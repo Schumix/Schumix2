@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<Schumix>
+    <Irc>
+        <Server>irc.rizon.net</Server>
+        <Port>6667</Port>
+        <Nick>Schumix2</Nick>
+        <Nick2>Schumixx2</Nick2>
+        <Nick3>Schumixxx2</Nick3>
+        <Allapot>
+            <Aktivitas>0</Aktivitas>
+            <Jelszo>pass</Jelszo>
+        </Allapot>
+    </Irc>
+    <Mysql>
+        <Host>localhost</Host>
+        <User>root</User>
+        <Password>pass</Password>
+        <Database>database</Database>
+    </Mysql>
+    <Parancs>
+        <Elojel>$</Elojel>
+    </Parancs>
+</Schumix>
