@@ -21,7 +21,7 @@ CREATE TABLE `channel` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `channel` VALUES ('1', ',koszones:ki,log:be,rejoin:be,parancsok:be', '#schumix2', '', '', '');
+INSERT INTO `channel` VALUES ('1', ',koszones:be,log:be,rejoin:be,parancsok:be', '#schumix2', '', '', '');
 
 DROP TABLE IF EXISTS `irc_parancsok`;
 CREATE TABLE `irc_parancsok` (
