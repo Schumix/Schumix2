@@ -30,7 +30,7 @@ namespace Schumix
         /// <summary>
         ///     A Schumix bot revision száma.
         /// </summary>
-		public static string revision = "0.1.3";
+		public static string revision = "0.2.0";
 
         /// <summary>
         ///     A server amire csatlakozik a bot.
