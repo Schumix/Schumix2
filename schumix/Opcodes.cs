@@ -1482,7 +1482,6 @@ namespace Schumix
 					}
 
 					SendChatMessage(MessageType.PRIVMSG, channel, String.Format("3Verzió: 10{0}", SchumixBot.revision));
-					SendChatMessage(MessageType.PRIVMSG, channel, String.Format("3Revision: 10{0}", SvnRevision.BUILD_REVISION));
 					SendChatMessage(MessageType.PRIVMSG, channel, String.Format("3Platform: {0}", Platform));
 					SendChatMessage(MessageType.PRIVMSG, channel, String.Format("3Programnyelv: c#"));
 					SendChatMessage(MessageType.PRIVMSG, channel, String.Format("3Uptime: {0}", SchumixBot.Uptime()));

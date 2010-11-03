@@ -26,7 +26,6 @@ namespace Schumix
 {
 	class MainClass
 	{
-
         /// <summary>
         ///     A Main függvény. Itt indul el a debug.
         /// </summary>
@@ -42,8 +41,7 @@ namespace Schumix
 			Console.WriteLine("[Schumix2]");
 			Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> parancsot vagy <kikapcs>\n");
 			Console.ForegroundColor = ConsoleColor.Gray;
-            Console.WriteLine(String.Format("Keszitette Megax, Jackneill. Built by {0}@{1}", SvnRevision.BUILD_USER, SvnRevision.BUILD_HOST));
-			Console.WriteLine(String.Format("Schumix Verzio: {0} Revision: {1} http://megaxx.info", SchumixBot.revision, SvnRevision.BUILD_REVISION));
+			Console.WriteLine(String.Format("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", SchumixBot.revision));
 			Console.WriteLine("==============================================================================");
 			Console.WriteLine("");
 			Log.Notice("Main", "Rendszer indul...");

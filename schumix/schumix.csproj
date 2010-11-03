@@ -44,7 +44,6 @@
     <Compile Include="Schumix.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Database.cs" />
-    <Compile Include="svn_revision.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="SingletonException.cs" />
     <Compile Include="GitInfo.cs" />
