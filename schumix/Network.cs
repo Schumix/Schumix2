@@ -356,7 +356,7 @@ namespace Schumix
 					else
 					{
 						ReConnect();
-						Thread.Sleep(10*1000);
+						Thread.Sleep(15*1000);
 					}
 				}
 			}
