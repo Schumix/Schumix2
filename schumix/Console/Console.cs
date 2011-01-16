@@ -24,7 +24,6 @@ namespace Schumix
 {
 	class Consol
 	{
-        
         /// <summary>
         ///     Opcodes.cs filet hívja meg.
         /// </summary>
