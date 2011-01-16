@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,7 @@ namespace Schumix
         /// <summary>
         ///     A Schumix bot revision száma.
         /// </summary>
-		public static string revision = "0.2.0";
+		public static string revision = "0.2.1";
 
         /// <summary>
         ///     Az éppen használt nick.
