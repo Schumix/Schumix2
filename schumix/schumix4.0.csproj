@@ -38,27 +38,27 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Data" />
-    <Reference Include="MySql.Data, Version=6.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
+    <Reference Include="MySql.Data, Version=6.3.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dep\MySql.Data.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Schumix.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="Database.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="SingletonException.cs" />
-    <Compile Include="GitInfo.cs" />
-    <Compile Include="HgInfo.cs" />
-    <Compile Include="SvnInfo.cs" />
-    <Compile Include="Opcodes.cs" />
-    <Compile Include="Console.cs" />
     <Compile Include="Calculator.cs" />
-    <Compile Include="Network.cs" />
-    <Compile Include="Config.cs" />
+    <Compile Include="Config\Config.cs" />
+    <Compile Include="Console\Console.cs" />
+    <Compile Include="Database\Database.cs" />
+    <Compile Include="IRC\Network.cs" />
+    <Compile Include="IRC\Opcodes.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rss\GitInfo.cs" />
+    <Compile Include="Rss\HgInfo.cs" />
+    <Compile Include="Rss\SvnInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
