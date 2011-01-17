@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
@@ -9,7 +9,12 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>schumix</RootNamespace>
     <AssemblyName>schumix</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -33,26 +38,36 @@
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Data" />
-    <Reference Include="MySql.Data, Version=6.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
+    <Reference Include="MySql.Data, Version=6.3.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\dep\MySql.Data.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
-    <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Schumix.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="Database.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="SingletonException.cs" />
-    <Compile Include="GitInfo.cs" />
-    <Compile Include="HgInfo.cs" />
-    <Compile Include="SvnInfo.cs" />
-    <Compile Include="Console.cs" />
     <Compile Include="Calculator.cs" />
-    <Compile Include="Opcodes.cs" />
-    <Compile Include="Network.cs" />
+    <Compile Include="Config\Config.cs" />
+    <Compile Include="Console\Console.cs" />
+    <Compile Include="Database\Database.cs" />
+    <Compile Include="IRC\Network.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rss\GitInfo.cs" />
+    <Compile Include="Rss\HgInfo.cs" />
+    <Compile Include="Rss\SvnInfo.cs" />
+    <Compile Include="IRC\MessageHandler.cs" />
+    <Compile Include="IRC\SendMessage.cs" />
+    <Compile Include="IRC\Commands\CommandManager.cs" />
+    <Compile Include="IRC\PublicMessageHandler.cs" />
+    <Compile Include="IRC\Commands\CommandHandler.cs" />
+    <Compile Include="IRC\Commands\AdminCommandHandler.cs" />
+    <Compile Include="IRC\Commands\PublicCommandHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="IRC\Commands\" />
+  </ItemGroup>
 </Project>
