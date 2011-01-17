@@ -101,63 +101,63 @@ namespace Schumix.IRC
 			if(channel.Substring(0, 1) == ":")
 				channel = channel.Remove(0, 1);
 
-			if(FSelect("koszones") != "be" && FSelect("koszones", channel) != "be")
-				return;
-
-			Random rand = new Random();
-			string Koszones = "";
-			switch(rand.Next(0, 12))
+			if(FSelect("koszones") == "be" && FSelect("koszones", channel) == "be")
 			{
-				case 0:
-					Koszones = "Hello";
-					break;
-				case 1:
-					Koszones = "Csáó";
-					break;
-				case 2:
-					Koszones = "Hy";
-					break;
-				case 3:
-					Koszones = "Szevasz";
-					break;
-				case 4:
-					Koszones = "Üdv";
-					break;
-				case 5:
-					Koszones = "Szervusz";
-					break;
-				case 6:
-					Koszones = "Aloha";
-					break;
-				case 7:
-					Koszones = "Jó napot";
-					break;
-				case 8:
-					Koszones = "Szia";
-					break;
-				case 9:
-					Koszones = "Hi";
-					break;
-				case 10:
-					Koszones = "Szerbusz";
-					break;
-				case 11:
-					Koszones = "Hali";
-					break;
-				case 12:
-					Koszones = "Szeva";
-					break;
-			}
-
-			if(DateTime.Now.Hour <= 9)
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, String.Format("Jó reggelt {0}", Network.IMessage.Nick));
-			else if(DateTime.Now.Hour >= 20)
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, String.Format("Jó estét {0}", Network.IMessage.Nick));
-			else
-				if(CManager.Admin(Network.IMessage.Nick))
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, "Üdv főnök");
+				Random rand = new Random();
+				string Koszones = "";
+				switch(rand.Next(0, 12))
+				{
+					case 0:
+						Koszones = "Hello";
+						break;
+					case 1:
+						Koszones = "Csáó";
+						break;
+					case 2:
+						Koszones = "Hy";
+						break;
+					case 3:
+						Koszones = "Szevasz";
+						break;
+					case 4:
+						Koszones = "Üdv";
+						break;
+					case 5:
+						Koszones = "Szervusz";
+						break;
+					case 6:
+						Koszones = "Aloha";
+						break;
+					case 7:
+						Koszones = "Jó napot";
+						break;
+					case 8:
+						Koszones = "Szia";
+						break;
+					case 9:
+						Koszones = "Hi";
+						break;
+					case 10:
+						Koszones = "Szerbusz";
+						break;
+					case 11:
+						Koszones = "Hali";
+						break;
+					case 12:
+						Koszones = "Szeva";
+						break;
+				}
+	
+				if(DateTime.Now.Hour <= 9)
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, String.Format("Jó reggelt {0}", Network.IMessage.Nick));
+				else if(DateTime.Now.Hour >= 20)
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, String.Format("Jó estét {0}", Network.IMessage.Nick));
 				else
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, String.Format("{0} {1}", Koszones, Network.IMessage.Nick));
+					if(CManager.Admin(Network.IMessage.Nick))
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, "Üdv főnök");
+					else
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, String.Format("{0} {1}", Koszones, Network.IMessage.Nick));
+			}
 		}
 
         /// <summary>
@@ -170,25 +170,25 @@ namespace Schumix.IRC
 			if(Network.IMessage.Nick == SchumixBot.NickTarolo)
 				return;
 
-			if(FSelect("koszones") != "be" && FSelect("koszones", Network.IMessage.Channel) != "be")
-				return;
-
-			Random rand = new Random();
-			string elkoszones = "";
-			switch(rand.Next(0, 1))
+			if(FSelect("koszones") == "be" && FSelect("koszones", Network.IMessage.Channel) == "be")
 			{
-				case 0:
-					elkoszones = "Viszlát";
-					break;
-				case 1:
-					elkoszones = "Bye";
-					break;
+				Random rand = new Random();
+				string elkoszones = "";
+				switch(rand.Next(0, 1))
+				{
+					case 0:
+						elkoszones = "Viszlát";
+						break;
+					case 1:
+						elkoszones = "Bye";
+						break;
+				}
+	
+				if(DateTime.Now.Hour >= 20)
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Jóét {0}", Network.IMessage.Nick));
+				else
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0} {1}", elkoszones, Network.IMessage.Nick));
 			}
-
-			if(DateTime.Now.Hour >= 20)
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Jóét {0}", Network.IMessage.Nick));
-			else
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0} {1}", elkoszones, Network.IMessage.Nick));
 		}
 
         /// <summary>
@@ -372,9 +372,6 @@ namespace Schumix.IRC
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			if(FSelect("parancsok") != "be" && FSelect("parancsok", Network.IMessage.Channel) != "be")
-				return;
-
 			if(Network.IMessage.Info[3] == SchumixBot.NickTarolo)
 			{
 				if(FSelect("rejoin") != "be" && FSelect("rejoin", Network.IMessage.Channel) != "be")
@@ -388,16 +385,19 @@ namespace Schumix.IRC
 			}
 			else
 			{
-				if(Consol.ConsoleLog == "be")
+				if(FSelect("parancsok") == "be" && FSelect("parancsok", Network.IMessage.Channel) == "be")
 				{
-					string alomany = "";
-					for(int i = 4; i < Network.IMessage.Info.Length; i++)
-						alomany += Network.IMessage.Info[i] + " ";
-		
-					if(alomany.Substring(0, 1) == ":")
-						alomany = alomany.Remove(0, 1);
-		
-					Console.WriteLine("{0} kickelte a következő felhasználot: {1} oka: {2}", Network.IMessage.Nick, Network.IMessage.Info[3], alomany);
+					if(Consol.ConsoleLog == "be")
+					{
+						string alomany = "";
+						for(int i = 4; i < Network.IMessage.Info.Length; i++)
+							alomany += Network.IMessage.Info[i] + " ";
+			
+						if(alomany.Substring(0, 1) == ":")
+							alomany = alomany.Remove(0, 1);
+			
+						Console.WriteLine("{0} kickelte a következő felhasználot: {1} oka: {2}", Network.IMessage.Nick, Network.IMessage.Info[3], alomany);
+					}
 				}
 			}
 		}
@@ -443,13 +443,10 @@ namespace Schumix.IRC
 			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
 			{
 				string szobak = m_ChannelFunkcio[i];
-				string[] pont = new string[szobak.Split('.').Length];
-				pont = szobak.Split('.');
+				string[] pont = szobak.Split('.');
 				string szoba = pont[0];
 				string funkciok = pont[1];
-
-				string[] kettospont = new string[funkciok.Split(':').Length];
-				kettospont = funkciok.Split(':');
+				string[] kettospont = funkciok.Split(':');
 
 				if(szoba == channel)
 				{
@@ -546,24 +543,24 @@ namespace Schumix.IRC
         /// <param name="args"></param>
 		private void LogToFajl(string channel, string user, string args)
         {
-			if(FSelect("log") != "be" && FSelect("log", channel) != "be")
-				return;
-
-			string logfile_name = channel + ".log";
-			if(!File.Exists(String.Format("./szoba/{0}", logfile_name)))
-				File.Create(String.Format("./szoba/{0}", logfile_name));
-
-			if(!Directory.Exists("szoba"))
-				Directory.CreateDirectory("szoba");
-
-			try
+			if(FSelect("log") == "be" && FSelect("log", channel) == "be")
 			{
-				TextWriter writeFile = new StreamWriter(String.Format("./szoba/{0}", logfile_name), true);
-				writeFile.WriteLine("[{0}] <{1}> {2}", DateTime.Now, user, args);
-				writeFile.Flush();
-				writeFile.Close();
+				string logfile_name = channel + ".log";
+				if(!File.Exists(String.Format("./szoba/{0}", logfile_name)))
+					File.Create(String.Format("./szoba/{0}", logfile_name));
+	
+				if(!Directory.Exists("szoba"))
+					Directory.CreateDirectory("szoba");
+	
+				try
+				{
+					TextWriter writeFile = new StreamWriter(String.Format("./szoba/{0}", logfile_name), true);
+					writeFile.WriteLine("[{0}] <{1}> {2}", DateTime.Now, user, args);
+					writeFile.Flush();
+					writeFile.Close();
+				}
+				catch { }
 			}
-			catch { }
 		}
 
         /// <summary>
@@ -583,8 +580,7 @@ namespace Schumix.IRC
 				if(db1 != null)
 				{
 					string funkciok = db1["funkciok"].ToString();
-					string[] vesszo = new string[funkciok.Split(',').Length];
-					vesszo = funkciok.Split(',');
+					string[] vesszo = funkciok.Split(',');
 
 					for(int x = 1; x < vesszo.Length; x++)
 					{
@@ -615,13 +611,10 @@ namespace Schumix.IRC
 			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
 			{
 				string szobak = m_ChannelFunkcio[i];
-				string[] pont = new string[szobak.Split('.').Length];
-				pont = szobak.Split('.');
+				string[] pont = szobak.Split('.');
 				string szoba = pont[0];
 				string funkciok = pont[1];
-
-				string[] kettospont = new string[funkciok.Split(':').Length];
-				kettospont = funkciok.Split(':');
+				string[] kettospont = funkciok.Split(':');
 
 				if(szoba == channel)
 				{
@@ -633,13 +626,10 @@ namespace Schumix.IRC
 			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
 			{
 				string szobak = m_ChannelFunkcio[i];
-				string[] pont = new string[szobak.Split('.').Length];
-				pont = szobak.Split('.');
+				string[] pont = szobak.Split('.');
 				string szoba = pont[0];
 				string funkciok = pont[1];
-
-				string[] kettospont = new string[funkciok.Split(':').Length];
-				kettospont = funkciok.Split(':');
+				string[] kettospont = funkciok.Split(':');
 
 				if(szoba == channel)
 				{

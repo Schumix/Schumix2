@@ -26,7 +26,6 @@ namespace Schumix.IRC.Commands
 	public partial class CommandHandler
 	{
 		private SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-
 		private CommandHandler() {}
 	}
 }
