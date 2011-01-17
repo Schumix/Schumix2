@@ -19,57 +19,57 @@
 
 using System;
 using System.Threading;
+using Schumix.IRC;
 
 namespace Schumix
 {
 	class Consol
 	{
         /// <summary>
-        ///     Opcodes.cs filet hívja meg.
+        ///     Opcodes.cs filet hÃ­vja meg.
         /// </summary>
-		private Opcodes sOpcodes = Singleton<Opcodes>.Instance;
+		//private Opcodes sOpcodes = Singleton<Opcodes>.Instance;
+		private SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 
         /// <summary>
-        ///     A Console logja. Alapértelmezésben ki van kapcsolva.
+        ///     A Console logja. AlapÃ©rtelmezÃ©sben ki van kapcsolva.
         /// </summary>
-		public static string ConsolLog;
+		public static string ConsoleLog;
 
         /// <summary>
-        ///     Console írást indítja.
+        ///     Console Ã­rÃ¡st indÃ­tja.
         /// </summary>
         /// <remarks>
-        ///     Ha érzékel valamit, akkor alapértelmezésben az IRC szobába írja,
-        ///     ha azt parancsnak érzékeli, akkor végrehajtja azt.
+        ///     Ha Ã©rzÃ©kel valamit, akkor alapÃ©rtelmezÃ©sben az IRC szobÃ¡ba Ã­rja,
+        ///     ha azt parancsnak Ã©rzÃ©keli, akkor vÃ©grehajtja azt.
         /// </remarks>
 		public Consol()
 		{
-			Thread consol = new Thread(new ThreadStart(ConsolIras));
-			consol.Start();
-
-			ConsolLog = "ki";
-
-			Log.Success("Consol", "Thread elindult.");
+			Thread console = new Thread(new ThreadStart(ConsoleRead));
+			console.Start();
+			ConsoleLog = "ki";
+			Log.Success("Console", "Thread elindult.");
 		}
 
         /// <summary>
         ///     Destruktor.
         /// </summary>
         /// <remarks>
-        ///     Ha ez lefut, akkor a class leáll.
+        ///     Ha ez lefut, akkor a class leÃ¡ll.
         /// </remarks>
 		~Consol()
 		{
-			Log.Debug("Consol", "~Consol()");
+			Log.Debug("Console", "~Console()");
 		}
 
         /// <summary>
-        ///     Console-ba beírt parancsot hajtja végre.
+        ///     Console-ba beÃ­rt parancsot hajtja vÃ©gre.
         /// </summary>
         /// <remarks>
-        ///     Ha a Console-ba beírt szöveg egy parancs, akkor ez a
-        ///     függvény hajtja végre.
+        ///     Ha a Console-ba beÃ­rt szÃ¶veg egy parancs, akkor ez a
+        ///     fÃ¼ggvÃ©ny hajtja vÃ©gre.
         /// </remarks>
-		private void ConsolIras()
+		private void ConsoleRead()
 		{
 			try
 			{
@@ -78,36 +78,36 @@ namespace Schumix
 				while(true)
 				{
 					uzenet = Console.ReadLine();
-					if(ConsolCommands(uzenet))
+					if(ConsoleCommands(uzenet))
 						continue;
 
 					var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT irc_cim FROM schumix WHERE entry = '1'"));
 					if(db != null)
-						sOpcodes.SendChatMessage(Opcodes.MessageType.PRIVMSG, db["irc_cim"].ToString(), uzenet);
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, db["irc_cim"].ToString(), uzenet);
 
 					Thread.Sleep(1000);
 				}
 			}
 			catch(Exception e)
 			{
-				Log.Error("ConsolIras", String.Format("Hiba oka: {0}", e.ToString()));
-				ConsolIras();
+				Log.Error("ConsoleRead", String.Format("Hiba oka: {0}", e.ToString()));
+				ConsoleRead();
 				Thread.Sleep(50);
 			}
 		}
 
         /// <summary>
-        ///     Az "info" -t darabolja fel szóközönként.
+        ///     Az "info" -t darabolja fel szÃ³kÃ¶zÃ¶nkÃ©nt.
         /// </summary>
-        /// <param name="info">Beviteli adat a Console-ból.</param>
+        /// <param name="info">Beviteli adat a Console-bÃ³l.</param>
         /// <returns>
-        ///     Ha igaz értékkel tér vissza "true"-val, akkor
+        ///     Ha igaz Ã©rtÃ©kkel tÃ©r vissza "true"-val, akkor
         ///     az "info" string egy parancs, 
-        ///     ha hamis értékkel tér vissza "false"-al, akkor
-        ///     az "info" string nem parancs, és a beírt szöveget
-        ///     az IRC szobába írja ki.
+        ///     ha hamis Ã©rtÃ©kkel tÃ©r vissza "false"-al, akkor
+        ///     az "info" string nem parancs, Ã©s a beÃ­rt szÃ¶veget
+        ///     az IRC szobÃ¡ba Ã­rja ki.
         /// </returns>
-		bool ConsolCommands(string info)
+		bool ConsoleCommands(string info)
 		{
 			string[] cmd = new string[info.Split(' ').Length];
 			cmd = info.Split(' ');
@@ -115,17 +115,17 @@ namespace Schumix
 
 			if(parancs == "help")
 			{
-				Log.Notice("Consol", "Parancsok: consollog, help, kikapcs, szoba");
+				Log.Notice("Console", "Parancsok: consolelog, help, kikapcs, szoba");
 				return true;
 			}
 
-			if(parancs == "consollog")
+			if(parancs == "consolelog")
 			{
 				if(info.Length < 2)
 					return false;
 
-				ConsolLog = cmd[1];
-				Log.Notice("Consol", String.Format("Console logolas {0}kapcsolva", cmd[1]));
+				ConsoleLog = cmd[1];
+				Log.Notice("Console", String.Format("Console logolas {0}kapcsolva", cmd[1]));
 				return true;
 			}
 
@@ -140,8 +140,8 @@ namespace Schumix
 
 			if(parancs == "kikapcs")
 			{
-				Log.Notice("Consol", "Viszlat :(");
-				Network.writer.WriteLine("QUIT :Consol: leallitas.");
+				Log.Notice("Console", "Viszlat :(");
+				Network.writer.WriteLine("QUIT :Console: leallitas.");
 				Thread.Sleep(1000);
 				Environment.Exit(1);
 			}

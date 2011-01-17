@@ -54,11 +54,20 @@
     <Compile Include="Console\Console.cs" />
     <Compile Include="Database\Database.cs" />
     <Compile Include="IRC\Network.cs" />
-    <Compile Include="IRC\Opcodes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rss\GitInfo.cs" />
     <Compile Include="Rss\HgInfo.cs" />
     <Compile Include="Rss\SvnInfo.cs" />
+    <Compile Include="IRC\MessageHandler.cs" />
+    <Compile Include="IRC\SendMessage.cs" />
+    <Compile Include="IRC\Commands\CommandManager.cs" />
+    <Compile Include="IRC\PublicMessageHandler.cs" />
+    <Compile Include="IRC\Commands\CommandHandler.cs" />
+    <Compile Include="IRC\Commands\AdminCommandHandler.cs" />
+    <Compile Include="IRC\Commands\PublicCommandHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="IRC\Commands\" />
+  </ItemGroup>
 </Project>
