@@ -142,19 +142,19 @@ namespace Schumix
 
 		private void InitHandler()
 		{
-			_IRCHandler.Add("001",     sMessageHandler.HandleSuccessfulAuth);
-			_IRCHandler.Add("PING",    sMessageHandler.HandlePing);
-			_IRCHandler.Add("PONG",    sMessageHandler.HandlePong);
-			_IRCHandler.Add("PRIVMSG", sMessageHandler.HandlePrivmsg);
-			_IRCHandler.Add("NOTICE",  sMessageHandler.HandleNotice);
-			_IRCHandler.Add("JOIN",    sMessageHandler.HandleJoin);
-			_IRCHandler.Add("LEFT",    sMessageHandler.HandleLeft);
-			_IRCHandler.Add("KICK",    sMessageHandler.HandleKick);
-			_IRCHandler.Add("474",     sMessageHandler.HandleChannelBan);
-			_IRCHandler.Add("475",     sMessageHandler.HandleNoChannelJelszo);
-			_IRCHandler.Add("319",     sMessageHandler.HandleWhois);
-			_IRCHandler.Add("421",     sMessageHandler.HandleIsmeretlenParancs);
-			_IRCHandler.Add("433",     sMessageHandler.HandleNickError);
+			RegisterHandler("001",     sMessageHandler.HandleSuccessfulAuth);
+			RegisterHandler("PING",    sMessageHandler.HandlePing);
+			RegisterHandler("PONG",    sMessageHandler.HandlePong);
+			RegisterHandler("PRIVMSG", sMessageHandler.HandlePrivmsg);
+			RegisterHandler("NOTICE",  sMessageHandler.HandleNotice);
+			RegisterHandler("JOIN",    sMessageHandler.HandleJoin);
+			RegisterHandler("LEFT",    sMessageHandler.HandleLeft);
+			RegisterHandler("KICK",    sMessageHandler.HandleKick);
+			RegisterHandler("474",     sMessageHandler.HandleChannelBan);
+			RegisterHandler("475",     sMessageHandler.HandleNoChannelJelszo);
+			RegisterHandler("319",     sMessageHandler.HandleWhois);
+			RegisterHandler("421",     sMessageHandler.HandleIsmeretlenParancs);
+			RegisterHandler("433",     sMessageHandler.HandleNickError);
 			Log.Notice("Network", "Osszes IRC handler regisztralva.");
 		}
 

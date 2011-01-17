@@ -29,7 +29,7 @@ namespace Schumix
         /// <summary>
         ///     A Schumix bot revision száma.
         /// </summary>
-		public static string revision = "0.2.5";
+		public static string revision = "0.2.6";
 
         /// <summary>
         ///     Az éppen használt nick.
