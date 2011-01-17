@@ -38,7 +38,6 @@ namespace Schumix.IRC.Commands
 	{
 		private Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
 		private CommandHandler sCommandHandler = Singleton<CommandHandler>.Instance;
-		public CommandMessage CMessage = new CommandMessage();
 
 		public CommandManager()
 		{
@@ -50,9 +49,12 @@ namespace Schumix.IRC.Commands
 		{
 			// Public
 			_CommandHandler.Add("xbot", sCommandHandler.HandleXbot);
+			_CommandHandler.Add("calc", sCommandHandler.HandleCalc);
 
 			// Admin
 			_CommandHandler.Add("hozzaferes", sCommandHandler.HandleHozzaferes);
+			_CommandHandler.Add("szoba",      sCommandHandler.HandleSzoba);
+			_CommandHandler.Add("kikapcs",    sCommandHandler.HandleKikapcs);
 
 			Log.Notice("CommandManager", "Osszes Command handler regisztralva.");
 		}
@@ -66,13 +68,6 @@ namespace Schumix.IRC.Commands
 		{
 			try
 			{
-				CMessage.Channel = Network.IMessage.Channel;
-				CMessage.Nick = Network.IMessage.Nick;
-				CMessage.User = Network.IMessage.User;
-				CMessage.Host = Network.IMessage.Host;
-				CMessage.Args = Network.IMessage.Args;
-				CMessage.Info = Network.IMessage.Info;
-
 				if(_CommandHandler.ContainsKey(handler))
 					_CommandHandler[handler].Invoke();
 			}
