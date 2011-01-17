@@ -49,10 +49,16 @@ namespace Schumix.IRC.Commands
 		{
 			// Public
 			_CommandHandler.Add("xbot", sCommandHandler.HandleXbot);
+			_CommandHandler.Add("info", sCommandHandler.HandleInfo);
+			_CommandHandler.Add("help", sCommandHandler.HandleHelp);
+			_CommandHandler.Add("ido", sCommandHandler.HandleIdo);
+			_CommandHandler.Add("datum", sCommandHandler.HandleDatum);
+			_CommandHandler.Add("roll", sCommandHandler.HandleRoll);
 			_CommandHandler.Add("calc", sCommandHandler.HandleCalc);
 
 			// Admin
 			_CommandHandler.Add("hozzaferes", sCommandHandler.HandleHozzaferes);
+			_CommandHandler.Add("ujjelszo",   sCommandHandler.HandleUjjelszo);
 			_CommandHandler.Add("szoba",      sCommandHandler.HandleSzoba);
 			_CommandHandler.Add("kikapcs",    sCommandHandler.HandleKikapcs);
 
