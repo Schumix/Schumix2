@@ -23,7 +23,6 @@ namespace Schumix
 {
 	public class Eval
 	{
-
 		// simulate basic evaluation of arithmetic expression
 		public Eval()
 		{

@@ -48,19 +48,19 @@ namespace Schumix.IRC.Commands
 		private void InitHandler()
 		{
 			// Public
-			_CommandHandler.Add("xbot", sCommandHandler.HandleXbot);
-			_CommandHandler.Add("info", sCommandHandler.HandleInfo);
-			_CommandHandler.Add("help", sCommandHandler.HandleHelp);
-			_CommandHandler.Add("ido", sCommandHandler.HandleIdo);
-			_CommandHandler.Add("datum", sCommandHandler.HandleDatum);
-			_CommandHandler.Add("roll", sCommandHandler.HandleRoll);
-			_CommandHandler.Add("calc", sCommandHandler.HandleCalc);
+			RegisterHandler("xbot",  sCommandHandler.HandleXbot);
+			RegisterHandler("info",  sCommandHandler.HandleInfo);
+			RegisterHandler("help",  sCommandHandler.HandleHelp);
+			RegisterHandler("ido",   sCommandHandler.HandleIdo);
+			RegisterHandler("datum", sCommandHandler.HandleDatum);
+			RegisterHandler("roll",  sCommandHandler.HandleRoll);
+			RegisterHandler("calc",  sCommandHandler.HandleCalc);
 
 			// Admin
-			_CommandHandler.Add("hozzaferes", sCommandHandler.HandleHozzaferes);
-			_CommandHandler.Add("ujjelszo",   sCommandHandler.HandleUjjelszo);
-			_CommandHandler.Add("szoba",      sCommandHandler.HandleSzoba);
-			_CommandHandler.Add("kikapcs",    sCommandHandler.HandleKikapcs);
+			RegisterHandler("hozzaferes", sCommandHandler.HandleHozzaferes);
+			RegisterHandler("ujjelszo",   sCommandHandler.HandleUjjelszo);
+			RegisterHandler("szoba",      sCommandHandler.HandleSzoba);
+			RegisterHandler("kikapcs",    sCommandHandler.HandleKikapcs);
 
 			Log.Notice("CommandManager", "Osszes Command handler regisztralva.");
 		}

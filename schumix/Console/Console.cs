@@ -141,7 +141,7 @@ namespace Schumix
 			if(parancs == "kikapcs")
 			{
 				Log.Notice("Console", "Viszlat :(");
-				Network.writer.WriteLine("QUIT :Console: leallitas.");
+				Network.writer.WriteLine("QUIT :Console: leállás.");
 				Thread.Sleep(1000);
 				Environment.Exit(1);
 			}
