@@ -22,16 +22,17 @@ using System.Threading;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Linq;
+using System.Collections.Generic;
+using Schumix.IRC;
 
 namespace Schumix
 {
 	public class Network
 	{
-        /// <summary>
-        ///     Opcodes.cs -t hívja meg.
-        /// </summary>
-		private Opcodes sOpcodes = Singleton<Opcodes>.Instance;
-
+		private MessageHandler sMessageHandler = Singleton<MessageHandler>.Instance;
+		public static IRCMessage IMessage = new IRCMessage();
+		
         ///***START***********************************///
         ///<summary>
         ///     A kimeneti adatokat külddi az IRC felé.
@@ -109,6 +110,7 @@ namespace Schumix
 	        ///***************************************///
 		};
 
+		private Dictionary<string, Action> _IRCHandler = new Dictionary<string, Action>();
 
         /// <summary>
         ///     Internet kapcsolat függvénye.
@@ -125,6 +127,8 @@ namespace Schumix
 			_server = server;
 			_port = port;
 
+			Log.Notice("Network", "Network elindult.");
+			InitHandler();
 			Connect();
 
 			// Start Opcodes thread
@@ -134,6 +138,29 @@ namespace Schumix
 			// Start Ping thread
 			Thread ping = new Thread(new ThreadStart(Ping));
 			ping.Start();
+		}
+
+		private void InitHandler()
+		{
+			_IRCHandler.Add("001",     sMessageHandler.HandleSuccessfulAuth);
+			_IRCHandler.Add("PING",    sMessageHandler.HandlePing);
+			_IRCHandler.Add("PONG",    sMessageHandler.HandlePong);
+			_IRCHandler.Add("PRIVMSG", sMessageHandler.HandlePrivmsg);
+			_IRCHandler.Add("NOTICE",  sMessageHandler.HandleNotice);
+			_IRCHandler.Add("JOIN",    sMessageHandler.HandleJoin);
+			_IRCHandler.Add("LEFT",    sMessageHandler.HandleLeft);
+			_IRCHandler.Add("KICK",    sMessageHandler.HandleKick);
+			_IRCHandler.Add("474",     sMessageHandler.HandleChannelBan);
+			_IRCHandler.Add("475",     sMessageHandler.HandleNoChannelJelszo);
+			_IRCHandler.Add("319",     sMessageHandler.HandleWhois);
+			_IRCHandler.Add("421",     sMessageHandler.HandleIsmeretlenParancs);
+			_IRCHandler.Add("433",     sMessageHandler.HandleNickError);
+			Log.Notice("Network", "Osszes IRC handler regisztralva.");
+		}
+
+		private void RegisterHandler(string code, Action method)
+		{
+			_IRCHandler.Add(code, method);
 		}
 
 		/// <summary>
@@ -213,6 +240,7 @@ namespace Schumix
 				string IrcOpcode;
 				string opcode;
 				string[] userdata;
+				string[] hostdata;
 				string[] IrcCommand;
 
 				while(true)
@@ -227,94 +255,33 @@ namespace Schumix
 						if(IrcCommand[0].Substring(0, 1) == ":")
 							IrcCommand[0] = IrcCommand[0].Remove(0, 1);
 
-						sOpcodes.hostmask = IrcCommand[0];
-						userdata = sOpcodes.hostmask.Split('!');
+						IMessage.Hostmask = IrcCommand[0];
+						userdata = IMessage.Hostmask.Split('!');
 
-						sOpcodes.source_nick = userdata[0];
-						sOpcodes.args = "";
+						IMessage.Args = "";
+						if(IrcCommand.Length > 2)
+							IMessage.Channel = IrcCommand[2];
+
+						IMessage.Nick = userdata[0];
+						if(userdata.Length > 1)
+						{
+							hostdata = userdata[1].Split('@');
+							IMessage.User = hostdata[0];
+							IMessage.Host = hostdata[0];
+						}
 
 						for(int i = 3; i < IrcCommand.Length; i++)
-							sOpcodes.args += IrcCommand[i] + " ";
+							IMessage.Args += IrcCommand[i] + " ";
 
 						opcode = IrcCommand[1];
+						IMessage.Info = IrcCommand;
 
-						switch(opcode)
+						if(_IRCHandler.ContainsKey(opcode))
+							_IRCHandler[opcode].Invoke();
+						else
 						{
-							case "PRIVMSG":
-								sOpcodes.OpcodePrivmsg(IrcCommand);
-								break;
-							case "NOTICE":
-								sOpcodes.OpcodeNotice(IrcCommand);
-								break;
-							case "PING":
-								sOpcodes.OpcodePing(IrcCommand);
-								break;
-							case "PONG":
-								sOpcodes.OpcodePong(IrcCommand);
-								break;
-							case "JOIN":
-								sOpcodes.OpcodeJoin(IrcCommand);
-								break;
-							case "PART":
-								sOpcodes.OpcodeLeft(IrcCommand);
-								break;
-							case "KICK":
-								sOpcodes.OpcodeKick(IrcCommand);
-								break;
-							case "001":
-								sOpcodes.OpcodeSikeresKapcsolodas(IrcCommand);
-								break;
-							case "421":
-								sOpcodes.OpcodeIsmeretlenParancs(IrcCommand);
-								break;
-							case "433":
-								sOpcodes.OpcodeNickError(IrcCommand);
-								break;
-							case "474":
-								sOpcodes.OpcodeChannelBan(IrcCommand);
-								break;
-							case "475":
-								sOpcodes.OpcodeNoChannelJelszo(IrcCommand);
-								break;
-							case "319":
-								sOpcodes.OpcodeWhois(IrcCommand);
-								break;
-							case "QUIT":
-							case "372":
-							case "002":
-							case "003":
-							case "004":
-							case "005":
-							case "042":
-							case "251":
-							case "252":
-							case "253":
-							case "254":
-							case "255":
-							case "265":
-							case "266":
-							case "332":
-							case "333":
-							case "353":
-							case "366":
-							case "412":
-							case "439":
-							case "375":
-							case "376":
-							case "451":
-							case "310":
-							case "311":
-							case "312":
-							case "317":
-							case "318":
-							case "338":
-							case "307":
-							case "671":
-							case "672":
-								break;
-							default:
-								sOpcodes.OpcodeConsol(IrcCommand);
-								break;
+							if(Consol.ConsoleLog == "be")
+								Log.Notice("Opcodes", String.Format("Received unhandled opcode: {0}", opcode));
 						}
 
 						if(m_ConnState == (int)ConnState.CONN_CONNECTED)

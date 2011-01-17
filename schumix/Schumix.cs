@@ -29,7 +29,7 @@ namespace Schumix
         /// <summary>
         ///     A Schumix bot revision száma.
         /// </summary>
-		public static string revision = "0.2.1";
+		public static string revision = "0.2.2";
 
         /// <summary>
         ///     Az éppen használt nick.
@@ -45,7 +45,6 @@ namespace Schumix
         ///     Ebbe a változóba töltödik bele a szoba neve és a jelszava, ha van.
         /// </summary>
 		public static Dictionary<string,string> m_ChannelLista = new Dictionary<string,string>();
-
 
         ///***START***********************************///
         /// <summary>
