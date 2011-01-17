@@ -374,13 +374,13 @@ namespace Schumix.IRC
 
 			if(Network.IMessage.Info[3] == SchumixBot.NickTarolo)
 			{
-				if(FSelect("rejoin") != "be" && FSelect("rejoin", Network.IMessage.Channel) != "be")
-					return;
-
-				foreach(var m_channel in SchumixBot.m_ChannelLista)
+				if(FSelect("rejoin") == "be" && FSelect("rejoin", Network.IMessage.Channel) == "be")
 				{
-					if(Network.IMessage.Channel == m_channel.Key)
-						Network.writer.WriteLine("JOIN " + m_channel.Key + m_channel.Value);
+					foreach(var m_channel in SchumixBot.m_ChannelLista)
+					{
+						if(Network.IMessage.Channel == m_channel.Key)
+							Network.writer.WriteLine("JOIN " + m_channel.Key + m_channel.Value);
+					}
 				}
 			}
 			else
