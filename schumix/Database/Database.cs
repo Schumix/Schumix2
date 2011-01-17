@@ -26,7 +26,6 @@ namespace Schumix
 {
 	class Mysql
 	{
-
         /// <summary>
         ///     A MySQL adatbázishoz való csatlakozás deklarációja.
         /// </summary>
