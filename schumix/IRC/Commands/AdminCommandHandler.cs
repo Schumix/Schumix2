@@ -56,6 +56,36 @@ namespace Schumix.IRC.Commands
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Nev, "Hozzáférés megtagadva");
 		}
 
+		public void HandleUjjelszo()
+		{
+			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick))
+				return;
+
+			if(Network.IMessage.Info.Length < 6)
+				return;
+
+			string admin_nev = Network.IMessage.Nick;
+			string jelszo = Network.IMessage.Info[4];
+			string ujjelszo = Network.IMessage.Info[5];
+			string Nev = "";
+			string JelszoSql = "";
+
+			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT nev, jelszo FROM adminok WHERE nev = '{0}'", admin_nev));
+			if(db != null)
+			{
+				Nev = db["nev"].ToString();
+				JelszoSql = db["jelszo"].ToString();
+			}
+
+			if(JelszoSql == jelszo)
+			{
+				SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET jelszo = '{0}' WHERE nev = '{1}'", ujjelszo, Nev));
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Nev, String.Format("Jelszó sikereset meg lett változtatva erre: {0}", ujjelszo));
+			}
+			else
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Nev, "A mostani jelszó nem egyezik, modósitás megtagadva");
+		}
+
 		public void HandleSzoba()
 		{
 			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host))

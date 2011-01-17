@@ -47,54 +47,27 @@ namespace Schumix.IRC
 
 			LogToFajl(Network.IMessage.Channel, Network.IMessage.Nick, Network.IMessage.Args);
 
-			if(FSelect("parancsok") != "be" && FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) != "#")
-				return;
-
-			if(Network.IMessage.Info[3].Substring(0, 1) == ":")
-				Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
-
-			Schumix();
-			
-			if(Network.IMessage.Info[Network.IMessage.Info.Length-2] == "" || Network.IMessage.Info[Network.IMessage.Info.Length-1] == "")
-				return;
-
-			if(Network.IMessage.Info[3].Substring(0, 1) == " " || Network.IMessage.Info[3].Substring(0, 1) != IRCConfig.Parancselojel)
-				return;
-
-			Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
-			CManager.BejovoInfo(Network.IMessage.Info[3].ToLower());
-
-			/*if(info[3] == "ujjelszo")
+			if(FSelect("parancsok") == "be")
 			{
-				if(!Admin(source_nick))
+				if(FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) != "#")
 					return;
 
-				if(info.Length < 6)
+				if(Network.IMessage.Info[3].Substring(0, 1) == ":")
+					Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
+
+				Schumix();
+
+				if(Network.IMessage.Info[Network.IMessage.Info.Length-2] == "" || Network.IMessage.Info[Network.IMessage.Info.Length-1] == "")
 					return;
 
-				string admin_nev = source_nick;
-				string jelszo = info[4];
-				string ujjelszo = info[5];
-				string Nev = "";
-				string JelszoSql = "";
+				if(Network.IMessage.Info[3].Substring(0, 1) == " " || Network.IMessage.Info[3].Substring(0, 1) != IRCConfig.Parancselojel)
+					return;
 
-				var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT nev, jelszo FROM adminok WHERE nev = '{0}'", admin_nev));
-				if(db != null)
-				{
-					Nev = db["nev"].ToString();
-					JelszoSql = db["jelszo"].ToString();
-				}
-
-				if(JelszoSql == jelszo)
-				{
-					SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET jelszo = '{0}' WHERE nev = '{1}'", ujjelszo, Nev));
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Nev, String.Format("Jelszó sikereset meg lett változtatva erre: {0}", ujjelszo));
-				}
-				else
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Nev, "A mostani jelszó nem egyezik, modósitás megtagadva");
+				Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
+				CManager.BejovoInfo(Network.IMessage.Info[3].ToLower());
 			}
 
-			if(info[3] == "admin")
+			/*if(info[3] == "admin")
 			{
 				if(!CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host))
 					return;
@@ -153,32 +126,6 @@ namespace Schumix.IRC
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}szinek | {0}funkcio | {0}kikapcs | {0}sznap | {0}szoba | {0}channel | {0}hozzaferes | {0}ujjelszo", IRCConfig.Parancselojel));
 					return;
 				}
-			}
-
-			if(info[3] == "info")
-			{
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Programozóm: Csaba, Jackneill.");
-				return;
-			}
-
-			if(info[3] == "help")
-			{
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Ha egy parancs mögé irod a help-et segít a használatában!");
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Fő parancsom: {0}xbot", IRCConfig.Parancselojel));
-				return;
-			}
-
-			if(info[3] == "ido")
-				Ido(info);
-
-			if(info[3] == "datum")
-				Datum(info);
-
-			if(info[3] == "roll")
-			{
-				Random rand = new Random();
-				int szam = rand.Next(0, 100);
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Százalékos aránya {0}%", szam));
 			}
 
 			if(info[3] == "teszt")
