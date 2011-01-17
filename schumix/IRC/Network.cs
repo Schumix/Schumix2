@@ -292,7 +292,7 @@ namespace Schumix
 						}
 					}
 					else
-						Thread.Sleep(50);
+						Thread.Sleep(100);
 				}
 			}
 			catch(Exception e)

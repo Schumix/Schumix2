@@ -32,5 +32,18 @@ namespace Schumix.IRC.Commands
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}info | {1}help | {2}ido | {3}datum | {4}irc | {5}roll | {6}keres | {7}sha1 | {8}md5 | {9}uzenet | {10}whois | {11}calc", IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel));
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Programmed by: 3Csaba");
 		}
+
+		public void HandleCalc()
+		{
+			string adat = "";
+			for(int i = 4; i < Network.IMessage.Info.Length; i++)
+				adat += " " + Network.IMessage.Info[i];
+
+			if(adat.Substring(0, 1) == " ")
+				adat = adat.Remove(0, 1);
+
+			double ris = Eval.Calculate(adat);
+			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}", ris));
+		}
 	}
 }

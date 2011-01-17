@@ -20,6 +20,7 @@
 // nincs egyenlőre adat
 
 using System;
+using Schumix.Config;
 
 namespace Schumix.IRC.Commands
 {
@@ -27,15 +28,15 @@ namespace Schumix.IRC.Commands
 	{
 		public void HandleHozzaferes()
 		{
-			if(!MessageHandler.CManager.Admin(MessageHandler.CManager.CMessage.Nick))
+			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick))
 				return;
 
-			if(MessageHandler.CManager.CMessage.Info.Length < 5)
+			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			string jelszo = MessageHandler.CManager.CMessage.Info[4];
-			string ip = MessageHandler.CManager.CMessage.Host;
-			string admin_nev = MessageHandler.CManager.CMessage.Nick;
+			string jelszo = Network.IMessage.Info[4];
+			string ip = Network.IMessage.Host;
+			string admin_nev = Network.IMessage.Nick;
 			string Nev = "";
 			string JelszoSql = "";
 
@@ -53,6 +54,33 @@ namespace Schumix.IRC.Commands
 			}
 			else
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Nev, "Hozzáférés megtagadva");
+		}
+
+		public void HandleSzoba()
+		{
+			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host))
+				return;
+
+			if(Network.IMessage.Info.Length < 5)
+				return;
+
+			if(Network.IMessage.Info[4] == "help")
+			{
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Segitség a konzol szoba váltásához!");
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Funkció használata: {0}szoba <ide jön a szoba>", IRCConfig.Parancselojel));
+			}
+			else
+				SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE schumix SET irc_cim = '{0}' WHERE entry = '1'", Network.IMessage.Info[4]));
+		}
+
+		public void HandleKikapcs()
+		{
+			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host))
+				return;
+
+			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Viszlát :(");
+			Network.writer.WriteLine("QUIT :{0} leallitott parancsal.", Network.IMessage.Nick);
+			Environment.Exit(1);
 		}
 	}
 }

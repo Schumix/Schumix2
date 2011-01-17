@@ -569,7 +569,7 @@ namespace Schumix.IRC
         /// <summary>
         ///     
         /// </summary>
-		private void ChannelFunkcioReload()
+		public void ChannelFunkcioReload()
 		{
 			m_ChannelFunkcio.Clear();
 
@@ -595,7 +595,7 @@ namespace Schumix.IRC
 			}
 		}
 
-		private void ChannelListaReload()
+		public void ChannelListaReload()
 		{
 			SchumixBot.m_ChannelLista.Clear();
 			var dbinfo = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT szoba, jelszo FROM channel"));
@@ -608,7 +608,7 @@ namespace Schumix.IRC
 			}
 		}
 
-		private string ChannelFunkciok(string nev, string status, string channel)
+		public string ChannelFunkciok(string nev, string status, string channel)
 		{
 			string funkcio = "";
 
