@@ -49,8 +49,8 @@ namespace Schumix.IRC
 
 			if(FSelect("parancsok") == "be")
 			{
-				if(FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) != "#")
-					return;
+				//if(FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) != "#")
+					//return;
 
 				if(Network.IMessage.Info[3].Substring(0, 1) == ":")
 					Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
@@ -75,6 +75,8 @@ namespace Schumix.IRC
 
 			if(INick.ToLower() == ParancsJel.ToLower())
 			{
+				CNick();
+
 				if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "info")
 				{
 					string Platform = "";
