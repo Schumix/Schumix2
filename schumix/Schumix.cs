@@ -27,11 +27,6 @@ namespace Schumix
 	class SchumixBot
 	{
         /// <summary>
-        ///     A Schumix bot revision száma.
-        /// </summary>
-		public static string revision = "0.2.7";
-
-        /// <summary>
         ///     Az éppen használt nick.
         /// </summary>
 		public static string NickTarolo;

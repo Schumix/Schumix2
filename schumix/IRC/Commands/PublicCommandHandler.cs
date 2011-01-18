@@ -31,7 +31,7 @@ namespace Schumix.IRC.Commands
 	{
 		public void HandleXbot()
 		{
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Verzió: 10{0}", SchumixBot.revision));
+			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Verzió: 10{0}", Verzio.SchumixVerzio));
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}info | {1}help | {2}ido | {3}datum | {4}irc | {5}roll | {6}keres | {7}sha1 | {8}md5 | {9}uzenet | {10}whois | {11}calc", IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel));
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Programmed by: 3Csaba");
 		}
@@ -167,6 +167,99 @@ namespace Schumix.IRC.Commands
 				Md5 += adat[i];
 
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, Md5.ToLower());
+		}
+
+		public void HandleIrc()
+		{
+			if(Network.IMessage.Info.Length < 5)
+				return;
+
+			if(Network.IMessage.Info[4] == "help")
+			{
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Segítség az irc-hez!");
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Parancsok: {0}irc rang | {1}irc rang1 | {2}irc nick | {3}irc kick | {4}irc owner", IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel));
+			}
+			else
+			{
+				var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT hasznalata FROM irc_parancsok WHERE parancs = '{0}'", Network.IMessage.Info[4]));
+				if(db != null)
+				{
+					string hasznalata = db["hasznalata"].ToString();
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, hasznalata);
+				}
+			}
+		}
+
+		public void HandleWhois()
+		{
+			if(Network.IMessage.Info.Length < 5)
+				return;
+
+			MessageHandler.WhoisPrivmsg = Network.IMessage.Channel;
+			Network.writer.WriteLine("WHOIS {0}", Network.IMessage.Info[4]);
+		}
+
+		public void HandleUzenet()
+		{
+			if(Network.IMessage.Info.Length < 5)
+				return;
+
+			if(Network.IMessage.Info[4] == "help")
+			{
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Segítség az üzenethez!");
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Funkció használata: {0}üzenet <ide jön a személy> <ha nem felhivás küldenél hanem saját üzenetet>", IRCConfig.Parancselojel));
+			}
+			else
+			{
+				if(Network.IMessage.Info.Length == 5)
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Info[4], String.Format("Keresnek téged itt: {0}", Network.IMessage.Channel));
+				else if(Network.IMessage.Info.Length >= 6)
+				{
+					string alomany = "";
+					for(int i = 5; i < Network.IMessage.Info.Length; i++)
+						alomany += Network.IMessage.Info[i] + " ";
+
+					if(alomany.Substring(0, 1) == ":")
+						alomany = alomany.Remove(0, 1);
+
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Info[4], String.Format("{0}", alomany));
+				}
+			}
+		}
+
+		public void HandleKeres()
+		{
+			if(Network.IMessage.Info.Length < 5)
+				return;
+
+			if(Network.IMessage.Info[4] == "help")
+			{
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Segítség a kereséshez!");
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Funkció használata: {0}keres <ide jön a kereset szöveg>", IRCConfig.Parancselojel));
+			}
+			else
+			{
+				string adat = "";
+				for(int i = 4; i < Network.IMessage.Info.Length; i++)
+					adat += "%20" + Network.IMessage.Info[i];
+
+				if(adat.Substring(0, 3) == "%20")
+					adat = adat.Remove(0, 3);
+
+				string url = Utility.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=" + adat);
+
+				var Regex1 = new Regex(@".titleNoFormatting.:.(?<title>\S+).,.content.:.");
+				if(!Regex1.IsMatch(url))
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "2Title: Nincs Title.");
+				else
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Title: {0}", Regex1.Match(url).Groups["title"].ToString()));
+
+				var Regex = new Regex(@".unescapedUrl.:.(?<url>\S+).,.url.");
+				if(!Regex.IsMatch(url))
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "2Link: Nincs Link.");
+				else
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Link: 9{0}", Regex.Match(url).Groups["url"].ToString()));
+			}
 		}
 	}
 }

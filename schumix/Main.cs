@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using Schumix.Config;
 
 namespace Schumix
 {
@@ -41,7 +42,7 @@ namespace Schumix
 			Console.WriteLine("[Schumix2]");
 			Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> parancsot vagy <kikapcs>\n");
 			Console.ForegroundColor = ConsoleColor.Gray;
-			Console.WriteLine(String.Format("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", SchumixBot.revision));
+			Console.WriteLine(String.Format("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", Verzio.SchumixVerzio));
 			Console.WriteLine("==============================================================================");
 			Console.WriteLine("");
 			Log.Notice("Main", "Rendszer indul...");
