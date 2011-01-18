@@ -21,10 +21,11 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using Schumix.Config;
+using Schumix.Database;
 
 namespace Schumix
 {
-	class SchumixBot
+	public class SchumixBot : Config.Config
 	{
         /// <summary>
         ///     Az éppen használt nick.
@@ -39,7 +40,7 @@ namespace Schumix
         /// <summary>
         ///     Ebbe a változóba töltödik bele a szoba neve és a jelszava, ha van.
         /// </summary>
-		public static Dictionary<string,string> m_ChannelLista = new Dictionary<string,string>();
+		public static Dictionary<string, string> m_ChannelLista = new Dictionary<string, string>();
 
         ///***START***********************************///
         /// <summary>
@@ -48,11 +49,10 @@ namespace Schumix
         /// </summary>
 		public static Mysql mSQLConn;
 
-		public SchumixBot()
+		public SchumixBot() : base("schumix.xml")
 		{
 			try
 			{
-				new Config.Config("schumix.xml");
 				mSQLConn = new Mysql(MysqlConfig.Host, MysqlConfig.User, MysqlConfig.Password, MysqlConfig.Database);
 				Log.Notice("SchumixBot", "Mysql adatbazishoz sikeres a kapcsolodas.");
 

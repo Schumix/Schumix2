@@ -16,3 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+using System;
+
+namespace Schumix.Rss
+{
+	public class SvnInfo
+	{
+
+	}
+}
