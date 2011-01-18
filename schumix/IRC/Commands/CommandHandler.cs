@@ -17,8 +17,6 @@
  * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-// nincs egyenlőre adat
-
 using System;
 
 namespace Schumix.IRC.Commands
