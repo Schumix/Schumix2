@@ -32,6 +32,8 @@ namespace Schumix.IRC.Commands
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
+			MessageHandler.CNick();
+
 			string jelszo = Network.IMessage.Info[4];
 			string ip = Network.IMessage.Host;
 			string admin_nev = Network.IMessage.Nick;
@@ -48,10 +50,10 @@ namespace Schumix.IRC.Commands
 			if(JelszoSql == jelszo)
 			{
 				SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET ip = '{0}' WHERE nev = '{1}'", ip, Nev));
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Nev, "Hozzáférés engedélyezve");
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hozzáférés engedélyezve");
 			}
 			else
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Nev, "Hozzáférés megtagadva");
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hozzáférés megtagadva");
 		}
 
 		public void HandleUjjelszo()
@@ -61,6 +63,8 @@ namespace Schumix.IRC.Commands
 
 			if(Network.IMessage.Info.Length < 6)
 				return;
+
+			MessageHandler.CNick();
 
 			string admin_nev = Network.IMessage.Nick;
 			string jelszo = Network.IMessage.Info[4];
@@ -78,16 +82,18 @@ namespace Schumix.IRC.Commands
 			if(JelszoSql == jelszo)
 			{
 				SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET jelszo = '{0}' WHERE nev = '{1}'", ujjelszo, Nev));
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Nev, String.Format("Jelszó sikereset meg lett változtatva erre: {0}", ujjelszo));
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Jelszó sikereset meg lett változtatva erre: {0}", ujjelszo));
 			}
 			else
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Nev, "A mostani jelszó nem egyezik, modósitás megtagadva");
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "A mostani jelszó nem egyezik, modósitás megtagadva");
 		}
 
 		public void HandleAdmin()
 		{
 			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host))
 				return;
+
+			MessageHandler.CNick();
 
 			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "help")
 			{
@@ -150,6 +156,8 @@ namespace Schumix.IRC.Commands
 
 			if(Network.IMessage.Info.Length < 5)
 				return;
+
+			MessageHandler.CNick();
 
 			if(Network.IMessage.Info[4] == "help")
 			{
@@ -301,6 +309,8 @@ namespace Schumix.IRC.Commands
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
+			MessageHandler.CNick();
+
 			if(Network.IMessage.Info[4] == "help")
 			{
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Alparancsok használata:");
@@ -408,6 +418,7 @@ namespace Schumix.IRC.Commands
 			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host))
 				return;
 
+			MessageHandler.CNick();
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "1teszt1 2teszt2 3teszt3 4teszt4 5teszt5 6teszt6 7teszt7 8teszt8");
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "9teszt9 10teszt10 11teszt11 12teszt12 13teszt13 14teszt14 15teszt15");
 		}
@@ -419,6 +430,8 @@ namespace Schumix.IRC.Commands
 
 			if(Network.IMessage.Info.Length < 5)
 				return;
+
+			MessageHandler.CNick();
 
 			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT nev, honap, nap FROM sznap WHERE nev = '{0}'", Network.IMessage.Info[4]));
 			if(db != null)
@@ -533,6 +546,8 @@ namespace Schumix.IRC.Commands
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
+			MessageHandler.CNick();
+
 			if(Network.IMessage.Info[4] == "help")
 			{
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Segitség a konzol szoba váltásához!");
@@ -546,6 +561,8 @@ namespace Schumix.IRC.Commands
 		{
 			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host))
 				return;
+
+			MessageHandler.CNick();
 
 			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "adat")
 			{
@@ -571,6 +588,7 @@ namespace Schumix.IRC.Commands
 			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host))
 				return;
 
+			MessageHandler.CNick();
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Viszlát :(");
 			Network.writer.WriteLine("QUIT :{0} leallitott parancsal.", Network.IMessage.Nick);
 			Environment.Exit(1);

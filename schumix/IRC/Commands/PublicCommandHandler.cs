@@ -31,6 +31,7 @@ namespace Schumix.IRC.Commands
 	{
 		public void HandleXbot()
 		{
+			MessageHandler.CNick();
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Verzió: 10{0}", Verzio.SchumixVerzio));
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}info | {1}help | {2}ido | {3}datum | {4}irc | {5}roll | {6}keres | {7}sha1 | {8}md5 | {9}uzenet | {10}whois | {11}calc", IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel, IRCConfig.Parancselojel));
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Programmed by: 3Csaba");
@@ -38,17 +39,21 @@ namespace Schumix.IRC.Commands
 
 		public void HandleInfo()
 		{
+			MessageHandler.CNick();
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Programozóm: Csaba, Jackneill.");
 		}
 
 		public void HandleHelp()
 		{
+			MessageHandler.CNick();
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Ha egy parancs mögé irod a help-et segít a használatában!");
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Fő parancsom: {0}xbot", IRCConfig.Parancselojel));
 		}
 
 		public void HandleIdo()
 		{
+			MessageHandler.CNick();
+
 			if(DateTime.Now.Minute < 10)
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Helyi idő: {0}:0{1}", DateTime.Now.Hour, DateTime.Now.Minute));
 			else
@@ -57,6 +62,7 @@ namespace Schumix.IRC.Commands
 
 		public void HandleDatum()
 		{
+			MessageHandler.CNick();
 			string[,] Nevnap = new string[12,31] {
 				{ "ÚJÉV","Ábel","Genovéva","Titusz","Simon","Boldizsár","Attila","Gyöngyvér","Marcell","Melánia","Ágota","Ernő","Veronika","Bódog","Lóránt","Gusztáv","Antal","Piroska","Sára","Sebestyén","Ágnes","Vince","Zelma","Timót","Pál","Vanda","Angelika","Károly,","Adél","Martina","Marcella" },
 				{ "Ignác","Karolina","Balázs","Ráhel","Ágota","Dóra","Tódor","Aranka","Abigél","Elvira","Bertold","Lívia","Ella, Linda","Bálint","Kolos","Julianna","Donát","Bernadett","Zsuzsanna","Álmos","Eleonóra","Gerzson","Alfréd","Mátyás","Géza","Edina","Ákos, Bátor","Elemér","","","" },
@@ -105,6 +111,7 @@ namespace Schumix.IRC.Commands
 
 		public void HandleRoll()
 		{
+			MessageHandler.CNick();
 			Random rand = new Random();
 			int szam = rand.Next(0, 100);
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Százalékos aránya {0}%", szam));
@@ -112,6 +119,7 @@ namespace Schumix.IRC.Commands
 
 		public void HandleCalc()
 		{
+			MessageHandler.CNick();
 			string adat = "";
 			for(int i = 4; i < Network.IMessage.Info.Length; i++)
 				adat += " " + Network.IMessage.Info[i];
@@ -128,6 +136,7 @@ namespace Schumix.IRC.Commands
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
+			MessageHandler.CNick();
 			Byte[] originalBytes;
 			Byte[] encodedBytes;
 			SHA1 sha1;
@@ -151,6 +160,7 @@ namespace Schumix.IRC.Commands
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
+			MessageHandler.CNick();
 			Byte[] originalBytes;
 			Byte[] encodedBytes;
 			MD5 md5;
@@ -174,6 +184,8 @@ namespace Schumix.IRC.Commands
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
+			MessageHandler.CNick();
+
 			if(Network.IMessage.Info[4] == "help")
 			{
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Segítség az irc-hez!");
@@ -194,7 +206,8 @@ namespace Schumix.IRC.Commands
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
-
+			
+			MessageHandler.CNick();
 			MessageHandler.WhoisPrivmsg = Network.IMessage.Channel;
 			Network.writer.WriteLine("WHOIS {0}", Network.IMessage.Info[4]);
 		}
@@ -203,6 +216,8 @@ namespace Schumix.IRC.Commands
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
+
+			MessageHandler.CNick();
 
 			if(Network.IMessage.Info[4] == "help")
 			{
@@ -231,6 +246,8 @@ namespace Schumix.IRC.Commands
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
+
+			MessageHandler.CNick();
 
 			if(Network.IMessage.Info[4] == "help")
 			{

@@ -567,5 +567,12 @@ namespace Schumix.IRC
 
 			return funkcio;
 		}
+
+		public static void CNick()
+		{
+			bool channel = Network.IMessage.Channel.StartsWith("#");
+			if(!channel)
+				Network.IMessage.Channel = Network.IMessage.Nick;
+		}
 	}
 }
