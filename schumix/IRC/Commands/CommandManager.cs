@@ -38,19 +38,27 @@ namespace Schumix.IRC.Commands
 		private void InitHandler()
 		{
 			// Public
-			RegisterHandler("xbot",  sCommandHandler.HandleXbot);
-			RegisterHandler("info",  sCommandHandler.HandleInfo);
-			RegisterHandler("help",  sCommandHandler.HandleHelp);
-			RegisterHandler("ido",   sCommandHandler.HandleIdo);
-			RegisterHandler("datum", sCommandHandler.HandleDatum);
-			RegisterHandler("roll",  sCommandHandler.HandleRoll);
-			RegisterHandler("calc",  sCommandHandler.HandleCalc);
-			RegisterHandler("sha1",  sCommandHandler.HandleSha1);
-			RegisterHandler("md5",   sCommandHandler.HandleMd5);
+			RegisterHandler("xbot",   sCommandHandler.HandleXbot);
+			RegisterHandler("info",   sCommandHandler.HandleInfo);
+			RegisterHandler("help",   sCommandHandler.HandleHelp);
+			RegisterHandler("ido",    sCommandHandler.HandleIdo);
+			RegisterHandler("datum",  sCommandHandler.HandleDatum);
+			RegisterHandler("roll",   sCommandHandler.HandleRoll);
+			RegisterHandler("calc",   sCommandHandler.HandleCalc);
+			RegisterHandler("sha1",   sCommandHandler.HandleSha1);
+			RegisterHandler("md5",    sCommandHandler.HandleMd5);
+			RegisterHandler("irc",    sCommandHandler.HandleIrc);
+			RegisterHandler("whois",  sCommandHandler.HandleWhois);
+			RegisterHandler("uzenet", sCommandHandler.HandleUzenet);
+			RegisterHandler("keres",  sCommandHandler.HandleKeres);
 
 			// Admin
 			RegisterHandler("hozzaferes", sCommandHandler.HandleHozzaferes);
 			RegisterHandler("ujjelszo",   sCommandHandler.HandleUjjelszo);
+			RegisterHandler("admin",      sCommandHandler.HandleAdmin);
+			RegisterHandler("funkcio",    sCommandHandler.HandleFunkcio);
+			RegisterHandler("channel",    sCommandHandler.HandleChannel);
+			RegisterHandler("sznap",      sCommandHandler.HandleSznap);
 			RegisterHandler("szinek",     sCommandHandler.HandleSzinek);
 			RegisterHandler("nick",       sCommandHandler.HandleNick);
 			RegisterHandler("join",       sCommandHandler.HandleJoin);

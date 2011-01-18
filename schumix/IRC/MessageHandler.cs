@@ -19,7 +19,6 @@
 
 using System;
 using System.IO;
-using System.Net;
 using System.Collections.Generic;
 using Schumix.Config;
 
@@ -43,7 +42,7 @@ namespace Schumix.IRC
         /// <summary>
         ///     Az IRC szobához tartozó funkciók.
         /// </summary>
-		public List<string> m_ChannelFunkcio = new List<string>();
+		public static List<string> m_ChannelFunkcio = new List<string>();
 
         /// <summary>
         ///     Tárolja azt az IRC szoba címet, amit betölt a bot.
@@ -53,7 +52,7 @@ namespace Schumix.IRC
         /// <summary>
         ///     Tárolja azt az IRC szoba címet, amit betölt a bot.
         /// </summary>
-		private string m_WhoisPrivmsg;
+		private static string m_WhoisPrivmsg;
 
 		public static string ChannelPrivmsg
 		{
@@ -64,6 +63,18 @@ namespace Schumix.IRC
 			set
 			{
 				m_ChannelPrivmsg = value;
+			}
+		}
+
+		public static string WhoisPrivmsg
+		{
+			get
+			{
+				return m_WhoisPrivmsg;
+			}
+			set
+			{
+				m_WhoisPrivmsg = value;
 			}
 		}
 
@@ -408,18 +419,6 @@ namespace Schumix.IRC
 		}
 
         /// <summary>
-        ///     Random karakter kombináció.
-        ///     Használható a jelszógeneráláshoz.
-        /// </summary>
-        /// <returns></returns>
-		private string GetRandomString()
-		{
-			string path = Path.GetRandomFileName();
-			path = path.Replace(".", "");
-			return path;
-		}
-
-        /// <summary>
         ///     
         /// </summary>
         /// <param name="nev"></param>
@@ -466,19 +465,6 @@ namespace Schumix.IRC
         /// <summary>
         ///     
         /// </summary>
-        /// <param name="url"></param>
-        /// <returns></returns>
-		private string GetUrl(string url)
-		{
-			WebClient web = new WebClient();
-			string kod = web.DownloadString(url);
-			web.Dispose();
-			return kod;
-		}
-
-        /// <summary>
-        ///     
-        /// </summary>
         /// <param name="channel"></param>
         /// <param name="user"></param>
         /// <param name="args"></param>
@@ -507,7 +493,7 @@ namespace Schumix.IRC
         /// <summary>
         ///     
         /// </summary>
-		public void ChannelFunkcioReload()
+		public static void ChannelFunkcioReload()
 		{
 			m_ChannelFunkcio.Clear();
 
@@ -532,7 +518,7 @@ namespace Schumix.IRC
 			}
 		}
 
-		public void ChannelListaReload()
+		public static void ChannelListaReload()
 		{
 			SchumixBot.m_ChannelLista.Clear();
 			var dbinfo = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT szoba, jelszo FROM channel"));
@@ -545,7 +531,7 @@ namespace Schumix.IRC
 			}
 		}
 
-		public string ChannelFunkciok(string nev, string status, string channel)
+		public static string ChannelFunkciok(string nev, string status, string channel)
 		{
 			string funkcio = "";
 
