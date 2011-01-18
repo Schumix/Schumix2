@@ -8,3 +8,4 @@ Megírásra váró feladatok:
 - Cnick hozzáadása.
 - Console parancsok bővítése.
 - Sha1-es jelszó alkalmazása az admin felhasználóknál.
+- User név megadási lehetőség hozzáadása a confighoz.

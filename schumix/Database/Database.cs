@@ -22,9 +22,9 @@ using System.Data;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
-namespace Schumix
+namespace Schumix.Database
 {
-	class Mysql
+	public class Mysql
 	{
         /// <summary>
         ///     A MySQL adatbázishoz való csatlakozás deklarációja.
