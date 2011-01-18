@@ -18,16 +18,9 @@
  */
 
 using System;
-using System.Threading;
 using System.IO;
 using System.Net;
-using System.Net.Sockets;
-using System.Linq;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Security.Cryptography;
 using Schumix.Config;
 
 namespace Schumix.IRC
@@ -55,12 +48,24 @@ namespace Schumix.IRC
         /// <summary>
         ///     Tárolja azt az IRC szoba címet, amit betölt a bot.
         /// </summary>
-		private string m_ChannelPrivmsg;
+		private static string m_ChannelPrivmsg;
 
         /// <summary>
         ///     Tárolja azt az IRC szoba címet, amit betölt a bot.
         /// </summary>
 		private string m_WhoisPrivmsg;
+
+		public static string ChannelPrivmsg
+		{
+			get
+			{
+				return m_ChannelPrivmsg;
+			}
+			set
+			{
+				m_ChannelPrivmsg = value;
+			}
+		}
 
 		private MessageHandler() {}
 

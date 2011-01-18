@@ -20,6 +20,9 @@
 // nincs egyenlőre adat
 
 using System;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
 using Schumix.Config;
 
 namespace Schumix.IRC.Commands
@@ -118,6 +121,52 @@ namespace Schumix.IRC.Commands
 
 			double ris = Eval.Calculate(adat);
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}", ris));
+		}
+
+		public void HandleSha1()
+		{
+			if(Network.IMessage.Info.Length < 5)
+				return;
+
+			Byte[] originalBytes;
+			Byte[] encodedBytes;
+			SHA1 sha1;
+
+			sha1 = new SHA1CryptoServiceProvider();
+			originalBytes = ASCIIEncoding.Default.GetBytes(Network.IMessage.Info[4]);
+			encodedBytes = sha1.ComputeHash(originalBytes);
+
+			string convert = BitConverter.ToString(encodedBytes);
+			string[] adat = convert.Split('-');
+			string Sha1 = "";
+
+			for(int i = 0; i < adat.Length; i++)
+				Sha1 += adat[i];
+
+			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, Sha1.ToLower());
+		}
+
+		public void HandleMd5()
+		{
+			if(Network.IMessage.Info.Length < 5)
+				return;
+
+			Byte[] originalBytes;
+			Byte[] encodedBytes;
+			MD5 md5;
+
+			md5 = new MD5CryptoServiceProvider();
+			originalBytes = ASCIIEncoding.Default.GetBytes(Network.IMessage.Info[4]);
+			encodedBytes = md5.ComputeHash(originalBytes);
+
+			string convert = BitConverter.ToString(encodedBytes);
+			string[] adat = convert.Split('-');
+			string Md5 = "";
+
+			for(int i = 0; i < adat.Length; i++)
+				Md5 += adat[i];
+
+			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, Md5.ToLower());
 		}
 	}
 }

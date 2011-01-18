@@ -24,16 +24,6 @@ using System.Collections.Generic;
 
 namespace Schumix.IRC.Commands
 {
-	public struct CommandMessage
-	{
-		public string Channel { get; set; }
-		public string Args { get; set; }
-		public string Nick { get; set; }
-		public string User { get; set; }
-		public string Host { get; set; }
-		public string[] Info { get; set; }
-	}
-
 	public class CommandManager
 	{
 		private Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
@@ -55,10 +45,19 @@ namespace Schumix.IRC.Commands
 			RegisterHandler("datum", sCommandHandler.HandleDatum);
 			RegisterHandler("roll",  sCommandHandler.HandleRoll);
 			RegisterHandler("calc",  sCommandHandler.HandleCalc);
+			RegisterHandler("sha1",  sCommandHandler.HandleSha1);
+			RegisterHandler("md5",   sCommandHandler.HandleMd5);
 
 			// Admin
 			RegisterHandler("hozzaferes", sCommandHandler.HandleHozzaferes);
 			RegisterHandler("ujjelszo",   sCommandHandler.HandleUjjelszo);
+			RegisterHandler("szinek",     sCommandHandler.HandleSzinek);
+			RegisterHandler("nick",       sCommandHandler.HandleNick);
+			RegisterHandler("join",       sCommandHandler.HandleJoin);
+			RegisterHandler("left",       sCommandHandler.HandleLeft);
+			RegisterHandler("kick",       sCommandHandler.HandleKick);
+			RegisterHandler("mode",       sCommandHandler.HandleMode);
+			RegisterHandler("teszt",      sCommandHandler.HandleTeszt);
 			RegisterHandler("szoba",      sCommandHandler.HandleSzoba);
 			RegisterHandler("kikapcs",    sCommandHandler.HandleKikapcs);
 

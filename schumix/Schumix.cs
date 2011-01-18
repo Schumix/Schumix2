@@ -29,7 +29,7 @@ namespace Schumix
         /// <summary>
         ///     A Schumix bot revision száma.
         /// </summary>
-		public static string revision = "0.2.6";
+		public static string revision = "0.2.7";
 
         /// <summary>
         ///     Az éppen használt nick.
@@ -57,7 +57,6 @@ namespace Schumix
 		{
 			try
 			{
-				//ConfigFajl();
 				new Config.Config("schumix.xml");
 				mSQLConn = new Mysql(MysqlConfig.Host, MysqlConfig.User, MysqlConfig.Password, MysqlConfig.Database);
 				Log.Notice("SchumixBot", "Mysql adatbazishoz sikeres a kapcsolodas.");
