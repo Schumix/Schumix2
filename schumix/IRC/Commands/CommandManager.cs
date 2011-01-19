@@ -59,8 +59,6 @@ namespace Schumix.IRC.Commands
 			RegisterHandler("keres",  sCommandHandler.HandleKeres);
 
 			// Operator
-			RegisterHandler("hozzaferes", sCommandHandler.HandleHozzaferes);
-			RegisterHandler("ujjelszo",   sCommandHandler.HandleUjjelszo);
 			RegisterHandler("admin",      sCommandHandler.HandleAdmin);
 			RegisterHandler("funkcio",    sCommandHandler.HandleFunkcio);
 			RegisterHandler("channel",    sCommandHandler.HandleChannel);

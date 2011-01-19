@@ -24,76 +24,61 @@ namespace Schumix.IRC.Commands
 {
 	public partial class CommandHandler
 	{
-		public void HandleHozzaferes()
-		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick))
-				return;
-
-			if(Network.IMessage.Info.Length < 5)
-				return;
-
-			MessageHandler.CNick();
-
-			string jelszo = Network.IMessage.Info[4];
-			string ip = Network.IMessage.Host;
-			string admin_nev = Network.IMessage.Nick;
-			string Nev = "";
-			string JelszoSql = "";
-
-			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT nev, jelszo FROM adminok WHERE nev = '{0}'", admin_nev));
-			if(db != null)
-			{
-				Nev = db["nev"].ToString();
-				JelszoSql = db["jelszo"].ToString();
-			}
-
-			if(JelszoSql == jelszo)
-			{
-				SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET vhost = '{0}' WHERE nev = '{1}'", ip, Nev));
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hozzáférés engedélyezve");
-			}
-			else
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hozzáférés megtagadva");
-		}
-
-		public void HandleUjjelszo()
-		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick))
-				return;
-
-			if(Network.IMessage.Info.Length < 6)
-				return;
-
-			MessageHandler.CNick();
-
-			string admin_nev = Network.IMessage.Nick;
-			string jelszo = Network.IMessage.Info[4];
-			string ujjelszo = Network.IMessage.Info[5];
-			string Nev = "";
-			string JelszoSql = "";
-
-			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT nev, jelszo FROM adminok WHERE nev = '{0}'", admin_nev));
-			if(db != null)
-			{
-				Nev = db["nev"].ToString();
-				JelszoSql = db["jelszo"].ToString();
-			}
-
-			if(JelszoSql == jelszo)
-			{
-				SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET jelszo = '{0}' WHERE nev = '{1}'", ujjelszo, Nev));
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Jelszó sikereset meg lett változtatva erre: {0}", ujjelszo));
-			}
-			else
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "A mostani jelszó nem egyezik, modósitás megtagadva");
-		}
-
 		public void HandleAdmin()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick))
 				return;
 
 			MessageHandler.CNick();
+			bool allapot = true;
+
+			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "hozzaferes")
+			{
+				if(Network.IMessage.Info.Length < 6)
+					return;
+
+				string nev = Network.IMessage.Nick;
+				var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT jelszo FROM adminok WHERE nev = '{0}'", nev.ToLower()));
+				if(db != null)
+				{
+					string JelszoSql = db["jelszo"].ToString();
+
+					if(JelszoSql == Network.IMessage.Info[5])
+					{
+						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET vhost = '{0}' WHERE nev = '{1}'", Network.IMessage.Host, nev.ToLower()));
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hozzáférés engedélyezve");
+					}
+					else
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hozzáférés megtagadva");
+				}
+
+				allapot = false;
+			}
+			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "ujjelszo")
+			{
+				if(Network.IMessage.Info.Length < 7)
+					return;
+
+				string nev = Network.IMessage.Nick;
+				var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT nev, jelszo FROM adminok WHERE nev = '{0}'", nev.ToLower()));
+				if(db != null)
+				{
+					string JelszoSql = db["jelszo"].ToString();
+
+					if(JelszoSql == Network.IMessage.Info[5])
+					{
+						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET jelszo = '{0}' WHERE nev = '{1}'", Network.IMessage.Info[6], nev.ToLower()));
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Jelszó sikereset meg lett változtatva erre: {0}", Network.IMessage.Info[5]));
+					}
+					else
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "A mostani jelszó nem egyezik, modósitás megtagadva");
+				}
+
+				allapot = false;
+			}
+
+			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+				return;
 
 			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "help")
 			{
@@ -172,15 +157,18 @@ namespace Schumix.IRC.Commands
 			}
 			else
 			{
+				if(!allapot)
+					return;
+
 				if(MessageHandler.CManager.Admin(Network.IMessage.Nick, AdminFlag.Operator))
 				{
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}nick | {0}join | {0}left | {0}kick | {0}mode", IRCConfig.Parancselojel));
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}channel | {0}hozzaferes | {0}ujjelszo", IRCConfig.Parancselojel));
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}channel", IRCConfig.Parancselojel));
 				}
 				else if(MessageHandler.CManager.Admin(Network.IMessage.Nick, AdminFlag.Administrator))
 				{
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}nick | {0}join | {0}left | {0}kick | {0}mode", IRCConfig.Parancselojel));
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}szoba | {0}channel | {0}hozzaferes | {0}ujjelszo | {0}kikapcs", IRCConfig.Parancselojel));
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}szoba | {0}channel | {0}kikapcs", IRCConfig.Parancselojel));
 				}
 			}
 		}
