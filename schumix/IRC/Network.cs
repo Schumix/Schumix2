@@ -248,7 +248,7 @@ namespace Schumix
 					{
 						if((IrcOpcode = reader.ReadLine()) == null)
 							break;
-
+						
 						IrcCommand = IrcOpcode.Split(' ');
 
 						if(IrcCommand[0].Substring(0, 1) == ":")
