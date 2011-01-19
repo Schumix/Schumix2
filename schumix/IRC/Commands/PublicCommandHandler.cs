@@ -182,6 +182,8 @@ namespace Schumix.IRC.Commands
 					string hasznalata = db["hasznalata"].ToString();
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, hasznalata);
 				}
+				else
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hibás lekérdezés!");
 			}
 		}
 

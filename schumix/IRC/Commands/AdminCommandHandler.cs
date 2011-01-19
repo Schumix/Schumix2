@@ -38,13 +38,17 @@ namespace Schumix.IRC.Commands
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "db")
 			{
 				var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT nev FROM adminok"));
-				for(int i = 0; i < db.Rows.Count; ++i)
+				if(db != null)
 				{
-					var row = db.Rows[i];
-
-					string admin = row["nev"].ToString();
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}", admin));
+					for(int i = 0; i < db.Rows.Count; ++i)
+					{
+						var row = db.Rows[i];
+						string admin = row["nev"].ToString();
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}", admin));
+					}
 				}
+				else
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hibás lekérdezés!");
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "vhost")
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, Network.IMessage.Host);
