@@ -43,7 +43,7 @@ namespace Schumix.IRC.Commands
 				{
 					string JelszoSql = db["jelszo"].ToString();
 
-					if(JelszoSql == Network.IMessage.Info[5])
+					if(JelszoSql == sUtility.Sha1(Network.IMessage.Info[5]))
 					{
 						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET vhost = '{0}' WHERE nev = '{1}'", Network.IMessage.Host, nev.ToLower()));
 						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hozzáférés engedélyezve");
@@ -65,10 +65,10 @@ namespace Schumix.IRC.Commands
 				{
 					string JelszoSql = db["jelszo"].ToString();
 
-					if(JelszoSql == Network.IMessage.Info[5])
+					if(JelszoSql == sUtility.Sha1(Network.IMessage.Info[5]))
 					{
-						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET jelszo = '{0}' WHERE nev = '{1}'", Network.IMessage.Info[6], nev.ToLower()));
-						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Jelszó sikereset meg lett változtatva erre: {0}", Network.IMessage.Info[5]));
+						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET jelszo = '{0}' WHERE nev = '{1}'", sUtility.Sha1(Network.IMessage.Info[6]), nev.ToLower()));
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Jelszó sikereset meg lett változtatva erre: {0}", Network.IMessage.Info[6]));
 					}
 					else
 						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "A mostani jelszó nem egyezik, modósitás megtagadva");
@@ -111,7 +111,7 @@ namespace Schumix.IRC.Commands
 				string nev = Network.IMessage.Info[5];
 				string pass = sUtility.GetRandomString();
 
-				SchumixBot.mSQLConn.QueryFirstRow(String.Format("INSERT INTO `adminok`(nev, jelszo) VALUES ('{0}', '{1}')", nev.ToLower(), pass));
+				SchumixBot.mSQLConn.QueryFirstRow(String.Format("INSERT INTO `adminok`(nev, jelszo) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass)));
 
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Admin hozzáadva: {0}", nev));
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, nev, String.Format("Mostantól Schumix adminja vagy. A te mostani jelszavad: {0}", pass));
