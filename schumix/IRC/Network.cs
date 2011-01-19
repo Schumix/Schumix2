@@ -25,6 +25,7 @@ using System.Net.Sockets;
 using System.Linq;
 using System.Collections.Generic;
 using Schumix.IRC;
+using Schumix.Config;
 
 namespace Schumix
 {
@@ -175,9 +176,8 @@ namespace Schumix
 			writer = new StreamWriter(stream);
 			writer.AutoFlush = true;
 
-			writer.WriteLine("USER {0} 8 * :{1}", SchumixBot.NickTarolo, SchumixBot.NickTarolo);
 			writer.WriteLine("NICK {0}", SchumixBot.NickTarolo);
-
+			writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserName);
 			m_ConnState = (int)ConnState.CONN_REGISTERED;
 
 			Status = true;
@@ -218,13 +218,12 @@ namespace Schumix
 			writer = new StreamWriter(stream);
 			writer.AutoFlush = true;
 
-			writer.WriteLine("USER {0} 8 * :{1}", SchumixBot.NickTarolo, SchumixBot.NickTarolo);
 			writer.WriteLine("NICK {0}", SchumixBot.NickTarolo);
+			writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserName);
+			m_ConnState = (int)ConnState.CONN_REGISTERED;
 
 			Status = true;
 			m_running = true;
-
-			m_ConnState = (int)ConnState.CONN_REGISTERED;
 		}
 
         /// <summary>
@@ -286,8 +285,8 @@ namespace Schumix
 
 						if(m_ConnState == (int)ConnState.CONN_CONNECTED)
 						{
-							writer.WriteLine("USER {0} 8 * :{1}", SchumixBot.NickTarolo, SchumixBot.NickTarolo);
 							writer.WriteLine("NICK {0}", SchumixBot.NickTarolo);
+							writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserName);
 							m_ConnState = (int)ConnState.CONN_REGISTERED;
 						}
 					}
@@ -301,7 +300,7 @@ namespace Schumix
 					Log.Error("Opcodes", String.Format("Hiba oka: {0}", e.ToString()));
 
 				Opcodes();
-				Thread.Sleep(50);
+				Thread.Sleep(100);
 			}
 		}
 

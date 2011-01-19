@@ -6,10 +6,11 @@
         <Nick>Schumix2</Nick>
         <Nick2>Schumixx2</Nick2>
         <Nick3>Schumixxx2</Nick3>
-        <Allapot>
-            <Aktivitas>0</Aktivitas>
+        <UserName>Schumacher</UserName>
+        <UseNickServ>
+            <Allapot>0</Allapot>
             <Jelszo>pass</Jelszo>
-        </Allapot>
+        </UseNickServ>
     </Irc>
     <Mysql>
         <Host>localhost</Host>
