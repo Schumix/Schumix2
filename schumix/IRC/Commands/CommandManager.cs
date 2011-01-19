@@ -57,6 +57,7 @@ namespace Schumix.IRC.Commands
 			RegisterHandler("whois",  sCommandHandler.HandleWhois);
 			RegisterHandler("uzenet", sCommandHandler.HandleUzenet);
 			RegisterHandler("keres",  sCommandHandler.HandleKeres);
+			RegisterHandler("prime",  sCommandHandler.HandlePrime);
 
 			// Operator
 			RegisterHandler("admin",      sCommandHandler.HandleAdmin);

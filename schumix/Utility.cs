@@ -64,5 +64,31 @@ namespace Schumix
 
 			return Sha1.ToLower();
 		}
+
+        public bool IsPrime(long x)
+        {
+            x = Math.Abs(x);
+
+            if (x == 1 || x == 0)
+                return false;
+
+            if (x == 2)
+                return true;
+
+            if (x % 2 == 0) return false;
+            
+            var p = true;
+
+            for(var i = 3; i <= Math.Floor(Math.Sqrt(x)); i +=2 )
+            {
+                if (x % i == 0)
+                {
+                    p = false;
+                    break;
+                }
+            }
+
+            return p;
+        }
 	}
 }
