@@ -2,10 +2,11 @@ DROP TABLE IF EXISTS `adminok`;
 CREATE TABLE `adminok` (
   `id` int(10) unsigned NOT NULL auto_increment,
   `nev` varchar(21) NOT NULL default '',
-  `jelszo` varchar(21) NOT NULL default '',
-  `ip` varchar(100) NOT NULL default '',
+  `jelszo` varchar(100) NOT NULL default '',
+  `vhost` varchar(100) NOT NULL default '',
+  `flag` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
@@ -16,7 +17,7 @@ CREATE TABLE `channel` (
   `aktivitas` text NOT NULL default '',
   `error` text NOT NULL default '',
   PRIMARY KEY  (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records 
@@ -29,7 +30,7 @@ CREATE TABLE `irc_parancsok` (
   `parancs` varchar(21) NOT NULL default '',
   `hasznalata` text NOT NULL default '',
   PRIMARY KEY  (`guid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records 
@@ -47,7 +48,7 @@ CREATE TABLE `schumix` (
   `funkcio_nev` varchar(21) NOT NULL default '',
   `funkcio_status` varchar(10) NOT NULL default '',
   PRIMARY KEY  (`entry`)
-) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- ----------------------------
 -- Records 
@@ -65,4 +66,4 @@ CREATE TABLE `sznap` (
   `honap1` tinyint(3) unsigned NOT NULL,
   `nap` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY  (`guid`)
-) ENGINE=MyISAM AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
