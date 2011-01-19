@@ -115,8 +115,8 @@ namespace Schumix.IRC.Commands
 
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Admin hozzáadva: {0}", nev));
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, nev, String.Format("Mostantól Schumix adminja vagy. A te mostani jelszavad: {0}", pass));
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, nev, String.Format("Ha megszeretnéd változtatni használd az {0}ujjelszo parancsot. Használata: {1}ujjelszo <régi> <új>", IRCConfig.Parancselojel, IRCConfig.Parancselojel));
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, nev, String.Format("Admin nick élesítése: {0}hozzaferes <jelszó>", IRCConfig.Parancselojel));
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, nev, String.Format("Ha megszeretnéd változtatni használd az {0}admin ujjelszo parancsot. Használata: {1}admin ujjelszo <régi> <új>", IRCConfig.Parancselojel, IRCConfig.Parancselojel));
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, nev, String.Format("Admin nick élesítése: {0}admin hozzaferes <jelszó>", IRCConfig.Parancselojel));
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "del")
 			{
@@ -223,24 +223,29 @@ namespace Schumix.IRC.Commands
 
 				if(Network.IMessage.Info[5] == "info")
 				{
-					string be = "";
-					string ki = "";
-
 					var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT funkcio_nev, funkcio_status FROM schumix"));
-					for(int i = 0; i < db.Rows.Count; ++i)
+					if(db != null)
 					{
-						var row = db.Rows[i];
-						string nev = row["funkcio_nev"].ToString();
-						string status = row["funkcio_status"].ToString();
+						string be = "";
+						string ki = "";
 
-						if(status == "be")
-							be += nev + " ";
-						else
-							ki += nev + " ";
+						for(int i = 0; i < db.Rows.Count; ++i)
+						{
+							var row = db.Rows[i];
+							string nev = row["funkcio_nev"].ToString();
+							string status = row["funkcio_status"].ToString();
+	
+							if(status == "be")
+								be += nev + " ";
+							else
+								ki += nev + " ";
+						}
+	
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Bekapcsolva: {0}", be));
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Kikapcsolva: {0}", ki));
 					}
-
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Bekapcsolva: {0}", be));
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Kikapcsolva: {0}", ki));
+					else
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hibás lekérdezés!");
 				}
 				else
 				{
@@ -299,15 +304,20 @@ namespace Schumix.IRC.Commands
 			}
 			else if(Network.IMessage.Info[4] == "update")
 			{
-				var db2 = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT szoba FROM channel"));
-				for(int i = 0; i < db2.Rows.Count; ++i)
+				var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT szoba FROM channel"));
+				if(db != null)
 				{
-					var row = db2.Rows[i];
-					string szoba = row["szoba"].ToString();
-					SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", szoba));
+					for(int i = 0; i < db.Rows.Count; ++i)
+					{
+						var row = db.Rows[i];
+						string szoba = row["szoba"].ToString();
+						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", szoba));
+					}
+	
+					MessageHandler.ChannelFunkcioReload();
 				}
-
-				MessageHandler.ChannelFunkcioReload();
+				else
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hibás lekérdezés!");
 			}
 			else
 			{
@@ -390,50 +400,55 @@ namespace Schumix.IRC.Commands
 			}
 			else if(Network.IMessage.Info[4] == "info")
 			{
-				string Aktivszobak = "";
-				string DeAktivszobak = "";
-				bool adatszoba = false;
-				bool adatszoba1 = false;
-
 				var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT szoba, aktivitas, error FROM channel"));
-				for(int i = 0; i < db.Rows.Count; ++i)
+				if(db != null)
 				{
-					var row = db.Rows[i];
-					string szoba = row["szoba"].ToString();
-					string aktivitas = row["aktivitas"].ToString();
-					string error = row["error"].ToString();
+					string Aktivszobak = "";
+					string DeAktivszobak = "";
+					bool adatszoba = false;
+					bool adatszoba1 = false;
 
-					if(aktivitas == "aktiv")
+					for(int i = 0; i < db.Rows.Count; ++i)
 					{
-						Aktivszobak += ", " + szoba;
-						adatszoba = true;
+						var row = db.Rows[i];
+						string szoba = row["szoba"].ToString();
+						string aktivitas = row["aktivitas"].ToString();
+						string error = row["error"].ToString();
+
+						if(aktivitas == "aktiv")
+						{
+							Aktivszobak += ", " + szoba;
+							adatszoba = true;
+						}
+						else if(aktivitas == "nem aktiv")
+						{
+							DeAktivszobak += ", " + szoba + ":" + error;
+							adatszoba1 = true;
+						}
 					}
-					else if(aktivitas == "nem aktiv")
+
+					if(adatszoba)
 					{
-						DeAktivszobak += ", " + szoba + ":" + error;
-						adatszoba1 = true;
+						if(Aktivszobak.Substring(0, 2) == ", ")
+							Aktivszobak = Aktivszobak.Remove(0, 2);
+
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Aktiv: {0}", Aktivszobak));
 					}
-				}
+					else
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Aktiv: Nincs adat.");
 
-				if(adatszoba)
-				{
-					if(Aktivszobak.Substring(0, 2) == ", ")
-						Aktivszobak = Aktivszobak.Remove(0, 2);
+					if(adatszoba1)
+					{
+						if(DeAktivszobak.Substring(0, 2) == ", ")
+							DeAktivszobak = DeAktivszobak.Remove(0, 2);
 
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Aktiv: {0}", Aktivszobak));
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Deaktiv: {0}", DeAktivszobak));
+					}
+					else
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Deaktiv: Nincs adat.");
 				}
 				else
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Aktiv: Nincs adat.");
-
-				if(adatszoba1)
-				{
-					if(DeAktivszobak.Substring(0, 2) == ", ")
-						DeAktivszobak = DeAktivszobak.Remove(0, 2);
-
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Deaktiv: {0}", DeAktivszobak));
-				}
-				else
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Deaktiv: Nincs adat.");
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hibás lekérdezés!");
 			}
 		}
 
