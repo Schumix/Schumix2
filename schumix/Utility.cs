@@ -20,6 +20,9 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Schumix
 {
@@ -40,6 +43,26 @@ namespace Schumix
 			string path = Path.GetRandomFileName();
 			path = path.Replace(".", "");
 			return path;
+		}
+
+		public string Sha1(string info)
+		{
+			Byte[] originalBytes;
+			Byte[] encodedBytes;
+			SHA1 sha1;
+
+			sha1 = new SHA1CryptoServiceProvider();
+			originalBytes = ASCIIEncoding.Default.GetBytes(info);
+			encodedBytes = sha1.ComputeHash(originalBytes);
+
+			string convert = BitConverter.ToString(encodedBytes);
+			string[] adat = convert.Split('-');
+			string Sha1 = "";
+
+			for(int i = 0; i < adat.Length; i++)
+				Sha1 += adat[i];
+
+			return Sha1.ToLower();
 		}
 	}
 }

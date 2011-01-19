@@ -135,22 +135,7 @@ namespace Schumix.IRC.Commands
 				return;
 
 			MessageHandler.CNick();
-			Byte[] originalBytes;
-			Byte[] encodedBytes;
-			SHA1 sha1;
-
-			sha1 = new SHA1CryptoServiceProvider();
-			originalBytes = ASCIIEncoding.Default.GetBytes(Network.IMessage.Info[4]);
-			encodedBytes = sha1.ComputeHash(originalBytes);
-
-			string convert = BitConverter.ToString(encodedBytes);
-			string[] adat = convert.Split('-');
-			string Sha1 = "";
-
-			for(int i = 0; i < adat.Length; i++)
-				Sha1 += adat[i];
-
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, Sha1.ToLower());
+			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, sUtility.Sha1(Network.IMessage.Info[4]));
 		}
 
 		public void HandleMd5()
