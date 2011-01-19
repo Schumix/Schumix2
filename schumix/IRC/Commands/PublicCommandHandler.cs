@@ -31,7 +31,7 @@ namespace Schumix.IRC.Commands
 		{
 			MessageHandler.CNick();
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Verzió: 10{0}", Verzio.SchumixVerzio));
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}info | {0}help | {0}ido | {0}datum | {0}irc | {0}roll | {0}keres | {0}sha1 | {0}md5 | {0}uzenet | {0}whois | {0}calc", IRCConfig.Parancselojel));
+			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}info | {0}help | {0}ido | {0}datum | {0}irc | {0}roll | {0}keres | {0}sha1 | {0}md5 | {0}uzenet | {0}whois | {0}calc | {0}prime", IRCConfig.Parancselojel));
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Programmed by: 3Csaba");
 		}
 
@@ -260,6 +260,20 @@ namespace Schumix.IRC.Commands
 				else
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Link: 9{0}", Regex.Match(url).Groups["url"].ToString()));
 			}
+		}
+
+		public void HandlePrime()
+		{
+			if(Network.IMessage.Info.Length < 5)
+				return;
+
+			MessageHandler.CNick();
+            bool prim = sUtility.IsPrime(Convert.ToInt32(Network.IMessage.Info[4]));
+
+			if(!prim)
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0} nem primszám.", Network.IMessage.Info[4]));
+			else
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0} primszám.", Network.IMessage.Info[4]));
 		}
 	}
 }
