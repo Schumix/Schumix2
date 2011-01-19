@@ -263,7 +263,7 @@ namespace Schumix.IRC.Commands
 				if(adat.Substring(0, 3) == "%20")
 					adat = adat.Remove(0, 3);
 
-				string url = Utility.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=" + adat);
+				string url = sUtility.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=" + adat);
 
 				var Regex1 = new Regex(@".titleNoFormatting.:.(?<title>\S+).,.content.:.");
 				if(!Regex1.IsMatch(url))

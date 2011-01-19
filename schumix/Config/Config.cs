@@ -37,8 +37,9 @@ namespace Schumix.Config
 			IRCConfig.NickName = xmldoc.SelectSingleNode("Schumix/Irc/Nick").InnerText;
 			IRCConfig.NickName2 = xmldoc.SelectSingleNode("Schumix/Irc/Nick2").InnerText;
 			IRCConfig.NickName3 = xmldoc.SelectSingleNode("Schumix/Irc/Nick3").InnerText;
-			IRCConfig.UseNickServ = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Allapot/Aktivitas").InnerText);
-			IRCConfig.NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/Allapot/Jelszo").InnerText;
+			IRCConfig.UserName = xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText;
+			IRCConfig.UseNickServ = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/UseNickServ/Allapot").InnerText);
+			IRCConfig.NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/UseNickServ/Jelszo").InnerText;
 
 			MysqlConfig.Host = xmldoc.SelectSingleNode("Schumix/Mysql/Host").InnerText;
 			MysqlConfig.User = xmldoc.SelectSingleNode("Schumix/Mysql/User").InnerText;
@@ -75,6 +76,7 @@ namespace Schumix.Config
 		private static string _NickName;
 		private static string _NickName2;
 		private static string _NickName3;
+		private static string _UserName;
 		private static int _UseNickServ;
 		private static string _NickServPassword;
 		private static string _Parancselojel;
@@ -136,6 +138,18 @@ namespace Schumix.Config
 			set
 			{
 				_NickName3 = value;
+			}
+		}
+
+		public static string UserName
+		{
+			get
+			{
+				return _UserName;
+			}
+			set
+			{
+				_UserName = value;
 			}
 		}
 

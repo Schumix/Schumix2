@@ -25,7 +25,9 @@ namespace Schumix
 {
 	public class Utility
 	{
-		public static string GetUrl(string url)
+		private Utility() {}
+
+		public string GetUrl(string url)
 		{
 			WebClient web = new WebClient();
 			string kod = web.DownloadString(url);
@@ -33,12 +35,7 @@ namespace Schumix
 			return kod;
 		}
 
-        /// <summary>
-        ///     Random karakter kombináció.
-        ///     Használható a jelszógeneráláshoz.
-        /// </summary>
-        /// <returns></returns>
-		public static string GetRandomString()
+		public string GetRandomString()
 		{
 			string path = Path.GetRandomFileName();
 			path = path.Replace(".", "");

@@ -124,7 +124,7 @@ namespace Schumix.IRC.Commands
 					return;
 
 				string nev = Network.IMessage.Info[5];
-				string pass = Utility.GetRandomString();
+				string pass = sUtility.GetRandomString();
 
 				SchumixBot.mSQLConn.QueryFirstRow(String.Format("INSERT INTO `adminok`(nev, jelszo) VALUES ('{0}', '{1}')", nev.ToLower(), pass));
 
