@@ -109,7 +109,7 @@ namespace Schumix.IRC
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "ghost")
 				{
-					if(!CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host))
+					if(!CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
 						return;
 
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, "NickServ", String.Format("ghost {0} {1}", IRCConfig.NickName, IRCConfig.NickServPassword));
@@ -118,7 +118,7 @@ namespace Schumix.IRC
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "nick")
 				{
-					if(!CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host))
+					if(!CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
 						return;
 
 					if(Network.IMessage.Info.Length < 6)

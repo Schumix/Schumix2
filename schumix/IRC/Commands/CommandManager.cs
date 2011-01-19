@@ -23,7 +23,13 @@ using System.Linq;
 using System.Collections.Generic;
 
 namespace Schumix.IRC.Commands
-{
+{	
+	public enum AdminFlag
+	{
+		Operator      = 0,
+		Administrator = 1
+	};
+
 	public class CommandManager
 	{
 		private Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
@@ -52,7 +58,7 @@ namespace Schumix.IRC.Commands
 			RegisterHandler("uzenet", sCommandHandler.HandleUzenet);
 			RegisterHandler("keres",  sCommandHandler.HandleKeres);
 
-			// Admin
+			// Operator
 			RegisterHandler("hozzaferes", sCommandHandler.HandleHozzaferes);
 			RegisterHandler("ujjelszo",   sCommandHandler.HandleUjjelszo);
 			RegisterHandler("admin",      sCommandHandler.HandleAdmin);
@@ -65,8 +71,9 @@ namespace Schumix.IRC.Commands
 			RegisterHandler("left",       sCommandHandler.HandleLeft);
 			RegisterHandler("kick",       sCommandHandler.HandleKick);
 			RegisterHandler("mode",       sCommandHandler.HandleMode);
+
+			// Admin
 			RegisterHandler("teszt",      sCommandHandler.HandleTeszt);
-			RegisterHandler("szoba",      sCommandHandler.HandleSzoba);
 			RegisterHandler("kikapcs",    sCommandHandler.HandleKikapcs);
 
 			Log.Notice("CommandManager", "Osszes Command handler regisztralva.");
@@ -90,48 +97,53 @@ namespace Schumix.IRC.Commands
 			}
 		}
 
-        /// <summary>
-        ///     Meghatározza, hogy a nick admin-e vagy sem, nick alapján.
-        /// </summary>
-		public bool Admin(string nick)
+		public bool Admin(string Nick)
 		{
-			string admin = "";
-			string _nick = nick.ToLower();
-
-			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT nev FROM adminok WHERE nev = '{0}'", _nick));
+			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT * FROM adminok WHERE nev = '{0}'", Nick.ToLower()));
 			if(db != null)
-				admin = db["nev"].ToString();
+				return true;
 
-			if(_nick != admin)
-				return false;
-
-			return true;
+			return false;
 		}
 
-        /// <summary>
-        ///     Meghatározza, hogy a nick admin-e vagy sem, nick és host alapján.
-        /// </summary>
-        /// <param name="host">A nick IP címe.</param>
-		public bool Admin(string nick, string host)
+		public bool Admin(string Nick, AdminFlag Flag)
 		{
-			string admin = "";
-			string ip = "";
-			string _nick = nick.ToLower();
-
-			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT nev, ip FROM adminok WHERE nev = '{0}'", _nick));
+			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT flag FROM adminok WHERE nev = '{0}'", Nick.ToLower()));
 			if(db != null)
 			{
-				admin = db["nev"].ToString();
-				ip = db["ip"].ToString();
+				int flag = Convert.ToInt32(db["flag"]);
+
+				if(Flag != (AdminFlag)flag)
+					return false;
+
+				return true;
 			}
 
-			if(_nick != admin)
-				return false;
+			return false;
+		}
 
-			if(host != ip)
-				return false;
+		public bool Admin(string Nick, string Vhost, AdminFlag Flag)
+		{
+			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT vhost, flag FROM adminok WHERE nev = '{0}'", Nick.ToLower()));
+			if(db != null)
+			{
+				string vhost = db["vhost"].ToString();
 
-			return true;
+				if(Vhost != vhost)
+					return false;
+
+				int flag = Convert.ToInt32(db["flag"]);
+
+				if(flag == 1 && Flag == 0)
+					return true;
+
+				if(Flag != (AdminFlag)flag)
+					return false;
+
+				return true;
+			}
+
+			return false;
 		}
 	}
 }

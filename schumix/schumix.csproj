@@ -67,6 +67,7 @@
     <Compile Include="IRC\Commands\PublicCommandHandler.cs" />
     <Compile Include="Config\SchumixConfig.cs" />
     <Compile Include="Utility.cs" />
+    <Compile Include="IRC\Commands\OperatorCommandHandler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

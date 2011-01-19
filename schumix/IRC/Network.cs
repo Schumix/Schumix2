@@ -266,7 +266,7 @@ namespace Schumix
 						{
 							hostdata = userdata[1].Split('@');
 							IMessage.User = hostdata[0];
-							IMessage.Host = hostdata[0];
+							IMessage.Host = hostdata[1];
 						}
 
 						for(int i = 3; i < IrcCommand.Length; i++)
