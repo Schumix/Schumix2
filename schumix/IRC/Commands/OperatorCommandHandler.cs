@@ -556,9 +556,8 @@ namespace Schumix.IRC.Commands
 				nev = nev.Remove(0, 1);
 
 			nev.ToLower();
-			bool nick = nev.StartsWith(tnick.ToLower());
 
-			if(!nick)
+			if(nev.IndexOf(tnick.ToLower()) == -1)
 				Network.writer.WriteLine(String.Format("MODE {0} {1} {2}", Network.IMessage.Channel, rang, nev));
 		}
 	}
