@@ -227,6 +227,16 @@ namespace Schumix.IRC
 				Console.Write(args + "\n");
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
+
+			if(Network.IMessage.Nick == "NickServ")
+			{
+				if(Network.IMessage.Args.IndexOf("Password incorrect.") != -1)
+					Log.Error("NickServ", "NickServ azonosito jelszo hibas!");
+				else if(Network.IMessage.Args.IndexOf("You are already identified.") != -1)
+					Log.Warning("NickServ", "NickServ azonosito mar aktivalva van!");
+				else if(Network.IMessage.Args.IndexOf("Password accepted - you are now recognized.") != -1)
+					Log.Success("NickServ", "NickServ azonosito jelszo elfogadva.");
+			}
 		}
 
         /// <summary>
