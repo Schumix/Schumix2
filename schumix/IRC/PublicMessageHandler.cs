@@ -60,7 +60,7 @@ namespace Schumix.IRC
 				if(Network.IMessage.Info[Network.IMessage.Info.Length-2] == "" || Network.IMessage.Info[Network.IMessage.Info.Length-1] == "")
 					return;
 
-				if(Network.IMessage.Info[3].Substring(0, 1) == " " || Network.IMessage.Info[3].Substring(0, 1) != IRCConfig.Parancselojel)
+				if(Network.IMessage.Info[3] == "" || Network.IMessage.Info[3].Substring(0, 1) == " " || Network.IMessage.Info[3].Substring(0, 1) != IRCConfig.Parancselojel)
 					return;
 
 				Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
