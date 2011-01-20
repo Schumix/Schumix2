@@ -49,6 +49,7 @@ namespace Schumix.Config
 			MysqlConfig.Database = xmldoc.SelectSingleNode("Schumix/Mysql/Database").InnerText;
 
 			IRCConfig.Parancselojel = xmldoc.SelectSingleNode("Schumix/Parancs/Elojel").InnerText;
+			LogConfig.LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
 
 			Log.Success("Config", "Config adatbazis betoltve.");
 			Console.WriteLine("");
@@ -270,6 +271,23 @@ namespace Schumix.Config
 			set
 			{
 				_Database = value;
+			}
+		}
+	}
+
+	public class LogConfig
+	{
+		private static int _LogLevel;
+
+		public static int LogLevel
+		{
+			get
+			{
+				return _LogLevel;
+			}
+			set
+			{
+				_LogLevel = value;
 			}
 		}
 	}
