@@ -110,8 +110,7 @@ namespace Schumix
         /// </returns>
 		bool ConsoleCommands(string info)
 		{
-			string[] cmd = new string[info.Split(' ').Length];
-			cmd = info.Split(' ');
+			string[] cmd = info.Split(' ');
 			string parancs = cmd[0].ToLower();
 
 			if(parancs == "help")
