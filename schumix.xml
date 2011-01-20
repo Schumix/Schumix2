@@ -11,11 +11,14 @@
             <Allapot>0</Allapot>
             <Jelszo>pass</Jelszo>
         </NickServ>
-	<HostServ>
+        <HostServ>
             <Allapot>0</Allapot>
             <Vhost>0</Vhost>
         </HostServ>
     </Irc>
+    <Log>
+        <LogLevel>3</LogLevel>
+    </Log>
     <Mysql>
         <Host>localhost</Host>
         <User>root</User>

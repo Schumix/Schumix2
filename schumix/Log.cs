@@ -18,12 +18,14 @@
  */
 
 using System;
+using Schumix.Config;
 
 namespace Schumix
 {
 	public static class Log
 	{
 		private static readonly object WriteLock = new object();
+
         /// <returns>
         ///     A visszatérési érték az aktuális dátum.
         /// </returns>
@@ -62,22 +64,6 @@ namespace Schumix
 			}
 		}
 
-		public static void Warning(string source, string format)
-		{
-			lock(WriteLock)
-			{
-				Console.ForegroundColor = ConsoleColor.Gray;
-				Console.Write(GetTime());
-				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.Write(" W");
-				Console.ForegroundColor = ConsoleColor.White;
-				Console.Write(" {0}: ", source);
-				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.Write("{0}\n", format);
-				Console.ForegroundColor = ConsoleColor.Gray;
-			}
-		}
-
 		public static void Success(string source, string format)
 		{
 			lock(WriteLock)
@@ -94,10 +80,32 @@ namespace Schumix
 			}
 		}
 
+		public static void Warning(string source, string format)
+		{
+			lock(WriteLock)
+			{
+				if(LogConfig.LogLevel < 1)
+					return;
+
+				Console.ForegroundColor = ConsoleColor.Gray;
+				Console.Write(GetTime());
+				Console.ForegroundColor = ConsoleColor.Yellow;
+				Console.Write(" W");
+				Console.ForegroundColor = ConsoleColor.White;
+				Console.Write(" {0}: ", source);
+				Console.ForegroundColor = ConsoleColor.Yellow;
+				Console.Write("{0}\n", format);
+				Console.ForegroundColor = ConsoleColor.Gray;
+			}
+		}
+
 		public static void Error(string source, string format)
 		{
 			lock(WriteLock)
 			{
+				if(LogConfig.LogLevel < 2)
+					return;
+
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Red;
@@ -114,6 +122,9 @@ namespace Schumix
 		{
 			lock(WriteLock)
 			{
+				if(LogConfig.LogLevel < 3)
+					return;
+
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Blue;
