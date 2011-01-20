@@ -248,7 +248,7 @@ namespace Schumix
 					{
 						if((IrcOpcode = reader.ReadLine()) == null)
 							break;
-						
+
 						IrcCommand = IrcOpcode.Split(' ');
 
 						if(IrcCommand[0].Substring(0, 1) == ":")
@@ -274,6 +274,9 @@ namespace Schumix
 
 						opcode = IrcCommand[1];
 						IMessage.Info = IrcCommand;
+
+						if(IMessage.Args != "" && IMessage.Args.Substring(0, 1) == ":")
+							IMessage.Args = IMessage.Args.Remove(0, 1);
 
 						if(_IRCHandler.ContainsKey(opcode))
 							_IRCHandler[opcode].Invoke();

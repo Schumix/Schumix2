@@ -216,15 +216,10 @@ namespace Schumix.IRC
 		{
 			if(Consol.ConsoleLog == "be")
 			{
-				string args = Network.IMessage.Args;
-
-				if(args.Substring(0, 1) == ":")
-					args = args.Remove(0, 1);
-
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write("[SERVER] ");
 				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.Write(args + "\n");
+				Console.Write(Network.IMessage.Args + "\n");
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 
@@ -245,12 +240,7 @@ namespace Schumix.IRC
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		public void HandlePing()
 		{
-			string args = Network.IMessage.Args;
-
-			if(args.Substring(0, 1) == ":")
-				args = args.Remove(0, 1);
-
-			Network.writer.WriteLine("PING :{0}", args);
+			Network.writer.WriteLine("PING :{0}", Network.IMessage.Args);
 		}
 
         /// <summary>
@@ -259,12 +249,7 @@ namespace Schumix.IRC
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		public void HandlePong()
 		{
-			string args = Network.IMessage.Args;
-
-			if(args.Substring(0, 1) == ":")
-				args = args.Remove(0, 1);
-
-			Network.writer.WriteLine("PONG :{0}", args);
+			Network.writer.WriteLine("PONG :{0}", Network.IMessage.Args);
 			Network.Status = true;
 		}
 
@@ -482,21 +467,27 @@ namespace Schumix.IRC
         {
 			if(FSelect("log") == "be" && FSelect("log", channel) == "be")
 			{
-				string logfile_name = channel + ".log";
-				if(!File.Exists(String.Format("./szoba/{0}", logfile_name)))
-					File.Create(String.Format("./szoba/{0}", logfile_name));
-	
-				if(!Directory.Exists("szoba"))
-					Directory.CreateDirectory("szoba");
-	
 				try
 				{
+					if(!Directory.Exists("szoba"))
+					{
+						Directory.CreateDirectory("szoba");
+						return;
+					}
+
+					string logfile_name = channel + ".log";
+					if(!File.Exists(String.Format("./szoba/{0}", logfile_name)))
+						File.Create(String.Format("./szoba/{0}", logfile_name));
+
 					TextWriter writeFile = new StreamWriter(String.Format("./szoba/{0}", logfile_name), true);
 					writeFile.WriteLine("[{0}] <{1}> {2}", DateTime.Now, user, args);
 					writeFile.Flush();
 					writeFile.Close();
 				}
-				catch { }
+				catch(Exception e)
+				{
+					Log.Error("MessageHandler", String.Format("Hiba oka: {0}", e.ToString()));
+				}
 			}
 		}
 
