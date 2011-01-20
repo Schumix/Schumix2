@@ -53,6 +53,7 @@ namespace Schumix.IRC
         ///     Tárolja azt az IRC szoba címet, amit betölt a bot.
         /// </summary>
 		private static string m_WhoisPrivmsg;
+		private bool HostServAllapot;
 
 		public static string ChannelPrivmsg
 		{
@@ -84,22 +85,56 @@ namespace Schumix.IRC
 		{
 			Network.m_ConnState = (int)Network.ConnState.CONN_REGISTERED;
 			Console.Write("\n");
-			Log.Success("Opcode", "Sikeres kapcsolodas");
+			Log.Success("MessageHandler", "Sikeres kapcsolodas");
+
 			if(IRCConfig.UseNickServ == 1)
 			{
 				Log.Notice("NickServ", "Sending NickServ identification.");
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, "NickServ", String.Format("identify {0}", IRCConfig.NickServPassword));
 			}
 
-			m_WhoisPrivmsg = SchumixBot.NickTarolo;
-			m_ChannelPrivmsg = SchumixBot.NickTarolo;
-			foreach(var m_channel in SchumixBot.m_ChannelLista)
+			if(IRCConfig.UseHostServ == 1)
 			{
-				Network.writer.WriteLine("JOIN " + m_channel.Key + m_channel.Value);
-				SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key));
+				HostServAllapot = true;
+				Log.Notice("HostServ", "HostServ bevan kapcsolva.");
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, "HostServ", "on");
 			}
+			else
+			{
+				Log.Notice("HostServ", "HostServ kivan kapcsolva.");
+				if(IRCConfig.HostServAllapot == 1)
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, "HostServ", "off");
 
-			ChannelFunkcioReload();
+				m_WhoisPrivmsg = SchumixBot.NickTarolo;
+				m_ChannelPrivmsg = SchumixBot.NickTarolo;
+				Log.Debug("MessageHandler", "Kapcsolodas a szobakhoz...");
+				bool error = false;
+
+				foreach(var m_channel in SchumixBot.m_ChannelLista)
+				{
+					Network.writer.WriteLine("JOIN " + m_channel.Key + m_channel.Value);
+					SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key));
+				}
+
+				ChannelFunkcioReload();
+				var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT aktivitas FROM channel"));
+				if(db != null)
+				{
+					for(int i = 0; i < db.Rows.Count; ++i)
+					{
+						var row = db.Rows[i];
+						string aktivitas = row["aktivitas"].ToString();
+
+						if(aktivitas == "nem aktiv")
+							error = true;
+					}
+				}
+
+				if(!error)
+					Log.Success("MessageHandler", "Sikeresen kapcsolodva szobakhoz.");
+				else
+					Log.Warning("MessageHandler", "Nehany kapcsolodas sikertelen!");
+			}
 		}
 
         /// <summary>
@@ -231,6 +266,44 @@ namespace Schumix.IRC
 					Log.Warning("NickServ", "NickServ azonosito mar aktivalva van!");
 				else if(Network.IMessage.Args.IndexOf("Password accepted - you are now recognized.") != -1)
 					Log.Success("NickServ", "NickServ azonosito jelszo elfogadva.");
+			}
+
+			if(Network.IMessage.Nick == "HostServ" && IRCConfig.UseHostServ == 1)
+			{
+				if(Network.IMessage.Args.IndexOf("Your vhost of") == -1 && HostServAllapot)
+				{
+					m_WhoisPrivmsg = SchumixBot.NickTarolo;
+					m_ChannelPrivmsg = SchumixBot.NickTarolo;
+					Log.Debug("MessageHandler", "Kapcsolodas a szobakhoz...");
+					bool error = false;
+
+					foreach(var m_channel in SchumixBot.m_ChannelLista)
+					{
+						Network.writer.WriteLine("JOIN " + m_channel.Key + m_channel.Value);
+						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key));
+					}
+
+					ChannelFunkcioReload();
+					var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT aktivitas FROM channel"));
+					if(db != null)
+					{
+						for(int i = 0; i < db.Rows.Count; ++i)
+						{
+							var row = db.Rows[i];
+							string aktivitas = row["aktivitas"].ToString();
+
+							if(aktivitas == "nem aktiv")
+								error = true;
+						}
+					}
+
+					if(!error)
+						Log.Success("MessageHandler", "Sikeresen kapcsolodva szobakhoz.");
+					else
+						Log.Warning("MessageHandler", "Nehany kapcsolodas sikertelen!");
+
+					HostServAllapot = false;
+				}
 			}
 		}
 
