@@ -51,6 +51,7 @@ namespace Schumix.Config
 
 			LogConfig.LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
 			LogConfig.LogHelye = xmldoc.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
+			LogConfig.IrcLog = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText);
 
 			Log.Success("Config", "Config adatbazis betoltve.");
 			Console.WriteLine("");
@@ -280,6 +281,7 @@ namespace Schumix.Config
 	{
 		private static int _LogLevel;
 		private static string _LogHelye;
+		private static int _IrcLog;
 
 		public static int LogLevel
 		{
@@ -302,6 +304,18 @@ namespace Schumix.Config
 			set
 			{
 				_LogHelye = value;
+			}
+		}
+
+		public static int IrcLog
+		{
+			get
+			{
+				return _IrcLog;
+			}
+			set
+			{
+				_IrcLog = value;
 			}
 		}
 	}

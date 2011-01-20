@@ -38,7 +38,7 @@ namespace Schumix.IRC
 
 		public void HandlePrivmsg()
 		{
-			if(Consol.ConsoleLog == "be")
+			if(Consol.ConsoleLog == 1)
 			{
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.WriteLine("[{0}] <{1}> {2}", Network.IMessage.Channel, Network.IMessage.Nick, Network.IMessage.Args);

@@ -20,6 +20,7 @@
 using System;
 using System.Threading;
 using Schumix.IRC;
+using Schumix.Config;
 
 namespace Schumix
 {
@@ -34,7 +35,7 @@ namespace Schumix
         /// <summary>
         ///     A Console logja. Alapértelmezésben ki van kapcsolva.
         /// </summary>
-		public static string ConsoleLog;
+		public static int ConsoleLog;
 
         /// <summary>
         ///     Console írást indítja.
@@ -47,7 +48,7 @@ namespace Schumix
 		{
 			Thread console = new Thread(new ThreadStart(ConsoleRead));
 			console.Start();
-			ConsoleLog = "ki";
+			ConsoleLog = LogConfig.IrcLog;
 			Log.Success("Console", "Thread elindult.");
 		}
 
@@ -124,8 +125,17 @@ namespace Schumix
 				if(info.Length < 2)
 					return false;
 
-				ConsoleLog = cmd[1];
-				Log.Notice("Console", String.Format("Console logolas {0}kapcsolva", cmd[1]));
+				if(cmd[1] == "be")
+				{
+					Log.Notice("Console", "Console logolas bekapcsolva");
+					ConsoleLog = 1;
+				}
+				else if(cmd[1] == "ki")
+				{
+					Log.Notice("Console", "Console logolas kikapcsolva");
+					ConsoleLog = 0;
+				}
+
 				return true;
 			}
 

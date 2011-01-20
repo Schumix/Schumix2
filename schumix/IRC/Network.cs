@@ -282,7 +282,7 @@ namespace Schumix
 							_IRCHandler[opcode].Invoke();
 						else
 						{
-							if(Consol.ConsoleLog == "be")
+							if(Consol.ConsoleLog == 1)
 								Log.Notice("Opcodes", String.Format("Received unhandled opcode: {0}", opcode));
 						}
 
