@@ -28,7 +28,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Schumix IRC Bot")]
-[assembly: AssemblyCopyright("Copyright (C) 2010 Megax <http://www.megaxx.info/>")]
+[assembly: AssemblyCopyright("Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
