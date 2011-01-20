@@ -77,7 +77,7 @@ namespace Schumix.IRC
 			{
 				CNick();
 
-				if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "info")
+				if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "sys")
 				{
 					string Platform = "";
 					var pid = Environment.OSVersion.Platform;
@@ -98,14 +98,26 @@ namespace Schumix.IRC
 							break;
 					}
 
+					var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
+
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Verzió: 10{0}", Verzio.SchumixVerzio));
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Platform: {0}", Platform));
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3OSVerzió: {0}", Environment.OSVersion.ToString()));
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Programnyelv: c#"));
+
+					/*if(memory >= 20)
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Memoria használat: 8{0} MB", memory));
+					else if(memory >= 30)
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Memoria használat: 5{0} MB", memory));
+					else
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Memoria használat: 3{0} MB", memory));*/
+
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Memoria használat: {0} MB", memory));
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Uptime: {0}", SchumixBot.Uptime()));
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "help")
 				{
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Parancsok: info | ghost | nick | sys");
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Parancsok: ghost | nick | sys");
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "ghost")
 				{
@@ -137,11 +149,6 @@ namespace Schumix.IRC
 						SchumixBot.NickTarolo = nick;
 						Network.writer.WriteLine("NICK {0}", nick);
 					}
-				}
-				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "sys")
-				{
-					var memory = Process.GetCurrentProcess().WorkingSet64 / 1024 / 1024;
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Memoria használat: {0} MB", memory));
 				}
 			}
 		}
