@@ -249,7 +249,7 @@ namespace Schumix.IRC
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		public void HandleNotice()
 		{
-			if(Consol.ConsoleLog == "be")
+			if(Consol.ConsoleLog == 1)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write("[SERVER] ");
@@ -332,7 +332,7 @@ namespace Schumix.IRC
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		public void HandleIsmeretlenParancs()
 		{
-			if(Consol.ConsoleLog == "be")
+			if(Consol.ConsoleLog == 1)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write("[SERVER] ");
@@ -471,7 +471,7 @@ namespace Schumix.IRC
 			{
 				if(FSelect("parancsok") == "be" && FSelect("parancsok", Network.IMessage.Channel) == "be")
 				{
-					if(Consol.ConsoleLog == "be")
+					if(Consol.ConsoleLog == 1)
 					{
 						string alomany = "";
 						for(int i = 4; i < Network.IMessage.Info.Length; i++)
