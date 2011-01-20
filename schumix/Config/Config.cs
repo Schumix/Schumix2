@@ -42,14 +42,15 @@ namespace Schumix.Config
 			IRCConfig.NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Jelszo").InnerText;
 			IRCConfig.UseHostServ = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Allapot").InnerText);
 			IRCConfig.HostServAllapot = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText);
+			IRCConfig.Parancselojel = xmldoc.SelectSingleNode("Schumix/Parancs/Elojel").InnerText;
 
 			MysqlConfig.Host = xmldoc.SelectSingleNode("Schumix/Mysql/Host").InnerText;
 			MysqlConfig.User = xmldoc.SelectSingleNode("Schumix/Mysql/User").InnerText;
 			MysqlConfig.Password = xmldoc.SelectSingleNode("Schumix/Mysql/Password").InnerText;
 			MysqlConfig.Database = xmldoc.SelectSingleNode("Schumix/Mysql/Database").InnerText;
 
-			IRCConfig.Parancselojel = xmldoc.SelectSingleNode("Schumix/Parancs/Elojel").InnerText;
 			LogConfig.LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
+			LogConfig.LogHelye = xmldoc.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
 
 			Log.Success("Config", "Config adatbazis betoltve.");
 			Console.WriteLine("");
@@ -278,6 +279,7 @@ namespace Schumix.Config
 	public class LogConfig
 	{
 		private static int _LogLevel;
+		private static string _LogHelye;
 
 		public static int LogLevel
 		{
@@ -288,6 +290,18 @@ namespace Schumix.Config
 			set
 			{
 				_LogLevel = value;
+			}
+		}
+
+		public static string LogHelye
+		{
+			get
+			{
+				return _LogHelye;
+			}
+			set
+			{
+				_LogHelye = value;
 			}
 		}
 	}

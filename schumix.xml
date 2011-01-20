@@ -18,6 +18,7 @@
     </Irc>
     <Log>
         <LogLevel>3</LogLevel>
+        <LogHelye>szoba</LogHelye>
     </Log>
     <Mysql>
         <Host>localhost</Host>

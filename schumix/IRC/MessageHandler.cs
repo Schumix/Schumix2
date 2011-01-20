@@ -542,17 +542,17 @@ namespace Schumix.IRC
 			{
 				try
 				{
-					if(!Directory.Exists("szoba"))
+					if(!Directory.Exists(LogConfig.LogHelye))
 					{
-						Directory.CreateDirectory("szoba");
+						Directory.CreateDirectory(LogConfig.LogHelye);
 						return;
 					}
 
 					string logfile_name = channel + ".log";
-					if(!File.Exists(String.Format("./szoba/{0}", logfile_name)))
-						File.Create(String.Format("./szoba/{0}", logfile_name));
+					if(!File.Exists(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name)))
+						File.Create(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name));
 
-					TextWriter writeFile = new StreamWriter(String.Format("./szoba/{0}", logfile_name), true);
+					TextWriter writeFile = new StreamWriter(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name), true);
 					writeFile.WriteLine("[{0}] <{1}> {2}", DateTime.Now, user, args);
 					writeFile.Flush();
 					writeFile.Close();
