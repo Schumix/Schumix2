@@ -38,8 +38,10 @@ namespace Schumix.Config
 			IRCConfig.NickName2 = xmldoc.SelectSingleNode("Schumix/Irc/Nick2").InnerText;
 			IRCConfig.NickName3 = xmldoc.SelectSingleNode("Schumix/Irc/Nick3").InnerText;
 			IRCConfig.UserName = xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText;
-			IRCConfig.UseNickServ = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/UseNickServ/Allapot").InnerText);
-			IRCConfig.NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/UseNickServ/Jelszo").InnerText;
+			IRCConfig.UseNickServ = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Allapot").InnerText);
+			IRCConfig.NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Jelszo").InnerText;
+			IRCConfig.UseHostServ = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Allapot").InnerText);
+			IRCConfig.HostServAllapot = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText);
 
 			MysqlConfig.Host = xmldoc.SelectSingleNode("Schumix/Mysql/Host").InnerText;
 			MysqlConfig.User = xmldoc.SelectSingleNode("Schumix/Mysql/User").InnerText;
@@ -79,6 +81,8 @@ namespace Schumix.Config
 		private static string _UserName;
 		private static int _UseNickServ;
 		private static string _NickServPassword;
+		private static int _UseHostServ;
+		private static int _HostServAllapot;
 		private static string _Parancselojel;
 
 		public static string Server
@@ -174,6 +178,30 @@ namespace Schumix.Config
 			set
 			{
 				_NickServPassword = value;
+			}
+		}
+
+		public static int UseHostServ
+		{
+			get
+			{
+				return _UseHostServ;
+			}
+			set
+			{
+				_UseHostServ = value;
+			}
+		}
+
+		public static int HostServAllapot
+		{
+			get
+			{
+				return _HostServAllapot;
+			}
+			set
+			{
+				_HostServAllapot = value;
 			}
 		}
 

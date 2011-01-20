@@ -7,10 +7,14 @@
         <Nick2>Schumixx2</Nick2>
         <Nick3>Schumixxx2</Nick3>
         <UserName>Schumix2</UserName>
-        <UseNickServ>
+        <NickServ>
             <Allapot>0</Allapot>
             <Jelszo>pass</Jelszo>
-        </UseNickServ>
+        </NickServ>
+	<HostServ>
+            <Allapot>0</Allapot>
+            <Vhost>0</Vhost>
+        </HostServ>
     </Irc>
     <Mysql>
         <Host>localhost</Host>
