@@ -270,7 +270,7 @@ namespace Schumix.IRC
 
 			if(Network.IMessage.Nick == "HostServ" && IRCConfig.UseHostServ == 1)
 			{
-				if(Network.IMessage.Args.IndexOf("Your vhost of") == -1 && HostServAllapot)
+				if(Network.IMessage.Args.IndexOf("Your vhost of") != -1 && HostServAllapot)
 				{
 					m_WhoisPrivmsg = SchumixBot.NickTarolo;
 					m_ChannelPrivmsg = SchumixBot.NickTarolo;
