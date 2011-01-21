@@ -125,7 +125,10 @@ namespace Schumix
 			if(parancs == "consolelog")
 			{
 				if(cmd.Length < 2)
-					return false;
+				{
+					Log.Error("Console", "Nincs parameter!");
+					return true;
+				}
 
 				if(cmd[1] == "be")
 				{
@@ -144,7 +147,10 @@ namespace Schumix
 			if(parancs == "szoba")
 			{
 				if(cmd.Length < 2)
-					return false;
+				{
+					Log.Error("Console", "Nincs megadva a szoba neve!");
+					return true;
+				}
 
 				SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE schumix SET irc_cim = '{0}' WHERE entry = '1'", cmd[1]));
 				return true;
@@ -165,8 +171,8 @@ namespace Schumix
 				{
 					if(cmd.Length < 3)
 					{
-						Log.Notice("Console", "Nincs nev megadva!");
-						return false;
+						Log.Error("Console", "Nincs nev megadva!");
+						return true;
 					}
 
 					int flag;
@@ -208,8 +214,8 @@ namespace Schumix
 				{
 					if(cmd.Length < 3)
 					{
-						Log.Notice("Console", "Nincs nev megadva!");
-						return false;
+						Log.Error("Console", "Nincs nev megadva!");
+						return true;
 					}
 
 					string nev = cmd[2];
@@ -223,8 +229,8 @@ namespace Schumix
 				{
 					if(cmd.Length < 3)
 					{
-						Log.Notice("Console", "Nincs nev megadva!");
-						return false;
+						Log.Error("Console", "Nincs nev megadva!");
+						return true;
 					}
 
 					string nev = cmd[2];
@@ -235,14 +241,14 @@ namespace Schumix
 				{
 					if(cmd.Length < 3)
 					{
-						Log.Notice("Console", "Nincs nev megadva!");
-						return false;
+						Log.Error("Console", "Nincs nev megadva!");
+						return true;
 					}
 
 					if(cmd.Length < 4)
 					{
-						Log.Notice("Console", "Nincs rang megadva!");
-						return false;
+						Log.Error("Console", "Nincs rang megadva!");
+						return true;
 					}
 
 					string nev = cmd[2].ToLower();
@@ -254,7 +260,7 @@ namespace Schumix
 						Log.Notice("Console", "Rang sikeresen modósitva.");
 					}
 					else
-						Log.Notice("Console", "Hibás rang!");
+						Log.Error("Console", "Hibás rang!");
 				}
 				else
 					Log.Notice("Console", "Parancsok: help | lista | add | del");
