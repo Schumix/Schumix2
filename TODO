@@ -3,6 +3,7 @@ Megírásra váró feladatok:
 - Help rendszer írása.
 - Funkcio fv kibővitése hogy ne legyen amiben gyengébb.
 - Pm-ben irás korrigálása.
-- Console parancsok bővítése.
 - fordit és jegyzet parancs hozzáadása.
 - autofunkcio parancs hozzáadása.
+- Console parancsok közé funkcio parancs hozzáadása.
+- Elhelyezni az irc és console részbe a rteurn részeknél a válasz üzeneteket.

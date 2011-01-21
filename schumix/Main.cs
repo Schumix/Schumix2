@@ -38,6 +38,7 @@ namespace Schumix
         /// </remarks>
 		private static void Main(string[] args)
 		{
+			Console.Title = "Schumix2 IRC Bot";
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("[Schumix2]");
 			Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> parancsot vagy <kikapcs>\n");
