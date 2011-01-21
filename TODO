@@ -7,3 +7,7 @@ Megírásra váró feladatok:
 - autofunkcio parancs hozzáadása.
 - Console parancsok közé funkcio parancs hozzáadása.
 - Elhelyezni az irc és console részbe a rteurn részeknél a válasz üzeneteket.
+- Keres parancs javítása és hozzá enkoder írása.
+- Network-höz reconnect funkció hozzáadása (fselect)
+- Parancs tiltás javítása.
+- Console-hoz sys parancs hozzáadása és thread-ok számának beletétele.
