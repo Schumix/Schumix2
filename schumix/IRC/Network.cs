@@ -27,7 +27,7 @@ using System.Collections.Generic;
 using Schumix.IRC;
 using Schumix.Config;
 
-namespace Schumix
+namespace Schumix.IRC
 {
 	public class Network
 	{
@@ -38,22 +38,22 @@ namespace Schumix
         ///<summary>
         ///     A kimeneti adatokat külddi az IRC felé.
         ///</summary>
-		public static StreamWriter writer;
+		public static StreamWriter writer { get; private set; }
 
         /// <summary>
         ///     
         /// </summary>
-		private NetworkStream stream;
+		private static NetworkStream stream;
 
         /// <summary>
         ///     
         /// </summary>
-		private TcpClient irc;
+		private static TcpClient irc;
 
         /// <summary>
         ///     
         /// </summary>
-		private StreamReader reader;
+		private static StreamReader reader;
         ///***END***********************************///
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace Schumix
         ///     Az lábbi 3 változót töltjük bele az "m_ConnState"-be
         ///     azért van, hogy ne számokkal kelljen dolgozni.
         ///</remarks>
-		public static int m_ConnState = 0;
+		public static ConnState m_ConnState = ConnState.CONN_CONNECTED;
 
         /// <summary>
         ///     Ha "true" akkor jött pong az IRC felől,
@@ -79,17 +79,17 @@ namespace Schumix
         ///     ha "false" akkor nincs.
         ///     Meggátolja, hogy hiba legyen.
         /// </summary>
-		private bool m_running;
+		private static bool m_running;
 
         /// <summary>
         ///     IRC szerver címe.
         /// </summary>
-		private string _server;
+		private static string _server;
 
         /// <summary>
         ///     IRC port száma.
         /// </summary>
-		private int _port;
+		private static int _port;
 
 		public enum ConnState
 		{
@@ -167,7 +167,7 @@ namespace Schumix
 		/// <summary>
         ///     Kapcsolódás az IRC kiszolgálóhoz.
         /// </summary>
-		public void Connect()
+		public static void Connect()
 		{
 			Log.Notice("Network", String.Format("Kapcsolodas ide megindult: {0}.", _server));
 			irc = new TcpClient(_server, _port);
@@ -178,7 +178,7 @@ namespace Schumix
 
 			writer.WriteLine("NICK {0}", SchumixBot.NickTarolo);
 			writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserName);
-			m_ConnState = (int)ConnState.CONN_REGISTERED;
+			m_ConnState = ConnState.CONN_REGISTERED;
 
 			Status = true;
 			m_running = true;
@@ -187,7 +187,7 @@ namespace Schumix
         /// <summary>
         ///     Lekapcsolódás az IRC koszolgálótól.
         /// </summary>
-		public void DisConnect()
+		public static void DisConnect()
 		{
 			m_running = false;
 			Status = false;
@@ -201,7 +201,7 @@ namespace Schumix
         /// <summary>
         ///     Visszakapcsolódás az IRC kiszolgálóhoz.
         /// </summary>
-		public void ReConnect()
+		public static void ReConnect()
 		{
 			m_running = false;
 			Status = false;
@@ -220,7 +220,7 @@ namespace Schumix
 
 			writer.WriteLine("NICK {0}", SchumixBot.NickTarolo);
 			writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserName);
-			m_ConnState = (int)ConnState.CONN_REGISTERED;
+			m_ConnState = ConnState.CONN_REGISTERED;
 
 			Status = true;
 			m_running = true;
@@ -286,11 +286,11 @@ namespace Schumix
 								Log.Notice("Opcodes", String.Format("Received unhandled opcode: {0}", opcode));
 						}
 
-						if(m_ConnState == (int)ConnState.CONN_CONNECTED)
+						if(m_ConnState == ConnState.CONN_CONNECTED)
 						{
 							writer.WriteLine("NICK {0}", SchumixBot.NickTarolo);
 							writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserName);
-							m_ConnState = (int)ConnState.CONN_REGISTERED;
+							m_ConnState = ConnState.CONN_REGISTERED;
 						}
 					}
 					else

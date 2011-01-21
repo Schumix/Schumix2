@@ -125,7 +125,7 @@ namespace Schumix.IRC
 						return;
 
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, "NickServ", String.Format("ghost {0} {1}", IRCConfig.NickName, IRCConfig.NickServPassword));
-					Network.writer.WriteLine("NICK {0}", IRCConfig.NickName);
+					sSendMessage.WriteLine(String.Format("NICK {0}", IRCConfig.NickName));
 					SchumixBot.NickTarolo = IRCConfig.NickName;
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "nick")
@@ -139,7 +139,7 @@ namespace Schumix.IRC
 					if(Network.IMessage.Info[5] == "identify")
 					{
 						SchumixBot.NickTarolo = IRCConfig.NickName;
-						Network.writer.WriteLine("NICK {0}", IRCConfig.NickName);
+						sSendMessage.WriteLine(String.Format("NICK {0}", IRCConfig.NickName));
 						Log.Notice("NickServ", "Sending NickServ identification.");
 						sSendMessage.SendChatMessage(MessageType.PRIVMSG, "NickServ", String.Format("identify {0}", IRCConfig.NickServPassword));
 					}
@@ -147,7 +147,7 @@ namespace Schumix.IRC
 					{
 						string nick = Network.IMessage.Info[5];
 						SchumixBot.NickTarolo = nick;
-						Network.writer.WriteLine("NICK {0}", nick);
+						sSendMessage.WriteLine(String.Format("NICK {0}", nick));
 					}
 				}
 			}

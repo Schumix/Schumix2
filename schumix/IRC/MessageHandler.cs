@@ -83,13 +83,13 @@ namespace Schumix.IRC
 
 		public void HandleSuccessfulAuth()
 		{
-			Network.m_ConnState = (int)Network.ConnState.CONN_REGISTERED;
+			Network.m_ConnState = Network.ConnState.CONN_REGISTERED;
 			Console.Write("\n");
 			Log.Success("MessageHandler", "Sikeres kapcsolodas");
 
 			if(IRCConfig.UseNickServ == 1)
 			{
-				Log.Notice("NickServ", "Sending NickServ identification.");
+				Log.Notice("NickServ", "NickServ azonosito kuldese.");
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, "NickServ", String.Format("identify {0}", IRCConfig.NickServPassword));
 			}
 
@@ -112,7 +112,7 @@ namespace Schumix.IRC
 
 				foreach(var m_channel in SchumixBot.m_ChannelLista)
 				{
-					Network.writer.WriteLine("JOIN " + m_channel.Key + m_channel.Value);
+					sSendMessage.WriteLine(String.Format("JOIN {0} {1}", m_channel.Key, m_channel.Value));
 					SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key));
 				}
 
@@ -285,7 +285,7 @@ namespace Schumix.IRC
 
 					foreach(var m_channel in SchumixBot.m_ChannelLista)
 					{
-						Network.writer.WriteLine("JOIN " + m_channel.Key + m_channel.Value);
+						sSendMessage.WriteLine(String.Format("JOIN {0} {1}", m_channel.Key, m_channel.Value));
 						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key));
 					}
 
@@ -325,7 +325,7 @@ namespace Schumix.IRC
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		public void HandlePing()
 		{
-			Network.writer.WriteLine("PING :{0}", Network.IMessage.Args);
+			sSendMessage.WriteLine(String.Format("PING :{0}", Network.IMessage.Args));
 		}
 
         /// <summary>
@@ -334,7 +334,7 @@ namespace Schumix.IRC
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		public void HandlePong()
 		{
-			Network.writer.WriteLine("PONG :{0}", Network.IMessage.Args);
+			sSendMessage.WriteLine(String.Format("PONG :{0}", Network.IMessage.Args));
 			Network.Status = true;
 		}
 
@@ -364,49 +364,55 @@ namespace Schumix.IRC
 			if(SchumixBot.NickTarolo == IRCConfig.NickName)
 			{
 				SchumixBot.NickTarolo = IRCConfig.NickName2;
-				Network.m_ConnState = (int)Network.ConnState.CONN_CONNECTED;
+				Network.m_ConnState = Network.ConnState.CONN_CONNECTED;
 				return;
 			}
 			else if(SchumixBot.NickTarolo == IRCConfig.NickName2)
 			{
 				SchumixBot.NickTarolo = IRCConfig.NickName3;
-				Network.m_ConnState = (int)Network.ConnState.CONN_CONNECTED;
+				Network.m_ConnState = Network.ConnState.CONN_CONNECTED;
 				return;
 			}
 			else if(SchumixBot.NickTarolo == IRCConfig.NickName3)
 			{
 				SchumixBot.NickTarolo = "_Schumix2";
-				Network.m_ConnState = (int)Network.ConnState.CONN_CONNECTED;
+				Network.m_ConnState = Network.ConnState.CONN_CONNECTED;
 				return;
 			}
 			else if(SchumixBot.NickTarolo == "_Schumix2")
 			{
 				SchumixBot.NickTarolo = "__Schumix2";
-				Network.m_ConnState = (int)Network.ConnState.CONN_CONNECTED;
+				Network.m_ConnState = Network.ConnState.CONN_CONNECTED;
 				return;
 			}
 			else if(SchumixBot.NickTarolo == "__Schumix2")
 			{
 				SchumixBot.NickTarolo = "_Schumix2_";
-				Network.m_ConnState = (int)Network.ConnState.CONN_CONNECTED;
+				Network.m_ConnState = Network.ConnState.CONN_CONNECTED;
 				return;
 			}
 			else if(SchumixBot.NickTarolo == "_Schumix2_")
 			{
 				SchumixBot.NickTarolo = "__Schumix2_";
-				Network.m_ConnState = (int)Network.ConnState.CONN_CONNECTED;
+				Network.m_ConnState = Network.ConnState.CONN_CONNECTED;
 				return;
 			}
 			else if(SchumixBot.NickTarolo == "__Schumix2_")
 			{
 				SchumixBot.NickTarolo = "__Schumix2__";
-				Network.m_ConnState = (int)Network.ConnState.CONN_CONNECTED;
+				Network.m_ConnState = Network.ConnState.CONN_CONNECTED;
 				return;
 			}
 			else if(SchumixBot.NickTarolo == "__Schumix2__")
 			{
 				SchumixBot.NickTarolo = IRCConfig.NickName;
-				Network.m_ConnState = (int)Network.ConnState.CONN_CONNECTED;
+				Network.m_ConnState = Network.ConnState.CONN_CONNECTED;
+				return;
+			}
+			else
+			{
+				SchumixBot.NickTarolo = IRCConfig.NickName;
+				Network.m_ConnState = Network.ConnState.CONN_CONNECTED;
 				return;
 			}
 		}
@@ -475,7 +481,7 @@ namespace Schumix.IRC
 					foreach(var m_channel in SchumixBot.m_ChannelLista)
 					{
 						if(Network.IMessage.Channel == m_channel.Key)
-							Network.writer.WriteLine("JOIN " + m_channel.Key + m_channel.Value);
+							sSendMessage.WriteLine(String.Format("JOIN {0} {1}", m_channel.Key, m_channel.Value));
 					}
 				}
 			}

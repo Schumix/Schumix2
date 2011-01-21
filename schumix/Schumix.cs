@@ -21,6 +21,7 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Schumix.IRC;
 using Schumix.Config;
 using Schumix.Database;
 
@@ -48,7 +49,7 @@ namespace Schumix
         ///     A MySQL class-t hívja meg.
         ///     Dekralálja a MySQL kapcsolódást.
         /// </summary>
-		public static Mysql mSQLConn;
+		public static Mysql mSQLConn { get; private set; }
 
 		private static Stopwatch SW = new Stopwatch();
 		public static bool IIdo = true;

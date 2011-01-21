@@ -20,6 +20,7 @@
 using System;
 using System.Threading;
 using Schumix.IRC;
+using Schumix.IRC.Commands;
 using Schumix.Config;
 
 namespace Schumix
@@ -31,6 +32,7 @@ namespace Schumix
         /// </summary>
 		//private Opcodes sOpcodes = Singleton<Opcodes>.Instance;
 		private SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private Utility sUtility = Singleton<Utility>.Instance;
 
         /// <summary>
         ///     A Console logja. Alapértelmezésben ki van kapcsolva.
@@ -115,13 +117,14 @@ namespace Schumix
 
 			if(parancs == "help")
 			{
-				Log.Notice("Console", "Parancsok: consolelog, help, kikapcs, szoba");
+				Log.Notice("Console", "Parancsok: connect, disconnect, reconnect, consolelog, kikapcs");
+				Log.Notice("Console", "Parancsok: szoba, admin");
 				return true;
 			}
 
 			if(parancs == "consolelog")
 			{
-				if(info.Length < 2)
+				if(cmd.Length < 2)
 					return false;
 
 				if(cmd[1] == "be")
@@ -140,10 +143,142 @@ namespace Schumix
 
 			if(parancs == "szoba")
 			{
-				if(info.Length < 2)
+				if(cmd.Length < 2)
 					return false;
 
 				SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE schumix SET irc_cim = '{0}' WHERE entry = '1'", cmd[1]));
+				return true;
+			}
+
+			if(parancs == "admin")
+			{
+				if(cmd.Length >= 2 && cmd[1] == "help")
+				{
+					Log.Notice("Console", "Alparancsok hasznalata:");
+					Log.Notice("Console", "Admin lista: admin lista");
+					Log.Notice("Console", "Hozzaadas: admin add <admin neve>");
+					Log.Notice("Console", "Eltavolitas: admin del <admin neve>");
+					Log.Notice("Console", "Rang: admin rang <admin neve> <uj rang pl operator: 0, administrator: 1>");
+					Log.Notice("Console", "Info: admin info <admin neve>");
+				}
+				else if(cmd.Length >= 2 && cmd[1] == "info")
+				{
+					if(cmd.Length < 3)
+					{
+						Log.Notice("Console", "Nincs nev megadva!");
+						return false;
+					}
+
+					int flag;
+
+					var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT flag FROM adminok WHERE nev = '{0}'", cmd[2].ToLower()));
+					if(db != null)
+						flag = Convert.ToInt32(db["flag"].ToString());
+					else
+						flag = -1;
+	
+					if((AdminFlag)flag == AdminFlag.Operator)
+						Log.Notice("Console", "Jelenleg Operator.");
+					else if((AdminFlag)flag == AdminFlag.Administrator)
+						Log.Notice("Console", "Jelenleg Adminisztrator.");
+				}
+				else if(cmd.Length >= 2 && cmd[1] == "lista")
+				{
+					var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT nev FROM adminok"));
+					if(db != null)
+					{
+						string adminok = "";
+
+						for(int i = 0; i < db.Rows.Count; ++i)
+						{
+							var row = db.Rows[i];
+							string nev = row["nev"].ToString();
+							adminok += ", " + nev;
+						}
+
+						if(adminok.Substring(0, 2) == ", ")
+							adminok = adminok.Remove(0, 2);
+
+						Log.Notice("Console", String.Format("Adminok: {0}", adminok));
+					}
+					else
+						Log.Error("Console", "Hibas lekerdezes!");
+				}
+				else if(cmd.Length >= 2 && cmd[1] == "add")
+				{
+					if(cmd.Length < 3)
+					{
+						Log.Notice("Console", "Nincs nev megadva!");
+						return false;
+					}
+
+					string nev = cmd[2];
+					string pass = sUtility.GetRandomString();
+
+					SchumixBot.mSQLConn.QueryFirstRow(String.Format("INSERT INTO `adminok`(nev, jelszo) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass)));
+					Log.Notice("Console", String.Format("Admin hozzaadva: {0}", nev));
+					Log.Notice("Console", String.Format("Mostani jelszo: {0}", pass));
+				}
+				else if(cmd.Length >= 2 && cmd[1] == "del")
+				{
+					if(cmd.Length < 3)
+					{
+						Log.Notice("Console", "Nincs nev megadva!");
+						return false;
+					}
+
+					string nev = cmd[2];
+					SchumixBot.mSQLConn.QueryFirstRow(String.Format("DELETE FROM `adminok` WHERE nev = '{0}'", nev.ToLower()));
+					Log.Notice("Console", String.Format("Admin törölve: {0}", nev));
+				}
+				else if(cmd.Length >= 2 && cmd[1] == "rang")
+				{
+					if(cmd.Length < 3)
+					{
+						Log.Notice("Console", "Nincs nev megadva!");
+						return false;
+					}
+
+					if(cmd.Length < 4)
+					{
+						Log.Notice("Console", "Nincs rang megadva!");
+						return false;
+					}
+
+					string nev = cmd[2].ToLower();
+					int rang = Convert.ToInt32(cmd[3]);
+
+					if((AdminFlag)rang == AdminFlag.Administrator || (AdminFlag)rang == AdminFlag.Operator)
+					{
+						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE adminok SET flag = '{0}' WHERE nev = '{1}'", rang, nev));
+						Log.Notice("Console", "Rang sikeresen modósitva.");
+					}
+					else
+						Log.Notice("Console", "Hibás rang!");
+				}
+				else
+					Log.Notice("Console", "Parancsok: help | lista | add | del");
+
+				return true;
+			}
+
+			if(parancs == "connect")
+			{
+				Network.Connect();
+				return true;
+			}
+
+			if(parancs == "disconnect")
+			{
+				sSendMessage.WriteLine("QUIT :Console: disconnect.");
+				Network.DisConnect();
+				return true;
+			}
+
+			if(parancs == "reconnect")
+			{
+				sSendMessage.WriteLine("QUIT :Console: reconnect.");
+				Network.ReConnect();
 				return true;
 			}
 
@@ -151,7 +286,7 @@ namespace Schumix
 			{
 				SchumixBot.SaveUptime();
 				Log.Notice("Console", "Viszlat :(");
-				Network.writer.WriteLine("QUIT :Console: leállás.");
+				sSendMessage.WriteLine("QUIT :Console: leállás.");
 				Thread.Sleep(1000);
 				Environment.Exit(1);
 			}

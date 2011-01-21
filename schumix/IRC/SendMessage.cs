@@ -53,7 +53,12 @@ namespace Schumix.IRC
 				buffer = "NOTICE";
 
 			buffer += " " + channel + " :" + uzenet;
-			Network.writer.WriteLine(buffer);
+			WriteLine(buffer);
+		}
+
+		public void WriteLine(string uzenet)
+		{
+			Network.writer.WriteLine(uzenet);
 		}
 	}
 }

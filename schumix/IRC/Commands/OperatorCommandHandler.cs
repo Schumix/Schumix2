@@ -87,21 +87,43 @@ namespace Schumix.IRC.Commands
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Hozzáadás: {0}admin add <admin neve>", IRCConfig.Parancselojel));
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Eltávolítás: {0}admin del <admin neve>", IRCConfig.Parancselojel));
 			}
+			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "info")
+			{
+				int flag;
+				string nev = Network.IMessage.Nick;
+
+				var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT flag FROM adminok WHERE nev = '{0}'", nev.ToLower()));
+				if(db != null)
+					flag = Convert.ToInt32(db["flag"].ToString());
+				else
+					flag = -1;
+
+				if((AdminFlag)flag == AdminFlag.Operator)
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Jelenleg Operátor vagy.");
+				else if((AdminFlag)flag == AdminFlag.Administrator)
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Jelenleg Adminisztrátor vagy.");
+			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "lista")
 			{
-				string adminok = "";
 				var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT nev FROM adminok"));
-				for(int i = 0; i < db.Rows.Count; ++i)
+				if(db != null)
 				{
-					var row = db.Rows[i];
-					string nev = row["nev"].ToString();
-					adminok += ", " + nev;
+					string adminok = "";
+
+					for(int i = 0; i < db.Rows.Count; ++i)
+					{
+						var row = db.Rows[i];
+						string nev = row["nev"].ToString();
+						adminok += ", " + nev;
+					}
+
+					if(adminok.Substring(0, 2) == ", ")
+						adminok = adminok.Remove(0, 2);
+
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Adminok: {0}", adminok));
 				}
-
-				if(adminok.Substring(0, 2) == ", ")
-					adminok = adminok.Remove(0, 2);
-
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Adminok: {0}", adminok));
+				else
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hibas lekerdezes!");
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "add")
 			{
@@ -129,8 +151,17 @@ namespace Schumix.IRC.Commands
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "rang")
 			{
-				if(Network.IMessage.Info.Length < 7)
+				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Nincs név megadva!");
 					return;
+				}
+
+				if(Network.IMessage.Info.Length < 7)
+				{
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Nincs rang megadva!");
+					return;
+				}
 
 				string nev = Network.IMessage.Info[5].ToLower();
 				if(MessageHandler.CManager.Admin(Network.IMessage.Nick, AdminFlag.Operator) && MessageHandler.CManager.Admin(nev, AdminFlag.Administrator))
