@@ -76,10 +76,6 @@ namespace Schumix
 				StartTime = DateTime.Now;
 
 				new Network(IRCConfig.Server, IRCConfig.Port);
-
-				// lefoglalt memoria felszabadítása
-				Thread fmemory = new Thread(new ThreadStart(FreeMemory));
-				fmemory.Start();
 			}
 			catch(Exception e)
 			{
@@ -103,26 +99,6 @@ namespace Schumix
 		{
 			var Time = DateTime.Now - StartTime;
 			return String.Format("{0} nap, {1} óra, {2} perc, {3} másodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
-		}
-
-		private void FreeMemory()
-		{
-			try
-			{
-				Log.Success("FreeMemory", "FreeMemory elindult.");
-
-				while(true)
-				{
-					GC.Collect();
-					Thread.Sleep(1000);
-				}
-			}
-			catch(Exception e)
-			{
-				Log.Error("FreeMemory", String.Format("Hiba oka: {0}", e.ToString()));
-				FreeMemory();
-				Thread.Sleep(100);
-			}
 		}
 	}
 }
