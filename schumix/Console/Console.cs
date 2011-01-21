@@ -149,6 +149,7 @@ namespace Schumix
 
 			if(parancs == "kikapcs")
 			{
+				SchumixBot.SaveUptime();
 				Log.Notice("Console", "Viszlat :(");
 				Network.writer.WriteLine("QUIT :Console: leállás.");
 				Thread.Sleep(1000);

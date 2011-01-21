@@ -62,6 +62,7 @@ namespace Schumix.IRC.Commands
 				return;
 
 			MessageHandler.CNick();
+			SchumixBot.SaveUptime();
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Viszlát :(");
 			Network.writer.WriteLine("QUIT :{0} leallitott parancsal.", Network.IMessage.Nick);
 			Environment.Exit(1);

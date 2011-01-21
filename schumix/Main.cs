@@ -47,7 +47,9 @@ namespace Schumix
 			Console.WriteLine("");
 			Log.Notice("Main", "Rendszer indul...");
 			Console.WriteLine("");
+
 			new SchumixBot();
+			Console.CancelKeyPress += (sender, e) => SchumixBot.SaveUptime();
 		}
 	}
 }
