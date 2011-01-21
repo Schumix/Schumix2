@@ -134,6 +134,12 @@ namespace Schumix.IRC
 					Log.Success("MessageHandler", "Sikeresen kapcsolodva szobakhoz.");
 				else
 					Log.Warning("MessageHandler", "Nehany kapcsolodas sikertelen!");
+
+				if(SchumixBot.IIdo)
+				{
+					SchumixBot.IndulasiIdo();
+					SchumixBot.IIdo = false;
+				}
 			}
 		}
 
@@ -303,6 +309,12 @@ namespace Schumix.IRC
 						Log.Warning("MessageHandler", "Nehany kapcsolodas sikertelen!");
 
 					HostServAllapot = false;
+
+					if(SchumixBot.IIdo)
+					{
+						SchumixBot.IndulasiIdo();
+						SchumixBot.IIdo = false;
+					}
 				}
 			}
 		}

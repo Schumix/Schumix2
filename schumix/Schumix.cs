@@ -20,6 +20,7 @@
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Schumix.Config;
 using Schumix.Database;
 
@@ -49,10 +50,14 @@ namespace Schumix
         /// </summary>
 		public static Mysql mSQLConn;
 
+		private static Stopwatch SW = new Stopwatch();
+		public static bool IIdo = true;
+
 		public SchumixBot() : base("schumix.xml")
 		{
 			try
 			{
+				SW.Start();
 				mSQLConn = new Mysql(MysqlConfig.Host, MysqlConfig.User, MysqlConfig.Password, MysqlConfig.Database);
 				Log.Notice("SchumixBot", "Mysql adatbazishoz sikeres a kapcsolodas.");
 
@@ -99,6 +104,40 @@ namespace Schumix
 		{
 			var Time = DateTime.Now - StartTime;
 			return String.Format("{0} nap, {1} óra, {2} perc, {3} másodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
+		}
+
+		public static void SaveUptime()
+		{
+			string datum = "";
+			int Ev = DateTime.Now.Year;
+			int Honap = DateTime.Now.Month;
+			int Nap = DateTime.Now.Day;
+			int Ora = DateTime.Now.Hour;
+			int Perc = DateTime.Now.Minute;
+			var mem = Process.GetCurrentProcess().WorkingSet64/1024/1024;
+
+			if(Honap < 10)
+			{
+				if(Nap < 10)
+					datum = String.Format("{0}. 0{1}. 0{2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
+				else
+					datum = String.Format("{0}. 0{1}. {2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
+			}
+			else
+			{
+				if(Nap < 10)
+					datum = String.Format("{0}. {1}. 0{2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
+				else
+					datum = String.Format("{0}. {1}. {2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
+			}
+
+			mSQLConn.QueryFirstRow(String.Format("INSERT INTO `uptime`(datum, uptime, memory) VALUES ('{0}', '{1}', '{2} MB')", datum, Uptime(), mem));
+		}
+
+		public static void IndulasiIdo()
+		{
+			SW.Stop();
+			Log.Debug("SchumixBot", String.Format("A program {0}ms alatt indult el.", SW.ElapsedMilliseconds));
 		}
 	}
 }
