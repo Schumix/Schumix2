@@ -119,7 +119,7 @@ namespace Schumix
 			if(parancs == "help")
 			{
 				Log.Notice("Console", "Parancsok: connect, disconnect, reconnect, consolelog, kikapcs");
-				Log.Notice("Console", "Parancsok: szoba, admin, sys");
+				Log.Notice("Console", "Parancsok: szoba, admin, sys, funkcio");
 				return true;
 			}
 
@@ -299,6 +299,56 @@ namespace Schumix
 					Log.Notice("Console", "Parancsok: help | lista | add | del");
 
 				return true;
+			}
+
+			if(parancs == "funkcio")
+			{
+				if(cmd.Length < 2)
+				{
+					Log.Error("Console", "Nincs megadva az 1. parameter!");
+					return true;
+				}
+
+				if(cmd.Length >= 2 && cmd[1] == "info")
+				{
+					var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT funkcio_nev, funkcio_status FROM schumix"));
+					if(db != null)
+					{
+						string be = "";
+						string ki = "";
+
+						for(int i = 0; i < db.Rows.Count; ++i)
+						{
+							var row = db.Rows[i];
+							string nev = row["funkcio_nev"].ToString();
+							string status = row["funkcio_status"].ToString();
+	
+							if(status == "be")
+								be += nev + " ";
+							else
+								ki += nev + " ";
+						}
+	
+						Log.Notice("Console", String.Format("Bekapcsolva: {0}", be));
+						Log.Notice("Console", String.Format("Kikapcsolva: {0}", ki));
+					}
+					else
+						Log.Error("Console", "Hibás lekérdezés!");
+				}
+				else
+				{
+					if(cmd.Length < 3)
+					{
+						Log.Error("Console", "Nincs a funkcio nev megadva!");
+						return true;
+					}
+
+					if(cmd[1] == "be" || cmd[1] == "ki")
+					{
+						Log.Notice("Console", String.Format("{0}: {1}kapcsolva", cmd[2], cmd[1]));
+						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", cmd[1], cmd[2]));
+					}
+				}
 			}
 
 			if(parancs == "connect")

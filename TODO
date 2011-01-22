@@ -6,7 +6,7 @@ Megírásra váró feladatok:
 - fordit és jegyzet parancs hozzáadása.
 - autofunkcio parancs hozzáadása.
 - Console parancsok közé funkcio parancs hozzáadása.
-- Elhelyezni az irc és console részbe a rteurn részeknél a válasz üzeneteket.
+- Elhelyezni az irc és console részbe a return részeknél a válasz üzeneteket.
 - Keres parancs javítása és hozzá enkoder írása.
 - Parancs tiltás javítása.
 - Console sys parancsnál futó szálak kiirásának fixálása.
