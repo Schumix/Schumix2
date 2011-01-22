@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Threading;
 using Schumix.Config;
 
 namespace Schumix.IRC.Commands
@@ -64,7 +65,8 @@ namespace Schumix.IRC.Commands
 			MessageHandler.CNick();
 			SchumixBot.SaveUptime();
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Viszlát :(");
-			Network.writer.WriteLine("QUIT :{0} leallitott parancsal.", Network.IMessage.Nick);
+			sSendMessage.WriteLine(String.Format("QUIT :{0} leállított parancsal.", Network.IMessage.Nick));
+			Thread.Sleep(1000);
 			Environment.Exit(1);
 		}
 	}

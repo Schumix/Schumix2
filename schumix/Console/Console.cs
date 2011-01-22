@@ -96,7 +96,7 @@ namespace Schumix
 			{
 				Log.Error("ConsoleRead", String.Format("Hiba oka: {0}", e.ToString()));
 				ConsoleRead();
-				Thread.Sleep(50);
+				Thread.Sleep(100);
 			}
 		}
 
@@ -173,7 +173,7 @@ namespace Schumix
 				Log.Notice("Console", String.Format("OSVerzio: {0}", Environment.OSVersion.ToString()));
 				Log.Notice("Console", String.Format("Programnyelv: c#"));
 				Log.Notice("Console", String.Format("Memoria hasznalat: {0} MB", memory));
-				//Log.Notice("Console", String.Format("Thread count: {0}", threads));
+				Log.Notice("Console", String.Format("Thread count: {0}", Process.GetCurrentProcess().Threads.Count));
 				Log.Notice("Console", String.Format("Uptime: {0}", SchumixBot.Uptime()));
 			}
 
