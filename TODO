@@ -6,4 +6,3 @@ Megírásra váró feladatok:
 - Elhelyezni az irc és console részbe a return részeknél a válasz üzeneteket.
 - Keres parancs javítása és hozzá enkoder írása.
 - Parancs tiltás javítása.
-- Console sys parancsnál futó szálak kiirásának fixálása.

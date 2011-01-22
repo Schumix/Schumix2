@@ -199,7 +199,7 @@ namespace Schumix.IRC.Commands
 				else if(MessageHandler.CManager.Admin(Network.IMessage.Nick, AdminFlag.Administrator))
 				{
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}nick | {0}join | {0}left | {0}kick | {0}mode", IRCConfig.Parancselojel));
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}szoba | {0}channel | {0}kikapcs", IRCConfig.Parancselojel));
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}channel | {0}kikapcs", IRCConfig.Parancselojel));
 				}
 			}
 		}
