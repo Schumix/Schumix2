@@ -224,28 +224,12 @@ namespace Schumix.IRC.Commands
 			}
 			else if(Network.IMessage.Info[4] == "info")
 			{
-				string be = "";
-				string ki = "";
-
-				for(int i = 0; i < MessageHandler.m_ChannelFunkcio.Count; i++)
-				{
-					string szobak = MessageHandler.m_ChannelFunkcio[i];
-					string[] pont = szobak.Split('.');
-					string szoba = pont[0];
-					string funkciok = pont[1];
-					string[] kettospont = funkciok.Split(':');
-
-					if(szoba == Network.IMessage.Channel)
-					{
-						if(kettospont[1] == "be")
-							be += kettospont[0] + " ";
-						else
-							ki += kettospont[0] + " ";
-					}
-				}
+				string[] ChannelInfo = MessageHandler.ChannelFunkciokInfo(Network.IMessage.Channel).Split('|');
+				if(ChannelInfo.Length < 2)
+					return;
 			
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Bekapcsolva: {0}", be));
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Kikapcsolva: {0}", ki));
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Bekapcsolva: {0}", ChannelInfo[0]));
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Kikapcsolva: {0}", ChannelInfo[1]));
 			}
 			else if(Network.IMessage.Info[4] == "all")
 			{
@@ -254,29 +238,19 @@ namespace Schumix.IRC.Commands
 
 				if(Network.IMessage.Info[5] == "info")
 				{
-					var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT funkcio_nev, funkcio_status FROM schumix"));
-					if(db != null)
+					string f = MessageHandler.FunkciokInfo();
+					if(f == "Hibás lekérdezés!")
 					{
-						string be = "";
-						string ki = "";
-
-						for(int i = 0; i < db.Rows.Count; ++i)
-						{
-							var row = db.Rows[i];
-							string nev = row["funkcio_nev"].ToString();
-							string status = row["funkcio_status"].ToString();
-	
-							if(status == "be")
-								be += nev + " ";
-							else
-								ki += nev + " ";
-						}
-	
-						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Bekapcsolva: {0}", be));
-						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Kikapcsolva: {0}", ki));
-					}
-					else
 						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hibás lekérdezés!");
+						return;
+					}
+
+					string[] FunkcioInfo = f.Split('|');
+					if(FunkcioInfo.Length < 2)
+						return;
+
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Bekapcsolva: {0}", FunkcioInfo[0]));
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Kikapcsolva: {0}", FunkcioInfo[1]));
 				}
 				else
 				{
@@ -285,8 +259,26 @@ namespace Schumix.IRC.Commands
 
 					if(Network.IMessage.Info[5] == "be" || Network.IMessage.Info[5] == "ki")
 					{
-						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}: {1}kapcsolva", Network.IMessage.Info[6], Network.IMessage.Info[5]));
-						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", Network.IMessage.Info[5], Network.IMessage.Info[6]));
+						if(Network.IMessage.Info.Length >= 8)
+						{
+							string alomany = "";
+	
+							for(int i = 6; i < Network.IMessage.Info.Length; i++)
+							{
+								alomany += ", " + Network.IMessage.Info[i];
+								SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", Network.IMessage.Info[5], Network.IMessage.Info[i]));
+							}
+	
+							if(alomany.Substring(0, 2) == ", ")
+								alomany = alomany.Remove(0, 2);
+	
+							sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}: {1}kapcsolva",  alomany, Network.IMessage.Info[5]));
+						}
+						else
+						{
+							sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}: {1}kapcsolva", Network.IMessage.Info[6], Network.IMessage.Info[5]));
+							SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", Network.IMessage.Info[5], Network.IMessage.Info[6]));
+						}
 					}
 				}
 			}
@@ -300,55 +292,76 @@ namespace Schumix.IRC.Commands
 			
 				if(Network.IMessage.Info[6] == "info")
 				{
-					string be = "";
-					string ki = "";
+					string[] ChannelInfo = MessageHandler.ChannelFunkciokInfo(channelinfo).Split('|');
+					if(ChannelInfo.Length < 2)
+						return;
 
-					for(int i = 0; i < MessageHandler.m_ChannelFunkcio.Count; i++)
-					{
-						string szobak = MessageHandler.m_ChannelFunkcio[i];
-						string[] pont = szobak.Split('.');
-						string szoba = pont[0];
-						string funkciok = pont[1];
-						string[] kettospont = funkciok.Split(':');
-
-						if(szoba == channelinfo)
-						{
-							if(kettospont[1] == "be")
-								be += kettospont[0] + " ";
-							else
-								ki += kettospont[0] + " ";
-						}
-					}
-
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Bekapcsolva: {0}", be));
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Kikapcsolva: {0}", ki));
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Bekapcsolva: {0}", ChannelInfo[0]));
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Kikapcsolva: {0}", ChannelInfo[1]));
 				}
 				else if(status == "be" || status == "ki")
 				{
 					if(Network.IMessage.Info.Length < 8)
 						return;
 
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}: {1}kapcsolva", Network.IMessage.Info[7], status));
-					SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", MessageHandler.ChannelFunkciok(Network.IMessage.Info[7], status, channelinfo), channelinfo));
-					MessageHandler.ChannelFunkcioReload();
+					if(Network.IMessage.Info.Length >= 9)
+					{
+						string alomany = "";
+
+						for(int i = 7; i < Network.IMessage.Info.Length; i++)
+						{
+							alomany += ", " + Network.IMessage.Info[i];
+							SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", MessageHandler.ChannelFunkciok(Network.IMessage.Info[i], status, channelinfo), channelinfo));
+							MessageHandler.ChannelFunkcioReload();
+						}
+
+						if(alomany.Substring(0, 2) == ", ")
+							alomany = alomany.Remove(0, 2);
+
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}: {1}kapcsolva",  alomany, status));
+					}
+					else
+					{
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}: {1}kapcsolva", Network.IMessage.Info[7], status));
+						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", MessageHandler.ChannelFunkciok(Network.IMessage.Info[7], status, channelinfo), channelinfo));
+						MessageHandler.ChannelFunkcioReload();
+					}
 				}
 			}
 			else if(Network.IMessage.Info[4] == "update")
 			{
-				var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT szoba FROM channel"));
-				if(db != null)
+				if(Network.IMessage.Info.Length < 6)
 				{
-					for(int i = 0; i < db.Rows.Count; ++i)
-					{
-						var row = db.Rows[i];
-						string szoba = row["szoba"].ToString();
-						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", szoba));
-					}
-	
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Sikeresen frissitve {0} channel funkciók.", Network.IMessage.Channel));
+					SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Channel));
 					MessageHandler.ChannelFunkcioReload();
+					return;
+				}
+
+				if(Network.IMessage.Info[5] == "all")
+				{
+					var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT szoba FROM channel"));
+					if(db != null)
+					{
+						for(int i = 0; i < db.Rows.Count; ++i)
+						{
+							var row = db.Rows[i];
+							string szoba = row["szoba"].ToString();
+							SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", szoba));
+						}
+
+						MessageHandler.ChannelFunkcioReload();
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Sikeresen frissitve minden channelen a funkciók.");
+					}
+					else
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hibás lekérdezés!");
 				}
 				else
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hibás lekérdezés!");
+				{
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Sikeresen frissitve {0} channel funkciók.", Network.IMessage.Info[5]));
+					SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Info[5]));
+					MessageHandler.ChannelFunkcioReload();
+				}
 			}
 			else
 			{
@@ -359,9 +372,28 @@ namespace Schumix.IRC.Commands
 
 				if(status == "be" || status == "ki")
 				{
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}: {1}kapcsolva", Network.IMessage.Info[5], status));
-					SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", MessageHandler.ChannelFunkciok(Network.IMessage.Info[5], status, Network.IMessage.Channel), Network.IMessage.Channel));
-					MessageHandler.ChannelFunkcioReload();
+					if(Network.IMessage.Info.Length >= 7)
+					{
+						string alomany = "";
+
+						for(int i = 5; i < Network.IMessage.Info.Length; i++)
+						{
+							alomany += ", " + Network.IMessage.Info[i];
+							SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", MessageHandler.ChannelFunkciok(Network.IMessage.Info[i], status, Network.IMessage.Channel), Network.IMessage.Channel));
+							MessageHandler.ChannelFunkcioReload();
+						}
+
+						if(alomany.Substring(0, 2) == ", ")
+							alomany = alomany.Remove(0, 2);
+
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}: {1}kapcsolva",  alomany, status));
+					}
+					else
+					{
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}: {1}kapcsolva", Network.IMessage.Info[5], status));
+						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", MessageHandler.ChannelFunkciok(Network.IMessage.Info[5], status, Network.IMessage.Channel), Network.IMessage.Channel));
+						MessageHandler.ChannelFunkcioReload();
+					}
 				}
 			}
 		}

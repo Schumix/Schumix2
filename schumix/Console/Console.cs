@@ -309,31 +309,21 @@ namespace Schumix
 					return true;
 				}
 
-				if(cmd.Length >= 2 && cmd[1] == "info")
+				if(cmd[1] == "info")
 				{
-					var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT funkcio_nev, funkcio_status FROM schumix"));
-					if(db != null)
+					string f = MessageHandler.FunkciokInfo();
+					if(f == "Hibás lekérdezés!")
 					{
-						string be = "";
-						string ki = "";
-
-						for(int i = 0; i < db.Rows.Count; ++i)
-						{
-							var row = db.Rows[i];
-							string nev = row["funkcio_nev"].ToString();
-							string status = row["funkcio_status"].ToString();
-	
-							if(status == "be")
-								be += nev + " ";
-							else
-								ki += nev + " ";
-						}
-	
-						Log.Notice("Console", String.Format("Bekapcsolva: {0}", be));
-						Log.Notice("Console", String.Format("Kikapcsolva: {0}", ki));
-					}
-					else
 						Log.Error("Console", "Hibás lekérdezés!");
+						return true;
+					}
+
+					string[] FunkcioInfo = f.Split('|');
+					if(FunkcioInfo.Length < 2)
+						return true;
+	
+					Log.Notice("Console", String.Format("Bekapcsolva: {0}", FunkcioInfo[0]));
+					Log.Notice("Console", String.Format("Kikapcsolva: {0}", FunkcioInfo[1]));
 				}
 				else
 				{
