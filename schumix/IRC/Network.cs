@@ -324,7 +324,9 @@ namespace Schumix.IRC
 					}
 					else
 					{
-						ReConnect();
+						if(sMessageHandler.FSelect("reconnect") == "be")
+							ReConnect();
+
 						Thread.Sleep(15*1000);
 					}
 				}

@@ -509,7 +509,7 @@ namespace Schumix.IRC
         /// </summary>
         /// <param name="nev"></param>
         /// <returns></returns>
-		private string FSelect(string nev)
+		public string FSelect(string nev)
 		{
 			string status = "";
 
