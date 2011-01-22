@@ -57,6 +57,7 @@ INSERT INTO `schumix` VALUES ('1', '', 'koszones', 'be');
 INSERT INTO `schumix` VALUES ('2', '', 'log', 'be');
 INSERT INTO `schumix` VALUES ('3', '', 'rejoin', 'be');
 INSERT INTO `schumix` VALUES ('4', '', 'parancsok', 'be');
+INSERT INTO `schumix` VALUES ('5', '', 'reconnect', 'be');
 
 DROP TABLE IF EXISTS `sznap`;
 CREATE TABLE `sznap` (
