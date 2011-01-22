@@ -19,6 +19,7 @@
 
 using System;
 using System.Threading;
+using System.Diagnostics;
 using Schumix.IRC;
 using Schumix.IRC.Commands;
 using Schumix.Config;
@@ -118,7 +119,7 @@ namespace Schumix
 			if(parancs == "help")
 			{
 				Log.Notice("Console", "Parancsok: connect, disconnect, reconnect, consolelog, kikapcs");
-				Log.Notice("Console", "Parancsok: szoba, admin");
+				Log.Notice("Console", "Parancsok: szoba, admin, sys");
 				return true;
 			}
 
@@ -142,6 +143,38 @@ namespace Schumix
 				}
 
 				return true;
+			}
+
+			if(parancs == "sys")
+			{
+				string Platform = "";
+				var pid = Environment.OSVersion.Platform;
+
+				switch(pid)
+				{
+					case PlatformID.Win32NT:
+					case PlatformID.Win32S:
+					case PlatformID.Win32Windows:
+					case PlatformID.WinCE:
+						Platform = "Windows";
+						break;
+					case PlatformID.Unix:
+						Platform = "Linux";
+						break;
+					default:
+						Platform = "Ismeretlen";
+						break;
+				}
+
+				var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
+
+				Log.Notice("Console", String.Format("Verzio: {0}", Verzio.SchumixVerzio));
+				Log.Notice("Console", String.Format("Platform: {0}", Platform));
+				Log.Notice("Console", String.Format("OSVerzio: {0}", Environment.OSVersion.ToString()));
+				Log.Notice("Console", String.Format("Programnyelv: c#"));
+				Log.Notice("Console", String.Format("Memoria hasznalat: {0} MB", memory));
+				//Log.Notice("Console", String.Format("Thread count: {0}", threads));
+				Log.Notice("Console", String.Format("Uptime: {0}", SchumixBot.Uptime()));
 			}
 
 			if(parancs == "szoba")
