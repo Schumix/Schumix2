@@ -660,6 +660,57 @@ namespace Schumix.IRC
 			return funkcio;
 		}
 
+		public static string FunkciokInfo()
+		{
+			string be = "";
+			string ki = "";
+
+			var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT funkcio_nev, funkcio_status FROM schumix"));
+			if(db != null)
+			{
+				for(int i = 0; i < db.Rows.Count; ++i)
+				{
+					var row = db.Rows[i];
+					string nev = row["funkcio_nev"].ToString();
+					string status = row["funkcio_status"].ToString();
+	
+					if(status == "be")
+						be += nev + " ";
+					else
+						ki += nev + " ";
+				}
+			}
+			else
+				return "Hibás lekérdezés!";
+
+			return be + "|" + ki;
+		}
+
+		public static string ChannelFunkciokInfo(string channel)
+		{
+			string be = "";
+			string ki = "";
+
+			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
+			{
+				string szobak = m_ChannelFunkcio[i];
+				string[] pont = szobak.Split('.');
+				string szoba = pont[0];
+				string funkciok = pont[1];
+				string[] kettospont = funkciok.Split(':');
+
+				if(szoba == channel)
+				{
+					if(kettospont[1] == "be")
+						be += kettospont[0] + " ";
+					else
+						ki += kettospont[0] + " ";
+				}
+			}
+
+			return be + "|" + ki;
+		}
+
 		public static void CNick()
 		{
 			bool channel = Network.IMessage.Channel.StartsWith("#");

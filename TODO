@@ -1,11 +1,8 @@
 Megírásra váró feladatok:
 - Parancslista potlása mely lehetséges.
 - Help rendszer írása.
-- Funkcio fv kibővitése hogy ne legyen amiben gyengébb.
-- Pm-ben irás korrigálása.
 - fordit és jegyzet parancs hozzáadása.
 - autofunkcio parancs hozzáadása.
-- Console parancsok közé funkcio parancs hozzáadása.
 - Elhelyezni az irc és console részbe a return részeknél a válasz üzeneteket.
 - Keres parancs javítása és hozzá enkoder írása.
 - Parancs tiltás javítása.
