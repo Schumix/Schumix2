@@ -136,5 +136,45 @@ namespace Schumix
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}
+
+		public static void Notice(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Notice(source, String.Format(format, args));
+			}
+		}
+
+		public static void Success(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Success(source, String.Format(format, args));
+			}
+		}
+
+		public static void Warning(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Warning(source, String.Format(format, args));
+			}
+		}
+
+		public static void Error(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Error(source, String.Format(format, args));
+			}
+		}
+
+		public static void Debug(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Debug(source, String.Format(format, args));
+			}
+		}
 	}
 }

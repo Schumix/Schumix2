@@ -90,7 +90,7 @@ namespace Schumix.IRC
 			if(IRCConfig.UseNickServ == 1)
 			{
 				Log.Notice("NickServ", "NickServ azonosito kuldese.");
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, "NickServ", String.Format("identify {0}", IRCConfig.NickServPassword));
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, "NickServ", "identify {0}", IRCConfig.NickServPassword);
 			}
 
 			if(IRCConfig.UseHostServ == 1)
@@ -112,7 +112,7 @@ namespace Schumix.IRC
 
 				foreach(var m_channel in SchumixBot.m_ChannelLista)
 				{
-					sSendMessage.WriteLine(String.Format("JOIN {0} {1}", m_channel.Key, m_channel.Value));
+					sSendMessage.WriteLine("JOIN {0} {1}", m_channel.Key, m_channel.Value);
 					SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key));
 				}
 
@@ -206,15 +206,15 @@ namespace Schumix.IRC
 				}
 	
 				if(DateTime.Now.Hour <= 9)
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, String.Format("Jó reggelt {0}", Network.IMessage.Nick));
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, "Jó reggelt {0}", Network.IMessage.Nick);
 				else if(DateTime.Now.Hour >= 20)
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, String.Format("Jó estét {0}", Network.IMessage.Nick));
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, "Jó estét {0}", Network.IMessage.Nick);
 				else
 				{
 					if(CManager.Admin(Network.IMessage.Nick))
 						sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, "Üdv főnök");
 					else
-						sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, String.Format("{0} {1}", Koszones, Network.IMessage.Nick));
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, channel, "{0} {1}", Koszones, Network.IMessage.Nick);
 				}
 			}
 		}
@@ -244,9 +244,9 @@ namespace Schumix.IRC
 				}
 	
 				if(DateTime.Now.Hour >= 20)
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("Jóét {0}", Network.IMessage.Nick));
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Jóét {0}", Network.IMessage.Nick);
 				else
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0} {1}", elkoszones, Network.IMessage.Nick));
+					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "{0} {1}", elkoszones, Network.IMessage.Nick);
 			}
 		}
 
@@ -287,7 +287,7 @@ namespace Schumix.IRC
 
 					foreach(var m_channel in SchumixBot.m_ChannelLista)
 					{
-						sSendMessage.WriteLine(String.Format("JOIN {0} {1}", m_channel.Key, m_channel.Value));
+						sSendMessage.WriteLine("JOIN {0} {1}", m_channel.Key, m_channel.Value);
 						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key));
 					}
 
@@ -327,7 +327,7 @@ namespace Schumix.IRC
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		public void HandlePing()
 		{
-			sSendMessage.WriteLine(String.Format("PING :{0}", Network.IMessage.Args));
+			sSendMessage.WriteLine("PING :{0}", Network.IMessage.Args);
 		}
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace Schumix.IRC
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		public void HandlePong()
 		{
-			sSendMessage.WriteLine(String.Format("PONG :{0}", Network.IMessage.Args));
+			sSendMessage.WriteLine("PONG :{0}", Network.IMessage.Args);
 			Network.Status = true;
 		}
 
@@ -429,7 +429,7 @@ namespace Schumix.IRC
 				return;
 
 			SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'nem aktiv', error = 'channel ban' WHERE szoba = '{0}'", Network.IMessage.Info[3]));
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, m_ChannelPrivmsg, String.Format("{0}: channel ban", Network.IMessage.Info[3]));
+			sSendMessage.SendChatMessage(MessageType.PRIVMSG, m_ChannelPrivmsg, "{0}: channel ban", Network.IMessage.Info[3]);
 			m_ChannelPrivmsg = SchumixBot.NickTarolo;
 		}
 
@@ -443,7 +443,7 @@ namespace Schumix.IRC
 				return;
 
 			SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'nem aktiv', error = 'hibas channel jelszo' WHERE szoba = '{0}'", Network.IMessage.Info[3]));
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, m_ChannelPrivmsg, String.Format("{0}: hibás channel jelszó", Network.IMessage.Info[3]));
+			sSendMessage.SendChatMessage(MessageType.PRIVMSG, m_ChannelPrivmsg, "{0}: hibás channel jelszó", Network.IMessage.Info[3]);
 			m_ChannelPrivmsg = SchumixBot.NickTarolo;
 		}
 
@@ -463,7 +463,7 @@ namespace Schumix.IRC
 			if(alomany.Substring(0, 1) == ":")
 				alomany = alomany.Remove(0, 1);
 
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, m_WhoisPrivmsg, String.Format("Jelenleg itt van fent: {0}", alomany));
+			sSendMessage.SendChatMessage(MessageType.PRIVMSG, m_WhoisPrivmsg, "Jelenleg itt van fent: {0}", alomany);
 			m_WhoisPrivmsg = SchumixBot.NickTarolo;
 		}
 
@@ -483,7 +483,7 @@ namespace Schumix.IRC
 					foreach(var m_channel in SchumixBot.m_ChannelLista)
 					{
 						if(Network.IMessage.Channel == m_channel.Key)
-							sSendMessage.WriteLine(String.Format("JOIN {0} {1}", m_channel.Key, m_channel.Value));
+							sSendMessage.WriteLine("JOIN {0} {1}", m_channel.Key, m_channel.Value);
 					}
 				}
 			}
@@ -579,7 +579,7 @@ namespace Schumix.IRC
 				}
 				catch(Exception e)
 				{
-					Log.Error("MessageHandler", String.Format("Hiba oka: {0}", e.ToString()));
+					Log.Error("MessageHandler", "Hiba oka: {0}", e.ToString());
 				}
 			}
 		}

@@ -43,7 +43,7 @@ namespace Schumix
 			Console.WriteLine("[Schumix2]");
 			Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> parancsot vagy <kikapcs>\n");
 			Console.ForegroundColor = ConsoleColor.Gray;
-			Console.WriteLine(String.Format("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", Verzio.SchumixVerzio));
+			Console.WriteLine("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", Verzio.SchumixVerzio);
 			Console.WriteLine("==============================================================================");
 			Console.WriteLine("");
 			Log.Notice("Main", "Rendszer indul...");

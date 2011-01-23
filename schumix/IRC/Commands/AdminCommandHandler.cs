@@ -45,7 +45,7 @@ namespace Schumix.IRC.Commands
 					{
 						var row = db.Rows[i];
 						string admin = row["nev"].ToString();
-						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}", admin));
+						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "{0}", admin);
 					}
 				}
 				else
@@ -54,7 +54,7 @@ namespace Schumix.IRC.Commands
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "vhost")
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, Network.IMessage.Host);
 			else
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("{0}", Network.IMessage.Info.Length));
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "{0}", Network.IMessage.Info.Length);
 		}
 
 		public void HandleKikapcs()
@@ -65,7 +65,7 @@ namespace Schumix.IRC.Commands
 			MessageHandler.CNick();
 			SchumixBot.SaveUptime();
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Viszlát :(");
-			sSendMessage.WriteLine(String.Format("QUIT :{0} leállított parancsal.", Network.IMessage.Nick));
+			sSendMessage.WriteLine("QUIT :{0} leállított parancsal.", Network.IMessage.Nick);
 			Thread.Sleep(1000);
 			Environment.Exit(1);
 		}

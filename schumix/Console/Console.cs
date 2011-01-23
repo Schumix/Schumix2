@@ -38,7 +38,7 @@ namespace Schumix
         /// <summary>
         ///     A Console logja. Alapértelmezésben ki van kapcsolva.
         /// </summary>
-		public static int ConsoleLog;
+		public static int ConsoleLog { get; private set; }
 
         /// <summary>
         ///     Console írást indítja.
@@ -94,7 +94,7 @@ namespace Schumix
 			}
 			catch(Exception e)
 			{
-				Log.Error("ConsoleRead", String.Format("Hiba oka: {0}", e.ToString()));
+				Log.Error("ConsoleRead", "Hiba oka: {0}", e.ToString());
 				ConsoleRead();
 				Thread.Sleep(100);
 			}
@@ -168,13 +168,15 @@ namespace Schumix
 
 				var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
 
-				Log.Notice("Console", String.Format("Verzio: {0}", Verzio.SchumixVerzio));
-				Log.Notice("Console", String.Format("Platform: {0}", Platform));
-				Log.Notice("Console", String.Format("OSVerzio: {0}", Environment.OSVersion.ToString()));
-				Log.Notice("Console", String.Format("Programnyelv: c#"));
-				Log.Notice("Console", String.Format("Memoria hasznalat: {0} MB", memory));
-				Log.Notice("Console", String.Format("Thread count: {0}", Process.GetCurrentProcess().Threads.Count));
-				Log.Notice("Console", String.Format("Uptime: {0}", SchumixBot.Uptime()));
+				Log.Notice("Console", "Verzio: {0}", Verzio.SchumixVerzio);
+				Log.Notice("Console", "Platform: {0}", Platform);
+				Log.Notice("Console", "OSVerzio: {0}", Environment.OSVersion.ToString());
+				Log.Notice("Console", "Programnyelv: c#");
+				Log.Notice("Console", "Memoria hasznalat: {0} MB", memory);
+				Log.Notice("Console", "Thread count: {0}", Process.GetCurrentProcess().Threads.Count);
+				Log.Notice("Console", "Uptime: {0}", SchumixBot.Uptime());
+
+				return true;
 			}
 
 			if(parancs == "szoba")
@@ -238,7 +240,7 @@ namespace Schumix
 						if(adminok.Substring(0, 2) == ", ")
 							adminok = adminok.Remove(0, 2);
 
-						Log.Notice("Console", String.Format("Adminok: {0}", adminok));
+						Log.Notice("Console", "Adminok: {0}", adminok);
 					}
 					else
 						Log.Error("Console", "Hibas lekerdezes!");
@@ -255,8 +257,8 @@ namespace Schumix
 					string pass = sUtility.GetRandomString();
 
 					SchumixBot.mSQLConn.QueryFirstRow(String.Format("INSERT INTO `adminok`(nev, jelszo) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass)));
-					Log.Notice("Console", String.Format("Admin hozzaadva: {0}", nev));
-					Log.Notice("Console", String.Format("Mostani jelszo: {0}", pass));
+					Log.Notice("Console", "Admin hozzaadva: {0}", nev);
+					Log.Notice("Console", "Mostani jelszo: {0}", pass);
 				}
 				else if(cmd.Length >= 2 && cmd[1] == "del")
 				{
@@ -268,7 +270,7 @@ namespace Schumix
 
 					string nev = cmd[2];
 					SchumixBot.mSQLConn.QueryFirstRow(String.Format("DELETE FROM `adminok` WHERE nev = '{0}'", nev.ToLower()));
-					Log.Notice("Console", String.Format("Admin törölve: {0}", nev));
+					Log.Notice("Console", "Admin törölve: {0}", nev);
 				}
 				else if(cmd.Length >= 2 && cmd[1] == "rang")
 				{
@@ -322,8 +324,8 @@ namespace Schumix
 					if(FunkcioInfo.Length < 2)
 						return true;
 	
-					Log.Notice("Console", String.Format("Bekapcsolva: {0}", FunkcioInfo[0]));
-					Log.Notice("Console", String.Format("Kikapcsolva: {0}", FunkcioInfo[1]));
+					Log.Notice("Console", "Bekapcsolva: {0}", FunkcioInfo[0]);
+					Log.Notice("Console", "Kikapcsolva: {0}", FunkcioInfo[1]);
 				}
 				else
 				{
@@ -335,10 +337,12 @@ namespace Schumix
 
 					if(cmd[1] == "be" || cmd[1] == "ki")
 					{
-						Log.Notice("Console", String.Format("{0}: {1}kapcsolva", cmd[2], cmd[1]));
+						Log.Notice("Console", "{0}: {1}kapcsolva", cmd[2], cmd[1]);
 						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", cmd[1], cmd[2]));
 					}
 				}
+
+				return true;
 			}
 
 			if(parancs == "connect")
