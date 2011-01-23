@@ -62,7 +62,7 @@ namespace Schumix
 				mSQLConn = new Mysql(MysqlConfig.Host, MysqlConfig.User, MysqlConfig.Password, MysqlConfig.Database);
 				Log.Notice("SchumixBot", "Mysql adatbazishoz sikeres a kapcsolodas.");
 
-				var db = mSQLConn.QueryRow(String.Format("SELECT szoba, jelszo FROM channel"));
+				var db = mSQLConn.QueryRow("SELECT szoba, jelszo FROM channel");
 				if(db != null)
 				{
 					for(int i = 0; i < db.Rows.Count; ++i)
@@ -132,7 +132,7 @@ namespace Schumix
 					datum = String.Format("{0}. {1}. {2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
 			}
 
-			mSQLConn.QueryFirstRow(String.Format("INSERT INTO `uptime`(datum, uptime, memory) VALUES ('{0}', '{1}', '{2} MB')", datum, Uptime(), mem));
+			mSQLConn.QueryFirstRow("INSERT INTO `uptime`(datum, uptime, memory) VALUES ('{0}', '{1}', '{2} MB')", datum, Uptime(), mem);
 		}
 
 		public static void IndulasiIdo()

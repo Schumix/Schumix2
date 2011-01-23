@@ -176,7 +176,7 @@ namespace Schumix.IRC.Commands
 			}
 			else
 			{
-				var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT hasznalata FROM irc_parancsok WHERE parancs = '{0}'", Network.IMessage.Info[4]));
+				var db = SchumixBot.mSQLConn.QueryFirstRow("SELECT hasznalata FROM irc_parancsok WHERE parancs = '{0}'", Network.IMessage.Info[4]);
 				if(db != null)
 				{
 					string hasznalata = db["hasznalata"].ToString();
