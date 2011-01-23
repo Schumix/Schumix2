@@ -314,7 +314,7 @@ namespace Schumix
 
 				if(cmd[1] == "info")
 				{
-					string f = MessageHandler.FunkciokInfo();
+					string f = Network.sChannelInfo.FunkciokInfo();
 					if(f == "Hibás lekérdezés!")
 					{
 						Log.Error("Console", "Hibás lekérdezés!");

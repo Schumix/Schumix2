@@ -32,6 +32,7 @@ namespace Schumix.IRC
 	public class Network
 	{
 		private MessageHandler sMessageHandler = Singleton<MessageHandler>.Instance;
+		public static readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		public static IRCMessage IMessage = new IRCMessage();
 		
         ///***START***********************************///
@@ -129,6 +130,7 @@ namespace Schumix.IRC
 			_port = port;
 
 			Log.Notice("Network", "Network elindult.");
+			sChannelInfo.ChannelLista();
 			InitHandler();
 			Connect();
 
@@ -152,7 +154,7 @@ namespace Schumix.IRC
 			RegisterHandler("LEFT",    sMessageHandler.HandleLeft);
 			RegisterHandler("KICK",    sMessageHandler.HandleKick);
 			RegisterHandler("474",     sMessageHandler.HandleChannelBan);
-			RegisterHandler("475",     sMessageHandler.HandleNoChannelJelszo);
+			RegisterHandler("475",     sMessageHandler.HandleNoChannelPassword);
 			RegisterHandler("319",     sMessageHandler.HandleWhois);
 			RegisterHandler("421",     sMessageHandler.HandleIsmeretlenParancs);
 			RegisterHandler("433",     sMessageHandler.HandleNickError);
@@ -324,7 +326,7 @@ namespace Schumix.IRC
 					}
 					else
 					{
-						if(sMessageHandler.FSelect("reconnect") == "be")
+						if(sChannelInfo.FSelect("reconnect") == "be")
 							ReConnect();
 
 						Thread.Sleep(15*1000);

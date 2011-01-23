@@ -224,7 +224,7 @@ namespace Schumix.IRC.Commands
 			}
 			else if(Network.IMessage.Info[4] == "info")
 			{
-				string[] ChannelInfo = MessageHandler.ChannelFunkciokInfo(Network.IMessage.Channel).Split('|');
+				string[] ChannelInfo = Network.sChannelInfo.ChannelFunkciokInfo(Network.IMessage.Channel).Split('|');
 				if(ChannelInfo.Length < 2)
 					return;
 			
@@ -238,7 +238,7 @@ namespace Schumix.IRC.Commands
 
 				if(Network.IMessage.Info[5] == "info")
 				{
-					string f = MessageHandler.FunkciokInfo();
+					string f = Network.sChannelInfo.FunkciokInfo();
 					if(f == "Hibás lekérdezés!")
 					{
 						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hibás lekérdezés!");
@@ -292,7 +292,7 @@ namespace Schumix.IRC.Commands
 			
 				if(Network.IMessage.Info[6] == "info")
 				{
-					string[] ChannelInfo = MessageHandler.ChannelFunkciokInfo(channelinfo).Split('|');
+					string[] ChannelInfo = Network.sChannelInfo.ChannelFunkciokInfo(channelinfo).Split('|');
 					if(ChannelInfo.Length < 2)
 						return;
 
@@ -311,8 +311,8 @@ namespace Schumix.IRC.Commands
 						for(int i = 7; i < Network.IMessage.Info.Length; i++)
 						{
 							alomany += ", " + Network.IMessage.Info[i];
-							SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", MessageHandler.ChannelFunkciok(Network.IMessage.Info[i], status, channelinfo), channelinfo);
-							MessageHandler.ChannelFunkcioReload();
+							SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[i], status, channelinfo), channelinfo);
+							Network.sChannelInfo.ChannelFunkcioReload();
 						}
 
 						if(alomany.Substring(0, 2) == ", ")
@@ -323,8 +323,8 @@ namespace Schumix.IRC.Commands
 					else
 					{
 						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "{0}: {1}kapcsolva", Network.IMessage.Info[7], status);
-						SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", MessageHandler.ChannelFunkciok(Network.IMessage.Info[7], status, channelinfo), channelinfo);
-						MessageHandler.ChannelFunkcioReload();
+						SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[7], status, channelinfo), channelinfo);
+						Network.sChannelInfo.ChannelFunkcioReload();
 					}
 				}
 			}
@@ -334,7 +334,7 @@ namespace Schumix.IRC.Commands
 				{
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Sikeresen frissitve {0} channel funkciók.", Network.IMessage.Channel);
 					SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Channel);
-					MessageHandler.ChannelFunkcioReload();
+					Network.sChannelInfo.ChannelFunkcioReload();
 					return;
 				}
 
@@ -350,7 +350,7 @@ namespace Schumix.IRC.Commands
 							SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", szoba);
 						}
 
-						MessageHandler.ChannelFunkcioReload();
+						Network.sChannelInfo.ChannelFunkcioReload();
 						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Sikeresen frissitve minden channelen a funkciók.");
 					}
 					else
@@ -360,7 +360,7 @@ namespace Schumix.IRC.Commands
 				{
 					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Sikeresen frissitve {0} channel funkciók.", Network.IMessage.Info[5]);
 					SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Info[5]);
-					MessageHandler.ChannelFunkcioReload();
+					Network.sChannelInfo.ChannelFunkcioReload();
 				}
 			}
 			else
@@ -379,8 +379,8 @@ namespace Schumix.IRC.Commands
 						for(int i = 5; i < Network.IMessage.Info.Length; i++)
 						{
 							alomany += ", " + Network.IMessage.Info[i];
-							SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", MessageHandler.ChannelFunkciok(Network.IMessage.Info[i], status, Network.IMessage.Channel), Network.IMessage.Channel);
-							MessageHandler.ChannelFunkcioReload();
+							SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[i], status, Network.IMessage.Channel), Network.IMessage.Channel);
+							Network.sChannelInfo.ChannelFunkcioReload();
 						}
 
 						if(alomany.Substring(0, 2) == ", ")
@@ -391,8 +391,8 @@ namespace Schumix.IRC.Commands
 					else
 					{
 						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "{0}: {1}kapcsolva", Network.IMessage.Info[5], status);
-						SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", MessageHandler.ChannelFunkciok(Network.IMessage.Info[5], status, Network.IMessage.Channel), Network.IMessage.Channel);
-						MessageHandler.ChannelFunkcioReload();
+						SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[5], status, Network.IMessage.Channel), Network.IMessage.Channel);
+						Network.sChannelInfo.ChannelFunkcioReload();
 					}
 				}
 			}
@@ -440,8 +440,8 @@ namespace Schumix.IRC.Commands
 
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Channel hozzáadva: {0}", szobainfo);
 
-				MessageHandler.ChannelListaReload();
-				MessageHandler.ChannelFunkcioReload();
+				Network.sChannelInfo.ChannelListaReload();
+				Network.sChannelInfo.ChannelFunkcioReload();
 			}
 			else if(Network.IMessage.Info[4] == "del")
 			{
@@ -453,13 +453,13 @@ namespace Schumix.IRC.Commands
 				SchumixBot.mSQLConn.QueryFirstRow("DELETE FROM `channel` WHERE szoba = '{0}'", szobainfo);
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Channel eltávolítva: {0}", szobainfo);
 
-				MessageHandler.ChannelListaReload();
-				MessageHandler.ChannelFunkcioReload();
+				Network.sChannelInfo.ChannelListaReload();
+				Network.sChannelInfo.ChannelFunkcioReload();
 			}
 			else if(Network.IMessage.Info[4] == "update")
 			{
-				MessageHandler.ChannelListaReload();
-				MessageHandler.ChannelFunkcioReload();
+				Network.sChannelInfo.ChannelListaReload();
+				Network.sChannelInfo.ChannelFunkcioReload();
 			}
 			else if(Network.IMessage.Info[4] == "info")
 			{

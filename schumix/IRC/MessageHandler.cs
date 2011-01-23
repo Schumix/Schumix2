@@ -40,11 +40,6 @@ namespace Schumix.IRC
 		private SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 
         /// <summary>
-        ///     Az IRC szobához tartozó funkciók.
-        /// </summary>
-		public static List<string> m_ChannelFunkcio = new List<string>();
-
-        /// <summary>
         ///     Tárolja azt az IRC szoba címet, amit betölt a bot.
         /// </summary>
 		private static string m_ChannelPrivmsg;
@@ -110,13 +105,13 @@ namespace Schumix.IRC
 				Log.Debug("MessageHandler", "Kapcsolodas a szobakhoz...");
 				bool error = false;
 
-				foreach(var m_channel in SchumixBot.m_ChannelLista)
+				foreach(var m_channel in Network.sChannelInfo._ChannelLista)
 				{
 					sSendMessage.WriteLine("JOIN {0} {1}", m_channel.Key, m_channel.Value);
 					SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key);
 				}
 
-				ChannelFunkcioReload();
+				Network.sChannelInfo.ChannelFunkcioReload();
 				var db = SchumixBot.mSQLConn.QueryRow("SELECT aktivitas FROM channel");
 				if(db != null)
 				{
@@ -158,7 +153,7 @@ namespace Schumix.IRC
 			if(channel.Substring(0, 1) == ":")
 				channel = channel.Remove(0, 1);
 
-			if(FSelect("koszones") == "be" && FSelect("koszones", channel) == "be")
+			if(Network.sChannelInfo.FSelect("koszones") == "be" && Network.sChannelInfo.FSelect("koszones", channel) == "be")
 			{
 				Random rand = new Random();
 				string Koszones = "";
@@ -229,7 +224,7 @@ namespace Schumix.IRC
 			if(Network.IMessage.Nick == SchumixBot.NickTarolo)
 				return;
 
-			if(FSelect("koszones") == "be" && FSelect("koszones", Network.IMessage.Channel) == "be")
+			if(Network.sChannelInfo.FSelect("koszones") == "be" && Network.sChannelInfo.FSelect("koszones", Network.IMessage.Channel) == "be")
 			{
 				Random rand = new Random();
 				string elkoszones = "";
@@ -285,13 +280,13 @@ namespace Schumix.IRC
 					Log.Debug("MessageHandler", "Kapcsolodas a szobakhoz...");
 					bool error = false;
 
-					foreach(var m_channel in SchumixBot.m_ChannelLista)
+					foreach(var m_channel in Network.sChannelInfo._ChannelLista)
 					{
 						sSendMessage.WriteLine("JOIN {0} {1}", m_channel.Key, m_channel.Value);
 						SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key);
 					}
 
-					ChannelFunkcioReload();
+					Network.sChannelInfo.ChannelFunkcioReload();
 					var db = SchumixBot.mSQLConn.QueryRow("SELECT aktivitas FROM channel");
 					if(db != null)
 					{
@@ -437,7 +432,7 @@ namespace Schumix.IRC
         ///     Ha hibás egy IRC szobának a jelszava, akkor feljegyzi.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandleNoChannelJelszo()
+		public void HandleNoChannelPassword()
 		{
 			if(Network.IMessage.Info.Length < 4)
 				return;
@@ -478,9 +473,9 @@ namespace Schumix.IRC
 
 			if(Network.IMessage.Info[3] == SchumixBot.NickTarolo)
 			{
-				if(FSelect("rejoin") == "be" && FSelect("rejoin", Network.IMessage.Channel) == "be")
+				if(Network.sChannelInfo.FSelect("rejoin") == "be" && Network.sChannelInfo.FSelect("rejoin", Network.IMessage.Channel) == "be")
 				{
-					foreach(var m_channel in SchumixBot.m_ChannelLista)
+					foreach(var m_channel in Network.sChannelInfo._ChannelLista)
 					{
 						if(Network.IMessage.Channel == m_channel.Key)
 							sSendMessage.WriteLine("JOIN {0} {1}", m_channel.Key, m_channel.Value);
@@ -489,7 +484,7 @@ namespace Schumix.IRC
 			}
 			else
 			{
-				if(FSelect("parancsok") == "be" && FSelect("parancsok", Network.IMessage.Channel) == "be")
+				if(Network.sChannelInfo.FSelect("parancsok") == "be" && Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) == "be")
 				{
 					if(Consol.ConsoleLog == 1)
 					{
@@ -509,56 +504,12 @@ namespace Schumix.IRC
         /// <summary>
         ///     
         /// </summary>
-        /// <param name="nev"></param>
-        /// <returns></returns>
-		public string FSelect(string nev)
-		{
-			string status = "";
-
-			var db = SchumixBot.mSQLConn.QueryFirstRow("SELECT funkcio_status FROM schumix WHERE funkcio_nev = '{0}'", nev);
-			if(db != null)
-				status = db["funkcio_status"].ToString();
-
-			return status;
-		}
-
-        /// <summary>
-        ///     
-        /// </summary>
-        /// <param name="nev"></param>
-        /// <param name="channel"></param>
-        /// <returns></returns>
-		private string FSelect(string nev, string channel)
-		{
-			string status = "";
-
-			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
-			{
-				string szobak = m_ChannelFunkcio[i];
-				string[] pont = szobak.Split('.');
-				string szoba = pont[0];
-				string funkciok = pont[1];
-				string[] kettospont = funkciok.Split(':');
-
-				if(szoba == channel)
-				{
-					if(kettospont[0] == nev)
-						status = kettospont[1];
-				}
-			}
-
-			return status;
-		}
-
-        /// <summary>
-        ///     
-        /// </summary>
         /// <param name="channel"></param>
         /// <param name="user"></param>
         /// <param name="args"></param>
 		private void LogToFajl(string channel, string user, string args)
         {
-			if(FSelect("log") == "be" && FSelect("log", channel) == "be")
+			if(Network.sChannelInfo.FSelect("log") == "be" && Network.sChannelInfo.FSelect("log", channel) == "be")
 			{
 				try
 				{
@@ -582,141 +533,6 @@ namespace Schumix.IRC
 					Log.Error("MessageHandler", "Hiba oka: {0}", e.ToString());
 				}
 			}
-		}
-
-        /// <summary>
-        ///     
-        /// </summary>
-		public static void ChannelFunkcioReload()
-		{
-			m_ChannelFunkcio.Clear();
-
-			var db = SchumixBot.mSQLConn.QueryRow("SELECT szoba FROM channel");
-			if(db != null)
-			{
-				for(int i = 0; i < db.Rows.Count; ++i)
-				{
-					var row = db.Rows[i];
-					string szoba = row["szoba"].ToString();
-
-					var db1 = SchumixBot.mSQLConn.QueryFirstRow("SELECT funkciok FROM channel WHERE szoba = '{0}'", szoba);
-					if(db1 != null)
-					{
-						string funkciok = db1["funkciok"].ToString();
-						string[] vesszo = funkciok.Split(',');
-
-						for(int x = 1; x < vesszo.Length; x++)
-						{
-							string szobaadat = szoba + "." + vesszo[x];
-							m_ChannelFunkcio.Add(szobaadat);
-						}
-					}
-				}
-			}
-		}
-
-		public static void ChannelListaReload()
-		{
-			SchumixBot.m_ChannelLista.Clear();
-			var db = SchumixBot.mSQLConn.QueryRow("SELECT szoba, jelszo FROM channel");
-			if(db != null)
-			{
-				for(int i = 0; i < db.Rows.Count; ++i)
-				{
-					var row = db.Rows[i];
-					string szoba = row["szoba"].ToString();
-					string jelszo = row["jelszo"].ToString();
-					SchumixBot.m_ChannelLista.Add(szoba, jelszo);
-				}
-			}
-		}
-
-		public static string ChannelFunkciok(string nev, string status, string channel)
-		{
-			string funkcio = "";
-
-			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
-			{
-				string szobak = m_ChannelFunkcio[i];
-				string[] pont = szobak.Split('.');
-				string szoba = pont[0];
-				string funkciok = pont[1];
-				string[] kettospont = funkciok.Split(':');
-
-				if(szoba == channel)
-				{
-					if(kettospont[0] != nev)
-						funkcio += "," + funkciok;
-				}
-			}
-
-			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
-			{
-				string szobak = m_ChannelFunkcio[i];
-				string[] pont = szobak.Split('.');
-				string szoba = pont[0];
-				string funkciok = pont[1];
-				string[] kettospont = funkciok.Split(':');
-
-				if(szoba == channel)
-				{
-					if(kettospont[0] == nev)
-						funkcio += "," + nev + ":" + status;
-				}
-			}
-
-			return funkcio;
-		}
-
-		public static string FunkciokInfo()
-		{
-			string be = "";
-			string ki = "";
-
-			var db = SchumixBot.mSQLConn.QueryRow("SELECT funkcio_nev, funkcio_status FROM schumix");
-			if(db != null)
-			{
-				for(int i = 0; i < db.Rows.Count; ++i)
-				{
-					var row = db.Rows[i];
-					string nev = row["funkcio_nev"].ToString();
-					string status = row["funkcio_status"].ToString();
-	
-					if(status == "be")
-						be += nev + " ";
-					else
-						ki += nev + " ";
-				}
-			}
-			else
-				return "Hibás lekérdezés!";
-
-			return be + "|" + ki;
-		}
-
-		public static string ChannelFunkciokInfo(string channel)
-		{
-			string be = "";
-			string ki = "";
-
-			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
-			{
-				string szobak = m_ChannelFunkcio[i];
-				string[] pont = szobak.Split('.');
-				string szoba = pont[0];
-				string funkciok = pont[1];
-				string[] kettospont = funkciok.Split(':');
-
-				if(szoba == channel)
-				{
-					if(kettospont[1] == "be")
-						be += kettospont[0] + " ";
-					else
-						ki += kettospont[0] + " ";
-				}
-			}
-
-			return be + "|" + ki;
 		}
 
 		public static void CNick()
