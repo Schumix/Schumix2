@@ -86,7 +86,7 @@ namespace Schumix.Database
 			}
 			catch(MySqlException ex)
 			{
-				Log.Error("Mysql", "Query hiba: " + ex.Message);
+				Log.Error("Mysql", "Query hiba: {0}", ex.Message);
 				return null;
 			}
 		}

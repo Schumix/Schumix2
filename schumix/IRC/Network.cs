@@ -169,7 +169,7 @@ namespace Schumix.IRC
         /// </summary>
 		public static void Connect()
 		{
-			Log.Notice("Network", String.Format("Kapcsolodas ide megindult: {0}.", _server));
+			Log.Notice("Network", "Kapcsolodas ide megindult: {0}.", _server);
 			irc = new TcpClient(_server, _port);
 			stream = irc.GetStream();
 			reader = new StreamReader(stream);
@@ -211,7 +211,7 @@ namespace Schumix.IRC
 			irc.Close();
 			Log.Notice("Network", "Kapcsolat bontva.");
 
-			Log.Debug("Network", String.Format("Ujrakapcsolodas ide megindult: {0}.", _server));
+			Log.Debug("Network", "Ujrakapcsolodas ide megindult: {0}.", _server);
 			irc = new TcpClient(_server, _port);
 			stream = irc.GetStream();
 			reader = new StreamReader(stream);
@@ -236,7 +236,7 @@ namespace Schumix.IRC
 		{
 			try
 			{
-				string IrcOpcode;
+				string IrcMessage;
 				string opcode;
 				string[] userdata;
 				string[] hostdata;
@@ -246,10 +246,10 @@ namespace Schumix.IRC
 				{
 					if(m_running)
 					{
-						if((IrcOpcode = reader.ReadLine()) == null)
+						if((IrcMessage = reader.ReadLine()) == null)
 							break;
 
-						IrcCommand = IrcOpcode.Split(' ');
+						IrcCommand = IrcMessage.Split(' ');
 
 						if(IrcCommand[0].Substring(0, 1) == ":")
 							IrcCommand[0] = IrcCommand[0].Remove(0, 1);
@@ -283,7 +283,7 @@ namespace Schumix.IRC
 						else
 						{
 							if(Consol.ConsoleLog == 1)
-								Log.Notice("Opcodes", String.Format("Received unhandled opcode: {0}", opcode));
+								Log.Notice("Opcodes", "Received unhandled opcode: {0}", opcode);
 						}
 
 						if(m_ConnState == ConnState.CONN_CONNECTED)
@@ -300,7 +300,7 @@ namespace Schumix.IRC
 			catch(Exception e)
 			{
 				if(m_running)
-					Log.Error("Opcodes", String.Format("Hiba oka: {0}", e.ToString()));
+					Log.Error("Opcodes", "Hiba oka: {0}", e.ToString());
 
 				Opcodes();
 				Thread.Sleep(100);
@@ -334,7 +334,7 @@ namespace Schumix.IRC
 			catch(Exception e)
 			{
 				if(m_running)
-					Log.Error("Ping", String.Format("Hiba oka: {0}", e.ToString()));
+					Log.Error("Ping", "Hiba oka: {0}", e.ToString());
 				else
 					Thread.Sleep(20*1000);
 

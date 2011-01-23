@@ -37,7 +37,7 @@ namespace Schumix
         /// <summary>
         ///     A bot elindításának ideje.
         /// </summary>
-		public static DateTime StartTime;
+		public static DateTime StartTime { get; private set; }
 
         /// <summary>
         ///     Ebbe a változóba töltödik bele a szoba neve és a jelszava, ha van.
@@ -85,7 +85,7 @@ namespace Schumix
 			}
 			catch(Exception e)
 			{
-				Log.Error("SchumixBot", String.Format("Hiba oka: {0}", e.ToString()));
+				Log.Error("SchumixBot", "Hiba oka: {0}", e.ToString());
 				Thread.Sleep(100);
 			}
 		}
@@ -138,7 +138,7 @@ namespace Schumix
 		public static void IndulasiIdo()
 		{
 			SW.Stop();
-			Log.Debug("SchumixBot", String.Format("A program {0}ms alatt indult el.", SW.ElapsedMilliseconds));
+			Log.Debug("SchumixBot", "A program {0}ms alatt indult el.", SW.ElapsedMilliseconds);
 		}
 	}
 }

@@ -56,9 +56,19 @@ namespace Schumix.IRC
 			WriteLine(buffer);
 		}
 
+		public void SendChatMessage(MessageType tipus, string channel, string uzenet, params object[] args)
+		{
+			SendChatMessage(tipus, channel, String.Format(uzenet, args));
+		}
+
 		public void WriteLine(string uzenet)
 		{
 			Network.writer.WriteLine(uzenet);
+		}
+
+		public void WriteLine(string uzenet, params object[] args)
+		{
+			WriteLine(String.Format(uzenet, args));
 		}
 	}
 }
