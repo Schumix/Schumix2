@@ -39,11 +39,6 @@ namespace Schumix
         /// </summary>
 		public static DateTime StartTime { get; private set; }
 
-        /// <summary>
-        ///     Ebbe a változóba töltödik bele a szoba neve és a jelszava, ha van.
-        /// </summary>
-		public static Dictionary<string, string> m_ChannelLista = new Dictionary<string, string>();
-
         ///***START***********************************///
         /// <summary>
         ///     A MySQL class-t hívja meg.
@@ -61,20 +56,6 @@ namespace Schumix
 				SW.Start();
 				mSQLConn = new Mysql(MysqlConfig.Host, MysqlConfig.User, MysqlConfig.Password, MysqlConfig.Database);
 				Log.Notice("SchumixBot", "Mysql adatbazishoz sikeres a kapcsolodas.");
-
-				var db = mSQLConn.QueryRow("SELECT szoba, jelszo FROM channel");
-				if(db != null)
-				{
-					for(int i = 0; i < db.Rows.Count; ++i)
-					{
-						var row = db.Rows[i];
-						string channel = row["szoba"].ToString();
-						string jelszo = row["jelszo"].ToString();
-						m_ChannelLista.Add(channel, jelszo);
-					}
-				}
-				else
-					Log.Error("SchumixBot", "Hibas lekerdezes!");
 
 				Log.Debug("SchumixBot", "Consol thread indul...");
 				new Consol();

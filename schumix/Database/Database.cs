@@ -29,7 +29,7 @@ namespace Schumix.Database
         /// <summary>
         ///     A MySQL adatbázishoz való csatlakozás deklarációja.
         /// </summary>
-		private MySqlConnection Connection;
+		private readonly MySqlConnection Connection;
 
         /// <summary>
         ///     A MySQL-hez való kapcsolódás.

@@ -47,9 +47,9 @@ namespace Schumix.IRC
 
 			LogToFajl(Network.IMessage.Channel, Network.IMessage.Nick, Network.IMessage.Args);
 
-			if(FSelect("parancsok") == "be")
+			if(Network.sChannelInfo.FSelect("parancsok") == "be")
 			{
-				//if(FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) != "#")
+				//if(Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) != "#")
 					//return;
 
 				if(Network.IMessage.Info[3].Substring(0, 1) == ":")
