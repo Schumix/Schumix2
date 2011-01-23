@@ -26,9 +26,18 @@ namespace Schumix.IRC
 {
 	public class ChannelInfo
 	{
+		private List<string> ChannelFunkcio = new List<string>();
+		private readonly Dictionary<string, string> _ChannelLista = new Dictionary<string, string>();
+		private SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		public Dictionary<string, string> CLista
+		{
+			get
+			{
+				return _ChannelLista;
+			}
+		}
+
 		private ChannelInfo() {}
-		private List<string> m_ChannelFunkcio = new List<string>();
-		public readonly Dictionary<string, string> _ChannelLista = new Dictionary<string, string>();
 
 		public void ChannelLista()
 		{
@@ -44,7 +53,7 @@ namespace Schumix.IRC
 				}
 			}
 			else
-				Log.Error("ChannelInfo", "Hibas lekerdezes!");
+				Log.Error("ChannelInfo", "ChannelLista: Hibas lekerdezes!");
 		}
 
 		public string FSelect(string nev)
@@ -54,6 +63,8 @@ namespace Schumix.IRC
 			var db = SchumixBot.mSQLConn.QueryFirstRow("SELECT funkcio_status FROM schumix WHERE funkcio_nev = '{0}'", nev);
 			if(db != null)
 				status = db["funkcio_status"].ToString();
+			else
+				Log.Error("ChannelInfo", "FSelect: Hibas lekerdezes!");
 
 			return status;
 		}
@@ -62,9 +73,9 @@ namespace Schumix.IRC
 		{
 			string status = "";
 
-			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
+			for(int i = 0; i < ChannelFunkcio.Count; i++)
 			{
-				string szobak = m_ChannelFunkcio[i];
+				string szobak = ChannelFunkcio[i];
 				string[] pont = szobak.Split('.');
 				string szoba = pont[0];
 				string funkciok = pont[1];
@@ -82,7 +93,7 @@ namespace Schumix.IRC
 
 		public void ChannelFunkcioReload()
 		{
-			m_ChannelFunkcio.Clear();
+			ChannelFunkcio.Clear();
 
 			var db = SchumixBot.mSQLConn.QueryRow("SELECT szoba FROM channel");
 			if(db != null)
@@ -101,11 +112,15 @@ namespace Schumix.IRC
 						for(int x = 1; x < vesszo.Length; x++)
 						{
 							string szobaadat = szoba + "." + vesszo[x];
-							m_ChannelFunkcio.Add(szobaadat);
+							ChannelFunkcio.Add(szobaadat);
 						}
 					}
+					else
+						Log.Error("ChannelInfo", "ChannelFunkcioReload: Hibas lekerdezes!");
 				}
 			}
+			else
+				Log.Error("ChannelInfo", "ChannelFunkcioReload: Hibas lekerdezes!");
 		}
 
 		public void ChannelListaReload()
@@ -122,15 +137,17 @@ namespace Schumix.IRC
 					_ChannelLista.Add(szoba, jelszo);
 				}
 			}
+			else
+				Log.Error("ChannelInfo", "ChannelListaReload: Hibas lekerdezes!");
 		}
 
 		public string ChannelFunkciok(string nev, string status, string channel)
 		{
 			string funkcio = "";
 
-			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
+			for(int i = 0; i < ChannelFunkcio.Count; i++)
 			{
-				string szobak = m_ChannelFunkcio[i];
+				string szobak = ChannelFunkcio[i];
 				string[] pont = szobak.Split('.');
 				string szoba = pont[0];
 				string funkciok = pont[1];
@@ -143,9 +160,9 @@ namespace Schumix.IRC
 				}
 			}
 
-			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
+			for(int i = 0; i < ChannelFunkcio.Count; i++)
 			{
-				string szobak = m_ChannelFunkcio[i];
+				string szobak = ChannelFunkcio[i];
 				string[] pont = szobak.Split('.');
 				string szoba = pont[0];
 				string funkciok = pont[1];
@@ -190,9 +207,9 @@ namespace Schumix.IRC
 		{
 			string be = "", ki = "";
 
-			for(int i = 0; i < m_ChannelFunkcio.Count; i++)
+			for(int i = 0; i < ChannelFunkcio.Count; i++)
 			{
-				string szobak = m_ChannelFunkcio[i];
+				string szobak = ChannelFunkcio[i];
 				string[] pont = szobak.Split('.');
 				string szoba = pont[0];
 				string funkciok = pont[1];
@@ -208,6 +225,45 @@ namespace Schumix.IRC
 			}
 
 			return be + "|" + ki;
+		}
+
+		public void JoinChannel()
+		{
+			Log.Debug("ChannelInfo", "Kapcsolodas a szobakhoz...");
+			bool error = false;
+
+			foreach(var channel in _ChannelLista)
+			{
+				sSendMessage.WriteLine("JOIN {0} {1}", channel.Key, channel.Value);
+				SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", channel.Key);
+			}
+
+			ChannelFunkcioReload();
+			var db = SchumixBot.mSQLConn.QueryRow("SELECT aktivitas FROM channel");
+			if(db != null)
+			{
+				for(int i = 0; i < db.Rows.Count; ++i)
+				{
+					var row = db.Rows[i];
+					string aktivitas = row["aktivitas"].ToString();
+
+					if(aktivitas == "nem aktiv")
+						error = true;
+				}
+			}
+			else
+				Log.Error("ChannelInfo", "JoinChannel: Hibas lekerdezes!");
+
+			if(!error)
+				Log.Success("ChannelInfo", "Sikeresen kapcsolodva szobakhoz.");
+			else
+				Log.Warning("ChannelInfo", "Nehany kapcsolodas sikertelen!");
+
+			if(SchumixBot.IIdo)
+			{
+				SchumixBot.IndulasiIdo();
+				SchumixBot.IIdo = false;
+			}
 		}
 	}
 }

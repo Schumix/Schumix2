@@ -102,39 +102,8 @@ namespace Schumix.IRC
 
 				m_WhoisPrivmsg = SchumixBot.NickTarolo;
 				m_ChannelPrivmsg = SchumixBot.NickTarolo;
-				Log.Debug("MessageHandler", "Kapcsolodas a szobakhoz...");
-				bool error = false;
 
-				foreach(var m_channel in Network.sChannelInfo._ChannelLista)
-				{
-					sSendMessage.WriteLine("JOIN {0} {1}", m_channel.Key, m_channel.Value);
-					SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key);
-				}
-
-				Network.sChannelInfo.ChannelFunkcioReload();
-				var db = SchumixBot.mSQLConn.QueryRow("SELECT aktivitas FROM channel");
-				if(db != null)
-				{
-					for(int i = 0; i < db.Rows.Count; ++i)
-					{
-						var row = db.Rows[i];
-						string aktivitas = row["aktivitas"].ToString();
-
-						if(aktivitas == "nem aktiv")
-							error = true;
-					}
-				}
-
-				if(!error)
-					Log.Success("MessageHandler", "Sikeresen kapcsolodva szobakhoz.");
-				else
-					Log.Warning("MessageHandler", "Nehany kapcsolodas sikertelen!");
-
-				if(SchumixBot.IIdo)
-				{
-					SchumixBot.IndulasiIdo();
-					SchumixBot.IIdo = false;
-				}
+				Network.sChannelInfo.JoinChannel();
 			}
 		}
 
@@ -277,41 +246,9 @@ namespace Schumix.IRC
 				{
 					m_WhoisPrivmsg = SchumixBot.NickTarolo;
 					m_ChannelPrivmsg = SchumixBot.NickTarolo;
-					Log.Debug("MessageHandler", "Kapcsolodas a szobakhoz...");
-					bool error = false;
 
-					foreach(var m_channel in Network.sChannelInfo._ChannelLista)
-					{
-						sSendMessage.WriteLine("JOIN {0} {1}", m_channel.Key, m_channel.Value);
-						SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key);
-					}
-
-					Network.sChannelInfo.ChannelFunkcioReload();
-					var db = SchumixBot.mSQLConn.QueryRow("SELECT aktivitas FROM channel");
-					if(db != null)
-					{
-						for(int i = 0; i < db.Rows.Count; ++i)
-						{
-							var row = db.Rows[i];
-							string aktivitas = row["aktivitas"].ToString();
-
-							if(aktivitas == "nem aktiv")
-								error = true;
-						}
-					}
-
-					if(!error)
-						Log.Success("MessageHandler", "Sikeresen kapcsolodva szobakhoz.");
-					else
-						Log.Warning("MessageHandler", "Nehany kapcsolodas sikertelen!");
-
+					Network.sChannelInfo.JoinChannel();
 					HostServAllapot = false;
-
-					if(SchumixBot.IIdo)
-					{
-						SchumixBot.IndulasiIdo();
-						SchumixBot.IIdo = false;
-					}
 				}
 			}
 		}
@@ -475,7 +412,7 @@ namespace Schumix.IRC
 			{
 				if(Network.sChannelInfo.FSelect("rejoin") == "be" && Network.sChannelInfo.FSelect("rejoin", Network.IMessage.Channel) == "be")
 				{
-					foreach(var m_channel in Network.sChannelInfo._ChannelLista)
+					foreach(var m_channel in Network.sChannelInfo.CLista)
 					{
 						if(Network.IMessage.Channel == m_channel.Key)
 							sSendMessage.WriteLine("JOIN {0} {1}", m_channel.Key, m_channel.Value);
