@@ -38,7 +38,7 @@ namespace Schumix.IRC.Commands
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "db")
 			{
-				var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT nev FROM adminok"));
+				var db = SchumixBot.mSQLConn.QueryRow("SELECT nev FROM adminok");
 				if(db != null)
 				{
 					for(int i = 0; i < db.Rows.Count; ++i)

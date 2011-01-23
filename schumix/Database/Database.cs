@@ -40,7 +40,7 @@ namespace Schumix.Database
         /// <param name="database">A MySQL adatbázis neve.</param>
 		public Mysql(string host, string username, string password, string database)
 		{
-			Connection = new MySqlConnection("SERVER=" + host + ";" + "DATABASE=" + database + ";" + "UID=" + username + ";" + "PWD=" + password + ";");
+			Connection = new MySqlConnection(String.Format("SERVER={0};DATABASE={1};UID={2};PWD={3};", host, database, username, password));
 			Connection.Open();
 
 			Log.Notice("Mysql", "Mysql rendszer elindult.");
@@ -108,6 +108,11 @@ namespace Schumix.Database
 				return null;
 		}
 
+		public DataRow QueryFirstRow(string query, params object[] args)
+		{
+			return QueryFirstRow(String.Format(query, args));
+		}
+
         /// <param name="query">A MySQL parancs.</param>
         /// <returns>
         ///     Az egész táblát adja vissza.
@@ -115,6 +120,11 @@ namespace Schumix.Database
 		public DataTable QueryRow(string query)
 		{
 			return Query(query);
+		}
+
+		public DataTable QueryRow(string query, params object[] args)
+		{
+			return QueryRow(String.Format(query, args));
 		}
 	}
 }

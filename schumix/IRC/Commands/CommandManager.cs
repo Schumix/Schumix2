@@ -92,13 +92,13 @@ namespace Schumix.IRC.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Error("BejovoInfo", String.Format("Hiba oka: {0}", e.ToString()));
+				Log.Error("BejovoInfo", "Hiba oka: {0}", e.ToString());
 			}
 		}
 
 		public bool Admin(string Nick)
 		{
-			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT * FROM adminok WHERE nev = '{0}'", Nick.ToLower()));
+			var db = SchumixBot.mSQLConn.QueryFirstRow("SELECT * FROM adminok WHERE nev = '{0}'", Nick.ToLower());
 			if(db != null)
 				return true;
 
@@ -107,7 +107,7 @@ namespace Schumix.IRC.Commands
 
 		public bool Admin(string Nick, AdminFlag Flag)
 		{
-			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT flag FROM adminok WHERE nev = '{0}'", Nick.ToLower()));
+			var db = SchumixBot.mSQLConn.QueryFirstRow("SELECT flag FROM adminok WHERE nev = '{0}'", Nick.ToLower());
 			if(db != null)
 			{
 				int flag = Convert.ToInt32(db["flag"]);
@@ -123,7 +123,7 @@ namespace Schumix.IRC.Commands
 
 		public bool Admin(string Nick, string Vhost, AdminFlag Flag)
 		{
-			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT vhost, flag FROM adminok WHERE nev = '{0}'", Nick.ToLower()));
+			var db = SchumixBot.mSQLConn.QueryFirstRow("SELECT vhost, flag FROM adminok WHERE nev = '{0}'", Nick.ToLower());
 			if(db != null)
 			{
 				string vhost = db["vhost"].ToString();

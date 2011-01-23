@@ -113,11 +113,11 @@ namespace Schumix.IRC
 				foreach(var m_channel in SchumixBot.m_ChannelLista)
 				{
 					sSendMessage.WriteLine("JOIN {0} {1}", m_channel.Key, m_channel.Value);
-					SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key));
+					SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key);
 				}
 
 				ChannelFunkcioReload();
-				var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT aktivitas FROM channel"));
+				var db = SchumixBot.mSQLConn.QueryRow("SELECT aktivitas FROM channel");
 				if(db != null)
 				{
 					for(int i = 0; i < db.Rows.Count; ++i)
@@ -288,11 +288,11 @@ namespace Schumix.IRC
 					foreach(var m_channel in SchumixBot.m_ChannelLista)
 					{
 						sSendMessage.WriteLine("JOIN {0} {1}", m_channel.Key, m_channel.Value);
-						SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key));
+						SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", m_channel.Key);
 					}
 
 					ChannelFunkcioReload();
-					var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT aktivitas FROM channel"));
+					var db = SchumixBot.mSQLConn.QueryRow("SELECT aktivitas FROM channel");
 					if(db != null)
 					{
 						for(int i = 0; i < db.Rows.Count; ++i)
@@ -428,7 +428,7 @@ namespace Schumix.IRC
 			if(Network.IMessage.Info.Length < 4)
 				return;
 
-			SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'nem aktiv', error = 'channel ban' WHERE szoba = '{0}'", Network.IMessage.Info[3]));
+			SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'nem aktiv', error = 'channel ban' WHERE szoba = '{0}'", Network.IMessage.Info[3]);
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, m_ChannelPrivmsg, "{0}: channel ban", Network.IMessage.Info[3]);
 			m_ChannelPrivmsg = SchumixBot.NickTarolo;
 		}
@@ -442,7 +442,7 @@ namespace Schumix.IRC
 			if(Network.IMessage.Info.Length < 4)
 				return;
 
-			SchumixBot.mSQLConn.QueryFirstRow(String.Format("UPDATE channel SET aktivitas = 'nem aktiv', error = 'hibas channel jelszo' WHERE szoba = '{0}'", Network.IMessage.Info[3]));
+			SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'nem aktiv', error = 'hibas channel jelszo' WHERE szoba = '{0}'", Network.IMessage.Info[3]);
 			sSendMessage.SendChatMessage(MessageType.PRIVMSG, m_ChannelPrivmsg, "{0}: hibás channel jelszó", Network.IMessage.Info[3]);
 			m_ChannelPrivmsg = SchumixBot.NickTarolo;
 		}
@@ -515,7 +515,7 @@ namespace Schumix.IRC
 		{
 			string status = "";
 
-			var db = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT funkcio_status FROM schumix WHERE funkcio_nev = '{0}'", nev));
+			var db = SchumixBot.mSQLConn.QueryFirstRow("SELECT funkcio_status FROM schumix WHERE funkcio_nev = '{0}'", nev);
 			if(db != null)
 				status = db["funkcio_status"].ToString();
 
@@ -591,7 +591,7 @@ namespace Schumix.IRC
 		{
 			m_ChannelFunkcio.Clear();
 
-			var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT szoba FROM channel"));
+			var db = SchumixBot.mSQLConn.QueryRow("SELECT szoba FROM channel");
 			if(db != null)
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
@@ -599,7 +599,7 @@ namespace Schumix.IRC
 					var row = db.Rows[i];
 					string szoba = row["szoba"].ToString();
 
-					var db1 = SchumixBot.mSQLConn.QueryFirstRow(String.Format("SELECT funkciok FROM channel WHERE szoba = '{0}'", szoba));
+					var db1 = SchumixBot.mSQLConn.QueryFirstRow("SELECT funkciok FROM channel WHERE szoba = '{0}'", szoba);
 					if(db1 != null)
 					{
 						string funkciok = db1["funkciok"].ToString();
@@ -618,7 +618,7 @@ namespace Schumix.IRC
 		public static void ChannelListaReload()
 		{
 			SchumixBot.m_ChannelLista.Clear();
-			var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT szoba, jelszo FROM channel"));
+			var db = SchumixBot.mSQLConn.QueryRow("SELECT szoba, jelszo FROM channel");
 			if(db != null)
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
@@ -673,7 +673,7 @@ namespace Schumix.IRC
 			string be = "";
 			string ki = "";
 
-			var db = SchumixBot.mSQLConn.QueryRow(String.Format("SELECT funkcio_nev, funkcio_status FROM schumix"));
+			var db = SchumixBot.mSQLConn.QueryRow("SELECT funkcio_nev, funkcio_status FROM schumix");
 			if(db != null)
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
