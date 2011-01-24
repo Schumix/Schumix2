@@ -32,8 +32,8 @@ namespace Schumix.IRC.Commands
 
 	public class CommandManager
 	{
-		private Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
-		private CommandHandler sCommandHandler = Singleton<CommandHandler>.Instance;
+		private readonly Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
+		private readonly CommandHandler sCommandHandler = Singleton<CommandHandler>.Instance;
 
 		public CommandManager()
 		{

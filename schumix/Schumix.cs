@@ -45,6 +45,7 @@ namespace Schumix
         ///     Dekralálja a MySQL kapcsolódást.
         /// </summary>
 		public static Mysql mSQLConn { get; private set; }
+		public static Network NWork { get; private set; }
 
 		private static Stopwatch SW = new Stopwatch();
 		public static bool IIdo = true;
@@ -62,7 +63,7 @@ namespace Schumix
 				NickTarolo = IRCConfig.NickName;
 				StartTime = DateTime.Now;
 
-				new Network(IRCConfig.Server, IRCConfig.Port);
+				NWork = new Network(IRCConfig.Server, IRCConfig.Port);
 			}
 			catch(Exception e)
 			{

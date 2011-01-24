@@ -26,9 +26,9 @@ namespace Schumix.IRC
 {
 	public class ChannelInfo
 	{
-		private List<string> ChannelFunkcio = new List<string>();
+		private readonly List<string> ChannelFunkcio = new List<string>();
 		private readonly Dictionary<string, string> _ChannelLista = new Dictionary<string, string>();
-		private SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Sender sSender = Singleton<Sender>.Instance;
 		public Dictionary<string, string> CLista
 		{
 			get
@@ -234,7 +234,7 @@ namespace Schumix.IRC
 
 			foreach(var channel in _ChannelLista)
 			{
-				sSendMessage.WriteLine("JOIN {0} {1}", channel.Key, channel.Value);
+				sSender.Join(channel.Key, channel.Value);
 				SchumixBot.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", channel.Key);
 			}
 

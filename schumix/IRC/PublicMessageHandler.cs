@@ -34,7 +34,7 @@ namespace Schumix.IRC
 {
 	public partial class MessageHandler
 	{
-		public static Commands.CommandManager CManager = new Commands.CommandManager();
+		public static readonly Commands.CommandManager CManager = new Commands.CommandManager();
 
 		public void HandlePrivmsg()
 		{
@@ -100,32 +100,32 @@ namespace Schumix.IRC
 
 					var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
 
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Verzió: 10{0}", Verzio.SchumixVerzio);
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Platform: {0}", Platform);
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3OSVerzió: {0}", Environment.OSVersion.ToString());
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Programnyelv: c#");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Verzió: 10{0}", Verzio.SchumixVerzio);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Platform: {0}", Platform);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3OSVerzió: {0}", Environment.OSVersion.ToString());
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Programnyelv: c#");
 
 					/*if(memory >= 20)
-						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Memoria használat: 8{0} MB", memory);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat: 8{0} MB", memory);
 					else if(memory >= 30)
-						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Memoria használat: 5{0} MB", memory);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat: 5{0} MB", memory);
 					else
-						sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Memoria használat: 3{0} MB", memory);*/
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat: 3{0} MB", memory);*/
 
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Memoria használat: {0} MB", memory);
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Uptime: {0}", SchumixBot.Uptime());
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat: {0} MB", memory);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Uptime: {0}", SchumixBot.Uptime());
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "help")
 				{
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Parancsok: ghost | nick | sys");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: ghost | nick | sys");
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "ghost")
 				{
 					if(!CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
 						return;
 
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, "NickServ", "ghost {0} {1}", IRCConfig.NickName, IRCConfig.NickServPassword);
-					sSendMessage.WriteLine("NICK {0}", IRCConfig.NickName);
+					sSender.NickServGhost(IRCConfig.NickName, IRCConfig.NickServPassword);
+					sSender.Nick(IRCConfig.NickName);
 					SchumixBot.NickTarolo = IRCConfig.NickName;
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "nick")
@@ -139,15 +139,15 @@ namespace Schumix.IRC
 					if(Network.IMessage.Info[5] == "identify")
 					{
 						SchumixBot.NickTarolo = IRCConfig.NickName;
-						sSendMessage.WriteLine("NICK {0}", IRCConfig.NickName);
-						Log.Notice("NickServ", "Sending NickServ identification.");
-						sSendMessage.SendChatMessage(MessageType.PRIVMSG, "NickServ", "identify {0}", IRCConfig.NickServPassword);
+						sSender.Nick(IRCConfig.NickName);
+						Log.Notice("NickServ", "NickServ azonosito kuldese.");
+						sSender.NickServ(IRCConfig.NickServPassword);
 					}
 					else
 					{
 						string nick = Network.IMessage.Info[5];
 						SchumixBot.NickTarolo = nick;
-						sSendMessage.WriteLine("NICK {0}", nick);
+						sSender.Nick(nick);
 					}
 				}
 			}
