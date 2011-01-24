@@ -30,22 +30,22 @@ namespace Schumix.IRC.Commands
 		public void HandleXbot()
 		{
 			MessageHandler.CNick();
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Verzió: 10{0}", Verzio.SchumixVerzio);
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "3Parancsok: {0}info | {0}help | {0}ido | {0}datum | {0}irc | {0}roll | {0}keres | {0}sha1 | {0}md5 | {0}uzenet | {0}whois | {0}calc | {0}prime", IRCConfig.Parancselojel);
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Programmed by: 3Csaba");
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Verzió: 10{0}", Verzio.SchumixVerzio);
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}info | {0}help | {0}ido | {0}datum | {0}irc | {0}roll | {0}keres | {0}sha1 | {0}md5 | {0}uzenet | {0}whois | {0}calc | {0}prime", IRCConfig.Parancselojel);
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Programmed by: 3Csaba");
 		}
 
 		public void HandleInfo()
 		{
 			MessageHandler.CNick();
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Programozóm: Csaba, Jackneill.");
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Programozóm: Csaba, Jackneill.");
 		}
 
 		public void HandleHelp()
 		{
 			MessageHandler.CNick();
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Ha egy parancs mögé irod a help-et segít a használatában!");
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Fő parancsom: {0}xbot", IRCConfig.Parancselojel);
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ha egy parancs mögé irod a help-et segít a használatában!");
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Fő parancsom: {0}xbot", IRCConfig.Parancselojel);
 		}
 
 		public void HandleIdo()
@@ -53,9 +53,9 @@ namespace Schumix.IRC.Commands
 			MessageHandler.CNick();
 
 			if(DateTime.Now.Minute < 10)
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Helyi idő: {0}:0{1}", DateTime.Now.Hour, DateTime.Now.Minute);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Helyi idő: {0}:0{1}", DateTime.Now.Hour, DateTime.Now.Minute);
 			else
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Helyi idő: {0}:{1}", DateTime.Now.Hour, DateTime.Now.Minute);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Helyi idő: {0}:{1}", DateTime.Now.Hour, DateTime.Now.Minute);
 		}
 
 		public void HandleDatum()
@@ -92,16 +92,16 @@ namespace Schumix.IRC.Commands
 					if(Honap < 10)
 					{
 						if(Nap < 10)
-							sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Ma {0}. 0{1}. 0{2}. {3} napja van.", Ev, Honap, Nap, napdb);
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ma {0}. 0{1}. 0{2}. {3} napja van.", Ev, Honap, Nap, napdb);
 						else
-							sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Ma {0}. 0{1}. {2}. {3} napja van.", Ev, Honap, Nap, napdb);
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ma {0}. 0{1}. {2}. {3} napja van.", Ev, Honap, Nap, napdb);
 					}
 					else
 					{
 						if(Nap < 10)
-							sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Ma {0}. {1}. 0{2}. {3} napja van.", Ev, Honap, Nap, napdb);
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ma {0}. {1}. 0{2}. {3} napja van.", Ev, Honap, Nap, napdb);
 						else
-							sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Ma {0}. {1}. {2}. {3} napja van.", Ev, Honap, Nap, napdb);
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ma {0}. {1}. {2}. {3} napja van.", Ev, Honap, Nap, napdb);
 					}
 				}
 		 	}
@@ -112,7 +112,7 @@ namespace Schumix.IRC.Commands
 			MessageHandler.CNick();
 			Random rand = new Random();
 			int szam = rand.Next(0, 100);
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Százalékos aránya {0}%", szam);
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Százalékos aránya {0}%", szam);
 		}
 
 		public void HandleCalc()
@@ -126,7 +126,7 @@ namespace Schumix.IRC.Commands
 				adat = adat.Remove(0, 1);
 
 			double ris = Eval.Calculate(adat);
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "{0}", ris);
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", ris);
 		}
 
 		public void HandleSha1()
@@ -135,7 +135,7 @@ namespace Schumix.IRC.Commands
 				return;
 
 			MessageHandler.CNick();
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, sUtility.Sha1(Network.IMessage.Info[4]));
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtility.Sha1(Network.IMessage.Info[4]));
 		}
 
 		public void HandleMd5()
@@ -159,7 +159,7 @@ namespace Schumix.IRC.Commands
 			for(int i = 0; i < adat.Length; i++)
 				Md5 += adat[i];
 
-			sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, Md5.ToLower());
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, Md5.ToLower());
 		}
 
 		public void HandleIrc()
@@ -171,8 +171,8 @@ namespace Schumix.IRC.Commands
 
 			if(Network.IMessage.Info[4] == "help")
 			{
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Segítség az irc-hez!");
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Parancsok: {0}irc rang | {0}irc rang1 | {0}irc nick | {0}irc kick | {0}irc owner", IRCConfig.Parancselojel);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Segítség az irc-hez!");
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Parancsok: {0}irc rang | {0}irc rang1 | {0}irc nick | {0}irc kick | {0}irc owner", IRCConfig.Parancselojel);
 			}
 			else
 			{
@@ -180,10 +180,10 @@ namespace Schumix.IRC.Commands
 				if(db != null)
 				{
 					string hasznalata = db["hasznalata"].ToString();
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, hasznalata);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, hasznalata);
 				}
 				else
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Hibás lekérdezés!");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
 			}
 		}
 
@@ -194,7 +194,7 @@ namespace Schumix.IRC.Commands
 			
 			MessageHandler.CNick();
 			MessageHandler.WhoisPrivmsg = Network.IMessage.Channel;
-			Network.writer.WriteLine("WHOIS {0}", Network.IMessage.Info[4]);
+			sSender.Whois(Network.IMessage.Info[4]);
 		}
 
 		public void HandleUzenet()
@@ -206,13 +206,13 @@ namespace Schumix.IRC.Commands
 
 			if(Network.IMessage.Info[4] == "help")
 			{
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Segítség az üzenethez!");
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Funkció használata: {0}üzenet <ide jön a személy> <ha nem felhivás küldenél hanem saját üzenetet>", IRCConfig.Parancselojel);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Segítség az üzenethez!");
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Funkció használata: {0}üzenet <ide jön a személy> <ha nem felhivás küldenél hanem saját üzenetet>", IRCConfig.Parancselojel);
 			}
 			else
 			{
 				if(Network.IMessage.Info.Length == 5)
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Info[4], "Keresnek téged itt: {0}", Network.IMessage.Channel);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Info[4], "Keresnek téged itt: {0}", Network.IMessage.Channel);
 				else if(Network.IMessage.Info.Length >= 6)
 				{
 					string alomany = "";
@@ -222,7 +222,7 @@ namespace Schumix.IRC.Commands
 					if(alomany.Substring(0, 1) == ":")
 						alomany = alomany.Remove(0, 1);
 
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Info[4], "{0}", alomany);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Info[4], "{0}", alomany);
 				}
 			}
 		}
@@ -236,8 +236,8 @@ namespace Schumix.IRC.Commands
 
 			if(Network.IMessage.Info[4] == "help")
 			{
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Segítség a kereséshez!");
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "Funkció használata: {0}keres <ide jön a kereset szöveg>", IRCConfig.Parancselojel);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Segítség a kereséshez!");
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Funkció használata: {0}keres <ide jön a kereset szöveg>", IRCConfig.Parancselojel);
 			}
 			else
 			{
@@ -252,15 +252,15 @@ namespace Schumix.IRC.Commands
 
 				var Regex1 = new Regex(@".titleNoFormatting.:.(?<title>\S+).,.content.:.");
 				if(!Regex1.IsMatch(url))
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "2Title: Nincs Title.");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Title: Nincs Title.");
 				else
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "2Title: {0}", Regex1.Match(url).Groups["title"].ToString());
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Title: {0}", Regex1.Match(url).Groups["title"].ToString());
 
 				var Regex = new Regex(@".unescapedUrl.:.(?<url>\S+).,.url.");
 				if(!Regex.IsMatch(url))
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "2Link: Nincs Link.");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Link: Nincs Link.");
 				else
-					sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "2Link: 9{0}", Regex.Match(url).Groups["url"].ToString());
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Link: 9{0}", Regex.Match(url).Groups["url"].ToString());
 			}
 		}
 
@@ -273,9 +273,9 @@ namespace Schumix.IRC.Commands
             bool prim = sUtility.IsPrime(Convert.ToInt32(Network.IMessage.Info[4]));
 
 			if(!prim)
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "{0} nem primszám.", Network.IMessage.Info[4]);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0} nem primszám.", Network.IMessage.Info[4]);
 			else
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "{0} primszám.", Network.IMessage.Info[4]);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0} primszám.", Network.IMessage.Info[4]);
 		}
 	}
 }

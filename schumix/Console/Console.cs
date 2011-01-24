@@ -32,8 +32,9 @@ namespace Schumix
         ///     Opcodes.cs filet hívja meg.
         /// </summary>
 		//private Opcodes sOpcodes = Singleton<Opcodes>.Instance;
-		private SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private Utility sUtility = Singleton<Utility>.Instance;
+		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Sender sSender = Singleton<Sender>.Instance;
+		private readonly Utility sUtility = Singleton<Utility>.Instance;
 
         /// <summary>
         ///     A Console logja. Alapértelmezésben ki van kapcsolva.
@@ -87,7 +88,7 @@ namespace Schumix
 
 					var db = SchumixBot.mSQLConn.QueryFirstRow("SELECT irc_cim FROM schumix WHERE entry = '1'");
 					if(db != null)
-						sSendMessage.SendChatMessage(MessageType.PRIVMSG, db["irc_cim"].ToString(), uzenet);
+						sSendMessage.SendCMPrivmsg(db["irc_cim"].ToString(), uzenet);
 
 					Thread.Sleep(1000);
 				}
@@ -348,21 +349,21 @@ namespace Schumix
 
 			if(parancs == "connect")
 			{
-				Network.Connect();
+				SchumixBot.NWork.Connect();
 				return true;
 			}
 
 			if(parancs == "disconnect")
 			{
-				sSendMessage.WriteLine("QUIT :Console: disconnect.");
-				Network.DisConnect();
+				sSender.Quit("Console: disconnect.");
+				SchumixBot.NWork.DisConnect();
 				return true;
 			}
 
 			if(parancs == "reconnect")
 			{
-				sSendMessage.WriteLine("QUIT :Console: reconnect.");
-				Network.ReConnect();
+				sSender.Quit("Console: reconnect.");
+				SchumixBot.NWork.ReConnect();
 				return true;
 			}
 
@@ -370,7 +371,7 @@ namespace Schumix
 			{
 				SchumixBot.SaveUptime();
 				Log.Notice("Console", "Viszlat :(");
-				sSendMessage.WriteLine("QUIT :Console: leállás.");
+				sSender.Quit("Console: leállás.");
 				Thread.Sleep(1000);
 				Environment.Exit(1);
 			}

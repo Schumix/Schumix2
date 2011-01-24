@@ -32,6 +32,7 @@ namespace Schumix.IRC
 
 	public class SendMessage
 	{
+		private readonly object WriteLock = new object();
 		private SendMessage() {}
 
         /// <summary>
@@ -45,30 +46,74 @@ namespace Schumix.IRC
         /// <param name="uzenet">Maga az üzenet</param>
 		public void SendChatMessage(MessageType tipus, string channel, string uzenet)
 		{
-			string buffer = "";
-
-			if(tipus == MessageType.PRIVMSG)
-				buffer = "PRIVMSG";
-			else if(tipus == MessageType.NOTICE)
-				buffer = "NOTICE";
-
-			buffer += " " + channel + " :" + uzenet;
-			WriteLine(buffer);
+			lock(WriteLock)
+			{
+				string buffer = "";
+	
+				if(tipus == MessageType.PRIVMSG)
+					buffer = "PRIVMSG";
+				else if(tipus == MessageType.NOTICE)
+					buffer = "NOTICE";
+	
+				buffer += " " + channel + " :" + uzenet;
+				WriteLine(buffer);
+			}
 		}
 
 		public void SendChatMessage(MessageType tipus, string channel, string uzenet, params object[] args)
 		{
-			SendChatMessage(tipus, channel, String.Format(uzenet, args));
+			lock(WriteLock)
+			{
+				SendChatMessage(tipus, channel, String.Format(uzenet, args));
+			}
+		}
+
+		public void SendCMPrivmsg(string channel, string uzenet)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(MessageType.PRIVMSG, channel, uzenet);
+			}
+		}
+
+		public void SendCMPrivmsg(string channel, string uzenet, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(MessageType.PRIVMSG, channel, String.Format(uzenet, args));
+			}
+		}
+
+		public void SendCMNotice(string channel, string uzenet)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(MessageType.NOTICE, channel, uzenet);
+			}
+		}
+
+		public void SendCMNotice(string channel, string uzenet, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(MessageType.NOTICE, channel, String.Format(uzenet, args));
+			}
 		}
 
 		public void WriteLine(string uzenet)
 		{
-			Network.writer.WriteLine(uzenet);
+			lock(WriteLock)
+			{
+				SchumixBot.NWork.writer.WriteLine(uzenet);
+			}
 		}
 
 		public void WriteLine(string uzenet, params object[] args)
 		{
-			WriteLine(String.Format(uzenet, args));
+			lock(WriteLock)
+			{
+				WriteLine(String.Format(uzenet, args));
+			}
 		}
 	}
 }
