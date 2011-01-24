@@ -70,6 +70,7 @@
     <Compile Include="IRC\Commands\OperatorCommandHandler.cs" />
     <Compile Include="IRC\ChannelInfo.cs" />
     <Compile Include="IRC\Sender.cs" />
+    <Compile Include="IRC\NickInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -53,6 +53,7 @@ namespace Schumix.IRC
 	{
 		private readonly MessageHandler sMessageHandler = Singleton<MessageHandler>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
+		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		public static readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		public static IRCMessage IMessage = new IRCMessage();
 		private readonly Dictionary<string, Action> _IRCHandler = new Dictionary<string, Action>();
@@ -123,6 +124,7 @@ namespace Schumix.IRC
 		{
 			_server = server;
 			_port = port;
+			sNickInfo.ChangeNick(IRCConfig.NickName);
 
 			Log.Notice("Network", "Network elindult.");
 			sChannelInfo.ChannelLista();
@@ -171,7 +173,7 @@ namespace Schumix.IRC
 			reader = new StreamReader(client.GetStream());
 			writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
 
-			writer.WriteLine("NICK {0}", SchumixBot.NickTarolo);
+			writer.WriteLine("NICK {0}", sNickInfo.NickStorage);
 			writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserName);
 			m_ConnState = ConnState.CONN_REGISTERED;
 
@@ -207,7 +209,7 @@ namespace Schumix.IRC
 			reader = new StreamReader(client.GetStream());
 			writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
 
-			sSender.NameInfo(SchumixBot.NickTarolo, IRCConfig.UserName);
+			sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName);
 			m_ConnState = ConnState.CONN_REGISTERED;
 
 			Status = true;
@@ -283,7 +285,7 @@ namespace Schumix.IRC
 
 						if(m_ConnState == ConnState.CONN_CONNECTED)
 						{
-							sSender.NameInfo(SchumixBot.NickTarolo, IRCConfig.UserName);
+							sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName);
 							m_ConnState = ConnState.CONN_REGISTERED;
 						}
 					}

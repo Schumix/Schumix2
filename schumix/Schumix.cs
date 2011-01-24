@@ -30,11 +30,6 @@ namespace Schumix
 	public class SchumixBot : Config.Config
 	{
         /// <summary>
-        ///     Az éppen használt nick.
-        /// </summary>
-		public static string NickTarolo;
-
-        /// <summary>
         ///     A bot elindításának ideje.
         /// </summary>
 		public static DateTime StartTime { get; private set; }
@@ -60,7 +55,6 @@ namespace Schumix
 
 				Log.Debug("SchumixBot", "Consol thread indul...");
 				new Consol();
-				NickTarolo = IRCConfig.NickName;
 				StartTime = DateTime.Now;
 
 				NWork = new Network(IRCConfig.Server, IRCConfig.Port);
