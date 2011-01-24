@@ -80,14 +80,7 @@ namespace Schumix.IRC.Commands
 			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
-			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "help")
-			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Alparancsok használata:");
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Admin lista: {0}admin lista", IRCConfig.Parancselojel);
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáadás: {0}admin add <admin neve>", IRCConfig.Parancselojel);
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Eltávolítás: {0}admin del <admin neve>", IRCConfig.Parancselojel);
-			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "info")
+			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "info")
 			{
 				int flag;
 				string nev = Network.IMessage.Nick;
@@ -214,15 +207,7 @@ namespace Schumix.IRC.Commands
 
 			MessageHandler.CNick();
 
-			if(Network.IMessage.Info[4] == "help")
-			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Alparancsok használata:");
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Channel kezelés: {0}funkcio <be vagy ki> <funkcio név>", IRCConfig.Parancselojel);
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Channel kezelés máshonnét: {0}funkcio channel <channel név> <be vagy ki> <funkcio név>", IRCConfig.Parancselojel);
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Együtes kezelés: {0}funkcio all <be vagy ki> <funkcio név>", IRCConfig.Parancselojel);
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Update kezelése: {0}funkcio update", IRCConfig.Parancselojel);
-			}
-			else if(Network.IMessage.Info[4] == "info")
+			if(Network.IMessage.Info[4] == "info")
 			{
 				string[] ChannelInfo = Network.sChannelInfo.ChannelFunkciokInfo(Network.IMessage.Channel).Split('|');
 				if(ChannelInfo.Length < 2)
@@ -403,19 +388,15 @@ namespace Schumix.IRC.Commands
 			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
-			if(Network.IMessage.Info.Length < 5)
-				return;
-
 			MessageHandler.CNick();
 
-			if(Network.IMessage.Info[4] == "help")
+			if(Network.IMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Alparancsok használata:");
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáadás: {0}channel add <channel> <ha van pass akkor az>", IRCConfig.Parancselojel);
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Eltávolítás: {0}channel del <channel>", IRCConfig.Parancselojel);
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Frissítés: {0}channel update", IRCConfig.Parancselojel);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: add | del | info | update");
+				return;
 			}
-			else if(Network.IMessage.Info[4] == "add")
+
+			if(Network.IMessage.Info[4] == "add")
 			{
 				if(Network.IMessage.Info.Length < 6)
 					return;
