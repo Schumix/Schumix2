@@ -25,6 +25,7 @@ namespace Schumix.IRC.Commands
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
+		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		private readonly Utility sUtility = Singleton<Utility>.Instance;
 		private CommandHandler() {}
 	}

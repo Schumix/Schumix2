@@ -556,7 +556,7 @@ namespace Schumix.IRC.Commands
 				return;
 
 			string nick = Network.IMessage.Info[4];
-			SchumixBot.NickTarolo = nick;
+			sNickInfo.ChangeNick(nick);
 			sSender.Nick(nick);
 		}
 
@@ -594,7 +594,7 @@ namespace Schumix.IRC.Commands
 
 			string kick = Network.IMessage.Info[4].ToLower();
 			int szam = Network.IMessage.Info.Length;
-			string nick = SchumixBot.NickTarolo;
+			string nick = sNickInfo.NickStorage;
 
 			if(szam == 5)
 			{
@@ -624,7 +624,7 @@ namespace Schumix.IRC.Commands
 				return;
 
 			string rang = Network.IMessage.Info[4].ToLower();
-			string tnick = SchumixBot.NickTarolo;
+			string tnick = sNickInfo.NickStorage;
 			string nev = "";
 
 			for(int i = 5; i < Network.IMessage.Info.Length; i++)
