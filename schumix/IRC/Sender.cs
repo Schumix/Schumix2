@@ -76,6 +76,30 @@ namespace Schumix.IRC
 			}
 		}
 
+		public void Kick(string channel, string name)
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("KICK {0} {1}", channel, name);
+			}
+		}
+
+		public void Kick(string channel, string name, string args)
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("KICK {0} {1} :{2}", channel, name, args);
+			}
+		}
+
+		public void Mode(string channel, string status, string name)
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("MODE {0} {1} {2}", channel, status, name);
+			}
+		}
+
 		public void Quit(string args)
 		{
 			lock(WriteLock)

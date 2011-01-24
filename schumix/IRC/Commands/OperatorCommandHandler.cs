@@ -599,7 +599,7 @@ namespace Schumix.IRC.Commands
 			if(szam == 5)
 			{
 				if(kick != nick.ToLower())
-					sSendMessage.WriteLine("KICK {0} {1}", Network.IMessage.Channel, kick);
+					sSender.Kick(Network.IMessage.Channel, kick);
 			}
 			else if(szam >= 6)
 			{
@@ -611,7 +611,7 @@ namespace Schumix.IRC.Commands
 					oka = oka.Remove(0, 1);
 
 				if(kick != nick.ToLower())
-					sSendMessage.WriteLine("KICK {0} {1} :{2}", Network.IMessage.Channel, kick, oka);
+					sSender.Kick(Network.IMessage.Channel, kick, oka);
 			}
 		}
 
@@ -636,7 +636,7 @@ namespace Schumix.IRC.Commands
 			nev.ToLower();
 
 			if(nev.IndexOf(tnick.ToLower()) == -1)
-				sSendMessage.WriteLine("MODE {0} {1} {2}", Network.IMessage.Channel, rang, nev);
+				sSender.Mode(Network.IMessage.Channel, rang, nev);
 		}
 	}
 }
