@@ -30,11 +30,6 @@ namespace Schumix
 {
 	public class SchumixBot : SchumixBase
 	{
-        /// <summary>
-        ///     A bot elindításának ideje.
-        /// </summary>
-		//public static DateTime StartTime { get; private set; }
-
         ///***START***********************************///
         /// <summary>
         ///     A MySQL class-t hívja meg.
@@ -55,13 +50,8 @@ namespace Schumix
 		{
 			try
 			{
-				//SW.Start();
-				//mSQLConn = new Mysql(MysqlConfig.Host, MysqlConfig.User, MysqlConfig.Password, MysqlConfig.Database);
-				//Log.Notice("SchumixBot", "Mysql adatbazishoz sikeres a kapcsolodas.");
-
 				Log.Debug("SchumixBot", "Consol thread indul...");
 				new Consol();
-				//StartTime = DateTime.Now;
 
 				NWork = new Network(IRCConfig.Server, IRCConfig.Port);
 			}
@@ -79,48 +69,5 @@ namespace Schumix
 		{
 			Log.Debug("SchumixBot", "~SchumixBot()");
 		}
-
-        /// <returns>
-        ///     Megmutatja mennyi ideje üzemel a program.
-        /// </returns>
-		/*public static string Uptime()
-		{
-			var Time = DateTime.Now - StartTime;
-			return String.Format("{0} nap, {1} óra, {2} perc, {3} másodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
-		}
-
-		public static void SaveUptime()
-		{
-			string datum = "";
-			int Ev = DateTime.Now.Year;
-			int Honap = DateTime.Now.Month;
-			int Nap = DateTime.Now.Day;
-			int Ora = DateTime.Now.Hour;
-			int Perc = DateTime.Now.Minute;
-			var mem = Process.GetCurrentProcess().WorkingSet64/1024/1024;
-
-			if(Honap < 10)
-			{
-				if(Nap < 10)
-					datum = String.Format("{0}. 0{1}. 0{2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
-				else
-					datum = String.Format("{0}. 0{1}. {2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
-			}
-			else
-			{
-				if(Nap < 10)
-					datum = String.Format("{0}. {1}. 0{2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
-				else
-					datum = String.Format("{0}. {1}. {2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
-			}
-
-			mSQLConn.QueryFirstRow("INSERT INTO `uptime`(datum, uptime, memory) VALUES ('{0}', '{1}', '{2} MB')", datum, Uptime(), mem);
-		}
-
-		public static void IndulasiIdo()
-		{
-			SW.Stop();
-			Log.Debug("SchumixBot", "A program {0}ms alatt indult el.", SW.ElapsedMilliseconds);
-		}*/
 	}
 }
