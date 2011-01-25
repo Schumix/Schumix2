@@ -3,15 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{8B00477A-BD08-422C-8ACF-BEA4A0004CEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix", "Schumix\schumix.csproj", "{CBAB674C-120D-4E4E-90CB-FCCC61B845B3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Irc", "Core\Schumix.Irc\Schumix.Irc.csproj", "{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Irc", "Schumix.Irc\Schumix.Irc.csproj", "{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Framework", "Core\Schumix.Framework\Schumix.Framework.csproj", "{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Framework", "Schumix.Framework\Schumix.Framework.csproj", "{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{302D248E-FD07-4FF3-A935-38EAA7256379}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WolframAPI", "WolframAPI", "{6F78C0EA-263B-4D2F-B279-D83CC17641AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix", "Applications\Schumix\Schumix.csproj", "{CBAB674C-120D-4E4E-90CB-FCCC61B845B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolframAPI", "WolframAPI\WolframAPI.csproj", "{988DBA54-C500-47AF-B31C-BE12EA83E4AA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{A82C6ED9-C26B-46A2-B168-5165F230C02B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolframAPI", "Libraries\WolframAPI\WolframAPI.csproj", "{988DBA54-C500-47AF-B31C-BE12EA83E4AA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,13 +39,13 @@ Global
 		{CBAB674C-120D-4E4E-90CB-FCCC61B845B3}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{CBAB674C-120D-4E4E-90CB-FCCC61B845B3} = {8B00477A-BD08-422C-8ACF-BEA4A0004CEA}
 		{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128} = {8B00477A-BD08-422C-8ACF-BEA4A0004CEA}
 		{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA} = {8B00477A-BD08-422C-8ACF-BEA4A0004CEA}
-		{988DBA54-C500-47AF-B31C-BE12EA83E4AA} = {6F78C0EA-263B-4D2F-B279-D83CC17641AE}
+		{CBAB674C-120D-4E4E-90CB-FCCC61B845B3} = {302D248E-FD07-4FF3-A935-38EAA7256379}
+		{988DBA54-C500-47AF-B31C-BE12EA83E4AA} = {A82C6ED9-C26B-46A2-B168-5165F230C02B}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = schumix\schumix.csproj
+		StartupItem = Schumix\Schumix.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
