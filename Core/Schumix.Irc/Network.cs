@@ -50,17 +50,12 @@ namespace Schumix.Irc
 		///***************************************///
 	};
 
-	public class Network
+	public class Network : MessageHandler
 	{
-		private readonly MessageHandler sMessageHandler = Singleton<MessageHandler>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		public static readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		public static IRCMessage IMessage = new IRCMessage();
 		private readonly Dictionary<string, Action> _IRCHandler = new Dictionary<string, Action>();
 
-		public static Mysql mSQLConn { get; private set; }
-		
         ///***START***********************************///
         ///<summary>
         ///     A kimeneti adatokat külddi az IRC felé.
@@ -129,8 +124,6 @@ namespace Schumix.Irc
 			_port = port;
 			sNickInfo.ChangeNick(IRCConfig.NickName);
 
-			mSQLConn = new Mysql(MysqlConfig.Host, MysqlConfig.User, MysqlConfig.Password, MysqlConfig.Database);
-
 			Log.Notice("Network", "Network elindult.");
 			sChannelInfo.ChannelLista();
 			InitHandler();
@@ -147,20 +140,20 @@ namespace Schumix.Irc
 
 		private void InitHandler()
 		{
-			RegisterHandler("001",     sMessageHandler.HandleSuccessfulAuth);
-			RegisterHandler("PING",    sMessageHandler.HandlePing);
-			RegisterHandler("PONG",    sMessageHandler.HandlePong);
-			RegisterHandler("PRIVMSG", sMessageHandler.HandlePrivmsg);
-			RegisterHandler("NOTICE",  sMessageHandler.HandleNotice);
-			RegisterHandler("JOIN",    sMessageHandler.HandleJoin);
-			RegisterHandler("LEFT",    sMessageHandler.HandleLeft);
-			RegisterHandler("KICK",    sMessageHandler.HandleKick);
-			RegisterHandler("474",     sMessageHandler.HandleChannelBan);
-			RegisterHandler("475",     sMessageHandler.HandleNoChannelPassword);
-			RegisterHandler("319",     sMessageHandler.HandleWhois);
-			RegisterHandler("421",     sMessageHandler.HandleIsmeretlenParancs);
-			RegisterHandler("433",     sMessageHandler.HandleNickError);
-			RegisterHandler("439",     sMessageHandler.HandleWaitingForConnection);
+			RegisterHandler("001",     HandleSuccessfulAuth);
+			RegisterHandler("PING",    HandlePing);
+			RegisterHandler("PONG",    HandlePong);
+			RegisterHandler("PRIVMSG", HandlePrivmsg);
+			RegisterHandler("NOTICE",  HandleNotice);
+			RegisterHandler("JOIN",    HandleMJoin);
+			RegisterHandler("LEFT",    HandleMLeft);
+			RegisterHandler("KICK",    HandleMKick);
+			RegisterHandler("474",     HandleChannelBan);
+			RegisterHandler("475",     HandleNoChannelPassword);
+			RegisterHandler("319",     HandleMWhois);
+			RegisterHandler("421",     HandleIsmeretlenParancs);
+			RegisterHandler("433",     HandleNickError);
+			RegisterHandler("439",     HandleWaitingForConnection);
 			Log.Notice("Network", "Osszes IRC handler regisztralva.");
 		}
 

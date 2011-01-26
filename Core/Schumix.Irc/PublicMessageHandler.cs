@@ -35,8 +35,6 @@ namespace Schumix.Irc
 {
 	public partial class MessageHandler
 	{
-		public static readonly Commands.CommandManager CManager = new Commands.CommandManager();
-
 		public void HandlePrivmsg()
 		{
 			if(ConsoleLog.CLog == 1)
@@ -65,7 +63,7 @@ namespace Schumix.Irc
 					return;
 
 				Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
-				CManager.BejovoInfo(Network.IMessage.Info[3].ToLower());
+				BejovoInfo(Network.IMessage.Info[3].ToLower());
 			}
 		}
 
@@ -122,7 +120,7 @@ namespace Schumix.Irc
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "ghost")
 				{
-					if(!CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
+					if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
 						return;
 
 					sSender.NickServGhost(IRCConfig.NickName, IRCConfig.NickServPassword);
@@ -131,7 +129,7 @@ namespace Schumix.Irc
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "nick")
 				{
-					if(!CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
+					if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
 						return;
 
 					if(Network.IMessage.Info.Length < 6)

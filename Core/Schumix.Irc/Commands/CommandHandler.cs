@@ -23,23 +23,27 @@ using Schumix.Framework.Config;
 
 namespace Schumix.Irc.Commands
 {
-	public partial class CommandHandler
+	public partial class CommandHandler : CommandInfo
 	{
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		private readonly Utility sUtility = Singleton<Utility>.Instance;
-		private CommandHandler() {}
+		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		protected readonly Sender sSender = Singleton<Sender>.Instance;
+		protected readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		protected string ChannelPrivmsg { get; set; }
+		protected string WhoisPrivmsg { get; set; }
 
-		public void HandleHelp()
+		protected CommandHandler() {}
+
+		protected void HandleHelp()
 		{
-			MessageHandler.CNick();
+			CNick();
+
 			if(Network.IMessage.Info.Length == 4)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ha a aparancs mögé irod a megadott parancs nevét vagy a nevet és egy alparancsát információt add a használatáról.");
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Fő parancsom: {0}xbot", IRCConfig.Parancselojel);
 				return;
-			}	
+			}
 
 			if(Network.IMessage.Info[4] == "xbot")
 			{
@@ -129,7 +133,7 @@ namespace Schumix.Irc.Commands
 			}
 		
 			// Operátor parancsok segítségei
-			if(MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 			{
 				if(Network.IMessage.Info[4] == "admin")
 				{
@@ -600,7 +604,7 @@ namespace Schumix.Irc.Commands
 			}
 		
 			// Adminisztrátor parancsok
-			if(MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+			if(Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 			{
 				if(Network.IMessage.Info[4] == "teszt")
 				{
@@ -644,12 +648,12 @@ namespace Schumix.Irc.Commands
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja a program információit.");
 				}
-				else if(Network.IMessage.Info[5] == "ghost" && MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+				else if(Network.IMessage.Info[5] == "ghost" && Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kilépteti a fő nick-et ha regisztrálva van.");
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0} ghost", ParancsJel.ToLower());
 				}
-				else if(Network.IMessage.Info[5] == "nick" && MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+				else if(Network.IMessage.Info[5] == "nick" && Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 				{
 					if(Network.IMessage.Info.Length < 7)
 					{

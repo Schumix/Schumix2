@@ -24,19 +24,12 @@ using System.Collections.Generic;
 using Schumix.Framework;
 
 namespace Schumix.Irc.Commands
-{	
-	public enum AdminFlag
-	{
-		Operator      = 0,
-		Administrator = 1
-	};
-
-	public class CommandManager
+{
+	public class CommandManager : CommandHandler
 	{
 		private readonly Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
-		private readonly CommandHandler sCommandHandler = Singleton<CommandHandler>.Instance;
 
-		public CommandManager()
+		protected CommandManager()
 		{
 			Log.Notice("CommandManager", "CommandManager elindult.");
 			InitHandler();
@@ -45,36 +38,36 @@ namespace Schumix.Irc.Commands
 		private void InitHandler()
 		{
 			// Public
-			RegisterHandler("xbot",   sCommandHandler.HandleXbot);
-			RegisterHandler("info",   sCommandHandler.HandleInfo);
-			RegisterHandler("help",   sCommandHandler.HandleHelp);
-			RegisterHandler("ido",    sCommandHandler.HandleIdo);
-			RegisterHandler("datum",  sCommandHandler.HandleDatum);
-			RegisterHandler("roll",   sCommandHandler.HandleRoll);
-			RegisterHandler("calc",   sCommandHandler.HandleCalc);
-			RegisterHandler("sha1",   sCommandHandler.HandleSha1);
-			RegisterHandler("md5",    sCommandHandler.HandleMd5);
-			RegisterHandler("irc",    sCommandHandler.HandleIrc);
-			RegisterHandler("whois",  sCommandHandler.HandleWhois);
-			RegisterHandler("uzenet", sCommandHandler.HandleUzenet);
-			RegisterHandler("keres",  sCommandHandler.HandleKeres);
-			RegisterHandler("prime",  sCommandHandler.HandlePrime);
+			RegisterHandler("xbot",   HandleXbot);
+			RegisterHandler("info",   HandleInfo);
+			RegisterHandler("help",   HandleHelp);
+			RegisterHandler("ido",    HandleIdo);
+			RegisterHandler("datum",  HandleDatum);
+			RegisterHandler("roll",   HandleRoll);
+			RegisterHandler("calc",   HandleCalc);
+			RegisterHandler("sha1",   HandleSha1);
+			RegisterHandler("md5",    HandleMd5);
+			RegisterHandler("irc",    HandleIrc);
+			RegisterHandler("whois",  HandleWhois);
+			RegisterHandler("uzenet", HandleUzenet);
+			RegisterHandler("keres",  HandleKeres);
+			RegisterHandler("prime",  HandlePrime);
 
 			// Operator
-			RegisterHandler("admin",      sCommandHandler.HandleAdmin);
-			RegisterHandler("funkcio",    sCommandHandler.HandleFunkcio);
-			RegisterHandler("channel",    sCommandHandler.HandleChannel);
-			RegisterHandler("sznap",      sCommandHandler.HandleSznap);
-			RegisterHandler("szinek",     sCommandHandler.HandleSzinek);
-			RegisterHandler("nick",       sCommandHandler.HandleNick);
-			RegisterHandler("join",       sCommandHandler.HandleJoin);
-			RegisterHandler("left",       sCommandHandler.HandleLeft);
-			RegisterHandler("kick",       sCommandHandler.HandleKick);
-			RegisterHandler("mode",       sCommandHandler.HandleMode);
+			RegisterHandler("admin",      HandleAdmin);
+			RegisterHandler("funkcio",    HandleFunkcio);
+			RegisterHandler("channel",    HandleChannel);
+			RegisterHandler("sznap",      HandleSznap);
+			RegisterHandler("szinek",     HandleSzinek);
+			RegisterHandler("nick",       HandleNick);
+			RegisterHandler("join",       HandleJoin);
+			RegisterHandler("left",       HandleLeft);
+			RegisterHandler("kick",       HandleKick);
+			RegisterHandler("mode",       HandleMode);
 
 			// Admin
-			RegisterHandler("teszt",      sCommandHandler.HandleTeszt);
-			RegisterHandler("kikapcs",    sCommandHandler.HandleKikapcs);
+			RegisterHandler("teszt",      HandleTeszt);
+			RegisterHandler("kikapcs",    HandleKikapcs);
 
 			Log.Notice("CommandManager", "Osszes Command handler regisztralva.");
 		}
@@ -84,7 +77,7 @@ namespace Schumix.Irc.Commands
 			_CommandHandler.Add(code, method);
 		}
 
-		public void BejovoInfo(string handler)
+		protected void BejovoInfo(string handler)
 		{
 			try
 			{
@@ -95,55 +88,6 @@ namespace Schumix.Irc.Commands
 			{
 				Log.Error("BejovoInfo", "Hiba oka: {0}", e.ToString());
 			}
-		}
-
-		public bool Admin(string Nick)
-		{
-			var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT * FROM adminok WHERE nev = '{0}'", Nick.ToLower());
-			if(db != null)
-				return true;
-
-			return false;
-		}
-
-		public bool Admin(string Nick, AdminFlag Flag)
-		{
-			var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT flag FROM adminok WHERE nev = '{0}'", Nick.ToLower());
-			if(db != null)
-			{
-				int flag = Convert.ToInt32(db["flag"]);
-
-				if(Flag != (AdminFlag)flag)
-					return false;
-
-				return true;
-			}
-
-			return false;
-		}
-
-		public bool Admin(string Nick, string Vhost, AdminFlag Flag)
-		{
-			var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT vhost, flag FROM adminok WHERE nev = '{0}'", Nick.ToLower());
-			if(db != null)
-			{
-				string vhost = db["vhost"].ToString();
-
-				if(Vhost != vhost)
-					return false;
-
-				int flag = Convert.ToInt32(db["flag"]);
-
-				if(flag == 1 && Flag == 0)
-					return true;
-
-				if(Flag != (AdminFlag)flag)
-					return false;
-
-				return true;
-			}
-
-			return false;
 		}
 	}
 }

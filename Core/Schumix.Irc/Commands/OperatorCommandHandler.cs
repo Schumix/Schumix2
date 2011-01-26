@@ -25,12 +25,12 @@ namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler
 	{
-		public void HandleAdmin()
+		protected void HandleAdmin()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick))
+			if(!Admin(Network.IMessage.Nick))
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 			bool allapot = true;
 
 			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "hozzaferes")
@@ -78,7 +78,7 @@ namespace Schumix.Irc.Commands
 				allapot = false;
 			}
 
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "info")
@@ -158,7 +158,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				string nev = Network.IMessage.Info[5].ToLower();
-				if(MessageHandler.CManager.Admin(Network.IMessage.Nick, AdminFlag.Operator) && MessageHandler.CManager.Admin(nev, AdminFlag.Administrator))
+				if(Admin(Network.IMessage.Nick, AdminFlag.Operator) && Admin(nev, AdminFlag.Administrator))
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem vagy Adminisztrátor!");
 					return;
@@ -166,7 +166,7 @@ namespace Schumix.Irc.Commands
 
 				int rang = Convert.ToInt32(Network.IMessage.Info[6]);
 		
-				if(MessageHandler.CManager.Admin(Network.IMessage.Nick, AdminFlag.Operator) && MessageHandler.CManager.Admin(nev, AdminFlag.Operator) && (AdminFlag)rang == AdminFlag.Administrator)
+				if(Admin(Network.IMessage.Nick, AdminFlag.Operator) && Admin(nev, AdminFlag.Operator) && (AdminFlag)rang == AdminFlag.Administrator)
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem vagy Adminisztrátor!");
 					return;
@@ -185,12 +185,12 @@ namespace Schumix.Irc.Commands
 				if(!allapot)
 					return;
 
-				if(MessageHandler.CManager.Admin(Network.IMessage.Nick, AdminFlag.Operator))
+				if(Admin(Network.IMessage.Nick, AdminFlag.Operator))
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}nick | {0}join | {0}left | {0}kick | {0}mode", IRCConfig.Parancselojel);
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}channel", IRCConfig.Parancselojel);
 				}
-				else if(MessageHandler.CManager.Admin(Network.IMessage.Nick, AdminFlag.Administrator))
+				else if(Admin(Network.IMessage.Nick, AdminFlag.Administrator))
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}nick | {0}join | {0}left | {0}kick | {0}mode", IRCConfig.Parancselojel);
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}channel | {0}kikapcs", IRCConfig.Parancselojel);
@@ -198,15 +198,15 @@ namespace Schumix.Irc.Commands
 			}
 		}
 
-		public void HandleFunkcio()
+		protected void HandleFunkcio()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 
 			if(Network.IMessage.Info[4] == "info")
 			{
@@ -384,12 +384,12 @@ namespace Schumix.Irc.Commands
 			}
 		}
 
-		public void HandleChannel()
+		protected void HandleChannel()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 
 			if(Network.IMessage.Info.Length < 5)
 			{
@@ -406,7 +406,7 @@ namespace Schumix.Irc.Commands
 			
 				if(Network.IMessage.Info.Length == 7)
 				{
-					MessageHandler.ChannelPrivmsg = Network.IMessage.Channel;
+					ChannelPrivmsg = Network.IMessage.Channel;
 					string jelszo = Network.IMessage.Info[6];
 					sSender.Join(szobainfo, jelszo);
 					SchumixBase.mSQLConn.QueryFirstRow("INSERT INTO `channel`(szoba, jelszo) VALUES ('{0}', '{1}')", szobainfo, jelszo);
@@ -414,7 +414,7 @@ namespace Schumix.Irc.Commands
 				}
 				else
 				{
-					MessageHandler.ChannelPrivmsg = Network.IMessage.Channel;
+					ChannelPrivmsg = Network.IMessage.Channel;
 					sSender.Join(szobainfo);
 					SchumixBase.mSQLConn.QueryFirstRow("INSERT INTO `channel`(szoba, jelszo) VALUES ('{0}', '')", szobainfo);
 					SchumixBase.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv' WHERE szoba = '{0}'", szobainfo);
@@ -497,25 +497,25 @@ namespace Schumix.Irc.Commands
 			}
 		}
 
-		public void HandleSzinek()
+		protected void HandleSzinek()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "1teszt1 2teszt2 3teszt3 4teszt4 5teszt5 6teszt6 7teszt7 8teszt8");
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "9teszt9 10teszt10 11teszt11 12teszt12 13teszt13 14teszt14 15teszt15");
 		}
 
-		public void HandleSznap()
+		protected void HandleSznap()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 
 			var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT nev, honap, nap FROM sznap WHERE nev = '{0}'", Network.IMessage.Info[4]);
 			if(db != null)
@@ -529,9 +529,9 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs ilyen ember.");
 		}
 
-		public void HandleNick()
+		protected void HandleNick()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
@@ -542,12 +542,12 @@ namespace Schumix.Irc.Commands
 			sSender.Nick(nick);
 		}
 
-		public void HandleJoin()
+		protected void HandleJoin()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
-			MessageHandler.ChannelPrivmsg = Network.IMessage.Channel;
+			ChannelPrivmsg = Network.IMessage.Channel;
 
 			if(Network.IMessage.Info.Length == 5)
 				sSender.Join(Network.IMessage.Info[4]);
@@ -555,9 +555,9 @@ namespace Schumix.Irc.Commands
 				sSender.Join(Network.IMessage.Info[4], Network.IMessage.Info[5]);
 		}
 
-		public void HandleLeft()
+		protected void HandleLeft()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
@@ -566,9 +566,9 @@ namespace Schumix.Irc.Commands
 			sSender.Part(Network.IMessage.Info[4]);
 		}
 
-		public void HandleKick()
+		protected void HandleKick()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
@@ -597,9 +597,9 @@ namespace Schumix.Irc.Commands
 			}
 		}
 
-		public void HandleMode()
+		protected void HandleMode()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			if(Network.IMessage.Info.Length < 6)
