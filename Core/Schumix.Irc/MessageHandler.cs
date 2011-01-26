@@ -22,6 +22,7 @@ using System.IO;
 using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Irc.Commands;
 
 namespace Schumix.Irc
 {
@@ -36,50 +37,13 @@ namespace Schumix.Irc
 		public string[] Info { get; set; }
 	}
 
-	public partial class MessageHandler
+	public partial class MessageHandler : CommandManager
 	{
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
-
-        /// <summary>
-        ///     Tárolja azt az IRC szoba címet, amit betölt a bot.
-        /// </summary>
-		private static string m_ChannelPrivmsg;
-
-        /// <summary>
-        ///     Tárolja azt az IRC szoba címet, amit betölt a bot.
-        /// </summary>
-		private static string m_WhoisPrivmsg;
 		private bool HostServAllapot;
 
-		public static string ChannelPrivmsg
-		{
-			get
-			{
-				return m_ChannelPrivmsg;
-			}
-			set
-			{
-				m_ChannelPrivmsg = value;
-			}
-		}
+		protected MessageHandler() {}
 
-		public static string WhoisPrivmsg
-		{
-			get
-			{
-				return m_WhoisPrivmsg;
-			}
-			set
-			{
-				m_WhoisPrivmsg = value;
-			}
-		}
-
-		private MessageHandler() {}
-
-		public void HandleSuccessfulAuth()
+		protected void HandleSuccessfulAuth()
 		{
 			Network.m_ConnState = ConnState.CONN_REGISTERED;
 			Console.Write("\n");
@@ -103,14 +67,14 @@ namespace Schumix.Irc
 				if(IRCConfig.HostServAllapot == 1)
 					sSender.HostServ("off");
 
-				m_WhoisPrivmsg = sNickInfo.NickStorage;
-				m_ChannelPrivmsg = sNickInfo.NickStorage;
+				WhoisPrivmsg = sNickInfo.NickStorage;
+				ChannelPrivmsg = sNickInfo.NickStorage;
 
 				Network.sChannelInfo.JoinChannel();
 			}
 		}
 
-		public void HandleWaitingForConnection()
+		protected void HandleWaitingForConnection()
 		{
 			Log.Notice("MessageHandler", "Varakozas a kapcsolat feldolgozasara.");
 		}
@@ -120,7 +84,7 @@ namespace Schumix.Irc
         ///     akkor köszön az éppen belépőnek.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandleJoin()
+		protected void HandleMJoin()
 		{
 			if(Network.IMessage.Nick == sNickInfo.NickStorage)
 				return;
@@ -183,7 +147,7 @@ namespace Schumix.Irc
 					sSendMessage.SendCMPrivmsg(channel, "Jó estét {0}", Network.IMessage.Nick);
 				else
 				{
-					if(CManager.Admin(Network.IMessage.Nick))
+					if(Admin(Network.IMessage.Nick))
 						sSendMessage.SendCMPrivmsg(channel, "Üdv főnök");
 					else
 						sSendMessage.SendCMPrivmsg(channel, "{0} {1}", Koszones, Network.IMessage.Nick);
@@ -196,7 +160,7 @@ namespace Schumix.Irc
         ///     miután a nick elhagyta a szobát elköszön tőle.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandleLeft()
+		protected void HandleMLeft()
 		{
 			if(Network.IMessage.Nick == sNickInfo.NickStorage)
 				return;
@@ -227,7 +191,7 @@ namespace Schumix.Irc
         ///     kiírja a console-ra az IRC szerverről fogadott információkat.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandleNotice()
+		protected void HandleNotice()
 		{
 			if(ConsoleLog.CLog == 1)
 			{
@@ -252,8 +216,8 @@ namespace Schumix.Irc
 			{
 				if(Network.IMessage.Args.IndexOf("Your vhost of") != -1 && HostServAllapot)
 				{
-					m_WhoisPrivmsg = sNickInfo.NickStorage;
-					m_ChannelPrivmsg = sNickInfo.NickStorage;
+					WhoisPrivmsg = sNickInfo.NickStorage;
+					ChannelPrivmsg = sNickInfo.NickStorage;
 
 					Network.sChannelInfo.JoinChannel();
 					HostServAllapot = false;
@@ -265,7 +229,7 @@ namespace Schumix.Irc
         ///     Válaszol, ha valaki pingeli a botot.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandlePing()
+		protected void HandlePing()
 		{
 			sSender.Ping(Network.IMessage.Args);
 		}
@@ -274,7 +238,7 @@ namespace Schumix.Irc
         ///     Válaszol, ha valaki pongolja a botot.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandlePong()
+		protected void HandlePong()
 		{
 			sSender.Pong(Network.IMessage.Args);
 			Network.Status = true;
@@ -284,7 +248,7 @@ namespace Schumix.Irc
         ///     Ha ismeretlen parancs jön, akkor kiírja.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandleIsmeretlenParancs()
+		protected void HandleIsmeretlenParancs()
 		{
 			if(ConsoleLog.CLog == 1)
 			{
@@ -301,7 +265,7 @@ namespace Schumix.Irc
         ///     átlép a másodlagosra, ha az is akkor a harmadlagosra.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandleNickError()
+		protected void HandleNickError()
 		{
 			sNickInfo.ChangeNick();
 			Network.m_ConnState = ConnState.CONN_CONNECTED;
@@ -311,35 +275,35 @@ namespace Schumix.Irc
 		///     Ha bannolva van egy szobából, akkor feljegyzi.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandleChannelBan()
+		protected void HandleChannelBan()
 		{
 			if(Network.IMessage.Info.Length < 4)
 				return;
 
 			SchumixBase.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'nem aktiv', error = 'channel ban' WHERE szoba = '{0}'", Network.IMessage.Info[3]);
-			sSendMessage.SendCMPrivmsg(m_ChannelPrivmsg, "{0}: channel ban", Network.IMessage.Info[3]);
-			m_ChannelPrivmsg = sNickInfo.NickStorage;
+			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: channel ban", Network.IMessage.Info[3]);
+			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
         /// <summary>
         ///     Ha hibás egy IRC szobának a jelszava, akkor feljegyzi.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandleNoChannelPassword()
+		protected void HandleNoChannelPassword()
 		{
 			if(Network.IMessage.Info.Length < 4)
 				return;
 
 			SchumixBase.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'nem aktiv', error = 'hibas channel jelszo' WHERE szoba = '{0}'", Network.IMessage.Info[3]);
-			sSendMessage.SendCMPrivmsg(m_ChannelPrivmsg, "{0}: hibás channel jelszó", Network.IMessage.Info[3]);
-			m_ChannelPrivmsg = sNickInfo.NickStorage;
+			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: hibás channel jelszó", Network.IMessage.Info[3]);
+			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
         /// <summary>
         ///     Kigyűjti éppen hol van fent a nick.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandleWhois()
+		protected void HandleMWhois()
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
@@ -351,15 +315,15 @@ namespace Schumix.Irc
 			if(alomany.Substring(0, 1) == ":")
 				alomany = alomany.Remove(0, 1);
 
-			sSendMessage.SendCMPrivmsg(m_WhoisPrivmsg, "Jelenleg itt van fent: {0}", alomany);
-			m_WhoisPrivmsg = sNickInfo.NickStorage;
+			sSendMessage.SendCMPrivmsg(WhoisPrivmsg, "Jelenleg itt van fent: {0}", alomany);
+			WhoisPrivmsg = sNickInfo.NickStorage;
 		}
 
         /// <summary>
         ///     Ha engedélyezett a ConsolLog, akkor kiírja a Console-ra ha kickelnek valakit.
         /// </summary>
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
-		public void HandleKick()
+		protected void HandleMKick()
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
@@ -425,13 +389,6 @@ namespace Schumix.Irc
 					Log.Error("MessageHandler", "Hiba oka: {0}", e.ToString());
 				}
 			}
-		}
-
-		public static void CNick()
-		{
-			bool channel = Network.IMessage.Channel.StartsWith("#");
-			if(!channel)
-				Network.IMessage.Channel = Network.IMessage.Nick;
 		}
 	}
 }

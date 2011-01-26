@@ -26,12 +26,12 @@ namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler
 	{
-		public void HandleTeszt()
+		protected void HandleTeszt()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 
 			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "adat")
 			{
@@ -58,12 +58,12 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", Network.IMessage.Info.Length);
 		}
 
-		public void HandleKikapcs()
+		protected void HandleKikapcs()
 		{
-			if(!MessageHandler.CManager.Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 			SchumixBase.SaveUptime();
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Viszlát :(");
 			sSender.Quit(String.Format("{0} leállított parancsal.", Network.IMessage.Nick));

@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{CBAB674C-120D-4E4E-90CB-FCCC61B845B3}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>schumix</RootNamespace>
+    <RootNamespace>Schumix</RootNamespace>
     <AssemblyName>schumix</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
@@ -28,7 +28,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>..\bin\Release</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -48,15 +48,15 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\WolframAPI\WolframAPI.csproj">
+    <ProjectReference Include="..\..\Libraries\WolframAPI\WolframAPI.csproj">
       <Project>{988DBA54-C500-47AF-B31C-BE12EA83E4AA}</Project>
       <Name>WolframAPI</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Schumix.Irc\Schumix.Irc.csproj">
+    <ProjectReference Include="..\..\Core\Schumix.Irc\Schumix.Irc.csproj">
       <Project>{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}</Project>
       <Name>Schumix.Irc</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Schumix.Framework\Schumix.Framework.csproj">
+    <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">
       <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
       <Name>Schumix.Framework</Name>
     </ProjectReference>

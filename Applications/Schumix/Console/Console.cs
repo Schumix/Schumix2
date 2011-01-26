@@ -29,26 +29,22 @@ namespace Schumix
 {
 	public class Consol : ConsoleLog
 	{
-        /// <summary>
-        ///     Opcodes.cs filet hívja meg.
-        /// </summary>
-		//private Opcodes sOpcodes = Singleton<Opcodes>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Utility sUtility = Singleton<Utility>.Instance;
 
-        /// <summary>
-        ///     A Console logja. Alapértelmezésben ki van kapcsolva.
-        /// </summary>
+		/// <summary>
+		///     A Console logja. Alapértelmezésben ki van kapcsolva.
+		/// </summary>
 		public static int ConsoleLog { get; private set; }
 
-        /// <summary>
-        ///     Console írást indítja.
-        /// </summary>
-        /// <remarks>
-        ///     Ha érzékel valamit, akkor alapértelmezésben az IRC szobába írja,
-        ///     ha azt parancsnak érzékeli, akkor végrehajtja azt.
-        /// </remarks>
+		/// <summary>
+		///     Console írást indítja.
+		/// </summary>
+		/// <remarks>
+		///     Ha érzékel valamit, akkor alapértelmezésben az IRC szobába írja,
+		///     ha azt parancsnak érzékeli, akkor végrehajtja azt.
+		/// </remarks>
 		public Consol() : base(LogConfig.IrcLog)
 		{
 			Thread console = new Thread(new ThreadStart(ConsoleRead));
@@ -57,24 +53,24 @@ namespace Schumix
 			Log.Success("Console", "Thread elindult.");
 		}
 
-        /// <summary>
-        ///     Destruktor.
-        /// </summary>
-        /// <remarks>
-        ///     Ha ez lefut, akkor a class leáll.
-        /// </remarks>
+		/// <summary>
+		///     Destruktor.
+		/// </summary>
+		/// <remarks>
+		///     Ha ez lefut, akkor a class leáll.
+		/// </remarks>
 		~Consol()
 		{
 			Log.Debug("Console", "~Console()");
 		}
 
-        /// <summary>
-        ///     Console-ba beírt parancsot hajtja végre.
-        /// </summary>
-        /// <remarks>
-        ///     Ha a Console-ba beírt szöveg egy parancs, akkor ez a
-        ///     függvény hajtja végre.
-        /// </remarks>
+		/// <summary>
+		///     Console-ba beírt parancsot hajtja végre.
+		/// </summary>
+		/// <remarks>
+		///     Ha a Console-ba beírt szöveg egy parancs, akkor ez a
+		///     függvény hajtja végre.
+		/// </remarks>
 		private void ConsoleRead()
 		{
 			try
@@ -102,17 +98,17 @@ namespace Schumix
 			}
 		}
 
-        /// <summary>
-        ///     Az "info" -t darabolja fel szóközönként.
-        /// </summary>
-        /// <param name="info">Beviteli adat a Console-ból.</param>
-        /// <returns>
-        ///     Ha igaz értékkel tér vissza "true"-val, akkor
-        ///     az "info" string egy parancs, 
-        ///     ha hamis értékkel tér vissza "false"-al, akkor
-        ///     az "info" string nem parancs, és a beírt szöveget
-        ///     az IRC szobába írja ki.
-        /// </returns>
+		/// <summary>
+		///     Az "info" -t darabolja fel szóközönként.
+		/// </summary>
+		/// <param name="info">Beviteli adat a Console-ból.</param>
+		/// <returns>
+		///     Ha igaz értékkel tér vissza "true"-val, akkor
+		///     az "info" string egy parancs, 
+		///     ha hamis értékkel tér vissza "false"-al, akkor
+		///     az "info" string nem parancs, és a beírt szöveget
+		///     az IRC szobába írja ki.
+		/// </returns>
 		bool ConsoleCommands(string info)
 		{
 			string[] cmd = info.Split(' ');

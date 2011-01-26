@@ -29,23 +29,23 @@ namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler
 	{
-		public void HandleXbot()
+		protected void HandleXbot()
 		{
-			MessageHandler.CNick();
+			CNick();
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Verzió: 10{0}", Verzio.SchumixVerzio);
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}info | {0}help | {0}ido | {0}datum | {0}irc | {0}roll | {0}keres | {0}sha1 | {0}md5 | {0}uzenet | {0}whois | {0}calc | {0}prime", IRCConfig.Parancselojel);
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Programmed by: 3Csaba");
 		}
 
-		public void HandleInfo()
+		protected void HandleInfo()
 		{
-			MessageHandler.CNick();
+			CNick();
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Programozóm: Csaba, Jackneill.");
 		}
 
-		public void HandleIdo()
+		protected void HandleIdo()
 		{
-			MessageHandler.CNick();
+			CNick();
 
 			if(DateTime.Now.Minute < 10)
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Helyi idő: {0}:0{1}", DateTime.Now.Hour, DateTime.Now.Minute);
@@ -53,9 +53,9 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Helyi idő: {0}:{1}", DateTime.Now.Hour, DateTime.Now.Minute);
 		}
 
-		public void HandleDatum()
+		protected void HandleDatum()
 		{
-			MessageHandler.CNick();
+			CNick();
 			string[,] Nevnap = new string[12,31] {
 				{ "ÚJÉV","Ábel","Genovéva","Titusz","Simon","Boldizsár","Attila","Gyöngyvér","Marcell","Melánia","Ágota","Ernő","Veronika","Bódog","Lóránt","Gusztáv","Antal","Piroska","Sára","Sebestyén","Ágnes","Vince","Zelma","Timót","Pál","Vanda","Angelika","Károly,","Adél","Martina","Marcella" },
 				{ "Ignác","Karolina","Balázs","Ráhel","Ágota","Dóra","Tódor","Aranka","Abigél","Elvira","Bertold","Lívia","Ella, Linda","Bálint","Kolos","Julianna","Donát","Bernadett","Zsuzsanna","Álmos","Eleonóra","Gerzson","Alfréd","Mátyás","Géza","Edina","Ákos, Bátor","Elemér","","","" },
@@ -102,17 +102,17 @@ namespace Schumix.Irc.Commands
 		 	}
 		}
 
-		public void HandleRoll()
+		protected void HandleRoll()
 		{
-			MessageHandler.CNick();
+			CNick();
 			Random rand = new Random();
 			int szam = rand.Next(0, 100);
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Százalékos aránya {0}%", szam);
 		}
 
-		public void HandleCalc()
+		protected void HandleCalc()
 		{
-			MessageHandler.CNick();
+			CNick();
 			string adat = "";
 			for(int i = 4; i < Network.IMessage.Info.Length; i++)
 				adat += " " + Network.IMessage.Info[i];
@@ -125,21 +125,21 @@ namespace Schumix.Irc.Commands
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", solution);
 		}
 
-		public void HandleSha1()
+		protected void HandleSha1()
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtility.Sha1(Network.IMessage.Info[4]));
 		}
 
-		public void HandleMd5()
+		protected void HandleMd5()
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 			Byte[] originalBytes;
 			Byte[] encodedBytes;
 			MD5 md5;
@@ -158,12 +158,12 @@ namespace Schumix.Irc.Commands
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, Md5.ToLower());
 		}
 
-		public void HandleIrc()
+		protected void HandleIrc()
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 
 			var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT hasznalata FROM irc_parancsok WHERE parancs = '{0}'", Network.IMessage.Info[4]);
 			if(db != null)
@@ -175,22 +175,22 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
 		}
 
-		public void HandleWhois()
+		protected void HandleWhois()
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
 			
-			MessageHandler.CNick();
-			MessageHandler.WhoisPrivmsg = Network.IMessage.Channel;
+			CNick();
+			WhoisPrivmsg = Network.IMessage.Channel;
 			sSender.Whois(Network.IMessage.Info[4]);
 		}
 
-		public void HandleUzenet()
+		protected void HandleUzenet()
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 
 			if(Network.IMessage.Info.Length == 5)
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Info[4], "Keresnek téged itt: {0}", Network.IMessage.Channel);
@@ -207,12 +207,12 @@ namespace Schumix.Irc.Commands
 			}
 		}
 
-		public void HandleKeres()
+		protected void HandleKeres()
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 
 			string adat = "";
 			for(int i = 4; i < Network.IMessage.Info.Length; i++)
@@ -236,12 +236,12 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Link: 9{0}", Regex.Match(url).Groups["url"].ToString());
 		}
 
-		public void HandlePrime()
+		protected void HandlePrime()
 		{
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			MessageHandler.CNick();
+			CNick();
 
 			double Num;
 			bool isNum = double.TryParse(Network.IMessage.Info[4], out Num);
