@@ -187,9 +187,8 @@ namespace Schumix.Irc
 		{
 			Close();
 			Log.Notice("Network", "Kapcsolat bontva.");
-
-			Log.Debug("Network", "Ujrakapcsolodas ide megindult: {0}.", _server);
 			Connection(false);
+			Log.Debug("Network", "Ujrakapcsolodas ide megindult: {0}.", _server);
 		}
 
 		private void Connection(bool b)
