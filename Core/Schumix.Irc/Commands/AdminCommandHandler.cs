@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Xml;
 using System.Threading;
 using Schumix.Framework;
 using Schumix.Framework.Config;
