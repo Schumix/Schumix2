@@ -65,6 +65,26 @@ namespace Schumix.Framework
 			return Sha1.ToLower();
 		}
 
+		public string Md5(string info)
+		{
+			Byte[] originalBytes;
+			Byte[] encodedBytes;
+			MD5 md5;
+
+			md5 = new MD5CryptoServiceProvider();
+			originalBytes = ASCIIEncoding.Default.GetBytes(info);
+			encodedBytes = md5.ComputeHash(originalBytes);
+
+			string convert = BitConverter.ToString(encodedBytes);
+			string[] adat = convert.Split('-');
+			string Md5 = "";
+
+			for(int i = 0; i < adat.Length; i++)
+				Md5 += adat[i];
+
+			return Md5.ToLower();
+		}
+
         public bool IsPrime(long x)
         {
             x = Math.Abs(x);

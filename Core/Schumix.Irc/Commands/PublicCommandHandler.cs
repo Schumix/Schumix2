@@ -140,22 +140,7 @@ namespace Schumix.Irc.Commands
 				return;
 
 			CNick();
-			Byte[] originalBytes;
-			Byte[] encodedBytes;
-			MD5 md5;
-
-			md5 = new MD5CryptoServiceProvider();
-			originalBytes = ASCIIEncoding.Default.GetBytes(Network.IMessage.Info[4]);
-			encodedBytes = md5.ComputeHash(originalBytes);
-
-			string convert = BitConverter.ToString(encodedBytes);
-			string[] adat = convert.Split('-');
-			string Md5 = "";
-
-			for(int i = 0; i < adat.Length; i++)
-				Md5 += adat[i];
-
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, Md5.ToLower());
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtility.Md5(Network.IMessage.Info[4]));
 		}
 
 		protected void HandleIrc()

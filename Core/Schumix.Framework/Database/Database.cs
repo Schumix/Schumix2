@@ -19,6 +19,7 @@
 
 using System;
 using System.Data;
+using System.Text.RegularExpressions;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 
@@ -71,8 +72,8 @@ namespace Schumix.Framework.Database
 			try
 			{
 				var adapter = new MySqlDataAdapter();
-
 				var command = Connection.CreateCommand();
+				MySqlEscape(query);
 				command.CommandText = query;
 				adapter.SelectCommand = command;
 
@@ -125,6 +126,14 @@ namespace Schumix.Framework.Database
 		public DataTable QueryRow(string query, params object[] args)
 		{
 			return QueryRow(String.Format(query, args));
+		}
+
+		private string MySqlEscape(string usString)
+		{
+			if(usString == null)
+				return null;
+
+			return Regex.Replace(usString, @"[\r\n\x00\x1a\\'""]", @"\$0");
 		}
 	}
 }
