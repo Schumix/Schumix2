@@ -187,6 +187,6 @@ namespace Schumix.Framework
 				Log.Debug("ScriptManager", "AppDomain::AssemblyResolve, sender: {0}, name: {1}, asm: {2}", sender.GetHashCode(), eargs.Name, eargs.RequestingAssembly.FullName );
 				return null;
 			};
-        }
-    }
+		}
+	}
 }
