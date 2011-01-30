@@ -53,6 +53,8 @@ namespace Schumix.Framework.Config
 			LogConfig.LogHelye = xmldoc.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
 			LogConfig.IrcLog = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText);
 
+			PluginsConfig.Dir = xmldoc.SelectSingleNode("Schumix/Plugins/Dir").InnerText;
+
 			Log.Success("Config", "Config adatbazis betoltve.");
 			Console.WriteLine("");
 		}
@@ -316,6 +318,23 @@ namespace Schumix.Framework.Config
 			set
 			{
 				_IrcLog = value;
+			}
+		}
+	}
+
+	public class PluginsConfig
+	{
+		private static string _Dir;
+
+		public static string Dir
+		{
+			get
+			{
+				return _Dir;
+			}
+			set
+			{
+				_Dir = value;
 			}
 		}
 	}

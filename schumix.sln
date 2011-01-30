@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Irc", "Core\Schumix
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Framework", "Core\Schumix.Framework\Schumix.Framework.csproj", "{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.API", "Core\Schumix.API\Schumix.API.csproj", "{A346B21F-17F6-431D-86B7-7B6B2AF02A13}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{302D248E-FD07-4FF3-A935-38EAA7256379}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix", "Applications\Schumix\Schumix.csproj", "{CBAB674C-120D-4E4E-90CB-FCCC61B845B3}"
@@ -15,12 +17,26 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolframAPI", "Libraries\WolframAPI\WolframAPI.csproj", "{988DBA54-C500-47AF-B31C-BE12EA83E4AA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Addons", "Addons", "{AD8E40DF-384D-4FF0-ABA9-91A956F38867}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.TesztPlugin", "Addons\Schumix.TesztPlugin\Schumix.TesztPlugin.csproj", "{062B6A8C-F14A-4754-81E0-66BF1E557CEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
 		Release|x86 = Release|x86
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{062B6A8C-F14A-4754-81E0-66BF1E557CEF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{062B6A8C-F14A-4754-81E0-66BF1E557CEF}.Debug|x64.Build.0 = Debug|Any CPU
+		{062B6A8C-F14A-4754-81E0-66BF1E557CEF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{062B6A8C-F14A-4754-81E0-66BF1E557CEF}.Debug|x86.Build.0 = Debug|Any CPU
+		{062B6A8C-F14A-4754-81E0-66BF1E557CEF}.Release|x64.ActiveCfg = Release|Any CPU
+		{062B6A8C-F14A-4754-81E0-66BF1E557CEF}.Release|x64.Build.0 = Release|Any CPU
+		{062B6A8C-F14A-4754-81E0-66BF1E557CEF}.Release|x86.ActiveCfg = Release|Any CPU
+		{062B6A8C-F14A-4754-81E0-66BF1E557CEF}.Release|x86.Build.0 = Release|Any CPU
 		{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}.Debug|x86.Build.0 = Debug|Any CPU
 		{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}.Release|x86.ActiveCfg = Release|Any CPU
@@ -29,6 +45,14 @@ Global
 		{988DBA54-C500-47AF-B31C-BE12EA83E4AA}.Debug|x86.Build.0 = Debug|Any CPU
 		{988DBA54-C500-47AF-B31C-BE12EA83E4AA}.Release|x86.ActiveCfg = Release|Any CPU
 		{988DBA54-C500-47AF-B31C-BE12EA83E4AA}.Release|x86.Build.0 = Release|Any CPU
+		{A346B21F-17F6-431D-86B7-7B6B2AF02A13}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A346B21F-17F6-431D-86B7-7B6B2AF02A13}.Debug|x64.Build.0 = Debug|Any CPU
+		{A346B21F-17F6-431D-86B7-7B6B2AF02A13}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A346B21F-17F6-431D-86B7-7B6B2AF02A13}.Debug|x86.Build.0 = Debug|Any CPU
+		{A346B21F-17F6-431D-86B7-7B6B2AF02A13}.Release|x64.ActiveCfg = Release|Any CPU
+		{A346B21F-17F6-431D-86B7-7B6B2AF02A13}.Release|x64.Build.0 = Release|Any CPU
+		{A346B21F-17F6-431D-86B7-7B6B2AF02A13}.Release|x86.ActiveCfg = Release|Any CPU
+		{A346B21F-17F6-431D-86B7-7B6B2AF02A13}.Release|x86.Build.0 = Release|Any CPU
 		{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}.Debug|x86.Build.0 = Debug|Any CPU
 		{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}.Release|x86.ActiveCfg = Release|Any CPU
@@ -41,11 +65,13 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128} = {8B00477A-BD08-422C-8ACF-BEA4A0004CEA}
 		{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA} = {8B00477A-BD08-422C-8ACF-BEA4A0004CEA}
+		{A346B21F-17F6-431D-86B7-7B6B2AF02A13} = {8B00477A-BD08-422C-8ACF-BEA4A0004CEA}
 		{CBAB674C-120D-4E4E-90CB-FCCC61B845B3} = {302D248E-FD07-4FF3-A935-38EAA7256379}
 		{988DBA54-C500-47AF-B31C-BE12EA83E4AA} = {A82C6ED9-C26B-46A2-B168-5165F230C02B}
+		{062B6A8C-F14A-4754-81E0-66BF1E557CEF} = {AD8E40DF-384D-4FF0-ABA9-91A956F38867}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Schumix\Schumix.csproj
+		StartupItem = Core\Schumix.Irc\Schumix.Irc.csproj
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

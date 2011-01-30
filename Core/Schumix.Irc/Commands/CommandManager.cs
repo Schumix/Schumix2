@@ -27,7 +27,7 @@ namespace Schumix.Irc.Commands
 {
 	public class CommandManager : CommandHandler
 	{
-		private readonly Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
+		private static readonly Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
 
 		protected CommandManager()
 		{
@@ -66,7 +66,7 @@ namespace Schumix.Irc.Commands
 			RegisterHandler("mode",       HandleMode);
 
 			// Admin
-			RegisterHandler("teszt",      HandleTeszt);
+			RegisterHandler("plugin",     HandlePlugin);
 			RegisterHandler("kikapcs",    HandleKikapcs);
 
 			Log.Notice("CommandManager", "Osszes Command handler regisztralva.");
@@ -75,6 +75,16 @@ namespace Schumix.Irc.Commands
 		private void RegisterHandler(string code, Action method)
 		{
 			_CommandHandler.Add(code, method);
+		}
+
+		public static void PublicRegisterHandler(string code, Action method)
+		{
+			_CommandHandler.Add(code, method);
+		}
+
+		public static void PublicRemoveHandler(string code)
+		{
+			_CommandHandler.Remove(code);
 		}
 
 		protected void BejovoInfo(string handler)
