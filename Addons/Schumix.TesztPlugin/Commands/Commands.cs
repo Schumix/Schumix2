@@ -18,15 +18,24 @@
  */
 
 using System;
+//using System.IO;
+//using System.Collections.Generic;
+//using System.Text;
+using System.Xml;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+/*using Atom.Core;
+using Atom.Utils;
+using Atom.AdditionalElements;
+using Atom.Core.Collections;*/
 
 namespace Schumix.TesztPlugin.Commands
 {
-    public class TesztCommand : CommandInfo
-    {
-		private static readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+	public class TesztCommand : CommandInfo
+	{
+		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utility sUtility = Singleton<Utility>.Instance;
 
         public void Teszt()
         {
@@ -62,11 +71,13 @@ namespace Schumix.TesztPlugin.Commands
 				var entry = feed.Entries[0]; // the first entry.
 
 				var tm = entry.Links[0].HRef.ToString().Split('/');
-				var hash = tm[(tm.Length-1)];
-				//XmlNodeList RSSNodeList = RSSXml.SelectNodes("feed");
-				//XmlNode RSSDesc = RSSXml.SelectSingleNode("feed");
+				var hash = tm[(tm.Length-1)];*/
+				/*XmlDocument RSSXml = new XmlDocument();
+				RSSXml.Load("https://github.com/megax/Schumix2/commits/master.atom");
+				XmlNodeList RSSNodeList = RSSXml.SelectNodes("feed");
+				XmlNode RSSDesc = RSSXml.SelectSingleNode("feed");
 
-				/*XmlNode RSSSubNode;
+				XmlNode RSSSubNode;
 				RSSSubNode = RSSXml.SelectSingleNode("feed/title");
 				string title = RSSSubNode != null ? RSSSubNode.InnerText : "";*/
 				//sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, hash);
@@ -75,6 +86,6 @@ namespace Schumix.TesztPlugin.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, Network.IMessage.Host);
 			else
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", Network.IMessage.Info.Length);
-        }
-    }
+		}
+	}
 }
