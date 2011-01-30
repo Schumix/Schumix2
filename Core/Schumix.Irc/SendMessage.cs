@@ -99,7 +99,8 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				Network.writer.WriteLine(uzenet);
+				if(Network.writer != null)
+					Network.writer.WriteLine(uzenet);
 			}
 		}
 
