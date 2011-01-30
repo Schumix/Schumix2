@@ -36,6 +36,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AdminCommandHandler.cs" />
@@ -62,6 +64,10 @@
     <ProjectReference Include="..\..\Libraries\WolframAPI\WolframAPI.csproj">
       <Project>{988DBA54-C500-47AF-B31C-BE12EA83E4AA}</Project>
       <Name>WolframAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Schumix.API\Schumix.API.csproj">
+      <Project>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</Project>
+      <Name>Schumix.API</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

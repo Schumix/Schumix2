@@ -18,17 +18,10 @@
  */
 
 using System;
-//using System.IO;
-//using System.Collections.Generic;
-//using System.Text;
-//using System.Xml;
 using System.Threading;
 using Schumix.Framework;
 using Schumix.Framework.Config;
-/*using Atom.Core;
-using Atom.Utils;
-using Atom.AdditionalElements;
-using Atom.Core.Collections;*/
+using Schumix.API;
 
 namespace Schumix.Irc.Commands
 {
