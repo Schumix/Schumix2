@@ -35,7 +35,7 @@ namespace Schumix.TesztPlugin.Commands
 	public class TesztCommand : CommandInfo
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly Utility sUtility = Singleton<Utility>.Instance;
+		//private readonly Utility sUtility = Singleton<Utility>.Instance;
 
         public void Teszt()
         {
