@@ -31,7 +31,7 @@ namespace Schumix.Framework
         /// </returns>
 		private static string GetTime()
 		{
-			return String.Format("{0}:{1}", DateTime.Now.Hour, DateTime.Now.Minute);
+			return String.Format("{0}:{1}:{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
 		}
 
         /// <summary>

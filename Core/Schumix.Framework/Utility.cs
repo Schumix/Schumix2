@@ -104,40 +104,37 @@ namespace Schumix.Framework
 			
 			var sb = new StringBuilder();
 			
-			for (int i = 0; i < retVal.Length; i++)
-			{
+			for(int i = 0; i < retVal.Length; i++)
 				sb.Append(retVal[i].ToString("x2"));
-				
-			}
 			
 			return sb.ToString();
 		}
 
-        public bool IsPrime(long x)
-        {
-            x = Math.Abs(x);
+		public bool IsPrime(long x)
+		{
+			x = Math.Abs(x);
 
-            if(x == 1 || x == 0)
-                return false;
-
-            if(x == 2)
-                return true;
-
-            if(x % 2 == 0)
+			if(x == 1 || x == 0)
 				return false;
 
-            var p = true;
+			if(x == 2)
+				return true;
 
-            for(var i = 3; i <= Math.Floor(Math.Sqrt(x)); i += 2)
-            {
-                if(x % i == 0)
-                {
-                    p = false;
-                    break;
-                }
-            }
+			if(x % 2 == 0)
+				return false;
 
-            return p;
-        }
+			var p = true;
+
+			for(var i = 3; i <= Math.Floor(Math.Sqrt(x)); i += 2)
+			{
+				if(x % i == 0)
+				{
+					p = false;
+					break;
+				}
+			}
+
+			return p;
+		}
 	}
 }
