@@ -5,10 +5,10 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}</ProjectGuid>
+    <ProjectGuid>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Schumix.Irc</RootNamespace>
-    <AssemblyName>Schumix.Irc</AssemblyName>
+    <RootNamespace>Schumix.API</RootNamespace>
+    <AssemblyName>Schumix.API</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -19,7 +19,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>true</Optimize>
     <OutputPath>..\..\bin\Debug</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -35,33 +35,15 @@
     <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Compile Include="ISchumix.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\AdminCommandHandler.cs" />
-    <Compile Include="Commands\CommandHandler.cs" />
-    <Compile Include="Commands\CommandManager.cs" />
-    <Compile Include="Commands\OperatorCommandHandler.cs" />
-    <Compile Include="Commands\PublicCommandHandler.cs" />
-    <Compile Include="ChannelInfo.cs" />
-    <Compile Include="MessageHandler.cs" />
-    <Compile Include="Network.cs" />
-    <Compile Include="NickInfo.cs" />
-    <Compile Include="PublicMessageHandler.cs" />
-    <Compile Include="Sender.cs" />
-    <Compile Include="SendMessage.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Commands\CommandInfo.cs" />
+    <Reference Include="System" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Schumix.Framework\Schumix.Framework.csproj">
-      <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
-      <Name>Schumix.Framework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Libraries\WolframAPI\WolframAPI.csproj">
-      <Project>{988DBA54-C500-47AF-B31C-BE12EA83E4AA}</Project>
-      <Name>WolframAPI</Name>
-    </ProjectReference>
+    <Folder Include="Properties\" />
+    <Folder Include="Properties\" />
   </ItemGroup>
 </Project>

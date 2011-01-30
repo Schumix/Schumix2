@@ -85,6 +85,34 @@ namespace Schumix.Framework
 			return Md5.ToLower();
 		}
 
+		/// <summary>
+		/// Calculates the MD5 sum of a file.
+		/// </summary>
+		/// <param name="fileName">
+		/// The file to check.
+		/// </param>
+		/// <returns>
+		/// The MD5 hash.
+		/// </returns>
+		public string MD5File(string fileName)
+		{
+			FileStream file = new FileStream(fileName, FileMode.Open);
+			MD5 md5 = new MD5CryptoServiceProvider();
+			byte[] retVal = md5.ComputeHash(file);
+			file.Close();
+			file.Dispose();
+			
+			var sb = new StringBuilder();
+			
+			for (int i = 0; i < retVal.Length; i++)
+			{
+				sb.Append(retVal[i].ToString("x2"));
+				
+			}
+			
+			return sb.ToString();
+		}
+
         public bool IsPrime(long x)
         {
             x = Math.Abs(x);

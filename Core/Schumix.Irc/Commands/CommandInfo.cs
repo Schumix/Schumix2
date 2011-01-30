@@ -35,7 +35,7 @@ namespace Schumix.Irc.Commands
 	{
 		protected CommandInfo()
 		{
-			Log.Notice("CommandInfo", "CommandInfo elindult.");
+			//Log.Notice("CommandInfo", "CommandInfo elindult.");
 		}
 
 		protected bool Admin(string Nick)

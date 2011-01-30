@@ -627,6 +627,39 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}hg add <rss neve> <channel>", IRCConfig.Parancselojel); // hülyeség szerepel itt
 					}
 				}*/
+				if(Network.IMessage.Info[4] == "plugin")
+				{
+					if(Network.IMessage.Info.Length < 6)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja milyen pluginok vannak betöltve.");
+						return;
+					}
+		
+					if(Network.IMessage.Info[5] == "load")
+					{
+						if(Network.IMessage.Info.Length < 7)
+						{
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Plugin betöltésére szólgáló parancs.");
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}plugin load <plugin neve>", IRCConfig.Parancselojel);
+							return;
+						}
+
+						if(Network.IMessage.Info[6] == "all")
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Betölt minden plugint.");
+					}
+					else if(Network.IMessage.Info[5] == "unload")
+					{
+						if(Network.IMessage.Info.Length < 7)
+						{
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Plugin eltávólítására szólgáló parancs.");
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}plugin unload <plugin neve>", IRCConfig.Parancselojel);
+							return;
+						}
+
+						if(Network.IMessage.Info[6] == "all")
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Eltávolít minden plugint.");
+					}
+				}
 				else if(Network.IMessage.Info[4] == "kikapcs")
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Bot leállítására használható parancs.");

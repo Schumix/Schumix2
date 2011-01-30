@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
@@ -19,17 +19,35 @@
 
 using System;
 
-namespace Schumix.Framework.Config
+namespace Schumix.API
 {
-	public class Verzio
+	/// <summary>
+	/// Another attempt to implement a plugin interface.
+	/// </summary>
+	public interface ISchumixBase
 	{
-		private readonly static string _SchumixVerzio = "1.5.3";
-		public static string SchumixVerzio
-		{
-			get
-			{
-				return _SchumixVerzio;
-			}
-		}
+		/// <summary>
+		/// Creates the addon.
+		/// </summary>
+		/// <param name="conn">IRC connection.</param>
+		/// <param name="channels">Channel list.</param>
+		void Setup();
+		/// <summary>
+		/// Destroys the addon, releasing all resources.
+		/// </summary>
+		void Destroy();
+
+		/// <summary>
+		/// Name of the addon
+		/// </summary>
+		string Name { get; }
+		/// <summary>
+		/// Author of the addon.
+		/// </summary>
+		string Author { get; }
+		/// <summary>
+		/// Website where the addon is available.
+		/// </summary>
+		string Website { get; }
 	}
 }

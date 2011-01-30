@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
@@ -18,17 +18,57 @@
  */
 
 using System;
+using System.Collections.Generic;
+using Schumix.API;
+using Schumix.Irc.Commands;
+using Schumix.Framework;
+using Schumix.TesztPlugin.Commands;
 
-namespace Schumix.Framework.Config
+namespace Schumix.TesztPlugin
 {
-	public class Verzio
+	public class SchumixPlugin : TesztCommand, ISchumixBase
 	{
-		private readonly static string _SchumixVerzio = "1.5.3";
-		public static string SchumixVerzio
+		public SchumixPlugin()
+		{
+
+		}
+
+		~SchumixPlugin()
+		{
+			Log.Debug("TesztPlugin", "~SchumixPlugin()");
+		}
+
+		public void Setup()
+		{
+			CommandManager.PublicRegisterHandler("teszt", Teszt);
+		}
+
+		public void Destroy()
+		{
+			CommandManager.PublicRemoveHandler("teszt");
+		}
+
+		public string Name
 		{
 			get
 			{
-				return _SchumixVerzio;
+				return "TesztPlugin";
+			}
+		}
+
+		public string Author
+		{
+			get
+			{
+				return "Megax";
+			}
+		}
+
+		public string Website
+		{
+			get
+			{
+				return "http://www.github.com/megax/Schumix2";
 			}
 		}
 	}

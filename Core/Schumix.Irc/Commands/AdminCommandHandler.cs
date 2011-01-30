@@ -18,45 +18,85 @@
  */
 
 using System;
-using System.Xml;
+//using System.IO;
+//using System.Collections.Generic;
+//using System.Text;
+//using System.Xml;
 using System.Threading;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+/*using Atom.Core;
+using Atom.Utils;
+using Atom.AdditionalElements;
+using Atom.Core.Collections;*/
 
 namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler
 	{
-		protected void HandleTeszt()
+		protected void HandlePlugin()
 		{
 			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 				return;
 
 			CNick();
 
-			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "adat")
+			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "load")
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Teszt probálkozás");
-			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "db")
-			{
-				var db = SchumixBase.mSQLConn.QueryRow("SELECT nev FROM adminok");
-				if(db != null)
+				if(Network.IMessage.Info.Length < 6)
+					return;
+
+				string name = Network.IMessage.Info[5];
+
+				if(name == "all")
 				{
-					for(int i = 0; i < db.Rows.Count; ++i)
+					if(ScriptManager.LoadPlugins())
 					{
-						var row = db.Rows[i];
-						string admin = row["nev"].ToString();
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", admin);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 3done.");
 					}
+					else
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 5failed.");
 				}
 				else
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+				{
+					if(ScriptManager.LoadPlugin(name))
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: {0} 3done.", name);
+					}
+					else
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: {0} 5failed.", name);
+				}
 			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "vhost")
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, Network.IMessage.Host);
+			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "unload")
+			{
+				string name = Network.IMessage.Info[5];
+
+				if(name == "all")
+				{
+					/*if(ScriptManager.UnloadPlugins())
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 3done.");
+					}
+					else
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 5failed.");*/
+				}
+				else
+				{
+					if(ScriptManager.UnloadPlugin(name))
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: {0} 3done.", name);
+					}
+					else
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: {0} 5failed.", name);
+				}
+			}
 			else
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", Network.IMessage.Info.Length);
+			{
+				foreach(var plugin in ScriptManager.GetPlugins())
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: 3loaded.", plugin.Name.Replace("Plugin", string.Empty));
+				}
+			}
 		}
 
 		protected void HandleKikapcs()

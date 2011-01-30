@@ -30,4 +30,7 @@
     <Parancs>
         <Elojel>$</Elojel>
     </Parancs>
+    <Plugins>
+        <Dir>plugins</Dir>
+    </Plugins>
 </Schumix>
