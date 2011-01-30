@@ -85,7 +85,7 @@ namespace Schumix
 
 					var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT irc_cim FROM schumix WHERE entry = '1'");
 					if(db != null)
-						sSendMessage.SendCMPrivmsg(db["irc_cim"].ToString(), uzenet);
+							sSendMessage.SendCMPrivmsg(db["irc_cim"].ToString(), uzenet);
 
 					Thread.Sleep(1000);
 				}
