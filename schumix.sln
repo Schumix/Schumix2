@@ -21,8 +21,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Addons", "Addons", "{AD8E40
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.TesztPlugin", "Addons\Schumix.TesztPlugin\Schumix.TesztPlugin.csproj", "{062B6A8C-F14A-4754-81E0-66BF1E557CEF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.CompilerPlugin", "Addons\Schumix.CompilerPlugin\Schumix.CompilerPlugin.csproj", "{8BFD953F-8C81-4E6C-9113-6DC842F6488A}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -43,14 +41,6 @@ Global
 		{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}.Debug|x86.Build.0 = Debug|Any CPU
 		{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}.Release|x86.ActiveCfg = Release|Any CPU
 		{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}.Release|x86.Build.0 = Release|Any CPU
-		{8BFD953F-8C81-4E6C-9113-6DC842F6488A}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{8BFD953F-8C81-4E6C-9113-6DC842F6488A}.Debug|x64.Build.0 = Debug|Any CPU
-		{8BFD953F-8C81-4E6C-9113-6DC842F6488A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{8BFD953F-8C81-4E6C-9113-6DC842F6488A}.Debug|x86.Build.0 = Debug|Any CPU
-		{8BFD953F-8C81-4E6C-9113-6DC842F6488A}.Release|x64.ActiveCfg = Release|Any CPU
-		{8BFD953F-8C81-4E6C-9113-6DC842F6488A}.Release|x64.Build.0 = Release|Any CPU
-		{8BFD953F-8C81-4E6C-9113-6DC842F6488A}.Release|x86.ActiveCfg = Release|Any CPU
-		{8BFD953F-8C81-4E6C-9113-6DC842F6488A}.Release|x86.Build.0 = Release|Any CPU
 		{988DBA54-C500-47AF-B31C-BE12EA83E4AA}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{988DBA54-C500-47AF-B31C-BE12EA83E4AA}.Debug|x86.Build.0 = Debug|Any CPU
 		{988DBA54-C500-47AF-B31C-BE12EA83E4AA}.Release|x86.ActiveCfg = Release|Any CPU
@@ -79,7 +69,6 @@ Global
 		{CBAB674C-120D-4E4E-90CB-FCCC61B845B3} = {302D248E-FD07-4FF3-A935-38EAA7256379}
 		{988DBA54-C500-47AF-B31C-BE12EA83E4AA} = {A82C6ED9-C26B-46A2-B168-5165F230C02B}
 		{062B6A8C-F14A-4754-81E0-66BF1E557CEF} = {AD8E40DF-384D-4FF0-ABA9-91A956F38867}
-		{8BFD953F-8C81-4E6C-9113-6DC842F6488A} = {AD8E40DF-384D-4FF0-ABA9-91A956F38867}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Core\Schumix.Irc\Schumix.Irc.csproj
