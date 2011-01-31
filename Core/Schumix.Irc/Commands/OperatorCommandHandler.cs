@@ -193,7 +193,7 @@ namespace Schumix.Irc.Commands
 				else if(Admin(Network.IMessage.Nick, AdminFlag.Administrator))
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}nick | {0}join | {0}left | {0}kick | {0}mode", IRCConfig.Parancselojel);
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}channel | {0}plugin {0}kikapcs", IRCConfig.Parancselojel);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}channel | {0}plugin | {0}kikapcs", IRCConfig.Parancselojel);
 				}
 			}
 		}

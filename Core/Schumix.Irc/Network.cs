@@ -146,7 +146,7 @@ namespace Schumix.Irc
 			RegisterHandler("PRIVMSG", HandlePrivmsg);
 			RegisterHandler("NOTICE",  HandleNotice);
 			RegisterHandler("JOIN",    HandleMJoin);
-			RegisterHandler("LEFT",    HandleMLeft);
+			RegisterHandler("PART",    HandleMLeft);
 			RegisterHandler("KICK",    HandleMKick);
 			RegisterHandler("474",     HandleChannelBan);
 			RegisterHandler("475",     HandleNoChannelPassword);
