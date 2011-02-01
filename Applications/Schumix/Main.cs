@@ -23,11 +23,14 @@ using System.Text;
 using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Irc;
 
 namespace Schumix
 {
 	class MainClass
 	{
+		private static readonly Sender sSender = Singleton<Sender>.Instance;
+
         /// <summary>
         ///     A Main függvény. Itt indul el a debug.
         /// </summary>
@@ -51,7 +54,7 @@ namespace Schumix
 			Console.WriteLine("");
 
 			new SchumixBot();
-			Console.CancelKeyPress += (sender, e) => SchumixBase.SaveUptime();
+			Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.SaveUptime(); };
 		}
 	}
 }
