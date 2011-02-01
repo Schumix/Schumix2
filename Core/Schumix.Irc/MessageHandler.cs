@@ -368,14 +368,11 @@ namespace Schumix.Irc
         {
 			if(Network.sChannelInfo.FSelect("log") == "be" && Network.sChannelInfo.FSelect("log", channel) == "be")
 			{
+				if(!Directory.Exists(LogConfig.LogHelye))
+					Directory.CreateDirectory(LogConfig.LogHelye);
+
 				try
 				{
-					if(!Directory.Exists(LogConfig.LogHelye))
-					{
-						Directory.CreateDirectory(LogConfig.LogHelye);
-						return;
-					}
-
 					string logfile_name = channel + ".log";
 					if(!File.Exists(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name)))
 						File.Create(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name));

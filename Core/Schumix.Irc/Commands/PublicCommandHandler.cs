@@ -112,6 +112,9 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleCalc()
 		{
+			if(Network.IMessage.Info.Length < 5)
+				return;
+
 			CNick();
 			string adat = "";
 			for(int i = 4; i < Network.IMessage.Info.Length; i++)
@@ -131,7 +134,14 @@ namespace Schumix.Irc.Commands
 				return;
 
 			CNick();
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtility.Sha1(Network.IMessage.Info[4]));
+			string adat = "";
+			for(int i = 4; i < Network.IMessage.Info.Length; i++)
+				adat += " " + Network.IMessage.Info[i];
+
+			if(adat.Substring(0, 1) == " ")
+				adat = adat.Remove(0, 1);
+
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtility.Sha1(adat));
 		}
 
 		protected void HandleMd5()
@@ -140,7 +150,14 @@ namespace Schumix.Irc.Commands
 				return;
 
 			CNick();
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtility.Md5(Network.IMessage.Info[4]));
+			string adat = "";
+			for(int i = 4; i < Network.IMessage.Info.Length; i++)
+				adat += " " + Network.IMessage.Info[i];
+
+			if(adat.Substring(0, 1) == " ")
+				adat = adat.Remove(0, 1);
+
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtility.Md5(adat));
 		}
 
 		protected void HandleIrc()
