@@ -116,7 +116,12 @@ namespace Schumix.Irc
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "help")
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: ghost | nick | sys");
+					if(Admin(Network.IMessage.Nick, Commands.AdminFlag.Operator))
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: ghost | nick | sys");
+					else if(Admin(Network.IMessage.Nick, Commands.AdminFlag.Administrator))
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: ghost | nick | sys | clean");
+					else
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: sys");
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "ghost")
 				{
@@ -148,6 +153,14 @@ namespace Schumix.Irc
 						sNickInfo.ChangeNick(nick);
 						sSender.Nick(nick);
 					}
+				}
+				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "clean")
+				{
+					if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Administrator))
+						return;
+
+					GC.Collect();
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Lefoglalt memória felszabadításra került.");
 				}
 			}
 		}

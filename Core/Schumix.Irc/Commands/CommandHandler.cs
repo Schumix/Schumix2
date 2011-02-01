@@ -673,7 +673,12 @@ namespace Schumix.Irc.Commands
 			{
 				if(Network.IMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Parancsok: ghost | nick | sys");
+					if(Admin(Network.IMessage.Nick, AdminFlag.Operator))
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Parancsok: ghost | nick | sys");
+					else if(Admin(Network.IMessage.Nick, AdminFlag.Administrator))
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Parancsok: ghost | nick | sys | clean");
+					else
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Parancsok: sys");
 					return;
 				}
 
@@ -681,12 +686,12 @@ namespace Schumix.Irc.Commands
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja a program információit.");
 				}
-				else if(Network.IMessage.Info[5] == "ghost" && Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+				else if(Network.IMessage.Info[5] == "ghost" && Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kilépteti a fő nick-et ha regisztrálva van.");
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0} ghost", ParancsJel.ToLower());
 				}
-				else if(Network.IMessage.Info[5] == "nick" && Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+				else if(Network.IMessage.Info[5] == "nick" && Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				{
 					if(Network.IMessage.Info.Length < 7)
 					{
@@ -700,6 +705,11 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Aktiválja a fő nick jelszavát.");
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0} nick identify", ParancsJel.ToLower());
 					}
+				}
+				else if(Network.IMessage.Info[5] == "clean" && Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Felszabadítja a lefoglalt memóriát.");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0} clean", ParancsJel.ToLower());
 				}
 			}
 		}
