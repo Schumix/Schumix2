@@ -127,13 +127,17 @@ namespace Schumix.Irc
 			Log.Notice("Network", "Network elindult.");
 			sChannelInfo.ChannelLista();
 			InitHandler();
+
+			Log.Debug("Network", "Kapcsolodas indul az irc szerver fele.");
 			Connect();
 
 			// Start Opcodes thread
+			Log.Debug("Network", "Opcodes thread indul...");
 			Thread opcodes = new Thread(new ThreadStart(Opcodes));
 			opcodes.Start();
 
 			// Start Ping thread
+			Log.Debug("Network", "Ping thread indul...");
 			Thread ping = new Thread(new ThreadStart(Ping));
 			ping.Start();
 		}
@@ -232,6 +236,8 @@ namespace Schumix.Irc
 		{
 			try
 			{
+				Log.Debug("Opcodes", "Opcodes thread elindult.");
+
 				string IrcMessage;
 				string opcode;
 				string[] userdata;
@@ -309,6 +315,8 @@ namespace Schumix.Irc
 		{
 			try
 			{
+				Log.Debug("Ping", "Ping thread elindult.");
+
 				while(true)
 				{
 					if(Status)

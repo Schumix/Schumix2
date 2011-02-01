@@ -48,6 +48,7 @@ namespace Schumix.Framework
 			try
 			{
 				SW.Start();
+				Log.Debug("SchumixBae", "Mysql indul...");
 				mSQLConn = new Mysql(MysqlConfig.Host, MysqlConfig.User, MysqlConfig.Password, MysqlConfig.Database);
 				Log.Notice("SchumixBase", "Mysql adatbazishoz sikeres a kapcsolodas.");
 

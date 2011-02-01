@@ -30,17 +30,6 @@ namespace Schumix
 {
 	public class SchumixBot : SchumixBase
 	{
-        ///***START***********************************///
-        /// <summary>
-        ///     A MySQL class-t hívja meg.
-        ///     Dekralálja a MySQL kapcsolódást.
-        /// </summary>
-		//public static Mysql mSQLConn { get; private set; }
-		public static Network NWork { get; private set; }
-
-		//private static Stopwatch SW = new Stopwatch();
-		//public static bool IIdo = true;
-
 		public SchumixBot() : this("schumix.xml")
 		{
 			// ha nem lenne megadva a config akkor fut le
@@ -50,10 +39,10 @@ namespace Schumix
 		{
 			try
 			{
-				Log.Debug("SchumixBot", "Consol thread indul...");
-				new Consol();
-
-				NWork = new Network(IRCConfig.Server, IRCConfig.Port);
+				Log.Debug("SchumixBot", "Network indul...");
+				var network = new Network(IRCConfig.Server, IRCConfig.Port);
+				Log.Debug("SchumixBot", "Console indul...");
+				new Consol(network);
 			}
 			catch(Exception e)
 			{

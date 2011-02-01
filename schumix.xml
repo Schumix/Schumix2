@@ -17,7 +17,7 @@
         </HostServ>
     </Irc>
     <Log>
-        <LogLevel>3</LogLevel>
+        <LogLevel>2</LogLevel>
         <LogHelye>szoba</LogHelye>
         <IrcLog>0</IrcLog>
     </Log>

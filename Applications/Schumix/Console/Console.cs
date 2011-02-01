@@ -32,6 +32,7 @@ namespace Schumix
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Utility sUtility = Singleton<Utility>.Instance;
+		private readonly Network _network;
 
 		/// <summary>
 		///     A Console logja. Alapértelmezésben ki van kapcsolva.
@@ -45,12 +46,13 @@ namespace Schumix
 		///     Ha érzékel valamit, akkor alapértelmezésben az IRC szobába írja,
 		///     ha azt parancsnak érzékeli, akkor végrehajtja azt.
 		/// </remarks>
-		public Consol() : base(LogConfig.IrcLog)
+		public Consol(Network network) : base(LogConfig.IrcLog)
 		{
 			Thread console = new Thread(new ThreadStart(ConsoleRead));
 			console.Start();
 			ConsoleLog = LogConfig.IrcLog;
-			Log.Success("Console", "Thread elindult.");
+			_network = network;
+			Log.Notice("Console", "Console elindult.");
 		}
 
 		/// <summary>
@@ -346,21 +348,21 @@ namespace Schumix
 
 			if(parancs == "connect")
 			{
-				SchumixBot.NWork.Connect();
+				_network.Connect();
 				return true;
 			}
 
 			if(parancs == "disconnect")
 			{
 				sSender.Quit("Console: disconnect.");
-				SchumixBot.NWork.DisConnect();
+				_network.DisConnect();
 				return true;
 			}
 
 			if(parancs == "reconnect")
 			{
 				sSender.Quit("Console: reconnect.");
-				SchumixBot.NWork.ReConnect();
+				_network.ReConnect();
 				return true;
 			}
 
