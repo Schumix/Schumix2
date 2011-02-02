@@ -35,6 +35,8 @@ namespace Schumix.Irc
 {
 	public partial class MessageHandler
 	{
+		private int PLength = IRCConfig.Parancselojel.Length;
+
 		public void HandlePrivmsg()
 		{
 			if(ConsoleLog.CLog)
@@ -59,10 +61,10 @@ namespace Schumix.Irc
 
 				Schumix();
 
-				if(Network.IMessage.Info[3] == "" || Network.IMessage.Info[3].Substring(0, 1) == " " || Network.IMessage.Info[3].Substring(0, 1) != IRCConfig.Parancselojel)
+				if(Network.IMessage.Info[3] == "" || Network.IMessage.Info[3].Substring(0, PLength) == " " || Network.IMessage.Info[3].Substring(0, PLength) != IRCConfig.Parancselojel)
 					return;
 
-				Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
+				Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, PLength);
 				BejovoInfo(Network.IMessage.Info[3].ToLower());
 			}
 		}
