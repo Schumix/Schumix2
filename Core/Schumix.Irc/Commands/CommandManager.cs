@@ -38,20 +38,21 @@ namespace Schumix.Irc.Commands
 		private void InitHandler()
 		{
 			// Public
-			RegisterHandler("xbot",   HandleXbot);
-			RegisterHandler("info",   HandleInfo);
-			RegisterHandler("help",   HandleHelp);
-			RegisterHandler("ido",    HandleIdo);
-			RegisterHandler("datum",  HandleDatum);
-			RegisterHandler("roll",   HandleRoll);
-			RegisterHandler("calc",   HandleCalc);
-			RegisterHandler("sha1",   HandleSha1);
-			RegisterHandler("md5",    HandleMd5);
-			RegisterHandler("irc",    HandleIrc);
-			RegisterHandler("whois",  HandleWhois);
-			RegisterHandler("uzenet", HandleUzenet);
-			RegisterHandler("keres",  HandleKeres);
-			RegisterHandler("prime",  HandlePrime);
+			RegisterHandler("xbot",    HandleXbot);
+			RegisterHandler("info",    HandleInfo);
+			RegisterHandler("help",    HandleHelp);
+			RegisterHandler("ido",     HandleIdo);
+			RegisterHandler("datum",   HandleDatum);
+			RegisterHandler("roll",    HandleRoll);
+			RegisterHandler("calc",    HandleCalc);
+			RegisterHandler("sha1",    HandleSha1);
+			RegisterHandler("md5",     HandleMd5);
+			RegisterHandler("irc",     HandleIrc);
+			RegisterHandler("whois",   HandleWhois);
+			RegisterHandler("uzenet",  HandleUzenet);
+			RegisterHandler("keres",   HandleKeres);
+			RegisterHandler("fordit",  HandleFordit);
+			RegisterHandler("prime",   HandlePrime);
 
 			// Operator
 			RegisterHandler("admin",      HandleAdmin);

@@ -33,7 +33,7 @@ namespace Schumix.Irc.Commands
 		{
 			CNick();
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Verzió: 10{0}", Verzio.SchumixVerzio);
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}info | {0}help | {0}ido | {0}datum | {0}irc | {0}roll | {0}keres | {0}sha1 | {0}md5 | {0}uzenet | {0}whois | {0}calc | {0}prime", IRCConfig.Parancselojel);
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}info | {0}help | {0}ido | {0}datum | {0}irc | {0}roll | {0}keres | {0}fordit | {0}sha1 | {0}md5 | {0}uzenet | {0}whois | {0}calc | {0}prime", IRCConfig.Parancselojel);
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Programmed by: 3Csaba");
 		}
 
@@ -236,6 +236,29 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Link: Nincs Link.");
 			else
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Link: 9{0}", Regex.Match(url).Groups["url"].ToString());
+		}
+
+		protected void HandleFordit()
+		{
+			if(Network.IMessage.Info.Length < 6)
+				return;
+
+			CNick();
+
+			string adat = "";
+			for(int i = 5; i < Network.IMessage.Info.Length; i++)
+				adat += "%20" + Network.IMessage.Info[i];
+
+			if(adat.Substring(0, 3) == "%20")
+				adat = adat.Remove(0, 3);
+
+			string url = sUtility.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=" + adat + "&langpair=" + Network.IMessage.Info[4]);
+
+			var Regex = new Regex(@"\{.translatedText.\:.(?<text>.+).\},");
+			if(!Regex.IsMatch(url))
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs fórdított szöveg.");
+			else
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", Regex.Match(url).Groups["text"].ToString());
 		}
 
 		protected void HandlePrime()
