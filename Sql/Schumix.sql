@@ -44,7 +44,7 @@ INSERT INTO `irc_parancsok` VALUES ('5', 'owner', 'Ownermod hasznalata: /msg cha
 DROP TABLE IF EXISTS `schumix`;
 CREATE TABLE `schumix` (
   `entry` int(10) unsigned NOT NULL auto_increment,
-  `irc_cim` varchar(21) NOT NULL default '',
+  `csatorna` varchar(21) NOT NULL default '',
   `funkcio_nev` varchar(21) NOT NULL default '',
   `funkcio_status` varchar(10) NOT NULL default '',
   PRIMARY KEY  (`entry`)
