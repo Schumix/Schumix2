@@ -262,7 +262,7 @@ namespace Schumix.Irc
 
 			if(SchumixBase.IIdo)
 			{
-				SchumixBase.IndulasiIdo();
+				SchumixBase.time.IndulasiIdo();
 				SchumixBase.IIdo = false;
 			}
 		}

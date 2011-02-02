@@ -48,11 +48,15 @@ namespace Schumix
 		/// </remarks>
 		public Consol(Network network) : base(LogConfig.IrcLog)
 		{
+			Log.Notice("Console", "Console elindult.");
 			Thread console = new Thread(new ThreadStart(ConsoleRead));
 			console.Start();
 			ConsoleLog = LogConfig.IrcLog;
 			_network = network;
-			Log.Notice("Console", "Console elindult.");
+
+			var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
+			if(db != null)
+				Console.Title = SchumixBase.Title + " || Console Writing Channel: " + db["csatorna"].ToString();
 		}
 
 		/// <summary>
@@ -85,9 +89,9 @@ namespace Schumix
 					if(ConsoleCommands(uzenet))
 						continue;
 
-					var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT irc_cim FROM schumix WHERE entry = '1'");
+					var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
 					if(db != null)
-						sSendMessage.SendCMPrivmsg(db["irc_cim"].ToString(), uzenet);
+						sSendMessage.SendCMPrivmsg(db["csatorna"].ToString(), uzenet);
 
 					Thread.Sleep(1000);
 				}
@@ -119,7 +123,7 @@ namespace Schumix
 			if(parancs == "help")
 			{
 				Log.Notice("Console", "Parancsok: connect, disconnect, reconnect, consolelog, kikapcs");
-				Log.Notice("Console", "Parancsok: szoba, admin, sys, funkcio");
+				Log.Notice("Console", "Parancsok: csatorna, admin, sys, funkcio");
 				return true;
 			}
 
@@ -174,21 +178,22 @@ namespace Schumix
 				Log.Notice("Console", "Programnyelv: c#");
 				Log.Notice("Console", "Memoria hasznalat: {0} MB", memory);
 				Log.Notice("Console", "Thread count: {0}", Process.GetCurrentProcess().Threads.Count);
-				Log.Notice("Console", "Uptime: {0}", SchumixBase.Uptime());
+				Log.Notice("Console", "Uptime: {0}", SchumixBase.time.Uptime());
 
 				return true;
 			}
 
-			if(parancs == "szoba")
+			if(parancs == "csatorna")
 			{
 				if(cmd.Length < 2)
 				{
-					Log.Error("Console", "Nincs megadva a szoba neve!");
+					Log.Error("Console", "Nincs megadva a csatorna neve!");
 					return true;
 				}
 
-				SchumixBase.mSQLConn.QueryFirstRow("UPDATE schumix SET irc_cim = '{0}' WHERE entry = '1'", cmd[1]);
-				Log.Notice("Console", "Uj szoba ahova mostantol lehet irni: {0}", cmd[1]);
+				SchumixBase.mSQLConn.QueryFirstRow("UPDATE schumix SET csatorna = '{0}' WHERE entry = '1'", cmd[1]);
+				Log.Notice("Console", "Uj csatorna ahova mostantol lehet irni: {0}", cmd[1]);
+				Console.Title = SchumixBase.Title + " || Console Writing Channel: " + cmd[1];
 				return true;
 			}
 
@@ -368,7 +373,7 @@ namespace Schumix
 
 			if(parancs == "kikapcs")
 			{
-				SchumixBase.SaveUptime();
+				SchumixBase.time.SaveUptime();
 				Log.Notice("Console", "Viszlat :(");
 				sSender.Quit("Console: leállás.");
 				Thread.Sleep(1000);
