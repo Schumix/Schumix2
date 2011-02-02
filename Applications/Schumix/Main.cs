@@ -42,7 +42,7 @@ namespace Schumix
         /// </remarks>
 		private static void Main(string[] args)
 		{
-			Console.Title = "Schumix2 IRC Bot";
+			Console.Title = SchumixBase.Title;
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("[Schumix2]");
 			Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> parancsot vagy <kikapcs>\n");
@@ -54,7 +54,7 @@ namespace Schumix
 			Console.WriteLine("");
 
 			new SchumixBot();
-			Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.SaveUptime(); };
+			Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.time.SaveUptime(); };
 		}
 	}
 }

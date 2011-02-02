@@ -28,31 +28,25 @@ namespace Schumix.Framework
 {
 	public class SchumixBase : Config.Config
 	{
-        /// <summary>
-        ///     A bot elindításának ideje.
-        /// </summary>
-		public static DateTime StartTime { get; private set; }
-
         ///***START***********************************///
         /// <summary>
         ///     A MySQL class-t hívja meg.
         ///     Dekralálja a MySQL kapcsolódást.
         /// </summary>
 		public static Mysql mSQLConn { get; private set; }
-
-		private static Stopwatch SW = new Stopwatch();
+		public static Time time { get; private set; }
 		public static bool IIdo = true;
+		public static string Title = "Schumix2 IRC Bot";
 
 		public SchumixBase(string config) : base(config)
 		{
 			try
 			{
-				SW.Start();
+				Log.Debug("SchumixBae", "Time indul...");
+				time = new Time();
 				Log.Debug("SchumixBae", "Mysql indul...");
 				mSQLConn = new Mysql(MysqlConfig.Host, MysqlConfig.User, MysqlConfig.Password, MysqlConfig.Database);
 				Log.Notice("SchumixBase", "Mysql adatbazishoz sikeres a kapcsolodas.");
-
-				StartTime = DateTime.Now;
 
 				if(PluginsConfig.Allapot)
 				{
@@ -73,49 +67,6 @@ namespace Schumix.Framework
 		~SchumixBase()
 		{
 			Log.Debug("SchumixBase", "~SchumixBase()");
-		}
-
-        /// <returns>
-        ///     Megmutatja mennyi ideje üzemel a program.
-        /// </returns>
-		public static string Uptime()
-		{
-			var Time = DateTime.Now - StartTime;
-			return String.Format("{0} nap, {1} óra, {2} perc, {3} másodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
-		}
-
-		public static void SaveUptime()
-		{
-			string datum = "";
-			int Ev = DateTime.Now.Year;
-			int Honap = DateTime.Now.Month;
-			int Nap = DateTime.Now.Day;
-			int Ora = DateTime.Now.Hour;
-			int Perc = DateTime.Now.Minute;
-			var mem = Process.GetCurrentProcess().WorkingSet64/1024/1024;
-
-			if(Honap < 10)
-			{
-				if(Nap < 10)
-					datum = String.Format("{0}. 0{1}. 0{2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
-				else
-					datum = String.Format("{0}. 0{1}. {2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
-			}
-			else
-			{
-				if(Nap < 10)
-					datum = String.Format("{0}. {1}. 0{2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
-				else
-					datum = String.Format("{0}. {1}. {2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
-			}
-
-			mSQLConn.QueryFirstRow("INSERT INTO `uptime`(datum, uptime, memory) VALUES ('{0}', '{1}', '{2} MB')", datum, Uptime(), mem);
-		}
-
-		public static void IndulasiIdo()
-		{
-			SW.Stop();
-			Log.Debug("SchumixBase", "A program {0}ms alatt indult el.", SW.ElapsedMilliseconds);
 		}
 	}
 }

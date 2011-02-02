@@ -98,7 +98,7 @@ namespace Schumix.Irc.Commands
 				return;
 
 			CNick();
-			SchumixBase.SaveUptime();
+			SchumixBase.time.SaveUptime();
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Viszlát :(");
 			sSender.Quit(String.Format("{0} leállított parancsal.", Network.IMessage.Nick));
 			Thread.Sleep(1000);

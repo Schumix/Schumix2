@@ -55,6 +55,7 @@
     <Compile Include="ConsoleLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptManager.cs" />
+    <Compile Include="Time.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
