@@ -8,18 +8,18 @@
         <Nick3>Schumixxx2</Nick3>
         <UserName>Schumix2</UserName>
         <NickServ>
-            <Allapot>0</Allapot>
+            <Allapot>false</Allapot>
             <Jelszo>pass</Jelszo>
         </NickServ>
         <HostServ>
-            <Allapot>0</Allapot>
-            <Vhost>0</Vhost>
+            <Allapot>false</Allapot>
+            <Vhost>false</Vhost>
         </HostServ>
     </Irc>
     <Log>
         <LogLevel>2</LogLevel>
         <LogHelye>szoba</LogHelye>
-        <IrcLog>0</IrcLog>
+        <IrcLog>false</IrcLog>
     </Log>
     <Mysql>
         <Host>localhost</Host>
@@ -31,6 +31,7 @@
         <Elojel>$</Elojel>
     </Parancs>
     <Plugins>
-        <Dir>plugins</Dir>
+        <Allapot>true</Allapot>
+        <Directory>plugins</Directory>
     </Plugins>
 </Schumix>

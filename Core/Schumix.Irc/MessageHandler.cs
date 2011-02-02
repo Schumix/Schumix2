@@ -49,13 +49,13 @@ namespace Schumix.Irc
 			Console.Write("\n");
 			Log.Success("MessageHandler", "Sikeres kapcsolodas.");
 
-			if(IRCConfig.UseNickServ == 1)
+			if(IRCConfig.UseNickServ)
 			{
 				Log.Notice("NickServ", "NickServ azonosito kuldese.");
 				sSender.NickServ(IRCConfig.NickServPassword);
 			}
 
-			if(IRCConfig.UseHostServ == 1)
+			if(IRCConfig.UseHostServ)
 			{
 				HostServAllapot = true;
 				Log.Notice("HostServ", "HostServ bevan kapcsolva.");
@@ -64,7 +64,7 @@ namespace Schumix.Irc
 			else
 			{
 				Log.Notice("HostServ", "HostServ kivan kapcsolva.");
-				if(IRCConfig.HostServAllapot == 1)
+				if(IRCConfig.HostServAllapot)
 					sSender.HostServ("off");
 
 				WhoisPrivmsg = sNickInfo.NickStorage;
@@ -193,7 +193,7 @@ namespace Schumix.Irc
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandleNotice()
 		{
-			if(ConsoleLog.CLog == 1)
+			if(ConsoleLog.CLog)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write("[SERVER] ");
@@ -212,7 +212,7 @@ namespace Schumix.Irc
 					Log.Success("NickServ", "NickServ azonosito jelszo elfogadva.");
 			}
 
-			if(Network.IMessage.Nick == "HostServ" && IRCConfig.UseHostServ == 1)
+			if(Network.IMessage.Nick == "HostServ" && IRCConfig.UseHostServ)
 			{
 				if(Network.IMessage.Args.IndexOf("Your vhost of") != -1 && HostServAllapot)
 				{
@@ -250,7 +250,7 @@ namespace Schumix.Irc
         /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandleIsmeretlenParancs()
 		{
-			if(ConsoleLog.CLog == 1)
+			if(ConsoleLog.CLog)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write("[SERVER] ");
@@ -343,7 +343,7 @@ namespace Schumix.Irc
 			{
 				if(Network.sChannelInfo.FSelect("parancsok") == "be" && Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) == "be")
 				{
-					if(ConsoleLog.CLog == 1)
+					if(ConsoleLog.CLog)
 					{
 						string alomany = "";
 						for(int i = 4; i < Network.IMessage.Info.Length; i++)

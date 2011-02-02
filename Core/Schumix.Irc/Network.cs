@@ -284,7 +284,7 @@ namespace Schumix.Irc
 							_IRCHandler[opcode].Invoke();
 						else
 						{
-							if(ConsoleLog.CLog == 1)
+							if(ConsoleLog.CLog)
 								Log.Notice("Opcodes", "Received unhandled opcode: {0}", opcode);
 						}
 

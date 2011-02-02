@@ -26,34 +26,43 @@ namespace Schumix.Framework.Config
 	{
 		public Config(string configfile)
 		{
-			Log.Debug("Config", ">> schumix.xml");
-			SchumixConfig.ConfigFile = configfile;
+			Log.Debug("Config", ">> {0}", configfile);
+			new SchumixConfig(configfile);
 			var xmldoc = new XmlDocument();
-			xmldoc.Load(@SchumixConfig.ConfigFile);
+			xmldoc.Load(@configfile);
 
 			Log.Notice("Config", "Config fajl betoltese...");
-			IRCConfig.Server = xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText;
-			IRCConfig.Port = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText);
-			IRCConfig.NickName = xmldoc.SelectSingleNode("Schumix/Irc/Nick").InnerText;
-			IRCConfig.NickName2 = xmldoc.SelectSingleNode("Schumix/Irc/Nick2").InnerText;
-			IRCConfig.NickName3 = xmldoc.SelectSingleNode("Schumix/Irc/Nick3").InnerText;
-			IRCConfig.UserName = xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText;
-			IRCConfig.UseNickServ = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Allapot").InnerText);
-			IRCConfig.NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Jelszo").InnerText;
-			IRCConfig.UseHostServ = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Allapot").InnerText);
-			IRCConfig.HostServAllapot = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText);
-			IRCConfig.Parancselojel = xmldoc.SelectSingleNode("Schumix/Parancs/Elojel").InnerText;
+			string Server = xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText;
+			int Port = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText);
+			string NickName = xmldoc.SelectSingleNode("Schumix/Irc/Nick").InnerText;
+			string NickName2 = xmldoc.SelectSingleNode("Schumix/Irc/Nick2").InnerText;
+			string NickName3 = xmldoc.SelectSingleNode("Schumix/Irc/Nick3").InnerText;
+			string UserName = xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText;
+			bool UseNickServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Allapot").InnerText);
+			string NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Jelszo").InnerText;
+			bool UseHostServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Allapot").InnerText);
+			bool HostServAllapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText);
+			string Parancselojel = xmldoc.SelectSingleNode("Schumix/Parancs/Elojel").InnerText;
 
-			MysqlConfig.Host = xmldoc.SelectSingleNode("Schumix/Mysql/Host").InnerText;
-			MysqlConfig.User = xmldoc.SelectSingleNode("Schumix/Mysql/User").InnerText;
-			MysqlConfig.Password = xmldoc.SelectSingleNode("Schumix/Mysql/Password").InnerText;
-			MysqlConfig.Database = xmldoc.SelectSingleNode("Schumix/Mysql/Database").InnerText;
+			new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, Parancselojel);
 
-			LogConfig.LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
-			LogConfig.LogHelye = xmldoc.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
-			LogConfig.IrcLog = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText);
+			string Host = xmldoc.SelectSingleNode("Schumix/Mysql/Host").InnerText;
+			string User = xmldoc.SelectSingleNode("Schumix/Mysql/User").InnerText;
+			string Password = xmldoc.SelectSingleNode("Schumix/Mysql/Password").InnerText;
+			string Database = xmldoc.SelectSingleNode("Schumix/Mysql/Database").InnerText;
 
-			PluginsConfig.Dir = xmldoc.SelectSingleNode("Schumix/Plugins/Dir").InnerText;
+			new MysqlConfig(Host, User, Password, Database);
+
+			int LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
+			string LogHelye = xmldoc.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
+			bool IrcLog = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText);
+
+			new LogConfig(LogLevel, LogHelye, IrcLog);
+
+			bool Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Plugins/Allapot").InnerText);
+			string Directory = xmldoc.SelectSingleNode("Schumix/Plugins/Directory").InnerText;
+
+			new PluginsConfig(Allapot, Directory);
 
 			Log.Success("Config", "Config adatbazis betoltve.");
 			Console.WriteLine("");
@@ -62,280 +71,83 @@ namespace Schumix.Framework.Config
 
 	public class SchumixConfig
 	{
-		private static string _ConfigFile;
-		public static string ConfigFile
+		public static string ConfigFile { get; private set; }
+
+		public SchumixConfig(string configfile)
 		{
-			get
-			{
-				return _ConfigFile;
-			}
-			set
-			{
-				_ConfigFile = value;
-			}
+			ConfigFile = configfile;
 		}
 	}
 
 	public class IRCConfig
 	{
-		private static string _Server;
-		private static int _Port;
-		private static string _NickName;
-		private static string _NickName2;
-		private static string _NickName3;
-		private static string _UserName;
-		private static int _UseNickServ;
-		private static string _NickServPassword;
-		private static int _UseHostServ;
-		private static int _HostServAllapot;
-		private static string _Parancselojel;
+		public static string Server { get; private set; }
+		public static int Port { get; private set; }
+		public static string NickName { get; private set; }
+		public static string NickName2 { get; private set; }
+		public static string NickName3 { get; private set; }
+		public static string UserName { get; private set; }
+		public static bool UseNickServ { get; private set; }
+		public static string NickServPassword { get; private set; }
+		public static bool UseHostServ { get; private set; }
+		public static bool HostServAllapot { get; private set; }
+		public static string Parancselojel { get; private set; }
 
-		public static string Server
+		public IRCConfig(string server, int port, string nickname, string nickname2, string nickname3, string username, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservallapot, string parancselojel)
 		{
-			get
-			{
-				return _Server;
-			}
-			set
-			{
-				_Server = value;
-			}
-		}
-
-		public static int Port
-		{
-			get
-			{
-				return _Port;
-			}
-			set
-			{
-				_Port = value;
-			}
-		}
-
-		public static string NickName
-		{
-			get
-			{
-				return _NickName;
-			}
-			set
-			{
-				_NickName = value;
-			}
-		}
-
-		public static string NickName2
-		{
-			get
-			{
-				return _NickName2;
-			}
-			set
-			{
-				_NickName2 = value;
-			}
-		}
-
-		public static string NickName3
-		{
-			get
-			{
-				return _NickName3;
-			}
-			set
-			{
-				_NickName3 = value;
-			}
-		}
-
-		public static string UserName
-		{
-			get
-			{
-				return _UserName;
-			}
-			set
-			{
-				_UserName = value;
-			}
-		}
-
-		public static int UseNickServ
-		{
-			get
-			{
-				return _UseNickServ;
-			}
-			set
-			{
-				_UseNickServ = value;
-			}
-		}
-
-		public static string NickServPassword
-		{
-			get
-			{
-				return _NickServPassword;
-			}
-			set
-			{
-				_NickServPassword = value;
-			}
-		}
-
-		public static int UseHostServ
-		{
-			get
-			{
-				return _UseHostServ;
-			}
-			set
-			{
-				_UseHostServ = value;
-			}
-		}
-
-		public static int HostServAllapot
-		{
-			get
-			{
-				return _HostServAllapot;
-			}
-			set
-			{
-				_HostServAllapot = value;
-			}
-		}
-
-		public static string Parancselojel
-		{
-			get
-			{
-				return _Parancselojel;
-			}
-			set
-			{
-				_Parancselojel = value;
-			}
+			Server           = server;
+			Port             = port;
+			NickName         = nickname;
+			NickName2        = nickname2;
+			NickName3        = nickname3;
+			UserName         = username;
+			UseNickServ      = usenickserv;
+			NickServPassword = nickservpassword;
+			UseHostServ      = usehostserv;
+			HostServAllapot  = hostservallapot;
+			Parancselojel    = parancselojel;
 		}
 	}
 
 	public class MysqlConfig
 	{
-		private static string _Host;
-		private static string _User;
-		private static string _Password;
-		private static string _Database;
+		public static string Host { get; private set; }
+		public static string User { get; private set; }
+		public static string Password { get; private set; }
+		public static string Database { get; private set; }
 
-		public static string Host
+		public MysqlConfig(string host, string user, string password, string database)
 		{
-			get
-			{
-				return _Host;
-			}
-			set
-			{
-				_Host = value;
-			}
-		}
-
-		public static string User
-		{
-			get
-			{
-				return _User;
-			}
-			set
-			{
-				_User = value;
-			}
-		}
-
-		public static string Password
-		{
-			get
-			{
-				return _Password;
-			}
-			set
-			{
-				_Password = value;
-			}
-		}
-
-		public static string Database
-		{
-			get
-			{
-				return _Database;
-			}
-			set
-			{
-				_Database = value;
-			}
+			Host     = host;
+			User     = user;
+			Password = password;
+			Database = database;
 		}
 	}
 
 	public class LogConfig
 	{
-		private static int _LogLevel;
-		private static string _LogHelye;
-		private static int _IrcLog;
+		public static int LogLevel { get; private set; }
+		public static string LogHelye { get; private set; }
+		public static bool IrcLog { get; private set; }
 
-		public static int LogLevel
+		public LogConfig(int loglevel, string loghelye, bool irclog)
 		{
-			get
-			{
-				return _LogLevel;
-			}
-			set
-			{
-				_LogLevel = value;
-			}
-		}
-
-		public static string LogHelye
-		{
-			get
-			{
-				return _LogHelye;
-			}
-			set
-			{
-				_LogHelye = value;
-			}
-		}
-
-		public static int IrcLog
-		{
-			get
-			{
-				return _IrcLog;
-			}
-			set
-			{
-				_IrcLog = value;
-			}
+			LogLevel = loglevel;
+			LogHelye = loghelye;
+			IrcLog   = irclog;
 		}
 	}
 
 	public class PluginsConfig
 	{
-		private static string _Dir;
+		public static bool Allapot { get; private set; }
+		public static string Directory { get; private set; }
 
-		public static string Dir
+		public PluginsConfig(bool allapot, string directory)
 		{
-			get
-			{
-				return _Dir;
-			}
-			set
-			{
-				_Dir = value;
-			}
+			Allapot   = allapot;
+			Directory = directory;
 		}
 	}
 }

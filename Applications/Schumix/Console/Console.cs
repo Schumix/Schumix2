@@ -37,7 +37,7 @@ namespace Schumix
 		/// <summary>
 		///     A Console logja. Alapértelmezésben ki van kapcsolva.
 		/// </summary>
-		public static int ConsoleLog { get; private set; }
+		public static bool ConsoleLog { get; private set; }
 
 		/// <summary>
 		///     Console írást indítja.
@@ -134,12 +134,12 @@ namespace Schumix
 				if(cmd[1] == "be")
 				{
 					Log.Notice("Console", "Console logolas bekapcsolva");
-					ChangeLog(1);
+					ChangeLog(true);
 				}
 				else if(cmd[1] == "ki")
 				{
 					Log.Notice("Console", "Console logolas kikapcsolva");
-					ChangeLog(0);
+					ChangeLog(false);
 				}
 
 				return true;

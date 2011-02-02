@@ -65,7 +65,7 @@ namespace Schumix.Framework
 		public static bool LoadPlugins()
 		{
 			Log.Notice("ScriptManager", "Loading plugins...");
-			var info = new DirectoryInfo("./" + PluginsConfig.Dir);
+			var info = new DirectoryInfo("./" + PluginsConfig.Directory);
 			FileInfo[] files = info.GetFiles();
 			
 			foreach(FileInfo f in files)
@@ -75,7 +75,7 @@ namespace Schumix.Framework
 				
 				try 
 				{
-					var asm = Assembly.LoadFrom("./" + PluginsConfig.Dir + "/" + f.Name);
+					var asm = Assembly.LoadFrom("./" + PluginsConfig.Directory + "/" + f.Name);
 					var plugin = asm.CreateInstance("Schumix." + f.Name.Replace(".dll", string.Empty) + ".SchumixPlugin");
 					var usable = plugin as ISchumixBase;
 					
@@ -91,7 +91,7 @@ namespace Schumix.Framework
 					return false;
 				}
 				
-				Log.Success("ScriptManager", "Loaded plugin: {0} (hash: {1})", f.Name, sUtility.MD5File("./" + PluginsConfig.Dir + "/" + f.Name));
+				Log.Success("ScriptManager", "Loaded plugin: {0} (hash: {1})", f.Name, sUtility.MD5File("./" + PluginsConfig.Directory + "/" + f.Name));
 			}
 
 			return true;
@@ -108,10 +108,10 @@ namespace Schumix.Framework
 			if(!name.EndsWith("Plugin"))
 				name += "Plugin";
 			
-			if(!File.Exists("./" + PluginsConfig.Dir + "/" + name + ".dll"))
+			if(!File.Exists("./" + PluginsConfig.Directory + "/" + name + ".dll"))
 				return false;
 			
-			var fi = new FileInfo("./" + PluginsConfig.Dir + "/" + name + ".dll");
+			var fi = new FileInfo("./" + PluginsConfig.Directory + "/" + name + ".dll");
 			
 			try 
 			{
@@ -131,7 +131,7 @@ namespace Schumix.Framework
 				return false;
 			}
 				
-			Log.Success("ScriptManager", "Loaded plugin: {0} (hash: {1})", fi.Name, sUtility.MD5File("./" + PluginsConfig.Dir + "/" + fi.Name));
+			Log.Success("ScriptManager", "Loaded plugin: {0} (hash: {1})", fi.Name, sUtility.MD5File("./" + PluginsConfig.Directory + "/" + fi.Name));
 			return true;
 		}
 
