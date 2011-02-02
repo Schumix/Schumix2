@@ -23,14 +23,14 @@ namespace Schumix.Framework
 {
 	public class ConsoleLog
 	{
-		public static int CLog { get; private set; }
+		public static bool CLog { get; private set; }
 
-		public ConsoleLog(int log)
+		public ConsoleLog(bool log)
 		{
 			CLog = log;
 		}
 
-		protected void ChangeLog(int log)
+		protected void ChangeLog(bool log)
 		{
 			CLog = log;
 		}

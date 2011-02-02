@@ -53,8 +53,12 @@ namespace Schumix.Framework
 				Log.Notice("SchumixBase", "Mysql adatbazishoz sikeres a kapcsolodas.");
 
 				StartTime = DateTime.Now;
-				ScriptManager.Initialize();
-				ScriptManager.LoadPlugins();
+
+				if(PluginsConfig.Allapot)
+				{
+					ScriptManager.Initialize();
+					ScriptManager.LoadPlugins();
+				}
 			}
 			catch(Exception e)
 			{
