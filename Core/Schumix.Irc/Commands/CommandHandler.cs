@@ -91,11 +91,11 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ha szökséged lenne valamire a google-ből nem kell hozzá weboldal csak ez a parancs.");
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}keres <ide jön a kereset szöveg>", IRCConfig.Parancselojel);
 			}
-			/*else if(Network.IMessage.Info[4] == "fordit")
+			else if(Network.IMessage.Info[4] == "fordit")
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ha rögtön kéne fordítani másik nyelvre vagy ről valamit megteheted ezzel a parancsal.");
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}fordit <miről|mire> <szöveg>", IRCConfig.Parancselojel);
-			}*/
+			}
 			/*else if(Network.IMessage.Info[4] == "xrev")
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Amik a kódba vannak integrálva projectek annak lekérdezhetőek egyes verziói.");
