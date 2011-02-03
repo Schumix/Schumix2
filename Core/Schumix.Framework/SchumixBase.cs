@@ -19,8 +19,6 @@
 
 using System;
 using System.Threading;
-using System.Collections.Generic;
-using System.Diagnostics;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
 

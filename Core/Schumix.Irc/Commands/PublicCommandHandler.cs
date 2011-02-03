@@ -18,7 +18,6 @@
  */
 
 using System;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Framework;
@@ -225,17 +224,17 @@ namespace Schumix.Irc.Commands
 
 			string url = sUtility.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=" + adat);
 
-			var Regex1 = new Regex(@".titleNoFormatting.:.(?<title>\S+).,.content.:.");
-			if(!Regex1.IsMatch(url))
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Title: Nincs Title.");
-			else
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Title: {0}", Regex1.Match(url).Groups["title"].ToString());
-
-			var Regex = new Regex(@".unescapedUrl.:.(?<url>\S+).,.url.");
+			var Regex = new Regex(@".unescapedUrl.\:.(?<url>\S+).,.url.+.titleNoFormatting.\:.(?<title>.+).,.content");
 			if(!Regex.IsMatch(url))
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Link: Nincs Link.");
+			{
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "2Title: Nincs Title.");
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "2Link: Nincs Link.");
+			}
 			else
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Link: 9{0}", Regex.Match(url).Groups["url"].ToString());
+			{
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Title: {0}", Regex.Match(url).Groups["title"].ToString()));
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Link: 3{0}", Regex.Match(url).Groups["url"].ToString()));
+			}
 		}
 
 		protected void HandleFordit()
