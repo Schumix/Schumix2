@@ -18,9 +18,6 @@
  */
 
 using System;
-using System.IO;
-using System.Linq;
-using System.Collections.Generic;
 using Schumix.Framework;
 
 namespace Schumix.Irc.Commands

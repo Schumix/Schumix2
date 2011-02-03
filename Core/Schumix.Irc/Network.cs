@@ -22,7 +22,6 @@ using System.Threading;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
-using System.Linq;
 using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Config;

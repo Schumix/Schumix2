@@ -19,10 +19,7 @@
 
 using System;
 using System.Threading;
-using System.Collections.Generic;
 using System.Diagnostics;
-using Schumix.Framework.Config;
-using Schumix.Framework.Database;
 
 namespace Schumix.Framework
 {
@@ -31,7 +28,7 @@ namespace Schumix.Framework
 		/// <summary>
 		///     A bot elindításának ideje.
 		/// </summary>
-		public DateTime StartTime { get; private set; }
+		public readonly DateTime StartTime;
 		public readonly Stopwatch SW = new Stopwatch();
 
 		public Time()
