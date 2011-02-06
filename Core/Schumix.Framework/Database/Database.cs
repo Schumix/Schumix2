@@ -106,7 +106,7 @@ namespace Schumix.Framework.Database
 
 			if(!table.Equals(null) && table.Rows.Count > 0)
 				return table.Rows[0];
-			else 
+			else
 				return null;
 		}
 

@@ -44,18 +44,14 @@ namespace Schumix.Irc.Commands
 				if(name == "all")
 				{
 					if(ScriptManager.LoadPlugins())
-					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 3done.");
-					}
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 5failed.");
 				}
 				else
 				{
 					if(ScriptManager.LoadPlugin(name))
-					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: {0} 3done.", name);
-					}
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: {0} 5failed.", name);
 				}
@@ -67,18 +63,14 @@ namespace Schumix.Irc.Commands
 				if(name == "all")
 				{
 					/*if(ScriptManager.UnloadPlugins())
-					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 3done.");
-					}
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 5failed.");*/
 				}
 				else
 				{
 					if(ScriptManager.UnloadPlugin(name))
-					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: {0} 3done.", name);
-					}
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: {0} 5failed.", name);
 				}
@@ -86,9 +78,7 @@ namespace Schumix.Irc.Commands
 			else
 			{
 				foreach(var plugin in ScriptManager.GetPlugins())
-				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: 3loaded.", plugin.Name.Replace("Plugin", string.Empty));
-				}
 			}
 		}
 

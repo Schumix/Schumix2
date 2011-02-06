@@ -29,26 +29,6 @@ using Schumix.Framework.Database;
 
 namespace Schumix.Irc
 {
-	public enum ConnState
-	{
-		///***************************************///
-		/// <summary>
-		///     Nincs kapcsolat.
-		/// </summary>
-		CONN_CONNECTED = 0,
-	
-		/// <summary>
-		///     Kapcsolódás.
-		/// </summary>
-		CONN_REGISTERING,
-	
-		/// <summary>
-		///     Van kapcsolódás.
-		/// </summary>
-		CONN_REGISTERED
-		///***************************************///
-	};
-
 	public class Network : MessageHandler
 	{
 		public static readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
@@ -73,21 +53,11 @@ namespace Schumix.Irc
         ///***END***********************************///
 
         /// <summary>
-        ///     Ha 0 akkor nem kapcsolódott szerverhez,
-        ///     ha 1 akkor kapcsolódik,
-        ///     ha 2 akkor kapcsolódott.
-        /// </summary>
-        /// <remarks>
-        ///     Az lábbi 3 változót töltjük bele az "m_ConnState"-be
-        ///     azért van, hogy ne számokkal kelljen dolgozni.
-        ///</remarks>
-		public static ConnState m_ConnState = ConnState.CONN_CONNECTED;
-
-        /// <summary>
         ///     Ha "true" akkor jött pong az IRC felől,
         ///     ha "false" akkor nem és elindul a reconnect() függvény.
         /// </summary>
 		public static bool Status;
+		public static bool NewNick;
 
         /// <summary>
         ///     Segédváltozó a "Status" váltotó mellé.
@@ -132,12 +102,12 @@ namespace Schumix.Irc
 
 			// Start Opcodes thread
 			Log.Debug("Network", "Opcodes thread indul...");
-			Thread opcodes = new Thread(new ThreadStart(Opcodes));
+			var opcodes = new Thread(new ThreadStart(Opcodes));
 			opcodes.Start();
 
 			// Start Ping thread
 			Log.Debug("Network", "Ping thread indul...");
-			Thread ping = new Thread(new ThreadStart(Ping));
+			var ping = new Thread(new ThreadStart(Ping));
 			ping.Start();
 		}
 
@@ -157,6 +127,7 @@ namespace Schumix.Irc
 			RegisterHandler("421",     HandleIsmeretlenParancs);
 			RegisterHandler("433",     HandleNickError);
 			RegisterHandler("439",     HandleWaitingForConnection);
+			RegisterHandler("451",     HandleNotRegistered);
 			Log.Notice("Network", "Osszes IRC handler regisztralva.");
 		}
 
@@ -209,8 +180,8 @@ namespace Schumix.Irc
 			else
 				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName);
 
-			m_ConnState = ConnState.CONN_REGISTERED;
-
+			NewNick = false;
+			HostServAllapot = false;
 			Status = true;
 			m_running = true;
 		}
@@ -286,12 +257,6 @@ namespace Schumix.Irc
 							if(ConsoleLog.CLog)
 								Log.Notice("Opcodes", "Received unhandled opcode: {0}", opcode);
 						}
-
-						if(m_ConnState == ConnState.CONN_CONNECTED)
-						{
-							sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName);
-							m_ConnState = ConnState.CONN_REGISTERED;
-						}
 					}
 					else
 						Thread.Sleep(100);
@@ -322,14 +287,14 @@ namespace Schumix.Irc
 					{
 						sSender.Ping(_server);
 						Status = false;
-						Thread.Sleep(15*1000);
+						Thread.Sleep(30*1000);
 					}
 					else
 					{
 						if(sChannelInfo.FSelect("reconnect") == "be")
 							ReConnect();
 
-						Thread.Sleep(15*1000);
+						Thread.Sleep(30*1000);
 					}
 				}
 			}

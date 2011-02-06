@@ -23,7 +23,7 @@ namespace Schumix.Framework.Config
 {
 	public class Verzio
 	{
-		private readonly static string _SchumixVerzio = "1.6.4";
+		private readonly static string _SchumixVerzio = "1.6.5";
 		public static string SchumixVerzio
 		{
 			get

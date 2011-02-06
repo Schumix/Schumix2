@@ -38,27 +38,38 @@ namespace Schumix.Irc
 
 	public partial class MessageHandler : CommandManager
 	{
-		private bool HostServAllapot = false;
+		public bool HostServAllapot;
 
 		protected MessageHandler() {}
 
 		protected void HandleSuccessfulAuth()
 		{
-			Network.m_ConnState = ConnState.CONN_REGISTERED;
 			Console.Write("\n");
 			Log.Success("MessageHandler", "Sikeres kapcsolodas.");
 
 			if(IRCConfig.UseNickServ)
 			{
 				Log.Notice("NickServ", "NickServ azonosito kuldese.");
-				sSender.NickServ(IRCConfig.NickServPassword);
+
+				if(!Network.NewNick)
+					sSender.NickServ(IRCConfig.NickServPassword);
 			}
 
 			if(IRCConfig.UseHostServ)
 			{
-				HostServAllapot = true;
-				Log.Notice("HostServ", "HostServ bevan kapcsolva.");
-				sSender.HostServ("on");
+				if(!Network.NewNick)
+				{
+					HostServAllapot = true;
+					Log.Notice("HostServ", "HostServ bevan kapcsolva.");
+					sSender.HostServ("on");
+				}
+				else
+				{
+					Log.Notice("HostServ", "HostServ kivan kapcsolva.");
+					WhoisPrivmsg = sNickInfo.NickStorage;
+					ChannelPrivmsg = sNickInfo.NickStorage;
+					Network.sChannelInfo.JoinChannel();
+				}
 			}
 			else
 			{
@@ -68,7 +79,6 @@ namespace Schumix.Irc
 
 				WhoisPrivmsg = sNickInfo.NickStorage;
 				ChannelPrivmsg = sNickInfo.NickStorage;
-
 				Network.sChannelInfo.JoinChannel();
 			}
 		}
@@ -78,11 +88,15 @@ namespace Schumix.Irc
 			Log.Notice("MessageHandler", "Varakozas a kapcsolat feldolgozasara.");
 		}
 
+		protected void HandleNotRegistered()
+		{
+			//Log.Notice("MessageHandler", "Teszt.");
+		}
+
         /// <summary>
         ///     Ha a szobában a köszönés funkció be van kapcsolva,
         ///     akkor köszön az éppen belépőnek.
         /// </summary>
-        /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandleMJoin()
 		{
 			if(Network.IMessage.Nick == sNickInfo.NickStorage)
@@ -158,7 +172,6 @@ namespace Schumix.Irc
         ///     Ha ez a funkció be van kapcsolva, akkor
         ///     miután a nick elhagyta a szobát elköszön tőle.
         /// </summary>
-        /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandleMLeft()
 		{
 			if(Network.IMessage.Nick == sNickInfo.NickStorage)
@@ -189,7 +202,6 @@ namespace Schumix.Irc
         ///     Ha a ConsoleLog be van kapcsolva, akkor
         ///     kiírja a console-ra az IRC szerverről fogadott információkat.
         /// </summary>
-        /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandleNotice()
 		{
 			if(ConsoleLog.CLog)
@@ -217,7 +229,6 @@ namespace Schumix.Irc
 				{
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
-
 					Network.sChannelInfo.JoinChannel();
 					HostServAllapot = false;
 				}
@@ -227,7 +238,6 @@ namespace Schumix.Irc
         /// <summary>
         ///     Válaszol, ha valaki pingeli a botot.
         /// </summary>
-        /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandlePing()
 		{
 			sSender.Ping(Network.IMessage.Args);
@@ -236,7 +246,6 @@ namespace Schumix.Irc
         /// <summary>
         ///     Válaszol, ha valaki pongolja a botot.
         /// </summary>
-        /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandlePong()
 		{
 			sSender.Pong(Network.IMessage.Args);
@@ -246,7 +255,6 @@ namespace Schumix.Irc
         /// <summary>
         ///     Ha ismeretlen parancs jön, akkor kiírja.
         /// </summary>
-        /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandleIsmeretlenParancs()
 		{
 			if(ConsoleLog.CLog)
@@ -263,17 +271,18 @@ namespace Schumix.Irc
         ///     Ha a bot elsődleges nickje már használatban van, akkor
         ///     átlép a másodlagosra, ha az is akkor a harmadlagosra.
         /// </summary>
-        /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandleNickError()
 		{
-			sNickInfo.ChangeNick();
-			Network.m_ConnState = ConnState.CONN_CONNECTED;
+			Log.Error("MessageHandler", "{0}-t mar hasznalja valaki!", sNickInfo.NickStorage);
+			string nick = sNickInfo.ChangeNick();
+			Log.Notice("MessageHandler", "Ujra probalom ezzel: {0}", nick);
+			Network.NewNick = true;
+			sSender.Nick(nick);
 		}
 
         /// <summary>
 		///     Ha bannolva van egy szobából, akkor feljegyzi.
         /// </summary>
-        /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandleChannelBan()
 		{
 			if(Network.IMessage.Info.Length < 4)
@@ -287,7 +296,6 @@ namespace Schumix.Irc
         /// <summary>
         ///     Ha hibás egy IRC szobának a jelszava, akkor feljegyzi.
         /// </summary>
-        /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandleNoChannelPassword()
 		{
 			if(Network.IMessage.Info.Length < 4)
@@ -301,7 +309,6 @@ namespace Schumix.Irc
         /// <summary>
         ///     Kigyűjti éppen hol van fent a nick.
         /// </summary>
-        /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandleMWhois()
 		{
 			if(Network.IMessage.Info.Length < 5)
@@ -321,7 +328,6 @@ namespace Schumix.Irc
         /// <summary>
         ///     Ha engedélyezett a ConsolLog, akkor kiírja a Console-ra ha kickelnek valakit.
         /// </summary>
-        /// <param name="info">Egyszerű adat, ami az IRC szerver felől jön.</param>
 		protected void HandleMKick()
 		{
 			if(Network.IMessage.Info.Length < 5)
@@ -376,9 +382,9 @@ namespace Schumix.Irc
 					if(!File.Exists(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name)))
 						File.Create(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name));
 
-					TextWriter writeFile = new StreamWriter(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name), true) { AutoFlush = true };
-					writeFile.WriteLine("[{0}] <{1}> {2}", DateTime.Now, user, args);
-					writeFile.Close();
+					var file = new StreamWriter(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name), true) { AutoFlush = true };
+					file.WriteLine("[{0}] <{1}> {2}", DateTime.Now, user, args);
+					file.Close();
 				}
 				catch(Exception e)
 				{

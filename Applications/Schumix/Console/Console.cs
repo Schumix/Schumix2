@@ -49,7 +49,7 @@ namespace Schumix
 		public Consol(Network network) : base(LogConfig.IrcLog)
 		{
 			Log.Notice("Console", "Console elindult.");
-			Thread console = new Thread(new ThreadStart(ConsoleRead));
+			var console = new Thread(new ThreadStart(ConsoleRead));
 			console.Start();
 			ConsoleLog = LogConfig.IrcLog;
 			_network = network;
