@@ -35,52 +35,62 @@ namespace Schumix.Irc
 
 		private NickInfo() {}
 
-		public void ChangeNick()
+		public string ChangeNick()
 		{
 			if(_NickStorage == IRCConfig.NickName)
 			{
 				_NickStorage = IRCConfig.NickName2;
-				return;
+				return _NickStorage;
 			}
 			else if(_NickStorage == IRCConfig.NickName2)
 			{
 				_NickStorage = IRCConfig.NickName3;
-				return;
+				return _NickStorage;
 			}
 			else if(_NickStorage == IRCConfig.NickName3)
 			{
-				_NickStorage = "_Schumix2";
-				return;
+				_NickStorage = String.Format("_{0}_", IRCConfig.NickName);
+				return _NickStorage;
 			}
-			else if(_NickStorage == "_Schumix2")
+			else if(_NickStorage == String.Format("_{0}_", IRCConfig.NickName))
 			{
-				_NickStorage = "__Schumix2";
-				return;
+				_NickStorage = String.Format("__{0}_", IRCConfig.NickName);
+				return _NickStorage;
 			}
-			else if(_NickStorage == "__Schumix2")
+			else if(_NickStorage == String.Format("__{0}_", IRCConfig.NickName))
 			{
-				_NickStorage = "_Schumix2_";
-				return;
+				_NickStorage = String.Format("__{0}__", IRCConfig.NickName);
+				return _NickStorage;
 			}
-			else if(_NickStorage == "_Schumix2_")
+			else if(_NickStorage == String.Format("__{0}__", IRCConfig.NickName))
 			{
-				_NickStorage = "__Schumix2_";
-				return;
+				_NickStorage = String.Format("___{0}", IRCConfig.NickName);
+				return _NickStorage;
 			}
-			else if(_NickStorage == "__Schumix2_")
+			else if(_NickStorage == String.Format("___{0}", IRCConfig.NickName))
 			{
-				_NickStorage = "__Schumix2__";
-				return;
+				_NickStorage = String.Format("___{0}_", IRCConfig.NickName);
+				return _NickStorage;
 			}
-			else if(_NickStorage == "__Schumix2__")
+			else if(_NickStorage == String.Format("___{0}_", IRCConfig.NickName))
+			{
+				_NickStorage = String.Format("___{0}__", IRCConfig.NickName);
+				return _NickStorage;
+			}
+			else if(_NickStorage == String.Format("___{0}__", IRCConfig.NickName))
+			{
+				_NickStorage = String.Format("___{0}___", IRCConfig.NickName);
+				return _NickStorage;
+			}
+			else if(_NickStorage == String.Format("___{0}___", IRCConfig.NickName))
 			{
 				_NickStorage = IRCConfig.NickName;
-				return;
+				return _NickStorage;
 			}
 			else
 			{
 				_NickStorage = IRCConfig.NickName;
-				return;
+				return _NickStorage;
 			}
 		}
 

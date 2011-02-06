@@ -124,6 +124,7 @@ namespace Schumix.Irc
 					sSender.NickServGhost(IRCConfig.NickName, IRCConfig.NickServPassword);
 					sSender.Nick(IRCConfig.NickName);
 					sNickInfo.ChangeNick(IRCConfig.NickName);
+					Network.NewNick = false;
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "nick")
 				{
@@ -139,6 +140,7 @@ namespace Schumix.Irc
 						sSender.Nick(IRCConfig.NickName);
 						Log.Notice("NickServ", "NickServ azonosito kuldese.");
 						sSender.NickServ(IRCConfig.NickServPassword);
+						Network.NewNick = false;
 					}
 					else
 					{

@@ -32,7 +32,7 @@ namespace Schumix.Framework
 
 		public string GetUrl(string url)
 		{
-			WebClient web = new WebClient();
+			var web = new WebClient();
 			string kod = web.DownloadString(url);
 			web.Dispose();
 			return kod;
@@ -123,7 +123,7 @@ namespace Schumix.Framework
 			if(x % 2 == 0)
 				return false;
 
-			var p = true;
+			bool p = true;
 
 			for(var i = 3; i <= Math.Floor(Math.Sqrt(x)); i += 2)
 			{

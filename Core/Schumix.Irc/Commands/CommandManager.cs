@@ -38,21 +38,21 @@ namespace Schumix.Irc.Commands
 		private void InitHandler()
 		{
 			// Public
-			RegisterHandler("xbot",    HandleXbot);
-			RegisterHandler("info",    HandleInfo);
-			RegisterHandler("help",    HandleHelp);
-			RegisterHandler("ido",     HandleIdo);
-			RegisterHandler("datum",   HandleDatum);
-			RegisterHandler("roll",    HandleRoll);
-			RegisterHandler("calc",    HandleCalc);
-			RegisterHandler("sha1",    HandleSha1);
-			RegisterHandler("md5",     HandleMd5);
-			RegisterHandler("irc",     HandleIrc);
-			RegisterHandler("whois",   HandleWhois);
-			RegisterHandler("uzenet",  HandleUzenet);
-			RegisterHandler("keres",   HandleKeres);
-			RegisterHandler("fordit",  HandleFordit);
-			RegisterHandler("prime",   HandlePrime);
+			RegisterHandler("xbot",       HandleXbot);
+			RegisterHandler("info",       HandleInfo);
+			RegisterHandler("help",       HandleHelp);
+			RegisterHandler("ido",        HandleIdo);
+			RegisterHandler("datum",      HandleDatum);
+			RegisterHandler("roll",       HandleRoll);
+			RegisterHandler("calc",       HandleCalc);
+			RegisterHandler("sha1",       HandleSha1);
+			RegisterHandler("md5",        HandleMd5);
+			RegisterHandler("irc",        HandleIrc);
+			RegisterHandler("whois",      HandleWhois);
+			RegisterHandler("uzenet",     HandleUzenet);
+			RegisterHandler("keres",      HandleKeres);
+			RegisterHandler("fordit",     HandleFordit);
+			RegisterHandler("prime",      HandlePrime);
 
 			// Operator
 			RegisterHandler("admin",      HandleAdmin);
@@ -73,19 +73,24 @@ namespace Schumix.Irc.Commands
 			Log.Notice("CommandManager", "Osszes Command handler regisztralva.");
 		}
 
-		private void RegisterHandler(string code, Action method)
+		private static void RegisterHandler(string code, Action method)
 		{
 			_CommandHandler.Add(code, method);
+		}
+
+		private static void RemoveHandler(string code)
+		{
+			_CommandHandler.Remove(code);
 		}
 
 		public static void PublicRegisterHandler(string code, Action method)
 		{
-			_CommandHandler.Add(code, method);
+			RegisterHandler(code, method);
 		}
 
 		public static void PublicRemoveHandler(string code)
 		{
-			_CommandHandler.Remove(code);
+			RemoveHandler(code);
 		}
 
 		protected void BejovoInfo(string handler)
