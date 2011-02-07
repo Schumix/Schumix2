@@ -68,7 +68,7 @@ namespace Schumix.Framework.Database
         ///     "return table" : Visszatér a MySQL táblához.
         ///     "return null"  : Null értékhez tér vissza.
         /// </returns>
-		public DataTable Query(string query)
+		private DataTable Query(string query)
 		{
 			try
 			{

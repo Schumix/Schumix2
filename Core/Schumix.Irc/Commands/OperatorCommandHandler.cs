@@ -140,6 +140,13 @@ namespace Schumix.Irc.Commands
 					return;
 
 				string nev = Network.IMessage.Info[5];
+
+				if(Admin(Network.IMessage.Nick, AdminFlag.Operator) && Admin(nev, AdminFlag.Administrator))
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem vagy Adminisztrátor!");
+					return;
+				}
+
 				SchumixBase.mSQLConn.QueryFirstRow("DELETE FROM `adminok` WHERE nev = '{0}'", nev.ToLower());
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Admin törölve: {0}", nev);
 			}
