@@ -56,8 +56,8 @@ namespace Schumix.Irc
         ///     Ha "true" akkor jött pong az IRC felől,
         ///     ha "false" akkor nem és elindul a reconnect() függvény.
         /// </summary>
-		public static bool Status;
-		public static bool NewNick;
+		public static bool Status { get; set; }
+		public static bool NewNick { get; set; }
 
         /// <summary>
         ///     Segédváltozó a "Status" váltotó mellé.

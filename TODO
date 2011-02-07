@@ -6,3 +6,4 @@ Megírásra váró feladatok:
 - Keres és fordit parancshoz enkoder írása.
 - Parancs tiltás javítása.
 - Reconnect-nél fixálni ping-et hogy bot ne essen le ha másik nickkel jön fel.
+- SqlLite hozzáadása a kódhoz.
