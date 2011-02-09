@@ -21,9 +21,9 @@ using System;
 
 namespace Schumix.Framework.Config
 {
-	public class Verzio
+	public sealed class Verzio
 	{
-		private readonly static string _SchumixVerzio = "1.6.6";
+		private readonly static string _SchumixVerzio = "1.6.7";
 		public static string SchumixVerzio
 		{
 			get

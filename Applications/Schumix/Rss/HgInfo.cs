@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.Rss
 {
-	public class HgInfo
+	public sealed class HgInfo
 	{
 
 	}

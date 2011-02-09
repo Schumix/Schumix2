@@ -26,7 +26,7 @@ using Schumix.Framework.Database;
 
 namespace Schumix
 {
-	public class SchumixBot : SchumixBase
+	public sealed class SchumixBot : SchumixBase
 	{
 		public SchumixBot() : this("schumix.xml")
 		{

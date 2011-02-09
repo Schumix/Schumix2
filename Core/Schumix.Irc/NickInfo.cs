@@ -22,7 +22,7 @@ using Schumix.Framework.Config;
 
 namespace Schumix.Irc
 {
-	public class NickInfo
+	public sealed class NickInfo
 	{
 		private string _NickStorage;
 		public string NickStorage

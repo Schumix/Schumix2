@@ -29,7 +29,7 @@ using Schumix.Framework.Database;
 
 namespace Schumix.Irc
 {
-	public class Network : MessageHandler
+	public sealed class Network : MessageHandler
 	{
 		public static readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		public static IRCMessage IMessage = new IRCMessage();

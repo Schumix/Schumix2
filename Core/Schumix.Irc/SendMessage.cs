@@ -30,7 +30,7 @@ namespace Schumix.Irc
 		NOTICE
 	};
 
-	public class SendMessage
+	public sealed class SendMessage
 	{
 		private readonly object WriteLock = new object();
 		private SendMessage() {}

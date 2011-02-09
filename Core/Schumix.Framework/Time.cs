@@ -23,7 +23,7 @@ using System.Diagnostics;
 
 namespace Schumix.Framework
 {
-	public class Time
+	public sealed class Time
 	{
 		/// <summary>
 		///     A bot elindításának ideje.

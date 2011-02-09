@@ -27,7 +27,7 @@ using Schumix.Framework.Config;
 
 namespace Schumix
 {
-	public class Consol : ConsoleLog
+	public sealed class Consol : ConsoleLog
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;

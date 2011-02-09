@@ -24,7 +24,7 @@ using Schumix.Framework.Config;
 
 namespace Schumix.Irc
 {
-	public class ChannelInfo
+	public sealed class ChannelInfo
 	{
 		private readonly List<string> ChannelFunkcio = new List<string>();
 		private readonly Dictionary<string, string> _ChannelLista = new Dictionary<string, string>();
