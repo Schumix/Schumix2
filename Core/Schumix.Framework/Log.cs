@@ -22,7 +22,7 @@ using Schumix.Framework.Config;
 
 namespace Schumix.Framework
 {
-	public static class Log
+	public sealed class Log
 	{
 		private static readonly object WriteLock = new object();
 

@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.Rss
 {
-	public class GitInfo
+	public sealed class GitInfo
 	{
 
 	}

@@ -22,7 +22,7 @@ using Schumix.Framework;
 
 namespace Schumix.Irc
 {
-	public class Sender
+	public sealed class Sender
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly object WriteLock = new object();

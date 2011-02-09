@@ -49,13 +49,13 @@
     <Compile Include="Database\Database.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Singleton.cs" />
-    <Compile Include="SingletonException.cs" />
     <Compile Include="Utility.cs" />
     <Compile Include="SchumixBase.cs" />
     <Compile Include="ConsoleLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScriptManager.cs" />
     <Compile Include="Time.cs" />
+    <Compile Include="Exceptions\SingletonException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

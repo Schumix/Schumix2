@@ -20,7 +20,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Schumix.Framework
+namespace Schumix.Framework.Exceptions
 {
    /// <summary>
    /// Represents errors that occur while creating a singleton.
@@ -29,7 +29,7 @@ namespace Schumix.Framework
    /// http://msdn.microsoft.com/en-us/library/ms229064(VS.80).aspx
    /// </remarks>
    [Serializable]
-   public class SingletonException : Exception
+   public sealed class SingletonException : Exception
    {
       /// <summary>
       /// Initializes a new instance.

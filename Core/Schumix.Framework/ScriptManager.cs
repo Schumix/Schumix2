@@ -31,7 +31,7 @@ namespace Schumix.Framework
 	/// <summary>
 	/// Class used to manage (load, unload, reload) plugins dynamically.
 	/// </summary>
-	public static class ScriptManager
+	public sealed class ScriptManager
 	{
 		private static readonly Utility sUtility = Singleton<Utility>.Instance;
 

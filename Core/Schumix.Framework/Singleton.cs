@@ -19,6 +19,7 @@
 
 using System;
 using System.Reflection;
+using Schumix.Framework.Exceptions;
 
 namespace Schumix.Framework
 {

@@ -26,7 +26,7 @@ using System.Text.RegularExpressions;
 
 namespace Schumix.Framework
 {
-	public class Utility
+	public sealed class Utility
 	{
 		private Utility() {}
 

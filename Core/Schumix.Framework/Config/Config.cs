@@ -69,7 +69,7 @@ namespace Schumix.Framework.Config
 		}
 	}
 
-	public class SchumixConfig
+	public sealed class SchumixConfig
 	{
 		public static string ConfigFile { get; private set; }
 
@@ -79,7 +79,7 @@ namespace Schumix.Framework.Config
 		}
 	}
 
-	public class IRCConfig
+	public sealed class IRCConfig
 	{
 		public static string Server { get; private set; }
 		public static int Port { get; private set; }
@@ -109,7 +109,7 @@ namespace Schumix.Framework.Config
 		}
 	}
 
-	public class MysqlConfig
+	public sealed class MysqlConfig
 	{
 		public static string Host { get; private set; }
 		public static string User { get; private set; }
@@ -125,7 +125,7 @@ namespace Schumix.Framework.Config
 		}
 	}
 
-	public class LogConfig
+	public sealed class LogConfig
 	{
 		public static int LogLevel { get; private set; }
 		public static string LogHelye { get; private set; }
@@ -139,7 +139,7 @@ namespace Schumix.Framework.Config
 		}
 	}
 
-	public class PluginsConfig
+	public sealed class PluginsConfig
 	{
 		public static bool Allapot { get; private set; }
 		public static string Directory { get; private set; }
