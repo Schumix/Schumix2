@@ -61,12 +61,6 @@ namespace Schumix.CompilerPlugin.Commands
 				}
 				else
 				{
-					if(adat.IndexOf("using") != -1)
-					{
-						Figyelmeztetes();
-						return;
-					}
-
 					if(adat.IndexOf("Schumix") == -1)
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a fő fv! (Schumix)");
