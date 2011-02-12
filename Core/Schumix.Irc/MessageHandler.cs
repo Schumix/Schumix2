@@ -19,6 +19,7 @@
 
 using System;
 using System.IO;
+using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Irc.Commands;

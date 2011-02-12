@@ -36,6 +36,8 @@ namespace Schumix.API
 		/// Destroys the addon, releasing all resources.
 		/// </summary>
 		void Destroy();
+		void HandlePrivmsg();
+		void HandleHelp();
 
 		/// <summary>
 		/// Name of the addon

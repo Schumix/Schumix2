@@ -45,6 +45,9 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			foreach(var plugin in ScriptManager.GetPlugins())
+				plugin.HandleHelp();
+
 			if(Network.IMessage.Info[4] == "xbot")
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Felhasználok számára használható parancslista.");
@@ -606,10 +609,6 @@ namespace Schumix.Irc.Commands
 			// Adminisztrátor parancsok
 			if(Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 			{
-				if(Network.IMessage.Info[4] == "teszt")
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Teszt célokra használt parancs.");
-				}
 				/*else if(Network.IMessage.Info[4] == "reload")
 				{
 					if(Network.IMessage.Info.Length < 6)

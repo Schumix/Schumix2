@@ -37,7 +37,7 @@ namespace Schumix.TesztPlugin.Commands
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		//private readonly Utility sUtility = Singleton<Utility>.Instance;
 
-        public void Teszt()
+        protected void Teszt()
         {
 			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 				return;
