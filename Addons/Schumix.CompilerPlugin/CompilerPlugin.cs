@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
@@ -18,17 +18,20 @@
  */
 
 using System;
+using System.Text.RegularExpressions;
 using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
-using Schumix.TesztPlugin.Commands;
+using Schumix.Framework.Config;
+using Schumix.CompilerPlugin.Commands;
 
-namespace Schumix.TesztPlugin
+namespace Schumix.CompilerPlugin
 {
-	public class SchumixPlugin : TesztCommand, ISchumixBase
+	public class SchumixPlugin : Compiler, ISchumixBase
 	{
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Regex regex = new Regex(@"\{(?<code>.+)\}$");
+		private int PLength = IRCConfig.Parancselojel.Length;
 
 		public SchumixPlugin()
 		{
@@ -37,41 +40,50 @@ namespace Schumix.TesztPlugin
 
 		~SchumixPlugin()
 		{
-			Log.Debug("TesztPlugin", "~SchumixPlugin()");
+			Log.Debug("CompilerPlugin", "~SchumixPlugin()");
 		}
 
 		public void Setup()
 		{
-			CommandManager.PublicRegisterHandler("teszt", Teszt);
+
 		}
 
 		public void Destroy()
 		{
-			CommandManager.PublicRemoveHandler("teszt");
+
 		}
 
 		public void HandlePrivmsg()
 		{
+			if(Network.sChannelInfo.FSelect("parancsok") == "be")
+			{
+				//if(Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) != "#")
+					//return;
 
+				if(Network.IMessage.Info[3].Substring(0, 1) == ":")
+					Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
+
+				if(Network.IMessage.Info[Network.IMessage.Info.Length-2] == "" || Network.IMessage.Info[Network.IMessage.Info.Length-1] == "")
+					return;
+
+				if(Network.IMessage.Info[3] == "" || Network.IMessage.Info[3].Substring(0, PLength) == " " || Network.IMessage.Info[3].Substring(0, PLength) != IRCConfig.Parancselojel)
+				{
+					if(regex.IsMatch(Network.IMessage.Args))
+						CompilerCommand();
+				}
+			}
 		}
 
 		public void HandleHelp()
 		{
-			// Adminisztrátor parancsok
-			if(Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
-			{
-				if(Network.IMessage.Info[4] == "teszt")
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Teszt célokra használt parancs.");
-				}
-			}
+
 		}
 
 		public string Name
 		{
 			get
 			{
-				return "TesztPlugin";
+				return "CompilerPlugin";
 			}
 		}
 

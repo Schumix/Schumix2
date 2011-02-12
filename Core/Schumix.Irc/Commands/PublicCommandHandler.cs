@@ -232,8 +232,8 @@ namespace Schumix.Irc.Commands
 			}
 			else
 			{
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Title: {0}", Regex.Match(url).Groups["title"].ToString()));
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, String.Format("2Link: 3{0}", Regex.Match(url).Groups["url"].ToString()));
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "2Title: {0}", Regex.Match(url).Groups["title"].ToString());
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "2Link: 3{0}", Regex.Match(url).Groups["url"].ToString());
 			}
 		}
 

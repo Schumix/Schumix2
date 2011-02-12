@@ -28,8 +28,11 @@ namespace Schumix.Irc
 	{
 		private int PLength = IRCConfig.Parancselojel.Length;
 
-		public void HandlePrivmsg()
+		protected void HandlePrivmsg()
 		{
+			foreach(var plugin in ScriptManager.GetPlugins())
+				plugin.HandlePrivmsg();
+
 			if(ConsoleLog.CLog)
 			{
 				Console.ForegroundColor = ConsoleColor.Yellow;
