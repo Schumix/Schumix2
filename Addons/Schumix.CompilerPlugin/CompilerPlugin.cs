@@ -30,8 +30,7 @@ namespace Schumix.CompilerPlugin
 {
 	public class SchumixPlugin : Compiler, ISchumixBase
 	{
-		private readonly Regex regex = new Regex(@"\{(?<code>.+)\}$");
-		private int PLength = IRCConfig.Parancselojel.Length;
+		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
 
 		public SchumixPlugin()
 		{
@@ -60,17 +59,8 @@ namespace Schumix.CompilerPlugin
 				//if(Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) != "#")
 					//return;
 
-				if(Network.IMessage.Info[3].Substring(0, 1) == ":")
-					Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
-
-				if(Network.IMessage.Info[Network.IMessage.Info.Length-2] == "" || Network.IMessage.Info[Network.IMessage.Info.Length-1] == "")
-					return;
-
-				if(Network.IMessage.Info[3] == "" || Network.IMessage.Info[3].Substring(0, PLength) == " " || Network.IMessage.Info[3].Substring(0, PLength) != IRCConfig.Parancselojel)
-				{
-					if(regex.IsMatch(Network.IMessage.Args))
-						CompilerCommand();
-				}
+				if(regex.IsMatch(Network.IMessage.Args))
+					CompilerCommand();
 			}
 		}
 

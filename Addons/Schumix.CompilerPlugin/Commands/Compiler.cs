@@ -32,11 +32,11 @@ namespace Schumix.CompilerPlugin.Commands
 	public class Compiler : CommandInfo
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly Regex regex = new Regex(@"\{(?<code>.+)\}$");
+		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
 		private readonly string Referenced = "using System; using System.Threading; using System.Reflection; using System.Linq; using System.Text; using System.Text.RegularExpressions;";
 
-        protected void CompilerCommand()
-        {
+		protected void CompilerCommand()
+		{
 			try
 			{
 				if(Network.IMessage.Info.Length < 5)

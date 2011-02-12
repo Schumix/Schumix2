@@ -47,11 +47,11 @@ namespace Schumix.Irc
 				//if(Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) != "#")
 					//return;
 
-				if(Network.IMessage.Info[3].Substring(0, 1) == ":")
-					Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
-
 				if(Network.IMessage.Info[Network.IMessage.Info.Length-2] == "" || Network.IMessage.Info[Network.IMessage.Info.Length-1] == "")
 					return;
+
+				if(Network.IMessage.Info[3].Substring(0, 1) == ":")
+					Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
 
 				Schumix();
 
