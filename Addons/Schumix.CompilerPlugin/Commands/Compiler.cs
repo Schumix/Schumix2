@@ -90,7 +90,7 @@ namespace Schumix.CompilerPlugin.Commands
 				string[] sorok = writer.ToString().Split('\n');
 
 				if(sorok.Length < 2 && adat.IndexOf("Console.Write") == -1)
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kód sikeresen lefordul csak nincs kimenő üzenet!");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kód sikeresen lefordult csak nincs kimenő üzenet!");
 
 				if(sorok.Length > 4)
 				{
@@ -254,7 +254,7 @@ namespace Schumix.CompilerPlugin.Commands
 
 		private void Figyelmeztetes()
 		{
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Megakartál szopatni? Nem sikerült :)");
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Elővigyázatosságból az egyik adat a kódsorban levan tiltva ezért nincs végeredmény!");
 		}
 	}
 }
