@@ -65,7 +65,7 @@ namespace Schumix.ExtraPlugin
 		{
 			get
 			{
-				return "TesztPlugin";
+				return "ExtraPlugin";
 			}
 		}
 
