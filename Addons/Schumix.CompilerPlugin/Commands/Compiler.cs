@@ -178,6 +178,12 @@ namespace Schumix.CompilerPlugin.Commands
 					return true;
 				}
 
+				if(adat.IndexOf("Console.Title") != -1)
+				{
+					Figyelmeztetes();
+					return true;
+				}
+
 				if(adat.IndexOf("00000000") != -1)
 				{
 					Figyelmeztetes();
