@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
@@ -23,11 +23,11 @@ using System.Runtime.CompilerServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Schumix.TesztPlugin")]
+[assembly: AssemblyTitle("Schumix.ExtraPlugin")]
 [assembly: AssemblyDescription("Schumix IRC bot")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Schumix.TesztPlugin")]
+[assembly: AssemblyProduct("Schumix.ExtraPlugin")]
 [assembly: AssemblyCopyright("Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -43,3 +43,4 @@ using System.Runtime.CompilerServices;
 
 //[assembly: AssemblyDelaySign(false)]
 //[assembly: AssemblyKeyFile("")]
+

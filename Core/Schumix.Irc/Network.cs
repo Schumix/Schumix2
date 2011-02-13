@@ -33,7 +33,7 @@ namespace Schumix.Irc
 	{
 		public static readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		public static IRCMessage IMessage = new IRCMessage();
-		private readonly Dictionary<string, Action> _IRCHandler = new Dictionary<string, Action>();
+		private static readonly Dictionary<string, Action> _IRCHandler = new Dictionary<string, Action>();
 
         ///***START***********************************///
         ///<summary>
@@ -118,9 +118,6 @@ namespace Schumix.Irc
 			RegisterHandler("PONG",    HandlePong);
 			RegisterHandler("PRIVMSG", HandlePrivmsg);
 			RegisterHandler("NOTICE",  HandleNotice);
-			RegisterHandler("JOIN",    HandleMJoin);
-			RegisterHandler("PART",    HandleMLeft);
-			RegisterHandler("KICK",    HandleMKick);
 			RegisterHandler("474",     HandleChannelBan);
 			RegisterHandler("475",     HandleNoChannelPassword);
 			RegisterHandler("319",     HandleMWhois);
@@ -131,9 +128,24 @@ namespace Schumix.Irc
 			Log.Notice("Network", "Osszes IRC handler regisztralva.");
 		}
 
-		private void RegisterHandler(string code, Action method)
+		private static void RegisterHandler(string code, Action method)
 		{
 			_IRCHandler.Add(code, method);
+		}
+
+		private static void RemoveHandler(string code)
+		{
+			_IRCHandler.Remove(code);
+		}
+
+		public static void PublicRegisterHandler(string code, Action method)
+		{
+			RegisterHandler(code, method);
+		}
+
+		public static void PublicRemoveHandler(string code)
+		{
+			RemoveHandler(code);
 		}
 
 		/// <summary>
