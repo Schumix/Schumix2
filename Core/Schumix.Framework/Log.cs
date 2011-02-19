@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Schumix.Framework.Config;
 
 namespace Schumix.Framework
@@ -137,6 +138,43 @@ namespace Schumix.Framework
 			}
 		}
 
+		public static void LargeWarning(string message)
+		{
+			lock(WriteLock)
+			{
+				string[] sp = message.Split('\n');
+				List<string> lines = new List<string>(50);
+
+				foreach(string s in sp)
+				{
+					if(!string.IsNullOrEmpty(s))
+						lines.Add(s);
+				}
+
+				Console.ForegroundColor = ConsoleColor.Yellow;
+				Console.WriteLine();
+				Console.WriteLine("**************************************************"); // 51
+				
+				foreach(string item in lines)
+				{
+					uint len = (uint)item.Length;
+					uint diff = (48-len);
+					Console.Write("* {0}", item);
+
+					if(diff > 0)
+					{
+						for(uint u = 1; u < diff; ++u)
+							Console.Write(" ");
+						
+						Console.Write("*\n");
+					}
+					
+				}
+				
+				Console.WriteLine("**************************************************");
+			}
+		}
+
 		public static void Notice(string source, string format, params object[] args)
 		{
 			lock(WriteLock)
@@ -174,6 +212,14 @@ namespace Schumix.Framework
 			lock(WriteLock)
 			{
 				Debug(source, String.Format(format, args));
+			}
+		}
+
+		public static void LargeWarning(string message, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				LargeWarning(String.Format(message, args));
 			}
 		}
 	}
