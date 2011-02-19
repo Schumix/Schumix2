@@ -194,13 +194,43 @@ namespace Schumix.Irc.Commands
 
 				if(Admin(Network.IMessage.Nick, AdminFlag.Operator))
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}nick | {0}join | {0}left | {0}kick | {0}mode", IRCConfig.Parancselojel);
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}channel", IRCConfig.Parancselojel);
+					string parancsok = "";
+
+					foreach(var command in CommandManager.GetOperatorCommandHandler())
+					{
+						if(command.Key == "admin")
+							continue;
+
+						parancsok += " | " + IRCConfig.Parancselojel + command.Key;
+					}
+
+					if(parancsok.Substring(0, 3) == " | ")
+						parancsok = parancsok.Remove(0, 3);
+
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Operátor parancsok!");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}", parancsok);
 				}
 				else if(Admin(Network.IMessage.Nick, AdminFlag.Administrator))
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}nick | {0}join | {0}left | {0}kick | {0}mode", IRCConfig.Parancselojel);
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}szinek | {0}funkcio | {0}sznap | {0}channel | {0}plugin | {0}kikapcs", IRCConfig.Parancselojel);
+					string parancsok = "";
+					string parancsok2 = "";
+
+					foreach(var command in CommandManager.GetOperatorCommandHandler())
+					{
+						if(command.Key == "admin")
+							continue;
+
+						parancsok += " | " + IRCConfig.Parancselojel + command.Key;
+					}
+
+					if(parancsok.Substring(0, 3) == " | ")
+						parancsok = parancsok.Remove(0, 3);
+
+					foreach(var command in CommandManager.GetAdminCommandHandler())
+						parancsok2 += " | " + IRCConfig.Parancselojel + command.Key;
+
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Adminisztrátor parancsok!");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}{1}", parancsok, parancsok2);
 				}
 			}
 		}
