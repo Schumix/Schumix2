@@ -90,7 +90,7 @@ namespace Schumix.ExtraPlugin.Commands
 						Koszones = "Szeva";
 						break;
 				}
-	
+
 				if(DateTime.Now.Hour <= 9)
 					sSendMessage.SendCMPrivmsg(channel, "Jó reggelt {0}", Network.IMessage.Nick);
 				else if(DateTime.Now.Hour >= 20)
@@ -127,7 +127,7 @@ namespace Schumix.ExtraPlugin.Commands
 						elkoszones = "Bye";
 						break;
 				}
-	
+
 				if(DateTime.Now.Hour >= 20)
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jóét {0}", Network.IMessage.Nick);
 				else
@@ -163,10 +163,10 @@ namespace Schumix.ExtraPlugin.Commands
 						string alomany = "";
 						for(int i = 4; i < Network.IMessage.Info.Length; i++)
 							alomany += Network.IMessage.Info[i] + " ";
-			
+
 						if(alomany.Substring(0, 1) == ":")
 							alomany = alomany.Remove(0, 1);
-			
+
 						Console.WriteLine("{0} kickelte a következő felhasználot: {1} oka: {2}", Network.IMessage.Nick, Network.IMessage.Info[3], alomany);
 					}
 				}

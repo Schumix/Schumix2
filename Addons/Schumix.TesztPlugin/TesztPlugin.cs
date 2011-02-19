@@ -42,12 +42,12 @@ namespace Schumix.TesztPlugin
 
 		public void Setup()
 		{
-			CommandManager.PublicRegisterHandler("teszt", Teszt);
+			CommandManager.AdminCRegisterHandler("teszt", Teszt);
 		}
 
 		public void Destroy()
 		{
-			CommandManager.PublicRemoveHandler("teszt");
+			CommandManager.AdminCRemoveHandler("teszt");
 		}
 
 		public void HandlePrivmsg()

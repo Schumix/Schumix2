@@ -27,7 +27,23 @@ namespace Schumix.Irc.Commands
 {
 	public class CommandManager : CommandHandler
 	{
-		private static readonly Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
+		private static readonly Dictionary<string, Action> _PublicCommandHandler = new Dictionary<string, Action>();
+		private static readonly Dictionary<string, Action> _OperatorCommandHandler = new Dictionary<string, Action>();
+		private static readonly Dictionary<string, Action> _AdminCommandHandler = new Dictionary<string, Action>();
+		public static Dictionary<string, Action> GetPublicCommandHandler()
+		{
+			return _PublicCommandHandler;
+		}
+
+		public static Dictionary<string, Action> GetOperatorCommandHandler()
+		{
+			return _OperatorCommandHandler;
+		}
+
+		public static Dictionary<string, Action> GetAdminCommandHandler()
+		{
+			return _AdminCommandHandler;
+		}
 
 		protected CommandManager()
 		{
@@ -38,67 +54,81 @@ namespace Schumix.Irc.Commands
 		private void InitHandler()
 		{
 			// Public
-			RegisterHandler("xbot",       HandleXbot);
-			RegisterHandler("info",       HandleInfo);
-			RegisterHandler("help",       HandleHelp);
-			RegisterHandler("ido",        HandleIdo);
-			RegisterHandler("datum",      HandleDatum);
-			RegisterHandler("roll",       HandleRoll);
-			RegisterHandler("calc",       HandleCalc);
-			RegisterHandler("sha1",       HandleSha1);
-			RegisterHandler("md5",        HandleMd5);
-			RegisterHandler("irc",        HandleIrc);
-			RegisterHandler("whois",      HandleWhois);
-			RegisterHandler("uzenet",     HandleUzenet);
-			RegisterHandler("keres",      HandleKeres);
-			RegisterHandler("fordit",     HandleFordit);
-			RegisterHandler("prime",      HandlePrime);
+			PublicCRegisterHandler("xbot",       HandleXbot);
+			PublicCRegisterHandler("info",       HandleInfo);
+			PublicCRegisterHandler("help",       HandleHelp);
+			PublicCRegisterHandler("ido",        HandleIdo);
+			PublicCRegisterHandler("datum",      HandleDatum);
+			PublicCRegisterHandler("roll",       HandleRoll);
+			PublicCRegisterHandler("calc",       HandleCalc);
+			PublicCRegisterHandler("sha1",       HandleSha1);
+			PublicCRegisterHandler("md5",        HandleMd5);
+			PublicCRegisterHandler("irc",        HandleIrc);
+			PublicCRegisterHandler("whois",      HandleWhois);
+			PublicCRegisterHandler("uzenet",     HandleUzenet);
+			PublicCRegisterHandler("keres",      HandleKeres);
+			PublicCRegisterHandler("fordit",     HandleFordit);
+			PublicCRegisterHandler("prime",      HandlePrime);
 
 			// Operator
-			RegisterHandler("admin",      HandleAdmin);
-			RegisterHandler("funkcio",    HandleFunkcio);
-			RegisterHandler("channel",    HandleChannel);
-			RegisterHandler("sznap",      HandleSznap);
-			RegisterHandler("szinek",     HandleSzinek);
-			RegisterHandler("nick",       HandleNick);
-			RegisterHandler("join",       HandleJoin);
-			RegisterHandler("left",       HandleLeft);
-			RegisterHandler("kick",       HandleKick);
-			RegisterHandler("mode",       HandleMode);
+			OperatorCRegisterHandler("admin",      HandleAdmin);
+			OperatorCRegisterHandler("funkcio",    HandleFunkcio);
+			OperatorCRegisterHandler("channel",    HandleChannel);
+			OperatorCRegisterHandler("sznap",      HandleSznap);
+			OperatorCRegisterHandler("szinek",     HandleSzinek);
+			OperatorCRegisterHandler("nick",       HandleNick);
+			OperatorCRegisterHandler("join",       HandleJoin);
+			OperatorCRegisterHandler("left",       HandleLeft);
+			OperatorCRegisterHandler("kick",       HandleKick);
+			OperatorCRegisterHandler("mode",       HandleMode);
 
 			// Admin
-			RegisterHandler("plugin",     HandlePlugin);
-			RegisterHandler("kikapcs",    HandleKikapcs);
+			AdminCRegisterHandler("plugin",     HandlePlugin);
+			AdminCRegisterHandler("kikapcs",    HandleKikapcs);
 
 			Log.Notice("CommandManager", "Osszes Command handler regisztralva.");
 		}
 
-		private static void RegisterHandler(string code, Action method)
+		public static void PublicCRegisterHandler(string code, Action method)
 		{
-			_CommandHandler.Add(code, method);
+			_PublicCommandHandler.Add(code, method);
 		}
 
-		private static void RemoveHandler(string code)
+		public static void PublicCRemoveHandler(string code)
 		{
-			_CommandHandler.Remove(code);
+			_PublicCommandHandler.Remove(code);
 		}
 
-		public static void PublicRegisterHandler(string code, Action method)
+		public static void OperatorCRegisterHandler(string code, Action method)
 		{
-			RegisterHandler(code, method);
+			_OperatorCommandHandler.Add(code, method);
 		}
 
-		public static void PublicRemoveHandler(string code)
+		public static void OperatorCRemoveHandler(string code)
 		{
-			RemoveHandler(code);
+			_OperatorCommandHandler.Remove(code);
+		}
+
+		public static void AdminCRegisterHandler(string code, Action method)
+		{
+			_AdminCommandHandler.Add(code, method);
+		}
+
+		public static void AdminCRemoveHandler(string code)
+		{
+			_AdminCommandHandler.Remove(code);
 		}
 
 		protected void BejovoInfo(string handler)
 		{
 			try
 			{
-				if(_CommandHandler.ContainsKey(handler))
-					_CommandHandler[handler].Invoke();
+				if(_PublicCommandHandler.ContainsKey(handler))
+					_PublicCommandHandler[handler].Invoke();
+				else if(_OperatorCommandHandler.ContainsKey(handler))
+					_OperatorCommandHandler[handler].Invoke();
+				else if(_AdminCommandHandler.ContainsKey(handler))
+					_AdminCommandHandler[handler].Invoke();
 			}
 			catch(Exception e)
 			{

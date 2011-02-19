@@ -32,7 +32,20 @@ namespace Schumix.Irc.Commands
 		{
 			CNick();
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Verzió: 10{0}", Verzio.SchumixVerzio);
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}info | {0}help | {0}ido | {0}datum | {0}irc | {0}roll | {0}keres | {0}fordit | {0}sha1 | {0}md5 | {0}uzenet | {0}whois | {0}calc | {0}prime", IRCConfig.Parancselojel);
+			string parancsok = "";
+
+			foreach(var command in CommandManager.GetPublicCommandHandler())
+			{
+				if(command.Key == "xbot")
+					continue;
+
+				parancsok += " | " + IRCConfig.Parancselojel + command.Key;
+			}
+
+			if(parancsok.Substring(0, 3) == " | ")
+				parancsok = parancsok.Remove(0, 3);
+
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}", parancsok);
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Programmed by: 3Csaba");
 		}
 
