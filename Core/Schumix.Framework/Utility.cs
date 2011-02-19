@@ -57,7 +57,7 @@ namespace Schumix.Framework
 
 			string convert = BitConverter.ToString(encodedBytes);
 			string[] adat = convert.Split('-');
-			string Sha1 = "";
+			string Sha1 = String.Empty;
 
 			for(int i = 0; i < adat.Length; i++)
 				Sha1 += adat[i];
@@ -77,7 +77,7 @@ namespace Schumix.Framework
 
 			string convert = BitConverter.ToString(encodedBytes);
 			string[] adat = convert.Split('-');
-			string Md5 = "";
+			string Md5 = String.Empty;
 
 			for(int i = 0; i < adat.Length; i++)
 				Md5 += adat[i];

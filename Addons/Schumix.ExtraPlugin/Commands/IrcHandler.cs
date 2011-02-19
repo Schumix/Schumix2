@@ -47,7 +47,7 @@ namespace Schumix.ExtraPlugin.Commands
 			if(Network.sChannelInfo.FSelect("koszones") == "be" && Network.sChannelInfo.FSelect("koszones", channel) == "be")
 			{
 				Random rand = new Random();
-				string Koszones = "";
+				string Koszones = String.Empty;
 				switch(rand.Next(0, 12))
 				{
 					case 0:
@@ -117,7 +117,7 @@ namespace Schumix.ExtraPlugin.Commands
 			if(Network.sChannelInfo.FSelect("koszones") == "be" && Network.sChannelInfo.FSelect("koszones", Network.IMessage.Channel) == "be")
 			{
 				Random rand = new Random();
-				string elkoszones = "";
+				string elkoszones = String.Empty;
 				switch(rand.Next(0, 1))
 				{
 					case 0:

@@ -151,7 +151,7 @@ namespace Schumix
 
 			if(parancs == "sys")
 			{
-				string Platform = "";
+				string Platform = String.Empty;
 				var pid = Environment.OSVersion.Platform;
 
 				switch(pid)
@@ -234,7 +234,7 @@ namespace Schumix
 					var db = SchumixBase.mSQLConn.QueryRow("SELECT nev FROM adminok");
 					if(db != null)
 					{
-						string adminok = "";
+						string adminok = String.Empty;
 
 						for(int i = 0; i < db.Rows.Count; ++i)
 						{

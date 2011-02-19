@@ -43,8 +43,8 @@ namespace Schumix.CompilerPlugin.Commands
 					return;
 
 				CNick();
-				string adat = "";
-				string sablon = "";
+				string adat = String.Empty;
+				string sablon = String.Empty;
 
 				if(regex.IsMatch(Network.IMessage.Args))
 					adat = regex.Match(Network.IMessage.Args).Groups["code"].ToString();

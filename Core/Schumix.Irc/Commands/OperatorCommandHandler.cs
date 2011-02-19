@@ -102,7 +102,7 @@ namespace Schumix.Irc.Commands
 				var db = SchumixBase.mSQLConn.QueryRow("SELECT nev FROM adminok");
 				if(db != null)
 				{
-					string adminok = "";
+					string adminok = String.Empty;
 
 					for(int i = 0; i < db.Rows.Count; ++i)
 					{
@@ -194,7 +194,7 @@ namespace Schumix.Irc.Commands
 
 				if(Admin(Network.IMessage.Nick, AdminFlag.Operator))
 				{
-					string parancsok = "";
+					string parancsok = String.Empty;
 
 					foreach(var command in CommandManager.GetOperatorCommandHandler())
 					{
@@ -212,8 +212,8 @@ namespace Schumix.Irc.Commands
 				}
 				else if(Admin(Network.IMessage.Nick, AdminFlag.Administrator))
 				{
-					string parancsok = "";
-					string parancsok2 = "";
+					string parancsok = String.Empty;
+					string parancsok2 = String.Empty;
 
 					foreach(var command in CommandManager.GetOperatorCommandHandler())
 					{
@@ -284,7 +284,7 @@ namespace Schumix.Irc.Commands
 					{
 						if(Network.IMessage.Info.Length >= 8)
 						{
-							string alomany = "";
+							string alomany = String.Empty;
 	
 							for(int i = 6; i < Network.IMessage.Info.Length; i++)
 							{
@@ -329,7 +329,7 @@ namespace Schumix.Irc.Commands
 
 					if(Network.IMessage.Info.Length >= 9)
 					{
-						string alomany = "";
+						string alomany = String.Empty;
 
 						for(int i = 7; i < Network.IMessage.Info.Length; i++)
 						{
@@ -397,7 +397,7 @@ namespace Schumix.Irc.Commands
 				{
 					if(Network.IMessage.Info.Length >= 7)
 					{
-						string alomany = "";
+						string alomany = String.Empty;
 
 						for(int i = 5; i < Network.IMessage.Info.Length; i++)
 						{
@@ -485,8 +485,8 @@ namespace Schumix.Irc.Commands
 				var db = SchumixBase.mSQLConn.QueryRow("SELECT szoba, aktivitas, error FROM channel");
 				if(db != null)
 				{
-					string Aktivszobak = "";
-					string DeAktivszobak = "";
+					string Aktivszobak = String.Empty;
+					string DeAktivszobak = String.Empty;
 					bool adatszoba = false;
 					bool adatszoba1 = false;
 
@@ -622,7 +622,7 @@ namespace Schumix.Irc.Commands
 			}
 			else if(szam >= 6)
 			{
-				string oka = "";
+				string oka = String.Empty;
 				for(int i = 5; i < Network.IMessage.Info.Length; i++)
 					oka += Network.IMessage.Info[i] + " ";
 
@@ -644,7 +644,7 @@ namespace Schumix.Irc.Commands
 
 			string rang = Network.IMessage.Info[4].ToLower();
 			string tnick = sNickInfo.NickStorage;
-			string nev = "";
+			string nev = String.Empty;
 
 			for(int i = 5; i < Network.IMessage.Info.Length; i++)
 				nev += Network.IMessage.Info[i] + " ";
