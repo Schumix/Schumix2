@@ -209,7 +209,7 @@ namespace Schumix.Irc
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			string alomany = "";
+			string alomany = String.Empty;
 			for(int i = 4; i < Network.IMessage.Info.Length; i++)
 				alomany += Network.IMessage.Info[i] + " ";
 
