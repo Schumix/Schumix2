@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Threading;
 using System.Text.RegularExpressions;
 using Schumix.API;
 using Schumix.Irc;
@@ -60,7 +61,12 @@ namespace Schumix.CompilerPlugin
 					//return;
 
 				if(regex.IsMatch(Network.IMessage.Args))
-					CompilerCommand();
+				{
+					var thread = new Thread(new ThreadStart(CompilerCommand));
+					thread.Start();
+					thread.Join(1000);
+					thread.Abort();
+				}
 			}
 		}
 
