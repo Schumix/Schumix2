@@ -71,7 +71,6 @@ namespace Schumix.Framework.Exceptions
       {
       }
 
-#if !WindowsCE
       /// <summary>
       /// Initializes a new instance with serialized data.
       /// </summary>
@@ -85,9 +84,8 @@ namespace Schumix.Framework.Exceptions
       /// </param>
       /// <exception cref="System.ArgumentNullException">The info parameter is null.</exception>
       /// <exception cref="System.Runtime.Serialization.SerializationException">The class name is null or System.Exception.HResult is zero (0).</exception>
-      protected SingletonException(SerializationInfo info, StreamingContext context) : base(info, context)
+      public SingletonException(SerializationInfo info, StreamingContext context) : base(info, context)
       {
       }
-#endif
    }
 }

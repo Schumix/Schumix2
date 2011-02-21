@@ -115,11 +115,13 @@ namespace Schumix.CompilerPlugin.Commands
 			{
 				var provider = new CSharpCodeProvider();
 				var compiler = provider.CreateCompiler();
+
 				var cparams = new CompilerParameters();
 				cparams.GenerateExecutable = false;
 				cparams.GenerateInMemory = false;
 
 				cparams.ReferencedAssemblies.Add("System.dll");
+				//cparams.CompilerOptions = "";
 
 				var results = compiler.CompileAssemblyFromSource(cparams, code);
 				if(results.Errors.HasErrors)
@@ -179,66 +181,6 @@ namespace Schumix.CompilerPlugin.Commands
 				}
 
 				if(adat.IndexOf("Console.Title") != -1)
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.IndexOf("00000000") != -1)
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.IndexOf("1111111") != -1)
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.IndexOf("2222222") != -1)
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.IndexOf("3333333") != -1)
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.IndexOf("4444444") != -1)
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.IndexOf("5555555") != -1)
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.IndexOf("6666666") != -1)
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.IndexOf("7777777") != -1)
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.IndexOf("8888888") != -1)
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.IndexOf("9999999") != -1)
 				{
 					Figyelmeztetes();
 					return true;
