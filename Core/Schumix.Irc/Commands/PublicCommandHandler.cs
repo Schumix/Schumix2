@@ -230,12 +230,12 @@ namespace Schumix.Irc.Commands
 
 			string adat = String.Empty;
 			for(int i = 4; i < Network.IMessage.Info.Length; i++)
-				adat += "%20" + Network.IMessage.Info[i];
+				adat += " " + Network.IMessage.Info[i];
 
-			if(adat.Substring(0, 3) == "%20")
-				adat = adat.Remove(0, 3);
+			if(adat.Substring(0, 1) == " ")
+				adat = adat.Remove(0, 1);
 
-			string url = sUtility.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=" + adat);
+			string url = sUtility.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=", adat);
 
 			var Regex = new Regex(@".unescapedUrl.\:.(?<url>\S+).,.url.+.titleNoFormatting.\:.(?<title>.+).,.content");
 			if(!Regex.IsMatch(url))
@@ -259,12 +259,12 @@ namespace Schumix.Irc.Commands
 
 			string adat = String.Empty;
 			for(int i = 5; i < Network.IMessage.Info.Length; i++)
-				adat += "%20" + Network.IMessage.Info[i];
+				adat += " " + Network.IMessage.Info[i];
 
-			if(adat.Substring(0, 3) == "%20")
-				adat = adat.Remove(0, 3);
+			if(adat.Substring(0, 1) == " ")
+				adat = adat.Remove(0, 1);
 
-			string url = sUtility.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=" + adat + "&langpair=" + Network.IMessage.Info[4]);
+			string url = sUtility.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=", adat, "&langpair=" + Network.IMessage.Info[4]);
 
 			var Regex = new Regex(@"\{.translatedText.\:.(?<text>.+).\},");
 			if(!Regex.IsMatch(url))

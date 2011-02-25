@@ -20,6 +20,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -35,6 +36,32 @@ namespace Schumix.Framework
 			var web = new WebClient();
 			string kod = web.DownloadString(url);
 			web.Dispose();
+			return kod;
+		}
+
+		public string GetUrl(string url, string args)
+		{
+			var u = new Uri(url + HttpUtility.UrlEncode(args));
+			string kod;
+
+			using(var client = new WebClient())
+			{
+				kod = client.DownloadString(u);
+			}
+
+			return kod;
+		}
+
+		public string GetUrl(string url, string args, string noencode)
+		{
+			var u = new Uri(url + HttpUtility.UrlEncode(args) + noencode);
+			string kod;
+
+			using(var client = new WebClient())
+			{
+				kod = client.DownloadString(u);
+			}
+
 			return kod;
 		}
 
