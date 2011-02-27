@@ -1,9 +1,9 @@
 ﻿namespace WolframAPI
 {
     using System;
-    using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Xml.Serialization;
+    using Collections;
 
     /// <summary>
     /// The QueryResult (main) part of the response.
@@ -19,7 +19,7 @@
             
         }
 
-        internal WAResult(bool success, bool error, int numPods, string dataTypes, string timedOut, double timing, double parseTiming, bool parseTimedOut, string recalculate, string version, List<WAPod> pods)
+        internal WAResult(bool success, bool error, int numPods, string dataTypes, string timedOut, double timing, double parseTiming, bool parseTimedOut, string recalculate, string version, UniqueList<WAPod> pods)
         {
             Success = success;
             Error = error;
@@ -101,7 +101,9 @@
         /// Gets or sets the list of pods.
         /// </summary>
         [XmlElement("pod")]
-        public List<WAPod> Pods { get; set; }
+        public UniqueList<WAPod> Pods { get; set; }
+
+        #region Interface Implementations
 
         /// <summary>
         /// Indicates whether the current object is equal to another object of the same type.
@@ -222,5 +224,7 @@
             return new WAResult(Success, Error, NumPods, DataTypes, TimedOut, Timing, ParseTiming, ParseTimedOut,
                                 Recalculate, Version, Pods);
         }
+
+        #endregion
     }
 }
