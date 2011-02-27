@@ -1,5 +1,4 @@
-﻿
-namespace WolframAPI
+﻿namespace WolframAPI
 {
     using System;
     using System.Xml.Serialization;

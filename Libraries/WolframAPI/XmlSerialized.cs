@@ -1,11 +1,10 @@
-﻿using WolframAPI.Exceptions;
-
-namespace WolframAPI
+﻿namespace WolframAPI
 {
     using System;
     using System.Diagnostics.Contracts;
     using System.IO;
     using System.Xml.Serialization;
+    using Exceptions;
 
     ///<summary>
     /// Base class for XML-serialized types.

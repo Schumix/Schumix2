@@ -1,5 +1,4 @@
-﻿
-namespace WolframAPI.Exceptions
+﻿namespace WolframAPI.Exceptions
 {
     using System;
     using System.Runtime.Serialization;

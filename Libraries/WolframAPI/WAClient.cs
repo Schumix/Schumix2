@@ -5,6 +5,8 @@
     using System.IO;
     using System.Linq;
     using System.Net;
+    using System.Reflection;
+    using System.Runtime.Remoting.Messaging;
     using System.Web;
     using System.Xml.Serialization;
     using Exceptions;
@@ -15,7 +17,27 @@
     /// </summary>
     /// <param name="response">The (raw) response returned.</param>
     /// <param name="expression">The expression submitted.</param>
-    public delegate void ResponseReceivedEventHandler(string response, string expression);
+    public delegate void SolutionReceivedEventHandler(string response, string expression = "");
+
+    /// <summary>
+    /// Used to handle the result response which is used in the <see cref="WAClient.GetResult"/> method.
+    /// </summary>
+    /// <param name="result">The result received</param>
+    /// <param name="expression">The expression submitted</param>
+    public delegate void ResultReceivedEventHandler(WAResult result, string expression = "");
+
+    /// <summary>
+    /// Used to asynchronously call the expression processor methods.
+    /// <param name="expression">The expression submitted.</param>
+    /// </summary>
+    public delegate string ExpressionProcessorMethod(string expression);
+
+    /// <summary>
+    /// Used to asynchronously fetch the result from Wolfram.
+    /// </summary>
+    /// <param name="expression">Expression to submit.</param>
+    /// <returns>The fetched result.</returns>
+    public delegate WAResult RetrieveResultMethod(string expression);
 
     /// <summary>
     /// Used to access Wolfram Alpha. 
@@ -37,7 +59,26 @@
         /// <summary>
         /// Occurs when a response is successfully retrieved using the API.
         /// </summary>
-        public event ResponseReceivedEventHandler OnResponseReceived;
+        public event SolutionReceivedEventHandler OnSolutionReceived;
+
+        /// <summary>
+        /// Occurs when a result is successfully retrieved using the API.
+        /// </summary>
+        public event ResultReceivedEventHandler OnResultReceived;
+
+        private static readonly object SyncLock = new object();
+
+        /// <summary>
+        /// Gets the version of the currently used library.
+        /// </summary>
+        /// <value>The version.</value>
+        public static string Version
+        {
+            get
+            {
+                return (Assembly.GetExecutingAssembly().GetName().Version.ToString());
+            }
+        }
 
 
         /// <summary>
@@ -58,8 +99,10 @@
         /// <returns>The solution of the given expression</returns>
         public string Solve(string expression)
         {
+#if WindowsCE
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
             Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+#endif
 
             var response = Submit(expression);
             var result = Parse(response);
@@ -93,7 +136,7 @@
             {
                 return "No solution found. The pod order might have changed. Report to devs!";
             }
-            
+
             return solution.SubPods[0].PlainText;
         }
 
@@ -130,8 +173,10 @@
         /// <returns>Raw response</returns>
         public string Submit(string expression)
         {
+#if WindowsCE
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
             Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+#endif
 
             try
             {
@@ -149,11 +194,6 @@
 
                 if(!string.IsNullOrEmpty(returned))
                 {
-                    if(OnResponseReceived != null)
-                    {
-                        OnResponseReceived(returned, expression);
-                    }
-
                     return returned;
                 }
 
@@ -176,10 +216,12 @@
         /// <returns>The parsed response</returns>
         /// <exception cref="WolframException">Throws in case of any error.</exception>
         /// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
-        public WAResult Parse(string response)
+        public static WAResult Parse(string response)
         {
+#if WindowsCE
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(response));
             Contract.Ensures(Contract.Result<WAResult>() != null);
+#endif
 
             try
             {
@@ -204,5 +246,101 @@
                 throw new WolframException("Exception thrown while deserializing the response.", x);
             }
         }
+
+        #region Async stuff
+
+#if WITH_ASYNC
+
+        private void HandleSolutionReceived(IAsyncResult ar)
+        {
+            Contract.Requires<ArgumentNullException>(ar != null);
+            Contract.Requires<ArgumentNullException>(((AsyncResult)ar).AsyncDelegate != null);
+
+            if (ar != null)
+            {
+                var expr = ar.AsyncState as string;
+
+                var proc = (ExpressionProcessorMethod) (((AsyncResult) ar).AsyncDelegate);
+
+                if (proc != null)
+                {
+                    var solution = proc.EndInvoke(ar);
+
+                    if(OnSolutionReceived != null)
+                    {
+                        OnSolutionReceived(solution, expr);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Solves the specified expression asynchronously.
+        /// <remarks>An event is raised on completion.</remarks>
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <exception cref="WolframException">Throws in case of any error.</exception>
+        /// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
+        /// <returns>The solution of the given expression</returns>
+        public void SolveAsync(string expression)
+        {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+
+            var procedure = new ExpressionProcessorMethod(Solve);
+
+            lock(SyncLock)
+            {
+                procedure.BeginInvoke(expression, HandleSolutionReceived, expression);
+            }
+        }
+
+        private void HandleResultReceived(IAsyncResult ar)
+        {
+            Contract.Requires<ArgumentNullException>(ar != null);
+            Contract.Requires<ArgumentNullException>(((AsyncResult)ar).AsyncDelegate != null);
+
+            if (ar != null)
+            {
+                var expr = ar.AsyncState as string;
+
+                var proc = (RetrieveResultMethod)(((AsyncResult)ar).AsyncDelegate);
+
+                if (proc != null)
+                {
+                    var result = proc.EndInvoke(ar);
+
+                    if(OnResultReceived != null)
+                    {
+                        OnResultReceived(result, expr);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the result of the specified expression asynchronously.
+        /// <para>The expression is returned as <see cref="WAResult"/></para> 
+        /// so you can manually go through the pods of the response (to get ANY information you'd like)
+        /// <para>It is encouraged to use this method instead of <see cref="Solve"/></para>
+        /// <remarks>An event is raised upon completion.</remarks>
+        /// </summary>
+        /// <param name="expression">The expression to solve.</param>
+        /// <exception cref="WolframException">Throws in case of any error.</exception>
+        /// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
+        /// <returns>The result</returns>
+        public void GetResultAsync(string expression)
+        {
+            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+
+            var procedure = new RetrieveResultMethod(GetResult);
+
+            lock(SyncLock)
+            {
+                procedure.BeginInvoke(expression, HandleResultReceived, expression);
+            }
+        }
+
+#endif
+        #endregion
     }
 }
