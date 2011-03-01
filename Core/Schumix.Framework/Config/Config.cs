@@ -18,7 +18,9 @@
  */
 
 using System;
+using System.IO;
 using System.Xml;
+using System.Threading;
 
 namespace Schumix.Framework.Config
 {
@@ -26,46 +28,165 @@ namespace Schumix.Framework.Config
 	{
 		public Config(string configfile)
 		{
-			Log.Debug("Config", ">> {0}", configfile);
-			new SchumixConfig(configfile);
-			var xmldoc = new XmlDocument();
-			xmldoc.Load(@configfile);
+			try
+			{
+				Log.Debug("Config", ">> {0}", configfile);
+				new SchumixConfig(configfile);
 
-			Log.Notice("Config", "Config fajl betoltese...");
-			string Server = xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText;
-			int Port = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText);
-			string NickName = xmldoc.SelectSingleNode("Schumix/Irc/Nick").InnerText;
-			string NickName2 = xmldoc.SelectSingleNode("Schumix/Irc/Nick2").InnerText;
-			string NickName3 = xmldoc.SelectSingleNode("Schumix/Irc/Nick3").InnerText;
-			string UserName = xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText;
-			bool UseNickServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Allapot").InnerText);
-			string NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Jelszo").InnerText;
-			bool UseHostServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Allapot").InnerText);
-			bool HostServAllapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText);
-			string Parancselojel = xmldoc.SelectSingleNode("Schumix/Parancs/Elojel").InnerText;
+				if(!IsConfig(configfile))
+				{
+					Log.Notice("Config", "Program leallitasa!");
+					Log.Notice("Config", "Kerlek toltsed ki a configot!");
+					Thread.Sleep(200);
+					Environment.Exit(1);
+				}
+				else
+				{
+					var xmldoc = new XmlDocument();
+					xmldoc.Load(@configfile);
 
-			new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, Parancselojel);
+					Log.Notice("Config", "Config fajl betoltese...");
+					string Server = xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText;
+					int Port = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText);
+					string NickName = xmldoc.SelectSingleNode("Schumix/Irc/Nick").InnerText;
+					string NickName2 = xmldoc.SelectSingleNode("Schumix/Irc/Nick2").InnerText;
+					string NickName3 = xmldoc.SelectSingleNode("Schumix/Irc/Nick3").InnerText;
+					string UserName = xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText;
+					bool UseNickServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Allapot").InnerText);
+					string NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Jelszo").InnerText;
+					bool UseHostServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Allapot").InnerText);
+					bool HostServAllapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText);
+					string Parancselojel = xmldoc.SelectSingleNode("Schumix/Parancs/Elojel").InnerText;
 
-			string Host = xmldoc.SelectSingleNode("Schumix/Mysql/Host").InnerText;
-			string User = xmldoc.SelectSingleNode("Schumix/Mysql/User").InnerText;
-			string Password = xmldoc.SelectSingleNode("Schumix/Mysql/Password").InnerText;
-			string Database = xmldoc.SelectSingleNode("Schumix/Mysql/Database").InnerText;
+					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, Parancselojel);
 
-			new MysqlConfig(Host, User, Password, Database);
+					string Host = xmldoc.SelectSingleNode("Schumix/Mysql/Host").InnerText;
+					string User = xmldoc.SelectSingleNode("Schumix/Mysql/User").InnerText;
+					string Password = xmldoc.SelectSingleNode("Schumix/Mysql/Password").InnerText;
+					string Database = xmldoc.SelectSingleNode("Schumix/Mysql/Database").InnerText;
 
-			int LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
-			string LogHelye = xmldoc.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
-			bool IrcLog = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText);
+					new MysqlConfig(Host, User, Password, Database);
 
-			new LogConfig(LogLevel, LogHelye, IrcLog);
+					int LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
+					string LogHelye = xmldoc.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
+					bool IrcLog = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText);
 
-			bool Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Plugins/Allapot").InnerText);
-			string Directory = xmldoc.SelectSingleNode("Schumix/Plugins/Directory").InnerText;
+					new LogConfig(LogLevel, LogHelye, IrcLog);
 
-			new PluginsConfig(Allapot, Directory);
+					bool Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Plugins/Allapot").InnerText);
+					string Directory = xmldoc.SelectSingleNode("Schumix/Plugins/Directory").InnerText;
 
-			Log.Success("Config", "Config adatbazis betoltve.");
-			Console.WriteLine("");
+					new PluginsConfig(Allapot, Directory);
+
+					Log.Success("Config", "Config adatbazis betoltve.");
+					Console.WriteLine("");
+				}
+			}
+			catch(Exception e)
+			{
+				new LogConfig(3, "szoba", false);
+				Log.Error("Config", "Hiba oka: {0}", e);
+			}
+		}
+
+		private bool IsConfig(string ConfigFile)
+		{
+			if(File.Exists(ConfigFile))
+				return true;
+			else
+			{
+				new LogConfig(3, "szoba", false);
+				Log.Error("Config", "Nincs config fajl!");
+				Log.Debug("Config", "Elkeszitese folyamatban...");
+				var w = new XmlTextWriter(ConfigFile, null);
+
+				try
+				{
+					w.Formatting = Formatting.Indented;
+					w.Indentation = 4;
+					w.Namespaces = false;
+					w.WriteStartDocument();
+
+					// <Schumix>
+					w.WriteStartElement("Schumix");
+
+					// <Irc>
+					w.WriteStartElement("Irc");
+					w.WriteElementString("Server", "irc.rizon.net");
+					w.WriteElementString("Port", "6667");
+					w.WriteElementString("Nick", "Schumix2");
+					w.WriteElementString("Nick2", "_Schumix2");
+					w.WriteElementString("Nick3", "_Schumix2");
+					w.WriteElementString("UserName", "Schumix2");
+
+					// <NickServ>
+					w.WriteStartElement("NickServ");
+					w.WriteElementString("Allapot", "false");
+					w.WriteElementString("Jelszo", "pass");
+
+					// </NickServ>
+					w.WriteEndElement();
+
+					// <HostServ>
+					w.WriteStartElement("HostServ");
+					w.WriteElementString("Allapot", "false");
+					w.WriteElementString("Vhost", "false");
+
+					// </HostServ>
+					w.WriteEndElement();
+
+					// </Irc>
+					w.WriteEndElement();
+
+					// <Log>
+					w.WriteStartElement("Log");
+					w.WriteElementString("LogLevel", "2");
+					w.WriteElementString("LogHelye", "szoba");
+					w.WriteElementString("IrcLog", "false");
+
+					// </Log>
+					w.WriteEndElement();
+
+					// <Mysql>
+					w.WriteStartElement("Mysql");
+					w.WriteElementString("Host", "localhost");
+					w.WriteElementString("User", "root");
+					w.WriteElementString("Password", "pass");
+					w.WriteElementString("Database", "database");
+
+					// </Mysql>
+					w.WriteEndElement();
+
+					// <Parancs>
+					w.WriteStartElement("Parancs");
+					w.WriteElementString("Elojel", "$");
+
+					// </Parancs>
+					w.WriteEndElement();
+
+					// <Plugins>
+					w.WriteStartElement("Plugins");
+					w.WriteElementString("Allapot", "true");
+					w.WriteElementString("Directory", "plugins");
+
+					// </Plugins>
+					w.WriteEndElement();
+
+					// </Schumix>
+					w.WriteEndElement();
+
+					w.Flush();
+					w.Close();
+
+					Log.Success("Config", "Config fajl elkeszult!");
+					return false;
+				}
+				catch(Exception e)
+				{
+					Log.Error("Config", "Hiba az xml irasa soran: {0}", e);
+					return false;
+				}
+			}
 		}
 	}
 
