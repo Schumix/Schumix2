@@ -42,7 +42,7 @@ namespace Schumix.Framework
 			{
 				Log.Debug("SchumixBase", "Time indul...");
 				time = new Time();
-				Log.Debug("SchumixBae", "Mysql indul...");
+				Log.Debug("SchumixBase", "Mysql indul...");
 				mSQLConn = new Mysql(MysqlConfig.Host, MysqlConfig.User, MysqlConfig.Password, MysqlConfig.Database);
 				Log.Notice("SchumixBase", "Mysql adatbazishoz sikeres a kapcsolodas.");
 
