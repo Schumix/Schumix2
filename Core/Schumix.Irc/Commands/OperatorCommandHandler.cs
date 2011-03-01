@@ -356,7 +356,7 @@ namespace Schumix.Irc.Commands
 				if(Network.IMessage.Info.Length < 6)
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve {0} channel funkciók.", Network.IMessage.Channel);
-					SchumixBase.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Channel);
+					SchumixBase.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:ki,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Channel);
 					Network.sChannelInfo.ChannelFunkcioReload();
 					return;
 				}
@@ -370,7 +370,7 @@ namespace Schumix.Irc.Commands
 						{
 							var row = db.Rows[i];
 							string szoba = row["szoba"].ToString();
-							SchumixBase.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", szoba);
+							SchumixBase.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:ki,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", szoba);
 						}
 
 						Network.sChannelInfo.ChannelFunkcioReload();
@@ -382,7 +382,7 @@ namespace Schumix.Irc.Commands
 				else
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve {0} channel funkciók.", Network.IMessage.Info[5]);
-					SchumixBase.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:be,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Info[5]);
+					SchumixBase.mSQLConn.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:ki,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Info[5]);
 					Network.sChannelInfo.ChannelFunkcioReload();
 				}
 			}
