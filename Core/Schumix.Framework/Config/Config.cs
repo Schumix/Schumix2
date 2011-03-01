@@ -26,6 +26,8 @@ namespace Schumix.Framework.Config
 {
 	public class Config
 	{
+		private bool error = false;
+
 		public Config(string configfile)
 		{
 			try
@@ -35,8 +37,12 @@ namespace Schumix.Framework.Config
 
 				if(!IsConfig(configfile))
 				{
-					Log.Notice("Config", "Program leallitasa!");
-					Log.Notice("Config", "Kerlek toltsed ki a configot!");
+					if(!error)
+					{
+						Log.Notice("Config", "Program leallitasa!");
+						Log.Notice("Config", "Kerlek toltsed ki a configot!");
+					}
+
 					Thread.Sleep(200);
 					Environment.Exit(1);
 				}
@@ -184,6 +190,7 @@ namespace Schumix.Framework.Config
 				catch(Exception e)
 				{
 					Log.Error("Config", "Hiba az xml irasa soran: {0}", e);
+					error = true;
 					return false;
 				}
 			}
