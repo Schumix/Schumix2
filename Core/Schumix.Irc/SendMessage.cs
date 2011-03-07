@@ -50,7 +50,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(tipus, channel, String.Format(uzenet, args));
+				SendChatMessage(tipus, channel, string.Format(uzenet, args));
 			}
 		}
 
@@ -66,7 +66,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.PRIVMSG, channel, String.Format(uzenet, args));
+				SendChatMessage(MessageType.PRIVMSG, channel, string.Format(uzenet, args));
 			}
 		}
 
@@ -82,7 +82,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.NOTICE, channel, String.Format(uzenet, args));
+				SendChatMessage(MessageType.NOTICE, channel, string.Format(uzenet, args));
 			}
 		}
 
@@ -99,7 +99,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				WriteLine(String.Format(uzenet, args));
+				WriteLine(string.Format(uzenet, args));
 			}
 		}
 	}

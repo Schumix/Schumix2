@@ -241,7 +241,7 @@ namespace Schumix.Irc
 						IMessage.Hostmask = IrcCommand[0];
 						userdata = IMessage.Hostmask.Split('!');
 
-						IMessage.Args = String.Empty;
+						IMessage.Args = string.Empty;
 						if(IrcCommand.Length > 2)
 							IMessage.Channel = IrcCommand[2];
 
@@ -259,7 +259,7 @@ namespace Schumix.Irc
 						opcode = IrcCommand[1];
 						IMessage.Info = IrcCommand;
 
-						if(IMessage.Args != String.Empty && IMessage.Args.Substring(0, 2) == " :")
+						if(IMessage.Args != string.Empty && IMessage.Args.Substring(0, 2) == " :")
 							IMessage.Args = IMessage.Args.Remove(0, 2);
 
 						if(_IRCHandler.ContainsKey(opcode))

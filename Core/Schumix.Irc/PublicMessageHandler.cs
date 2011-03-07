@@ -47,7 +47,7 @@ namespace Schumix.Irc
 				//if(Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) != "#")
 					//return;
 
-				if(Network.IMessage.Info[Network.IMessage.Info.Length-2] == String.Empty || Network.IMessage.Info[Network.IMessage.Info.Length-1] == String.Empty)
+				if(Network.IMessage.Info[Network.IMessage.Info.Length-2] == string.Empty || Network.IMessage.Info[Network.IMessage.Info.Length-1] == string.Empty)
 					return;
 
 				if(Network.IMessage.Info[3].Substring(0, 1) == ":")
@@ -55,7 +55,7 @@ namespace Schumix.Irc
 
 				Schumix();
 
-				if(Network.IMessage.Info[3] == String.Empty || Network.IMessage.Info[3].Substring(0, PLength) == " " || Network.IMessage.Info[3].Substring(0, PLength) != IRCConfig.Parancselojel)
+				if(Network.IMessage.Info[3] == string.Empty || Network.IMessage.Info[3].Substring(0, PLength) == " " || Network.IMessage.Info[3].Substring(0, PLength) != IRCConfig.Parancselojel)
 					return;
 
 				Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, PLength);
@@ -74,7 +74,7 @@ namespace Schumix.Irc
 
 				if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "sys")
 				{
-					string Platform = String.Empty;
+					string Platform = string.Empty;
 					var pid = Environment.OSVersion.Platform;
 
 					switch(pid)

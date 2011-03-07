@@ -49,40 +49,40 @@ namespace Schumix.Irc
 			}
 			else if(_NickStorage == IRCConfig.NickName3)
 			{
-				_NickStorage = String.Format("_{0}_", IRCConfig.NickName);
+				_NickStorage = string.Format("_{0}_", IRCConfig.NickName);
 				return _NickStorage;
 			}
-			else if(_NickStorage == String.Format("_{0}_", IRCConfig.NickName))
+			else if(_NickStorage == string.Format("_{0}_", IRCConfig.NickName))
 			{
-				_NickStorage = String.Format("__{0}_", IRCConfig.NickName);
+				_NickStorage = string.Format("__{0}_", IRCConfig.NickName);
 				return _NickStorage;
 			}
-			else if(_NickStorage == String.Format("__{0}_", IRCConfig.NickName))
+			else if(_NickStorage == string.Format("__{0}_", IRCConfig.NickName))
 			{
-				_NickStorage = String.Format("__{0}__", IRCConfig.NickName);
+				_NickStorage = string.Format("__{0}__", IRCConfig.NickName);
 				return _NickStorage;
 			}
-			else if(_NickStorage == String.Format("__{0}__", IRCConfig.NickName))
+			else if(_NickStorage == string.Format("__{0}__", IRCConfig.NickName))
 			{
-				_NickStorage = String.Format("___{0}", IRCConfig.NickName);
+				_NickStorage = string.Format("___{0}", IRCConfig.NickName);
 				return _NickStorage;
 			}
-			else if(_NickStorage == String.Format("___{0}", IRCConfig.NickName))
+			else if(_NickStorage == string.Format("___{0}", IRCConfig.NickName))
 			{
-				_NickStorage = String.Format("___{0}_", IRCConfig.NickName);
+				_NickStorage = string.Format("___{0}_", IRCConfig.NickName);
 				return _NickStorage;
 			}
-			else if(_NickStorage == String.Format("___{0}_", IRCConfig.NickName))
+			else if(_NickStorage == string.Format("___{0}_", IRCConfig.NickName))
 			{
-				_NickStorage = String.Format("___{0}__", IRCConfig.NickName);
+				_NickStorage = string.Format("___{0}__", IRCConfig.NickName);
 				return _NickStorage;
 			}
-			else if(_NickStorage == String.Format("___{0}__", IRCConfig.NickName))
+			else if(_NickStorage == string.Format("___{0}__", IRCConfig.NickName))
 			{
-				_NickStorage = String.Format("___{0}___", IRCConfig.NickName);
+				_NickStorage = string.Format("___{0}___", IRCConfig.NickName);
 				return _NickStorage;
 			}
-			else if(_NickStorage == String.Format("___{0}___", IRCConfig.NickName))
+			else if(_NickStorage == string.Format("___{0}___", IRCConfig.NickName))
 			{
 				_NickStorage = IRCConfig.NickName;
 				return _NickStorage;
