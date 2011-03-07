@@ -33,7 +33,7 @@ namespace Schumix.Framework
 	/// </summary>
 	public sealed class ScriptManager
 	{
-		private static readonly Utility sUtility = Singleton<Utility>.Instance;
+		//private static readonly Utility sUtility = Singleton<Utility>.Instance;
 
 		/// <summary>
 		/// List of found assemblies.

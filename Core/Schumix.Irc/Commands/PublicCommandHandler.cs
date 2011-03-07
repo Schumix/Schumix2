@@ -32,7 +32,7 @@ namespace Schumix.Irc.Commands
 		{
 			CNick();
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Verzió: 10{0}", Verzio.SchumixVerzio);
-			string parancsok = String.Empty;
+			string parancsok = string.Empty;
 
 			foreach(var command in CommandManager.GetPublicCommandHandler())
 			{
@@ -128,7 +128,7 @@ namespace Schumix.Irc.Commands
 				return;
 
 			CNick();
-			string adat = String.Empty;
+			string adat = string.Empty;
 			for(int i = 4; i < Network.IMessage.Info.Length; i++)
 				adat += " " + Network.IMessage.Info[i];
 
@@ -146,7 +146,7 @@ namespace Schumix.Irc.Commands
 				return;
 
 			CNick();
-			string adat = String.Empty;
+			string adat = string.Empty;
 			for(int i = 4; i < Network.IMessage.Info.Length; i++)
 				adat += " " + Network.IMessage.Info[i];
 
@@ -162,7 +162,7 @@ namespace Schumix.Irc.Commands
 				return;
 
 			CNick();
-			string adat = String.Empty;
+			string adat = string.Empty;
 			for(int i = 4; i < Network.IMessage.Info.Length; i++)
 				adat += " " + Network.IMessage.Info[i];
 
@@ -210,7 +210,7 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Info[4], "Keresnek téged itt: {0}", Network.IMessage.Channel);
 			else if(Network.IMessage.Info.Length >= 6)
 			{
-				string alomany = String.Empty;
+				string alomany = string.Empty;
 				for(int i = 5; i < Network.IMessage.Info.Length; i++)
 					alomany += Network.IMessage.Info[i] + " ";
 
@@ -228,7 +228,7 @@ namespace Schumix.Irc.Commands
 
 			CNick();
 
-			string adat = String.Empty;
+			string adat = string.Empty;
 			for(int i = 4; i < Network.IMessage.Info.Length; i++)
 				adat += " " + Network.IMessage.Info[i];
 
@@ -257,7 +257,7 @@ namespace Schumix.Irc.Commands
 
 			CNick();
 
-			string adat = String.Empty;
+			string adat = string.Empty;
 			for(int i = 5; i < Network.IMessage.Info.Length; i++)
 				adat += " " + Network.IMessage.Info[i];
 
