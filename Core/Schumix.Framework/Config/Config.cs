@@ -49,7 +49,7 @@ namespace Schumix.Framework.Config
 				else
 				{
 					var xmldoc = new XmlDocument();
-					xmldoc.Load(@configfile);
+					xmldoc.Load(configfile);
 
 					Log.Notice("Config", "Config fajl betoltese...");
 					string Server = xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText;
@@ -75,9 +75,10 @@ namespace Schumix.Framework.Config
 
 					int LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
 					string LogHelye = xmldoc.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
+					string IrcLogHelye = xmldoc.SelectSingleNode("Schumix/Log/IrcLogHelye").InnerText;
 					bool IrcLog = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText);
 
-					new LogConfig(LogLevel, LogHelye, IrcLog);
+					new LogConfig(LogLevel, LogHelye, IrcLogHelye, IrcLog);
 
 					bool Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Plugins/Allapot").InnerText);
 					string Directory = xmldoc.SelectSingleNode("Schumix/Plugins/Directory").InnerText;
@@ -90,7 +91,7 @@ namespace Schumix.Framework.Config
 			}
 			catch(Exception e)
 			{
-				new LogConfig(3, "szoba", false);
+				new LogConfig(3, "Logs", "Szoba", false);
 				Log.Error("Config", "Hiba oka: {0}", e);
 			}
 		}
@@ -101,7 +102,7 @@ namespace Schumix.Framework.Config
 				return true;
 			else
 			{
-				new LogConfig(3, "szoba", false);
+				new LogConfig(3, "Logs", "Szoba", false);
 				Log.Error("Config", "Nincs config fajl!");
 				Log.Debug("Config", "Elkeszitese folyamatban...");
 				var w = new XmlTextWriter(ConfigFile, null);
@@ -147,7 +148,8 @@ namespace Schumix.Framework.Config
 					// <Log>
 					w.WriteStartElement("Log");
 					w.WriteElementString("LogLevel", "2");
-					w.WriteElementString("LogHelye", "szoba");
+					w.WriteElementString("LogHelye", "Logs");
+					w.WriteElementString("IrcLogHelye", "Szoba");
 					w.WriteElementString("IrcLog", "false");
 
 					// </Log>
@@ -257,12 +259,14 @@ namespace Schumix.Framework.Config
 	{
 		public static int LogLevel { get; private set; }
 		public static string LogHelye { get; private set; }
+		public static string IrcLogHelye { get; private set; }
 		public static bool IrcLog { get; private set; }
 
-		public LogConfig(int loglevel, string loghelye, bool irclog)
+		public LogConfig(int loglevel, string loghelye, string ircloghelye, bool irclog)
 		{
 			LogLevel = loglevel;
 			LogHelye = loghelye;
+			IrcLogHelye = ircloghelye;
 			IrcLog   = irclog;
 		}
 	}

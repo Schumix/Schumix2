@@ -35,15 +35,6 @@ namespace Schumix.Irc
 		private readonly object WriteLock = new object();
 		private SendMessage() {}
 
-        /// <summary>
-        ///     Ez küldi el az üzenetet az chatre.
-        /// </summary>
-        /// <param name="tipus">
-        ///     PRIVMSG : Sima üzenet
-		///     NOTICE  : Notice üzenet
-        /// </param>
-        /// <param name="channel">IRC szoba neve</param>
-        /// <param name="uzenet">Maga az üzenet</param>
 		public void SendChatMessage(MessageType tipus, string channel, string uzenet)
 		{
 			lock(WriteLock)

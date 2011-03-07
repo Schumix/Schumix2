@@ -1,4 +1,4 @@
-/*
+ï»¿/*
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
@@ -29,16 +29,19 @@ namespace Schumix
 		private static readonly Sender sSender = Singleton<Sender>.Instance;
 
         /// <summary>
-        ///     A Main függvény. Itt indul el a debug.
+        ///     A Main fÃ¼ggvÃ©ny. Itt indul el a debug.
         /// </summary>
         /// <remarks>
         ///     Schumix IRC bot
         ///     <para>
-        ///         Készítette Megaxxx és Jackneill.
+        ///         KÃ©szÃ­tette Megaxxx Ã©s Jackneill.
         ///     </para>
         /// </remarks>
 		private static void Main(string[] args)
 		{
+			string configfile = "schumix.xml";
+			Log.Indulas(configfile);
+
 			Console.Title = SchumixBase.Title;
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("[Schumix2]");
@@ -50,7 +53,7 @@ namespace Schumix
 			Log.Notice("Main", "Rendszer indul...");
 			Console.WriteLine("");
 
-			new SchumixBot("schumix.xml");
+			new SchumixBot(configfile);
 			Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.time.SaveUptime(); };
 		}
 	}

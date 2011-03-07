@@ -1,4 +1,4 @@
-/*
+Ôªø/*
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
@@ -18,6 +18,8 @@
  */
 
 using System;
+using System.IO;
+using System.Xml;
 using System.Collections.Generic;
 using Schumix.Framework.Config;
 
@@ -26,30 +28,84 @@ namespace Schumix.Framework
 	public sealed class Log
 	{
 		private static readonly object WriteLock = new object();
+		private static string ConfigFile;
 
         /// <returns>
-        ///     A visszatÈrÈsi ÈrtÈk az aktu·lis d·tum.
+        ///     A visszat√©r√©si √©rt√©k az aktu√°lis d√°tum.
         /// </returns>
 		private static string GetTime()
 		{
-			return String.Format("{0}:{1}:{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+			return string.Format("{0}:{1}:{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+		}
+
+		private static void LogToFile(string log)
+		{
+			try
+			{
+				string loghelye;
+				if(LogConfig.LogHelye == null)
+					loghelye = InitConfig();
+				else
+					loghelye = LogConfig.LogHelye;
+
+				var file = new StreamWriter(string.Format("./{0}/{1}", loghelye, "Schumix.log"), true) { AutoFlush = true };
+				file.Write(log);
+				file.Close();
+			}
+			catch(Exception/* e*/)
+			{
+				// semmi
+			}
+		}
+
+		private static string InitConfig()
+		{
+			var xml = new XmlDocument();
+			xml.Load(ConfigFile);
+			return xml.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
+		}
+
+		public static void Indulas(string configfile)
+		{
+			try
+			{
+				ConfigFile = configfile;
+				string loghelye = InitConfig();
+
+				if(!Directory.Exists(loghelye))
+					Directory.CreateDirectory(loghelye);
+
+				var time = DateTime.Now;
+				string logfile = "Schumix.log";
+
+				if(!File.Exists(string.Format("./{0}/{1}", loghelye, logfile)))
+					File.Create(string.Format("./{0}/{1}", loghelye, logfile));
+
+				var file = new StreamWriter(string.Format("./{0}/{1}", loghelye, logfile), true) { AutoFlush = true };
+				file.Write("\nIndul√°si id≈ëpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n", time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
+				file.Close();
+			}
+			catch(Exception/* e*/)
+			{
+				Indulas(ConfigFile);
+			}
 		}
 
         /// <summary>
-        ///     D·tummal logolja a szˆveget meghat·rozva honnan sz·rmazik. 
-        ///     Lehet ez egyÈnileg meghat·rozott f¸ggvÈny vagy class nÈvvel ell·tva.
+        ///     D√°tummal logolja a sz√∂veget meghat√°rozva honnan sz√°rmazik. 
+        ///     Lehet ez egy√©nileg meghat√°rozott f√ºggv√©ny vagy class n√©vvel ell√°tva.
         ///     Logol a Console-ra.
         /// </summary>
         /// <param name="source">
-        ///     Meghat·rozza honnan sz·rmazik a log.
+        ///     Meghat√°rozza honnan sz√°rmazik a log.
         ///     <example>
-        ///         17:28 N <c>Config:</c> Config file betˆltÈse...
+        ///         17:28 N <c>Config:</c> Config file bet√∂lt√©se...
         ///     </example>
         /// </param>
         /// <param name="format">
-        ///     A szˆveg amit kiÌrunk.
+        ///     A sz√∂veg amit ki√≠runk.
         ///     <example>
-        ///         17:28 N Config: <c>Config file betˆltÈse...</c>
+        ///         17:28 N Config: <c>Config file bet√∂lt√©se...</c>
         ///     </example>
         /// </param>
 		public static void Notice(string source, string format)
@@ -62,6 +118,7 @@ namespace Schumix.Framework
 				Console.Write(" N {0}: ", source);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write("{0}\n", format);
+				LogToFile(GetTime() + string.Format(" N {0}: {1}\n", source, format));
 			}
 		}
 
@@ -78,6 +135,7 @@ namespace Schumix.Framework
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
+				LogToFile(GetTime() + string.Format(" S {0}: {1}\n", source, format));
 			}
 		}
 
@@ -97,6 +155,7 @@ namespace Schumix.Framework
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
+				LogToFile(GetTime() + string.Format(" W {0}: {1}\n", source, format));
 			}
 		}
 
@@ -116,6 +175,7 @@ namespace Schumix.Framework
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
+				LogToFile(GetTime() + string.Format(" E {0}: {1}\n", source, format));
 			}
 		}
 
@@ -135,6 +195,7 @@ namespace Schumix.Framework
 				Console.ForegroundColor = ConsoleColor.Blue;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
+				LogToFile(GetTime() + string.Format(" D {0}: {1}\n", source, format));
 			}
 		}
 
@@ -168,7 +229,6 @@ namespace Schumix.Framework
 						
 						Console.Write("*\n");
 					}
-					
 				}
 				
 				Console.WriteLine("**************************************************");
@@ -179,7 +239,7 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				Notice(source, String.Format(format, args));
+				Notice(source, string.Format(format, args));
 			}
 		}
 
@@ -187,7 +247,7 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				Success(source, String.Format(format, args));
+				Success(source, string.Format(format, args));
 			}
 		}
 
@@ -195,7 +255,7 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				Warning(source, String.Format(format, args));
+				Warning(source, string.Format(format, args));
 			}
 		}
 
@@ -203,7 +263,7 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				Error(source, String.Format(format, args));
+				Error(source, string.Format(format, args));
 			}
 		}
 
@@ -211,7 +271,7 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				Debug(source, String.Format(format, args));
+				Debug(source, string.Format(format, args));
 			}
 		}
 
@@ -219,7 +279,7 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				LargeWarning(String.Format(message, args));
+				LargeWarning(string.Format(message, args));
 			}
 		}
 	}

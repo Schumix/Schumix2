@@ -209,7 +209,7 @@ namespace Schumix.Irc
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			string alomany = String.Empty;
+			string alomany = string.Empty;
 			for(int i = 4; i < Network.IMessage.Info.Length; i++)
 				alomany += Network.IMessage.Info[i] + " ";
 
@@ -230,22 +230,22 @@ namespace Schumix.Irc
 		{
 			if(Network.sChannelInfo.FSelect("log") == "be" && Network.sChannelInfo.FSelect("log", channel) == "be")
 			{
-				if(!Directory.Exists(LogConfig.LogHelye))
-					Directory.CreateDirectory(LogConfig.LogHelye);
-
 				try
 				{
-					string logfile_name = channel + ".log";
-					if(!File.Exists(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name)))
-						File.Create(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name));
+					if(!Directory.Exists(LogConfig.IrcLogHelye))
+						Directory.CreateDirectory(LogConfig.IrcLogHelye);
 
-					var file = new StreamWriter(String.Format("./{0}/{1}", LogConfig.LogHelye, logfile_name), true) { AutoFlush = true };
+					string logfile_name = channel + ".log";
+					if(!File.Exists(string.Format("./{0}/{1}", LogConfig.IrcLogHelye, logfile_name)))
+						File.Create(string.Format("./{0}/{1}", LogConfig.IrcLogHelye, logfile_name));
+
+					var file = new StreamWriter(string.Format("./{0}/{1}", LogConfig.IrcLogHelye, logfile_name), true) { AutoFlush = true };
 					file.WriteLine("[{0}] <{1}> {2}", DateTime.Now, user, args);
 					file.Close();
 				}
-				catch(Exception e)
+				catch(Exception/* e*/)
 				{
-					Log.Error("MessageHandler", "Hiba oka: {0}", e.ToString());
+					// semmi
 				}
 			}
 		}

@@ -18,7 +18,8 @@
     </Irc>
     <Log>
         <LogLevel>2</LogLevel>
-        <LogHelye>szoba</LogHelye>
+        <LogHelye>Logs</LogHelye>
+        <IrcLogHelye>Szoba</IrcLogHelye>
         <IrcLog>false</IrcLog>
     </Log>
     <Mysql>
