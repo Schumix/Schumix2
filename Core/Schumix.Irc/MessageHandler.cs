@@ -227,7 +227,7 @@ namespace Schumix.Irc
         /// <param name="user"></param>
         /// <param name="args"></param>
 		private void LogToFajl(string channel, string user, string args)
-        {
+		{
 			if(Network.sChannelInfo.FSelect("log") == "be" && Network.sChannelInfo.FSelect("log", channel) == "be")
 			{
 				if(!Directory.Exists(LogConfig.LogHelye))
