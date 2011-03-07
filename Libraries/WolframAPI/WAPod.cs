@@ -63,7 +63,9 @@
         {
             get
             {
+#if WindowsCE
                 Contract.Requires(SubPods != null);
+#endif
 
                 return (from sp in SubPods
                         where sp.Title.ToLower().Equals(name)

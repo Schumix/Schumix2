@@ -18,7 +18,9 @@
         /// <param name="item">The item.</param>
         public new void Add(T item)
         {
+#if WindowsCE
             Contract.Requires(!Equals(item, null));
+#endif
             
             if (Contains(item) || FindIndex(it => it.Equals(item)) != -1)
             {
@@ -36,7 +38,9 @@
         {
             get
             {
+#if WindowsCE
                 Contract.Requires(!Equals(ind, null));
+#endif
 
                 return (from elem in this
                         where elem.Equals(ind)
@@ -45,8 +49,10 @@
 
             set
             {
+#if WindowsCE
                 Contract.Requires(!Equals(ind, null));
                 Contract.Requires(!Equals(value, null));
+#endif
 
                 int index;
 

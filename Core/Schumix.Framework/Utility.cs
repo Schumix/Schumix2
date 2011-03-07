@@ -76,9 +76,8 @@ namespace Schumix.Framework
 		{
 			Byte[] originalBytes;
 			Byte[] encodedBytes;
-			SHA1 sha1;
 
-			sha1 = new SHA1CryptoServiceProvider();
+			var sha1 = new SHA1CryptoServiceProvider();
 			originalBytes = ASCIIEncoding.Default.GetBytes(info);
 			encodedBytes = sha1.ComputeHash(originalBytes);
 
@@ -96,9 +95,8 @@ namespace Schumix.Framework
 		{
 			Byte[] originalBytes;
 			Byte[] encodedBytes;
-			MD5 md5;
 
-			md5 = new MD5CryptoServiceProvider();
+			var md5 = new MD5CryptoServiceProvider();
 			originalBytes = ASCIIEncoding.Default.GetBytes(info);
 			encodedBytes = md5.ComputeHash(originalBytes);
 
@@ -128,12 +126,12 @@ namespace Schumix.Framework
 			byte[] retVal = md5.ComputeHash(file);
 			file.Close();
 			file.Dispose();
-			
+
 			var sb = new StringBuilder();
-			
+
 			for(int i = 0; i < retVal.Length; i++)
 				sb.Append(retVal[i].ToString("x2"));
-			
+
 			return sb.ToString();
 		}
 

@@ -130,7 +130,9 @@
                 return "No solution found. The response might have been malformed.";
             }
 
+#if WindowsCE
             Contract.Assume(solution.SubPods[0] != null);
+#endif
 
             if (string.IsNullOrEmpty(solution.SubPods[0].PlainText))
             {
