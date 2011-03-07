@@ -20,7 +20,9 @@
         /// <returns>The serialized instance.</returns>
         public string Serialize()
         {
+#if WindowsCE
             Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+#endif
 
             string data;
 

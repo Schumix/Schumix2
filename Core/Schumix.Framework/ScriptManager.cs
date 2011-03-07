@@ -91,7 +91,7 @@ namespace Schumix.Framework
 					return false;
 				}
 				
-				Log.Success("ScriptManager", "Loaded plugin: {0} (hash: {1})", f.Name, sUtility.MD5File("./" + PluginsConfig.Directory + "/" + f.Name));
+				Log.Success("ScriptManager", "Loaded plugin: {0}"/* (hash: {1})"*/, f.Name/*, sUtility.MD5File("./" + PluginsConfig.Directory + "/" + f.Name)*/);
 			}
 
 			return true;
@@ -131,7 +131,7 @@ namespace Schumix.Framework
 				return false;
 			}
 				
-			Log.Success("ScriptManager", "Loaded plugin: {0} (hash: {1})", fi.Name, sUtility.MD5File("./" + PluginsConfig.Directory + "/" + fi.Name));
+			Log.Success("ScriptManager", "Loaded plugin: {0}"/* (hash: {1})"*/, fi.Name/*, sUtility.MD5File("./" + PluginsConfig.Directory + "/" + fi.Name)*/);
 			return true;
 		}
 

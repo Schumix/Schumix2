@@ -159,7 +159,9 @@
         /// <returns>The string representation</returns>
         public override string ToString()
         {
+#if WindowsCE
             Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+#endif
 
             var sd = Serialize();
 
@@ -219,7 +221,9 @@
         /// <filterpriority>2</filterpriority>
         public object Clone()
         {
+#if WindowsCE
             Contract.Ensures(Contract.Result<object>() != null);
+#endif
 
             return new WAResult(Success, Error, NumPods, DataTypes, TimedOut, Timing, ParseTiming, ParseTimedOut,
                                 Recalculate, Version, Pods);
