@@ -32,6 +32,7 @@ namespace Schumix
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Utility sUtility = Singleton<Utility>.Instance;
+		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		private readonly Network _network;
 
 		/// <summary>
@@ -123,7 +124,7 @@ namespace Schumix
 			if(parancs == "help")
 			{
 				Log.Notice("Console", "Parancsok: connect, disconnect, reconnect, consolelog, kikapcs");
-				Log.Notice("Console", "Parancsok: csatorna, admin, sys, funkcio");
+				Log.Notice("Console", "Parancsok: csatorna, admin, sys, funkcio, nick, join, left");
 				return true;
 			}
 
@@ -368,6 +369,48 @@ namespace Schumix
 			{
 				sSender.Quit("Console: reconnect.");
 				_network.ReConnect();
+				return true;
+			}
+
+			if(parancs == "nick")
+			{
+				if(cmd.Length < 2)
+				{
+					Log.Error("Console", "Nincs megadva a nev!");
+					return true;
+				}
+
+				string nick = cmd[1];
+				sNickInfo.ChangeNick(nick);
+				sSender.Nick(nick);
+				return true;
+			}
+
+			if(parancs == "join")
+			{
+				if(cmd.Length < 2)
+				{
+					Log.Error("Console", "Nincs megadva a csatorna neve!");
+					return true;
+				}
+
+				if(cmd.Length == 2)
+					sSender.Join(cmd[1]);
+				else if(cmd.Length == 3)
+					sSender.Join(cmd[1], cmd[2]);
+
+				return true;
+			}
+
+			if(parancs == "left")
+			{
+				if(cmd.Length < 2)
+				{
+					Log.Error("Console", "Nincs megadva a csatorna neve!");
+					return true;
+				}
+
+				sSender.Part(cmd[1]);
 				return true;
 			}
 
