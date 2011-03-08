@@ -41,7 +41,7 @@ namespace Schumix.Irc
 
 		public void ChannelLista()
 		{
-			var db = SchumixBase.mSQLConn.QueryRow("SELECT szoba, jelszo FROM channel");
+			var db = SchumixBase.DManager.Query("SELECT szoba, jelszo FROM channel");
 			if(db != null)
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
@@ -60,7 +60,7 @@ namespace Schumix.Irc
 		{
 			string status = "";
 
-			var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT funkcio_status FROM schumix WHERE funkcio_nev = '{0}'", nev);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT funkcio_status FROM schumix WHERE funkcio_nev = '{0}'", nev);
 			if(db != null)
 				status = db["funkcio_status"].ToString();
 			else
@@ -95,7 +95,7 @@ namespace Schumix.Irc
 		{
 			ChannelFunkcio.Clear();
 
-			var db = SchumixBase.mSQLConn.QueryRow("SELECT szoba FROM channel");
+			var db = SchumixBase.DManager.Query("SELECT szoba FROM channel");
 			if(db != null)
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
@@ -103,7 +103,7 @@ namespace Schumix.Irc
 					var row = db.Rows[i];
 					string szoba = row["szoba"].ToString();
 
-					var db1 = SchumixBase.mSQLConn.QueryFirstRow("SELECT funkciok FROM channel WHERE szoba = '{0}'", szoba);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT funkciok FROM channel WHERE szoba = '{0}'", szoba);
 					if(db1 != null)
 					{
 						string funkciok = db1["funkciok"].ToString();
@@ -126,7 +126,7 @@ namespace Schumix.Irc
 		public void ChannelListaReload()
 		{
 			_ChannelLista.Clear();
-			var db = SchumixBase.mSQLConn.QueryRow("SELECT szoba, jelszo FROM channel");
+			var db = SchumixBase.DManager.Query("SELECT szoba, jelszo FROM channel");
 			if(db != null)
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
@@ -182,7 +182,7 @@ namespace Schumix.Irc
 		{
 			string be = "", ki = "";
 
-			var db = SchumixBase.mSQLConn.QueryRow("SELECT funkcio_nev, funkcio_status FROM schumix");
+			var db = SchumixBase.DManager.Query("SELECT funkcio_nev, funkcio_status FROM schumix");
 			if(db != null)
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
@@ -235,11 +235,11 @@ namespace Schumix.Irc
 			foreach(var channel in _ChannelLista)
 			{
 				sSender.Join(channel.Key, channel.Value);
-				SchumixBase.mSQLConn.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", channel.Key);
+				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv', error = '' WHERE szoba = '{0}'", channel.Key);
 			}
 
 			ChannelFunkcioReload();
-			var db = SchumixBase.mSQLConn.QueryRow("SELECT aktivitas FROM channel");
+			var db = SchumixBase.DManager.Query("SELECT aktivitas FROM channel");
 			if(db != null)
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)

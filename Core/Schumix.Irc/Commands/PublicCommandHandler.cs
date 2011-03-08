@@ -179,7 +179,7 @@ namespace Schumix.Irc.Commands
 
 			CNick();
 
-			var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT hasznalata FROM irc_parancsok WHERE parancs = '{0}'", Network.IMessage.Info[4]);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT hasznalata FROM irc_parancsok WHERE parancs = '{0}'", Network.IMessage.Info[4]);
 			if(db != null)
 			{
 				string hasznalata = db["hasznalata"].ToString();

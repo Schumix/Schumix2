@@ -55,7 +55,7 @@ namespace Schumix
 			ConsoleLog = LogConfig.IrcLog;
 			_network = network;
 
-			var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
 			if(db != null)
 				Console.Title = SchumixBase.Title + " || Console Writing Channel: " + db["csatorna"].ToString();
 		}
@@ -90,7 +90,7 @@ namespace Schumix
 					if(ConsoleCommands(uzenet))
 						continue;
 
-					var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
 					if(db != null)
 						sSendMessage.SendCMPrivmsg(db["csatorna"].ToString(), uzenet);
 
@@ -192,7 +192,7 @@ namespace Schumix
 					return true;
 				}
 
-				SchumixBase.mSQLConn.QueryFirstRow("UPDATE schumix SET csatorna = '{0}' WHERE entry = '1'", cmd[1]);
+				SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET csatorna = '{0}' WHERE entry = '1'", cmd[1]);
 				Log.Notice("Console", "Uj csatorna ahova mostantol lehet irni: {0}", cmd[1]);
 				Console.Title = SchumixBase.Title + " || Console Writing Channel: " + cmd[1];
 				return true;
@@ -219,7 +219,7 @@ namespace Schumix
 
 					int flag;
 
-					var db = SchumixBase.mSQLConn.QueryFirstRow("SELECT flag FROM adminok WHERE nev = '{0}'", cmd[2].ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT flag FROM adminok WHERE nev = '{0}'", cmd[2].ToLower());
 					if(db != null)
 						flag = Convert.ToInt32(db["flag"].ToString());
 					else
@@ -232,7 +232,7 @@ namespace Schumix
 				}
 				else if(cmd.Length >= 2 && cmd[1] == "lista")
 				{
-					var db = SchumixBase.mSQLConn.QueryRow("SELECT nev FROM adminok");
+					var db = SchumixBase.DManager.Query("SELECT nev FROM adminok");
 					if(db != null)
 					{
 						string adminok = string.Empty;
@@ -263,7 +263,7 @@ namespace Schumix
 					string nev = cmd[2];
 					string pass = sUtility.GetRandomString();
 
-					SchumixBase.mSQLConn.QueryFirstRow("INSERT INTO `adminok`(nev, jelszo) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(nev, jelszo) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
 					Log.Notice("Console", "Admin hozzaadva: {0}", nev);
 					Log.Notice("Console", "Mostani jelszo: {0}", pass);
 				}
@@ -276,7 +276,7 @@ namespace Schumix
 					}
 
 					string nev = cmd[2];
-					SchumixBase.mSQLConn.QueryFirstRow("DELETE FROM `adminok` WHERE nev = '{0}'", nev.ToLower());
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE nev = '{0}'", nev.ToLower());
 					Log.Notice("Console", "Admin törölve: {0}", nev);
 				}
 				else if(cmd.Length >= 2 && cmd[1] == "rang")
@@ -298,7 +298,7 @@ namespace Schumix
 
 					if((AdminFlag)rang == AdminFlag.Administrator || (AdminFlag)rang == AdminFlag.Operator)
 					{
-						SchumixBase.mSQLConn.QueryFirstRow("UPDATE adminok SET flag = '{0}' WHERE nev = '{1}'", rang, nev);
+						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET flag = '{0}' WHERE nev = '{1}'", rang, nev);
 						Log.Notice("Console", "Rang sikeresen modósitva.");
 					}
 					else
@@ -345,7 +345,7 @@ namespace Schumix
 					if(cmd[1] == "be" || cmd[1] == "ki")
 					{
 						Log.Notice("Console", "{0}: {1}kapcsolva", cmd[2], cmd[1]);
-						SchumixBase.mSQLConn.QueryFirstRow("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", cmd[1], cmd[2]);
+						SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", cmd[1], cmd[2]);
 					}
 				}
 

@@ -66,12 +66,18 @@ namespace Schumix.Framework.Config
 
 					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, Parancselojel);
 
-					string Host = xmldoc.SelectSingleNode("Schumix/Mysql/Host").InnerText;
-					string User = xmldoc.SelectSingleNode("Schumix/Mysql/User").InnerText;
-					string Password = xmldoc.SelectSingleNode("Schumix/Mysql/Password").InnerText;
-					string Database = xmldoc.SelectSingleNode("Schumix/Mysql/Database").InnerText;
+					bool Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Allapot").InnerText);
+					string Host = xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText;
+					string User = xmldoc.SelectSingleNode("Schumix/MySql/User").InnerText;
+					string Password = xmldoc.SelectSingleNode("Schumix/MySql/Password").InnerText;
+					string Database = xmldoc.SelectSingleNode("Schumix/MySql/Database").InnerText;
 
-					new MysqlConfig(Host, User, Password, Database);
+					new MySqlConfig(Allapot, Host, User, Password, Database);
+
+					Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/SQLite/Allapot").InnerText);
+					string FileName = xmldoc.SelectSingleNode("Schumix/SQLite/FileName").InnerText;
+
+					new SQLiteConfig(Allapot, FileName);
 
 					int LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
 					string LogHelye = xmldoc.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
@@ -80,7 +86,7 @@ namespace Schumix.Framework.Config
 
 					new LogConfig(LogLevel, LogHelye, IrcLogHelye, IrcLog);
 
-					bool Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Plugins/Allapot").InnerText);
+					Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Plugins/Allapot").InnerText);
 					string Directory = xmldoc.SelectSingleNode("Schumix/Plugins/Directory").InnerText;
 
 					new PluginsConfig(Allapot, Directory);
@@ -155,14 +161,23 @@ namespace Schumix.Framework.Config
 					// </Log>
 					w.WriteEndElement();
 
-					// <Mysql>
-					w.WriteStartElement("Mysql");
+					// <MySql>
+					w.WriteStartElement("MySql");
+					w.WriteElementString("Allapot", "false");
 					w.WriteElementString("Host", "localhost");
 					w.WriteElementString("User", "root");
 					w.WriteElementString("Password", "pass");
 					w.WriteElementString("Database", "database");
 
-					// </Mysql>
+					// </MySql>
+					w.WriteEndElement();
+
+					// <SQLite>
+					w.WriteStartElement("SQLite");
+					w.WriteElementString("Allapot", "false");
+					w.WriteElementString("FileName", "Schumix.db3");
+
+					// </SQLite>
 					w.WriteEndElement();
 
 					// <Parancs>
@@ -239,19 +254,33 @@ namespace Schumix.Framework.Config
 		}
 	}
 
-	public sealed class MysqlConfig
+	public sealed class MySqlConfig
 	{
+		public static bool Allapot { get; private set; }
 		public static string Host { get; private set; }
 		public static string User { get; private set; }
 		public static string Password { get; private set; }
 		public static string Database { get; private set; }
 
-		public MysqlConfig(string host, string user, string password, string database)
+		public MySqlConfig(bool allapot, string host, string user, string password, string database)
 		{
+			Allapot  = allapot;
 			Host     = host;
 			User     = user;
 			Password = password;
 			Database = database;
+		}
+	}
+
+	public sealed class SQLiteConfig
+	{
+		public static bool Allapot { get; private set; }
+		public static string FileName { get; private set; }
+
+		public SQLiteConfig(bool allapot, string filename)
+		{
+			Allapot  = allapot;
+			FileName = filename;
 		}
 	}
 

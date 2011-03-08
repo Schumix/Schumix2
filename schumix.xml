@@ -22,12 +22,17 @@
         <IrcLogHelye>Szoba</IrcLogHelye>
         <IrcLog>false</IrcLog>
     </Log>
-    <Mysql>
+    <MySql>
+        <Allapot>false</Allapot>
         <Host>localhost</Host>
         <User>root</User>
         <Password>pass</Password>
         <Database>database</Database>
-    </Mysql>
+    </MySql>
+    <SQLite>
+        <Allapot>false</Allapot>
+        <FileName>Schumix.db3</FileName>
+    </SQLite>
     <Parancs>
         <Elojel>$</Elojel>
     </Parancs>
