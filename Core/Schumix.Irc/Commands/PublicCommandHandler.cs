@@ -117,7 +117,7 @@ namespace Schumix.Irc.Commands
 		protected void HandleRoll()
 		{
 			CNick();
-			Random rand = new Random();
+			var rand = new Random();
 			int szam = rand.Next(0, 100);
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Százalékos aránya {0}%", szam);
 		}
