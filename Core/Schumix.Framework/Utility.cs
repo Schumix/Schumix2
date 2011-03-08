@@ -33,9 +33,13 @@ namespace Schumix.Framework
 
 		public string GetUrl(string url)
 		{
-			var web = new WebClient();
-			string kod = web.DownloadString(url);
-			web.Dispose();
+			string kod;
+
+			using(var client = new WebClient())
+			{
+				kod = client.DownloadString(url);
+			}
+
 			return kod;
 		}
 
@@ -72,65 +76,61 @@ namespace Schumix.Framework
 			return path;
 		}
 
-		public string Sha1(string info)
+		public string Sha1(string value)
 		{
-			Byte[] originalBytes;
-			Byte[] encodedBytes;
+			if(value == null)
+				throw new ArgumentNullException("value");
 
-			var sha1 = new SHA1CryptoServiceProvider();
-			originalBytes = ASCIIEncoding.Default.GetBytes(info);
-			encodedBytes = sha1.ComputeHash(originalBytes);
+			var x = new SHA1CryptoServiceProvider();
+			var data = Encoding.ASCII.GetBytes(value);
+			data = x.ComputeHash(data);
+			//x.Dispose();
+			var ret = string.Empty;
 
-			string convert = BitConverter.ToString(encodedBytes);
-			string[] adat = convert.Split('-');
-			string Sha1 = String.Empty;
+			for(var i = 0; i < data.Length; i++)
+				ret += data[i].ToString("x2").ToLower();
 
-			for(int i = 0; i < adat.Length; i++)
-				Sha1 += adat[i];
-
-			return Sha1.ToLower();
+			return ret;
 		}
 
-		public string Md5(string info)
+		public string Md5(string value)
 		{
-			Byte[] originalBytes;
-			Byte[] encodedBytes;
+			if(value == null)
+				throw new ArgumentNullException("value");
 
-			var md5 = new MD5CryptoServiceProvider();
-			originalBytes = ASCIIEncoding.Default.GetBytes(info);
-			encodedBytes = md5.ComputeHash(originalBytes);
+			var x = new MD5CryptoServiceProvider();
+			var data = Encoding.ASCII.GetBytes(value);
+			data = x.ComputeHash(data);
+			//x.Dispose();
+			var ret = string.Empty;
 
-			string convert = BitConverter.ToString(encodedBytes);
-			string[] adat = convert.Split('-');
-			string Md5 = String.Empty;
+			for(var i = 0; i < data.Length; i++)
+				ret += data[i].ToString("x2").ToLower();
 
-			for(int i = 0; i < adat.Length; i++)
-				Md5 += adat[i];
-
-			return Md5.ToLower();
+			return ret;
 		}
 
-		/// <summary>
-		/// Calculates the MD5 sum of a file.
-		/// </summary>
-		/// <param name="fileName">
-		/// The file to check.
-		/// </param>
-		/// <returns>
-		/// The MD5 hash.
-		/// </returns>
 		public string MD5File(string fileName)
 		{
-			FileStream file = new FileStream(fileName, FileMode.Open);
-			MD5 md5 = new MD5CryptoServiceProvider();
-			byte[] retVal = md5.ComputeHash(file);
-			file.Close();
-			file.Dispose();
+			if(fileName == null)
+				throw new ArgumentNullException("fileName");
+
+			byte[] retVal;
+
+			using(var file = new FileStream(fileName, FileMode.Open))
+			{
+				MD5 md5 = new MD5CryptoServiceProvider();
+				retVal = md5.ComputeHash(file);
+				//md5.Dispose();
+			}
 
 			var sb = new StringBuilder();
 
-			for(int i = 0; i < retVal.Length; i++)
-				sb.Append(retVal[i].ToString("x2"));
+			if(retVal != null)
+			{
+				for(var i = 0; i < retVal.Length; i++)
+					sb.Append(retVal[i].ToString("x2"));
+			}
 
 			return sb.ToString();
 		}
