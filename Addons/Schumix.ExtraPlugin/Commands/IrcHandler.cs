@@ -46,8 +46,8 @@ namespace Schumix.ExtraPlugin.Commands
 
 			if(Network.sChannelInfo.FSelect("koszones") == "be" && Network.sChannelInfo.FSelect("koszones", channel) == "be")
 			{
-				Random rand = new Random();
-				string Koszones = String.Empty;
+				var rand = new Random();
+				string Koszones = string.Empty;
 				switch(rand.Next(0, 12))
 				{
 					case 0:
@@ -116,8 +116,8 @@ namespace Schumix.ExtraPlugin.Commands
 
 			if(Network.sChannelInfo.FSelect("koszones") == "be" && Network.sChannelInfo.FSelect("koszones", Network.IMessage.Channel) == "be")
 			{
-				Random rand = new Random();
-				string elkoszones = String.Empty;
+				var rand = new Random();
+				string elkoszones = string.Empty;
 				switch(rand.Next(0, 1))
 				{
 					case 0:
@@ -160,7 +160,7 @@ namespace Schumix.ExtraPlugin.Commands
 				{
 					if(ConsoleLog.CLog)
 					{
-						string alomany = "";
+						string alomany = string.Empty;
 						for(int i = 4; i < Network.IMessage.Info.Length; i++)
 							alomany += Network.IMessage.Info[i] + " ";
 
@@ -174,4 +174,3 @@ namespace Schumix.ExtraPlugin.Commands
 		}
 	}
 }
-
