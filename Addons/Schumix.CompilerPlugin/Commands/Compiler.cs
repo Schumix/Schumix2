@@ -81,6 +81,15 @@ namespace Schumix.CompilerPlugin.Commands
 				var type = o.GetType();
 				type.InvokeMember("Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
 
+				if(writer.ToString().Length >= 3000)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kimeneti szöveg túl hosszú ezért nem került kiirásra!");
+					var s = new StreamWriter(Console.OpenStandardOutput());
+					s.AutoFlush = true;
+					Console.SetOut(s);
+					return;
+				}
+
 				string[] sorok = writer.ToString().Split('\n');
 
 				if(sorok.Length < 2 && adat.IndexOf("Console.Write") == -1)
