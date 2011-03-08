@@ -39,7 +39,7 @@ INSERT INTO `irc_parancsok` VALUES ('1', 'rang', 'Rang hasznalata: /mode <channe
 INSERT INTO `irc_parancsok` VALUES ('2', 'rang1', 'Rang mentese: /chanserv <rang (sop, aop, hop, vop)> <channel> ADD <nev>');
 INSERT INTO `irc_parancsok` VALUES ('3', 'nick', 'Nick csere hasznalata: /nick <uj nev>');
 INSERT INTO `irc_parancsok` VALUES ('4', 'kick', 'Kick hasznalata: /kick <channel> <nev> (<oka> nem feltetlen kell)');
-INSERT INTO `irc_parancsok` VALUES ('5', 'owner', 'Ownermod hasznalata: /msg chanserv SET <channel> ownermode on ');
+INSERT INTO `irc_parancsok` VALUES ('5', 'owner', 'Ownermod hasznalata: /msg chanserv SET <channel> ownermode on');
 
 DROP TABLE IF EXISTS `schumix`;
 CREATE TABLE `schumix` (

@@ -31,7 +31,7 @@ namespace Schumix.Framework
         ///     A MySQL class-t hívja meg.
         ///     Dekralálja a MySQL kapcsolódást.
         /// </summary>
-		public static Mysql mSQLConn { get; private set; }
+		public static DatabaseManager DManager { get; private set; }
 		public static Time time { get; private set; }
 		public static bool IIdo = true;
 		public static string Title = "Schumix2 IRC Bot";
@@ -43,8 +43,8 @@ namespace Schumix.Framework
 				Log.Debug("SchumixBase", "Time indul...");
 				time = new Time();
 				Log.Debug("SchumixBase", "Mysql indul...");
-				mSQLConn = new Mysql(MysqlConfig.Host, MysqlConfig.User, MysqlConfig.Password, MysqlConfig.Database);
-				Log.Notice("SchumixBase", "Mysql adatbazishoz sikeres a kapcsolodas.");
+				DManager = new DatabaseManager();
+				Log.Notice("SchumixBase", "Az adatbazishoz sikeres a kapcsolodas.");
 
 				if(PluginsConfig.Allapot)
 				{

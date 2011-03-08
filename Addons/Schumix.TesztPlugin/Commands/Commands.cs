@@ -50,7 +50,7 @@ namespace Schumix.TesztPlugin.Commands
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "db")
 			{
-				var db = SchumixBase.mSQLConn.QueryRow("SELECT nev FROM adminok");
+				var db = SchumixBase.DManager.Query("SELECT nev FROM adminok");
 				if(db != null)
 				{
 					for(int i = 0; i < db.Rows.Count; ++i)
