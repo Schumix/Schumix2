@@ -609,23 +609,6 @@ namespace Schumix.Irc.Commands
 			// Adminisztrátor parancsok
 			if(Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 			{
-				/*else if(Network.IMessage.Info[4] == "reload")
-				{
-					if(Network.IMessage.Info.Length < 6)
-					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Bot egyes részeinek újratöltése.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Reload parancsai: info");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}reload <rész neve>", IRCConfig.Parancselojel);
-						res.clear();
-						return;
-					}
-		
-					if(Network.IMessage.Info[5] == "info")
-					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelenleg újrainditható részekről infó.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}hg add <rss neve> <channel>", IRCConfig.Parancselojel); // hülyeség szerepel itt
-					}
-				}*/
 				if(Network.IMessage.Info[4] == "plugin")
 				{
 					if(Network.IMessage.Info.Length < 6)

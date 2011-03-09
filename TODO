@@ -1,5 +1,6 @@
 Megírásra váró feladatok:
-- Parancslista potlása mely lehetséges.
+- xrev parancs hozzáadása.
 - jegyzet parancs hozzáadása.
 - autofunkcio parancs hozzáadása.
 - Reconnect-nél fixálni ping-et hogy bot ne essen le ha másik nickkel jön fel.
+- rss-ek megirása és hozzáadása a kódhoz.
