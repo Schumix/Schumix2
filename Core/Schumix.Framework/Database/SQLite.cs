@@ -26,7 +26,7 @@ using System.Text.RegularExpressions;
 
 namespace Schumix.Framework.Database
 {
-	public class SQLite
+	public sealed class SQLite
 	{
 		private SQLiteConnection Connection;
 

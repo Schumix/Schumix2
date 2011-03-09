@@ -27,7 +27,7 @@ using Schumix.Framework.Config;
 
 namespace Schumix.Framework.Database
 {
-	public class DatabaseManager
+	public sealed class DatabaseManager
 	{
 		private readonly SQLite sdatabase;
 		private readonly MySql mdatabase;
