@@ -314,7 +314,7 @@ namespace Schumix
 			{
 				if(cmd.Length < 2)
 				{
-					Log.Error("Console", "Nincs megadva az 1. parameter!");
+					Log.Error("Console", "Nincs megadva egy parameter!");
 					return true;
 				}
 
@@ -376,13 +376,14 @@ namespace Schumix
 			{
 				if(cmd.Length < 2)
 				{
-					Log.Error("Console", "Nincs megadva a nev!");
+					Log.Error("Console", "Nincs nev megadva!");
 					return true;
 				}
 
 				string nick = cmd[1];
 				sNickInfo.ChangeNick(nick);
 				sSender.Nick(nick);
+				Log.Notice("Console", "Nick megvaltoztatasa erre: {0}", nick);
 				return true;
 			}
 
@@ -399,6 +400,7 @@ namespace Schumix
 				else if(cmd.Length == 3)
 					sSender.Join(cmd[1], cmd[2]);
 
+				Log.Notice("Console", "Kapcsolodas ehez a csatonahoz: {0}", cmd[1]);
 				return true;
 			}
 
@@ -411,6 +413,7 @@ namespace Schumix
 				}
 
 				sSender.Part(cmd[1]);
+				Log.Notice("Console", "Lelepes errol a csatornarol: {0}", cmd[1]);
 				return true;
 			}
 

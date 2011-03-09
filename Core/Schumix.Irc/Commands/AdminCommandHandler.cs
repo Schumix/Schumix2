@@ -37,7 +37,10 @@ namespace Schumix.Irc.Commands
 			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "load")
 			{
 				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva egy paraméter!");
 					return;
+				}
 
 				string name = Network.IMessage.Info[5];
 
@@ -58,6 +61,12 @@ namespace Schumix.Irc.Commands
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "unload")
 			{
+				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva egy paraméter!");
+					return;
+				}
+
 				string name = Network.IMessage.Info[5];
 
 				if(name == "all")

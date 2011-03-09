@@ -36,7 +36,10 @@ namespace Schumix.Irc.Commands
 			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "hozzaferes")
 			{
 				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a jelszó!");
 					return;
+				}
 
 				string nev = Network.IMessage.Nick;
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT jelszo FROM adminok WHERE nev = '{0}'", nev.ToLower());
@@ -57,8 +60,17 @@ namespace Schumix.Irc.Commands
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "ujjelszo")
 			{
-				if(Network.IMessage.Info.Length < 7)
+				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a régi jelszó!");
 					return;
+				}
+
+				if(Network.IMessage.Info.Length < 7)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva az új jelszó!");
+					return;
+				}
 
 				string nev = Network.IMessage.Nick;
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT nev, jelszo FROM adminok WHERE nev = '{0}'", nev.ToLower());
@@ -117,12 +129,15 @@ namespace Schumix.Irc.Commands
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Adminok: {0}", adminok);
 				}
 				else
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibas lekerdezes!");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "add")
 			{
 				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
 					return;
+				}
 
 				string nev = Network.IMessage.Info[5];
 				string pass = sUtility.GetRandomString();
@@ -137,7 +152,10 @@ namespace Schumix.Irc.Commands
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "del")
 			{
 				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
 					return;
+				}
 
 				string nev = Network.IMessage.Info[5];
 
@@ -241,7 +259,10 @@ namespace Schumix.Irc.Commands
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
 				return;
+			}
 
 			CNick();
 
@@ -257,7 +278,10 @@ namespace Schumix.Irc.Commands
 			else if(Network.IMessage.Info[4] == "all")
 			{
 				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva egy paraméter!");
 					return;
+				}
 
 				if(Network.IMessage.Info[5] == "info")
 				{
@@ -278,7 +302,10 @@ namespace Schumix.Irc.Commands
 				else
 				{
 					if(Network.IMessage.Info.Length < 7)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a funkció neve!");
 						return;
+					}
 
 					if(Network.IMessage.Info[5] == "be" || Network.IMessage.Info[5] == "ki")
 					{
@@ -307,8 +334,17 @@ namespace Schumix.Irc.Commands
 			}
 			else if(Network.IMessage.Info[4] == "channel")
 			{
-				if(Network.IMessage.Info.Length < 7)
+				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a csatorna neve!");
 					return;
+				}
+
+				if(Network.IMessage.Info.Length < 7)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva egy paraméter!");
+					return;
+				}
 			
 				string channelinfo = Network.IMessage.Info[5];
 				string status = Network.IMessage.Info[6];
@@ -325,7 +361,10 @@ namespace Schumix.Irc.Commands
 				else if(status == "be" || status == "ki")
 				{
 					if(Network.IMessage.Info.Length < 8)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a funkció neve!");
 						return;
+					}
 
 					if(Network.IMessage.Info.Length >= 9)
 					{
@@ -355,7 +394,7 @@ namespace Schumix.Irc.Commands
 			{
 				if(Network.IMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve {0} channel funkciók.", Network.IMessage.Channel);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve {0} csatornán a funkciók.", Network.IMessage.Channel);
 					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:ki,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Channel);
 					Network.sChannelInfo.ChannelFunkcioReload();
 					return;
@@ -374,22 +413,31 @@ namespace Schumix.Irc.Commands
 						}
 
 						Network.sChannelInfo.ChannelFunkcioReload();
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve minden channelen a funkciók.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve minden csatornán a funkciók.");
 					}
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
 				}
 				else
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve {0} channel funkciók.", Network.IMessage.Info[5]);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve {0} csatornán a funkciók.", Network.IMessage.Info[5]);
 					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:ki,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Info[5]);
 					Network.sChannelInfo.ChannelFunkcioReload();
 				}
 			}
 			else
 			{
-				if(Network.IMessage.Info.Length < 6)
+				if(Network.IMessage.Info.Length < 5)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a funkció állapota!");
 					return;
+				}
+
+				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a funkció neve!");
+					return;
+				}
 
 				string status = Network.IMessage.Info[4];
 
@@ -437,7 +485,10 @@ namespace Schumix.Irc.Commands
 			if(Network.IMessage.Info[4] == "add")
 			{
 				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a csatorna neve!");
 					return;
+				}
 
 				string szobainfo = Network.IMessage.Info[5];
 			
@@ -465,7 +516,10 @@ namespace Schumix.Irc.Commands
 			else if(Network.IMessage.Info[4] == "del")
 			{
 				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a csatorna neve!");
 					return;
+				}
 
 				string szobainfo = Network.IMessage.Info[5];
 				sSender.Part(szobainfo);
@@ -479,6 +533,7 @@ namespace Schumix.Irc.Commands
 			{
 				Network.sChannelInfo.ChannelListaReload();
 				Network.sChannelInfo.ChannelFunkcioReload();
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A csatorna információk frissitésre kerültek.");
 			}
 			else if(Network.IMessage.Info[4] == "info")
 			{
@@ -550,7 +605,10 @@ namespace Schumix.Irc.Commands
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
 				return;
+			}
 
 			CNick();
 
@@ -563,7 +621,7 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0} születés napja: {1} {2}", nev, honap, nap);
 			}
 			else
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs ilyen ember.");
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs ilyen ember!");
 		}
 
 		protected void HandleNick()
@@ -572,11 +630,15 @@ namespace Schumix.Irc.Commands
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
 				return;
+			}
 
 			string nick = Network.IMessage.Info[4];
 			sNickInfo.ChangeNick(nick);
 			sSender.Nick(nick);
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nick megváltoztatása erre: {0}", nick);
 		}
 
 		protected void HandleJoin()
@@ -584,12 +646,20 @@ namespace Schumix.Irc.Commands
 			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
+			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a csatorna neve!");
+				return;
+			}
+
 			ChannelPrivmsg = Network.IMessage.Channel;
 
 			if(Network.IMessage.Info.Length == 5)
 				sSender.Join(Network.IMessage.Info[4]);
 			else if(Network.IMessage.Info.Length == 6)
 				sSender.Join(Network.IMessage.Info[4], Network.IMessage.Info[5]);
+
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kapcsolodás ehez a csatonához: {0}", Network.IMessage.Info[4]);
 		}
 
 		protected void HandleLeft()
@@ -598,9 +668,13 @@ namespace Schumix.Irc.Commands
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a csatorna neve!");
 				return;
+			}
 
 			sSender.Part(Network.IMessage.Info[4]);
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Lelépés erről a csatornáról: {0}", Network.IMessage.Info[4]);
 		}
 
 		protected void HandleKick()
@@ -609,7 +683,10 @@ namespace Schumix.Irc.Commands
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
 				return;
+			}
 
 			string kick = Network.IMessage.Info[4].ToLower();
 			int szam = Network.IMessage.Info.Length;
@@ -639,8 +716,17 @@ namespace Schumix.Irc.Commands
 			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
-			if(Network.IMessage.Info.Length < 6)
+			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs a rang megadva!");
 				return;
+			}
+
+			if(Network.IMessage.Info.Length < 6)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
+				return;
+			}
 
 			string rang = Network.IMessage.Info[4].ToLower();
 			string tnick = sNickInfo.NickStorage;

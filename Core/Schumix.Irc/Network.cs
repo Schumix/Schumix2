@@ -70,12 +70,12 @@ namespace Schumix.Irc
         /// <summary>
         ///     IRC szerver címe.
         /// </summary>
-		private string _server;
+		private readonly string _server;
 
         /// <summary>
         ///     IRC port száma.
         /// </summary>
-		private int _port;
+		private readonly int _port;
 
         /// <summary>
         ///     Internet kapcsolat függvénye.

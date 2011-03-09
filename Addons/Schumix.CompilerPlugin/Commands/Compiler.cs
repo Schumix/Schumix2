@@ -40,7 +40,10 @@ namespace Schumix.CompilerPlugin.Commands
 			try
 			{
 				if(Network.IMessage.Info.Length < 5)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
 					return;
+				}
 
 				CNick();
 				string adat = string.Empty;
