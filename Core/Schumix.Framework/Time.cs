@@ -63,7 +63,7 @@ namespace Schumix.Framework
 
 		public void SaveUptime()
 		{
-			string datum = "";
+			string datum = string.Empty;
 			int Ev = DateTime.Now.Year;
 			int Honap = DateTime.Now.Month;
 			int Nap = DateTime.Now.Day;
