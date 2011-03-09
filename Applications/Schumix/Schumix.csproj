@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -50,6 +50,22 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\Addons\Schumix.CompilerPlugin\Schumix.CompilerPlugin.csproj">
+      <Project>{8BFD953F-8C81-4E6C-9113-6DC842F6488A}</Project>
+      <Name>Schumix.CompilerPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Addons\Schumix.ExtraPlugin\Schumix.ExtraPlugin.csproj">
+      <Project>{9BDBD8CA-119B-4AA7-8B8E-9F0E5CFC2BE8}</Project>
+      <Name>Schumix.ExtraPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Addons\Schumix.TesztPlugin\Schumix.TesztPlugin.csproj">
+      <Project>{062B6A8C-F14A-4754-81E0-66BF1E557CEF}</Project>
+      <Name>Schumix.TesztPlugin</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Schumix.API\Schumix.API.csproj">
+      <Project>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</Project>
+      <Name>Schumix.API</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libraries\WolframAPI\WolframAPI.csproj">
       <Project>{988DBA54-C500-47AF-B31C-BE12EA83E4AA}</Project>
       <Name>WolframAPI</Name>
