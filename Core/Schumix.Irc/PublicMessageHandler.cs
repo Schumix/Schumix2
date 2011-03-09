@@ -128,6 +128,7 @@ namespace Schumix.Irc
 					sSender.Nick(IRCConfig.NickName);
 					sNickInfo.ChangeNick(IRCConfig.NickName);
 					Network.NewNick = false;
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ghost paranccsal elsődleges nick visszaszerzése.");
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "nick")
 				{
@@ -135,13 +136,17 @@ namespace Schumix.Irc
 						return;
 
 					if(Network.IMessage.Info.Length < 6)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
 						return;
+					}
 
 					if(Network.IMessage.Info[5] == "identify")
 					{
 						sNickInfo.ChangeNick(IRCConfig.NickName);
 						sSender.Nick(IRCConfig.NickName);
 						Log.Notice("NickServ", "NickServ azonosito kuldese.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "NickServ azonosító küldése.");
 						sSender.NickServ(IRCConfig.NickServPassword);
 						Network.NewNick = false;
 					}
@@ -150,6 +155,7 @@ namespace Schumix.Irc
 						string nick = Network.IMessage.Info[5];
 						sNickInfo.ChangeNick(nick);
 						sSender.Nick(nick);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nick megváltoztatása erre: {0}", nick);
 					}
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "clean")

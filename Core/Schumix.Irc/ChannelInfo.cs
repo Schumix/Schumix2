@@ -58,7 +58,7 @@ namespace Schumix.Irc
 
 		public string FSelect(string nev)
 		{
-			string status = "";
+			string status = string.Empty;
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT funkcio_status FROM schumix WHERE funkcio_nev = '{0}'", nev);
 			if(db != null)
@@ -71,7 +71,7 @@ namespace Schumix.Irc
 
 		public string FSelect(string nev, string channel)
 		{
-			string status = "";
+			string status = string.Empty;
 
 			for(int i = 0; i < ChannelFunkcio.Count; i++)
 			{
@@ -143,7 +143,7 @@ namespace Schumix.Irc
 
 		public string ChannelFunkciok(string nev, string status, string channel)
 		{
-			string funkcio = "";
+			string funkcio = string.Empty;
 
 			for(int i = 0; i < ChannelFunkcio.Count; i++)
 			{
@@ -180,7 +180,7 @@ namespace Schumix.Irc
 
 		public string FunkciokInfo()
 		{
-			string be = "", ki = "";
+			string be = string.Empty, ki = string.Empty;
 
 			var db = SchumixBase.DManager.Query("SELECT funkcio_nev, funkcio_status FROM schumix");
 			if(db != null)
@@ -205,7 +205,7 @@ namespace Schumix.Irc
 
 		public string ChannelFunkciokInfo(string channel)
 		{
-			string be = "", ki = "";
+			string be = string.Empty, ki = string.Empty;
 
 			for(int i = 0; i < ChannelFunkcio.Count; i++)
 			{
@@ -255,7 +255,7 @@ namespace Schumix.Irc
 				Log.Error("ChannelInfo", "JoinChannel: Hibas lekerdezes!");
 
 			if(!error)
-				Log.Success("ChannelInfo", "Sikeresen kapcsolodva szobakhoz.");
+				Log.Success("ChannelInfo", "Sikeres kapcsolodas a szobakhoz.");
 			else
 				Log.Warning("ChannelInfo", "Nehany kapcsolodas sikertelen!");
 

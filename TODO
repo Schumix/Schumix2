@@ -2,5 +2,4 @@ Megírásra váró feladatok:
 - Parancslista potlása mely lehetséges.
 - jegyzet parancs hozzáadása.
 - autofunkcio parancs hozzáadása.
-- Elhelyezni az irc és console részbe a return részeknél a válasz üzeneteket.
 - Reconnect-nél fixálni ping-et hogy bot ne essen le ha másik nickkel jön fel.

@@ -125,7 +125,10 @@ namespace Schumix.Irc.Commands
 		protected void HandleCalc()
 		{
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
 				return;
+			}
 
 			CNick();
 			string adat = string.Empty;
@@ -143,7 +146,10 @@ namespace Schumix.Irc.Commands
 		protected void HandleSha1()
 		{
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
 				return;
+			}
 
 			CNick();
 			string adat = string.Empty;
@@ -159,7 +165,10 @@ namespace Schumix.Irc.Commands
 		protected void HandleMd5()
 		{
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
 				return;
+			}
 
 			CNick();
 			string adat = string.Empty;
@@ -175,7 +184,10 @@ namespace Schumix.Irc.Commands
 		protected void HandleIrc()
 		{
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a parancs neve!");
 				return;
+			}
 
 			CNick();
 
@@ -192,7 +204,10 @@ namespace Schumix.Irc.Commands
 		protected void HandleWhois()
 		{
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a keresendő személy neve!");
 				return;
+			}
 			
 			CNick();
 			WhoisPrivmsg = Network.IMessage.Channel;
@@ -202,7 +217,10 @@ namespace Schumix.Irc.Commands
 		protected void HandleUzenet()
 		{
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a név!");
 				return;
+			}
 
 			CNick();
 
@@ -224,7 +242,10 @@ namespace Schumix.Irc.Commands
 		protected void HandleKeres()
 		{
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a keresendő szöveg!");
 				return;
+			}
 
 			CNick();
 
@@ -252,8 +273,17 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleFordit()
 		{
-			if(Network.IMessage.Info.Length < 6)
+			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva melyik nyelvről melyikre fordítsa le!");
 				return;
+			}
+
+			if(Network.IMessage.Info.Length < 6)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a fordítandó szöveg!");
+				return;
+			}
 
 			CNick();
 
@@ -276,7 +306,10 @@ namespace Schumix.Irc.Commands
 		protected void HandlePrime()
 		{
 			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva szám!");
 				return;
+			}
 
 			CNick();
 
