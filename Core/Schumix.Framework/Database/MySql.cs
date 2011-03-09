@@ -27,7 +27,7 @@ using MySql.Data.MySqlClient;
 
 namespace Schumix.Framework.Database
 {
-	public class MySql
+	public sealed class MySql
 	{
 		private MySqlConnection Connection;
 

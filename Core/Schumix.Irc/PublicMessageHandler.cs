@@ -42,10 +42,10 @@ namespace Schumix.Irc
 
 			LogToFajl(Network.IMessage.Channel, Network.IMessage.Nick, Network.IMessage.Args);
 
-			if(Network.sChannelInfo.FSelect("parancsok") == "be")
+			if(Network.sChannelInfo.FSelect("parancsok") == "be" || Network.IMessage.Channel.Substring(0, 1) != "#")
 			{
-				//if(Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) != "#")
-					//return;
+				if(Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) == "#")
+					return;
 
 				if(Network.IMessage.Info[Network.IMessage.Info.Length-2] == string.Empty || Network.IMessage.Info[Network.IMessage.Info.Length-1] == string.Empty)
 					return;
