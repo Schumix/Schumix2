@@ -200,7 +200,7 @@ namespace Schumix.Irc.Commands
 				if((AdminFlag)rang == AdminFlag.Administrator || (AdminFlag)rang == AdminFlag.Operator)
 				{
 					SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET flag = '{0}' WHERE nev = '{1}'", rang, nev);
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Rang sikeresen modósitva.");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Rang sikeresen módosítva.");
 				}
 				else
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás rang!");
@@ -312,16 +312,16 @@ namespace Schumix.Irc.Commands
 						if(Network.IMessage.Info.Length >= 8)
 						{
 							string alomany = string.Empty;
-	
+
 							for(int i = 6; i < Network.IMessage.Info.Length; i++)
 							{
 								alomany += ", " + Network.IMessage.Info[i];
 								SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", Network.IMessage.Info[5], Network.IMessage.Info[i]);
 							}
-	
+
 							if(alomany.Substring(0, 2) == ", ")
 								alomany = alomany.Remove(0, 2);
-	
+
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: {1}kapcsolva",  alomany, Network.IMessage.Info[5]);
 						}
 						else

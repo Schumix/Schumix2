@@ -40,7 +40,7 @@ namespace Schumix.Irc.Commands
 
 			if(Network.IMessage.Info.Length == 4)
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ha a parancs mögé irod a megadott parancs nevét vagy a nevet és egy alparancsát információt add a használatáról.");
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ha a parancs mögé irod a megadott parancs nevét vagy a nevet és alparancsát információt add a használatáról.");
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Fő parancsom: {0}xbot", IRCConfig.Parancselojel);
 				return;
 			}
