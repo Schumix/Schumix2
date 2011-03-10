@@ -55,7 +55,7 @@ namespace Schumix.Irc
 
 				Schumix();
 
-				if(Network.IMessage.Info[3] == string.Empty || Network.IMessage.Info[3].Substring(0, PLength) == " " || Network.IMessage.Info[3].Substring(0, PLength) != IRCConfig.Parancselojel)
+				if(Network.IMessage.Info[3] == string.Empty || Network.IMessage.Info[3].Length < PLength || Network.IMessage.Info[3].Substring(0, PLength) != IRCConfig.Parancselojel)
 					return;
 
 				Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, PLength);

@@ -38,7 +38,7 @@ namespace Schumix.Irc
 
 	public partial class MessageHandler : CommandManager
 	{
-		public bool HostServAllapot;
+		protected bool HostServAllapot;
 
 		protected MessageHandler() {}
 
