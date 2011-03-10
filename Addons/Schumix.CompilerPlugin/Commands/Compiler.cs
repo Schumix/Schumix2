@@ -78,7 +78,7 @@ namespace Schumix.CompilerPlugin.Commands
 				var type = o.GetType();
 				type.InvokeMember("Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
 
-				if(writer.ToString().Length >= 3000)
+				if(writer.ToString().Length > 3000)
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kimeneti szöveg túl hosszú ezért nem került kiirásra!");
 					var s = new StreamWriter(Console.OpenStandardOutput());
