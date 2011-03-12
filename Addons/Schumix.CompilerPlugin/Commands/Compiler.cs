@@ -33,7 +33,7 @@ namespace Schumix.CompilerPlugin.Commands
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
-		private readonly string Referenced = "using System; using System.Threading; using System.Reflection; using System.Linq; using System.Text; using System.Text.RegularExpressions;";
+		private readonly string Referenced = "using System; using System.Threading; using System.Reflection; using System.Linq; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
 
 		protected void CompilerCommand()
 		{
@@ -127,6 +127,7 @@ namespace Schumix.CompilerPlugin.Commands
 				cparams.GenerateInMemory = false;
 
 				cparams.ReferencedAssemblies.Add("System.dll");
+				cparams.ReferencedAssemblies.Add("Schumix.Libraries.dll");
 				//cparams.CompilerOptions = "";
 
 				var results = compiler.CompileAssemblyFromSource(cparams, code);

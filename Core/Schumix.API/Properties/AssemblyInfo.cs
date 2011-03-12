@@ -24,11 +24,11 @@ using System.Runtime.CompilerServices;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Schumix.API")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Schumix IRC bot")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("")]
+[assembly: AssemblyProduct("Schumix.API")]
+[assembly: AssemblyCopyright("Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
