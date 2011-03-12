@@ -303,7 +303,7 @@ namespace Schumix.Irc
 					}
 					else
 					{
-						if(sChannelInfo.FSelect("reconnect") == "be")
+						if(sChannelInfo.FSelect("reconnect"))
 							ReConnect();
 
 						Thread.Sleep(30*1000);

@@ -56,7 +56,7 @@ namespace Schumix.Irc
 				Log.Error("ChannelInfo", "ChannelLista: Hibas lekerdezes!");
 		}
 
-		public string FSelect(string nev)
+		public bool FSelect(string nev)
 		{
 			string status = string.Empty;
 
@@ -66,10 +66,13 @@ namespace Schumix.Irc
 			else
 				Log.Error("ChannelInfo", "FSelect: Hibas lekerdezes!");
 
-			return status;
+			if(status == "be")
+				return true;
+			else
+				return false;
 		}
 
-		public string FSelect(string nev, string channel)
+		public bool FSelect(string nev, string channel)
 		{
 			string status = string.Empty;
 
@@ -88,7 +91,10 @@ namespace Schumix.Irc
 				}
 			}
 
-			return status;
+			if(status == "be")
+				return true;
+			else
+				return false;
 		}
 
 		public void ChannelFunkcioReload()
