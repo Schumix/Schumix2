@@ -123,8 +123,9 @@ namespace Schumix
 
 			if(parancs == "help")
 			{
-				Log.Notice("Console", "Parancsok: connect, disconnect, reconnect, consolelog, kikapcs");
+				Log.Notice("Console", "Parancsok: connect, disconnect, reconnect, consolelog");
 				Log.Notice("Console", "Parancsok: csatorna, admin, sys, funkcio, nick, join, left");
+				Log.Notice("Console", "Parancsok: channel, kikapcs");
 				return true;
 			}
 
@@ -323,7 +324,7 @@ namespace Schumix
 					string f = Network.sChannelInfo.FunkciokInfo();
 					if(f == "Hibás lekérdezés!")
 					{
-						Log.Error("Console", "Hibás lekérdezés!");
+						Log.Error("Console", "Hibás lekerdezes!");
 						return true;
 					}
 
@@ -347,6 +348,119 @@ namespace Schumix
 						Log.Notice("Console", "{0}: {1}kapcsolva", cmd[2], cmd[1]);
 						SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", cmd[1], cmd[2]);
 					}
+				}
+
+				return true;
+			}
+
+			if(parancs == "channel")
+			{
+				if(cmd.Length < 2)
+				{
+					Log.Notice("Console", "Parancsok: add | del | info | update");
+					return true;
+				}
+	
+				if(cmd[1] == "add")
+				{
+					if(cmd.Length < 3)
+					{
+						Log.Error("Console", "Nincs megadva a csatorna neve!");
+						return true;
+					}
+
+					string szobainfo = cmd[2];
+
+					if(cmd.Length == 4)
+					{
+						string jelszo = cmd[3];
+						sSender.Join(szobainfo, jelszo);
+						SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(szoba, jelszo) VALUES ('{0}', '{1}')", szobainfo, jelszo);
+						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv' WHERE szoba = '{0}'", szobainfo);
+					}
+					else
+					{
+						sSender.Join(szobainfo);
+						SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(szoba, jelszo) VALUES ('{0}', '')", szobainfo);
+						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv' WHERE szoba = '{0}'", szobainfo);
+					}
+
+					Log.Notice("Console", "Channel hozzaadva: {0}", szobainfo);
+
+					Network.sChannelInfo.ChannelListaReload();
+					Network.sChannelInfo.ChannelFunkcioReload();
+				}
+				else if(cmd[1] == "del")
+				{
+					if(cmd.Length < 3)
+					{
+						Log.Error("Console", "Nincs megadva a csatorna neve!");
+						return true;
+					}
+
+					string szobainfo = cmd[2];
+					sSender.Part(szobainfo);
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE szoba = '{0}'", szobainfo);
+					Log.Notice("Console", "Channel eltavolitva: {0}", szobainfo);
+	
+					Network.sChannelInfo.ChannelListaReload();
+					Network.sChannelInfo.ChannelFunkcioReload();
+				}
+				else if(cmd[1] == "update")
+				{
+					Network.sChannelInfo.ChannelListaReload();
+					Network.sChannelInfo.ChannelFunkcioReload();
+					Log.Notice("Console", "A csatorna informaciok frissitesre kerultek.");
+				}
+				else if(cmd[1] == "info")
+				{
+					var db = SchumixBase.DManager.Query("SELECT szoba, aktivitas, error FROM channel");
+					if(db != null)
+					{
+						string Aktivszobak = string.Empty, DeAktivszobak = string.Empty;
+						bool adatszoba = false, adatszoba1 = false;
+
+						for(int i = 0; i < db.Rows.Count; ++i)
+						{
+							var row = db.Rows[i];
+							string szoba = row["szoba"].ToString();
+							string aktivitas = row["aktivitas"].ToString();
+							string error = row["error"].ToString();
+
+							if(aktivitas == "aktiv")
+							{
+								Aktivszobak += ", " + szoba;
+								adatszoba = true;
+							}
+							else if(aktivitas == "nem aktiv")
+							{
+								DeAktivszobak += ", " + szoba + ":" + error;
+								adatszoba1 = true;
+							}
+						}
+
+						if(adatszoba)
+						{
+							if(Aktivszobak.Substring(0, 2) == ", ")
+								Aktivszobak = Aktivszobak.Remove(0, 2);
+
+							Log.Notice("Console", "Aktiv: {0}", Aktivszobak);
+						}
+						else
+							Log.Notice("Console", "Aktiv: Nincs adat.");
+
+						if(adatszoba1)
+						{
+							if(DeAktivszobak.Substring(0, 2) == ", ")
+								DeAktivszobak = DeAktivszobak.Remove(0, 2);
+
+							Log.Notice("Console", "Deaktiv: {0}", DeAktivszobak);
+						}
+						else
+							Log.Notice("Console", "Deaktiv: Nincs adat.");
+					}
+					else
+						Log.Error("Console", "Hibas lekerdezes!");
 				}
 
 				return true;

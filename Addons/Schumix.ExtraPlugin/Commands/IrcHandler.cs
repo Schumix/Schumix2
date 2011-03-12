@@ -44,7 +44,7 @@ namespace Schumix.ExtraPlugin.Commands
 			if(channel.Substring(0, 1) == ":")
 				channel = channel.Remove(0, 1);
 
-			if(Network.sChannelInfo.FSelect("koszones") == "be" && Network.sChannelInfo.FSelect("koszones", channel) == "be")
+			if(Network.sChannelInfo.FSelect("koszones") && Network.sChannelInfo.FSelect("koszones", channel))
 			{
 				var rand = new Random();
 				string Koszones = string.Empty;
@@ -114,7 +114,7 @@ namespace Schumix.ExtraPlugin.Commands
 			if(Network.IMessage.Nick == sNickInfo.NickStorage)
 				return;
 
-			if(Network.sChannelInfo.FSelect("koszones") == "be" && Network.sChannelInfo.FSelect("koszones", Network.IMessage.Channel) == "be")
+			if(Network.sChannelInfo.FSelect("koszones") && Network.sChannelInfo.FSelect("koszones", Network.IMessage.Channel))
 			{
 				var rand = new Random();
 				string elkoszones = string.Empty;
@@ -145,7 +145,7 @@ namespace Schumix.ExtraPlugin.Commands
 
 			if(Network.IMessage.Info[3] == sNickInfo.NickStorage)
 			{
-				if(Network.sChannelInfo.FSelect("rejoin") == "be" && Network.sChannelInfo.FSelect("rejoin", Network.IMessage.Channel) == "be")
+				if(Network.sChannelInfo.FSelect("rejoin") && Network.sChannelInfo.FSelect("rejoin", Network.IMessage.Channel))
 				{
 					foreach(var m_channel in Network.sChannelInfo.CLista)
 					{
@@ -156,7 +156,7 @@ namespace Schumix.ExtraPlugin.Commands
 			}
 			else
 			{
-				if(Network.sChannelInfo.FSelect("parancsok") == "be" && Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) == "be")
+				if(Network.sChannelInfo.FSelect("parancsok") && Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel))
 				{
 					if(ConsoleLog.CLog)
 					{

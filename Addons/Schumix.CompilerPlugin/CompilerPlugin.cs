@@ -55,9 +55,9 @@ namespace Schumix.CompilerPlugin
 
 		public void HandlePrivmsg()
 		{
-			if(Network.sChannelInfo.FSelect("parancsok") == "be" || Network.IMessage.Channel.Substring(0, 1) != "#")
+			if(Network.sChannelInfo.FSelect("parancsok") || Network.IMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) != "be" && Network.IMessage.Channel.Substring(0, 1) == "#")
+				if(!Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				if(regex.IsMatch(Network.IMessage.Args))

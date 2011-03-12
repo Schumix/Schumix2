@@ -491,7 +491,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				string szobainfo = Network.IMessage.Info[5];
-			
+
 				if(Network.IMessage.Info.Length == 7)
 				{
 					ChannelPrivmsg = Network.IMessage.Channel;
@@ -540,10 +540,8 @@ namespace Schumix.Irc.Commands
 				var db = SchumixBase.DManager.Query("SELECT szoba, aktivitas, error FROM channel");
 				if(db != null)
 				{
-					string Aktivszobak = string.Empty;
-					string DeAktivszobak = string.Empty;
-					bool adatszoba = false;
-					bool adatszoba1 = false;
+					string Aktivszobak = string.Empty, DeAktivszobak = string.Empty;
+					bool adatszoba = false, adatszoba1 = false;
 
 					for(int i = 0; i < db.Rows.Count; ++i)
 					{

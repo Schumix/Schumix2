@@ -228,7 +228,7 @@ namespace Schumix.Irc
         /// <param name="args"></param>
 		private void LogToFajl(string channel, string user, string args)
 		{
-			if(Network.sChannelInfo.FSelect("log") == "be" && Network.sChannelInfo.FSelect("log", channel) == "be")
+			if(Network.sChannelInfo.FSelect("log") && Network.sChannelInfo.FSelect("log", channel))
 			{
 				try
 				{
