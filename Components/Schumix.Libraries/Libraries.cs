@@ -20,6 +20,7 @@
 using System;
 using System.Text;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace Schumix.Libraries
 {
@@ -55,6 +56,34 @@ namespace Schumix.Libraries
 			}
 
 			return p;
+		}
+
+		public static string Regex(string regex, string adat)
+		{
+			var x = new Regex(regex);
+
+			if(x.IsMatch(adat))
+			{
+				string s = string.Empty;
+
+				for(int a = 1; a < x.Match(adat).Length; a++)
+					s += " " + x.Match(adat).Groups[a].ToString();
+
+				s = s.Remove(0, 1);
+				return s;
+			}
+			else
+				return "Hibás regex!";
+		}
+
+		public static string Regex(string regex, string adat, string groups)
+		{
+			var x = new Regex(regex);
+
+			if(x.IsMatch(adat))
+				return x.Match(adat).Groups[groups].ToString();
+			else
+				return "Hibás regex!";
 		}
 	}
 }

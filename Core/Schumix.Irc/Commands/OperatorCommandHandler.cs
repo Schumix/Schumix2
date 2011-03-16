@@ -738,7 +738,7 @@ namespace Schumix.Irc.Commands
 
 			nev.ToLower();
 
-			if(nev.IndexOf(tnick.ToLower()) == -1)
+			if(!nev.Contains(tnick.ToLower()))
 				sSender.Mode(Network.IMessage.Channel, rang, nev);
 		}
 	}

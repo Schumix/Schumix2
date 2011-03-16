@@ -49,16 +49,16 @@ namespace Schumix.CompilerPlugin.Commands
 				if(Tiltas(adat))
 					return;
 
-				if(adat.IndexOf("Entry") == -1)
+				if(!adat.Contains("Entry"))
 				{
-					if(adat.IndexOf("Schumix") == -1)
+					if(!adat.Contains("Schumix"))
 						sablon = Referenced + " public class Entry { public void Schumix() { " + adat + " } }";
 					else
 						sablon = Referenced + " public class Entry { " + adat + " }";
 				}
 				else
 				{
-					if(adat.IndexOf("Schumix") == -1)
+					if(!adat.Contains("Schumix"))
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a fő fv! (Schumix)");
 						return;
@@ -109,7 +109,7 @@ namespace Schumix.CompilerPlugin.Commands
 				sw.AutoFlush = true;
 				Console.SetOut(sw);
 			}
-			catch(NotSupportedException)
+			catch(Exception/* e*/)
 			{
 				// egyenlőre semmi
 			}
@@ -139,7 +139,7 @@ namespace Schumix.CompilerPlugin.Commands
 				else
 					return results.CompiledAssembly;
 			}
-			catch(NotSupportedException)
+			catch(Exception/* e*/)
 			{
 				// egyenlőre semmi
 			}
@@ -151,49 +151,49 @@ namespace Schumix.CompilerPlugin.Commands
 		{
 			try
 			{
-				if(adat.IndexOf("Environment") != -1)
+				if(adat.Contains("Environment"))
 				{
 					Figyelmeztetes();
 					return true;
 				}
 
-				if(adat.IndexOf("System.IO") != -1)
+				if(adat.Contains("System.IO"))
 				{
 					Figyelmeztetes();
 					return true;
 				}
 
-				if(adat.IndexOf("System.Diagnostics.Process") != -1)
+				if(adat.Contains("System.Diagnostics.Process"))
 				{
 					Figyelmeztetes();
 					return true;
 				}
 
-				if(adat.IndexOf("Microsoft.Win32") != -1)
+				if(adat.Contains("Microsoft.Win32"))
 				{
 					Figyelmeztetes();
 					return true;
 				}
 
-				if(adat.IndexOf("System.CodeDom") != -1)
+				if(adat.Contains("System.CodeDom"))
 				{
 					Figyelmeztetes();
 					return true;
 				}
 
-				if(adat.IndexOf("Console.SetOut") != -1)
+				if(adat.Contains("Console.SetOut"))
 				{
 					Figyelmeztetes();
 					return true;
 				}
 
-				if(adat.IndexOf("Console.Title") != -1)
+				if(adat.Contains("Console.Title"))
 				{
 					Figyelmeztetes();
 					return true;
 				}
 			}
-			catch(NotSupportedException)
+			catch(Exception/* e*/)
 			{
 				// egyenlőre semmi
 			}
