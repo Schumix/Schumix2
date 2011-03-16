@@ -40,7 +40,7 @@ namespace Schumix
 				Log.Debug("SchumixBot", "Network indul...");
 				var network = new Network(IRCConfig.Server, IRCConfig.Port);
 				Log.Debug("SchumixBot", "Console indul...");
-				new Consol(network);
+				new Console.Console(network);
 			}
 			catch(Exception e)
 			{

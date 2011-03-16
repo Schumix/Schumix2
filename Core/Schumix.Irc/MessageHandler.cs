@@ -25,17 +25,6 @@ using Schumix.Irc.Commands;
 
 namespace Schumix.Irc
 {
-	public struct IRCMessage
-	{
-		public string Hostmask { get; set; }
-		public string Channel { get; set; }
-		public string Args { get; set; }
-		public string Nick { get; set; }
-		public string User { get; set; }
-		public string Host { get; set; }
-		public string[] Info { get; set; }
-	}
-
 	public partial class MessageHandler : CommandManager
 	{
 		protected bool HostServAllapot;
@@ -110,17 +99,17 @@ namespace Schumix.Irc
 
 			if(Network.IMessage.Nick == "NickServ")
 			{
-				if(Network.IMessage.Args.IndexOf("Password incorrect.") != -1)
+				if(Network.IMessage.Args.Contains("Password incorrect."))
 					Log.Error("NickServ", "NickServ azonosito jelszo hibas!");
-				else if(Network.IMessage.Args.IndexOf("You are already identified.") != -1)
+				else if(Network.IMessage.Args.Contains("You are already identified."))
 					Log.Warning("NickServ", "NickServ azonosito mar aktivalva van!");
-				else if(Network.IMessage.Args.IndexOf("Password accepted - you are now recognized.") != -1)
+				else if(Network.IMessage.Args.Contains("Password accepted - you are now recognized."))
 					Log.Success("NickServ", "NickServ azonosito jelszo elfogadva.");
 			}
 
 			if(Network.IMessage.Nick == "HostServ" && IRCConfig.UseHostServ)
 			{
-				if(Network.IMessage.Args.IndexOf("Your vhost of") != -1 && HostServAllapot)
+				if(Network.IMessage.Args.Contains("Your vhost of") && HostServAllapot)
 				{
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;

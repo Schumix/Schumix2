@@ -42,19 +42,19 @@ namespace Schumix
 			string configfile = "schumix.xml";
 			Log.Indulas(configfile);
 
-			Console.Title = SchumixBase.Title;
-			Console.ForegroundColor = ConsoleColor.Blue;
-			Console.WriteLine("[Schumix2]");
-			Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> parancsot vagy <kikapcs>\n");
-			Console.ForegroundColor = ConsoleColor.Gray;
-			Console.WriteLine("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", Verzio.SchumixVerzio);
-			Console.WriteLine("==============================================================================");
-			Console.WriteLine("");
+			System.Console.Title = SchumixBase.Title;
+			System.Console.ForegroundColor = ConsoleColor.Blue;
+			System.Console.WriteLine("[Schumix2]");
+			System.Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> parancsot vagy <kikapcs>\n");
+			System.Console.ForegroundColor = ConsoleColor.Gray;
+			System.Console.WriteLine("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", Verzio.SchumixVerzio);
+			System.Console.WriteLine("==============================================================================");
+			System.Console.WriteLine("");
 			Log.Notice("Main", "Rendszer indul...");
-			Console.WriteLine("");
+			System.Console.WriteLine("");
 
 			new SchumixBot(configfile);
-			Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.time.SaveUptime(); };
+			System.Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.time.SaveUptime(); };
 		}
 	}
 }

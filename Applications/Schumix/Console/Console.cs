@@ -19,26 +19,16 @@
 
 using System;
 using System.Threading;
-using System.Diagnostics;
 using Schumix.Irc;
-using Schumix.Irc.Commands;
 using Schumix.Framework;
-using Schumix.Framework.Config;
+using Schumix.Console.Commands;
 
-namespace Schumix
+namespace Schumix.Console
 {
-	public sealed class Consol : ConsoleLog
+	public sealed class Console
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly Utility sUtility = Singleton<Utility>.Instance;
-		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
-		private readonly Network _network;
-
-		/// <summary>
-		///     A Console logja. Alapértelmezésben ki van kapcsolva.
-		/// </summary>
-		public static bool ConsoleLog { get; private set; }
+		private readonly CCommandManager CCManager;
 
 		/// <summary>
 		///     Console írást indítja.
@@ -47,17 +37,16 @@ namespace Schumix
 		///     Ha érzékel valamit, akkor alapértelmezésben az IRC szobába írja,
 		///     ha azt parancsnak érzékeli, akkor végrehajtja azt.
 		/// </remarks>
-		public Consol(Network network) : base(LogConfig.IrcLog)
+		public Console(Network network)
 		{
 			Log.Notice("Console", "Console elindult.");
 			var console = new Thread(new ThreadStart(ConsoleRead));
 			console.Start();
-			ConsoleLog = LogConfig.IrcLog;
-			_network = network;
+			CCManager = new CCommandManager(network);
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
 			if(db != null)
-				Console.Title = SchumixBase.Title + " || Console Writing Channel: " + db["csatorna"].ToString();
+				System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + db["csatorna"].ToString();
 		}
 
 		/// <summary>
@@ -66,7 +55,7 @@ namespace Schumix
 		/// <remarks>
 		///     Ha ez lefut, akkor a class leáll.
 		/// </remarks>
-		~Consol()
+		~Console()
 		{
 			Log.Debug("Console", "~Console()");
 		}
@@ -86,8 +75,8 @@ namespace Schumix
 
 				while(true)
 				{
-					uzenet = Console.ReadLine();
-					if(ConsoleCommands(uzenet))
+					uzenet = System.Console.ReadLine();
+					if(CCManager.CBejovoInfo(uzenet))
 						continue;
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
@@ -103,444 +92,6 @@ namespace Schumix
 				ConsoleRead();
 				Thread.Sleep(100);
 			}
-		}
-
-		/// <summary>
-		///     Az "info" -t darabolja fel szóközönként.
-		/// </summary>
-		/// <param name="info">Beviteli adat a Console-ból.</param>
-		/// <returns>
-		///     Ha igaz értékkel tér vissza "true"-val, akkor
-		///     az "info" string egy parancs, 
-		///     ha hamis értékkel tér vissza "false"-al, akkor
-		///     az "info" string nem parancs, és a beírt szöveget
-		///     az IRC szobába írja ki.
-		/// </returns>
-		bool ConsoleCommands(string info)
-		{
-			string[] cmd = info.Split(' ');
-			string parancs = cmd[0].ToLower();
-
-			if(parancs == "help")
-			{
-				Log.Notice("Console", "Parancsok: connect, disconnect, reconnect, consolelog");
-				Log.Notice("Console", "Parancsok: csatorna, admin, sys, funkcio, nick, join, left");
-				Log.Notice("Console", "Parancsok: channel, kikapcs");
-				return true;
-			}
-
-			if(parancs == "consolelog")
-			{
-				if(cmd.Length < 2)
-				{
-					Log.Error("Console", "Nincs parameter!");
-					return true;
-				}
-
-				if(cmd[1] == "be")
-				{
-					Log.Notice("Console", "Console logolas bekapcsolva");
-					ChangeLog(true);
-				}
-				else if(cmd[1] == "ki")
-				{
-					Log.Notice("Console", "Console logolas kikapcsolva");
-					ChangeLog(false);
-				}
-
-				return true;
-			}
-
-			if(parancs == "sys")
-			{
-				string Platform = string.Empty;
-				var pid = Environment.OSVersion.Platform;
-
-				switch(pid)
-				{
-					case PlatformID.Win32NT:
-					case PlatformID.Win32S:
-					case PlatformID.Win32Windows:
-					case PlatformID.WinCE:
-						Platform = "Windows";
-						break;
-					case PlatformID.Unix:
-						Platform = "Linux";
-						break;
-					default:
-						Platform = "Ismeretlen";
-						break;
-				}
-
-				var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
-
-				Log.Notice("Console", "Verzio: {0}", Verzio.SchumixVerzio);
-				Log.Notice("Console", "Platform: {0}", Platform);
-				Log.Notice("Console", "OSVerzio: {0}", Environment.OSVersion.ToString());
-				Log.Notice("Console", "Programnyelv: c#");
-				Log.Notice("Console", "Memoria hasznalat: {0} MB", memory);
-				Log.Notice("Console", "Thread count: {0}", Process.GetCurrentProcess().Threads.Count);
-				Log.Notice("Console", "Uptime: {0}", SchumixBase.time.Uptime());
-
-				return true;
-			}
-
-			if(parancs == "csatorna")
-			{
-				if(cmd.Length < 2)
-				{
-					Log.Error("Console", "Nincs megadva a csatorna neve!");
-					return true;
-				}
-
-				SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET csatorna = '{0}' WHERE entry = '1'", cmd[1]);
-				Log.Notice("Console", "Uj csatorna ahova mostantol lehet irni: {0}", cmd[1]);
-				Console.Title = SchumixBase.Title + " || Console Writing Channel: " + cmd[1];
-				return true;
-			}
-
-			if(parancs == "admin")
-			{
-				if(cmd.Length >= 2 && cmd[1] == "help")
-				{
-					Log.Notice("Console", "Alparancsok hasznalata:");
-					Log.Notice("Console", "Admin lista: admin lista");
-					Log.Notice("Console", "Hozzaadas: admin add <admin neve>");
-					Log.Notice("Console", "Eltavolitas: admin del <admin neve>");
-					Log.Notice("Console", "Rang: admin rang <admin neve> <uj rang pl operator: 0, administrator: 1>");
-					Log.Notice("Console", "Info: admin info <admin neve>");
-				}
-				else if(cmd.Length >= 2 && cmd[1] == "info")
-				{
-					if(cmd.Length < 3)
-					{
-						Log.Error("Console", "Nincs nev megadva!");
-						return true;
-					}
-
-					int flag;
-
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT flag FROM adminok WHERE nev = '{0}'", cmd[2].ToLower());
-					if(db != null)
-						flag = Convert.ToInt32(db["flag"].ToString());
-					else
-						flag = -1;
-	
-					if((AdminFlag)flag == AdminFlag.Operator)
-						Log.Notice("Console", "Jelenleg Operator.");
-					else if((AdminFlag)flag == AdminFlag.Administrator)
-						Log.Notice("Console", "Jelenleg Adminisztrator.");
-				}
-				else if(cmd.Length >= 2 && cmd[1] == "lista")
-				{
-					var db = SchumixBase.DManager.Query("SELECT nev FROM adminok");
-					if(db != null)
-					{
-						string adminok = string.Empty;
-
-						for(int i = 0; i < db.Rows.Count; ++i)
-						{
-							var row = db.Rows[i];
-							string nev = row["nev"].ToString();
-							adminok += ", " + nev;
-						}
-
-						if(adminok.Substring(0, 2) == ", ")
-							adminok = adminok.Remove(0, 2);
-
-						Log.Notice("Console", "Adminok: {0}", adminok);
-					}
-					else
-						Log.Error("Console", "Hibas lekerdezes!");
-				}
-				else if(cmd.Length >= 2 && cmd[1] == "add")
-				{
-					if(cmd.Length < 3)
-					{
-						Log.Error("Console", "Nincs nev megadva!");
-						return true;
-					}
-
-					string nev = cmd[2];
-					string pass = sUtility.GetRandomString();
-
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(nev, jelszo) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
-					Log.Notice("Console", "Admin hozzaadva: {0}", nev);
-					Log.Notice("Console", "Mostani jelszo: {0}", pass);
-				}
-				else if(cmd.Length >= 2 && cmd[1] == "del")
-				{
-					if(cmd.Length < 3)
-					{
-						Log.Error("Console", "Nincs nev megadva!");
-						return true;
-					}
-
-					string nev = cmd[2];
-					SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE nev = '{0}'", nev.ToLower());
-					Log.Notice("Console", "Admin törölve: {0}", nev);
-				}
-				else if(cmd.Length >= 2 && cmd[1] == "rang")
-				{
-					if(cmd.Length < 3)
-					{
-						Log.Error("Console", "Nincs nev megadva!");
-						return true;
-					}
-
-					if(cmd.Length < 4)
-					{
-						Log.Error("Console", "Nincs rang megadva!");
-						return true;
-					}
-
-					string nev = cmd[2].ToLower();
-					int rang = Convert.ToInt32(cmd[3]);
-
-					if((AdminFlag)rang == AdminFlag.Administrator || (AdminFlag)rang == AdminFlag.Operator)
-					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET flag = '{0}' WHERE nev = '{1}'", rang, nev);
-						Log.Notice("Console", "Rang sikeresen modósitva.");
-					}
-					else
-						Log.Error("Console", "Hibás rang!");
-				}
-				else
-					Log.Notice("Console", "Parancsok: help | lista | add | del");
-
-				return true;
-			}
-
-			if(parancs == "funkcio")
-			{
-				if(cmd.Length < 2)
-				{
-					Log.Error("Console", "Nincs megadva egy parameter!");
-					return true;
-				}
-
-				if(cmd[1] == "info")
-				{
-					string f = Network.sChannelInfo.FunkciokInfo();
-					if(f == "Hibás lekérdezés!")
-					{
-						Log.Error("Console", "Hibás lekerdezes!");
-						return true;
-					}
-
-					string[] FunkcioInfo = f.Split('|');
-					if(FunkcioInfo.Length < 2)
-						return true;
-	
-					Log.Notice("Console", "Bekapcsolva: {0}", FunkcioInfo[0]);
-					Log.Notice("Console", "Kikapcsolva: {0}", FunkcioInfo[1]);
-				}
-				else
-				{
-					if(cmd.Length < 3)
-					{
-						Log.Error("Console", "Nincs a funkcio nev megadva!");
-						return true;
-					}
-
-					if(cmd[1] == "be" || cmd[1] == "ki")
-					{
-						Log.Notice("Console", "{0}: {1}kapcsolva", cmd[2], cmd[1]);
-						SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", cmd[1], cmd[2]);
-					}
-				}
-
-				return true;
-			}
-
-			if(parancs == "channel")
-			{
-				if(cmd.Length < 2)
-				{
-					Log.Notice("Console", "Parancsok: add | del | info | update");
-					return true;
-				}
-	
-				if(cmd[1] == "add")
-				{
-					if(cmd.Length < 3)
-					{
-						Log.Error("Console", "Nincs megadva a csatorna neve!");
-						return true;
-					}
-
-					string szobainfo = cmd[2];
-
-					if(cmd.Length == 4)
-					{
-						string jelszo = cmd[3];
-						sSender.Join(szobainfo, jelszo);
-						SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(szoba, jelszo) VALUES ('{0}', '{1}')", szobainfo, jelszo);
-						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv' WHERE szoba = '{0}'", szobainfo);
-					}
-					else
-					{
-						sSender.Join(szobainfo);
-						SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(szoba, jelszo) VALUES ('{0}', '')", szobainfo);
-						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv' WHERE szoba = '{0}'", szobainfo);
-					}
-
-					Log.Notice("Console", "Channel hozzaadva: {0}", szobainfo);
-
-					Network.sChannelInfo.ChannelListaReload();
-					Network.sChannelInfo.ChannelFunkcioReload();
-				}
-				else if(cmd[1] == "del")
-				{
-					if(cmd.Length < 3)
-					{
-						Log.Error("Console", "Nincs megadva a csatorna neve!");
-						return true;
-					}
-
-					string szobainfo = cmd[2];
-					sSender.Part(szobainfo);
-					SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE szoba = '{0}'", szobainfo);
-					Log.Notice("Console", "Channel eltavolitva: {0}", szobainfo);
-	
-					Network.sChannelInfo.ChannelListaReload();
-					Network.sChannelInfo.ChannelFunkcioReload();
-				}
-				else if(cmd[1] == "update")
-				{
-					Network.sChannelInfo.ChannelListaReload();
-					Network.sChannelInfo.ChannelFunkcioReload();
-					Log.Notice("Console", "A csatorna informaciok frissitesre kerultek.");
-				}
-				else if(cmd[1] == "info")
-				{
-					var db = SchumixBase.DManager.Query("SELECT szoba, aktivitas, error FROM channel");
-					if(db != null)
-					{
-						string Aktivszobak = string.Empty, DeAktivszobak = string.Empty;
-						bool adatszoba = false, adatszoba1 = false;
-
-						for(int i = 0; i < db.Rows.Count; ++i)
-						{
-							var row = db.Rows[i];
-							string szoba = row["szoba"].ToString();
-							string aktivitas = row["aktivitas"].ToString();
-							string error = row["error"].ToString();
-
-							if(aktivitas == "aktiv")
-							{
-								Aktivszobak += ", " + szoba;
-								adatszoba = true;
-							}
-							else if(aktivitas == "nem aktiv")
-							{
-								DeAktivszobak += ", " + szoba + ":" + error;
-								adatszoba1 = true;
-							}
-						}
-
-						if(adatszoba)
-						{
-							if(Aktivszobak.Substring(0, 2) == ", ")
-								Aktivszobak = Aktivszobak.Remove(0, 2);
-
-							Log.Notice("Console", "Aktiv: {0}", Aktivszobak);
-						}
-						else
-							Log.Notice("Console", "Aktiv: Nincs adat.");
-
-						if(adatszoba1)
-						{
-							if(DeAktivszobak.Substring(0, 2) == ", ")
-								DeAktivszobak = DeAktivszobak.Remove(0, 2);
-
-							Log.Notice("Console", "Deaktiv: {0}", DeAktivszobak);
-						}
-						else
-							Log.Notice("Console", "Deaktiv: Nincs adat.");
-					}
-					else
-						Log.Error("Console", "Hibas lekerdezes!");
-				}
-
-				return true;
-			}
-
-			if(parancs == "connect")
-			{
-				_network.Connect();
-				return true;
-			}
-
-			if(parancs == "disconnect")
-			{
-				sSender.Quit("Console: disconnect.");
-				_network.DisConnect();
-				return true;
-			}
-
-			if(parancs == "reconnect")
-			{
-				sSender.Quit("Console: reconnect.");
-				_network.ReConnect();
-				return true;
-			}
-
-			if(parancs == "nick")
-			{
-				if(cmd.Length < 2)
-				{
-					Log.Error("Console", "Nincs nev megadva!");
-					return true;
-				}
-
-				string nick = cmd[1];
-				sNickInfo.ChangeNick(nick);
-				sSender.Nick(nick);
-				Log.Notice("Console", "Nick megvaltoztatasa erre: {0}", nick);
-				return true;
-			}
-
-			if(parancs == "join")
-			{
-				if(cmd.Length < 2)
-				{
-					Log.Error("Console", "Nincs megadva a csatorna neve!");
-					return true;
-				}
-
-				if(cmd.Length == 2)
-					sSender.Join(cmd[1]);
-				else if(cmd.Length == 3)
-					sSender.Join(cmd[1], cmd[2]);
-
-				Log.Notice("Console", "Kapcsolodas ehez a csatonahoz: {0}", cmd[1]);
-				return true;
-			}
-
-			if(parancs == "left")
-			{
-				if(cmd.Length < 2)
-				{
-					Log.Error("Console", "Nincs megadva a csatorna neve!");
-					return true;
-				}
-
-				sSender.Part(cmd[1]);
-				Log.Notice("Console", "Lelepes errol a csatornarol: {0}", cmd[1]);
-				return true;
-			}
-
-			if(parancs == "kikapcs")
-			{
-				SchumixBase.time.SaveUptime();
-				Log.Notice("Console", "Viszlat :(");
-				sSender.Quit("Console: leállás.");
-				Thread.Sleep(1000);
-				Environment.Exit(1);
-			}
-
-			return false;
 		}
 	}
 }
