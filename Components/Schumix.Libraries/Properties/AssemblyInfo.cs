@@ -26,17 +26,17 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("Schumix.Libraries")]
 [assembly: AssemblyDescription("Schumix IRC bot")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Megax Productions")]
 [assembly: AssemblyProduct("Schumix.Libraries")]
 [assembly: AssemblyCopyright("Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("GNU General Public License")]
 [assembly: AssemblyCulture("")]
 
 // The assembly version has the format "{Major}.{Minor}.{Build}.{Revision}".
 // The form "{Major}.{Minor}.*" will automatically update the build and revision,
 // and "{Major}.{Minor}.{Build}.*" will update just the revision.
 
-[assembly: AssemblyVersion("1.0.*")]
+[assembly: AssemblyVersion("1.1.*")]
 
 // The following attributes are used to specify the signing key for the assembly, 
 // if desired. See the Mono documentation for more information about signing.
