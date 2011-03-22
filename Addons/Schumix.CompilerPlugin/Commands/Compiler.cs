@@ -34,8 +34,14 @@ namespace Schumix.CompilerPlugin.Commands
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
+
+#if MONO
 		private readonly string Referenced = "using System; using System.Threading; using System.Reflection; using System.Linq; " +
 		 	"using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
+#else
+		private readonly string Referenced = "using System; using System.Threading; using System.Reflection; " +
+		 	"using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
+#endif
 
 		protected void CompilerCommand()
 		{
@@ -121,8 +127,12 @@ namespace Schumix.CompilerPlugin.Commands
 		{
 			try
 			{
-				//var provider = new CSharpCodeProvider();
+#if MONO
+				var provider = new CSharpCodeProvider();
+				var compiler = provider.CreateCompiler();
+#else
 				var compiler = CodeDomProvider.CreateProvider("CSharp");
+#endif
 
 				var cparams = new CompilerParameters();
 				cparams.GenerateExecutable = false;
