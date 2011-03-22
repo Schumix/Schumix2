@@ -1,7 +1,8 @@
 *.obj
 *.pidb
 *.mdb
-*/Run/*
+*/bin/*
+Run/
 
 #ignore thumbnails created by windows
 Thumbs.db
@@ -33,3 +34,4 @@ _ReSharper*/
 [Tt]est[Rr]esult*
 UpgradeLog.XML
 *.ReSharper
+*.userprefs
