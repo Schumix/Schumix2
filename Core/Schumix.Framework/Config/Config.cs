@@ -191,7 +191,7 @@ namespace Schumix.Framework.Config
 					// <Plugins>
 					w.WriteStartElement("Plugins");
 					w.WriteElementString("Allapot", "true");
-					w.WriteElementString("Directory", "plugins");
+					w.WriteElementString("Directory", "Plugins");
 
 					// </Plugins>
 					w.WriteEndElement();
