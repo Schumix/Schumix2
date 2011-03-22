@@ -39,7 +39,7 @@ namespace Schumix
         /// </remarks>
 		private static void Main(string[] args)
 		{
-			string configfile = "Schumix.xml";
+			string configfile = "schumix.xml";
 			Log.Indulas(configfile);
 
 			System.Console.Title = SchumixBase.Title;
