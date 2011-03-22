@@ -25,6 +25,7 @@ using System.Linq;
 using System.Reflection;
 using Schumix.API;
 using Schumix.Framework.Config;
+using Schumix.Framework.Exceptions;
 
 namespace Schumix.Framework
 {
@@ -85,9 +86,9 @@ namespace Schumix.Framework
 					usable.Setup();
 					_plugins.Add(usable);
 				}
-				catch(Exception x)
+				catch(SchumixException s)
 				{
-					Log.Error("ScriptManager", "Failed to load: {0} ({1})", f.Name, x.Message);
+					Log.Error("ScriptManager", "Failed to load: {0} ({1})", f.Name, s.Message);
 					return false;
 				}
 				
@@ -125,7 +126,7 @@ namespace Schumix.Framework
 				usable.Setup();
 				_plugins.Add(usable);
 			}
-			catch(Exception)
+			catch(SchumixException)
 			{
 				Log.Error("ScriptManager", "Failed to load: {0}", fi.Name);
 				return false;

@@ -23,6 +23,7 @@ using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
+using Schumix.Framework.Exceptions;
 
 namespace Schumix
 {
@@ -42,9 +43,9 @@ namespace Schumix
 				Log.Debug("SchumixBot", "Console indul...");
 				new Console.Console(network);
 			}
-			catch(Exception e)
+			catch(SchumixException s)
 			{
-				Log.Error("SchumixBot", "Hiba oka: {0}", e.ToString());
+				Log.Error("SchumixBot", "Hiba oka: {0}", s.Message);
 				Thread.Sleep(100);
 			}
 		}

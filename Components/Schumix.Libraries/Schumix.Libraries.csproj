@@ -28,9 +28,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <DefineConstants>RELEASE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="System">
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Libraries.cs" />
