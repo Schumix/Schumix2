@@ -56,9 +56,9 @@ namespace Schumix.Framework.Database
 				Connection.Open();
 				return true;
 			}
-			catch(SQLiteException ex)
+			catch(SQLiteException s)
 			{
-				Log.Error("SQLite", "{0}", ex.Message);
+				Log.Error("SQLite", "{0}", s.Message);
 				return false;
 			}
 		}
@@ -86,9 +86,9 @@ namespace Schumix.Framework.Database
 
 				return table;
 			}
-			catch(SQLiteException ex)
+			catch(SQLiteException s)
 			{
-				Log.Error("SQLite", "Query hiba: {0}", ex.Message);
+				Log.Error("SQLite", "Query hiba: {0}", s.Message);
 				return null;
 			}
 		}

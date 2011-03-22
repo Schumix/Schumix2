@@ -26,6 +26,7 @@ using Microsoft.CSharp;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Exceptions;
 
 namespace Schumix.CompilerPlugin.Commands
 {
@@ -33,7 +34,8 @@ namespace Schumix.CompilerPlugin.Commands
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
-		private readonly string Referenced = "using System; using System.Threading; using System.Reflection; using System.Linq; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
+		private readonly string Referenced = "using System; using System.Threading; using System.Reflection; using System.Linq; " +
+		 	"using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
 
 		protected void CompilerCommand()
 		{
@@ -109,7 +111,7 @@ namespace Schumix.CompilerPlugin.Commands
 				sw.AutoFlush = true;
 				Console.SetOut(sw);
 			}
-			catch(Exception/* e*/)
+			catch(SchumixException)
 			{
 				// egyenlőre semmi
 			}
@@ -119,8 +121,8 @@ namespace Schumix.CompilerPlugin.Commands
 		{
 			try
 			{
-				var provider = new CSharpCodeProvider();
-				var compiler = provider.CreateCompiler();
+				//var provider = new CSharpCodeProvider();
+				var compiler = CodeDomProvider.CreateProvider("CSharp");
 
 				var cparams = new CompilerParameters();
 				cparams.GenerateExecutable = false;
@@ -139,7 +141,7 @@ namespace Schumix.CompilerPlugin.Commands
 				else
 					return results.CompiledAssembly;
 			}
-			catch(Exception/* e*/)
+			catch(SchumixException)
 			{
 				// egyenlőre semmi
 			}
@@ -149,53 +151,46 @@ namespace Schumix.CompilerPlugin.Commands
 
 		private bool Tiltas(string adat)
 		{
-			try
+			if(adat.Contains("Environment"))
 			{
-				if(adat.Contains("Environment"))
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.Contains("System.IO"))
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.Contains("System.Diagnostics.Process"))
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.Contains("Microsoft.Win32"))
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.Contains("System.CodeDom"))
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.Contains("Console.SetOut"))
-				{
-					Figyelmeztetes();
-					return true;
-				}
-
-				if(adat.Contains("Console.Title"))
-				{
-					Figyelmeztetes();
-					return true;
-				}
+				Figyelmeztetes();
+				return true;
 			}
-			catch(Exception/* e*/)
+
+			if(adat.Contains("System.IO"))
 			{
-				// egyenlőre semmi
+				Figyelmeztetes();
+				return true;
+			}
+
+			if(adat.Contains("System.Diagnostics.Process"))
+			{
+				Figyelmeztetes();
+				return true;
+			}
+
+			if(adat.Contains("Microsoft.Win32"))
+			{
+				Figyelmeztetes();
+				return true;
+			}
+
+			if(adat.Contains("System.CodeDom"))
+			{
+				Figyelmeztetes();
+				return true;
+			}
+
+			if(adat.Contains("Console.SetOut"))
+			{
+				Figyelmeztetes();
+				return true;
+			}
+
+			if(adat.Contains("Console.Title"))
+			{
+				Figyelmeztetes();
+				return true;
 			}
 
 			return false;

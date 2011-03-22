@@ -22,6 +22,7 @@ using System.IO;
 using System.Xml;
 using System.Collections.Generic;
 using Schumix.Framework.Config;
+using Schumix.Framework.Exceptions;
 
 namespace Schumix.Framework
 {
@@ -52,7 +53,7 @@ namespace Schumix.Framework
 				file.Write(log);
 				file.Close();
 			}
-			catch(Exception/* e*/)
+			catch(SchumixException)
 			{
 				// semmi
 			}
@@ -85,7 +86,7 @@ namespace Schumix.Framework
 				file.Write("\nIndulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n", time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
 				file.Close();
 			}
-			catch(Exception/* e*/)
+			catch(SchumixException)
 			{
 				Indulas(ConfigFile);
 			}

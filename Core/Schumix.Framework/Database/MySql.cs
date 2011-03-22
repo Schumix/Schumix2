@@ -57,9 +57,9 @@ namespace Schumix.Framework.Database
 				Connection.Open();
 				return true;
 			}
-			catch(MySqlException ex)
+			catch(MySqlException m)
 			{
-				Log.Error("Mysql", "{0}", ex.Message);
+				Log.Error("Mysql", "{0}", m.Message);
 				return false;
 			}
 		}
@@ -82,9 +82,9 @@ namespace Schumix.Framework.Database
 
 				return table;
 			}
-			catch(MySqlException ex)
+			catch(MySqlException m)
 			{
-				Log.Error("Mysql", "Query hiba: {0}", ex.Message);
+				Log.Error("Mysql", "Query hiba: {0}", m.Message);
 				return null;
 			}
 		}

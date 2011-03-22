@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
+using Schumix.Framework.Exceptions;
 
 namespace Schumix.Irc
 {
@@ -274,10 +275,10 @@ namespace Schumix.Irc
 						Thread.Sleep(100);
 				}
 			}
-			catch(Exception e)
+			catch(SchumixException s)
 			{
 				if(m_running)
-					Log.Error("Opcodes", "Hiba oka: {0}", e.ToString());
+					Log.Error("Opcodes", "Hiba oka: {0}", s.Message);
 
 				Opcodes();
 				Thread.Sleep(100);
@@ -310,10 +311,10 @@ namespace Schumix.Irc
 					}
 				}
 			}
-			catch(Exception e)
+			catch(SchumixException s)
 			{
 				if(m_running)
-					Log.Error("Ping", "Hiba oka: {0}", e.ToString());
+					Log.Error("Ping", "Hiba oka: {0}", s.Message);
 				else
 					Thread.Sleep(20*1000);
 
