@@ -38,6 +38,6 @@
     </Parancs>
     <Plugins>
         <Allapot>true</Allapot>
-        <Directory>plugins</Directory>
+        <Directory>Plugins</Directory>
     </Plugins>
 </Schumix>
