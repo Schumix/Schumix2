@@ -21,7 +21,6 @@ using System;
 using System.Threading;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
-using Schumix.Framework.Exceptions;
 
 namespace Schumix.Framework
 {
@@ -56,9 +55,9 @@ namespace Schumix.Framework
 					ScriptManager.LoadPlugins();
 				}
 			}
-			catch(SchumixException s)
+			catch(Exception e)
 			{
-				Log.Error("SchumixBase", "Hiba oka: {0}", s.Message);
+				Log.Error("SchumixBase", "Hiba oka: {0}", e.Message);
 				Thread.Sleep(100);
 			}
 		}
