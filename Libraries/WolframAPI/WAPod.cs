@@ -63,7 +63,7 @@
         {
             get
             {
-#if WindowsCE
+#if !MONO
                 Contract.Requires(SubPods != null);
 #endif
 

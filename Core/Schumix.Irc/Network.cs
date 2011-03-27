@@ -103,12 +103,12 @@ namespace Schumix.Irc
 
 			// Start Opcodes thread
 			Log.Debug("Network", "Opcodes thread indul...");
-			var opcodes = new Thread(new ThreadStart(Opcodes));
+			var opcodes = new Thread(Opcodes);
 			opcodes.Start();
 
 			// Start Ping thread
 			Log.Debug("Network", "Ping thread indul...");
-			var ping = new Thread(new ThreadStart(Ping));
+			var ping = new Thread(Ping);
 			ping.Start();
 		}
 

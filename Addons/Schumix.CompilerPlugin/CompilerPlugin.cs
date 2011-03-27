@@ -62,7 +62,7 @@ namespace Schumix.CompilerPlugin
 
 				if(regex.IsMatch(Network.IMessage.Args))
 				{
-					var thread = new Thread(new ThreadStart(CompilerCommand));
+					var thread = new Thread(CompilerCommand);
 					thread.Start();
 					thread.Join(1000);
 					thread.Abort();

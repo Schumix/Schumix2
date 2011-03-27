@@ -159,7 +159,7 @@
         /// <returns>The string representation</returns>
         public override string ToString()
         {
-#if WindowsCE
+#if !MONO
             Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 #endif
 
@@ -221,7 +221,7 @@
         /// <filterpriority>2</filterpriority>
         public object Clone()
         {
-#if WindowsCE
+#if !MONO
             Contract.Ensures(Contract.Result<object>() != null);
 #endif
 
