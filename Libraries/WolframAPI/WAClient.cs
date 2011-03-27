@@ -99,7 +99,7 @@
         /// <returns>The solution of the given expression</returns>
         public string Solve(string expression)
         {
-#if WindowsCE
+#if !MONO
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
             Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 #endif
@@ -130,7 +130,7 @@
                 return "No solution found. The response might have been malformed.";
             }
 
-#if WindowsCE
+#if !MONO
             Contract.Assume(solution.SubPods[0] != null);
 #endif
 
@@ -175,7 +175,7 @@
         /// <returns>Raw response</returns>
         public string Submit(string expression)
         {
-#if WindowsCE
+#if !MONO
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
             Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 #endif
@@ -220,7 +220,7 @@
         /// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
         public static WAResult Parse(string response)
         {
-#if WindowsCE
+#if !MONO
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(response));
             Contract.Ensures(Contract.Result<WAResult>() != null);
 #endif

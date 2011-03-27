@@ -41,7 +41,7 @@ namespace Schumix.Console
 		public Console(Network network)
 		{
 			Log.Notice("Console", "Console elindult.");
-			var console = new Thread(new ThreadStart(ConsoleRead));
+			var console = new Thread(ConsoleRead);
 			console.Start();
 			CCManager = new CCommandManager(network);
 

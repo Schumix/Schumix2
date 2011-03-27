@@ -18,7 +18,7 @@
         /// <param name="item">The item.</param>
         public new void Add(T item)
         {
-#if WindowsCE
+#if !MONO
             Contract.Requires(!Equals(item, null));
 #endif
             
@@ -38,7 +38,7 @@
         {
             get
             {
-#if WindowsCE
+#if !MONO
                 Contract.Requires(!Equals(ind, null));
 #endif
 
@@ -49,7 +49,7 @@
 
             set
             {
-#if WindowsCE
+#if !MONO
                 Contract.Requires(!Equals(ind, null));
                 Contract.Requires(!Equals(value, null));
 #endif

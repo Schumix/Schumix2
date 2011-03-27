@@ -59,13 +59,14 @@ namespace Schumix.Framework.Config
 					string NickName2 = xmldoc.SelectSingleNode("Schumix/Irc/Nick2").InnerText;
 					string NickName3 = xmldoc.SelectSingleNode("Schumix/Irc/Nick3").InnerText;
 					string UserName = xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText;
+					string MasterChannel = xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel").InnerText;
 					bool UseNickServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Allapot").InnerText);
 					string NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Jelszo").InnerText;
 					bool UseHostServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Allapot").InnerText);
 					bool HostServAllapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText);
 					string Parancselojel = xmldoc.SelectSingleNode("Schumix/Parancs/Elojel").InnerText;
 
-					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, Parancselojel);
+					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, MasterChannel, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, Parancselojel);
 
 					bool Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Allapot").InnerText);
 					string Host = xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText;
@@ -132,6 +133,7 @@ namespace Schumix.Framework.Config
 					w.WriteElementString("Nick2", "_Schumix2");
 					w.WriteElementString("Nick3", "_Schumix2");
 					w.WriteElementString("UserName", "Schumix2");
+					w.WriteElementString("MasterChannel", "#schumix2");
 
 					// <NickServ>
 					w.WriteStartElement("NickServ");
@@ -233,13 +235,14 @@ namespace Schumix.Framework.Config
 		public static string NickName2 { get; private set; }
 		public static string NickName3 { get; private set; }
 		public static string UserName { get; private set; }
+		public static string MasterChannel { get; private set; }
 		public static bool UseNickServ { get; private set; }
 		public static string NickServPassword { get; private set; }
 		public static bool UseHostServ { get; private set; }
 		public static bool HostServAllapot { get; private set; }
 		public static string Parancselojel { get; private set; }
 
-		public IRCConfig(string server, int port, string nickname, string nickname2, string nickname3, string username, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservallapot, string parancselojel)
+		public IRCConfig(string server, int port, string nickname, string nickname2, string nickname3, string username, string masterchannel, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservallapot, string parancselojel)
 		{
 			Server           = server;
 			Port             = port;
@@ -247,6 +250,7 @@ namespace Schumix.Framework.Config
 			NickName2        = nickname2;
 			NickName3        = nickname3;
 			UserName         = username;
+			MasterChannel    = masterchannel;
 			UseNickServ      = usenickserv;
 			NickServPassword = nickservpassword;
 			UseHostServ      = usehostserv;

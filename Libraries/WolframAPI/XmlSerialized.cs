@@ -20,7 +20,7 @@
         /// <returns>The serialized instance.</returns>
         public string Serialize()
         {
-#if WindowsCE
+#if !MONO
             Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 #endif
 
