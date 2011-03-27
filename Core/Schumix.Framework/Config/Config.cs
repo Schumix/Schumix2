@@ -21,7 +21,6 @@ using System;
 using System.IO;
 using System.Xml;
 using System.Threading;
-using Schumix.Framework.Exceptions;
 
 namespace Schumix.Framework.Config
 {
@@ -97,10 +96,10 @@ namespace Schumix.Framework.Config
 					Console.WriteLine("");
 				}
 			}
-			catch(SchumixException s)
+			catch(Exception e)
 			{
 				new LogConfig(3, "Logs", "Szoba", false);
-				Log.Error("Config", "Hiba oka: {0}", s.Message);
+				Log.Error("Config", "Hiba oka: {0}", e.Message);
 			}
 		}
 
@@ -207,9 +206,9 @@ namespace Schumix.Framework.Config
 					Log.Success("Config", "Config fajl elkeszult!");
 					return false;
 				}
-				catch(SchumixException s)
+				catch(Exception e)
 				{
-					Log.Error("Config", "Hiba az xml irasa soran: {0}", s.Message);
+					Log.Error("Config", "Hiba az xml irasa soran: {0}", e.Message);
 					error = true;
 					return false;
 				}

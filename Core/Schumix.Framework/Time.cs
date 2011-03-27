@@ -20,7 +20,6 @@
 using System;
 using System.Threading;
 using System.Diagnostics;
-using Schumix.Framework.Exceptions;
 
 namespace Schumix.Framework
 {
@@ -40,9 +39,9 @@ namespace Schumix.Framework
 				SW.Start();
 				StartTime = DateTime.Now;
 			}
-			catch(SchumixException s)
+			catch(Exception e)
 			{
-				Log.Error("Time", "Hiba oka: {0}", s.Message);
+				Log.Error("Time", "Hiba oka: {0}", e.Message);
 				Thread.Sleep(100);
 			}
 		}

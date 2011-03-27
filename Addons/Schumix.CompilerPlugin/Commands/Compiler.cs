@@ -26,7 +26,6 @@ using Microsoft.CSharp;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
-using Schumix.Framework.Exceptions;
 
 namespace Schumix.CompilerPlugin.Commands
 {
@@ -117,7 +116,7 @@ namespace Schumix.CompilerPlugin.Commands
 				sw.AutoFlush = true;
 				Console.SetOut(sw);
 			}
-			catch(SchumixException)
+			catch(Exception)
 			{
 				// egyenlőre semmi
 			}
@@ -151,7 +150,7 @@ namespace Schumix.CompilerPlugin.Commands
 				else
 					return results.CompiledAssembly;
 			}
-			catch(SchumixException)
+			catch(Exception)
 			{
 				// egyenlőre semmi
 			}

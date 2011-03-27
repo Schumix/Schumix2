@@ -21,7 +21,6 @@ using System;
 using System.Threading;
 using Schumix.Irc;
 using Schumix.Framework;
-using Schumix.Framework.Exceptions;
 using Schumix.Console.Commands;
 
 namespace Schumix.Console
@@ -87,9 +86,9 @@ namespace Schumix.Console
 					Thread.Sleep(1000);
 				}
 			}
-			catch(SchumixException s)
+			catch(Exception e)
 			{
-				Log.Error("ConsoleRead", "Hiba oka: {0}", s.Message);
+				Log.Error("ConsoleRead", "Hiba oka: {0}", e.Message);
 				ConsoleRead();
 				Thread.Sleep(100);
 			}
