@@ -22,23 +22,13 @@ using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
-using Schumix.TesztPlugin.Commands;
+using Schumix.TesztAddon.Commands;
 
-namespace Schumix.TesztPlugin
+namespace Schumix.TesztAddon
 {
-	public class SchumixPlugin : TesztCommand, ISchumixBase
+	public class TesztAddon : TesztCommand, ISchumixAddon
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-
-		public SchumixPlugin()
-		{
-
-		}
-
-		~SchumixPlugin()
-		{
-			Log.Debug("TesztPlugin", "~SchumixPlugin()");
-		}
 
 		public void Setup()
 		{
@@ -71,7 +61,7 @@ namespace Schumix.TesztPlugin
 		{
 			get
 			{
-				return "TesztPlugin";
+				return "TesztAddon";
 			}
 		}
 

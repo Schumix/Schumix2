@@ -25,13 +25,112 @@ using System.Linq;
 using System.Reflection;
 using Schumix.API;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework
 {
 	/// <summary>
 	/// Class used to manage (load, unload, reload) plugins dynamically.
 	/// </summary>
-	public sealed class ScriptManager
+	public static class AddonManager
+	{
+		private static readonly List<ISchumixAddon> _addons = new List<ISchumixAddon>();
+		private static readonly object LoadLock = new object();
+
+		/// <summary>
+		/// List of found assemblies.
+		/// </summary>
+		public static readonly List<Assembly> Assemblies = new List<Assembly>();
+		public static List<ISchumixAddon> GetPlugins() { return _addons; }
+
+		/// <summary>
+		/// Initializes the Plugin manager.
+		/// </summary>
+		public static void Initialize()
+		{
+			SetupAppDomainDebugHandlers();
+		}
+
+		/// <summary>
+		/// Loads plugins from the specified directory.
+		/// </summary>
+		/// <param name="directory">The directory to check in</param>
+		public static void LoadPluginsFromDirectory(DirectoryInfo directory) { LoadPluginsFromDirectory(directory.FullName);}
+
+		/// <summary>
+		/// Loads plugins from the specified directory.
+		/// </summary>
+		/// <param name="directory">The directory to check in</param>
+		public static bool LoadPluginsFromDirectory(string directory)
+		{
+			try
+			{
+				var dir = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, directory));
+				Log.Notice("AddonManager", "Loading addons from: {0}", dir.FullName);
+
+				foreach(var dll in dir.GetFiles("*.dll").AsParallel())
+				{
+					if(!dll.FullName.Contains("Addon"))
+						continue;
+
+					var asm = Assembly.LoadFrom(dll.FullName);
+
+					if(asm == null)
+						continue;
+
+					ISchumixAddon pl = null;
+
+					foreach(var type in from t in asm.GetTypes().AsParallel() where t.GetInterfaces().Contains(typeof(ISchumixAddon)) select t)
+					{
+						pl = Activator.CreateInstance(type).Cast<ISchumixAddon>();
+
+						if(pl == null)
+							continue;
+
+						pl.Setup();
+
+						lock(LoadLock)
+						{
+							_addons.Add(pl);
+							Assemblies.Add(asm);
+						}
+
+						Log.Success("AddonManager", "Loaded plugin: {0} {1} by {2} ({3})", pl.Name, asm.GetName().Version.ToString(), pl.Author, pl.Website);
+					}
+				}
+
+				return true;
+			}
+			catch(Exception e)
+			{
+				Log.Error("AddonManager", "Error while loading one of directories! Detail: {0}", e.Message);
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// Unloads all addons.
+		/// </summary>
+		public static bool UnloadPlugins()
+		{
+			lock(LoadLock)
+			{
+				for(var i = 0; i < _addons.Count; ++i)
+				{
+					var pl = _addons[i];
+					pl.Destroy();
+					_addons.Remove(pl);
+				}
+
+				Assemblies.Clear();
+			}
+
+			return true;
+		}
+	/// <summary>
+	/// Class used to manage (load, unload, reload) plugins dynamically.
+	/// </summary>
+/*	public sealed class ScriptManager
 	{
 		//private static readonly Utility sUtility = Singleton<Utility>.Instance;
 
@@ -91,7 +190,7 @@ namespace Schumix.Framework
 					return false;
 				}
 				
-				Log.Success("ScriptManager", "Loaded plugin: {0}"/* (hash: {1})"*/, f.Name/*, sUtility.MD5File("./" + PluginsConfig.Directory + "/" + f.Name)*/);
+				Log.Success("ScriptManager", "Loaded plugin: {0}"/* (hash: {1})"*//*, f.Name/*, sUtility.MD5File("./" + PluginsConfig.Directory + "/" + f.Name)*//*);
 			}
 
 			return true;
@@ -131,7 +230,7 @@ namespace Schumix.Framework
 				return false;
 			}
 				
-			Log.Success("ScriptManager", "Loaded plugin: {0}"/* (hash: {1})"*/, fi.Name/*, sUtility.MD5File("./" + PluginsConfig.Directory + "/" + fi.Name)*/);
+			Log.Success("ScriptManager", "Loaded plugin: {0}"/* (hash: {1})"*//*, fi.Name/*, sUtility.MD5File("./" + PluginsConfig.Directory + "/" + fi.Name)*//*);
 			return true;
 		}
 
@@ -154,7 +253,7 @@ namespace Schumix.Framework
 		/// <param name="name">
 		/// The name of the plugin to unload.
 		/// </param>
-		public static bool UnloadPlugin(string name)
+/*		public static bool UnloadPlugin(string name)
 		{
 			bool removed = false;
 			foreach(var plugin in _plugins)
@@ -173,19 +272,19 @@ namespace Schumix.Framework
 				Log.Error("ScriptManager", "Couldn't unload plugin: {0}", name);
 
 			return removed;
-		}
+		}*/
 
 		private static void SetupAppDomainDebugHandlers()
 		{
 			AppDomain.CurrentDomain.DomainUnload += (sender, args) =>
-				Log.Debug("ScriptManager", "AppDomain::DomainUnload, hash: {0}", AppDomain.CurrentDomain.GetHashCode());
+				Log.Debug("AddonManager", "AppDomain::DomainUnload, hash: {0}", AppDomain.CurrentDomain.GetHashCode());
 
 			AppDomain.CurrentDomain.AssemblyLoad += (sender, ea) =>
-				Log.Debug("ScriptManager", "AppDomain::AssemblyLoad, sender is: {0}, loaded assembly: {1}.", sender.GetHashCode(), ea.LoadedAssembly.FullName);
+				Log.Debug("AddonManager", "AppDomain::AssemblyLoad, sender is: {0}, loaded assembly: {1}.", sender.GetHashCode(), ea.LoadedAssembly.FullName);
 
 			AppDomain.CurrentDomain.AssemblyResolve += (sender, eargs) =>
 			{
-				Log.Debug("ScriptManager", "AppDomain::AssemblyResolve, sender: {0}, name: {1}, asm: {2}", sender.GetHashCode(), eargs.Name, eargs.RequestingAssembly.FullName );
+				Log.Debug("AddonManager", "AppDomain::AssemblyResolve, sender: {0}, name: {1}, asm: {2}", sender.GetHashCode(), eargs.Name, eargs.RequestingAssembly.FullName );
 				return null;
 			};
 		}

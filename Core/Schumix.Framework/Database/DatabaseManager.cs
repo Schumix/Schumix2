@@ -36,13 +36,13 @@ namespace Schumix.Framework.Database
 		{
 			byte x = 0;
 
-			if(SQLiteConfig.Allapot)
+			if(SQLiteConfig.Enabled)
 			{
 				x++;
 				sdatabase = new SQLite(SQLiteConfig.FileName);
 			}
 
-			if(MySqlConfig.Allapot)
+			if(MySqlConfig.Enabled)
 			{
 				x++;
 				mdatabase = new MySql(MySqlConfig.Host, MySqlConfig.User, MySqlConfig.Password, MySqlConfig.Database);
@@ -69,7 +69,7 @@ namespace Schumix.Framework.Database
 
 		public DataTable Query(string sql)
 		{
-			if(SQLiteConfig.Allapot)
+			if(SQLiteConfig.Enabled)
 				return sdatabase.Query(sql);
 			else
 				return mdatabase.Query(sql);
@@ -82,7 +82,7 @@ namespace Schumix.Framework.Database
 
 		public DataRow QueryFirstRow(string query)
 		{
-			if(SQLiteConfig.Allapot)
+			if(SQLiteConfig.Enabled)
 				return sdatabase.QueryFirstRow(query);
 			else
 				return mdatabase.QueryFirstRow(query);

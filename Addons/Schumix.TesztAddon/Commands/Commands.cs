@@ -30,7 +30,7 @@ using Atom.Utils;
 using Atom.AdditionalElements;
 using Atom.Core.Collections;*/
 
-namespace Schumix.TesztPlugin.Commands
+namespace Schumix.TesztAddon.Commands
 {
 	public class TesztCommand : CommandInfo
 	{

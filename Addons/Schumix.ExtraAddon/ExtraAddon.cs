@@ -21,22 +21,12 @@ using System;
 using Schumix.API;
 using Schumix.Irc;
 using Schumix.Framework;
-using Schumix.ExtraPlugin.Commands;
+using Schumix.ExtraAddon.Commands;
 
-namespace Schumix.ExtraPlugin
+namespace Schumix.ExtraAddon
 {
-	public class SchumixPlugin : IrcHandler, ISchumixBase
+	public class ExtraAddon : IrcHandler, ISchumixAddon
 	{
-		public SchumixPlugin()
-		{
-
-		}
-
-		~SchumixPlugin()
-		{
-			Log.Debug("ExtraPlugin", "~SchumixPlugin()");
-		}
-
 		public void Setup()
 		{
 			Network.PublicRegisterHandler("JOIN",    HandleJoin);
@@ -65,7 +55,7 @@ namespace Schumix.ExtraPlugin
 		{
 			get
 			{
-				return "ExtraPlugin";
+				return "ExtraAddon";
 			}
 		}
 

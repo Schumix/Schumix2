@@ -146,8 +146,8 @@ namespace Schumix.Irc.Commands
 
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Admin hozzáadva: {0}", nev);
 				sSendMessage.SendCMPrivmsg(nev, "Mostantól Schumix adminja vagy. A te mostani jelszavad: {0}", pass);
-				sSendMessage.SendCMPrivmsg(nev, "Ha megszeretnéd változtatni használd az {0}admin ujjelszo parancsot. Használata: {0}admin ujjelszo <régi> <új>", IRCConfig.Parancselojel);
-				sSendMessage.SendCMPrivmsg(nev, "Admin nick élesítése: {0}admin hozzaferes <jelszó>", IRCConfig.Parancselojel);
+				sSendMessage.SendCMPrivmsg(nev, "Ha megszeretnéd változtatni használd az {0}admin ujjelszo parancsot. Használata: {0}admin ujjelszo <régi> <új>", IRCConfig.CommandPrefix);
+				sSendMessage.SendCMPrivmsg(nev, "Admin nick élesítése: {0}admin hozzaferes <jelszó>", IRCConfig.CommandPrefix);
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "del")
 			{
@@ -219,7 +219,7 @@ namespace Schumix.Irc.Commands
 						if(command.Key == "admin")
 							continue;
 
-						parancsok += " | " + IRCConfig.Parancselojel + command.Key;
+						parancsok += " | " + IRCConfig.CommandPrefix + command.Key;
 					}
 
 					if(parancsok.Substring(0, 3) == " | ")
@@ -238,14 +238,14 @@ namespace Schumix.Irc.Commands
 						if(command.Key == "admin")
 							continue;
 
-						parancsok += " | " + IRCConfig.Parancselojel + command.Key;
+						parancsok += " | " + IRCConfig.CommandPrefix + command.Key;
 					}
 
 					if(parancsok.Substring(0, 3) == " | ")
 						parancsok = parancsok.Remove(0, 3);
 
 					foreach(var command in CommandManager.GetAdminCommandHandler())
-						parancsok2 += " | " + IRCConfig.Parancselojel + command.Key;
+						parancsok2 += " | " + IRCConfig.CommandPrefix + command.Key;
 
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Adminisztrátor parancsok!");
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}{1}", parancsok, parancsok2);

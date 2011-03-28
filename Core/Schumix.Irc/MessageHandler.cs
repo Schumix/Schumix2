@@ -62,7 +62,7 @@ namespace Schumix.Irc
 			else
 			{
 				Log.Notice("HostServ", "HostServ kivan kapcsolva.");
-				if(IRCConfig.HostServAllapot)
+				if(IRCConfig.HostServEnabled)
 					sSender.HostServ("off");
 
 				WhoisPrivmsg = sNickInfo.NickStorage;
@@ -214,26 +214,26 @@ namespace Schumix.Irc
         /// <param name="channel"></param>
         /// <param name="user"></param>
         /// <param name="args"></param>
-		private void LogToFajl(string channel, string user, string args)
+		private void LogToFile(string channel, string user, string args)
 		{
 			if(Network.sChannelInfo.FSelect("log") && Network.sChannelInfo.FSelect("log", channel))
 			{
 				try
 				{
-					if(!Directory.Exists(LogConfig.IrcLogHelye))
-						Directory.CreateDirectory(LogConfig.IrcLogHelye);
+					if(!Directory.Exists(LogConfig.IrcLogDirectory))
+						Directory.CreateDirectory(LogConfig.IrcLogDirectory);
 
 					string logfile_name = channel + ".log";
-					if(!File.Exists(string.Format("./{0}/{1}", LogConfig.IrcLogHelye, logfile_name)))
-						File.Create(string.Format("./{0}/{1}", LogConfig.IrcLogHelye, logfile_name));
+					if(!File.Exists(string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, logfile_name)))
+						File.Create(string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, logfile_name));
 
-					var file = new StreamWriter(string.Format("./{0}/{1}", LogConfig.IrcLogHelye, logfile_name), true) { AutoFlush = true };
+					var file = new StreamWriter(string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, logfile_name), true) { AutoFlush = true };
 					file.WriteLine("[{0}] <{1}> {2}", DateTime.Now, user, args);
 					file.Close();
 				}
-				catch(Exception/* e*/)
+				catch(Exception)
 				{
-					// semmi
+					LogToFile(channel, user, args);
 				}
 			}
 		}

@@ -27,7 +27,7 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 
-namespace Schumix.CompilerPlugin.Commands
+namespace Schumix.CompilerAddon.Commands
 {
 	public class Compiler : CommandInfo
 	{

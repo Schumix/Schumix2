@@ -252,11 +252,12 @@
         #region Async stuff
 
 #if WITH_ASYNC
-
         private void HandleSolutionReceived(IAsyncResult ar)
         {
+#if !MONO
             Contract.Requires<ArgumentNullException>(ar != null);
             Contract.Requires<ArgumentNullException>(((AsyncResult)ar).AsyncDelegate != null);
+#endif
 
             if (ar != null)
             {
@@ -286,7 +287,9 @@
         /// <returns>The solution of the given expression</returns>
         public void SolveAsync(string expression)
         {
+#if !MONO
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+#endif
 
             var procedure = new ExpressionProcessorMethod(Solve);
 
@@ -298,8 +301,10 @@
 
         private void HandleResultReceived(IAsyncResult ar)
         {
+#if !MONO
             Contract.Requires<ArgumentNullException>(ar != null);
             Contract.Requires<ArgumentNullException>(((AsyncResult)ar).AsyncDelegate != null);
+#endif
 
             if (ar != null)
             {
@@ -332,7 +337,9 @@
         /// <returns>The result</returns>
         public void GetResultAsync(string expression)
         {
+#if !MONO
             Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+#endif
 
             var procedure = new RetrieveResultMethod(GetResult);
 

@@ -39,7 +39,7 @@ namespace Schumix.Irc.Commands
 				if(command.Key == "xbot")
 					continue;
 
-				parancsok += " | " + IRCConfig.Parancselojel + command.Key;
+				parancsok += " | " + IRCConfig.CommandPrefix + command.Key;
 			}
 
 			if(parancsok.Substring(0, 3) == " | ")

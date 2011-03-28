@@ -24,7 +24,7 @@ namespace Schumix.API
 	/// <summary>
 	/// Another attempt to implement a plugin interface.
 	/// </summary>
-	public interface ISchumixBase
+	public interface ISchumixAddon
 	{
 		/// <summary>
 		/// Creates the addon.

@@ -7,20 +7,15 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{062B6A8C-F14A-4754-81E0-66BF1E557CEF}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Schumix.TesztPlugin</RootNamespace>
+    <RootNamespace>Schumix.TesztAddon</RootNamespace>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
-    <AssemblyName>TesztPlugin</AssemblyName>
+    <AssemblyName>TesztAddon</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Run\Debug\Plugins</OutputPath>
+    <OutputPath>..\..\Run\Debug\Addons</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -29,7 +24,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Run\Release\Plugins</OutputPath>
+    <OutputPath>..\..\Run\Release\Addons</OutputPath>
     <DefineConstants>RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -38,7 +33,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono-Debug|x86' ">
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Run\Debug\Plugins</OutputPath>
+    <OutputPath>..\..\Run\Debug\Addons</OutputPath>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>DEBUG;MONO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -48,7 +43,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono-Release|x86' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Run\Release\Plugins</OutputPath>
+    <OutputPath>..\..\Run\Release\Addons</OutputPath>
     <DefineConstants>RELEASE;MONO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -58,7 +53,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Run\Debug_x64\Plugins</OutputPath>
+    <OutputPath>..\..\Run\Debug_x64\Addons</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -67,7 +62,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Run\Release_x64\Plugins</OutputPath>
+    <OutputPath>..\..\Run\Release_x64\Addons</OutputPath>
     <DefineConstants>RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -76,7 +71,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono-Debug|x64' ">
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\Run\Debug_x64\Plugins</OutputPath>
+    <OutputPath>..\..\Run\Debug_x64\Addons</OutputPath>
     <DebugSymbols>true</DebugSymbols>
     <DefineConstants>DEBUG;MONO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -86,7 +81,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono-Release|x64' ">
     <DebugType>none</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\Run\Release_x64\Plugins</OutputPath>
+    <OutputPath>..\..\Run\Release_x64\Addons</OutputPath>
     <DefineConstants>RELEASE;MONO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -103,7 +98,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\Commands.cs" />
-    <Compile Include="TesztPlugin.cs" />
+    <Compile Include="TesztAddon.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Schumix.API\Schumix.API.csproj">

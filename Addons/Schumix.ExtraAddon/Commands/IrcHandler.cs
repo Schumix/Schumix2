@@ -22,7 +22,7 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 
-namespace Schumix.ExtraPlugin.Commands
+namespace Schumix.ExtraAddon.Commands
 {
 	public class IrcHandler : CommandInfo
 	{

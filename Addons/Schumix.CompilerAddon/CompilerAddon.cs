@@ -25,23 +25,13 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
-using Schumix.CompilerPlugin.Commands;
+using Schumix.CompilerAddon.Commands;
 
-namespace Schumix.CompilerPlugin
+namespace Schumix.CompilerAddon
 {
-	public class SchumixPlugin : Compiler, ISchumixBase
+	public class CompilerAddon : Compiler, ISchumixAddon
 	{
 		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
-
-		public SchumixPlugin()
-		{
-
-		}
-
-		~SchumixPlugin()
-		{
-			Log.Debug("CompilerPlugin", "~SchumixPlugin()");
-		}
 
 		public void Setup()
 		{
@@ -79,7 +69,7 @@ namespace Schumix.CompilerPlugin
 		{
 			get
 			{
-				return "CompilerPlugin";
+				return "CompilerAddon";
 			}
 		}
 
