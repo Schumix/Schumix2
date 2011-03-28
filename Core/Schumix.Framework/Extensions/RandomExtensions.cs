@@ -107,7 +107,7 @@ namespace Schumix.Framework.Extensions
 				sb.AppendFormat("{0}{1}", str, separator);
 
 			return sb.ToString();
-        }
+		}
 
 		/// <summary>
 		/// Concatenates the string in the specified array and returns the sum string.

@@ -35,17 +35,17 @@ namespace Schumix.Framework.Database
 		{
 			if(!Initialize(host, username, password, database))
 			{
-				Log.Error("Mysql", "Hiba tortent az adatbazishoz valo kapcsolodas soran!");
+				Log.Error("MySql", "Hiba tortent az adatbazishoz valo kapcsolodas soran!");
 				Thread.Sleep(200);
 				Environment.Exit(1);
 			}
 			else
-				Log.Success("Mysql", "Mysql rendszer elindult.");
+				Log.Success("MySql", "Mysql rendszer elindult.");
 		}
 
 		~MySql()
 		{
-			Log.Debug("Mysql", "~Mysql()");
+			Log.Debug("MySql", "~MySql()");
 			Connection.Close();
 		}
 
@@ -59,7 +59,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				Log.Error("Mysql", "{0}", m.Message);
+				Log.Error("MySql", "{0}", m.Message);
 				return false;
 			}
 		}
@@ -84,7 +84,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				Log.Error("Mysql", "Query hiba: {0}", m.Message);
+				Log.Error("MySql", "Query hiba: {0}", m.Message);
 				return null;
 			}
 		}
