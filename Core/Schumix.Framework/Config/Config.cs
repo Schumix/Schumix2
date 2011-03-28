@@ -126,11 +126,11 @@ namespace Schumix.Framework.Config
 
 					// <Irc>
 					w.WriteStartElement("Irc");
-					w.WriteElementString("Server", "irc.rizon.net");
+					w.WriteElementString("Server", "localhost");
 					w.WriteElementString("Port", "6667");
 					w.WriteElementString("NickName", "Schumix2");
 					w.WriteElementString("NickName2", "_Schumix2");
-					w.WriteElementString("NickName3", "_Schumix2");
+					w.WriteElementString("NickName3", "__Schumix2");
 					w.WriteElementString("UserName", "Schumix2");
 					w.WriteElementString("MasterChannel", "#schumix2");
 
@@ -157,7 +157,7 @@ namespace Schumix.Framework.Config
 					w.WriteStartElement("Log");
 					w.WriteElementString("LogLevel", "2");
 					w.WriteElementString("LogDirectory", "Logs");
-					w.WriteElementString("IrcDirectory", "Szoba");
+					w.WriteElementString("IrcLogDirectory", "Szoba");
 					w.WriteElementString("IrcLog", "false");
 
 					// </Log>

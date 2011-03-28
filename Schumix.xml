@@ -1,44 +1,44 @@
-<?xml version="1.0" encoding="utf-8" ?> 
+<?xml version="1.0" encoding="utf-8" ?>
 <Schumix>
     <Irc>
-        <Server>irc.rizon.net</Server>
+        <Server>localhost</Server>
         <Port>6667</Port>
-        <Nick>Schumix2</Nick>
-        <Nick2>Schumixx2</Nick2>
-        <Nick3>Schumixxx2</Nick3>
+        <NickName>Schumix2</NickName>
+        <NickName2>_Schumix2</NickName2>
+        <NickName3>__Schumix2</NickName3>
         <UserName>Schumix2</UserName>
         <MasterChannel>#schumix2</MasterChannel>
         <NickServ>
-            <Allapot>false</Allapot>
-            <Jelszo>pass</Jelszo>
+            <Enabled>false</Enabled>
+            <Password>pass</Password>
         </NickServ>
         <HostServ>
-            <Allapot>false</Allapot>
+            <Enabled>false</Enabled>
             <Vhost>false</Vhost>
         </HostServ>
     </Irc>
     <Log>
         <LogLevel>2</LogLevel>
-        <LogHelye>Logs</LogHelye>
-        <IrcLogHelye>Szoba</IrcLogHelye>
+        <LogDirectory>Logs</LogDirectory>
+        <IrcLogDirectory>Szoba</IrcLogDirectory>
         <IrcLog>false</IrcLog>
     </Log>
     <MySql>
-        <Allapot>false</Allapot>
+        <Enabled>false</Enabled>
         <Host>localhost</Host>
         <User>root</User>
         <Password>pass</Password>
         <Database>database</Database>
     </MySql>
     <SQLite>
-        <Allapot>false</Allapot>
+        <Enabled>false</Enabled>
         <FileName>Schumix.db3</FileName>
     </SQLite>
-    <Parancs>
-        <Elojel>$</Elojel>
-    </Parancs>
-    <Plugins>
-        <Allapot>true</Allapot>
-        <Directory>Plugins</Directory>
-    </Plugins>
+    <Command>
+        <Prefix>$</Prefix>
+    </Command>
+    <Addons>
+        <Enabled>true</Enabled>
+        <Directory>Addons</Directory>
+    </Addons>
 </Schumix>
