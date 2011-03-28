@@ -54,43 +54,43 @@ namespace Schumix.Framework.Config
 					Log.Notice("Config", "Config fajl betoltese...");
 					string Server = xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText;
 					int Port = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText);
-					string NickName = xmldoc.SelectSingleNode("Schumix/Irc/Nick").InnerText;
-					string NickName2 = xmldoc.SelectSingleNode("Schumix/Irc/Nick2").InnerText;
-					string NickName3 = xmldoc.SelectSingleNode("Schumix/Irc/Nick3").InnerText;
+					string NickName = xmldoc.SelectSingleNode("Schumix/Irc/NickName").InnerText;
+					string NickName2 = xmldoc.SelectSingleNode("Schumix/Irc/NickName2").InnerText;
+					string NickName3 = xmldoc.SelectSingleNode("Schumix/Irc/NickName3").InnerText;
 					string UserName = xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText;
 					string MasterChannel = xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel").InnerText;
-					bool UseNickServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Allapot").InnerText);
-					string NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Jelszo").InnerText;
-					bool UseHostServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Allapot").InnerText);
+					bool UseNickServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Enabled").InnerText);
+					string NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Password").InnerText;
+					bool UseHostServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Enabled").InnerText);
 					bool HostServAllapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText);
-					string Parancselojel = xmldoc.SelectSingleNode("Schumix/Parancs/Elojel").InnerText;
+					string CommandPrefix = xmldoc.SelectSingleNode("Schumix/Command/Prefix").InnerText;
 
-					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, MasterChannel, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, Parancselojel);
+					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, MasterChannel, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, CommandPrefix);
 
-					bool Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Allapot").InnerText);
+					bool Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText);
 					string Host = xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText;
 					string User = xmldoc.SelectSingleNode("Schumix/MySql/User").InnerText;
 					string Password = xmldoc.SelectSingleNode("Schumix/MySql/Password").InnerText;
 					string Database = xmldoc.SelectSingleNode("Schumix/MySql/Database").InnerText;
 
-					new MySqlConfig(Allapot, Host, User, Password, Database);
+					new MySqlConfig(Enabled, Host, User, Password, Database);
 
-					Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/SQLite/Allapot").InnerText);
+					Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").InnerText);
 					string FileName = xmldoc.SelectSingleNode("Schumix/SQLite/FileName").InnerText;
 
-					new SQLiteConfig(Allapot, FileName);
+					new SQLiteConfig(Enabled, FileName);
 
 					int LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
-					string LogHelye = xmldoc.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
-					string IrcLogHelye = xmldoc.SelectSingleNode("Schumix/Log/IrcLogHelye").InnerText;
+					string LogDirectory = xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").InnerText;
+					string IrcLogDirectory = xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").InnerText;
 					bool IrcLog = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText);
 
-					new LogConfig(LogLevel, LogHelye, IrcLogHelye, IrcLog);
+					new LogConfig(LogLevel, LogDirectory, IrcLogDirectory, IrcLog);
 
-					Allapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Plugins/Allapot").InnerText);
-					string Directory = xmldoc.SelectSingleNode("Schumix/Plugins/Directory").InnerText;
+					Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Addons/Enabled").InnerText);
+					string Directory = xmldoc.SelectSingleNode("Schumix/Addons/Directory").InnerText;
 
-					new PluginsConfig(Allapot, Directory);
+					new AddonsConfig(Enabled, Directory);
 
 					Log.Success("Config", "Config adatbazis betoltve.");
 					Console.WriteLine("");
@@ -128,23 +128,23 @@ namespace Schumix.Framework.Config
 					w.WriteStartElement("Irc");
 					w.WriteElementString("Server", "irc.rizon.net");
 					w.WriteElementString("Port", "6667");
-					w.WriteElementString("Nick", "Schumix2");
-					w.WriteElementString("Nick2", "_Schumix2");
-					w.WriteElementString("Nick3", "_Schumix2");
+					w.WriteElementString("NickName", "Schumix2");
+					w.WriteElementString("NickName2", "_Schumix2");
+					w.WriteElementString("NickName3", "_Schumix2");
 					w.WriteElementString("UserName", "Schumix2");
 					w.WriteElementString("MasterChannel", "#schumix2");
 
 					// <NickServ>
 					w.WriteStartElement("NickServ");
-					w.WriteElementString("Allapot", "false");
-					w.WriteElementString("Jelszo", "pass");
+					w.WriteElementString("Enabled", "false");
+					w.WriteElementString("Password", "pass");
 
 					// </NickServ>
 					w.WriteEndElement();
 
 					// <HostServ>
 					w.WriteStartElement("HostServ");
-					w.WriteElementString("Allapot", "false");
+					w.WriteElementString("Enabled", "false");
 					w.WriteElementString("Vhost", "false");
 
 					// </HostServ>
@@ -156,8 +156,8 @@ namespace Schumix.Framework.Config
 					// <Log>
 					w.WriteStartElement("Log");
 					w.WriteElementString("LogLevel", "2");
-					w.WriteElementString("LogHelye", "Logs");
-					w.WriteElementString("IrcLogHelye", "Szoba");
+					w.WriteElementString("LogDirectory", "Logs");
+					w.WriteElementString("IrcDirectory", "Szoba");
 					w.WriteElementString("IrcLog", "false");
 
 					// </Log>
@@ -165,7 +165,7 @@ namespace Schumix.Framework.Config
 
 					// <MySql>
 					w.WriteStartElement("MySql");
-					w.WriteElementString("Allapot", "false");
+					w.WriteElementString("Enabled", "false");
 					w.WriteElementString("Host", "localhost");
 					w.WriteElementString("User", "root");
 					w.WriteElementString("Password", "pass");
@@ -176,23 +176,23 @@ namespace Schumix.Framework.Config
 
 					// <SQLite>
 					w.WriteStartElement("SQLite");
-					w.WriteElementString("Allapot", "false");
+					w.WriteElementString("Enabled", "false");
 					w.WriteElementString("FileName", "Schumix.db3");
 
 					// </SQLite>
 					w.WriteEndElement();
 
 					// <Parancs>
-					w.WriteStartElement("Parancs");
-					w.WriteElementString("Elojel", "$");
+					w.WriteStartElement("Command");
+					w.WriteElementString("Prefix", "$");
 
 					// </Parancs>
 					w.WriteEndElement();
 
 					// <Plugins>
-					w.WriteStartElement("Plugins");
-					w.WriteElementString("Allapot", "true");
-					w.WriteElementString("Directory", "Plugins");
+					w.WriteStartElement("Addons");
+					w.WriteElementString("Enabled", "true");
+					w.WriteElementString("Directory", "Addons");
 
 					// </Plugins>
 					w.WriteEndElement();
@@ -238,10 +238,10 @@ namespace Schumix.Framework.Config
 		public static bool UseNickServ { get; private set; }
 		public static string NickServPassword { get; private set; }
 		public static bool UseHostServ { get; private set; }
-		public static bool HostServAllapot { get; private set; }
-		public static string Parancselojel { get; private set; }
+		public static bool HostServEnabled { get; private set; }
+		public static string CommandPrefix { get; private set; }
 
-		public IRCConfig(string server, int port, string nickname, string nickname2, string nickname3, string username, string masterchannel, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservallapot, string parancselojel)
+		public IRCConfig(string server, int port, string nickname, string nickname2, string nickname3, string username, string masterchannel, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, string commandprefix)
 		{
 			Server           = server;
 			Port             = port;
@@ -253,22 +253,22 @@ namespace Schumix.Framework.Config
 			UseNickServ      = usenickserv;
 			NickServPassword = nickservpassword;
 			UseHostServ      = usehostserv;
-			HostServAllapot  = hostservallapot;
-			Parancselojel    = parancselojel;
+			HostServEnabled  = hostservenabled;
+			CommandPrefix    = commandprefix;
 		}
 	}
 
 	public sealed class MySqlConfig
 	{
-		public static bool Allapot { get; private set; }
+		public static bool Enabled { get; private set; }
 		public static string Host { get; private set; }
 		public static string User { get; private set; }
 		public static string Password { get; private set; }
 		public static string Database { get; private set; }
 
-		public MySqlConfig(bool allapot, string host, string user, string password, string database)
+		public MySqlConfig(bool enabled, string host, string user, string password, string database)
 		{
-			Allapot  = allapot;
+			Enabled  = enabled;
 			Host     = host;
 			User     = user;
 			Password = password;
@@ -278,12 +278,12 @@ namespace Schumix.Framework.Config
 
 	public sealed class SQLiteConfig
 	{
-		public static bool Allapot { get; private set; }
+		public static bool Enabled { get; private set; }
 		public static string FileName { get; private set; }
 
-		public SQLiteConfig(bool allapot, string filename)
+		public SQLiteConfig(bool enabled, string filename)
 		{
-			Allapot  = allapot;
+			Enabled  = enabled;
 			FileName = filename;
 		}
 	}
@@ -291,27 +291,27 @@ namespace Schumix.Framework.Config
 	public sealed class LogConfig
 	{
 		public static int LogLevel { get; private set; }
-		public static string LogHelye { get; private set; }
-		public static string IrcLogHelye { get; private set; }
+		public static string LogDirectory { get; private set; }
+		public static string IrcLogDirectory { get; private set; }
 		public static bool IrcLog { get; private set; }
 
-		public LogConfig(int loglevel, string loghelye, string ircloghelye, bool irclog)
+		public LogConfig(int loglevel, string logdirectory, string irclogdirectory, bool irclog)
 		{
-			LogLevel = loglevel;
-			LogHelye = loghelye;
-			IrcLogHelye = ircloghelye;
-			IrcLog   = irclog;
+			LogLevel        = loglevel;
+			LogDirectory    = logdirectory;
+			IrcLogDirectory = irclogdirectory;
+			IrcLog          = irclog;
 		}
 	}
 
-	public sealed class PluginsConfig
+	public sealed class AddonsConfig
 	{
-		public static bool Allapot { get; private set; }
+		public static bool Enabled { get; private set; }
 		public static string Directory { get; private set; }
 
-		public PluginsConfig(bool allapot, string directory)
+		public AddonsConfig(bool enabled, string directory)
 		{
-			Allapot   = allapot;
+			Enabled   = enabled;
 			Directory = directory;
 		}
 	}

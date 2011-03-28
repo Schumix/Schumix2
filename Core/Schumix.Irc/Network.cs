@@ -171,7 +171,9 @@ namespace Schumix.Irc
         /// </summary>
 		public void ReConnect()
 		{
-			Close();
+			m_running = false;
+			Status = false;
+
 			Log.Notice("Network", "Kapcsolat bontva.");
 			Connection(false);
 			Log.Debug("Network", "Ujrakapcsolodas ide megindult: {0}.", _server);

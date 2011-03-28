@@ -26,11 +26,11 @@ namespace Schumix.Irc
 {
 	public partial class MessageHandler
 	{
-		private int PLength = IRCConfig.Parancselojel.Length;
+		private int PLength = IRCConfig.CommandPrefix.Length;
 
 		protected void HandlePrivmsg()
 		{
-			foreach(var plugin in ScriptManager.GetPlugins())
+			foreach(var plugin in AddonManager.GetPlugins())
 				plugin.HandlePrivmsg();
 
 			if(ConsoleLog.CLog)
@@ -40,7 +40,7 @@ namespace Schumix.Irc
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 
-			LogToFajl(Network.IMessage.Channel, Network.IMessage.Nick, Network.IMessage.Args);
+			LogToFile(Network.IMessage.Channel, Network.IMessage.Nick, Network.IMessage.Args);
 
 			if(Network.sChannelInfo.FSelect("parancsok") || Network.IMessage.Channel.Substring(0, 1) != "#")
 			{
@@ -55,7 +55,7 @@ namespace Schumix.Irc
 
 				Schumix();
 
-				if(Network.IMessage.Info[3] == string.Empty || Network.IMessage.Info[3].Length < PLength || Network.IMessage.Info[3].Substring(0, PLength) != IRCConfig.Parancselojel)
+				if(Network.IMessage.Info[3] == string.Empty || Network.IMessage.Info[3].Length < PLength || Network.IMessage.Info[3].Substring(0, PLength) != IRCConfig.CommandPrefix)
 					return;
 
 				Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, PLength);

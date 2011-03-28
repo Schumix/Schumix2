@@ -43,10 +43,10 @@ namespace Schumix.Framework
 			try
 			{
 				string loghelye;
-				if(LogConfig.LogHelye == null)
+				if(LogConfig.LogDirectory == null)
 					loghelye = InitConfig();
 				else
-					loghelye = LogConfig.LogHelye;
+					loghelye = LogConfig.LogDirectory;
 
 				var file = new StreamWriter(string.Format("./{0}/{1}", loghelye, "Schumix.log"), true) { AutoFlush = true };
 				file.Write(log);
@@ -62,7 +62,7 @@ namespace Schumix.Framework
 		{
 			var xml = new XmlDocument();
 			xml.Load(ConfigFile);
-			return xml.SelectSingleNode("Schumix/Log/LogHelye").InnerText;
+			return xml.SelectSingleNode("Schumix/Log/LogDirectory").InnerText;
 		}
 
 		public static void Indulas(string configfile)

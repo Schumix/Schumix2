@@ -36,57 +36,21 @@ namespace Schumix.Irc.Commands
 
 			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "load")
 			{
-				if(Network.IMessage.Info.Length < 6)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva egy paraméter!");
-					return;
-				}
-
-				string name = Network.IMessage.Info[5];
-
-				if(name == "all")
-				{
-					if(ScriptManager.LoadPlugins())
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 3done.");
-					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 5failed.");
-				}
+				if(AddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 3done.");
 				else
-				{
-					if(ScriptManager.LoadPlugin(name))
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: {0} 3done.", name);
-					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: {0} 5failed.", name);
-				}
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 5failed.");
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "unload")
 			{
-				if(Network.IMessage.Info.Length < 6)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva egy paraméter!");
-					return;
-				}
-
-				string name = Network.IMessage.Info[5];
-
-				if(name == "all")
-				{
-					/*if(ScriptManager.UnloadPlugins())
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 3done.");
-					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 5failed.");*/
-				}
+				if(AddonManager.UnloadPlugins())
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 3done.");
 				else
-				{
-					if(ScriptManager.UnloadPlugin(name))
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: {0} 3done.", name);
-					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: {0} 5failed.", name);
-				}
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 5failed.");
 			}
 			else
 			{
-				foreach(var plugin in ScriptManager.GetPlugins())
+				foreach(var plugin in AddonManager.GetPlugins())
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: 3loaded.", plugin.Name.Replace("Plugin", string.Empty));
 			}
 		}

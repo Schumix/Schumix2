@@ -1,2 +1,2 @@
 #!/bin/sh
-xbuild schumix.sln
+xbuild Schumix.sln

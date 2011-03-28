@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
@@ -25,7 +25,7 @@ using System.Runtime.InteropServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Schumix.TesztPlugin")]
+[assembly: AssemblyTitle("Schumix.ExtraAddon")]
 [assembly: AssemblyDescription("Schumix IRC bot")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("Release")]
 #endif
 [assembly: AssemblyCompany("Megax Productions")]
-[assembly: AssemblyProduct("Schumix.TesztPlugin")]
+[assembly: AssemblyProduct("Schumix.ExtraAddon")]
 [assembly: AssemblyCopyright("Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>")]
 [assembly: AssemblyTrademark("GNU General Public License")]
 [assembly: AssemblyCulture("hu-HU")]
@@ -55,5 +55,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.5.*")]
-[assembly: AssemblyFileVersion("2.5.0.0")]
+[assembly: AssemblyVersion("2.6.*")]
+[assembly: AssemblyFileVersion("2.6.0.0")]
