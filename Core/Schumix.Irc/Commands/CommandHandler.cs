@@ -619,27 +619,11 @@ namespace Schumix.Irc.Commands
 		
 					if(Network.IMessage.Info[5] == "load")
 					{
-						if(Network.IMessage.Info.Length < 7)
-						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Plugin betöltésére szólgáló parancs.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}plugin load <plugin neve>", IRCConfig.CommandPrefix);
-							return;
-						}
-
-						if(Network.IMessage.Info[6] == "all")
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Betölt minden plugint.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Betölt minden plugint.");
 					}
 					else if(Network.IMessage.Info[5] == "unload")
 					{
-						if(Network.IMessage.Info.Length < 7)
-						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Plugin eltávólítására szólgáló parancs.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}plugin unload <plugin neve>", IRCConfig.CommandPrefix);
-							return;
-						}
-
-						if(Network.IMessage.Info[6] == "all")
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Eltávolít minden plugint.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Eltávolít minden plugint.");
 					}
 				}
 				else if(Network.IMessage.Info[4] == "kikapcs")
