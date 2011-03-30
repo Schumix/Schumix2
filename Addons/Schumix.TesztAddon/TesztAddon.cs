@@ -50,7 +50,7 @@ namespace Schumix.TesztAddon
 			// Adminisztrátor parancsok
 			if(Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 			{
-				if(Network.IMessage.Info[4] == "teszt")
+				if(Network.IMessage.Info[4].ToLower() == "teszt")
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Teszt célokra használt parancs.");
 				}
