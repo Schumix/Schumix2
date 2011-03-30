@@ -16,6 +16,9 @@
             <Enabled>false</Enabled>
             <Vhost>false</Vhost>
         </HostServ>
+        <Wait>
+            <MessageSending>50</MessageSending>
+        </Wait>
     </Irc>
     <Log>
         <LogLevel>2</LogLevel>

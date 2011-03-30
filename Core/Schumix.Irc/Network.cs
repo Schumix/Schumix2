@@ -176,6 +176,7 @@ namespace Schumix.Irc
 
 			Log.Notice("Network", "Kapcsolat bontva.");
 			Connection(false);
+			NewNick = true;
 			Log.Debug("Network", "Ujrakapcsolodas ide megindult: {0}.", _server);
 		}
 
