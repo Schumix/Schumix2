@@ -44,11 +44,11 @@ namespace Schumix.TesztAddon.Commands
 
 			CNick();
 
-			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "adat")
+			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "adat")
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Teszt probálkozás");
 			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "db")
+			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "db")
 			{
 				var db = SchumixBase.DManager.Query("SELECT nev FROM adminok");
 				if(db != null)
@@ -63,7 +63,7 @@ namespace Schumix.TesztAddon.Commands
 				else
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
 			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "rss")
+			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "rss")
 			{
 				//string url = sUtility.GetUrl("https://github.com/megax/Schumix2/commits/master.atom");
 				/*var feed = AtomFeed.Load(new Uri("https://github.com/megax/Schumix2/commits/master.atom"));
@@ -82,7 +82,7 @@ namespace Schumix.TesztAddon.Commands
 				string title = RSSSubNode != null ? RSSSubNode.InnerText : "";*/
 				//sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, hash);
 			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "vhost")
+			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "vhost")
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, Network.IMessage.Host);
 			else
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", Network.IMessage.Info.Length);
