@@ -23,7 +23,7 @@
     <Log>
         <LogLevel>2</LogLevel>
         <LogDirectory>Logs</LogDirectory>
-        <IrcLogDirectory>Szoba</IrcLogDirectory>
+        <IrcLogDirectory>Csatorna</IrcLogDirectory>
         <IrcLog>false</IrcLog>
     </Log>
     <MySql>
