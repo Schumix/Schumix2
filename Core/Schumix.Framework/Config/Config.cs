@@ -43,7 +43,7 @@ namespace Schumix.Framework.Config
 						Log.Notice("Config", "Kerlek toltsed ki a configot!");
 					}
 
-					Thread.Sleep(200);
+					Thread.Sleep(5*1000);
 					Environment.Exit(1);
 				}
 				else

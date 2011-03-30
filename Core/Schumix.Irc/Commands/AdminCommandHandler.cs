@@ -34,14 +34,14 @@ namespace Schumix.Irc.Commands
 
 			CNick();
 
-			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "load")
+			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "load")
 			{
 				if(AddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 3done.");
 				else
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 5failed.");
 			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "unload")
+			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "unload")
 			{
 				if(AddonManager.UnloadPlugins())
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 3done.");

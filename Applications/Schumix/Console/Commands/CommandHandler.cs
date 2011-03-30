@@ -66,12 +66,12 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(Info[1] == "be")
+			if(Info[1].ToLower() == "be")
 			{
 				Log.Notice("Console", "Console logolas bekapcsolva");
 				ChangeLog(true);
 			}
-			else if(Info[1] == "ki")
+			else if(Info[1].ToLower() == "ki")
 			{
 				Log.Notice("Console", "Console logolas kikapcsolva");
 				ChangeLog(false);
@@ -125,7 +125,7 @@ namespace Schumix.Console.Commands
 
 		protected void HandleAdmin()
 		{
-			if(Info.Length >= 2 && Info[1] == "help")
+			if(Info.Length >= 2 && Info[1].ToLower() == "help")
 			{
 				Log.Notice("Console", "Alparancsok hasznalata:");
 				Log.Notice("Console", "Admin lista: admin lista");
@@ -134,7 +134,7 @@ namespace Schumix.Console.Commands
 				Log.Notice("Console", "Rang: admin rang <admin neve> <uj rang pl operator: 0, administrator: 1>");
 				Log.Notice("Console", "Info: admin info <admin neve>");
 			}
-			else if(Info.Length >= 2 && Info[1] == "info")
+			else if(Info.Length >= 2 && Info[1].ToLower() == "info")
 			{
 				if(Info.Length < 3)
 				{
@@ -155,7 +155,7 @@ namespace Schumix.Console.Commands
 				else if((AdminFlag)flag == AdminFlag.Administrator)
 					Log.Notice("Console", "Jelenleg Adminisztrator.");
 			}
-			else if(Info.Length >= 2 && Info[1] == "lista")
+			else if(Info.Length >= 2 && Info[1].ToLower() == "lista")
 			{
 				var db = SchumixBase.DManager.Query("SELECT nev FROM adminok");
 				if(db != null)
@@ -177,7 +177,7 @@ namespace Schumix.Console.Commands
 				else
 					Log.Error("Console", "Hibas lekerdezes!");
 			}
-			else if(Info.Length >= 2 && Info[1] == "add")
+			else if(Info.Length >= 2 && Info[1].ToLower() == "add")
 			{
 				if(Info.Length < 3)
 				{
@@ -186,13 +186,19 @@ namespace Schumix.Console.Commands
 				}
 
 				string nev = Info[2];
-				string pass = sUtility.GetRandomString();
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE nev = '{0}'", nev.ToLower());
+				if(db != null)
+				{
+					Log.Error("Console", "A nev mar szerepel az admin listan!");
+					return;
+				}
 
+				string pass = sUtility.GetRandomString();
 				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(nev, jelszo) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
 				Log.Notice("Console", "Admin hozzaadva: {0}", nev);
 				Log.Notice("Console", "Mostani jelszo: {0}", pass);
 			}
-			else if(Info.Length >= 2 && Info[1] == "del")
+			else if(Info.Length >= 2 && Info[1].ToLower() == "del")
 			{
 				if(Info.Length < 3)
 				{
@@ -204,7 +210,7 @@ namespace Schumix.Console.Commands
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE nev = '{0}'", nev.ToLower());
 				Log.Notice("Console", "Admin törölve: {0}", nev);
 			}
-			else if(Info.Length >= 2 && Info[1] == "rang")
+			else if(Info.Length >= 2 && Info[1].ToLower() == "rang")
 			{
 				if(Info.Length < 3)
 				{
@@ -241,7 +247,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(Info[1] == "info")
+			if(Info[1].ToLower() == "info")
 			{
 				string f = Network.sChannelInfo.FunkciokInfo();
 				if(f == "Hibás lekérdezés!")
@@ -265,10 +271,10 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				if(Info[1] == "be" || Info[1] == "ki")
+				if(Info[1].ToLower() == "be" || Info[1].ToLower() == "ki")
 				{
-					Log.Notice("Console", "{0}: {1}kapcsolva", Info[2], Info[1]);
-					SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", Info[1], Info[2]);
+					Log.Notice("Console", "{0}: {1}kapcsolva", Info[2].ToLower(), Info[1].ToLower());
+					SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", Info[1].ToLower(), Info[2].ToLower());
 				}
 			}
 		}
@@ -281,7 +287,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(Info[1] == "add")
+			if(Info[1].ToLower() == "add")
 			{
 				if(Info.Length < 3)
 				{
@@ -289,7 +295,13 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				string szobainfo = Info[2];
+				string szobainfo = Info[2].ToLower();
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE szoba = '{0}'", szobainfo);
+				if(db != null)
+				{
+					Log.Error("Console", "A nev mar szerepel a csatorna listan!");
+					return;
+				}
 
 				if(Info.Length == 4)
 				{
@@ -310,7 +322,7 @@ namespace Schumix.Console.Commands
 				Network.sChannelInfo.ChannelListaReload();
 				Network.sChannelInfo.ChannelFunkcioReload();
 			}
-			else if(Info[1] == "del")
+			else if(Info[1].ToLower() == "del")
 			{
 				if(Info.Length < 3)
 				{
@@ -318,7 +330,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				string szobainfo = Info[2];
+				string szobainfo = Info[2].ToLower();
 				sSender.Part(szobainfo);
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE szoba = '{0}'", szobainfo);
 				Log.Notice("Console", "Channel eltavolitva: {0}", szobainfo);
@@ -326,13 +338,13 @@ namespace Schumix.Console.Commands
 				Network.sChannelInfo.ChannelListaReload();
 				Network.sChannelInfo.ChannelFunkcioReload();
 			}
-			else if(Info[1] == "update")
+			else if(Info[1].ToLower() == "update")
 			{
 				Network.sChannelInfo.ChannelListaReload();
 				Network.sChannelInfo.ChannelFunkcioReload();
 				Log.Notice("Console", "A csatorna informaciok frissitesre kerultek.");
 			}
-			else if(Info[1] == "info")
+			else if(Info[1].ToLower() == "info")
 			{
 				var db = SchumixBase.DManager.Query("SELECT szoba, aktivitas, error FROM channel");
 				if(db != null)
