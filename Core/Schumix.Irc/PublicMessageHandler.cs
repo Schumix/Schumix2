@@ -72,7 +72,7 @@ namespace Schumix.Irc
 			{
 				CNick();
 
-				if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "sys")
+				if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "sys")
 				{
 					string Platform = string.Empty;
 					var pid = Environment.OSVersion.Platform;
@@ -110,7 +110,7 @@ namespace Schumix.Irc
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat: {0} MB", memory);
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Uptime: {0}", SchumixBase.time.Uptime());
 				}
-				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "help")
+				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "help")
 				{
 					if(Admin(Network.IMessage.Nick, Commands.AdminFlag.Operator))
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: ghost | nick | sys");
@@ -119,7 +119,7 @@ namespace Schumix.Irc
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: sys");
 				}
-				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "ghost")
+				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "ghost")
 				{
 					if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
 						return;
@@ -130,7 +130,7 @@ namespace Schumix.Irc
 					Network.NewNick = false;
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ghost paranccsal elsődleges nick visszaszerzése.");
 				}
-				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "nick")
+				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "nick")
 				{
 					if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
 						return;
@@ -141,7 +141,7 @@ namespace Schumix.Irc
 						return;
 					}
 
-					if(Network.IMessage.Info[5] == "identify")
+					if(Network.IMessage.Info[5].ToLower() == "identify")
 					{
 						sNickInfo.ChangeNick(IRCConfig.NickName);
 						sSender.Nick(IRCConfig.NickName);
@@ -158,7 +158,7 @@ namespace Schumix.Irc
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nick megváltoztatása erre: {0}", nick);
 					}
 				}
-				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4] == "clean")
+				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "clean")
 				{
 					if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Administrator))
 						return;
