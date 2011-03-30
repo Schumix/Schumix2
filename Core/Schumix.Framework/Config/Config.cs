@@ -165,7 +165,7 @@ namespace Schumix.Framework.Config
 					w.WriteStartElement("Log");
 					w.WriteElementString("LogLevel", "2");
 					w.WriteElementString("LogDirectory", "Logs");
-					w.WriteElementString("IrcLogDirectory", "Csatorna");
+					w.WriteElementString("IrcLogDirectory", "Csatornak");
 					w.WriteElementString("IrcLog", "false");
 
 					// </Log>
