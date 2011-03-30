@@ -1,22 +1,22 @@
 DROP TABLE IF EXISTS `adminok`;
 CREATE TABLE `adminok` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `nev` varchar(21) NOT NULL default '',
-  `jelszo` varchar(100) NOT NULL default '',
-  `vhost` varchar(100) NOT NULL default '',
-  `flag` int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY  (`id`)
+  `Id` int(3) unsigned NOT NULL auto_increment,
+  `Name` varchar(20) NOT NULL default '',
+  `Password` varchar(40) NOT NULL default '',
+  `Vhost` varchar(50) NOT NULL default '',
+  `Flag` int(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
-  `id` int(10) unsigned NOT NULL auto_increment,
-  `funkciok` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be',
-  `szoba` text NOT NULL default '',
-  `jelszo` text NOT NULL default '',
-  `aktivitas` text NOT NULL default '',
-  `error` text NOT NULL default '',
-  PRIMARY KEY  (`id`)
+  `Id` int(3) unsigned NOT NULL auto_increment,
+  `Functions` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be',
+  `Channel` varchar(20) NOT NULL default '',
+  `Password` varchar(30) NOT NULL default '',
+  `Enabled` varchar(5) NOT NULL default '',
+  `Error` text NOT NULL default '',
+  PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
 -- ----------------------------

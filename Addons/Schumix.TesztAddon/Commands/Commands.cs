@@ -50,13 +50,13 @@ namespace Schumix.TesztAddon.Commands
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "db")
 			{
-				var db = SchumixBase.DManager.Query("SELECT nev FROM adminok");
+				var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
 				if(db != null)
 				{
 					for(int i = 0; i < db.Rows.Count; ++i)
 					{
 						var row = db.Rows[i];
-						string admin = row["nev"].ToString();
+						string admin = row["Name"].ToString();
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", admin);
 					}
 				}

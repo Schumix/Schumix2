@@ -46,7 +46,7 @@ namespace Schumix.Framework
 				DManager = new DatabaseManager();
 				Log.Notice("SchumixBase", "Az adatbazishoz sikeres a kapcsolodas.");
 
-				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET szoba = '{0}' WHERE id = '1'", IRCConfig.MasterChannel);
+				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Channel = '{0}' WHERE Id = '1'", IRCConfig.MasterChannel);
 				Log.Notice("SchumixBase", "Master csatorna frissitve lett erre: {0}", IRCConfig.MasterChannel);
 
 				if(AddonsConfig.Enabled)

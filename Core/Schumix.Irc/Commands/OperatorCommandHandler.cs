@@ -42,14 +42,14 @@ namespace Schumix.Irc.Commands
 				}
 
 				string nev = Network.IMessage.Nick;
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT jelszo FROM adminok WHERE nev = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM adminok WHERE Name = '{0}'", nev.ToLower());
 				if(db != null)
 				{
-					string JelszoSql = db["jelszo"].ToString();
+					string JelszoSql = db["Password"].ToString();
 
 					if(JelszoSql == sUtility.Sha1(Network.IMessage.Info[5]))
 					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET vhost = '{0}' WHERE nev = '{1}'", Network.IMessage.Host, nev.ToLower());
+						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Vhost = '{0}' WHERE Name = '{1}'", Network.IMessage.Host, nev.ToLower());
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáférés engedélyezve");
 					}
 					else
@@ -73,14 +73,14 @@ namespace Schumix.Irc.Commands
 				}
 
 				string nev = Network.IMessage.Nick;
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT nev, jelszo FROM adminok WHERE nev = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM adminok WHERE Name = '{0}'", nev.ToLower());
 				if(db != null)
 				{
-					string JelszoSql = db["jelszo"].ToString();
+					string JelszoSql = db["Password"].ToString();
 
 					if(JelszoSql == sUtility.Sha1(Network.IMessage.Info[5]))
 					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET jelszo = '{0}' WHERE nev = '{1}'", sUtility.Sha1(Network.IMessage.Info[6]), nev.ToLower());
+						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Password = '{0}' WHERE Name = '{1}'", sUtility.Sha1(Network.IMessage.Info[6]), nev.ToLower());
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelszó sikereset meg lett változtatva erre: {0}", Network.IMessage.Info[6]);
 					}
 					else
@@ -98,9 +98,9 @@ namespace Schumix.Irc.Commands
 				int flag;
 				string nev = Network.IMessage.Nick;
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT flag FROM adminok WHERE nev = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM adminok WHERE Name = '{0}'", nev.ToLower());
 				if(db != null)
-					flag = Convert.ToInt32(db["flag"].ToString());
+					flag = Convert.ToInt32(db["Flag"].ToString());
 				else
 					flag = -1;
 
@@ -111,7 +111,7 @@ namespace Schumix.Irc.Commands
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "lista")
 			{
-				var db = SchumixBase.DManager.Query("SELECT nev FROM adminok");
+				var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
 				if(db != null)
 				{
 					string adminok = string.Empty;
@@ -119,7 +119,7 @@ namespace Schumix.Irc.Commands
 					for(int i = 0; i < db.Rows.Count; ++i)
 					{
 						var row = db.Rows[i];
-						string nev = row["nev"].ToString();
+						string nev = row["Name"].ToString();
 						adminok += ", " + nev;
 					}
 
@@ -141,7 +141,7 @@ namespace Schumix.Irc.Commands
 
 				string nev = Network.IMessage.Info[5];
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE nev = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
 				if(db != null)
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel az admin listán!");
@@ -150,7 +150,7 @@ namespace Schumix.Irc.Commands
 
 				string pass = sUtility.GetRandomString();
 
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(nev, jelszo) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
 
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Admin hozzáadva: {0}", nev);
 				sSendMessage.SendCMPrivmsg(nev, "Mostantól Schumix adminja vagy. A te mostani jelszavad: {0}", pass);
@@ -173,7 +173,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE nev = '{0}'", nev.ToLower());
+				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE Name = '{0}'", nev.ToLower());
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Admin törölve: {0}", nev);
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "rang")
@@ -207,7 +207,7 @@ namespace Schumix.Irc.Commands
 		
 				if((AdminFlag)rang == AdminFlag.Administrator || (AdminFlag)rang == AdminFlag.Operator)
 				{
-					SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET flag = '{0}' WHERE nev = '{1}'", rang, nev);
+					SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Flag = '{0}' WHERE Name = '{1}'", rang, nev);
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Rang sikeresen módosítva.");
 				}
 				else
@@ -381,7 +381,7 @@ namespace Schumix.Irc.Commands
 						for(int i = 7; i < Network.IMessage.Info.Length; i++)
 						{
 							alomany += ", " + Network.IMessage.Info[i].ToLower();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[i].ToLower(), status, channelinfo), channelinfo);
+							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[i].ToLower(), status, channelinfo), channelinfo);
 							Network.sChannelInfo.ChannelFunkcioReload();
 						}
 
@@ -393,7 +393,7 @@ namespace Schumix.Irc.Commands
 					else
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: {1}kapcsolva", Network.IMessage.Info[7].ToLower(), status);
-						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[7], status, channelinfo), channelinfo);
+						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[7], status, channelinfo), channelinfo);
 						Network.sChannelInfo.ChannelFunkcioReload();
 					}
 				}
@@ -403,21 +403,21 @@ namespace Schumix.Irc.Commands
 				if(Network.IMessage.Info.Length < 6)
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve {0} csatornán a funkciók.", Network.IMessage.Channel);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:ki,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Channel);
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be' WHERE Channel = '{0}'", Network.IMessage.Channel);
 					Network.sChannelInfo.ChannelFunkcioReload();
 					return;
 				}
 
 				if(Network.IMessage.Info[5].ToLower() == "all")
 				{
-					var db = SchumixBase.DManager.Query("SELECT szoba FROM channel");
+					var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
 					if(db != null)
 					{
 						for(int i = 0; i < db.Rows.Count; ++i)
 						{
 							var row = db.Rows[i];
-							string szoba = row["szoba"].ToString();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:ki,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", szoba);
+							string szoba = row["Channel"].ToString();
+							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be' WHERE Channel = '{0}'", szoba);
 						}
 
 						Network.sChannelInfo.ChannelFunkcioReload();
@@ -429,7 +429,7 @@ namespace Schumix.Irc.Commands
 				else
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve {0} csatornán a funkciók.", Network.IMessage.Info[5].ToLower());
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET funkciok = ',koszones:ki,log:be,rejoin:be,parancsok:be' WHERE szoba = '{0}'", Network.IMessage.Info[5].ToLower());
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be' WHERE Channel = '{0}'", Network.IMessage.Info[5].ToLower());
 					Network.sChannelInfo.ChannelFunkcioReload();
 				}
 			}
@@ -458,7 +458,7 @@ namespace Schumix.Irc.Commands
 						for(int i = 5; i < Network.IMessage.Info.Length; i++)
 						{
 							alomany += ", " + Network.IMessage.Info[i].ToLower();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[i].ToLower(), status, Network.IMessage.Channel), Network.IMessage.Channel);
+							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[i].ToLower(), status, Network.IMessage.Channel), Network.IMessage.Channel);
 							Network.sChannelInfo.ChannelFunkcioReload();
 						}
 
@@ -470,7 +470,7 @@ namespace Schumix.Irc.Commands
 					else
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: {1}kapcsolva", Network.IMessage.Info[5].ToLower(), status);
-						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET funkciok = '{0}' WHERE szoba = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[5].ToLower(), status, Network.IMessage.Channel), Network.IMessage.Channel);
+						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", Network.sChannelInfo.ChannelFunkciok(Network.IMessage.Info[5].ToLower(), status, Network.IMessage.Channel), Network.IMessage.Channel);
 						Network.sChannelInfo.ChannelFunkcioReload();
 					}
 				}
@@ -498,9 +498,9 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				string szobainfo = Network.IMessage.Info[5].ToLower();
+				string csatornainfo = Network.IMessage.Info[5].ToLower();
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE szoba = '{0}'", szobainfo);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", csatornainfo);
 				if(db != null)
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel a csatorna listán!");
@@ -511,19 +511,19 @@ namespace Schumix.Irc.Commands
 				{
 					ChannelPrivmsg = Network.IMessage.Channel;
 					string jelszo = Network.IMessage.Info[6];
-					sSender.Join(szobainfo, jelszo);
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(szoba, jelszo) VALUES ('{0}', '{1}')", szobainfo, jelszo);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv' WHERE szoba = '{0}'", szobainfo);
+					sSender.Join(csatornainfo, jelszo);
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password) VALUES ('{0}', '{1}')", csatornainfo, jelszo);
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", csatornainfo);
 				}
 				else
 				{
 					ChannelPrivmsg = Network.IMessage.Channel;
-					sSender.Join(szobainfo);
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(szoba, jelszo) VALUES ('{0}', '')", szobainfo);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv' WHERE szoba = '{0}'", szobainfo);
+					sSender.Join(csatornainfo);
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password) VALUES ('{0}', '')", csatornainfo);
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", csatornainfo);
 				}
 
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Channel hozzáadva: {0}", szobainfo);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Csatorna hozzáadva: {0}", csatornainfo);
 
 				Network.sChannelInfo.ChannelListaReload();
 				Network.sChannelInfo.ChannelFunkcioReload();
@@ -536,10 +536,10 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				string szobainfo = Network.IMessage.Info[5].ToLower();
-				sSender.Part(szobainfo);
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE szoba = '{0}'", szobainfo);
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Channel eltávolítva: {0}", szobainfo);
+				string csatornainfo = Network.IMessage.Info[5].ToLower();
+				sSender.Part(csatornainfo);
+				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE Channel = '{0}'", csatornainfo);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Csatorna eltávolítva: {0}", csatornainfo);
 
 				Network.sChannelInfo.ChannelListaReload();
 				Network.sChannelInfo.ChannelFunkcioReload();
@@ -552,47 +552,47 @@ namespace Schumix.Irc.Commands
 			}
 			else if(Network.IMessage.Info[4].ToLower() == "info")
 			{
-				var db = SchumixBase.DManager.Query("SELECT szoba, aktivitas, error FROM channel");
+				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channel");
 				if(db != null)
 				{
-					string Aktivszobak = string.Empty, DeAktivszobak = string.Empty;
-					bool adatszoba = false, adatszoba1 = false;
+					string AktivCsatornak = string.Empty, DeAktivCsatornak = string.Empty;
+					bool AdatCsatorna = false, AdatCsatorna1 = false;
 
 					for(int i = 0; i < db.Rows.Count; ++i)
 					{
 						var row = db.Rows[i];
-						string szoba = row["szoba"].ToString();
-						string aktivitas = row["aktivitas"].ToString();
-						string error = row["error"].ToString();
+						string csatorna = row["Channel"].ToString();
+						string aktivitas = row["Enabled"].ToString();
+						string error = row["Error"].ToString();
 
-						if(aktivitas == "aktiv")
+						if(aktivitas == "true")
 						{
-							Aktivszobak += ", " + szoba;
-							adatszoba = true;
+							AktivCsatornak += ", " + csatorna;
+							AdatCsatorna = true;
 						}
-						else if(aktivitas == "nem aktiv")
+						else if(aktivitas == "false")
 						{
-							DeAktivszobak += ", " + szoba + ":" + error;
-							adatszoba1 = true;
+							DeAktivCsatornak += ", " + csatorna + ":" + error;
+							AdatCsatorna1 = true;
 						}
 					}
 
-					if(adatszoba)
+					if(AdatCsatorna)
 					{
-						if(Aktivszobak.Substring(0, 2) == ", ")
-							Aktivszobak = Aktivszobak.Remove(0, 2);
+						if(AktivCsatornak.Substring(0, 2) == ", ")
+							AktivCsatornak = AktivCsatornak.Remove(0, 2);
 
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Aktiv: {0}", Aktivszobak);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Aktiv: {0}", AktivCsatornak);
 					}
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Aktiv: Nincs adat.");
 
-					if(adatszoba1)
+					if(AdatCsatorna1)
 					{
-						if(DeAktivszobak.Substring(0, 2) == ", ")
-							DeAktivszobak = DeAktivszobak.Remove(0, 2);
+						if(DeAktivCsatornak.Substring(0, 2) == ", ")
+							DeAktivCsatornak = DeAktivCsatornak.Remove(0, 2);
 
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Deaktiv: {0}", DeAktivszobak);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Deaktiv: {0}", DeAktivCsatornak);
 					}
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Deaktiv: Nincs adat.");
