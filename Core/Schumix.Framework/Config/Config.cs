@@ -63,9 +63,10 @@ namespace Schumix.Framework.Config
 					string NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Password").InnerText;
 					bool UseHostServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Enabled").InnerText);
 					bool HostServAllapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText);
+					int MessageSending = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").InnerText);
 					string CommandPrefix = xmldoc.SelectSingleNode("Schumix/Command/Prefix").InnerText;
 
-					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, MasterChannel, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, CommandPrefix);
+					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, MasterChannel, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, MessageSending, CommandPrefix);
 
 					bool Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText);
 					string Host = xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText;
@@ -148,6 +149,13 @@ namespace Schumix.Framework.Config
 					w.WriteElementString("Vhost", "false");
 
 					// </HostServ>
+					w.WriteEndElement();
+
+					// <Wait>
+					w.WriteStartElement("Wait");
+					w.WriteElementString("MessageSending", "50");
+
+					// </Wait>
 					w.WriteEndElement();
 
 					// </Irc>
@@ -239,9 +247,10 @@ namespace Schumix.Framework.Config
 		public static string NickServPassword { get; private set; }
 		public static bool UseHostServ { get; private set; }
 		public static bool HostServEnabled { get; private set; }
+		public static int MessageSending { get; private set; }
 		public static string CommandPrefix { get; private set; }
 
-		public IRCConfig(string server, int port, string nickname, string nickname2, string nickname3, string username, string masterchannel, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, string commandprefix)
+		public IRCConfig(string server, int port, string nickname, string nickname2, string nickname3, string username, string masterchannel, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, int messagesending, string commandprefix)
 		{
 			Server           = server;
 			Port             = port;
@@ -254,6 +263,7 @@ namespace Schumix.Framework.Config
 			NickServPassword = nickservpassword;
 			UseHostServ      = usehostserv;
 			HostServEnabled  = hostservenabled;
+			MessageSending   = messagesending;
 			CommandPrefix    = commandprefix;
 		}
 	}

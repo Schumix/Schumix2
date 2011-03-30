@@ -149,6 +149,13 @@ namespace Schumix.Irc
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "NickServ azonosító küldése.");
 						sSender.NickServ(IRCConfig.NickServPassword);
 						Network.NewNick = false;
+
+						if(IRCConfig.UseHostServ)
+						{
+							HostServAllapot = true;
+							Log.Notice("HostServ", "HostServ bevan kapcsolva.");
+							sSender.HostServ("on");
+						}
 					}
 					else
 					{

@@ -18,6 +18,8 @@
  */
 
 using System;
+using System.Threading;
+using Schumix.Framework.Config;
 
 namespace Schumix.Irc
 {
@@ -92,6 +94,8 @@ namespace Schumix.Irc
 			{
 				if(Network.writer != null)
 					Network.writer.WriteLine(uzenet);
+
+				Thread.Sleep(IRCConfig.MessageSending);
 			}
 		}
 
