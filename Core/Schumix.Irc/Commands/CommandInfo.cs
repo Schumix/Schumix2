@@ -37,7 +37,7 @@ namespace Schumix.Irc.Commands
 
 		protected bool Admin(string Nick)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM adminok WHERE nev = '{0}'", Nick.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM adminok WHERE Name = '{0}'", Nick.ToLower());
 			if(db != null)
 				return true;
 
@@ -46,10 +46,10 @@ namespace Schumix.Irc.Commands
 
 		protected bool Admin(string Nick, AdminFlag Flag)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT flag FROM adminok WHERE nev = '{0}'", Nick.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM adminok WHERE Name = '{0}'", Nick.ToLower());
 			if(db != null)
 			{
-				int flag = Convert.ToInt32(db["flag"]);
+				int flag = Convert.ToInt32(db["Flag"]);
 
 				if(Flag != (AdminFlag)flag)
 					return false;
@@ -62,15 +62,15 @@ namespace Schumix.Irc.Commands
 
 		protected bool Admin(string Nick, string Vhost, AdminFlag Flag)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT vhost, flag FROM adminok WHERE nev = '{0}'", Nick.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM adminok WHERE Name = '{0}'", Nick.ToLower());
 			if(db != null)
 			{
-				string vhost = db["vhost"].ToString();
+				string vhost = db["Vhost"].ToString();
 
 				if(Vhost != vhost)
 					return false;
 
-				int flag = Convert.ToInt32(db["flag"]);
+				int flag = Convert.ToInt32(db["Flag"]);
 
 				if(flag == 1 && Flag == 0)
 					return true;

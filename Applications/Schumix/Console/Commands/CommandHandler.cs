@@ -144,9 +144,9 @@ namespace Schumix.Console.Commands
 
 				int flag;
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT flag FROM adminok WHERE nev = '{0}'", Info[2].ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM adminok WHERE Name = '{0}'", Info[2].ToLower());
 				if(db != null)
-					flag = Convert.ToInt32(db["flag"].ToString());
+					flag = Convert.ToInt32(db["Flag"].ToString());
 				else
 					flag = -1;
 	
@@ -157,7 +157,7 @@ namespace Schumix.Console.Commands
 			}
 			else if(Info.Length >= 2 && Info[1].ToLower() == "lista")
 			{
-				var db = SchumixBase.DManager.Query("SELECT nev FROM adminok");
+				var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
 				if(db != null)
 				{
 					string adminok = string.Empty;
@@ -165,7 +165,7 @@ namespace Schumix.Console.Commands
 					for(int i = 0; i < db.Rows.Count; ++i)
 					{
 						var row = db.Rows[i];
-						string nev = row["nev"].ToString();
+						string nev = row["Name"].ToString();
 						adminok += ", " + nev;
 					}
 
@@ -186,7 +186,7 @@ namespace Schumix.Console.Commands
 				}
 
 				string nev = Info[2];
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE nev = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
 				if(db != null)
 				{
 					Log.Error("Console", "A nev mar szerepel az admin listan!");
@@ -194,7 +194,7 @@ namespace Schumix.Console.Commands
 				}
 
 				string pass = sUtility.GetRandomString();
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(nev, jelszo) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
 				Log.Notice("Console", "Admin hozzaadva: {0}", nev);
 				Log.Notice("Console", "Mostani jelszo: {0}", pass);
 			}
@@ -207,7 +207,7 @@ namespace Schumix.Console.Commands
 				}
 
 				string nev = Info[2];
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE nev = '{0}'", nev.ToLower());
+				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE Name = '{0}'", nev.ToLower());
 				Log.Notice("Console", "Admin törölve: {0}", nev);
 			}
 			else if(Info.Length >= 2 && Info[1].ToLower() == "rang")
@@ -229,8 +229,8 @@ namespace Schumix.Console.Commands
 
 				if((AdminFlag)rang == AdminFlag.Administrator || (AdminFlag)rang == AdminFlag.Operator)
 				{
-					SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET flag = '{0}' WHERE nev = '{1}'", rang, nev);
-					Log.Notice("Console", "Rang sikeresen modósitva.");
+					SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Flag = '{0}' WHERE Name = '{1}'", rang, nev);
+					Log.Notice("Console", "Rang sikeresen modositva.");
 				}
 				else
 					Log.Error("Console", "Hibás rang!");
@@ -295,8 +295,8 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				string szobainfo = Info[2].ToLower();
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE szoba = '{0}'", szobainfo);
+				string csatornainfo = Info[2].ToLower();
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", csatornainfo);
 				if(db != null)
 				{
 					Log.Error("Console", "A nev mar szerepel a csatorna listan!");
@@ -306,18 +306,18 @@ namespace Schumix.Console.Commands
 				if(Info.Length == 4)
 				{
 					string jelszo = Info[3];
-					sSender.Join(szobainfo, jelszo);
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(szoba, jelszo) VALUES ('{0}', '{1}')", szobainfo, jelszo);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv' WHERE szoba = '{0}'", szobainfo);
+					sSender.Join(csatornainfo, jelszo);
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password) VALUES ('{0}', '{1}')", csatornainfo, jelszo);
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", csatornainfo);
 				}
 				else
 				{
-					sSender.Join(szobainfo);
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(szoba, jelszo) VALUES ('{0}', '')", szobainfo);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET aktivitas = 'aktiv' WHERE szoba = '{0}'", szobainfo);
+					sSender.Join(csatornainfo);
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password) VALUES ('{0}', '')", csatornainfo);
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", csatornainfo);
 				}
 
-				Log.Notice("Console", "Channel hozzaadva: {0}", szobainfo);
+				Log.Notice("Console", "Csatorna hozzaadva: {0}", csatornainfo);
 
 				Network.sChannelInfo.ChannelListaReload();
 				Network.sChannelInfo.ChannelFunkcioReload();
@@ -330,10 +330,10 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				string szobainfo = Info[2].ToLower();
-				sSender.Part(szobainfo);
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE szoba = '{0}'", szobainfo);
-				Log.Notice("Console", "Channel eltavolitva: {0}", szobainfo);
+				string csatornainfo = Info[2].ToLower();
+				sSender.Part(csatornainfo);
+				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE Channel = '{0}'", csatornainfo);
+				Log.Notice("Console", "Csatorna eltavolitva: {0}", csatornainfo);
 
 				Network.sChannelInfo.ChannelListaReload();
 				Network.sChannelInfo.ChannelFunkcioReload();
@@ -346,47 +346,47 @@ namespace Schumix.Console.Commands
 			}
 			else if(Info[1].ToLower() == "info")
 			{
-				var db = SchumixBase.DManager.Query("SELECT szoba, aktivitas, error FROM channel");
+				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channel");
 				if(db != null)
 				{
-					string Aktivszobak = string.Empty, DeAktivszobak = string.Empty;
-					bool adatszoba = false, adatszoba1 = false;
+					string AktivCsatornak = string.Empty, DeAktivCsatornak = string.Empty;
+					bool AdatCsatorna = false, AdatCsatorna1 = false;
 
 					for(int i = 0; i < db.Rows.Count; ++i)
 					{
 						var row = db.Rows[i];
-						string szoba = row["szoba"].ToString();
-						string aktivitas = row["aktivitas"].ToString();
-						string error = row["error"].ToString();
+						string csatorna = row["Channel"].ToString();
+						string aktivitas = row["Enabled"].ToString();
+						string error = row["Error"].ToString();
 
-						if(aktivitas == "aktiv")
+						if(aktivitas == "true")
 						{
-							Aktivszobak += ", " + szoba;
-							adatszoba = true;
+							AktivCsatornak += ", " + csatorna;
+							AdatCsatorna = true;
 						}
-						else if(aktivitas == "nem aktiv")
+						else if(aktivitas == "false")
 						{
-							DeAktivszobak += ", " + szoba + ":" + error;
-							adatszoba1 = true;
+							DeAktivCsatornak += ", " + csatorna + ":" + error;
+							AdatCsatorna1 = true;
 						}
 					}
 
-					if(adatszoba)
+					if(AdatCsatorna)
 					{
-						if(Aktivszobak.Substring(0, 2) == ", ")
-							Aktivszobak = Aktivszobak.Remove(0, 2);
+						if(AktivCsatornak.Substring(0, 2) == ", ")
+							AktivCsatornak = AktivCsatornak.Remove(0, 2);
 
-						Log.Notice("Console", "Aktiv: {0}", Aktivszobak);
+						Log.Notice("Console", "Aktiv: {0}", AktivCsatornak);
 					}
 					else
 						Log.Notice("Console", "Aktiv: Nincs adat.");
 
-					if(adatszoba1)
+					if(AdatCsatorna1)
 					{
-						if(DeAktivszobak.Substring(0, 2) == ", ")
-							DeAktivszobak = DeAktivszobak.Remove(0, 2);
+						if(DeAktivCsatornak.Substring(0, 2) == ", ")
+							DeAktivCsatornak = DeAktivCsatornak.Remove(0, 2);
 
-						Log.Notice("Console", "Deaktiv: {0}", DeAktivszobak);
+						Log.Notice("Console", "Deaktiv: {0}", DeAktivCsatornak);
 					}
 					else
 						Log.Notice("Console", "Deaktiv: Nincs adat.");
