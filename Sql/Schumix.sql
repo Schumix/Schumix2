@@ -11,7 +11,7 @@ CREATE TABLE `adminok` (
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
   `Id` int(3) unsigned NOT NULL auto_increment,
-  `Functions` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be',
+  `Functions` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be,hl:ki',
   `Channel` varchar(20) NOT NULL default '',
   `Password` varchar(30) NOT NULL default '',
   `Enabled` varchar(5) NOT NULL default '',
@@ -58,6 +58,7 @@ INSERT INTO `schumix` VALUES ('2', '', 'log', 'be');
 INSERT INTO `schumix` VALUES ('3', '', 'rejoin', 'be');
 INSERT INTO `schumix` VALUES ('4', '', 'parancsok', 'be');
 INSERT INTO `schumix` VALUES ('5', '', 'reconnect', 'be');
+INSERT INTO `schumix` VALUES ('6', '', 'hl', 'ki');
 
 DROP TABLE IF EXISTS `sznap`;
 CREATE TABLE `sznap` (
@@ -76,4 +77,13 @@ CREATE TABLE `uptime` (
   `uptime` text NOT NULL,
   `memory` text NOT NULL,
   PRIMARY KEY  (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `hlmessage`;
+CREATE TABLE `hlmessage` (
+  `Id` int(3) unsigned NOT NULL auto_increment,
+  `Name` varchar(20) NOT NULL default '',
+  `Info` text NOT NULL,
+  `Enabled` varchar(2) NOT NULL default '',
+  PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

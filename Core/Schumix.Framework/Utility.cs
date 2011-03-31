@@ -45,8 +45,8 @@ namespace Schumix.Framework
 
 		public string GetUrl(string url, string args)
 		{
-			var u = new Uri(url + HttpUtility.UrlEncode(args));
 			string kod;
+			var u = new Uri(url + HttpUtility.UrlEncode(args));
 
 			using(var client = new WebClient())
 			{
@@ -58,8 +58,8 @@ namespace Schumix.Framework
 
 		public string GetUrl(string url, string args, string noencode)
 		{
-			var u = new Uri(url + HttpUtility.UrlEncode(args) + noencode);
 			string kod;
+			var u = new Uri(url + HttpUtility.UrlEncode(args) + noencode);
 
 			using(var client = new WebClient())
 			{
@@ -84,7 +84,9 @@ namespace Schumix.Framework
 			var x = new SHA1CryptoServiceProvider();
 			var data = Encoding.ASCII.GetBytes(value);
 			data = x.ComputeHash(data);
-			//x.Dispose();
+#if !MONO
+			x.Dispose();
+#endif
 			var ret = string.Empty;
 
 			for(var i = 0; i < data.Length; i++)
@@ -101,7 +103,9 @@ namespace Schumix.Framework
 			var x = new MD5CryptoServiceProvider();
 			var data = Encoding.ASCII.GetBytes(value);
 			data = x.ComputeHash(data);
-			//x.Dispose();
+#if !MONO
+			x.Dispose();
+#endif
 			var ret = string.Empty;
 
 			for(var i = 0; i < data.Length; i++)
@@ -119,9 +123,11 @@ namespace Schumix.Framework
 
 			using(var file = new FileStream(fileName, FileMode.Open))
 			{
-				MD5 md5 = new MD5CryptoServiceProvider();
+				var md5 = new MD5CryptoServiceProvider();
 				retVal = md5.ComputeHash(file);
-				//md5.Dispose();
+#if !MONO
+				md5.Dispose();
+#endif
 			}
 
 			var sb = new StringBuilder();
