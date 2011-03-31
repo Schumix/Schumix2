@@ -91,6 +91,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\IrcHandler.cs" />
     <Compile Include="ExtraAddon.cs" />
+    <Compile Include="Commands\Commands.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

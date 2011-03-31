@@ -20,6 +20,7 @@
 using System;
 using Schumix.API;
 using Schumix.Irc;
+using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.ExtraAddon.Commands;
 
@@ -27,11 +28,16 @@ namespace Schumix.ExtraAddon
 {
 	public class ExtraAddon : IrcHandler, ISchumixAddon
 	{
+		private Functions _functions;
+
 		public void Setup()
 		{
-			Network.PublicRegisterHandler("JOIN",    HandleJoin);
-			Network.PublicRegisterHandler("PART",    HandleLeft);
-			Network.PublicRegisterHandler("KICK",    HandleKick);
+			Network.PublicRegisterHandler("JOIN",               HandleJoin);
+			Network.PublicRegisterHandler("PART",               HandleLeft);
+			Network.PublicRegisterHandler("KICK",               HandleKick);
+
+			_functions = new Functions();
+			CommandManager.AdminCRegisterHandler("autofunkcio", _functions.HandleAutoFunkcio);
 		}
 
 		public void Destroy()
@@ -39,16 +45,23 @@ namespace Schumix.ExtraAddon
 			Network.PublicRemoveHandler("JOIN");
 			Network.PublicRemoveHandler("PART");
 			Network.PublicRemoveHandler("KICK");
+			CommandManager.AdminCRemoveHandler("autofunkcio");
 		}
 
 		public void HandlePrivmsg()
 		{
+			if(Network.sChannelInfo.FSelect("parancsok") || Network.IMessage.Channel.Substring(0, 1) != "#")
+			{
+				if(!Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
+					return;
 
+				_functions.HLUzenet();
+			}
 		}
 
 		public void HandleHelp()
 		{
-
+			_functions.Help();
 		}
 
 		public string Name
