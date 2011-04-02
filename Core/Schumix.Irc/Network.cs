@@ -262,7 +262,7 @@ namespace Schumix.Irc
 						opcode = IrcCommand[1];
 						IMessage.Info = IrcCommand;
 
-						if(IMessage.Args != string.Empty && IMessage.Args.Substring(0, 2) == " :")
+						if(IMessage.Args.Length > 1 && IMessage.Args.Substring(0, 2) == " :")
 							IMessage.Args = IMessage.Args.Remove(0, 2);
 
 						if(_IRCHandler.ContainsKey(opcode))

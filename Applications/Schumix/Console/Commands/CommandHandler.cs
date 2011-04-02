@@ -52,7 +52,7 @@ namespace Schumix.Console.Commands
 				parancsok += ", " + command.Key;
 			}
 
-			if(parancsok.Substring(0, 2) == ", ")
+			if(parancsok.Length > 1 && parancsok.Substring(0, 2) == ", ")
 				parancsok = parancsok.Remove(0, 2);
 
 			Log.Notice("Console", "Parancsok: {0}", parancsok);
@@ -169,7 +169,7 @@ namespace Schumix.Console.Commands
 						adminok += ", " + nev;
 					}
 
-					if(adminok.Substring(0, 2) == ", ")
+					if(adminok.Length > 1 && adminok.Substring(0, 2) == ", ")
 						adminok = adminok.Remove(0, 2);
 
 					Log.Notice("Console", "Adminok: {0}", adminok);
@@ -189,7 +189,7 @@ namespace Schumix.Console.Commands
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
 				if(db != null)
 				{
-					Log.Error("Console", "A nev mar szerepel az admin listan!");
+					Log.Warning("Console", "A nev mar szerepel az admin listan!");
 					return;
 				}
 
@@ -207,6 +207,13 @@ namespace Schumix.Console.Commands
 				}
 
 				string nev = Info[2];
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
+				if(db == null)
+				{
+					Log.Warning("Console", "Ilyen nev nem letezik!");
+					return;
+				}
+
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE Name = '{0}'", nev.ToLower());
 				Log.Notice("Console", "Admin törölve: {0}", nev);
 			}
@@ -299,7 +306,7 @@ namespace Schumix.Console.Commands
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", csatornainfo);
 				if(db != null)
 				{
-					Log.Error("Console", "A nev mar szerepel a csatorna listan!");
+					Log.Warning("Console", "A nev mar szerepel a csatorna listan!");
 					return;
 				}
 
@@ -331,6 +338,24 @@ namespace Schumix.Console.Commands
 				}
 
 				string csatornainfo = Info[2].ToLower();
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channel WHERE Channel = '{0}'", csatornainfo);
+				if(db != null)
+				{
+					int id = Convert.ToInt32(db["Id"].ToString());
+					if(id == 1)
+					{
+						Log.Warning("Console", "A mester csatorna nem törölhető!");
+						return;
+					}
+				}
+
+				db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", csatornainfo);
+				if(db == null)
+				{
+					Log.Warning("Console", "Ilyen csatorna nem letezik!");
+					return;
+				}
+
 				sSender.Part(csatornainfo);
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE Channel = '{0}'", csatornainfo);
 				Log.Notice("Console", "Csatorna eltavolitva: {0}", csatornainfo);

@@ -133,6 +133,14 @@ namespace Schumix.Irc
 			}
 		}
 
+		public void NickServStatus(string status)
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("NickServ status {0}", status);
+			}
+		}
+
 		public void HostServ(string h)
 		{
 			lock(WriteLock)

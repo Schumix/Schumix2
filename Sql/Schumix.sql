@@ -11,7 +11,7 @@ CREATE TABLE `adminok` (
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
   `Id` int(3) unsigned NOT NULL auto_increment,
-  `Functions` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be,hl:ki',
+  `Functions` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be,hl:ki,kick:ki,mode:ki',
   `Channel` varchar(20) NOT NULL default '',
   `Password` varchar(30) NOT NULL default '',
   `Enabled` varchar(5) NOT NULL default '',
@@ -22,7 +22,7 @@ CREATE TABLE `channel` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `channel` VALUES ('1', ',koszones:be,log:be,rejoin:be,parancsok:be', '#schumix2', '', '', '');
+INSERT INTO `channel` VALUES ('1', ',koszones:be,log:be,rejoin:be,parancsok:be,hl:ki,kick:ki,mode:ki', '#schumix2', '', '', '');
 
 DROP TABLE IF EXISTS `irc_parancsok`;
 CREATE TABLE `irc_parancsok` (
@@ -59,6 +59,8 @@ INSERT INTO `schumix` VALUES ('3', '', 'rejoin', 'be');
 INSERT INTO `schumix` VALUES ('4', '', 'parancsok', 'be');
 INSERT INTO `schumix` VALUES ('5', '', 'reconnect', 'be');
 INSERT INTO `schumix` VALUES ('6', '', 'hl', 'ki');
+INSERT INTO `schumix` VALUES ('7', '', 'kick', 'ki');
+INSERT INTO `schumix` VALUES ('8', '', 'mode', 'ki');
 
 DROP TABLE IF EXISTS `sznap`;
 CREATE TABLE `sznap` (
@@ -85,5 +87,23 @@ CREATE TABLE `hlmessage` (
   `Name` varchar(20) NOT NULL default '',
   `Info` text NOT NULL,
   `Enabled` varchar(2) NOT NULL default '',
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `kicklist`;
+CREATE TABLE `kicklist` (
+  `Id` int(3) unsigned NOT NULL auto_increment,
+  `Name` varchar(20) NOT NULL default '',
+  `Channel` varchar(20) NOT NULL default '',
+  `Reason` text NOT NULL,
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `modelist`;
+CREATE TABLE `modelist` (
+  `Id` int(3) unsigned NOT NULL auto_increment,
+  `Name` varchar(20) NOT NULL default '',
+  `Channel` varchar(20) NOT NULL default '',
+  `Rank` varchar(10) NOT NULL default '',
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
