@@ -23,6 +23,7 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.ExtraAddon.Commands;
+using Schumix.ExtraAddon.Config;
 
 namespace Schumix.ExtraAddon
 {
@@ -33,6 +34,7 @@ namespace Schumix.ExtraAddon
 
 		public void Setup()
 		{
+			new AddonConfig(Name + ".xml");
 			Network.PublicRegisterHandler("JOIN",               HandleJoin);
 			Network.PublicRegisterHandler("PART",               HandleLeft);
 			Network.PublicRegisterHandler("KICK",               HandleKick);
@@ -85,7 +87,19 @@ namespace Schumix.ExtraAddon
 						sSender.Mode(ModeChannel, rang, Network.IMessage.Info[4]);
 					}
 					else
-						sSender.Mode(ModeChannel, "-aohv", string.Format("{0} {0} {0} {0}", Network.IMessage.Info[4]));
+					{
+						if(ModeConfig.RemoveEnabled)
+						{
+							if(ModeConfig.RemoveType.Length == 1)
+								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, Network.IMessage.Info[4]);
+							else if(ModeConfig.RemoveType.Length == 2)
+								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0}", Network.IMessage.Info[4]));
+							else if(ModeConfig.RemoveType.Length == 3)
+								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0}", Network.IMessage.Info[4]));
+							else if(ModeConfig.RemoveType.Length == 4)
+								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0} {0}", Network.IMessage.Info[4]));
+						}
+					}
 				}
 
 				AutoMode = false;

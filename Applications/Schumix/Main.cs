@@ -39,9 +39,6 @@ namespace Schumix
         /// </remarks>
 		private static void Main(string[] args)
 		{
-			string configfile = "Schumix.xml";
-			Log.Indulas(configfile);
-
 			System.Console.Title = SchumixBase.Title;
 			System.Console.ForegroundColor = ConsoleColor.Blue;
 			System.Console.WriteLine("[Schumix2]");
@@ -50,10 +47,11 @@ namespace Schumix
 			System.Console.WriteLine("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", Verzio.SchumixVerzio);
 			System.Console.WriteLine("==============================================================================");
 			System.Console.WriteLine("");
-			Log.Notice("Main", "Rendszer indul...");
-			System.Console.WriteLine("");
 
-			new SchumixBot(configfile);
+			new Config("Configs", "Schumix.xml");
+			Log.Notice("Main", "Rendszer indul...");
+
+			new SchumixBot();
 			System.Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.time.SaveUptime(); };
 		}
 	}

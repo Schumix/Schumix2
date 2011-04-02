@@ -24,7 +24,7 @@ using Schumix.Framework.Database;
 
 namespace Schumix.Framework
 {
-	public class SchumixBase : Config.Config
+	public class SchumixBase
 	{
         ///***START***********************************///
         /// <summary>
@@ -36,7 +36,7 @@ namespace Schumix.Framework
 		public static bool IIdo = true;
 		public static string Title = "Schumix2 IRC Bot";
 
-		public SchumixBase(string config) : base(config)
+		public SchumixBase()
 		{
 			try
 			{
