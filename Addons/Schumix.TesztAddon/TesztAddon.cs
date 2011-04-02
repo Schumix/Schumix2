@@ -45,6 +45,11 @@ namespace Schumix.TesztAddon
 
 		}
 
+		public void HandleNotice()
+		{
+
+		}
+
 		public void HandleHelp()
 		{
 			// Adminisztrátor parancsok

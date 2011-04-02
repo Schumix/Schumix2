@@ -29,6 +29,9 @@ namespace Schumix.ExtraAddon.Commands
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		private readonly Functions sFunctions = Singleton<Functions>.Instance;
+		protected bool AutoMode = false;
+		protected string ModeChannel;
 
 		/// <summary>
 		///     Ha a szobában a köszönés funkció be van kapcsolva,
@@ -39,10 +42,20 @@ namespace Schumix.ExtraAddon.Commands
 			if(Network.IMessage.Nick == sNickInfo.NickStorage)
 				return;
 
+			if(sFunctions.AutoKick("join"))
+				return;
+
 			string channel = Network.IMessage.Channel;
 
 			if(channel.Substring(0, 1) == ":")
 				channel = channel.Remove(0, 1);
+
+			if(Network.sChannelInfo.FSelect("mode") && Network.sChannelInfo.FSelect("mode", channel))
+			{
+				AutoMode = true;
+				ModeChannel = channel;
+				sSender.NickServStatus(Network.IMessage.Nick);
+			}
 
 			if(Network.sChannelInfo.FSelect("koszones") && Network.sChannelInfo.FSelect("koszones", channel))
 			{

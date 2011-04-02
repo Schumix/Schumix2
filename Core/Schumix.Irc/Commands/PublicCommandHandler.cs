@@ -42,7 +42,7 @@ namespace Schumix.Irc.Commands
 				parancsok += " | " + IRCConfig.CommandPrefix + command.Key;
 			}
 
-			if(parancsok.Substring(0, 3) == " | ")
+			if(parancsok.Length > 2 && parancsok.Substring(0, 3) == " | ")
 				parancsok = parancsok.Remove(0, 3);
 
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}", parancsok);

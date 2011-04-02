@@ -87,6 +87,9 @@ namespace Schumix.Irc
         /// </summary>
 		protected void HandleNotice()
 		{
+			foreach(var plugin in AddonManager.GetPlugins())
+				plugin.HandleNotice();
+
 			if(ConsoleLog.CLog)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;

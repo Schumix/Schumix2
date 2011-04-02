@@ -1,6 +1,5 @@
 Megírásra váró feladatok:
 - xrev parancs hozzáadása.
 - jegyzet parancs hozzáadása.
-- autofunkcio parancs hozzáadása (már csak mode és kick rész hiányzik belőle).
 - Reconnect-nél fixálni ping-et hogy bot ne essen le ha másik nickkel jön fel.
 - rss-ek megirása és hozzáadása a kódhoz.

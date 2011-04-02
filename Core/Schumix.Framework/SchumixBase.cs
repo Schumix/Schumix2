@@ -47,7 +47,7 @@ namespace Schumix.Framework
 				Log.Notice("SchumixBase", "Az adatbazishoz sikeres a kapcsolodas.");
 
 				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Channel = '{0}' WHERE Id = '1'", IRCConfig.MasterChannel);
-				Log.Notice("SchumixBase", "Master csatorna frissitve lett erre: {0}", IRCConfig.MasterChannel);
+				Log.Notice("SchumixBase", "Mester csatorna frissitve lett erre: {0}", IRCConfig.MasterChannel);
 
 				if(AddonsConfig.Enabled)
 				{

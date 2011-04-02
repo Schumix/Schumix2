@@ -37,6 +37,7 @@ namespace Schumix.API
 		/// </summary>
 		void Destroy();
 		void HandlePrivmsg();
+		void HandleNotice();
 		void HandleHelp();
 
 		/// <summary>

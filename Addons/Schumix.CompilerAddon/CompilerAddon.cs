@@ -60,6 +60,11 @@ namespace Schumix.CompilerAddon
 			}
 		}
 
+		public void HandleNotice()
+		{
+
+		}
+
 		public void HandleHelp()
 		{
 

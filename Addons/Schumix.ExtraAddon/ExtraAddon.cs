@@ -28,7 +28,8 @@ namespace Schumix.ExtraAddon
 {
 	public class ExtraAddon : IrcHandler, ISchumixAddon
 	{
-		private Functions _functions;
+		private readonly Functions sFunctions = Singleton<Functions>.Instance;
+		private readonly Sender sSender = Singleton<Sender>.Instance;
 
 		public void Setup()
 		{
@@ -36,8 +37,7 @@ namespace Schumix.ExtraAddon
 			Network.PublicRegisterHandler("PART",               HandleLeft);
 			Network.PublicRegisterHandler("KICK",               HandleKick);
 
-			_functions = new Functions();
-			CommandManager.AdminCRegisterHandler("autofunkcio", _functions.HandleAutoFunkcio);
+			CommandManager.AdminCRegisterHandler("autofunkcio", sFunctions.HandleAutoFunkcio);
 		}
 
 		public void Destroy()
@@ -55,13 +55,46 @@ namespace Schumix.ExtraAddon
 				if(!Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
 					return;
 
-				_functions.HLUzenet();
+				if(sFunctions.AutoKick("privmsg"))
+					return;
+
+				if(Network.sChannelInfo.FSelect("mode") && Network.sChannelInfo.FSelect("mode", Network.IMessage.Channel))
+				{
+					AutoMode = true;
+					ModeChannel = Network.IMessage.Channel;
+					sSender.NickServStatus(Network.IMessage.Nick);
+				}
+
+				sFunctions.HLUzenet();
+			}
+		}
+
+		public void HandleNotice()
+		{
+			if(Network.IMessage.Nick == "NickServ" && AutoMode)
+			{
+				if(Network.IMessage.Info.Length < 6)
+					return;
+
+				if(Network.IMessage.Info[5] == "3")
+				{
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", Network.IMessage.Info[4].ToLower(), ModeChannel);
+					if(db != null)
+					{
+						string rang = db["Rank"].ToString();
+						sSender.Mode(ModeChannel, rang, Network.IMessage.Info[4]);
+					}
+					else
+						sSender.Mode(ModeChannel, "-aohv", string.Format("{0} {0} {0} {0}", Network.IMessage.Info[4]));
+				}
+
+				AutoMode = false;
 			}
 		}
 
 		public void HandleHelp()
 		{
-			_functions.Help();
+			sFunctions.Help();
 		}
 
 		public string Name
