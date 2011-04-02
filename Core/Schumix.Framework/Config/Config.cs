@@ -24,18 +24,17 @@ using System.Threading;
 
 namespace Schumix.Framework.Config
 {
-	public class Config
+	public sealed class Config
 	{
 		private bool error = false;
 
-		public Config(string configfile)
+		public Config(string configdir, string configfile)
 		{
 			try
 			{
-				Log.Debug("Config", ">> {0}", configfile);
-				new SchumixConfig(configfile);
+				new SchumixConfig(configdir, configfile);
 
-				if(!IsConfig(configfile))
+				if(!IsConfig(configdir, configfile))
 				{
 					if(!error)
 					{
@@ -49,7 +48,17 @@ namespace Schumix.Framework.Config
 				else
 				{
 					var xmldoc = new XmlDocument();
-					xmldoc.Load(configfile);
+					xmldoc.Load(string.Format("./{0}/{1}", configdir, configfile));
+
+					int LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
+					string LogDirectory = xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").InnerText;
+					string IrcLogDirectory = xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").InnerText;
+					bool IrcLog = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText);
+
+					new LogConfig(LogLevel, LogDirectory, IrcLogDirectory, IrcLog);
+
+					Log.Debug("Config", ">> {0}", configfile);
+					Log.Init();
 
 					Log.Notice("Config", "Config fajl betoltese...");
 					string Server = xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText;
@@ -81,13 +90,6 @@ namespace Schumix.Framework.Config
 
 					new SQLiteConfig(Enabled, FileName);
 
-					int LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
-					string LogDirectory = xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").InnerText;
-					string IrcLogDirectory = xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").InnerText;
-					bool IrcLog = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText);
-
-					new LogConfig(LogLevel, LogDirectory, IrcLogDirectory, IrcLog);
-
 					Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Addons/Enabled").InnerText);
 					string Directory = xmldoc.SelectSingleNode("Schumix/Addons/Directory").InnerText;
 
@@ -104,133 +106,147 @@ namespace Schumix.Framework.Config
 			}
 		}
 
-		private bool IsConfig(string ConfigFile)
+		private bool IsConfig(string ConfigDirectory, string ConfigFile)
 		{
-			if(File.Exists(ConfigFile))
-				return true;
-			else
+			if(!Directory.Exists(ConfigDirectory))
+				Directory.CreateDirectory(ConfigDirectory);
+
+			try
 			{
-				new LogConfig(3, "Logs", "Szoba", false);
-				Log.Error("Config", "Nincs config fajl!");
-				Log.Debug("Config", "Elkeszitese folyamatban...");
-				var w = new XmlTextWriter(ConfigFile, null);
-
-				try
+				if(File.Exists(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile)))
+					return true;
+				else
 				{
-					w.Formatting = Formatting.Indented;
-					w.Indentation = 4;
-					w.Namespaces = false;
-					w.WriteStartDocument();
+					new LogConfig(3, "Logs", "Szoba", false);
+					Log.Error("Config", "Nincs config fajl!");
+					Log.Debug("Config", "Elkeszitese folyamatban...");
+					var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
 
-					// <Schumix>
-					w.WriteStartElement("Schumix");
+					try
+					{
+						w.Formatting = Formatting.Indented;
+						w.Indentation = 4;
+						w.Namespaces = false;
+						w.WriteStartDocument();
 
-					// <Irc>
-					w.WriteStartElement("Irc");
-					w.WriteElementString("Server", "localhost");
-					w.WriteElementString("Port", "6667");
-					w.WriteElementString("NickName", "Schumix2");
-					w.WriteElementString("NickName2", "_Schumix2");
-					w.WriteElementString("NickName3", "__Schumix2");
-					w.WriteElementString("UserName", "Schumix2");
-					w.WriteElementString("MasterChannel", "#schumix2");
+						// <Schumix>
+						w.WriteStartElement("Schumix");
 
-					// <NickServ>
-					w.WriteStartElement("NickServ");
-					w.WriteElementString("Enabled", "false");
-					w.WriteElementString("Password", "pass");
+						// <Irc>
+						w.WriteStartElement("Irc");
+						w.WriteElementString("Server", "localhost");
+						w.WriteElementString("Port", "6667");
+						w.WriteElementString("NickName", "Schumix2");
+						w.WriteElementString("NickName2", "_Schumix2");
+						w.WriteElementString("NickName3", "__Schumix2");
+						w.WriteElementString("UserName", "Schumix2");
+						w.WriteElementString("MasterChannel", "#schumix2");
 
-					// </NickServ>
-					w.WriteEndElement();
+						// <NickServ>
+						w.WriteStartElement("NickServ");
+						w.WriteElementString("Enabled", "false");
+						w.WriteElementString("Password", "pass");
 
-					// <HostServ>
-					w.WriteStartElement("HostServ");
-					w.WriteElementString("Enabled", "false");
-					w.WriteElementString("Vhost", "false");
+						// </NickServ>
+						w.WriteEndElement();
 
-					// </HostServ>
-					w.WriteEndElement();
+						// <HostServ>
+						w.WriteStartElement("HostServ");
+						w.WriteElementString("Enabled", "false");
+						w.WriteElementString("Vhost", "false");
 
-					// <Wait>
-					w.WriteStartElement("Wait");
-					w.WriteElementString("MessageSending", "50");
+						// </HostServ>
+						w.WriteEndElement();
 
-					// </Wait>
-					w.WriteEndElement();
+						// <Wait>
+						w.WriteStartElement("Wait");
+						w.WriteElementString("MessageSending", "50");
 
-					// </Irc>
-					w.WriteEndElement();
+						// </Wait>
+						w.WriteEndElement();
 
-					// <Log>
-					w.WriteStartElement("Log");
-					w.WriteElementString("LogLevel", "2");
-					w.WriteElementString("LogDirectory", "Logs");
-					w.WriteElementString("IrcLogDirectory", "Csatornak");
-					w.WriteElementString("IrcLog", "false");
+						// </Irc>
+						w.WriteEndElement();
 
-					// </Log>
-					w.WriteEndElement();
+						// <Log>
+						w.WriteStartElement("Log");
+						w.WriteElementString("LogLevel", "2");
+						w.WriteElementString("LogDirectory", "Logs");
+						w.WriteElementString("IrcLogDirectory", "Csatornak");
+						w.WriteElementString("IrcLog", "false");
 
-					// <MySql>
-					w.WriteStartElement("MySql");
-					w.WriteElementString("Enabled", "false");
-					w.WriteElementString("Host", "localhost");
-					w.WriteElementString("User", "root");
-					w.WriteElementString("Password", "pass");
-					w.WriteElementString("Database", "database");
+						// </Log>
+						w.WriteEndElement();
 
-					// </MySql>
-					w.WriteEndElement();
+						// <MySql>
+						w.WriteStartElement("MySql");
+						w.WriteElementString("Enabled", "false");
+						w.WriteElementString("Host", "localhost");
+						w.WriteElementString("User", "root");
+						w.WriteElementString("Password", "pass");
+						w.WriteElementString("Database", "database");
 
-					// <SQLite>
-					w.WriteStartElement("SQLite");
-					w.WriteElementString("Enabled", "false");
-					w.WriteElementString("FileName", "Schumix.db3");
+						// </MySql>
+						w.WriteEndElement();
 
-					// </SQLite>
-					w.WriteEndElement();
+						// <SQLite>
+						w.WriteStartElement("SQLite");
+						w.WriteElementString("Enabled", "false");
+						w.WriteElementString("FileName", "Schumix.db3");
 
-					// <Parancs>
-					w.WriteStartElement("Command");
-					w.WriteElementString("Prefix", "$");
+						// </SQLite>
+						w.WriteEndElement();
 
-					// </Parancs>
-					w.WriteEndElement();
+						// <Parancs>
+						w.WriteStartElement("Command");
+						w.WriteElementString("Prefix", "$");
 
-					// <Plugins>
-					w.WriteStartElement("Addons");
-					w.WriteElementString("Enabled", "true");
-					w.WriteElementString("Directory", "Addons");
+						// </Parancs>
+						w.WriteEndElement();
 
-					// </Plugins>
-					w.WriteEndElement();
+						// <Plugins>
+						w.WriteStartElement("Addons");
+						w.WriteElementString("Enabled", "true");
+						w.WriteElementString("Directory", "Addons");
 
-					// </Schumix>
-					w.WriteEndElement();
+						// </Plugins>
+						w.WriteEndElement();
 
-					w.Flush();
-					w.Close();
+						// </Schumix>
+						w.WriteEndElement();
 
-					Log.Success("Config", "Config fajl elkeszult!");
-					return false;
-				}
-				catch(Exception e)
-				{
-					Log.Error("Config", "Hiba az xml irasa soran: {0}", e.Message);
-					error = true;
-					return false;
+						w.Flush();
+						w.Close();
+
+						Log.Success("Config", "Config fajl elkeszult!");
+						return false;
+					}
+					catch(Exception e)
+					{
+						Log.Error("Config", "Hiba az xml irasa soran: {0}", e.Message);
+						error = true;
+						return false;
+					}
 				}
 			}
+			catch(DirectoryNotFoundException)
+			{
+				IsConfig(ConfigDirectory, ConfigFile);
+			}
+
+			return true;
 		}
 	}
 
 	public sealed class SchumixConfig
 	{
+		public static string ConfigDirectory { get; private set; }
 		public static string ConfigFile { get; private set; }
 
-		public SchumixConfig(string configfile)
+		public SchumixConfig(string configdirectory, string configfile)
 		{
-			ConfigFile = configfile;
+			ConfigDirectory = configdirectory;
+			ConfigFile      = configfile;
 		}
 	}
 

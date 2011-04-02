@@ -28,12 +28,7 @@ namespace Schumix
 {
 	public sealed class SchumixBot : SchumixBase
 	{
-		public SchumixBot() : this("schumix.xml")
-		{
-			// ha nem lenne megadva a config akkor fut le
-		}
-
-		public SchumixBot(string config) : base(config)
+		public SchumixBot()
 		{
 			try
 			{

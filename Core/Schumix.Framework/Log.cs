@@ -28,7 +28,6 @@ namespace Schumix.Framework
 	public sealed class Log
 	{
 		private static readonly object WriteLock = new object();
-		private static string ConfigFile;
 
         /// <returns>
         ///     A visszatérési érték az aktuális dátum.
@@ -42,13 +41,7 @@ namespace Schumix.Framework
 		{
 			try
 			{
-				string loghelye;
-				if(LogConfig.LogDirectory == null)
-					loghelye = InitConfig();
-				else
-					loghelye = LogConfig.LogDirectory;
-
-				var file = new StreamWriter(string.Format("./{0}/{1}", loghelye, "Schumix.log"), true) { AutoFlush = true };
+				var file = new StreamWriter(string.Format("./{0}/{1}", LogConfig.LogDirectory, "Schumix.log"), true) { AutoFlush = true };
 				file.Write(log);
 				file.Close();
 			}
@@ -58,36 +51,26 @@ namespace Schumix.Framework
 			}
 		}
 
-		private static string InitConfig()
-		{
-			var xml = new XmlDocument();
-			xml.Load(ConfigFile);
-			return xml.SelectSingleNode("Schumix/Log/LogDirectory").InnerText;
-		}
-
-		public static void Indulas(string configfile)
+		public static void Init()
 		{
 			try
 			{
-				ConfigFile = configfile;
-				string loghelye = InitConfig();
-
-				if(!Directory.Exists(loghelye))
-					Directory.CreateDirectory(loghelye);
+				if(!Directory.Exists(LogConfig.LogDirectory))
+					Directory.CreateDirectory(LogConfig.LogDirectory);
 
 				var time = DateTime.Now;
 				string logfile = "Schumix.log";
 
-				if(!File.Exists(string.Format("./{0}/{1}", loghelye, logfile)))
-					File.Create(string.Format("./{0}/{1}", loghelye, logfile));
+				if(!File.Exists(string.Format("./{0}/{1}", LogConfig.LogDirectory, logfile)))
+					File.Create(string.Format("./{0}/{1}", LogConfig.LogDirectory, logfile));
 
-				var file = new StreamWriter(string.Format("./{0}/{1}", loghelye, logfile), true) { AutoFlush = true };
+				var file = new StreamWriter(string.Format("./{0}/{1}", LogConfig.LogDirectory, logfile), true) { AutoFlush = true };
 				file.Write("\nIndulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n", time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
 				file.Close();
 			}
 			catch(Exception)
 			{
-				Indulas(ConfigFile);
+				Init();
 			}
 		}
 

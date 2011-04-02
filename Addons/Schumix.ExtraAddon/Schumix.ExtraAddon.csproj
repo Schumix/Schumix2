@@ -94,14 +94,17 @@
     <Compile Include="Commands\Commands.cs" />
     <Compile Include="Commands\Help.cs" />
     <Compile Include="Commands\Functions.cs" />
+    <Compile Include="Config\AddonConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Commands\" />
+    <Folder Include="Config\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System">
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Schumix.API\Schumix.API.csproj">
