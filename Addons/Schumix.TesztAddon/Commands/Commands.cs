@@ -72,15 +72,16 @@ namespace Schumix.TesztAddon.Commands
 
 				var tm = entry.Links[0].HRef.ToString().Split('/');
 				var hash = tm[(tm.Length-1)];*/
-				/*XmlDocument RSSXml = new XmlDocument();
-				RSSXml.Load("https://github.com/megax/Schumix2/commits/master.atom");
-				XmlNodeList RSSNodeList = RSSXml.SelectNodes("feed");
-				XmlNode RSSDesc = RSSXml.SelectSingleNode("feed");
+				XmlDocument RSSXml = new XmlDocument();
+				//RSSXml.Load("http://www.assembla.com/spaces/Sandshroud/stream.rss");
+				RSSXml.Load("http://github.com/megax/Schumix2/commits/master.atom");
 
 				XmlNode RSSSubNode;
+				//RSSSubNode = RSSXml.SelectSingleNode("rss/channel/item/title");
 				RSSSubNode = RSSXml.SelectSingleNode("feed/title");
-				string title = RSSSubNode != null ? RSSSubNode.InnerText : "";*/
+				string title = RSSSubNode != null ? RSSSubNode.InnerText : "";
 				//sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, hash);
+				Console.WriteLine(title);
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "vhost")
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, Network.IMessage.Host);

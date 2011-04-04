@@ -29,6 +29,7 @@ namespace Schumix.Framework.Database
 {
 	public sealed class DatabaseManager
 	{
+		private readonly object _lock = new object();
 		private readonly SQLite sdatabase;
 		private readonly MySql mdatabase;
 
@@ -69,10 +70,13 @@ namespace Schumix.Framework.Database
 
 		public DataTable Query(string sql)
 		{
-			if(SQLiteConfig.Enabled)
-				return sdatabase.Query(sql);
-			else
-				return mdatabase.Query(sql);
+			lock(_lock)
+			{
+				if(SQLiteConfig.Enabled)
+					return sdatabase.Query(sql);
+				else
+					return mdatabase.Query(sql);
+			}
 		}
 
 		public DataTable Query(string query, params object[] args)
@@ -82,10 +86,13 @@ namespace Schumix.Framework.Database
 
 		public DataRow QueryFirstRow(string query)
 		{
-			if(SQLiteConfig.Enabled)
-				return sdatabase.QueryFirstRow(query);
-			else
-				return mdatabase.QueryFirstRow(query);
+			lock(_lock)
+			{
+				if(SQLiteConfig.Enabled)
+					return sdatabase.QueryFirstRow(query);
+				else
+					return mdatabase.QueryFirstRow(query);
+			}
 		}
 
 		public DataRow QueryFirstRow(string query, params object[] args)

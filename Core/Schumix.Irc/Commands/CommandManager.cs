@@ -132,7 +132,7 @@ namespace Schumix.Irc.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Error("BejovoInfo", "Hiba oka: {0}", e.ToString());
+				Log.Error("BejovoInfo", "Hiba oka: {0}", e.Message);
 			}
 		}
 	}
