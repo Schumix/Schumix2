@@ -112,6 +112,9 @@ namespace Schumix.Framework
 						if(pl == null)
 							continue;
 
+						if(Assemblies.Contains(asm))
+							continue;
+
 						pl.Setup();
 
 						lock(LoadLock)
