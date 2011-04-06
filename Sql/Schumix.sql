@@ -61,6 +61,7 @@ INSERT INTO `schumix` VALUES ('5', '', 'reconnect', 'be');
 INSERT INTO `schumix` VALUES ('6', '', 'hl', 'ki');
 INSERT INTO `schumix` VALUES ('7', '', 'kick', 'ki');
 INSERT INTO `schumix` VALUES ('8', '', 'mode', 'ki');
+INSERT INTO `schumix` VALUES ('9', '', 'svn', 'ki');
 
 DROP TABLE IF EXISTS `sznap`;
 CREATE TABLE `sznap` (
