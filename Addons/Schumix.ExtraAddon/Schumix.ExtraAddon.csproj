@@ -104,7 +104,10 @@
   <ItemGroup>
     <Reference Include="System">
     </Reference>
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml">
+    </Reference>
+    <Reference Include="System.Data">
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Schumix.API\Schumix.API.csproj">
