@@ -3,4 +3,3 @@ Megírásra váró feladatok:
 - jegyzet parancs hozzáadása.
 - Reconnect-nél fixálni ping-et hogy bot ne essen le ha másik nickkel jön fel.
 - rss-ek megirása és hozzáadása a kódhoz (már csak a hg és git hiányzik).
-- ignore rész hozzáadása az addonmanagerhez.
