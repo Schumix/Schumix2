@@ -235,7 +235,7 @@ namespace Schumix.Irc
 
 		public void JoinChannel()
 		{
-			Log.Debug("ChannelInfo", "Kapcsolodas a szobakhoz...");
+			Log.Debug("ChannelInfo", "Kapcsolodas a csatornakhoz...");
 			bool error = false;
 
 			foreach(var channel in _ChannelLista)
@@ -261,7 +261,7 @@ namespace Schumix.Irc
 				Log.Error("ChannelInfo", "JoinChannel: Hibas lekerdezes!");
 
 			if(!error)
-				Log.Success("ChannelInfo", "Sikeres kapcsolodas a szobakhoz.");
+				Log.Success("ChannelInfo", "Sikeres kapcsolodas a csatornakhoz.");
 			else
 				Log.Warning("ChannelInfo", "Nehany kapcsolodas sikertelen!");
 
