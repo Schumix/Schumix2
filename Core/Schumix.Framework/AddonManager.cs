@@ -65,12 +65,37 @@ namespace Schumix.Framework
 		{
 			try
 			{
+				string file = string.Empty;
+				string[] ignore = AddonsConfig.Ignore.Split(',');
 				var dir = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, directory));
 				Log.Notice("AddonManager", "Loading addons from: {0}", dir.FullName);
 
 				foreach(var dll in dir.GetFiles("*.dll").AsParallel())
 				{
-					if(!dll.FullName.Contains("Addon"))
+					if(!dll.Name.Contains("Addon"))
+						continue;
+
+					bool enabled = true;
+
+					if(ignore.Length > 1)
+					{
+						for(byte x = 0; x < ignore.Length; x++)
+						{
+							file = ignore[x] + ".dll";
+
+							if(dll.Name.ToLower() == file.ToLower())
+								enabled = false;
+						}
+					}
+					else
+					{
+						file = AddonsConfig.Ignore + ".dll";
+
+						if(dll.Name.ToLower() == file.ToLower())
+							enabled = false;
+					}
+
+					if(!enabled)
 						continue;
 
 					var asm = Assembly.LoadFrom(dll.FullName);

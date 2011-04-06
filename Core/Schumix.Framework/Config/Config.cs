@@ -91,9 +91,10 @@ namespace Schumix.Framework.Config
 					new SQLiteConfig(Enabled, FileName);
 
 					Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Addons/Enabled").InnerText);
+					string Ignore = xmldoc.SelectSingleNode("Schumix/Addons/Ignore").InnerText;
 					string Directory = xmldoc.SelectSingleNode("Schumix/Addons/Directory").InnerText;
 
-					new AddonsConfig(Enabled, Directory);
+					new AddonsConfig(Enabled, Ignore, Directory);
 
 					Log.Success("Config", "Config adatbazis betoltve.");
 					Console.WriteLine("");
@@ -207,6 +208,7 @@ namespace Schumix.Framework.Config
 						// <Plugins>
 						w.WriteStartElement("Addons");
 						w.WriteElementString("Enabled", "true");
+						w.WriteElementString("Ignore", "SvnRssAddon,TesztAddon");
 						w.WriteElementString("Directory", "Addons");
 
 						// </Plugins>
@@ -333,11 +335,13 @@ namespace Schumix.Framework.Config
 	public sealed class AddonsConfig
 	{
 		public static bool Enabled { get; private set; }
+		public static string Ignore { get; private set; }
 		public static string Directory { get; private set; }
 
-		public AddonsConfig(bool enabled, string directory)
+		public AddonsConfig(bool enabled, string ignore, string directory)
 		{
 			Enabled   = enabled;
+			Ignore    = ignore;
 			Directory = directory;
 		}
 	}
