@@ -97,7 +97,7 @@ namespace Schumix.Framework.Config
 					new AddonsConfig(Enabled, Ignore, Directory);
 
 					Log.Success("Config", "Config adatbazis betoltve.");
-					Console.WriteLine("");
+					Console.WriteLine();
 				}
 			}
 			catch(Exception e)

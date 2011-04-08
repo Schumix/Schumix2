@@ -56,7 +56,7 @@ namespace Schumix.ExtraAddon.Config
 			new ModeConfig(Enabled, Type);
 
 			Log.Success("ExtraAddonConfig", "Config adatbazis betoltve.");
-			Console.WriteLine("");
+			Console.WriteLine();
 		}
 
 		private bool IsConfig(string ConfigDirectory, string ConfigFile)
