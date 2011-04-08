@@ -42,7 +42,7 @@ namespace Schumix
 			System.Console.Title = SchumixBase.Title;
 			System.Console.ForegroundColor = ConsoleColor.Blue;
 			System.Console.WriteLine("[Schumix2]");
-			System.Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> parancsot vagy <kikapcs>\n");
+			System.Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> vagy <kikapcs> parancsot!\n");
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 			System.Console.WriteLine("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", Verzio.SchumixVerzio);
 			System.Console.WriteLine("==============================================================================");
