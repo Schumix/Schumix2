@@ -44,9 +44,9 @@ namespace Schumix
 			}
 		}
 
-        /// <summary>
-        ///     Ha lefut, akkor leáll a class.
-        /// </summary>
+		/// <summary>
+		///     Ha lefut, akkor leáll a class.
+		/// </summary>
 		~SchumixBot()
 		{
 			Log.Debug("SchumixBot", "~SchumixBot()");

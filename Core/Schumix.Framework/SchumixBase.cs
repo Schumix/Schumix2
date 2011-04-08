@@ -26,11 +26,6 @@ namespace Schumix.Framework
 {
 	public class SchumixBase
 	{
-        ///***START***********************************///
-        /// <summary>
-        ///     A MySQL class-t hívja meg.
-        ///     Dekralálja a MySQL kapcsolódást.
-        /// </summary>
 		public static DatabaseManager DManager { get; private set; }
 		public static Time time { get; private set; }
 		public static bool IIdo = true;
@@ -62,9 +57,9 @@ namespace Schumix.Framework
 			}
 		}
 
-        /// <summary>
-        ///     Ha lefut, akkor leáll a class.
-        /// </summary>
+		/// <summary>
+		///     Ha lefut, akkor leáll a class.
+		/// </summary>
 		~SchumixBase()
 		{
 			Log.Debug("SchumixBase", "~SchumixBase()");
