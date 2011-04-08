@@ -55,7 +55,7 @@ namespace Schumix.SvnRssAddon.Config
 			new RssConfig(QueryTime);
 
 			Log.Success("SvnRssAddonConfig", "Config adatbazis betoltve.");
-			Console.WriteLine("");
+			Console.WriteLine();
 		}
 
 		private bool IsConfig(string ConfigDirectory, string ConfigFile)

@@ -46,7 +46,7 @@ namespace Schumix
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 			System.Console.WriteLine("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", Verzio.SchumixVerzio);
 			System.Console.WriteLine("==============================================================================");
-			System.Console.WriteLine("");
+			System.Console.WriteLine();
 
 			new Config("Configs", "Schumix.xml");
 			Log.Notice("Main", "Rendszer indul...");
