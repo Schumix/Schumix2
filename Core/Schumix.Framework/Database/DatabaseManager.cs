@@ -36,6 +36,7 @@ namespace Schumix.Framework.Database
 		public DatabaseManager()
 		{
 			byte x = 0;
+			Log.Debug("DatabaseManager", "Adatbazis betoltese elindult.");
 
 			if(SQLiteConfig.Enabled)
 			{
@@ -48,6 +49,8 @@ namespace Schumix.Framework.Database
 				x++;
 				mdatabase = new MySql(MySqlConfig.Host, MySqlConfig.User, MySqlConfig.Password, MySqlConfig.Database);
 			}
+
+			Log.Debug("DatabaseManager", "Adatbazis fajtajanak kivalasztasa folyamatban.");
 
 			if(x == 0)
 			{

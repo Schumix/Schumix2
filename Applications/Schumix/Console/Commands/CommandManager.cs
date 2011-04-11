@@ -36,7 +36,7 @@ namespace Schumix.Console.Commands
 
 		public CCommandManager(Network network) : base(network)
 		{
-			Log.Notice("CCommandManager", "CCommandManager elindult.");
+			Log.Notice("CCommandManager", "CCommandManager sikeresen elindult.");
 			InitHandler();
 		}
 

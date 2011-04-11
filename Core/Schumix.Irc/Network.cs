@@ -93,7 +93,7 @@ namespace Schumix.Irc
 			_port = port;
 			sNickInfo.ChangeNick(IRCConfig.NickName);
 
-			Log.Notice("Network", "Network elindult.");
+			Log.Notice("Network", "Network sikeresen elindult.");
 			sChannelInfo.ChannelLista();
 			InitHandler();
 
@@ -174,7 +174,7 @@ namespace Schumix.Irc
 			m_running = false;
 			Status = false;
 
-			Log.Notice("Network", "Kapcsolat bontva.");
+			Log.Notice("Network", "Kapcsolat bontasra kerult.");
 			Connection(false);
 			NewNick = true;
 			Log.Debug("Network", "Ujrakapcsolodas ide megindult: {0}.", _server);
@@ -184,6 +184,12 @@ namespace Schumix.Irc
 		{
 			client = new TcpClient();
 			client.Connect(_server, _port);
+
+			if(client.Connected)
+				Log.Success("Network", "A kapcsolat sikeresen letrejott.");
+			else
+				Log.Error("Network", "Hiba tortent a kapcsolat letrehozasanal!");
+
 			reader = new StreamReader(client.GetStream());
 			writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
 
@@ -194,6 +200,8 @@ namespace Schumix.Irc
 			}
 			else
 				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName);
+
+			Log.Notice("Network", "Felhasznaloi informaciok el lettek kuldve.");
 
 			NewNick = false;
 			HostServAllapot = false;
@@ -221,13 +229,14 @@ namespace Schumix.Irc
 		{
 			try
 			{
-				Log.Debug("Opcodes", "Opcodes thread elindult.");
+				Log.Notice("Opcodes", "A szal sikeresen elindult.");
 
 				string IrcMessage;
 				string opcode;
 				string[] userdata;
 				string[] hostdata;
 				string[] IrcCommand;
+				Log.Notice("Opcodes", "Elindult az irc adatok fogadasa.");
 
 				while(true)
 				{
@@ -294,7 +303,7 @@ namespace Schumix.Irc
 		{
 			try
 			{
-				Log.Debug("Ping", "Ping thread elindult.");
+				Log.Notice("Ping", "A szal sikeresen elindult.");
 
 				while(true)
 				{

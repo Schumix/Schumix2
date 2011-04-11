@@ -46,6 +46,7 @@ namespace Schumix.Framework
 
 				if(AddonsConfig.Enabled)
 				{
+					Log.Debug("SchumixBase", "AddonManager betoltese folyamatban...");
 					AddonManager.Initialize();
 					AddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory);
 				}

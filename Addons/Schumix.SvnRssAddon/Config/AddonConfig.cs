@@ -110,6 +110,7 @@ namespace Schumix.SvnRssAddon.Config
 		public RssConfig(int querytime)
 		{
 			QueryTime = querytime;
+			Log.Notice("SvnRssConfig", "SvnRssConfig beallitasai betoltve.");
 		}
 	}
 }

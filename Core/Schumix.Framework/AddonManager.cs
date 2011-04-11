@@ -127,6 +127,9 @@ namespace Schumix.Framework
 					}
 				}
 
+				if(AddonsConfig.Ignore.Length > 1)
+					Log.Notice("AddonManager", "Ignoring plugins: {0}", AddonsConfig.Ignore);
+
 				return true;
 			}
 			catch(Exception e)
@@ -153,6 +156,7 @@ namespace Schumix.Framework
 				Assemblies.Clear();
 			}
 
+			Log.Notice("AddonManager", "Unload plugins.");
 			return true;
 		}
 

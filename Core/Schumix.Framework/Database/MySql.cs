@@ -40,7 +40,7 @@ namespace Schumix.Framework.Database
 				Environment.Exit(1);
 			}
 			else
-				Log.Success("MySql", "Mysql rendszer elindult.");
+				Log.Success("MySql", "MySql adatbazishoz sikeres a kapcsolodas.");
 		}
 
 		~MySql()
