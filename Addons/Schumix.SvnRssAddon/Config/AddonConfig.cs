@@ -49,7 +49,7 @@ namespace Schumix.SvnRssAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(string.Format("./{0}/{1}", SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("SvnRssAddonConfig", "Config fajl betoltese...");
+			Log.Notice("SvnRssAddonConfig", "Config fajl betoltese.");
 
 			int QueryTime = Convert.ToInt32(xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").InnerText);
 			new RssConfig(QueryTime);

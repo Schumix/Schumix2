@@ -49,7 +49,7 @@ namespace Schumix.ExtraAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(string.Format("./{0}/{1}", SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("ExtraAddonConfig", "Config fajl betoltese...");
+			Log.Notice("ExtraAddonConfig", "Config fajl betoltese.");
 
 			bool Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText);
 			string Type = xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText;

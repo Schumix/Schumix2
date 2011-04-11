@@ -28,15 +28,15 @@ namespace Schumix
 	{
 		private static readonly Sender sSender = Singleton<Sender>.Instance;
 
-        /// <summary>
-        ///     A Main függvény. Itt indul el a debug.
-        /// </summary>
-        /// <remarks>
-        ///     Schumix IRC bot
-        ///     <para>
-        ///         Készítette Megaxxx és Jackneill.
-        ///     </para>
-        /// </remarks>
+		/// <summary>
+		///     A Main függvény. Itt indul el a debug.
+		/// </summary>
+		/// <remarks>
+		///     Schumix2 IRC bot
+		///     <para>
+		///         Készítette Megaxxx és Jackneill.
+		///     </para>
+		/// </remarks>
 		private static void Main(string[] args)
 		{
 			System.Console.Title = SchumixBase.Title;
