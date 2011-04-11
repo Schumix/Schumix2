@@ -47,7 +47,7 @@ namespace Schumix.Irc.Commands
 
 		protected CommandManager()
 		{
-			Log.Notice("CommandManager", "CommandManager elindult.");
+			Log.Notice("CommandManager", "CommandManager sikeresen elindult.");
 			InitHandler();
 		}
 

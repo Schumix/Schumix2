@@ -35,9 +35,10 @@ namespace Schumix.Framework
 		{
 			try
 			{
-				Log.Notice("Time", "Time elindult.");
+				Log.Notice("Time", "Time sikeresen elindult.");
 				SW.Start();
 				StartTime = DateTime.Now;
+				Log.Debug("Time", "Program indulasi idopontja mentesre kerult.");
 			}
 			catch(Exception e)
 			{

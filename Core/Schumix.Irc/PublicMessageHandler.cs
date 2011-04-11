@@ -145,16 +145,16 @@ namespace Schumix.Irc
 					{
 						sNickInfo.ChangeNick(IRCConfig.NickName);
 						sSender.Nick(IRCConfig.NickName);
-						Log.Notice("NickServ", "NickServ azonosito kuldese.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "NickServ azonosító küldése.");
+						Log.Notice("NickServ", "Azonosito jelszo kuldese a kiszolgalonak.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Azonosító jelszó küldése a kiszolgálonak.");
 						sSender.NickServ(IRCConfig.NickServPassword);
 						Network.NewNick = false;
 
 						if(IRCConfig.UseHostServ)
 						{
 							HostServAllapot = true;
-							Log.Notice("HostServ", "HostServ bevan kapcsolva.");
 							sSender.HostServ("on");
+							Log.Notice("HostServ", "Vhost be van kapcsolva.");
 						}
 					}
 					else
@@ -162,7 +162,7 @@ namespace Schumix.Irc
 						string nick = Network.IMessage.Info[5];
 						sNickInfo.ChangeNick(nick);
 						sSender.Nick(nick);
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nick megváltoztatása erre: {0}", nick);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Név megváltoztatása erre: {0}", nick);
 					}
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "clean")
@@ -171,7 +171,7 @@ namespace Schumix.Irc
 						return;
 
 					GC.Collect();
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Lefoglalt memória felszabadításra került.");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Lefoglalt memória felszabadításra kerül.");
 				}
 			}
 		}

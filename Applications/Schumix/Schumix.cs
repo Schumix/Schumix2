@@ -32,6 +32,7 @@ namespace Schumix
 		{
 			try
 			{
+				Log.Notice("SchumixBot", "SchumixBot sikeresen elindult.");
 				Log.Debug("SchumixBot", "Network indul...");
 				var network = new Network(IRCConfig.Server, IRCConfig.Port);
 				Log.Debug("SchumixBot", "Console indul...");

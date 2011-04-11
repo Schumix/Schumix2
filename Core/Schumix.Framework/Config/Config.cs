@@ -60,7 +60,7 @@ namespace Schumix.Framework.Config
 					Log.Debug("Config", ">> {0}", configfile);
 					Log.Init();
 
-					Log.Notice("Config", "Config fajl betoltese...");
+					Log.Notice("Config", "Config fajl betoltese.");
 					string Server = xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText;
 					int Port = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText);
 					string NickName = xmldoc.SelectSingleNode("Schumix/Irc/NickName").InnerText;
@@ -283,6 +283,7 @@ namespace Schumix.Framework.Config
 			HostServEnabled  = hostservenabled;
 			MessageSending   = messagesending;
 			CommandPrefix    = commandprefix;
+			Log.Notice("IRCConfig", "Irc beallitasai betoltve.");
 		}
 	}
 
@@ -301,6 +302,7 @@ namespace Schumix.Framework.Config
 			User     = user;
 			Password = password;
 			Database = database;
+			Log.Notice("MySqlConfig", "MySql beallitasai betoltve.");
 		}
 	}
 
@@ -313,6 +315,7 @@ namespace Schumix.Framework.Config
 		{
 			Enabled  = enabled;
 			FileName = filename;
+			Log.Notice("SQLiteConfig", "SQLite beallitasai betoltve.");
 		}
 	}
 
@@ -343,6 +346,7 @@ namespace Schumix.Framework.Config
 			Enabled   = enabled;
 			Ignore    = ignore;
 			Directory = directory;
+			Log.Notice("AddonsConfig", "Addons beallitasai betoltve.");
 		}
 	}
 }

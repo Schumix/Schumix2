@@ -120,6 +120,7 @@ namespace Schumix.ExtraAddon.Config
 		{
 			RemoveEnabled = removeenabled;
 			RemoveType    = removetype;
+			Log.Notice("ModeConfig", "Mode beallitasai betoltve.");
 		}
 	}
 }

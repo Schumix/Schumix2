@@ -32,12 +32,12 @@ namespace Schumix.Irc
 
 		protected void HandleSuccessfulAuth()
 		{
-			Console.Write("\n");
-			Log.Success("MessageHandler", "Sikeres kapcsolodas.");
+			Console.WriteLine();
+			Log.Success("MessageHandler", "Sikeres kapcsolodas az irc kiszolgalohoz.");
 
 			if(IRCConfig.UseNickServ)
 			{
-				Log.Notice("NickServ", "NickServ azonosito kuldese.");
+				Log.Notice("NickServ", "Azonosito jelszo kuldese a kiszolgalonak.");
 
 				if(!Network.NewNick)
 					sSender.NickServ(IRCConfig.NickServPassword);
@@ -48,12 +48,12 @@ namespace Schumix.Irc
 				if(!Network.NewNick)
 				{
 					HostServAllapot = true;
-					Log.Notice("HostServ", "HostServ bevan kapcsolva.");
 					sSender.HostServ("on");
+					Log.Notice("HostServ", "Vhost be van kapcsolva.");
 				}
 				else
 				{
-					Log.Notice("HostServ", "HostServ kivan kapcsolva.");
+					Log.Notice("HostServ", "Vhost ki van kapcsolva.");
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
 					Network.sChannelInfo.JoinChannel();
@@ -61,7 +61,7 @@ namespace Schumix.Irc
 			}
 			else
 			{
-				Log.Notice("HostServ", "HostServ kivan kapcsolva.");
+				Log.Notice("HostServ", "Vhost ki van kapcsolva.");
 				if(IRCConfig.HostServEnabled)
 					sSender.HostServ("off");
 
@@ -102,11 +102,11 @@ namespace Schumix.Irc
 			if(Network.IMessage.Nick == "NickServ")
 			{
 				if(Network.IMessage.Args.Contains("Password incorrect."))
-					Log.Error("NickServ", "NickServ azonosito jelszo hibas!");
+					Log.Error("NickServ", "Azonosito jelszo hibas!");
 				else if(Network.IMessage.Args.Contains("You are already identified."))
-					Log.Warning("NickServ", "NickServ azonosito mar aktivalva van!");
+					Log.Warning("NickServ", "Azonosito mar aktivalva van!");
 				else if(Network.IMessage.Args.Contains("Password accepted - you are now recognized."))
-					Log.Success("NickServ", "NickServ azonosito jelszo elfogadva.");
+					Log.Success("NickServ", "Azonosito jelszo elfogadva.");
 			}
 
 			if(Network.IMessage.Nick == "HostServ" && IRCConfig.UseHostServ)
@@ -148,7 +148,7 @@ namespace Schumix.Irc
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write("[SERVER] ");
 				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.Write("Nemletezo irc parancs\n");
+				Console.Write("Nem letezo irc parancs\n");
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}

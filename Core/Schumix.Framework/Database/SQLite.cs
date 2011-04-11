@@ -39,7 +39,7 @@ namespace Schumix.Framework.Database
 				Environment.Exit(1);
 			}
 			else
-				Log.Notice("SQLite", "SQLite rendszer elindult.");
+				Log.Notice("SQLite", "SQLite adatbazishoz sikeres a kapcsolodas.");
 		}
 
 		~SQLite()

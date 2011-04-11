@@ -39,8 +39,9 @@ namespace Schumix.Console
 		/// </remarks>
 		public Console(Network network)
 		{
-			Log.Notice("Console", "Console elindult.");
+			Log.Notice("Console", "Console sikeresen elindult.");
 			var console = new Thread(ConsoleRead);
+			Log.Debug("Console", "Console parancs olvasoja indul...");
 			console.Start();
 			CCManager = new CCommandManager(network);
 
@@ -72,6 +73,7 @@ namespace Schumix.Console
 			try
 			{
 				string uzenet;
+				Log.Notice("Console", "Console parancs olvaso resze elindult.");
 
 				while(true)
 				{
@@ -89,8 +91,8 @@ namespace Schumix.Console
 			catch(Exception e)
 			{
 				Log.Error("ConsoleRead", "Hiba oka: {0}", e.Message);
+				Thread.Sleep(1000);
 				ConsoleRead();
-				Thread.Sleep(100);
 			}
 		}
 	}
