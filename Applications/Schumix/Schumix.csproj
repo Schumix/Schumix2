@@ -105,8 +105,6 @@
     <Compile Include="Schumix.cs" />
     <Compile Include="Console\Console.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rss\GitInfo.cs" />
-    <Compile Include="Rss\HgInfo.cs" />
     <Compile Include="Console\Commands\CommandHandler.cs" />
     <Compile Include="Console\Commands\CommandManager.cs" />
   </ItemGroup>
