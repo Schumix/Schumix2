@@ -70,28 +70,28 @@ namespace Schumix.CompilerAddon
 
 		}
 
+		/// <summary>
+		/// Name of the addon
+		/// </summary>
 		public string Name
 		{
-			get
-			{
-				return "CompilerAddon";
-			}
+			get { return "CompilerAddon"; }
 		}
 
+		/// <summary>
+		/// Author of the addon.
+		/// </summary>
 		public string Author
 		{
-			get
-			{
-				return "Megax";
-			}
+			get { return "Megax"; }
 		}
 
+		/// <summary>
+		/// Website where the addon is available.
+		/// </summary>
 		public string Website
 		{
-			get
-			{
-				return "http://www.github.com/megax/Schumix2";
-			}
+			get { return "http://www.github.com/megax/Schumix2"; }
 		}
 	}
 }

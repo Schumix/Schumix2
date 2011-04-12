@@ -127,8 +127,10 @@ namespace Schumix.CompilerAddon.Commands
 			try
 			{
 #if MONO
+#pragma warning disable 618
 				var provider = new CSharpCodeProvider();
 				var compiler = provider.CreateCompiler();
+#pragma warning restore 618
 #else
 				var compiler = CodeDomProvider.CreateProvider("CSharp");
 #endif

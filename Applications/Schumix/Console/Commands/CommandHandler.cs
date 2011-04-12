@@ -131,7 +131,7 @@ namespace Schumix.Console.Commands
 				Log.Notice("Console", "Admin lista: admin lista");
 				Log.Notice("Console", "Hozzaadas: admin add <admin neve>");
 				Log.Notice("Console", "Eltavolitas: admin del <admin neve>");
-				Log.Notice("Console", "Rang: admin rang <admin neve> <uj rang pl operator: 0, administrator: 1>");
+				Log.Notice("Console", "Rang: admin rang <admin neve> <uj rang pl halfoperator: 0, operator: 1, administrator: 2>");
 				Log.Notice("Console", "Info: admin info <admin neve>");
 			}
 			else if(Info.Length >= 2 && Info[1].ToLower() == "info")
@@ -149,8 +149,10 @@ namespace Schumix.Console.Commands
 					flag = Convert.ToInt32(db["Flag"].ToString());
 				else
 					flag = -1;
-	
-				if((AdminFlag)flag == AdminFlag.Operator)
+
+				if((AdminFlag)flag == AdminFlag.HalfOperator)
+					Log.Notice("Console", "Jelenleg Fel Operator.");		
+				else if((AdminFlag)flag == AdminFlag.Operator)
 					Log.Notice("Console", "Jelenleg Operator.");
 				else if((AdminFlag)flag == AdminFlag.Administrator)
 					Log.Notice("Console", "Jelenleg Adminisztrator.");
@@ -195,6 +197,7 @@ namespace Schumix.Console.Commands
 
 				string pass = sUtility.GetRandomString();
 				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'ki')", nev.ToLower());
 				Log.Notice("Console", "Admin hozzaadva: {0}", nev);
 				Log.Notice("Console", "Mostani jelszo: {0}", pass);
 			}
@@ -215,6 +218,7 @@ namespace Schumix.Console.Commands
 				}
 
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE Name = '{0}'", nev.ToLower());
+				SchumixBase.DManager.QueryFirstRow("DELETE FROM `hlmessage` WHERE nick = '{0}'", nev.ToLower());
 				Log.Notice("Console", "Admin törölve: {0}", nev);
 			}
 			else if(Info.Length >= 2 && Info[1].ToLower() == "rang")
@@ -234,7 +238,7 @@ namespace Schumix.Console.Commands
 				string nev = Info[2].ToLower();
 				int rang = Convert.ToInt32(Info[3]);
 
-				if((AdminFlag)rang == AdminFlag.Administrator || (AdminFlag)rang == AdminFlag.Operator)
+				if((AdminFlag)rang == AdminFlag.Administrator || (AdminFlag)rang == AdminFlag.Operator || (AdminFlag)rang == AdminFlag.HalfOperator)
 				{
 					SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Flag = '{0}' WHERE Name = '{1}'", rang, nev);
 					Log.Notice("Console", "Rang sikeresen modositva.");

@@ -112,16 +112,18 @@ namespace Schumix.Irc
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "help")
 				{
-					if(Admin(Network.IMessage.Nick, Commands.AdminFlag.Operator))
+					if(IsAdmin(Network.IMessage.Nick, Commands.AdminFlag.HalfOperator))
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: nick | sys");
+					else if(IsAdmin(Network.IMessage.Nick, Commands.AdminFlag.Operator))
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: ghost | nick | sys");
-					else if(Admin(Network.IMessage.Nick, Commands.AdminFlag.Administrator))
+					else if(IsAdmin(Network.IMessage.Nick, Commands.AdminFlag.Administrator))
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: ghost | nick | sys | clean");
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: sys");
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "ghost")
 				{
-					if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
+					if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
 						return;
 
 					sSender.NickServGhost(IRCConfig.NickName, IRCConfig.NickServPassword);
@@ -132,7 +134,7 @@ namespace Schumix.Irc
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "nick")
 				{
-					if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Operator))
+					if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.HalfOperator))
 						return;
 
 					if(Network.IMessage.Info.Length < 6)
@@ -167,7 +169,7 @@ namespace Schumix.Irc
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "clean")
 				{
-					if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Administrator))
+					if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, Commands.AdminFlag.Administrator))
 						return;
 
 					GC.Collect();

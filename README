@@ -111,7 +111,7 @@ Ha mind ezekkel megvagyunk már csak inditanuk kell és használni a kódot :)
       Apróságok
 ---------------------
 
-- Az álltalam készített addonokhoz tartoznak álltalában konfig fájlok. Ezek is szintén a Configs mappába generálodnak és ott állíthatóak.
+- Az álltalam készített addonokhoz tartoznak álltalában konfig fájlok. Ezek is szintén a Configs mappába generálodnak és ott állíthatóak be.
 - A kódban továbbá elhelyezésre került egy bot parancs is. Ez a parancs az elsõdleges névbõl tevõdik össze. Példa rá: schumix2, help
   Fontos a parancs szerkezete <elsõdleges nick>, parancs
 - A kódhoz ki és be kapcsolható funkciók tartoznak. Ezt csak is gizárólag admin vezérelheti.

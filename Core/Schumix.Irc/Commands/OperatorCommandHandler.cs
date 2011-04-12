@@ -25,251 +25,9 @@ namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler
 	{
-		protected void HandleAdmin()
-		{
-			if(!Admin(Network.IMessage.Nick))
-				return;
-
-			CNick();
-			bool allapot = true;
-
-			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "hozzaferes")
-			{
-				if(Network.IMessage.Info.Length < 6)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a jelszó!");
-					return;
-				}
-
-				string nev = Network.IMessage.Nick;
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db != null)
-				{
-					string JelszoSql = db["Password"].ToString();
-
-					if(JelszoSql == sUtility.Sha1(Network.IMessage.Info[5]))
-					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Vhost = '{0}' WHERE Name = '{1}'", Network.IMessage.Host, nev.ToLower());
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáférés engedélyezve");
-					}
-					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáférés megtagadva");
-				}
-
-				allapot = false;
-			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "ujjelszo")
-			{
-				if(Network.IMessage.Info.Length < 6)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a régi jelszó!");
-					return;
-				}
-
-				if(Network.IMessage.Info.Length < 7)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva az új jelszó!");
-					return;
-				}
-
-				string nev = Network.IMessage.Nick;
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db != null)
-				{
-					string JelszoSql = db["Password"].ToString();
-
-					if(JelszoSql == sUtility.Sha1(Network.IMessage.Info[5]))
-					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Password = '{0}' WHERE Name = '{1}'", sUtility.Sha1(Network.IMessage.Info[6]), nev.ToLower());
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelszó sikereset meg lett változtatva erre: {0}", Network.IMessage.Info[6]);
-					}
-					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A mostani jelszó nem egyezik, modósitás megtagadva");
-				}
-
-				allapot = false;
-			}
-
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
-				return;
-
-			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "info")
-			{
-				int flag;
-				string nev = Network.IMessage.Nick;
-
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db != null)
-					flag = Convert.ToInt32(db["Flag"].ToString());
-				else
-					flag = -1;
-
-				if((AdminFlag)flag == AdminFlag.Operator)
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelenleg Operátor vagy.");
-				else if((AdminFlag)flag == AdminFlag.Administrator)
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelenleg Adminisztrátor vagy.");
-			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "lista")
-			{
-				var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
-				if(db != null)
-				{
-					string adminok = string.Empty;
-
-					for(int i = 0; i < db.Rows.Count; ++i)
-					{
-						var row = db.Rows[i];
-						string nev = row["Name"].ToString();
-						adminok += ", " + nev;
-					}
-
-					if(adminok.Length > 1 && adminok.Substring(0, 2) == ", ")
-						adminok = adminok.Remove(0, 2);
-
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Adminok: {0}", adminok);
-				}
-				else
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
-			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "add")
-			{
-				if(Network.IMessage.Info.Length < 6)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
-					return;
-				}
-
-				string nev = Network.IMessage.Info[5];
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db != null)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel az admin listán!");
-					return;
-				}
-
-				string pass = sUtility.GetRandomString();
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'ki')", nev.ToLower());
-
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Admin hozzáadva: {0}", nev);
-				sSendMessage.SendCMPrivmsg(nev, "Mostantól Schumix adminja vagy. A te mostani jelszavad: {0}", pass);
-				sSendMessage.SendCMPrivmsg(nev, "Ha megszeretnéd változtatni használd az {0}admin ujjelszo parancsot. Használata: {0}admin ujjelszo <régi> <új>", IRCConfig.CommandPrefix);
-				sSendMessage.SendCMPrivmsg(nev, "Admin nick élesítése: {0}admin hozzaferes <jelszó>", IRCConfig.CommandPrefix);
-			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "del")
-			{
-				if(Network.IMessage.Info.Length < 6)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
-					return;
-				}
-
-				string nev = Network.IMessage.Info[5];
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db == null)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen név nem létezik!");
-					return;
-				}
-
-				if(Admin(Network.IMessage.Nick, AdminFlag.Operator) && Admin(nev, AdminFlag.Administrator))
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem vagy Adminisztrátor!");
-					return;
-				}
-
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE Name = '{0}'", nev.ToLower());
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `hluzenet` WHERE nick = '{0}'", nev.ToLower());
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Admin törölve: {0}", nev);
-			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "rang")
-			{
-				if(Network.IMessage.Info.Length < 6)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
-					return;
-				}
-
-				if(Network.IMessage.Info.Length < 7)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs rang megadva!");
-					return;
-				}
-
-				string nev = Network.IMessage.Info[5].ToLower();
-				if(Admin(Network.IMessage.Nick, AdminFlag.Operator) && Admin(nev, AdminFlag.Administrator))
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem vagy Adminisztrátor!");
-					return;
-				}
-
-				int rang = Convert.ToInt32(Network.IMessage.Info[6]);
-		
-				if(Admin(Network.IMessage.Nick, AdminFlag.Operator) && Admin(nev, AdminFlag.Operator) && (AdminFlag)rang == AdminFlag.Administrator)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem vagy Adminisztrátor!");
-					return;
-				}
-		
-				if((AdminFlag)rang == AdminFlag.Administrator || (AdminFlag)rang == AdminFlag.Operator)
-				{
-					SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Flag = '{0}' WHERE Name = '{1}'", rang, nev);
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Rang sikeresen módosítva.");
-				}
-				else
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás rang!");
-			}
-			else
-			{
-				if(!allapot)
-					return;
-
-				if(Admin(Network.IMessage.Nick, AdminFlag.Operator))
-				{
-					string parancsok = string.Empty;
-
-					foreach(var command in CommandManager.GetOperatorCommandHandler())
-					{
-						if(command.Key == "admin")
-							continue;
-
-						parancsok += " | " + IRCConfig.CommandPrefix + command.Key;
-					}
-
-					if(parancsok.Length > 2 && parancsok.Substring(0, 3) == " | ")
-						parancsok = parancsok.Remove(0, 3);
-
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Operátor parancsok!");
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}", parancsok);
-				}
-				else if(Admin(Network.IMessage.Nick, AdminFlag.Administrator))
-				{
-					string parancsok = string.Empty;
-					string parancsok2 = string.Empty;
-
-					foreach(var command in CommandManager.GetOperatorCommandHandler())
-					{
-						if(command.Key == "admin")
-							continue;
-
-						parancsok += " | " + IRCConfig.CommandPrefix + command.Key;
-					}
-
-					if(parancsok.Length > 2 && parancsok.Substring(0, 3) == " | ")
-						parancsok = parancsok.Remove(0, 3);
-
-					foreach(var command in CommandManager.GetAdminCommandHandler())
-						parancsok2 += " | " + IRCConfig.CommandPrefix + command.Key;
-
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Adminisztrátor parancsok!");
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}{1}", parancsok, parancsok2);
-				}
-			}
-		}
-
 		protected void HandleFunkcio()
 		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
@@ -485,7 +243,7 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleChannel()
 		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			CNick();
@@ -625,19 +383,9 @@ namespace Schumix.Irc.Commands
 			}
 		}
 
-		protected void HandleSzinek()
-		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
-				return;
-
-			CNick();
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "1teszt1 2teszt2 3teszt3 4teszt4 5teszt5 6teszt6 7teszt7 8teszt8");
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "9teszt9 10teszt10 11teszt11 12teszt12 13teszt13 14teszt14 15teszt15");
-		}
-
 		protected void HandleSznap()
 		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
@@ -660,62 +408,9 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs ilyen ember!");
 		}
 
-		protected void HandleNick()
-		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
-				return;
-
-			if(Network.IMessage.Info.Length < 5)
-			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
-				return;
-			}
-
-			string nick = Network.IMessage.Info[4];
-			sNickInfo.ChangeNick(nick);
-			sSender.Nick(nick);
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nick megváltoztatása erre: {0}", nick);
-		}
-
-		protected void HandleJoin()
-		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
-				return;
-
-			if(Network.IMessage.Info.Length < 5)
-			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a csatorna neve!");
-				return;
-			}
-
-			ChannelPrivmsg = Network.IMessage.Channel;
-
-			if(Network.IMessage.Info.Length == 5)
-				sSender.Join(Network.IMessage.Info[4]);
-			else if(Network.IMessage.Info.Length == 6)
-				sSender.Join(Network.IMessage.Info[4], Network.IMessage.Info[5]);
-
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kapcsolodás ehez a csatonához: {0}", Network.IMessage.Info[4]);
-		}
-
-		protected void HandleLeft()
-		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
-				return;
-
-			if(Network.IMessage.Info.Length < 5)
-			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a csatorna neve!");
-				return;
-			}
-
-			sSender.Part(Network.IMessage.Info[4]);
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Lelépés erről a csatornáról: {0}", Network.IMessage.Info[4]);
-		}
-
 		protected void HandleKick()
 		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			if(Network.IMessage.Info.Length < 5)
@@ -749,7 +444,7 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleMode()
 		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			if(Network.IMessage.Info.Length < 5)

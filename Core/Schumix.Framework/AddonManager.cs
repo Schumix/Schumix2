@@ -32,7 +32,7 @@ namespace Schumix.Framework
 	/// <summary>
 	/// Class used to manage (load, unload, reload) plugins dynamically.
 	/// </summary>
-	public static class AddonManager
+	public sealed class AddonManager
 	{
 		private static readonly List<ISchumixAddon> _addons = new List<ISchumixAddon>();
 		private static readonly object LoadLock = new object();

@@ -18,28 +18,20 @@
  */
 
 using System;
-//using System.IO;
-//using System.Collections.Generic;
-//using System.Text;
 using System.Xml;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
-/*using Atom.Core;
-using Atom.Utils;
-using Atom.AdditionalElements;
-using Atom.Core.Collections;*/
 
 namespace Schumix.TesztAddon.Commands
 {
 	public class TesztCommand : CommandInfo
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		//private readonly Utility sUtility = Singleton<Utility>.Instance;
 
 		protected void Teszt()
 		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 				return;
 
 			CNick();
@@ -65,22 +57,13 @@ namespace Schumix.TesztAddon.Commands
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "rss")
 			{
-				//string url = sUtility.GetUrl("https://github.com/megax/Schumix2/commits/master.atom");
-				/*var feed = AtomFeed.Load(new Uri("https://github.com/megax/Schumix2/commits/master.atom"));
+				var rss = new XmlDocument();
+				//rss.Load("http://www.assembla.com/spaces/Sandshroud/stream.rss");
+				rss.Load("http://github.com/megax/Schumix2/commits/master.atom");
 
-				var entry = feed.Entries[0]; // the first entry.
-
-				var tm = entry.Links[0].HRef.ToString().Split('/');
-				var hash = tm[(tm.Length-1)];*/
-				XmlDocument RSSXml = new XmlDocument();
-				//RSSXml.Load("http://www.assembla.com/spaces/Sandshroud/stream.rss");
-				RSSXml.Load("http://github.com/megax/Schumix2/commits/master.atom");
-
-				XmlNode RSSSubNode;
-				//RSSSubNode = RSSXml.SelectSingleNode("rss/channel/item/title");
-				RSSSubNode = RSSXml.SelectSingleNode("feed/title");
-				string title = RSSSubNode != null ? RSSSubNode.InnerText : "";
-				//sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, hash);
+				//var node = rss.SelectSingleNode("rss/channel/item/title");
+				var node = rss.SelectSingleNode("feed/title");
+				string title = node != null ? node.InnerText : string.Empty;
 				Console.WriteLine(title);
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "vhost")

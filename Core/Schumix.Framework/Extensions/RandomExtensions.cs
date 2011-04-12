@@ -37,7 +37,7 @@ namespace Schumix.Framework.Extensions
 		/// <returns>The casted object.</returns>
 		public static T Cast<T>(this object ob)
 		{
-			return (T) ob;
+			return (T)ob;
 		}
 
 		/// <summary>

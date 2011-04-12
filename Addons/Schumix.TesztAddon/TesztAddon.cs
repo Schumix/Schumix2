@@ -53,7 +53,7 @@ namespace Schumix.TesztAddon
 		public void HandleHelp()
 		{
 			// Adminisztrátor parancsok
-			if(Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+			if(IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 			{
 				if(Network.IMessage.Info[4].ToLower() == "teszt")
 				{
@@ -62,28 +62,28 @@ namespace Schumix.TesztAddon
 			}
 		}
 
+		/// <summary>
+		/// Name of the addon
+		/// </summary>
 		public string Name
 		{
-			get
-			{
-				return "TesztAddon";
-			}
+			get { return "TesztAddon"; }
 		}
 
+		/// <summary>
+		/// Author of the addon.
+		/// </summary>
 		public string Author
 		{
-			get
-			{
-				return "Megax";
-			}
+			get { return "Megax"; }
 		}
 
+		/// <summary>
+		/// Website where the addon is available.
+		/// </summary>
 		public string Website
 		{
-			get
-			{
-				return "http://www.github.com/megax/Schumix2";
-			}
+			get { return "http://www.github.com/megax/Schumix2"; }
 		}
 	}
 }

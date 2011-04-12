@@ -29,7 +29,7 @@ namespace Schumix.SvnRssAddon.Commands
 		public void Help()
 		{
 			// Operátor parancsok segítségei
-			if(Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 			{
 				if(Network.IMessage.Info[4].ToLower() == "svn")
 				{
