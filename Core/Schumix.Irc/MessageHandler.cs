@@ -81,10 +81,10 @@ namespace Schumix.Irc
 			//Log.Notice("MessageHandler", "Teszt.");
 		}
 
-        /// <summary>
-        ///     Ha a ConsoleLog be van kapcsolva, akkor
-        ///     kiírja a console-ra az IRC szerverről fogadott információkat.
-        /// </summary>
+		/// <summary>
+		///     Ha a ConsoleLog be van kapcsolva, akkor
+		///     kiírja a console-ra az IRC szerverről fogadott információkat.
+		/// </summary>
 		protected void HandleNotice()
 		{
 			foreach(var plugin in AddonManager.GetPlugins())
@@ -121,26 +121,26 @@ namespace Schumix.Irc
 			}
 		}
 
-        /// <summary>
-        ///     Válaszol, ha valaki pingeli a botot.
-        /// </summary>
+		/// <summary>
+		///     Válaszol, ha valaki pingeli a botot.
+		/// </summary>
 		protected void HandlePing()
 		{
 			sSender.Ping(Network.IMessage.Args);
 		}
 
-        /// <summary>
-        ///     Válaszol, ha valaki pongolja a botot.
-        /// </summary>
+		/// <summary>
+		///     Válaszol, ha valaki pongolja a botot.
+		/// </summary>
 		protected void HandlePong()
 		{
 			sSender.Pong(Network.IMessage.Args);
 			Network.Status = true;
 		}
 
-        /// <summary>
-        ///     Ha ismeretlen parancs jön, akkor kiírja.
-        /// </summary>
+		/// <summary>
+		///     Ha ismeretlen parancs jön, akkor kiírja.
+		/// </summary>
 		protected void HandleIsmeretlenParancs()
 		{
 			if(ConsoleLog.CLog)
@@ -153,10 +153,10 @@ namespace Schumix.Irc
 			}
 		}
 
-        /// <summary>
-        ///     Ha a bot elsődleges nickje már használatban van, akkor
-        ///     átlép a másodlagosra, ha az is akkor a harmadlagosra.
-        /// </summary>
+		/// <summary>
+		///     Ha a bot elsődleges nickje már használatban van, akkor
+		///     átlép a másodlagosra, ha az is akkor a harmadlagosra.
+		/// </summary>
 		protected void HandleNickError()
 		{
 			Log.Error("MessageHandler", "{0}-t mar hasznalja valaki!", sNickInfo.NickStorage);
@@ -166,9 +166,9 @@ namespace Schumix.Irc
 			sSender.Nick(nick);
 		}
 
-        /// <summary>
+		/// <summary>
 		///     Ha bannolva van egy szobából, akkor feljegyzi.
-        /// </summary>
+		/// </summary>
 		protected void HandleChannelBan()
 		{
 			if(Network.IMessage.Info.Length < 4)
@@ -179,9 +179,9 @@ namespace Schumix.Irc
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
-        /// <summary>
-        ///     Ha hibás egy IRC szobának a jelszava, akkor feljegyzi.
-        /// </summary>
+		/// <summary>
+		///     Ha hibás egy IRC szobának a jelszava, akkor feljegyzi.
+		/// </summary>
 		protected void HandleNoChannelPassword()
 		{
 			if(Network.IMessage.Info.Length < 4)
@@ -192,9 +192,9 @@ namespace Schumix.Irc
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
-        /// <summary>
-        ///     Kigyűjti éppen hol van fent a nick.
-        /// </summary>
+		/// <summary>
+		///     Kigyűjti éppen hol van fent a nick.
+		/// </summary>
 		protected void HandleMWhois()
 		{
 			if(Network.IMessage.Info.Length < 5)
@@ -211,12 +211,12 @@ namespace Schumix.Irc
 			WhoisPrivmsg = sNickInfo.NickStorage;
 		}
 
-        /// <summary>
-        ///     
-        /// </summary>
-        /// <param name="channel"></param>
-        /// <param name="user"></param>
-        /// <param name="args"></param>
+		/// <summary>
+		///     
+		/// </summary>
+		/// <param name="channel"></param>
+		/// <param name="user"></param>
+		/// <param name="args"></param>
 		private void LogToFile(string channel, string user, string args)
 		{
 			if(Network.sChannelInfo.FSelect("log") && Network.sChannelInfo.FSelect("log", channel))
