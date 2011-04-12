@@ -62,10 +62,7 @@ namespace Schumix.SvnRssAddon
 
 		public string Name
 		{
-			get
-			{
-				return _name;
-			}
+			get { return _name; }
 		}
 
 		public void Start()

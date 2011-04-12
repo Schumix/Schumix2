@@ -70,10 +70,7 @@ namespace Schumix.HgRssAddon
 
 		public string Name
 		{
-			get
-			{
-				return _name;
-			}
+			get { return _name; }
 		}
 
 		public void Start()
