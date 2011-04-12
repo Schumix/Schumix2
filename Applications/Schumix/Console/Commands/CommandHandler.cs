@@ -218,7 +218,7 @@ namespace Schumix.Console.Commands
 				}
 
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE Name = '{0}'", nev.ToLower());
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `hlmessage` WHERE nick = '{0}'", nev.ToLower());
+				SchumixBase.DManager.QueryFirstRow("DELETE FROM `hlmessage` WHERE Name = '{0}'", nev.ToLower());
 				Log.Notice("Console", "Admin törölve: {0}", nev);
 			}
 			else if(Info.Length >= 2 && Info[1].ToLower() == "rang")

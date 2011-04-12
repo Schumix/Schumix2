@@ -193,7 +193,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE Name = '{0}'", nev.ToLower());
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `hlmessage` WHERE nick = '{0}'", nev.ToLower());
+				SchumixBase.DManager.QueryFirstRow("DELETE FROM `hlmessage` WHERE Name = '{0}'", nev.ToLower());
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Admin törölve: {0}", nev);
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "rang")
