@@ -110,7 +110,7 @@ namespace Schumix.ExtraAddon.Commands
 					sSendMessage.SendCMPrivmsg(channel, "Jó estét {0}", Network.IMessage.Nick);
 				else
 				{
-					if(Admin(Network.IMessage.Nick))
+					if(IsAdmin(Network.IMessage.Nick))
 						sSendMessage.SendCMPrivmsg(channel, "Üdv főnök");
 					else
 						sSendMessage.SendCMPrivmsg(channel, "{0} {1}", Koszones, Network.IMessage.Nick);

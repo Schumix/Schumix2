@@ -29,7 +29,7 @@ namespace Schumix.Irc.Commands
 	{
 		protected void HandlePlugin()
 		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 				return;
 
 			CNick();
@@ -57,7 +57,7 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleKikapcs()
 		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 				return;
 
 			CNick();

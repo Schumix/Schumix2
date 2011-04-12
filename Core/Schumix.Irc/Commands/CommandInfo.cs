@@ -24,8 +24,9 @@ namespace Schumix.Irc.Commands
 {	
 	public enum AdminFlag
 	{
-		Operator      = 0,
-		Administrator = 1
+		HalfOperator  = 0,
+		Operator      = 1,
+		Administrator = 2
 	};
 
 	public class CommandInfo
@@ -35,7 +36,7 @@ namespace Schumix.Irc.Commands
 			//Log.Notice("CommandInfo", "CommandInfo elindult.");
 		}
 
-		protected bool Admin(string Nick)
+		protected bool IsAdmin(string Nick)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM adminok WHERE Name = '{0}'", Nick.ToLower());
 			if(db != null)
@@ -44,7 +45,7 @@ namespace Schumix.Irc.Commands
 			return false;
 		}
 
-		protected bool Admin(string Nick, AdminFlag Flag)
+		protected bool IsAdmin(string Nick, AdminFlag Flag)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM adminok WHERE Name = '{0}'", Nick.ToLower());
 			if(db != null)
@@ -60,7 +61,7 @@ namespace Schumix.Irc.Commands
 			return false;
 		}
 
-		protected bool Admin(string Nick, string Vhost, AdminFlag Flag)
+		protected bool IsAdmin(string Nick, string Vhost, AdminFlag Flag)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM adminok WHERE Name = '{0}'", Nick.ToLower());
 			if(db != null)
@@ -72,7 +73,9 @@ namespace Schumix.Irc.Commands
 
 				int flag = Convert.ToInt32(db["Flag"]);
 
-				if(flag == 1 && Flag == 0)
+				if((flag == 1 && Flag == AdminFlag.HalfOperator) ||
+					(flag == 2 && Flag == AdminFlag.HalfOperator) ||
+					(flag == 2 && Flag == AdminFlag.Operator))
 					return true;
 
 				if(Flag != (AdminFlag)flag)

@@ -34,7 +34,7 @@ namespace Schumix.SvnRssAddon
 		public void Setup()
 		{
 			new AddonConfig(Name + ".xml");
-			CommandManager.AdminCRegisterHandler("svn", HandleSvn);
+			CommandManager.OperatorCRegisterHandler("svn", HandleSvn);
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM svninfo");
 			if(db != null)
@@ -66,7 +66,7 @@ namespace Schumix.SvnRssAddon
 
 		public void Destroy()
 		{
-			CommandManager.AdminCRemoveHandler("svn");
+			CommandManager.OperatorCRemoveHandler("svn");
 
 			foreach(var list in RssList)
 				list.Stop();
@@ -87,28 +87,28 @@ namespace Schumix.SvnRssAddon
 			Help();
 		}
 
+		/// <summary>
+		/// Name of the addon
+		/// </summary>
 		public string Name
 		{
-			get
-			{
-				return "SvnRssAddon";
-			}
+			get { return "SvnRssAddon"; }
 		}
 
+		/// <summary>
+		/// Author of the addon.
+		/// </summary>
 		public string Author
 		{
-			get
-			{
-				return "Megax";
-			}
+			get { return "Megax"; }
 		}
 
+		/// <summary>
+		/// Website where the addon is available.
+		/// </summary>
 		public string Website
 		{
-			get
-			{
-				return "http://www.github.com/megax/Schumix2";
-			}
+			get { return "http://www.github.com/megax/Schumix2"; }
 		}
 	}
 }

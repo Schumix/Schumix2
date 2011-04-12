@@ -39,7 +39,7 @@ namespace Schumix.ExtraAddon
 			Network.PublicRegisterHandler("PART",               HandleLeft);
 			Network.PublicRegisterHandler("KICK",               HandleKick);
 
-			CommandManager.AdminCRegisterHandler("autofunkcio", sFunctions.HandleAutoFunkcio);
+			CommandManager.HalfOperatorCRegisterHandler("autofunkcio", sFunctions.HandleAutoFunkcio);
 		}
 
 		public void Destroy()
@@ -47,7 +47,7 @@ namespace Schumix.ExtraAddon
 			Network.PublicRemoveHandler("JOIN");
 			Network.PublicRemoveHandler("PART");
 			Network.PublicRemoveHandler("KICK");
-			CommandManager.AdminCRemoveHandler("autofunkcio");
+			CommandManager.HalfOperatorCRemoveHandler("autofunkcio");
 		}
 
 		public void HandlePrivmsg()
@@ -111,28 +111,28 @@ namespace Schumix.ExtraAddon
 			sFunctions.Help();
 		}
 
+		/// <summary>
+		/// Name of the addon
+		/// </summary>
 		public string Name
 		{
-			get
-			{
-				return "ExtraAddon";
-			}
+			get { return "ExtraAddon"; }
 		}
 
+		/// <summary>
+		/// Author of the addon.
+		/// </summary>
 		public string Author
 		{
-			get
-			{
-				return "Megax";
-			}
+			get { return "Megax"; }
 		}
 
+		/// <summary>
+		/// Website where the addon is available.
+		/// </summary>
 		public string Website
 		{
-			get
-			{
-				return "http://www.github.com/megax/Schumix2";
-			}
+			get { return "http://www.github.com/megax/Schumix2"; }
 		}
 	}
 }

@@ -28,11 +28,17 @@ namespace Schumix.Irc.Commands
 	public class CommandManager : CommandHandler
 	{
 		private static readonly Dictionary<string, Action> _PublicCommandHandler = new Dictionary<string, Action>();
+		private static readonly Dictionary<string, Action> _HalfOperatorCommandHandler = new Dictionary<string, Action>();
 		private static readonly Dictionary<string, Action> _OperatorCommandHandler = new Dictionary<string, Action>();
 		private static readonly Dictionary<string, Action> _AdminCommandHandler = new Dictionary<string, Action>();
 		public static Dictionary<string, Action> GetPublicCommandHandler()
 		{
 			return _PublicCommandHandler;
+		}
+
+		public static Dictionary<string, Action> GetHalfOperatorCommandHandler()
+		{
+			return _HalfOperatorCommandHandler;
 		}
 
 		public static Dictionary<string, Action> GetOperatorCommandHandler()
@@ -54,37 +60,39 @@ namespace Schumix.Irc.Commands
 		private void InitHandler()
 		{
 			// Public
-			PublicCRegisterHandler("xbot",       HandleXbot);
-			PublicCRegisterHandler("info",       HandleInfo);
-			PublicCRegisterHandler("help",       HandleHelp);
-			PublicCRegisterHandler("ido",        HandleIdo);
-			PublicCRegisterHandler("datum",      HandleDatum);
-			PublicCRegisterHandler("roll",       HandleRoll);
-			PublicCRegisterHandler("calc",       HandleCalc);
-			PublicCRegisterHandler("sha1",       HandleSha1);
-			PublicCRegisterHandler("md5",        HandleMd5);
-			PublicCRegisterHandler("irc",        HandleIrc);
-			PublicCRegisterHandler("whois",      HandleWhois);
-			PublicCRegisterHandler("uzenet",     HandleUzenet);
-			PublicCRegisterHandler("keres",      HandleKeres);
-			PublicCRegisterHandler("fordit",     HandleFordit);
-			PublicCRegisterHandler("prime",      HandlePrime);
+			PublicCRegisterHandler("xbot",         HandleXbot);
+			PublicCRegisterHandler("info",         HandleInfo);
+			PublicCRegisterHandler("help",         HandleHelp);
+			PublicCRegisterHandler("ido",          HandleIdo);
+			PublicCRegisterHandler("datum",        HandleDatum);
+			PublicCRegisterHandler("roll",         HandleRoll);
+			PublicCRegisterHandler("calc",         HandleCalc);
+			PublicCRegisterHandler("sha1",         HandleSha1);
+			PublicCRegisterHandler("md5",          HandleMd5);
+			PublicCRegisterHandler("irc",          HandleIrc);
+			PublicCRegisterHandler("whois",        HandleWhois);
+			PublicCRegisterHandler("uzenet",       HandleUzenet);
+			PublicCRegisterHandler("keres",        HandleKeres);
+			PublicCRegisterHandler("fordit",       HandleFordit);
+			PublicCRegisterHandler("prime",        HandlePrime);
+
+			// Half Operator
+			HalfOperatorCRegisterHandler("admin",  HandleAdmin);
+			HalfOperatorCRegisterHandler("szinek", HandleSzinek);
+			HalfOperatorCRegisterHandler("nick",   HandleNick);
+			HalfOperatorCRegisterHandler("join",   HandleJoin);
+			HalfOperatorCRegisterHandler("left",   HandleLeft);
 
 			// Operator
-			OperatorCRegisterHandler("admin",      HandleAdmin);
 			OperatorCRegisterHandler("funkcio",    HandleFunkcio);
 			OperatorCRegisterHandler("channel",    HandleChannel);
 			OperatorCRegisterHandler("sznap",      HandleSznap);
-			OperatorCRegisterHandler("szinek",     HandleSzinek);
-			OperatorCRegisterHandler("nick",       HandleNick);
-			OperatorCRegisterHandler("join",       HandleJoin);
-			OperatorCRegisterHandler("left",       HandleLeft);
 			OperatorCRegisterHandler("kick",       HandleKick);
 			OperatorCRegisterHandler("mode",       HandleMode);
 
 			// Admin
-			AdminCRegisterHandler("plugin",     HandlePlugin);
-			AdminCRegisterHandler("kikapcs",    HandleKikapcs);
+			AdminCRegisterHandler("plugin",        HandlePlugin);
+			AdminCRegisterHandler("kikapcs",       HandleKikapcs);
 
 			Log.Notice("CommandManager", "Osszes Command handler regisztralva.");
 		}
@@ -97,6 +105,16 @@ namespace Schumix.Irc.Commands
 		public static void PublicCRemoveHandler(string code)
 		{
 			_PublicCommandHandler.Remove(code);
+		}
+
+		public static void HalfOperatorCRegisterHandler(string code, Action method)
+		{
+			_HalfOperatorCommandHandler.Add(code, method);
+		}
+
+		public static void HalfOperatorCRemoveHandler(string code)
+		{
+			_HalfOperatorCommandHandler.Remove(code);
 		}
 
 		public static void OperatorCRegisterHandler(string code, Action method)
@@ -125,6 +143,8 @@ namespace Schumix.Irc.Commands
 			{
 				if(_PublicCommandHandler.ContainsKey(handler))
 					_PublicCommandHandler[handler].Invoke();
+				else if(_HalfOperatorCommandHandler.ContainsKey(handler))
+					_HalfOperatorCommandHandler[handler].Invoke();
 				else if(_OperatorCommandHandler.ContainsKey(handler))
 					_OperatorCommandHandler[handler].Invoke();
 				else if(_AdminCommandHandler.ContainsKey(handler))

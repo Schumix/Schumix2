@@ -30,7 +30,7 @@ namespace Schumix.SvnRssAddon.Commands
 
 		public void HandleSvn()
 		{
-			if(!Admin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
 			CNick();

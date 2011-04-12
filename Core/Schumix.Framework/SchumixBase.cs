@@ -29,7 +29,7 @@ namespace Schumix.Framework
 		public static DatabaseManager DManager { get; private set; }
 		public static Time time { get; private set; }
 		public static bool IIdo = true;
-		public static string Title = "Schumix2 IRC Bot";
+		public static string Title { get { return "Schumix2 IRC Bot"; } }
 
 		public SchumixBase()
 		{
