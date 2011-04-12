@@ -29,8 +29,6 @@ namespace Schumix.API
 		/// <summary>
 		/// Creates the addon.
 		/// </summary>
-		/// <param name="conn">IRC connection.</param>
-		/// <param name="channels">Channel list.</param>
 		void Setup();
 		/// <summary>
 		/// Destroys the addon, releasing all resources.
