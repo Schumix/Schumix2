@@ -30,7 +30,7 @@ namespace Schumix.Irc
 
 		protected void HandlePrivmsg()
 		{
-			foreach(var plugin in AddonManager.GetPlugins())
+			foreach(var plugin in sAddonManager.GetPlugins())
 				plugin.HandlePrivmsg();
 
 			if(ConsoleLog.CLog)

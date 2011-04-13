@@ -26,6 +26,7 @@ namespace Schumix.Framework
 {
 	public class SchumixBase
 	{
+		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		public static DatabaseManager DManager { get; private set; }
 		public static Time time { get; private set; }
 		public static bool IIdo = true;
@@ -47,8 +48,8 @@ namespace Schumix.Framework
 				if(AddonsConfig.Enabled)
 				{
 					Log.Debug("SchumixBase", "AddonManager betoltese folyamatban...");
-					AddonManager.Initialize();
-					AddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory);
+					sAddonManager.Initialize();
+					sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory);
 				}
 			}
 			catch(Exception e)
