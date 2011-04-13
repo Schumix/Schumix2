@@ -34,19 +34,21 @@ namespace Schumix.Framework
 	/// </summary>
 	public sealed class AddonManager
 	{
-		private static readonly List<ISchumixAddon> _addons = new List<ISchumixAddon>();
-		private static readonly object LoadLock = new object();
+		private readonly List<ISchumixAddon> _addons = new List<ISchumixAddon>();
+		private readonly object LoadLock = new object();
 
 		/// <summary>
 		/// List of found assemblies.
 		/// </summary>
-		public static readonly List<Assembly> Assemblies = new List<Assembly>();
-		public static List<ISchumixAddon> GetPlugins() { return _addons; }
+		public readonly List<Assembly> Assemblies = new List<Assembly>();
+		public List<ISchumixAddon> GetPlugins() { return _addons; }
+
+		private AddonManager() {}
 
 		/// <summary>
 		/// Initializes the Plugin manager.
 		/// </summary>
-		public static void Initialize()
+		public void Initialize()
 		{
 			SetupAppDomainDebugHandlers();
 		}
@@ -55,13 +57,13 @@ namespace Schumix.Framework
 		/// Loads plugins from the specified directory.
 		/// </summary>
 		/// <param name="directory">The directory to check in</param>
-		public static void LoadPluginsFromDirectory(DirectoryInfo directory) { LoadPluginsFromDirectory(directory.FullName);}
+		public void LoadPluginsFromDirectory(DirectoryInfo directory) { LoadPluginsFromDirectory(directory.FullName);}
 
 		/// <summary>
 		/// Loads plugins from the specified directory.
 		/// </summary>
 		/// <param name="directory">The directory to check in</param>
-		public static bool LoadPluginsFromDirectory(string directory)
+		public bool LoadPluginsFromDirectory(string directory)
 		{
 			try
 			{
@@ -142,7 +144,7 @@ namespace Schumix.Framework
 		/// <summary>
 		/// Unloads all addons.
 		/// </summary>
-		public static bool UnloadPlugins()
+		public bool UnloadPlugins()
 		{
 			lock(LoadLock)
 			{
@@ -160,7 +162,7 @@ namespace Schumix.Framework
 			return true;
 		}
 
-		private static void SetupAppDomainDebugHandlers()
+		private void SetupAppDomainDebugHandlers()
 		{
 			AppDomain.CurrentDomain.DomainUnload += (sender, args) =>
 				Log.Debug("AddonManager", "AppDomain::DomainUnload, hash: {0}", AppDomain.CurrentDomain.GetHashCode());

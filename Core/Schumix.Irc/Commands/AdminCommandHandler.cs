@@ -36,21 +36,21 @@ namespace Schumix.Irc.Commands
 
 			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "load")
 			{
-				if(AddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
+				if(sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 3done.");
 				else
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 5failed.");
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "unload")
 			{
-				if(AddonManager.UnloadPlugins())
+				if(sAddonManager.UnloadPlugins())
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 3done.");
 				else
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 5failed.");
 			}
 			else
 			{
-				foreach(var plugin in AddonManager.GetPlugins())
+				foreach(var plugin in sAddonManager.GetPlugins())
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: 3loaded.", plugin.Name.Replace("Plugin", string.Empty));
 			}
 		}

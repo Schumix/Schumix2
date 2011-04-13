@@ -29,6 +29,7 @@ namespace Schumix.Irc.Commands
 		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		protected readonly Sender sSender = Singleton<Sender>.Instance;
 		protected readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		protected string ChannelPrivmsg { get; set; }
 		protected string WhoisPrivmsg { get; set; }
 
@@ -45,7 +46,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			foreach(var plugin in AddonManager.GetPlugins())
+			foreach(var plugin in sAddonManager.GetPlugins())
 				plugin.HandleHelp();
 
 			if(Network.IMessage.Info[4].ToLower() == "xbot")

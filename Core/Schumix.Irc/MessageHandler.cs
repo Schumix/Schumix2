@@ -87,7 +87,7 @@ namespace Schumix.Irc
 		/// </summary>
 		protected void HandleNotice()
 		{
-			foreach(var plugin in AddonManager.GetPlugins())
+			foreach(var plugin in sAddonManager.GetPlugins())
 				plugin.HandleNotice();
 
 			if(ConsoleLog.CLog)

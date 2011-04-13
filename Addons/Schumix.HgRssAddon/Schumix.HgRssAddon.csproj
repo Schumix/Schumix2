@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B16E08ED-1366-4EC9-9C7C-9D724EF2F3C2}</ProjectGuid>
+    <ProjectGuid>{DE409C76-0C99-49AE-BB95-5CA1AD968B13}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.HgRssAddon</RootNamespace>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
