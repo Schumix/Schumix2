@@ -47,7 +47,7 @@ namespace Schumix.Irc.Commands
 				{
 					string JelszoSql = db["Password"].ToString();
 
-					if(JelszoSql == sUtility.Sha1(Network.IMessage.Info[5]))
+					if(JelszoSql == sUtilities.Sha1(Network.IMessage.Info[5]))
 					{
 						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Vhost = '{0}' WHERE Name = '{1}'", Network.IMessage.Host, nev.ToLower());
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáférés engedélyezve");
@@ -78,9 +78,9 @@ namespace Schumix.Irc.Commands
 				{
 					string JelszoSql = db["Password"].ToString();
 
-					if(JelszoSql == sUtility.Sha1(Network.IMessage.Info[5]))
+					if(JelszoSql == sUtilities.Sha1(Network.IMessage.Info[5]))
 					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Password = '{0}' WHERE Name = '{1}'", sUtility.Sha1(Network.IMessage.Info[6]), nev.ToLower());
+						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Password = '{0}' WHERE Name = '{1}'", sUtilities.Sha1(Network.IMessage.Info[6]), nev.ToLower());
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelszó sikereset meg lett változtatva erre: {0}", Network.IMessage.Info[6]);
 					}
 					else
@@ -149,8 +149,8 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				string pass = sUtility.GetRandomString();
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
+				string pass = sUtilities.GetRandomString();
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtilities.Sha1(pass));
 				SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'ki')", nev.ToLower());
 
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Admin hozzáadva: {0}", nev);

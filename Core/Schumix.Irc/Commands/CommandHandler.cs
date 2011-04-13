@@ -25,7 +25,7 @@ namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler : CommandInfo
 	{
-		private readonly Utility sUtility = Singleton<Utility>.Instance;
+		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		protected readonly Sender sSender = Singleton<Sender>.Instance;
 		protected readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;

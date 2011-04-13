@@ -118,7 +118,9 @@ namespace Schumix.CompilerAddon.Commands
 			}
 			catch(Exception)
 			{
-				// egyenlőre semmi
+				var sw = new StreamWriter(Console.OpenStandardOutput());
+				sw.AutoFlush = true;
+				Console.SetOut(sw);
 			}
 		}
 

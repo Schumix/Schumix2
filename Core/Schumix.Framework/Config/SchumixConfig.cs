@@ -23,6 +23,6 @@ namespace Schumix.Framework.Config
 {
 	public sealed class Verzio
 	{
-		public static string SchumixVerzio { get { return "2.7.8"; } }
+		public static string SchumixVerzio { get { return "2.7.9"; } }
 	}
 }

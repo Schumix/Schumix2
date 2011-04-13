@@ -36,7 +36,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Schumix")]
 [assembly: AssemblyCopyright("Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>")]
 [assembly: AssemblyTrademark("GNU General Public License")]
-[assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 

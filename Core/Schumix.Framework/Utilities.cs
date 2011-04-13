@@ -27,9 +27,9 @@ using System.Text.RegularExpressions;
 
 namespace Schumix.Framework
 {
-	public sealed class Utility
+	public sealed class Utilities
 	{
-		private Utility() {}
+		private Utilities() {}
 
 		public string GetUrl(string url)
 		{
@@ -166,6 +166,36 @@ namespace Schumix.Framework
 			}
 
 			return p;
+		}
+
+		public string GetPlatform()
+		{
+			string Platform = string.Empty;
+			var pid = Environment.OSVersion.Platform;
+
+			switch(pid)
+			{
+				case PlatformID.Win32NT:
+				case PlatformID.Win32S:
+				case PlatformID.Win32Windows:
+				case PlatformID.WinCE:
+					Platform = "Windows";
+					break;
+				case PlatformID.Unix:
+					Platform = "Linux";
+					break;
+				case PlatformID.MacOSX:
+					Platform = "MacOSX";
+					break;
+				case PlatformID.Xbox:
+					Platform = "Xbox";
+					break;
+				default:
+					Platform = "Ismeretlen";
+					break;
+			}
+
+			return Platform;
 		}
 	}
 }
