@@ -36,7 +36,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("Schumix")]
 [assembly: AssemblyCopyright("Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>")]
 [assembly: AssemblyTrademark("GNU General Public License")]
-[assembly: AssemblyCulture("")]
 
 [assembly: CLSCompliant(true)]
 

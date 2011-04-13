@@ -159,7 +159,7 @@ namespace Schumix.Irc.Commands
 			if(adat.Substring(0, 1) == " ")
 				adat = adat.Remove(0, 1);
 
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtility.Sha1(adat));
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtilities.Sha1(adat));
 		}
 
 		protected void HandleMd5()
@@ -178,7 +178,7 @@ namespace Schumix.Irc.Commands
 			if(adat.Substring(0, 1) == " ")
 				adat = adat.Remove(0, 1);
 
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtility.Md5(adat));
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtilities.Md5(adat));
 		}
 
 		protected void HandleIrc()
@@ -256,7 +256,7 @@ namespace Schumix.Irc.Commands
 			if(adat.Substring(0, 1) == " ")
 				adat = adat.Remove(0, 1);
 
-			string url = sUtility.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=", adat);
+			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=", adat);
 
 			var Regex = new Regex(@".unescapedUrl.\:.(?<url>\S+).,.url.+.titleNoFormatting.\:.(?<title>.+).,.content");
 			if(!Regex.IsMatch(url))
@@ -294,7 +294,7 @@ namespace Schumix.Irc.Commands
 			if(adat.Substring(0, 1) == " ")
 				adat = adat.Remove(0, 1);
 
-			string url = sUtility.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=", adat, "&langpair=" + Network.IMessage.Info[4]);
+			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=", adat, "&langpair=" + Network.IMessage.Info[4]);
 
 			var Regex = new Regex(@"\{.translatedText.\:.(?<text>.+).\},");
 			if(!Regex.IsMatch(url))
@@ -322,7 +322,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-            bool prim = sUtility.IsPrime(Convert.ToInt32(Num));
+            bool prim = sUtilities.IsPrime(Convert.ToInt32(Num));
 
 			if(!prim)
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0} nem primszám.", Network.IMessage.Info[4]);

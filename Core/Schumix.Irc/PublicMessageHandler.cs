@@ -74,40 +74,19 @@ namespace Schumix.Irc
 
 				if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "sys")
 				{
-					string Platform = string.Empty;
-					var pid = Environment.OSVersion.Platform;
-
-					switch(pid)
-					{
-						case PlatformID.Win32NT:
-						case PlatformID.Win32S:
-						case PlatformID.Win32Windows:
-						case PlatformID.WinCE:
-							Platform = "Windows";
-							break;
-						case PlatformID.Unix:
-							Platform = "Linux";
-							break;
-						default:
-							Platform = "Ismeretlen";
-							break;
-					}
-
 					var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
-
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Verzió: 10{0}", Verzio.SchumixVerzio);
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Platform: {0}", Platform);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Platform: {0}", sUtilities.GetPlatform());
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3OSVerzió: {0}", Environment.OSVersion.ToString());
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Programnyelv: c#");
 
-					/*if(memory >= 20)
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat: 8{0} MB", memory);
-					else if(memory >= 30)
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat: 5{0} MB", memory);
+					if(memory >= 40)
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat:5 {0} MB", memory);
+					else if(memory >= 20)
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat:8 {0} MB", memory);
 					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat: 3{0} MB", memory);*/
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat:3 {0} MB", memory);
 
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat: {0} MB", memory);
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Uptime: {0}", SchumixBase.time.Uptime());
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "help")

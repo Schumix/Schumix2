@@ -30,7 +30,7 @@ namespace Schumix.Console.Commands
 	public class CommandHandler : ConsoleLog
 	{
 		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly Utility sUtility = Singleton<Utility>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		private readonly Network _network;
 		protected string[] Info;
@@ -80,29 +80,9 @@ namespace Schumix.Console.Commands
 
 		protected void HandleSys()
 		{
-			string Platform = string.Empty;
-			var pid = Environment.OSVersion.Platform;
-
-			switch(pid)
-			{
-				case PlatformID.Win32NT:
-				case PlatformID.Win32S:
-				case PlatformID.Win32Windows:
-				case PlatformID.WinCE:
-					Platform = "Windows";
-					break;
-				case PlatformID.Unix:
-					Platform = "Linux";
-					break;
-				default:
-					Platform = "Ismeretlen";
-					break;
-			}
-
 			var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
-
 			Log.Notice("Console", "Verzio: {0}", Verzio.SchumixVerzio);
-			Log.Notice("Console", "Platform: {0}", Platform);
+			Log.Notice("Console", "Platform: {0}", sUtilities.GetPlatform());
 			Log.Notice("Console", "OSVerzio: {0}", Environment.OSVersion.ToString());
 			Log.Notice("Console", "Programnyelv: c#");
 			Log.Notice("Console", "Memoria hasznalat: {0} MB", memory);
@@ -195,8 +175,8 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				string pass = sUtility.GetRandomString();
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtility.Sha1(pass));
+				string pass = sUtilities.GetRandomString();
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtilities.Sha1(pass));
 				SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'ki')", nev.ToLower());
 				Log.Notice("Console", "Admin hozzaadva: {0}", nev);
 				Log.Notice("Console", "Mostani jelszo: {0}", pass);
@@ -488,7 +468,7 @@ namespace Schumix.Console.Commands
 		{
 			SchumixBase.time.SaveUptime();
 			Log.Notice("Console", "Viszlat :(");
-			sSender.Quit("Console: leállás.");
+			sSender.Quit("Console: Program leállítása.");
 			Thread.Sleep(1000);
 			Environment.Exit(1);
 		}

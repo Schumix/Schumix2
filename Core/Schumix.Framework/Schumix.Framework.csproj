@@ -115,7 +115,6 @@
     <Compile Include="Config\SchumixConfig.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Singleton.cs" />
-    <Compile Include="Utility.cs" />
     <Compile Include="SchumixBase.cs" />
     <Compile Include="ConsoleLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -127,6 +126,7 @@
     <Compile Include="Exceptions\SchumixException.cs" />
     <Compile Include="AddonManager.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
