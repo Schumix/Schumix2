@@ -62,6 +62,12 @@ namespace Schumix.Framework
 			return String.Format("{0} nap, {1} óra, {2} perc, {3} másodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
 		}
 
+		public string CUptime()
+		{
+			var Time = DateTime.Now - StartTime;
+			return String.Format("{0} nap, {1} ora, {2} perc, {3} masodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
+		}
+
 		public void SaveUptime()
 		{
 			string datum = string.Empty;

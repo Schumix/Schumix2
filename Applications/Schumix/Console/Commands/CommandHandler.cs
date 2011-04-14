@@ -87,7 +87,7 @@ namespace Schumix.Console.Commands
 			Log.Notice("Console", "Programnyelv: c#");
 			Log.Notice("Console", "Memoria hasznalat: {0} MB", memory);
 			Log.Notice("Console", "Thread count: {0}", Process.GetCurrentProcess().Threads.Count);
-			Log.Notice("Console", "Uptime: {0}", SchumixBase.time.Uptime());
+			Log.Notice("Console", "Uptime: {0}", SchumixBase.time.CUptime());
 		}
 
 		protected void HandleCsatorna()
