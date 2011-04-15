@@ -19,6 +19,9 @@
         <Wait>
             <MessageSending>50</MessageSending>
         </Wait>
+        <Command>
+            <Prefix>$</Prefix>
+        </Command>
     </Irc>
     <Log>
         <LogLevel>2</LogLevel>
@@ -37,9 +40,6 @@
         <Enabled>false</Enabled>
         <FileName>Schumix.db3</FileName>
     </SQLite>
-    <Command>
-        <Prefix>$</Prefix>
-    </Command>
     <Addons>
         <Enabled>true</Enabled>
         <Ignore>SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon</Ignore>
