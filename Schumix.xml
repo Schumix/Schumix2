@@ -42,7 +42,7 @@
     </Command>
     <Addons>
         <Enabled>true</Enabled>
-        <Ignore>SvnRssAddon,HgRssAddon,TesztAddon</Ignore>
+        <Ignore>SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon</Ignore>
         <Directory>Addons</Directory>
     </Addons>
 </Schumix>

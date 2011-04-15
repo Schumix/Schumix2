@@ -208,7 +208,7 @@ namespace Schumix.Framework.Config
 						// <Plugins>
 						w.WriteStartElement("Addons");
 						w.WriteElementString("Enabled", "true");
-						w.WriteElementString("Ignore", "SvnRssAddon,HgRssAddon,TesztAddon");
+						w.WriteElementString("Ignore", "SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon");
 						w.WriteElementString("Directory", "Addons");
 
 						// </Plugins>

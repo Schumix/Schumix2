@@ -316,61 +316,6 @@ namespace Schumix.Irc.Commands
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Megváltoztatja a nick rangját megadott channelen.");
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}mode <rang> <név vagy nevek>", IRCConfig.CommandPrefix);
 				}
-				/*else if(Network.IMessage.Info[4].ToLower() == "git")
-				{
-					if(Network.IMessage.Info.Length < 6)
-					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Git rss-ek kezelése.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Git parancsai: add | del | info | lista | new | stop | reload");
-						res.clear();
-						return;
-					}
-		
-					if(Network.IMessage.Info[5].ToLower() == "add")
-					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Új channel hozzáadása az rss-hez.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}git add <rss neve> <tipus> <channel>", IRCConfig.CommandPrefix);
-					}
-					else if(Network.IMessage.Info[5].ToLower() == "del")
-					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem használatos channel eltávolítása az rss-ből.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}git del <rss neve> <channel>", IRCConfig.CommandPrefix);
-					}
-					else if(Network.IMessage.Info[5].ToLower() == "info")
-					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja az rss-ek állapotát.");
-					}
-					else if(Network.IMessage.Info[5].ToLower() == "lista")
-					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Választható rss-ek listája.");
-					}
-					else if(Network.IMessage.Info[5].ToLower() == "new")
-					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Új rss betöltése.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}git new <rss neve> <tipus>", IRCConfig.CommandPrefix);
-					}
-					else if(Network.IMessage.Info[5].ToLower() == "stop")
-					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Rss leállítása.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}git stop <rss neve> <tipus>", IRCConfig.CommandPrefix);
-					}
-					else if(Network.IMessage.Info[5].ToLower() == "reload")
-					{
-						if(Network.IMessage.Info.Length < 7)
-						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Megadott rss újratöltése.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Git reload parancsai: all");
-							res.clear();
-							return;
-						}
-		
-						else if(Network.IMessage.Info[6].ToLower() == "all")
-						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Minden rss újratöltése.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}git reload <rss neve> <tipus>", IRCConfig.CommandPrefix);
-						}
-					}
-				}*/
 			}
 		
 			// Adminisztrátor parancsok
