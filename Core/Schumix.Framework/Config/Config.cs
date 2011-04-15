@@ -73,7 +73,7 @@ namespace Schumix.Framework.Config
 					bool UseHostServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Enabled").InnerText);
 					bool HostServAllapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText);
 					int MessageSending = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").InnerText);
-					string CommandPrefix = xmldoc.SelectSingleNode("Schumix/Command/Prefix").InnerText;
+					string CommandPrefix = xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").InnerText;
 
 					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, MasterChannel, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, MessageSending, CommandPrefix);
 
@@ -166,6 +166,13 @@ namespace Schumix.Framework.Config
 						// </Wait>
 						w.WriteEndElement();
 
+						// <Parancs>
+						w.WriteStartElement("Command");
+						w.WriteElementString("Prefix", "$");
+
+						// </Parancs>
+						w.WriteEndElement();
+
 						// </Irc>
 						w.WriteEndElement();
 
@@ -196,13 +203,6 @@ namespace Schumix.Framework.Config
 						w.WriteElementString("FileName", "Schumix.db3");
 
 						// </SQLite>
-						w.WriteEndElement();
-
-						// <Parancs>
-						w.WriteStartElement("Command");
-						w.WriteElementString("Prefix", "$");
-
-						// </Parancs>
 						w.WriteEndElement();
 
 						// <Plugins>

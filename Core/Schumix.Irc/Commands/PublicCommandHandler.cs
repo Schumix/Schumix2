@@ -322,7 +322,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-            bool prim = sUtilities.IsPrime(Convert.ToInt32(Num));
+			bool prim = sUtilities.IsPrime(Convert.ToInt32(Num));
 
 			if(!prim)
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0} nem primszám.", Network.IMessage.Info[4]);
