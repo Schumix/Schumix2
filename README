@@ -60,6 +60,8 @@ HostServ:
          Vhost: Értéke true vagy false lehet. Ezen rész határózza meg hogy a nickhez tartotó vhost aktiválásra kerüljön-e. Alapértelmezés: false
 Wait:
      MessageSending: Üzenet küldésének késleltetése. Legföbbként flood ellen van.
+Command:
+        Prefix: A parancsok elõjele. Alapértelmezés: $ (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: $xbot)
 
 # Log #
 LogLevel: Meghatározza hogy a konzolba milyen üzenetek kerülnek kiirásra. Alapértelmezés: 2
@@ -81,9 +83,6 @@ Database: Az adatbázis amiben megtalálhatók a bothoz tartozó táblák.
 # SQLite #
 Enabled: Értéke true vagy false lehet. Meghatározza hogy sqlite alapú-e az adatbázis. Alapértelmezés: false
 FileName: Az sqlite fájl neve.
-
-# Command #
-Prefix: A parancsok elõjele. Alapértelmezés: $ (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: $xbot)
 
 # Addons #
 Enabled: Értéke true vagy false lehet. Engedélyezi az addonok betöltését. Alapértelmezés: true
