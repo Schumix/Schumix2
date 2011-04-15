@@ -38,7 +38,9 @@ namespace Schumix.Libraries
 			var x = new SHA1CryptoServiceProvider();
 			var data = Encoding.ASCII.GetBytes(value);
 			data = x.ComputeHash(data);
-			//x.Dispose();
+#if !MONO
+			x.Dispose();
+#endif
 			var ret = string.Empty;
 
 			for(var i = 0; i < data.Length; i++)
@@ -55,7 +57,9 @@ namespace Schumix.Libraries
 			var x = new MD5CryptoServiceProvider();
 			var data = Encoding.ASCII.GetBytes(value);
 			data = x.ComputeHash(data);
-			//x.Dispose();
+#if !MONO
+			x.Dispose();
+#endif
 			var ret = string.Empty;
 
 			for(var i = 0; i < data.Length; i++)
