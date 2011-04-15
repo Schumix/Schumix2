@@ -173,10 +173,6 @@ namespace Schumix.SvnRssAddon.Commands
 					if(db != null)
 					{
 						string[] csatorna = db["Channel"].ToString().Split(',');
-
-						if(csatorna.Length < 1)
-							return;
-
 						string adat = string.Empty;
 
 						for(int x = 0; x < csatorna.Length; x++)
@@ -185,7 +181,11 @@ namespace Schumix.SvnRssAddon.Commands
 						if(adat.Length > 0 && adat.Substring(0, 1) == ",")
 							adat = adat.Remove(0, 1);
 
-						adat += "," + Network.IMessage.Info[7].ToLower();
+						if(csatorna.Length == 1 && adat == string.Empty)
+							adat += Network.IMessage.Info[7].ToLower();
+						else
+							adat += "," + Network.IMessage.Info[7].ToLower();
+
 						SchumixBase.DManager.QueryFirstRow("UPDATE svninfo SET Channel = '{0}' WHERE Name = '{1}'", adat, Network.IMessage.Info[6].ToLower());
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Csatorna sikeresen hozzáadva.");
 					}
@@ -210,10 +210,6 @@ namespace Schumix.SvnRssAddon.Commands
 					if(db != null)
 					{
 						string[] csatorna = db["Channel"].ToString().Split(',');
-
-						if(csatorna.Length < 1)
-							return;
-
 						string adat = string.Empty;
 
 						for(int x = 0; x < csatorna.Length; x++)
