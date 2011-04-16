@@ -41,7 +41,7 @@ namespace Schumix.Irc.Commands
 
 			if(Network.IMessage.Info.Length == 4)
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ha a parancs mögé irod a megadott parancs nevét vagy a nevet és alparancsát információt add a használatáról.");
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ha a parancs mögé írod a megadott parancs nevét vagy a nevet és alparancsát információt add a használatáról.");
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Fő parancsom: {0}xbot", IRCConfig.CommandPrefix);
 				return;
 			}
@@ -62,22 +62,6 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A parancs segítségével megtudhatjuk hogy egy nick milyen channelon van fent.");
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}whois <nick>", IRCConfig.CommandPrefix);
 			}
-			/*else if(Network.IMessage.Info[4].ToLower() == "jegyzet")
-			{
-				if(Network.IMessage.Info.Length < 6)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Különböző adatokat jegyezhetünk fel a segítségével.");
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet parancsai: kod");
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet beküldése: {0}jegyzet <amit feljegyeznél>", IRCConfig.CommandPrefix);
-					return;
-				}
-		
-				if(Network.IMessage.Info[5].ToLower() == "kod")
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet kiolvasásához szükséges kód.", IRCConfig.CommandPrefix);
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet kod <kod amit kaptál>", IRCConfig.CommandPrefix);
-				}
-			}*/
 			else if(Network.IMessage.Info[4].ToLower() == "roll")
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Csöp szorakozás a wowból, már ha valaki felismeri :P");

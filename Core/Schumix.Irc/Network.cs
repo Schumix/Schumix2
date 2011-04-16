@@ -240,64 +240,69 @@ namespace Schumix.Irc
 
 				while(true)
 				{
-					if(m_running)
+					try
 					{
-						if((IrcMessage = reader.ReadLine()) == null)
-							break;
-
-						IrcCommand = IrcMessage.Split(' ');
-
-						if(IrcCommand[0].Substring(0, 1) == ":")
-							IrcCommand[0] = IrcCommand[0].Remove(0, 1);
-
-						IMessage.Hostmask = IrcCommand[0];
-						userdata = IMessage.Hostmask.Split('!');
-
-						IMessage.Args = string.Empty;
-						if(IrcCommand.Length > 2)
-							IMessage.Channel = IrcCommand[2];
-
-						IMessage.Nick = userdata[0];
-						if(userdata.Length > 1)
+						if(m_running)
 						{
-							hostdata = userdata[1].Split('@');
-							IMessage.User = hostdata[0];
-							IMessage.Host = hostdata[1];
+							if((IrcMessage = reader.ReadLine()) == null)
+								break;
+
+							IrcCommand = IrcMessage.Split(' ');
+
+							if(IrcCommand[0].Substring(0, 1) == ":")
+								IrcCommand[0] = IrcCommand[0].Remove(0, 1);
+
+							IMessage.Hostmask = IrcCommand[0];
+							userdata = IMessage.Hostmask.Split('!');
+
+							IMessage.Args = string.Empty;
+							if(IrcCommand.Length > 2)
+								IMessage.Channel = IrcCommand[2];
+
+							IMessage.Nick = userdata[0];
+							if(userdata.Length > 1)
+							{
+								hostdata = userdata[1].Split('@');
+								IMessage.User = hostdata[0];
+								IMessage.Host = hostdata[1];
+							}
+
+							for(int i = 3; i < IrcCommand.Length; i++)
+								IMessage.Args += " " + IrcCommand[i];
+
+							opcode = IrcCommand[1];
+							IMessage.Info = IrcCommand;
+
+							if(IMessage.Args.Length > 1 && IMessage.Args.Substring(0, 2) == " :")
+								IMessage.Args = IMessage.Args.Remove(0, 2);
+
+							if(_IRCHandler.ContainsKey(opcode))
+								_IRCHandler[opcode].Invoke();
+							else
+							{
+								if(ConsoleLog.CLog)
+									Log.Notice("Opcodes", "Received unhandled opcode: {0}", opcode);
+							}
 						}
-
-						for(int i = 3; i < IrcCommand.Length; i++)
-							IMessage.Args += " " + IrcCommand[i];
-
-						opcode = IrcCommand[1];
-						IMessage.Info = IrcCommand;
-
-						if(IMessage.Args.Length > 1 && IMessage.Args.Substring(0, 2) == " :")
-							IMessage.Args = IMessage.Args.Remove(0, 2);
-
-						if(_IRCHandler.ContainsKey(opcode))
-							_IRCHandler[opcode].Invoke();
 						else
-						{
-							if(ConsoleLog.CLog)
-								Log.Notice("Opcodes", "Received unhandled opcode: {0}", opcode);
-						}
+							Thread.Sleep(100);
 					}
-					else
-						Thread.Sleep(100);
+					catch(Exception e)
+					{
+						if(m_running)
+							Log.Error("Opcodes", "Hiba oka: {0}", e.Message);
+					}
 				}
 			}
 			catch(Exception e)
 			{
-				if(m_running)
-					Log.Error("Opcodes", "Hiba oka: {0}", e.Message);
-
+				Log.Error("Opcodes", "Vegzetes hiba oka: {0}", e.Message);
 				Opcodes();
-				Thread.Sleep(100);
 			}
 		}
 
         /// <summary>
-        ///     Pingeli az IRC szervert 15 másodpercenként.
+        ///     Pingeli az IRC szervert 30 másodpercenként.
         /// </summary>
 		private void Ping()
 		{

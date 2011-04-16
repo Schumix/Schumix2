@@ -68,14 +68,14 @@ namespace Schumix.Framework.Database
 		/// </summary>
 		/// <param name="sql">The query</param>
 		/// <returns>Result from the database.</returns>
-		public DataTable Query(string sql)
+		public DataTable Query(string query)
 		{
 			try
 			{
 				var adapter = new SQLiteDataAdapter();
 				var command = Connection.CreateCommand();
-				SQLiteEscape(sql);
-				command.CommandText = sql;
+				SQLiteEscape(query);
+				command.CommandText = query;
 				adapter.SelectCommand = command;
 
 				var table = new DataTable();
@@ -104,12 +104,12 @@ namespace Schumix.Framework.Database
 			return !table.Equals(null) && table.Rows.Count > 0 ? table.Rows[0] : null;
 		}
 
-		private string SQLiteEscape(string usString)
+		private string SQLiteEscape(string s)
 		{
-			if(usString == null)
+			if(s == null)
 				return null;
 
-			return Regex.Replace(usString, @"[\r\n\x00\x1a\\'""]", @"\$0");
+			return Regex.Replace(s, @"[\r\n\x00\x1a\\'""]", @"\$0");
 		}
 	}
 }
