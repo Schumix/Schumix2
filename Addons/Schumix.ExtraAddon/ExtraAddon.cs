@@ -30,6 +30,7 @@ namespace Schumix.ExtraAddon
 	public class ExtraAddon : IrcHandler, ISchumixAddon
 	{
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
+		private readonly Jegyzet sJegyzet = Singleton<Jegyzet>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 
 		public void Setup()
@@ -40,6 +41,7 @@ namespace Schumix.ExtraAddon
 			Network.PublicRegisterHandler("KICK",               HandleKick);
 
 			CommandManager.HalfOperatorCRegisterHandler("autofunkcio", sFunctions.HandleAutoFunkcio);
+			CommandManager.PublicCRegisterHandler("jegyzet",           sJegyzet.HandleJegyzet);
 		}
 
 		public void Destroy()
@@ -48,6 +50,7 @@ namespace Schumix.ExtraAddon
 			Network.PublicRemoveHandler("PART");
 			Network.PublicRemoveHandler("KICK");
 			CommandManager.HalfOperatorCRemoveHandler("autofunkcio");
+			CommandManager.PublicCRemoveHandler("jegyzet");
 		}
 
 		public void HandlePrivmsg()

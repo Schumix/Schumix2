@@ -28,6 +28,64 @@ namespace Schumix.ExtraAddon.Commands
 	{
 		public void Help()
 		{
+			if(Network.IMessage.Info[4].ToLower() == "jegyzet")
+			{
+				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Különböző adatokat jegyezhetünk fel a segítségével.");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet parancsai: user | kod");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet beküldése: {0}jegyzet <egy kód amit megjegyzünk pl: schumix> <amit feljegyeznél>", IRCConfig.CommandPrefix);
+					return;
+				}
+
+				if(Network.IMessage.Info[5].ToLower() == "user")
+				{
+					if(Network.IMessage.Info.Length < 7)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet felhasználó kezelése.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "User parancsai: register | remove | hozzaferes | ujjelszo");
+						return;
+					}
+
+					if(Network.IMessage.Info[6].ToLower() == "register")
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Új felhasználó hozzáadása.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet user register <jelszó>", IRCConfig.CommandPrefix);
+					}
+					else if(Network.IMessage.Info[6].ToLower() == "remove")
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Felhasználó eltávolítása.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet user remove <jelszó>", IRCConfig.CommandPrefix);
+					}
+					else if(Network.IMessage.Info[6].ToLower() == "hozzaferes")
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az jegyzet parancsok használatához szükséges jelszó ellenörző és vhost aktiváló.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet user hozzaferes <jelszó>", IRCConfig.CommandPrefix);
+					}
+					else if(Network.IMessage.Info[6].ToLower() == "ujjelszo")
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Felhasználó jelszavának cseréje ha új kéne a régi helyet.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet user ujjelszo <régi jelszó> <új jelszó>", IRCConfig.CommandPrefix);
+					}
+				}
+				else if(Network.IMessage.Info[5].ToLower() == "kod")
+				{
+					if(Network.IMessage.Info.Length < 7)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet kiolvasásához szükséges kód.", IRCConfig.CommandPrefix);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet kod <jegyzet kódja>", IRCConfig.CommandPrefix);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kod parancsai: del");
+						return;
+					}
+
+					if(Network.IMessage.Info[6].ToLower() == "del")
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Törli a jegyzetet kód alapján.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet kod del <jegyzet kódja>", IRCConfig.CommandPrefix);
+					}
+				}
+			}
+
 			// Fél Operátor parancsok segítségei
 			if(IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.HalfOperator))
 			{

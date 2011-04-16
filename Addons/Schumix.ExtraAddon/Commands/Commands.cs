@@ -21,6 +21,7 @@ using System;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 
 namespace Schumix.ExtraAddon.Commands
 {
@@ -28,7 +29,6 @@ namespace Schumix.ExtraAddon.Commands
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
-
 		private Functions() {}
 
 		public void HandleAutoFunkcio()
@@ -448,6 +448,288 @@ namespace Schumix.ExtraAddon.Commands
 					}
 				}
 			}
+		}
+	}
+
+	public sealed class Jegyzet : CommandInfo
+	{
+		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private Jegyzet() {}
+
+		public void HandleJegyzet()
+		{
+			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
+				return;
+			}
+
+			CNick();
+
+			if(Network.IMessage.Info[4].ToLower() == "info")
+			{
+				if(!Figyelmeztetes())
+					return;
+
+				if(!IsUser(Network.IMessage.Nick, Network.IMessage.Host))
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az adataid nem megfelelőek ezért nem folytatható a parancs!");
+					return;
+				}
+
+				var db = SchumixBase.DManager.Query("SELECT Code FROM notes");
+				if(db != null)
+				{
+					string kodok = string.Empty;
+
+					for(int i = 0; i < db.Rows.Count; ++i)
+					{
+						var row = db.Rows[i];
+						string kod = row["Code"].ToString();
+						kodok += ", " + kod;
+					};
+
+					if(kodok.Length > 1 && kodok.Substring(0, 2) == ", ")
+						kodok = kodok.Remove(0, 2);
+
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzetek kódjai: {0}", kodok);
+				}
+				else
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+			}
+			else if(Network.IMessage.Info[4].ToLower() == "user")
+			{
+				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
+					return;
+				}
+
+				if(Network.IMessage.Info[5].ToLower() == "hozzaferes")
+				{
+					if(Network.IMessage.Info.Length < 7)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a jelszó!");
+						return;
+					}
+
+					string nev = Network.IMessage.Nick;
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
+					if(db != null)
+					{
+						string JelszoSql = db["Password"].ToString();
+
+						if(JelszoSql == sUtilities.Sha1(Network.IMessage.Info[6]))
+						{
+							SchumixBase.DManager.QueryFirstRow("UPDATE notes_users SET Vhost = '{0}' WHERE Name = '{1}'", Network.IMessage.Host, nev.ToLower());
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáférés engedélyezve");
+						}
+						else
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáférés megtagadva");
+					}
+				}
+				else if(Network.IMessage.Info[5].ToLower() == "ujjelszo")
+				{
+					if(Network.IMessage.Info.Length < 7)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a régi jelszó!");
+						return;
+					}
+
+					if(Network.IMessage.Info.Length < 8)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva az új jelszó!");
+						return;
+					}
+
+					string nev = Network.IMessage.Nick;
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
+					if(db != null)
+					{
+						string JelszoSql = db["Password"].ToString();
+
+						if(JelszoSql == sUtilities.Sha1(Network.IMessage.Info[6]))
+						{
+							SchumixBase.DManager.QueryFirstRow("UPDATE notes_users SET Password = '{0}' WHERE Name = '{1}'", sUtilities.Sha1(Network.IMessage.Info[7]), nev.ToLower());
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelszó sikereset meg lett változtatva erre: {0}", Network.IMessage.Info[7]);
+						}
+						else
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A mostani jelszó nem egyezik, modósitás megtagadva");
+					}
+				}
+				else if(Network.IMessage.Info[5].ToLower() == "register")
+				{
+					if(Network.IMessage.Info.Length < 7)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs jelszó megadva!");
+						return;
+					}
+
+					string nev = Network.IMessage.Nick;
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes_users WHERE Name = '{0}'", nev.ToLower());
+					if(db != null)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Már szerepelsz a felhasználói listán!");
+						return;
+					}
+
+					string pass = Network.IMessage.Info[6];
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `notes_users`(Name, Password, Vhost) VALUES ('{0}', '{1}', '{2}')", nev.ToLower(), sUtilities.Sha1(pass), Network.IMessage.Host);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen hozzá vagy adva a felhasználói listához.");
+				}
+				else if(Network.IMessage.Info[5].ToLower() == "remove")
+				{
+					if(Network.IMessage.Info.Length < 7)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a jelszó a törlés megerősítéséhez!");
+						return;
+					}
+
+					string nev = Network.IMessage.Nick;
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes_users WHERE Name = '{0}'", nev.ToLower());
+					if(db == null)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem szerepelsz a felhasználói listán!");
+						return;
+					}
+
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
+					if(db != null)
+					{
+						string jelszo = db["Password"].ToString();
+						if(jelszo != sUtilities.Sha1(Network.IMessage.Info[6]))
+						{
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A jelszó nem egyezik meg az adatbázisban tárolttal!");
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Törlés meg lett szakítva!");
+							return;
+						}
+					}
+
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `notes_users` WHERE Name = '{0}'", nev.ToLower());
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `notes` WHERE Name = '{0}'", nev.ToLower());
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen törölve lett a felhasználód.");
+				}
+			}
+			else if(Network.IMessage.Info[4].ToLower() == "kod")
+			{
+				if(!Figyelmeztetes())
+					return;
+
+				if(!IsUser(Network.IMessage.Nick, Network.IMessage.Host))
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az adataid nem megfelelőek ezért nem folytatható a parancs!");
+					return;
+				}
+
+				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kód nincs megadva!");
+					return;
+				}
+
+				if(Network.IMessage.Info[5].ToLower() == "del")
+				{
+					if(Network.IMessage.Info.Length < 7)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kód nincs megadva!");
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}'", Network.IMessage.Info[6].ToLower());
+					if(db == null)
+					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen kód nem szerepel a listán!");
+						return;
+					}
+
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `notes` WHERE Code = '{0}'", Network.IMessage.Info[6].ToLower());
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A jegyzet sikeresen törlésre került.");
+				}
+				else
+				{
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Note FROM notes WHERE Code = '{0}'", Network.IMessage.Info[5].ToLower());
+					if(db != null)
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet: {0}", db["Note"].ToString());
+					else
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+				}
+			}
+			else
+			{
+				if(!Figyelmeztetes())
+					return;
+
+				if(!IsUser(Network.IMessage.Nick, Network.IMessage.Host))
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az adataid nem megfelelőek ezért nem folytatható a parancs!");
+					return;
+				}
+
+				if(Network.IMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva jegyzetnek semmi se!");
+					return;
+				}
+
+				string adat = string.Empty;
+				string kod = Network.IMessage.Info[4];
+
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}'", kod.ToLower());
+				if(db != null)
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A jegyzet kódneve már szerepel az adatbázisban!");
+					return;
+				}
+
+				for(int i = 5; i < Network.IMessage.Info.Length; i++)
+					adat += " " + Network.IMessage.Info[i];
+
+				if(adat.Substring(0, 1) == " ")
+					adat = adat.Remove(0, 1);
+
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `notes`(Code, Name, Note) VALUES ('{0}', '{1}', '{2}')", kod.ToLower(), Network.IMessage.Nick.ToLower(), adat);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet kódja: {0}", kod);
+			}
+		}
+
+		private bool IsUser(string Name)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM notes_users WHERE Name = '{0}'", Name.ToLower());
+			if(db != null)
+				return true;
+
+			return false;
+		}
+
+		private bool IsUser(string Name, string Vhost)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost FROM notes_users WHERE Name = '{0}'", Name.ToLower());
+			if(db != null)
+			{
+				string vhost = db["Vhost"].ToString();
+
+				if(Vhost != vhost)
+					return false;
+
+				return true;
+			}
+
+			return false;
+		}
+
+		private bool Figyelmeztetes()
+		{
+			if(!IsUser(Network.IMessage.Nick))
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelenleg nem szerepelsz a jegyzetek felhasználói listáján!");
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ahoz hogy hozzáad magad nem kell mást tenned mint az alábbi parancsot végrehajtani. (Lehetöleg privát üzenetként ne hogy más megtudja.)");
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}jegyzet user register <jelszó>", IRCConfig.CommandPrefix);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Felhasználói adatok frissitése (ha nem fogadná el adataidat) pedig: {0}jegyzet user hozzaferes <jelszó>", IRCConfig.CommandPrefix);
+				return false;
+			}
+
+			return true;
 		}
 	}
 }

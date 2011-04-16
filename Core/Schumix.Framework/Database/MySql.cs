@@ -95,12 +95,12 @@ namespace Schumix.Framework.Database
 			return !table.Equals(null) && table.Rows.Count > 0 ? table.Rows[0] : null;
 		}
 
-		private string MySqlEscape(string usString)
+		private string MySqlEscape(string s)
 		{
-			if(usString == null)
+			if(s == null)
 				return null;
 
-			return Regex.Replace(usString, @"[\r\n\x00\x1a\\'""]", @"\$0");
+			return Regex.Replace(s, @"[\r\n\x00\x1a\\'""]", @"\$0");
 		}
 	}
 }
