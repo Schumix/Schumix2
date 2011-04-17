@@ -33,6 +33,7 @@ namespace Schumix.CompilerAddon.Commands
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
+		private readonly Regex regex2 = new Regex(@"^\{(?<code>.+)\}.+$");
 
 #if MONO
 		private readonly string Referenced = "using System; using System.Threading; using System.Reflection; using System.Linq; " +
@@ -52,6 +53,8 @@ namespace Schumix.CompilerAddon.Commands
 
 				if(regex.IsMatch(Network.IMessage.Args))
 					adat = regex.Match(Network.IMessage.Args).Groups["code"].ToString();
+				else if(regex2.IsMatch(Network.IMessage.Args))
+					adat = regex2.Match(Network.IMessage.Args).Groups["code"].ToString();
 
 				if(Tiltas(adat))
 					return;

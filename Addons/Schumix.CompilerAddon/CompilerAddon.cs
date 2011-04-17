@@ -32,6 +32,7 @@ namespace Schumix.CompilerAddon
 	public class CompilerAddon : Compiler, ISchumixAddon
 	{
 		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
+		private readonly Regex regex2 = new Regex(@"^\{(?<code>.+)\}.+$");
 
 		public void Setup()
 		{
@@ -51,6 +52,13 @@ namespace Schumix.CompilerAddon
 					return;
 
 				if(regex.IsMatch(Network.IMessage.Args))
+				{
+					var thread = new Thread(CompilerCommand);
+					thread.Start();
+					thread.Join(1000);
+					thread.Abort();
+				}
+				else if(regex2.IsMatch(Network.IMessage.Args))
 				{
 					var thread = new Thread(CompilerCommand);
 					thread.Start();
