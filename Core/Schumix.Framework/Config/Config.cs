@@ -57,8 +57,8 @@ namespace Schumix.Framework.Config
 
 					new LogConfig(LogLevel, LogDirectory, IrcLogDirectory, IrcLog);
 
-					Log.Debug("Config", ">> {0}", configfile);
 					Log.Init();
+					Log.Debug("Config", ">> {0}", configfile);
 
 					Log.Notice("Config", "Config fajl betoltese.");
 					string Server = xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText;
