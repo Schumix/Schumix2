@@ -124,7 +124,7 @@ namespace Schumix.CompilerAddon.Config
 			CompilerEnabled = compilerenabled;
 			MaxAllocatingE  = maxallocatinge;
 			MaxAllocatingM  = maxallocatingm;
-			Log.Notice("Compile", "Compile beallitasai betoltve.");
+			Log.Notice("CompilerConfig", "Compile beallitasai betoltve.");
 		}
 	}
 }
