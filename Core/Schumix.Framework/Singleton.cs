@@ -20,6 +20,7 @@
 using System;
 using System.Reflection;
 using Schumix.Framework.Exceptions;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework
 {
@@ -66,7 +67,7 @@ namespace Schumix.Framework
 		{
 			get
 			{
-				if(_instance == null)
+				if(_instance.IsNull())
 				{
 					lock(_lock)
 					{
@@ -82,7 +83,7 @@ namespace Schumix.Framework
 							Log.Error("Singleton", "{0}", e.Message);
 						}
 
-						if(constructor == null || constructor.IsAssembly) // Also exclude internal constructors.
+						if(constructor.IsNull() || constructor.IsAssembly) // Also exclude internal constructors.
 							Log.Error("Singleton", "A private or protected constructor is missing for '{0}'.", typeof(T).Name);
 
 						_instance = (T)constructor.Invoke(null);
