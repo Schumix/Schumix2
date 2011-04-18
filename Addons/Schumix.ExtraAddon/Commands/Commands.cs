@@ -22,6 +22,7 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.ExtraAddon.Commands
 {
@@ -55,7 +56,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(Network.IMessage.Info[5].ToLower() == "info")
 				{
 					var db = SchumixBase.DManager.Query("SELECT Name, Enabled FROM hlmessage");
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string Nevek = string.Empty;
 
@@ -78,7 +79,7 @@ namespace Schumix.ExtraAddon.Commands
 				else if(Network.IMessage.Info[5].ToLower() == "update")
 				{
 					var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
-					if(db != null)
+					if(!db.IsNull())
 					{
 						for(int i = 0; i < db.Rows.Count; ++i)
 						{
@@ -86,7 +87,7 @@ namespace Schumix.ExtraAddon.Commands
 							string nev = row["Name"].ToString();
 
 							var db1 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM hlmessage WHERE Name = '{0}'", nev);
-							if(db1 == null)
+							if(db1.IsNull())
 								SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'ki')", nev);
 						}
 
@@ -109,15 +110,8 @@ namespace Schumix.ExtraAddon.Commands
 				}
 				else
 				{
-					string adat = string.Empty;
-					for(int i = 5; i < Network.IMessage.Info.Length; i++)
-						adat += " " + Network.IMessage.Info[i];
-
-					if(adat.Substring(0, 1) == " ")
-						adat = adat.Remove(0, 1);
-
 					string nev = Network.IMessage.Nick.ToLower();
-					SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Info` = '{0}', `Enabled` = 'be' WHERE Name = '{1}'", adat, nev);
+					SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Info` = '{0}', `Enabled` = 'be' WHERE Name = '{1}'", Network.IMessage.Info.SplitToString(5, " "), nev);
 					SchumixBase.DManager.QueryFirstRow("UPDATE `schumix` SET `funkcio_status` = 'be' WHERE funkcio_nev = 'hl'");
 					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", Network.sChannelInfo.ChannelFunkciok("hl", "be", Network.IMessage.Channel), Network.IMessage.Channel);
 					Network.sChannelInfo.ChannelFunkcioReload();
@@ -151,20 +145,13 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel a kick listán!");
 						return;
 					}
 
-					string adat = string.Empty;
-					for(int i = 7; i < Network.IMessage.Info.Length; i++)
-						adat += " " + Network.IMessage.Info[i];
-
-					if(adat.Substring(0, 1) == " ")
-						adat = adat.Remove(0, 1);
-
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[6].ToLower(), Network.IMessage.Channel, adat);
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[6].ToLower(), Network.IMessage.Channel, Network.IMessage.Info.SplitToString(7, " "));
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listához a név hozzáadva: {0}", Network.IMessage.Info[6]);
 				}
 				else if(Network.IMessage.Info[5].ToLower() == "del")
@@ -176,7 +163,7 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
-					if(db == null)
+					if(db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen név nem létezik!");
 						return;
@@ -188,7 +175,7 @@ namespace Schumix.ExtraAddon.Commands
 				else if(Network.IMessage.Info[5].ToLower() == "info")
 				{
 					var db = SchumixBase.DManager.Query("SELECT Name FROM kicklist WHERE Channel = '{0}'", Network.IMessage.Channel);
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string Nevek = string.Empty;
 
@@ -236,20 +223,13 @@ namespace Schumix.ExtraAddon.Commands
 						}
 	
 						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", Network.IMessage.Info[7].ToLower());
-						if(db != null)
+						if(!db.IsNull())
 						{
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel a kick listán!");
 							return;
 						}
 
-						string adat = string.Empty;
-						for(int i = 9; i < Network.IMessage.Info.Length; i++)
-							adat += " " + Network.IMessage.Info[i];
-
-						if(adat.Substring(0, 1) == " ")
-							adat = adat.Remove(0, 1);
-
-						SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[7].ToLower(), Network.IMessage.Info[8], adat);
+						SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[7].ToLower(), Network.IMessage.Info[8], Network.IMessage.Info.SplitToString(9, " "));
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listához a név hozzáadva: {0}", Network.IMessage.Info[7]);
 					}
 					else if(Network.IMessage.Info[6].ToLower() == "del")
@@ -261,7 +241,7 @@ namespace Schumix.ExtraAddon.Commands
 						}
 
 						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", Network.IMessage.Info[7].ToLower());
-						if(db == null)
+						if(db.IsNull())
 						{
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen név nem létezik!");
 							return;
@@ -273,7 +253,7 @@ namespace Schumix.ExtraAddon.Commands
 					else if(Network.IMessage.Info[6].ToLower() == "info")
 					{
 						var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM kicklist");
-						if(db != null)
+						if(!db.IsNull())
 						{
 							string Nevek = string.Empty;
 
@@ -318,7 +298,7 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel a mode listán!");
 						return;
@@ -336,7 +316,7 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
-					if(db == null)
+					if(db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen név nem létezik!");
 						return;
@@ -348,7 +328,7 @@ namespace Schumix.ExtraAddon.Commands
 				else if(Network.IMessage.Info[5].ToLower() == "info")
 				{
 					var db = SchumixBase.DManager.Query("SELECT Name FROM modelist WHERE Channel = '{0}'", Network.IMessage.Channel);
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string Nevek = string.Empty;
 
@@ -396,7 +376,7 @@ namespace Schumix.ExtraAddon.Commands
 						}
 
 						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", Network.IMessage.Info[7].ToLower());
-						if(db != null)
+						if(!db.IsNull())
 						{
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel a mode listán!");
 							return;
@@ -414,7 +394,7 @@ namespace Schumix.ExtraAddon.Commands
 						}
 		
 						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", Network.IMessage.Info[7].ToLower());
-						if(db == null)
+						if(db.IsNull())
 						{
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen név nem létezik!");
 							return;
@@ -426,7 +406,7 @@ namespace Schumix.ExtraAddon.Commands
 					else if(Network.IMessage.Info[6].ToLower() == "info")
 					{
 						var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM modelist");
-						if(db != null)
+						if(!db.IsNull())
 						{
 							string Nevek = string.Empty;
 
@@ -479,7 +459,7 @@ namespace Schumix.ExtraAddon.Commands
 				}
 
 				var db = SchumixBase.DManager.Query("SELECT Code FROM notes");
-				if(db != null)
+				if(!db.IsNull())
 				{
 					string kodok = string.Empty;
 
@@ -516,7 +496,7 @@ namespace Schumix.ExtraAddon.Commands
 
 					string nev = Network.IMessage.Nick;
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string JelszoSql = db["Password"].ToString();
 
@@ -545,7 +525,7 @@ namespace Schumix.ExtraAddon.Commands
 
 					string nev = Network.IMessage.Nick;
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string JelszoSql = db["Password"].ToString();
 
@@ -568,7 +548,7 @@ namespace Schumix.ExtraAddon.Commands
 
 					string nev = Network.IMessage.Nick;
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes_users WHERE Name = '{0}'", nev.ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Már szerepelsz a felhasználói listán!");
 						return;
@@ -588,14 +568,14 @@ namespace Schumix.ExtraAddon.Commands
 
 					string nev = Network.IMessage.Nick;
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes_users WHERE Name = '{0}'", nev.ToLower());
-					if(db == null)
+					if(db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem szerepelsz a felhasználói listán!");
 						return;
 					}
 
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string jelszo = db["Password"].ToString();
 						if(jelszo != sUtilities.Sha1(Network.IMessage.Info[6]))
@@ -637,7 +617,7 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}'", Network.IMessage.Info[6].ToLower());
-					if(db == null)
+					if(db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen kód nem szerepel a listán!");
 						return;
@@ -649,7 +629,7 @@ namespace Schumix.ExtraAddon.Commands
 				else
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Note FROM notes WHERE Code = '{0}'", Network.IMessage.Info[5].ToLower());
-					if(db != null)
+					if(!db.IsNull())
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet: {0}", db["Note"].ToString());
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
@@ -672,23 +652,16 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
-				string adat = string.Empty;
 				string kod = Network.IMessage.Info[4];
 
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}'", kod.ToLower());
-				if(db != null)
+				if(!db.IsNull())
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A jegyzet kódneve már szerepel az adatbázisban!");
 					return;
 				}
 
-				for(int i = 5; i < Network.IMessage.Info.Length; i++)
-					adat += " " + Network.IMessage.Info[i];
-
-				if(adat.Substring(0, 1) == " ")
-					adat = adat.Remove(0, 1);
-
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `notes`(Code, Name, Note) VALUES ('{0}', '{1}', '{2}')", kod.ToLower(), Network.IMessage.Nick.ToLower(), adat);
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `notes`(Code, Name, Note) VALUES ('{0}', '{1}', '{2}')", kod.ToLower(), Network.IMessage.Nick.ToLower(), Network.IMessage.Info.SplitToString(5, " "));
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet kódja: {0}", kod);
 			}
 		}
@@ -696,7 +669,7 @@ namespace Schumix.ExtraAddon.Commands
 		private bool IsUser(string Name)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM notes_users WHERE Name = '{0}'", Name.ToLower());
-			if(db != null)
+			if(!db.IsNull())
 				return true;
 
 			return false;
@@ -705,7 +678,7 @@ namespace Schumix.ExtraAddon.Commands
 		private bool IsUser(string Name, string Vhost)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost FROM notes_users WHERE Name = '{0}'", Name.ToLower());
-			if(db != null)
+			if(!db.IsNull())
 			{
 				string vhost = db["Vhost"].ToString();
 

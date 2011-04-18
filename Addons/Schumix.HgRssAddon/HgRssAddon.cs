@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 using Schumix.Irc.Commands;
 using Schumix.HgRssAddon.Commands;
 using Schumix.HgRssAddon.Config;
@@ -37,7 +38,7 @@ namespace Schumix.HgRssAddon
 			CommandManager.OperatorCRegisterHandler("hg", HandleHg);
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM hginfo");
-			if(db != null)
+			if(!db.IsNull())
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
 				{

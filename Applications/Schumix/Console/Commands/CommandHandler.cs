@@ -24,6 +24,7 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Console.Commands
 {
@@ -125,7 +126,7 @@ namespace Schumix.Console.Commands
 				int flag;
 
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM adminok WHERE Name = '{0}'", Info[2].ToLower());
-				if(db != null)
+				if(!db.IsNull())
 					flag = Convert.ToInt32(db["Flag"].ToString());
 				else
 					flag = -1;
@@ -140,7 +141,7 @@ namespace Schumix.Console.Commands
 			else if(Info.Length >= 2 && Info[1].ToLower() == "lista")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
-				if(db != null)
+				if(!db.IsNull())
 				{
 					string adminok = string.Empty;
 
@@ -169,7 +170,7 @@ namespace Schumix.Console.Commands
 
 				string nev = Info[2];
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db != null)
+				if(!db.IsNull())
 				{
 					Log.Warning("Console", "A nev mar szerepel az admin listan!");
 					return;
@@ -191,7 +192,7 @@ namespace Schumix.Console.Commands
 
 				string nev = Info[2];
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db == null)
+				if(db.IsNull())
 				{
 					Log.Warning("Console", "Ilyen nev nem letezik!");
 					return;
@@ -288,7 +289,7 @@ namespace Schumix.Console.Commands
 
 				string csatornainfo = Info[2].ToLower();
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", csatornainfo);
-				if(db != null)
+				if(!db.IsNull())
 				{
 					Log.Warning("Console", "A nev mar szerepel a csatorna listan!");
 					return;
@@ -323,7 +324,7 @@ namespace Schumix.Console.Commands
 
 				string csatornainfo = Info[2].ToLower();
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channel WHERE Channel = '{0}'", csatornainfo);
-				if(db != null)
+				if(!db.IsNull())
 				{
 					int id = Convert.ToInt32(db["Id"].ToString());
 					if(id == 1)
@@ -334,7 +335,7 @@ namespace Schumix.Console.Commands
 				}
 
 				db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", csatornainfo);
-				if(db == null)
+				if(db.IsNull())
 				{
 					Log.Warning("Console", "Ilyen csatorna nem letezik!");
 					return;
@@ -356,7 +357,7 @@ namespace Schumix.Console.Commands
 			else if(Info[1].ToLower() == "info")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channel");
-				if(db != null)
+				if(!db.IsNull())
 				{
 					string AktivCsatornak = string.Empty, DeAktivCsatornak = string.Empty;
 					bool AdatCsatorna = false, AdatCsatorna1 = false;

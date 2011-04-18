@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 using Schumix.Irc.Commands;
 using Schumix.SvnRssAddon.Commands;
 using Schumix.SvnRssAddon.Config;
@@ -37,7 +38,7 @@ namespace Schumix.SvnRssAddon
 			CommandManager.OperatorCRegisterHandler("svn", HandleSvn);
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM svninfo");
-			if(db != null)
+			if(!db.IsNull())
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
 				{

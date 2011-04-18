@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
 {
@@ -42,7 +43,7 @@ namespace Schumix.Irc
 		public void ChannelLista()
 		{
 			var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channel");
-			if(db != null)
+			if(!db.IsNull())
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
 				{
@@ -61,7 +62,7 @@ namespace Schumix.Irc
 			string status = string.Empty;
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT funkcio_status FROM schumix WHERE funkcio_nev = '{0}'", nev);
-			if(db != null)
+			if(!db.IsNull())
 				status = db["funkcio_status"].ToString();
 			else
 				Log.Error("ChannelInfo", "FSelect: Hibas lekerdezes!");
@@ -102,7 +103,7 @@ namespace Schumix.Irc
 			ChannelFunkcio.Clear();
 
 			var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
-			if(db != null)
+			if(!db.IsNull())
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
 				{
@@ -110,7 +111,7 @@ namespace Schumix.Irc
 					string csatorna = row["Channel"].ToString();
 
 					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", csatorna);
-					if(db1 != null)
+					if(!db1.IsNull())
 					{
 						string funkciok = db1["Functions"].ToString();
 						string[] vesszo = funkciok.Split(',');
@@ -133,7 +134,7 @@ namespace Schumix.Irc
 		{
 			_ChannelLista.Clear();
 			var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channel");
-			if(db != null)
+			if(!db.IsNull())
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
 				{
@@ -189,7 +190,7 @@ namespace Schumix.Irc
 			string be = string.Empty, ki = string.Empty;
 
 			var db = SchumixBase.DManager.Query("SELECT funkcio_nev, funkcio_status FROM schumix");
-			if(db != null)
+			if(!db.IsNull())
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
 				{
@@ -246,7 +247,7 @@ namespace Schumix.Irc
 
 			ChannelFunkcioReload();
 			var db = SchumixBase.DManager.Query("SELECT Enabled FROM channel");
-			if(db != null)
+			if(!db.IsNull())
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
 				{

@@ -22,6 +22,7 @@ using System.Xml;
 using System.Threading;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 using Schumix.GitRssAddon.Config;
 
 namespace Schumix.GitRssAddon
@@ -95,7 +96,7 @@ namespace Schumix.GitRssAddon
 				string author;
 
 				url = GetUrl();
-				if(url != null)
+				if(!url.IsNull())
 					_oldrev = Revision(url);
 
 				while(true)
@@ -103,7 +104,7 @@ namespace Schumix.GitRssAddon
 					if(Network.sChannelInfo.FSelect("git"))
 					{
 						url = GetUrl();
-						if(url == null)
+						if(url.IsNull())
 							continue;
 
 						newrev = Revision(url);
@@ -156,7 +157,7 @@ namespace Schumix.GitRssAddon
 		private string Title(XmlDocument rss)
 		{
 			var title = rss.SelectSingleNode(_title);
-			if(title == null)
+			if(title.IsNull())
 				return "nincs adat";
 			else
 				return title.InnerText;
@@ -165,7 +166,7 @@ namespace Schumix.GitRssAddon
 		private string Author(XmlDocument rss)
 		{
 			var author = rss.SelectSingleNode(_author);
-			if(author == null)
+			if(author.IsNull())
 				return "nincs adat";
 			else
 				return author.InnerText;
@@ -176,7 +177,7 @@ namespace Schumix.GitRssAddon
 			if(_website == "github")
 			{
 				var id = rss.SelectSingleNode(_id);
-				if(id == null)
+				if(id.IsNull())
 					return "nincs adat";
 
 				string rev = id.InnerText;
@@ -193,7 +194,7 @@ namespace Schumix.GitRssAddon
 		private void Informations(string rev, string title, string author)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}", _name, _type);
-			if(db != null)
+			if(!db.IsNull())
 			{
 				string[] csatorna = db["Channel"].ToString().Split(',');
 

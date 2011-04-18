@@ -21,6 +21,7 @@ using System;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.ExtraAddon.Commands
 {
@@ -173,10 +174,7 @@ namespace Schumix.ExtraAddon.Commands
 				{
 					if(ConsoleLog.CLog)
 					{
-						string alomany = string.Empty;
-						for(int i = 4; i < Network.IMessage.Info.Length; i++)
-							alomany += Network.IMessage.Info[i] + " ";
-
+						string alomany = Network.IMessage.Info.SplitToString(4, " ");
 						if(alomany.Substring(0, 1) == ":")
 							alomany = alomany.Remove(0, 1);
 

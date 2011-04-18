@@ -21,6 +21,7 @@ using System;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.SvnRssAddon.Commands
 {
@@ -44,7 +45,7 @@ namespace Schumix.SvnRssAddon.Commands
 			if(Network.IMessage.Info[4].ToLower() == "info")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM svninfo");
-				if(db != null)
+				if(!db.IsNull())
 				{
 					for(int i = 0; i < db.Rows.Count; ++i)
 					{
@@ -69,7 +70,7 @@ namespace Schumix.SvnRssAddon.Commands
 			else if(Network.IMessage.Info[4].ToLower() == "lista")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name FROM svninfo");
-				if(db != null)
+				if(!db.IsNull())
 				{
 					string lista = string.Empty;
 
@@ -170,7 +171,7 @@ namespace Schumix.SvnRssAddon.Commands
 					}
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM svninfo WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string[] csatorna = db["Channel"].ToString().Split(',');
 						string adat = string.Empty;
@@ -207,7 +208,7 @@ namespace Schumix.SvnRssAddon.Commands
 					}
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM svninfo WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string[] csatorna = db["Channel"].ToString().Split(',');
 						string adat = string.Empty;

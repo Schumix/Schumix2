@@ -19,8 +19,8 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Schumix.Framework.Extensions
 {
@@ -118,6 +118,42 @@ namespace Schumix.Framework.Extensions
 		public static string ConcatenateWithSpaces(this IEnumerable<string> arr)
 		{
 			return arr.Concatenate(" ");
+		}
+
+		public static string SplitToString(this string[] split)
+		{
+			string ss = string.Empty;
+
+			for(int x = 0; x < split.Length; x++)
+				ss += split[x];
+
+			return ss;
+		}
+
+		public static string SplitToString(this string[] split, string s)
+		{
+			string ss = string.Empty;
+
+			for(int x = 0; x < split.Length; x++)
+				ss += s + split[x];
+
+			if(ss.Substring(0, s.Length) == s)
+				ss = ss.Remove(0, s.Length);
+
+			return ss;
+		}
+
+		public static string SplitToString(this string[] split, int min, string s)
+		{
+			string ss = string.Empty;
+
+			for(int x = min; x < split.Length; x++)
+				ss += s + split[x];
+
+			if(ss.Substring(0, s.Length) == s)
+				ss = ss.Remove(0, s.Length);
+
+			return ss;
 		}
 	}
 }

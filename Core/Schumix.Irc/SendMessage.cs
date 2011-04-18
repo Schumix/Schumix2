@@ -20,6 +20,7 @@
 using System;
 using System.Threading;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
 {
@@ -92,7 +93,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(Network.writer != null)
+				if(!Network.writer.IsNull())
 					Network.writer.WriteLine(uzenet);
 
 				Thread.Sleep(IRCConfig.MessageSending);

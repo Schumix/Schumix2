@@ -1,7 +1,27 @@
+/*
+ * This file is part of Schumix.
+ * 
+ * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * 
+ * Schumix is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Schumix is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 using System;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.ExtraAddon.Commands
 {
@@ -20,7 +40,7 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Info, Enabled FROM hlmessage WHERE Name = '{0}'", Network.IMessage.Info[i].ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string info = db["Info"].ToString();
 						string allapot = db["Enabled"].ToString();
@@ -47,7 +67,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(Network.sChannelInfo.FSelect("kick") && Network.sChannelInfo.FSelect("kick", channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", Network.IMessage.Nick.ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string oka = db["Reason"].ToString();
 						sSender.Kick(channel, Network.IMessage.Nick, oka);
@@ -63,7 +83,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(Network.sChannelInfo.FSelect("kick") && Network.sChannelInfo.FSelect("kick", Network.IMessage.Channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", Network.IMessage.Nick.ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string oka = db["Reason"].ToString();
 						sSender.Kick(Network.IMessage.Channel, Network.IMessage.Nick, oka);

@@ -22,6 +22,7 @@ using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 using Schumix.ExtraAddon.Commands;
 using Schumix.ExtraAddon.Config;
 
@@ -84,7 +85,7 @@ namespace Schumix.ExtraAddon
 				if(Network.IMessage.Info[5] == "3")
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", Network.IMessage.Info[4].ToLower(), ModeChannel);
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string rang = db["Rank"].ToString();
 						sSender.Mode(ModeChannel, rang, Network.IMessage.Info[4]);

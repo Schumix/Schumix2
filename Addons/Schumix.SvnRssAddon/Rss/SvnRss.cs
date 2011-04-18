@@ -22,6 +22,7 @@ using System.Xml;
 using System.Threading;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 using Schumix.SvnRssAddon.Config;
 
 namespace Schumix.SvnRssAddon
@@ -85,12 +86,16 @@ namespace Schumix.SvnRssAddon
 				string title;
 				string author;
 
+				url = GetUrl();
+				if(!url.IsNull())
+					_oldrev = Revision(url);
+
 				while(true)
 				{
 					if(Network.sChannelInfo.FSelect("svn"))
 					{
 						url = GetUrl();
-						if(url == null)
+						if(url.IsNull())
 							continue;
 
 						newrev = Revision(url);
@@ -143,7 +148,7 @@ namespace Schumix.SvnRssAddon
 		private string Title(XmlDocument rss)
 		{
 			var title = rss.SelectSingleNode(_title);
-			if(title == null)
+			if(title.IsNull())
 				return "nincs adat";
 			else
 				return title.InnerText;
@@ -152,7 +157,7 @@ namespace Schumix.SvnRssAddon
 		private string Author(XmlDocument rss)
 		{
 			var author = rss.SelectSingleNode(_author);
-			if(author == null)
+			if(author.IsNull())
 				return "nincs adat";
 			else
 				return author.InnerText;
@@ -163,7 +168,7 @@ namespace Schumix.SvnRssAddon
 			if(_website == "assembla")
 			{
 				var title = rss.SelectSingleNode(_title);
-				if(title == null)
+				if(title.IsNull())
 					return "nincs adat";
 
 				string rev = title.InnerText;
@@ -189,7 +194,7 @@ namespace Schumix.SvnRssAddon
 		private void Informations(string rev, string title, string author)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM svninfo WHERE Name = '{0}'", _name);
-			if(db != null)
+			if(!db.IsNull())
 			{
 				string[] csatorna = db["Channel"].ToString().Split(',');
 
