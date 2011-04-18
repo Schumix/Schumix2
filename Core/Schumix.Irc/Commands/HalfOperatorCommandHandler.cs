@@ -20,6 +20,7 @@
 using System;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands
 {
@@ -43,7 +44,7 @@ namespace Schumix.Irc.Commands
 
 				string nev = Network.IMessage.Nick;
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db != null)
+				if(!db.IsNull())
 				{
 					string JelszoSql = db["Password"].ToString();
 
@@ -74,7 +75,7 @@ namespace Schumix.Irc.Commands
 
 				string nev = Network.IMessage.Nick;
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db != null)
+				if(!db.IsNull())
 				{
 					string JelszoSql = db["Password"].ToString();
 
@@ -99,7 +100,7 @@ namespace Schumix.Irc.Commands
 				string nev = Network.IMessage.Nick;
 
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db != null)
+				if(!db.IsNull())
 					flag = Convert.ToInt32(db["Flag"].ToString());
 				else
 					flag = -1;
@@ -114,7 +115,7 @@ namespace Schumix.Irc.Commands
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "lista")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
-				if(db != null)
+				if(!db.IsNull())
 				{
 					string adminok = string.Empty;
 
@@ -143,7 +144,7 @@ namespace Schumix.Irc.Commands
 
 				string nev = Network.IMessage.Info[5];
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db != null)
+				if(!db.IsNull())
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel az admin listán!");
 					return;
@@ -168,7 +169,7 @@ namespace Schumix.Irc.Commands
 
 				string nev = Network.IMessage.Info[5];
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
-				if(db == null)
+				if(db.IsNull())
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen név nem létezik!");
 					return;

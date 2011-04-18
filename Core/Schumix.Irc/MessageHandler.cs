@@ -22,6 +22,7 @@ using System.IO;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Irc.Commands;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
 {
@@ -200,10 +201,7 @@ namespace Schumix.Irc
 			if(Network.IMessage.Info.Length < 5)
 				return;
 
-			string alomany = string.Empty;
-			for(int i = 4; i < Network.IMessage.Info.Length; i++)
-				alomany += Network.IMessage.Info[i] + " ";
-
+			string alomany = Network.IMessage.Info.SplitToString(4, " ");
 			if(alomany.Substring(0, 1) == ":")
 				alomany = alomany.Remove(0, 1);
 

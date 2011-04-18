@@ -21,6 +21,7 @@ using System;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.GitRssAddon.Commands
 {
@@ -44,7 +45,7 @@ namespace Schumix.GitRssAddon.Commands
 			if(Network.IMessage.Info[4].ToLower() == "info")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name, Type, Channel FROM gitinfo");
-				if(db != null)
+				if(!db.IsNull())
 				{
 					for(int i = 0; i < db.Rows.Count; ++i)
 					{
@@ -70,7 +71,7 @@ namespace Schumix.GitRssAddon.Commands
 			else if(Network.IMessage.Info[4].ToLower() == "lista")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name, Type FROM gitinfo");
-				if(db != null)
+				if(!db.IsNull())
 				{
 					string lista = string.Empty;
 
@@ -177,7 +178,7 @@ namespace Schumix.GitRssAddon.Commands
 					}
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}'", Network.IMessage.Info[6].ToLower(), Network.IMessage.Info[7].ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string[] csatorna = db["Channel"].ToString().Split(',');
 						string adat = string.Empty;
@@ -220,7 +221,7 @@ namespace Schumix.GitRssAddon.Commands
 					}
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}'", Network.IMessage.Info[6].ToLower(), Network.IMessage.Info[7].ToLower());
-					if(db != null)
+					if(!db.IsNull())
 					{
 						string[] csatorna = db["Channel"].ToString().Split(',');
 						string adat = string.Empty;

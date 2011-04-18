@@ -20,6 +20,7 @@
 using System;
 using System.Text;
 using System.Security.Cryptography;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Libraries
 {
@@ -32,7 +33,7 @@ namespace Schumix.Libraries
 
 		public static string Sha1(string value)
 		{
-			if(value == null)
+			if(value.IsNull())
 				throw new ArgumentNullException("value");
 
 			var x = new SHA1CryptoServiceProvider();
@@ -51,7 +52,7 @@ namespace Schumix.Libraries
 
 		public static string Md5(string value)
 		{
-			if(value == null)
+			if(value.IsNull())
 				throw new ArgumentNullException("value");
 
 			var x = new MD5CryptoServiceProvider();

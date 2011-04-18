@@ -22,6 +22,7 @@ using System.Xml;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.TesztAddon.Commands
 {
@@ -43,7 +44,7 @@ namespace Schumix.TesztAddon.Commands
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "db")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
-				if(db != null)
+				if(!db.IsNull())
 				{
 					for(int i = 0; i < db.Rows.Count; ++i)
 					{
@@ -58,13 +59,13 @@ namespace Schumix.TesztAddon.Commands
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "rss")
 			{
 				var rss = new XmlDocument();
-				//rss.Load("http://www.assembla.com/spaces/Sandshroud/stream.rss");
-				rss.Load("http://github.com/megax/Schumix2/commits/master.atom");
+				rss.Load("http://www.assembla.com/spaces/Sandshroud/stream.rss");
+				//rss.Load("http://github.com/megax/Schumix2/commits/master.atom");
 
-				//var node = rss.SelectSingleNode("rss/channel/item/title");
-				var node = rss.SelectSingleNode("feed/title");
-				string title = node != null ? node.InnerText : string.Empty;
-				Console.WriteLine(title);
+				var node = rss.SelectSingleNode("rss/channel/item/title");
+				//var node = rss.SelectSingleNode("feed/title");
+				string title = !node.IsNull() ? node.InnerText : string.Empty;
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, title);
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "vhost")
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, Network.IMessage.Host);

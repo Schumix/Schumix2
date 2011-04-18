@@ -19,6 +19,7 @@
 
 using System;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands
 {	
@@ -39,7 +40,7 @@ namespace Schumix.Irc.Commands
 		protected bool IsAdmin(string Name)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM adminok WHERE Name = '{0}'", Name.ToLower());
-			if(db != null)
+			if(!db.IsNull())
 				return true;
 
 			return false;
@@ -48,7 +49,7 @@ namespace Schumix.Irc.Commands
 		protected bool IsAdmin(string Name, AdminFlag Flag)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM adminok WHERE Name = '{0}'", Name.ToLower());
-			if(db != null)
+			if(!db.IsNull())
 			{
 				int flag = Convert.ToInt32(db["Flag"]);
 
@@ -64,7 +65,7 @@ namespace Schumix.Irc.Commands
 		protected bool IsAdmin(string Name, string Vhost, AdminFlag Flag)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM adminok WHERE Name = '{0}'", Name.ToLower());
-			if(db != null)
+			if(!db.IsNull())
 			{
 				string vhost = db["Vhost"].ToString();
 

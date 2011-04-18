@@ -24,6 +24,7 @@ using System.Web;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework
 {
@@ -78,7 +79,7 @@ namespace Schumix.Framework
 
 		public string Sha1(string value)
 		{
-			if(value == null)
+			if(value.IsNull())
 				throw new ArgumentNullException("value");
 
 			var x = new SHA1CryptoServiceProvider();
@@ -97,7 +98,7 @@ namespace Schumix.Framework
 
 		public string Md5(string value)
 		{
-			if(value == null)
+			if(value.IsNull())
 				throw new ArgumentNullException("value");
 
 			var x = new MD5CryptoServiceProvider();
@@ -116,7 +117,7 @@ namespace Schumix.Framework
 
 		public string MD5File(string fileName)
 		{
-			if(fileName == null)
+			if(fileName.IsNull())
 				throw new ArgumentNullException("fileName");
 
 			byte[] retVal;
@@ -132,7 +133,7 @@ namespace Schumix.Framework
 
 			var sb = new StringBuilder();
 
-			if(retVal != null)
+			if(!retVal.IsNull())
 			{
 				for(var i = 0; i < retVal.Length; i++)
 					sb.Append(retVal[i].ToString("x2"));

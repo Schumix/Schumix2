@@ -26,6 +26,7 @@ using Microsoft.CSharp;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.CompilerAddon.Commands
 {
@@ -78,7 +79,7 @@ namespace Schumix.CompilerAddon.Commands
 				}
 
 				var asm = CompileCode(sablon);
-				if(asm == null)
+				if(asm.IsNull())
 					return;
 
 				var writer = new StringWriter();

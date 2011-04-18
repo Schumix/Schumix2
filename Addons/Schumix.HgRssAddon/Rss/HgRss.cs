@@ -22,6 +22,7 @@ using System.Xml;
 using System.Threading;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 using Schumix.HgRssAddon.Config;
 
 namespace Schumix.HgRssAddon
@@ -94,7 +95,7 @@ namespace Schumix.HgRssAddon
 				string author;
 
 				url = GetUrl();
-				if(url != null)
+				if(!url.IsNull())
 					_oldrev = Revision(url);
 
 				while(true)
@@ -102,7 +103,7 @@ namespace Schumix.HgRssAddon
 					if(Network.sChannelInfo.FSelect("hg"))
 					{
 						url = GetUrl();
-						if(url == null)
+						if(url.IsNull())
 							continue;
 
 						newrev = Revision(url);
@@ -155,7 +156,7 @@ namespace Schumix.HgRssAddon
 		private string Title(XmlDocument rss)
 		{
 			var title = rss.SelectSingleNode(_title);
-			if(title == null)
+			if(title.IsNull())
 				return "nincs adat";
 			else
 				return title.InnerText;
@@ -164,7 +165,7 @@ namespace Schumix.HgRssAddon
 		private string Author(XmlDocument rss)
 		{
 			var author = rss.SelectSingleNode(_author);
-			if(author == null)
+			if(author.IsNull())
 				return "nincs adat";
 			else
 				return author.InnerText;
@@ -175,7 +176,7 @@ namespace Schumix.HgRssAddon
 			if(_website == "google")
 			{
 				var id = rss.SelectSingleNode(_id);
-				if(id == null)
+				if(id.IsNull())
 					return "nincs adat";
 
 				string rev = id.InnerText;
@@ -188,7 +189,7 @@ namespace Schumix.HgRssAddon
 			else if(_website == "bitbucket")
 			{
 				var id = rss.SelectSingleNode(_id);
-				if(id == null)
+				if(id.IsNull())
 					return "nincs adat";
 
 				string rev = id.InnerText;
@@ -205,7 +206,7 @@ namespace Schumix.HgRssAddon
 		private void Informations(string rev, string title, string author)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM hginfo WHERE Name = '{0}'", _name);
-			if(db != null)
+			if(!db.IsNull())
 			{
 				string[] csatorna = db["Channel"].ToString().Split(',');
 

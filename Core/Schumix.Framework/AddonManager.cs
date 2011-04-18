@@ -102,7 +102,7 @@ namespace Schumix.Framework
 
 					var asm = Assembly.LoadFrom(dll.FullName);
 
-					if(asm == null)
+					if(asm.IsNull())
 						continue;
 
 					ISchumixAddon pl = null;
@@ -111,7 +111,7 @@ namespace Schumix.Framework
 					{
 						pl = Activator.CreateInstance(type).Cast<ISchumixAddon>();
 
-						if(pl == null)
+						if(pl.IsNull())
 							continue;
 
 						if(Assemblies.Contains(asm))

@@ -20,6 +20,7 @@
 using System;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands
 {
@@ -43,7 +44,7 @@ namespace Schumix.Irc.Commands
 				string[] ChannelInfo = Network.sChannelInfo.ChannelFunkciokInfo(Network.IMessage.Channel).Split('|');
 				if(ChannelInfo.Length < 2)
 					return;
-			
+
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Bekapcsolva: {0}", ChannelInfo[0]);
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Kikapcsolva: {0}", ChannelInfo[1]);
 			}
@@ -175,7 +176,7 @@ namespace Schumix.Irc.Commands
 				if(Network.IMessage.Info[5].ToLower() == "all")
 				{
 					var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
-					if(db != null)
+					if(!db.IsNull())
 					{
 						for(int i = 0; i < db.Rows.Count; ++i)
 						{
@@ -264,7 +265,7 @@ namespace Schumix.Irc.Commands
 
 				string csatornainfo = Network.IMessage.Info[5].ToLower();
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", csatornainfo);
-				if(db != null)
+				if(!db.IsNull())
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel a csatorna listán!");
 					return;
@@ -301,7 +302,7 @@ namespace Schumix.Irc.Commands
 
 				string csatornainfo = Network.IMessage.Info[5].ToLower();
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channel WHERE Channel = '{0}'", csatornainfo);
-				if(db != null)
+				if(!db.IsNull())
 				{
 					int id = Convert.ToInt32(db["Id"].ToString());
 					if(id == 1)
@@ -312,7 +313,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", csatornainfo);
-				if(db == null)
+				if(db.IsNull())
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen csatorna nem létezik!");
 					return;
@@ -334,7 +335,7 @@ namespace Schumix.Irc.Commands
 			else if(Network.IMessage.Info[4].ToLower() == "info")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channel");
-				if(db != null)
+				if(!db.IsNull())
 				{
 					string AktivCsatornak = string.Empty, DeAktivCsatornak = string.Empty;
 					bool AdatCsatorna = false, AdatCsatorna1 = false;
@@ -397,7 +398,7 @@ namespace Schumix.Irc.Commands
 			CNick();
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT nev, honap, nap FROM sznap WHERE nev = '{0}'", Network.IMessage.Info[4]);
-			if(db != null)
+			if(!db.IsNull())
 			{
 				string nev = db["nev"].ToString();
 				string honap = db["honap"].ToString();
@@ -430,15 +431,8 @@ namespace Schumix.Irc.Commands
 			}
 			else if(szam >= 6)
 			{
-				string oka = string.Empty;
-				for(int i = 5; i < Network.IMessage.Info.Length; i++)
-					oka += Network.IMessage.Info[i] + " ";
-
-				if(oka.Substring(0, 1) == ",")
-					oka = oka.Remove(0, 1);
-
 				if(kick != nick.ToLower())
-					sSender.Kick(Network.IMessage.Channel, kick, oka);
+					sSender.Kick(Network.IMessage.Channel, kick, Network.IMessage.Info.SplitToString(5, " "));
 			}
 		}
 
@@ -460,18 +454,9 @@ namespace Schumix.Irc.Commands
 			}
 
 			string rang = Network.IMessage.Info[4].ToLower();
-			string tnick = sNickInfo.NickStorage;
-			string nev = string.Empty;
+			string nev = Network.IMessage.Info.SplitToString(5, " ").ToLower();
 
-			for(int i = 5; i < Network.IMessage.Info.Length; i++)
-				nev += Network.IMessage.Info[i] + " ";
-
-			if(nev.Substring(0, 1) == " ")
-				nev = nev.Remove(0, 1);
-
-			nev.ToLower();
-
-			if(!nev.Contains(tnick.ToLower()))
+			if(!nev.Contains(sNickInfo.NickStorage.ToLower()))
 				sSender.Mode(Network.IMessage.Channel, rang, nev);
 		}
 	}

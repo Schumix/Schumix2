@@ -22,6 +22,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using WolframAPI;
 
 namespace Schumix.Irc.Commands
@@ -131,15 +132,8 @@ namespace Schumix.Irc.Commands
 			}
 
 			CNick();
-			string adat = string.Empty;
-			for(int i = 4; i < Network.IMessage.Info.Length; i++)
-				adat += " " + Network.IMessage.Info[i];
-
-			if(adat.Substring(0, 1) == " ")
-				adat = adat.Remove(0, 1);
-
 			var client = new WAClient("557QYQ-UUUWTKX95V");
-			var solution = client.Solve(adat);
+			var solution = client.Solve(Network.IMessage.Info.SplitToString(4, " "));
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", solution);
 		}
 
@@ -152,14 +146,7 @@ namespace Schumix.Irc.Commands
 			}
 
 			CNick();
-			string adat = string.Empty;
-			for(int i = 4; i < Network.IMessage.Info.Length; i++)
-				adat += " " + Network.IMessage.Info[i];
-
-			if(adat.Substring(0, 1) == " ")
-				adat = adat.Remove(0, 1);
-
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtilities.Sha1(adat));
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtilities.Sha1(Network.IMessage.Info.SplitToString(4, " ")));
 		}
 
 		protected void HandleMd5()
@@ -171,14 +158,7 @@ namespace Schumix.Irc.Commands
 			}
 
 			CNick();
-			string adat = string.Empty;
-			for(int i = 4; i < Network.IMessage.Info.Length; i++)
-				adat += " " + Network.IMessage.Info[i];
-
-			if(adat.Substring(0, 1) == " ")
-				adat = adat.Remove(0, 1);
-
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtilities.Md5(adat));
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtilities.Md5(Network.IMessage.Info.SplitToString(4, " ")));
 		}
 
 		protected void HandleIrc()
@@ -192,7 +172,7 @@ namespace Schumix.Irc.Commands
 			CNick();
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT hasznalata FROM irc_parancsok WHERE parancs = '{0}'", Network.IMessage.Info[4]);
-			if(db != null)
+			if(!db.IsNull())
 			{
 				string hasznalata = db["hasznalata"].ToString();
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, hasznalata);
@@ -227,16 +207,7 @@ namespace Schumix.Irc.Commands
 			if(Network.IMessage.Info.Length == 5)
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Info[4], "Keresnek téged itt: {0}", Network.IMessage.Channel);
 			else if(Network.IMessage.Info.Length >= 6)
-			{
-				string alomany = string.Empty;
-				for(int i = 5; i < Network.IMessage.Info.Length; i++)
-					alomany += Network.IMessage.Info[i] + " ";
-
-				if(alomany.Substring(0, 1) == ":")
-					alomany = alomany.Remove(0, 1);
-
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Info[4], "{0}", alomany);
-			}
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Info[4], "{0}", Network.IMessage.Info.SplitToString(5, " "));
 		}
 
 		protected void HandleKeres()
@@ -248,15 +219,7 @@ namespace Schumix.Irc.Commands
 			}
 
 			CNick();
-
-			string adat = string.Empty;
-			for(int i = 4; i < Network.IMessage.Info.Length; i++)
-				adat += " " + Network.IMessage.Info[i];
-
-			if(adat.Substring(0, 1) == " ")
-				adat = adat.Remove(0, 1);
-
-			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=", adat);
+			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=", Network.IMessage.Info.SplitToString(4, " "));
 
 			var Regex = new Regex(@".unescapedUrl.\:.(?<url>\S+).,.url.+.titleNoFormatting.\:.(?<title>.+).,.content");
 			if(!Regex.IsMatch(url))
@@ -286,15 +249,7 @@ namespace Schumix.Irc.Commands
 			}
 
 			CNick();
-
-			string adat = string.Empty;
-			for(int i = 5; i < Network.IMessage.Info.Length; i++)
-				adat += " " + Network.IMessage.Info[i];
-
-			if(adat.Substring(0, 1) == " ")
-				adat = adat.Remove(0, 1);
-
-			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=", adat, "&langpair=" + Network.IMessage.Info[4]);
+			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=", Network.IMessage.Info.SplitToString(5, " "), "&langpair=" + Network.IMessage.Info[4]);
 
 			var Regex = new Regex(@"\{.translatedText.\:.(?<text>.+).\},");
 			if(!Regex.IsMatch(url))

@@ -23,6 +23,7 @@ using System.Threading;
 using System.Data;
 using System.Data.SQLite;
 using System.Text.RegularExpressions;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework.Database
 {
@@ -106,7 +107,7 @@ namespace Schumix.Framework.Database
 
 		private string SQLiteEscape(string s)
 		{
-			if(s == null)
+			if(s.IsNull())
 				return null;
 
 			return Regex.Replace(s, @"[\r\n\x00\x1a\\'""]", @"\$0");

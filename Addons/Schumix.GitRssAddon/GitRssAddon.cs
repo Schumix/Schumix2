@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 using Schumix.Irc.Commands;
 using Schumix.GitRssAddon.Commands;
 using Schumix.GitRssAddon.Config;
@@ -37,7 +38,7 @@ namespace Schumix.GitRssAddon
 			CommandManager.OperatorCRegisterHandler("git", HandleGit);
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Type, Link, Website FROM gitinfo");
-			if(db != null)
+			if(!db.IsNull())
 			{
 				for(int i = 0; i < db.Rows.Count; ++i)
 				{

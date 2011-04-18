@@ -21,6 +21,7 @@ using System;
 using System.Threading;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 using Schumix.Console.Commands;
 
 namespace Schumix.Console
@@ -46,7 +47,7 @@ namespace Schumix.Console
 			CCManager = new CCommandManager(network);
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
-			if(db != null)
+			if(!db.IsNull())
 				System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + db["csatorna"].ToString();
 		}
 
@@ -82,7 +83,7 @@ namespace Schumix.Console
 						continue;
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
-					if(db != null)
+					if(!db.IsNull())
 						sSendMessage.SendCMPrivmsg(db["csatorna"].ToString(), uzenet);
 
 					Thread.Sleep(1000);
