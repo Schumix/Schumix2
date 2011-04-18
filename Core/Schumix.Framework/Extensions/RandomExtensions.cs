@@ -49,7 +49,7 @@ namespace Schumix.Framework.Extensions
 		/// </returns>
 		public static bool IsNull(this object obj)
 		{
-			return (obj.IsOfType(typeof(string))) ? (string.IsNullOrEmpty(obj as string)) : (obj == null);
+			return (obj == null);
 		}
 
 		/// <summary>
