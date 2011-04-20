@@ -103,6 +103,42 @@ namespace Schumix.CompilerAddon.Commands
 
 					adat = sb.ToString();
 				}
+				else if(adat.Contains("do") && adat.Contains("while"))
+				{
+					string s = adat;
+					int i = s.IndexOf("do");
+					var sb = new StringBuilder();
+
+					sb.Append(s.Substring(0, i));
+					sb.Append(" int asdcmxd = 0; do");
+					s = s.Substring(s.IndexOf("do")+2);
+
+					if(s.Contains("{"))
+					{
+						sb.Append(s.Substring(0, s.IndexOf("{")));
+
+						if(!s.Contains("do"))
+							sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
+						else
+							sb.Append("{ return;");
+
+						sb.Append(s.Substring(s.IndexOf("{")+1));
+					}
+					else
+					{
+						sb.Append(s.Substring(0, s.IndexOf(")")+1));
+
+						if(!s.Contains("do"))
+							sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
+						else
+							sb.Append(" { return;");
+
+						sb.Append(s.Substring(s.IndexOf(")")+1));
+						sb.Append("}");
+					}
+
+					adat = sb.ToString();
+				}
 				else if(adat.Contains("while"))
 				{
 					string s = adat;
