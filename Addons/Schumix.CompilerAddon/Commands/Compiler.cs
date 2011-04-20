@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.CodeDom.Compiler;
+using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.CSharp;
 using Schumix.Irc;
@@ -60,7 +61,93 @@ namespace Schumix.CompilerAddon.Commands
 				if(Tiltas(adat))
 					return;
 
+				if(adat.Contains("asdcmxd"))
+				{
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kódban olyan részek vannak melyek veszélyeztetik a programot. Ezért leállt a fordítás!");
+					return;
+				}
+
+				if(adat.Contains("for"))
+				{
+					string s = adat;
+					int i = s.IndexOf("for");
+					var sb = new StringBuilder();
+
+					sb.Append(s.Substring(0, i));
+					sb.Append(" int asdcmxd = 0; for");
+					s = s.Substring(s.IndexOf("for")+3);
+
+					if(s.Contains("{"))
+					{
+						sb.Append(s.Substring(0, s.IndexOf("{")));
+
+						if(!s.Contains("for"))
+							sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
+						else
+							sb.Append("{ return;");
+
+						sb.Append(s.Substring(s.IndexOf("{")+1));
+					}
+					else
+					{
+						sb.Append(s.Substring(0, s.IndexOf(")")+1));
+
+						if(!s.Contains("for"))
+							sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
+						else
+							sb.Append(" { return;");
+
+						sb.Append(s.Substring(s.IndexOf(")")+1));
+						sb.Append("}");
+					}
+
+					adat = sb.ToString();
+				}
+				else if(adat.Contains("while"))
+				{
+					string s = adat;
+					int i = s.IndexOf("while");
+					var sb = new StringBuilder();
+
+					sb.Append(s.Substring(0, i));
+					sb.Append(" int asdcmxd = 0; while");
+					s = s.Substring(s.IndexOf("while")+5);
+
+					if(s.Contains("{"))
+					{
+						sb.Append(s.Substring(0, s.IndexOf("{")));
+
+						if(!s.Contains("while"))
+							sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
+						else
+							sb.Append("{ return;");
+
+						sb.Append(s.Substring(s.IndexOf("{")+1));
+					}
+					else
+					{
+						sb.Append(s.Substring(0, s.IndexOf(")")+1));
+
+						if(!s.Contains("while"))
+							sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
+						else
+							sb.Append(" { return;");
+
+						sb.Append(s.Substring(s.IndexOf(")")+1));
+						sb.Append("}");
+					}
+
+					adat = sb.ToString();
+				}
+
 				if(!adat.Contains("Entry"))
+				{
+					if(!adat.Contains("Schumix"))
+						sablon = Referenced + " public class Entry { public void Schumix() { " + adat + " } }";
+					else
+						sablon = Referenced + " public class Entry { " + adat + " }";
+				}
+				else if(!adat.Contains("class"))
 				{
 					if(!adat.Contains("Schumix"))
 						sablon = Referenced + " public class Entry { public void Schumix() { " + adat + " } }";
@@ -147,7 +234,9 @@ namespace Schumix.CompilerAddon.Commands
 
 				cparams.ReferencedAssemblies.Add("System.dll");
 				cparams.ReferencedAssemblies.Add("Schumix.Libraries.dll");
-				//cparams.CompilerOptions = "";
+				cparams.CompilerOptions = "/optimize";
+				cparams.WarningLevel = 4;
+				cparams.TreatWarningsAsErrors = false;
 
 				var results = compiler.CompileAssemblyFromSource(cparams, code);
 				if(results.Errors.HasErrors)
@@ -205,6 +294,36 @@ namespace Schumix.CompilerAddon.Commands
 			}
 
 			if(adat.Contains("Console.Title"))
+			{
+				Figyelmeztetes();
+				return true;
+			}
+
+			if(adat.Contains("System.Net.Dns"))
+			{
+				Figyelmeztetes();
+				return true;
+			}
+
+			if(adat.Contains("System.Net.IPAddress"))
+			{
+				Figyelmeztetes();
+				return true;
+			}
+
+			if(adat.Contains("System.Net.IPEndPoint"))
+			{
+				Figyelmeztetes();
+				return true;
+			}
+
+			if(adat.Contains("System.Net.IPHostEntry"))
+			{
+				Figyelmeztetes();
+				return true;
+			}
+
+			if(adat.Contains("using") && adat.Contains("System.Net"))
 			{
 				Figyelmeztetes();
 				return true;
