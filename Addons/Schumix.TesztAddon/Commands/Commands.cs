@@ -19,6 +19,7 @@
 
 using System;
 using System.Xml;
+using System.Data;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -46,9 +47,8 @@ namespace Schumix.TesztAddon.Commands
 				var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
 				if(!db.IsNull())
 				{
-					for(int i = 0; i < db.Rows.Count; ++i)
+					foreach(DataRow row in db.Rows)
 					{
-						var row = db.Rows[i];
 						string admin = row["Name"].ToString();
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", admin);
 					}

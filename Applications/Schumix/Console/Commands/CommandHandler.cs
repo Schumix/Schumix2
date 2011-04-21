@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using System.Threading;
 using System.Diagnostics;
 using Schumix.Irc;
@@ -145,9 +146,8 @@ namespace Schumix.Console.Commands
 				{
 					string adminok = string.Empty;
 
-					for(int i = 0; i < db.Rows.Count; ++i)
+					foreach(DataRow row in db.Rows)
 					{
-						var row = db.Rows[i];
 						string nev = row["Name"].ToString();
 						adminok += ", " + nev;
 					}
@@ -362,9 +362,8 @@ namespace Schumix.Console.Commands
 					string AktivCsatornak = string.Empty, DeAktivCsatornak = string.Empty;
 					bool AdatCsatorna = false, AdatCsatorna1 = false;
 
-					for(int i = 0; i < db.Rows.Count; ++i)
+					foreach(DataRow row in db.Rows)
 					{
-						var row = db.Rows[i];
 						string csatorna = row["Channel"].ToString();
 						string aktivitas = row["Enabled"].ToString();
 						string error = row["Error"].ToString();

@@ -220,8 +220,8 @@ namespace Schumix.Irc.Commands
 
 			CNick();
 			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=", Network.IMessage.Info.SplitToString(4, " "));
-
 			var Regex = new Regex(@".unescapedUrl.\:.(?<url>\S+).,.url.+.titleNoFormatting.\:.(?<title>.+).,.content");
+
 			if(!Regex.IsMatch(url))
 			{
 				sSendMessage.SendChatMessage(MessageType.PRIVMSG, Network.IMessage.Channel, "2Title: Nincs Title.");
@@ -250,8 +250,8 @@ namespace Schumix.Irc.Commands
 
 			CNick();
 			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=", Network.IMessage.Info.SplitToString(5, " "), "&langpair=" + Network.IMessage.Info[4]);
-
 			var Regex = new Regex(@"\{.translatedText.\:.(?<text>.+).\},");
+
 			if(!Regex.IsMatch(url))
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs fórdított szöveg.");
 			else

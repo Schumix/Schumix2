@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
@@ -40,16 +41,15 @@ namespace Schumix.HgRssAddon
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM hginfo");
 			if(!db.IsNull())
 			{
-				for(int i = 0; i < db.Rows.Count; ++i)
+				foreach(DataRow row in db.Rows)
 				{
-					var row = db.Rows[i];
 					string nev = row["Name"].ToString();
 					string link = row["Link"].ToString();
 					string weboldal = row["Website"].ToString();
 
 					var rss = new HgRss(nev, link, weboldal);
 					RssList.Add(rss);
-				};
+				}
 
 				int x = 0;
 

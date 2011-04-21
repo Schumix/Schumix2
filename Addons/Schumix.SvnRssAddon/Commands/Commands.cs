@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -47,9 +48,8 @@ namespace Schumix.SvnRssAddon.Commands
 				var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM svninfo");
 				if(!db.IsNull())
 				{
-					for(int i = 0; i < db.Rows.Count; ++i)
+					foreach(DataRow row in db.Rows)
 					{
-						var row = db.Rows[i];
 						string nev = row["Name"].ToString();
 						string[] csatorna = row["Channel"].ToString().Split(',');
 
@@ -62,7 +62,7 @@ namespace Schumix.SvnRssAddon.Commands
 							adat += " " + csatorna[x];
 
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3{0} Channel:2{1}", nev, adat);
-					};
+					}
 				}
 				else
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
@@ -74,11 +74,8 @@ namespace Schumix.SvnRssAddon.Commands
 				{
 					string lista = string.Empty;
 
-					for(int i = 0; i < db.Rows.Count; ++i)
-					{
-						var row = db.Rows[i];
+					foreach(DataRow row in db.Rows)
 						lista += " " + row["Name"].ToString();
-					};
 
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Lista:3{0}", lista);
 				}

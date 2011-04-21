@@ -111,10 +111,7 @@ namespace Schumix.Framework
 					{
 						pl = Activator.CreateInstance(type).Cast<ISchumixAddon>();
 
-						if(pl.IsNull())
-							continue;
-
-						if(Assemblies.Contains(asm))
+						if(pl.IsNull() || Assemblies.Contains(asm))
 							continue;
 
 						pl.Setup();

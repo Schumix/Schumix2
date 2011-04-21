@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -46,9 +47,7 @@ namespace Schumix.Irc.Commands
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM adminok WHERE Name = '{0}'", nev.ToLower());
 				if(!db.IsNull())
 				{
-					string JelszoSql = db["Password"].ToString();
-
-					if(JelszoSql == sUtilities.Sha1(Network.IMessage.Info[5]))
+					if(db["Password"].ToString() == sUtilities.Sha1(Network.IMessage.Info[5]))
 					{
 						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Vhost = '{0}' WHERE Name = '{1}'", Network.IMessage.Host, nev.ToLower());
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáférés engedélyezve");
@@ -77,9 +76,7 @@ namespace Schumix.Irc.Commands
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM adminok WHERE Name = '{0}'", nev.ToLower());
 				if(!db.IsNull())
 				{
-					string JelszoSql = db["Password"].ToString();
-
-					if(JelszoSql == sUtilities.Sha1(Network.IMessage.Info[5]))
+					if(db["Password"].ToString() == sUtilities.Sha1(Network.IMessage.Info[5]))
 					{
 						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Password = '{0}' WHERE Name = '{1}'", sUtilities.Sha1(Network.IMessage.Info[6]), nev.ToLower());
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelszó sikereset meg lett változtatva erre: {0}", Network.IMessage.Info[6]);
@@ -119,9 +116,8 @@ namespace Schumix.Irc.Commands
 				{
 					string adminok = string.Empty;
 
-					for(int i = 0; i < db.Rows.Count; ++i)
+					foreach(DataRow row in db.Rows)
 					{
-						var row = db.Rows[i];
 						string nev = row["Name"].ToString();
 						adminok += ", " + nev;
 					}

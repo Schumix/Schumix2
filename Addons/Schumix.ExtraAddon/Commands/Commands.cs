@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -60,9 +61,8 @@ namespace Schumix.ExtraAddon.Commands
 					{
 						string Nevek = string.Empty;
 
-						for(int i = 0; i < db.Rows.Count; ++i)
+						foreach(DataRow row in db.Rows)
 						{
-							var row = db.Rows[i];
 							string nev = row["Name"].ToString();
 							string allapot = row["Enabled"].ToString();
 							Nevek += ", " + nev + ":" + allapot;
@@ -81,9 +81,8 @@ namespace Schumix.ExtraAddon.Commands
 					var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
 					if(!db.IsNull())
 					{
-						for(int i = 0; i < db.Rows.Count; ++i)
+						foreach(DataRow row in db.Rows)
 						{
-							var row = db.Rows[i];
 							string nev = row["Name"].ToString();
 
 							var db1 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM hlmessage WHERE Name = '{0}'", nev);
@@ -179,9 +178,8 @@ namespace Schumix.ExtraAddon.Commands
 					{
 						string Nevek = string.Empty;
 
-						for(int i = 0; i < db.Rows.Count; ++i)
+						foreach(DataRow row in db.Rows)
 						{
-							var row = db.Rows[i];
 							string nev = row["Name"].ToString();
 							Nevek += ", " + nev + ":" + Network.IMessage.Channel;
 						};
@@ -257,9 +255,8 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							string Nevek = string.Empty;
 
-							for(int i = 0; i < db.Rows.Count; ++i)
+							foreach(DataRow row in db.Rows)
 							{
-								var row = db.Rows[i];
 								string nev = row["Name"].ToString();
 								string csatorna = row["Channel"].ToString();
 								Nevek += ", " + nev + ":" + csatorna;
@@ -332,9 +329,8 @@ namespace Schumix.ExtraAddon.Commands
 					{
 						string Nevek = string.Empty;
 
-						for(int i = 0; i < db.Rows.Count; ++i)
+						foreach(DataRow row in db.Rows)
 						{
-							var row = db.Rows[i];
 							string nev = row["Name"].ToString();
 							Nevek += ", " + nev + ":" + Network.IMessage.Channel;
 						};
@@ -410,9 +406,8 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							string Nevek = string.Empty;
 
-							for(int i = 0; i < db.Rows.Count; ++i)
+							foreach(DataRow row in db.Rows)
 							{
-								var row = db.Rows[i];
 								string nev = row["Name"].ToString();
 								string csatorna = row["Channel"].ToString();
 								Nevek += ", " + nev + ":" + csatorna;
@@ -463,9 +458,8 @@ namespace Schumix.ExtraAddon.Commands
 				{
 					string kodok = string.Empty;
 
-					for(int i = 0; i < db.Rows.Count; ++i)
+					foreach(DataRow row in db.Rows)
 					{
-						var row = db.Rows[i];
 						string kod = row["Code"].ToString();
 						kodok += ", " + kod;
 					};
@@ -498,9 +492,7 @@ namespace Schumix.ExtraAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
 					if(!db.IsNull())
 					{
-						string JelszoSql = db["Password"].ToString();
-
-						if(JelszoSql == sUtilities.Sha1(Network.IMessage.Info[6]))
+						if(db["Password"].ToString() == sUtilities.Sha1(Network.IMessage.Info[6]))
 						{
 							SchumixBase.DManager.QueryFirstRow("UPDATE notes_users SET Vhost = '{0}' WHERE Name = '{1}'", Network.IMessage.Host, nev.ToLower());
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáférés engedélyezve");
@@ -527,9 +519,7 @@ namespace Schumix.ExtraAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
 					if(!db.IsNull())
 					{
-						string JelszoSql = db["Password"].ToString();
-
-						if(JelszoSql == sUtilities.Sha1(Network.IMessage.Info[6]))
+						if(db["Password"].ToString() == sUtilities.Sha1(Network.IMessage.Info[6]))
 						{
 							SchumixBase.DManager.QueryFirstRow("UPDATE notes_users SET Password = '{0}' WHERE Name = '{1}'", sUtilities.Sha1(Network.IMessage.Info[7]), nev.ToLower());
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelszó sikereset meg lett változtatva erre: {0}", Network.IMessage.Info[7]);
@@ -577,8 +567,7 @@ namespace Schumix.ExtraAddon.Commands
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
 					if(!db.IsNull())
 					{
-						string jelszo = db["Password"].ToString();
-						if(jelszo != sUtilities.Sha1(Network.IMessage.Info[6]))
+						if(db["Password"].ToString() != sUtilities.Sha1(Network.IMessage.Info[6]))
 						{
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A jelszó nem egyezik meg az adatbázisban tárolttal!");
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Törlés meg lett szakítva!");

@@ -27,10 +27,7 @@ namespace Schumix.Irc
 		private string _NickStorage;
 		public string NickStorage
 		{
-			get
-			{
-				return _NickStorage;
-			}
+			get { return _NickStorage; }
 		}
 
 		private NickInfo() {}
