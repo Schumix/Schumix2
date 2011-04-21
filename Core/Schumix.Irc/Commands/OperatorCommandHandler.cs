@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -178,9 +179,8 @@ namespace Schumix.Irc.Commands
 					var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
 					if(!db.IsNull())
 					{
-						for(int i = 0; i < db.Rows.Count; ++i)
+						foreach(DataRow row in db.Rows)
 						{
-							var row = db.Rows[i];
 							string szoba = row["Channel"].ToString();
 							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,hl:ki,kick:ki,mode:ki' WHERE Channel = '{0}'", szoba);
 						}
@@ -340,9 +340,8 @@ namespace Schumix.Irc.Commands
 					string AktivCsatornak = string.Empty, DeAktivCsatornak = string.Empty;
 					bool AdatCsatorna = false, AdatCsatorna1 = false;
 
-					for(int i = 0; i < db.Rows.Count; ++i)
+					foreach(DataRow row in db.Rows)
 					{
-						var row = db.Rows[i];
 						string csatorna = row["Channel"].ToString();
 						string aktivitas = row["Enabled"].ToString();
 						string error = row["Error"].ToString();

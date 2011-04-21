@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
@@ -63,6 +64,10 @@ namespace Schumix.CompilerAddon
 					thread.Start();
 					thread.Join(1000);
 					thread.Abort();
+
+					var sw = new StreamWriter(Console.OpenStandardOutput());
+					sw.AutoFlush = true;
+					Console.SetOut(sw);
 				}
 				else if(regex2.IsMatch(Network.IMessage.Args) && Enabled())
 				{
@@ -70,6 +75,10 @@ namespace Schumix.CompilerAddon
 					thread.Start();
 					thread.Join(1000);
 					thread.Abort();
+
+					var sw = new StreamWriter(Console.OpenStandardOutput());
+					sw.AutoFlush = true;
+					Console.SetOut(sw);
 				}
 			}
 		}

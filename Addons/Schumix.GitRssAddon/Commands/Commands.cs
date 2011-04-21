@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -47,9 +48,8 @@ namespace Schumix.GitRssAddon.Commands
 				var db = SchumixBase.DManager.Query("SELECT Name, Type, Channel FROM gitinfo");
 				if(!db.IsNull())
 				{
-					for(int i = 0; i < db.Rows.Count; ++i)
+					foreach(DataRow row in db.Rows)
 					{
-						var row = db.Rows[i];
 						string nev = row["Name"].ToString();
 						string tipus = row["Type"].ToString();
 						string[] csatorna = row["Channel"].ToString().Split(',');
@@ -63,7 +63,7 @@ namespace Schumix.GitRssAddon.Commands
 							adat += " " + csatorna[x];
 
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3{0} 7{1} Channel:2{2}", nev, tipus, adat);
-					};
+					}
 				}
 				else
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
@@ -75,11 +75,8 @@ namespace Schumix.GitRssAddon.Commands
 				{
 					string lista = string.Empty;
 
-					for(int i = 0; i < db.Rows.Count; ++i)
-					{
-						var row = db.Rows[i];
+					foreach(DataRow row in db.Rows)
 						lista += " " + row["Name"].ToString() + " " + row["Type"].ToString() + ";";
-					};
 
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Lista:3{0}", lista);
 				}

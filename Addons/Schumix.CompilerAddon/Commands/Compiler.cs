@@ -215,9 +215,6 @@ namespace Schumix.CompilerAddon.Commands
 				if(writer.ToString().Length > 3000)
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kimeneti szöveg túl hosszú ezért nem került kiirásra!");
-					var s = new StreamWriter(Console.OpenStandardOutput());
-					s.AutoFlush = true;
-					Console.SetOut(s);
 					return;
 				}
 
@@ -238,16 +235,10 @@ namespace Schumix.CompilerAddon.Commands
 					for(int x = 0; x < sorok.Length; x++)
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sorok[x]);
 				}
-
-				var sw = new StreamWriter(Console.OpenStandardOutput());
-				sw.AutoFlush = true;
-				Console.SetOut(sw);
 			}
 			catch(Exception)
 			{
-				var sw = new StreamWriter(Console.OpenStandardOutput());
-				sw.AutoFlush = true;
-				Console.SetOut(sw);
+				// egyenlőre semmi
 			}
 		}
 

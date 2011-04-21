@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
@@ -40,9 +41,8 @@ namespace Schumix.GitRssAddon
 			var db = SchumixBase.DManager.Query("SELECT Name, Type, Link, Website FROM gitinfo");
 			if(!db.IsNull())
 			{
-				for(int i = 0; i < db.Rows.Count; ++i)
+				foreach(DataRow row in db.Rows)
 				{
-					var row = db.Rows[i];
 					string nev = row["Name"].ToString();
 					string tipus = row["Type"].ToString();
 					string link = row["Link"].ToString();
@@ -50,7 +50,7 @@ namespace Schumix.GitRssAddon
 
 					var rss = new GitRss(nev, tipus, link, weboldal);
 					RssList.Add(rss);
-				};
+				}
 
 				int x = 0;
 

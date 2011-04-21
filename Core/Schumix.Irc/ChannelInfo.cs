@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -32,10 +33,7 @@ namespace Schumix.Irc
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		public Dictionary<string, string> CLista
 		{
-			get
-			{
-				return _ChannelLista;
-			}
+			get { return _ChannelLista; }
 		}
 
 		private ChannelInfo() {}
@@ -45,9 +43,8 @@ namespace Schumix.Irc
 			var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channel");
 			if(!db.IsNull())
 			{
-				for(int i = 0; i < db.Rows.Count; ++i)
+				foreach(DataRow row in db.Rows)
 				{
-					var row = db.Rows[i];
 					string csatorna = row["Channel"].ToString();
 					string jelszo = row["Password"].ToString();
 					_ChannelLista.Add(csatorna, jelszo);
@@ -77,9 +74,8 @@ namespace Schumix.Irc
 		{
 			string status = string.Empty;
 
-			for(int i = 0; i < ChannelFunkcio.Count; i++)
+			foreach(var csatornak in ChannelFunkcio)
 			{
-				string csatornak = ChannelFunkcio[i];
 				string[] pont = csatornak.Split('.');
 				string csatorna = pont[0];
 				string funkciok = pont[1];
@@ -105,9 +101,8 @@ namespace Schumix.Irc
 			var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
 			if(!db.IsNull())
 			{
-				for(int i = 0; i < db.Rows.Count; ++i)
+				foreach(DataRow row in db.Rows)
 				{
-					var row = db.Rows[i];
 					string csatorna = row["Channel"].ToString();
 
 					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", csatorna);
@@ -136,9 +131,8 @@ namespace Schumix.Irc
 			var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channel");
 			if(!db.IsNull())
 			{
-				for(int i = 0; i < db.Rows.Count; ++i)
+				foreach(DataRow row in db.Rows)
 				{
-					var row = db.Rows[i];
 					string csatorna = row["Channel"].ToString();
 					string jelszo = row["Password"].ToString();
 					_ChannelLista.Add(csatorna, jelszo);
@@ -152,9 +146,8 @@ namespace Schumix.Irc
 		{
 			string funkcio = string.Empty;
 
-			for(int i = 0; i < ChannelFunkcio.Count; i++)
+			foreach(var csatornak in ChannelFunkcio)
 			{
-				string csatornak = ChannelFunkcio[i];
 				string[] pont = csatornak.Split('.');
 				string csatorna = pont[0];
 				string funkciok = pont[1];
@@ -167,9 +160,8 @@ namespace Schumix.Irc
 				}
 			}
 
-			for(int i = 0; i < ChannelFunkcio.Count; i++)
+			foreach(var csatornak in ChannelFunkcio)
 			{
-				string csatornak = ChannelFunkcio[i];
 				string[] pont = csatornak.Split('.');
 				string csatorna = pont[0];
 				string funkciok = pont[1];
@@ -192,9 +184,8 @@ namespace Schumix.Irc
 			var db = SchumixBase.DManager.Query("SELECT funkcio_nev, funkcio_status FROM schumix");
 			if(!db.IsNull())
 			{
-				for(int i = 0; i < db.Rows.Count; ++i)
+				foreach(DataRow row in db.Rows)
 				{
-					var row = db.Rows[i];
 					string nev = row["funkcio_nev"].ToString();
 					string status = row["funkcio_status"].ToString();
 	
@@ -214,9 +205,8 @@ namespace Schumix.Irc
 		{
 			string be = string.Empty, ki = string.Empty;
 
-			for(int i = 0; i < ChannelFunkcio.Count; i++)
+			foreach(var csatornak in ChannelFunkcio)
 			{
-				string csatornak = ChannelFunkcio[i];
 				string[] pont = csatornak.Split('.');
 				string csatorna = pont[0];
 				string funkciok = pont[1];
@@ -249,9 +239,8 @@ namespace Schumix.Irc
 			var db = SchumixBase.DManager.Query("SELECT Enabled FROM channel");
 			if(!db.IsNull())
 			{
-				for(int i = 0; i < db.Rows.Count; ++i)
+				foreach(DataRow row in db.Rows)
 				{
-					var row = db.Rows[i];
 					string aktivitas = row["Enabled"].ToString();
 
 					if(aktivitas == "false")
