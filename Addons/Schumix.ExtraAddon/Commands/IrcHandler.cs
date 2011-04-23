@@ -27,6 +27,7 @@ namespace Schumix.ExtraAddon.Commands
 {
 	public class IrcHandler : CommandInfo
 	{
+		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
@@ -46,19 +47,16 @@ namespace Schumix.ExtraAddon.Commands
 			if(sFunctions.AutoKick("join"))
 				return;
 
-			string channel = Network.IMessage.Channel;
+			string channel = Network.IMessage.Channel.Remove(0, 1, ":");
 
-			if(channel.Substring(0, 1) == ":")
-				channel = channel.Remove(0, 1);
-
-			if(Network.sChannelInfo.FSelect("mode") && Network.sChannelInfo.FSelect("mode", channel))
+			if(sChannelInfo.FSelect("mode") && sChannelInfo.FSelect("mode", channel))
 			{
 				AutoMode = true;
 				ModeChannel = channel;
 				sSender.NickServStatus(Network.IMessage.Nick);
 			}
 
-			if(Network.sChannelInfo.FSelect("koszones") && Network.sChannelInfo.FSelect("koszones", channel))
+			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", channel))
 			{
 				var rand = new Random();
 				string Koszones = string.Empty;
@@ -128,7 +126,7 @@ namespace Schumix.ExtraAddon.Commands
 			if(Network.IMessage.Nick == sNickInfo.NickStorage)
 				return;
 
-			if(Network.sChannelInfo.FSelect("koszones") && Network.sChannelInfo.FSelect("koszones", Network.IMessage.Channel))
+			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", Network.IMessage.Channel))
 			{
 				var rand = new Random();
 				string elkoszones = string.Empty;
@@ -159,9 +157,9 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(Network.IMessage.Info[3] == sNickInfo.NickStorage)
 			{
-				if(Network.sChannelInfo.FSelect("rejoin") && Network.sChannelInfo.FSelect("rejoin", Network.IMessage.Channel))
+				if(sChannelInfo.FSelect("rejoin") && sChannelInfo.FSelect("rejoin", Network.IMessage.Channel))
 				{
-					foreach(var m_channel in Network.sChannelInfo.CLista)
+					foreach(var m_channel in sChannelInfo.CLista)
 					{
 						if(Network.IMessage.Channel == m_channel.Key)
 							sSender.Join(m_channel.Key, m_channel.Value);
@@ -170,15 +168,12 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			else
 			{
-				if(Network.sChannelInfo.FSelect("parancsok") && Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel))
+				if(sChannelInfo.FSelect("parancsok") && sChannelInfo.FSelect("parancsok", Network.IMessage.Channel))
 				{
 					if(ConsoleLog.CLog)
 					{
 						string alomany = Network.IMessage.Info.SplitToString(4, " ");
-						if(alomany.Substring(0, 1) == ":")
-							alomany = alomany.Remove(0, 1);
-
-						Console.WriteLine("{0} kickelte a következő felhasználot: {1} oka: {2}", Network.IMessage.Nick, Network.IMessage.Info[3], alomany);
+						Console.WriteLine("{0} kickelte a következő felhasználot: {1} oka: {2}", Network.IMessage.Nick, Network.IMessage.Info[3], alomany.Remove(0, 1, ":"));
 					}
 				}
 			}

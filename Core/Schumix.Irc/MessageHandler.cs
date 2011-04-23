@@ -29,6 +29,8 @@ namespace Schumix.Irc
 	public partial class MessageHandler : CommandManager
 	{
 		protected bool HostServAllapot;
+		protected bool Status;
+		protected bool NewNick;
 		protected MessageHandler() {}
 
 		protected void HandleSuccessfulAuth()
@@ -40,13 +42,13 @@ namespace Schumix.Irc
 			{
 				Log.Notice("NickServ", "Azonosito jelszo kuldese a kiszolgalonak.");
 
-				if(!Network.NewNick)
+				if(!NewNick)
 					sSender.NickServ(IRCConfig.NickServPassword);
 			}
 
 			if(IRCConfig.UseHostServ)
 			{
-				if(!Network.NewNick)
+				if(!NewNick)
 				{
 					HostServAllapot = true;
 					sSender.HostServ("on");
@@ -57,7 +59,7 @@ namespace Schumix.Irc
 					Log.Notice("HostServ", "Vhost ki van kapcsolva.");
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
-					Network.sChannelInfo.JoinChannel();
+					sChannelInfo.JoinChannel();
 				}
 			}
 			else
@@ -68,7 +70,7 @@ namespace Schumix.Irc
 
 				WhoisPrivmsg = sNickInfo.NickStorage;
 				ChannelPrivmsg = sNickInfo.NickStorage;
-				Network.sChannelInfo.JoinChannel();
+				sChannelInfo.JoinChannel();
 			}
 		}
 
@@ -116,7 +118,7 @@ namespace Schumix.Irc
 				{
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
-					Network.sChannelInfo.JoinChannel();
+					sChannelInfo.JoinChannel();
 					HostServAllapot = false;
 				}
 			}
@@ -136,7 +138,7 @@ namespace Schumix.Irc
 		protected void HandlePong()
 		{
 			sSender.Pong(Network.IMessage.Args);
-			Network.Status = true;
+			Status = true;
 		}
 
 		/// <summary>
@@ -163,7 +165,7 @@ namespace Schumix.Irc
 			Log.Error("MessageHandler", "{0}-t mar hasznalja valaki!", sNickInfo.NickStorage);
 			string nick = sNickInfo.ChangeNick();
 			Log.Notice("MessageHandler", "Ujra probalom ezzel: {0}", nick);
-			Network.NewNick = true;
+			NewNick = true;
 			sSender.Nick(nick);
 		}
 
@@ -202,10 +204,7 @@ namespace Schumix.Irc
 				return;
 
 			string alomany = Network.IMessage.Info.SplitToString(4, " ");
-			if(alomany.Substring(0, 1) == ":")
-				alomany = alomany.Remove(0, 1);
-
-			sSendMessage.SendCMPrivmsg(WhoisPrivmsg, "Jelenleg itt van fent: {0}", alomany);
+			sSendMessage.SendCMPrivmsg(WhoisPrivmsg, "Jelenleg itt van fent: {0}", alomany.Remove(0, 1, ":"));
 			WhoisPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -217,7 +216,7 @@ namespace Schumix.Irc
 		/// <param name="args"></param>
 		private void LogToFile(string channel, string user, string args)
 		{
-			if(Network.sChannelInfo.FSelect("log") && Network.sChannelInfo.FSelect("log", channel))
+			if(sChannelInfo.FSelect("log") && sChannelInfo.FSelect("log", channel))
 			{
 				try
 				{

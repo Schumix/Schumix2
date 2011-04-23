@@ -29,6 +29,7 @@ namespace Schumix.SvnRssAddon
 {
 	public sealed class SvnRss
 	{
+		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private Thread _thread;
 		private readonly string _name;
@@ -92,7 +93,7 @@ namespace Schumix.SvnRssAddon
 
 				while(true)
 				{
-					if(Network.sChannelInfo.FSelect("svn"))
+					if(sChannelInfo.FSelect("svn"))
 					{
 						url = GetUrl();
 						if(url.IsNull())
@@ -197,9 +198,6 @@ namespace Schumix.SvnRssAddon
 			if(!db.IsNull())
 			{
 				string[] csatorna = db["Channel"].ToString().Split(',');
-
-				if(csatorna.Length < 1)
-					return;
 
 				for(int x = 0; x < csatorna.Length; x++)
 				{

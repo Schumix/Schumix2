@@ -29,7 +29,7 @@ namespace Schumix.ExtraAddon.Commands
 	{
 		public void HLUzenet()
 		{
-			if(Network.sChannelInfo.FSelect("hl") && Network.sChannelInfo.FSelect("hl", Network.IMessage.Channel))
+			if(sChannelInfo.FSelect("hl") && sChannelInfo.FSelect("hl", Network.IMessage.Channel))
 			{
 				for(int i = 3; i < Network.IMessage.Info.Length; i++)
 				{
@@ -64,7 +64,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(channel.Substring(0, 1) == ":")
 					channel = channel.Remove(0, 1);
 
-				if(Network.sChannelInfo.FSelect("kick") && Network.sChannelInfo.FSelect("kick", channel))
+				if(sChannelInfo.FSelect("kick") && sChannelInfo.FSelect("kick", channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", Network.IMessage.Nick.ToLower());
 					if(!db.IsNull())
@@ -80,7 +80,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(allapot == "privmsg")
 			{
-				if(Network.sChannelInfo.FSelect("kick") && Network.sChannelInfo.FSelect("kick", Network.IMessage.Channel))
+				if(sChannelInfo.FSelect("kick") && sChannelInfo.FSelect("kick", Network.IMessage.Channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", Network.IMessage.Nick.ToLower());
 					if(!db.IsNull())

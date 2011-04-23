@@ -29,6 +29,7 @@ namespace Schumix.ExtraAddon.Commands
 {
 	public partial class Functions : CommandInfo
 	{
+		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private Functions() {}
@@ -112,8 +113,8 @@ namespace Schumix.ExtraAddon.Commands
 					string nev = Network.IMessage.Nick.ToLower();
 					SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Info` = '{0}', `Enabled` = 'be' WHERE Name = '{1}'", Network.IMessage.Info.SplitToString(5, " "), nev);
 					SchumixBase.DManager.QueryFirstRow("UPDATE `schumix` SET `funkcio_status` = 'be' WHERE funkcio_nev = 'hl'");
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", Network.sChannelInfo.ChannelFunkciok("hl", "be", Network.IMessage.Channel), Network.IMessage.Channel);
-					Network.sChannelInfo.ChannelFunkcioReload();
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok("hl", "be", Network.IMessage.Channel), Network.IMessage.Channel);
+					sChannelInfo.ChannelFunkcioReload();
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az üzenet módosításra került.");
 				}
 			}

@@ -30,6 +30,7 @@ namespace Schumix.ExtraAddon
 {
 	public class ExtraAddon : IrcHandler, ISchumixAddon
 	{
+		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
 		private readonly Jegyzet sJegyzet = Singleton<Jegyzet>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
@@ -56,15 +57,15 @@ namespace Schumix.ExtraAddon
 
 		public void HandlePrivmsg()
 		{
-			if(Network.sChannelInfo.FSelect("parancsok") || Network.IMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect("parancsok") || Network.IMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				if(sFunctions.AutoKick("privmsg"))
 					return;
 
-				if(Network.sChannelInfo.FSelect("mode") && Network.sChannelInfo.FSelect("mode", Network.IMessage.Channel))
+				if(sChannelInfo.FSelect("mode") && sChannelInfo.FSelect("mode", Network.IMessage.Channel))
 				{
 					AutoMode = true;
 					ModeChannel = Network.IMessage.Channel;

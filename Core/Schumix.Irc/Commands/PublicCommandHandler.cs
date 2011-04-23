@@ -173,10 +173,7 @@ namespace Schumix.Irc.Commands
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT hasznalata FROM irc_parancsok WHERE parancs = '{0}'", Network.IMessage.Info[4]);
 			if(!db.IsNull())
-			{
-				string hasznalata = db["hasznalata"].ToString();
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, hasznalata);
-			}
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, db["hasznalata"].ToString());
 			else
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
 		}

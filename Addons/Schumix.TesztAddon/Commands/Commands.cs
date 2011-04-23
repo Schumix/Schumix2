@@ -69,6 +69,10 @@ namespace Schumix.TesztAddon.Commands
 			}
 			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "vhost")
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, Network.IMessage.Host);
+			/*else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "amsg")
+				sSendMessage.SendCMAmsg("teszt");
+			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "me")
+				sSendMessage.SendCMMe("teszt");*/
 			else
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", Network.IMessage.Info.Length);
 		}

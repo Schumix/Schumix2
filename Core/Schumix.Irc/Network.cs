@@ -26,16 +26,15 @@ using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
 {
 	public sealed class Network : MessageHandler
 	{
-		public static readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		public static IRCMessage IMessage = new IRCMessage();
 		private static readonly Dictionary<string, Action> _IRCHandler = new Dictionary<string, Action>();
+		public static IRCMessage IMessage = new IRCMessage();
 
-        ///***START***********************************///
         ///<summary>
         ///     A kimeneti adatokat külddi az IRC felé.
         ///</summary>
@@ -50,14 +49,6 @@ namespace Schumix.Irc
         ///     
         /// </summary>
 		private StreamReader reader;
-        ///***END***********************************///
-
-        /// <summary>
-        ///     Ha "true" akkor jött pong az IRC felől,
-        ///     ha "false" akkor nem és elindul a reconnect() függvény.
-        /// </summary>
-		public static bool Status { get; set; }
-		public static bool NewNick { get; set; }
 
         /// <summary>
         ///     Segédváltozó a "Status" váltotó mellé.
@@ -272,9 +263,7 @@ namespace Schumix.Irc
 
 							opcode = IrcCommand[1];
 							IMessage.Info = IrcCommand;
-
-							if(IMessage.Args.Length > 1 && IMessage.Args.Substring(0, 2) == " :")
-								IMessage.Args = IMessage.Args.Remove(0, 2);
+							IMessage.Args = IMessage.Args.Remove(0, 2, " :");
 
 							if(_IRCHandler.ContainsKey(opcode))
 								_IRCHandler[opcode].Invoke();

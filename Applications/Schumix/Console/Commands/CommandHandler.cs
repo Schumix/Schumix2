@@ -31,9 +31,10 @@ namespace Schumix.Console.Commands
 {
 	public class CommandHandler : ConsoleLog
 	{
-		private readonly Sender sSender = Singleton<Sender>.Instance;
+		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Network _network;
 		protected string[] Info;
 
@@ -54,10 +55,7 @@ namespace Schumix.Console.Commands
 				parancsok += ", " + command.Key;
 			}
 
-			if(parancsok.Length > 1 && parancsok.Substring(0, 2) == ", ")
-				parancsok = parancsok.Remove(0, 2);
-
-			Log.Notice("Console", "Parancsok: {0}", parancsok);
+			Log.Notice("Console", "Parancsok: {0}", parancsok.Remove(0, 2, ", "));
 		}
 
 		protected void HandleConsoleLog()
@@ -152,10 +150,7 @@ namespace Schumix.Console.Commands
 						adminok += ", " + nev;
 					}
 
-					if(adminok.Length > 1 && adminok.Substring(0, 2) == ", ")
-						adminok = adminok.Remove(0, 2);
-
-					Log.Notice("Console", "Adminok: {0}", adminok);
+					Log.Notice("Console", "Adminok: {0}", adminok.Remove(0, 2, ", "));
 				}
 				else
 					Log.Error("Console", "Hibas lekerdezes!");
@@ -241,7 +236,7 @@ namespace Schumix.Console.Commands
 
 			if(Info[1].ToLower() == "info")
 			{
-				string f = Network.sChannelInfo.FunkciokInfo();
+				string f = sChannelInfo.FunkciokInfo();
 				if(f == "Hibás lekérdezés!")
 				{
 					Log.Error("Console", "Hibás lekerdezes!");
@@ -311,8 +306,8 @@ namespace Schumix.Console.Commands
 
 				Log.Notice("Console", "Csatorna hozzaadva: {0}", csatornainfo);
 
-				Network.sChannelInfo.ChannelListaReload();
-				Network.sChannelInfo.ChannelFunkcioReload();
+				sChannelInfo.ChannelListaReload();
+				sChannelInfo.ChannelFunkcioReload();
 			}
 			else if(Info[1].ToLower() == "del")
 			{
@@ -345,13 +340,13 @@ namespace Schumix.Console.Commands
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE Channel = '{0}'", csatornainfo);
 				Log.Notice("Console", "Csatorna eltavolitva: {0}", csatornainfo);
 
-				Network.sChannelInfo.ChannelListaReload();
-				Network.sChannelInfo.ChannelFunkcioReload();
+				sChannelInfo.ChannelListaReload();
+				sChannelInfo.ChannelFunkcioReload();
 			}
 			else if(Info[1].ToLower() == "update")
 			{
-				Network.sChannelInfo.ChannelListaReload();
-				Network.sChannelInfo.ChannelFunkcioReload();
+				sChannelInfo.ChannelListaReload();
+				sChannelInfo.ChannelFunkcioReload();
 				Log.Notice("Console", "A csatorna informaciok frissitesre kerultek.");
 			}
 			else if(Info[1].ToLower() == "info")
@@ -360,43 +355,25 @@ namespace Schumix.Console.Commands
 				if(!db.IsNull())
 				{
 					string AktivCsatornak = string.Empty, DeAktivCsatornak = string.Empty;
-					bool AdatCsatorna = false, AdatCsatorna1 = false;
 
 					foreach(DataRow row in db.Rows)
 					{
 						string csatorna = row["Channel"].ToString();
 						string aktivitas = row["Enabled"].ToString();
-						string error = row["Error"].ToString();
 
 						if(aktivitas == "true")
-						{
 							AktivCsatornak += ", " + csatorna;
-							AdatCsatorna = true;
-						}
 						else if(aktivitas == "false")
-						{
-							DeAktivCsatornak += ", " + csatorna + ":" + error;
-							AdatCsatorna1 = true;
-						}
+							DeAktivCsatornak += ", " + csatorna + ":" + row["Error"].ToString();
 					}
 
-					if(AdatCsatorna)
-					{
-						if(AktivCsatornak.Substring(0, 2) == ", ")
-							AktivCsatornak = AktivCsatornak.Remove(0, 2);
-
-						Log.Notice("Console", "Aktiv: {0}", AktivCsatornak);
-					}
+					if(AktivCsatornak.Length > 0)
+						Log.Notice("Console", "Aktiv: {0}", AktivCsatornak.Remove(0, 2, ", "));
 					else
 						Log.Notice("Console", "Aktiv: Nincs adat.");
 
-					if(AdatCsatorna1)
-					{
-						if(DeAktivCsatornak.Substring(0, 2) == ", ")
-							DeAktivCsatornak = DeAktivCsatornak.Remove(0, 2);
-
-						Log.Notice("Console", "Deaktiv: {0}", DeAktivCsatornak);
-					}
+					if(DeAktivCsatornak.Length > 0)
+						Log.Notice("Console", "Deaktiv: {0}", DeAktivCsatornak.Remove(0, 2, ", "));
 					else
 						Log.Notice("Console", "Deaktiv: Nincs adat.");
 				}

@@ -137,7 +137,7 @@ namespace Schumix.Framework.Extensions
 			for(int x = 0; x < split.Length; x++)
 				ss += s + split[x];
 
-			if(ss.Substring(0, s.Length) == s)
+			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
 				ss = ss.Remove(0, s.Length);
 
 			return ss;
@@ -150,10 +150,18 @@ namespace Schumix.Framework.Extensions
 			for(int x = min; x < split.Length; x++)
 				ss += s + split[x];
 
-			if(ss.Substring(0, s.Length) == s)
+			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
 				ss = ss.Remove(0, s.Length);
 
 			return ss;
+		}
+
+		public static string Remove(this string s, int min, int max, string value)
+		{
+			if(s.Length >= max && s.Substring(min, max) == value)
+				return s.Remove(min, max);
+			else
+				return string.Empty;
 		}
 	}
 }

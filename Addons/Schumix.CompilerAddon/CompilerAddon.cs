@@ -34,6 +34,7 @@ namespace Schumix.CompilerAddon
 {
 	public class CompilerAddon : Compiler, ISchumixAddon
 	{
+		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
 		private readonly Regex regex2 = new Regex(@"^\{(?<code>.+)\}.+$");
@@ -50,9 +51,9 @@ namespace Schumix.CompilerAddon
 
 		public void HandlePrivmsg()
 		{
-			if(Network.sChannelInfo.FSelect("parancsok") || Network.IMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect("parancsok") || Network.IMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				if(!CompilerConfig.CompilerEnabled)

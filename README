@@ -14,7 +14,7 @@ Schumixxal szemben gyorsabb és megbízhatobb. A kód c# nyelven írodott.
 ---------------------
 
 A bot kompatibilis a windows és linux rendszerrel. Valószínüleg Mac OS X-en is fut de még nem került tesztelésre.
-Windows alatt ajálott a .net 4 keresztrendszer használata vagy újabb.
+Windows alatt ajálott a .net 4.0 használata vagy újabb.
 Monon jelenleg minimum követelmény a 2.10 vagy újabb.
 
 ---------------------
