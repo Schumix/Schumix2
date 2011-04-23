@@ -59,12 +59,12 @@ namespace Schumix.Framework
 					Directory.CreateDirectory(LogConfig.LogDirectory);
 
 				var time = DateTime.Now;
-				string logfile = "Schumix.log";
+				string logfile = string.Format("./{0}/Schumix.log", LogConfig.LogDirectory);
 
-				if(!File.Exists(string.Format("./{0}/{1}", LogConfig.LogDirectory, logfile)))
-					File.Create(string.Format("./{0}/{1}", LogConfig.LogDirectory, logfile));
+				if(!File.Exists(logfile))
+					File.Create(logfile);
 
-				var file = new StreamWriter(string.Format("./{0}/{1}", LogConfig.LogDirectory, logfile), true) { AutoFlush = true };
+				var file = new StreamWriter(logfile, true) { AutoFlush = true };
 				file.Write("\nIndulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n", time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
 				file.Close();
 			}
