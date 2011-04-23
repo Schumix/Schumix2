@@ -31,6 +31,8 @@ namespace Schumix.Irc
 	{
 		PRIVMSG,
 		NOTICE
+		/*AMSG,
+		ME*/
 	};
 
 	public sealed class SendMessage
@@ -46,6 +48,10 @@ namespace Schumix.Irc
 					WriteLine("PRIVMSG {0} :{1}", channel, uzenet);
 				else if(tipus == MessageType.NOTICE)
 					WriteLine("NOTICE {0} :{1}", channel, uzenet);
+				/*else if(tipus == MessageType.AMSG)
+					WriteLine("AMSG :{0}", uzenet);
+				else if(tipus == MessageType.ME)
+					WriteLine("ME :{0}", uzenet); // egyenlőre nem megy*/
 			}
 		}
 
@@ -69,7 +75,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.PRIVMSG, channel, string.Format(uzenet, args));
+				SendCMPrivmsg(channel, string.Format(uzenet, args));
 			}
 		}
 
@@ -85,9 +91,41 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.NOTICE, channel, string.Format(uzenet, args));
+				SendCMNotice(channel, string.Format(uzenet, args));
 			}
 		}
+
+		/*public void SendCMAmsg(string uzenet)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(MessageType.AMSG, string.Empty, uzenet);
+			}
+		}
+
+		public void SendCMAmsg(string uzenet, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				SendCMAmsg(string.Format(uzenet, args));
+			}
+		}
+
+		public void SendCMMe(string uzenet)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(MessageType.ME, string.Empty, uzenet);
+			}
+		}
+
+		public void SendCMMe(string uzenet, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				SendCMMe(string.Format(uzenet, args));
+			}
+		}*/
 
 		public void WriteLine(string uzenet)
 		{

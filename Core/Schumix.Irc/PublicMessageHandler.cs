@@ -21,6 +21,7 @@ using System;
 using System.Diagnostics;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
 {
@@ -42,17 +43,15 @@ namespace Schumix.Irc
 
 			LogToFile(Network.IMessage.Channel, Network.IMessage.Nick, Network.IMessage.Args);
 
-			if(Network.sChannelInfo.FSelect("parancsok") || Network.IMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect("parancsok") || Network.IMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!Network.sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				if(Network.IMessage.Info[Network.IMessage.Info.Length-2] == string.Empty || Network.IMessage.Info[Network.IMessage.Info.Length-1] == string.Empty)
 					return;
 
-				if(Network.IMessage.Info[3].Substring(0, 1) == ":")
-					Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
-
+				Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1, ":");
 				Schumix();
 
 				if(Network.IMessage.Info[3] == string.Empty || Network.IMessage.Info[3].Length < PLength || Network.IMessage.Info[3].Substring(0, PLength) != IRCConfig.CommandPrefix)
@@ -108,7 +107,7 @@ namespace Schumix.Irc
 					sSender.NickServGhost(IRCConfig.NickName, IRCConfig.NickServPassword);
 					sSender.Nick(IRCConfig.NickName);
 					sNickInfo.ChangeNick(IRCConfig.NickName);
-					Network.NewNick = false;
+					NewNick = false;
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ghost paranccsal elsődleges nick visszaszerzése.");
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "nick")
@@ -129,7 +128,7 @@ namespace Schumix.Irc
 						Log.Notice("NickServ", "Azonosito jelszo kuldese a kiszolgalonak.");
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Azonosító jelszó küldése a kiszolgálonak.");
 						sSender.NickServ(IRCConfig.NickServPassword);
-						Network.NewNick = false;
+						NewNick = false;
 
 						if(IRCConfig.UseHostServ)
 						{

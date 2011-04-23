@@ -122,10 +122,7 @@ namespace Schumix.Irc.Commands
 						adminok += ", " + nev;
 					}
 
-					if(adminok.Length > 1 && adminok.Substring(0, 2) == ", ")
-						adminok = adminok.Remove(0, 2);
-
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Adminok: {0}", adminok);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Adminok: {0}", adminok.Remove(0, 2, ", "));
 				}
 				else
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
@@ -271,11 +268,8 @@ namespace Schumix.Irc.Commands
 						parancsok += " | " + IRCConfig.CommandPrefix + command.Key;
 					}
 
-					if(parancsok.Length > 2 && parancsok.Substring(0, 3) == " | ")
-						parancsok = parancsok.Remove(0, 3);
-
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Fél Operátor parancsok!");
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}", parancsok);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}", parancsok.Remove(0, 3, " | "));
 				}
 				else if(IsAdmin(Network.IMessage.Nick, AdminFlag.Operator))
 				{
@@ -290,14 +284,11 @@ namespace Schumix.Irc.Commands
 						parancsok += " | " + IRCConfig.CommandPrefix + command.Key;
 					}
 
-					if(parancsok.Length > 2 && parancsok.Substring(0, 3) == " | ")
-						parancsok = parancsok.Remove(0, 3);
-
 					foreach(var command in CommandManager.GetOperatorCommandHandler())
 						parancsok2 += " | " + IRCConfig.CommandPrefix + command.Key;
 
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Operátor parancsok!");
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}{1}", parancsok, parancsok2);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}{1}", parancsok.Remove(0, 3, " | "), parancsok2);
 				}
 				else if(IsAdmin(Network.IMessage.Nick, AdminFlag.Administrator))
 				{
@@ -313,9 +304,6 @@ namespace Schumix.Irc.Commands
 						parancsok += " | " + IRCConfig.CommandPrefix + command.Key;
 					}
 
-					if(parancsok.Length > 2 && parancsok.Substring(0, 3) == " | ")
-						parancsok = parancsok.Remove(0, 3);
-
 					foreach(var command in CommandManager.GetOperatorCommandHandler())
 						parancsok2 += " | " + IRCConfig.CommandPrefix + command.Key;
 
@@ -323,7 +311,7 @@ namespace Schumix.Irc.Commands
 						parancsok3 += " | " + IRCConfig.CommandPrefix + command.Key;
 
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Adminisztrátor parancsok!");
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}{1}{2}", parancsok, parancsok2, parancsok3);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: {0}{1}{2}", parancsok.Remove(0, 3, " | "), parancsok2, parancsok3);
 				}
 			}
 		}

@@ -53,16 +53,7 @@ namespace Schumix.GitRssAddon.Commands
 						string nev = row["Name"].ToString();
 						string tipus = row["Type"].ToString();
 						string[] csatorna = row["Channel"].ToString().Split(',');
-
-						if(csatorna.Length < 1)
-							return;
-
-						string adat = string.Empty;
-
-						for(int x = 0; x < csatorna.Length; x++)
-							adat += " " + csatorna[x];
-
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3{0} 7{1} Channel:2{2}", nev, tipus, adat);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3{0} 7{1} Channel: 2{2}", nev, tipus, csatorna.SplitToString(" "));
 					}
 				}
 				else
@@ -178,13 +169,7 @@ namespace Schumix.GitRssAddon.Commands
 					if(!db.IsNull())
 					{
 						string[] csatorna = db["Channel"].ToString().Split(',');
-						string adat = string.Empty;
-
-						for(int x = 0; x < csatorna.Length; x++)
-							adat += "," + csatorna[x];
-
-						if(adat.Length > 0 && adat.Substring(0, 1) == ",")
-							adat = adat.Remove(0, 1);
+						string adat = csatorna.SplitToString(",");
 
 						if(csatorna.Length == 1 && adat == string.Empty)
 							adat += Network.IMessage.Info[8].ToLower();
@@ -231,10 +216,7 @@ namespace Schumix.GitRssAddon.Commands
 							adat += "," + csatorna[x];
 						}
 
-						if(adat.Length > 0 && adat.Substring(0, 1) == ",")
-							adat = adat.Remove(0, 1);
-
-						SchumixBase.DManager.QueryFirstRow("UPDATE gitinfo SET Channel = '{0}' WHERE Name = '{1}' AND Type = '{2}'", adat, Network.IMessage.Info[6].ToLower(), Network.IMessage.Info[7].ToLower());
+						SchumixBase.DManager.QueryFirstRow("UPDATE gitinfo SET Channel = '{0}' WHERE Name = '{1}' AND Type = '{2}'", adat.Remove(0, 1, ","), Network.IMessage.Info[6].ToLower(), Network.IMessage.Info[7].ToLower());
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Csatorna sikeresen törölve.");
 					}
 					else

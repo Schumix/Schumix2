@@ -52,16 +52,7 @@ namespace Schumix.HgRssAddon.Commands
 					{
 						string nev = row["Name"].ToString();
 						string[] csatorna = row["Channel"].ToString().Split(',');
-
-						if(csatorna.Length < 1)
-							return;
-
-						string adat = string.Empty;
-
-						for(int x = 0; x < csatorna.Length; x++)
-							adat += " " + csatorna[x];
-
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3{0} Channel:2{1}", nev, adat);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3{0} Channel: 2{1}", nev, csatorna.SplitToString(" "));
 					}
 				}
 				else
@@ -171,13 +162,7 @@ namespace Schumix.HgRssAddon.Commands
 					if(!db.IsNull())
 					{
 						string[] csatorna = db["Channel"].ToString().Split(',');
-						string adat = string.Empty;
-
-						for(int x = 0; x < csatorna.Length; x++)
-							adat += "," + csatorna[x];
-
-						if(adat.Length > 0 && adat.Substring(0, 1) == ",")
-							adat = adat.Remove(0, 1);
+						string adat = csatorna.SplitToString(",");
 
 						if(csatorna.Length == 1 && adat == string.Empty)
 							adat += Network.IMessage.Info[7].ToLower();
@@ -218,10 +203,7 @@ namespace Schumix.HgRssAddon.Commands
 							adat += "," + csatorna[x];
 						}
 
-						if(adat.Length > 0 && adat.Substring(0, 1) == ",")
-							adat = adat.Remove(0, 1);
-
-						SchumixBase.DManager.QueryFirstRow("UPDATE hginfo SET Channel = '{0}' WHERE Name = '{1}'", adat, Network.IMessage.Info[6].ToLower());
+						SchumixBase.DManager.QueryFirstRow("UPDATE hginfo SET Channel = '{0}' WHERE Name = '{1}'", adat.Remove(0, 1, ","), Network.IMessage.Info[6].ToLower());
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Csatorna sikeresen törölve.");
 					}
 					else
