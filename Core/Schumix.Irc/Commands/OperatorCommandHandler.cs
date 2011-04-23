@@ -93,10 +93,7 @@ namespace Schumix.Irc.Commands
 								SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", Network.IMessage.Info[5].ToLower(), Network.IMessage.Info[i].ToLower());
 							}
 
-							if(alomany.Substring(0, 2) == ", ")
-								alomany = alomany.Remove(0, 2);
-
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: {1}kapcsolva",  alomany, Network.IMessage.Info[5].ToLower());
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: {1}kapcsolva",  alomany.Remove(0, 2, ", "), Network.IMessage.Info[5].ToLower());
 						}
 						else
 						{
@@ -151,15 +148,12 @@ namespace Schumix.Irc.Commands
 							sChannelInfo.ChannelFunkcioReload();
 						}
 
-						if(alomany.Substring(0, 2) == ", ")
-							alomany = alomany.Remove(0, 2);
-
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: {1}kapcsolva",  alomany, status);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: {1}kapcsolva",  alomany.Remove(0, 2, ", "), status);
 					}
 					else
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: {1}kapcsolva", Network.IMessage.Info[7].ToLower(), status);
-						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok(Network.IMessage.Info[7], status, channelinfo), channelinfo);
+						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok(Network.IMessage.Info[7].ToLower(), status, channelinfo), channelinfo);
 						sChannelInfo.ChannelFunkcioReload();
 					}
 				}
@@ -181,8 +175,8 @@ namespace Schumix.Irc.Commands
 					{
 						foreach(DataRow row in db.Rows)
 						{
-							string szoba = row["Channel"].ToString();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,hl:ki,kick:ki,mode:ki' WHERE Channel = '{0}'", szoba);
+							string csatorna = row["Channel"].ToString();
+							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,hl:ki,kick:ki,mode:ki' WHERE Channel = '{0}'", csatorna);
 						}
 
 						sChannelInfo.ChannelFunkcioReload();
@@ -227,10 +221,7 @@ namespace Schumix.Irc.Commands
 							sChannelInfo.ChannelFunkcioReload();
 						}
 
-						if(alomany.Substring(0, 2) == ", ")
-							alomany = alomany.Remove(0, 2);
-
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: {1}kapcsolva",  alomany, status);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: {1}kapcsolva",  alomany.Remove(0, 2, ", "), status);
 					}
 					else
 					{

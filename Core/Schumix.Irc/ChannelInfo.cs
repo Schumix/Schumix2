@@ -81,10 +81,13 @@ namespace Schumix.Irc
 				string funkciok = pont[1];
 				string[] kettospont = funkciok.Split(':');
 
-				if(csatorna == channel)
+				if(csatorna == channel.ToLower())
 				{
-					if(kettospont[0] == nev)
+					if(kettospont[0] == nev.ToLower())
+					{
 						status = kettospont[1];
+						break;
+					}
 				}
 			}
 
@@ -153,9 +156,9 @@ namespace Schumix.Irc
 				string funkciok = pont[1];
 				string[] kettospont = funkciok.Split(':');
 
-				if(csatorna == channel)
+				if(csatorna == channel.ToLower())
 				{
-					if(kettospont[0] != nev)
+					if(kettospont[0] != nev.ToLower())
 						funkcio += "," + funkciok;
 				}
 			}
@@ -167,9 +170,9 @@ namespace Schumix.Irc
 				string funkciok = pont[1];
 				string[] kettospont = funkciok.Split(':');
 
-				if(csatorna == channel)
+				if(csatorna == channel.ToLower())
 				{
-					if(kettospont[0] == nev)
+					if(kettospont[0] == nev.ToLower())
 						funkcio += "," + nev + ":" + status;
 				}
 			}
@@ -212,7 +215,7 @@ namespace Schumix.Irc
 				string funkciok = pont[1];
 				string[] kettospont = funkciok.Split(':');
 
-				if(csatorna == channel)
+				if(csatorna == channel.ToLower())
 				{
 					if(kettospont[1] == "be")
 						be += kettospont[0] + " ";
