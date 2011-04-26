@@ -21,8 +21,27 @@ using System;
 
 namespace Schumix.Framework.Config
 {
-	public sealed class Verzio
+	public static class Consts
 	{
-		public static string SchumixVerzio { get { return "2.9.1"; } }
+		public const string SchumixDescription = "Schumix IRC bot";
+#if DEBUG
+#if MONO
+		public const string SchumixConfiguration = "Mono-Debug";
+#else
+		public const string SchumixConfiguration = "Debug";
+#endif
+#else
+#if MONO
+		public const string SchumixConfiguration = "Mono-Release";
+#else
+		public const string SchumixConfiguration = "Release";
+#endif
+#endif
+		public const string SchumixCompany = "Megax Productions";
+		public const string SchumixProduct = "Schumix";
+		public const string SchumixCopyright = "Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>";
+		public const string SchumixTrademark = "GNU General Public License";
+		public const string SchumixVersion = "2.9.2";
+		public const string SchumixFileVersion = "2.9.2.0";
 	}
 }

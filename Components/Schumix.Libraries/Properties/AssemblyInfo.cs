@@ -21,21 +21,18 @@ using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Schumix.Framework.Config;
 
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Schumix.Libraries")]
-[assembly: AssemblyDescription("Schumix IRC bot")]
-#if DEBUG
-[assembly: AssemblyConfiguration("Debug")]
-#else
-[assembly: AssemblyConfiguration("Release")]
-#endif
-[assembly: AssemblyCompany("Megax Productions")]
-[assembly: AssemblyProduct("Schumix")]
-[assembly: AssemblyCopyright("Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>")]
-[assembly: AssemblyTrademark("GNU General Public License")]
+[assembly: AssemblyDescription(Consts.SchumixDescription)]
+[assembly: AssemblyConfiguration(Consts.SchumixConfiguration)]
+[assembly: AssemblyCompany(Consts.SchumixCompany)]
+[assembly: AssemblyProduct(Consts.SchumixProduct)]
+[assembly: AssemblyCopyright(Consts.SchumixCopyright)]
+[assembly: AssemblyTrademark(Consts.SchumixTrademark)]
 
 [assembly: CLSCompliant(true)]
 

@@ -48,9 +48,6 @@ namespace Schumix.Irc
 				if(!sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
 					return;
 
-				if(Network.IMessage.Info[Network.IMessage.Info.Length-2] == string.Empty || Network.IMessage.Info[Network.IMessage.Info.Length-1] == string.Empty)
-					return;
-
 				Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1, ":");
 				Schumix();
 
@@ -74,7 +71,7 @@ namespace Schumix.Irc
 				if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "sys")
 				{
 					var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Verzió: 10{0}", Verzio.SchumixVerzio);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Verzió: 10{0}", sUtilities.GetVersion());
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Platform: {0}", sUtilities.GetPlatform());
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3OSVerzió: {0}", Environment.OSVersion.ToString());
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Programnyelv: c#");

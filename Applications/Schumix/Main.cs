@@ -26,6 +26,7 @@ namespace Schumix
 {
 	class MainClass
 	{
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Sender sSender = Singleton<Sender>.Instance;
 
 		/// <summary>
@@ -44,7 +45,7 @@ namespace Schumix
 			System.Console.WriteLine("[Schumix2]");
 			System.Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> vagy <kikapcs> parancsot!\n");
 			System.Console.ForegroundColor = ConsoleColor.Gray;
-			System.Console.WriteLine("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", Verzio.SchumixVerzio);
+			System.Console.WriteLine("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", sUtilities.GetVersion());
 			System.Console.WriteLine("==============================================================================");
 			System.Console.WriteLine();
 

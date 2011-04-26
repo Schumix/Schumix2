@@ -198,5 +198,10 @@ namespace Schumix.Framework
 
 			return Platform;
 		}
+
+		public string GetVersion()
+		{
+			return Schumix.Framework.Config.Consts.SchumixVersion;
+		}
 	}
 }
