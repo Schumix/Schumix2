@@ -235,7 +235,7 @@ namespace Schumix.Irc
 					{
 						if(m_running)
 						{
-							if((IrcMessage = reader.ReadLine()) == null)
+							if((IrcMessage = reader.ReadLine()).IsNull())
 								break;
 
 							IrcCommand = IrcMessage.Split(' ');
@@ -301,28 +301,34 @@ namespace Schumix.Irc
 
 				while(true)
 				{
-					if(Status)
+					try
 					{
-						sSender.Ping(_server);
-						Status = false;
-						Thread.Sleep(30*1000);
-					}
-					else
-					{
-						if(sChannelInfo.FSelect("reconnect"))
-							ReConnect();
+						if(Status)
+						{
+							sSender.Ping(_server);
+							Status = false;
+							Thread.Sleep(30*1000);
+						}
+						else
+						{
+							if(sChannelInfo.FSelect("reconnect"))
+								ReConnect();
 
-						Thread.Sleep(30*1000);
+							Thread.Sleep(30*1000);
+						}
+					}
+					catch(Exception e)
+					{
+						if(m_running)
+							Log.Error("Ping", "Hiba oka: {0}", e.Message);
+						else
+							Thread.Sleep(20*1000);
 					}
 				}
 			}
 			catch(Exception e)
 			{
-				if(m_running)
-					Log.Error("Ping", "Hiba oka: {0}", e.Message);
-				else
-					Thread.Sleep(20*1000);
-
+				Log.Error("Ping", "Vegzetes hiba oka: {0}", e.Message);
 				Ping();
 			}
 		}

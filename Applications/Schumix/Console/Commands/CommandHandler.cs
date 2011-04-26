@@ -81,7 +81,7 @@ namespace Schumix.Console.Commands
 		protected void HandleSys()
 		{
 			var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
-			Log.Notice("Console", "Verzio: {0}", Verzio.SchumixVerzio);
+			Log.Notice("Console", "Verzio: {0}", sUtilities.GetVersion());
 			Log.Notice("Console", "Platform: {0}", sUtilities.GetPlatform());
 			Log.Notice("Console", "OSVerzio: {0}", Environment.OSVersion.ToString());
 			Log.Notice("Console", "Programnyelv: c#");
