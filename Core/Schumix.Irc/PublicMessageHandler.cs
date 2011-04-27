@@ -76,9 +76,9 @@ namespace Schumix.Irc
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3OSVerzió: {0}", Environment.OSVersion.ToString());
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Programnyelv: c#");
 
-					if(memory >= 40)
+					if(memory >= 60)
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat:5 {0} MB", memory);
-					else if(memory >= 20)
+					else if(memory >= 30)
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat:8 {0} MB", memory);
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat:3 {0} MB", memory);
@@ -148,6 +148,7 @@ namespace Schumix.Irc
 						return;
 
 					GC.Collect();
+					GC.WaitForPendingFinalizers();
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Lefoglalt memória felszabadításra kerül.");
 				}
 			}
