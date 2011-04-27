@@ -44,7 +44,7 @@ namespace Schumix.ExtraAddon.Commands
 			if(Network.IMessage.Nick == sNickInfo.NickStorage)
 				return;
 
-			if(sFunctions.AutoKick("join"))
+			if(sFunctions.AutoKick("join", Network.IMessage.Nick,Network.IMessage.Channel))
 				return;
 
 			string channel = Network.IMessage.Channel.Remove(0, 1, ":");

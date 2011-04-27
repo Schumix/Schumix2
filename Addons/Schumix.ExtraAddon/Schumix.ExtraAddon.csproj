@@ -95,6 +95,7 @@
     <Compile Include="Commands\Help.cs" />
     <Compile Include="Commands\Functions.cs" />
     <Compile Include="Config\AddonConfig.cs" />
+    <Compile Include="Commands\WebHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

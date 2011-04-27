@@ -1,6 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
+ * Copyright (C) 2010-2011 Twl
  * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
@@ -18,6 +19,7 @@
  */
 
 using System;
+using System.Text.RegularExpressions;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -27,16 +29,16 @@ namespace Schumix.ExtraAddon.Commands
 {
 	public partial class Functions : CommandInfo
 	{
-		public void HLUzenet()
+		public void HLUzenet(string channel, string[] _info)
 		{
-			if(sChannelInfo.FSelect("hl") && sChannelInfo.FSelect("hl", Network.IMessage.Channel))
+			if(sChannelInfo.FSelect("hl") && sChannelInfo.FSelect("hl", channel))
 			{
-				for(int i = 3; i < Network.IMessage.Info.Length; i++)
+				for(int i = 3; i < _info.Length; i++)
 				{
 					if(i == 3)
-						Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1, ":");
+						_info[3] = _info[3].Remove(0, 1, ":");
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Info, Enabled FROM hlmessage WHERE Name = '{0}'", Network.IMessage.Info[i].ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Info, Enabled FROM hlmessage WHERE Name = '{0}'", _info[i].ToLower());
 					if(!db.IsNull())
 					{
 						string info = db["Info"].ToString();
@@ -45,26 +47,26 @@ namespace Schumix.ExtraAddon.Commands
 						if(allapot != "be")
 							return;
 
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", info);
+						sSendMessage.SendCMPrivmsg(channel, "{0}", info);
 						break;
 					}
 				}
 			}
 		}
 
-		public bool AutoKick(string allapot)
+		public bool AutoKick(string allapot, string nick, string _channel)
 		{
 			if(allapot == "join")
 			{
-				string channel = Network.IMessage.Channel.Remove(0, 1, ":");
+				string channel = _channel.Remove(0, 1, ":");
 
 				if(sChannelInfo.FSelect("kick") && sChannelInfo.FSelect("kick", channel))
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", Network.IMessage.Nick.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
 					{
 						string oka = db["Reason"].ToString();
-						sSender.Kick(channel, Network.IMessage.Nick, oka);
+						sSender.Kick(channel, nick, oka);
 						return true;
 					}
 				}
@@ -74,13 +76,13 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(allapot == "privmsg")
 			{
-				if(sChannelInfo.FSelect("kick") && sChannelInfo.FSelect("kick", Network.IMessage.Channel))
+				if(sChannelInfo.FSelect("kick") && sChannelInfo.FSelect("kick", _channel))
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", Network.IMessage.Nick.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
 					{
 						string oka = db["Reason"].ToString();
-						sSender.Kick(Network.IMessage.Channel, Network.IMessage.Nick, oka);
+						sSender.Kick(_channel, nick, oka);
 						return true;
 					}
 				}
@@ -89,6 +91,38 @@ namespace Schumix.ExtraAddon.Commands
 			}
 
 			return false;
+		}
+
+		public void HandleWebTitle(string channel, string msg)
+		{
+			try
+			{
+				var url = new Uri(msg);
+				var webTitle = WebHelper.GetWebTitle(url);
+
+				if(string.IsNullOrEmpty(webTitle))
+					return;
+
+				var title = Regex.Replace(webTitle, @"\s+", " ");
+
+				// check if it's youtube.
+				var youtubeRegex = new Regex(@"\s*YouTube\s*\-(?<song>.+)", RegexOptions.IgnoreCase);
+
+				if(youtubeRegex.IsMatch(title))
+				{
+					var match = youtubeRegex.Match(title);
+					var song = match.Groups["song"].ToString();
+					sSendMessage.SendCMPrivmsg(channel, "1,0You0,4Tube: {0}", song.Substring(1));
+					return;
+				}
+
+				sSendMessage.SendCMPrivmsg(channel, "1,0Title: {0}", title);
+			}
+			catch(Exception e)
+			{
+				Log.Error("Functions", "Hiba oka: {0}", e.Message);
+				return;
+			}
 		}
 	}
 }

@@ -1,6 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
+ * Copyright (C) 2010-2011 Twl
  * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
@@ -21,7 +22,9 @@ using System;
 using System.IO;
 using System.Net;
 using System.Web;
+using System.Linq;
 using System.Security.Cryptography;
+using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Framework.Extensions;
@@ -68,6 +71,46 @@ namespace Schumix.Framework
 			}
 
 			return kod;
+		}
+
+		/// <summary>
+		/// Gets the URLs in the specified text.
+		/// </summary>
+		/// <param name = "text">
+		/// The text to search in.
+		/// </param>
+		/// <returns>
+		/// The list of urls.
+		/// </returns>
+		public List<string> GetUrls(string text)
+		{
+			var urls = new List<string>();
+
+			try
+			{
+				var urlFind = new Regex(@"(?<url>(http://)?(www\.)?\S+\.\S{2,6}([/]*\S+))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+				if(urlFind.IsMatch(text))
+				{
+					var matches = urlFind.Matches(text);
+
+					foreach(var url in from Match match in matches select match.Groups["url"].ToString())
+					{
+						var lurl = url;
+						if(!lurl.StartsWith("http://") && !url.StartsWith("https://"))
+							lurl = string.Format("http://{0}", url);
+
+						Log.Debug("Utilities", "Checking: {0}", url);
+						urls.Add(lurl);
+					}
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error("Utilities", "Hiba oka: {0}", e.Message);
+			}
+
+			return urls;
 		}
 
 		public string GetRandomString()

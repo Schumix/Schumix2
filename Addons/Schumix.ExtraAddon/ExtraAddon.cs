@@ -1,6 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
+ * Copyright (C) 2010-2011 Twl
  * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
@@ -18,6 +19,7 @@
  */
 
 using System;
+using System.Threading.Tasks;
 using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
@@ -30,6 +32,7 @@ namespace Schumix.ExtraAddon
 {
 	public class ExtraAddon : IrcHandler, ISchumixAddon
 	{
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
 		private readonly Jegyzet sJegyzet = Singleton<Jegyzet>.Instance;
@@ -62,17 +65,46 @@ namespace Schumix.ExtraAddon
 				if(!sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
 					return;
 
-				if(sFunctions.AutoKick("privmsg"))
-					return;
-
-				if(sChannelInfo.FSelect("mode") && sChannelInfo.FSelect("mode", Network.IMessage.Channel))
+				Task.Factory.StartNew(() =>
 				{
-					AutoMode = true;
-					ModeChannel = Network.IMessage.Channel;
-					sSender.NickServStatus(Network.IMessage.Nick);
-				}
+					if(sFunctions.AutoKick("privmsg", Network.IMessage.Nick, Network.IMessage.Channel))
+						return;
+				});
 
-				sFunctions.HLUzenet();
+				Task.Factory.StartNew(() =>
+				{
+					if(sChannelInfo.FSelect("mode") && sChannelInfo.FSelect("mode", Network.IMessage.Channel))
+					{
+						AutoMode = true;
+						ModeChannel = Network.IMessage.Channel;
+						sSender.NickServStatus(Network.IMessage.Nick);
+					}
+				});
+
+				Task.Factory.StartNew(() =>
+				{
+					string channel = Network.IMessage.Channel;
+					var urlsin = sUtilities.GetUrls(Network.IMessage.Args);
+
+					if(urlsin.Count <= 0)
+						return;
+
+					try
+					{
+						Parallel.ForEach(urlsin, url => sFunctions.HandleWebTitle(channel, url));
+						return;
+					}
+					catch(Exception e)
+					{
+						Log.Error("ExtraAddon", "Invalid webpage address: {0}", e.Message);
+						return;
+					}
+				});
+
+				Task.Factory.StartNew(() =>
+				{
+					sFunctions.HLUzenet(Network.IMessage.Channel, Network.IMessage.Info);
+				});
 			}
 		}
 
