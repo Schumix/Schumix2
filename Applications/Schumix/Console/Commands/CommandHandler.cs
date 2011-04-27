@@ -354,7 +354,7 @@ namespace Schumix.Console.Commands
 				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channel");
 				if(!db.IsNull())
 				{
-					string AktivCsatornak = string.Empty, DeAktivCsatornak = string.Empty;
+					string AktivCsatornak = string.Empty, InAktivCsatornak = string.Empty;
 
 					foreach(DataRow row in db.Rows)
 					{
@@ -364,7 +364,7 @@ namespace Schumix.Console.Commands
 						if(aktivitas == "true")
 							AktivCsatornak += ", " + csatorna;
 						else if(aktivitas == "false")
-							DeAktivCsatornak += ", " + csatorna + ":" + row["Error"].ToString();
+							InAktivCsatornak += ", " + csatorna + ":" + row["Error"].ToString();
 					}
 
 					if(AktivCsatornak.Length > 0)
@@ -372,8 +372,8 @@ namespace Schumix.Console.Commands
 					else
 						Log.Notice("Console", "Aktiv: Nincs adat.");
 
-					if(DeAktivCsatornak.Length > 0)
-						Log.Notice("Console", "Deaktiv: {0}", DeAktivCsatornak.Remove(0, 2, ", "));
+					if(InAktivCsatornak.Length > 0)
+						Log.Notice("Console", "Deaktiv: {0}", InAktivCsatornak.Remove(0, 2, ", "));
 					else
 						Log.Notice("Console", "Deaktiv: Nincs adat.");
 				}

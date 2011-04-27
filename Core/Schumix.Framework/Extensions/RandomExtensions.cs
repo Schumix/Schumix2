@@ -161,7 +161,7 @@ namespace Schumix.Framework.Extensions
 			if(s.Length >= max && s.Substring(min, max) == value)
 				return s.Remove(min, max);
 			else
-				return string.Empty;
+				return s;
 		}
 	}
 }
