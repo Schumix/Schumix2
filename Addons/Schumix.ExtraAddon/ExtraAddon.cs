@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Threading;
 using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;

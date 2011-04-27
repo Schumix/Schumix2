@@ -34,10 +34,7 @@ namespace Schumix.ExtraAddon.Commands
 				for(int i = 3; i < Network.IMessage.Info.Length; i++)
 				{
 					if(i == 3)
-					{
-						if(Network.IMessage.Info[3].Substring(0, 1) == ":")
-							Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1);
-					}
+						Network.IMessage.Info[3] = Network.IMessage.Info[3].Remove(0, 1, ":");
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Info, Enabled FROM hlmessage WHERE Name = '{0}'", Network.IMessage.Info[i].ToLower());
 					if(!db.IsNull())
@@ -59,10 +56,7 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			if(allapot == "join")
 			{
-				string channel = Network.IMessage.Channel;
-
-				if(channel.Substring(0, 1) == ":")
-					channel = channel.Remove(0, 1);
+				string channel = Network.IMessage.Channel.Remove(0, 1, ":");
 
 				if(sChannelInfo.FSelect("kick") && sChannelInfo.FSelect("kick", channel))
 				{

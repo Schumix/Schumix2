@@ -328,7 +328,7 @@ namespace Schumix.Irc.Commands
 				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channel");
 				if(!db.IsNull())
 				{
-					string AktivCsatornak = string.Empty, DeAktivCsatornak = string.Empty;
+					string AktivCsatornak = string.Empty, InAktivCsatornak = string.Empty;
 
 					foreach(DataRow row in db.Rows)
 					{
@@ -338,7 +338,7 @@ namespace Schumix.Irc.Commands
 						if(aktivitas == "true")
 							AktivCsatornak += ", " + csatorna;
 						else if(aktivitas == "false")
-							DeAktivCsatornak += ", " + csatorna + ":" + row["Error"].ToString();
+							InAktivCsatornak += ", " + csatorna + ":" + row["Error"].ToString();
 					}
 
 					if(AktivCsatornak.Length > 0)
@@ -346,10 +346,10 @@ namespace Schumix.Irc.Commands
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Aktiv: Nincs adat.");
 
-					if(DeAktivCsatornak.Length > 0)
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Deaktiv: {0}", DeAktivCsatornak.Remove(0, 2, ", "));
+					if(InAktivCsatornak.Length > 0)
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Inaktiv: {0}", InAktivCsatornak.Remove(0, 2, ", "));
 					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Deaktiv: Nincs adat.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Inaktiv: Nincs adat.");
 				}
 				else
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
