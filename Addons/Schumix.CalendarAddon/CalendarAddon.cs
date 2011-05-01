@@ -57,11 +57,11 @@ namespace Schumix.CalendarAddon
 		{
 			Task.Factory.StartNew(() =>
 			{
-				string nick = Network.IMessage.Nick.ToLower();
 				string channel = Network.IMessage.Channel.ToLower();
 
 				if(sChannelInfo.FSelect("antiflood") && sChannelInfo.FSelect("antiflood", channel))
 				{
+					string nick = Network.IMessage.Nick.ToLower();
 					int i = 0;
 
 					foreach(var list in FloodList)

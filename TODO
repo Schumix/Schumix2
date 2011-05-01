@@ -1,4 +1,3 @@
 Megírásra váró feladatok:
 - xrev parancs hozzáadása.
 - autofunkciokhoz hozzáadni az üzenet parancsot. Ez arra szólgálna hogy ha például szeretnénk másnak üzenetett hagyni mert ép nincs fent akkor a bot elküldi neki mihelyst fellép vagy ír (de inkább ha csak ír úgy a biztonságos).
-- Naptárrendszer létrehozása. Ennek segítségével különböző időpontokban jelezhetne a bot.
