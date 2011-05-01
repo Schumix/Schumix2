@@ -83,7 +83,7 @@ namespace Schumix.Irc
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Memoria használat:3 {0} MB", memory);
 
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Uptime: {0}", SchumixBase.time.Uptime());
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Uptime: {0}", SchumixBase.timer.Uptime());
 				}
 				else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "help")
 				{

@@ -69,10 +69,7 @@ namespace Schumix.ExtraAddon.Commands
 							Nevek += ", " + nev + ":" + allapot;
 						}
 
-						if(Nevek.Length > 1 && Nevek.Substring(0, 2) == ", ")
-							Nevek = Nevek.Remove(0, 2);
-
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Létező nickek: {0}", Nevek);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Létező nickek: {0}", Nevek.Remove(0, 2, ", "));
 					}
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
@@ -183,12 +180,9 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							string nev = row["Name"].ToString();
 							Nevek += ", " + nev + ":" + Network.IMessage.Channel;
-						};
+						}
 
-						if(Nevek.Length > 1 && Nevek.Substring(0, 2) == ", ")
-							Nevek = Nevek.Remove(0, 2);
-
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listán lévők: {0}", Nevek);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listán lévők: {0}", Nevek.Remove(0, 2, ", "));
 					}
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
@@ -261,12 +255,9 @@ namespace Schumix.ExtraAddon.Commands
 								string nev = row["Name"].ToString();
 								string csatorna = row["Channel"].ToString();
 								Nevek += ", " + nev + ":" + csatorna;
-							};
+							}
 
-							if(Nevek.Length > 1 && Nevek.Substring(0, 2) == ", ")
-								Nevek = Nevek.Remove(0, 2);
-
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listán lévők: {0}", Nevek);
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listán lévők: {0}", Nevek.Remove(0, 2, ", "));
 						}
 						else
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
@@ -334,12 +325,9 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							string nev = row["Name"].ToString();
 							Nevek += ", " + nev + ":" + Network.IMessage.Channel;
-						};
+						}
 
-						if(Nevek.Length > 1 && Nevek.Substring(0, 2) == ", ")
-							Nevek = Nevek.Remove(0, 2);
-
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listán lévők: {0}", Nevek);
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listán lévők: {0}", Nevek.Remove(0, 2, ", "));
 					}
 					else
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
@@ -412,12 +400,9 @@ namespace Schumix.ExtraAddon.Commands
 								string nev = row["Name"].ToString();
 								string csatorna = row["Channel"].ToString();
 								Nevek += ", " + nev + ":" + csatorna;
-							};
+							}
 
-							if(Nevek.Length > 1 && Nevek.Substring(0, 2) == ", ")
-								Nevek = Nevek.Remove(0, 2);
-
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listán lévők: {0}", Nevek);
+							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listán lévők: {0}", Nevek.Remove(0, 2, ", "));
 						}
 						else
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
@@ -463,12 +448,9 @@ namespace Schumix.ExtraAddon.Commands
 					{
 						string kod = row["Code"].ToString();
 						kodok += ", " + kod;
-					};
+					}
 
-					if(kodok.Length > 1 && kodok.Substring(0, 2) == ", ")
-						kodok = kodok.Remove(0, 2);
-
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzetek kódjai: {0}", kodok);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzetek kódjai: {0}", kodok.Remove(0, 2, ", "));
 				}
 				else
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");

@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Data;
 using System.Text.RegularExpressions;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
@@ -29,26 +30,26 @@ namespace Schumix.ExtraAddon.Commands
 {
 	public partial class Functions : CommandInfo
 	{
-		public void HLUzenet(string channel, string[] _info)
+		public void HLUzenet(string channel, string args)
 		{
-			if(sChannelInfo.FSelect("hl") && sChannelInfo.FSelect("hl", channel))
+			if(sChannelInfo.FSelect("autohl") && sChannelInfo.FSelect("autohl", channel))
 			{
-				for(int i = 3; i < _info.Length; i++)
+				var db = SchumixBase.DManager.Query("SELECT Name, Info, Enabled FROM hlmessage");
+				if(!db.IsNull())
 				{
-					if(i == 3)
-						_info[3] = _info[3].Remove(0, 1, ":");
-
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Info, Enabled FROM hlmessage WHERE Name = '{0}'", _info[i].ToLower());
-					if(!db.IsNull())
+					foreach(DataRow row in db.Rows)
 					{
-						string info = db["Info"].ToString();
-						string allapot = db["Enabled"].ToString();
+						var regex = new Regex(row["Name"].ToString());
 
-						if(allapot != "be")
-							return;
+						if(regex.IsMatch(args.ToLower()))
+						{
+							string allapot = row["Enabled"].ToString();
 
-						sSendMessage.SendCMPrivmsg(channel, "{0}", info);
-						break;
+							if(allapot != "be")
+								return;
+
+							sSendMessage.SendCMPrivmsg(channel, "{0}", row["Info"].ToString());
+						}
 					}
 				}
 			}
@@ -60,7 +61,7 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				string channel = _channel.Remove(0, 1, ":");
 
-				if(sChannelInfo.FSelect("kick") && sChannelInfo.FSelect("kick", channel))
+				if(sChannelInfo.FSelect("autokick") && sChannelInfo.FSelect("autokick", channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
@@ -76,7 +77,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(allapot == "privmsg")
 			{
-				if(sChannelInfo.FSelect("kick") && sChannelInfo.FSelect("kick", _channel))
+				if(sChannelInfo.FSelect("autokick") && sChannelInfo.FSelect("autokick", _channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
@@ -120,7 +121,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Error("Functions", "Hiba oka: {0}", e.Message);
+				Log.Debug("Functions", "Hiba oka: {0}", e.Message);
 				return;
 			}
 		}

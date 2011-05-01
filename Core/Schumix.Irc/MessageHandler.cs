@@ -72,6 +72,8 @@ namespace Schumix.Irc
 				ChannelPrivmsg = sNickInfo.NickStorage;
 				sChannelInfo.JoinChannel();
 			}
+
+			SchumixBase.UrlTitleEnabled = true;
 		}
 
 		protected void HandleWaitingForConnection()
@@ -82,6 +84,11 @@ namespace Schumix.Irc
 		protected void HandleNotRegistered()
 		{
 			//Log.Notice("MessageHandler", "Teszt.");
+		}
+
+		protected void HandleNoNickName()
+		{
+			Log.Warning("MessageHandler", "Nincs megadva a a bot nick neve!");
 		}
 
 		/// <summary>

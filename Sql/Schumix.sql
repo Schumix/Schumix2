@@ -11,7 +11,7 @@ CREATE TABLE `adminok` (
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
   `Id` int(3) unsigned NOT NULL auto_increment,
-  `Functions` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be,hl:ki,kick:ki,mode:ki',
+  `Functions` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki',
   `Channel` varchar(20) NOT NULL default '',
   `Password` varchar(30) NOT NULL default '',
   `Enabled` varchar(5) NOT NULL default '',
@@ -22,7 +22,7 @@ CREATE TABLE `channel` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `channel` VALUES ('1', ',koszones:be,log:be,rejoin:be,parancsok:be,hl:ki,kick:ki,mode:ki', '#schumix2', '', '', '');
+INSERT INTO `channel` VALUES ('1', ',koszones:be,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki', '#schumix2', '', '', '');
 
 DROP TABLE IF EXISTS `irc_parancsok`;
 CREATE TABLE `irc_parancsok` (
@@ -58,12 +58,13 @@ INSERT INTO `schumix` VALUES ('2', '', 'log', 'be');
 INSERT INTO `schumix` VALUES ('3', '', 'rejoin', 'be');
 INSERT INTO `schumix` VALUES ('4', '', 'parancsok', 'be');
 INSERT INTO `schumix` VALUES ('5', '', 'reconnect', 'be');
-INSERT INTO `schumix` VALUES ('6', '', 'hl', 'ki');
-INSERT INTO `schumix` VALUES ('7', '', 'kick', 'ki');
-INSERT INTO `schumix` VALUES ('8', '', 'mode', 'ki');
+INSERT INTO `schumix` VALUES ('6', '', 'autohl', 'ki');
+INSERT INTO `schumix` VALUES ('7', '', 'autokick', 'ki');
+INSERT INTO `schumix` VALUES ('8', '', 'automode', 'ki');
 INSERT INTO `schumix` VALUES ('9', '', 'svn', 'ki');
 INSERT INTO `schumix` VALUES ('10', '', 'hg', 'ki');
 INSERT INTO `schumix` VALUES ('11', '', 'git', 'ki');
+INSERT INTO `schumix` VALUES ('12', '', 'antiflood', 'ki');
 
 DROP TABLE IF EXISTS `sznap`;
 CREATE TABLE `sznap` (
@@ -165,5 +166,19 @@ CREATE TABLE `notes_users` (
   `Name` varchar(20) NOT NULL default '',
   `Password` varchar(40) NOT NULL default '',
   `Vhost` varchar(50) NOT NULL default '',
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `banned`;
+CREATE TABLE `banned` (
+  `Id` int(5) unsigned NOT NULL auto_increment,
+  `Name` varchar(50) NOT NULL default '',
+  `Channel` varchar(20) NOT NULL default '',
+  `Reason` text NOT NULL,
+  `Year` int(4) NOT NULL DEFAULT '0',
+  `Month` int(2) NOT NULL DEFAULT '0',
+  `Day` int(2) NOT NULL DEFAULT '0',
+  `Hour` int(2) NOT NULL DEFAULT '0',
+  `Minute` int(2) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

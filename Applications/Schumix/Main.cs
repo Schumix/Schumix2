@@ -53,7 +53,7 @@ namespace Schumix
 			Log.Notice("Main", "Rendszer indul...");
 
 			new SchumixBot();
-			System.Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.time.SaveUptime(); };
+			System.Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.timer.SaveUptime(); };
 		}
 	}
 }

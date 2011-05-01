@@ -54,7 +54,10 @@ namespace Schumix.CompilerAddon.Config
 			bool CompilerEnabled = Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/Enabled").InnerText);
 			bool Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Enabled").InnerText);
 			int Memory = Convert.ToInt32(xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Memory").InnerText);
-			new CompilerConfig(CompilerEnabled, Enabled, Memory);
+			string CompilerOptions = xmldoc.SelectSingleNode("CompilerAddon/Compiler/CompilerOptions").InnerText;
+			int WarningLevel = Convert.ToInt32(xmldoc.SelectSingleNode("CompilerAddon/Compiler/WarningLevel").InnerText);
+			bool TreatWarningsAsErrors = Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/TreatWarningsAsErrors").InnerText);
+			new CompilerConfig(CompilerEnabled, Enabled, Memory, CompilerOptions, WarningLevel, TreatWarningsAsErrors);
 
 			Log.Success("CompilerAddonConfig", "Config adatbazis betoltve.");
 			Console.WriteLine();
@@ -92,6 +95,10 @@ namespace Schumix.CompilerAddon.Config
 					// </MaxAllocating>
 					w.WriteEndElement();
 
+					w.WriteElementString("CompilerOptions", "/optimize");
+					w.WriteElementString("WarningLevel", "4");
+					w.WriteElementString("TreatWarningsAsErrors", "false");
+
 					// </Compiler>
 					w.WriteEndElement();
 
@@ -118,12 +125,18 @@ namespace Schumix.CompilerAddon.Config
 		public static bool CompilerEnabled { get; private set; }
 		public static bool MaxAllocatingE { get; private set; }
 		public static int MaxAllocatingM { get; private set; }
+		public static string CompilerOptions { get; private set; }
+		public static int WarningLevel { get; private set; }
+		public static bool TreatWarningsAsErrors { get; private set; }
 
-		public CompilerConfig(bool compilerenabled, bool maxallocatinge, int maxallocatingm)
+		public CompilerConfig(bool compilerenabled, bool maxallocatinge, int maxallocatingm, string compileroptions, int warninglevel, bool treatwarningsaserrors)
 		{
-			CompilerEnabled = compilerenabled;
-			MaxAllocatingE  = maxallocatinge;
-			MaxAllocatingM  = maxallocatingm;
+			CompilerEnabled       = compilerenabled;
+			MaxAllocatingE        = maxallocatinge;
+			MaxAllocatingM        = maxallocatingm;
+			CompilerOptions       = compileroptions;
+			WarningLevel          = warninglevel;
+			TreatWarningsAsErrors = treatwarningsaserrors;
 			Log.Notice("CompilerConfig", "Compile beallitasai betoltve.");
 		}
 	}

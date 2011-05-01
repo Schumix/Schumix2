@@ -44,12 +44,12 @@ namespace Schumix.ExtraAddon.Commands
 			if(Network.IMessage.Nick == sNickInfo.NickStorage)
 				return;
 
-			if(sFunctions.AutoKick("join", Network.IMessage.Nick,Network.IMessage.Channel))
+			if(sFunctions.AutoKick("join", Network.IMessage.Nick, Network.IMessage.Channel))
 				return;
 
 			string channel = Network.IMessage.Channel.Remove(0, 1, ":");
 
-			if(sChannelInfo.FSelect("mode") && sChannelInfo.FSelect("mode", channel))
+			if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", channel))
 			{
 				AutoMode = true;
 				ModeChannel = channel;

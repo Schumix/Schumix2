@@ -113,7 +113,6 @@
     <Compile Include="SchumixBase.cs" />
     <Compile Include="ConsoleLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Time.cs" />
     <Compile Include="Exceptions\SingletonException.cs" />
     <Compile Include="Database\SQLite.cs" />
     <Compile Include="Database\DatabaseManager.cs" />
@@ -122,6 +121,7 @@
     <Compile Include="AddonManager.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Timer.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -129,10 +129,10 @@ namespace Schumix.Irc.Commands
 					if(Network.IMessage.Info.Length < 6)
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja az operátorok vagy adminisztrátorok által használható parancsokat.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Admin parancsai: add | del | rang | hozzaferes | ujjelszo");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Admin parancsai: info | lista | add | del | rang | hozzaferes | ujjelszo");
 						return;
 					}
-		
+
 					if(Network.IMessage.Info[5].ToLower() == "add")
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Új admin hozzáadása.");
@@ -150,6 +150,10 @@ namespace Schumix.Irc.Commands
 					}
 					else if(Network.IMessage.Info[5].ToLower() == "info")
 					{
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja éppen milyen rangod van.");
+					}
+					else if(Network.IMessage.Info[5].ToLower() == "lista")
+					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja az összes admin nevét aki az adatbázisban szerepel.");
 					}
 					else if(Network.IMessage.Info[5].ToLower() == "hozzaferes")
@@ -159,7 +163,7 @@ namespace Schumix.Irc.Commands
 					}
 					else if(Network.IMessage.Info[5].ToLower() == "ujjelszo")
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az admin jelszavának cseréje ha új kéne a régi helyet.");
+						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az admin jelszavának cseréje ha új kéne a régi helyett.");
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}admin ujjelszo <régi jelszó> <új jelszó>", IRCConfig.CommandPrefix);
 					}
 				}
@@ -174,18 +178,18 @@ namespace Schumix.Irc.Commands
 				}
 				else if(Network.IMessage.Info[4].ToLower() == "join")
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kapcsolodás megadot channelra.");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kapcsolodás megadot csatornára.");
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata:");
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelszó nélküli channel: {0}join <channel>", IRCConfig.CommandPrefix);
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelszóval ellátott channel: {0}join <channel> <jelszó>", IRCConfig.CommandPrefix);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelszó nélküli csatorna: {0}join <csatorna>", IRCConfig.CommandPrefix);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelszóval ellátott csatorna: {0}join <csatorna> <jelszó>", IRCConfig.CommandPrefix);
 				}
 				else if(Network.IMessage.Info[4].ToLower() == "left")
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Lelépés megadot channelra.");
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}left <channel>", IRCConfig.CommandPrefix);
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Lelépés megadot csatonáról.");
+					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}left <csatona>", IRCConfig.CommandPrefix);
 				}
 			}
-		
+
 			// Operátor parancsok segítségei
 			if(IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 			{
@@ -196,7 +200,7 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Channel parancsai: add | del | info | update");
 						return;
 					}
-		
+
 					if(Network.IMessage.Info[5].ToLower() == "add")
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Új channel hozzáadása.");
@@ -227,7 +231,7 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Channel funkciók kezelése: {0}funkcio <be vagy ki> <funkcio név1> <funkcio név2> ... stb", IRCConfig.CommandPrefix);
 						return;
 					}
-		
+
 					if(Network.IMessage.Info[5].ToLower() == "channel")
 					{
 						if(Network.IMessage.Info.Length < 7)
@@ -239,7 +243,7 @@ namespace Schumix.Irc.Commands
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Channel funkciók kezelése: {0}funkcio channel <be vagy ki> <funkcio név1> <funkcio név2> ... stb", IRCConfig.CommandPrefix);
 							return;
 						}
-		
+
 						if(Network.IMessage.Info[6].ToLower() == "info")
 						{
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja a funkciók állapotát.");
@@ -255,7 +259,7 @@ namespace Schumix.Irc.Commands
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Együtes funkciók kezelése: {0}funkcio all <be vagy ki> <funkcio név1> <funkcio név2> ... stb", IRCConfig.CommandPrefix);
 							return;
 						}
-		
+
 						if(Network.IMessage.Info[6].ToLower() == "info")
 						{
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja a funkciók állapotát.");
@@ -272,7 +276,7 @@ namespace Schumix.Irc.Commands
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ahol tartozkodsz channel: {0}funkcio update", IRCConfig.CommandPrefix);
 							return;
 						}
-		
+
 						if(Network.IMessage.Info[6].ToLower() == "all")
 						{
 							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Frissiti az összes funkciót vagy alapértelmezésre állitja.");
@@ -302,7 +306,7 @@ namespace Schumix.Irc.Commands
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}mode <rang> <név vagy nevek>", IRCConfig.CommandPrefix);
 				}
 			}
-		
+
 			// Adminisztrátor parancsok
 			if(IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
 			{
@@ -314,7 +318,7 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Plugin parancsok: load | unload");
 						return;
 					}
-		
+
 					if(Network.IMessage.Info[5].ToLower() == "load")
 					{
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Betölt minden plugint.");

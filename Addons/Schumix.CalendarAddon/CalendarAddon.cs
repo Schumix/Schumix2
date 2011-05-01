@@ -18,25 +18,70 @@
  */
 
 using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 using Schumix.API;
+using Schumix.Irc;
+using Schumix.Irc.Commands;
+using Schumix.Framework;
+using Schumix.CalendarAddon.Commands;
+using Schumix.CalendarAddon.Config;
 
 namespace Schumix.CalendarAddon
 {
 	public class CalendarAddon : ISchumixAddon
 	{
+		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
+		private readonly BannedCommand sBannedCommand = Singleton<BannedCommand>.Instance;
+		private Calendar _calendar;
+		public static readonly List<Flood> FloodList = new List<Flood>();
+
 		public void Setup()
 		{
+			new AddonConfig(Name + ".xml");
+			_calendar = new Calendar();
+			_calendar.Start();
 
+			CommandManager.OperatorCRegisterHandler("banned", sBannedCommand.HandleBanned);
+			CommandManager.OperatorCRegisterHandler("unbanned", sBannedCommand.HandleUnbanned);
 		}
 
 		public void Destroy()
 		{
-
+			_calendar.Stop();
+			CommandManager.OperatorCRemoveHandler("banned");
+			CommandManager.OperatorCRemoveHandler("unbanned");
 		}
 
 		public void HandlePrivmsg()
 		{
+			Task.Factory.StartNew(() =>
+			{
+				string nick = Network.IMessage.Nick.ToLower();
+				string channel = Network.IMessage.Channel.ToLower();
 
+				if(sChannelInfo.FSelect("antiflood") && sChannelInfo.FSelect("antiflood", channel))
+				{
+					int i = 0;
+
+					foreach(var list in FloodList)
+					{
+						if(nick == list.Name && channel == list.Channel)
+						{
+							list.Message++;
+							i++;
+						}
+					}
+
+					if(nick == "py-ctcp")
+						return;
+
+					if(i > 0)
+						return;
+
+					FloodList.Add(new Flood(nick, channel));
+				}
+			});
 		}
 
 		public void HandleNotice()
@@ -46,7 +91,7 @@ namespace Schumix.CalendarAddon
 
 		public void HandleHelp()
 		{
-
+			sBannedCommand.Help();
 		}
 
 		/// <summary>

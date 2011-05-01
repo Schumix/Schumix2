@@ -29,7 +29,7 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.Console.Commands
 {
-	public class CommandHandler : ConsoleLog
+	public partial class CommandHandler : ConsoleLog
 	{
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
@@ -41,21 +41,6 @@ namespace Schumix.Console.Commands
 		protected CommandHandler(Network network) : base(LogConfig.IrcLog)
 		{
 			_network = network;
-		}
-
-		protected void HandleHelp()
-		{
-			string parancsok = string.Empty;
-
-			foreach(var command in CCommandManager.GetCommandHandler())
-			{
-				if(command.Key == "help")
-					continue;
-
-				parancsok += ", " + command.Key;
-			}
-
-			Log.Notice("Console", "Parancsok: {0}", parancsok.Remove(0, 2, ", "));
 		}
 
 		protected void HandleConsoleLog()
@@ -87,7 +72,7 @@ namespace Schumix.Console.Commands
 			Log.Notice("Console", "Programnyelv: c#");
 			Log.Notice("Console", "Memoria hasznalat: {0} MB", memory);
 			Log.Notice("Console", "Thread count: {0}", Process.GetCurrentProcess().Threads.Count);
-			Log.Notice("Console", "Uptime: {0}", SchumixBase.time.CUptime());
+			Log.Notice("Console", "Uptime: {0}", SchumixBase.timer.CUptime());
 		}
 
 		protected void HandleCsatorna()
@@ -105,16 +90,7 @@ namespace Schumix.Console.Commands
 
 		protected void HandleAdmin()
 		{
-			if(Info.Length >= 2 && Info[1].ToLower() == "help")
-			{
-				Log.Notice("Console", "Alparancsok hasznalata:");
-				Log.Notice("Console", "Admin lista: admin lista");
-				Log.Notice("Console", "Hozzaadas: admin add <admin neve>");
-				Log.Notice("Console", "Eltavolitas: admin del <admin neve>");
-				Log.Notice("Console", "Rang: admin rang <admin neve> <uj rang pl halfoperator: 0, operator: 1, administrator: 2>");
-				Log.Notice("Console", "Info: admin info <admin neve>");
-			}
-			else if(Info.Length >= 2 && Info[1].ToLower() == "info")
+			if(Info.Length >= 2 && Info[1].ToLower() == "info")
 			{
 				if(Info.Length < 3)
 				{
@@ -234,7 +210,94 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(Info[1].ToLower() == "info")
+			if(Info[1].ToLower() == "channel")
+			{
+				if(Info.Length < 3)
+				{
+					Log.Error("Console", "Nincs megadva a csatorna neve!");
+					return;
+				}
+
+				if(Info.Length < 4)
+				{
+					Log.Error("Console", "Nincs megadva egy parameter!");
+					return;
+				}
+			
+				string channelinfo = Info[2].ToLower();
+				string status = Info[3].ToLower();
+			
+				if(Info[3].ToLower() == "info")
+				{
+					string[] ChannelInfo = sChannelInfo.ChannelFunkciokInfo(channelinfo).Split('|');
+					if(ChannelInfo.Length < 2)
+						return;
+
+					Log.Notice("Console", "Bekapcsolva: {0}", ChannelInfo[0]);
+					Log.Notice("Console", "Kikapcsolva: {0}", ChannelInfo[1]);
+				}
+				else if(status == "be" || status == "ki")
+				{
+					if(Info.Length < 5)
+					{
+						Log.Error("Console", "Nincs megadva a funkcio neve!");
+						return;
+					}
+
+					if(Info.Length >= 6)
+					{
+						string alomany = string.Empty;
+
+						for(int i = 4; i < Info.Length; i++)
+						{
+							alomany += ", " + Info[i].ToLower();
+							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok(Info[i].ToLower(), status, channelinfo), channelinfo);
+							sChannelInfo.ChannelFunkcioReload();
+						}
+
+						Log.Notice("Console", "{0}: {1}kapcsolva",  alomany.Remove(0, 2, ", "), status);
+					}
+					else
+					{
+						Log.Notice("Console", "{0}: {1}kapcsolva", Info[4].ToLower(), status);
+						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok(Info[4].ToLower(), status, channelinfo), channelinfo);
+						sChannelInfo.ChannelFunkcioReload();
+					}
+				}
+			}
+			else if(Info[1].ToLower() == "update")
+			{
+				if(Info.Length < 3)
+				{
+					Log.Error("Console", "Nincs megadva egy parameter!");
+					return;
+				}
+
+				if(Info[2].ToLower() == "all")
+				{
+					var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
+					if(!db.IsNull())
+					{
+						foreach(DataRow row in db.Rows)
+						{
+							string csatorna = row["Channel"].ToString();
+							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki' WHERE Channel = '{0}'", csatorna);
+						}
+
+						sChannelInfo.ChannelFunkcioReload();
+						Log.Notice("Console", "Sikeresen frissitve minden csatornan a funkciok.");
+					}
+					else
+						Log.Error("Console", "Hibas lekerdezes!");
+				}
+				else
+				{
+					Log.Notice("Console", "Sikeresen frissitve {0} csatornan a funkciok.", Info[2].ToLower());
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki' WHERE Channel = '{0}'", Info[2].ToLower());
+					sChannelInfo.ChannelFunkcioReload();
+				}
+			}
+			else if(Info[1].ToLower() == "info")
 			{
 				string f = sChannelInfo.FunkciokInfo();
 				if(f == "Hibás lekérdezés!")
@@ -443,7 +506,7 @@ namespace Schumix.Console.Commands
 
 		protected void HandleKikapcs()
 		{
-			SchumixBase.time.SaveUptime();
+			SchumixBase.timer.SaveUptime();
 			Log.Notice("Console", "Viszlat :(");
 			sSender.Quit("Console: Program leállítása.");
 			Thread.Sleep(1000);
