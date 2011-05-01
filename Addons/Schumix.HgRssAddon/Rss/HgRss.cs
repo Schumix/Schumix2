@@ -101,39 +101,46 @@ namespace Schumix.HgRssAddon
 
 				while(true)
 				{
-					if(sChannelInfo.FSelect("hg"))
+					try
 					{
-						url = GetUrl();
-						if(url.IsNull())
-							continue;
-
-						newrev = Revision(url);
-						if(newrev == "nincs adat")
-							continue;
-
-						if(_oldrev != newrev)
+						if(sChannelInfo.FSelect("hg"))
 						{
-							title = Title(url);
-							if(title == "nincs adat")
+							url = GetUrl();
+							if(url.IsNull())
 								continue;
 
-							author = Author(url);
-							if(author == "nincs adat")
+							newrev = Revision(url);
+							if(newrev == "nincs adat")
 								continue;
 
-							Informations(newrev, title, author);
-							_oldrev = newrev;
+							if(_oldrev != newrev)
+							{
+								title = Title(url);
+								if(title == "nincs adat")
+									continue;
+
+								author = Author(url);
+								if(author == "nincs adat")
+									continue;
+
+								Informations(newrev, title, author);
+								_oldrev = newrev;
+							}
+
+							Thread.Sleep(RssConfig.QueryTime*1000);
 						}
-
-						Thread.Sleep(RssConfig.QueryTime*1000);
+						else 
+							Thread.Sleep(1000);
 					}
-					else 
-						Thread.Sleep(1000);
+					catch(Exception e)
+					{
+						Log.Error("HgRss", "[{0}] Hiba oka: {1}", _name, e.Message);
+					}
 				}
 			}
 			catch(Exception e)
 			{
-				Log.Error("HgRss", "[{0}] Hiba oka: {1}", _name, e.Message);
+				Log.Error("HgRss", "[{0}] Vegzetes hiba oka: {1}", _name, e.Message);
 				Update();
 			}
 		}

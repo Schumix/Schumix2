@@ -73,7 +73,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect("mode") && sChannelInfo.FSelect("mode", Network.IMessage.Channel))
+					if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", Network.IMessage.Channel))
 					{
 						AutoMode = true;
 						ModeChannel = Network.IMessage.Channel;
@@ -83,7 +83,19 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
+					sFunctions.HLUzenet(Network.IMessage.Channel, Network.IMessage.Args);
+				});
+
+				Task.Factory.StartNew(() =>
+				{
+					if(!SchumixBase.UrlTitleEnabled)
+						return;
+
 					string channel = Network.IMessage.Channel;
+
+					if(Network.IMessage.Nick.ToLower() == "py-bopm")
+						return;
+
 					var urlsin = sUtilities.GetUrls(Network.IMessage.Args);
 
 					if(urlsin.Count <= 0)
@@ -99,11 +111,6 @@ namespace Schumix.ExtraAddon
 						Log.Error("ExtraAddon", "Invalid webpage address: {0}", e.Message);
 						return;
 					}
-				});
-
-				Task.Factory.StartNew(() =>
-				{
-					sFunctions.HLUzenet(Network.IMessage.Channel, Network.IMessage.Info);
 				});
 			}
 		}

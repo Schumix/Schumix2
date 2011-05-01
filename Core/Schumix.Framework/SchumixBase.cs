@@ -28,8 +28,9 @@ namespace Schumix.Framework
 	{
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		public static DatabaseManager DManager { get; private set; }
-		public static Time time { get; private set; }
+		public static Timer timer { get; private set; }
 		public static bool IIdo = true;
+		public static bool UrlTitleEnabled = false;
 		public static string Title { get { return "Schumix2 IRC Bot"; } }
 
 		public SchumixBase()
@@ -37,7 +38,7 @@ namespace Schumix.Framework
 			try
 			{
 				Log.Debug("SchumixBase", "Time indul...");
-				time = new Time();
+				timer = new Timer();
 				Log.Debug("SchumixBase", "Mysql indul...");
 				DManager = new DatabaseManager();
 				Log.Notice("SchumixBase", "Az adatbazishoz sikeres a kapcsolodas.");

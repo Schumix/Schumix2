@@ -69,7 +69,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Error("WebHelper", "Exception thrown while fetching web title: {0}", e.Message);
+				Log.Debug("WebHelper", "Exception thrown while fetching web title: {0}", e.Message);
 				return string.Empty;
 			}
 		}

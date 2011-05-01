@@ -23,7 +23,7 @@ using System.Diagnostics;
 
 namespace Schumix.Framework
 {
-	public sealed class Time
+	public sealed class Timer
 	{
 		/// <summary>
 		///     A bot elindításának ideje.
@@ -31,7 +31,7 @@ namespace Schumix.Framework
 		public readonly DateTime StartTime;
 		public readonly Stopwatch SW = new Stopwatch();
 
-		public Time()
+		public Timer()
 		{
 			try
 			{

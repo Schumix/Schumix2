@@ -19,6 +19,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
@@ -82,11 +83,12 @@ namespace Schumix.Irc
 		{
 			_server = server;
 			_port = port;
-			sNickInfo.ChangeNick(IRCConfig.NickName);
 
 			Log.Notice("Network", "Network sikeresen elindult.");
-			sChannelInfo.ChannelLista();
+			sNickInfo.ChangeNick(IRCConfig.NickName);
 			InitHandler();
+
+			Task.Factory.StartNew(() => sChannelInfo.ChannelLista());
 
 			Log.Debug("Network", "Kapcsolodas indul az irc szerver fele.");
 			Connect();
@@ -116,6 +118,7 @@ namespace Schumix.Irc
 			RegisterHandler("433",     HandleNickError);
 			RegisterHandler("439",     HandleWaitingForConnection);
 			RegisterHandler("451",     HandleNotRegistered);
+			RegisterHandler("431",     HandleNoNickName);
 			Log.Notice("Network", "Osszes IRC handler regisztralva.");
 		}
 
@@ -198,6 +201,7 @@ namespace Schumix.Irc
 			HostServAllapot = false;
 			Status = true;
 			m_running = true;
+			SchumixBase.UrlTitleEnabled = false;
 		}
 
 		private void Close()
@@ -221,7 +225,6 @@ namespace Schumix.Irc
 			try
 			{
 				Log.Notice("Opcodes", "A szal sikeresen elindult.");
-
 				string IrcMessage;
 				string opcode;
 				string[] userdata;
@@ -239,14 +242,11 @@ namespace Schumix.Irc
 								break;
 
 							IrcCommand = IrcMessage.Split(' ');
-
-							if(IrcCommand[0].Substring(0, 1) == ":")
-								IrcCommand[0] = IrcCommand[0].Remove(0, 1);
-
+							IrcCommand[0] = IrcCommand[0].Remove(0, 1, ":");
+							IMessage.Args = string.Empty;
 							IMessage.Hostmask = IrcCommand[0];
 							userdata = IMessage.Hostmask.Split('!');
 
-							IMessage.Args = string.Empty;
 							if(IrcCommand.Length > 2)
 								IMessage.Channel = IrcCommand[2];
 

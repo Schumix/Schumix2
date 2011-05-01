@@ -28,6 +28,7 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.CompilerAddon.Config;
 
 namespace Schumix.CompilerAddon.Commands
 {
@@ -61,129 +62,9 @@ namespace Schumix.CompilerAddon.Commands
 				if(Tiltas(adat))
 					return;
 
-				if(adat.Contains("asdcmxd"))
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kódban olyan részek vannak melyek veszélyeztetik a programot. Ezért leállt a fordítás!");
-					return;
-				}
+				adat = Loop(adat);
 
-				if(adat.Contains("for"))
-				{
-					string s = adat;
-					int i = s.IndexOf("for");
-					var sb = new StringBuilder();
-
-					sb.Append(s.Substring(0, i));
-					sb.Append(" int asdcmxd = 0; for");
-					s = s.Substring(s.IndexOf("for")+3);
-
-					if(s.Contains("{"))
-					{
-						sb.Append(s.Substring(0, s.IndexOf("{")));
-
-						if(!s.Contains("for"))
-							sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
-						else
-							sb.Append("{ return;");
-
-						sb.Append(s.Substring(s.IndexOf("{")+1));
-					}
-					else
-					{
-						sb.Append(s.Substring(0, s.IndexOf(")")+1));
-
-						if(!s.Contains("for"))
-							sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
-						else
-							sb.Append(" { return;");
-
-						sb.Append(s.Substring(s.IndexOf(")")+1));
-						sb.Append("}");
-					}
-
-					adat = sb.ToString();
-				}
-				else if(adat.Contains("do") && adat.Contains("while"))
-				{
-					string s = adat;
-					int i = s.IndexOf("do");
-					var sb = new StringBuilder();
-
-					sb.Append(s.Substring(0, i));
-					sb.Append(" int asdcmxd = 0; do");
-					s = s.Substring(s.IndexOf("do")+2);
-
-					if(s.Contains("{"))
-					{
-						sb.Append(s.Substring(0, s.IndexOf("{")));
-
-						if(!s.Contains("do"))
-							sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
-						else
-							sb.Append("{ return;");
-
-						sb.Append(s.Substring(s.IndexOf("{")+1));
-					}
-					else
-					{
-						sb.Append(s.Substring(0, s.IndexOf(")")+1));
-
-						if(!s.Contains("do"))
-							sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
-						else
-							sb.Append(" { return;");
-
-						sb.Append(s.Substring(s.IndexOf(")")+1));
-						sb.Append("}");
-					}
-
-					adat = sb.ToString();
-				}
-				else if(adat.Contains("while"))
-				{
-					string s = adat;
-					int i = s.IndexOf("while");
-					var sb = new StringBuilder();
-
-					sb.Append(s.Substring(0, i));
-					sb.Append(" int asdcmxd = 0; while");
-					s = s.Substring(s.IndexOf("while")+5);
-
-					if(s.Contains("{"))
-					{
-						sb.Append(s.Substring(0, s.IndexOf("{")));
-
-						if(!s.Contains("while"))
-							sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
-						else
-							sb.Append("{ return;");
-
-						sb.Append(s.Substring(s.IndexOf("{")+1));
-					}
-					else
-					{
-						sb.Append(s.Substring(0, s.IndexOf(")")+1));
-
-						if(!s.Contains("while"))
-							sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
-						else
-							sb.Append(" { return;");
-
-						sb.Append(s.Substring(s.IndexOf(")")+1));
-						sb.Append("}");
-					}
-
-					adat = sb.ToString();
-				}
-
-				if(!adat.Contains("Entry"))
-				{
-					if(!adat.Contains("Schumix"))
-						sablon = Referenced + " public class Entry { public void Schumix() { " + adat + " } }";
-					else
-						sablon = Referenced + " public class Entry { " + adat + " }";
-				}
-				else if(!adat.Contains("class"))
+				if((!adat.Contains("Entry") && !adat.Contains("class")) || (!adat.Contains("Entry") && adat.Contains("class")) || (adat.Contains("Entry") && !adat.Contains("class")))
 				{
 					if(!adat.Contains("Schumix"))
 						sablon = Referenced + " public class Entry { public void Schumix() { " + adat + " } }";
@@ -261,9 +142,9 @@ namespace Schumix.CompilerAddon.Commands
 
 				cparams.ReferencedAssemblies.Add("System.dll");
 				cparams.ReferencedAssemblies.Add("Schumix.Libraries.dll");
-				cparams.CompilerOptions = "/optimize";
-				cparams.WarningLevel = 4;
-				cparams.TreatWarningsAsErrors = false;
+				cparams.CompilerOptions = CompilerConfig.CompilerOptions;
+				cparams.WarningLevel = CompilerConfig.WarningLevel;
+				cparams.TreatWarningsAsErrors = CompilerConfig.TreatWarningsAsErrors;
 
 				var results = compiler.CompileAssemblyFromSource(cparams, code);
 				if(results.Errors.HasErrors)
@@ -280,6 +161,120 @@ namespace Schumix.CompilerAddon.Commands
 			}
 
 			return null;
+		}
+
+		private string Loop(string data)
+		{
+			if(data.Contains("for"))
+			{
+				string s = data;
+				int i = s.IndexOf("for");
+				var sb = new StringBuilder();
+
+				sb.Append(s.Substring(0, i));
+				sb.Append(" int asdcmxd = 0; for");
+				s = s.Substring(s.IndexOf("for")+3);
+
+				if(s.Contains("{"))
+				{
+					sb.Append(s.Substring(0, s.IndexOf("{")));
+
+					if(!s.Contains("for"))
+						sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
+					else
+						sb.Append("{ return;");
+
+					sb.Append(s.Substring(s.IndexOf("{")+1));
+				}
+				else
+				{
+					sb.Append(s.Substring(0, s.IndexOf(")")+1));
+
+					if(!s.Contains("for"))
+						sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
+					else
+						sb.Append(" { return;");
+
+					sb.Append(s.Substring(s.IndexOf(")")+1));
+					sb.Append("}");
+				}
+
+				return sb.ToString();
+			}
+			else if(data.Contains("do") && data.Contains("while"))
+			{
+				string s = data;
+				int i = s.IndexOf("do");
+				var sb = new StringBuilder();
+
+				sb.Append(s.Substring(0, i));
+				sb.Append(" int asdcmxd = 0; do");
+				s = s.Substring(s.IndexOf("do")+2);
+
+				if(s.Contains("{"))
+				{
+					sb.Append(s.Substring(0, s.IndexOf("{")));
+
+					if(!s.Contains("do"))
+						sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
+					else
+						sb.Append("{ return;");
+
+					sb.Append(s.Substring(s.IndexOf("{")+1));
+				}
+				else
+				{
+					sb.Append(s.Substring(0, s.IndexOf(")")+1));
+
+					if(!s.Contains("do"))
+						sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
+					else
+						sb.Append(" { return;");
+
+					sb.Append(s.Substring(s.IndexOf(")")+1));
+					sb.Append("}");
+				}
+
+				return sb.ToString();
+			}
+			else if(data.Contains("while"))
+			{
+				string s = data;
+				int i = s.IndexOf("while");
+				var sb = new StringBuilder();
+
+				sb.Append(s.Substring(0, i));
+				sb.Append(" int asdcmxd = 0; while");
+				s = s.Substring(s.IndexOf("while")+5);
+
+				if(s.Contains("{"))
+				{
+					sb.Append(s.Substring(0, s.IndexOf("{")));
+
+					if(!s.Contains("while"))
+						sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
+					else
+						sb.Append("{ return;");
+
+					sb.Append(s.Substring(s.IndexOf("{")+1));
+				}
+				else
+				{
+					sb.Append(s.Substring(0, s.IndexOf(")")+1));
+
+					if(!s.Contains("while"))
+						sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
+					else
+						sb.Append(" { return;");
+
+					sb.Append(s.Substring(s.IndexOf(")")+1));
+					sb.Append("}");
+				}
+
+				return sb.ToString();
+			}
+
+			return data;
 		}
 
 		private bool Tiltas(string adat)
@@ -356,12 +351,18 @@ namespace Schumix.CompilerAddon.Commands
 				return true;
 			}
 
+			if(adat.Contains("asdcmxd"))
+			{
+				Figyelmeztetes();
+				return true;
+			}
+
 			return false;
 		}
 
 		private void Figyelmeztetes()
 		{
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Elővigyázatosságból az egyik adat a kódsorban levan tiltva ezért nincs végeredmény!");
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kódban olyan részek vannak melyek veszélyeztetik a programot. Ezért leállt a fordítás!");
 		}
 	}
 }

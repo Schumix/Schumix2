@@ -19,6 +19,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -41,9 +42,8 @@ namespace Schumix.Console
 		public Console(Network network)
 		{
 			Log.Notice("Console", "Console sikeresen elindult.");
-			var console = new Thread(ConsoleRead);
 			Log.Debug("Console", "Console parancs olvasoja indul...");
-			console.Start();
+			Task.Factory.StartNew(() => ConsoleRead());
 			CCManager = new CCommandManager(network);
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");

@@ -93,6 +93,22 @@ namespace Schumix.Irc
 			}
 		}
 
+		public void Banned(string channel, string name)
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("MODE {0} +b {1}", channel, name);
+			}
+		}
+
+		public void Unbanned(string channel, string name)
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("MODE {0} -b {1}", channel, name);
+			}
+		}
+
 		public void Mode(string channel, string status, string name)
 		{
 			lock(WriteLock)
