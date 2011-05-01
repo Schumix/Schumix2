@@ -281,7 +281,7 @@ namespace Schumix.Console.Commands
 						foreach(DataRow row in db.Rows)
 						{
 							string csatorna = row["Channel"].ToString();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki' WHERE Channel = '{0}'", csatorna);
+							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki' WHERE Channel = '{0}'", csatorna);
 						}
 
 						sChannelInfo.ChannelFunkcioReload();
@@ -293,7 +293,7 @@ namespace Schumix.Console.Commands
 				else
 				{
 					Log.Notice("Console", "Sikeresen frissitve {0} csatornan a funkciok.", Info[2].ToLower());
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki' WHERE Channel = '{0}'", Info[2].ToLower());
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki' WHERE Channel = '{0}'", Info[2].ToLower());
 					sChannelInfo.ChannelFunkcioReload();
 				}
 			}
