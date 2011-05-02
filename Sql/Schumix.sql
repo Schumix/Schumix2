@@ -11,7 +11,7 @@ CREATE TABLE `adminok` (
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
   `Id` int(3) unsigned NOT NULL auto_increment,
-  `Functions` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki',
+  `Functions` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:be,autokick:ki,automode:ki,antiflood:ki,uzenet:ki',
   `Channel` varchar(20) NOT NULL default '',
   `Password` varchar(30) NOT NULL default '',
   `Enabled` varchar(5) NOT NULL default '',
@@ -22,7 +22,7 @@ CREATE TABLE `channel` (
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `channel` VALUES ('1', ',koszones:be,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki', '#schumix2', '', '', '');
+INSERT INTO `channel` VALUES ('1', ',koszones:be,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki,uzenet:ki', '#schumix2', '', '', '');
 
 DROP TABLE IF EXISTS `irc_parancsok`;
 CREATE TABLE `irc_parancsok` (
@@ -65,6 +65,7 @@ INSERT INTO `schumix` VALUES ('9', '', 'svn', 'ki');
 INSERT INTO `schumix` VALUES ('10', '', 'hg', 'ki');
 INSERT INTO `schumix` VALUES ('11', '', 'git', 'ki');
 INSERT INTO `schumix` VALUES ('12', '', 'antiflood', 'ki');
+INSERT INTO `schumix` VALUES ('13', '', 'uzenet', 'ki');
 
 DROP TABLE IF EXISTS `sznap`;
 CREATE TABLE `sznap` (
@@ -180,5 +181,15 @@ CREATE TABLE `banned` (
   `Day` int(2) NOT NULL DEFAULT '0',
   `Hour` int(2) NOT NULL DEFAULT '0',
   `Minute` int(2) NOT NULL DEFAULT '0',
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `message`;
+CREATE TABLE `message` (
+  `Id` int(10) unsigned NOT NULL auto_increment,
+  `Name` varchar(20) NOT NULL default '',
+  `Channel` varchar(20) NOT NULL default '',
+  `Message` text NOT NULL,
+  `Wrote` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

@@ -122,13 +122,14 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleCalc()
 		{
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
 				return;
 			}
 
-			CNick();
 			var client = new WAClient("557QYQ-UUUWTKX95V");
 			var solution = client.Solve(Network.IMessage.Info.SplitToString(4, " "));
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", solution);
@@ -136,37 +137,39 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleSha1()
 		{
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
 				return;
 			}
 
-			CNick();
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtilities.Sha1(Network.IMessage.Info.SplitToString(4, " ")));
 		}
 
 		protected void HandleMd5()
 		{
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
 				return;
 			}
 
-			CNick();
 			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sUtilities.Md5(Network.IMessage.Info.SplitToString(4, " ")));
 		}
 
 		protected void HandleIrc()
 		{
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a parancs neve!");
 				return;
 			}
-
-			CNick();
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT hasznalata FROM irc_parancsok WHERE parancs = '{0}'", Network.IMessage.Info[4]);
 			if(!db.IsNull())
@@ -177,26 +180,27 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleWhois()
 		{
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a keresendő személy neve!");
 				return;
 			}
-			
-			CNick();
+
 			WhoisPrivmsg = Network.IMessage.Channel;
 			sSender.Whois(Network.IMessage.Info[4]);
 		}
 
-		protected void HandleUzenet()
+		protected void HandleWarning()
 		{
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a név!");
 				return;
 			}
-
-			CNick();
 
 			if(Network.IMessage.Info.Length == 5)
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Info[4], "Keresnek téged itt: {0}", Network.IMessage.Channel);
@@ -206,13 +210,14 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleKeres()
 		{
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a keresendő szöveg!");
 				return;
 			}
 
-			CNick();
 			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=", Network.IMessage.Info.SplitToString(4, " "));
 			var Regex = new Regex(@".unescapedUrl.\:.(?<url>\S+).,.url.+.titleNoFormatting.\:.(?<title>.+).,.content");
 
@@ -230,6 +235,8 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleFordit()
 		{
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva melyik nyelvről melyikre fordítsa le!");
@@ -242,7 +249,6 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			CNick();
 			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=", Network.IMessage.Info.SplitToString(5, " "), "&langpair=" + Network.IMessage.Info[4]);
 			var Regex = new Regex(@"\{.translatedText.\:.(?<text>.+).\},");
 
@@ -254,13 +260,13 @@ namespace Schumix.Irc.Commands
 
 		protected void HandlePrime()
 		{
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva szám!");
 				return;
 			}
-
-			CNick();
 
 			double Num;
 			bool isNum = double.TryParse(Network.IMessage.Info[4], out Num);

@@ -125,5 +125,23 @@ namespace Schumix.ExtraAddon.Commands
 				return;
 			}
 		}
+
+		public void Uzenet(string name, string channel)
+		{
+			if(sChannelInfo.FSelect("uzenet") && sChannelInfo.FSelect("uzenet", channel))
+			{
+				var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}'", name.ToLower(), channel.ToLower());
+				if(!db.IsNull())
+				{
+					foreach(DataRow row in db.Rows)
+					{
+						sSendMessage.SendCMPrivmsg(channel, "{0}: {1}", name, row["Message"].ToString());
+						sSendMessage.SendCMPrivmsg(channel, "Üzenetet hagyta neked: {0}", row["Wrote"].ToString());
+					}
+
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `message` WHERE Name = '{0}'", name.ToLower());
+				}
+			}
+		}
 	}
 }

@@ -32,13 +32,13 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
 				return;
 			}
-
-			CNick();
 
 			if(Network.IMessage.Info[4].ToLower() == "info")
 			{
@@ -163,7 +163,7 @@ namespace Schumix.Irc.Commands
 				if(Network.IMessage.Info.Length < 6)
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve {0} csatornán a funkciók.", Network.IMessage.Channel);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki' WHERE Channel = '{0}'", Network.IMessage.Channel);
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki,uzenet:ki' WHERE Channel = '{0}'", Network.IMessage.Channel);
 					sChannelInfo.ChannelFunkcioReload();
 					return;
 				}
@@ -176,7 +176,7 @@ namespace Schumix.Irc.Commands
 						foreach(DataRow row in db.Rows)
 						{
 							string csatorna = row["Channel"].ToString();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki' WHERE Channel = '{0}'", csatorna);
+							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki,uzenet:ki' WHERE Channel = '{0}'", csatorna);
 						}
 
 						sChannelInfo.ChannelFunkcioReload();
@@ -188,7 +188,7 @@ namespace Schumix.Irc.Commands
 				else
 				{
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen frissitve {0} csatornán a funkciók.", Network.IMessage.Info[5].ToLower());
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki' WHERE Channel = '{0}'", Network.IMessage.Info[5].ToLower());
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki,uzenet:ki' WHERE Channel = '{0}'", Network.IMessage.Info[5].ToLower());
 					sChannelInfo.ChannelFunkcioReload();
 				}
 			}
@@ -361,13 +361,13 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
 
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
 				return;
 			}
-
-			CNick();
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT nev, honap, nap FROM sznap WHERE nev = '{0}'", Network.IMessage.Info[4]);
 			if(!db.IsNull())
@@ -385,6 +385,8 @@ namespace Schumix.Irc.Commands
 		{
 			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
+
+			CNick();
 
 			if(Network.IMessage.Info.Length < 5)
 			{
@@ -412,6 +414,8 @@ namespace Schumix.Irc.Commands
 		{
 			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
 				return;
+
+			CNick();
 
 			if(Network.IMessage.Info.Length < 5)
 			{

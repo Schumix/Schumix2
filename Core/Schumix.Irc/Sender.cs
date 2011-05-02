@@ -19,6 +19,7 @@
 
 using System;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 
 namespace Schumix.Irc
 {
@@ -28,12 +29,12 @@ namespace Schumix.Irc
 		private readonly object WriteLock = new object();
 		private Sender() {}
 
-		public void NameInfo(string nick, string user)
+		public void NameInfo(string nick, string user, string userinfo)
 		{
 			lock(WriteLock)
 			{
 				Nick(nick);
-				User(user);
+				User(user, userinfo);
 			}
 		}
 
@@ -45,11 +46,11 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void User(string user)
+		public void User(string user, string userinfo)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("USER {0} 8 * :{0}", user, user);				
+				sSendMessage.WriteLine("USER {0} 8 * :{1}", user, userinfo);
 			}
 		}
 
@@ -57,7 +58,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("JOIN {0}", channel);				
+				sSendMessage.WriteLine("JOIN {0}", channel);
 			}
 		}
 
@@ -65,7 +66,27 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("JOIN {0} {1}", channel, pass);				
+				bool enabled = true;
+				string[] ignore = IRCConfig.IgnoreChannel.Split(',');
+
+				if(ignore.Length > 1)
+				{
+					foreach(var _ignore in ignore)
+					{
+						if(channel.ToLower() == _ignore.ToLower())
+							enabled = false;
+					}
+				}
+				else
+				{
+					if(channel.ToLower() == IRCConfig.IgnoreChannel.ToLower())
+						enabled = false;
+				}
+
+				if(!enabled)
+					return;
+
+				sSendMessage.WriteLine("JOIN {0} {1}", channel, pass);
 			}
 		}
 
@@ -129,7 +150,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("PING :{0}", ping);				
+				sSendMessage.WriteLine("PING :{0}", ping);
 			}
 		}
 
@@ -137,7 +158,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("PONG :{0}", pong);				
+				sSendMessage.WriteLine("PONG :{0}", pong);
 			}
 		}
 

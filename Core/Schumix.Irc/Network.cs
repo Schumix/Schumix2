@@ -190,10 +190,10 @@ namespace Schumix.Irc
 			if(b)
 			{
 				writer.WriteLine("NICK {0}", sNickInfo.NickStorage);
-				writer.WriteLine("USER {0} 8 * :{0}", IRCConfig.UserName);
+				writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
 			}
 			else
-				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName);
+				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
 
 			Log.Notice("Network", "Felhasznaloi informaciok el lettek kuldve.");
 

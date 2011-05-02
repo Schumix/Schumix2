@@ -110,7 +110,7 @@ namespace Schumix.ExtraAddon.Commands
 					string nev = Network.IMessage.Nick.ToLower();
 					SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Info` = '{0}', `Enabled` = 'be' WHERE Name = '{1}'", Network.IMessage.Info.SplitToString(5, " "), nev);
 					SchumixBase.DManager.QueryFirstRow("UPDATE `schumix` SET `funkcio_status` = 'be' WHERE funkcio_nev = 'hl'");
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok("hl", "be", Network.IMessage.Channel), Network.IMessage.Channel);
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok("hl", "be", Network.IMessage.Channel), Network.IMessage.Channel.ToLower());
 					sChannelInfo.ChannelFunkcioReload();
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az üzenet módosításra került.");
 				}
@@ -148,7 +148,7 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[6].ToLower(), Network.IMessage.Channel, Network.IMessage.Info.SplitToString(7, " "));
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[6].ToLower(), Network.IMessage.Channel.ToLower(), Network.IMessage.Info.SplitToString(7, " "));
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listához a név hozzáadva: {0}", Network.IMessage.Info[6]);
 				}
 				else if(Network.IMessage.Info[5].ToLower() == "del")
@@ -171,7 +171,7 @@ namespace Schumix.ExtraAddon.Commands
 				}
 				else if(Network.IMessage.Info[5].ToLower() == "info")
 				{
-					var db = SchumixBase.DManager.Query("SELECT Name FROM kicklist WHERE Channel = '{0}'", Network.IMessage.Channel);
+					var db = SchumixBase.DManager.Query("SELECT Name FROM kicklist WHERE Channel = '{0}'", Network.IMessage.Channel.ToLower());
 					if(!db.IsNull())
 					{
 						string Nevek = string.Empty;
@@ -222,7 +222,7 @@ namespace Schumix.ExtraAddon.Commands
 							return;
 						}
 
-						SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[7].ToLower(), Network.IMessage.Info[8], Network.IMessage.Info.SplitToString(9, " "));
+						SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[7].ToLower(), Network.IMessage.Info[8].ToLower(), Network.IMessage.Info.SplitToString(9, " "));
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listához a név hozzáadva: {0}", Network.IMessage.Info[7]);
 					}
 					else if(Network.IMessage.Info[6].ToLower() == "del")
@@ -293,7 +293,7 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `modelist`(Name, Channel, Rank) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[6].ToLower(), Network.IMessage.Channel, Network.IMessage.Info[7].ToLower());
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `modelist`(Name, Channel, Rank) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[6].ToLower(), Network.IMessage.Channel.ToLower(), Network.IMessage.Info[7].ToLower());
 					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listához a név hozzáadva: {0}", Network.IMessage.Info[6]);
 				}
 				else if(Network.IMessage.Info[5].ToLower() == "del")
@@ -316,7 +316,7 @@ namespace Schumix.ExtraAddon.Commands
 				}
 				else if(Network.IMessage.Info[5].ToLower() == "info")
 				{
-					var db = SchumixBase.DManager.Query("SELECT Name FROM modelist WHERE Channel = '{0}'", Network.IMessage.Channel);
+					var db = SchumixBase.DManager.Query("SELECT Name FROM modelist WHERE Channel = '{0}'", Network.IMessage.Channel.ToLower());
 					if(!db.IsNull())
 					{
 						string Nevek = string.Empty;
@@ -367,7 +367,7 @@ namespace Schumix.ExtraAddon.Commands
 							return;
 						}
 
-						SchumixBase.DManager.QueryFirstRow("INSERT INTO `modelist`(Name, Channel, Rank) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[7].ToLower(), Network.IMessage.Info[8], Network.IMessage.Info[9]);
+						SchumixBase.DManager.QueryFirstRow("INSERT INTO `modelist`(Name, Channel, Rank) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[7].ToLower(), Network.IMessage.Info[8].ToLower(), Network.IMessage.Info[9]);
 						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listához a név hozzáadva: {0}", Network.IMessage.Info[7]);
 					}
 					else if(Network.IMessage.Info[6].ToLower() == "del")
@@ -410,6 +410,26 @@ namespace Schumix.ExtraAddon.Commands
 				}
 			}
 		}
+
+		public void HandleUzenet()
+		{
+			CNick();
+
+			if(Network.IMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név nincs megadva!");
+				return;
+			}
+
+			if(Network.IMessage.Info.Length < 6)
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név nincs megadva!");
+				return;
+			}
+
+			SchumixBase.DManager.QueryFirstRow("INSERT INTO `message`(Name, Channel, Message, Wrote) VALUES ('{0}', '{1}', '{2}', '{3}')", Network.IMessage.Info[4].ToLower(), Network.IMessage.Channel.ToLower(), Network.IMessage.Info.SplitToString(5, " "), Network.IMessage.Nick);
+			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az üzenet sikeresen feljegyzésre került.");
+		}
 	}
 
 	public sealed class Jegyzet : CommandInfo
@@ -420,13 +440,13 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleJegyzet()
 		{
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
 				return;
 			}
-
-			CNick();
 
 			if(Network.IMessage.Info[4].ToLower() == "info")
 			{

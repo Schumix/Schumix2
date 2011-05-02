@@ -81,9 +81,9 @@ namespace Schumix.Framework
 
 					if(ignore.Length > 1)
 					{
-						for(byte x = 0; x < ignore.Length; x++)
+						foreach(var _ignore in ignore)
 						{
-							file = ignore[x] + ".dll";
+							file = _ignore + ".dll";
 
 							if(dll.Name.ToLower() == file.ToLower())
 								enabled = false;

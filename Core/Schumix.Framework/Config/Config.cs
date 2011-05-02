@@ -67,7 +67,9 @@ namespace Schumix.Framework.Config
 					string NickName2 = xmldoc.SelectSingleNode("Schumix/Irc/NickName2").InnerText;
 					string NickName3 = xmldoc.SelectSingleNode("Schumix/Irc/NickName3").InnerText;
 					string UserName = xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText;
+					string UserInfo = xmldoc.SelectSingleNode("Schumix/Irc/UserInfo").InnerText;
 					string MasterChannel = xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel").InnerText;
+					string IgnoreChannel = xmldoc.SelectSingleNode("Schumix/Irc/IgnoreChannel").InnerText;
 					bool UseNickServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Enabled").InnerText);
 					string NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Password").InnerText;
 					bool UseHostServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Enabled").InnerText);
@@ -75,7 +77,7 @@ namespace Schumix.Framework.Config
 					int MessageSending = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").InnerText);
 					string CommandPrefix = xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").InnerText;
 
-					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, MasterChannel, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, MessageSending, CommandPrefix);
+					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, IgnoreChannel, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, MessageSending, CommandPrefix);
 
 					bool Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText);
 					string Host = xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText;
@@ -141,7 +143,9 @@ namespace Schumix.Framework.Config
 						w.WriteElementString("NickName2", "_Schumix2");
 						w.WriteElementString("NickName3", "__Schumix2");
 						w.WriteElementString("UserName", "Schumix2");
+						w.WriteElementString("UserInfo", "Schumix2 IRC Bot");
 						w.WriteElementString("MasterChannel", "#schumix2");
+						w.WriteElementString("IgnoreChannel", "#test");
 
 						// <NickServ>
 						w.WriteStartElement("NickServ");
@@ -260,7 +264,9 @@ namespace Schumix.Framework.Config
 		public static string NickName2 { get; private set; }
 		public static string NickName3 { get; private set; }
 		public static string UserName { get; private set; }
+		public static string UserInfo { get; private set; }
 		public static string MasterChannel { get; private set; }
+		public static string IgnoreChannel { get; private set; }
 		public static bool UseNickServ { get; private set; }
 		public static string NickServPassword { get; private set; }
 		public static bool UseHostServ { get; private set; }
@@ -268,7 +274,7 @@ namespace Schumix.Framework.Config
 		public static int MessageSending { get; private set; }
 		public static string CommandPrefix { get; private set; }
 
-		public IRCConfig(string server, int port, string nickname, string nickname2, string nickname3, string username, string masterchannel, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, int messagesending, string commandprefix)
+		public IRCConfig(string server, int port, string nickname, string nickname2, string nickname3, string username, string userinfo, string masterchannel, string ignorechannel, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, int messagesending, string commandprefix)
 		{
 			Server           = server;
 			Port             = port;
@@ -276,7 +282,9 @@ namespace Schumix.Framework.Config
 			NickName2        = nickname2;
 			NickName3        = nickname3;
 			UserName         = username;
+			UserInfo         = userinfo;
 			MasterChannel    = masterchannel;
+			IgnoreChannel    = ignorechannel;
 			UseNickServ      = usenickserv;
 			NickServPassword = nickservpassword;
 			UseHostServ      = usehostserv;
