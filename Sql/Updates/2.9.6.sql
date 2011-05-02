@@ -10,4 +10,4 @@ CREATE TABLE `message` (
 
 INSERT INTO `schumix` VALUES ('13', '', 'uzenet', 'ki');
 ALTER TABLE channel CHANGE column `Functions` `Functions` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki,uzenet:ki';
-UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:be,autokick:ki,automode:ki,antiflood:ki,uzenet:ki';
+UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki,uzenet:ki';

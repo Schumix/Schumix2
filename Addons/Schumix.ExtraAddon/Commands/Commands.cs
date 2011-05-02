@@ -423,7 +423,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(Network.IMessage.Info.Length < 6)
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név nincs megadva!");
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Üzenet nincs megadva!");
 				return;
 			}
 
