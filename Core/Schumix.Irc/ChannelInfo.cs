@@ -258,6 +258,9 @@ namespace Schumix.Irc
 			else
 				Log.Warning("ChannelInfo", "Nehany kapcsolodas sikertelen!");
 
+			if(IRCConfig.IgnoreChannel.Length > 0)
+				Log.Notice("ChannelInfo", "Letiltott csatornak: {0}", IRCConfig.IgnoreChannel);
+
 			if(SchumixBase.IIdo)
 			{
 				SchumixBase.timer.IndulasiIdo();

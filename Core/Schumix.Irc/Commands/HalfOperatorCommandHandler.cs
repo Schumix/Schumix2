@@ -331,6 +331,8 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.HalfOperator))
 				return;
 
+			CNick();
+
 			if(Network.IMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
@@ -347,6 +349,8 @@ namespace Schumix.Irc.Commands
 		{
 			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.HalfOperator))
 				return;
+
+			CNick();
 
 			if(Network.IMessage.Info.Length < 5)
 			{
@@ -368,6 +372,8 @@ namespace Schumix.Irc.Commands
 		{
 			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.HalfOperator))
 				return;
+
+			CNick();
 
 			if(Network.IMessage.Info.Length < 5)
 			{

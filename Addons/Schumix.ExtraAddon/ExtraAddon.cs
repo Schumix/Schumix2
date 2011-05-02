@@ -45,8 +45,9 @@ namespace Schumix.ExtraAddon
 			Network.PublicRegisterHandler("PART",               HandleLeft);
 			Network.PublicRegisterHandler("KICK",               HandleKick);
 
-			CommandManager.HalfOperatorCRegisterHandler("autofunkcio", sFunctions.HandleAutoFunkcio);
 			CommandManager.PublicCRegisterHandler("jegyzet",           sJegyzet.HandleJegyzet);
+			CommandManager.PublicCRegisterHandler("uzenet",            sFunctions.HandleUzenet);
+			CommandManager.HalfOperatorCRegisterHandler("autofunkcio", sFunctions.HandleAutoFunkcio);
 		}
 
 		public void Destroy()
@@ -54,8 +55,9 @@ namespace Schumix.ExtraAddon
 			Network.PublicRemoveHandler("JOIN");
 			Network.PublicRemoveHandler("PART");
 			Network.PublicRemoveHandler("KICK");
-			CommandManager.HalfOperatorCRemoveHandler("autofunkcio");
 			CommandManager.PublicCRemoveHandler("jegyzet");
+			CommandManager.PublicCRemoveHandler("uzenet");
+			CommandManager.HalfOperatorCRemoveHandler("autofunkcio");
 		}
 
 		public void HandlePrivmsg()
@@ -83,8 +85,12 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					sFunctions.HLUzenet(Network.IMessage.Channel, Network.IMessage.Args);
+					if(Network.IMessage.Args.IsUpper() && Network.IMessage.Args.Length > 4)
+						sSender.Kick(Network.IMessage.Channel, Network.IMessage.Nick, "Turn caps lock OFF!");
 				});
+
+				Task.Factory.StartNew(() => sFunctions.HLUzenet(Network.IMessage.Channel, Network.IMessage.Args));
+				Task.Factory.StartNew(() => sFunctions.Uzenet(Network.IMessage.Nick, Network.IMessage.Channel));
 
 				Task.Factory.StartNew(() =>
 				{

@@ -100,10 +100,10 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Több funkciós számológép.");
 				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}calc <szám>", IRCConfig.CommandPrefix);
 			}
-			else if(Network.IMessage.Info[4].ToLower() == "uzenet")
+			else if(Network.IMessage.Info[4].ToLower() == "warning")
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Figyelmeztető üzenet küldése, hogy keresik ezen a channelen vagy egy tetszőleges üzenet küldése.");
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}üzenet <ide jön a személy> <ha nem felhívát küldenél hanem saját üzenetet>", IRCConfig.CommandPrefix);
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Figyelmeztető üzenet küldése, hogy keresik ezen a csatornán vagy egy tetszőleges üzenet küldése.");
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}warning <ide jön a személy> <ha nem felhívát küldenél hanem saját üzenetet>", IRCConfig.CommandPrefix);
 			}
 			else if(Network.IMessage.Info[4].ToLower() == "sha1")
 			{

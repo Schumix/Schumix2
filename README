@@ -49,7 +49,11 @@ NickName: Elsõdleges név.
 NickName2: Másodlagos név.
 NickName3: Harmadlagos név.
 UserName: Felhasználó név.
+UserInfo: Információ a felhasználóról.
 MasterChannel: Elsõdleges csatorna ahova csatlakozik minden esetben a bot. Ennek a neve itt változtatható meg. Az adatbázisból nem törölhetõ.
+IgnoreChannel: Letilthatók a nem kívánatos csatornák vele. Ami itt szerepel oda nem megy fel a bot. Ezen rész letiltja a bot rendszerében szereplõket is.
+               Tehát ha abból nem akarunk valahova felmenni akkor is használhatjuk ezt törlés helyett. Vesszõvel elválasztva kell egymás útán írni öket.
+               pl: #teszt,#teszt2 vagy szimplán #teszt
 NickServ:
          Enabled: Értéke true vagy false lehet. Ezen rész határozza meg hogy a nickhez tartozó jelszó el legyen-e küldve. true = igen, false = nem.
                   Alapértelmezés: false
@@ -86,8 +90,8 @@ FileName: Az sqlite fájl neve.
 
 # Addons #
 Enabled: Értéke true vagy false lehet. Engedélyezi az addonok betöltését. Alapértelmezés: true
-Ignore: Azon addonok melyeket nem szeretnénk inditáskor betölteni. Vesszõvel elválasztva kell egymás útán írni öket. (pl: TesztAddon, Teszt2Addon)
-        Alapértelmezés: SvnRssAddon,TesztAddon
+Ignore: Azon addonok melyeket nem szeretnénk inditáskor betölteni. Vesszõvel elválasztva kell egymás útán írni öket. (pl: TesztAddon,Teszt2Addon vagy szimplán TesztAddon)
+        Alapértelmezés: SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon
 Directory: Az addonok mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: Addons
 
 - Adatbázis beüzemelése -

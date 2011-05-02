@@ -85,6 +85,11 @@ namespace Schumix.ExtraAddon.Commands
 					}
 				}
 			}
+			else if(Network.IMessage.Info[4].ToLower() == "uzenet")
+			{
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ezzel a paranccsal üzenetet lehet hagyni bárkinek a megadott csatornán.");
+				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}uzenet <név> <üzenet>", IRCConfig.CommandPrefix);
+			}
 
 			// Fél Operátor parancsok segítségei
 			if(IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.HalfOperator))

@@ -71,7 +71,7 @@ namespace Schumix.Irc.Commands
 			PublicCRegisterHandler("md5",          HandleMd5);
 			PublicCRegisterHandler("irc",          HandleIrc);
 			PublicCRegisterHandler("whois",        HandleWhois);
-			PublicCRegisterHandler("uzenet",       HandleUzenet);
+			PublicCRegisterHandler("warning",      HandleWarning);
 			PublicCRegisterHandler("keres",        HandleKeres);
 			PublicCRegisterHandler("fordit",       HandleFordit);
 			PublicCRegisterHandler("prime",        HandlePrime);

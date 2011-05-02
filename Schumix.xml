@@ -7,7 +7,9 @@
         <NickName2>_Schumix2</NickName2>
         <NickName3>__Schumix2</NickName3>
         <UserName>Schumix2</UserName>
+        <UserInfo>Schumix2 IRC Bot</UserInfo>
         <MasterChannel>#schumix2</MasterChannel>
+        <IgnoreChannel>#test</IgnoreChannel>
         <NickServ>
             <Enabled>false</Enabled>
             <Password>pass</Password>
