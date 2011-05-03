@@ -19,10 +19,11 @@
 
 using System;
 using System.IO;
+using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Config;
-using Schumix.Irc.Commands;
 using Schumix.Framework.Extensions;
+using Schumix.Irc.Commands;
 
 namespace Schumix.Irc
 {
@@ -33,7 +34,7 @@ namespace Schumix.Irc
 		protected bool NewNick;
 		protected MessageHandler() {}
 
-		protected void HandleSuccessfulAuth()
+		protected void HandleSuccessfulAuth(IRCMessage sIRCMessage)
 		{
 			Console.WriteLine();
 			Log.Success("MessageHandler", "Sikeres kapcsolodas az irc kiszolgalohoz.");
@@ -76,17 +77,17 @@ namespace Schumix.Irc
 			SchumixBase.UrlTitleEnabled = true;
 		}
 
-		protected void HandleWaitingForConnection()
+		protected void HandleWaitingForConnection(IRCMessage sIRCMessage)
 		{
 			Log.Notice("MessageHandler", "Varakozas a kapcsolat feldolgozasara.");
 		}
 
-		protected void HandleNotRegistered()
+		protected void HandleNotRegistered(IRCMessage sIRCMessage)
 		{
 			//Log.Notice("MessageHandler", "Teszt.");
 		}
 
-		protected void HandleNoNickName()
+		protected void HandleNoNickName(IRCMessage sIRCMessage)
 		{
 			Log.Warning("MessageHandler", "Nincs megadva a a bot nick neve!");
 		}
@@ -95,38 +96,38 @@ namespace Schumix.Irc
 		///     Ha a ConsoleLog be van kapcsolva, akkor
 		///     kiírja a console-ra az IRC szerverről fogadott információkat.
 		/// </summary>
-		protected void HandleNotice()
+		protected void HandleNotice(IRCMessage sIRCMessage)
 		{
 			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.HandleNotice();
+				plugin.HandleNotice(sIRCMessage);
 
 			if(ConsoleLog.CLog)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write("[SERVER] ");
 				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.Write(Network.IMessage.Args + "\n");
+				Console.Write(sIRCMessage.Args + "\n");
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 
-			if(Network.IMessage.Nick == "NickServ")
+			if(sIRCMessage.Nick == "NickServ")
 			{
-				if(Network.IMessage.Args.Contains("Password incorrect."))
+				if(sIRCMessage.Args.Contains("Password incorrect."))
 					Log.Error("NickServ", "Azonosito jelszo hibas!");
-				else if(Network.IMessage.Args.Contains("You are already identified."))
+				else if(sIRCMessage.Args.Contains("You are already identified."))
 					Log.Warning("NickServ", "Azonosito mar aktivalva van!");
-				else if(Network.IMessage.Args.Contains("Password accepted - you are now recognized."))
+				else if(sIRCMessage.Args.Contains("Password accepted - you are now recognized."))
 					Log.Success("NickServ", "Azonosito jelszo elfogadva.");
 			}
 
-			if(Network.IMessage.Nick == "HostServ" && IRCConfig.UseHostServ)
+			if(sIRCMessage.Nick == "HostServ" && IRCConfig.UseHostServ)
 			{
-				if(Network.IMessage.Args.Contains("Your vhost of") && HostServAllapot)
+				if(sIRCMessage.Args.Contains("Your vhost of") && HostServAllapot)
 				{
+					HostServAllapot = false;
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
 					sChannelInfo.JoinChannel();
-					HostServAllapot = false;
 				}
 			}
 		}
@@ -134,24 +135,25 @@ namespace Schumix.Irc
 		/// <summary>
 		///     Válaszol, ha valaki pingeli a botot.
 		/// </summary>
-		protected void HandlePing()
+		protected void HandlePing(IRCMessage sIRCMessage)
 		{
-			sSender.Ping(Network.IMessage.Args);
+			sSender.Ping(sIRCMessage.Args);
+			Console.WriteLine(sIRCMessage.Args);
 		}
 
 		/// <summary>
 		///     Válaszol, ha valaki pongolja a botot.
 		/// </summary>
-		protected void HandlePong()
+		protected void HandlePong(IRCMessage sIRCMessage)
 		{
-			sSender.Pong(Network.IMessage.Args);
+			sSender.Pong(sIRCMessage.Args);
 			Status = true;
 		}
 
 		/// <summary>
 		///     Ha ismeretlen parancs jön, akkor kiírja.
 		/// </summary>
-		protected void HandleIsmeretlenParancs()
+		protected void HandleIsmeretlenParancs(IRCMessage sIRCMessage)
 		{
 			if(ConsoleLog.CLog)
 			{
@@ -167,7 +169,7 @@ namespace Schumix.Irc
 		///     Ha a bot elsődleges nickje már használatban van, akkor
 		///     átlép a másodlagosra, ha az is akkor a harmadlagosra.
 		/// </summary>
-		protected void HandleNickError()
+		protected void HandleNickError(IRCMessage sIRCMessage)
 		{
 			Log.Error("MessageHandler", "{0}-t mar hasznalja valaki!", sNickInfo.NickStorage);
 			string nick = sNickInfo.ChangeNick();
@@ -179,38 +181,38 @@ namespace Schumix.Irc
 		/// <summary>
 		///     Ha bannolva van egy szobából, akkor feljegyzi.
 		/// </summary>
-		protected void HandleChannelBan()
+		protected void HandleChannelBan(IRCMessage sIRCMessage)
 		{
-			if(Network.IMessage.Info.Length < 4)
+			if(sIRCMessage.Info.Length < 4)
 				return;
 
-			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'csatorna ban' WHERE Channel = '{0}'", Network.IMessage.Info[3]);
-			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: channel ban", Network.IMessage.Info[3]);
+			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'csatorna ban' WHERE Channel = '{0}'", sIRCMessage.Info[3]);
+			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: channel ban", sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
 		/// <summary>
 		///     Ha hibás egy IRC szobának a jelszava, akkor feljegyzi.
 		/// </summary>
-		protected void HandleNoChannelPassword()
+		protected void HandleNoChannelPassword(IRCMessage sIRCMessage)
 		{
-			if(Network.IMessage.Info.Length < 4)
+			if(sIRCMessage.Info.Length < 4)
 				return;
 
-			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'hibas csatorna jelszo' WHERE Channel = '{0}'", Network.IMessage.Info[3]);
-			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: hibás channel jelszó", Network.IMessage.Info[3]);
+			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'hibas csatorna jelszo' WHERE Channel = '{0}'", sIRCMessage.Info[3]);
+			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: hibás channel jelszó", sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
 		/// <summary>
 		///     Kigyűjti éppen hol van fent a nick.
 		/// </summary>
-		protected void HandleMWhois()
+		protected void HandleMWhois(IRCMessage sIRCMessage)
 		{
-			if(Network.IMessage.Info.Length < 5)
+			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			string alomany = Network.IMessage.Info.SplitToString(4, " ");
+			string alomany = sIRCMessage.Info.SplitToString(4, " ");
 			sSendMessage.SendCMPrivmsg(WhoisPrivmsg, "Jelenleg itt van fent: {0}", alomany.Remove(0, 1, ":"));
 			WhoisPrivmsg = sNickInfo.NickStorage;
 		}

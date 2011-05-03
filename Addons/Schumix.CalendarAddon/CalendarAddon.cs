@@ -42,8 +42,8 @@ namespace Schumix.CalendarAddon
 			_calendar = new Calendar();
 			_calendar.Start();
 
-			CommandManager.OperatorCRegisterHandler("banned", sBannedCommand.HandleBanned);
-			CommandManager.OperatorCRegisterHandler("unbanned", sBannedCommand.HandleUnbanned);
+			CommandManager.OperatorCRegisterHandler("banned",   new Action<IRCMessage>(sBannedCommand.HandleBanned));
+			CommandManager.OperatorCRegisterHandler("unbanned", new Action<IRCMessage>(sBannedCommand.HandleUnbanned));
 		}
 
 		public void Destroy()
@@ -53,15 +53,15 @@ namespace Schumix.CalendarAddon
 			CommandManager.OperatorCRemoveHandler("unbanned");
 		}
 
-		public void HandlePrivmsg()
+		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 			Task.Factory.StartNew(() =>
 			{
-				string channel = Network.IMessage.Channel.ToLower();
+				string channel = sIRCMessage.Channel.ToLower();
 
 				if(sChannelInfo.FSelect("antiflood") && sChannelInfo.FSelect("antiflood", channel))
 				{
-					string nick = Network.IMessage.Nick.ToLower();
+					string nick = sIRCMessage.Nick.ToLower();
 					int i = 0;
 
 					foreach(var list in FloodList)
@@ -84,14 +84,14 @@ namespace Schumix.CalendarAddon
 			});
 		}
 
-		public void HandleNotice()
+		public void HandleNotice(IRCMessage sIRCMessage)
 		{
 
 		}
 
-		public void HandleHelp()
+		public void HandleHelp(IRCMessage sIRCMessage)
 		{
-			sBannedCommand.Help();
+			sBannedCommand.Help(sIRCMessage);
 		}
 
 		/// <summary>

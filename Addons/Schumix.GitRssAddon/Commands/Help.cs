@@ -18,6 +18,7 @@
  */
 
 using System;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework.Config;
@@ -26,70 +27,70 @@ namespace Schumix.GitRssAddon.Commands
 {
 	public partial class RssCommand : CommandInfo
 	{
-		public void Help()
+		public void Help(IRCMessage sIRCMessage)
 		{
 			// Operátor parancsok segítségei
-			if(IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 			{
-				if(Network.IMessage.Info[4].ToLower() == "git")
+				if(sIRCMessage.Info[4].ToLower() == "git")
 				{
-					if(Network.IMessage.Info.Length < 6)
+					if(sIRCMessage.Info.Length < 6)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Git rss-ek kezelése.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Git parancsai: channel | info | lista | start | stop | reload");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Git rss-ek kezelése.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Git parancsai: channel | info | lista | start | stop | reload");
 						return;
 					}
 
-					if(Network.IMessage.Info[5].ToLower() == "channel")
+					if(sIRCMessage.Info[5].ToLower() == "channel")
 					{
-						if(Network.IMessage.Info.Length < 7)
+						if(sIRCMessage.Info.Length < 7)
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Rss csatornákra való kiirásának kezelése.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Channel parancsai: add | del");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Rss csatornákra való kiirásának kezelése.");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Channel parancsai: add | del");
 							return;
 						}
-						if(Network.IMessage.Info[6].ToLower() == "add")
+						if(sIRCMessage.Info[6].ToLower() == "add")
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Új csatorna hozzáadása az rss-hez.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}git channel add <rss neve> <tipus> <csatorna>", IRCConfig.CommandPrefix);
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Új csatorna hozzáadása az rss-hez.");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}git channel add <rss neve> <tipus> <csatorna>", IRCConfig.CommandPrefix);
 						}
-						else if(Network.IMessage.Info[6].ToLower() == "del")
+						else if(sIRCMessage.Info[6].ToLower() == "del")
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem használatos csatorna eltávolítása az rss-ből.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}git channel del <rss neve> <tipus> <csatorna>", IRCConfig.CommandPrefix);
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nem használatos csatorna eltávolítása az rss-ből.");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}git channel del <rss neve> <tipus> <csatorna>", IRCConfig.CommandPrefix);
 						}
 					}
-					else if(Network.IMessage.Info[5].ToLower() == "info")
+					else if(sIRCMessage.Info[5].ToLower() == "info")
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja az rss-ek állapotát.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiirja az rss-ek állapotát.");
 					}
-					else if(Network.IMessage.Info[5].ToLower() == "lista")
+					else if(sIRCMessage.Info[5].ToLower() == "lista")
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Választható rss-ek listája.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Választható rss-ek listája.");
 					}
-					else if(Network.IMessage.Info[5].ToLower() == "start")
+					else if(sIRCMessage.Info[5].ToLower() == "start")
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Új rss betöltése.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}git start <rss neve> <tipus>", IRCConfig.CommandPrefix);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Új rss betöltése.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}git start <rss neve> <tipus>", IRCConfig.CommandPrefix);
 					}
-					else if(Network.IMessage.Info[5].ToLower() == "stop")
+					else if(sIRCMessage.Info[5].ToLower() == "stop")
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Rss leállítása.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}git stop <rss neve> <tipus>", IRCConfig.CommandPrefix);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Rss leállítása.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}git stop <rss neve> <tipus>", IRCConfig.CommandPrefix);
 					}
-					else if(Network.IMessage.Info[5].ToLower() == "reload")
+					else if(sIRCMessage.Info[5].ToLower() == "reload")
 					{
-						if(Network.IMessage.Info.Length < 7)
+						if(sIRCMessage.Info.Length < 7)
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Megadott rss újratöltése.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Git reload parancsai: all");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Megadott rss újratöltése.");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Git reload parancsai: all");
 							return;
 						}
 
-						else if(Network.IMessage.Info[6].ToLower() == "all")
+						else if(sIRCMessage.Info[6].ToLower() == "all")
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Minden rss újratöltése.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}git reload <rss neve> <tipus>", IRCConfig.CommandPrefix);
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Minden rss újratöltése.");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}git reload <rss neve> <tipus>", IRCConfig.CommandPrefix);
 						}
 					}
 				}

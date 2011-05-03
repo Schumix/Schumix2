@@ -90,6 +90,7 @@
   <ItemGroup>
     <Compile Include="ISchumix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IRCMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System">

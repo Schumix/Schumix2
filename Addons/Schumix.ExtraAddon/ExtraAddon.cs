@@ -41,13 +41,13 @@ namespace Schumix.ExtraAddon
 		public void Setup()
 		{
 			new AddonConfig(Name + ".xml");
-			Network.PublicRegisterHandler("JOIN",               HandleJoin);
-			Network.PublicRegisterHandler("PART",               HandleLeft);
-			Network.PublicRegisterHandler("KICK",               HandleKick);
+			Network.PublicRegisterHandler("JOIN",               new Action<IRCMessage>(HandleJoin));
+			Network.PublicRegisterHandler("PART",               new Action<IRCMessage>(HandleLeft));
+			Network.PublicRegisterHandler("KICK",               new Action<IRCMessage>(HandleKick));
 
-			CommandManager.PublicCRegisterHandler("jegyzet",           sJegyzet.HandleJegyzet);
-			CommandManager.PublicCRegisterHandler("uzenet",            sFunctions.HandleUzenet);
-			CommandManager.HalfOperatorCRegisterHandler("autofunkcio", sFunctions.HandleAutoFunkcio);
+			CommandManager.PublicCRegisterHandler("jegyzet",           new Action<IRCMessage>(sJegyzet.HandleJegyzet));
+			CommandManager.PublicCRegisterHandler("uzenet",            new Action<IRCMessage>(sFunctions.HandleUzenet));
+			CommandManager.HalfOperatorCRegisterHandler("autofunkcio", new Action<IRCMessage>(sFunctions.HandleAutoFunkcio));
 		}
 
 		public void Destroy()
@@ -60,49 +60,49 @@ namespace Schumix.ExtraAddon
 			CommandManager.HalfOperatorCRemoveHandler("autofunkcio");
 		}
 
-		public void HandlePrivmsg()
+		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("parancsok") || Network.IMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect("parancsok") || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect("parancsok", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sFunctions.AutoKick("privmsg", Network.IMessage.Nick, Network.IMessage.Channel))
+					if(sFunctions.AutoKick("privmsg", sIRCMessage.Nick, sIRCMessage.Channel))
 						return;
 				});
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", Network.IMessage.Channel))
+					if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", sIRCMessage.Channel))
 					{
 						AutoMode = true;
-						ModeChannel = Network.IMessage.Channel;
-						sSender.NickServStatus(Network.IMessage.Nick);
+						ModeChannel = sIRCMessage.Channel;
+						sSender.NickServStatus(sIRCMessage.Nick);
 					}
 				});
 
 				Task.Factory.StartNew(() =>
 				{
-					if(Network.IMessage.Args.IsUpper() && Network.IMessage.Args.Length > 4)
-						sSender.Kick(Network.IMessage.Channel, Network.IMessage.Nick, "Turn caps lock OFF!");
+					if(sIRCMessage.Args.IsUpper() && sIRCMessage.Args.Length > 4)
+						sSender.Kick(sIRCMessage.Channel, sIRCMessage.Nick, "Turn caps lock OFF!");
 				});
 
-				Task.Factory.StartNew(() => sFunctions.HLUzenet(Network.IMessage.Channel, Network.IMessage.Args));
-				Task.Factory.StartNew(() => sFunctions.Uzenet(Network.IMessage.Nick, Network.IMessage.Channel));
+				Task.Factory.StartNew(() => sFunctions.HLUzenet(sIRCMessage.Channel, sIRCMessage.Args));
+				Task.Factory.StartNew(() => sFunctions.Uzenet(sIRCMessage.Nick, sIRCMessage.Channel));
 
 				Task.Factory.StartNew(() =>
 				{
 					if(!SchumixBase.UrlTitleEnabled)
 						return;
 
-					string channel = Network.IMessage.Channel;
+					string channel = sIRCMessage.Channel;
 
-					if(Network.IMessage.Nick.ToLower() == "py-bopm")
+					if(sIRCMessage.Nick.ToLower() == "py-bopm")
 						return;
 
-					var urlsin = sUtilities.GetUrls(Network.IMessage.Args);
+					var urlsin = sUtilities.GetUrls(sIRCMessage.Args);
 
 					if(urlsin.Count <= 0)
 						return;
@@ -121,33 +121,33 @@ namespace Schumix.ExtraAddon
 			}
 		}
 
-		public void HandleNotice()
+		public void HandleNotice(IRCMessage sIRCMessage)
 		{
-			if(Network.IMessage.Nick == "NickServ" && AutoMode)
+			if(sIRCMessage.Nick == "NickServ" && AutoMode)
 			{
-				if(Network.IMessage.Info.Length < 6)
+				if(sIRCMessage.Info.Length < 6)
 					return;
 
-				if(Network.IMessage.Info[5] == "3")
+				if(sIRCMessage.Info[5] == "3")
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", Network.IMessage.Info[4].ToLower(), ModeChannel);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sIRCMessage.Info[4].ToLower(), ModeChannel);
 					if(!db.IsNull())
 					{
 						string rang = db["Rank"].ToString();
-						sSender.Mode(ModeChannel, rang, Network.IMessage.Info[4]);
+						sSender.Mode(ModeChannel, rang, sIRCMessage.Info[4]);
 					}
 					else
 					{
 						if(ModeConfig.RemoveEnabled)
 						{
 							if(ModeConfig.RemoveType.Length == 1)
-								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, Network.IMessage.Info[4]);
+								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, sIRCMessage.Info[4]);
 							else if(ModeConfig.RemoveType.Length == 2)
-								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0}", Network.IMessage.Info[4]));
+								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0}", sIRCMessage.Info[4]));
 							else if(ModeConfig.RemoveType.Length == 3)
-								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0}", Network.IMessage.Info[4]));
+								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0}", sIRCMessage.Info[4]));
 							else if(ModeConfig.RemoveType.Length == 4)
-								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0} {0}", Network.IMessage.Info[4]));
+								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0} {0}", sIRCMessage.Info[4]));
 						}
 					}
 				}
@@ -156,9 +156,9 @@ namespace Schumix.ExtraAddon
 			}
 		}
 
-		public void HandleHelp()
+		public void HandleHelp(IRCMessage sIRCMessage)
 		{
-			sFunctions.Help();
+			sFunctions.Help(sIRCMessage);
 		}
 
 		/// <summary>

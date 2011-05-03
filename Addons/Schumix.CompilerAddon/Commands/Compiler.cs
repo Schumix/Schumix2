@@ -24,6 +24,7 @@ using System.CodeDom.Compiler;
 using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.CSharp;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -46,20 +47,20 @@ namespace Schumix.CompilerAddon.Commands
 		 	"using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
 #endif
 
-		protected void CompilerCommand()
+		protected void CompilerCommand(IRCMessage sIRCMessage)
 		{
 			try
 			{
-				CNick();
+				CNick(sIRCMessage);
 				string adat = string.Empty;
 				string sablon = string.Empty;
 
-				if(regex.IsMatch(Network.IMessage.Args))
-					adat = regex.Match(Network.IMessage.Args).Groups["code"].ToString();
-				else if(regex2.IsMatch(Network.IMessage.Args))
-					adat = regex2.Match(Network.IMessage.Args).Groups["code"].ToString();
+				if(regex.IsMatch(sIRCMessage.Args))
+					adat = regex.Match(sIRCMessage.Args).Groups["code"].ToString();
+				else if(regex2.IsMatch(sIRCMessage.Args))
+					adat = regex2.Match(sIRCMessage.Args).Groups["code"].ToString();
 
-				if(Tiltas(adat))
+				if(Tiltas(adat, sIRCMessage.Channel))
 					return;
 
 				adat = Loop(adat);
@@ -75,14 +76,14 @@ namespace Schumix.CompilerAddon.Commands
 				{
 					if(!adat.Contains("Schumix"))
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a fő fv! (Schumix)");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a fő fv! (Schumix)");
 						return;
 					}
 
 					sablon = Referenced + " " + adat;
 				}
 
-				var asm = CompileCode(sablon);
+				var asm = CompileCode(sablon, sIRCMessage.Channel);
 				if(asm.IsNull())
 					return;
 
@@ -95,26 +96,26 @@ namespace Schumix.CompilerAddon.Commands
 
 				if(writer.ToString().Length > 3000)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kimeneti szöveg túl hosszú ezért nem került kiirásra!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A kimeneti szöveg túl hosszú ezért nem került kiirásra!");
 					return;
 				}
 
 				string[] sorok = writer.ToString().Split('\n');
 
 				if(sorok.Length < 2 && adat.IndexOf("Console.Write") == -1)
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kód sikeresen lefordult csak nincs kimenő üzenet!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A kód sikeresen lefordult csak nincs kimenő üzenet!");
 
 				if(sorok.Length > 4)
 				{
 					for(int x = 0; x < 4; x++)
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sorok[x]);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sorok[x]);
 	
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hátramaradt még {0} kiirás!", sorok.Length-6);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hátramaradt még {0} kiirás!", sorok.Length-6);
 				}
 				else
 				{
 					for(int x = 0; x < sorok.Length; x++)
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sorok[x]);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sorok[x]);
 				}
 			}
 			catch(Exception)
@@ -123,7 +124,7 @@ namespace Schumix.CompilerAddon.Commands
 			}
 		}
 
-		private Assembly CompileCode(string code)
+		private Assembly CompileCode(string code, string channel)
 		{
 			try
 			{
@@ -150,7 +151,7 @@ namespace Schumix.CompilerAddon.Commands
 				if(results.Errors.HasErrors)
 				{
 					foreach(CompilerError error in results.Errors)
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Errors: {0}", error.ErrorText);
+						sSendMessage.SendCMPrivmsg(channel, "Errors: {0}", error.ErrorText);
 				}
 				else
 					return results.CompiledAssembly;
@@ -277,92 +278,92 @@ namespace Schumix.CompilerAddon.Commands
 			return data;
 		}
 
-		private bool Tiltas(string adat)
+		private bool Tiltas(string adat, string channel)
 		{
 			if(adat.Contains("Environment"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("System.IO"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("System.Diagnostics.Process"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("Microsoft.Win32"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("System.CodeDom"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("Console.SetOut"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("Console.Title"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("System.Net.Dns"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("System.Net.IPAddress"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("System.Net.IPEndPoint"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("System.Net.IPHostEntry"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("using") && adat.Contains("System.Net"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			if(adat.Contains("asdcmxd"))
 			{
-				Figyelmeztetes();
+				Figyelmeztetes(channel);
 				return true;
 			}
 
 			return false;
 		}
 
-		private void Figyelmeztetes()
+		private void Figyelmeztetes(string channel)
 		{
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kódban olyan részek vannak melyek veszélyeztetik a programot. Ezért leállt a fordítás!");
+			sSendMessage.SendCMPrivmsg(channel, "A kódban olyan részek vannak melyek veszélyeztetik a programot. Ezért leállt a fordítás!");
 		}
 	}
 }

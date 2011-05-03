@@ -36,7 +36,7 @@ namespace Schumix.HgRssAddon
 		public void Setup()
 		{
 			new AddonConfig(Name + ".xml");
-			CommandManager.OperatorCRegisterHandler("hg", HandleHg);
+			CommandManager.OperatorCRegisterHandler("hg", new Action<IRCMessage>(HandleHg));
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM hginfo");
 			if(!db.IsNull())
@@ -73,19 +73,19 @@ namespace Schumix.HgRssAddon
 				list.Stop();
 		}
 
-		public void HandlePrivmsg()
+		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 
 		}
 
-		public void HandleNotice()
+		public void HandleNotice(IRCMessage sIRCMessage)
 		{
 
 		}
 
-		public void HandleHelp()
+		public void HandleHelp(IRCMessage sIRCMessage)
 		{
-			Help();
+			Help(sIRCMessage);
 		}
 
 		/// <summary>

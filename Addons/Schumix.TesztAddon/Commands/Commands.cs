@@ -20,6 +20,7 @@
 using System;
 using System.Xml;
 using System.Data;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -31,18 +32,18 @@ namespace Schumix.TesztAddon.Commands
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 
-		protected void Teszt()
+		protected void Teszt(IRCMessage sIRCMessage)
 		{
-			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
 
-			CNick();
+			CNick(sIRCMessage);
 
-			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "adat")
+			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "adat")
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Teszt probálkozás");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Teszt probálkozás");
 			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "db")
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "db")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
 				if(!db.IsNull())
@@ -50,13 +51,13 @@ namespace Schumix.TesztAddon.Commands
 					foreach(DataRow row in db.Rows)
 					{
 						string admin = row["Name"].ToString();
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", admin);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}", admin);
 					}
 				}
 				else
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "rss")
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "rss")
 			{
 				var rss = new XmlDocument();
 				rss.Load("http://www.assembla.com/spaces/Sandshroud/stream.rss");
@@ -65,16 +66,16 @@ namespace Schumix.TesztAddon.Commands
 				var node = rss.SelectSingleNode("rss/channel/item/title");
 				//var node = rss.SelectSingleNode("feed/title");
 				string title = !node.IsNull() ? node.InnerText : string.Empty;
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, title);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, title);
 			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "vhost")
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, Network.IMessage.Host);
-			/*else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "amsg")
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "vhost")
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sIRCMessage.Host);
+			/*else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "amsg")
 				sSendMessage.SendCMAmsg("teszt");
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "me")
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "me")
 				sSendMessage.SendCMMe("teszt");*/
 			else
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}", Network.IMessage.Info.Length);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}", sIRCMessage.Info.Length);
 		}
 	}
 }

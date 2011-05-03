@@ -27,43 +27,43 @@ namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler
 	{
-		protected void HandlePlugin()
+		protected void HandlePlugin(IRCMessage sIRCMessage)
 		{
-			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
 
-			CNick();
+			CNick(sIRCMessage);
 
-			if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "load")
+			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "load")
 			{
 				if(sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 3done.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2[Load]: All plugins 3done.");
 				else
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Load]: All plugins 5failed.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2[Load]: All plugins 5failed.");
 			}
-			else if(Network.IMessage.Info.Length >= 5 && Network.IMessage.Info[4].ToLower() == "unload")
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "unload")
 			{
 				if(sAddonManager.UnloadPlugins())
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 3done.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2[Unload]: All plugins 3done.");
 				else
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2[Unload]: All plugins 5failed.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2[Unload]: All plugins 5failed.");
 			}
 			else
 			{
 				foreach(var plugin in sAddonManager.GetPlugins())
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: 3loaded.", plugin.Name.Replace("Plugin", string.Empty));
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: 3loaded.", plugin.Name.Replace("Plugin", string.Empty));
 			}
 		}
 
-		protected void HandleKikapcs()
+		protected void HandleKikapcs(IRCMessage sIRCMessage)
 		{
-			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Administrator))
+			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
 
-			CNick();
+			CNick(sIRCMessage);
 			SchumixBase.timer.SaveUptime();
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Viszlát :(");
-			sSender.Quit(string.Format("{0} leállított parancsal.", Network.IMessage.Nick));
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Viszlát :(");
+			sSender.Quit(string.Format("{0} leállított parancsal.", sIRCMessage.Nick));
 			Thread.Sleep(1000);
 			Environment.Exit(1);
 		}
