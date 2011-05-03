@@ -20,6 +20,7 @@
 using System;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Schumix.API;
@@ -49,33 +50,37 @@ namespace Schumix.CompilerAddon
 
 		}
 
-		public void HandlePrivmsg()
+		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("parancsok") || Network.IMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect("parancsok") || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!sChannelInfo.FSelect("parancsok", Network.IMessage.Channel) && Network.IMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect("parancsok", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				if(!CompilerConfig.CompilerEnabled)
 					return;
 
-				if(regex.IsMatch(Network.IMessage.Args) && Enabled())
+				if(regex.IsMatch(sIRCMessage.Args) && Enabled(sIRCMessage.Channel))
 				{
-					var thread = new Thread(CompilerCommand);
-					thread.Start();
-					thread.Join(1000);
-					thread.Abort();
+					var ts = new CancellationTokenSource();
+					var ct = ts.Token;
+					var t = Task.Factory.StartNew(() => CompilerCommand(sIRCMessage), ct);
+
+					t.Wait(1000);
+					ts.Cancel();
 
 					var sw = new StreamWriter(Console.OpenStandardOutput());
 					sw.AutoFlush = true;
 					Console.SetOut(sw);
 				}
-				else if(regex2.IsMatch(Network.IMessage.Args) && Enabled())
+				else if(regex2.IsMatch(sIRCMessage.Args) && Enabled(sIRCMessage.Channel))
 				{
-					var thread = new Thread(CompilerCommand);
-					thread.Start();
-					thread.Join(1000);
-					thread.Abort();
+					var ts = new CancellationTokenSource();
+					var ct = ts.Token;
+					var t = Task.Factory.StartNew(() => CompilerCommand(sIRCMessage), ct);
+
+					t.Wait(1000);
+					ts.Cancel();
 
 					var sw = new StreamWriter(Console.OpenStandardOutput());
 					sw.AutoFlush = true;
@@ -84,17 +89,17 @@ namespace Schumix.CompilerAddon
 			}
 		}
 
-		public void HandleNotice()
+		public void HandleNotice(IRCMessage sIRCMessage)
 		{
 
 		}
 
-		public void HandleHelp()
+		public void HandleHelp(IRCMessage sIRCMessage)
 		{
 
 		}
 
-		private bool Enabled()
+		private bool Enabled(string channel)
 		{
 			if(CompilerConfig.MaxAllocatingE)
 			{
@@ -102,7 +107,7 @@ namespace Schumix.CompilerAddon
 
 				if(memory > CompilerConfig.MaxAllocatingM)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelenleg túl sok memóriát fogyaszt a bot ezért ezen funkció nem elérhető!");
+					sSendMessage.SendCMPrivmsg(channel, "Jelenleg túl sok memóriát fogyaszt a bot ezért ezen funkció nem elérhető!");
 					return false;
 				}
 			}

@@ -36,7 +36,7 @@ namespace Schumix.SvnRssAddon
 		public void Setup()
 		{
 			new AddonConfig(Name + ".xml");
-			CommandManager.OperatorCRegisterHandler("svn", HandleSvn);
+			CommandManager.OperatorCRegisterHandler("svn", new Action<IRCMessage>(HandleSvn));
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM svninfo");
 			if(!db.IsNull())
@@ -73,19 +73,19 @@ namespace Schumix.SvnRssAddon
 				list.Stop();
 		}
 
-		public void HandlePrivmsg()
+		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 
 		}
 
-		public void HandleNotice()
+		public void HandleNotice(IRCMessage sIRCMessage)
 		{
 
 		}
 
-		public void HandleHelp()
+		public void HandleHelp(IRCMessage sIRCMessage)
 		{
-			Help();
+			Help(sIRCMessage);
 		}
 
 		/// <summary>

@@ -18,6 +18,7 @@
  */
 
 using System;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -39,21 +40,21 @@ namespace Schumix.ExtraAddon.Commands
 		///     Ha a szobában a köszönés funkció be van kapcsolva,
 		///     akkor köszön az éppen belépőnek.
 		/// </summary>
-		protected void HandleJoin()
+		protected void HandleJoin(IRCMessage sIRCMessage)
 		{
-			if(Network.IMessage.Nick == sNickInfo.NickStorage)
+			if(sIRCMessage.Nick == sNickInfo.NickStorage)
 				return;
 
-			if(sFunctions.AutoKick("join", Network.IMessage.Nick, Network.IMessage.Channel))
+			if(sFunctions.AutoKick("join", sIRCMessage.Nick, sIRCMessage.Channel))
 				return;
 
-			string channel = Network.IMessage.Channel.Remove(0, 1, ":");
+			string channel = sIRCMessage.Channel.Remove(0, 1, ":");
 
 			if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", channel))
 			{
 				AutoMode = true;
 				ModeChannel = channel;
-				sSender.NickServStatus(Network.IMessage.Nick);
+				sSender.NickServStatus(sIRCMessage.Nick);
 			}
 
 			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", channel))
@@ -104,15 +105,15 @@ namespace Schumix.ExtraAddon.Commands
 				}
 
 				if(DateTime.Now.Hour <= 9)
-					sSendMessage.SendCMPrivmsg(channel, "Jó reggelt {0}", Network.IMessage.Nick);
+					sSendMessage.SendCMPrivmsg(channel, "Jó reggelt {0}", sIRCMessage.Nick);
 				else if(DateTime.Now.Hour >= 20)
-					sSendMessage.SendCMPrivmsg(channel, "Jó estét {0}", Network.IMessage.Nick);
+					sSendMessage.SendCMPrivmsg(channel, "Jó estét {0}", sIRCMessage.Nick);
 				else
 				{
-					if(IsAdmin(Network.IMessage.Nick))
+					if(IsAdmin(sIRCMessage.Nick))
 						sSendMessage.SendCMPrivmsg(channel, "Üdv főnök");
 					else
-						sSendMessage.SendCMPrivmsg(channel, "{0} {1}", Koszones, Network.IMessage.Nick);
+						sSendMessage.SendCMPrivmsg(channel, "{0} {1}", Koszones, sIRCMessage.Nick);
 				}
 			}
 		}
@@ -121,12 +122,12 @@ namespace Schumix.ExtraAddon.Commands
 		///     Ha ez a funkció be van kapcsolva, akkor
 		///     miután a nick elhagyta a szobát elköszön tőle.
 		/// </summary>
-		protected void HandleLeft()
+		protected void HandleLeft(IRCMessage sIRCMessage)
 		{
-			if(Network.IMessage.Nick == sNickInfo.NickStorage)
+			if(sIRCMessage.Nick == sNickInfo.NickStorage)
 				return;
 
-			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", Network.IMessage.Channel))
+			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", sIRCMessage.Channel))
 			{
 				var rand = new Random();
 				string elkoszones = string.Empty;
@@ -141,39 +142,39 @@ namespace Schumix.ExtraAddon.Commands
 				}
 
 				if(DateTime.Now.Hour >= 20)
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jóét {0}", Network.IMessage.Nick);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jóét {0}", sIRCMessage.Nick);
 				else
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0} {1}", elkoszones, Network.IMessage.Nick);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0} {1}", elkoszones, sIRCMessage.Nick);
 			}
 		}
 
 		/// <summary>
 		///     Ha engedélyezett a ConsolLog, akkor kiírja a Console-ra ha kickelnek valakit.
 		/// </summary>
-		protected void HandleKick()
+		protected void HandleKick(IRCMessage sIRCMessage)
 		{
-			if(Network.IMessage.Info.Length < 5)
+			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			if(Network.IMessage.Info[3] == sNickInfo.NickStorage)
+			if(sIRCMessage.Info[3] == sNickInfo.NickStorage)
 			{
-				if(sChannelInfo.FSelect("rejoin") && sChannelInfo.FSelect("rejoin", Network.IMessage.Channel))
+				if(sChannelInfo.FSelect("rejoin") && sChannelInfo.FSelect("rejoin", sIRCMessage.Channel))
 				{
 					foreach(var m_channel in sChannelInfo.CLista)
 					{
-						if(Network.IMessage.Channel == m_channel.Key)
+						if(sIRCMessage.Channel == m_channel.Key)
 							sSender.Join(m_channel.Key, m_channel.Value);
 					}
 				}
 			}
 			else
 			{
-				if(sChannelInfo.FSelect("parancsok") && sChannelInfo.FSelect("parancsok", Network.IMessage.Channel))
+				if(sChannelInfo.FSelect("parancsok") && sChannelInfo.FSelect("parancsok", sIRCMessage.Channel))
 				{
 					if(ConsoleLog.CLog)
 					{
-						string alomany = Network.IMessage.Info.SplitToString(4, " ");
-						Console.WriteLine("{0} kickelte a következő felhasználot: {1} oka: {2}", Network.IMessage.Nick, Network.IMessage.Info[3], alomany.Remove(0, 1, ":"));
+						string alomany = sIRCMessage.Info.SplitToString(4, " ");
+						Console.WriteLine("{0} kickelte a következő felhasználot: {1} oka: {2}", sIRCMessage.Nick, sIRCMessage.Info[3], alomany.Remove(0, 1, ":"));
 					}
 				}
 			}

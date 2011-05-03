@@ -18,6 +18,7 @@
  */
 
 using System;
+using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 
@@ -88,11 +89,11 @@ namespace Schumix.Irc.Commands
 			return false;
 		}
 
-		protected void CNick()
+		protected void CNick(IRCMessage sIRCMessage)
 		{
-			bool channel = Network.IMessage.Channel.StartsWith("#");
+			bool channel = sIRCMessage.Channel.StartsWith("#");
 			if(!channel)
-				Network.IMessage.Channel = Network.IMessage.Nick;
+				sIRCMessage.Channel = sIRCMessage.Nick;
 		}
 	}
 }

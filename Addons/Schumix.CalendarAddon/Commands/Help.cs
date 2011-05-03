@@ -18,6 +18,7 @@
  */
 
 using System;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework.Config;
@@ -26,19 +27,19 @@ namespace Schumix.CalendarAddon.Commands
 {
 	public partial class BannedCommand
 	{
-		public void Help()
+		public void Help(IRCMessage sIRCMessage)
 		{
-			if(Network.IMessage.Info[4].ToLower() == "banned")
+			if(sIRCMessage.Info[4].ToLower() == "banned")
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Tiltást rak a megadott névre vagy vhost-ra.");
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata:");
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Óra és perc: {0}banned <név> <óó:pp> <oka>", IRCConfig.CommandPrefix);
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Dátum, Óra és perc: {0}banned <név> <éééé.hh.nn> <óó:pp> <oka>", IRCConfig.CommandPrefix);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Tiltást rak a megadott névre vagy vhost-ra.");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata:");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Óra és perc: {0}banned <név> <óó:pp> <oka>", IRCConfig.CommandPrefix);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Dátum, Óra és perc: {0}banned <név> <éééé.hh.nn> <óó:pp> <oka>", IRCConfig.CommandPrefix);
 			}
-			else if(Network.IMessage.Info[4].ToLower() == "unbanned")
+			else if(sIRCMessage.Info[4].ToLower() == "unbanned")
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Feloldja a tiltást a névről vagy vhost-ról ha szerepel a bot rendszerében.");
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}unbanned <név vagy vhost>", IRCConfig.CommandPrefix);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Feloldja a tiltást a névről vagy vhost-ról ha szerepel a bot rendszerében.");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}unbanned <név vagy vhost>", IRCConfig.CommandPrefix);
 			}
 		}
 	}

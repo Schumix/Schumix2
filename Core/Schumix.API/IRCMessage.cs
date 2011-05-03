@@ -19,9 +19,9 @@
 
 using System;
 
-namespace Schumix.Irc
+namespace Schumix.API
 {
-	public struct IRCMessage
+	public class IRCMessage
 	{
 		public string Hostmask { get; set; }
 		public string Channel { get; set; }

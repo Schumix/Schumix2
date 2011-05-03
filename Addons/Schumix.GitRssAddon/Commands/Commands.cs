@@ -19,6 +19,7 @@
 
 using System;
 using System.Data;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -30,20 +31,20 @@ namespace Schumix.GitRssAddon.Commands
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 
-		public void HandleGit()
+		public void HandleGit(IRCMessage sIRCMessage)
 		{
-			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
-			CNick();
+			CNick(sIRCMessage);
 
-			if(Network.IMessage.Info.Length < 5)
+			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs paraméter!");
 				return;
 			}
 
-			if(Network.IMessage.Info[4].ToLower() == "info")
+			if(sIRCMessage.Info[4].ToLower() == "info")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name, Type, Channel FROM gitinfo");
 				if(!db.IsNull())
@@ -53,13 +54,13 @@ namespace Schumix.GitRssAddon.Commands
 						string nev = row["Name"].ToString();
 						string tipus = row["Type"].ToString();
 						string[] csatorna = row["Channel"].ToString().Split(',');
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3{0} 7{1} Channel: 2{2}", nev, tipus, csatorna.SplitToString(" "));
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3{0} 7{1} Channel: 2{2}", nev, tipus, csatorna.SplitToString(" "));
 					}
 				}
 				else
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 			}
-			else if(Network.IMessage.Info[4].ToLower() == "lista")
+			else if(sIRCMessage.Info[4].ToLower() == "lista")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name, Type FROM gitinfo");
 				if(!db.IsNull())
@@ -69,12 +70,12 @@ namespace Schumix.GitRssAddon.Commands
 					foreach(DataRow row in db.Rows)
 						lista += " " + row["Name"].ToString() + " " + row["Type"].ToString() + ";";
 
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "2Lista:3{0}", lista);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2Lista:3{0}", lista);
 				}
 				else
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 			}
-			else if(Network.IMessage.Info[4].ToLower() == "start")
+			else if(sIRCMessage.Info[4].ToLower() == "start")
 			{
 				/*if(res.size() < 3)
 				{
@@ -93,7 +94,7 @@ namespace Schumix.GitRssAddon.Commands
 					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Sikertelen hozzáadás!");*/
 				//SvnRssAddon.RssList
 			}
-			else if(Network.IMessage.Info[4].ToLower() == "stop")
+			else if(sIRCMessage.Info[4].ToLower() == "stop")
 			{
 				/*if(res.size() < 3)
 				{
@@ -111,7 +112,7 @@ namespace Schumix.GitRssAddon.Commands
 				else
 					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Sikertelen leállitás!");*/
 			}
-			else if(Network.IMessage.Info[4].ToLower() == "reload")
+			else if(sIRCMessage.Info[4].ToLower() == "reload")
 			{
 				/*if(res.size() < 3)
 				{
@@ -137,72 +138,72 @@ namespace Schumix.GitRssAddon.Commands
 						sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Sikertelen újrainditás!");
 				}*/
 			}
-			else if(Network.IMessage.Info[4].ToLower() == "channel")
+			else if(sIRCMessage.Info[4].ToLower() == "channel")
 			{
-				if(Network.IMessage.Info.Length < 6)
+				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a parancs!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a parancs!");
 					return;
 				}
 
-				if(Network.IMessage.Info[5].ToLower() == "add")
+				if(sIRCMessage.Info[5].ToLower() == "add")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
 						return;
 					}
 
-					if(Network.IMessage.Info.Length < 8)
+					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs a tipus neve megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs a tipus neve megadva!");
 						return;
 					}
 
-					if(Network.IMessage.Info.Length < 9)
+					if(sIRCMessage.Info.Length < 9)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs a csatorna név megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs a csatorna név megadva!");
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}'", Network.IMessage.Info[6].ToLower(), Network.IMessage.Info[7].ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}'", sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[7].ToLower());
 					if(!db.IsNull())
 					{
 						string[] csatorna = db["Channel"].ToString().Split(',');
 						string adat = csatorna.SplitToString(",");
 
 						if(csatorna.Length == 1 && adat == string.Empty)
-							adat += Network.IMessage.Info[8].ToLower();
+							adat += sIRCMessage.Info[8].ToLower();
 						else
-							adat += "," + Network.IMessage.Info[8].ToLower();
+							adat += "," + sIRCMessage.Info[8].ToLower();
 
-						SchumixBase.DManager.QueryFirstRow("UPDATE gitinfo SET Channel = '{0}' WHERE Name = '{1}' AND Type = '{2}'", adat, Network.IMessage.Info[6].ToLower(), Network.IMessage.Info[7].ToLower());
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Csatorna sikeresen hozzáadva.");
+						SchumixBase.DManager.QueryFirstRow("UPDATE gitinfo SET Channel = '{0}' WHERE Name = '{1}' AND Type = '{2}'", adat, sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[7].ToLower());
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Csatorna sikeresen hozzáadva.");
 					}
 					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem létezik ilyen név!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nem létezik ilyen név!");
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "del")
+				else if(sIRCMessage.Info[5].ToLower() == "del")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
 						return;
 					}
 
-					if(Network.IMessage.Info.Length < 8)
+					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs a tipus neve megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs a tipus neve megadva!");
 						return;
 					}
 
-					if(Network.IMessage.Info.Length < 9)
+					if(sIRCMessage.Info.Length < 9)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs a csatorna név megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs a csatorna név megadva!");
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}'", Network.IMessage.Info[6].ToLower(), Network.IMessage.Info[7].ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}'", sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[7].ToLower());
 					if(!db.IsNull())
 					{
 						string[] csatorna = db["Channel"].ToString().Split(',');
@@ -210,17 +211,17 @@ namespace Schumix.GitRssAddon.Commands
 
 						for(int x = 0; x < csatorna.Length; x++)
 						{
-							if(csatorna[x] == Network.IMessage.Info[8].ToLower())
+							if(csatorna[x] == sIRCMessage.Info[8].ToLower())
 								continue;
 
 							adat += "," + csatorna[x];
 						}
 
-						SchumixBase.DManager.QueryFirstRow("UPDATE gitinfo SET Channel = '{0}' WHERE Name = '{1}' AND Type = '{2}'", adat.Remove(0, 1, ","), Network.IMessage.Info[6].ToLower(), Network.IMessage.Info[7].ToLower());
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Csatorna sikeresen törölve.");
+						SchumixBase.DManager.QueryFirstRow("UPDATE gitinfo SET Channel = '{0}' WHERE Name = '{1}' AND Type = '{2}'", adat.Remove(0, 1, ","), sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[7].ToLower());
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Csatorna sikeresen törölve.");
 					}
 					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem létezik ilyen név!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nem létezik ilyen név!");
 				}
 			}
 		}

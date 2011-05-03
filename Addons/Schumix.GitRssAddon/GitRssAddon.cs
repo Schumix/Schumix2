@@ -36,7 +36,7 @@ namespace Schumix.GitRssAddon
 		public void Setup()
 		{
 			new AddonConfig(Name + ".xml");
-			CommandManager.OperatorCRegisterHandler("git", HandleGit);
+			CommandManager.OperatorCRegisterHandler("git", new Action<IRCMessage>(HandleGit));
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Type, Link, Website FROM gitinfo");
 			if(!db.IsNull())
@@ -74,19 +74,19 @@ namespace Schumix.GitRssAddon
 				list.Stop();
 		}
 
-		public void HandlePrivmsg()
+		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 
 		}
 
-		public void HandleNotice()
+		public void HandleNotice(IRCMessage sIRCMessage)
 		{
 
 		}
 
-		public void HandleHelp()
+		public void HandleHelp(IRCMessage sIRCMessage)
 		{
-			Help();
+			Help(sIRCMessage);
 		}
 
 		/// <summary>

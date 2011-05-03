@@ -19,6 +19,7 @@
 
 using System;
 using System.Data;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -34,28 +35,28 @@ namespace Schumix.ExtraAddon.Commands
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private Functions() {}
 
-		public void HandleAutoFunkcio()
+		public void HandleAutoFunkcio(IRCMessage sIRCMessage)
 		{
-			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.HalfOperator))
+			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				return;
 
-			CNick();
+			CNick(sIRCMessage);
 
-			if(Network.IMessage.Info.Length < 5)
+			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Parancsok: kick | mode | hluzenet");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Parancsok: kick | mode | hluzenet");
 				return;
 			}
 
-			if(Network.IMessage.Info[4].ToLower() == "hluzenet")
+			if(sIRCMessage.Info[4].ToLower() == "hluzenet")
 			{
-				if(Network.IMessage.Info.Length < 6)
+				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva az első paraméter!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva az első paraméter!");
 					return;
 				}
 
-				if(Network.IMessage.Info[5].ToLower() == "info")
+				if(sIRCMessage.Info[5].ToLower() == "info")
 				{
 					var db = SchumixBase.DManager.Query("SELECT Name, Enabled FROM hlmessage");
 					if(!db.IsNull())
@@ -69,12 +70,12 @@ namespace Schumix.ExtraAddon.Commands
 							Nevek += ", " + nev + ":" + allapot;
 						}
 
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "3Létező nickek: {0}", Nevek.Remove(0, 2, ", "));
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Létező nickek: {0}", Nevek.Remove(0, 2, ", "));
 					}
 					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "update")
+				else if(sIRCMessage.Info[5].ToLower() == "update")
 				{
 					var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
 					if(!db.IsNull())
@@ -88,90 +89,90 @@ namespace Schumix.ExtraAddon.Commands
 								SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'ki')", nev);
 						}
 
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az adatbázis sikeresen frissitésre került.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az adatbázis sikeresen frissitésre került.");
 					}
 					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "funkcio")
+				else if(sIRCMessage.Info[5].ToLower() == "funkcio")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs a funkció név megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs a funkció név megadva!");
 						return;
 					}
 
-					string nev = Network.IMessage.Nick.ToLower();
-					SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Enabled` = '{0}' WHERE Name = '{1}'", Network.IMessage.Info[6], nev);
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}: {1}kapcsolva", nev, Network.IMessage.Info[6]);
+					string nev = sIRCMessage.Nick.ToLower();
+					SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Enabled` = '{0}' WHERE Name = '{1}'", sIRCMessage.Info[6], nev);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: {1}kapcsolva", nev, sIRCMessage.Info[6]);
 				}
 				else
 				{
-					string nev = Network.IMessage.Nick.ToLower();
-					SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Info` = '{0}', `Enabled` = 'be' WHERE Name = '{1}'", Network.IMessage.Info.SplitToString(5, " "), nev);
+					string nev = sIRCMessage.Nick.ToLower();
+					SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Info` = '{0}', `Enabled` = 'be' WHERE Name = '{1}'", sIRCMessage.Info.SplitToString(5, " "), nev);
 					SchumixBase.DManager.QueryFirstRow("UPDATE `schumix` SET `funkcio_status` = 'be' WHERE funkcio_nev = 'hl'");
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok("hl", "be", Network.IMessage.Channel), Network.IMessage.Channel.ToLower());
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok("hl", "be", sIRCMessage.Channel), sIRCMessage.Channel.ToLower());
 					sChannelInfo.ChannelFunkcioReload();
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az üzenet módosításra került.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az üzenet módosításra került.");
 				}
 			}
 
-			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
-			if(Network.IMessage.Info[4].ToLower() == "kick")
+			if(sIRCMessage.Info[4].ToLower() == "kick")
 			{
-				if(Network.IMessage.Info.Length < 6)
+				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva az első paraméter!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva az első paraméter!");
 					return;
 				}
 
-				if(Network.IMessage.Info[5].ToLower() == "add")
+				if(sIRCMessage.Info[5].ToLower() == "add")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
 						return;
 					}
 
-					if(Network.IMessage.Info.Length < 8)
+					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs ok megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs ok megadva!");
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", sIRCMessage.Info[6].ToLower());
 					if(!db.IsNull())
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel a kick listán!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A név már szerepel a kick listán!");
 						return;
 					}
 
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[6].ToLower(), Network.IMessage.Channel.ToLower(), Network.IMessage.Info.SplitToString(7, " "));
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listához a név hozzáadva: {0}", Network.IMessage.Info[6]);
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", sIRCMessage.Info[6].ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.Info.SplitToString(7, " "));
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kick listához a név hozzáadva: {0}", sIRCMessage.Info[6]);
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "del")
+				else if(sIRCMessage.Info[5].ToLower() == "del")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", sIRCMessage.Info[6].ToLower());
 					if(db.IsNull())
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen név nem létezik!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ilyen név nem létezik!");
 						return;
 					}
 
-					SchumixBase.DManager.QueryFirstRow("DELETE FROM `kicklist` WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listából a név eltávólításra került: {0}", Network.IMessage.Info[6]);
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `kicklist` WHERE Name = '{0}'", sIRCMessage.Info[6].ToLower());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kick listából a név eltávólításra került: {0}", sIRCMessage.Info[6]);
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "info")
+				else if(sIRCMessage.Info[5].ToLower() == "info")
 				{
-					var db = SchumixBase.DManager.Query("SELECT Name FROM kicklist WHERE Channel = '{0}'", Network.IMessage.Channel.ToLower());
+					var db = SchumixBase.DManager.Query("SELECT Name FROM kicklist WHERE Channel = '{0}'", sIRCMessage.Channel.ToLower());
 					if(!db.IsNull())
 					{
 						string Nevek = string.Empty;
@@ -179,71 +180,71 @@ namespace Schumix.ExtraAddon.Commands
 						foreach(DataRow row in db.Rows)
 						{
 							string nev = row["Name"].ToString();
-							Nevek += ", " + nev + ":" + Network.IMessage.Channel;
+							Nevek += ", " + nev + ":" + sIRCMessage.Channel;
 						}
 
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listán lévők: {0}", Nevek.Remove(0, 2, ", "));
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kick listán lévők: {0}", Nevek.Remove(0, 2, ", "));
 					}
 					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "channel")
+				else if(sIRCMessage.Info[5].ToLower() == "channel")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva az első paraméter!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva az első paraméter!");
 						return;
 					}
 
-					if(Network.IMessage.Info[6].ToLower() == "add")
+					if(sIRCMessage.Info[6].ToLower() == "add")
 					{
-						if(Network.IMessage.Info.Length < 8)
+						if(sIRCMessage.Info.Length < 8)
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
 							return;
 						}
 
-						if(Network.IMessage.Info.Length < 9)
+						if(sIRCMessage.Info.Length < 9)
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs a csatorna megadva!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs a csatorna megadva!");
 							return;
 						}
 
-						if(Network.IMessage.Info.Length < 10)
+						if(sIRCMessage.Info.Length < 10)
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs ok megadva!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs ok megadva!");
 							return;
 						}
 	
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", Network.IMessage.Info[7].ToLower());
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", sIRCMessage.Info[7].ToLower());
 						if(!db.IsNull())
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel a kick listán!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A név már szerepel a kick listán!");
 							return;
 						}
 
-						SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[7].ToLower(), Network.IMessage.Info[8].ToLower(), Network.IMessage.Info.SplitToString(9, " "));
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listához a név hozzáadva: {0}", Network.IMessage.Info[7]);
+						SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", sIRCMessage.Info[7].ToLower(), sIRCMessage.Info[8].ToLower(), sIRCMessage.Info.SplitToString(9, " "));
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kick listához a név hozzáadva: {0}", sIRCMessage.Info[7]);
 					}
-					else if(Network.IMessage.Info[6].ToLower() == "del")
+					else if(sIRCMessage.Info[6].ToLower() == "del")
 					{
-						if(Network.IMessage.Info.Length < 8)
+						if(sIRCMessage.Info.Length < 8)
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
 							return;
 						}
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", Network.IMessage.Info[7].ToLower());
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", sIRCMessage.Info[7].ToLower());
 						if(db.IsNull())
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen név nem létezik!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ilyen név nem létezik!");
 							return;
 						}
 
-						SchumixBase.DManager.QueryFirstRow("DELETE FROM `kicklist` WHERE Name = '{0}'", Network.IMessage.Info[7].ToLower());
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listából a név eltávólításra került: {0}", Network.IMessage.Info[7]);
+						SchumixBase.DManager.QueryFirstRow("DELETE FROM `kicklist` WHERE Name = '{0}'", sIRCMessage.Info[7].ToLower());
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kick listából a név eltávólításra került: {0}", sIRCMessage.Info[7]);
 					}
-					else if(Network.IMessage.Info[6].ToLower() == "info")
+					else if(sIRCMessage.Info[6].ToLower() == "info")
 					{
 						var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM kicklist");
 						if(!db.IsNull())
@@ -257,66 +258,66 @@ namespace Schumix.ExtraAddon.Commands
 								Nevek += ", " + nev + ":" + csatorna;
 							}
 
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick listán lévők: {0}", Nevek.Remove(0, 2, ", "));
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kick listán lévők: {0}", Nevek.Remove(0, 2, ", "));
 						}
 						else
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 					}
 				}
 			}
-			else if(Network.IMessage.Info[4].ToLower() == "mode")
+			else if(sIRCMessage.Info[4].ToLower() == "mode")
 			{
-				if(Network.IMessage.Info.Length < 6)
+				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva az első paraméter!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva az első paraméter!");
 					return;
 				}
 		
-				if(Network.IMessage.Info[5].ToLower() == "add")
+				if(sIRCMessage.Info[5].ToLower() == "add")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
 						return;
 					}
 		
-					if(Network.IMessage.Info.Length < 8)
+					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs rang megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs rang megadva!");
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", sIRCMessage.Info[6].ToLower());
 					if(!db.IsNull())
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel a mode listán!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A név már szerepel a mode listán!");
 						return;
 					}
 
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `modelist`(Name, Channel, Rank) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[6].ToLower(), Network.IMessage.Channel.ToLower(), Network.IMessage.Info[7].ToLower());
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listához a név hozzáadva: {0}", Network.IMessage.Info[6]);
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `modelist`(Name, Channel, Rank) VALUES ('{0}', '{1}', '{2}')", sIRCMessage.Info[6].ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.Info[7].ToLower());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Mode listához a név hozzáadva: {0}", sIRCMessage.Info[6]);
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "del")
+				else if(sIRCMessage.Info[5].ToLower() == "del")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", sIRCMessage.Info[6].ToLower());
 					if(db.IsNull())
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen név nem létezik!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ilyen név nem létezik!");
 						return;
 					}
 
-					SchumixBase.DManager.QueryFirstRow("DELETE FROM `modelist` WHERE Name = '{0}'", Network.IMessage.Info[6].ToLower());
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listából a név eltávólításra került: {0}", Network.IMessage.Info[6]);
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `modelist` WHERE Name = '{0}'", sIRCMessage.Info[6].ToLower());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Mode listából a név eltávólításra került: {0}", sIRCMessage.Info[6]);
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "info")
+				else if(sIRCMessage.Info[5].ToLower() == "info")
 				{
-					var db = SchumixBase.DManager.Query("SELECT Name FROM modelist WHERE Channel = '{0}'", Network.IMessage.Channel.ToLower());
+					var db = SchumixBase.DManager.Query("SELECT Name FROM modelist WHERE Channel = '{0}'", sIRCMessage.Channel.ToLower());
 					if(!db.IsNull())
 					{
 						string Nevek = string.Empty;
@@ -324,71 +325,71 @@ namespace Schumix.ExtraAddon.Commands
 						foreach(DataRow row in db.Rows)
 						{
 							string nev = row["Name"].ToString();
-							Nevek += ", " + nev + ":" + Network.IMessage.Channel;
+							Nevek += ", " + nev + ":" + sIRCMessage.Channel;
 						}
 
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listán lévők: {0}", Nevek.Remove(0, 2, ", "));
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Mode listán lévők: {0}", Nevek.Remove(0, 2, ", "));
 					}
 					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "channel")
+				else if(sIRCMessage.Info[5].ToLower() == "channel")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva az első paraméter!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva az első paraméter!");
 						return;
 					}
 		
-					if(Network.IMessage.Info[6].ToLower() == "add")
+					if(sIRCMessage.Info[6].ToLower() == "add")
 					{
-						if(Network.IMessage.Info.Length < 8)
+						if(sIRCMessage.Info.Length < 8)
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
 							return;
 						}
 		
-						if(Network.IMessage.Info.Length < 9)
+						if(sIRCMessage.Info.Length < 9)
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs a csatorna megadva!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs a csatorna megadva!");
 							return;
 						}
 		
-						if(Network.IMessage.Info.Length < 10)
+						if(sIRCMessage.Info.Length < 10)
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs rang megadva!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs rang megadva!");
 							return;
 						}
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", Network.IMessage.Info[7].ToLower());
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", sIRCMessage.Info[7].ToLower());
 						if(!db.IsNull())
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név már szerepel a mode listán!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A név már szerepel a mode listán!");
 							return;
 						}
 
-						SchumixBase.DManager.QueryFirstRow("INSERT INTO `modelist`(Name, Channel, Rank) VALUES ('{0}', '{1}', '{2}')", Network.IMessage.Info[7].ToLower(), Network.IMessage.Info[8].ToLower(), Network.IMessage.Info[9]);
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listához a név hozzáadva: {0}", Network.IMessage.Info[7]);
+						SchumixBase.DManager.QueryFirstRow("INSERT INTO `modelist`(Name, Channel, Rank) VALUES ('{0}', '{1}', '{2}')", sIRCMessage.Info[7].ToLower(), sIRCMessage.Info[8].ToLower(), sIRCMessage.Info[9]);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Mode listához a név hozzáadva: {0}", sIRCMessage.Info[7]);
 					}
-					else if(Network.IMessage.Info[6].ToLower() == "del")
+					else if(sIRCMessage.Info[6].ToLower() == "del")
 					{
-						if(Network.IMessage.Info.Length < 8)
+						if(sIRCMessage.Info.Length < 8)
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs név megadva!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
 							return;
 						}
 		
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", Network.IMessage.Info[7].ToLower());
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", sIRCMessage.Info[7].ToLower());
 						if(db.IsNull())
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen név nem létezik!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ilyen név nem létezik!");
 							return;
 						}
 
-						SchumixBase.DManager.QueryFirstRow("DELETE FROM `modelist` WHERE Name = '{0}'", Network.IMessage.Info[7].ToLower());
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listából a név eltávólításra került: {0}", Network.IMessage.Info[7]);
+						SchumixBase.DManager.QueryFirstRow("DELETE FROM `modelist` WHERE Name = '{0}'", sIRCMessage.Info[7].ToLower());
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Mode listából a név eltávólításra került: {0}", sIRCMessage.Info[7]);
 					}
-					else if(Network.IMessage.Info[6].ToLower() == "info")
+					else if(sIRCMessage.Info[6].ToLower() == "info")
 					{
 						var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM modelist");
 						if(!db.IsNull())
@@ -402,33 +403,59 @@ namespace Schumix.ExtraAddon.Commands
 								Nevek += ", " + nev + ":" + csatorna;
 							}
 
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode listán lévők: {0}", Nevek.Remove(0, 2, ", "));
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Mode listán lévők: {0}", Nevek.Remove(0, 2, ", "));
 						}
 						else
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 					}
 				}
 			}
 		}
 
-		public void HandleUzenet()
+		public void HandleUzenet(IRCMessage sIRCMessage)
 		{
-			CNick();
+			CNick(sIRCMessage);
 
-			if(Network.IMessage.Info.Length < 5)
+			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A név nincs megadva!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva egy paraméter!");
 				return;
 			}
 
-			if(Network.IMessage.Info.Length < 6)
+			if(sIRCMessage.Info[4].ToLower() == "channel")
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Üzenet nincs megadva!");
-				return;
-			}
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A csatorna nincs megadva!");
+					return;
+				}
 
-			SchumixBase.DManager.QueryFirstRow("INSERT INTO `message`(Name, Channel, Message, Wrote) VALUES ('{0}', '{1}', '{2}', '{3}')", Network.IMessage.Info[4].ToLower(), Network.IMessage.Channel.ToLower(), Network.IMessage.Info.SplitToString(5, " "), Network.IMessage.Nick);
-			sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az üzenet sikeresen feljegyzésre került.");
+				if(sIRCMessage.Info.Length < 7)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A név nincs megadva!");
+					return;
+				}
+
+				if(sIRCMessage.Info.Length < 8)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Üzenet nincs megadva!");
+					return;
+				}
+
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `message`(Name, Channel, Message, Wrote) VALUES ('{0}', '{1}', '{2}', '{3}')", sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[5].ToLower(), sIRCMessage.Info.SplitToString(7, " "), sIRCMessage.Nick);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az üzenet sikeresen feljegyzésre került.");
+			}
+			else
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Üzenet nincs megadva!");
+					return;
+				}
+
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `message`(Name, Channel, Message, Wrote) VALUES ('{0}', '{1}', '{2}', '{3}')", sIRCMessage.Info[4].ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.Info.SplitToString(5, " "), sIRCMessage.Nick);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az üzenet sikeresen feljegyzésre került.");
+			}
 		}
 	}
 
@@ -438,24 +465,24 @@ namespace Schumix.ExtraAddon.Commands
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private Jegyzet() {}
 
-		public void HandleJegyzet()
+		public void HandleJegyzet(IRCMessage sIRCMessage)
 		{
-			CNick();
+			CNick(sIRCMessage);
 
-			if(Network.IMessage.Info.Length < 5)
+			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs paraméter!");
 				return;
 			}
 
-			if(Network.IMessage.Info[4].ToLower() == "info")
+			if(sIRCMessage.Info[4].ToLower() == "info")
 			{
-				if(!Figyelmeztetes())
+				if(!Figyelmeztetes(sIRCMessage))
 					return;
 
-				if(!IsUser(Network.IMessage.Nick, Network.IMessage.Host))
+				if(!IsUser(sIRCMessage.Nick, sIRCMessage.Host))
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az adataid nem megfelelőek ezért nem folytatható a parancs!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az adataid nem megfelelőek ezért nem folytatható a parancs!");
 					return;
 				}
 
@@ -470,191 +497,191 @@ namespace Schumix.ExtraAddon.Commands
 						kodok += ", " + kod;
 					}
 
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzetek kódjai: {0}", kodok.Remove(0, 2, ", "));
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jegyzetek kódjai: {0}", kodok.Remove(0, 2, ", "));
 				}
 				else
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 			}
-			else if(Network.IMessage.Info[4].ToLower() == "user")
+			else if(sIRCMessage.Info[4].ToLower() == "user")
 			{
-				if(Network.IMessage.Info.Length < 6)
+				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs paraméter!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs paraméter!");
 					return;
 				}
 
-				if(Network.IMessage.Info[5].ToLower() == "hozzaferes")
+				if(sIRCMessage.Info[5].ToLower() == "hozzaferes")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a jelszó!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a jelszó!");
 						return;
 					}
 
-					string nev = Network.IMessage.Nick;
+					string nev = sIRCMessage.Nick;
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
 					if(!db.IsNull())
 					{
-						if(db["Password"].ToString() == sUtilities.Sha1(Network.IMessage.Info[6]))
+						if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[6]))
 						{
-							SchumixBase.DManager.QueryFirstRow("UPDATE notes_users SET Vhost = '{0}' WHERE Name = '{1}'", Network.IMessage.Host, nev.ToLower());
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáférés engedélyezve");
+							SchumixBase.DManager.QueryFirstRow("UPDATE notes_users SET Vhost = '{0}' WHERE Name = '{1}'", sIRCMessage.Host, nev.ToLower());
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hozzáférés engedélyezve");
 						}
 						else
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hozzáférés megtagadva");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hozzáférés megtagadva");
 					}
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "ujjelszo")
+				else if(sIRCMessage.Info[5].ToLower() == "ujjelszo")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a régi jelszó!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a régi jelszó!");
 						return;
 					}
 
-					if(Network.IMessage.Info.Length < 8)
+					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva az új jelszó!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva az új jelszó!");
 						return;
 					}
 
-					string nev = Network.IMessage.Nick;
+					string nev = sIRCMessage.Nick;
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
 					if(!db.IsNull())
 					{
-						if(db["Password"].ToString() == sUtilities.Sha1(Network.IMessage.Info[6]))
+						if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[6]))
 						{
-							SchumixBase.DManager.QueryFirstRow("UPDATE notes_users SET Password = '{0}' WHERE Name = '{1}'", sUtilities.Sha1(Network.IMessage.Info[7]), nev.ToLower());
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelszó sikereset meg lett változtatva erre: {0}", Network.IMessage.Info[7]);
+							SchumixBase.DManager.QueryFirstRow("UPDATE notes_users SET Password = '{0}' WHERE Name = '{1}'", sUtilities.Sha1(sIRCMessage.Info[7]), nev.ToLower());
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jelszó sikereset meg lett változtatva erre: {0}", sIRCMessage.Info[7]);
 						}
 						else
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A mostani jelszó nem egyezik, modósitás megtagadva");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A mostani jelszó nem egyezik, modósitás megtagadva");
 					}
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "register")
+				else if(sIRCMessage.Info[5].ToLower() == "register")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs jelszó megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs jelszó megadva!");
 						return;
 					}
 
-					string nev = Network.IMessage.Nick;
+					string nev = sIRCMessage.Nick;
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes_users WHERE Name = '{0}'", nev.ToLower());
 					if(!db.IsNull())
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Már szerepelsz a felhasználói listán!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Már szerepelsz a felhasználói listán!");
 						return;
 					}
 
-					string pass = Network.IMessage.Info[6];
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `notes_users`(Name, Password, Vhost) VALUES ('{0}', '{1}', '{2}')", nev.ToLower(), sUtilities.Sha1(pass), Network.IMessage.Host);
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen hozzá vagy adva a felhasználói listához.");
+					string pass = sIRCMessage.Info[6];
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `notes_users`(Name, Password, Vhost) VALUES ('{0}', '{1}', '{2}')", nev.ToLower(), sUtilities.Sha1(pass), sIRCMessage.Host);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sikeresen hozzá vagy adva a felhasználói listához.");
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "remove")
+				else if(sIRCMessage.Info[5].ToLower() == "remove")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva a jelszó a törlés megerősítéséhez!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a jelszó a törlés megerősítéséhez!");
 						return;
 					}
 
-					string nev = Network.IMessage.Nick;
+					string nev = sIRCMessage.Nick;
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes_users WHERE Name = '{0}'", nev.ToLower());
 					if(db.IsNull())
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nem szerepelsz a felhasználói listán!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nem szerepelsz a felhasználói listán!");
 						return;
 					}
 
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", nev.ToLower());
 					if(!db.IsNull())
 					{
-						if(db["Password"].ToString() != sUtilities.Sha1(Network.IMessage.Info[6]))
+						if(db["Password"].ToString() != sUtilities.Sha1(sIRCMessage.Info[6]))
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A jelszó nem egyezik meg az adatbázisban tárolttal!");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Törlés meg lett szakítva!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A jelszó nem egyezik meg az adatbázisban tárolttal!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Törlés meg lett szakítva!");
 							return;
 						}
 					}
 
 					SchumixBase.DManager.QueryFirstRow("DELETE FROM `notes_users` WHERE Name = '{0}'", nev.ToLower());
 					SchumixBase.DManager.QueryFirstRow("DELETE FROM `notes` WHERE Name = '{0}'", nev.ToLower());
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Sikeresen törölve lett a felhasználód.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sikeresen törölve lett a felhasználód.");
 				}
 			}
-			else if(Network.IMessage.Info[4].ToLower() == "kod")
+			else if(sIRCMessage.Info[4].ToLower() == "kod")
 			{
-				if(!Figyelmeztetes())
+				if(!Figyelmeztetes(sIRCMessage))
 					return;
 
-				if(!IsUser(Network.IMessage.Nick, Network.IMessage.Host))
+				if(!IsUser(sIRCMessage.Nick, sIRCMessage.Host))
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az adataid nem megfelelőek ezért nem folytatható a parancs!");
-					return;
-				}
-
-				if(Network.IMessage.Info.Length < 6)
-				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kód nincs megadva!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az adataid nem megfelelőek ezért nem folytatható a parancs!");
 					return;
 				}
 
-				if(Network.IMessage.Info[5].ToLower() == "del")
+				if(sIRCMessage.Info.Length < 6)
 				{
-					if(Network.IMessage.Info.Length < 7)
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A kód nincs megadva!");
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "del")
+				{
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A kód nincs megadva!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A kód nincs megadva!");
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}'", Network.IMessage.Info[6].ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}'", sIRCMessage.Info[6].ToLower());
 					if(db.IsNull())
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ilyen kód nem szerepel a listán!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ilyen kód nem szerepel a listán!");
 						return;
 					}
 
-					SchumixBase.DManager.QueryFirstRow("DELETE FROM `notes` WHERE Code = '{0}'", Network.IMessage.Info[6].ToLower());
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A jegyzet sikeresen törlésre került.");
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `notes` WHERE Code = '{0}'", sIRCMessage.Info[6].ToLower());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A jegyzet sikeresen törlésre került.");
 				}
 				else
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Note FROM notes WHERE Code = '{0}'", Network.IMessage.Info[5].ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Note FROM notes WHERE Code = '{0}'", sIRCMessage.Info[5].ToLower());
 					if(!db.IsNull())
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet: {0}", db["Note"].ToString());
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jegyzet: {0}", db["Note"].ToString());
 					else
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Hibás lekérdezés!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 				}
 			}
 			else
 			{
-				if(!Figyelmeztetes())
+				if(!Figyelmeztetes(sIRCMessage))
 					return;
 
-				if(!IsUser(Network.IMessage.Nick, Network.IMessage.Host))
+				if(!IsUser(sIRCMessage.Nick, sIRCMessage.Host))
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az adataid nem megfelelőek ezért nem folytatható a parancs!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az adataid nem megfelelőek ezért nem folytatható a parancs!");
 					return;
 				}
 
-				if(Network.IMessage.Info.Length < 6)
+				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva jegyzetnek semmi se!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva jegyzetnek semmi se!");
 					return;
 				}
 
-				string kod = Network.IMessage.Info[4];
+				string kod = sIRCMessage.Info[4];
 
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}'", kod.ToLower());
 				if(!db.IsNull())
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "A jegyzet kódneve már szerepel az adatbázisban!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A jegyzet kódneve már szerepel az adatbázisban!");
 					return;
 				}
 
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `notes`(Code, Name, Note) VALUES ('{0}', '{1}', '{2}')", kod.ToLower(), Network.IMessage.Nick.ToLower(), Network.IMessage.Info.SplitToString(5, " "));
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet kódja: {0}", kod);
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `notes`(Code, Name, Note) VALUES ('{0}', '{1}', '{2}')", kod.ToLower(), sIRCMessage.Nick.ToLower(), sIRCMessage.Info.SplitToString(5, " "));
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jegyzet kódja: {0}", kod);
 			}
 		}
 
@@ -683,14 +710,14 @@ namespace Schumix.ExtraAddon.Commands
 			return false;
 		}
 
-		private bool Figyelmeztetes()
+		private bool Figyelmeztetes(IRCMessage sIRCMessage)
 		{
-			if(!IsUser(Network.IMessage.Nick))
+			if(!IsUser(sIRCMessage.Nick))
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jelenleg nem szerepelsz a jegyzetek felhasználói listáján!");
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ahoz hogy hozzáad magad nem kell mást tenned mint az alábbi parancsot végrehajtani. (Lehetöleg privát üzenetként ne hogy más megtudja.)");
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "{0}jegyzet user register <jelszó>", IRCConfig.CommandPrefix);
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Felhasználói adatok frissitése (ha nem fogadná el adataidat) pedig: {0}jegyzet user hozzaferes <jelszó>", IRCConfig.CommandPrefix);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jelenleg nem szerepelsz a jegyzetek felhasználói listáján!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ahoz hogy hozzáad magad nem kell mást tenned mint az alábbi parancsot végrehajtani. (Lehetöleg privát üzenetként ne hogy más megtudja.)");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}jegyzet user register <jelszó>", IRCConfig.CommandPrefix);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Felhasználói adatok frissitése (ha nem fogadná el adataidat) pedig: {0}jegyzet user hozzaferes <jelszó>", IRCConfig.CommandPrefix);
 				return false;
 			}
 

@@ -18,6 +18,7 @@
  */
 
 using System;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.CalendarAddon;
@@ -33,61 +34,61 @@ namespace Schumix.CalendarAddon.Commands
 		private readonly Unbanned sUnbanned = Singleton<Unbanned>.Instance;
 		private BannedCommand() {}
 
-		public void HandleBanned()
+		public void HandleBanned(IRCMessage sIRCMessage)
 		{
-			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
-			CNick();
+			CNick(sIRCMessage);
 
-			if(Network.IMessage.Info.Length < 5)
+			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs megadva az idő!");
-				return;
-			}
-
-			if(Network.IMessage.Info.Length < 6)
-			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs a kitiltandó név vagy vhost!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva az idő!");
 				return;
 			}
 
-			if(Network.IMessage.Info[5].Contains(":"))
+			if(sIRCMessage.Info.Length < 6)
 			{
-				if(Network.IMessage.Info.Length < 7)
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs a kitiltandó név vagy vhost!");
+				return;
+			}
+
+			if(sIRCMessage.Info[5].Contains(":"))
+			{
+				if(sIRCMessage.Info.Length < 7)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs az idő!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs az idő!");
 					return;
 				}
 
-				int ora = Convert.ToInt32(Network.IMessage.Info[5].Substring(0, Network.IMessage.Info[5].IndexOf(":")));
+				int ora = Convert.ToInt32(sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(":")));
 				if(ora > 24)
 					return;
 
-				int perc = Convert.ToInt32(Network.IMessage.Info[5].Substring(Network.IMessage.Info[5].IndexOf(":")+1));
+				int perc = Convert.ToInt32(sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(":")+1));
 				if(perc > 60)
 					return;
 
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sBanned.BannedName(Network.IMessage.Info[4].ToLower(), Network.IMessage.Channel, Network.IMessage.Info.SplitToString(6, " "), ora, perc));
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sBanned.BannedName(sIRCMessage.Info[4].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(6, " "), ora, perc));
 			}
 			else
 			{
-				if(Network.IMessage.Info.Length < 7)
+				if(sIRCMessage.Info.Length < 7)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs a kitiltandó név vagy vhost!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs a kitiltandó név vagy vhost!");
 					return;
 				}
 
-				if(Network.IMessage.Info.Length < 8)
+				if(sIRCMessage.Info.Length < 8)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs az idő!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs az idő!");
 					return;
 				}
 
-				string[] s = Network.IMessage.Info[5].Split('.');
+				string[] s = sIRCMessage.Info[5].Split('.');
 				if(s.Length < 3)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Helytelen dátum formátum!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Helytelen dátum formátum!");
 					return;
 				}
 
@@ -100,32 +101,32 @@ namespace Schumix.CalendarAddon.Commands
 				if(nap > 31)
 					return;
 
-				int ora = Convert.ToInt32(Network.IMessage.Info[6].Substring(0, Network.IMessage.Info[6].IndexOf(":")));
+				int ora = Convert.ToInt32(sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(":")));
 				if(ora > 24)
 					return;
 
-				int perc = Convert.ToInt32(Network.IMessage.Info[6].Substring(Network.IMessage.Info[6].IndexOf(":")+1));
+				int perc = Convert.ToInt32(sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(":")+1));
 				if(perc > 60)
 					return;
 
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, sBanned.BannedName(Network.IMessage.Info[4].ToLower(), Network.IMessage.Channel, Network.IMessage.Info.SplitToString(7, " "), ev, honap, nap, ora, perc));
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sBanned.BannedName(sIRCMessage.Info[4].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(7, " "), ev, honap, nap, ora, perc));
 			}
 		}
 
-		public void HandleUnbanned()
+		public void HandleUnbanned(IRCMessage sIRCMessage)
 		{
-			if(!IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
-			CNick();
+			CNick(sIRCMessage);
 
-			if(Network.IMessage.Info.Length < 5)
+			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Nincs a kitiltandó neve vagy vhost!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs a kitiltandó neve vagy vhost!");
 				return;
 			}
 
-			sUnbanned.UnbannedName(Network.IMessage.Info[4], Network.IMessage.Channel);
+			sUnbanned.UnbannedName(sIRCMessage.Info[4], sIRCMessage.Channel);
 		}
 	}
 }

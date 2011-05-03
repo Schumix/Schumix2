@@ -34,9 +34,9 @@ namespace Schumix.API
 		/// Destroys the addon, releasing all resources.
 		/// </summary>
 		void Destroy();
-		void HandlePrivmsg();
-		void HandleNotice();
-		void HandleHelp();
+		void HandlePrivmsg(IRCMessage sIRCMessage);
+		void HandleNotice(IRCMessage sIRCMessage);
+		void HandleHelp(IRCMessage sIRCMessage);
 
 		/// <summary>
 		/// Name of the addon

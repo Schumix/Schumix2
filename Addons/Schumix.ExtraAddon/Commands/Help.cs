@@ -18,6 +18,7 @@
  */
 
 using System;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework.Config;
@@ -26,212 +27,223 @@ namespace Schumix.ExtraAddon.Commands
 {
 	public partial class Functions : CommandInfo
 	{
-		public void Help()
+		public void Help(IRCMessage sIRCMessage)
 		{
-			if(Network.IMessage.Info[4].ToLower() == "jegyzet")
+			if(sIRCMessage.Info[4].ToLower() == "jegyzet")
 			{
-				if(Network.IMessage.Info.Length < 6)
+				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Különböző adatokat jegyezhetünk fel a segítségével.");
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet parancsai: user | kod");
-					sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet beküldése: {0}jegyzet <egy kód amit megjegyzünk pl: schumix> <amit feljegyeznél>", IRCConfig.CommandPrefix);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Különböző adatokat jegyezhetünk fel a segítségével.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jegyzet parancsai: user | kod");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jegyzet beküldése: {0}jegyzet <egy kód amit megjegyzünk pl: schumix> <amit feljegyeznél>", IRCConfig.CommandPrefix);
 					return;
 				}
 
-				if(Network.IMessage.Info[5].ToLower() == "user")
+				if(sIRCMessage.Info[5].ToLower() == "user")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet felhasználó kezelése.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "User parancsai: register | remove | hozzaferes | ujjelszo");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jegyzet felhasználó kezelése.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "User parancsai: register | remove | hozzaferes | ujjelszo");
 						return;
 					}
 
-					if(Network.IMessage.Info[6].ToLower() == "register")
+					if(sIRCMessage.Info[6].ToLower() == "register")
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Új felhasználó hozzáadása.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet user register <jelszó>", IRCConfig.CommandPrefix);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Új felhasználó hozzáadása.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}jegyzet user register <jelszó>", IRCConfig.CommandPrefix);
 					}
-					else if(Network.IMessage.Info[6].ToLower() == "remove")
+					else if(sIRCMessage.Info[6].ToLower() == "remove")
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Felhasználó eltávolítása.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet user remove <jelszó>", IRCConfig.CommandPrefix);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Felhasználó eltávolítása.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}jegyzet user remove <jelszó>", IRCConfig.CommandPrefix);
 					}
-					else if(Network.IMessage.Info[6].ToLower() == "hozzaferes")
+					else if(sIRCMessage.Info[6].ToLower() == "hozzaferes")
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Az jegyzet parancsok használatához szükséges jelszó ellenörző és vhost aktiváló.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet user hozzaferes <jelszó>", IRCConfig.CommandPrefix);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az jegyzet parancsok használatához szükséges jelszó ellenörző és vhost aktiváló.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}jegyzet user hozzaferes <jelszó>", IRCConfig.CommandPrefix);
 					}
-					else if(Network.IMessage.Info[6].ToLower() == "ujjelszo")
+					else if(sIRCMessage.Info[6].ToLower() == "ujjelszo")
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Felhasználó jelszavának cseréje ha új kéne a régi helyet.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet user ujjelszo <régi jelszó> <új jelszó>", IRCConfig.CommandPrefix);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Felhasználó jelszavának cseréje ha új kéne a régi helyet.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}jegyzet user ujjelszo <régi jelszó> <új jelszó>", IRCConfig.CommandPrefix);
 					}
 				}
-				else if(Network.IMessage.Info[5].ToLower() == "kod")
+				else if(sIRCMessage.Info[5].ToLower() == "kod")
 				{
-					if(Network.IMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Jegyzet kiolvasásához szükséges kód.", IRCConfig.CommandPrefix);
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet kod <jegyzet kódja>", IRCConfig.CommandPrefix);
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kod parancsai: del");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jegyzet kiolvasásához szükséges kód.", IRCConfig.CommandPrefix);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}jegyzet kod <jegyzet kódja>", IRCConfig.CommandPrefix);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kód parancsai: del");
 						return;
 					}
 
-					if(Network.IMessage.Info[6].ToLower() == "del")
+					if(sIRCMessage.Info[6].ToLower() == "del")
 					{
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Törli a jegyzetet kód alapján.");
-						sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}jegyzet kod del <jegyzet kódja>", IRCConfig.CommandPrefix);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Törli a jegyzetet kód alapján.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}jegyzet kod del <jegyzet kódja>", IRCConfig.CommandPrefix);
 					}
 				}
 			}
-			else if(Network.IMessage.Info[4].ToLower() == "uzenet")
+			else if(sIRCMessage.Info[4].ToLower() == "uzenet")
 			{
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ezzel a paranccsal üzenetet lehet hagyni bárkinek a megadott csatornán.");
-				sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}uzenet <név> <üzenet>", IRCConfig.CommandPrefix);
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ezzel a paranccsal üzenetet lehet hagyni bárkinek a megadott csatornán.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}uzenet <név> <üzenet>", IRCConfig.CommandPrefix);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Üzenet parancsai: channel");
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "channel")
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ezzel a paranccsal üzenetet lehet hagyni bárkinek a kiválasztott csatornán.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}uzenet channel <csatorna> <név> <üzenet>", IRCConfig.CommandPrefix);
+				}
 			}
 
 			// Fél Operátor parancsok segítségei
-			if(IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.HalfOperator))
+			if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 			{
-				if(Network.IMessage.Info[4].ToLower() == "autofunkcio")
+				if(sIRCMessage.Info[4].ToLower() == "autofunkcio")
 				{
-					if(Network.IMessage.Info.Length < 6)
+					if(sIRCMessage.Info.Length < 6)
 					{
-						if(IsAdmin(Network.IMessage.Nick, AdminFlag.HalfOperator))
+						if(IsAdmin(sIRCMessage.Nick, AdminFlag.HalfOperator))
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Autómatikusan müködő kódrészek kezelése.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Autofunkcio parancsai: hluzenet");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Autómatikusan müködő kódrészek kezelése.");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Autofunkcio parancsai: hluzenet");
 							return;
 						}
-						else if(IsAdmin(Network.IMessage.Nick, AdminFlag.Operator))
+						else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator))
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Autómatikusan müködő kódrészek kezelése.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Autofunkcio parancsai: kick | mode | hluzenet");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Autómatikusan müködő kódrészek kezelése.");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Autofunkcio parancsai: kick | mode | hluzenet");
 							return;
 						}
 					}
 
-					if(Network.IMessage.Info[5].ToLower() == "hluzenet")
+					if(sIRCMessage.Info[5].ToLower() == "hluzenet")
 					{
-						if(Network.IMessage.Info.Length < 7)
+						if(sIRCMessage.Info.Length < 7)
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Autómatikusan hl-t kapó nick-ek kezelése.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick channel parancsai: funkcio | update | info");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}autofunkcio hluzenet <üzenet>", IRCConfig.CommandPrefix);
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Autómatikusan hl-t kapó nick-ek kezelése.");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kick channel parancsai: funkcio | update | info");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}autofunkcio hluzenet <üzenet>", IRCConfig.CommandPrefix);
 							return;
 						}
 
-						if(Network.IMessage.Info[6].ToLower() == "funkcio")
+						if(sIRCMessage.Info[6].ToLower() == "funkcio")
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Ezzel a parancsal állitható a hl állapota.");
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}hluzenet funkcio <állapot>", IRCConfig.CommandPrefix);
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ezzel a parancsal állitható a hl állapota.");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}hluzenet funkcio <állapot>", IRCConfig.CommandPrefix);
 						}
-						else if(Network.IMessage.Info[6].ToLower() == "update")
+						else if(sIRCMessage.Info[6].ToLower() == "update")
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Frissiti az adatbázisban szereplő hl listát!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Frissiti az adatbázisban szereplő hl listát!");
 						}
-						else if(Network.IMessage.Info[6].ToLower() == "info")
+						else if(sIRCMessage.Info[6].ToLower() == "info")
 						{
-							sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja a hl-ek állapotát.");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiirja a hl-ek állapotát.");
 						}
 					}
 
-					if(IsAdmin(Network.IMessage.Nick, Network.IMessage.Host, AdminFlag.Operator))
+					if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 					{
-						if(Network.IMessage.Info[5].ToLower() == "kick")
+						if(sIRCMessage.Info[5].ToLower() == "kick")
 						{
-							if(Network.IMessage.Info.Length < 7)
+							if(sIRCMessage.Info.Length < 7)
 							{
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Autómatikusan kirúgásra kerülő nick-ek kezelése.");
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick parancsai: add | del | info | channel");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Autómatikusan kirúgásra kerülő nick-ek kezelése.");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kick parancsai: add | del | info | channel");
 								return;
 							}
 
-							if(Network.IMessage.Info[6].ToLower() == "add")
+							if(sIRCMessage.Info[6].ToLower() == "add")
 							{
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kirúgandó nevének hozzáadása ahol tartozkodsz.");
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}autofunkcio kick add <név> <oka>", IRCConfig.CommandPrefix);
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kirúgandó nevének hozzáadása ahol tartozkodsz.");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}autofunkcio kick add <név> <oka>", IRCConfig.CommandPrefix);
 							}
-							else if(Network.IMessage.Info[6].ToLower() == "del")
+							else if(sIRCMessage.Info[6].ToLower() == "del")
 							{
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kirúgandó nevének eltávolítása ahol tartozkodsz.");
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}autofunkcio kick del <név>", IRCConfig.CommandPrefix);
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kirúgandó nevének eltávolítása ahol tartozkodsz.");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}autofunkcio kick del <név>", IRCConfig.CommandPrefix);
 							}
-							else if(Network.IMessage.Info[6].ToLower() == "info")
+							else if(sIRCMessage.Info[6].ToLower() == "info")
 							{
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja a kirúgandok állapotát.");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiirja a kirúgandok állapotát.");
 							}
-							else if(Network.IMessage.Info[6].ToLower() == "channel")
+							else if(sIRCMessage.Info[6].ToLower() == "channel")
 							{
-								if(Network.IMessage.Info.Length < 8)
+								if(sIRCMessage.Info.Length < 8)
 								{
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Autómatikusan kirúgásra kerülő nick-ek kezelése megadot channelen.");
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kick channel parancsai: add | del | info");
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Autómatikusan kirúgásra kerülő nick-ek kezelése megadot channelen.");
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kick channel parancsai: add | del | info");
 									return;
 								}
 
-								if(Network.IMessage.Info[7].ToLower() == "add")
+								if(sIRCMessage.Info[7].ToLower() == "add")
 								{
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kirúgandó nevének hozzáadása megadott channelen.");
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}autofunkcio kick channel add <név> <csatorna> <oka>", IRCConfig.CommandPrefix);
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kirúgandó nevének hozzáadása megadott channelen.");
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}autofunkcio kick channel add <név> <csatorna> <oka>", IRCConfig.CommandPrefix);
 								}
-								else if(Network.IMessage.Info[7].ToLower() == "del")
+								else if(sIRCMessage.Info[7].ToLower() == "del")
 								{
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kirúgandó nevének eltávolítása megadott channelen.");
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}autofunkcio kick channel del <név>", IRCConfig.CommandPrefix);
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kirúgandó nevének eltávolítása megadott channelen.");
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}autofunkcio kick channel del <név>", IRCConfig.CommandPrefix);
 								}
-								else if(Network.IMessage.Info[7].ToLower() == "info")
+								else if(sIRCMessage.Info[7].ToLower() == "info")
 								{
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja a kirúgandok állapotát.");
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiirja a kirúgandok állapotát.");
 								}
 							}
 						}
-						else if(Network.IMessage.Info[5].ToLower() == "mode")
+						else if(sIRCMessage.Info[5].ToLower() == "mode")
 						{
-							if(Network.IMessage.Info.Length < 7)
+							if(sIRCMessage.Info.Length < 7)
 							{
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Autómatikusan rangot kapó nick-ek kezelése.");
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode parancsai: add | del | info | channel");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Autómatikusan rangot kapó nick-ek kezelése.");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Mode parancsai: add | del | info | channel");
 								return;
 							}
 
-							if(Network.IMessage.Info[6].ToLower() == "add")
+							if(sIRCMessage.Info[6].ToLower() == "add")
 							{
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Rangot kapó nevének hozzáadása ahol tartozkodsz.");
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}autofunkcio mode add <név> <rang>", IRCConfig.CommandPrefix);
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Rangot kapó nevének hozzáadása ahol tartozkodsz.");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}autofunkcio mode add <név> <rang>", IRCConfig.CommandPrefix);
 							}
-							else if(Network.IMessage.Info[6].ToLower() == "del")
+							else if(sIRCMessage.Info[6].ToLower() == "del")
 							{
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Rangot kapó nevének eltávolítása ahol tartozkodsz.");
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}autofunkcio mode del <név>", IRCConfig.CommandPrefix);
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Rangot kapó nevének eltávolítása ahol tartozkodsz.");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}autofunkcio mode del <név>", IRCConfig.CommandPrefix);
 							}
-							else if(Network.IMessage.Info[6].ToLower() == "info")
+							else if(sIRCMessage.Info[6].ToLower() == "info")
 							{
-								sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja a rangot kapók állapotát.");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiirja a rangot kapók állapotát.");
 							}
-							else if(Network.IMessage.Info[6].ToLower() == "channel")
+							else if(sIRCMessage.Info[6].ToLower() == "channel")
 							{
-								if(Network.IMessage.Info.Length < 8)
+								if(sIRCMessage.Info.Length < 8)
 								{
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Autómatikusan rangot kapó nick-ek kezelése megadot channelen.");
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Mode channel parancsai: add | del | info");
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Autómatikusan rangot kapó nick-ek kezelése megadot channelen.");
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Mode channel parancsai: add | del | info");
 									return;
 								}
 
-								if(Network.IMessage.Info[7].ToLower() == "add")
+								if(sIRCMessage.Info[7].ToLower() == "add")
 								{
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Rangot kapó nevének hozzáadása megadott channelen.");
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}autofunkcio mode channel add <név> <csatorna> <rang>", IRCConfig.CommandPrefix);
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Rangot kapó nevének hozzáadása megadott channelen.");
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}autofunkcio mode channel add <név> <csatorna> <rang>", IRCConfig.CommandPrefix);
 								}
-								else if(Network.IMessage.Info[7].ToLower() == "del")
+								else if(sIRCMessage.Info[7].ToLower() == "del")
 								{
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Rangot kapó nevének eltávolítása megadott channelen.");
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Használata: {0}autofunkcio mode channel del <név>", IRCConfig.CommandPrefix);
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Rangot kapó nevének eltávolítása megadott channelen.");
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}autofunkcio mode channel del <név>", IRCConfig.CommandPrefix);
 								}
-								else if(Network.IMessage.Info[7].ToLower() == "info")
+								else if(sIRCMessage.Info[7].ToLower() == "info")
 								{
-									sSendMessage.SendCMPrivmsg(Network.IMessage.Channel, "Kiirja a rangot kapók állapotát.");
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiirja a rangot kapók állapotát.");
 								}
 							}
 						}

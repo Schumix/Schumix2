@@ -28,13 +28,13 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
 using Schumix.Framework.Extensions;
+using Schumix.API;
 
 namespace Schumix.Irc
 {
 	public sealed class Network : MessageHandler
 	{
-		private static readonly Dictionary<string, Action> _IRCHandler = new Dictionary<string, Action>();
-		public static IRCMessage IMessage = new IRCMessage();
+		private static readonly Dictionary<string, Action<IRCMessage>> _IRCHandler = new Dictionary<string, Action<IRCMessage>>();
 
         ///<summary>
         ///     A kimeneti adatokat külddi az IRC felé.
@@ -106,23 +106,23 @@ namespace Schumix.Irc
 
 		private void InitHandler()
 		{
-			RegisterHandler("001",     HandleSuccessfulAuth);
-			RegisterHandler("PING",    HandlePing);
-			RegisterHandler("PONG",    HandlePong);
-			RegisterHandler("PRIVMSG", HandlePrivmsg);
-			RegisterHandler("NOTICE",  HandleNotice);
-			RegisterHandler("474",     HandleChannelBan);
-			RegisterHandler("475",     HandleNoChannelPassword);
-			RegisterHandler("319",     HandleMWhois);
-			RegisterHandler("421",     HandleIsmeretlenParancs);
-			RegisterHandler("433",     HandleNickError);
-			RegisterHandler("439",     HandleWaitingForConnection);
-			RegisterHandler("451",     HandleNotRegistered);
-			RegisterHandler("431",     HandleNoNickName);
+			RegisterHandler("001",     new Action<IRCMessage>(HandleSuccessfulAuth));
+			RegisterHandler("PING",    new Action<IRCMessage>(HandlePing));
+			RegisterHandler("PONG",    new Action<IRCMessage>(HandlePong));
+			RegisterHandler("PRIVMSG", new Action<IRCMessage>(HandlePrivmsg));
+			RegisterHandler("NOTICE",  new Action<IRCMessage>(HandleNotice));
+			RegisterHandler("474",     new Action<IRCMessage>(HandleChannelBan));
+			RegisterHandler("475",     new Action<IRCMessage>(HandleNoChannelPassword));
+			RegisterHandler("319",     new Action<IRCMessage>(HandleMWhois));
+			RegisterHandler("421",     new Action<IRCMessage>(HandleIsmeretlenParancs));
+			RegisterHandler("433",     new Action<IRCMessage>(HandleNickError));
+			RegisterHandler("439",     new Action<IRCMessage>(HandleWaitingForConnection));
+			RegisterHandler("451",     new Action<IRCMessage>(HandleNotRegistered));
+			RegisterHandler("431",     new Action<IRCMessage>(HandleNoNickName));
 			Log.Notice("Network", "Osszes IRC handler regisztralva.");
 		}
 
-		private static void RegisterHandler(string code, Action method)
+		private static void RegisterHandler(string code, Action<IRCMessage> method)
 		{
 			_IRCHandler.Add(code, method);
 		}
@@ -132,7 +132,7 @@ namespace Schumix.Irc
 			_IRCHandler.Remove(code);
 		}
 
-		public static void PublicRegisterHandler(string code, Action method)
+		public static void PublicRegisterHandler(string code, Action<IRCMessage> method)
 		{
 			RegisterHandler(code, method);
 		}
@@ -225,11 +225,6 @@ namespace Schumix.Irc
 			try
 			{
 				Log.Notice("Opcodes", "A szal sikeresen elindult.");
-				string IrcMessage;
-				string opcode;
-				string[] userdata;
-				string[] hostdata;
-				string[] IrcCommand;
 				Log.Notice("Opcodes", "Elindult az irc adatok fogadasa.");
 
 				while(true)
@@ -238,40 +233,11 @@ namespace Schumix.Irc
 					{
 						if(m_running)
 						{
+							string IrcMessage;
 							if((IrcMessage = reader.ReadLine()).IsNull())
 								break;
 
-							IrcCommand = IrcMessage.Split(' ');
-							IrcCommand[0] = IrcCommand[0].Remove(0, 1, ":");
-							IMessage.Args = string.Empty;
-							IMessage.Hostmask = IrcCommand[0];
-							userdata = IMessage.Hostmask.Split('!');
-
-							if(IrcCommand.Length > 2)
-								IMessage.Channel = IrcCommand[2];
-
-							IMessage.Nick = userdata[0];
-							if(userdata.Length > 1)
-							{
-								hostdata = userdata[1].Split('@');
-								IMessage.User = hostdata[0];
-								IMessage.Host = hostdata[1];
-							}
-
-							for(int i = 3; i < IrcCommand.Length; i++)
-								IMessage.Args += " " + IrcCommand[i];
-
-							opcode = IrcCommand[1];
-							IMessage.Info = IrcCommand;
-							IMessage.Args = IMessage.Args.Remove(0, 2, " :");
-
-							if(_IRCHandler.ContainsKey(opcode))
-								_IRCHandler[opcode].Invoke();
-							else
-							{
-								if(ConsoleLog.CLog)
-									Log.Notice("Opcodes", "Received unhandled opcode: {0}", opcode);
-							}
+							Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage));
 						}
 						else
 							Thread.Sleep(100);
@@ -287,6 +253,44 @@ namespace Schumix.Irc
 			{
 				Log.Error("Opcodes", "Vegzetes hiba oka: {0}", e.Message);
 				Opcodes();
+			}
+		}
+
+		private void HandleIrcCommand(string message)
+		{
+			var IMessage = new IRCMessage();
+			string[] IrcCommand = message.Split(' ');
+			IrcCommand[0] = IrcCommand[0].Remove(0, 1, ":");
+			IMessage.Args = string.Empty;
+			IMessage.Hostmask = IrcCommand[0];
+			string[] userdata = IMessage.Hostmask.Split('!');
+
+			if(IrcCommand.Length > 2)
+				IMessage.Channel = IrcCommand[2];
+
+			string[] hostdata;
+			IMessage.Nick = userdata[0];
+
+			if(userdata.Length > 1)
+			{
+				hostdata = userdata[1].Split('@');
+				IMessage.User = hostdata[0];
+				IMessage.Host = hostdata[1];
+			}
+
+			for(int i = 3; i < IrcCommand.Length; i++)
+				IMessage.Args += " " + IrcCommand[i];
+
+			string opcode = IrcCommand[1];
+			IMessage.Info = IrcCommand;
+			IMessage.Args = IMessage.Args.Remove(0, 2, " :");
+
+			if(_IRCHandler.ContainsKey(opcode))
+				_IRCHandler[opcode].Invoke(IMessage);
+			else
+			{
+				if(ConsoleLog.CLog)
+					Log.Notice("Opcodes", "Received unhandled opcode: {0}", opcode);
 			}
 		}
 
