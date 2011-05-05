@@ -86,7 +86,7 @@ namespace Schumix.Framework.Config
 					string Database = xmldoc.SelectSingleNode("Schumix/MySql/Database").InnerText;
 					string Charset = xmldoc.SelectSingleNode("Schumix/MySql/Charset").InnerText;
 
-					new MySqlConfig(Enabled, Host, User, Password, Database);
+					new MySqlConfig(Enabled, Host, User, Password, Database, Charset);
 
 					Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").InnerText);
 					string FileName = xmldoc.SelectSingleNode("Schumix/SQLite/FileName").InnerText;

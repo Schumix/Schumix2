@@ -32,9 +32,9 @@ namespace Schumix.Framework.Database
 	{
 		private MySqlConnection Connection;
 
-		public MySql(string host, string username, string password, string database)
+		public MySql(string host, string username, string password, string database, string charset)
 		{
-			if(!Initialize(host, username, password, database))
+			if(!Initialize(host, username, password, database, charset))
 			{
 				Log.Error("MySql", "Hiba tortent az adatbazishoz valo kapcsolodas soran!");
 				Thread.Sleep(200);
