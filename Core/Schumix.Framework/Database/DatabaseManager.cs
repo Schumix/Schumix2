@@ -47,7 +47,7 @@ namespace Schumix.Framework.Database
 			if(MySqlConfig.Enabled)
 			{
 				x++;
-				mdatabase = new MySql(MySqlConfig.Host, MySqlConfig.User, MySqlConfig.Password, MySqlConfig.Database);
+				mdatabase = new MySql(MySqlConfig.Host, MySqlConfig.User, MySqlConfig.Password, MySqlConfig.Database, MySqlConfig.Charset);
 			}
 
 			Log.Debug("DatabaseManager", "Adatbazis fajtajanak kivalasztasa folyamatban.");

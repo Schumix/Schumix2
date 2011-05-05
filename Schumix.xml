@@ -37,6 +37,7 @@
         <User>root</User>
         <Password>pass</Password>
         <Database>database</Database>
+        <Charset>utf8</Charset>
     </MySql>
     <SQLite>
         <Enabled>false</Enabled>

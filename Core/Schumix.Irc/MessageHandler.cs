@@ -186,7 +186,7 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 4)
 				return;
 
-			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'csatorna ban' WHERE Channel = '{0}'", sIRCMessage.Info[3]);
+			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'csatorna ban' WHERE Channel = '{0}'", sIRCMessage.Info[3].ToLower());
 			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: channel ban", sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
@@ -199,7 +199,7 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 4)
 				return;
 
-			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'hibas csatorna jelszo' WHERE Channel = '{0}'", sIRCMessage.Info[3]);
+			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'hibas csatorna jelszo' WHERE Channel = '{0}'", sIRCMessage.Info[3].ToLower());
 			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: hibás channel jelszó", sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}

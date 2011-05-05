@@ -32,7 +32,7 @@ namespace Schumix.TesztAddon.Commands
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 
-		protected void Teszt(IRCMessage sIRCMessage)
+		protected void HandleTeszt(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
@@ -45,7 +45,7 @@ namespace Schumix.TesztAddon.Commands
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "db")
 			{
-				var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
+				var db = SchumixBase.DManager.Query("SELECT Name FROM admins");
 				if(!db.IsNull())
 				{
 					foreach(DataRow row in db.Rows)

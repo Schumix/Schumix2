@@ -100,7 +100,7 @@ namespace Schumix.Console.Commands
 
 				int flag;
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM adminok WHERE Name = '{0}'", Info[2].ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", Info[2].ToLower());
 				if(!db.IsNull())
 					flag = Convert.ToInt32(db["Flag"].ToString());
 				else
@@ -140,7 +140,7 @@ namespace Schumix.Console.Commands
 				}
 
 				string nev = Info[2];
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}'", nev.ToLower());
 				if(!db.IsNull())
 				{
 					Log.Warning("Console", "A nev mar szerepel az admin listan!");
@@ -148,7 +148,7 @@ namespace Schumix.Console.Commands
 				}
 
 				string pass = sUtilities.GetRandomString();
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtilities.Sha1(pass));
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `admins`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtilities.Sha1(pass));
 				SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'ki')", nev.ToLower());
 				Log.Notice("Console", "Admin hozzaadva: {0}", nev);
 				Log.Notice("Console", "Mostani jelszo: {0}", pass);
@@ -162,14 +162,14 @@ namespace Schumix.Console.Commands
 				}
 
 				string nev = Info[2];
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}'", nev.ToLower());
 				if(db.IsNull())
 				{
 					Log.Warning("Console", "Ilyen nev nem letezik!");
 					return;
 				}
 
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE Name = '{0}'", nev.ToLower());
+				SchumixBase.DManager.QueryFirstRow("DELETE FROM `admins` WHERE Name = '{0}'", nev.ToLower());
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `hlmessage` WHERE Name = '{0}'", nev.ToLower());
 				Log.Notice("Console", "Admin törölve: {0}", nev);
 			}
@@ -192,7 +192,7 @@ namespace Schumix.Console.Commands
 
 				if((AdminFlag)rang == AdminFlag.Administrator || (AdminFlag)rang == AdminFlag.Operator || (AdminFlag)rang == AdminFlag.HalfOperator)
 				{
-					SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Flag = '{0}' WHERE Name = '{1}'", rang, nev);
+					SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Flag = '{0}' WHERE Name = '{1}'", rang, nev);
 					Log.Notice("Console", "Rang sikeresen modositva.");
 				}
 				else

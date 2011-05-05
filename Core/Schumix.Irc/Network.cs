@@ -290,7 +290,7 @@ namespace Schumix.Irc
 			else
 			{
 				if(ConsoleLog.CLog)
-					Log.Notice("Opcodes", "Received unhandled opcode: {0}", opcode);
+					Log.Notice("HandleIrcCommand", "Received unhandled opcode: {0}", opcode);
 			}
 		}
 

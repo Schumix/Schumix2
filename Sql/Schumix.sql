@@ -24,22 +24,22 @@ CREATE TABLE `channel` (
 -- ----------------------------
 INSERT INTO `channel` VALUES ('1', ',koszones:be,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki,uzenet:ki', '#schumix2', '', '', '');
 
-DROP TABLE IF EXISTS `irc_parancsok`;
-CREATE TABLE `irc_parancsok` (
-  `guid` int(10) unsigned NOT NULL auto_increment,
-  `parancs` varchar(21) NOT NULL default '',
-  `hasznalata` text NOT NULL default '',
-  PRIMARY KEY  (`guid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+DROP TABLE IF EXISTS `irc_commands`;
+CREATE TABLE `irc_commands` (
+  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Command` varchar(30) NOT NULL default '',
+  `Message` text NOT NULL,
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
 
 -- ----------------------------
 -- Records 
 -- ----------------------------
-INSERT INTO `irc_parancsok` VALUES ('1', 'rang', 'Rang hasznalata: /mode <channel> <rang> <nev>');
-INSERT INTO `irc_parancsok` VALUES ('2', 'rang1', 'Rang mentese: /chanserv <rang (sop, aop, hop, vop)> <channel> ADD <nev>');
-INSERT INTO `irc_parancsok` VALUES ('3', 'nick', 'Nick csere hasznalata: /nick <uj nev>');
-INSERT INTO `irc_parancsok` VALUES ('4', 'kick', 'Kick hasznalata: /kick <channel> <nev> (<oka> nem feltetlen kell)');
-INSERT INTO `irc_parancsok` VALUES ('5', 'owner', 'Ownermod hasznalata: /msg chanserv SET <channel> ownermode on');
+INSERT INTO `irc_commands` VALUES ('1', 'rang', 'Rang használata: /mode <channel> <rang> <név>');
+INSERT INTO `irc_commands` VALUES ('2', 'rang1', 'Rang mentése: /chanserv <rang (sop, aop, hop, vop)> <channel> ADD <név>');
+INSERT INTO `irc_commands` VALUES ('3', 'nick', 'Nick csere használata: /nick <új név>');
+INSERT INTO `irc_commands` VALUES ('4', 'kick', 'Kick használata: /kick <channel> <név> (<oka> nem feltétlen kell)');
+INSERT INTO `irc_commands` VALUES ('5', 'owner', 'Ownermod használata: /msg chanserv SET <channel> ownermode on');
 
 DROP TABLE IF EXISTS `schumix`;
 CREATE TABLE `schumix` (
@@ -93,7 +93,7 @@ CREATE TABLE `hlmessage` (
   `Info` text NOT NULL,
   `Enabled` varchar(2) NOT NULL default '',
   PRIMARY KEY  (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
 
 DROP TABLE IF EXISTS `kicklist`;
 CREATE TABLE `kicklist` (
@@ -102,7 +102,7 @@ CREATE TABLE `kicklist` (
   `Channel` varchar(20) NOT NULL default '',
   `Reason` text NOT NULL,
   PRIMARY KEY  (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
 
 DROP TABLE IF EXISTS `modelist`;
 CREATE TABLE `modelist` (
@@ -159,7 +159,7 @@ CREATE TABLE `notes` (
   `Name` varchar(20) NOT NULL default '',
   `Note` text NOT NULL default '',
   PRIMARY KEY  (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
 
 DROP TABLE IF EXISTS `notes_users`;
 CREATE TABLE `notes_users` (
@@ -182,7 +182,7 @@ CREATE TABLE `banned` (
   `Hour` int(2) NOT NULL DEFAULT '0',
   `Minute` int(2) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_hungarian_ci;
 
 DROP TABLE IF EXISTS `message`;
 CREATE TABLE `message` (
@@ -192,4 +192,4 @@ CREATE TABLE `message` (
   `Message` text NOT NULL,
   `Wrote` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARACTER SET utf8 COLLATE utf8_hungarian_ci;

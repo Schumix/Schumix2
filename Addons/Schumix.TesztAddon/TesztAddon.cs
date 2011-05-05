@@ -32,7 +32,7 @@ namespace Schumix.TesztAddon
 
 		public void Setup()
 		{
-			CommandManager.AdminCRegisterHandler("teszt", new Action<IRCMessage>(Teszt));
+			CommandManager.AdminCRegisterHandler("teszt", new Action<IRCMessage>(HandleTeszt));
 		}
 
 		public void Destroy()

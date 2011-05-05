@@ -83,6 +83,8 @@ Host: A mysql szerver címe.
 User: A szerver felhasználó neve.
 Password: A szerver jelszava.
 Database: Az adatbázis amiben megtalálhatók a bothoz tartozó táblák.
+Charset: Az adatbázisba menõ adatok kódolását és olvasását határozza meg.
+         Alapértelmezés: utf8
 
 # SQLite #
 Enabled: Értéke true vagy false lehet. Meghatározza hogy sqlite alapú-e az adatbázis. Alapértelmezés: false
