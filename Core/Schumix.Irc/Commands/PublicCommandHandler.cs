@@ -172,9 +172,9 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT hasznalata FROM irc_parancsok WHERE parancs = '{0}'", sIRCMessage.Info[4]);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Message FROM irc_commands WHERE command = '{0}'", sIRCMessage.Info[4]);
 			if(!db.IsNull())
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, db["hasznalata"].ToString());
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, db["Message"].ToString());
 			else
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
 		}

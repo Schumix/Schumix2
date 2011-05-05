@@ -84,6 +84,7 @@ namespace Schumix.Framework.Config
 					string User = xmldoc.SelectSingleNode("Schumix/MySql/User").InnerText;
 					string Password = xmldoc.SelectSingleNode("Schumix/MySql/Password").InnerText;
 					string Database = xmldoc.SelectSingleNode("Schumix/MySql/Database").InnerText;
+					string Charset = xmldoc.SelectSingleNode("Schumix/MySql/Charset").InnerText;
 
 					new MySqlConfig(Enabled, Host, User, Password, Database);
 
@@ -197,6 +198,7 @@ namespace Schumix.Framework.Config
 						w.WriteElementString("User", "root");
 						w.WriteElementString("Password", "pass");
 						w.WriteElementString("Database", "database");
+						w.WriteElementString("Charset", "utf8");
 
 						// </MySql>
 						w.WriteEndElement();
@@ -302,14 +304,16 @@ namespace Schumix.Framework.Config
 		public static string User { get; private set; }
 		public static string Password { get; private set; }
 		public static string Database { get; private set; }
+		public static string Charset { get; private set; }
 
-		public MySqlConfig(bool enabled, string host, string user, string password, string database)
+		public MySqlConfig(bool enabled, string host, string user, string password, string database, string charset)
 		{
 			Enabled  = enabled;
 			Host     = host;
 			User     = user;
 			Password = password;
 			Database = database;
+			Charset  = charset;
 			Log.Notice("MySqlConfig", "MySql beallitasai betoltve.");
 		}
 	}

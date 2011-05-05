@@ -50,11 +50,11 @@ namespace Schumix.Framework.Database
 			Connection.Close();
 		}
 
-		private bool Initialize(string host, string username, string password, string database)
+		private bool Initialize(string host, string username, string password, string database, string charset)
 		{
 			try
 			{
-				Connection = new MySqlConnection(string.Format("SERVER={0};DATABASE={1};UID={2};PWD={3};", host, database, username, password));
+				Connection = new MySqlConnection(string.Format("SERVER={0};DATABASE={1};UID={2};PWD={3};charset={4};", host, database, username, password, charset));
 				Connection.Open();
 				return true;
 			}

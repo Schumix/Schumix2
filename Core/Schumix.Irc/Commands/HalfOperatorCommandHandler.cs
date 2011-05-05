@@ -45,12 +45,12 @@ namespace Schumix.Irc.Commands
 				}
 
 				string nev = sIRCMessage.Nick;
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM adminok WHERE Name = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM admins WHERE Name = '{0}'", nev.ToLower());
 				if(!db.IsNull())
 				{
 					if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[5]))
 					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Vhost = '{0}' WHERE Name = '{1}'", sIRCMessage.Host, nev.ToLower());
+						SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Vhost = '{0}' WHERE Name = '{1}'", sIRCMessage.Host, nev.ToLower());
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hozzáférés engedélyezve");
 					}
 					else
@@ -74,12 +74,12 @@ namespace Schumix.Irc.Commands
 				}
 
 				string nev = sIRCMessage.Nick;
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM adminok WHERE Name = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM admins WHERE Name = '{0}'", nev.ToLower());
 				if(!db.IsNull())
 				{
 					if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[5]))
 					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Password = '{0}' WHERE Name = '{1}'", sUtilities.Sha1(sIRCMessage.Info[6]), nev.ToLower());
+						SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Password = '{0}' WHERE Name = '{1}'", sUtilities.Sha1(sIRCMessage.Info[6]), nev.ToLower());
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jelszó sikereset meg lett változtatva erre: {0}", sIRCMessage.Info[6]);
 					}
 					else
@@ -97,7 +97,7 @@ namespace Schumix.Irc.Commands
 				int flag;
 				string nev = sIRCMessage.Nick;
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM adminok WHERE Name = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", nev.ToLower());
 				if(!db.IsNull())
 					flag = Convert.ToInt32(db["Flag"].ToString());
 				else
@@ -112,7 +112,7 @@ namespace Schumix.Irc.Commands
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "lista")
 			{
-				var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
+				var db = SchumixBase.DManager.Query("SELECT Name FROM admins");
 				if(!db.IsNull())
 				{
 					string adminok = string.Empty;
@@ -137,7 +137,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				string nev = sIRCMessage.Info[5];
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}'", nev.ToLower());
 				if(!db.IsNull())
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A név már szerepel az admin listán!");
@@ -145,7 +145,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				string pass = sUtilities.GetRandomString();
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `adminok`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtilities.Sha1(pass));
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `admins`(Name, Password) VALUES ('{0}', '{1}')", nev.ToLower(), sUtilities.Sha1(pass));
 				SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'ki')", nev.ToLower());
 
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Admin hozzáadva: {0}", nev);
@@ -162,7 +162,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				string nev = sIRCMessage.Info[5];
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM adminok WHERE Name = '{0}'", nev.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}'", nev.ToLower());
 				if(db.IsNull())
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ilyen név nem létezik!");
@@ -187,7 +187,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `adminok` WHERE Name = '{0}'", nev.ToLower());
+				SchumixBase.DManager.QueryFirstRow("DELETE FROM `admins` WHERE Name = '{0}'", nev.ToLower());
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `hlmessage` WHERE Name = '{0}'", nev.ToLower());
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Admin törölve: {0}", nev);
 			}
@@ -246,7 +246,7 @@ namespace Schumix.Irc.Commands
 		
 				if((AdminFlag)rang == AdminFlag.Administrator || (AdminFlag)rang == AdminFlag.Operator || (AdminFlag)rang == AdminFlag.HalfOperator)
 				{
-					SchumixBase.DManager.QueryFirstRow("UPDATE adminok SET Flag = '{0}' WHERE Name = '{1}'", rang, nev);
+					SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Flag = '{0}' WHERE Name = '{1}'", rang, nev);
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Rang sikeresen módosítva.");
 				}
 				else
