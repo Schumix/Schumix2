@@ -25,14 +25,16 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.TesztAddon.Commands
 {
 	public class TesztCommand : CommandInfo
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 
-		protected void HandleTeszt(IRCMessage sIRCMessage)
+		protected void HandleTest(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
@@ -55,7 +57,7 @@ namespace Schumix.TesztAddon.Commands
 					}
 				}
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "rss")
 			{
@@ -74,6 +76,8 @@ namespace Schumix.TesztAddon.Commands
 				sSendMessage.SendCMAmsg("teszt");
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "me")
 				sSendMessage.SendCMMe("teszt");*/
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "text")
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 			else
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}", sIRCMessage.Info.Length);
 		}

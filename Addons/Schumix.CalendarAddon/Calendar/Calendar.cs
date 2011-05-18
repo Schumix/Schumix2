@@ -24,17 +24,19 @@ using System.Threading.Tasks;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.CalendarAddon.Config;
 
 namespace Schumix.CalendarAddon
 {
 	public sealed class Calendar
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly Banned sBanned = Singleton<Banned>.Instance;
-		private readonly Unbanned sUnbanned = Singleton<Unbanned>.Instance;
+		private readonly Ban sBan = Singleton<Ban>.Instance;
+		private readonly Unban sUnban = Singleton<Unban>.Instance;
 		private System.Timers.Timer _timerflood = new System.Timers.Timer();
-		private System.Timers.Timer _timerunbanned = new System.Timers.Timer();
+		private System.Timers.Timer _timerunban = new System.Timers.Timer();
 		private int flood;
 
 		public Calendar()
@@ -50,11 +52,11 @@ namespace Schumix.CalendarAddon
 			_timerflood.Enabled = true;
 			_timerflood.Start();
 
-			// Unbanned
-			_timerunbanned.Interval = 60*1000;
-			_timerunbanned.Elapsed += HandleTimerUnbannedElapsed;
-			_timerunbanned.Enabled = true;
-			_timerunbanned.Start();
+			// Unban
+			_timerunban.Interval = 60*1000;
+			_timerunban.Elapsed += HandleTimerUnbanElapsed;
+			_timerunban.Enabled = true;
+			_timerunban.Start();
 		}
 
 		public void Stop()
@@ -64,10 +66,10 @@ namespace Schumix.CalendarAddon
 			_timerflood.Elapsed -= HandleTimerFloodElapsed;
 			_timerflood.Stop();
 
-			// Unbann
-			_timerunbanned.Enabled = false;
-			_timerunbanned.Elapsed -= HandleTimerUnbannedElapsed;
-			_timerunbanned.Stop();
+			// Unban
+			_timerunban.Enabled = false;
+			_timerunban.Elapsed -= HandleTimerUnbanElapsed;
+			_timerunban.Stop();
 		}
 		
 		private void HandleTimerFloodElapsed(object sender, ElapsedEventArgs e)
@@ -75,9 +77,9 @@ namespace Schumix.CalendarAddon
 			UpdateFlood();
 		}
 
-		private void HandleTimerUnbannedElapsed(object sender, ElapsedEventArgs e)
+		private void HandleTimerUnbanElapsed(object sender, ElapsedEventArgs e)
 		{
-			UpdateUnbanned();
+			UpdateUnban();
 		}
 
 		private void UpdateFlood()
@@ -92,15 +94,15 @@ namespace Schumix.CalendarAddon
 			}
 		}
 
-		private void UpdateUnbanned()
+		private void UpdateUnban()
 		{
 			try
 			{
-				Task.Factory.StartNew(() => Unbanned());
+				Task.Factory.StartNew(() => Unban());
 			}
 			catch(Exception e)
 			{
-				Log.Error("Calendar", "[UpdateUnbanned] Hiba oka: {0}", e.Message);
+				Log.Error("Calendar", "[UpdateUnban] Hiba oka: {0}", e.Message);
 			}
 		}
 
@@ -116,14 +118,14 @@ namespace Schumix.CalendarAddon
 				{
 					if(list.Piece == CalendarConfig.NumberOfFlooding)
 					{
-						sBanned.BannedName(list.Name, list.Channel, "Recurrent flooding!", DateTime.Now);
+						sBan.BanName(list.Name, list.Channel, sLManager.GetWarningText("RecurrentFlooding", list.Channel), DateTime.Now);
 						list.Piece = 0;
 					}
 					else
 					{
 						if(list.Message >= CalendarConfig.NumberOfMessages)
 						{
-							sSender.Kick(list.Channel, list.Name, "Stop flooding!");
+							sSender.Kick(list.Channel, list.Name, sLManager.GetWarningText("StopFlooding", list.Channel));
 							list.Message = 0;
 							list.Piece++;
 						}
@@ -134,7 +136,7 @@ namespace Schumix.CalendarAddon
 			}
 		}
 
-		private void Unbanned()
+		private void Unban()
 		{
 			var time = DateTime.Now;
 			var db = SchumixBase.DManager.Query("SELECT Name, Channel, Reason, Year, Month, Day, Hour, Minute FROM banned");
@@ -144,54 +146,54 @@ namespace Schumix.CalendarAddon
 				{
 					string nev = row["Name"].ToString();
 					string csatorna = row["Channel"].ToString();
-					int ev = Convert.ToInt32(row["Year"].ToString());
+					int year = Convert.ToInt32(row["Year"].ToString());
 
-					if(time.Year > ev)
-						sUnbanned.UnbannedName(nev, csatorna);
-					else if(time.Year < ev)
+					if(time.Year > year)
+						sUnban.UnbanName(nev, csatorna);
+					else if(time.Year < year)
 						continue;
-					else if(time.Year == ev)
+					else if(time.Year == year)
 					{
-						int honap = Convert.ToInt32(row["Month"].ToString());
+						int month = Convert.ToInt32(row["Month"].ToString());
 
-						if(time.Month > honap)
-							sUnbanned.UnbannedName(nev, csatorna);
-						else if(time.Month < honap)
+						if(time.Month > month)
+							sUnban.UnbanName(nev, csatorna);
+						else if(time.Month < month)
 							continue;
 						else
 						{
-							int nap = Convert.ToInt32(row["Day"].ToString());
+							int day = Convert.ToInt32(row["Day"].ToString());
 
-							if(time.Month == honap)
+							if(time.Month == month)
 							{
-								if(time.Day > nap)
-									sUnbanned.UnbannedName(nev, csatorna);
-								else if(time.Day < nap)
+								if(time.Day > day)
+									sUnban.UnbanName(nev, csatorna);
+								else if(time.Day < day)
 									continue;
 								else
 								{
-									if(time.Day == nap)
+									if(time.Day == day)
 									{
-										int ora = Convert.ToInt32(row["Hour"].ToString());
+										int hour = Convert.ToInt32(row["Hour"].ToString());
 
-										if(time.Hour > ora)
-											sUnbanned.UnbannedName(nev, csatorna);
-										else if(time.Hour < ora)
+										if(time.Hour > hour)
+											sUnban.UnbanName(nev, csatorna);
+										else if(time.Hour < hour)
 											continue;
 										else
 										{
-											if(time.Hour == ora)
+											if(time.Hour == hour)
 											{
-												int perc = Convert.ToInt32(row["Minute"].ToString());
+												int minute = Convert.ToInt32(row["Minute"].ToString());
 
-												if(time.Minute > perc)
-													sUnbanned.UnbannedName(nev, csatorna);
-												else if(time.Minute < perc)
+												if(time.Minute > minute)
+													sUnban.UnbanName(nev, csatorna);
+												else if(time.Minute < minute)
 													continue;
 												else
 												{
-													if(time.Minute == perc)
-														sUnbanned.UnbannedName(nev, csatorna);
+													if(time.Minute == minute)
+														sUnban.UnbanName(nev, csatorna);
 												}
 											}
 										}

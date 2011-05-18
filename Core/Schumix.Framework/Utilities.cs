@@ -37,40 +37,40 @@ namespace Schumix.Framework
 
 		public string GetUrl(string url)
 		{
-			string kod;
+			string code;
 
 			using(var client = new WebClient())
 			{
-				kod = client.DownloadString(url);
+				code = client.DownloadString(url);
 			}
 
-			return kod;
+			return code;
 		}
 
 		public string GetUrl(string url, string args)
 		{
-			string kod;
+			string code;
 			var u = new Uri(url + HttpUtility.UrlEncode(args));
 
 			using(var client = new WebClient())
 			{
-				kod = client.DownloadString(u);
+				code = client.DownloadString(u);
 			}
 
-			return kod;
+			return code;
 		}
 
 		public string GetUrl(string url, string args, string noencode)
 		{
-			string kod;
+			string code;
 			var u = new Uri(url + HttpUtility.UrlEncode(args) + noencode);
 
 			using(var client = new WebClient())
 			{
-				kod = client.DownloadString(u);
+				code = client.DownloadString(u);
 			}
 
-			return kod;
+			return code;
 		}
 
 		/// <summary>
@@ -245,6 +245,23 @@ namespace Schumix.Framework
 		public string GetVersion()
 		{
 			return Schumix.Framework.Config.Consts.SchumixVersion;
+		}
+
+		public string GetFunctionUpdate()
+		{
+			return ",koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off";
+		}
+
+		public string SqlEscape(string text)
+		{
+			if(text.IsNull() || text == string.Empty)
+				return string.Empty;
+
+			text = Regex.Replace(text, @"'", @"\'");
+			text = Regex.Replace(text, @"\\'", @" \'");
+			text = Regex.Replace(text, @"`", @"\`");
+			text = Regex.Replace(text, @"\\`", @" \`");
+			return text;
 		}
 	}
 }

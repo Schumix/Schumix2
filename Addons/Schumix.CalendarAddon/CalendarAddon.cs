@@ -32,7 +32,7 @@ namespace Schumix.CalendarAddon
 	public class CalendarAddon : ISchumixAddon
 	{
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		private readonly BannedCommand sBannedCommand = Singleton<BannedCommand>.Instance;
+		private readonly BanCommand sBanCommand = Singleton<BanCommand>.Instance;
 		private Calendar _calendar;
 		public static readonly List<Flood> FloodList = new List<Flood>();
 
@@ -42,15 +42,15 @@ namespace Schumix.CalendarAddon
 			_calendar = new Calendar();
 			_calendar.Start();
 
-			CommandManager.OperatorCRegisterHandler("banned",   new Action<IRCMessage>(sBannedCommand.HandleBanned));
-			CommandManager.OperatorCRegisterHandler("unbanned", new Action<IRCMessage>(sBannedCommand.HandleUnbanned));
+			CommandManager.OperatorCRegisterHandler("ban",   new Action<IRCMessage>(sBanCommand.HandleBan));
+			CommandManager.OperatorCRegisterHandler("unban", new Action<IRCMessage>(sBanCommand.HandleUnban));
 		}
 
 		public void Destroy()
 		{
 			_calendar.Stop();
-			CommandManager.OperatorCRemoveHandler("banned");
-			CommandManager.OperatorCRemoveHandler("unbanned");
+			CommandManager.OperatorCRemoveHandler("ban");
+			CommandManager.OperatorCRemoveHandler("unban");
 		}
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)
@@ -89,9 +89,9 @@ namespace Schumix.CalendarAddon
 
 		}
 
-		public void HandleHelp(IRCMessage sIRCMessage)
+		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
-			sBannedCommand.Help(sIRCMessage);
+			return false;
 		}
 
 		/// <summary>

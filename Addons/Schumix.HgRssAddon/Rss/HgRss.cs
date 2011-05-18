@@ -216,23 +216,22 @@ namespace Schumix.HgRssAddon
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM hginfo WHERE Name = '{0}'", _name);
 			if(!db.IsNull())
 			{
-				string[] csatorna = db["Channel"].ToString().Split(',');
+				string[] channel = db["Channel"].ToString().Split(',');
 
-				for(int x = 0; x < csatorna.Length; x++)
+				for(int x = 0; x < channel.Length; x++)
 				{
 					if(_website == "google")
 					{
 						if(title.IndexOf(":") != -1)
 						{
-							string kiiras = title.Substring(title.IndexOf(":")+1);
-							sSendMessage.SendCMPrivmsg(csatorna[x], "3{0} Revision: 10{1} by {2}", _name, rev.Substring(0, 10), author);
-							sSendMessage.SendCMPrivmsg(csatorna[x], "3{0} Info:{1}", _name, kiiras);
+							sSendMessage.SendCMPrivmsg(channel[x], "3{0} Revision: 10{1} by {2}", _name, rev.Substring(0, 10), author);
+							sSendMessage.SendCMPrivmsg(channel[x], "3{0} Info:{1}", _name, title.Substring(title.IndexOf(":")+1));
 						}
 					}
 					else if(_website == "bitbucket")
 					{
-						sSendMessage.SendCMPrivmsg(csatorna[x], "3{0} Revision: 10{1} by {2}", _name, rev.Substring(0, 10), author);
-						sSendMessage.SendCMPrivmsg(csatorna[x], "3{0} Info:{1}", _name, title);
+						sSendMessage.SendCMPrivmsg(channel[x], "3{0} Revision: 10{1} by {2}", _name, rev.Substring(0, 10), author);
+						sSendMessage.SendCMPrivmsg(channel[x], "3{0} Info:{1}", _name, title);
 					}
 
 					Thread.Sleep(1000);

@@ -23,11 +23,13 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.ExtraAddon.Commands
 {
 	public class IrcHandler : CommandInfo
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
@@ -160,7 +162,7 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				if(sChannelInfo.FSelect("rejoin") && sChannelInfo.FSelect("rejoin", sIRCMessage.Channel))
 				{
-					foreach(var m_channel in sChannelInfo.CLista)
+					foreach(var m_channel in sChannelInfo.CList)
 					{
 						if(sIRCMessage.Channel == m_channel.Key)
 							sSender.Join(m_channel.Key, m_channel.Value);
@@ -169,12 +171,12 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			else
 			{
-				if(sChannelInfo.FSelect("parancsok") && sChannelInfo.FSelect("parancsok", sIRCMessage.Channel))
+				if(sChannelInfo.FSelect("commands") && sChannelInfo.FSelect("commands", sIRCMessage.Channel))
 				{
 					if(ConsoleLog.CLog)
 					{
-						string alomany = sIRCMessage.Info.SplitToString(4, " ");
-						Console.WriteLine("{0} kickelte a következő felhasználot: {1} oka: {2}", sIRCMessage.Nick, sIRCMessage.Info[3], alomany.Remove(0, 1, ":"));
+						string text = sIRCMessage.Info.SplitToString(4, " ");
+						Console.WriteLine(sLManager.GetCommandText("handlekick", sIRCMessage.Channel), sIRCMessage.Nick, sIRCMessage.Info[3], text.Remove(0, 1, ":"));
 					}
 				}
 			}

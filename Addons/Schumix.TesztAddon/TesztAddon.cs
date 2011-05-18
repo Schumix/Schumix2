@@ -32,12 +32,12 @@ namespace Schumix.TesztAddon
 
 		public void Setup()
 		{
-			CommandManager.AdminCRegisterHandler("teszt", new Action<IRCMessage>(HandleTeszt));
+			CommandManager.AdminCRegisterHandler("test", new Action<IRCMessage>(HandleTest));
 		}
 
 		public void Destroy()
 		{
-			CommandManager.AdminCRemoveHandler("teszt");
+			CommandManager.AdminCRemoveHandler("test");
 		}
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)
@@ -50,16 +50,19 @@ namespace Schumix.TesztAddon
 
 		}
 
-		public void HandleHelp(IRCMessage sIRCMessage)
+		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			// Adminisztrátor parancsok
 			if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 			{
-				if(sIRCMessage.Info[4].ToLower() == "teszt")
+				if(sIRCMessage.Info[4].ToLower() == "test")
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Teszt célokra használt parancs.");
+					return true;
 				}
 			}
+
+			return false;
 		}
 
 		/// <summary>

@@ -88,7 +88,7 @@ namespace Schumix.Irc
 			sNickInfo.ChangeNick(IRCConfig.NickName);
 			InitHandler();
 
-			Task.Factory.StartNew(() => sChannelInfo.ChannelLista());
+			Task.Factory.StartNew(() => sChannelInfo.ChannelList());
 
 			Log.Debug("Network", "Kapcsolodas indul az irc szerver fele.");
 			Connect();
@@ -198,7 +198,7 @@ namespace Schumix.Irc
 			Log.Notice("Network", "Felhasznaloi informaciok el lettek kuldve.");
 
 			NewNick = false;
-			HostServAllapot = false;
+			HostServStatus = false;
 			Status = true;
 			m_running = true;
 			SchumixBase.UrlTitleEnabled = false;
@@ -222,38 +222,39 @@ namespace Schumix.Irc
         /// </remarks>
 		private void Opcodes()
 		{
-			try
+			Log.Notice("Opcodes", "A szal sikeresen elindult.");
+			Log.Notice("Opcodes", "Elindult az irc adatok fogadasa.");
+
+			while(true)
 			{
-				Log.Notice("Opcodes", "A szal sikeresen elindult.");
-				Log.Notice("Opcodes", "Elindult az irc adatok fogadasa.");
-
-				while(true)
+				try
 				{
-					try
+					if(m_running)
 					{
-						if(m_running)
+						string IrcMessage;
+						if((IrcMessage = reader.ReadLine()).IsNull())
 						{
-							string IrcMessage;
-							if((IrcMessage = reader.ReadLine()).IsNull())
-								break;
-
-							Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage));
+							Log.Error("Opcodes", "Nem jon informacio az irc szerver felol!");
+							DisConnect();
+							break;
 						}
-						else
-							Thread.Sleep(100);
+
+						Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage));
 					}
-					catch(Exception e)
-					{
-						if(m_running)
-							Log.Error("Opcodes", "Hiba oka: {0}", e.Message);
-					}
+					else
+						Thread.Sleep(100);
+				}
+				catch(Exception e)
+				{
+					if(m_running)
+						Log.Error("Opcodes", "Hiba oka: {0}", e.Message);
 				}
 			}
-			catch(Exception e)
-			{
-				Log.Error("Opcodes", "Vegzetes hiba oka: {0}", e.Message);
-				Opcodes();
-			}
+
+			SchumixBase.timer.SaveUptime();
+			Log.Warning("Opcodes", "A program leall!");
+			Thread.Sleep(1000);
+			Environment.Exit(1);
 		}
 
 		private void HandleIrcCommand(string message)
@@ -261,29 +262,25 @@ namespace Schumix.Irc
 			var IMessage = new IRCMessage();
 			string[] IrcCommand = message.Split(' ');
 			IrcCommand[0] = IrcCommand[0].Remove(0, 1, ":");
-			IMessage.Args = string.Empty;
 			IMessage.Hostmask = IrcCommand[0];
-			string[] userdata = IMessage.Hostmask.Split('!');
 
 			if(IrcCommand.Length > 2)
 				IMessage.Channel = IrcCommand[2];
 
-			string[] hostdata;
+			string[] userdata = IMessage.Hostmask.Split('!');
 			IMessage.Nick = userdata[0];
 
 			if(userdata.Length > 1)
 			{
-				hostdata = userdata[1].Split('@');
+				string[] hostdata = userdata[1].Split('@');
 				IMessage.User = hostdata[0];
 				IMessage.Host = hostdata[1];
 			}
 
-			for(int i = 3; i < IrcCommand.Length; i++)
-				IMessage.Args += " " + IrcCommand[i];
-
 			string opcode = IrcCommand[1];
 			IMessage.Info = IrcCommand;
-			IMessage.Args = IMessage.Args.Remove(0, 2, " :");
+			IMessage.Args = IrcCommand.SplitToString(3, " ");
+			IMessage.Args = IMessage.Args.Remove(0, 1, ":");
 
 			if(_IRCHandler.ContainsKey(opcode))
 				_IRCHandler[opcode].Invoke(IMessage);
@@ -299,41 +296,30 @@ namespace Schumix.Irc
         /// </summary>
 		private void Ping()
 		{
-			try
+			Log.Notice("Ping", "A szal sikeresen elindult.");
+
+			while(true)
 			{
-				Log.Notice("Ping", "A szal sikeresen elindult.");
-
-				while(true)
+				try
 				{
-					try
+					if(Status)
 					{
-						if(Status)
-						{
-							sSender.Ping(_server);
-							Status = false;
-							Thread.Sleep(30*1000);
-						}
-						else
-						{
-							if(sChannelInfo.FSelect("reconnect"))
-								ReConnect();
-
-							Thread.Sleep(30*1000);
-						}
+						sSender.Ping(_server);
+						Status = false;
 					}
-					catch(Exception e)
+					else
 					{
-						if(m_running)
-							Log.Error("Ping", "Hiba oka: {0}", e.Message);
-						else
-							Thread.Sleep(20*1000);
+						if(sChannelInfo.FSelect("reconnect"))
+							ReConnect();
 					}
 				}
-			}
-			catch(Exception e)
-			{
-				Log.Error("Ping", "Vegzetes hiba oka: {0}", e.Message);
-				Ping();
+				catch(Exception e)
+				{
+					if(m_running)
+						Log.Error("Ping", "Hiba oka: {0}", e.Message);
+				}
+
+				Thread.Sleep(30*1000);
 			}
 		}
 	}

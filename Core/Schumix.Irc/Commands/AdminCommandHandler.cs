@@ -36,34 +36,55 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "load")
 			{
+				var text = sLManager.GetCommandTexts("plugin/load", sIRCMessage.Channel);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					return;
+				}
+
 				if(sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2[Load]: All plugins 3done.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2[Load]: All plugins 5failed.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "unload")
 			{
+				var text = sLManager.GetCommandTexts("plugin/unload", sIRCMessage.Channel);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					return;
+				}
+
 				if(sAddonManager.UnloadPlugins())
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2[Unload]: All plugins 3done.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2[Unload]: All plugins 5failed.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
 			}
 			else
 			{
 				foreach(var plugin in sAddonManager.GetPlugins())
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: 3loaded.", plugin.Name.Replace("Plugin", string.Empty));
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("plugin", sIRCMessage.Channel), plugin.Name.Replace("Plugin", string.Empty));
 			}
 		}
 
-		protected void HandleKikapcs(IRCMessage sIRCMessage)
+		protected void HandleQuit(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
 
 			CNick(sIRCMessage);
+			var text = sLManager.GetCommandTexts("quit", sIRCMessage.Channel);
+			if(text.Length < 2)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				return;
+			}
+
 			SchumixBase.timer.SaveUptime();
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Viszlát :(");
-			sSender.Quit(string.Format("{0} leállított parancsal.", sIRCMessage.Nick));
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+			sSender.Quit(string.Format(text[1], sIRCMessage.Nick));
 			Thread.Sleep(1000);
 			Environment.Exit(1);
 		}

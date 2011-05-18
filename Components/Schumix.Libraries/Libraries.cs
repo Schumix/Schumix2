@@ -54,16 +54,16 @@ namespace Schumix.Libraries
 			return p;
 		}
 
-		public static string Regex(string regex, string adat)
+		public static string Regex(this string text, string regex)
 		{
 			var x = new Regex(regex);
 
-			if(x.IsMatch(adat))
+			if(x.IsMatch(text))
 			{
 				string s = string.Empty;
 
-				for(int a = 1; a < x.Match(adat).Length; a++)
-					s += " " + x.Match(adat).Groups[a].ToString();
+				for(int a = 1; a < x.Match(text).Length; a++)
+					s += " " + x.Match(text).Groups[a].ToString();
 
 				s = s.Remove(0, 1);
 				return s;
@@ -72,12 +72,12 @@ namespace Schumix.Libraries
 				return "Hibás regex!";
 		}
 
-		public static string Regex(string regex, string adat, string groups)
+		public static string Regex(this string text, string regex, string groups)
 		{
 			var x = new Regex(regex);
 
-			if(x.IsMatch(adat))
-				return x.Match(adat).Groups[groups].ToString();
+			if(x.IsMatch(text))
+				return x.Match(text).Groups[groups].ToString();
 			else
 				return "Hibás regex!";
 		}

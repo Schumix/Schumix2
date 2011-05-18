@@ -96,6 +96,10 @@ Ignore: Azon addonok melyeket nem szeretnénk inditáskor betölteni. Vesszõvel elv
         Alapértelmezés: SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon
 Directory: Az addonok mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: Addons
 
+# Localization #
+Locale: Meghatározza hogy a kód milyen nyelven fusson. (csak az irc és konzol parancsokra vonatkozik)
+        Alapértelmezés: enUS
+
 - Adatbázis beüzemelése -
 # MySql #
 Ha a jó öreg mysql alapú adatbázist szeretnénk használni állítsuk a konfig fájlban (lásd: <MySql><Enabled>false</Enabled>) az engedélyét true értékre.

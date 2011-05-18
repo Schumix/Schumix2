@@ -21,11 +21,14 @@ using System;
 using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler : CommandInfo
 	{
+		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		protected readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
@@ -34,7 +37,6 @@ namespace Schumix.Irc.Commands
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		protected string ChannelPrivmsg { get; set; }
 		protected string WhoisPrivmsg { get; set; }
-
 		protected CommandHandler() {}
 
 		protected void HandleHelp(IRCMessage sIRCMessage)
@@ -43,346 +45,140 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length == 4)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ha a parancs mögé írod a megadott parancs nevét vagy a nevet és alparancsát információt ad a használatáról.");
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Fő parancsom: {0}xbot", IRCConfig.CommandPrefix);
+				var text = sLManager.GetCommandTexts("help", sIRCMessage.Channel);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					return;
+				}
+
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], IRCConfig.CommandPrefix);
 				return;
 			}
 
 			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.HandleHelp(sIRCMessage);
-
-			if(sIRCMessage.Info[4].ToLower() == "xbot")
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Felhasználok számára használható parancslista.");
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "info")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kis leírás a botról.");
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "whois")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A parancs segítségével megtudhatjuk hogy egy nick milyen channelon van fent.");
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}whois <nick>", IRCConfig.CommandPrefix);
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "roll")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Csöpp szorakozás a wowból, már ha valaki felismeri :P");
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "datum")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az aktuális dátumot írja ki és a hozzá tartozó névnapot.");
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "ido")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az aktuális időt írja ki.");
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "keres")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ha szükséged lenne valamire a google-ből nem kell hozzá weboldal csak ez a parancs.");
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}keres <ide jön a keresett szöveg>", IRCConfig.CommandPrefix);
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "fordit")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ha rögtön kéne fordítani másik nyelvre vagy -ről valamit, akkor megteheted ezzel a parancsal.");
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}fordit <miről|mire> <szöveg>", IRCConfig.CommandPrefix);
-			}
-			/*else if(sIRCMessage.Info[4].ToLower() == "xrev")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Amik a kódba vannak integrálva projectek annak lekérdezhetőek egyes verziói.");
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}xrev <emulátor neve> <rev>", IRCConfig.CommandPrefix);
-			}*/
-			else if(sIRCMessage.Info[4].ToLower() == "irc")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Néhány parancs használata az IRC-n.");
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}irc <parancs neve>", IRCConfig.CommandPrefix);
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "calc")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Több funkciós számológép.");
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}calc <szám>", IRCConfig.CommandPrefix);
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "warning")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Figyelmeztető üzenet küldése, hogy keresik ezen a csatornán vagy egy tetszőleges üzenet küldése.");
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}warning <ide jön a személy> <ha nem felhívát küldenél hanem saját üzenetet>", IRCConfig.CommandPrefix);
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "sha1")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sha1 kódolássá átalakitó parancs.");
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}sha1 <átalakítandó szöveg>", IRCConfig.CommandPrefix);
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "md5")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Md5 kódolássá átalakító parancs.");
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}md5 <átalakítandó szöveg>", IRCConfig.CommandPrefix);
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "prime")
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Megálapítja hogy a szám prímszám-e. Csak egész számmal tud számolni!");
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}prime <szám>", IRCConfig.CommandPrefix);
-			}
-
-			// Fél Operátor parancsok segítségei
-			if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
-			{
-				if(sIRCMessage.Info[4].ToLower() == "admin")
-				{
-					if(sIRCMessage.Info.Length < 6)
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Admin parancsai: info | lista | add | del | rang | hozzaferes | ujjelszo");
-						return;
-					}
-
-					if(sIRCMessage.Info[5].ToLower() == "add")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Új admin hozzáadása.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}admin add <admin neve>", IRCConfig.CommandPrefix);
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "del")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Admin eltávolítása.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}admin del <admin neve>", IRCConfig.CommandPrefix);
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "rang")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Admin rangjának megváltoztatása.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}admin rang <admin neve> <új rang pl halfoperator: 0, operator: 1, administrator: 2>", IRCConfig.CommandPrefix);
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "info")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiirja éppen milyen rangod van.");
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "lista")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiirja az összes admin nevét aki az adatbázisban szerepel.");
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "hozzaferes")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az admin parancsok használatához szükséges jelszó ellenörző és vhost aktiváló.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}admin hozzaferes <jelszó>", IRCConfig.CommandPrefix);
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "ujjelszo")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Az admin jelszavának cseréje ha új kéne a régi helyett.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}admin ujjelszo <régi jelszó> <új jelszó>", IRCConfig.CommandPrefix);
-					}
-				}
-				else if(sIRCMessage.Info[4].ToLower() == "szinek")
-				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Adot skálájú szinek kiírása amit lehet használni IRC-n.");
-				}
-				else if(sIRCMessage.Info[4].ToLower() == "nick")
-				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Bot nick nevének cseréje.");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}nick <név>", IRCConfig.CommandPrefix);
-				}
-				else if(sIRCMessage.Info[4].ToLower() == "join")
-				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kapcsolodás megadot csatornára.");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata:");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jelszó nélküli csatorna: {0}join <csatorna>", IRCConfig.CommandPrefix);
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jelszóval ellátott csatorna: {0}join <csatorna> <jelszó>", IRCConfig.CommandPrefix);
-				}
-				else if(sIRCMessage.Info[4].ToLower() == "left")
-				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Lelépés megadot csatonáról.");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}left <csatona>", IRCConfig.CommandPrefix);
-				}
-			}
-
-			// Operátor parancsok segítségei
-			if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
-			{
-				if(sIRCMessage.Info[4].ToLower() == "channel")
-				{
-					if(sIRCMessage.Info.Length < 6)
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Channel parancsai: add | del | info | update");
-						return;
-					}
-
-					if(sIRCMessage.Info[5].ToLower() == "add")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Új channel hozzáadása.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}channel add <channel> <ha van pass akkor az>", IRCConfig.CommandPrefix);
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "del")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nem használatos channel eltávolítása.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}channel del <channel>", IRCConfig.CommandPrefix);
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "info")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Összes channel kiirása ami az adatbázisban van és a hozzájuk tartozó informáciok.");
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "update")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Channelekhez tartozó összes információ frissítése, alapértelmezésre állítása.");
-					}
-				}
-				else if(sIRCMessage.Info[4].ToLower() == "funkcio")
-				{
-					if(sIRCMessage.Info.Length < 6)
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Funkciók vezérlésére szolgáló parancs.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Funkció parancsai: channel | all | update | info");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata ahol tartózkodsz:");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Channel funkció kezelése: {0}funkcio <be vagy ki> <funkcio név>", IRCConfig.CommandPrefix);
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Channel funkciók kezelése: {0}funkcio <be vagy ki> <funkcio név1> <funkcio név2> ... stb", IRCConfig.CommandPrefix);
-						return;
-					}
-
-					if(sIRCMessage.Info[5].ToLower() == "channel")
-					{
-						if(sIRCMessage.Info.Length < 7)
-						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Megadot channelen állithatók ezzel a parancsal a funkciók.");
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Funkció channel parancsai: info");
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata:");
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Channel funkció kezelése: {0}funkcio channel <be vagy ki> <funkció név>", IRCConfig.CommandPrefix);
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Channel funkciók kezelése: {0}funkcio channel <be vagy ki> <funkció név1> <funkcio név2> ... stb", IRCConfig.CommandPrefix);
-							return;
-						}
-
-						if(sIRCMessage.Info[6].ToLower() == "info")
-						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiírja a funkciók állapotát.");
-						}
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "all")
-					{
-						if(sIRCMessage.Info.Length < 7)
-						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Globális funkciók kezelése.");
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Funkció all parancsai: info");
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Együttes kezelés: {0}funkcio all <be vagy ki> <funkció név>", IRCConfig.CommandPrefix);
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Együttes funkciók kezelése: {0}funkcio all <be vagy ki> <funkció név1> <funkció név2> ... stb", IRCConfig.CommandPrefix);
-							return;
-						}
-
-						if(sIRCMessage.Info[6].ToLower() == "info")
-						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiírja a funkciók állapotát.");
-						}
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "update")
-					{
-						if(sIRCMessage.Info.Length < 7)
-						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Frissiti a funkciókat vagy alapértelmezésre állítja.");
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Funkció update parancsai: all");
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata:");
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Más channel: {0}funkcio update <channel neve>", IRCConfig.CommandPrefix);
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ahol tartozkodsz channel: {0}funkcio update", IRCConfig.CommandPrefix);
-							return;
-						}
-
-						if(sIRCMessage.Info[6].ToLower() == "all")
-						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Frissíti az összes funkciót vagy alapértelmezésre állitja.");
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}funkcio update all", IRCConfig.CommandPrefix);
-						}
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "info")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiírja a funkciók állapotát.");
-					}
-				}
-				else if(sIRCMessage.Info[4].ToLower() == "sznap")
-				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiírja a megadott név születésnapjának dátumát.");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}sznap <név>", IRCConfig.CommandPrefix);
-				}
-				else if(sIRCMessage.Info[4].ToLower() == "kick")
-				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kirúgja a nick-et a megadott channelről.");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata:");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Csak kirúgás: {0}kick <channel> <név>", IRCConfig.CommandPrefix);
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kirúgás okkal: {0}kick <channel> <név> <oka>", IRCConfig.CommandPrefix);
-				}
-				else if(sIRCMessage.Info[4].ToLower() == "mode")
-				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Megváltoztatja a nick rangját megadott channelen.");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}mode <rang> <név vagy nevek>", IRCConfig.CommandPrefix);
-				}
-			}
-
-			// Adminisztrátor parancsok
-			if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
-			{
-				if(sIRCMessage.Info[4].ToLower() == "plugin")
-				{
-					if(sIRCMessage.Info.Length < 6)
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiírja milyen pluginok vannak betöltve.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Plugin parancsok: load | unload");
-						return;
-					}
-
-					if(sIRCMessage.Info[5].ToLower() == "load")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Betölt minden plugint.");
-					}
-					else if(sIRCMessage.Info[5].ToLower() == "unload")
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Eltávolít minden plugint.");
-					}
-				}
-				else if(sIRCMessage.Info[4].ToLower() == "kikapcs")
-				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Bot leállítására használható parancs.");
-				}
+				if(plugin.HandleHelp(sIRCMessage))
+					return;
 			}
 
 			string ParancsJel = IRCConfig.NickName + ",";
-			string INick = sIRCMessage.Info[4];
 
-			if(INick.ToLower() == ParancsJel.ToLower())
+			if(sIRCMessage.Info[4].ToLower() == ParancsJel.ToLower())
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
+					var text = sLManager.GetCommandHelpTexts("schumix2", sIRCMessage.Channel);
+					if(text.Length < 4)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						return;
+					}
+
 					if(IsAdmin(sIRCMessage.Nick, AdminFlag.HalfOperator))
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Parancsok: nick | sys");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 					else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator))
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Parancsok: ghost | nick | sys");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
 					else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Administrator))
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Parancsok: ghost | nick | sys | clean");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2]);
 					else
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Parancsok: sys");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
 
 					return;
 				}
 
 				if(sIRCMessage.Info[5].ToLower() == "sys")
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kiírja a program információit.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandHelpText("schumix2/sys", sIRCMessage.Channel));
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "ghost" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kilépteti a fő nick-et ha regisztrálva van.");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0} ghost", ParancsJel.ToLower());
+					var text = sLManager.GetCommandHelpTexts("schumix2/ghost", sIRCMessage.Channel);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						return;
+					}
+
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], ParancsJel.ToLower());
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "nick" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				{
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Bot nick nevének cseréje.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0} nick <név>", ParancsJel.ToLower());
+						var text = sLManager.GetCommandHelpTexts("schumix2/nick", sIRCMessage.Channel);
+						if(text.Length < 2)
+						{
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+							return;
+						}
+
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], ParancsJel.ToLower());
 						return;
 					}
 
 					if(sIRCMessage.Info[6].ToLower() == "identify")
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Aktiválja a fő nick jelszavát.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0} nick identify", ParancsJel.ToLower());
+						var text = sLManager.GetCommandHelpTexts("schumix2/nick/identify", sIRCMessage.Channel);
+						if(text.Length < 2)
+						{
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+							return;
+						}
+
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], ParancsJel.ToLower());
 					}
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "clean" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Felszabadítja a lefoglalt memóriát.");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0} clean", ParancsJel.ToLower());
+					var text = sLManager.GetCommandHelpTexts("schumix2/clean", sIRCMessage.Channel);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						return;
+					}
+
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], ParancsJel.ToLower());
 				}
+			}
+			else
+			{
+				int adminflag = Adminflag(sIRCMessage.Nick, sIRCMessage.Host);
+
+				if(adminflag != -1)
+				{
+					string command = sIRCMessage.Info.SplitToString(4, "/");
+					int rank = sLManager.GetCommandHelpRank(sIRCMessage.Info.SplitToString(4, "/"), sIRCMessage.Channel);
+
+					if((adminflag == 2 && rank == 2) || (adminflag == 2 && rank == 1) || (adminflag == 2 && rank == 0) ||
+					(adminflag == 1 && rank == 1) || (adminflag == 1 && rank == 0) || (adminflag == 0 && rank == 0) ||
+					(adminflag == 2 && rank == 9) || (adminflag == 1 && rank == 9) || (adminflag == 0 && rank == 9))
+						HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(command, sIRCMessage.Channel, rank));
+				}
+				else
+				{
+					string command = sIRCMessage.Info.SplitToString(4, "/");
+					if(sLManager.IsAdminCommandHelp(command, sIRCMessage.Channel))
+						return;
+
+					HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(command, sIRCMessage.Channel));
+				}
+			}
+		}
+
+		private void HelpMessage(IRCMessage sIRCMessage, string[] text)
+		{
+			foreach(var t in text)
+			{
+				if(t.Contains("{0}"))
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, t, IRCConfig.CommandPrefix);
+				else
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, t);
 			}
 		}
 	}

@@ -25,6 +25,7 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.ExtraAddon.Commands;
 using Schumix.ExtraAddon.Config;
 
@@ -32,22 +33,23 @@ namespace Schumix.ExtraAddon
 {
 	public class ExtraAddon : IrcHandler, ISchumixAddon
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
-		private readonly Jegyzet sJegyzet = Singleton<Jegyzet>.Instance;
+		private readonly Notes sNotes = Singleton<Notes>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 
 		public void Setup()
 		{
 			new AddonConfig(Name + ".xml");
-			Network.PublicRegisterHandler("JOIN",               new Action<IRCMessage>(HandleJoin));
-			Network.PublicRegisterHandler("PART",               new Action<IRCMessage>(HandleLeft));
-			Network.PublicRegisterHandler("KICK",               new Action<IRCMessage>(HandleKick));
+			Network.PublicRegisterHandler("JOIN",                       new Action<IRCMessage>(HandleJoin));
+			Network.PublicRegisterHandler("PART",                       new Action<IRCMessage>(HandleLeft));
+			Network.PublicRegisterHandler("KICK",                       new Action<IRCMessage>(HandleKick));
 
-			CommandManager.PublicCRegisterHandler("jegyzet",           new Action<IRCMessage>(sJegyzet.HandleJegyzet));
-			CommandManager.PublicCRegisterHandler("uzenet",            new Action<IRCMessage>(sFunctions.HandleUzenet));
-			CommandManager.HalfOperatorCRegisterHandler("autofunkcio", new Action<IRCMessage>(sFunctions.HandleAutoFunkcio));
+			CommandManager.PublicCRegisterHandler("notes",              new Action<IRCMessage>(sNotes.HandleNotes));
+			CommandManager.PublicCRegisterHandler("message",            new Action<IRCMessage>(sFunctions.HandleMessage));
+			CommandManager.HalfOperatorCRegisterHandler("autofunction", new Action<IRCMessage>(sFunctions.HandleAutoFunction));
 		}
 
 		public void Destroy()
@@ -55,16 +57,16 @@ namespace Schumix.ExtraAddon
 			Network.PublicRemoveHandler("JOIN");
 			Network.PublicRemoveHandler("PART");
 			Network.PublicRemoveHandler("KICK");
-			CommandManager.PublicCRemoveHandler("jegyzet");
-			CommandManager.PublicCRemoveHandler("uzenet");
-			CommandManager.HalfOperatorCRemoveHandler("autofunkcio");
+			CommandManager.PublicCRemoveHandler("notes");
+			CommandManager.PublicCRemoveHandler("message");
+			CommandManager.HalfOperatorCRemoveHandler("autofunction");
 		}
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("parancsok") || sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect("commands") || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!sChannelInfo.FSelect("parancsok", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect("commands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				Task.Factory.StartNew(() =>
@@ -86,11 +88,11 @@ namespace Schumix.ExtraAddon
 				Task.Factory.StartNew(() =>
 				{
 					if(sIRCMessage.Args.IsUpper() && sIRCMessage.Args.Length > 4)
-						sSender.Kick(sIRCMessage.Channel, sIRCMessage.Nick, "Turn caps lock OFF!");
+						sSender.Kick(sIRCMessage.Channel, sIRCMessage.Nick, sLManager.GetWarningText("CapsLockOff", sIRCMessage.Channel));
 				});
 
-				Task.Factory.StartNew(() => sFunctions.HLUzenet(sIRCMessage.Channel, sIRCMessage.Args));
-				Task.Factory.StartNew(() => sFunctions.Uzenet(sIRCMessage.Nick, sIRCMessage.Channel));
+				Task.Factory.StartNew(() => sFunctions.HLMessage(sIRCMessage.Channel, sIRCMessage.Args));
+				Task.Factory.StartNew(() => sFunctions.Message(sIRCMessage.Nick, sIRCMessage.Channel));
 
 				Task.Factory.StartNew(() =>
 				{
@@ -133,8 +135,8 @@ namespace Schumix.ExtraAddon
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sIRCMessage.Info[4].ToLower(), ModeChannel);
 					if(!db.IsNull())
 					{
-						string rang = db["Rank"].ToString();
-						sSender.Mode(ModeChannel, rang, sIRCMessage.Info[4]);
+						string rank = db["Rank"].ToString();
+						sSender.Mode(ModeChannel, rank, sIRCMessage.Info[4]);
 					}
 					else
 					{
@@ -156,9 +158,12 @@ namespace Schumix.ExtraAddon
 			}
 		}
 
-		public void HandleHelp(IRCMessage sIRCMessage)
+		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
-			sFunctions.Help(sIRCMessage);
+			if(sFunctions.Help(sIRCMessage))
+				return true;
+			else
+				return false;
 		}
 
 		/// <summary>

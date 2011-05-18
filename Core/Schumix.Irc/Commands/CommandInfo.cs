@@ -33,6 +33,8 @@ namespace Schumix.Irc.Commands
 
 	public class CommandInfo
 	{
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
 		protected CommandInfo()
 		{
 			//Log.Notice("CommandInfo", "CommandInfo elindult.");
@@ -40,7 +42,7 @@ namespace Schumix.Irc.Commands
 
 		protected bool IsAdmin(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM admins WHERE Name = '{0}'", Name.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
 			if(!db.IsNull())
 				return true;
 
@@ -49,7 +51,7 @@ namespace Schumix.Irc.Commands
 
 		protected bool IsAdmin(string Name, AdminFlag Flag)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", Name.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
 			if(!db.IsNull())
 			{
 				int flag = Convert.ToInt32(db["Flag"]);
@@ -65,7 +67,7 @@ namespace Schumix.Irc.Commands
 
 		protected bool IsAdmin(string Name, string Vhost, AdminFlag Flag)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM admins WHERE Name = '{0}'", Name.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
 			if(!db.IsNull())
 			{
 				string vhost = db["Vhost"].ToString();
@@ -94,6 +96,31 @@ namespace Schumix.Irc.Commands
 			bool channel = sIRCMessage.Channel.StartsWith("#");
 			if(!channel)
 				sIRCMessage.Channel = sIRCMessage.Nick;
+		}
+
+		protected int Adminflag(string Name)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			if(!db.IsNull())
+				return Convert.ToInt32(db["Flag"]);
+			else
+				return -1;
+		}
+
+		protected int Adminflag(string Name, string Vhost)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			if(!db.IsNull())
+			{
+				string vhost = db["Vhost"].ToString();
+
+				if(Vhost != vhost)
+					return -1;
+
+				return Convert.ToInt32(db["Flag"]);
+			}
+			else
+				return -1;
 		}
 	}
 }

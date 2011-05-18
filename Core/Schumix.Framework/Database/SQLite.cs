@@ -75,7 +75,6 @@ namespace Schumix.Framework.Database
 			{
 				var adapter = new SQLiteDataAdapter();
 				var command = Connection.CreateCommand();
-				SQLiteEscape(query);
 				command.CommandText = query;
 				adapter.SelectCommand = command;
 
@@ -103,14 +102,6 @@ namespace Schumix.Framework.Database
 		{
 			var table = Query(query);
 			return !table.Equals(null) && table.Rows.Count > 0 ? table.Rows[0] : null;
-		}
-
-		private string SQLiteEscape(string s)
-		{
-			if(s.IsNull())
-				return null;
-
-			return Regex.Replace(s, @"[\r\n\x00\x1a\\'""]", @"\$0");
 		}
 	}
 }

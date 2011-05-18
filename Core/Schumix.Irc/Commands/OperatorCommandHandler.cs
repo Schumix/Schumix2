@@ -28,7 +28,7 @@ namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler
 	{
-		protected void HandleFunkcio(IRCMessage sIRCMessage)
+		protected void HandleFunction(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
@@ -37,69 +37,97 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs paraméter!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
 				return;
 			}
 
 			if(sIRCMessage.Info[4].ToLower() == "info")
 			{
-				string[] ChannelInfo = sChannelInfo.ChannelFunkciokInfo(sIRCMessage.Channel).Split('|');
+				var text = sLManager.GetCommandTexts("function/info", sIRCMessage.Channel);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					return;
+				}
+
+				string[] ChannelInfo = sChannelInfo.ChannelFunctionsInfo(sIRCMessage.Channel).Split('|');
 				if(ChannelInfo.Length < 2)
 					return;
 
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2Bekapcsolva: {0}", ChannelInfo[0]);
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2Kikapcsolva: {0}", ChannelInfo[1]);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], ChannelInfo[0]);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], ChannelInfo[1]);
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "all")
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva egy paraméter!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
 					return;
 				}
 
 				if(sIRCMessage.Info[5].ToLower() == "info")
 				{
-					string f = sChannelInfo.FunkciokInfo();
-					if(f == "Hibás lekérdezés!")
+					var text = sLManager.GetCommandTexts("function/all/info", sIRCMessage.Channel);
+					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
 						return;
 					}
 
-					string[] FunkcioInfo = f.Split('|');
-					if(FunkcioInfo.Length < 2)
+					string f = sChannelInfo.FunctionsInfo();
+					if(f == "Hibás lekérdezés!")
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+						return;
+					}
+
+					string[] FunctionInfo = f.Split('|');
+					if(FunctionInfo.Length < 2)
 						return;
 
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2Bekapcsolva: {0}", FunkcioInfo[0]);
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2Kikapcsolva: {0}", FunkcioInfo[1]);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], FunctionInfo[0]);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], FunctionInfo[1]);
 				}
 				else
 				{
-					if(sIRCMessage.Info.Length < 7)
+					var text = sLManager.GetCommandTexts("function/all", sIRCMessage.Channel);
+					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a funkció neve!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
 						return;
 					}
 
-					if(sIRCMessage.Info[5].ToLower() == "be" || sIRCMessage.Info[5].ToLower() == "ki")
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoFunctionName", sIRCMessage.Channel));
+						return;
+					}
+
+					if(sIRCMessage.Info[5].ToLower() == "on" || sIRCMessage.Info[5].ToLower() == "off")
 					{
 						if(sIRCMessage.Info.Length >= 8)
 						{
-							string alomany = string.Empty;
+							string args = string.Empty;
 
 							for(int i = 6; i < sIRCMessage.Info.Length; i++)
 							{
-								alomany += ", " + sIRCMessage.Info[i].ToLower();
-								SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", sIRCMessage.Info[5].ToLower(), sIRCMessage.Info[i].ToLower());
+								args += ", " + sIRCMessage.Info[i].ToLower();
+								SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET FunctionStatus = '{0}' WHERE FunctionName = '{1}'", sIRCMessage.Info[5].ToLower(), sUtilities.SqlEscape(sIRCMessage.Info[i].ToLower()));
 							}
 
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: {1}kapcsolva",  alomany.Remove(0, 2, ", "), sIRCMessage.Info[5].ToLower());
+							if(sIRCMessage.Info[5].ToLower() == "on")
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0],  args.Remove(0, 2, ", "));
+							else
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1],  args.Remove(0, 2, ", "));
 						}
 						else
 						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: {1}kapcsolva", sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[5].ToLower());
-							SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET funkcio_status = '{0}' WHERE funkcio_nev = '{1}'", sIRCMessage.Info[5].ToLower(), sIRCMessage.Info[6].ToLower());
+							if(sIRCMessage.Info[5].ToLower() == "on")
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Info[6].ToLower());
+							else
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[6].ToLower());
+
+							SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET FunctionStatus = '{0}' WHERE FunctionName = '{1}'", sIRCMessage.Info[5].ToLower(), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
 						}
 					}
 				}
@@ -108,54 +136,75 @@ namespace Schumix.Irc.Commands
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a csatorna neve!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 7)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva egy paraméter!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
 					return;
 				}
 			
-				string channelinfo = sIRCMessage.Info[5].ToLower();
+				string channel = sIRCMessage.Info[5].ToLower();
 				string status = sIRCMessage.Info[6].ToLower();
 			
 				if(sIRCMessage.Info[6].ToLower() == "info")
 				{
-					string[] ChannelInfo = sChannelInfo.ChannelFunkciokInfo(channelinfo).Split('|');
+					var text = sLManager.GetCommandTexts("function/channel/info", sIRCMessage.Channel);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						return;
+					}
+
+					string[] ChannelInfo = sChannelInfo.ChannelFunctionsInfo(channel).Split('|');
 					if(ChannelInfo.Length < 2)
 						return;
 
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2Bekapcsolva: {0}", ChannelInfo[0]);
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "2Kikapcsolva: {0}", ChannelInfo[1]);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], ChannelInfo[0]);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], ChannelInfo[1]);
 				}
-				else if(status == "be" || status == "ki")
+				else if(status == "on" || status == "off")
 				{
+					var text = sLManager.GetCommandTexts("function/channel", sIRCMessage.Channel);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						return;
+					}
+
 					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a funkció neve!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoFunctionName", sIRCMessage.Channel));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length >= 9)
 					{
-						string alomany = string.Empty;
+						string args = string.Empty;
 
 						for(int i = 7; i < sIRCMessage.Info.Length; i++)
 						{
-							alomany += ", " + sIRCMessage.Info[i].ToLower();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok(sIRCMessage.Info[i].ToLower(), status, channelinfo), channelinfo);
-							sChannelInfo.ChannelFunkcioReload();
+							args += ", " + sIRCMessage.Info[i].ToLower();
+							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[i].ToLower(), status, channel), channel);
+							sChannelInfo.ChannelFunctionReload();
 						}
 
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: {1}kapcsolva",  alomany.Remove(0, 2, ", "), status);
+						if(status == "on")
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0],  args.Remove(0, 2, ", "));
+						else
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1],  args.Remove(0, 2, ", "));
 					}
 					else
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: {1}kapcsolva", sIRCMessage.Info[7].ToLower(), status);
-						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok(sIRCMessage.Info[7].ToLower(), status, channelinfo), channelinfo);
-						sChannelInfo.ChannelFunkcioReload();
+						if(status == "on")
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Info[7].ToLower());
+						else
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[7].ToLower());
+
+						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[7].ToLower(), status, channel), channel);
+						sChannelInfo.ChannelFunctionReload();
 					}
 				}
 			}
@@ -163,9 +212,9 @@ namespace Schumix.Irc.Commands
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sikeresen frissitve {0} csatornán a funkciók.", sIRCMessage.Channel);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki,uzenet:ki' WHERE Channel = '{0}'", sIRCMessage.Channel);
-					sChannelInfo.ChannelFunkcioReload();
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("function/update", sIRCMessage.Channel), sIRCMessage.Channel);
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), sIRCMessage.Channel);
+					sChannelInfo.ChannelFunctionReload();
 					return;
 				}
 
@@ -176,59 +225,73 @@ namespace Schumix.Irc.Commands
 					{
 						foreach(DataRow row in db.Rows)
 						{
-							string csatorna = row["Channel"].ToString();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki,uzenet:ki' WHERE Channel = '{0}'", csatorna);
+							string channel = row["Channel"].ToString();
+							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), channel);
 						}
 
-						sChannelInfo.ChannelFunkcioReload();
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sikeresen frissitve minden csatornán a funkciók.");
+						sChannelInfo.ChannelFunctionReload();
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("function/update/all", sIRCMessage.Channel));
 					}
 					else
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
 				}
 				else
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sikeresen frissitve {0} csatornán a funkciók.", sIRCMessage.Info[5].ToLower());
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = ',koszones:ki,log:be,rejoin:be,parancsok:be,autohl:ki,autokick:ki,automode:ki,antiflood:ki,uzenet:ki' WHERE Channel = '{0}'", sIRCMessage.Info[5].ToLower());
-					sChannelInfo.ChannelFunkcioReload();
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("function/update", sIRCMessage.Channel), sIRCMessage.Info[5].ToLower());
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()));
+					sChannelInfo.ChannelFunctionReload();
 				}
 			}
 			else
 			{
+				var text = sLManager.GetCommandTexts("function", sIRCMessage.Channel);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					return;
+				}
+
 				if(sIRCMessage.Info.Length < 5)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a funkció állapota!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoFunctionStatus", sIRCMessage.Channel));
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a funkció neve!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoFunctionName", sIRCMessage.Channel));
 					return;
 				}
 
 				string status = sIRCMessage.Info[4].ToLower();
 
-				if(status == "be" || status == "ki")
+				if(status == "on" || status == "off")
 				{
 					if(sIRCMessage.Info.Length >= 7)
 					{
-						string alomany = string.Empty;
+						string args = string.Empty;
 
 						for(int i = 5; i < sIRCMessage.Info.Length; i++)
 						{
-							alomany += ", " + sIRCMessage.Info[i].ToLower();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok(sIRCMessage.Info[i].ToLower(), status, sIRCMessage.Channel), sIRCMessage.Channel);
-							sChannelInfo.ChannelFunkcioReload();
+							args += ", " + sIRCMessage.Info[i].ToLower();
+							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[i].ToLower(), status, sIRCMessage.Channel), sIRCMessage.Channel);
+							sChannelInfo.ChannelFunctionReload();
 						}
 
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: {1}kapcsolva",  alomany.Remove(0, 2, ", "), status);
+						if(status == "on")
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0],  args.Remove(0, 2, ", "));
+						else
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1],  args.Remove(0, 2, ", "));
 					}
 					else
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: {1}kapcsolva", sIRCMessage.Info[5].ToLower(), status);
-						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunkciok(sIRCMessage.Info[5].ToLower(), status, sIRCMessage.Channel), sIRCMessage.Channel);
-						sChannelInfo.ChannelFunkcioReload();
+						if(status == "on")
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Info[5].ToLower());
+						else
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[5].ToLower());
+
+						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[5].ToLower(), status, sIRCMessage.Channel), sIRCMessage.Channel);
+						sChannelInfo.ChannelFunctionReload();
 					}
 				}
 			}
@@ -243,117 +306,153 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Parancsok: add | del | info | update");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("channel", sIRCMessage.Channel));
 				return;
 			}
 
 			if(sIRCMessage.Info[4].ToLower() == "add")
 			{
-				if(sIRCMessage.Info.Length < 6)
+				var text = sLManager.GetCommandTexts("channel/add", sIRCMessage.Channel);
+				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a csatorna neve!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
 					return;
 				}
 
-				string csatornainfo = sIRCMessage.Info[5].ToLower();
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", csatornainfo);
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+					return;
+				}
+
+				string channel = sIRCMessage.Info[5].ToLower();
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
 				if(!db.IsNull())
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A név már szerepel a csatorna listán!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 					return;
 				}
 
 				if(sIRCMessage.Info.Length == 7)
 				{
 					ChannelPrivmsg = sIRCMessage.Channel;
-					string jelszo = sIRCMessage.Info[6];
-					sSender.Join(csatornainfo, jelszo);
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password) VALUES ('{0}', '{1}')", csatornainfo, jelszo);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", csatornainfo);
+					string pass = sIRCMessage.Info[6];
+					sSender.Join(channel, pass);
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password, Language) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(channel), sUtilities.SqlEscape(pass), sLManager.Locale);
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
 				}
 				else
 				{
 					ChannelPrivmsg = sIRCMessage.Channel;
-					sSender.Join(csatornainfo);
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password) VALUES ('{0}', '')", csatornainfo);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", csatornainfo);
+					sSender.Join(channel);
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password, Language) VALUES ('{0}', '', '{1}')", sUtilities.SqlEscape(channel), sLManager.Locale);
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
 				}
 
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Csatorna hozzáadva: {0}", csatornainfo);
-
-				sChannelInfo.ChannelListaReload();
-				sChannelInfo.ChannelFunkcioReload();
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], channel);
+				sChannelInfo.ChannelListReload();
+				sChannelInfo.ChannelFunctionReload();
 			}
-			else if(sIRCMessage.Info[4].ToLower() == "del")
+			else if(sIRCMessage.Info[4].ToLower() == "remove")
 			{
-				if(sIRCMessage.Info.Length < 6)
+				var text = sLManager.GetCommandTexts("channel/remove", sIRCMessage.Channel);
+				if(text.Length < 3)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a csatorna neve!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
 					return;
 				}
 
-				string csatornainfo = sIRCMessage.Info[5].ToLower();
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channel WHERE Channel = '{0}'", csatornainfo);
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+					return;
+				}
+
+				string channel = sIRCMessage.Info[5].ToLower();
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
 				if(!db.IsNull())
 				{
 					int id = Convert.ToInt32(db["Id"].ToString());
 					if(id == 1)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A mester csatorna nem törölhető!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 						return;
 					}
 				}
 
-				db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", csatornainfo);
+				db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
 				if(db.IsNull())
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ilyen csatorna nem létezik!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
 					return;
 				}
 
-				sSender.Part(csatornainfo);
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE Channel = '{0}'", csatornainfo);
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Csatorna eltávolítva: {0}", csatornainfo);
-
-				sChannelInfo.ChannelListaReload();
-				sChannelInfo.ChannelFunkcioReload();
+				sSender.Part(channel);
+				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], channel);
+				sChannelInfo.ChannelListReload();
+				sChannelInfo.ChannelFunctionReload();
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "update")
 			{
-				sChannelInfo.ChannelListaReload();
-				sChannelInfo.ChannelFunkcioReload();
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A csatorna információk frissitésre kerültek.");
+				sChannelInfo.ChannelListReload();
+				sChannelInfo.ChannelFunctionReload();
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("channel/update", sIRCMessage.Channel));
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "info")
 			{
+				var text = sLManager.GetCommandTexts("channel/info", sIRCMessage.Channel);
+				if(text.Length < 4)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					return;
+				}
+
 				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channel");
 				if(!db.IsNull())
 				{
-					string AktivCsatornak = string.Empty, InAktivCsatornak = string.Empty;
+					string ActiveChannels = string.Empty, InActiveChannels = string.Empty;
 
 					foreach(DataRow row in db.Rows)
 					{
-						string csatorna = row["Channel"].ToString();
-						string aktivitas = row["Enabled"].ToString();
+						string channel = row["Channel"].ToString();
+						bool enabled = Convert.ToBoolean(row["Enabled"].ToString());
 
-						if(aktivitas == "true")
-							AktivCsatornak += ", " + csatorna;
-						else if(aktivitas == "false")
-							InAktivCsatornak += ", " + csatorna + ":" + row["Error"].ToString();
+						if(enabled)
+							ActiveChannels += ", " + channel;
+						else if(!enabled)
+							InActiveChannels += ", " + channel + ":" + row["Error"].ToString();
 					}
 
-					if(AktivCsatornak.Length > 0)
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Aktiv: {0}", AktivCsatornak.Remove(0, 2, ", "));
+					if(ActiveChannels.Length > 0)
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], ActiveChannels.Remove(0, 2, ", "));
 					else
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Aktiv: Nincs adat.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
 
-					if(InAktivCsatornak.Length > 0)
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Inaktiv: {0}", InAktivCsatornak.Remove(0, 2, ", "));
+					if(InActiveChannels.Length > 0)
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], InActiveChannels.Remove(0, 2, ", "));
 					else
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Inaktiv: Nincs adat.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
 				}
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "language")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info.Length < 7)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoChannelLanguage", sIRCMessage.Channel));
+					return;
+				}
+
+				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Language = '{0}' WHERE Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()));
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("channel/language", sIRCMessage.Channel), sIRCMessage.Info[6]);
 			}
 		}
 
@@ -366,17 +465,19 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 				return;
 			}
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT nev, honap, nap FROM sznap WHERE nev = '{0}'", sIRCMessage.Info[4]);
+			// INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'sznap', '1', 'Kiírja a megadott név születésnapjának dátumát.\nHasználata: {0}sznap <név>');
+
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT nev, honap, nap FROM sznap WHERE nev = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[4]));
 			if(!db.IsNull())
 			{
-				string nev = db["nev"].ToString();
-				string honap = db["honap"].ToString();
-				int nap = Convert.ToInt32(db["nap"]);
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0} születés napja: {1} {2}", nev, honap, nap);
+				string name = db["nev"].ToString();
+				string month = db["honap"].ToString();
+				int day = Convert.ToInt32(db["nap"]);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0} születés napja: {1} {2}", name, month, day);
 			}
 			else
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs ilyen ember!");
@@ -391,22 +492,20 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 				return;
 			}
 
 			string kick = sIRCMessage.Info[4].ToLower();
-			int szam = sIRCMessage.Info.Length;
-			string nick = sNickInfo.NickStorage;
 
-			if(szam == 5)
+			if(sIRCMessage.Info.Length == 5)
 			{
-				if(kick != nick.ToLower())
+				if(kick != sNickInfo.NickStorage.ToLower())
 					sSender.Kick(sIRCMessage.Channel, kick);
 			}
-			else if(szam >= 6)
+			else if(sIRCMessage.Info.Length >= 6)
 			{
-				if(kick != nick.ToLower())
+				if(kick != sNickInfo.NickStorage.ToLower())
 					sSender.Kick(sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, " "));
 			}
 		}
@@ -420,21 +519,21 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs a rang megadva!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoRank", sIRCMessage.Channel));
 				return;
 			}
 
 			if(sIRCMessage.Info.Length < 6)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs név megadva!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 				return;
 			}
 
-			string rang = sIRCMessage.Info[4].ToLower();
-			string nev = sIRCMessage.Info.SplitToString(5, " ").ToLower();
+			string rank = sIRCMessage.Info[4].ToLower();
+			string name = sIRCMessage.Info.SplitToString(5, " ").ToLower();
 
-			if(!nev.Contains(sNickInfo.NickStorage.ToLower()))
-				sSender.Mode(sIRCMessage.Channel, rang, nev);
+			if(!name.Contains(sNickInfo.NickStorage.ToLower()))
+				sSender.Mode(sIRCMessage.Channel, rank, name);
 		}
 	}
 }

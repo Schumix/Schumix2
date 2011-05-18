@@ -99,6 +99,10 @@ namespace Schumix.Framework.Config
 
 					new AddonsConfig(Enabled, Ignore, Directory);
 
+					string Locale = xmldoc.SelectSingleNode("Schumix/Localization/Locale").InnerText;
+
+					new LocalizationConfig(Locale);
+
 					Log.Success("Config", "Config adatbazis betoltve.");
 					Console.WriteLine();
 				}
@@ -171,11 +175,11 @@ namespace Schumix.Framework.Config
 						// </Wait>
 						w.WriteEndElement();
 
-						// <Parancs>
+						// <Command>
 						w.WriteStartElement("Command");
 						w.WriteElementString("Prefix", "$");
 
-						// </Parancs>
+						// </Command>
 						w.WriteEndElement();
 
 						// </Irc>
@@ -218,6 +222,13 @@ namespace Schumix.Framework.Config
 						w.WriteElementString("Directory", "Addons");
 
 						// </Plugins>
+						w.WriteEndElement();
+
+						// <Localization>
+						w.WriteStartElement("Localization");
+						w.WriteElementString("Locale", "enUS");
+
+						// </Localization>
 						w.WriteEndElement();
 
 						// </Schumix>
@@ -359,6 +370,17 @@ namespace Schumix.Framework.Config
 			Ignore    = ignore;
 			Directory = directory;
 			Log.Notice("AddonsConfig", "Addons beallitasai betoltve.");
+		}
+	}
+
+	public sealed class LocalizationConfig
+	{
+		public static string Locale { get; private set; }
+
+		public LocalizationConfig(string locale)
+		{
+			Locale = locale;
+			Log.Notice("LocalizationConfig", "Localization beallitasai betoltve.");
 		}
 	}
 }

@@ -18,60 +18,23 @@
  */
 
 using System;
-using System.Data;
-using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
-using Schumix.Framework.Extensions;
 using Schumix.Irc.Commands;
-using Schumix.GitRssAddon.Commands;
-using Schumix.GitRssAddon.Config;
+using Schumix.RevisionAddon.Commands;
 
-namespace Schumix.GitRssAddon
+namespace Schumix.RevisionAddon
 {
-	public class GitRssAddon : RssCommand, ISchumixAddon
+	public class RevisionAddon : Revision, ISchumixAddon
 	{
-		public static readonly List<GitRss> RssList = new List<GitRss>();
-
 		public void Setup()
 		{
-			new AddonConfig(Name + ".xml");
-			CommandManager.OperatorCRegisterHandler("git", new Action<IRCMessage>(HandleGit));
-
-			var db = SchumixBase.DManager.Query("SELECT Name, Type, Link, Website FROM gitinfo");
-			if(!db.IsNull())
-			{
-				foreach(DataRow row in db.Rows)
-				{
-					string name = row["Name"].ToString();
-					string type = row["Type"].ToString();
-					string link = row["Link"].ToString();
-					string website = row["Website"].ToString();
-
-					var rss = new GitRss(name, type, link, website);
-					RssList.Add(rss);
-				}
-
-				int x = 0;
-
-				foreach(var list in RssList)
-				{
-					list.Start();
-					x++;
-				}
-
-				Log.Notice("GitRssAddon", "{0} rss kerult betoltesre.", x);
-			}
-			else
-				Log.Warning("GitRssAddon", "Ures az adatbazis!");
+			CommandManager.PublicCRegisterHandler("xrev", new Action<IRCMessage>(HandleXrev));
 		}
 
 		public void Destroy()
 		{
-			CommandManager.OperatorCRemoveHandler("git");
-
-			foreach(var list in RssList)
-				list.Stop();
+			CommandManager.PublicCRemoveHandler("xrev");
 		}
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)
@@ -94,7 +57,7 @@ namespace Schumix.GitRssAddon
 		/// </summary>
 		public string Name
 		{
-			get { return "GitRssAddon"; }
+			get { return "RevisionAddon"; }
 		}
 
 		/// <summary>
