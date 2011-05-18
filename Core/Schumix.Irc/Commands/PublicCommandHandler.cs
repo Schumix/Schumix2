@@ -33,41 +33,61 @@ namespace Schumix.Irc.Commands
 		protected void HandleXbot(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Verzió: 10{0}", sUtilities.GetVersion());
-			string parancsok = string.Empty;
+			var text = sLManager.GetCommandTexts("xbot", sIRCMessage.Channel);
+			if(text.Length < 3)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				return;
+			}
+
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sUtilities.GetVersion());
+			string commands = string.Empty;
 
 			foreach(var command in CommandManager.GetPublicCommandHandler())
 			{
 				if(command.Key == "xbot")
 					continue;
 
-				parancsok += " | " + IRCConfig.CommandPrefix + command.Key;
+				commands += " | " + IRCConfig.CommandPrefix + command.Key;
 			}
 
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Parancsok: {0}", parancsok.Remove(0, 3, " | "));
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Programmed by: 3Csaba");
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], commands.Remove(0, 3, " | "));
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2]);
 		}
 
 		protected void HandleInfo(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Programozóm: Csaba, Jackneill.");
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("info", sIRCMessage.Channel));
 		}
 
-		protected void HandleIdo(IRCMessage sIRCMessage)
+		protected void HandleTime(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
+			var text = sLManager.GetCommandTexts("xbot", sIRCMessage.Channel);
+			if(text.Length < 2)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				return;
+			}
 
 			if(DateTime.Now.Minute < 10)
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Helyi idő: {0}:0{1}", DateTime.Now.Hour, DateTime.Now.Minute);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], DateTime.Now.Hour, DateTime.Now.Minute);
 			else
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Helyi idő: {0}:{1}", DateTime.Now.Hour, DateTime.Now.Minute);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], DateTime.Now.Hour, DateTime.Now.Minute);
 		}
 
-		protected void HandleDatum(IRCMessage sIRCMessage)
+		protected void HandleDate(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
-			string[,] Nevnap = new string[12,31] {
+			var text = sLManager.GetCommandTexts("date", sIRCMessage.Channel);
+			if(text.Length < 4)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				return;
+			}
+
+			string[,] Nameday = new string[,] {
 				{ "ÚJÉV","Ábel","Genovéva","Titusz","Simon","Boldizsár","Attila","Gyöngyvér","Marcell","Melánia","Ágota","Ernő","Veronika","Bódog","Lóránt","Gusztáv","Antal","Piroska","Sára","Sebestyén","Ágnes","Vince","Zelma","Timót","Pál","Vanda","Angelika","Károly,","Adél","Martina","Marcella" },
 				{ "Ignác","Karolina","Balázs","Ráhel","Ágota","Dóra","Tódor","Aranka","Abigél","Elvira","Bertold","Lívia","Ella, Linda","Bálint","Kolos","Julianna","Donát","Bernadett","Zsuzsanna","Álmos","Eleonóra","Gerzson","Alfréd","Mátyás","Géza","Edina","Ákos, Bátor","Elemér","","","" },
 				{ "Albin","Lujza","Kornélia","Kázmér","Adorján","Leonóra","Tamás","Zoltán","Franciska","Ildikó","Szilárd","Gergely","Krisztián, Ajtony","Matild","Kristóf","Henrietta","Gertrúd","Sándor","József","Klaudia","Benedek","Beáta","Emőke","Gábor","Irén","Emánuel","Hajnalka","Gedeon","Auguszta","Zalán","Árpád" },
@@ -82,43 +102,31 @@ namespace Schumix.Irc.Commands
 				{ "Elza","Melinda","Ferenc","Barbara, Borbála","Vilma","Miklós","Ambrus","Mária","Natália","Judit","Árpád","Gabriella","Luca","Szilárda","Valér","Etelka","Lázár","Auguszta","Viola","Teofil","Tamás","Zéno","Viktória","Ádám, Éva","KARÁCSONY","KARÁCSONY","János","Kamilla","Tamás","Dávid","Szilveszter" },
 			};
 
-			int[] Honapok = new int[12] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 };
+			int month = DateTime.Now.Month;
+			int day = DateTime.Now.Day;
 
-			int Ev = DateTime.Now.Year;
-			int Honap = DateTime.Now.Month;
-			int Nap = DateTime.Now.Day;
-
-			for(int x = 0; x < 12; x++)
+			if(month < 10)
 			{
-				int honapdb = Honapok[x];
-				string napdb = Nevnap[x,DateTime.Now.Day-1];
-
-				if(Honap == honapdb)
-				{
-					if(Honap < 10)
-					{
-						if(Nap < 10)
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ma {0}. 0{1}. 0{2}. {3} napja van.", Ev, Honap, Nap, napdb);
-						else
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ma {0}. 0{1}. {2}. {3} napja van.", Ev, Honap, Nap, napdb);
-					}
-					else
-					{
-						if(Nap < 10)
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ma {0}. {1}. 0{2}. {3} napja van.", Ev, Honap, Nap, napdb);
-						else
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ma {0}. {1}. {2}. {3} napja van.", Ev, Honap, Nap, napdb);
-					}
-				}
-		 	}
+				if(day < 10)
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], DateTime.Now.Year, month, day, Nameday[month-1, day-1]);
+				else
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], DateTime.Now.Year, month, day, Nameday[month-1, day-1]);
+			}
+			else
+			{
+				if(day < 10)
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], DateTime.Now.Year, month, day, Nameday[month-1, day-1]);
+				else
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3], DateTime.Now.Year, month, day, Nameday[month-1, day-1]);
+			}
 		}
 
 		protected void HandleRoll(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
 			var rand = new Random();
-			int szam = rand.Next(0, 100);
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Százalékos aránya {0}%", szam);
+			int number = rand.Next(0, 100);
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("roll", sIRCMessage.Channel), number);
 		}
 
 		protected void HandleCalc(IRCMessage sIRCMessage)
@@ -127,7 +135,7 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs paraméter!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
 				return;
 			}
 
@@ -142,7 +150,7 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs paraméter!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
 				return;
 			}
 
@@ -155,7 +163,7 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs paraméter!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
 				return;
 			}
 
@@ -168,15 +176,15 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a parancs neve!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoIrcCommandName", sIRCMessage.Channel));
 				return;
 			}
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Message FROM irc_commands WHERE command = '{0}'", sIRCMessage.Info[4]);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Message FROM irc_commands WHERE command = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[4]));
 			if(!db.IsNull())
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, db["Message"].ToString());
 			else
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hibás lekérdezés!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
 		}
 
 		protected void HandleWhois(IRCMessage sIRCMessage)
@@ -185,7 +193,7 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a keresendő személy neve!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoWhoisName", sIRCMessage.Channel));
 				return;
 			}
 
@@ -199,23 +207,29 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a név!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 				return;
 			}
 
 			if(sIRCMessage.Info.Length == 5)
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Info[4], "Keresnek téged itt: {0}", sIRCMessage.Channel);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Info[4], sLManager.GetCommandText("warning", sIRCMessage.Channel), sIRCMessage.Channel);
 			else if(sIRCMessage.Info.Length >= 6)
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Info[4], "{0}", sIRCMessage.Info.SplitToString(5, " "));
 		}
 
-		protected void HandleKeres(IRCMessage sIRCMessage)
+		protected void HandleGoogle(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
+			var text = sLManager.GetCommandTexts("google", sIRCMessage.Channel);
+			if(text.Length < 4)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				return;
+			}
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a keresendő szöveg!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoGoogleText", sIRCMessage.Channel));
 				return;
 			}
 
@@ -224,29 +238,29 @@ namespace Schumix.Irc.Commands
 
 			if(!Regex.IsMatch(url))
 			{
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, sIRCMessage.Channel, "2Title: Nincs Title.");
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, sIRCMessage.Channel, "2Link: Nincs Link.");
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, sIRCMessage.Channel, text[0]);
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, sIRCMessage.Channel, text[1]);
 			}
 			else
 			{
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, sIRCMessage.Channel, "2Title: {0}", Regex.Match(url).Groups["title"].ToString());
-				sSendMessage.SendChatMessage(MessageType.PRIVMSG, sIRCMessage.Channel, "2Link: 3{0}", Regex.Match(url).Groups["url"].ToString());
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, sIRCMessage.Channel, text[2], Regex.Match(url).Groups["title"].ToString());
+				sSendMessage.SendChatMessage(MessageType.PRIVMSG, sIRCMessage.Channel, text[3], Regex.Match(url).Groups["url"].ToString());
 			}
 		}
 
-		protected void HandleFordit(IRCMessage sIRCMessage)
+		protected void HandleTranslate(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva melyik nyelvről melyikre fordítsa le!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoTranslateLanguage", sIRCMessage.Channel));
 				return;
 			}
 
 			if(sIRCMessage.Info.Length < 6)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a fordítandó szöveg!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoTranslateText", sIRCMessage.Channel));
 				return;
 			}
 
@@ -254,7 +268,7 @@ namespace Schumix.Irc.Commands
 			var Regex = new Regex(@"\{.translatedText.\:.(?<text>.+).\},");
 
 			if(!Regex.IsMatch(url))
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs fórdított szöveg.");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("translate", sIRCMessage.Channel));
 			else
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}", Regex.Match(url).Groups["text"].ToString());
 		}
@@ -262,10 +276,16 @@ namespace Schumix.Irc.Commands
 		protected void HandlePrime(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
+			var text = sLManager.GetCommandTexts("prime", sIRCMessage.Channel);
+			if(text.Length < 3)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				return;
+			}
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva szám!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoNumber", sIRCMessage.Channel));
 				return;
 			}
 
@@ -274,16 +294,16 @@ namespace Schumix.Irc.Commands
 
 			if(!isNum)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nem csak számot tartalmaz!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 				return;
 			}
 
 			bool prim = sUtilities.IsPrime(Convert.ToInt32(Num));
 
 			if(!prim)
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0} nem primszám.", sIRCMessage.Info[4]);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[4]);
 			else
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0} primszám.", sIRCMessage.Info[4]);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], sIRCMessage.Info[4]);
 		}
 	}
 }

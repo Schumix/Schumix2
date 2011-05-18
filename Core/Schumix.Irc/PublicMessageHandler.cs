@@ -44,9 +44,9 @@ namespace Schumix.Irc
 
 			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
 
-			if(sChannelInfo.FSelect("parancsok") || sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect("commands") || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!sChannelInfo.FSelect("parancsok", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect("commands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, ":");
@@ -56,46 +56,60 @@ namespace Schumix.Irc
 					return;
 
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, PLength);
-				BejovoInfo(sIRCMessage.Info[3].ToLower(), sIRCMessage);
+				IncomingInfo(sIRCMessage.Info[3].ToLower(), sIRCMessage);
 			}
 		}
 
 		private void Schumix(IRCMessage sIRCMessage)
 		{
-			string ParancsJel = IRCConfig.NickName + ",";
+			string command = IRCConfig.NickName + ",";
 			string INick = sIRCMessage.Info[3];
 
-			if(INick.ToLower() == ParancsJel.ToLower())
+			if(INick.ToLower() == command.ToLower())
 			{
 				CNick(sIRCMessage);
 
 				if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "sys")
 				{
+					var text = sLManager.GetCommandTexts("schumix2/sys", sIRCMessage.Channel);
+					if(text.Length < 8)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						return;
+					}
+
 					var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Verzió: 10{0}", sUtilities.GetVersion());
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Platform: {0}", sUtilities.GetPlatform());
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3OSVerzió: {0}", Environment.OSVersion.ToString());
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Programnyelv: c#");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sUtilities.GetVersion());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sUtilities.GetPlatform());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], Environment.OSVersion.ToString());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
 
 					if(memory >= 60)
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Memoria használat:5 {0} MB", memory);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4], memory);
 					else if(memory >= 30)
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Memoria használat:8 {0} MB", memory);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[5], memory);
 					else
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Memoria használat:3 {0} MB", memory);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[6], memory);
 
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Uptime: {0}", SchumixBase.timer.Uptime());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[7], SchumixBase.timer.Uptime());
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "help")
 				{
+					var text = sLManager.GetCommandTexts("schumix2/help", sIRCMessage.Channel);
+					if(text.Length < 4)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						return;
+					}
+
 					if(IsAdmin(sIRCMessage.Nick, Commands.AdminFlag.HalfOperator))
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Parancsok: nick | sys");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 					else if(IsAdmin(sIRCMessage.Nick, Commands.AdminFlag.Operator))
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Parancsok: ghost | nick | sys");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
 					else if(IsAdmin(sIRCMessage.Nick, Commands.AdminFlag.Administrator))
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Parancsok: ghost | nick | sys | clean");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2]);
 					else
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "3Parancsok: sys");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "ghost")
 				{
@@ -106,7 +120,7 @@ namespace Schumix.Irc
 					sSender.Nick(IRCConfig.NickName);
 					sNickInfo.ChangeNick(IRCConfig.NickName);
 					NewNick = false;
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ghost paranccsal elsődleges nick visszaszerzése.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("schumix2/ghost", sIRCMessage.Channel));
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "nick")
 				{
@@ -115,7 +129,7 @@ namespace Schumix.Irc
 
 					if(sIRCMessage.Info.Length < 6)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs paraméter!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
 						return;
 					}
 
@@ -124,13 +138,13 @@ namespace Schumix.Irc
 						sNickInfo.ChangeNick(IRCConfig.NickName);
 						sSender.Nick(IRCConfig.NickName);
 						Log.Notice("NickServ", "Azonosito jelszo kuldese a kiszolgalonak.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Azonosító jelszó küldése a kiszolgálonak.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("schumix2/nick/identify", sIRCMessage.Channel));
 						sSender.NickServ(IRCConfig.NickServPassword);
 						NewNick = false;
 
 						if(IRCConfig.UseHostServ)
 						{
-							HostServAllapot = true;
+							HostServStatus = true;
 							sSender.HostServ("on");
 							Log.Notice("HostServ", "Vhost be van kapcsolva.");
 						}
@@ -140,7 +154,7 @@ namespace Schumix.Irc
 						string nick = sIRCMessage.Info[5];
 						sNickInfo.ChangeNick(nick);
 						sSender.Nick(nick);
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Név megváltoztatása erre: {0}", nick);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("schumix2/nick", sIRCMessage.Channel), nick);
 					}
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "clean")
@@ -150,7 +164,7 @@ namespace Schumix.Irc
 
 					GC.Collect();
 					GC.WaitForPendingFinalizers();
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Lefoglalt memória felszabadításra kerül.");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("schumix2/clean", sIRCMessage.Channel));
 				}
 			}
 		}

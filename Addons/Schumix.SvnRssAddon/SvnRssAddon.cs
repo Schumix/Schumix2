@@ -43,11 +43,11 @@ namespace Schumix.SvnRssAddon
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					string nev = row["Name"].ToString();
+					string name = row["Name"].ToString();
 					string link = row["Link"].ToString();
-					string weboldal = row["Website"].ToString();
+					string website = row["Website"].ToString();
 
-					var rss = new SvnRss(nev, link, weboldal);
+					var rss = new SvnRss(name, link, website);
 					RssList.Add(rss);
 				}
 
@@ -83,9 +83,9 @@ namespace Schumix.SvnRssAddon
 
 		}
 
-		public void HandleHelp(IRCMessage sIRCMessage)
+		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
-			Help(sIRCMessage);
+			return false;
 		}
 
 		/// <summary>

@@ -21,15 +21,17 @@ using System;
 using System.Threading;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
 	public class SchumixBase
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		public static DatabaseManager DManager { get; private set; }
 		public static Timer timer { get; private set; }
-		public static bool IIdo = true;
+		public static bool STime = true;
 		public static bool UrlTitleEnabled = false;
 		public static string Title { get { return "Schumix2 IRC Bot"; } }
 
@@ -52,6 +54,8 @@ namespace Schumix.Framework
 					sAddonManager.Initialize();
 					sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory);
 				}
+
+				sLManager.Locale = LocalizationConfig.Locale;
 			}
 			catch(Exception e)
 			{

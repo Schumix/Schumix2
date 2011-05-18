@@ -40,6 +40,12 @@ namespace Schumix.Console.Commands
 			InitHandler();
 		}
 
+		public string Channel
+		{
+			get { return _channel; }
+			set { _channel = value; }
+		}
+
 		private void InitHandler()
 		{
 			RegisterHandler("help",       HandleHelp);
@@ -47,7 +53,7 @@ namespace Schumix.Console.Commands
 			RegisterHandler("sys",        HandleSys);
 			RegisterHandler("csatorna",   HandleCsatorna);
 			RegisterHandler("admin",      HandleAdmin);
-			RegisterHandler("funkcio",    HandleFunkcio);
+			RegisterHandler("function",    HandleFunction);
 			RegisterHandler("channel",    HandleChannel);
 			RegisterHandler("connect",    HandleConnect);
 			RegisterHandler("disconnect", HandleDisConnect);
@@ -55,7 +61,7 @@ namespace Schumix.Console.Commands
 			RegisterHandler("nick",       HandleNick);
 			RegisterHandler("join",       HandleJoin);
 			RegisterHandler("left",       HandleLeft);
-			RegisterHandler("kikapcs",    HandleKikapcs);
+			RegisterHandler("quit",       HandleQuit);
 
 			Log.Notice("CCommandManager", "Osszes Command handler regisztralva.");
 		}
@@ -70,7 +76,7 @@ namespace Schumix.Console.Commands
 			_CommandHandler.Remove(code);
 		}
 
-		public bool CBejovoInfo(string info)
+		public bool CIncomingInfo(string info)
 		{
 			try
 			{
@@ -87,7 +93,7 @@ namespace Schumix.Console.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Error("CBejovoInfo", "Hiba oka: {0}", e.ToString());
+				Log.Error("CIncomingInfo", "Hiba oka: {0}", e.ToString());
 				return false;
 			}
 		}

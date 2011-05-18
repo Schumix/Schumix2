@@ -28,97 +28,92 @@ namespace Schumix.Irc
 {
 	public sealed class ChannelInfo
 	{
-		private readonly List<string> ChannelFunkcio = new List<string>();
-		private readonly Dictionary<string, string> _ChannelLista = new Dictionary<string, string>();
+		private readonly List<string> ChannelFunction = new List<string>();
+		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
 		private readonly Sender sSender = Singleton<Sender>.Instance;
-		public Dictionary<string, string> CLista
+		public Dictionary<string, string> CList
 		{
-			get { return _ChannelLista; }
+			get { return _ChannelList; }
 		}
 
 		private ChannelInfo() {}
 
-		public void ChannelLista()
+		public void ChannelList()
 		{
 			var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channel");
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					string csatorna = row["Channel"].ToString();
-					string jelszo = row["Password"].ToString();
-					_ChannelLista.Add(csatorna, jelszo);
+					string channel = row["Channel"].ToString();
+					string password = row["Password"].ToString();
+					_ChannelList.Add(channel, password);
 				}
 			}
 			else
 				Log.Error("ChannelInfo", "ChannelLista: Hibas lekerdezes!");
 		}
 
-		public bool FSelect(string nev)
+		public bool FSelect(string name)
 		{
-			string status = string.Empty;
-
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT funkcio_status FROM schumix WHERE funkcio_nev = '{0}'", nev);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT FunctionStatus FROM schumix WHERE FunctionName = '{0}'", name);
 			if(!db.IsNull())
-				status = db["funkcio_status"].ToString();
-			else
-				Log.Error("ChannelInfo", "FSelect: Hibas lekerdezes!");
+			{
+				string status = db["FunctionStatus"].ToString();
 
-			if(status == "be")
-				return true;
+				if(status == "on")
+					return true;
+				else
+					return false;
+			}
 			else
+			{
+				Log.Error("ChannelInfo", "FSelect: Hibas lekerdezes!");
 				return false;
+			}
 		}
 
-		public bool FSelect(string nev, string channel)
+		public bool FSelect(string name, string channel)
 		{
-			string status = string.Empty;
-
-			foreach(var csatornak in ChannelFunkcio)
+			foreach(var channels in ChannelFunction)
 			{
-				string[] pont = csatornak.Split('.');
-				string csatorna = pont[0];
-				string funkciok = pont[1];
-				string[] kettospont = funkciok.Split(':');
+				string[] point = channels.Split('.');
+				string[] point2 = point[1].Split(':');
 
-				if(csatorna == channel.ToLower())
+				if(point[0] == channel.ToLower())
 				{
-					if(kettospont[0] == nev.ToLower())
+					if(point2[0] == name.ToLower())
 					{
-						status = kettospont[1];
-						break;
+						if(point2[1] == "on")
+							return true;
+						else
+							return false;
 					}
 				}
 			}
 
-			if(status == "be")
-				return true;
-			else
-				return false;
+			return false;
 		}
 
-		public void ChannelFunkcioReload()
+		public void ChannelFunctionReload()
 		{
-			ChannelFunkcio.Clear();
+			ChannelFunction.Clear();
 
 			var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					string csatorna = row["Channel"].ToString();
+					string channel = row["Channel"].ToString();
 
-					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", csatorna);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", channel);
 					if(!db1.IsNull())
 					{
-						string funkciok = db1["Functions"].ToString();
-						string[] vesszo = funkciok.Split(',');
+						string functions = db1["Functions"].ToString();
+						string[] comma = functions.Split(',');
 
-						for(int x = 1; x < vesszo.Length; x++)
-						{
-							string csatornaadat = csatorna + "." + vesszo[x];
-							ChannelFunkcio.Add(csatornaadat);
-						}
+						for(int x = 1; x < comma.Length; x++)
+							ChannelFunction.Add(channel + "." + comma[x]);
 					}
 					else
 						Log.Error("ChannelInfo", "ChannelFunkcioReload: Hibas lekerdezes!");
@@ -128,103 +123,97 @@ namespace Schumix.Irc
 				Log.Error("ChannelInfo", "ChannelFunkcioReload: Hibas lekerdezes!");
 		}
 
-		public void ChannelListaReload()
+		public void ChannelListReload()
 		{
-			_ChannelLista.Clear();
+			_ChannelList.Clear();
 			var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channel");
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					string csatorna = row["Channel"].ToString();
-					string jelszo = row["Password"].ToString();
-					_ChannelLista.Add(csatorna, jelszo);
+					string channel = row["Channel"].ToString();
+					string password = row["Password"].ToString();
+					_ChannelList.Add(channel, password);
 				}
 			}
 			else
 				Log.Error("ChannelInfo", "ChannelListaReload: Hibas lekerdezes!");
 		}
 
-		public string ChannelFunkciok(string nev, string status, string channel)
+		public string ChannelFunctions(string name, string status, string channel)
 		{
-			string funkcio = string.Empty;
+			string function = string.Empty;
 
-			foreach(var csatornak in ChannelFunkcio)
+			foreach(var channels in ChannelFunction)
 			{
-				string[] pont = csatornak.Split('.');
-				string csatorna = pont[0];
-				string funkciok = pont[1];
-				string[] kettospont = funkciok.Split(':');
+				string[] point = channels.Split('.');
+				string[] point2 = point[1].Split(':');
 
-				if(csatorna == channel.ToLower())
+				if(point[0] == channel.ToLower())
 				{
-					if(kettospont[0] != nev.ToLower())
-						funkcio += "," + funkciok;
+					if(point2[0] != name.ToLower())
+						function += "," + point[1];
 				}
 			}
 
-			foreach(var csatornak in ChannelFunkcio)
+			foreach(var channels in ChannelFunction)
 			{
-				string[] pont = csatornak.Split('.');
-				string csatorna = pont[0];
-				string funkciok = pont[1];
-				string[] kettospont = funkciok.Split(':');
+				string[] point = channels.Split('.');
+				string[] point2 = point[1].Split(':');
 
-				if(csatorna == channel.ToLower())
+				if(point[0] == channel.ToLower())
 				{
-					if(kettospont[0] == nev.ToLower())
-						funkcio += "," + nev + ":" + status;
+					if(point2[0] == name.ToLower())
+						function += "," + name + ":" + status;
 				}
 			}
 
-			return funkcio;
+			return function;
 		}
 
-		public string FunkciokInfo()
+		public string FunctionsInfo()
 		{
-			string be = string.Empty, ki = string.Empty;
-
-			var db = SchumixBase.DManager.Query("SELECT funkcio_nev, funkcio_status FROM schumix");
+			var db = SchumixBase.DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix");
 			if(!db.IsNull())
 			{
+				string on = string.Empty, off = string.Empty;
+
 				foreach(DataRow row in db.Rows)
 				{
-					string nev = row["funkcio_nev"].ToString();
-					string status = row["funkcio_status"].ToString();
-	
-					if(status == "be")
-						be += nev + " ";
+					string name = row["FunctionName"].ToString();
+					string status = row["FunctionStatus"].ToString();
+
+					if(status == "on")
+						on += name + " ";
 					else
-						ki += nev + " ";
+						off += name + " ";
 				}
+
+				return on + "|" + off;
 			}
 			else
 				return "Hibás lekérdezés!";
-
-			return be + "|" + ki;
 		}
 
-		public string ChannelFunkciokInfo(string channel)
+		public string ChannelFunctionsInfo(string channel)
 		{
-			string be = string.Empty, ki = string.Empty;
+			string on = string.Empty, off = string.Empty;
 
-			foreach(var csatornak in ChannelFunkcio)
+			foreach(var channels in ChannelFunction)
 			{
-				string[] pont = csatornak.Split('.');
-				string csatorna = pont[0];
-				string funkciok = pont[1];
-				string[] kettospont = funkciok.Split(':');
+				string[] point = channels.Split('.');
+				string[] point2 = point[1].Split(':');
 
-				if(csatorna == channel.ToLower())
+				if(point[0] == channel.ToLower())
 				{
-					if(kettospont[1] == "be")
-						be += kettospont[0] + " ";
+					if(point2[1] == "on")
+						on += point2[0] + " ";
 					else
-						ki += kettospont[0] + " ";
+						off += point2[0] + " ";
 				}
 			}
 
-			return be + "|" + ki;
+			return on + "|" + off;
 		}
 
 		public void JoinChannel()
@@ -232,21 +221,21 @@ namespace Schumix.Irc
 			Log.Debug("ChannelInfo", "Kapcsolodas a csatornakhoz...");
 			bool error = false;
 
-			foreach(var channel in _ChannelLista)
+			foreach(var channel in _ChannelList)
 			{
 				sSender.Join(channel.Key, channel.Value);
 				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true', Error = '' WHERE Channel = '{0}'", channel.Key);
 			}
 
-			ChannelFunkcioReload();
+			ChannelFunctionReload();
 			var db = SchumixBase.DManager.Query("SELECT Enabled FROM channel");
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					string aktivitas = row["Enabled"].ToString();
+					bool enabled = Convert.ToBoolean(row["Enabled"].ToString());
 
-					if(aktivitas == "false")
+					if(!enabled)
 						error = true;
 				}
 			}
@@ -261,11 +250,36 @@ namespace Schumix.Irc
 			if(IRCConfig.IgnoreChannel.Length > 0)
 				Log.Notice("ChannelInfo", "Letiltott csatornak: {0}", IRCConfig.IgnoreChannel);
 
-			if(SchumixBase.IIdo)
+			if(SchumixBase.STime)
 			{
-				SchumixBase.timer.IndulasiIdo();
-				SchumixBase.IIdo = false;
+				SchumixBase.timer.StartTimer();
+				SchumixBase.STime = false;
 			}
+		}
+
+		public bool IsIgnore(string channel)
+		{
+			bool enabled = false;
+			string[] ignore = IRCConfig.IgnoreChannel.Split(',');
+
+			if(ignore.Length > 1)
+			{
+				foreach(var _ignore in ignore)
+				{
+					if(channel.ToLower() == _ignore.ToLower())
+						enabled = true;
+				}
+			}
+			else
+			{
+				if(channel.ToLower() == IRCConfig.IgnoreChannel.ToLower())
+					enabled = true;
+			}
+
+			if(enabled)
+				return true;
+
+			return false;
 		}
 	}
 }

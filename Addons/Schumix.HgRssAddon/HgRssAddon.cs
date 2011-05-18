@@ -43,11 +43,11 @@ namespace Schumix.HgRssAddon
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					string nev = row["Name"].ToString();
+					string name = row["Name"].ToString();
 					string link = row["Link"].ToString();
-					string weboldal = row["Website"].ToString();
+					string website = row["Website"].ToString();
 
-					var rss = new HgRss(nev, link, weboldal);
+					var rss = new HgRss(name, link, website);
 					RssList.Add(rss);
 				}
 
@@ -83,9 +83,9 @@ namespace Schumix.HgRssAddon
 
 		}
 
-		public void HandleHelp(IRCMessage sIRCMessage)
+		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
-			Help(sIRCMessage);
+			return false;
 		}
 
 		/// <summary>

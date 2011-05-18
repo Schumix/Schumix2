@@ -29,7 +29,7 @@ namespace Schumix.Irc
 {
 	public partial class MessageHandler : CommandManager
 	{
-		protected bool HostServAllapot;
+		protected bool HostServStatus;
 		protected bool Status;
 		protected bool NewNick;
 		protected MessageHandler() {}
@@ -51,7 +51,7 @@ namespace Schumix.Irc
 			{
 				if(!NewNick)
 				{
-					HostServAllapot = true;
+					HostServStatus = true;
 					sSender.HostServ("on");
 					Log.Notice("HostServ", "Vhost be van kapcsolva.");
 				}
@@ -122,9 +122,9 @@ namespace Schumix.Irc
 
 			if(sIRCMessage.Nick == "HostServ" && IRCConfig.UseHostServ)
 			{
-				if(sIRCMessage.Args.Contains("Your vhost of") && HostServAllapot)
+				if(sIRCMessage.Args.Contains("Your vhost of") && HostServStatus)
 				{
-					HostServAllapot = false;
+					HostServStatus = false;
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
 					sChannelInfo.JoinChannel();
@@ -187,7 +187,7 @@ namespace Schumix.Irc
 				return;
 
 			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'csatorna ban' WHERE Channel = '{0}'", sIRCMessage.Info[3].ToLower());
-			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: channel ban", sIRCMessage.Info[3]);
+			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: csatorna ban", sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -200,7 +200,7 @@ namespace Schumix.Irc
 				return;
 
 			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'hibas csatorna jelszo' WHERE Channel = '{0}'", sIRCMessage.Info[3].ToLower());
-			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: hibás channel jelszó", sIRCMessage.Info[3]);
+			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: hibás csatorna jelszó", sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -212,8 +212,8 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			string alomany = sIRCMessage.Info.SplitToString(4, " ");
-			sSendMessage.SendCMPrivmsg(WhoisPrivmsg, "Jelenleg itt van fent: {0}", alomany.Remove(0, 1, ":"));
+			string text = sIRCMessage.Info.SplitToString(4, " ");
+			sSendMessage.SendCMPrivmsg(WhoisPrivmsg, sLManager.GetCommandText("whois", sIRCMessage.Channel), text.Remove(0, 1, ":"));
 			WhoisPrivmsg = sNickInfo.NickStorage;
 		}
 

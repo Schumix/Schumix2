@@ -98,7 +98,6 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SvnRssAddon.cs" />
-    <Compile Include="Commands\Help.cs" />
     <Compile Include="Commands\Commands.cs" />
     <Compile Include="Rss\SvnRss.cs" />
     <Compile Include="Config\AddonConfig.cs" />

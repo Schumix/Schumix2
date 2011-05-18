@@ -47,7 +47,7 @@ namespace Schumix.Framework
 			}
 		}
 
-		public void IndulasiIdo()
+		public void StartTimer()
 		{
 			SW.Stop();
 			Log.Debug("Time", "A program {0}ms alatt indult el.", SW.ElapsedMilliseconds);
@@ -59,41 +59,38 @@ namespace Schumix.Framework
 		public string Uptime()
 		{
 			var Time = DateTime.Now - StartTime;
-			return String.Format("{0} nap, {1} óra, {2} perc, {3} másodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
+			return string.Format("{0} nap, {1} óra, {2} perc, {3} másodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
 		}
 
 		public string CUptime()
 		{
 			var Time = DateTime.Now - StartTime;
-			return String.Format("{0} nap, {1} ora, {2} perc, {3} masodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
+			return string.Format("{0} nap, {1} ora, {2} perc, {3} masodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
 		}
 
 		public void SaveUptime()
 		{
-			string datum = string.Empty;
-			int Ev = DateTime.Now.Year;
-			int Honap = DateTime.Now.Month;
-			int Nap = DateTime.Now.Day;
-			int Ora = DateTime.Now.Hour;
-			int Perc = DateTime.Now.Minute;
-			var mem = Process.GetCurrentProcess().WorkingSet64/1024/1024;
+			string date = string.Empty;
+			int month = DateTime.Now.Month;
+			int day = DateTime.Now.Day;
+			var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
 
-			if(Honap < 10)
+			if(month < 10)
 			{
-				if(Nap < 10)
-					datum = String.Format("{0}. 0{1}. 0{2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
+				if(day < 10)
+					date = string.Format("{0}. 0{1}. 0{2}. {3}:{4}", DateTime.Now.Year, month, day, DateTime.Now.Hour, DateTime.Now.Minute);
 				else
-					datum = String.Format("{0}. 0{1}. {2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
+					date = string.Format("{0}. 0{1}. {2}. {3}:{4}", DateTime.Now.Year, month, day, DateTime.Now.Hour, DateTime.Now.Minute);
 			}
 			else
 			{
-				if(Nap < 10)
-					datum = String.Format("{0}. {1}. 0{2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
+				if(day < 10)
+					date = string.Format("{0}. {1}. 0{2}. {3}:{4}", DateTime.Now.Year, month, day, DateTime.Now.Hour, DateTime.Now.Minute);
 				else
-					datum = String.Format("{0}. {1}. {2}. {3}:{4}", Ev, Honap, Nap, Ora, Perc);
+					date = string.Format("{0}. {1}. {2}. {3}:{4}", DateTime.Now.Year, month, day, DateTime.Now.Hour, DateTime.Now.Minute);
 			}
 
-			SchumixBase.DManager.QueryFirstRow("INSERT INTO `uptime`(datum, uptime, memory) VALUES ('{0}', '{1}', '{2} MB')", datum, Uptime(), mem);
+			SchumixBase.DManager.QueryFirstRow("INSERT INTO `uptime`(datum, uptime, memory) VALUES ('{0}', '{1}', '{2} MB')", date, Uptime(), memory);
 		}
 	}
 }

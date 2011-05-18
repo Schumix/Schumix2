@@ -58,7 +58,8 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("JOIN {0}", channel);
+				if(!IsIgnore(channel))
+					sSendMessage.WriteLine("JOIN {0}", channel);
 			}
 		}
 
@@ -66,27 +67,8 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				bool enabled = true;
-				string[] ignore = IRCConfig.IgnoreChannel.Split(',');
-
-				if(ignore.Length > 1)
-				{
-					foreach(var _ignore in ignore)
-					{
-						if(channel.ToLower() == _ignore.ToLower())
-							enabled = false;
-					}
-				}
-				else
-				{
-					if(channel.ToLower() == IRCConfig.IgnoreChannel.ToLower())
-						enabled = false;
-				}
-
-				if(!enabled)
-					return;
-
-				sSendMessage.WriteLine("JOIN {0} {1}", channel, pass);
+				if(!IsIgnore(channel))
+					sSendMessage.WriteLine("JOIN {0} {1}", channel, pass);
 			}
 		}
 
@@ -114,7 +96,7 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void Banned(string channel, string name)
+		public void Ban(string channel, string name)
 		{
 			lock(WriteLock)
 			{
@@ -122,7 +104,7 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void Unbanned(string channel, string name)
+		public void Unban(string channel, string name)
 		{
 			lock(WriteLock)
 			{
@@ -200,6 +182,31 @@ namespace Schumix.Irc
 			{
 				sSendMessage.WriteLine("WHOIS {0}", name);
 			}
+		}
+
+		private bool IsIgnore(string channel)
+		{
+			bool enabled = false;
+			string[] ignore = IRCConfig.IgnoreChannel.Split(',');
+
+			if(ignore.Length > 1)
+			{
+				foreach(var _ignore in ignore)
+				{
+					if(channel.ToLower() == _ignore.ToLower())
+						enabled = true;
+				}
+			}
+			else
+			{
+				if(channel.ToLower() == IRCConfig.IgnoreChannel.ToLower())
+					enabled = true;
+			}
+
+			if(enabled)
+				return true;
+
+			return false;
 		}
 	}
 }

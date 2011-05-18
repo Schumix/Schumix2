@@ -22,6 +22,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Console.Commands;
 
@@ -46,9 +47,8 @@ namespace Schumix.Console
 			Task.Factory.StartNew(() => ConsoleRead());
 			CCManager = new CCommandManager(network);
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
-			if(!db.IsNull())
-				System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + db["csatorna"].ToString();
+			CCManager.Channel = IRCConfig.MasterChannel;
+			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + CCManager.Channel;
 		}
 
 		/// <summary>
@@ -73,19 +73,16 @@ namespace Schumix.Console
 		{
 			try
 			{
-				string uzenet;
+				string message;
 				Log.Notice("Console", "Console parancs olvaso resze elindult.");
 
 				while(true)
 				{
-					uzenet = System.Console.ReadLine();
-					if(CCManager.CBejovoInfo(uzenet))
+					message = System.Console.ReadLine();
+					if(CCManager.CIncomingInfo(message))
 						continue;
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT csatorna FROM schumix WHERE entry = '1'");
-					if(!db.IsNull())
-						sSendMessage.SendCMPrivmsg(db["csatorna"].ToString(), uzenet);
-
+					sSendMessage.SendCMPrivmsg(CCManager.Channel, message);
 					Thread.Sleep(1000);
 				}
 			}

@@ -28,6 +28,7 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Localization;
 using Schumix.CompilerAddon.Commands;
 using Schumix.CompilerAddon.Config;
 
@@ -35,10 +36,10 @@ namespace Schumix.CompilerAddon
 {
 	public class CompilerAddon : Compiler, ISchumixAddon
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
-		private readonly Regex regex2 = new Regex(@"^\{(?<code>.+)\}.+$");
 
 		public void Setup()
 		{
@@ -52,15 +53,16 @@ namespace Schumix.CompilerAddon
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("parancsok") || sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect("commands") || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!sChannelInfo.FSelect("parancsok", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect("commands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				if(!CompilerConfig.CompilerEnabled)
 					return;
 
-				if(regex.IsMatch(sIRCMessage.Args) && Enabled(sIRCMessage.Channel))
+				if((sChannelInfo.FSelect("compiler") && sChannelInfo.FSelect("compiler", sIRCMessage.Channel)) &&
+					(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage.Channel)))
 				{
 					var ts = new CancellationTokenSource();
 					var ct = ts.Token;
@@ -68,19 +70,7 @@ namespace Schumix.CompilerAddon
 
 					t.Wait(1000);
 					ts.Cancel();
-
-					var sw = new StreamWriter(Console.OpenStandardOutput());
-					sw.AutoFlush = true;
-					Console.SetOut(sw);
-				}
-				else if(regex2.IsMatch(sIRCMessage.Args) && Enabled(sIRCMessage.Channel))
-				{
-					var ts = new CancellationTokenSource();
-					var ct = ts.Token;
-					var t = Task.Factory.StartNew(() => CompilerCommand(sIRCMessage), ct);
-
-					t.Wait(1000);
-					ts.Cancel();
+					Thread.Sleep(1000);
 
 					var sw = new StreamWriter(Console.OpenStandardOutput());
 					sw.AutoFlush = true;
@@ -94,9 +84,9 @@ namespace Schumix.CompilerAddon
 
 		}
 
-		public void HandleHelp(IRCMessage sIRCMessage)
+		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
-
+			return false;
 		}
 
 		private bool Enabled(string channel)
@@ -107,7 +97,7 @@ namespace Schumix.CompilerAddon
 
 				if(memory > CompilerConfig.MaxAllocatingM)
 				{
-					sSendMessage.SendCMPrivmsg(channel, "Jelenleg túl sok memóriát fogyaszt a bot ezért ezen funkció nem elérhető!");
+					sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/memory", channel));
 					return false;
 				}
 			}

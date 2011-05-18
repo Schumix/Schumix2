@@ -28,9 +28,9 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.ExtraAddon.Commands
 {
-	public partial class Functions : CommandInfo
+	public partial class Functions
 	{
-		public void HLUzenet(string channel, string args)
+		public void HLMessage(string channel, string args)
 		{
 			if(sChannelInfo.FSelect("autohl") && sChannelInfo.FSelect("autohl", channel))
 			{
@@ -43,9 +43,9 @@ namespace Schumix.ExtraAddon.Commands
 
 						if(regex.IsMatch(args.ToLower()))
 						{
-							string allapot = row["Enabled"].ToString();
+							string status = row["Enabled"].ToString();
 
-							if(allapot != "be")
+							if(status != "on")
 								return;
 
 							sSendMessage.SendCMPrivmsg(channel, "{0}", row["Info"].ToString());
@@ -55,9 +55,9 @@ namespace Schumix.ExtraAddon.Commands
 			}
 		}
 
-		public bool AutoKick(string allapot, string nick, string _channel)
+		public bool AutoKick(string status, string nick, string _channel)
 		{
-			if(allapot == "join")
+			if(status == "join")
 			{
 				string channel = _channel.Remove(0, 1, ":");
 
@@ -66,8 +66,8 @@ namespace Schumix.ExtraAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
 					{
-						string oka = db["Reason"].ToString();
-						sSender.Kick(channel, nick, oka);
+						string reason = db["Reason"].ToString();
+						sSender.Kick(channel, nick, reason);
 						return true;
 					}
 				}
@@ -75,15 +75,15 @@ namespace Schumix.ExtraAddon.Commands
 				return false;
 			}
 
-			if(allapot == "privmsg")
+			if(status == "privmsg")
 			{
 				if(sChannelInfo.FSelect("autokick") && sChannelInfo.FSelect("autokick", _channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
 					{
-						string oka = db["Reason"].ToString();
-						sSender.Kick(_channel, nick, oka);
+						string reason = db["Reason"].ToString();
+						sSender.Kick(_channel, nick, reason);
 						return true;
 					}
 				}
@@ -126,9 +126,9 @@ namespace Schumix.ExtraAddon.Commands
 			}
 		}
 
-		public void Uzenet(string name, string channel)
+		public void Message(string name, string channel)
 		{
-			if(sChannelInfo.FSelect("uzenet") && sChannelInfo.FSelect("uzenet", channel))
+			if(sChannelInfo.FSelect("message") && sChannelInfo.FSelect("message", channel))
 			{
 				var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}'", name.ToLower(), channel.ToLower());
 				if(!db.IsNull())
@@ -136,7 +136,7 @@ namespace Schumix.ExtraAddon.Commands
 					foreach(DataRow row in db.Rows)
 					{
 						sSendMessage.SendCMPrivmsg(channel, "{0}: {1}", name, row["Message"].ToString());
-						sSendMessage.SendCMPrivmsg(channel, "Üzenetet hagyta neked: {0}", row["Wrote"].ToString());
+						sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("message2", channel), row["Wrote"].ToString());
 					}
 
 					SchumixBase.DManager.QueryFirstRow("DELETE FROM `message` WHERE Name = '{0}'", name.ToLower());

@@ -204,14 +204,14 @@ namespace Schumix.GitRssAddon
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}", _name, _type);
 			if(!db.IsNull())
 			{
-				string[] csatorna = db["Channel"].ToString().Split(',');
+				string[] channel = db["Channel"].ToString().Split(',');
 
-				for(int x = 0; x < csatorna.Length; x++)
+				for(int x = 0; x < channel.Length; x++)
 				{
 					if(_website == "github")
 					{
-						sSendMessage.SendCMPrivmsg(csatorna[x], "3{0} 7{1} Revision: 10{2} by {3}", _name, _type, rev.Substring(0, 10), author);
-						sSendMessage.SendCMPrivmsg(csatorna[x], "3{0} Info:{1}", _name, title);
+						sSendMessage.SendCMPrivmsg(channel[x], "3{0} 7{1} Revision: 10{2} by {3}", _name, _type, rev.Substring(0, 10), author);
+						sSendMessage.SendCMPrivmsg(channel[x], "3{0} Info:{1}", _name, title);
 					}
 
 					Thread.Sleep(1000);

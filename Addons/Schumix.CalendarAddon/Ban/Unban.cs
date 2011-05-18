@@ -21,23 +21,26 @@ using System;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.CalendarAddon
 {
-	public sealed class Unbanned
+	public sealed class Unban
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private Unbanned() {}
+		private Unban() {}
 
-		public string UnbannedName(string name, string channel)
+		public string UnbanName(string name, string channel)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}'", name.ToLower(), channel.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower());
 			if(db.IsNull())
-				return "Nem szerepel a tiltó listán!";
+				return sLManager.GetWarningText("UnbanList", channel);
 
-			sSender.Unbanned(channel, name);
-			SchumixBase.DManager.QueryFirstRow("DELETE FROM `banned` WHERE Name = '{0}' AND Channel = '{1}'", name.ToLower(), channel.ToLower());
-			return "Sikeresen törölve lett a tiltó listához.";
+			sSender.Unban(channel, name);
+			SchumixBase.DManager.QueryFirstRow("DELETE FROM `banned` WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower());
+			return sLManager.GetWarningText("UnbanList1", channel);
 		}
 	}
 }

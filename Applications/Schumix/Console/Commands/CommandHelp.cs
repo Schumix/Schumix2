@@ -29,25 +29,25 @@ namespace Schumix.Console.Commands
 		{
 			if(Info.Length == 1)
 			{
-				string parancsok = string.Empty;
+				string commands = string.Empty;
 
 				foreach(var command in CCommandManager.GetCommandHandler())
 				{
 					if(command.Key == "help")
 						continue;
 
-					parancsok += ", " + command.Key;
+					commands += ", " + command.Key;
 				}
 
 				Log.Notice("Console", "Ha a parancs moge irod a megadott parancs nevet vagy a nevet es alparancsat informaciot ad a hasznalatarol.");
-				Log.Notice("Console", "Parancsok: {0}", parancsok.Remove(0, 2, ", "));
+				Log.Notice("Console", "Parancsok: {0}", commands.Remove(0, 2, ", "));
 				return;
 			}
 
 			if(Info[1].ToLower() == "consolelog")
 			{
 				Log.Notice("Console", "Az irc adatok konzolra irasat engedelyezi vagy tiltja. Alapertelmezesben ki van kapcsolva.");
-				Log.Notice("Console", "Hasznalata: consolelog <be vagy ki>");
+				Log.Notice("Console", "Hasznalata: consolelog <on vagy off>");
 			}
 			else if(Info[1].ToLower() == "sys")
 			{
@@ -63,7 +63,7 @@ namespace Schumix.Console.Commands
 				if(Info.Length < 3)
 				{
 					Log.Notice("Console", "Kiirja az operatorok vagy adminisztratorok altal hasznalhato parancsokat.");
-					Log.Notice("Console", "Admin parancsai: info | lista | add | del | rang | hozzaferes | ujjelszo");
+					Log.Notice("Console", "Admin parancsai: info | list | add | remove | rank");
 					return;
 				}
 		
@@ -72,45 +72,35 @@ namespace Schumix.Console.Commands
 					Log.Notice("Console", "Uj admin hozzaadasa.");
 					Log.Notice("Console", "Hasznalata: admin add <admin neve>");
 				}
-				else if(Info[2].ToLower() == "del")
+				else if(Info[2].ToLower() == "remove")
 				{
 					Log.Notice("Console", "Admin eltavolitasa.");
-					Log.Notice("Console", "Hasznalata: admin del <admin neve>");
+					Log.Notice("Console", "Hasznalata: admin remove <admin neve>");
 				}
-				else if(Info[2].ToLower() == "rang")
+				else if(Info[2].ToLower() == "rank")
 				{
 					Log.Notice("Console", "Admin rangjanak megvaltoztatasa.");
-					Log.Notice("Console", "Hasznalata: admin rang <admin neve> <uj rang pl halfoperator: 0, operator: 1, administrator: 2>");
+					Log.Notice("Console", "Hasznalata: admin rank <admin neve> <uj rang pl halfoperator: 0, operator: 1, administrator: 2>");
 				}
 				else if(Info[2].ToLower() == "info")
 				{
 					Log.Notice("Console", "Kiirja éppen milyen rangja van az illetonek.");
 					Log.Notice("Console", "Hasznalata: admin info <admin neve>");
 				}
-				else if(Info[2].ToLower() == "lista")
+				else if(Info[2].ToLower() == "list")
 				{
 					Log.Notice("Console", "Kiirja az összes admin nevet aki az adatbazisban szerepel.");
 				}
-				else if(Info[2].ToLower() == "hozzaferes")
-				{
-					Log.Notice("Console", "Az admin parancsok hasznalatahoz szukseges jelszo ellenorzo és vhost aktivalo.");
-					Log.Notice("Console", "Hasznalata: admin hozzaferes <jelszo>");
-				}
-				else if(Info[2].ToLower() == "ujjelszo")
-				{
-					Log.Notice("Console", "Az admin jelszavanak csereje ha uj kene a regi helyett.");
-					Log.Notice("Console", "Hasznalata: admin ujjelszo <regi jelszo> <uj jelszo>");
-				}
 			}
-			else if(Info[1].ToLower() == "funkcio")
+			else if(Info[1].ToLower() == "function")
 			{
 				if(Info.Length < 3)
 				{
 					Log.Notice("Console", "Funkciok vezerlesere szolgalo parancs.");
 					Log.Notice("Console", "Funkcio parancsai: channel | all | update | info");
 					Log.Notice("Console", "Hasznalata globalisan:");
-					Log.Notice("Console", "Globalis funkcio kezelese: funkcio <be vagy ki> <funkcio nev>");
-					Log.Notice("Console", "Globalis funkciok kezelese: funkcio <be vagy ki> <funkcio nev1> <funkcio nev2> ... stb");
+					Log.Notice("Console", "Globalis funkcio kezelese: function <on vagy off> <funkcio nev>");
+					Log.Notice("Console", "Globalis funkciok kezelese: function <on vagy off> <funkcio nev1> <funkcio nev2> ... stb");
 					return;
 				}
 		
@@ -121,8 +111,8 @@ namespace Schumix.Console.Commands
 						Log.Notice("Console", "Megadot channelen allithatok ezzel a parancsal a funkciok.");
 						Log.Notice("Console", "Funkcio channel parancsai: info");
 						Log.Notice("Console", "Hasznalata:");
-						Log.Notice("Console", "Channel funkcio kezelese: funkcio channel <be vagy ki> <funkcio nev>");
-						Log.Notice("Console", "Channel funkciok kezelése: funkcio channel <be vagy ki> <funkcio nev1> <funkcio nev2> ... stb");
+						Log.Notice("Console", "Channel funkcio kezelese: function channel <on vagy off> <funkcio nev>");
+						Log.Notice("Console", "Channel funkciok kezelése: function channel <on vagy off> <funkcio nev1> <funkcio nev2> ... stb");
 						return;
 					}
 
@@ -135,8 +125,8 @@ namespace Schumix.Console.Commands
 				{
 					Log.Notice("Console", "Frissiti a funkciokat vagy alapertelmezesre allitja.");
 					Log.Notice("Console", "Hasznalata:");
-					Log.Notice("Console", "Mas csatorna: funkcio update <csatorna neve>");
-					Log.Notice("Console", "Globalis: funkcio update");
+					Log.Notice("Console", "Mas csatorna: function update <csatorna neve>");
+					Log.Notice("Console", "Globalis: function update");
 				}
 				else if(Info[3].ToLower() == "info")
 				{
@@ -147,7 +137,7 @@ namespace Schumix.Console.Commands
 			{
 				if(Info.Length < 3)
 				{
-					Log.Notice("Console", "Channel parancsai: add | del | info | update");
+					Log.Notice("Console", "Channel parancsai: add | remove | info | update | language");
 					return;
 				}
 
@@ -156,10 +146,10 @@ namespace Schumix.Console.Commands
 					Log.Notice("Console", "Uj channel hozzaadasa.");
 					Log.Notice("Console", "Hasznalata: channel add <channel> <ha van pass akkor az>");
 				}
-				else if(Info[2].ToLower() == "del")
+				else if(Info[2].ToLower() == "remove")
 				{
 					Log.Notice("Console", "Nem hasznalatos channel eltavolitasa.");
-					Log.Notice("Console", "Hasznalata: channel del <channel>");
+					Log.Notice("Console", "Hasznalata: channel remove <channel>");
 				}
 				else if(Info[2].ToLower() == "info")
 				{
@@ -168,6 +158,11 @@ namespace Schumix.Console.Commands
 				else if(Info[2].ToLower() == "update")
 				{
 					Log.Notice("Console", "Channelekhez tartozo összes informacio frissitese, alapertelmezesre allitasa.");
+				}
+				else if(Info[2].ToLower() == "language")
+				{
+					Log.Notice("Console", "Frissiti a csatorna nyelvezetet.");
+					Log.Notice("Console", "Hasznalata: channel language <csatorna> <nyelvezet>");
 				}
 			}
 			else if(Info[1].ToLower() == "connect")
@@ -199,7 +194,7 @@ namespace Schumix.Console.Commands
 				Log.Notice("Console", "Lelepes a megadott csatornarol.");
 				Log.Notice("Console", "Hasznalata: left <csatorna>");
 			}
-			else if(Info[1].ToLower() == "kikapcs")
+			else if(Info[1].ToLower() == "quit")
 			{
 				Log.Notice("Console", "Bot leallitasara hasznalhato parancs.");
 			}

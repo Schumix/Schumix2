@@ -64,8 +64,8 @@ namespace Schumix.Irc.Commands
 			PublicCRegisterHandler("xbot",         new Action<IRCMessage>(HandleXbot));
 			PublicCRegisterHandler("info",         new Action<IRCMessage>(HandleInfo));
 			PublicCRegisterHandler("help",         new Action<IRCMessage>(HandleHelp));
-			PublicCRegisterHandler("ido",          new Action<IRCMessage>(HandleIdo));
-			PublicCRegisterHandler("datum",        new Action<IRCMessage>(HandleDatum));
+			PublicCRegisterHandler("time",         new Action<IRCMessage>(HandleTime));
+			PublicCRegisterHandler("date",         new Action<IRCMessage>(HandleDate));
 			PublicCRegisterHandler("roll",         new Action<IRCMessage>(HandleRoll));
 			PublicCRegisterHandler("calc",         new Action<IRCMessage>(HandleCalc));
 			PublicCRegisterHandler("sha1",         new Action<IRCMessage>(HandleSha1));
@@ -73,19 +73,19 @@ namespace Schumix.Irc.Commands
 			PublicCRegisterHandler("irc",          new Action<IRCMessage>(HandleIrc));
 			PublicCRegisterHandler("whois",        new Action<IRCMessage>(HandleWhois));
 			PublicCRegisterHandler("warning",      new Action<IRCMessage>(HandleWarning));
-			PublicCRegisterHandler("keres",        new Action<IRCMessage>(HandleKeres));
-			PublicCRegisterHandler("fordit",       new Action<IRCMessage>(HandleFordit));
+			PublicCRegisterHandler("google",       new Action<IRCMessage>(HandleGoogle));
+			PublicCRegisterHandler("translate",    new Action<IRCMessage>(HandleTranslate));
 			PublicCRegisterHandler("prime",        new Action<IRCMessage>(HandlePrime));
 
 			// Half Operator
 			HalfOperatorCRegisterHandler("admin",  new Action<IRCMessage>(HandleAdmin));
-			HalfOperatorCRegisterHandler("szinek", new Action<IRCMessage>(HandleSzinek));
+			HalfOperatorCRegisterHandler("colors", new Action<IRCMessage>(HandleColors));
 			HalfOperatorCRegisterHandler("nick",   new Action<IRCMessage>(HandleNick));
 			HalfOperatorCRegisterHandler("join",   new Action<IRCMessage>(HandleJoin));
 			HalfOperatorCRegisterHandler("left",   new Action<IRCMessage>(HandleLeft));
 
 			// Operator
-			OperatorCRegisterHandler("funkcio",    new Action<IRCMessage>(HandleFunkcio));
+			OperatorCRegisterHandler("function",   new Action<IRCMessage>(HandleFunction));
 			OperatorCRegisterHandler("channel",    new Action<IRCMessage>(HandleChannel));
 			OperatorCRegisterHandler("sznap",      new Action<IRCMessage>(HandleSznap));
 			OperatorCRegisterHandler("kick",       new Action<IRCMessage>(HandleKick));
@@ -93,7 +93,7 @@ namespace Schumix.Irc.Commands
 
 			// Admin
 			AdminCRegisterHandler("plugin",        new Action<IRCMessage>(HandlePlugin));
-			AdminCRegisterHandler("kikapcs",       new Action<IRCMessage>(HandleKikapcs));
+			AdminCRegisterHandler("quit",          new Action<IRCMessage>(HandleQuit));
 
 			Log.Notice("CommandManager", "Osszes Command handler regisztralva.");
 		}
@@ -138,7 +138,7 @@ namespace Schumix.Irc.Commands
 			_AdminCommandHandler.Remove(code);
 		}
 
-		protected void BejovoInfo(string handler, IRCMessage sIRCMessage)
+		protected void IncomingInfo(string handler, IRCMessage sIRCMessage)
 		{
 			try
 			{
@@ -153,7 +153,7 @@ namespace Schumix.Irc.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Error("BejovoInfo", "Hiba oka: {0}", e.Message);
+				Log.Error("IncomingInfo", "Hiba oka: {0}", e.Message);
 			}
 		}
 	}

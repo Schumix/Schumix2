@@ -36,7 +36,7 @@ namespace Schumix.API
 		void Destroy();
 		void HandlePrivmsg(IRCMessage sIRCMessage);
 		void HandleNotice(IRCMessage sIRCMessage);
-		void HandleHelp(IRCMessage sIRCMessage);
+		bool HandleHelp(IRCMessage sIRCMessage);
 
 		/// <summary>
 		/// Name of the addon

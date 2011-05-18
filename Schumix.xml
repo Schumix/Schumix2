@@ -48,4 +48,7 @@
         <Ignore>SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon</Ignore>
         <Directory>Addons</Directory>
     </Addons>
+    <Localization>
+        <Locale>enUS</Locale>
+    </Localization>
 </Schumix>
