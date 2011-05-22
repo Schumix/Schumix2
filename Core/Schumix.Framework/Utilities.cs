@@ -116,8 +116,7 @@ namespace Schumix.Framework
 		public string GetRandomString()
 		{
 			string path = Path.GetRandomFileName();
-			path = path.Replace(".", "");
-			return path;
+			return path.Replace(".", "");
 		}
 
 		public string Sha1(string value)

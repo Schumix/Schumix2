@@ -28,7 +28,7 @@
     <Log>
         <LogLevel>2</LogLevel>
         <LogDirectory>Logs</LogDirectory>
-        <IrcLogDirectory>Csatornak</IrcLogDirectory>
+        <IrcLogDirectory>Channels</IrcLogDirectory>
         <IrcLog>false</IrcLog>
     </Log>
     <MySql>

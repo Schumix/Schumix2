@@ -43,10 +43,7 @@ namespace Schumix.Irc.Commands
 		protected bool IsAdmin(string Name)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
-			if(!db.IsNull())
-				return true;
-
-			return false;
+			return !db.IsNull() ? true : false;
 		}
 
 		protected bool IsAdmin(string Name, AdminFlag Flag)
@@ -55,11 +52,7 @@ namespace Schumix.Irc.Commands
 			if(!db.IsNull())
 			{
 				int flag = Convert.ToInt32(db["Flag"]);
-
-				if(Flag != (AdminFlag)flag)
-					return false;
-
-				return true;
+				return Flag != (AdminFlag)flag ? false : true;
 			}
 
 			return false;
@@ -82,10 +75,7 @@ namespace Schumix.Irc.Commands
 					(flag == 2 && Flag == AdminFlag.Operator))
 					return true;
 
-				if(Flag != (AdminFlag)flag)
-					return false;
-
-				return true;
+				return Flag != (AdminFlag)flag ? false : true;
 			}
 
 			return false;
@@ -93,18 +83,14 @@ namespace Schumix.Irc.Commands
 
 		protected void CNick(IRCMessage sIRCMessage)
 		{
-			bool channel = sIRCMessage.Channel.StartsWith("#");
-			if(!channel)
+			if(!sIRCMessage.Channel.StartsWith("#"))
 				sIRCMessage.Channel = sIRCMessage.Nick;
 		}
 
 		protected int Adminflag(string Name)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
-			if(!db.IsNull())
-				return Convert.ToInt32(db["Flag"]);
-			else
-				return -1;
+			return !db.IsNull() ? Convert.ToInt32(db["Flag"]) : -1;
 		}
 
 		protected int Adminflag(string Name, string Vhost)
@@ -113,11 +99,7 @@ namespace Schumix.Irc.Commands
 			if(!db.IsNull())
 			{
 				string vhost = db["Vhost"].ToString();
-
-				if(Vhost != vhost)
-					return -1;
-
-				return Convert.ToInt32(db["Flag"]);
+				return Vhost != vhost ? -1 : Convert.ToInt32(db["Flag"]);
 			}
 			else
 				return -1;

@@ -22,6 +22,7 @@ using System.IO;
 using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.ExtraAddon.Config
 {
@@ -51,8 +52,8 @@ namespace Schumix.ExtraAddon.Config
 
 			Log.Notice("ExtraAddonConfig", "Config fajl betoltese.");
 
-			bool Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText);
-			string Type = xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText;
+			bool Enabled = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText) : false;
+			string Type = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText : "aohv";
 			new ModeConfig(Enabled, Type);
 
 			Log.Success("ExtraAddonConfig", "Config adatbazis betoltve.");

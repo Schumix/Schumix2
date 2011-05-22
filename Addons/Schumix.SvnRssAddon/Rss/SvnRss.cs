@@ -156,19 +156,13 @@ namespace Schumix.SvnRssAddon
 		private string Title(XmlDocument rss)
 		{
 			var title = rss.SelectSingleNode(_title);
-			if(title.IsNull())
-				return "nincs adat";
-			else
-				return title.InnerText;
+			return title.IsNull() ? "nincs adat" : title.InnerText;
 		}
 
 		private string Author(XmlDocument rss)
 		{
 			var author = rss.SelectSingleNode(_author);
-			if(author.IsNull())
-				return "nincs adat";
-			else
-				return author.InnerText;
+			return author.IsNull() ? "nincs adat" : author.InnerText;
 		}
 
 		private string Revision(XmlDocument rss)

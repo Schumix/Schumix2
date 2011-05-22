@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Xml;
 using System.Threading;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework.Config
 {
@@ -50,10 +51,10 @@ namespace Schumix.Framework.Config
 					var xmldoc = new XmlDocument();
 					xmldoc.Load(string.Format("./{0}/{1}", configdir, configfile));
 
-					int LogLevel = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText);
-					string LogDirectory = xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").InnerText;
-					string IrcLogDirectory = xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").InnerText;
-					bool IrcLog = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText);
+					int LogLevel = !xmldoc.SelectSingleNode("Schumix/Log/LogLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText) : 2;
+					string LogDirectory = !xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").InnerText : "Logs";
+					string IrcLogDirectory = !xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").InnerText : "Channels";
+					bool IrcLog = !xmldoc.SelectSingleNode("Schumix/Log/IrcLog").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText) : false;
 
 					new LogConfig(LogLevel, LogDirectory, IrcLogDirectory, IrcLog);
 
@@ -61,45 +62,45 @@ namespace Schumix.Framework.Config
 					Log.Debug("Config", ">> {0}", configfile);
 
 					Log.Notice("Config", "Config fajl betoltese.");
-					string Server = xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText;
-					int Port = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText);
-					string NickName = xmldoc.SelectSingleNode("Schumix/Irc/NickName").InnerText;
-					string NickName2 = xmldoc.SelectSingleNode("Schumix/Irc/NickName2").InnerText;
-					string NickName3 = xmldoc.SelectSingleNode("Schumix/Irc/NickName3").InnerText;
-					string UserName = xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText;
-					string UserInfo = xmldoc.SelectSingleNode("Schumix/Irc/UserInfo").InnerText;
-					string MasterChannel = xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel").InnerText;
-					string IgnoreChannel = xmldoc.SelectSingleNode("Schumix/Irc/IgnoreChannel").InnerText;
-					bool UseNickServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Enabled").InnerText);
-					string NickServPassword = xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Password").InnerText;
-					bool UseHostServ = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Enabled").InnerText);
-					bool HostServAllapot = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText);
-					int MessageSending = Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").InnerText);
-					string CommandPrefix = xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").InnerText;
+					string Server = !xmldoc.SelectSingleNode("Schumix/Irc/Server").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText : "localhost";
+					int Port = !xmldoc.SelectSingleNode("Schumix/Irc/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText) : 6667;
+					string NickName = !xmldoc.SelectSingleNode("Schumix/Irc/NickName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName").InnerText : "Schumix2";
+					string NickName2 = !xmldoc.SelectSingleNode("Schumix/Irc/NickName2").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName2").InnerText : "_Schumix2";
+					string NickName3 = !xmldoc.SelectSingleNode("Schumix/Irc/NickName3").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName3").InnerText : "__Schumix2";
+					string UserName = !xmldoc.SelectSingleNode("Schumix/Irc/UserName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText : "Schumix2";
+					string UserInfo = !xmldoc.SelectSingleNode("Schumix/Irc/UserInfo").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/UserInfo").InnerText : "Schumix2 IRC Bot";
+					string MasterChannel = !xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel").InnerText : "#schumix2";
+					string IgnoreChannel = !xmldoc.SelectSingleNode("Schumix/Irc/IgnoreChannel").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/IgnoreChannel").InnerText : "#test";
+					bool UseNickServ = !xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Enabled").InnerText) : false;
+					string NickServPassword = !xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Password").InnerText : "pass";
+					bool UseHostServ = !xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Enabled").InnerText) : false;
+					bool HostServStatus = !xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText) : false;
+					int MessageSending = !xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").InnerText) : 50;
+					string CommandPrefix = !xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").InnerText : "$";
 
-					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, IgnoreChannel, UseNickServ, NickServPassword, UseHostServ, HostServAllapot, MessageSending, CommandPrefix);
+					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, IgnoreChannel, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix);
 
-					bool Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText);
-					string Host = xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText;
-					string User = xmldoc.SelectSingleNode("Schumix/MySql/User").InnerText;
-					string Password = xmldoc.SelectSingleNode("Schumix/MySql/Password").InnerText;
-					string Database = xmldoc.SelectSingleNode("Schumix/MySql/Database").InnerText;
-					string Charset = xmldoc.SelectSingleNode("Schumix/MySql/Charset").InnerText;
+					bool Enabled = !xmldoc.SelectSingleNode("Schumix/MySql/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText) : false;
+					string Host = !xmldoc.SelectSingleNode("Schumix/MySql/Host").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText : "localhost";
+					string User = !xmldoc.SelectSingleNode("Schumix/MySql/User").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/User").InnerText : "root";
+					string Password = !xmldoc.SelectSingleNode("Schumix/MySql/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Password").InnerText : "pass";
+					string Database = !xmldoc.SelectSingleNode("Schumix/MySql/Database").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Database").InnerText : "database";
+					string Charset = !xmldoc.SelectSingleNode("Schumix/MySql/Charset").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Charset").InnerText : "utf8";
 
 					new MySqlConfig(Enabled, Host, User, Password, Database, Charset);
 
-					Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").InnerText);
-					string FileName = xmldoc.SelectSingleNode("Schumix/SQLite/FileName").InnerText;
+					Enabled = !xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").InnerText) : false;
+					string FileName = !xmldoc.SelectSingleNode("Schumix/SQLite/FileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/SQLite/FileName").InnerText : "Schumix.db3";
 
 					new SQLiteConfig(Enabled, FileName);
 
-					Enabled = Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Addons/Enabled").InnerText);
-					string Ignore = xmldoc.SelectSingleNode("Schumix/Addons/Ignore").InnerText;
-					string Directory = xmldoc.SelectSingleNode("Schumix/Addons/Directory").InnerText;
+					Enabled = !xmldoc.SelectSingleNode("Schumix/Addons/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Addons/Enabled").InnerText) : true;
+					string Ignore = !xmldoc.SelectSingleNode("Schumix/Addons/Ignore").IsNull() ? xmldoc.SelectSingleNode("Schumix/Addons/Ignore").InnerText : "SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon";
+					string Directory = !xmldoc.SelectSingleNode("Schumix/Addons/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Addons/Directory").InnerText : "Addons";
 
 					new AddonsConfig(Enabled, Ignore, Directory);
 
-					string Locale = xmldoc.SelectSingleNode("Schumix/Localization/Locale").InnerText;
+					string Locale = !xmldoc.SelectSingleNode("Schumix/Localization/Locale").IsNull() ? xmldoc.SelectSingleNode("Schumix/Localization/Locale").InnerText : "enUS";
 
 					new LocalizationConfig(Locale);
 
@@ -109,7 +110,7 @@ namespace Schumix.Framework.Config
 			}
 			catch(Exception e)
 			{
-				new LogConfig(3, "Logs", "Szoba", false);
+				new LogConfig(3, "Logs", "Channels", false);
 				Log.Error("Config", "Hiba oka: {0}", e.Message);
 			}
 		}
@@ -125,7 +126,7 @@ namespace Schumix.Framework.Config
 					return true;
 				else
 				{
-					new LogConfig(3, "Logs", "Szoba", false);
+					new LogConfig(3, "Logs", "Channels", false);
 					Log.Error("Config", "Nincs config fajl!");
 					Log.Debug("Config", "Elkeszitese folyamatban...");
 					var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
@@ -189,7 +190,7 @@ namespace Schumix.Framework.Config
 						w.WriteStartElement("Log");
 						w.WriteElementString("LogLevel", "2");
 						w.WriteElementString("LogDirectory", "Logs");
-						w.WriteElementString("IrcLogDirectory", "Csatornak");
+						w.WriteElementString("IrcLogDirectory", "Channels");
 						w.WriteElementString("IrcLog", "false");
 
 						// </Log>
@@ -296,7 +297,7 @@ namespace Schumix.Framework.Config
 			NickName3        = nickname3;
 			UserName         = username;
 			UserInfo         = userinfo;
-			MasterChannel    = masterchannel;
+			MasterChannel    = masterchannel.ToLower();
 			IgnoreChannel    = ignorechannel;
 			UseNickServ      = usenickserv;
 			NickServPassword = nickservpassword;

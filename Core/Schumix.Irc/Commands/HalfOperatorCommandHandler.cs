@@ -115,14 +115,9 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				int flag;
 				string name = sIRCMessage.Nick;
-
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", name.ToLower());
-				if(!db.IsNull())
-					flag = Convert.ToInt32(db["Flag"].ToString());
-				else
-					flag = -1;
+				int flag = !db.IsNull() ? Convert.ToInt32(db["Flag"].ToString()) : -1;
 
 				if((AdminFlag)flag == AdminFlag.HalfOperator)
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);

@@ -60,11 +60,7 @@ namespace Schumix.Irc
 			if(!db.IsNull())
 			{
 				string status = db["FunctionStatus"].ToString();
-
-				if(status == "on")
-					return true;
-				else
-					return false;
+				return status == "on" ? true : false;
 			}
 			else
 			{
@@ -83,12 +79,7 @@ namespace Schumix.Irc
 				if(point[0] == channel.ToLower())
 				{
 					if(point2[0] == name.ToLower())
-					{
-						if(point2[1] == "on")
-							return true;
-						else
-							return false;
-					}
+						return point2[1] == "on" ? true : false;
 				}
 			}
 

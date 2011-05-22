@@ -158,10 +158,7 @@ namespace Schumix.Framework.Extensions
 
 		public static string Remove(this string s, int min, int max, string value)
 		{
-			if(s.Length >= max && s.Substring(min, max) == value)
-				return s.Remove(min, max);
-			else
-				return s;
+			return (s.Length >= max && s.Substring(min, max) == value) ? s.Remove(min, max) : s;
 		}
 
 		public static bool IsUpper(this string value)
