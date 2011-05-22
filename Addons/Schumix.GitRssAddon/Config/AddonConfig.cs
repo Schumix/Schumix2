@@ -22,6 +22,7 @@ using System.IO;
 using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.GitRssAddon.Config
 {
@@ -51,7 +52,7 @@ namespace Schumix.GitRssAddon.Config
 
 			Log.Notice("GitRssAddonConfig", "Config fajl betoltese.");
 
-			int QueryTime = Convert.ToInt32(xmldoc.SelectSingleNode("GitRssAddon/Rss/QueryTime").InnerText);
+			int QueryTime = !xmldoc.SelectSingleNode("GitRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("GitRssAddon/Rss/QueryTime").InnerText) : 60;
 			new RssConfig(QueryTime);
 
 			Log.Success("GitRssAddonConfig", "Config adatbazis betoltve.");

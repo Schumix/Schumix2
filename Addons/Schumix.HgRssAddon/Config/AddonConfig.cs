@@ -22,6 +22,7 @@ using System.IO;
 using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.HgRssAddon.Config
 {
@@ -51,7 +52,7 @@ namespace Schumix.HgRssAddon.Config
 
 			Log.Notice("HgRssAddonConfig", "Config fajl betoltese.");
 
-			int QueryTime = Convert.ToInt32(xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").InnerText);
+			int QueryTime = !xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").InnerText) : 60;
 			new RssConfig(QueryTime);
 
 			Log.Success("HgRssAddonConfig", "Config adatbazis betoltve.");

@@ -101,13 +101,8 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				int flag;
-
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", Info[2].ToLower());
-				if(!db.IsNull())
-					flag = Convert.ToInt32(db["Flag"].ToString());
-				else
-					flag = -1;
+				int flag = !db.IsNull() ? Convert.ToInt32(db["Flag"].ToString()) : -1;
 
 				if((AdminFlag)flag == AdminFlag.HalfOperator)
 					Log.Notice("Console", "Jelenleg Fel Operator.");		

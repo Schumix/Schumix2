@@ -40,16 +40,38 @@ namespace Schumix
 		/// </remarks>
 		private static void Main(string[] args)
 		{
+			string configdir = "Configs";
+			string configfile = "Schumix.xml";
+
+			for(int i = 0; i < args.Length; i++)
+			{
+				if(args[i] == "-h" || args[i] == "--help")
+				{
+					//Help();
+					return;
+				}
+				else if(args[i] == "--config-dir")
+				{
+					configdir = args[i+1];
+					continue;
+				}
+				else if(args[i] == "--config-file")
+				{
+					configfile = args[i+1];
+					continue;
+				}
+			}
+
 			System.Console.Title = SchumixBase.Title;
 			System.Console.ForegroundColor = ConsoleColor.Blue;
 			System.Console.WriteLine("[Schumix2]");
-			System.Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> vagy <kikapcs> parancsot!\n");
+			System.Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> vagy <quit> parancsot!\n");
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 			System.Console.WriteLine("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", sUtilities.GetVersion());
 			System.Console.WriteLine("==============================================================================");
 			System.Console.WriteLine();
 
-			new Config("Configs", "Schumix.xml");
+			new Config(configdir, configfile);
 			Log.Notice("Main", "Rendszer indul...");
 
 			new SchumixBot();

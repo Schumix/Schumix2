@@ -22,6 +22,7 @@ using System.IO;
 using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.SvnRssAddon.Config
 {
@@ -51,7 +52,7 @@ namespace Schumix.SvnRssAddon.Config
 
 			Log.Notice("SvnRssAddonConfig", "Config fajl betoltese.");
 
-			int QueryTime = Convert.ToInt32(xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").InnerText);
+			int QueryTime = !xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").InnerText) : 60;
 			new RssConfig(QueryTime);
 
 			Log.Success("SvnRssAddonConfig", "Config adatbazis betoltve.");
