@@ -23,6 +23,7 @@ using System.IO;
 using System.Net;
 using System.Web;
 using System.Linq;
+using System.Reflection;
 using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Text;
@@ -33,6 +34,9 @@ namespace Schumix.Framework
 {
 	public sealed class Utilities
 	{
+		private readonly DateTime UnixTimeStart = new DateTime(1970, 1, 1, 0, 0, 0);
+		private const int TicksPerSecond = 10000;
+		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
 		private Utilities() {}
 
 		public string GetUrl(string url)
@@ -261,6 +265,165 @@ namespace Schumix.Framework
 			text = Regex.Replace(text, @"`", @"\`");
 			text = Regex.Replace(text, @"\\`", @" \`");
 			return text;
+		}
+
+		/// <summary>
+		///   Gets the cpu brand string.
+		/// </summary>
+		/// <returns>
+		///   The CPU brand string.
+		/// </returns>
+		public string GetCpuId()
+		{
+#if !MONO
+			var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
+			return (from ManagementObject mo in mos.Get() select (Regex.Replace(Convert.ToString(mo["Name"]), @"\s+", " "))).FirstOrDefault();
+#else
+			var reader = new StreamReader("/proc/cpuinfo");
+			string content = reader.ReadToEnd();
+			reader.Close();
+			reader.Dispose();
+			var getBrandRegex = new Regex(@"model\sname\s:\s*(?<first>.+\sCPU)\s*(?<second>.+)", RegexOptions.IgnoreCase);
+
+			if(!getBrandRegex.IsMatch(content))
+			{
+				// not intel
+				var amdRegex = new Regex(@"model\sname\s:\s*(?<cpu>.+)");
+
+				if(!amdRegex.IsMatch(content))
+					return "Not found";
+
+				var amatch = amdRegex.Match(content);
+				string amd = amatch.Groups["cpu"].ToString();
+				return amd;
+			}
+
+			var match = getBrandRegex.Match(content);
+			string cpu = (match.Groups["first"].ToString() + " " + match.Groups["second"].ToString());
+			return cpu;
+#endif
+        }
+
+		/// <summary>
+		///   The current unix time.
+		/// </summary>
+		public double UnixTime
+		{
+			get
+			{
+				var elapsed = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
+				return (elapsed.TotalSeconds);
+			}
+		}
+
+		/// <summary>
+		/// Converts DateTime to miliseconds.
+		/// </summary>
+		/// <param name="time"></param>
+		/// <returns></returns>
+		public int ToMilliSecondsInt(this DateTime time)
+		{
+			return (int)(time.Ticks/TicksPerSecond);
+		}
+
+		/// <summary>
+		/// Converts TimeSpan to miliseconds.
+		/// </summary>
+		/// <param name="time"></param>
+		/// <returns></returns>
+		public int ToMilliSecondsInt(this TimeSpan time)
+		{
+			return (int)(time.Ticks)/TicksPerSecond;
+		}
+
+		/// <summary>
+		/// Converts ticks to miliseconds.
+		/// </summary>
+		/// <param name="ticks"></param>
+		/// <returns></returns>
+		public int ToMilliSecondsInt(int ticks)
+		{
+			return ticks/TicksPerSecond;
+		}
+
+		/// <summary>
+		///   Gets the system uptime.
+		/// </summary>
+		/// <returns>the system uptime in milliseconds</returns>
+		public long GetSystemTime()
+		{
+			return (uint)Environment.TickCount;
+		}
+
+		/// <summary>
+		///   Gets the time since the Unix epoch.
+		/// </summary>
+		/// <returns>the time since the unix epoch in seconds</returns>
+		public long GetEpochTime()
+		{
+			return (long)((DateTime.UtcNow.Ticks - TicksSince1970)/TimeSpan.TicksPerSecond);
+		}
+
+		/// <summary>
+		/// Gets the date time from unix time.
+		/// </summary>
+		/// <param name="unixTime">The unix time.</param>
+		/// <returns></returns>
+		public DateTime GetDateTimeFromUnixTime(long unixTime)
+		{
+			return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTime);
+		}
+
+		/// <summary>
+		/// Gets the UTC time from seconds.
+		/// </summary>
+		/// <param name="seconds">The seconds.</param>
+		/// <returns></returns>
+		public DateTime GetUTCTimeSeconds(long seconds)
+		{
+			return UnixTimeStart.AddSeconds(seconds);
+		}
+
+		/// <summary>
+		/// Gets the UTC time from millis.
+		/// </summary>
+		/// <param name="millis">The millis.</param>
+		/// <returns></returns>
+		public DateTime GetUTCTimeMillis(long millis)
+		{
+			return UnixTimeStart.AddMilliseconds(millis);
+		}
+
+		/// <summary>
+		///   Gets the system uptime.
+		/// </summary>
+		/// <remarks>
+		///   Even though this returns a long, the original value is a 32-bit integer,
+		///   so it will wrap back to 0 after approximately 49 and half days of system uptime.
+		/// </remarks>
+		/// <returns>the system uptime in milliseconds</returns>
+		public long GetSystemTimeLong()
+		{
+			return (long)Environment.TickCount;
+		}
+
+		/// <summary>
+		///   Gets the time between the Unix epich and a specific <see cref = "DateTime">time</see>.
+		/// </summary>
+		/// <returns>the time between the unix epoch and the supplied <see cref = "DateTime">time</see> in seconds</returns>
+		public long GetEpochTimeFromDT()
+		{
+			return GetEpochTimeFromDT(DateTime.Now);
+		}
+
+		/// <summary>
+		///   Gets the time between the Unix epich and a specific <see cref = "DateTime">time</see>.
+		/// </summary>
+		/// <param name = "time">the end time</param>
+		/// <returns>the time between the unix epoch and the supplied <see cref = "DateTime">time</see> in seconds</returns>
+		public long GetEpochTimeFromDT(DateTime time)
+		{
+			return (long)((time.Ticks - TicksSince1970)/10000000L);
 		}
 	}
 }

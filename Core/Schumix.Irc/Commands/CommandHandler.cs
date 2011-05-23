@@ -153,7 +153,7 @@ namespace Schumix.Irc.Commands
 				if(adminflag != -1)
 				{
 					string command = sIRCMessage.Info.SplitToString(4, "/");
-					int rank = sLManager.GetCommandHelpRank(sIRCMessage.Info.SplitToString(4, "/"), sIRCMessage.Channel);
+					int rank = sLManager.GetCommandHelpRank(command, sIRCMessage.Channel);
 
 					if((adminflag == 2 && rank == 2) || (adminflag == 2 && rank == 1) || (adminflag == 2 && rank == 0) ||
 					(adminflag == 1 && rank == 1) || (adminflag == 1 && rank == 0) || (adminflag == 0 && rank == 0) ||

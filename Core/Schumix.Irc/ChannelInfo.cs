@@ -224,9 +224,7 @@ namespace Schumix.Irc
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					bool enabled = Convert.ToBoolean(row["Enabled"].ToString());
-
-					if(!enabled)
+					if(!Convert.ToBoolean(row["Enabled"].ToString()))
 						error = true;
 				}
 			}
@@ -267,10 +265,7 @@ namespace Schumix.Irc
 					enabled = true;
 			}
 
-			if(enabled)
-				return true;
-
-			return false;
+			return enabled;
 		}
 	}
 }

@@ -51,13 +51,13 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				string name = sIRCMessage.Nick;
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM admins WHERE Name = '{0}'", name.ToLower());
+				string name = sIRCMessage.Nick.ToLower();
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM admins WHERE Name = '{0}'", name);
 				if(!db.IsNull())
 				{
 					if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[5]))
 					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Vhost = '{0}' WHERE Name = '{1}'", sIRCMessage.Host, name.ToLower());
+						SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Vhost = '{0}' WHERE Name = '{1}'", sIRCMessage.Host, name);
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 					}
 					else
@@ -87,13 +87,13 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				string name = sIRCMessage.Nick;
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM admins WHERE Name = '{0}'", name.ToLower());
+				string name = sIRCMessage.Nick.ToLower();
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM admins WHERE Name = '{0}'", name);
 				if(!db.IsNull())
 				{
 					if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[5]))
 					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Password = '{0}' WHERE Name = '{1}'", sUtilities.Sha1(sIRCMessage.Info[6]), name.ToLower());
+						SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Password = '{0}' WHERE Name = '{1}'", sUtilities.Sha1(sIRCMessage.Info[6]), name);
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Info[6]);
 					}
 					else
@@ -115,8 +115,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				string name = sIRCMessage.Nick;
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", name.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", sIRCMessage.Nick.ToLower());
 				int flag = !db.IsNull() ? Convert.ToInt32(db["Flag"].ToString()) : -1;
 
 				if((AdminFlag)flag == AdminFlag.HalfOperator)

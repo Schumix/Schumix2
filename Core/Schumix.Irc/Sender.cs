@@ -203,10 +203,7 @@ namespace Schumix.Irc
 					enabled = true;
 			}
 
-			if(enabled)
-				return true;
-
-			return false;
+			return enabled;
 		}
 	}
 }
