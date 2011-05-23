@@ -28,6 +28,7 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.CompilerAddon.Commands;
 using Schumix.CompilerAddon.Config;
@@ -61,12 +62,31 @@ namespace Schumix.CompilerAddon
 				if(!CompilerConfig.CompilerEnabled)
 					return;
 
+				string command = IRCConfig.NickName + ",";
+				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, ":");
+
+				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage.Channel) && sIRCMessage.Args.Contains(";"))
+				{
+					sIRCMessage.Args = sIRCMessage.Args.Remove(0, command.Length);
+					var ts = new CancellationTokenSource();
+					var ct = ts.Token;
+					var t = Task.Factory.StartNew(() => CompilerCommand(sIRCMessage, true), ct);
+
+					t.Wait(1000);
+					ts.Cancel();
+					Thread.Sleep(1000);
+
+					var sw = new StreamWriter(Console.OpenStandardOutput());
+					sw.AutoFlush = true;
+					Console.SetOut(sw);
+				}
+
 				if((sChannelInfo.FSelect("compiler") && sChannelInfo.FSelect("compiler", sIRCMessage.Channel)) &&
 					(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage.Channel)))
 				{
 					var ts = new CancellationTokenSource();
 					var ct = ts.Token;
-					var t = Task.Factory.StartNew(() => CompilerCommand(sIRCMessage), ct);
+					var t = Task.Factory.StartNew(() => CompilerCommand(sIRCMessage, false), ct);
 
 					t.Wait(1000);
 					ts.Cancel();

@@ -48,7 +48,7 @@ namespace Schumix.CompilerAddon.Commands
 		 	"using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
 #endif
 
-		protected void CompilerCommand(IRCMessage sIRCMessage)
+		protected void CompilerCommand(IRCMessage sIRCMessage, bool command)
 		{
 			try
 			{
@@ -62,8 +62,10 @@ namespace Schumix.CompilerAddon.Commands
 
 				string data = string.Empty, template = string.Empty;
 
-				if(regex.IsMatch(sIRCMessage.Args.TrimEnd()))
+				if(!command && regex.IsMatch(sIRCMessage.Args.TrimEnd()))
 					data = regex.Match(sIRCMessage.Args.TrimEnd()).Groups["code"].ToString();
+				else if(command)
+					data = sIRCMessage.Args.Trim();
 
 				if(Ban(data, sIRCMessage.Channel))
 					return;

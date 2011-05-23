@@ -63,9 +63,8 @@ namespace Schumix.Irc
 		private void Schumix(IRCMessage sIRCMessage)
 		{
 			string command = IRCConfig.NickName + ",";
-			string INick = sIRCMessage.Info[3];
 
-			if(INick.ToLower() == command.ToLower())
+			if(sIRCMessage.Info[3].ToLower() == command.ToLower())
 			{
 				CNick(sIRCMessage);
 
