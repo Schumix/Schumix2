@@ -309,7 +309,7 @@ INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'git/c
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'git/channel/remove', 'Csatorna sikeresen törölve.\nNem létezik ilyen név!');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'compiler/memory', 'Jelenleg túl sok memóriát fogyaszt a bot ezért ezen funkció nem elérhető!');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'compiler/warning', 'A kódban olyan részek vannak melyek veszélyeztetik a programot. Ezért leállt a fordítás!');
-INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'compiler', 'Nincs megadva a fő fv! (Schumix)\nA kimeneti szöveg túl hosszú ezért nem került kiirásra!\nA kód sikeresen lefordult csak nincs kimenő üzenet!\nHátramaradt még {0} kiirás!');
+INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'compiler', 'Nincs megadva a fő fv! (Schumix)\nNincs megadva a fő class!\nA kimeneti szöveg túl hosszú ezért nem került kiirásra!\nA kód sikeresen lefordult csak nincs kimenő üzenet!\nHátramaradt még {0} kiirás!');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'compiler/code', 'Hibák: {0}');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'handlekick', '{0} kirúgta a következő felhasználót: {1} oka: {2}');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'ban', 'Helytelen dátum formátum!');

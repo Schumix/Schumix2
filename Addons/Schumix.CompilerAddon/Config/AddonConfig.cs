@@ -58,7 +58,10 @@ namespace Schumix.CompilerAddon.Config
 			string CompilerOptions = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/CompilerOptions").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/CompilerOptions").InnerText : "/optimize";
 			int WarningLevel = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/WarningLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CompilerAddon/Compiler/WarningLevel").InnerText) : 4;
 			bool TreatWarningsAsErrors = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/TreatWarningsAsErrors").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/TreatWarningsAsErrors").InnerText) : false;
-			new CompilerConfig(CompilerEnabled, Enabled, Memory, CompilerOptions, WarningLevel, TreatWarningsAsErrors);
+			string Referenced = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/Referenced").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/Referenced").InnerText : "using System; using System.Threading; " +
+			"using System.Reflection; using System.Linq; using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
+			string ReferencedAssemblies = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/ReferencedAssemblies").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/ReferencedAssemblies").InnerText : "System.dll,Schumix.Libraries.dll";
+			new CompilerConfig(CompilerEnabled, Enabled, Memory, CompilerOptions, WarningLevel, TreatWarningsAsErrors, Referenced, ReferencedAssemblies);
 
 			Log.Success("CompilerAddonConfig", "Config adatbazis betoltve.");
 			Console.WriteLine();
@@ -99,6 +102,9 @@ namespace Schumix.CompilerAddon.Config
 					w.WriteElementString("CompilerOptions", "/optimize");
 					w.WriteElementString("WarningLevel", "4");
 					w.WriteElementString("TreatWarningsAsErrors", "false");
+					w.WriteElementString("Referenced", "using System; using System.Threading; using System.Reflection; using System.Linq; " +
+					"using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;");
+					w.WriteElementString("ReferencedAssemblies", "System.dll,Schumix.Libraries.dll");
 
 					// </Compiler>
 					w.WriteEndElement();
@@ -129,8 +135,10 @@ namespace Schumix.CompilerAddon.Config
 		public static string CompilerOptions { get; private set; }
 		public static int WarningLevel { get; private set; }
 		public static bool TreatWarningsAsErrors { get; private set; }
+		public static string Referenced { get; private set; }
+		public static string[] ReferencedAssemblies { get; private set; }
 
-		public CompilerConfig(bool compilerenabled, bool maxallocatinge, int maxallocatingm, string compileroptions, int warninglevel, bool treatwarningsaserrors)
+		public CompilerConfig(bool compilerenabled, bool maxallocatinge, int maxallocatingm, string compileroptions, int warninglevel, bool treatwarningsaserrors, string referenced, string referencedassemblies)
 		{
 			CompilerEnabled       = compilerenabled;
 			MaxAllocatingE        = maxallocatinge;
@@ -138,6 +146,8 @@ namespace Schumix.CompilerAddon.Config
 			CompilerOptions       = compileroptions;
 			WarningLevel          = warninglevel;
 			TreatWarningsAsErrors = treatwarningsaserrors;
+			Referenced            = referenced;
+			ReferencedAssemblies  = referencedassemblies.Split(',');
 			Log.Notice("CompilerConfig", "Compile beallitasai betoltve.");
 		}
 	}

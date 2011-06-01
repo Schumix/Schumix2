@@ -1,0 +1,1 @@
+UPDATE `localized_command` SET Text = 'Nincs megadva a fő fv! (Schumix)\nNincs megadva a fő class!\nA kimeneti szöveg túl hosszú ezért nem került kiirásra!\nA kód sikeresen lefordult csak nincs kimenő üzenet!\nHátramaradt még {0} kiirás!' WHERE Language = 'huHU' AND Command = 'compiler';
