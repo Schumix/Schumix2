@@ -72,7 +72,7 @@ namespace Schumix.CompilerAddon
 					var ct = ts.Token;
 					var t = Task.Factory.StartNew(() => CompilerCommand(sIRCMessage, true), ct);
 
-					t.Wait(1000);
+					t.Wait(2000);
 					ts.Cancel();
 					Thread.Sleep(1000);
 
@@ -88,7 +88,7 @@ namespace Schumix.CompilerAddon
 					var ct = ts.Token;
 					var t = Task.Factory.StartNew(() => CompilerCommand(sIRCMessage, false), ct);
 
-					t.Wait(1000);
+					t.Wait(2000);
 					ts.Cancel();
 					Thread.Sleep(1000);
 

@@ -186,8 +186,8 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				string[] sp = message.Split('\n');
-				List<string> lines = new List<string>(50);
+				var sp = message.Split('\n');
+				var lines = new List<string>(50);
 
 				foreach(string s in sp)
 				{

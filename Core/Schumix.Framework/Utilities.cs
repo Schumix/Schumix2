@@ -352,7 +352,7 @@ namespace Schumix.Framework
 		/// <returns>the system uptime in milliseconds</returns>
 		public long GetSystemTime()
 		{
-			return (uint)Environment.TickCount;
+			return (long)Environment.TickCount;
 		}
 
 		/// <summary>

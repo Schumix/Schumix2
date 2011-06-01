@@ -39,14 +39,11 @@ namespace Schumix.CompilerAddon.Commands
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
-
-#if MONO
-		private readonly string Referenced = "using System; using System.Threading; using System.Reflection; using System.Linq; " +
-		 	"using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
-#else
-		private readonly string Referenced = "using System; using System.Threading; using System.Reflection; " +
-		 	"using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
-#endif
+		private readonly Regex ClassRegex = new Regex(@"class\s+Entry\s*?\{");
+		private readonly Regex EntryRegex = new Regex(@" Entry\s*?\{");
+		private readonly Regex SchumixRegex = new Regex(@"Schumix\s*\(\s*(?<lol>.*)\s*\)");
+		private readonly Regex ForRegex = new Regex(@"for\s*\(\s*(?<lol>.*)\s*\)");
+		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
 
 		protected void CompilerCommand(IRCMessage sIRCMessage, bool command)
 		{
@@ -54,7 +51,7 @@ namespace Schumix.CompilerAddon.Commands
 			{
 				CNick(sIRCMessage);
 				var text = sLManager.GetCommandTexts("compiler", sIRCMessage.Channel);
-				if(text.Length < 4)
+				if(text.Length < 5)
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
 					return;
@@ -70,24 +67,22 @@ namespace Schumix.CompilerAddon.Commands
 				if(Ban(data, sIRCMessage.Channel))
 					return;
 
-				data = Loop(data);
-
-				if((!data.Contains("Entry") && !data.Contains("class")) || (!data.Contains("Entry") && data.Contains("class")) || (data.Contains("Entry") && !data.Contains("class")))
+				if(!IsClass(data))
 				{
-					if(!data.Contains("Schumix"))
-						template = Referenced + " public class Entry { public void Schumix() { " + data + " } }";
+					if(!IsSchumix(data))
+						template = CompilerConfig.Referenced + " public class Entry { public void Schumix() { int asdcmxd = 0; " + Loop(data, false, false) + " } }";
 					else
-						template = Referenced + " public class Entry { " + data + " }";
+						template = CompilerConfig.Referenced + " public class Entry { private int asdcmxd = 0; " + Loop(data, false, true) + " }";
 				}
-				else
+				else if(IsEntry(data))
 				{
-					if(!data.Contains("Schumix"))
+					if(!IsSchumix(data))
 					{
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 						return;
 					}
 
-					template = Referenced + " " + data;
+					template = CompilerConfig.Referenced + " " + Loop(data, true, true);
 				}
 
 				var asm = CompileCode(template, sIRCMessage.Channel);
@@ -98,26 +93,32 @@ namespace Schumix.CompilerAddon.Commands
 				Console.SetOut(writer);
 
 				object o = asm.CreateInstance("Entry");
-				var type = o.GetType();
-				type.InvokeMember("Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
-
-				if(writer.ToString().Length > 3000)
+				if(o.IsNull())
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
 					return;
 				}
 
-				string[] lines = writer.ToString().Split('\n');
+				var type = o.GetType();
+				type.InvokeMember("Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+
+				if(writer.ToString().Length > 3000)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2]);
+					return;
+				}
+
+				var lines = writer.ToString().Split('\n');
 
 				if(lines.Length < 2 && data.IndexOf("Console.Write") == -1)
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2]);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
 
 				if(lines.Length > 4)
 				{
 					for(int x = 0; x < 4; x++)
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, lines[x]);
 	
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3], lines.Length-6);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4], lines.Length-6);
 				}
 				else
 				{
@@ -131,30 +132,34 @@ namespace Schumix.CompilerAddon.Commands
 			}
 		}
 
+		private CompilerParameters InitCompilerParameters()
+		{
+			var cparams = new CompilerParameters();
+			cparams.GenerateExecutable = false;
+			cparams.GenerateInMemory = false;
+
+			foreach(var asm in CompilerConfig.ReferencedAssemblies)
+				cparams.ReferencedAssemblies.Add(asm);
+
+			cparams.CompilerOptions = CompilerConfig.CompilerOptions;
+			cparams.WarningLevel = CompilerConfig.WarningLevel;
+			cparams.TreatWarningsAsErrors = CompilerConfig.TreatWarningsAsErrors;
+			return cparams;
+		}
+
 		private Assembly CompileCode(string code, string channel)
 		{
 			try
 			{
 #if MONO
 #pragma warning disable 618
-				var provider = new CSharpCodeProvider();
-				var compiler = provider.CreateCompiler();
+				var compiler = new CSharpCodeProvider().CreateCompiler();
 #pragma warning restore 618
 #else
 				var compiler = CodeDomProvider.CreateProvider("CSharp");
 #endif
+				var results = compiler.CompileAssemblyFromSource(InitCompilerParameters(), code);
 
-				var cparams = new CompilerParameters();
-				cparams.GenerateExecutable = false;
-				cparams.GenerateInMemory = false;
-
-				cparams.ReferencedAssemblies.Add("System.dll");
-				cparams.ReferencedAssemblies.Add("Schumix.Libraries.dll");
-				cparams.CompilerOptions = CompilerConfig.CompilerOptions;
-				cparams.WarningLevel = CompilerConfig.WarningLevel;
-				cparams.TreatWarningsAsErrors = CompilerConfig.TreatWarningsAsErrors;
-
-				var results = compiler.CompileAssemblyFromSource(cparams, code);
 				if(results.Errors.HasErrors)
 				{
 					foreach(CompilerError error in results.Errors)
@@ -171,115 +176,279 @@ namespace Schumix.CompilerAddon.Commands
 			return null;
 		}
 
-		private string Loop(string data)
+		private string Loop(string data, bool Class, bool Schumix)
 		{
-			if(data.Contains("for"))
+			bool doandwhile = false, enabled = false;
+
+			if(Class && Schumix)
 			{
-				string s = data;
-				int i = s.IndexOf("for");
 				var sb = new StringBuilder();
+				sb.Append(data.Substring(0, data.IndexOf("class")+5));
+				data = data.Remove(0, data.IndexOf("class")+5);
 
-				sb.Append(s.Substring(0, i));
-				sb.Append(" int asdcmxd = 0; for");
-				s = s.Substring(s.IndexOf("for")+3);
-
-				if(s.Contains("{"))
+				if(data.Substring(0, data.IndexOf("Entry")).TrimStart() == string.Empty)
 				{
+					sb.Append(data.Substring(0, data.IndexOf("{")));
+					sb.Append("{ public static int asdcmxd = 0; ");
+					sb.Append(data.Substring(data.IndexOf("{")+1));
+					data = sb.ToString();
+				}
+				else
+				{
+					sb.Append(data);
+					data = sb.ToString();
+				}
+			}
+
+			if(IsFor(data))
+			{
+				string s = data, a = string.Empty;
+				var sb = new StringBuilder();
+				sb.Append(s.Substring(0, s.IndexOf("for")));
+				s = s.Remove(0, s.IndexOf("for"));
+				enabled = true;
+
+				for(;;)
+				{
+					if(!s.Contains("for") && !enabled)
+						break;
+
+					if(s.Length > 4 && (s.Substring(0, 4) == "for(" || s.Substring(0, 4) == "for "))
+					{
+					}
+					else
+					{
+						sb.Append(s.Substring(0, s.IndexOf("for")+3));
+						s = s.Substring(s.IndexOf("for")+3);
+
+						if(!s.Contains("for"))
+							sb.Append(s);
+
+						if(enabled)
+							enabled = false;
+
+						continue;
+					}
+
+					if(enabled)
+						enabled = false;
+
+					a = s.Remove(0, s.IndexOf(")"));
+
+					if(a.IndexOf(";") == a.Length-1)
+						a = a.Substring(1, a.IndexOf(";"));
+					else
+						a = a.Substring(1, a.IndexOf(";")+1);
+
+					s = s.Substring(s.IndexOf("for")+3);
+
+					if(a.Trim().Substring(0, 3) == "for")
+					{
+						s = s.Substring(s.IndexOf("for"));
+						continue;
+					}
+
+					sb.Append(" for");
+
+					if(!a.Contains("{") && !a.Contains("if") && !a.Contains("switch"))
+					{
+						sb.Append(s.Substring(0, s.IndexOf(")")+1));
+
+						if(Class && Schumix)
+							sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
+						else
+							sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
+
+						if(!s.Contains("for"))
+						{
+							string x = s.Substring(s.IndexOf(")")+1);
+							sb.Append(x.Substring(0, x.IndexOf(";")) + "; }" + x.Substring(x.IndexOf(";")+1));
+							continue;
+						}
+						else
+						{
+							s = s.Remove(0, s.IndexOf(")")+1);
+							sb.Append(s.Substring(0, s.IndexOf(";")));
+							sb.Append("; }");
+							s = s.Remove(0, s.IndexOf(";")+1);
+							sb.Append(s.Substring(0, s.IndexOf("for")));
+							s = s.Substring(s.IndexOf("for"));
+							continue;
+						}
+					}
+
 					sb.Append(s.Substring(0, s.IndexOf("{")));
+
+					if(Class && Schumix)
+						sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
+					else
+						sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
 
 					if(!s.Contains("for"))
-						sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
+						sb.Append(s.Substring(s.IndexOf("{")+1));
 					else
-						sb.Append("{ return;");
-
-					sb.Append(s.Substring(s.IndexOf("{")+1));
-				}
-				else
-				{
-					sb.Append(s.Substring(0, s.IndexOf(")")+1));
-
-					if(!s.Contains("for"))
-						sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
-					else
-						sb.Append(" { return;");
-
-					sb.Append(s.Substring(s.IndexOf(")")+1));
-					sb.Append("}");
+					{
+						s = s.Remove(0, s.IndexOf("{")+1);
+						sb.Append(s.Substring(0, s.IndexOf("for")));
+						s = s.Substring(s.IndexOf("for"));
+					}
 				}
 
-				return sb.ToString();
+				data = sb.ToString();
 			}
-			else if(data.Contains("do") && data.Contains("while"))
+
+			if(data.Contains("do") && IsWhile(data) && (data.IndexOf("do") == 0 || data.Contains(" do ") ||
+				data.Contains(" do") || data.Contains("do ") || data.Contains("}do") || data.Contains(";do")))
 			{
+				doandwhile = true;
 				string s = data;
-				int i = s.IndexOf("do");
 				var sb = new StringBuilder();
+				sb.Append(s.Substring(0, s.IndexOf("do")));
+				s = s.Remove(0, s.IndexOf("do"));
+				enabled = true;
 
-				sb.Append(s.Substring(0, i));
-				sb.Append(" int asdcmxd = 0; do");
-				s = s.Substring(s.IndexOf("do")+2);
-
-				if(s.Contains("{"))
+				for(;;)
 				{
+					if(!s.Contains("do") && !enabled)
+						break;
+
+					if(s.Length > 3 && s.Substring(0, 3) == "do ")
+					{
+					}
+					else
+					{
+						sb.Append(s.Substring(0, s.IndexOf("do")+2));
+						s = s.Substring(s.IndexOf("do")+2);
+
+						if(!s.Contains("do"))
+							sb.Append(s);
+
+						if(enabled)
+							enabled = false;
+
+						continue;
+					}
+
+					if(enabled)
+						enabled = false;
+
+					s = s.Substring(s.IndexOf("do")+2);
+					sb.Append(" do");
 					sb.Append(s.Substring(0, s.IndexOf("{")));
 
-					if(!s.Contains("do"))
-						sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
+					if(Class && Schumix)
+						sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
 					else
-						sb.Append("{ return;");
-
-					sb.Append(s.Substring(s.IndexOf("{")+1));
-				}
-				else
-				{
-					sb.Append(s.Substring(0, s.IndexOf(")")+1));
+						sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
 
 					if(!s.Contains("do"))
-						sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
+						sb.Append(s.Substring(s.IndexOf("{")+1));
 					else
-						sb.Append(" { return;");
-
-					sb.Append(s.Substring(s.IndexOf(")")+1));
-					sb.Append("}");
+					{
+						s = s.Remove(0, s.IndexOf("{")+1);
+						sb.Append(s.Substring(0, s.IndexOf("do")));
+						s = s.Substring(s.IndexOf("do"));
+					}
 				}
 
-				return sb.ToString();
+				data = sb.ToString();
 			}
-			else if(data.Contains("while"))
+
+			if(IsWhile(data) && doandwhile)
 			{
-				string s = data;
-				int i = s.IndexOf("while");
+				string s = data, a = string.Empty;
 				var sb = new StringBuilder();
+				sb.Append(s.Substring(0, s.IndexOf("while")));
+				s = s.Remove(0, s.IndexOf("while"));
+				enabled = true;
 
-				sb.Append(s.Substring(0, i));
-				sb.Append(" int asdcmxd = 0; while");
-				s = s.Substring(s.IndexOf("while")+5);
-
-				if(s.Contains("{"))
+				for(;;)
 				{
+					if(!s.Contains("while") && !enabled)
+						break;
+
+					if(s.Length > 6 && (s.Substring(0, 6) == "while(" || s.Substring(0, 6) == "while "))
+					{
+					}
+					else
+					{
+						sb.Append(s.Substring(0, s.IndexOf("while")+5));
+						s = s.Substring(s.IndexOf("while")+5);
+
+						if(!s.Contains("while"))
+							sb.Append(s);
+
+						if(enabled)
+							enabled = false;
+
+						continue;
+					}
+
+					if(enabled)
+						enabled = false;
+
+					a = s.Remove(0, s.IndexOf(")"));
+
+					if(a.IndexOf(";") == a.Length-1)
+						a = a.Substring(1, a.IndexOf(";"));
+					else
+						a = a.Substring(1, a.IndexOf(";")+1);
+
+					s = s.Substring(s.IndexOf("while")+5);
+
+					if(a.Trim().Substring(0, 5) == "while")
+					{
+						s = s.Substring(s.IndexOf("while"));
+						continue;
+					}
+
+					sb.Append(" while");
+
+					if(!a.Contains("{") && !a.Contains("if") && !a.Contains("switch"))
+					{
+						sb.Append(s.Substring(0, s.IndexOf(")")+1));
+
+						if(Class && Schumix)
+							sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
+						else
+							sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
+
+						if(!s.Contains("while"))
+						{
+							string x = s.Substring(s.IndexOf(")")+1);
+							sb.Append(x.Substring(0, x.IndexOf(";")) + "; }" + x.Substring(x.IndexOf(";")+1));
+							continue;
+						}
+						else
+						{
+							s = s.Remove(0, s.IndexOf(")")+1);
+							sb.Append(s.Substring(0, s.IndexOf(";")));
+							sb.Append("; }");
+							s = s.Remove(0, s.IndexOf(";")+1);
+							sb.Append(s.Substring(0, s.IndexOf("while")));
+							s = s.Substring(s.IndexOf("while"));
+							continue;
+						}
+					}
+
 					sb.Append(s.Substring(0, s.IndexOf("{")));
 
-					if(!s.Contains("while"))
-						sb.Append("{ asdcmxd++; if(asdcmxd == 10000) return;");
+					if(Class && Schumix)
+						sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
 					else
-						sb.Append("{ return;");
-
-					sb.Append(s.Substring(s.IndexOf("{")+1));
-				}
-				else
-				{
-					sb.Append(s.Substring(0, s.IndexOf(")")+1));
+						sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
 
 					if(!s.Contains("while"))
-						sb.Append(" { asdcmxd++; if(asdcmxd == 10000) return;");
+						sb.Append(s.Substring(s.IndexOf("{")+1));
 					else
-						sb.Append(" { return;");
-
-					sb.Append(s.Substring(s.IndexOf(")")+1));
-					sb.Append("}");
+					{
+						s = s.Remove(0, s.IndexOf("{")+1);
+						sb.Append(s.Substring(0, s.IndexOf("while")));
+						s = s.Substring(s.IndexOf("while"));
+					}
 				}
 
-				return sb.ToString();
+				data = sb.ToString();
 			}
 
 			return data;
@@ -371,6 +540,31 @@ namespace Schumix.CompilerAddon.Commands
 		private void Warning(string channel)
 		{
 			sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/warning", channel));
+		}
+
+		private bool IsClass(string data)
+		{
+			return ClassRegex.IsMatch(data);
+		}
+
+		private bool IsEntry(string data)
+		{
+			return EntryRegex.IsMatch(data);
+		}
+
+		private bool IsSchumix(string data)
+		{
+			return SchumixRegex.IsMatch(data);
+		}
+
+		private bool IsFor(string data)
+		{
+			return ForRegex.IsMatch(data);
+		}
+
+		private bool IsWhile(string data)
+		{
+			return WhileRegex.IsMatch(data);
 		}
 	}
 }
