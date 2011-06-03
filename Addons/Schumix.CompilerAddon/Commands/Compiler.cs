@@ -44,6 +44,7 @@ namespace Schumix.CompilerAddon.Commands
 		private readonly Regex SchumixRegex = new Regex(@"Schumix\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex ForRegex = new Regex(@"for\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
+		private readonly Regex SystemNetRegex = new Regex(@"using\s+System.Net");
 
 		protected void CompilerCommand(IRCMessage sIRCMessage, bool command)
 		{
@@ -522,7 +523,7 @@ namespace Schumix.CompilerAddon.Commands
 				return true;
 			}
 
-			if(data.Contains("using") && data.Contains("System.Net"))
+			if(SystemNetRegex.IsMatch(data))
 			{
 				Warning(channel);
 				return true;
