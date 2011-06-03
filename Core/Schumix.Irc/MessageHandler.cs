@@ -229,13 +229,8 @@ namespace Schumix.Irc
 			{
 				try
 				{
-					if(!Directory.Exists(LogConfig.IrcLogDirectory))
-						Directory.CreateDirectory(LogConfig.IrcLogDirectory);
-
-					string logfile = string.Format("./{0}/{1}.log", LogConfig.IrcLogDirectory, channel);
-					if(!File.Exists(logfile))
-						File.Create(logfile);
-
+					sUtilities.CreateDirectory(LogConfig.IrcLogDirectory);
+					sUtilities.CreateFile(string.Format("./{0}/{1}.log", LogConfig.IrcLogDirectory, channel));
 					var file = new StreamWriter(logfile, true) { AutoFlush = true };
 					file.WriteLine("[{0}] <{1}> {2}", DateTime.Now, user, args);
 					file.Close();
