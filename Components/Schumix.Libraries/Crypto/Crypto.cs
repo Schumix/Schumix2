@@ -18,55 +18,24 @@
  */
 
 using System;
-using System.Text;
-using System.Security.Cryptography;
-using Schumix.Framework.Extensions;
+using Schumix.Framework;
 
 namespace Schumix.Libraries
 {
 	public sealed class Crypto
 	{
-		public Crypto()
-		{
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
-		}
+		public Crypto() {}
 
 		public static string Sha1(string value)
 		{
-			if(value.IsNull())
-				throw new ArgumentNullException("value");
-
-			var x = new SHA1CryptoServiceProvider();
-			var data = Encoding.ASCII.GetBytes(value);
-			data = x.ComputeHash(data);
-#if !MONO
-			x.Dispose();
-#endif
-			var ret = string.Empty;
-
-			for(var i = 0; i < data.Length; i++)
-				ret += data[i].ToString("x2").ToLower();
-
-			return ret;
+			return sUtilities.Sha1(value);
 		}
 
 		public static string Md5(string value)
 		{
-			if(value.IsNull())
-				throw new ArgumentNullException("value");
-
-			var x = new MD5CryptoServiceProvider();
-			var data = Encoding.ASCII.GetBytes(value);
-			data = x.ComputeHash(data);
-#if !MONO
-			x.Dispose();
-#endif
-			var ret = string.Empty;
-
-			for(var i = 0; i < data.Length; i++)
-				ret += data[i].ToString("x2").ToLower();
-
-			return ret;
+			return sUtilities.Md5(value);
 		}
 	}
 }
