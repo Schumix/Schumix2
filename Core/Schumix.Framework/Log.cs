@@ -27,6 +27,7 @@ namespace Schumix.Framework
 {
 	public sealed class Log
 	{
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly object WriteLock = new object();
 
         /// <returns>
@@ -55,15 +56,9 @@ namespace Schumix.Framework
 		{
 			try
 			{
-				if(!Directory.Exists(LogConfig.LogDirectory))
-					Directory.CreateDirectory(LogConfig.LogDirectory);
-
 				var time = DateTime.Now;
-				string logfile = string.Format("./{0}/Schumix.log", LogConfig.LogDirectory);
-
-				if(!File.Exists(logfile))
-					File.Create(logfile);
-
+				sUtilities.CreateDirectory(LogConfig.LogDirectory);
+				sUtilities.CreateFile(string.Format("./{0}/Schumix.log", LogConfig.LogDirectory));
 				var file = new StreamWriter(logfile, true) { AutoFlush = true };
 				file.Write("\nIndulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n", time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
 				file.Close();
