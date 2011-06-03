@@ -58,7 +58,8 @@ namespace Schumix.Framework
 			{
 				var time = DateTime.Now;
 				sUtilities.CreateDirectory(LogConfig.LogDirectory);
-				sUtilities.CreateFile(string.Format("./{0}/Schumix.log", LogConfig.LogDirectory));
+				string logfile = string.Format("./{0}/Schumix.log", LogConfig.LogDirectory);
+				sUtilities.CreateFile(logfile);
 				var file = new StreamWriter(logfile, true) { AutoFlush = true };
 				file.Write("\nIndulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n", time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
 				file.Close();
