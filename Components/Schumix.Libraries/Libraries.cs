@@ -25,40 +25,20 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
 using System.Collections.Generic;
+using Schumix.Framework;
 
 namespace Schumix.Libraries
 {
 	public static class Lib
 	{
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly DateTime UnixTimeStart = new DateTime(1970, 1, 1, 0, 0, 0);
 		private const int TicksPerSecond = 10000;
 		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
 
 		public static bool IsPrime(long x)
 		{
-			x = Math.Abs(x);
-
-			if(x == 1 || x == 0)
-				return false;
-
-			if(x == 2)
-				return true;
-
-			if(x % 2 == 0)
-				return false;
-
-			bool p = true;
-
-			for(var i = 3; i <= Math.Floor(Math.Sqrt(x)); i += 2)
-			{
-				if(x % i == 0)
-				{
-					p = false;
-					break;
-				}
-			}
-
-			return p;
+			return sUtilities.IsPrime(x);
 		}
 
 		public static string Regex(this string text, string regex)
@@ -214,33 +194,7 @@ namespace Schumix.Libraries
 		/// </returns>
 		public static string GetCpuId()
 		{
-#if !MONO
-			var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
-			return (from ManagementObject mo in mos.Get() select (Regex.Replace(Convert.ToString(mo["Name"]), @"\s+", " "))).FirstOrDefault();
-#else
-			var reader = new StreamReader("/proc/cpuinfo");
-			string content = reader.ReadToEnd();
-			reader.Close();
-			reader.Dispose();
-			var getBrandRegex = new Regex(@"model\sname\s:\s*(?<first>.+\sCPU)\s*(?<second>.+)", RegexOptions.IgnoreCase);
-
-			if(!getBrandRegex.IsMatch(content))
-			{
-				// not intel
-				var amdRegex = new Regex(@"model\sname\s:\s*(?<cpu>.+)");
-
-				if(!amdRegex.IsMatch(content))
-					return "Not found";
-
-				var amatch = amdRegex.Match(content);
-				string amd = amatch.Groups["cpu"].ToString();
-				return amd;
-			}
-
-			var match = getBrandRegex.Match(content);
-			string cpu = (match.Groups["first"].ToString() + " " + match.Groups["second"].ToString());
-			return cpu;
-#endif
+			return sUtilities.GetCpuId();
         }
 
 		/// <summary>
@@ -366,4 +320,3 @@ namespace Schumix.Libraries
 		}
 	}
 }
-
