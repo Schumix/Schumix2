@@ -90,6 +90,8 @@
   <ItemGroup>
     <Reference Include="System">
     </Reference>
+    <Reference Include="System.Management">
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Libraries.cs" />

@@ -19,6 +19,8 @@
 
 using System;
 using System.IO;
+using System.Linq;
+using System.Management;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;
