@@ -187,7 +187,7 @@ namespace Schumix.Irc
 		private bool IsIgnore(string channel)
 		{
 			bool enabled = false;
-			string[] ignore = IRCConfig.IgnoreChannel.Split(',');
+			string[] ignore = IRCConfig.IgnoreChannels.Split(',');
 
 			if(ignore.Length > 1)
 			{
@@ -199,7 +199,7 @@ namespace Schumix.Irc
 			}
 			else
 			{
-				if(channel.ToLower() == IRCConfig.IgnoreChannel.ToLower())
+				if(channel.ToLower() == IRCConfig.IgnoreChannels.ToLower())
 					enabled = true;
 			}
 

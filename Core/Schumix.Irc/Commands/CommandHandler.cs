@@ -29,12 +29,13 @@ namespace Schumix.Irc.Commands
 	public partial class CommandHandler : CommandInfo
 	{
 		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		protected readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		protected readonly Sender sSender = Singleton<Sender>.Instance;
-		protected readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
+		protected readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
+		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		protected readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		protected readonly NickName sNickName = Singleton<NickName>.Instance;
+		protected readonly Sender sSender = Singleton<Sender>.Instance;
 		protected string ChannelPrivmsg { get; set; }
 		protected string WhoisPrivmsg { get; set; }
 		protected CommandHandler() {}

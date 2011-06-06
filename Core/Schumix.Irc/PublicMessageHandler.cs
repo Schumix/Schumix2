@@ -32,6 +32,9 @@ namespace Schumix.Irc
 
 		protected void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
+			if(sNickName.Ignore(sIRCMessage.Nick))
+				return;
+
 			foreach(var plugin in sAddonManager.GetPlugins())
 				plugin.HandlePrivmsg(sIRCMessage);
 
