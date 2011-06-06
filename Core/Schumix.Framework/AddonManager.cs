@@ -57,7 +57,10 @@ namespace Schumix.Framework
 		/// Loads plugins from the specified directory.
 		/// </summary>
 		/// <param name="directory">The directory to check in</param>
-		public void LoadPluginsFromDirectory(DirectoryInfo directory) { LoadPluginsFromDirectory(directory.FullName);}
+		public bool LoadPluginsFromDirectory(DirectoryInfo directory)
+		{
+			return LoadPluginsFromDirectory(directory.FullName);
+		}
 
 		/// <summary>
 		/// Loads plugins from the specified directory.

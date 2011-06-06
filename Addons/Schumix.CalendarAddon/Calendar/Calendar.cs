@@ -144,12 +144,12 @@ namespace Schumix.CalendarAddon
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					string nev = row["Name"].ToString();
-					string csatorna = row["Channel"].ToString();
+					string name = row["Name"].ToString();
+					string channel = row["Channel"].ToString();
 					int year = Convert.ToInt32(row["Year"].ToString());
 
 					if(time.Year > year)
-						sUnban.UnbanName(nev, csatorna);
+						sUnban.UnbanName(name, channel);
 					else if(time.Year < year)
 						continue;
 					else if(time.Year == year)
@@ -157,7 +157,7 @@ namespace Schumix.CalendarAddon
 						int month = Convert.ToInt32(row["Month"].ToString());
 
 						if(time.Month > month)
-							sUnban.UnbanName(nev, csatorna);
+							sUnban.UnbanName(name, channel);
 						else if(time.Month < month)
 							continue;
 						else
@@ -167,7 +167,7 @@ namespace Schumix.CalendarAddon
 							if(time.Month == month)
 							{
 								if(time.Day > day)
-									sUnban.UnbanName(nev, csatorna);
+									sUnban.UnbanName(name, channel);
 								else if(time.Day < day)
 									continue;
 								else
@@ -177,7 +177,7 @@ namespace Schumix.CalendarAddon
 										int hour = Convert.ToInt32(row["Hour"].ToString());
 
 										if(time.Hour > hour)
-											sUnban.UnbanName(nev, csatorna);
+											sUnban.UnbanName(name, channel);
 										else if(time.Hour < hour)
 											continue;
 										else
@@ -187,13 +187,13 @@ namespace Schumix.CalendarAddon
 												int minute = Convert.ToInt32(row["Minute"].ToString());
 
 												if(time.Minute > minute)
-													sUnban.UnbanName(nev, csatorna);
+													sUnban.UnbanName(name, channel);
 												else if(time.Minute < minute)
 													continue;
 												else
 												{
 													if(time.Minute == minute)
-														sUnban.UnbanName(nev, csatorna);
+														sUnban.UnbanName(name, channel);
 												}
 											}
 										}

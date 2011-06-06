@@ -9,7 +9,8 @@
         <UserName>Schumix2</UserName>
         <UserInfo>Schumix2 IRC Bot</UserInfo>
         <MasterChannel>#schumix2</MasterChannel>
-        <IgnoreChannel>#test</IgnoreChannel>
+        <IgnoreChannels>#test</IgnoreChannels>
+        <IgnoreNames></IgnoreNames>
         <NickServ>
             <Enabled>false</Enabled>
             <Password>pass</Password>

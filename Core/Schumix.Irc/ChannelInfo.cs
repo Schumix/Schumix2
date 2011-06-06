@@ -236,8 +236,8 @@ namespace Schumix.Irc
 			else
 				Log.Warning("ChannelInfo", "Nehany kapcsolodas sikertelen!");
 
-			if(IRCConfig.IgnoreChannel.Length > 0)
-				Log.Notice("ChannelInfo", "Letiltott csatornak: {0}", IRCConfig.IgnoreChannel);
+			if(IRCConfig.IgnoreChannels.Length > 0)
+				Log.Notice("ChannelInfo", "Letiltott csatornak: {0}", IRCConfig.IgnoreChannels);
 
 			if(SchumixBase.STime)
 			{
@@ -249,7 +249,7 @@ namespace Schumix.Irc
 		public bool IsIgnore(string channel)
 		{
 			bool enabled = false;
-			string[] ignore = IRCConfig.IgnoreChannel.Split(',');
+			string[] ignore = IRCConfig.IgnoreChannels.Split(',');
 
 			if(ignore.Length > 1)
 			{
@@ -261,7 +261,7 @@ namespace Schumix.Irc
 			}
 			else
 			{
-				if(channel.ToLower() == IRCConfig.IgnoreChannel.ToLower())
+				if(channel.ToLower() == IRCConfig.IgnoreChannels.ToLower())
 					enabled = true;
 			}
 
