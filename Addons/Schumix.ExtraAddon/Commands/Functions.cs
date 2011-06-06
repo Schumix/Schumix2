@@ -66,8 +66,7 @@ namespace Schumix.ExtraAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
 					{
-						string reason = db["Reason"].ToString();
-						sSender.Kick(channel, nick, reason);
+						sSender.Kick(channel, nick, db["Reason"].ToString());
 						return true;
 					}
 				}
@@ -82,8 +81,7 @@ namespace Schumix.ExtraAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
 					{
-						string reason = db["Reason"].ToString();
-						sSender.Kick(_channel, nick, reason);
+						sSender.Kick(_channel, nick, db["Reason"].ToString());
 						return true;
 					}
 				}

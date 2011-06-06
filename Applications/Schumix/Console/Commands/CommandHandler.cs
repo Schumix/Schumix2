@@ -303,7 +303,7 @@ namespace Schumix.Console.Commands
 				string f = sChannelInfo.FunctionsInfo();
 				if(f == "Hibás lekérdezés!")
 				{
-					Log.Error("Console", "Hibás lekerdezes!");
+					Log.Error("Console", "Hibas lekerdezes!");
 					return;
 				}
 
