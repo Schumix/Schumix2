@@ -46,7 +46,6 @@ namespace Schumix.Console
 			Log.Debug("Console", "Console parancs olvasoja indul...");
 			Task.Factory.StartNew(() => ConsoleRead());
 			CCManager = new CCommandManager(network);
-
 			CCManager.Channel = IRCConfig.MasterChannel;
 			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + CCManager.Channel;
 		}

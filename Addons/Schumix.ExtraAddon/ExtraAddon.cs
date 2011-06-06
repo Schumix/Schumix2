@@ -46,7 +46,6 @@ namespace Schumix.ExtraAddon
 			Network.PublicRegisterHandler("JOIN",                       new Action<IRCMessage>(HandleJoin));
 			Network.PublicRegisterHandler("PART",                       new Action<IRCMessage>(HandleLeft));
 			Network.PublicRegisterHandler("KICK",                       new Action<IRCMessage>(HandleKick));
-
 			CommandManager.PublicCRegisterHandler("notes",              new Action<IRCMessage>(sNotes.HandleNotes));
 			CommandManager.PublicCRegisterHandler("message",            new Action<IRCMessage>(sFunctions.HandleMessage));
 			CommandManager.HalfOperatorCRegisterHandler("autofunction", new Action<IRCMessage>(sFunctions.HandleAutoFunction));
@@ -160,10 +159,7 @@ namespace Schumix.ExtraAddon
 
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
-			if(sFunctions.Help(sIRCMessage))
-				return true;
-			else
-				return false;
+			return sFunctions.Help(sIRCMessage);
 		}
 
 		/// <summary>
