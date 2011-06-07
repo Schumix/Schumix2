@@ -18,9 +18,10 @@
  */
 
 using System;
+using System.Text;
+using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
-using Schumix.Irc;
 
 namespace Schumix
 {
@@ -42,26 +43,35 @@ namespace Schumix
 		{
 			string configdir = "Configs";
 			string configfile = "Schumix.xml";
+			string console_encoding = "utf-8";
 
 			for(int i = 0; i < args.Length; i++)
 			{
-				if(args[i] == "-h" || args[i] == "--help")
+				string arg = args[i];
+
+				if(arg == "-h" || arg == "--help")
 				{
 					//Help();
 					return;
 				}
-				else if(args[i] == "--config-dir")
+				else if(arg.Contains("--config-dir="))
 				{
-					configdir = args[i+1];
+					configdir = arg.Substring(arg.IndexOf("=")+1);
 					continue;
 				}
-				else if(args[i] == "--config-file")
+				else if(arg.Contains("--config-file="))
 				{
-					configfile = args[i+1];
+					configfile = arg.Substring(arg.IndexOf("=")+1);
+					continue;
+				}
+				else if(arg.Contains("--console-encoding="))
+				{
+					console_encoding = arg.Substring(arg.IndexOf("=")+1);
 					continue;
 				}
 			}
 
+			System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
 			System.Console.Title = SchumixBase.Title;
 			System.Console.ForegroundColor = ConsoleColor.Blue;
 			System.Console.WriteLine("[Schumix2]");
