@@ -215,7 +215,6 @@ INSERT INTO `localized_warning` (Language, Command, Text) VALUES ('huHU', 'NoRan
 INSERT INTO `localized_warning` (Language, Command, Text) VALUES ('huHU', 'NoFunctionName', 'Nincs megadva a funkció neve!');
 INSERT INTO `localized_warning` (Language, Command, Text) VALUES ('huHU', 'NoFunctionStatus', 'Nincs megadva a funkció állapota!');
 INSERT INTO `localized_warning` (Language, Command, Text) VALUES ('huHU', 'NoCommand', 'Nincs megadva a parancs!');
-INSERT INTO `localized_warning` (Language, Command, Text) VALUES ('huHU', 'NoChannelName', 'Nincs megadva a csatorna neve!');
 INSERT INTO `localized_warning` (Language, Command, Text) VALUES ('huHU', 'NoTypeName', 'Nincs a tipus neve megadva!');
 INSERT INTO `localized_warning` (Language, Command, Text) VALUES ('huHU', 'CapsLockOff', 'Kapcsold ki a caps lock-ot!');
 INSERT INTO `localized_warning` (Language, Command, Text) VALUES ('huHU', 'NoTime', 'Nincs megadva az idő!');
@@ -347,6 +346,9 @@ INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'messa
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'plugin/load', '2[Load]: All plugins 3done.\n2[Load]: All plugins 5failed.');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'plugin/unload', '2[Unload]: All plugins 3done.\n2[Unload]: All plugins 5failed.');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'plugin', '{0}: 3loaded.');
+INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'compiler/memory', 'This function is disabled, because currently too many memory is allocated!');
+INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'compiler/warning', 'This code contains dangerous parts. Compiling stopped!');
+INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'compiler', 'The main function is not specified! (Schumix)\nThe main class is not specified!\nThe output text is too long so do not written out.\nSuccessfully compiled the code, only nothing output text!\nResidual is {0} line!');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'compiler/code', 'Errors: {0}');
 
 DROP TABLE IF EXISTS `localized_command_help`;

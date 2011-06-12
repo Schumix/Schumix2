@@ -66,36 +66,11 @@ namespace Schumix.CompilerAddon
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, ":");
 
 				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage.Channel) && sIRCMessage.Args.Contains(";"))
-				{
-					sIRCMessage.Args = sIRCMessage.Args.Remove(0, command.Length);
-					var ts = new CancellationTokenSource();
-					var ct = ts.Token;
-					var t = Task.Factory.StartNew(() => CompilerCommand(sIRCMessage, true), ct);
-
-					t.Wait(2000);
-					ts.Cancel();
-					Thread.Sleep(1000);
-
-					var sw = new StreamWriter(Console.OpenStandardOutput());
-					sw.AutoFlush = true;
-					Console.SetOut(sw);
-				}
+					Compiler(sIRCMessage, true, command);
 
 				if((sChannelInfo.FSelect("compiler") && sChannelInfo.FSelect("compiler", sIRCMessage.Channel)) &&
 					(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage.Channel)))
-				{
-					var ts = new CancellationTokenSource();
-					var ct = ts.Token;
-					var t = Task.Factory.StartNew(() => CompilerCommand(sIRCMessage, false), ct);
-
-					t.Wait(2000);
-					ts.Cancel();
-					Thread.Sleep(1000);
-
-					var sw = new StreamWriter(Console.OpenStandardOutput());
-					sw.AutoFlush = true;
-					Console.SetOut(sw);
-				}
+					Compiler(sIRCMessage, false, command);
 			}
 		}
 
@@ -123,6 +98,29 @@ namespace Schumix.CompilerAddon
 			}
 
 			return true;
+		}
+
+		private void Compiler(IRCMessage sIRCMessage, bool command, string args)
+		{
+			if(command)
+			{
+				sIRCMessage.Args = sIRCMessage.Args.Remove(0, args.Length);
+				var thread = new Thread(() => CompilerCommand(sIRCMessage, true));
+				thread.Start();
+				thread.Join(2000);
+				thread.Abort();
+			}
+			else
+			{
+				var thread = new Thread(() => CompilerCommand(sIRCMessage, false));
+				thread.Start();
+				thread.Join(2000);
+				thread.Abort();
+			}
+
+			var sw = new StreamWriter(Console.OpenStandardOutput());
+			sw.AutoFlush = true;
+			Console.SetOut(sw);
 		}
 
 		/// <summary>

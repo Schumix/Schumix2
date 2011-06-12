@@ -44,6 +44,7 @@ namespace Schumix.CompilerAddon.Commands
 		private readonly Regex SchumixRegex = new Regex(@"Schumix\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex ForRegex = new Regex(@"for\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
+		private readonly Regex DoRegex = new Regex(@"do\s*\{?\s*(?<content>.+)\s*\}?\s*while\s*\((?<while>.+)\s*\)");
 		private readonly Regex SystemNetRegex = new Regex(@"using\s+System.Net");
 
 		protected void CompilerCommand(IRCMessage sIRCMessage, bool command)
@@ -102,6 +103,7 @@ namespace Schumix.CompilerAddon.Commands
 
 				var type = o.GetType();
 				type.InvokeMember("Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, string.Empty);
 
 				if(writer.ToString().Length > 3000)
 				{
@@ -109,22 +111,25 @@ namespace Schumix.CompilerAddon.Commands
 					return;
 				}
 
+				if(writer.ToString().Length == 0)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
+					return;
+				}
+
 				var lines = writer.ToString().Split('\n');
 
-				if(lines.Length < 2 && data.IndexOf("Console.Write") == -1)
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
-
-				if(lines.Length > 4)
+				if(lines.Length <= 5)
+				{
+					foreach(var line in lines)
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, line);
+				}
+				else if(lines.Length > 5)
 				{
 					for(int x = 0; x < 4; x++)
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, lines[x]);
-	
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4], lines.Length-6);
-				}
-				else
-				{
-					for(int x = 0; x < lines.Length; x++)
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, lines[x]);
+
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4], lines.Length-5);
 				}
 			}
 			catch(Exception)
@@ -179,7 +184,7 @@ namespace Schumix.CompilerAddon.Commands
 
 		private string Loop(string data, bool Class, bool Schumix)
 		{
-			bool doandwhile = false, enabled = false;
+			bool enabled = false;
 
 			if(Class && Schumix)
 			{
@@ -243,7 +248,7 @@ namespace Schumix.CompilerAddon.Commands
 
 					s = s.Substring(s.IndexOf("for")+3);
 
-					if(a.Trim().Substring(0, 3) == "for")
+					if(a.Length > 3 && a.Trim().Substring(0, 3) == "for")
 					{
 						s = s.Substring(s.IndexOf("for"));
 						continue;
@@ -298,11 +303,9 @@ namespace Schumix.CompilerAddon.Commands
 				data = sb.ToString();
 			}
 
-			if(data.Contains("do") && IsWhile(data) && (data.IndexOf("do") == 0 || data.Contains(" do ") ||
-				data.Contains(" do") || data.Contains("do ") || data.Contains("}do") || data.Contains(";do")))
+			if(IsDo(data))
 			{
-				doandwhile = true;
-				string s = data;
+				string s = data, a = string.Empty;
 				var sb = new StringBuilder();
 				sb.Append(s.Substring(0, s.IndexOf("do")));
 				s = s.Remove(0, s.IndexOf("do"));
@@ -313,7 +316,7 @@ namespace Schumix.CompilerAddon.Commands
 					if(!s.Contains("do") && !enabled)
 						break;
 
-					if(s.Length > 3 && s.Substring(0, 3) == "do ")
+					if(s.Length > 3 && (s.Substring(0, 3) == "do " || s.Substring(0, 3) == "do{" || s.Substring(0, 3) == "do;"))
 					{
 					}
 					else
@@ -333,8 +336,46 @@ namespace Schumix.CompilerAddon.Commands
 					if(enabled)
 						enabled = false;
 
+					a = s.Remove(0, s.IndexOf("do"));
+
+					if(a.IndexOf(";") == a.Length-1)
+						a = a.Substring(1, a.IndexOf(";"));
+					else
+						a = a.Substring(1, a.IndexOf(";")+1);
+
 					s = s.Substring(s.IndexOf("do")+2);
+
+					if(a.Length > 2 && a.Trim().Substring(0, 2) == "do")
+					{
+						s = s.Substring(s.IndexOf("do"));
+						continue;
+					}
+
 					sb.Append(" do");
+
+					if(!a.Contains("{") && !a.Contains("if") && !a.Contains("switch"))
+					{
+						if(Class && Schumix)
+							sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
+						else
+							sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
+
+						if(!s.Contains("do"))
+						{
+							sb.Append(s.Substring(0, s.IndexOf(";")) + "; }" + s.Substring(s.IndexOf(";")+1));
+							continue;
+						}
+						else
+						{
+							sb.Append(s.Substring(0, s.IndexOf(";")));
+							sb.Append("; }");
+							s = s.Remove(0, s.IndexOf(";")+1);
+							sb.Append(s.Substring(0, s.IndexOf("do")));
+							s = s.Substring(s.IndexOf("do"));
+							continue;
+						}
+					}
+
 					sb.Append(s.Substring(0, s.IndexOf("{")));
 
 					if(Class && Schumix)
@@ -355,11 +396,12 @@ namespace Schumix.CompilerAddon.Commands
 				data = sb.ToString();
 			}
 
-			if(IsWhile(data) && doandwhile)
+			if(IsWhile(data))
 			{
 				string s = data, a = string.Empty;
 				var sb = new StringBuilder();
 				sb.Append(s.Substring(0, s.IndexOf("while")));
+				a = s.Substring(0, s.IndexOf("while"));
 				s = s.Remove(0, s.IndexOf("while"));
 				enabled = true;
 
@@ -367,6 +409,31 @@ namespace Schumix.CompilerAddon.Commands
 				{
 					if(!s.Contains("while") && !enabled)
 						break;
+
+					// TODO: Nem kezeli a do{...while(true);..}while(true); kódot.
+					//       Figyelmen kivül haggya ezért használhatattlan lesz amit kapunk végeredménynek.
+					//       Ha ilyen formában használnánk ajánlott a for-t használni.
+					//       A végtelen ciklus elleni védelmet megkerülni nem lehet elvileg csak rossz kódot épit fel.
+					//       Ezért amig nem lesz rá javítás ilyen formában használni nem ajánlott.
+					if(enabled && a.Contains("do") && (a.Contains(";do") || a.Contains("do;") || a.Contains(" do ") ||
+						a.Contains(" do") || a.Contains("do ")))
+					{
+						s = s.Substring(s.IndexOf("while")+5);
+						sb.Append(" while");
+
+						if(s.Contains("while"))
+						{
+							sb.Append(s.Substring(0, s.IndexOf("while")));
+							s = s.Substring(s.IndexOf("while"));
+						}
+						else
+							sb.Append(s);
+
+						if(enabled)
+							enabled = false;
+
+						continue;
+					}
 
 					if(s.Length > 6 && (s.Substring(0, 6) == "while(" || s.Substring(0, 6) == "while "))
 					{
@@ -397,7 +464,7 @@ namespace Schumix.CompilerAddon.Commands
 
 					s = s.Substring(s.IndexOf("while")+5);
 
-					if(a.Trim().Substring(0, 5) == "while")
+					if(a.Length > 5 && a.Trim().Substring(0, 5) == "while")
 					{
 						s = s.Substring(s.IndexOf("while"));
 						continue;
@@ -457,78 +524,78 @@ namespace Schumix.CompilerAddon.Commands
 
 		private bool Ban(string data, string channel)
 		{
+			// Environment
 			if(data.Contains("Environment"))
 			{
 				Warning(channel);
 				return true;
 			}
 
+			// Input, Output
 			if(data.Contains("System.IO"))
 			{
 				Warning(channel);
 				return true;
 			}
 
+			// Process
 			if(data.Contains("System.Diagnostics.Process"))
 			{
 				Warning(channel);
 				return true;
 			}
 
+			// Windows
 			if(data.Contains("Microsoft.Win32"))
 			{
 				Warning(channel);
 				return true;
 			}
 
+			// Compile
 			if(data.Contains("System.CodeDom"))
 			{
 				Warning(channel);
 				return true;
 			}
 
-			if(data.Contains("Console.SetOut"))
+			// Timers
+			if(data.Contains("System.Timers"))
 			{
 				Warning(channel);
 				return true;
 			}
 
-			if(data.Contains("Console.Title"))
+			// Console
+			if(data.Contains("Console.SetOut") || data.Contains("Console.Title") || data.Contains("Console.CancelKeyPress") ||
+				data.Contains("Console.ResetColor") || data.Contains("Console.SetCursorPosition") ||
+				data.Contains("Console.SetError") || data.Contains("Console.SetIn") || data.Contains("Console.SetWindowSize") ||
+				data.Contains("Console.BackgroundColor") || data.Contains("Console.CapsLock") || data.Contains("Console.Cursor") ||
+				data.Contains("Console.ForegroundColor") || data.Contains("Console.InputEncoding") ||
+				data.Contains("Console.KeyAvailable") || data.Contains("Console.LargestWindow") ||
+				data.Contains("Console.NumberLock") || data.Contains("Console.OutputEncoding") ||
+				data.Contains("Console.TreatControlCAsInput") || data.Contains("Console.Window"))
 			{
 				Warning(channel);
 				return true;
 			}
 
-			if(data.Contains("System.Net.Dns"))
+			// System.Net
+			if(data.Contains("System.Net.Dns") || data.Contains("System.Net.IPAddress") || data.Contains("System.Net.IPEndPoint") ||
+				data.Contains("System.Net.IPHostEntry") || SystemNetRegex.IsMatch(data))
 			{
 				Warning(channel);
 				return true;
 			}
 
-			if(data.Contains("System.Net.IPAddress"))
+			// Assembly
+			if(data.Contains("Assembly.Load") || data.Contains("Assembly.ReflectionOnlyLoad"))
 			{
 				Warning(channel);
 				return true;
 			}
 
-			if(data.Contains("System.Net.IPEndPoint"))
-			{
-				Warning(channel);
-				return true;
-			}
-
-			if(data.Contains("System.Net.IPHostEntry"))
-			{
-				Warning(channel);
-				return true;
-			}
-
-			if(SystemNetRegex.IsMatch(data))
-			{
-				Warning(channel);
-				return true;
-			}
-
+			// Schumix
 			if(data.Contains("asdcmxd"))
 			{
 				Warning(channel);
@@ -566,6 +633,11 @@ namespace Schumix.CompilerAddon.Commands
 		private bool IsWhile(string data)
 		{
 			return WhileRegex.IsMatch(data);
+		}
+
+		private bool IsDo(string data)
+		{
+			return DoRegex.IsMatch(data);
 		}
 	}
 }
