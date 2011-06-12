@@ -1,0 +1,3 @@
+INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'compiler/memory', 'This function is disabled, because currently too many memory is allocated!');
+INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'compiler/warning', 'This code contains dangerous parts. Compiling stopped!');
+INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'compiler', 'The main function is not specified! (Schumix)\nThe main class is not specified!\nThe output text is too long so do not written out.\nSuccessfully compiled the code, only nothing output text!\nResidual is {0} line!');
