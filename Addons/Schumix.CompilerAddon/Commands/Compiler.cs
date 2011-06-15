@@ -47,6 +47,36 @@ namespace Schumix.CompilerAddon.Commands
 		private readonly Regex DoRegex = new Regex(@"do\s*\{?\s*(?<content>.+)\s*\}?\s*while\s*\((?<while>.+)\s*\)");
 		private readonly Regex SystemNetRegex = new Regex(@"using\s+System.Net");
 
+		private bool IsClass(string data)
+		{
+			return ClassRegex.IsMatch(data);
+		}
+
+		private bool IsEntry(string data)
+		{
+			return EntryRegex.IsMatch(data);
+		}
+
+		private bool IsSchumix(string data)
+		{
+			return SchumixRegex.IsMatch(data);
+		}
+
+		private bool IsFor(string data)
+		{
+			return ForRegex.IsMatch(data);
+		}
+
+		private bool IsWhile(string data)
+		{
+			return WhileRegex.IsMatch(data);
+		}
+
+		private bool IsDo(string data)
+		{
+			return DoRegex.IsMatch(data);
+		}
+
 		protected void CompilerCommand(IRCMessage sIRCMessage, bool command)
 		{
 			try
@@ -72,9 +102,9 @@ namespace Schumix.CompilerAddon.Commands
 				if(!IsClass(data))
 				{
 					if(!IsSchumix(data))
-						template = CompilerConfig.Referenced + " public class Entry { public void Schumix() { int asdcmxd = 0; " + Loop(data, false, false) + " } }";
+						template = CompilerConfig.Referenced + " public class Entry { public void Schumix() { int asdcmxd = 0; " + InfiniteLoop(CleanText(data), false, false) + " } }";
 					else
-						template = CompilerConfig.Referenced + " public class Entry { private int asdcmxd = 0; " + Loop(data, false, true) + " }";
+						template = CompilerConfig.Referenced + " public class Entry { private int asdcmxd = 0; " + InfiniteLoop(CleanText(data), false, true) + " }";
 				}
 				else if(IsEntry(data))
 				{
@@ -84,7 +114,7 @@ namespace Schumix.CompilerAddon.Commands
 						return;
 					}
 
-					template = CompilerConfig.Referenced + " " + Loop(data, true, true);
+					template = CompilerConfig.Referenced + " " + InfiniteLoop(CleanText(data), true, true);
 				}
 
 				var asm = CompileCode(template, sIRCMessage.Channel);
@@ -105,7 +135,7 @@ namespace Schumix.CompilerAddon.Commands
 				type.InvokeMember("Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, string.Empty);
 
-				if(writer.ToString().Length > 3000)
+				if(writer.ToString().Length > 2000)
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2]);
 					return;
@@ -164,28 +194,71 @@ namespace Schumix.CompilerAddon.Commands
 #else
 				var compiler = CodeDomProvider.CreateProvider("CSharp");
 #endif
-				var results = compiler.CompileAssemblyFromSource(InitCompilerParameters(), code);
-
-				if(results.Errors.HasErrors)
-				{
-					foreach(CompilerError error in results.Errors)
-						sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/code", channel), error.ErrorText);
-				}
-				else
-					return results.CompiledAssembly;
+				return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), channel);
 			}
 			catch(Exception)
 			{
-				// egyenlőre semmi
+				return null;
 			}
-
-			return null;
 		}
 
-		private string Loop(string data, bool Class, bool Schumix)
+		private Assembly CompilerErrors(CompilerResults results, string channel)
 		{
-			bool enabled = false;
+			if(results.Errors.HasErrors)
+			{
+				foreach(CompilerError error in results.Errors)
+				{
+					string errortext = error.ErrorText;
 
+					if(errortext.Contains("Location of the symbol related to previous error"))
+					{
+#if MONO
+						for(;;)
+						{
+							if(errortext.Contains("/"))
+							{
+								if(errortext.Substring(0, 1) == "/")
+									errortext = errortext.Remove(0, 1);
+								else
+									errortext = errortext.Remove(0, errortext.IndexOf("/"));
+							}
+							else
+								break;
+						}
+
+						string s = "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
+						sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/code", channel), s);
+#else
+						for(;;)
+						{
+							if(errortext.Contains("\\"))
+							{
+								if(errortext.Substring(0, 1) == "\\")
+									errortext = errortext.Remove(0, 1);
+								else
+									errortext = errortext.Remove(0, errortext.IndexOf("\\"));
+							}
+							else
+								break;
+						}
+
+						string s = "*:\***\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
+						sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/code", channel), s);
+#endif
+						continue;
+					}
+
+					sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/code", channel), errortext);
+				}
+
+				return null;
+			}
+			else
+				return results.CompiledAssembly;
+		}
+
+		private string InfiniteLoop(string data, bool Class, bool Schumix)
+		{
 			if(Class && Schumix)
 			{
 				var sb = new StringBuilder();
@@ -207,325 +280,165 @@ namespace Schumix.CompilerAddon.Commands
 			}
 
 			if(IsFor(data))
+				data = Loop(data, Class, Schumix, "for");
+
+			if(IsDo(data))
+				data = Loop(data, Class, Schumix, "do");
+
+			if(IsWhile(data))
+				data = Loop(data, Class, Schumix, "while");
+
+			return data;
+		}
+
+		private string Loop(string data, bool Class, bool Schumix, string loop)
+		{
+			var Length = loop.Length;
+			bool enabled = false;
+			string s = data, a = string.Empty;
+			var sb = new StringBuilder();
+			sb.Append(s.Substring(0, s.IndexOf(loop)));
+
+			if(loop == "while")
+				a = s.Substring(0, s.IndexOf(loop));
+
+			s = s.Remove(0, s.IndexOf(loop));
+			enabled = true;
+
+			for(;;)
 			{
-				string s = data, a = string.Empty;
-				var sb = new StringBuilder();
-				sb.Append(s.Substring(0, s.IndexOf("for")));
-				s = s.Remove(0, s.IndexOf("for"));
-				enabled = true;
+				if(!s.Contains(loop) && !enabled)
+					break;
 
-				for(;;)
+				// TODO: Nem kezeli a do{...while(true);..}while(true); kódot.
+				//       Figyelmen kivül haggya ezért használhatattlan lesz amit kapunk végeredménynek.
+				//       Ha ilyen formában használnánk ajánlott a for-t használni.
+				//       A végtelen ciklus elleni védelmet megkerülni nem lehet elvileg csak rossz kódot épit fel.
+				//       Ezért amig nem lesz rá javítás ilyen formában használni nem ajánlott.
+				if(enabled && loop == "while" && a.Contains("do") && (a.Contains(";do") || a.Contains("do;") || a.Contains(" do ") ||
+					a.Contains(" do") || a.Contains("do ")))
 				{
-					if(!s.Contains("for") && !enabled)
-						break;
+					s = s.Substring(s.IndexOf(loop)+Length);
+					sb.Append(" " + loop);
 
-					if(s.Length > 4 && (s.Substring(0, 4) == "for(" || s.Substring(0, 4) == "for "))
+					if(s.Contains(loop))
 					{
+						sb.Append(s.Substring(0, s.IndexOf(loop)));
+						s = s.Substring(s.IndexOf(loop));
 					}
 					else
-					{
-						sb.Append(s.Substring(0, s.IndexOf("for")+3));
-						s = s.Substring(s.IndexOf("for")+3);
-
-						if(!s.Contains("for"))
-							sb.Append(s);
-
-						if(enabled)
-							enabled = false;
-
-						continue;
-					}
+						sb.Append(s);
 
 					if(enabled)
 						enabled = false;
 
+					continue;
+				}
+
+				if(s.Length > Length && ((loop == "for" && s.Substring(0, Length+1) == "for(" || s.Substring(0, Length+1) == "for ")) ||
+					(loop == "while" && s.Substring(0, Length+1) == "while(" || s.Substring(0, Length+1) == "while ") ||
+					(loop == "do" && s.Substring(0, Length+1) == "do " || s.Substring(0, Length+1) == "do{" || s.Substring(0, Length+1) == "do;"))
+				{
+				}
+				else
+				{
+					sb.Append(s.Substring(0, s.IndexOf(loop)+Length));
+					s = s.Substring(s.IndexOf(loop)+Length);
+
+					if(!s.Contains(loop))
+						sb.Append(s);
+
+					if(enabled)
+						enabled = false;
+
+					continue;
+				}
+
+				if(enabled)
+					enabled = false;
+
+				if(loop == "do")
+					a = s.Remove(0, s.IndexOf("do"));
+				else
 					a = s.Remove(0, s.IndexOf(")"));
 
-					if(a.IndexOf(";") == a.Length-1)
-						a = a.Substring(1, a.IndexOf(";"));
-					else
-						a = a.Substring(1, a.IndexOf(";")+1);
+				if(a.IndexOf(";") == a.Length-1)
+					a = a.Substring(1, a.IndexOf(";"));
+				else
+					a = a.Substring(1, a.IndexOf(";")+1);
 
-					s = s.Substring(s.IndexOf("for")+3);
+				s = s.Substring(s.IndexOf(loop)+Length);
 
-					if(a.Length > 3 && a.Trim().Substring(0, 3) == "for")
-					{
-						s = s.Substring(s.IndexOf("for"));
-						continue;
-					}
+				if(a.Length > Length && a.Trim().Substring(0, Length) == loop)
+				{
+					s = s.Substring(s.IndexOf(loop));
+					continue;
+				}
 
-					sb.Append(" for");
+				sb.Append(" " + loop);
 
-					if(!a.Contains("{") && !a.Contains("if") && !a.Contains("switch"))
-					{
+				if(!a.Contains("{") && !a.Contains("if") && !a.Contains("switch"))
+				{
+					if(loop != "do")
 						sb.Append(s.Substring(0, s.IndexOf(")")+1));
-
-						if(Class && Schumix)
-							sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
-						else
-							sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
-
-						if(!s.Contains("for"))
-						{
-							string x = s.Substring(s.IndexOf(")")+1);
-							sb.Append(x.Substring(0, x.IndexOf(";")) + "; }" + x.Substring(x.IndexOf(";")+1));
-							continue;
-						}
-						else
-						{
-							s = s.Remove(0, s.IndexOf(")")+1);
-							sb.Append(s.Substring(0, s.IndexOf(";")));
-							sb.Append("; }");
-							s = s.Remove(0, s.IndexOf(";")+1);
-							sb.Append(s.Substring(0, s.IndexOf("for")));
-							s = s.Substring(s.IndexOf("for"));
-							continue;
-						}
-					}
-
-					sb.Append(s.Substring(0, s.IndexOf("{")));
 
 					if(Class && Schumix)
 						sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
 					else
 						sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
 
-					if(!s.Contains("for"))
-						sb.Append(s.Substring(s.IndexOf("{")+1));
-					else
+					if(!s.Contains(loop))
 					{
-						s = s.Remove(0, s.IndexOf("{")+1);
-						sb.Append(s.Substring(0, s.IndexOf("for")));
-						s = s.Substring(s.IndexOf("for"));
-					}
-				}
-
-				data = sb.ToString();
-			}
-
-			if(IsDo(data))
-			{
-				string s = data, a = string.Empty;
-				var sb = new StringBuilder();
-				sb.Append(s.Substring(0, s.IndexOf("do")));
-				s = s.Remove(0, s.IndexOf("do"));
-				enabled = true;
-
-				for(;;)
-				{
-					if(!s.Contains("do") && !enabled)
-						break;
-
-					if(s.Length > 3 && (s.Substring(0, 3) == "do " || s.Substring(0, 3) == "do{" || s.Substring(0, 3) == "do;"))
-					{
-					}
-					else
-					{
-						sb.Append(s.Substring(0, s.IndexOf("do")+2));
-						s = s.Substring(s.IndexOf("do")+2);
-
-						if(!s.Contains("do"))
-							sb.Append(s);
-
-						if(enabled)
-							enabled = false;
-
-						continue;
-					}
-
-					if(enabled)
-						enabled = false;
-
-					a = s.Remove(0, s.IndexOf("do"));
-
-					if(a.IndexOf(";") == a.Length-1)
-						a = a.Substring(1, a.IndexOf(";"));
-					else
-						a = a.Substring(1, a.IndexOf(";")+1);
-
-					s = s.Substring(s.IndexOf("do")+2);
-
-					if(a.Length > 2 && a.Trim().Substring(0, 2) == "do")
-					{
-						s = s.Substring(s.IndexOf("do"));
-						continue;
-					}
-
-					sb.Append(" do");
-
-					if(!a.Contains("{") && !a.Contains("if") && !a.Contains("switch"))
-					{
-						if(Class && Schumix)
-							sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
-						else
-							sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
-
-						if(!s.Contains("do"))
+						if(loop == "do")
 						{
 							sb.Append(s.Substring(0, s.IndexOf(";")) + "; }" + s.Substring(s.IndexOf(";")+1));
 							continue;
 						}
 						else
 						{
-							sb.Append(s.Substring(0, s.IndexOf(";")));
-							sb.Append("; }");
-							s = s.Remove(0, s.IndexOf(";")+1);
-							sb.Append(s.Substring(0, s.IndexOf("do")));
-							s = s.Substring(s.IndexOf("do"));
-							continue;
-						}
-					}
-
-					sb.Append(s.Substring(0, s.IndexOf("{")));
-
-					if(Class && Schumix)
-						sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
-					else
-						sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
-
-					if(!s.Contains("do"))
-						sb.Append(s.Substring(s.IndexOf("{")+1));
-					else
-					{
-						s = s.Remove(0, s.IndexOf("{")+1);
-						sb.Append(s.Substring(0, s.IndexOf("do")));
-						s = s.Substring(s.IndexOf("do"));
-					}
-				}
-
-				data = sb.ToString();
-			}
-
-			if(IsWhile(data))
-			{
-				string s = data, a = string.Empty;
-				var sb = new StringBuilder();
-				sb.Append(s.Substring(0, s.IndexOf("while")));
-				a = s.Substring(0, s.IndexOf("while"));
-				s = s.Remove(0, s.IndexOf("while"));
-				enabled = true;
-
-				for(;;)
-				{
-					if(!s.Contains("while") && !enabled)
-						break;
-
-					// TODO: Nem kezeli a do{...while(true);..}while(true); kódot.
-					//       Figyelmen kivül haggya ezért használhatattlan lesz amit kapunk végeredménynek.
-					//       Ha ilyen formában használnánk ajánlott a for-t használni.
-					//       A végtelen ciklus elleni védelmet megkerülni nem lehet elvileg csak rossz kódot épit fel.
-					//       Ezért amig nem lesz rá javítás ilyen formában használni nem ajánlott.
-					if(enabled && a.Contains("do") && (a.Contains(";do") || a.Contains("do;") || a.Contains(" do ") ||
-						a.Contains(" do") || a.Contains("do ")))
-					{
-						s = s.Substring(s.IndexOf("while")+5);
-						sb.Append(" while");
-
-						if(s.Contains("while"))
-						{
-							sb.Append(s.Substring(0, s.IndexOf("while")));
-							s = s.Substring(s.IndexOf("while"));
-						}
-						else
-							sb.Append(s);
-
-						if(enabled)
-							enabled = false;
-
-						continue;
-					}
-
-					if(s.Length > 6 && (s.Substring(0, 6) == "while(" || s.Substring(0, 6) == "while "))
-					{
-					}
-					else
-					{
-						sb.Append(s.Substring(0, s.IndexOf("while")+5));
-						s = s.Substring(s.IndexOf("while")+5);
-
-						if(!s.Contains("while"))
-							sb.Append(s);
-
-						if(enabled)
-							enabled = false;
-
-						continue;
-					}
-
-					if(enabled)
-						enabled = false;
-
-					a = s.Remove(0, s.IndexOf(")"));
-
-					if(a.IndexOf(";") == a.Length-1)
-						a = a.Substring(1, a.IndexOf(";"));
-					else
-						a = a.Substring(1, a.IndexOf(";")+1);
-
-					s = s.Substring(s.IndexOf("while")+5);
-
-					if(a.Length > 5 && a.Trim().Substring(0, 5) == "while")
-					{
-						s = s.Substring(s.IndexOf("while"));
-						continue;
-					}
-
-					sb.Append(" while");
-
-					if(!a.Contains("{") && !a.Contains("if") && !a.Contains("switch"))
-					{
-						sb.Append(s.Substring(0, s.IndexOf(")")+1));
-
-						if(Class && Schumix)
-							sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
-						else
-							sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
-
-						if(!s.Contains("while"))
-						{
 							string x = s.Substring(s.IndexOf(")")+1);
 							sb.Append(x.Substring(0, x.IndexOf(";")) + "; }" + x.Substring(x.IndexOf(";")+1));
 							continue;
 						}
-						else
-						{
-							s = s.Remove(0, s.IndexOf(")")+1);
-							sb.Append(s.Substring(0, s.IndexOf(";")));
-							sb.Append("; }");
-							s = s.Remove(0, s.IndexOf(";")+1);
-							sb.Append(s.Substring(0, s.IndexOf("while")));
-							s = s.Substring(s.IndexOf("while"));
-							continue;
-						}
 					}
-
-					sb.Append(s.Substring(0, s.IndexOf("{")));
-
-					if(Class && Schumix)
-						sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
-					else
-						sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
-
-					if(!s.Contains("while"))
-						sb.Append(s.Substring(s.IndexOf("{")+1));
 					else
 					{
-						s = s.Remove(0, s.IndexOf("{")+1);
-						sb.Append(s.Substring(0, s.IndexOf("while")));
-						s = s.Substring(s.IndexOf("while"));
+						if(loop != "do")
+							s = s.Remove(0, s.IndexOf(")")+1);
+
+						sb.Append(s.Substring(0, s.IndexOf(";")));
+						sb.Append("; }");
+						s = s.Remove(0, s.IndexOf(";")+1);
+						sb.Append(s.Substring(0, s.IndexOf(loop)));
+						s = s.Substring(s.IndexOf(loop));
+						continue;
 					}
 				}
 
-				data = sb.ToString();
+				sb.Append(s.Substring(0, s.IndexOf("{")));
+
+				if(Class && Schumix)
+					sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
+				else
+					sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
+
+				if(!s.Contains(loop))
+					sb.Append(s.Substring(s.IndexOf("{")+1));
+				else
+				{
+					s = s.Remove(0, s.IndexOf("{")+1);
+					sb.Append(s.Substring(0, s.IndexOf(loop)));
+					s = s.Substring(s.IndexOf(loop));
+				}
 			}
 
-			return data;
+			return sb.ToString();
 		}
 
 		private bool Ban(string data, string channel)
 		{
-			// Environment
-			if(data.Contains("Environment"))
+			// Environment and Security
+			if(data.Contains("Environment") || data.Contains("System.Security"))
 			{
 				Warning(channel);
 				return true;
@@ -605,39 +518,47 @@ namespace Schumix.CompilerAddon.Commands
 			return false;
 		}
 
+		private string CleanText(string text)
+		{
+			if(text.Contains("/*") && text.Contains("*/"))
+			{
+				var sb = new StringBuilder();
+
+				for(;;)
+				{
+					if(!text.Contains("/*"))
+						break;
+
+					sb.Append(text.Substring(0, text.IndexOf("/*")));
+
+					if(text.Contains("/*"))
+						text = text.Remove(0, text.IndexOf("*/")+2);
+					else
+						sb.Append(text.Substring(text.IndexOf("*/")+2));
+				}
+
+				text = sb.ToString();
+			}
+
+			if(text.Trim().Length > 0 && text.Trim().Substring(0, 1) == ";")
+			{
+				for(;;)
+				{
+					string s = text.Trim();
+
+					if(s.Length == 0 || s.Substring(0, 1) != ";")
+						break;
+
+					text = s.Remove(0, 1, ";");
+				}
+			}
+
+			return text.Trim() == string.Empty ? "Console.Write(\":'(\");" : text;
+		}
+
 		private void Warning(string channel)
 		{
 			sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/warning", channel));
-		}
-
-		private bool IsClass(string data)
-		{
-			return ClassRegex.IsMatch(data);
-		}
-
-		private bool IsEntry(string data)
-		{
-			return EntryRegex.IsMatch(data);
-		}
-
-		private bool IsSchumix(string data)
-		{
-			return SchumixRegex.IsMatch(data);
-		}
-
-		private bool IsFor(string data)
-		{
-			return ForRegex.IsMatch(data);
-		}
-
-		private bool IsWhile(string data)
-		{
-			return WhileRegex.IsMatch(data);
-		}
-
-		private bool IsDo(string data)
-		{
-			return DoRegex.IsMatch(data);
 		}
 	}
 }
