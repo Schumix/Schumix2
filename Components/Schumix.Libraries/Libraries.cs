@@ -55,13 +55,13 @@ namespace Schumix.Libraries
 				return s.Remove(0, 1);
 			}
 			else
-				return "Hibás regex!";
+				return "Regex error!";
 		}
 
 		public static string Regex(this string text, string regex, string groups)
 		{
 			var x = new Regex(regex);
-			return x.IsMatch(text) ? x.Match(text).Groups[groups].ToString() : "Hibás regex!";
+			return x.IsMatch(text) ? x.Match(text).Groups[groups].ToString() : "Regex error!";
 		}
 
 		/// <summary>
@@ -317,6 +317,16 @@ namespace Schumix.Libraries
 		public static long GetEpochTimeFromDT(DateTime time)
 		{
 			return (long)((time.Ticks - TicksSince1970)/10000000L);
+		}
+
+		public static string GetVersion()
+		{
+			return sUtilities.GetVersion();
+		}
+
+		public static string GetNetVersion()
+		{
+			return Environment.Version.ToString();
 		}
 	}
 }
