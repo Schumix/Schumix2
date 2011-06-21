@@ -38,7 +38,7 @@ namespace Schumix.CompilerAddon.Commands
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
+		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 		private readonly Regex ClassRegex = new Regex(@"class\s+Entry\s*?\{");
 		private readonly Regex EntryRegex = new Regex(@" Entry\s*?\{");
 		private readonly Regex SchumixRegex = new Regex(@"Schumix\s*\(\s*(?<lol>.*)\s*\)");
@@ -77,7 +77,7 @@ namespace Schumix.CompilerAddon.Commands
 			return DoRegex.IsMatch(data);
 		}
 
-		protected void CompilerCommand(IRCMessage sIRCMessage, bool command)
+		protected bool CompilerCommand(IRCMessage sIRCMessage, bool command)
 		{
 			try
 			{
@@ -86,7 +86,7 @@ namespace Schumix.CompilerAddon.Commands
 				if(text.Length < 5)
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
-					return;
+					return true;
 				}
 
 				string data = string.Empty, template = string.Empty;
@@ -97,7 +97,7 @@ namespace Schumix.CompilerAddon.Commands
 					data = sIRCMessage.Args.Trim();
 
 				if(Ban(data, sIRCMessage.Channel))
-					return;
+					return true;
 
 				if(!IsClass(data))
 				{
@@ -111,7 +111,7 @@ namespace Schumix.CompilerAddon.Commands
 					if(!IsSchumix(data))
 					{
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
-						return;
+						return true;
 					}
 
 					template = CompilerConfig.Referenced + " " + InfiniteLoop(CleanText(data), true, true);
@@ -119,7 +119,7 @@ namespace Schumix.CompilerAddon.Commands
 
 				var asm = CompileCode(template, sIRCMessage.Channel);
 				if(asm.IsNull())
-					return;
+					return true;
 
 				var writer = new StringWriter();
 				Console.SetOut(writer);
@@ -128,7 +128,7 @@ namespace Schumix.CompilerAddon.Commands
 				if(o.IsNull())
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
-					return;
+					return true;
 				}
 
 				var type = o.GetType();
@@ -138,13 +138,13 @@ namespace Schumix.CompilerAddon.Commands
 				if(writer.ToString().Length > 2000)
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2]);
-					return;
+					return true;
 				}
 
 				if(writer.ToString().Length == 0)
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
-					return;
+					return true;
 				}
 
 				var lines = writer.ToString().Split('\n');
@@ -161,10 +161,12 @@ namespace Schumix.CompilerAddon.Commands
 
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4], lines.Length-5);
 				}
+
+				return true;
 			}
 			catch(Exception)
 			{
-				// egyenlőre semmi
+				return true;
 			}
 		}
 
@@ -293,8 +295,8 @@ namespace Schumix.CompilerAddon.Commands
 
 		private string Loop(string data, bool Class, bool Schumix, string loop)
 		{
+			bool enabled = true;
 			var Length = loop.Length;
-			bool enabled = false;
 			string s = data, a = string.Empty;
 			var sb = new StringBuilder();
 			sb.Append(s.Substring(0, s.IndexOf(loop)));
@@ -303,7 +305,6 @@ namespace Schumix.CompilerAddon.Commands
 				a = s.Substring(0, s.IndexOf(loop));
 
 			s = s.Remove(0, s.IndexOf(loop));
-			enabled = true;
 
 			for(;;)
 			{
@@ -335,12 +336,9 @@ namespace Schumix.CompilerAddon.Commands
 					continue;
 				}
 
-				if(s.Length > Length && ((loop == "for" && s.Substring(0, Length+1) == "for(" || s.Substring(0, Length+1) == "for ")) ||
-					(loop == "while" && s.Substring(0, Length+1) == "while(" || s.Substring(0, Length+1) == "while ") ||
-					(loop == "do" && s.Substring(0, Length+1) == "do " || s.Substring(0, Length+1) == "do{" || s.Substring(0, Length+1) == "do;"))
-				{
-				}
-				else
+				if(s.Length > Length && ((loop == "for" && s.Substring(0, Length+1) != "for(" && s.Substring(0, Length+1) != "for ")) ||
+					(loop == "while" && s.Substring(0, Length+1) != "while(" && s.Substring(0, Length+1) != "while ") ||
+					(loop == "do" && s.Substring(0, Length+1) != "do " && s.Substring(0, Length+1) != "do{" && s.Substring(0, Length+1) != "do;"))
 				{
 					sb.Append(s.Substring(0, s.IndexOf(loop)+Length));
 					s = s.Substring(s.IndexOf(loop)+Length);
@@ -358,13 +356,13 @@ namespace Schumix.CompilerAddon.Commands
 					enabled = false;
 
 				if(loop == "do")
-					a = s.Remove(0, s.IndexOf("do"));
+					a = s.Remove(0, s.IndexOf(loop));
 				else
 					a = s.Remove(0, s.IndexOf(")"));
 
 				if(a.IndexOf(";") == a.Length-1)
 					a = a.Substring(1, a.IndexOf(";"));
-				else
+				else if(a.Contains(";"))
 					a = a.Substring(1, a.IndexOf(";")+1);
 
 				s = s.Substring(s.IndexOf(loop)+Length);
@@ -377,10 +375,27 @@ namespace Schumix.CompilerAddon.Commands
 
 				sb.Append(" " + loop);
 
-				if(!a.Contains("{") && !a.Contains("if") && !a.Contains("switch"))
+				if(a.Trim() == ")")
+					return data;
+
+				// TODO: if és switch használatának megoldása
+				if(a.Length > 0 && a.TrimStart().Substring(0, 1) != "{" && !a.Contains("if") && !a.Contains("switch"))
 				{
-					if(loop != "do")
+					if(loop == "do")
+					{
+						if(s.Contains("while"))
+						{
+							if(s.Substring(0, s.IndexOf("while")).TrimStart() == string.Empty)
+								return data;
+						}
+					}
+					else
+					{
+						if(!s.Substring(s.IndexOf(")")+1).Contains(";"))
+							return data;
+
 						sb.Append(s.Substring(0, s.IndexOf(")")+1));
+					}
 
 					if(Class && Schumix)
 						sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
@@ -397,7 +412,27 @@ namespace Schumix.CompilerAddon.Commands
 						else
 						{
 							string x = s.Substring(s.IndexOf(")")+1);
-							sb.Append(x.Substring(0, x.IndexOf(";")) + "; }" + x.Substring(x.IndexOf(";")+1));
+
+							// TODO: for(;;) do;while(true); megoldása
+							/*if(loop == "for")
+							{
+								if(IsDo(x))
+								{
+									for(;;)
+									{
+										sb.Append(s.Substring(0, s.IndexOf(loop)+Length));
+										s = s.Substring(s.IndexOf(loop)+Length);
+
+										if(!s.Contains(loop))
+											sb.Append(s);
+									}
+								}
+								else
+									sb.Append(x.Substring(0, x.IndexOf(";")) + "; }" + x.Substring(x.IndexOf(";")+1));
+							}
+							else*/
+								sb.Append(x.Substring(0, x.IndexOf(";")) + "; }" + x.Substring(x.IndexOf(";")+1));
+
 							continue;
 						}
 					}
@@ -540,6 +575,77 @@ namespace Schumix.CompilerAddon.Commands
 				text = sb.ToString();
 			}
 
+			text = CleanSemicolon(text);
+
+			if(text.Contains("{") && text.Contains("}"))
+			{
+				for(;;)
+				{
+					string s = text.Trim();
+
+					if(s.Length > 0 && s.Substring(0, 1) == "}")
+					{
+						text = s.Remove(0, 1, "}");
+						continue;
+					}
+
+					if(s.Length == 0 || s.Substring(0, 1) != "{")
+						break;
+
+					if(s.IndexOf("{") == s.Length-1)
+					{
+						text = s.Remove(0, s.IndexOf("{")+1);
+						break;
+					}
+
+					if(s.Substring(s.IndexOf("{")+1, s.IndexOf("}")).Trim() == "}")
+					{
+						text = s.Remove(0, s.IndexOf("}")+1);
+						continue;
+					}
+					else if(s.Substring(s.IndexOf("{")+1, s.IndexOf("}")).Trim().Substring(0, 1) == "{")
+					{
+						text = s.Remove(0, s.IndexOf("{")+1);
+						continue;
+					}
+					else if(s.Substring(s.IndexOf("{")+1, s.IndexOf("}")).Trim().Substring(0, 1) == ";")
+					{
+						bool enabled = true;
+						string ss = s.Substring(s.IndexOf("{")+1, s.IndexOf("}")).Trim();
+
+						for(;;)
+						{
+							if(!enabled)
+								ss = text.Trim();
+
+							if(enabled)
+								enabled = false;
+
+							if(ss.Length > 0 && ss.Substring(0, 1) == "}")
+							{
+								text = ss.Remove(0, 1, "}");
+								break;
+							}
+
+							if(ss.Length == 0 || ss.Substring(0, 1) != ";")
+								break;
+
+							text = ss.Remove(0, 1, ";");
+						}
+
+						continue;
+					}
+					else
+						break;
+				}
+			}
+
+			text = CleanSemicolon(text);
+			return text.Trim() == string.Empty ? "Console.Write(\":'(\");" : text;
+		}
+
+		private string CleanSemicolon(string text)
+		{
 			if(text.Trim().Length > 0 && text.Trim().Substring(0, 1) == ";")
 			{
 				for(;;)
@@ -553,7 +659,7 @@ namespace Schumix.CompilerAddon.Commands
 				}
 			}
 
-			return text.Trim() == string.Empty ? "Console.Write(\":'(\");" : text;
+			return text;
 		}
 
 		private void Warning(string channel)

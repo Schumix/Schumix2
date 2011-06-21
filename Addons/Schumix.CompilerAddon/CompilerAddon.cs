@@ -40,7 +40,7 @@ namespace Schumix.CompilerAddon
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly Regex regex = new Regex(@"^\{(?<code>.+)\}$");
+		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 
 		public void Setup()
 		{
@@ -102,21 +102,27 @@ namespace Schumix.CompilerAddon
 
 		private void Compiler(IRCMessage sIRCMessage, bool command, string args)
 		{
+			bool b = false;
+
 			if(command)
 			{
 				sIRCMessage.Args = sIRCMessage.Args.Remove(0, args.Length);
-				var thread = new Thread(() => CompilerCommand(sIRCMessage, true));
+				var thread = new Thread(() => b = CompilerCommand(sIRCMessage, true));
 				thread.Start();
 				thread.Join(2000);
 				thread.Abort();
 			}
 			else
 			{
-				var thread = new Thread(() => CompilerCommand(sIRCMessage, false));
+				var thread = new Thread(() => b = CompilerCommand(sIRCMessage, false));
 				thread.Start();
 				thread.Join(2000);
 				thread.Abort();
 			}
+
+			// TODO: Sql-be rakni a szöveget.
+			if(!b)
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Killed thread!");
 
 			var sw = new StreamWriter(Console.OpenStandardOutput());
 			sw.AutoFlush = true;
