@@ -19,6 +19,7 @@
 
 using System;
 using System.IO;
+using System.Threading;
 using System.Reflection;
 using System.CodeDom.Compiler;
 using System.Text;
@@ -102,9 +103,9 @@ namespace Schumix.CompilerAddon.Commands
 				if(!IsClass(data))
 				{
 					if(!IsSchumix(data))
-						template = CompilerConfig.Referenced + " public class Entry { public void Schumix() { int asdcmxd = 0; " + InfiniteLoop(CleanText(data), false, false) + " } }";
+						template = CompilerConfig.Referenced + " public class Entry { public void Schumix() { " + CleanText(data) + " } }";
 					else
-						template = CompilerConfig.Referenced + " public class Entry { private int asdcmxd = 0; " + InfiniteLoop(CleanText(data), false, true) + " }";
+						template = CompilerConfig.Referenced + " public class Entry { " + CleanText(data) + " }";
 				}
 				else if(IsEntry(data))
 				{
@@ -114,7 +115,7 @@ namespace Schumix.CompilerAddon.Commands
 						return true;
 					}
 
-					template = CompilerConfig.Referenced + " " + InfiniteLoop(CleanText(data), true, true);
+					template = CompilerConfig.Referenced + " " + CleanText(data);
 				}
 
 				var asm = CompileCode(template, sIRCMessage.Channel);
@@ -131,8 +132,24 @@ namespace Schumix.CompilerAddon.Commands
 					return true;
 				}
 
-				var type = o.GetType();
-				type.InvokeMember("Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+				if(IsFor(data) || IsDo(data) || IsWhile(data))
+				{
+					bool b = false;
+					var thread = new Thread(() => { o.GetType().InvokeMember("Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
+					thread.Start();
+					thread.Join(1);
+					thread.Abort();
+
+					// TODO: Sql-be rakni a szöveget.
+					if(!b)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Killed thread!");
+						return true;
+					}
+				}
+				else
+					o.GetType().InvokeMember("Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, string.Empty);
 
 				if(writer.ToString().Length > 2000)
@@ -259,217 +276,6 @@ namespace Schumix.CompilerAddon.Commands
 				return results.CompiledAssembly;
 		}
 
-		private string InfiniteLoop(string data, bool Class, bool Schumix)
-		{
-			if(Class && Schumix)
-			{
-				var sb = new StringBuilder();
-				sb.Append(data.Substring(0, data.IndexOf("class")+5));
-				data = data.Remove(0, data.IndexOf("class")+5);
-
-				if(data.Substring(0, data.IndexOf("Entry")).TrimStart() == string.Empty)
-				{
-					sb.Append(data.Substring(0, data.IndexOf("{")));
-					sb.Append("{ public static int asdcmxd = 0; ");
-					sb.Append(data.Substring(data.IndexOf("{")+1));
-					data = sb.ToString();
-				}
-				else
-				{
-					sb.Append(data);
-					data = sb.ToString();
-				}
-			}
-
-			if(IsFor(data))
-				data = Loop(data, Class, Schumix, "for");
-
-			if(IsDo(data))
-				data = Loop(data, Class, Schumix, "do");
-
-			if(IsWhile(data))
-				data = Loop(data, Class, Schumix, "while");
-
-			return data;
-		}
-
-		private string Loop(string data, bool Class, bool Schumix, string loop)
-		{
-			bool enabled = true;
-			var Length = loop.Length;
-			string s = data, a = string.Empty;
-			var sb = new StringBuilder();
-			sb.Append(s.Substring(0, s.IndexOf(loop)));
-
-			if(loop == "while")
-				a = s.Substring(0, s.IndexOf(loop));
-
-			s = s.Remove(0, s.IndexOf(loop));
-
-			for(;;)
-			{
-				if(!s.Contains(loop) && !enabled)
-					break;
-
-				// TODO: Nem kezeli a do{...while(true);..}while(true); kódot.
-				//       Figyelmen kivül haggya ezért használhatattlan lesz amit kapunk végeredménynek.
-				//       Ha ilyen formában használnánk ajánlott a for-t használni.
-				//       A végtelen ciklus elleni védelmet megkerülni nem lehet elvileg csak rossz kódot épit fel.
-				//       Ezért amig nem lesz rá javítás ilyen formában használni nem ajánlott.
-				if(enabled && loop == "while" && a.Contains("do") && (a.Contains(";do") || a.Contains("do;") || a.Contains(" do ") ||
-					a.Contains(" do") || a.Contains("do ")))
-				{
-					s = s.Substring(s.IndexOf(loop)+Length);
-					sb.Append(" " + loop);
-
-					if(s.Contains(loop))
-					{
-						sb.Append(s.Substring(0, s.IndexOf(loop)));
-						s = s.Substring(s.IndexOf(loop));
-					}
-					else
-						sb.Append(s);
-
-					if(enabled)
-						enabled = false;
-
-					continue;
-				}
-
-				if(s.Length > Length && ((loop == "for" && s.Substring(0, Length+1) != "for(" && s.Substring(0, Length+1) != "for ")) ||
-					(loop == "while" && s.Substring(0, Length+1) != "while(" && s.Substring(0, Length+1) != "while ") ||
-					(loop == "do" && s.Substring(0, Length+1) != "do " && s.Substring(0, Length+1) != "do{" && s.Substring(0, Length+1) != "do;"))
-				{
-					sb.Append(s.Substring(0, s.IndexOf(loop)+Length));
-					s = s.Substring(s.IndexOf(loop)+Length);
-
-					if(!s.Contains(loop))
-						sb.Append(s);
-
-					if(enabled)
-						enabled = false;
-
-					continue;
-				}
-
-				if(enabled)
-					enabled = false;
-
-				if(loop == "do")
-					a = s.Remove(0, s.IndexOf(loop));
-				else
-					a = s.Remove(0, s.IndexOf(")"));
-
-				if(a.IndexOf(";") == a.Length-1)
-					a = a.Substring(1, a.IndexOf(";"));
-				else if(a.Contains(";"))
-					a = a.Substring(1, a.IndexOf(";")+1);
-
-				s = s.Substring(s.IndexOf(loop)+Length);
-
-				if(a.Length > Length && a.Trim().Substring(0, Length) == loop)
-				{
-					s = s.Substring(s.IndexOf(loop));
-					continue;
-				}
-
-				sb.Append(" " + loop);
-
-				if(a.Trim() == ")")
-					return data;
-
-				// TODO: if és switch használatának megoldása
-				if(a.Length > 0 && a.TrimStart().Substring(0, 1) != "{" && !a.Contains("if") && !a.Contains("switch"))
-				{
-					if(loop == "do")
-					{
-						if(s.Contains("while"))
-						{
-							if(s.Substring(0, s.IndexOf("while")).TrimStart() == string.Empty)
-								return data;
-						}
-					}
-					else
-					{
-						if(!s.Substring(s.IndexOf(")")+1).Contains(";"))
-							return data;
-
-						sb.Append(s.Substring(0, s.IndexOf(")")+1));
-					}
-
-					if(Class && Schumix)
-						sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
-					else
-						sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
-
-					if(!s.Contains(loop))
-					{
-						if(loop == "do")
-						{
-							sb.Append(s.Substring(0, s.IndexOf(";")) + "; }" + s.Substring(s.IndexOf(";")+1));
-							continue;
-						}
-						else
-						{
-							string x = s.Substring(s.IndexOf(")")+1);
-
-							// TODO: for(;;) do;while(true); megoldása
-							/*if(loop == "for")
-							{
-								if(IsDo(x))
-								{
-									for(;;)
-									{
-										sb.Append(s.Substring(0, s.IndexOf(loop)+Length));
-										s = s.Substring(s.IndexOf(loop)+Length);
-
-										if(!s.Contains(loop))
-											sb.Append(s);
-									}
-								}
-								else
-									sb.Append(x.Substring(0, x.IndexOf(";")) + "; }" + x.Substring(x.IndexOf(";")+1));
-							}
-							else*/
-								sb.Append(x.Substring(0, x.IndexOf(";")) + "; }" + x.Substring(x.IndexOf(";")+1));
-
-							continue;
-						}
-					}
-					else
-					{
-						if(loop != "do")
-							s = s.Remove(0, s.IndexOf(")")+1);
-
-						sb.Append(s.Substring(0, s.IndexOf(";")));
-						sb.Append("; }");
-						s = s.Remove(0, s.IndexOf(";")+1);
-						sb.Append(s.Substring(0, s.IndexOf(loop)));
-						s = s.Substring(s.IndexOf(loop));
-						continue;
-					}
-				}
-
-				sb.Append(s.Substring(0, s.IndexOf("{")));
-
-				if(Class && Schumix)
-					sb.Append("{ Entry.asdcmxd++; if(Entry.asdcmxd >= 10000) break;");
-				else
-					sb.Append("{ asdcmxd++; if(asdcmxd >= 10000) break;");
-
-				if(!s.Contains(loop))
-					sb.Append(s.Substring(s.IndexOf("{")+1));
-				else
-				{
-					s = s.Remove(0, s.IndexOf("{")+1);
-					sb.Append(s.Substring(0, s.IndexOf(loop)));
-					s = s.Substring(s.IndexOf(loop));
-				}
-			}
-
-			return sb.ToString();
-		}
-
 		private bool Ban(string data, string channel)
 		{
 			// Environment and Security
@@ -538,13 +344,6 @@ namespace Schumix.CompilerAddon.Commands
 
 			// Assembly
 			if(data.Contains("Assembly.Load") || data.Contains("Assembly.ReflectionOnlyLoad"))
-			{
-				Warning(channel);
-				return true;
-			}
-
-			// Schumix
-			if(data.Contains("asdcmxd"))
 			{
 				Warning(channel);
 				return true;

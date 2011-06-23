@@ -68,9 +68,17 @@ namespace Schumix.CompilerAddon
 				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage.Channel) && sIRCMessage.Args.Contains(";"))
 					Compiler(sIRCMessage, true, command);
 
-				if((sChannelInfo.FSelect("compiler") && sChannelInfo.FSelect("compiler", sIRCMessage.Channel)) &&
-					(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage.Channel)))
-					Compiler(sIRCMessage, false, command);
+				if(sIRCMessage.Channel.Substring(0, 1) != "#")
+				{
+					if(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage.Channel))
+						Compiler(sIRCMessage, false, command);
+				}
+				else
+				{
+					if((sChannelInfo.FSelect("compiler") && sChannelInfo.FSelect("compiler", sIRCMessage.Channel)) &&
+						(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage.Channel)))
+						Compiler(sIRCMessage, false, command);
+				}
 			}
 		}
 
