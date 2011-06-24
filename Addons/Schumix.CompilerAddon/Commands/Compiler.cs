@@ -40,13 +40,13 @@ namespace Schumix.CompilerAddon.Commands
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
-		private readonly Regex ClassRegex = new Regex(@"class\s+Entry\s*?\{");
-		private readonly Regex EntryRegex = new Regex(@" Entry\s*?\{");
-		private readonly Regex SchumixRegex = new Regex(@"Schumix\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex ForRegex = new Regex(@"for\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex DoRegex = new Regex(@"do\s*\{?\s*(?<content>.+)\s*\}?\s*while\s*\((?<while>.+)\s*\)");
 		private readonly Regex SystemNetRegex = new Regex(@"using\s+System.Net");
+		protected Regex ClassRegex { get; set; }
+		protected Regex EntryRegex { get; set; }
+		protected Regex SchumixRegex { get; set; }
 
 		private bool IsClass(string data)
 		{
@@ -103,9 +103,9 @@ namespace Schumix.CompilerAddon.Commands
 				if(!IsClass(data))
 				{
 					if(!IsSchumix(data))
-						template = CompilerConfig.Referenced + " public class Entry { public void Schumix() { " + CleanText(data) + " } }";
+						template = CompilerConfig.Referenced + " public class " + CompilerConfig.MainClass + " { public void " + CompilerConfig.MainConstructor + "() { " + CleanText(data) + " } }";
 					else
-						template = CompilerConfig.Referenced + " public class Entry { " + CleanText(data) + " }";
+						template = CompilerConfig.Referenced + " public class " + CompilerConfig.MainClass + " { " + CleanText(data) + " }";
 				}
 				else if(IsEntry(data))
 				{
@@ -125,7 +125,7 @@ namespace Schumix.CompilerAddon.Commands
 				var writer = new StringWriter();
 				Console.SetOut(writer);
 
-				object o = asm.CreateInstance("Entry");
+				object o = asm.CreateInstance(CompilerConfig.MainClass);
 				if(o.IsNull())
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
@@ -135,7 +135,7 @@ namespace Schumix.CompilerAddon.Commands
 				if(IsFor(data) || IsDo(data) || IsWhile(data))
 				{
 					bool b = false;
-					var thread = new Thread(() => { o.GetType().InvokeMember("Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
+					var thread = new Thread(() => { o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
 					thread.Start();
 					thread.Join(1);
 					thread.Abort();
@@ -148,7 +148,7 @@ namespace Schumix.CompilerAddon.Commands
 					}
 				}
 				else
-					o.GetType().InvokeMember("Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+					o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
 
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, string.Empty);
 
@@ -168,15 +168,39 @@ namespace Schumix.CompilerAddon.Commands
 
 				if(lines.Length <= 5)
 				{
+					byte i = 0, x = 0;
+
 					foreach(var line in lines)
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, line);
+					{
+						i++;
+
+						if(line == string.Empty)
+							x++;
+						else
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, line);
+					}
+
+					if(i == x)
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
 				}
 				else if(lines.Length > 5)
 				{
-					for(int x = 0; x < 4; x++)
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, lines[x]);
+					int i = 0, x = 0;
 
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4], lines.Length-5);
+					for(var b = 0; b < 4; b++)
+					{
+						i++;
+
+						if(lines[b] == string.Empty)
+							x++;
+						else
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, lines[b]);
+					}
+
+					if(i == x)
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4], lines.Length-1);
+					else
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4], lines.Length-5);
 				}
 
 				return true;
@@ -299,8 +323,8 @@ namespace Schumix.CompilerAddon.Commands
 				return true;
 			}
 
-			// Windows
-			if(data.Contains("Microsoft.Win32"))
+			// Microsoft
+			if(data.Contains("Microsoft.Win32") || data.Contains("Microsoft.CSharp"))
 			{
 				Warning(channel);
 				return true;
@@ -343,7 +367,7 @@ namespace Schumix.CompilerAddon.Commands
 			}
 
 			// Assembly
-			if(data.Contains("Assembly.Load") || data.Contains("Assembly.ReflectionOnlyLoad"))
+			if(data.Contains("Assembly.Load") || data.Contains("Assembly.ReflectionOnlyLoad") || data.Contains("Assembly.UnsafeLoadFrom"))
 			{
 				Warning(channel);
 				return true;
