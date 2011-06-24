@@ -45,6 +45,9 @@ namespace Schumix.CompilerAddon
 		public void Setup()
 		{
 			new AddonConfig(Name + ".xml");
+			ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
+			EntryRegex = new Regex(" " + CompilerConfig.MainClass + @"\s*?\{");
+			SchumixRegex = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)");
 		}
 
 		public void Destroy()
