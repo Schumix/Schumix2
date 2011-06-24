@@ -343,7 +343,7 @@ INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'compi
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'compiler/warning', 'A kódban olyan részek vannak melyek veszélyeztetik a programot. Ezért leállt a fordítás!');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'compiler', 'Nincs megadva a fő fv! (Schumix)\nNincs megadva a fő class!\nA kimeneti szöveg túl hosszú ezért nem került kiirásra!\nA kód sikeresen lefordult csak nincs kimenő üzenet!\nHátramaradt még {0} kiirás!');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'compiler/code', 'Hibák: {0}');
-INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'compiler/kill', 'Szál kilőve!');
+INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'compiler/kill', 'Szál kilőve!');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'handlekick', '{0} kirúgta a következő felhasználót: {1} oka: {2}');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'ban', 'Helytelen dátum formátum!');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'autofunction', '3Parancsok: hlmessage\n3Parancsok: kick | mode | hlmessage');
