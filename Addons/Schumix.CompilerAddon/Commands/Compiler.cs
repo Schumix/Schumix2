@@ -140,10 +140,9 @@ namespace Schumix.CompilerAddon.Commands
 					thread.Join(1);
 					thread.Abort();
 
-					// TODO: Sql-be rakni a szöveget.
 					if(!b)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Killed thread!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
 						return true;
 					}
 				}
