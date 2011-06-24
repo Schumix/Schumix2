@@ -64,7 +64,7 @@ namespace Schumix.Irc.Commands
 		protected void HandleTime(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
-			var text = sLManager.GetCommandTexts("xbot", sIRCMessage.Channel);
+			var text = sLManager.GetCommandTexts("time", sIRCMessage.Channel);
 			if(text.Length < 2)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
