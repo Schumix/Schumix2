@@ -305,5 +305,82 @@ namespace Schumix.Irc.Commands
 			else
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], sIRCMessage.Info[4]);
 		}
+
+		protected void HandleWeather(IRCMessage sIRCMessage)
+		{
+			CNick(sIRCMessage);
+			var text = sLManager.GetCommandTexts("weather", sIRCMessage.Channel);
+			if(text.Length < 3)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				return;
+			}
+
+			if(sIRCMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoCityName", sIRCMessage.Channel));
+				return;
+			}
+
+			bool home = false;
+			string source = string.Empty;
+
+			if(sIRCMessage.Info[4].ToLower() == "home")
+				home = true;
+
+			if(home)
+				source = sUtilities.GetUrl("http://www.met.hu/elorejelzesek/Magyarorszag/index.php?v=Zalaegerszeg");
+			else
+			{
+				string s = sIRCMessage.Info[4].Replace("á", "a");
+				s = s.Replace("é", "e");
+				s = s.Replace("í", "i");
+				s = s.Replace("ű", "u");
+				s = s.Replace("ü", "u");
+				s = s.Replace("ú", "u");
+				s = s.Replace("ő", "o");
+				s = s.Replace("ö", "o");
+				s = s.Replace("ó", "o");
+				source = sUtilities.GetUrl(string.Format("http://www.met.hu/elorejelzesek/Magyarorszag/index.php?v={0}", s));
+			}
+
+			try
+			{
+				int first = source.IndexOf("<tr class='wrc0'>") + "<tr class='wrc1'>".Length;
+				int last = source.IndexOf("<tr class='wrc1'>");
+				source = source.Substring(first, last - first);
+
+				int date_first = source.IndexOf("<a href='index.php?k=Europa&o=Magyarorszag&no=1'>");
+				date_first = date_first + "<a href='index.php?k=Europa&o=Magyarorszag&no=1'>".Length + "ágos táblázat&#187; ' class='vnev'><a href='index.php?k=Europa&o=Magyarorszag&no=0'>".Length;
+				int date_last = source.IndexOf("<a></td>");
+
+				string weather = source.Substring(date_first, date_last - date_first).Replace("<br>", " ");
+				int weath_first = source.IndexOf("<td class='szirch'>") + "<td class='szirch'>".Length;
+				int weath_last = source.IndexOf("<td class='numt' title=' Minimum hőmérséklet '>");
+
+				string weath = source.Substring(weath_first, weath_last - weath_first).Replace("<td class='numt' title=' Minimum hőmérséklet '>", "").Replace("</td>", "").Trim();
+				weather = weather + " " + weath;
+
+				int min_first = source.IndexOf("<td class='numt' title=' Minimum hőmérséklet '>") + "<td class='numt' title=' Minimum hőmérséklet '>".Length;
+				int min_last = source.IndexOf("<td class='numt' title=' Maximum hőmérséklet '>");
+				string min = source.Substring(min_first, min_last - min_first).Replace("<td class='numt' title=' Maximum hőmérséklet '>", "").Replace("</td>", "").Trim();
+
+				int max_first = min_last + "<td class='numt' title=' Maximum hőmérséklet '>".Length;
+				int max_last = source.IndexOf("<td width=35 title='");
+				string max = source.Substring(max_first, max_last - max_first).Replace("<td width=35 title='", "").Replace("</td>", "").Trim();
+
+				int wind_first = source.IndexOf("<td class='numt' title=' Szélsebesség:") + "<td class='numt' title=' Szélsebesség:".Length;
+				string wind = source.Substring(wind_first, 11).Trim();
+
+				if(home)
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], weather, min, max, wind);
+				else
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[4], weather, min, max, wind);
+			}
+			catch
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2]);
+			}
+		}
 	}
 }

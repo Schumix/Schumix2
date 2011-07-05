@@ -39,10 +39,11 @@ namespace Schumix.ExtraAddon
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
 		private readonly Notes sNotes = Singleton<Notes>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
+		private AddonConfig _config;
 
 		public void Setup()
 		{
-			new AddonConfig(Name + ".xml");
+			_config = new AddonConfig(Name + ".xml");
 			Network.PublicRegisterHandler("JOIN",                       new Action<IRCMessage>(HandleJoin));
 			Network.PublicRegisterHandler("PART",                       new Action<IRCMessage>(HandleLeft));
 			Network.PublicRegisterHandler("KICK",                       new Action<IRCMessage>(HandleKick));
@@ -59,6 +60,18 @@ namespace Schumix.ExtraAddon
 			CommandManager.PublicCRemoveHandler("notes");
 			CommandManager.PublicCRemoveHandler("message");
 			CommandManager.HalfOperatorCRemoveHandler("autofunction");
+		}
+
+		public bool Reload(string RName)
+		{
+			switch(RName.ToLower())
+			{
+				case "config":
+					_config = new AddonConfig(Name + ".xml");
+					return true;
+			}
+
+			return false;
 		}
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)

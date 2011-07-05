@@ -75,10 +75,7 @@ namespace Schumix.Framework.Database
 		{
 			lock(_lock)
 			{
-				if(SQLiteConfig.Enabled)
-					return sdatabase.Query(sql);
-				else
-					return mdatabase.Query(sql);
+				return SQLiteConfig.Enabled ? sdatabase.Query(sql) : mdatabase.Query(sql);
 			}
 		}
 
@@ -91,10 +88,7 @@ namespace Schumix.Framework.Database
 		{
 			lock(_lock)
 			{
-				if(SQLiteConfig.Enabled)
-					return sdatabase.QueryFirstRow(query);
-				else
-					return mdatabase.QueryFirstRow(query);
+				return SQLiteConfig.Enabled ? sdatabase.QueryFirstRow(query) : mdatabase.QueryFirstRow(query);
 			}
 		}
 

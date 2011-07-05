@@ -33,6 +33,7 @@ namespace Schumix.Console.Commands
 	public partial class CommandHandler : ConsoleLog
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
@@ -50,44 +51,58 @@ namespace Schumix.Console.Commands
 		{
 			if(Info.Length < 2)
 			{
-				Log.Error("Console", "Nincs parameter!");
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoValue"));
+				return;
+			}
+
+			var text = sLManager.GetConsoleCommandTexts("consolelog");
+			if(text.Length < 2)
+			{
+				Log.Error("Console", "No translations found!");
 				return;
 			}
 
 			if(Info[1].ToLower() == "on")
 			{
-				Log.Notice("Console", "Console logolas bekapcsolva");
+				Log.Notice("Console", text[0]);
 				ChangeLog(true);
 			}
 			else if(Info[1].ToLower() == "off")
 			{
-				Log.Notice("Console", "Console logolas kikapcsolva");
+				Log.Notice("Console", text[1]);
 				ChangeLog(false);
 			}
 		}
 
 		protected void HandleSys()
 		{
+			var text = sLManager.GetConsoleCommandTexts("sys");
+			if(text.Length < 7)
+			{
+				Log.Error("Console", "No translations found!");
+				return;
+			}
+
 			var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
-			Log.Notice("Console", "Verzio: {0}", sUtilities.GetVersion());
-			Log.Notice("Console", "Platform: {0}", sUtilities.GetPlatform());
-			Log.Notice("Console", "OSVerzio: {0}", Environment.OSVersion.ToString());
-			Log.Notice("Console", "Programnyelv: c#");
-			Log.Notice("Console", "Memoria hasznalat: {0} MB", memory);
-			Log.Notice("Console", "Thread count: {0}", Process.GetCurrentProcess().Threads.Count);
-			Log.Notice("Console", "Uptime: {0}", SchumixBase.timer.CUptime());
+			Log.Notice("Console", text[0], sUtilities.GetVersion());
+			Log.Notice("Console", text[1], sUtilities.GetPlatform());
+			Log.Notice("Console", text[2], Environment.OSVersion.ToString());
+			Log.Notice("Console", text[3]);
+			Log.Notice("Console", text[4], memory);
+			Log.Notice("Console", text[5], Process.GetCurrentProcess().Threads.Count);
+			Log.Notice("Console", text[6], SchumixBase.timer.CUptime());
 		}
 
 		protected void HandleCsatorna()
 		{
 			if(Info.Length < 2)
 			{
-				Log.Error("Console", "Nincs megadva a csatorna neve!");
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
 				return;
 			}
 
 			_channel = Info[1];
-			Log.Notice("Console", "Uj csatorna ahova mostantol lehet irni: {0}", Info[1]);
+			Log.Notice("Console", sLManager.GetConsoleCommandText("csatorna"), Info[1]);
 			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + Info[1];
 		}
 
@@ -97,7 +112,14 @@ namespace Schumix.Console.Commands
 			{
 				if(Info.Length < 3)
 				{
-					Log.Error("Console", "Nincs nev megadva!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
+					return;
+				}
+
+				var text = sLManager.GetConsoleCommandTexts("admin/info");
+				if(text.Length < 3)
+				{
+					Log.Error("Console", "No translations found!");
 					return;
 				}
 
@@ -105,11 +127,11 @@ namespace Schumix.Console.Commands
 				int flag = !db.IsNull() ? Convert.ToInt32(db["Flag"].ToString()) : -1;
 
 				if((AdminFlag)flag == AdminFlag.HalfOperator)
-					Log.Notice("Console", "Jelenleg Fel Operator.");		
+					Log.Notice("Console", text[0]);		
 				else if((AdminFlag)flag == AdminFlag.Operator)
-					Log.Notice("Console", "Jelenleg Operator.");
+					Log.Notice("Console", text[1]);
 				else if((AdminFlag)flag == AdminFlag.Administrator)
-					Log.Notice("Console", "Jelenleg Adminisztrator.");
+					Log.Notice("Console", text[2]);
 			}
 			else if(Info.Length >= 2 && Info[1].ToLower() == "list")
 			{
@@ -124,16 +146,23 @@ namespace Schumix.Console.Commands
 						admins += ", " + name;
 					}
 
-					Log.Notice("Console", "Adminok: {0}", admins.Remove(0, 2, ", "));
+					Log.Notice("Console", sLManager.GetConsoleCommandText("admin/list"), admins.Remove(0, 2, ", "));
 				}
 				else
-					Log.Error("Console", "Hibas lekerdezes!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("FaultyQuery"));
 			}
 			else if(Info.Length >= 2 && Info[1].ToLower() == "add")
 			{
 				if(Info.Length < 3)
 				{
-					Log.Error("Console", "Nincs nev megadva!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
+					return;
+				}
+
+				var text = sLManager.GetConsoleCommandTexts("admin/add");
+				if(text.Length < 3)
+				{
+					Log.Error("Console", "No translations found!");
 					return;
 				}
 
@@ -141,21 +170,28 @@ namespace Schumix.Console.Commands
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}'", name.ToLower());
 				if(!db.IsNull())
 				{
-					Log.Warning("Console", "A nev mar szerepel az admin listan!");
+					Log.Warning("Console", text[0]);
 					return;
 				}
 
 				string pass = sUtilities.GetRandomString();
 				SchumixBase.DManager.QueryFirstRow("INSERT INTO `admins`(Name, Password) VALUES ('{0}', '{1}')", name.ToLower(), sUtilities.Sha1(pass));
 				SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'ki')", name.ToLower());
-				Log.Notice("Console", "Admin hozzaadva: {0}", name);
-				Log.Notice("Console", "Mostani jelszo: {0}", pass);
+				Log.Notice("Console", text[1], name);
+				Log.Notice("Console", text[2], pass);
 			}
 			else if(Info.Length >= 2 && Info[1].ToLower() == "remove")
 			{
 				if(Info.Length < 3)
 				{
-					Log.Error("Console", "Nincs nev megadva!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
+					return;
+				}
+
+				var text = sLManager.GetConsoleCommandTexts("admin/remove");
+				if(text.Length < 2)
+				{
+					Log.Error("Console", "No translations found!");
 					return;
 				}
 
@@ -163,25 +199,32 @@ namespace Schumix.Console.Commands
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}'", name.ToLower());
 				if(db.IsNull())
 				{
-					Log.Warning("Console", "Ilyen nev nem letezik!");
+					Log.Warning("Console", text[0]);
 					return;
 				}
 
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `admins` WHERE Name = '{0}'", name.ToLower());
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `hlmessage` WHERE Name = '{0}'", name.ToLower());
-				Log.Notice("Console", "Admin törölve: {0}", name);
+				Log.Notice("Console", text[1], name);
 			}
 			else if(Info.Length >= 2 && Info[1].ToLower() == "rank")
 			{
 				if(Info.Length < 3)
 				{
-					Log.Error("Console", "Nincs nev megadva!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
 					return;
 				}
 
 				if(Info.Length < 4)
 				{
-					Log.Error("Console", "Nincs rang megadva!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoRank"));
+					return;
+				}
+
+				var text = sLManager.GetConsoleCommandTexts("admin/rank");
+				if(text.Length < 2)
+				{
+					Log.Error("Console", "No translations found!");
 					return;
 				}
 
@@ -191,20 +234,20 @@ namespace Schumix.Console.Commands
 				if((AdminFlag)rank == AdminFlag.Administrator || (AdminFlag)rank == AdminFlag.Operator || (AdminFlag)rank == AdminFlag.HalfOperator)
 				{
 					SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Flag = '{0}' WHERE Name = '{1}'", rank, name);
-					Log.Notice("Console", "Rang sikeresen modositva.");
+					Log.Notice("Console", text[0]);
 				}
 				else
-					Log.Error("Console", "Hibás rang!");
+					Log.Error("Console", text[1]);
 			}
 			else
-				Log.Notice("Console", "Parancsok: help | list | add | remove");
+				Log.Notice("Console", sLManager.GetConsoleCommandText("admin"));
 		}
 
 		protected void HandleFunction()
 		{
 			if(Info.Length < 2)
 			{
-				Log.Error("Console", "Nincs megadva egy parameter!");
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoValue1"));
 				return;
 			}
 
@@ -212,13 +255,13 @@ namespace Schumix.Console.Commands
 			{
 				if(Info.Length < 3)
 				{
-					Log.Error("Console", "Nincs megadva a csatorna neve!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
 					return;
 				}
 
 				if(Info.Length < 4)
 				{
-					Log.Error("Console", "Nincs megadva egy parameter!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoValue1"));
 					return;
 				}
 			
@@ -227,18 +270,32 @@ namespace Schumix.Console.Commands
 			
 				if(Info[3].ToLower() == "info")
 				{
+					var text = sLManager.GetConsoleCommandTexts("function/channel/info");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", "No translations found!");
+						return;
+					}
+
 					string[] ChannelInfo = sChannelInfo.ChannelFunctionsInfo(channel).Split('|');
 					if(ChannelInfo.Length < 2)
 						return;
 
-					Log.Notice("Console", "Bekapcsolva: {0}", ChannelInfo[0]);
-					Log.Notice("Console", "Kikapcsolva: {0}", ChannelInfo[1]);
+					Log.Notice("Console", text[0], ChannelInfo[0]);
+					Log.Notice("Console", text[1], ChannelInfo[1]);
 				}
 				else if(status == "on" || status == "off")
 				{
 					if(Info.Length < 5)
 					{
-						Log.Error("Console", "Nincs megadva a funkcio neve!");
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoFunctionName"));
+						return;
+					}
+
+					var text = sLManager.GetConsoleCommandTexts("function/channel");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", "No translations found!");
 						return;
 					}
 
@@ -254,13 +311,17 @@ namespace Schumix.Console.Commands
 						}
 
 						if(status == "on")
-							Log.Notice("Console", "{0}: bekapcsolva",  args.Remove(0, 2, ", "));
+							Log.Notice("Console", text[0],  args.Remove(0, 2, ", "));
 						else
-							Log.Notice("Console", "{0}: kikapcsolva",  args.Remove(0, 2, ", "));
+							Log.Notice("Console", text[1],  args.Remove(0, 2, ", "));
 					}
 					else
 					{
-						Log.Notice("Console", "{0}: {1}kapcsolva", Info[4].ToLower(), status);
+						if(status == "on")
+							Log.Notice("Console", text[0], status);
+						else
+							Log.Notice("Console", text[1], status);
+
 						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions(Info[4].ToLower(), status, channel), channel);
 						sChannelInfo.ChannelFunctionReload();
 					}
@@ -270,7 +331,7 @@ namespace Schumix.Console.Commands
 			{
 				if(Info.Length < 3)
 				{
-					Log.Error("Console", "Nincs megadva egy parameter!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoValue1"));
 					return;
 				}
 
@@ -286,24 +347,31 @@ namespace Schumix.Console.Commands
 						}
 
 						sChannelInfo.ChannelFunctionReload();
-						Log.Notice("Console", "Sikeresen frissitve minden csatornan a funkciok.");
+						Log.Notice("Console", sLManager.GetConsoleCommandText("function/update/all"));
 					}
 					else
-						Log.Error("Console", "Hibas lekerdezes!");
+						Log.Error("Console", sLManager.GetConsoleWarningText("FaultyQuery"));
 				}
 				else
 				{
-					Log.Notice("Console", "Sikeresen frissitve {0} csatornan a funkciok.", Info[2].ToLower());
+					Log.Notice("Console", sLManager.GetConsoleCommandText("function/update"), Info[2].ToLower());
 					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), Info[2].ToLower());
 					sChannelInfo.ChannelFunctionReload();
 				}
 			}
 			else if(Info[1].ToLower() == "info")
 			{
+				var text = sLManager.GetConsoleCommandTexts("function/info");
+				if(text.Length < 2)
+				{
+					Log.Error("Console", "No translations found!");
+					return;
+				}
+
 				string f = sChannelInfo.FunctionsInfo();
 				if(f == "Hibás lekérdezés!")
 				{
-					Log.Error("Console", "Hibas lekerdezes!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("FaultyQuery"));
 					return;
 				}
 
@@ -311,23 +379,30 @@ namespace Schumix.Console.Commands
 				if(FunkcioInfo.Length < 2)
 					return;
 	
-				Log.Notice("Console", "Bekapcsolva: {0}", FunkcioInfo[0]);
-				Log.Notice("Console", "Kikapcsolva: {0}", FunkcioInfo[1]);
+				Log.Notice("Console", text[0], FunkcioInfo[0]);
+				Log.Notice("Console", text[1], FunkcioInfo[1]);
 			}
 			else
 			{
 				if(Info.Length < 3)
 				{
-					Log.Error("Console", "Nincs a funkcio nev megadva!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoFunctionName"));
+					return;
+				}
+
+				var text = sLManager.GetConsoleCommandTexts("function");
+				if(text.Length < 2)
+				{
+					Log.Error("Console", "No translations found!");
 					return;
 				}
 
 				if(Info[1].ToLower() == "on" || Info[1].ToLower() == "off")
 				{
 					if(Info[1].ToLower() == "on")
-						Log.Notice("Console", "{0}: bekapcsolva", Info[2].ToLower());
+						Log.Notice("Console", text[0], Info[2].ToLower());
 					else
-						Log.Notice("Console", "{0}: kikapcsolva", Info[2].ToLower());
+						Log.Notice("Console", text[1], Info[2].ToLower());
 
 					SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET FunctionStatus = '{0}' WHERE FunctionName = '{1}'", Info[1].ToLower(), Info[2].ToLower());
 				}
@@ -338,7 +413,7 @@ namespace Schumix.Console.Commands
 		{
 			if(Info.Length < 2)
 			{
-				Log.Notice("Console", "Parancsok: add | remove | info | update | language");
+				Log.Notice("Console", sLManager.GetConsoleCommandText("channel"));
 				return;
 			}
 
@@ -346,7 +421,14 @@ namespace Schumix.Console.Commands
 			{
 				if(Info.Length < 3)
 				{
-					Log.Error("Console", "Nincs megadva a csatorna neve!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+					return;
+				}
+
+				var text = sLManager.GetConsoleCommandTexts("channel/add");
+				if(text.Length < 2)
+				{
+					Log.Error("Console", "No translations found!");
 					return;
 				}
 
@@ -354,7 +436,7 @@ namespace Schumix.Console.Commands
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", channel);
 				if(!db.IsNull())
 				{
-					Log.Warning("Console", "A nev mar szerepel a csatorna listan!");
+					Log.Warning("Console", text[0]);
 					return;
 				}
 
@@ -372,8 +454,7 @@ namespace Schumix.Console.Commands
 					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", channel);
 				}
 
-				Log.Notice("Console", "Csatorna hozzaadva: {0}", channel);
-
+				Log.Notice("Console", text[1], channel);
 				sChannelInfo.ChannelListReload();
 				sChannelInfo.ChannelFunctionReload();
 			}
@@ -381,7 +462,14 @@ namespace Schumix.Console.Commands
 			{
 				if(Info.Length < 3)
 				{
-					Log.Error("Console", "Nincs megadva a csatorna neve!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+					return;
+				}
+
+				var text = sLManager.GetConsoleCommandTexts("channel/remove");
+				if(text.Length < 3)
+				{
+					Log.Error("Console", "No translations found!");
 					return;
 				}
 
@@ -392,7 +480,7 @@ namespace Schumix.Console.Commands
 					int id = Convert.ToInt32(db["Id"].ToString());
 					if(id == 1)
 					{
-						Log.Warning("Console", "A mester csatorna nem törölhető!");
+						Log.Warning("Console", text[0]);
 						return;
 					}
 				}
@@ -400,13 +488,13 @@ namespace Schumix.Console.Commands
 				db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", channel);
 				if(db.IsNull())
 				{
-					Log.Warning("Console", "Ilyen csatorna nem letezik!");
+					Log.Warning("Console", text[1]);
 					return;
 				}
 
 				sSender.Part(channel);
 				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE Channel = '{0}'", channel);
-				Log.Notice("Console", "Csatorna eltavolitva: {0}", channel);
+				Log.Notice("Console", text[2], channel);
 
 				sChannelInfo.ChannelListReload();
 				sChannelInfo.ChannelFunctionReload();
@@ -415,10 +503,17 @@ namespace Schumix.Console.Commands
 			{
 				sChannelInfo.ChannelListReload();
 				sChannelInfo.ChannelFunctionReload();
-				Log.Notice("Console", "A csatorna informaciok frissitesre kerultek.");
+				Log.Notice("Console", sLManager.GetConsoleCommandText("channel/update"));
 			}
 			else if(Info[1].ToLower() == "info")
 			{
+				var text = sLManager.GetConsoleCommandTexts("channel/info");
+				if(text.Length < 3)
+				{
+					Log.Error("Console", "No translations found!");
+					return;
+				}
+
 				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channel");
 				if(!db.IsNull())
 				{
@@ -436,34 +531,34 @@ namespace Schumix.Console.Commands
 					}
 
 					if(ActiveChannels.Length > 0)
-						Log.Notice("Console", "Aktiv: {0}", ActiveChannels.Remove(0, 2, ", "));
+						Log.Notice("Console", text[0], ActiveChannels.Remove(0, 2, ", "));
 					else
-						Log.Notice("Console", "Aktiv: Nincs informacio.");
+						Log.Notice("Console", text[1]);
 
 					if(InActiveChannels.Length > 0)
-						Log.Notice("Console", "Inaktiv: {0}", InActiveChannels.Remove(0, 2, ", "));
+						Log.Notice("Console", text[2], InActiveChannels.Remove(0, 2, ", "));
 					else
-						Log.Notice("Console", "Inaktiv: Nincs informacio.");
+						Log.Notice("Console", text[3]);
 				}
 				else
-					Log.Error("Console", "Hibas lekerdezes!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("FaultyQuery"));
 			}
 			else if(Info[1].ToLower() == "language")
 			{
 				if(Info.Length < 3)
 				{
-					Log.Error("Console", "Nincs megadva a csatorna neve!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
 					return;
 				}
 
 				if(Info.Length < 4)
 				{
-					Log.Error("Console", "Nincs megadva a csatorna nyelvezete!");
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelLanguage"));
 					return;
 				}
 
 				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Language = '{0}' WHERE Channel = '{1}'", Info[3], Info[2].ToLower());
-				Log.Notice("Console", "Csatorna nyelvezete sikeresen meg lett valtoztatva erre: {0}", Info[3]);
+				Log.Notice("Console", sLManager.GetConsoleCommandText("channel/language"), Info[3]);
 			}
 		}
 
@@ -488,21 +583,21 @@ namespace Schumix.Console.Commands
 		{
 			if(Info.Length < 2)
 			{
-				Log.Error("Console", "Nincs nev megadva!");
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
 				return;
 			}
 
 			string nick = Info[1];
 			sNickInfo.ChangeNick(nick);
 			sSender.Nick(nick);
-			Log.Notice("Console", "Nick megvaltoztatasa erre: {0}", nick);
+			Log.Notice("Console", sLManager.GetConsoleCommandText("nick"), nick);
 		}
 
 		protected void HandleJoin()
 		{
 			if(Info.Length < 2)
 			{
-				Log.Error("Console", "Nincs megadva a csatorna neve!");
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
 				return;
 			}
 
@@ -511,26 +606,71 @@ namespace Schumix.Console.Commands
 			else if(Info.Length == 3)
 				sSender.Join(Info[1], Info[2]);
 
-			Log.Notice("Console", "Kapcsolodas ehez a csatonahoz: {0}", Info[1]);
+			Log.Notice("Console", sLManager.GetConsoleCommandText("join"), Info[1]);
 		}
 
 		protected void HandleLeft()
 		{
 			if(Info.Length < 2)
 			{
-				Log.Error("Console", "Nincs megadva a csatorna neve!");
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
 				return;
 			}
 
 			sSender.Part(Info[1]);
-			Log.Notice("Console", "Lelepes errol a csatornarol: {0}", Info[1]);
+			Log.Notice("Console", sLManager.GetConsoleCommandText("left"), Info[1]);
+		}
+
+		protected void HandleReload()
+		{
+			if(Info.Length < 2)
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
+				return;
+			}
+
+			var text = sLManager.GetConsoleCommandTexts("reload");
+			if(text.Length < 2)
+			{
+				Log.Error("Console", "No translations found!");
+				return;
+			}
+
+			bool status = false;
+
+			switch(Info[1].ToLower())
+			{
+				case "config":
+					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile);
+					status = true;
+					break;
+			}
+
+			foreach(var plugin in sAddonManager.GetPlugins())
+			{
+				if(plugin.Reload(Info[1]))
+					status = true;
+			}
+
+			if(status)
+				Log.Notice("Console", text[0], Info[1]);
+			else
+				Log.Error("Console", text[1]);
 		}
 
 		protected void HandleQuit()
 		{
+			var text = sLManager.GetConsoleCommandTexts("quit");
+			if(text.Length < 2)
+			{
+				Log.Error("Console", "No translations found!");
+				return;
+			}
+
+			SchumixBase.ExitStatus = true;
 			SchumixBase.timer.SaveUptime();
-			Log.Notice("Console", "Viszlat :(");
-			sSender.Quit("Console: Program leállítása.");
+			Log.Notice("Console", text[0]);
+			sSender.Quit(text[1]);
 			Thread.Sleep(1000);
 			Environment.Exit(1);
 		}

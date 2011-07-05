@@ -35,10 +35,11 @@ namespace Schumix.CalendarAddon
 		private readonly BanCommand sBanCommand = Singleton<BanCommand>.Instance;
 		private Calendar _calendar;
 		public static readonly List<Flood> FloodList = new List<Flood>();
+		private AddonConfig _config;
 
 		public void Setup()
 		{
-			new AddonConfig(Name + ".xml");
+			_config = new AddonConfig(Name + ".xml");
 			_calendar = new Calendar();
 			_calendar.Start();
 
@@ -51,6 +52,18 @@ namespace Schumix.CalendarAddon
 			_calendar.Stop();
 			CommandManager.OperatorCRemoveHandler("ban");
 			CommandManager.OperatorCRemoveHandler("unban");
+		}
+
+		public bool Reload(string RName)
+		{
+			switch(RName.ToLower())
+			{
+				case "config":
+					_config = new AddonConfig(Name + ".xml");
+					return true;
+			}
+
+			return false;
 		}
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)

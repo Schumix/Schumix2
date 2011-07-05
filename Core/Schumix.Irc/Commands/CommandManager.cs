@@ -76,6 +76,7 @@ namespace Schumix.Irc.Commands
 			PublicCRegisterHandler("google",       new Action<IRCMessage>(HandleGoogle));
 			PublicCRegisterHandler("translate",    new Action<IRCMessage>(HandleTranslate));
 			PublicCRegisterHandler("prime",        new Action<IRCMessage>(HandlePrime));
+			PublicCRegisterHandler("weather",      new Action<IRCMessage>(HandleWeather));
 
 			// Half Operator
 			HalfOperatorCRegisterHandler("admin",  new Action<IRCMessage>(HandleAdmin));
@@ -93,6 +94,7 @@ namespace Schumix.Irc.Commands
 
 			// Admin
 			AdminCRegisterHandler("plugin",        new Action<IRCMessage>(HandlePlugin));
+			AdminCRegisterHandler("reload",        new Action<IRCMessage>(HandleReload));
 			AdminCRegisterHandler("quit",          new Action<IRCMessage>(HandleQuit));
 
 			Log.Notice("CommandManager", "Osszes Command handler regisztralva.");
@@ -153,7 +155,7 @@ namespace Schumix.Irc.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Error("IncomingInfo", "Hiba oka: {0}", e.Message);
+				Log.Error("IncomingInfo", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 	}

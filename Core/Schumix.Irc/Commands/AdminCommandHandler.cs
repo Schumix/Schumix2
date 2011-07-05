@@ -69,6 +69,48 @@ namespace Schumix.Irc.Commands
 			}
 		}
 
+		protected void HandleReload(IRCMessage sIRCMessage)
+		{
+			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
+				return;
+
+			CNick(sIRCMessage);
+
+			if(sIRCMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+				return;
+			}
+
+			var text = sLManager.GetCommandTexts("reload", sIRCMessage.Channel);
+			if(text.Length < 2)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				return;
+			}
+
+			bool status = false;
+
+			switch(sIRCMessage.Info[4].ToLower())
+			{
+				case "config":
+					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile);
+					status = true;
+					break;
+			}
+
+			foreach(var plugin in sAddonManager.GetPlugins())
+			{
+				if(plugin.Reload(sIRCMessage.Info[4]))
+					status = true;
+			}
+
+			if(status)
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Info[4]);
+			else
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
+		}
+
 		protected void HandleQuit(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
@@ -82,6 +124,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			SchumixBase.ExitStatus = true;
 			SchumixBase.timer.SaveUptime();
 			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 			sSender.Quit(string.Format(text[1], sIRCMessage.Nick));

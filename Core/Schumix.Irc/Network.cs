@@ -52,14 +52,6 @@ namespace Schumix.Irc
 		private StreamReader reader;
 
         /// <summary>
-        ///     Segédváltozó a "Status" váltotó mellé.
-        ///     Ha "true" akkor van kapcsolat az IRC-el,
-        ///     ha "false" akkor nincs.
-        ///     Meggátolja, hogy hiba legyen.
-        /// </summary>
-		private bool m_running;
-
-        /// <summary>
         ///     IRC szerver címe.
         /// </summary>
 		private readonly string _server;
@@ -165,9 +157,6 @@ namespace Schumix.Irc
         /// </summary>
 		public void ReConnect()
 		{
-			m_running = false;
-			Status = false;
-
 			Log.Notice("Network", "Kapcsolat bontasra kerult.");
 			Connection(false);
 			NewNick = true;
@@ -176,13 +165,24 @@ namespace Schumix.Irc
 
 		private void Connection(bool b)
 		{
-			client = new TcpClient();
-			client.Connect(_server, _port);
+			try
+			{
+				client = new TcpClient();
+				client.Connect(_server, _port);
+			}
+			catch(Exception)
+			{
+				Log.Error("Network", "Vegzetes hiba tortent a kapcsolat letrehozasanal!");
+				return;
+			}
 
 			if(client.Connected)
 				Log.Success("Network", "A kapcsolat sikeresen letrejott.");
 			else
+			{
 				Log.Error("Network", "Hiba tortent a kapcsolat letrehozasanal!");
+				return;
+			}
 
 			reader = new StreamReader(client.GetStream());
 			writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
@@ -199,16 +199,11 @@ namespace Schumix.Irc
 
 			NewNick = false;
 			HostServStatus = false;
-			Status = true;
-			m_running = true;
 			SchumixBase.UrlTitleEnabled = false;
 		}
 
 		private void Close()
 		{
-			m_running = false;
-			Status = false;
-
 			client.Close();
 			writer.Dispose();
 			reader.Dispose();
@@ -229,30 +224,34 @@ namespace Schumix.Irc
 			{
 				try
 				{
-					if(m_running)
+					string IrcMessage;
+					if((IrcMessage = reader.ReadLine()).IsNull())
 					{
-						string IrcMessage;
-						if((IrcMessage = reader.ReadLine()).IsNull())
-						{
-							Log.Error("Opcodes", "Nem jon informacio az irc szerver felol!");
-							DisConnect();
-							break;
-						}
-
-						Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage));
+						Log.Error("Opcodes", "Nem jon informacio az irc szerver felol!");
+						DisConnect();
+						break;
 					}
-					else
-						Thread.Sleep(100);
+
+					Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage));
+				}
+				catch(IOException)
+				{
+					if(sChannelInfo.FSelect("reconnect"))
+					{
+						Thread.Sleep(10*1000);
+						ReConnect();
+						continue;
+					}
 				}
 				catch(Exception e)
 				{
-					if(m_running)
-						Log.Error("Opcodes", "Hiba oka: {0}", e.Message);
+					Log.Error("Opcodes", sLConsole.Exception("Error"), e.Message);
+					Thread.Sleep(1000);
 				}
 			}
 
 			SchumixBase.timer.SaveUptime();
-			Log.Warning("Opcodes", "A program leall!");
+			Log.Warning("Opcodes", "A program leáll!");
 			Thread.Sleep(1000);
 			Environment.Exit(1);
 		}
@@ -302,21 +301,15 @@ namespace Schumix.Irc
 			{
 				try
 				{
-					if(Status)
-					{
-						sSender.Ping(_server);
-						Status = false;
-					}
-					else
-					{
-						if(sChannelInfo.FSelect("reconnect"))
-							ReConnect();
-					}
+					sSender.Ping(_server);
+				}
+				catch(IOException)
+				{
+					// no code
 				}
 				catch(Exception e)
 				{
-					if(m_running)
-						Log.Error("Ping", "Hiba oka: {0}", e.Message);
+					Log.Error("Ping", sLConsole.Exception("Error"), e.Message);
 				}
 
 				Thread.Sleep(30*1000);

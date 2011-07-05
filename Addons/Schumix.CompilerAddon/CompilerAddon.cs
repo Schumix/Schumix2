@@ -41,10 +41,11 @@ namespace Schumix.CompilerAddon
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
+		private AddonConfig _config;
 
 		public void Setup()
 		{
-			new AddonConfig(Name + ".xml");
+			_config = new AddonConfig(Name + ".xml");
 			ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
 			EntryRegex = new Regex(" " + CompilerConfig.MainClass + @"\s*?\{");
 			SchumixRegex = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)");
@@ -53,6 +54,18 @@ namespace Schumix.CompilerAddon
 		public void Destroy()
 		{
 
+		}
+
+		public bool Reload(string RName)
+		{
+			switch(RName.ToLower())
+			{
+				case "config":
+					_config = new AddonConfig(Name + ".xml");
+					return true;
+			}
+
+			return false;
 		}
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)

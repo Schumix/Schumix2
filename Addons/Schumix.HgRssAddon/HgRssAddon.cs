@@ -32,10 +32,11 @@ namespace Schumix.HgRssAddon
 	public class HgRssAddon : RssCommand, ISchumixAddon
 	{
 		public static readonly List<HgRss> RssList = new List<HgRss>();
+		private AddonConfig _config;
 
 		public void Setup()
 		{
-			new AddonConfig(Name + ".xml");
+			_config = new AddonConfig(Name + ".xml");
 			CommandManager.OperatorCRegisterHandler("hg", new Action<IRCMessage>(HandleHg));
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM hginfo");
@@ -71,6 +72,18 @@ namespace Schumix.HgRssAddon
 
 			foreach(var list in RssList)
 				list.Stop();
+		}
+
+		public bool Reload(string RName)
+		{
+			switch(RName.ToLower())
+			{
+				case "config":
+					_config = new AddonConfig(Name + ".xml");
+					return true;
+			}
+
+			return false;
 		}
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)

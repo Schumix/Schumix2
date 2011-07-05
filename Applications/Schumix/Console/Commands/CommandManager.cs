@@ -53,7 +53,7 @@ namespace Schumix.Console.Commands
 			RegisterHandler("sys",        HandleSys);
 			RegisterHandler("csatorna",   HandleCsatorna);
 			RegisterHandler("admin",      HandleAdmin);
-			RegisterHandler("function",    HandleFunction);
+			RegisterHandler("function",   HandleFunction);
 			RegisterHandler("channel",    HandleChannel);
 			RegisterHandler("connect",    HandleConnect);
 			RegisterHandler("disconnect", HandleDisConnect);
@@ -61,6 +61,7 @@ namespace Schumix.Console.Commands
 			RegisterHandler("nick",       HandleNick);
 			RegisterHandler("join",       HandleJoin);
 			RegisterHandler("left",       HandleLeft);
+			RegisterHandler("reload",     HandleReload);
 			RegisterHandler("quit",       HandleQuit);
 
 			Log.Notice("CCommandManager", "Osszes Command handler regisztralva.");

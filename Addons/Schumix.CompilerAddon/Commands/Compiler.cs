@@ -298,7 +298,7 @@ namespace Schumix.CompilerAddon.Commands
 								break;
 						}
 
-						string s = "*:\***\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
+						string s = "*:\\***\\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
 						sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/code", channel), s);
 #endif
 						continue;
@@ -401,6 +401,7 @@ namespace Schumix.CompilerAddon.Commands
 						break;
 
 					sb.Append(text.Substring(0, text.IndexOf("/*")));
+					text = text.Substring(text.IndexOf("/*")+2);
 
 					if(text.Contains("/*"))
 						text = text.Remove(0, text.IndexOf("*/")+2);
@@ -417,7 +418,7 @@ namespace Schumix.CompilerAddon.Commands
 			{
 				for(;;)
 				{
-					string s = text.Trim();
+					string s = CleanSemicolon(text).Trim();
 
 					if(s.Length > 0 && s.Substring(0, 1) == "}")
 					{

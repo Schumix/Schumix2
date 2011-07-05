@@ -19,6 +19,7 @@
 
 using System;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Console.Commands
@@ -29,6 +30,13 @@ namespace Schumix.Console.Commands
 		{
 			if(Info.Length == 1)
 			{
+				var text = sLManager.GetConsoleCommandTexts("help");
+				if(text.Length < 2)
+				{
+					Log.Error("Console", "No translations found!");
+					return;
+				}
+
 				string commands = string.Empty;
 
 				foreach(var command in CCommandManager.GetCommandHandler())
@@ -39,164 +47,17 @@ namespace Schumix.Console.Commands
 					commands += ", " + command.Key;
 				}
 
-				Log.Notice("Console", "Ha a parancs moge irod a megadott parancs nevet vagy a nevet es alparancsat informaciot ad a hasznalatarol.");
-				Log.Notice("Console", "Parancsok: {0}", commands.Remove(0, 2, ", "));
+				Log.Notice("Console", text[0]);
+				Log.Notice("Console", text[1], commands.Remove(0, 2, ", "));
 				return;
 			}
 
-			if(Info[1].ToLower() == "consolelog")
+			foreach(var t in sLManager.GetConsoleCommandHelpTexts(Info.SplitToString(1, "/")))
 			{
-				Log.Notice("Console", "Az irc adatok konzolra irasat engedelyezi vagy tiltja. Alapertelmezesben ki van kapcsolva.");
-				Log.Notice("Console", "Hasznalata: consolelog <on vagy off>");
-			}
-			else if(Info[1].ToLower() == "sys")
-			{
-				Log.Notice("Console", "Kiirja a botrol a rendszer informaciokat.");
-			}
-			else if(Info[1].ToLower() == "csatorna")
-			{
-				Log.Notice("Console", "A bot csatornara irasat allithatjuk vele.");
-				Log.Notice("Console", "Hasznalata: csatorna <csatorna neve>");
-			}
-			else if(Info[1].ToLower() == "admin")
-			{
-				if(Info.Length < 3)
-				{
-					Log.Notice("Console", "Kiirja az operatorok vagy adminisztratorok altal hasznalhato parancsokat.");
-					Log.Notice("Console", "Admin parancsai: info | list | add | remove | rank");
-					return;
-				}
-		
-				if(Info[2].ToLower() == "add")
-				{
-					Log.Notice("Console", "Uj admin hozzaadasa.");
-					Log.Notice("Console", "Hasznalata: admin add <admin neve>");
-				}
-				else if(Info[2].ToLower() == "remove")
-				{
-					Log.Notice("Console", "Admin eltavolitasa.");
-					Log.Notice("Console", "Hasznalata: admin remove <admin neve>");
-				}
-				else if(Info[2].ToLower() == "rank")
-				{
-					Log.Notice("Console", "Admin rangjanak megvaltoztatasa.");
-					Log.Notice("Console", "Hasznalata: admin rank <admin neve> <uj rang pl halfoperator: 0, operator: 1, administrator: 2>");
-				}
-				else if(Info[2].ToLower() == "info")
-				{
-					Log.Notice("Console", "Kiirja éppen milyen rangja van az illetonek.");
-					Log.Notice("Console", "Hasznalata: admin info <admin neve>");
-				}
-				else if(Info[2].ToLower() == "list")
-				{
-					Log.Notice("Console", "Kiirja az összes admin nevet aki az adatbazisban szerepel.");
-				}
-			}
-			else if(Info[1].ToLower() == "function")
-			{
-				if(Info.Length < 3)
-				{
-					Log.Notice("Console", "Funkciok vezerlesere szolgalo parancs.");
-					Log.Notice("Console", "Funkcio parancsai: channel | all | update | info");
-					Log.Notice("Console", "Hasznalata globalisan:");
-					Log.Notice("Console", "Globalis funkcio kezelese: function <on vagy off> <funkcio nev>");
-					Log.Notice("Console", "Globalis funkciok kezelese: function <on vagy off> <funkcio nev1> <funkcio nev2> ... stb");
-					return;
-				}
-		
-				if(Info[2].ToLower() == "channel")
-				{
-					if(Info.Length < 4)
-					{
-						Log.Notice("Console", "Megadot channelen allithatok ezzel a parancsal a funkciok.");
-						Log.Notice("Console", "Funkcio channel parancsai: info");
-						Log.Notice("Console", "Hasznalata:");
-						Log.Notice("Console", "Channel funkcio kezelese: function channel <on vagy off> <funkcio nev>");
-						Log.Notice("Console", "Channel funkciok kezelése: function channel <on vagy off> <funkcio nev1> <funkcio nev2> ... stb");
-						return;
-					}
-
-					if(Info[3].ToLower() == "info")
-					{
-						Log.Notice("Console", "Kiirja a funkciok allapotat.");
-					}
-				}
-				else if(Info[2].ToLower() == "update")
-				{
-					Log.Notice("Console", "Frissiti a funkciokat vagy alapertelmezesre allitja.");
-					Log.Notice("Console", "Hasznalata:");
-					Log.Notice("Console", "Mas csatorna: function update <csatorna neve>");
-					Log.Notice("Console", "Globalis: function update");
-				}
-				else if(Info[3].ToLower() == "info")
-				{
-					Log.Notice("Console", "Kiirja a funkciok allapotat.");
-				}
-			}
-			else if(Info[1].ToLower() == "channel")
-			{
-				if(Info.Length < 3)
-				{
-					Log.Notice("Console", "Channel parancsai: add | remove | info | update | language");
-					return;
-				}
-
-				if(Info[2].ToLower() == "add")
-				{
-					Log.Notice("Console", "Uj channel hozzaadasa.");
-					Log.Notice("Console", "Hasznalata: channel add <channel> <ha van pass akkor az>");
-				}
-				else if(Info[2].ToLower() == "remove")
-				{
-					Log.Notice("Console", "Nem hasznalatos channel eltavolitasa.");
-					Log.Notice("Console", "Hasznalata: channel remove <channel>");
-				}
-				else if(Info[2].ToLower() == "info")
-				{
-					Log.Notice("Console", "Osszes channel kiirasa ami az adatbazisban van es a hozzajuk tartozo informaciok.");
-				}
-				else if(Info[2].ToLower() == "update")
-				{
-					Log.Notice("Console", "Channelekhez tartozo összes informacio frissitese, alapertelmezesre allitasa.");
-				}
-				else if(Info[2].ToLower() == "language")
-				{
-					Log.Notice("Console", "Frissiti a csatorna nyelvezetet.");
-					Log.Notice("Console", "Hasznalata: channel language <csatorna> <nyelvezet>");
-				}
-			}
-			else if(Info[1].ToLower() == "connect")
-			{
-				Log.Notice("Console", "Kapcsolodas az irc szerverhez.");
-			}
-			else if(Info[1].ToLower() == "disconnect")
-			{
-				Log.Notice("Console", "Kapcsolat bontasa.");
-			}
-			else if(Info[1].ToLower() == "reconnect")
-			{
-				Log.Notice("Console", "Ujrakapcsolodas az irc szerverhez.");
-			}
-			else if(Info[1].ToLower() == "nick")
-			{
-				Log.Notice("Console", "Bot nick nevenek csereje.");
-				Log.Notice("Console", "Hasznalata: {0}nick <nev>");
-			}
-			else if(Info[1].ToLower() == "join")
-			{
-				Log.Notice("Console", "Kapcsolodas megadot csatornara.");
-				Log.Notice("Console", "Hasznalata:");
-				Log.Notice("Console", "Jelszo nelkuli csatorna: join <csatorna>");
-				Log.Notice("Console", "Jelszoval ellatott csatorna: join <csatorna> <jelszo>");
-			}
-			else if(Info[1].ToLower() == "left")
-			{
-				Log.Notice("Console", "Lelepes a megadott csatornarol.");
-				Log.Notice("Console", "Hasznalata: left <csatorna>");
-			}
-			else if(Info[1].ToLower() == "quit")
-			{
-				Log.Notice("Console", "Bot leallitasara hasznalhato parancs.");
+				if(t.Contains("{0}"))
+					Log.Notice("Console", t, IRCConfig.CommandPrefix);
+				else
+					Log.Notice("Console", t);
 			}
 		}
 	}
