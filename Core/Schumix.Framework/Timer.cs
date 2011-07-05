@@ -20,11 +20,13 @@
 using System;
 using System.Threading;
 using System.Diagnostics;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
 	public sealed class Timer
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		/// <summary>
 		///     A bot elindításának ideje.
 		/// </summary>
@@ -35,14 +37,14 @@ namespace Schumix.Framework
 		{
 			try
 			{
-				Log.Notice("Time", "Time sikeresen elindult.");
+				Log.Notice("Timer", "Timer sikeresen elindult.");
 				SW.Start();
 				StartTime = DateTime.Now;
-				Log.Debug("Time", "Program indulasi idopontja mentesre kerult.");
+				Log.Debug("Timer", "Program indulasi idopontja mentesre kerult.");
 			}
 			catch(Exception e)
 			{
-				Log.Error("Time", "Hiba oka: {0}", e.Message);
+				Log.Error("Timer", sLConsole.Exception("Error"), e.Message);
 				Thread.Sleep(100);
 			}
 		}
@@ -50,7 +52,7 @@ namespace Schumix.Framework
 		public void StartTimer()
 		{
 			SW.Stop();
-			Log.Debug("Time", "A program {0}ms alatt indult el.", SW.ElapsedMilliseconds);
+			Log.Debug("Timer", "A program {0}ms alatt indult el.", SW.ElapsedMilliseconds);
 		}
 
 		/// <returns>

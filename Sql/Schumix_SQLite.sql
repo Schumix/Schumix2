@@ -146,7 +146,7 @@ Reason TEXT
 -- Table structure for "localized_command"
 -- ----------------------------
 DROP TABLE IF EXISTS "localized_command";
-CREATE TABLE `localized_command` (
+CREATE TABLE "localized_command" (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
 Language VARCHAR(4)    DEFAULT 'enUS',
 Command TEXT,
@@ -262,7 +262,7 @@ INSERT INTO "localized_command" VALUES (101, 'enUS', 'compiler/code', 'Errors: {
 -- Table structure for "localized_command_help"
 -- ----------------------------
 DROP TABLE IF EXISTS "localized_command_help";
-CREATE TABLE `localized_command_help` (
+CREATE TABLE "localized_command_help" (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
 Language VARCHAR(4)    DEFAULT 'enUS',
 Command TEXT,
@@ -393,7 +393,7 @@ INSERT INTO "localized_command_help" VALUES (115, 'huHU', 'autofunction/mode/cha
 -- Table structure for "localized_warning"
 -- ----------------------------
 DROP TABLE IF EXISTS "localized_warning";
-CREATE TABLE `localized_warning` (
+CREATE TABLE "localized_warning" (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
 Language VARCHAR(4)    DEFAULT 'enUS',
 Command TEXT,
@@ -447,7 +447,7 @@ INSERT INTO "localized_warning" VALUES (39, 'enUS', 'StopFlooding', 'Stop floodi
 -- Table structure for "message"
 -- ----------------------------
 DROP TABLE IF EXISTS "message";
-CREATE TABLE `message` (
+CREATE TABLE "message" (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
 Name VARCHAR(20),
 Channel VARCHAR(20),

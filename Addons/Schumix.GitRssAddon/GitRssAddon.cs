@@ -32,10 +32,11 @@ namespace Schumix.GitRssAddon
 	public class GitRssAddon : RssCommand, ISchumixAddon
 	{
 		public static readonly List<GitRss> RssList = new List<GitRss>();
+		private AddonConfig _config;
 
 		public void Setup()
 		{
-			new AddonConfig(Name + ".xml");
+			_config = new AddonConfig(Name + ".xml");
 			CommandManager.OperatorCRegisterHandler("git", new Action<IRCMessage>(HandleGit));
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Type, Link, Website FROM gitinfo");
@@ -72,6 +73,18 @@ namespace Schumix.GitRssAddon
 
 			foreach(var list in RssList)
 				list.Stop();
+		}
+
+		public bool Reload(string RName)
+		{
+			switch(RName.ToLower())
+			{
+				case "config":
+					_config = new AddonConfig(Name + ".xml");
+					return true;
+			}
+
+			return false;
 		}
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)

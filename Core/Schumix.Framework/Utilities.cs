@@ -42,40 +42,30 @@ namespace Schumix.Framework
 
 		public string GetUrl(string url)
 		{
-			string code;
-
 			using(var client = new WebClient())
 			{
-				code = client.DownloadString(url);
+				return client.DownloadString(url);
 			}
-
-			return code;
 		}
 
 		public string GetUrl(string url, string args)
 		{
-			string code;
-			var u = new Uri(url + HttpUtility.UrlEncode(args));
+			var _url = new Uri(url + HttpUtility.UrlEncode(args));
 
 			using(var client = new WebClient())
 			{
-				code = client.DownloadString(u);
+				return client.DownloadString(_url);
 			}
-
-			return code;
 		}
 
 		public string GetUrl(string url, string args, string noencode)
 		{
-			string code;
-			var u = new Uri(url + HttpUtility.UrlEncode(args) + noencode);
+			var _url = new Uri(url + HttpUtility.UrlEncode(args) + noencode);
 
 			using(var client = new WebClient())
 			{
-				code = client.DownloadString(u);
+				return client.DownloadString(_url);
 			}
-
-			return code;
 		}
 
 		/// <summary>

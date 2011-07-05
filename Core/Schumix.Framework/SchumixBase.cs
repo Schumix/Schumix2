@@ -27,11 +27,13 @@ namespace Schumix.Framework
 {
 	public class SchumixBase
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		public static DatabaseManager DManager { get; private set; }
 		public static Timer timer { get; private set; }
 		public static bool STime = true;
+		public static bool ExitStatus = false;
 		public static bool UrlTitleEnabled = false;
 		public static string Title { get { return "Schumix2 IRC Bot"; } }
 
@@ -59,7 +61,7 @@ namespace Schumix.Framework
 			}
 			catch(Exception e)
 			{
-				Log.Error("SchumixBase", "Hiba oka: {0}", e.Message);
+				Log.Error("SchumixBase", sLConsole.Exception("Error"), e.Message);
 				Thread.Sleep(100);
 			}
 		}

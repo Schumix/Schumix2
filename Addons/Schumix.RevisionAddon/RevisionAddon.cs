@@ -37,6 +37,11 @@ namespace Schumix.RevisionAddon
 			CommandManager.PublicCRemoveHandler("xrev");
 		}
 
+		public bool Reload(string RName)
+		{
+			return false;
+		}
+
 		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 

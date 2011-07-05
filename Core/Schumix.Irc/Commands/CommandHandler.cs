@@ -28,6 +28,7 @@ namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler : CommandInfo
 	{
+		protected readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		protected readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
@@ -64,9 +65,9 @@ namespace Schumix.Irc.Commands
 					return;
 			}
 
-			string ParancsJel = IRCConfig.NickName + ",";
+			string command = IRCConfig.NickName + ",";
 
-			if(sIRCMessage.Info[4].ToLower() == ParancsJel.ToLower())
+			if(sIRCMessage.Info[4].ToLower() == command.ToLower())
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
@@ -103,7 +104,7 @@ namespace Schumix.Irc.Commands
 					}
 
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], ParancsJel.ToLower());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], command.ToLower());
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "nick" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				{
@@ -117,7 +118,7 @@ namespace Schumix.Irc.Commands
 						}
 
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], ParancsJel.ToLower());
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], command.ToLower());
 						return;
 					}
 
@@ -131,7 +132,7 @@ namespace Schumix.Irc.Commands
 						}
 
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], ParancsJel.ToLower());
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], command.ToLower());
 					}
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "clean" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
@@ -144,7 +145,7 @@ namespace Schumix.Irc.Commands
 					}
 
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], ParancsJel.ToLower());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], command.ToLower());
 				}
 			}
 			else
@@ -153,21 +154,21 @@ namespace Schumix.Irc.Commands
 
 				if(adminflag != -1)
 				{
-					string command = sIRCMessage.Info.SplitToString(4, "/");
-					int rank = sLManager.GetCommandHelpRank(command, sIRCMessage.Channel);
+					string commands = sIRCMessage.Info.SplitToString(4, "/");
+					int rank = sLManager.GetCommandHelpRank(commands, sIRCMessage.Channel);
 
 					if((adminflag == 2 && rank == 2) || (adminflag == 2 && rank == 1) || (adminflag == 2 && rank == 0) ||
 					(adminflag == 1 && rank == 1) || (adminflag == 1 && rank == 0) || (adminflag == 0 && rank == 0) ||
 					(adminflag == 2 && rank == 9) || (adminflag == 1 && rank == 9) || (adminflag == 0 && rank == 9))
-						HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(command, sIRCMessage.Channel, rank));
+						HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, rank));
 				}
 				else
 				{
-					string command = sIRCMessage.Info.SplitToString(4, "/");
-					if(sLManager.IsAdminCommandHelp(command, sIRCMessage.Channel))
+					string commands = sIRCMessage.Info.SplitToString(4, "/");
+					if(sLManager.IsAdminCommandHelp(commands, sIRCMessage.Channel))
 						return;
 
-					HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(command, sIRCMessage.Channel));
+					HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel));
 				}
 			}
 		}

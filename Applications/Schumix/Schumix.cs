@@ -23,24 +23,27 @@ using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
+using Schumix.Framework.Localization;
 
 namespace Schumix
 {
 	public sealed class SchumixBot : SchumixBase
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+
 		public SchumixBot()
 		{
 			try
 			{
-				Log.Notice("SchumixBot", "SchumixBot sikeresen elindult.");
-				Log.Debug("SchumixBot", "Network indul...");
+				Log.Notice("SchumixBot", sLConsole.SchumixBot("Text"));
+				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text1"));
 				var network = new Network(IRCConfig.Server, IRCConfig.Port);
-				Log.Debug("SchumixBot", "Console indul...");
+				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text2"));
 				new Console.Console(network);
 			}
 			catch(Exception e)
 			{
-				Log.Error("SchumixBot", "Hiba oka: {0}", e.Message);
+				Log.Error("SchumixBot", sLConsole.Exception("Error"), e.Message);
 				Thread.Sleep(100);
 			}
 		}

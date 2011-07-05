@@ -40,6 +40,11 @@ namespace Schumix.TesztAddon
 			CommandManager.AdminCRemoveHandler("test");
 		}
 
+		public bool Reload(string RName)
+		{
+			return false;
+		}
+
 		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 

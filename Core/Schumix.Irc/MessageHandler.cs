@@ -30,7 +30,6 @@ namespace Schumix.Irc
 	public partial class MessageHandler : CommandManager
 	{
 		protected bool HostServStatus;
-		protected bool Status;
 		protected bool NewNick;
 		protected MessageHandler() {}
 
@@ -84,7 +83,7 @@ namespace Schumix.Irc
 
 		protected void HandleNotRegistered(IRCMessage sIRCMessage)
 		{
-			//Log.Notice("MessageHandler", "Teszt.");
+			//Log.Notice("MessageHandler", "Test.");
 		}
 
 		protected void HandleNoNickName(IRCMessage sIRCMessage)
@@ -147,7 +146,6 @@ namespace Schumix.Irc
 		protected void HandlePong(IRCMessage sIRCMessage)
 		{
 			sSender.Pong(sIRCMessage.Args);
-			Status = true;
 		}
 
 		/// <summary>

@@ -32,10 +32,11 @@ namespace Schumix.SvnRssAddon
 	public class SvnRssAddon : RssCommand, ISchumixAddon
 	{
 		public static readonly List<SvnRss> RssList = new List<SvnRss>();
+		private AddonConfig _config;
 
 		public void Setup()
 		{
-			new AddonConfig(Name + ".xml");
+			_config = new AddonConfig(Name + ".xml");
 			CommandManager.OperatorCRegisterHandler("svn", new Action<IRCMessage>(HandleSvn));
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM svninfo");
@@ -71,6 +72,18 @@ namespace Schumix.SvnRssAddon
 
 			foreach(var list in RssList)
 				list.Stop();
+		}
+
+		public bool Reload(string RName)
+		{
+			switch(RName.ToLower())
+			{
+				case "config":
+					_config = new AddonConfig(Name + ".xml");
+					return true;
+			}
+
+			return false;
 		}
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)

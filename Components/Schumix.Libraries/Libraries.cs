@@ -328,5 +328,35 @@ namespace Schumix.Libraries
 		{
 			return Environment.Version.ToString();
 		}
+
+		public static void print(string text)
+		{
+			Console.Write(text);
+		}
+
+		public static void print(object o)
+		{
+			Console.Write(o);
+		}
+
+		public static void print(string text, params object[] args)
+		{
+			print(string.Format(text, args));
+		}
+
+		public static void printf(string text)
+		{
+			Console.Write(text);
+		}
+
+		public static void printf(object o)
+		{
+			Console.Write(o);
+		}
+
+		public static void printf(string text, params object[] args)
+		{
+			printf(string.Format(text, args));
+		}
 	}
 }

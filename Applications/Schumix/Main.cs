@@ -22,11 +22,13 @@ using System.Text;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Localization;
 
 namespace Schumix
 {
 	class MainClass
 	{
+		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Sender sSender = Singleton<Sender>.Instance;
 
@@ -71,18 +73,27 @@ namespace Schumix
 				}
 			}
 
-			System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
+			double Num;
+			bool isNum = double.TryParse(console_encoding, out Num);
+
+			if(!isNum)
+				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
+			else
+				System.Console.OutputEncoding = Encoding.GetEncoding(Convert.ToInt32(Num)); // Magyar karakterkódolás windows xp-n: 852
+
+			sLConsole.Locale = "huHU";
 			System.Console.Title = SchumixBase.Title;
 			System.Console.ForegroundColor = ConsoleColor.Blue;
 			System.Console.WriteLine("[Schumix2]");
-			System.Console.WriteLine("A program leallitasahoz hasznald a <Ctrl+C> vagy <quit> parancsot!\n");
+			System.Console.WriteLine(sLConsole.MainText("StartText"));
 			System.Console.ForegroundColor = ConsoleColor.Gray;
-			System.Console.WriteLine("Keszitette Megax, Jackneill. Schumix Verzio: {0} http://megaxx.info", sUtilities.GetVersion());
-			System.Console.WriteLine("==============================================================================");
+			System.Console.WriteLine(sLConsole.MainText("StartText2"), sUtilities.GetVersion());
+			System.Console.WriteLine("================================================================================"); // 80
 			System.Console.WriteLine();
 
 			new Config(configdir, configfile);
-			Log.Notice("Main", "Rendszer indul...");
+			sLConsole.Locale = LocalizationConfig.Locale;
+			Log.Notice("Main", sLConsole.MainText("StartText3"));
 
 			new SchumixBot();
 			System.Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.timer.SaveUptime(); };

@@ -24,12 +24,14 @@ using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.Console.Commands;
 
 namespace Schumix.Console
 {
 	public sealed class Console
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly CCommandManager CCManager;
 
@@ -87,7 +89,7 @@ namespace Schumix.Console
 			}
 			catch(Exception e)
 			{
-				Log.Error("ConsoleRead", "Hiba oka: {0}", e.Message);
+				Log.Error("ConsoleRead", sLConsole.Exception("Error"), e.Message);
 				Thread.Sleep(1000);
 				ConsoleRead();
 			}
