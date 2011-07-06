@@ -46,6 +46,8 @@ CREATE TABLE `channel` (
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
+INSERT INTO `channel` VALUES ('1', ',koszones:on,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off', '#schumix2', '', '', '', 'huHU');
+
 -- ----------------------------
 -- Table structure for gitinfo
 -- ----------------------------

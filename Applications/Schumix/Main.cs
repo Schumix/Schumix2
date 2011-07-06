@@ -46,6 +46,7 @@ namespace Schumix
 			string configdir = "Configs";
 			string configfile = "Schumix.xml";
 			string console_encoding = "utf-8";
+			string localization = "enUS";
 
 			for(int i = 0; i < args.Length; i++)
 			{
@@ -71,6 +72,11 @@ namespace Schumix
 					console_encoding = arg.Substring(arg.IndexOf("=")+1);
 					continue;
 				}
+				else if(arg.Contains("--console-localization="))
+				{
+					localization = arg.Substring(arg.IndexOf("=")+1);
+					continue;
+				}
 			}
 
 			double Num;
@@ -81,7 +87,7 @@ namespace Schumix
 			else
 				System.Console.OutputEncoding = Encoding.GetEncoding(Convert.ToInt32(Num)); // Magyar karakterkódolás windows xp-n: 852
 
-			sLConsole.Locale = "huHU";
+			sLConsole.Locale = localization;
 			System.Console.Title = SchumixBase.Title;
 			System.Console.ForegroundColor = ConsoleColor.Blue;
 			System.Console.WriteLine("[Schumix2]");
