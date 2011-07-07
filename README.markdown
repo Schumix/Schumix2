@@ -34,68 +34,68 @@ a `Schumix.xml` nevû fájlt.
 
 ## Irc
 
-* Server: Ide kell beírni a szerver nevét ahova csatlakozni szeretnénk.
-* Port: A szerver portja. Alapértelmezés: `6667`
-* NickName: Elsõdleges név.
-* NickName2: Másodlagos név.
-* NickName3: Harmadlagos név.
-* UserName: Felhasználó név.
-* UserInfo: Információ a felhasználóról.
-* MasterChannel: Elsõdleges csatorna ahova csatlakozik minden esetben a bot. Ennek a neve itt változtatható meg. Az adatbázisból nem törölhetõ.
-* IgnoreChannels: Letilthatók a nem kívánatos csatornák vele. Ami itt szerepel oda nem megy fel a bot. Ezen rész letiltja a bot rendszerében szereplõket is.
+* **Server:** Ide kell beírni a szerver nevét ahova csatlakozni szeretnénk.
+* **Port:** A szerver portja. Alapértelmezés: `6667`
+* **NickName:** Elsõdleges név.
+* **NickName2:** Másodlagos név.
+* **NickName3:** Harmadlagos név.
+* **UserName:** Felhasználó név.
+* **UserInfo:** Információ a felhasználóról.
+* **MasterChannel:** Elsõdleges csatorna ahova csatlakozik minden esetben a bot. Ennek a neve itt változtatható meg. Az adatbázisból nem törölhetõ.
+* **IgnoreChannels:** Letilthatók a nem kívánatos csatornák vele. Ami itt szerepel oda nem megy fel a bot. Ezen rész letiltja a bot rendszerében szereplõket is.
                Tehát ha abból nem akarunk valahova felmenni akkor is használhatjuk ezt törlés helyett. Vesszõvel elválasztva kell egymás útán írni öket.
                `pl: #teszt,#teszt2 vagy szimplán #teszt`
-* IgnoreNames: Letilthatóak vele a nem kívánatos személyek. Így csak az használhatja a botot aki megérdemli.
+* **IgnoreNames:** Letilthatóak vele a nem kívánatos személyek. Így csak az használhatja a botot aki megérdemli.
              `pl: schumix,schumix2 vagy szimplán schumix`
-* NickServ:
-         ** Enabled: Értéke `true` vagy `false` lehet. Ezen rész határozza meg hogy a nickhez tartozó jelszó el legyen-e küldve. true = igen, false = nem.
+* **NickServ:**
+         ** **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határozza meg hogy a nickhez tartozó jelszó el legyen-e küldve. true = igen, false = nem.
                   Alapértelmezés: false
-         ** Password: Nickhez tartozó jelszó.
-* HostServ:
-         ** Enabled: Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy ha van a nickhez vhost akkor bekapcsolodjon-e. Alapértelmezés: `false`
+         ** **Password:** Nickhez tartozó jelszó.
+* **HostServ:**
+         ** **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy ha van a nickhez vhost akkor bekapcsolodjon-e. Alapértelmezés: `false`
                   Mert ha nincs akkor megjelenitödhet az ip ezért olyankor ajánlott false értékre tenni.
-         ** Vhost: Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy a nickhez tartotó vhost aktiválásra kerüljön-e. Alapértelmezés: `false`
-* Wait:
-     MessageSending: Üzenet küldésének késleltetése. Legföbbként flood ellen van.
-* Command:
-        Prefix: A parancsok elõjele. Alapértelmezés: `$` (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: `$xbot`)
+         ** **Vhost:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy a nickhez tartotó vhost aktiválásra kerüljön-e. Alapértelmezés: `false`
+* **Wait:**
+    ** **MessageSending:** Üzenet küldésének késleltetése. Legföbbként flood ellen van.
+* **Command:**
+        ** **Prefix:** A parancsok elõjele. Alapértelmezés: `$` (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: `$xbot`)
 
 ## Log
 
-* LogLevel: Meghatározza hogy a konzolba milyen üzenetek kerülnek kiirásra. Alapértelmezés: `2`
-          ** Szintjei: `0` (Normális üzenetek és a sikeresek)
+* **LogLevel:** Meghatározza hogy a konzolba milyen üzenetek kerülnek kiirásra. Alapértelmezés: `2`
+          ** **Szintjei:** `0` (Normális üzenetek és a sikeresek)
                     *** `1` (Figyelmeztetések)
                     *** `2` (Hibák)
                     *** `3` (Hibakeresõ üzenetek)
-* LogDirectory: A log üzenetek mentése abba a mappába ami megvan adva. Alapértelmezés: `Logs`
-* IrcLogDirectory: Az irc csatornák és egyéb üzenetének mentése abba a mappába ami megvan adva. Alapértelmezés: `Csatornak`
-* IrcLog: Értéke `true` vagy `false` lehet. Meghatározza hogy a konzolba kiirásra kerülhetnek-e az irc-tõl jövõ üzenetek. Alapértelmezés: `false`
+* **LogDirectory:** A log üzenetek mentése abba a mappába ami megvan adva. Alapértelmezés: `Logs`
+* **IrcLogDirectory:** Az irc csatornák és egyéb üzenetének mentése abba a mappába ami megvan adva. Alapértelmezés: `Csatornak`
+* **IrcLog:** Értéke `true` vagy `false` lehet. Meghatározza hogy a konzolba kiirásra kerülhetnek-e az irc-tõl jövõ üzenetek. Alapértelmezés: `false`
 
 ## MySql
 
-* Enabled: Értéke `true` vagy `false` lehet. Meghatározza hogy mysql alapú-e az adatbázis. Alapértelmezés: `false`
-* Host: A mysql szerver címe.
-* User: A szerver felhasználó neve.
-* Password: A szerver jelszava.
-* Database: Az adatbázis amiben megtalálhatók a bothoz tartozó táblák.
-* Charset: Az adatbázisba menõ adatok kódolását és olvasását határozza meg.
+* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy mysql alapú-e az adatbázis. Alapértelmezés: `false`
+* **Host:** A mysql szerver címe.
+* **User:** A szerver felhasználó neve.
+* **Password:** A szerver jelszava.
+* **Database:** Az adatbázis amiben megtalálhatók a bothoz tartozó táblák.
+* **Charset:** Az adatbázisba menõ adatok kódolását és olvasását határozza meg.
          Alapértelmezés: `utf8`
 
 ## SQLite
 
-* Enabled: Értéke `true` vagy `false` lehet. Meghatározza hogy sqlite alapú-e az adatbázis. Alapértelmezés: `false`
-* FileName: Az sqlite fájl neve.
+* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy sqlite alapú-e az adatbázis. Alapértelmezés: `false`
+* **FileName:** Az sqlite fájl neve.
 
 ## Addons
 
-* Enabled: Értéke `true` vagy `false` lehet. Engedélyezi az addonok betöltését. Alapértelmezés: `true`
-* Ignore: Azon addonok melyeket nem szeretnénk inditáskor betölteni. Vesszõvel elválasztva kell egymás útán írni öket. `(pl: TesztAddon,Teszt2Addon vagy szimplán TesztAddon)`
+* **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi az addonok betöltését. Alapértelmezés: `true`
+* **Ignore:** Azon addonok melyeket nem szeretnénk inditáskor betölteni. Vesszõvel elválasztva kell egymás útán írni öket. `(pl: TesztAddon,Teszt2Addon vagy szimplán TesztAddon)`
         Alapértelmezés: `SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon`
-* Directory: Az addonok mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Addons`
+* **Directory:** Az addonok mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Addons`
 
 ## Localization
 
-* Locale: Meghatározza hogy a kód milyen nyelven fusson. (csak az irc és konzol parancsokra vonatkozik)
+* **Locale:** Meghatározza hogy a kód milyen nyelven fusson. (csak az irc és konzol parancsokra vonatkozik)
         Alapértelmezés: `enUS`
 
 # Adatbázis beüzemelése
