@@ -64,7 +64,7 @@ a `Schumix.xml` nevû fájlt.
 
 * **LogLevel:**
 Meghatározza hogy a konzolba milyen üzenetek kerülnek kiirásra. Alapértelmezés: `2`
-**Szintjei: `0` (Normális üzenetek és a sikeresek)
+**Szintjei:** `0` (Normális üzenetek és a sikeresek)
 `1` (Figyelmeztetések)
 `2` (Hibák)
 `3` (Hibakeresõ üzenetek)
