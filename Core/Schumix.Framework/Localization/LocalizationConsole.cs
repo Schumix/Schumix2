@@ -59,9 +59,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "System start...";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string Exception(string Name)
@@ -77,9 +77,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string Translations(string Name)
@@ -109,9 +109,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string SchumixBot(string Name)
@@ -145,9 +145,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string Console(string Name)
@@ -181,9 +181,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string CCommandManager(string Name)
@@ -208,9 +208,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string Log(string Name)
@@ -226,9 +226,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string DatabaseManager(string Name)
@@ -271,9 +271,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string MySql(string Name)
@@ -307,9 +307,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string SQLite(string Name)
@@ -343,9 +343,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string Utilities(string Name)
@@ -361,9 +361,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "Checking: {0}";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string SchumixBase(string Name)
@@ -415,9 +415,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string Timer(string Name)
@@ -460,9 +460,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string AddonManager(string Name)
@@ -514,9 +514,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "Unload plugins.";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string Config(string Name)
@@ -595,9 +595,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string IRCConfig(string Name)
@@ -613,9 +613,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string MySqlConfig(string Name)
@@ -631,9 +631,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string SQLiteConfig(string Name)
@@ -649,9 +649,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string AddonsConfig(string Name)
@@ -667,9 +667,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 
 		public string LocalizationConfig(string Name)
@@ -685,9 +685,9 @@ namespace Schumix.Framework.Localization
 					else
 						return "";
 				}
+				default:
+					return string.Empty;
 			}
-
-			return string.Empty;
 		}
 	}
 }
