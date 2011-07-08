@@ -422,6 +422,11 @@ namespace Schumix.Framework.Localization
 
 		public string Timer(string Name)
 		{
+			return Timer(Name, Locale);
+		}
+
+		public string Timer(string Name, string Language)
+		{
 			switch(Name)
 			{
 				case "Text":
