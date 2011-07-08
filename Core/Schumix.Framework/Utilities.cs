@@ -30,11 +30,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
 	public sealed class Utilities
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly DateTime UnixTimeStart = new DateTime(1970, 1, 1, 0, 0, 0);
 		private const int TicksPerSecond = 10000;
 		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
@@ -95,14 +97,14 @@ namespace Schumix.Framework
 						if(!lurl.StartsWith("http://") && !url.StartsWith("https://"))
 							lurl = string.Format("http://{0}", url);
 
-						Log.Debug("Utilities", "Checking: {0}", url);
+						Log.Debug("Utilities", sLConsole.Utilities("Text"), url);
 						urls.Add(lurl);
 					}
 				}
 			}
 			catch(Exception e)
 			{
-				Log.Error("Utilities", "Hiba oka: {0}", e.Message);
+				Log.Error("Utilities", sLConsole.Exception("Error"), e.Message);
 			}
 
 			return urls;

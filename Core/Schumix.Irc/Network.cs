@@ -111,7 +111,7 @@ namespace Schumix.Irc
 			RegisterHandler("439",     new Action<IRCMessage>(HandleWaitingForConnection));
 			RegisterHandler("451",     new Action<IRCMessage>(HandleNotRegistered));
 			RegisterHandler("431",     new Action<IRCMessage>(HandleNoNickName));
-			Log.Notice("Network", "Osszes IRC handler regisztralva.");
+			Log.Notice("Network", "Összes IRC handler regisztrálásra került.");
 		}
 
 		private static void RegisterHandler(string code, Action<IRCMessage> method)

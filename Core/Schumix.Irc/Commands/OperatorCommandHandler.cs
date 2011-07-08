@@ -46,7 +46,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("function/info", sIRCMessage.Channel);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -70,7 +70,7 @@ namespace Schumix.Irc.Commands
 					var text = sLManager.GetCommandTexts("function/all/info", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -93,7 +93,7 @@ namespace Schumix.Irc.Commands
 					var text = sLManager.GetCommandTexts("function/all", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -154,7 +154,7 @@ namespace Schumix.Irc.Commands
 					var text = sLManager.GetCommandTexts("function/channel/info", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -170,7 +170,7 @@ namespace Schumix.Irc.Commands
 					var text = sLManager.GetCommandTexts("function/channel", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -247,7 +247,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("function", sIRCMessage.Channel);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -315,7 +315,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("channel/add", sIRCMessage.Channel);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -358,7 +358,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("channel/remove", sIRCMessage.Channel);
 				if(text.Length < 3)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -404,7 +404,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("channel/info", sIRCMessage.Channel);
 				if(text.Length < 4)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 

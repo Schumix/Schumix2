@@ -22,11 +22,13 @@ using System.IO;
 using System.Xml;
 using System.Threading;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
 {
 	public sealed class Config
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private bool error = false;
 
 		public Config(string configdir, string configfile)
@@ -39,8 +41,8 @@ namespace Schumix.Framework.Config
 				{
 					if(!error)
 					{
-						Log.Notice("Config", "Program leallitasa!");
-						Log.Notice("Config", "Kerlek toltsed ki a configot!");
+						Log.Notice("Config", sLConsole.Config("Text"));
+						Log.Notice("Config", sLConsole.Config("Text2"));
 					}
 
 					Thread.Sleep(5*1000);
@@ -61,7 +63,7 @@ namespace Schumix.Framework.Config
 					Log.Init();
 					Log.Debug("Config", ">> {0}", configfile);
 
-					Log.Notice("Config", "Config fajl betoltese.");
+					Log.Notice("Config", sLConsole.Config("Text3"));
 					string Server = !xmldoc.SelectSingleNode("Schumix/Irc/Server").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText : "localhost";
 					int Port = !xmldoc.SelectSingleNode("Schumix/Irc/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText) : 6667;
 					string NickName = !xmldoc.SelectSingleNode("Schumix/Irc/NickName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName").InnerText : "Schumix2";
@@ -105,14 +107,14 @@ namespace Schumix.Framework.Config
 
 					new LocalizationConfig(Locale);
 
-					Log.Success("Config", "Config adatbazis betoltve.");
+					Log.Success("Config", sLConsole.Config("Text4"));
 					Console.WriteLine();
 				}
 			}
 			catch(Exception e)
 			{
 				new LogConfig(3, "Logs", "Channels", false);
-				Log.Error("Config", "Hiba oka: {0}", e.Message);
+				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 
@@ -128,8 +130,8 @@ namespace Schumix.Framework.Config
 				else
 				{
 					new LogConfig(3, "Logs", "Channels", false);
-					Log.Error("Config", "Nincs config fajl!");
-					Log.Debug("Config", "Elkeszitese folyamatban...");
+					Log.Error("Config", sLConsole.Config("Text5"));
+					Log.Debug("Config", sLConsole.Config("Text6"));
 					var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
 
 					try
@@ -240,12 +242,12 @@ namespace Schumix.Framework.Config
 						w.Flush();
 						w.Close();
 
-						Log.Success("Config", "Config fajl elkeszult!");
+						Log.Success("Config", sLConsole.Config("Text7"));
 						return false;
 					}
 					catch(Exception e)
 					{
-						Log.Error("Config", "Hiba az xml irasa soran: {0}", e.Message);
+						Log.Error("Config", sLConsole.Config("Text8"), e.Message);
 						error = true;
 						return false;
 					}
@@ -274,6 +276,7 @@ namespace Schumix.Framework.Config
 
 	public sealed class IRCConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static string Server { get; private set; }
 		public static int Port { get; private set; }
 		public static string NickName { get; private set; }
@@ -309,12 +312,13 @@ namespace Schumix.Framework.Config
 			HostServEnabled  = hostservenabled;
 			MessageSending   = messagesending;
 			CommandPrefix    = commandprefix;
-			Log.Notice("IRCConfig", "Irc beallitasai betoltve.");
+			Log.Notice("IRCConfig", sLConsole.IRCConfig("Text"));
 		}
 	}
 
 	public sealed class MySqlConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static bool Enabled { get; private set; }
 		public static string Host { get; private set; }
 		public static string User { get; private set; }
@@ -330,12 +334,13 @@ namespace Schumix.Framework.Config
 			Password = password;
 			Database = database;
 			Charset  = charset;
-			Log.Notice("MySqlConfig", "MySql beallitasai betoltve.");
+			Log.Notice("MySqlConfig", sLConsole.MySqlConfig("Text"));
 		}
 	}
 
 	public sealed class SQLiteConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static bool Enabled { get; private set; }
 		public static string FileName { get; private set; }
 
@@ -343,7 +348,7 @@ namespace Schumix.Framework.Config
 		{
 			Enabled  = enabled;
 			FileName = filename;
-			Log.Notice("SQLiteConfig", "SQLite beallitasai betoltve.");
+			Log.Notice("SQLiteConfig", sLConsole.SQLiteConfig("Text"));
 		}
 	}
 
@@ -365,6 +370,7 @@ namespace Schumix.Framework.Config
 
 	public sealed class AddonsConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static bool Enabled { get; private set; }
 		public static string Ignore { get; private set; }
 		public static string Directory { get; private set; }
@@ -374,18 +380,19 @@ namespace Schumix.Framework.Config
 			Enabled   = enabled;
 			Ignore    = ignore;
 			Directory = directory;
-			Log.Notice("AddonsConfig", "Addons beallitasai betoltve.");
+			Log.Notice("AddonsConfig", sLConsole.AddonsConfig("Text"));
 		}
 	}
 
 	public sealed class LocalizationConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static string Locale { get; private set; }
 
 		public LocalizationConfig(string locale)
 		{
 			Locale = locale;
-			Log.Notice("LocalizationConfig", "Localization beallitasai betoltve.");
+			Log.Notice("LocalizationConfig", sLConsole.LocalizationConfig("Text"));
 		}
 	}
 }

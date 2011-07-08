@@ -22,11 +22,13 @@ using System.IO;
 using System.Xml;
 using System.Collections.Generic;
 using Schumix.Framework.Config;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
 	public sealed class Log
 	{
+		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly object WriteLock = new object();
 
@@ -61,7 +63,7 @@ namespace Schumix.Framework
 				string logfile = string.Format("./{0}/Schumix.log", LogConfig.LogDirectory);
 				sUtilities.CreateFile(logfile);
 				var file = new StreamWriter(logfile, true) { AutoFlush = true };
-				file.Write("\nIndulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n", time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
+				file.Write(sLConsole.Log("Text"), time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
 				file.Close();
 			}
 			catch(Exception)

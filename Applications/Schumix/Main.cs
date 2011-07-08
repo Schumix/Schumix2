@@ -98,7 +98,10 @@ namespace Schumix
 			System.Console.WriteLine();
 
 			new Config(configdir, configfile);
-			sLConsole.Locale = LocalizationConfig.Locale;
+
+			if(localization != LocalizationConfig.Locale)
+				sLConsole.Locale = LocalizationConfig.Locale;
+
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
 
 			new SchumixBot();

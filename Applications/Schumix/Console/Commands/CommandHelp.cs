@@ -21,6 +21,7 @@ using System;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Console.Commands
 {
@@ -33,7 +34,7 @@ namespace Schumix.Console.Commands
 				var text = sLManager.GetConsoleCommandTexts("help");
 				if(text.Length < 2)
 				{
-					Log.Error("Console", "No translations found!");
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
