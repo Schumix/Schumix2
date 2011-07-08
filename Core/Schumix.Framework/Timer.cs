@@ -64,6 +64,12 @@ namespace Schumix.Framework
 			return string.Format(sLConsole.Timer("Uptime"), Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
 		}
 
+		public string Uptime(string Language)
+		{
+			var Time = DateTime.Now - StartTime;
+			return string.Format(sLConsole.Timer("Uptime", Language), Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
+		}
+
 		public void SaveUptime()
 		{
 			string date = string.Empty;

@@ -93,7 +93,7 @@ namespace Schumix.Irc
 					else
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[6], memory);
 
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[7], SchumixBase.timer.Uptime());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[7], SchumixBase.timer.Uptime(sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "help")
 				{
