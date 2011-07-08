@@ -36,7 +36,7 @@ namespace Schumix.Irc.Commands
 			var text = sLManager.GetCommandTexts("xbot", sIRCMessage.Channel);
 			if(text.Length < 3)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
 			}
 
@@ -67,7 +67,7 @@ namespace Schumix.Irc.Commands
 			var text = sLManager.GetCommandTexts("time", sIRCMessage.Channel);
 			if(text.Length < 2)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
 			}
 
@@ -83,7 +83,7 @@ namespace Schumix.Irc.Commands
 			var text = sLManager.GetCommandTexts("date", sIRCMessage.Channel);
 			if(text.Length < 4)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
 			}
 
@@ -223,7 +223,7 @@ namespace Schumix.Irc.Commands
 			var text = sLManager.GetCommandTexts("google", sIRCMessage.Channel);
 			if(text.Length < 4)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
 			}
 
@@ -279,7 +279,7 @@ namespace Schumix.Irc.Commands
 			var text = sLManager.GetCommandTexts("prime", sIRCMessage.Channel);
 			if(text.Length < 3)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
 			}
 
@@ -312,7 +312,7 @@ namespace Schumix.Irc.Commands
 			var text = sLManager.GetCommandTexts("weather", sIRCMessage.Channel);
 			if(text.Length < 3)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
 			}
 

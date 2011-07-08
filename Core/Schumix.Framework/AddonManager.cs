@@ -26,6 +26,7 @@ using System.Reflection;
 using Schumix.API;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
@@ -34,6 +35,7 @@ namespace Schumix.Framework
 	/// </summary>
 	public sealed class AddonManager
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly List<ISchumixAddon> _addons = new List<ISchumixAddon>();
 		private readonly object LoadLock = new object();
 
@@ -73,7 +75,7 @@ namespace Schumix.Framework
 				string file = string.Empty;
 				string[] ignore = AddonsConfig.Ignore.Split(',');
 				var dir = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, directory));
-				Log.Notice("AddonManager", "Loading addons from: {0}", dir.FullName);
+				Log.Notice("AddonManager", sLConsole.AddonManager("Text"), dir.FullName);
 
 				foreach(var dll in dir.GetFiles("*.dll").AsParallel())
 				{
@@ -125,18 +127,18 @@ namespace Schumix.Framework
 							Assemblies.Add(asm);
 						}
 
-						Log.Success("AddonManager", "Loaded plugin: {0} {1} by {2} ({3})", pl.Name, asm.GetName().Version.ToString(), pl.Author, pl.Website);
+						Log.Success("AddonManager", sLConsole.AddonManager("Text2"), pl.Name, asm.GetName().Version.ToString(), pl.Author, pl.Website);
 					}
 				}
 
 				if(AddonsConfig.Ignore.Length > 1)
-					Log.Notice("AddonManager", "Ignoring plugins: {0}", AddonsConfig.Ignore);
+					Log.Notice("AddonManager", sLConsole.AddonManager("Text3"), AddonsConfig.Ignore);
 
 				return true;
 			}
 			catch(Exception e)
 			{
-				Log.Error("AddonManager", "Error while loading one of directories! Detail: {0}", e.Message);
+				Log.Error("AddonManager", sLConsole.AddonManager("Text4"), e.Message);
 				return false;
 			}
 		}
@@ -158,7 +160,7 @@ namespace Schumix.Framework
 				Assemblies.Clear();
 			}
 
-			Log.Notice("AddonManager", "Unload plugins.");
+			Log.Notice("AddonManager", sLConsole.AddonManager("Text5"));
 			return true;
 		}
 

@@ -24,11 +24,13 @@ using System.Data.SQLite;
 using System.Threading;
 using MySql.Data;
 using Schumix.Framework.Config;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Database
 {
 	public sealed class DatabaseManager
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly object _lock = new object();
 		private readonly SQLite sdatabase;
 		private readonly MySql mdatabase;
@@ -36,7 +38,7 @@ namespace Schumix.Framework.Database
 		public DatabaseManager()
 		{
 			byte x = 0;
-			Log.Debug("DatabaseManager", "Adatbazis betoltese elindult.");
+			Log.Debug("DatabaseManager", sLConsole.DatabaseManager("Text"));
 
 			if(SQLiteConfig.Enabled)
 			{
@@ -50,17 +52,17 @@ namespace Schumix.Framework.Database
 				mdatabase = new MySql(MySqlConfig.Host, MySqlConfig.User, MySqlConfig.Password, MySqlConfig.Database, MySqlConfig.Charset);
 			}
 
-			Log.Debug("DatabaseManager", "Adatbazis fajtajanak kivalasztasa folyamatban.");
+			Log.Debug("DatabaseManager", sLConsole.DatabaseManager("Text2"));
 
 			if(x == 0)
 			{
-				Log.Error("DatabaseManager", "Nincs az adatbazis tipusa kivalasztva!");
+				Log.Error("DatabaseManager", sLConsole.DatabaseManager("Text3"));
 				Thread.Sleep(200);
 				Environment.Exit(1);
 			}
 			else if(x == 2)
 			{
-				Log.Error("DatabaseManager", "Ketto adatbazis van kivalasztva!");
+				Log.Error("DatabaseManager", sLConsole.DatabaseManager("Text4"));
 				Thread.Sleep(200);
 				Environment.Exit(1);
 			}

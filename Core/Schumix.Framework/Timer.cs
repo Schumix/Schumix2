@@ -37,10 +37,10 @@ namespace Schumix.Framework
 		{
 			try
 			{
-				Log.Notice("Timer", "Timer sikeresen elindult.");
+				Log.Notice("Timer", sLConsole.Timer("Text"));
 				SW.Start();
 				StartTime = DateTime.Now;
-				Log.Debug("Timer", "Program indulasi idopontja mentesre kerult.");
+				Log.Debug("Timer", sLConsole.Timer("Text2"));
 			}
 			catch(Exception e)
 			{
@@ -52,7 +52,7 @@ namespace Schumix.Framework
 		public void StartTimer()
 		{
 			SW.Stop();
-			Log.Debug("Timer", "A program {0}ms alatt indult el.", SW.ElapsedMilliseconds);
+			Log.Debug("Timer", sLConsole.Timer("Text3"), SW.ElapsedMilliseconds);
 		}
 
 		/// <returns>
@@ -61,13 +61,7 @@ namespace Schumix.Framework
 		public string Uptime()
 		{
 			var Time = DateTime.Now - StartTime;
-			return string.Format("{0} nap, {1} óra, {2} perc, {3} másodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
-		}
-
-		public string CUptime()
-		{
-			var Time = DateTime.Now - StartTime;
-			return string.Format("{0} nap, {1} ora, {2} perc, {3} masodperc.", Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
+			return string.Format(sLConsole.Timer("Uptime"), Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
 		}
 
 		public void SaveUptime()

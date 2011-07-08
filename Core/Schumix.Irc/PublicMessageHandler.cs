@@ -76,7 +76,7 @@ namespace Schumix.Irc
 					var text = sLManager.GetCommandTexts("schumix2/sys", sIRCMessage.Channel);
 					if(text.Length < 8)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -100,7 +100,7 @@ namespace Schumix.Irc
 					var text = sLManager.GetCommandTexts("schumix2/help", sIRCMessage.Channel);
 					if(text.Length < 4)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 

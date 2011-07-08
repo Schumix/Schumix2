@@ -19,15 +19,18 @@
 
 using System;
 using System.IO;
+using System.Text;
 using System.Linq;
 using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Console.Commands
 {
 	public sealed class CCommandManager : CommandHandler
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
 		public static Dictionary<string, Action> GetCommandHandler()
 		{
@@ -36,7 +39,7 @@ namespace Schumix.Console.Commands
 
 		public CCommandManager(Network network) : base(network)
 		{
-			Log.Notice("CCommandManager", "CCommandManager sikeresen elindult.");
+			Log.Notice("CCommandManager", sLConsole.CCommandManager("Text"));
 			InitHandler();
 		}
 
@@ -64,7 +67,7 @@ namespace Schumix.Console.Commands
 			RegisterHandler("reload",     HandleReload);
 			RegisterHandler("quit",       HandleQuit);
 
-			Log.Notice("CCommandManager", "Osszes Command handler regisztralva.");
+			Log.Notice("CCommandManager", sLConsole.CCommandManager("Text2"));
 		}
 
 		private void RegisterHandler(string code, Action method)
@@ -94,7 +97,7 @@ namespace Schumix.Console.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Error("CIncomingInfo", "Hiba oka: {0}", e.ToString());
+				Log.Error("CIncomingInfo", sLConsole.Exception("Error"), e.Message);
 				return false;
 			}
 		}

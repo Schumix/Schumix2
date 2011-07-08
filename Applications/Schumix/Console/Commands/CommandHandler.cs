@@ -32,6 +32,7 @@ namespace Schumix.Console.Commands
 {
 	public partial class CommandHandler : ConsoleLog
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
@@ -58,7 +59,7 @@ namespace Schumix.Console.Commands
 			var text = sLManager.GetConsoleCommandTexts("consolelog");
 			if(text.Length < 2)
 			{
-				Log.Error("Console", "No translations found!");
+				Log.Error("Console", sLConsole.Translations("NoFound2"));
 				return;
 			}
 
@@ -79,7 +80,7 @@ namespace Schumix.Console.Commands
 			var text = sLManager.GetConsoleCommandTexts("sys");
 			if(text.Length < 7)
 			{
-				Log.Error("Console", "No translations found!");
+				Log.Error("Console", sLConsole.Translations("NoFound2"));
 				return;
 			}
 
@@ -90,7 +91,7 @@ namespace Schumix.Console.Commands
 			Log.Notice("Console", text[3]);
 			Log.Notice("Console", text[4], memory);
 			Log.Notice("Console", text[5], Process.GetCurrentProcess().Threads.Count);
-			Log.Notice("Console", text[6], SchumixBase.timer.CUptime());
+			Log.Notice("Console", text[6], SchumixBase.timer.Uptime());
 		}
 
 		protected void HandleCsatorna()
@@ -119,7 +120,7 @@ namespace Schumix.Console.Commands
 				var text = sLManager.GetConsoleCommandTexts("admin/info");
 				if(text.Length < 3)
 				{
-					Log.Error("Console", "No translations found!");
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
@@ -162,7 +163,7 @@ namespace Schumix.Console.Commands
 				var text = sLManager.GetConsoleCommandTexts("admin/add");
 				if(text.Length < 3)
 				{
-					Log.Error("Console", "No translations found!");
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
@@ -191,7 +192,7 @@ namespace Schumix.Console.Commands
 				var text = sLManager.GetConsoleCommandTexts("admin/remove");
 				if(text.Length < 2)
 				{
-					Log.Error("Console", "No translations found!");
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
@@ -224,7 +225,7 @@ namespace Schumix.Console.Commands
 				var text = sLManager.GetConsoleCommandTexts("admin/rank");
 				if(text.Length < 2)
 				{
-					Log.Error("Console", "No translations found!");
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
@@ -273,7 +274,7 @@ namespace Schumix.Console.Commands
 					var text = sLManager.GetConsoleCommandTexts("function/channel/info");
 					if(text.Length < 2)
 					{
-						Log.Error("Console", "No translations found!");
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
 						return;
 					}
 
@@ -295,7 +296,7 @@ namespace Schumix.Console.Commands
 					var text = sLManager.GetConsoleCommandTexts("function/channel");
 					if(text.Length < 2)
 					{
-						Log.Error("Console", "No translations found!");
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
 						return;
 					}
 
@@ -364,7 +365,7 @@ namespace Schumix.Console.Commands
 				var text = sLManager.GetConsoleCommandTexts("function/info");
 				if(text.Length < 2)
 				{
-					Log.Error("Console", "No translations found!");
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
@@ -393,7 +394,7 @@ namespace Schumix.Console.Commands
 				var text = sLManager.GetConsoleCommandTexts("function");
 				if(text.Length < 2)
 				{
-					Log.Error("Console", "No translations found!");
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
@@ -428,7 +429,7 @@ namespace Schumix.Console.Commands
 				var text = sLManager.GetConsoleCommandTexts("channel/add");
 				if(text.Length < 2)
 				{
-					Log.Error("Console", "No translations found!");
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
@@ -469,7 +470,7 @@ namespace Schumix.Console.Commands
 				var text = sLManager.GetConsoleCommandTexts("channel/remove");
 				if(text.Length < 3)
 				{
-					Log.Error("Console", "No translations found!");
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
@@ -510,7 +511,7 @@ namespace Schumix.Console.Commands
 				var text = sLManager.GetConsoleCommandTexts("channel/info");
 				if(text.Length < 3)
 				{
-					Log.Error("Console", "No translations found!");
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
@@ -569,13 +570,13 @@ namespace Schumix.Console.Commands
 
 		protected void HandleDisConnect()
 		{
-			sSender.Quit("Console: disconnect.");
+			sSender.Quit("Console: Disconnect.");
 			_network.DisConnect();
 		}
 
 		protected void HandleReConnect()
 		{
-			sSender.Quit("Console: reconnect.");
+			sSender.Quit("Console: Reconnect.");
 			_network.ReConnect();
 		}
 
@@ -632,7 +633,7 @@ namespace Schumix.Console.Commands
 			var text = sLManager.GetConsoleCommandTexts("reload");
 			if(text.Length < 2)
 			{
-				Log.Error("Console", "No translations found!");
+				Log.Error("Console", sLConsole.Translations("NoFound2"));
 				return;
 			}
 
@@ -663,7 +664,7 @@ namespace Schumix.Console.Commands
 			var text = sLManager.GetConsoleCommandTexts("quit");
 			if(text.Length < 2)
 			{
-				Log.Error("Console", "No translations found!");
+				Log.Error("Console", sLConsole.Translations("NoFound2"));
 				return;
 			}
 

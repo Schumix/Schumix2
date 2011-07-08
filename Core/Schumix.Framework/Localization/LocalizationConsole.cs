@@ -55,9 +55,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Rendszer indul...";
 					else if(Locale == "enUS")
-						return "";
+						return "System start...";
 					else
-						return "";
+						return "System start...";
 				}
 			}
 
@@ -71,8 +71,40 @@ namespace Schumix.Framework.Localization
 				case "Error":
 				{
 					if(Locale == "huHU")
-						return "Hiba oka: {0}";
+						return "Meghibásodás részletei: {0}";
 					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string Translations(string Name)
+		{
+			return Translations(Name, Locale);
+		}
+
+		public string Translations(string Name, string Language)
+		{
+			switch(Name)
+			{
+				case "NoFound":
+				{
+					if(Language == "huHU")
+						return "Nem találhatóak fordítások!";
+					else if(Language == "enUS")
+						return "No translations found!";
+					else
+						return "No translations found!";
+				}
+				case "NoFound2":
+				{
+					if(Language == "huHU")
+						return "Nem található néhány fordítás!";
+					else if(Language == "enUS")
 						return "";
 					else
 						return "";
@@ -108,6 +140,546 @@ namespace Schumix.Framework.Localization
 				{
 					if(Locale == "huHU")
 						return "Console indul...";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string Console(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Console sikeresen elindult.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Console parancs olvasója indul...";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Console parancs olvasó része elindult.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string CCommandManager(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "CCommandManager sikeresen elindult.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Összes Command handler regisztrálásra került.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string Log(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "\nIndulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string DatabaseManager(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Adatbázis betöltése elindult.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Adatbázis fajtájának kiválasztása folyamatban.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Nincs az adatbázis tipusa kiválasztva!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "Kettő adatbázis van kiválasztva!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string MySql(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Hiba történt az adatbázishoz való kapcsolodás során!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "MySql adatbázishoz sikeres a kapcsolodás.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Query hiba: {0}";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string SQLite(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Hiba történt az adatbázishoz való kapcsolodás során!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "SQLite adatbázishoz sikeres a kapcsolodás.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Query hiba: {0}";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string Utilities(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Ellenőrzése: {0}";
+					else if(Locale == "enUS")
+						return "Checking: {0}";
+					else
+						return "Checking: {0}";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string SchumixBase(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Timer indul...";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Mysql indul...";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Az adatbázishoz sikeres a kapcsolodás.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "Mester csatorna frissitve lett erre: {0}";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "AddonManager betöltése folyamatban...";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string Timer(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Timer sikeresen elindult.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Program indulási időpontja mentésre került.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "A program {0}ms alatt indult el.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Uptime":
+				{
+					if(Locale == "huHU")
+						return "{0} nap, {1} óra, {2} perc, {3} másodperc.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string AddonManager(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Addonok betöltése innét: {0}";
+					else if(Locale == "enUS")
+						return "Loading addons from: {0}";
+					else
+						return "Loading addons from: {0}";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Betöltött plugin: {0} {1} készítette {2} ({3})";
+					else if(Locale == "enUS")
+						return "Loaded plugin: {0} {1} by {2} ({3})";
+					else
+						return "Loaded plugin: {0} {1} by {2} ({3})";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Tiltott pluginok: {0}";
+					else if(Locale == "enUS")
+						return "Ignoring plugins: {0}";
+					else
+						return "Ignoring plugins: {0}";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "Hiba egy könyvtár betöltése közben! Részletek: {0}";
+					else if(Locale == "enUS")
+						return "Error while loading one of directories! Detail: {0}";
+					else
+						return "Error while loading one of directories! Detail: {0}";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "Pluginok leválasztva.";
+					else if(Locale == "enUS")
+						return "Unload plugins.";
+					else
+						return "Unload plugins.";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string Config(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Program leállítása!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Kérlek töltsed ki a konfigot!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Konfig fájl betöltése.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "Konfig adatbázis betöltve.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "Nincs konfig fájl!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text6":
+				{
+					if(Locale == "huHU")
+						return "Elkészítése folyamatban...";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text7":
+				{
+					if(Locale == "huHU")
+						return "Konfig fájl elkészült!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text8":
+				{
+					if(Locale == "huHU")
+						return "Meghibásodás az xml írása során. Részletek: {0}";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string IRCConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Irc beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string MySqlConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "MySql beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string SQLiteConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "SQLite beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string AddonsConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Addons beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+			}
+
+			return string.Empty;
+		}
+
+		public string LocalizationConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Localization beállításai betöltve.";
 					else if(Locale == "enUS")
 						return "";
 					else

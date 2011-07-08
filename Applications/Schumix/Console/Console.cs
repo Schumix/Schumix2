@@ -44,8 +44,8 @@ namespace Schumix.Console
 		/// </remarks>
 		public Console(Network network)
 		{
-			Log.Notice("Console", "Console sikeresen elindult.");
-			Log.Debug("Console", "Console parancs olvasoja indul...");
+			Log.Notice("Console", sLConsole.Console("Text"));
+			Log.Debug("Console", sLConsole.Console("Text2"));
 			Task.Factory.StartNew(() => ConsoleRead());
 			CCManager = new CCommandManager(network);
 			CCManager.Channel = IRCConfig.MasterChannel;
@@ -75,12 +75,12 @@ namespace Schumix.Console
 			try
 			{
 				string message;
-				Log.Notice("Console", "Console parancs olvaso resze elindult.");
+				Log.Notice("Console", sLConsole.Console("Text3"));
 
 				while(true)
 				{
 					message = System.Console.ReadLine();
-					if(CCManager.CIncomingInfo(message))
+					if(message.IsNull() || CCManager.CIncomingInfo(message))
 						continue;
 
 					sSendMessage.SendCMPrivmsg(CCManager.Channel, message);

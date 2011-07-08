@@ -24,23 +24,25 @@ using System.Data;
 using System.Data.SQLite;
 using System.Text.RegularExpressions;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Database
 {
 	public sealed class SQLite
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private SQLiteConnection Connection;
 
 		public SQLite(string file)
 		{
 			if(!Initialize(file))
 			{
-				Log.Error("SQLite", "Hiba tortent az adatbazishoz valo kapcsolodas soran!");
+				Log.Error("SQLite", sLConsole.SQLite("Text"));
 				Thread.Sleep(200);
 				Environment.Exit(1);
 			}
 			else
-				Log.Notice("SQLite", "SQLite adatbazishoz sikeres a kapcsolodas.");
+				Log.Notice("SQLite", sLConsole.SQLite("Text2"));
 		}
 
 		~SQLite()
@@ -88,7 +90,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(SQLiteException s)
 			{
-				Log.Error("SQLite", "Query hiba: {0}", s.Message);
+				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 				return null;
 			}
 		}

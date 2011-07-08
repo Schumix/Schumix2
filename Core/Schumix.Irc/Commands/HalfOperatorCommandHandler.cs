@@ -47,7 +47,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("admin/access", sIRCMessage.Channel);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -83,7 +83,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("admin/newpassword", sIRCMessage.Channel);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -111,7 +111,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("admin/info", sIRCMessage.Channel);
 				if(text.Length < 3)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -154,7 +154,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("admin/add", sIRCMessage.Channel);
 				if(text.Length < 5)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -186,7 +186,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("admin/remove", sIRCMessage.Channel);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -237,7 +237,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("admin/rank", sIRCMessage.Channel);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -296,7 +296,7 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("admin", sIRCMessage.Channel);
 				if(text.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 

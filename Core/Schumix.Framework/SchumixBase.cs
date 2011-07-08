@@ -41,18 +41,18 @@ namespace Schumix.Framework
 		{
 			try
 			{
-				Log.Debug("SchumixBase", "Time indul...");
+				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text"));
 				timer = new Timer();
-				Log.Debug("SchumixBase", "Mysql indul...");
+				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text2"));
 				DManager = new DatabaseManager();
-				Log.Notice("SchumixBase", "Az adatbazishoz sikeres a kapcsolodas.");
+				Log.Notice("SchumixBase", sLConsole.SchumixBase("Text3"));
 
 				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Channel = '{0}' WHERE Id = '1'", IRCConfig.MasterChannel);
-				Log.Notice("SchumixBase", "Mester csatorna frissitve lett erre: {0}", IRCConfig.MasterChannel);
+				Log.Notice("SchumixBase", sLConsole.SchumixBase("Text4"), IRCConfig.MasterChannel);
 
 				if(AddonsConfig.Enabled)
 				{
-					Log.Debug("SchumixBase", "AddonManager betoltese folyamatban...");
+					Log.Debug("SchumixBase", sLConsole.SchumixBase("Text5"));
 					sAddonManager.Initialize();
 					sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory);
 				}

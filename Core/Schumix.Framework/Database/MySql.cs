@@ -25,23 +25,25 @@ using System.Text.RegularExpressions;
 using MySql.Data;
 using MySql.Data.MySqlClient;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Database
 {
 	public sealed class MySql
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private MySqlConnection Connection;
 
 		public MySql(string host, string username, string password, string database, string charset)
 		{
 			if(!Initialize(host, username, password, database, charset))
 			{
-				Log.Error("MySql", "Hiba tortent az adatbazishoz valo kapcsolodas soran!");
+				Log.Error("MySql", sLConsole.MySql("Text"));
 				Thread.Sleep(200);
 				Environment.Exit(1);
 			}
 			else
-				Log.Success("MySql", "MySql adatbazishoz sikeres a kapcsolodas.");
+				Log.Success("MySql", sLConsole.MySql("Text2"));
 		}
 
 		~MySql()
@@ -84,7 +86,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				Log.Error("MySql", "Query hiba: {0}", m.Message);
+				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 				return null;
 			}
 		}
