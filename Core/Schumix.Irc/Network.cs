@@ -42,12 +42,12 @@ namespace Schumix.Irc
 		public static StreamWriter writer { get; private set; }
 
         /// <summary>
-        ///     
+        ///     A kapcsolatot tároljra.
         /// </summary>
 		private TcpClient client;
 
         /// <summary>
-        ///     
+        ///     A bejövő információkat fogadja.
         /// </summary>
 		private StreamReader reader;
 
@@ -213,11 +213,13 @@ namespace Schumix.Irc
         ///     Ez a függvény kezeli azt IRC adatai és az opcedes-eket.
         /// </summary>
         /// <remarks>
-        ///     Opcodes : Az IRC-ről jövő funkciók, kódok.
+        ///     Opcodes: Az IRC-ről jövő funkciók, kódok.
         /// </remarks>
 		private void Opcodes()
 		{
 			Log.Notice("Opcodes", "A szal sikeresen elindult.");
+			byte number = 0;
+			bool enabled = false;
 			Log.Notice("Opcodes", "Elindult az irc adatok fogadasa.");
 
 			while(true)
@@ -232,13 +234,27 @@ namespace Schumix.Irc
 						break;
 					}
 
+					if(enabled)
+					{
+						number = 0;
+						enabled = false;
+					}
+
 					Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage));
 				}
 				catch(IOException)
 				{
 					if(sChannelInfo.FSelect("reconnect"))
 					{
-						Thread.Sleep(10*1000);
+						if(number <= 6)
+						{
+							Thread.Sleep(10*1000);
+							number++;
+						}
+						else
+							Thread.Sleep(120*1000);
+
+						enabled = true;
 						ReConnect();
 						continue;
 					}

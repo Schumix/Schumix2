@@ -30,24 +30,70 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Console.Commands
 {
+	/// <summary>
+	///     CommandHandler class.
+	/// </summary>
 	public partial class CommandHandler : ConsoleLog
 	{
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     LocalizationConsole segítségével állíthatóak be a konzol nyelvi tulajdonságai.
+		/// </summary>
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     LocalizationManager segítségével állítható be az irc szerver felé menő tárolt üzenetek nyelvezete.
+		/// </summary>
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Addonok kezelése.
+		/// </summary>
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Az eggyes csatornákról tárolt információkat lehet kezelni illetve csatornák számát módosítani.
+		/// </summary>
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
+		/// </summary>
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     A nick név változtatását illetve jelenlegi kiírását teszi lehetővé.
+		/// </summary>
 		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Üzenet küldés az irc szerver felé.
+		/// </summary>
 		private readonly Sender sSender = Singleton<Sender>.Instance;
+		/// <summary>
+		///     Network elérését tárólja.
+		/// </summary>
 		private readonly Network _network;
+		/// <summary>
+		///     A szétdarabolt információkat tárolja.
+		/// </summary>
 		protected string[] Info;
+		/// <summary>
+		///     Csatorna nevét tárólja.
+		/// </summary>
 		protected string _channel;
 
+		/// <summary>
+		///     Indulási függvény.
+		/// </summary>
 		protected CommandHandler(Network network) : base(LogConfig.IrcLog)
 		{
 			_network = network;
 		}
 
+		/// <summary>
+		///     Consolelog parancs függvénye.
+		/// </summary>
 		protected void HandleConsoleLog()
 		{
 			if(Info.Length < 2)
@@ -75,6 +121,9 @@ namespace Schumix.Console.Commands
 			}
 		}
 
+		/// <summary>
+		///     Sys parancs függvénye.
+		/// </summary>
 		protected void HandleSys()
 		{
 			var text = sLManager.GetConsoleCommandTexts("sys");
@@ -94,6 +143,9 @@ namespace Schumix.Console.Commands
 			Log.Notice("Console", text[6], SchumixBase.timer.Uptime());
 		}
 
+		/// <summary>
+		///     Csatorna parancs függvénye.
+		/// </summary>
 		protected void HandleCsatorna()
 		{
 			if(Info.Length < 2)
@@ -107,6 +159,9 @@ namespace Schumix.Console.Commands
 			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + Info[1];
 		}
 
+		/// <summary>
+		///     Admin parancs függvénye.
+		/// </summary>
 		protected void HandleAdmin()
 		{
 			if(Info.Length >= 2 && Info[1].ToLower() == "info")
@@ -244,6 +299,9 @@ namespace Schumix.Console.Commands
 				Log.Notice("Console", sLManager.GetConsoleCommandText("admin"));
 		}
 
+		/// <summary>
+		///     Function parancs függvénye.
+		/// </summary>
 		protected void HandleFunction()
 		{
 			if(Info.Length < 2)
@@ -410,6 +468,9 @@ namespace Schumix.Console.Commands
 			}
 		}
 
+		/// <summary>
+		///     Channel parancs függvénye.
+		/// </summary>
 		protected void HandleChannel()
 		{
 			if(Info.Length < 2)
@@ -563,23 +624,35 @@ namespace Schumix.Console.Commands
 			}
 		}
 
+		/// <summary>
+		///     Connect parancs függvénye.
+		/// </summary>
 		protected void HandleConnect()
 		{
 			_network.Connect();
 		}
 
+		/// <summary>
+		///     Disconnect parancs függvénye.
+		/// </summary>
 		protected void HandleDisConnect()
 		{
 			sSender.Quit("Console: Disconnect.");
 			_network.DisConnect();
 		}
 
+		/// <summary>
+		///     Reconnect parancs függvénye.
+		/// </summary>
 		protected void HandleReConnect()
 		{
 			sSender.Quit("Console: Reconnect.");
 			_network.ReConnect();
 		}
 
+		/// <summary>
+		///     Nick parancs függvénye.
+		/// </summary>
 		protected void HandleNick()
 		{
 			if(Info.Length < 2)
@@ -594,6 +667,9 @@ namespace Schumix.Console.Commands
 			Log.Notice("Console", sLManager.GetConsoleCommandText("nick"), nick);
 		}
 
+		/// <summary>
+		///     Join parancs függvénye.
+		/// </summary>
 		protected void HandleJoin()
 		{
 			if(Info.Length < 2)
@@ -610,6 +686,9 @@ namespace Schumix.Console.Commands
 			Log.Notice("Console", sLManager.GetConsoleCommandText("join"), Info[1]);
 		}
 
+		/// <summary>
+		///     Left parancs függvénye.
+		/// </summary>
 		protected void HandleLeft()
 		{
 			if(Info.Length < 2)
@@ -622,6 +701,9 @@ namespace Schumix.Console.Commands
 			Log.Notice("Console", sLManager.GetConsoleCommandText("left"), Info[1]);
 		}
 
+		/// <summary>
+		///     Reload parancs függvénye.
+		/// </summary>
 		protected void HandleReload()
 		{
 			if(Info.Length < 2)
@@ -659,6 +741,9 @@ namespace Schumix.Console.Commands
 				Log.Error("Console", text[1]);
 		}
 
+		/// <summary>
+		///     Quit parancs függvénye.
+		/// </summary>
 		protected void HandleQuit()
 		{
 			var text = sLManager.GetConsoleCommandTexts("quit");
