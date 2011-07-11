@@ -24,21 +24,32 @@ using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
-using Schumix.CalendarAddon.Commands;
+using Schumix.Framework.Localization;
 using Schumix.CalendarAddon.Config;
+using Schumix.CalendarAddon.Commands;
+using Schumix.CalendarAddon.Localization;
 
 namespace Schumix.CalendarAddon
 {
 	public class CalendarAddon : ISchumixAddon
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly BanCommand sBanCommand = Singleton<BanCommand>.Instance;
 		private Calendar _calendar;
 		public static readonly List<Flood> FloodList = new List<Flood>();
+#if MONO
+#pragma warning disable 414
 		private AddonConfig _config;
+#pragma warning restore 414
+#else
+		private AddonConfig _config;
+#endif
 
 		public void Setup()
 		{
+			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
 			_calendar = new Calendar();
 			_calendar.Start();

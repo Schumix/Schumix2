@@ -30,6 +30,7 @@ namespace Schumix.HgRssAddon.Commands
 {
 	public partial class RssCommand : CommandInfo
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
@@ -153,7 +154,7 @@ namespace Schumix.HgRssAddon.Commands
 					var text = sLManager.GetCommandTexts("hg/channel/add", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -191,7 +192,7 @@ namespace Schumix.HgRssAddon.Commands
 					var text = sLManager.GetCommandTexts("hg/channel/remove", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 

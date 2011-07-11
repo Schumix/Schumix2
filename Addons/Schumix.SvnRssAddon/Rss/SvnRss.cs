@@ -102,17 +102,17 @@ namespace Schumix.SvnRssAddon
 								continue;
 
 							newrev = Revision(url);
-							if(newrev == "nincs adat")
+							if(newrev == "no text")
 								continue;
 
 							if(_oldrev != newrev)
 							{
 								title = Title(url);
-								if(title == "nincs adat")
+								if(title == "no text")
 									continue;
 
 								author = Author(url);
-								if(author == "nincs adat")
+								if(author == "no text")
 									continue;
 
 								Informations(newrev, title, author);
@@ -156,13 +156,13 @@ namespace Schumix.SvnRssAddon
 		private string Title(XmlDocument rss)
 		{
 			var title = rss.SelectSingleNode(_title);
-			return title.IsNull() ? "nincs adat" : title.InnerText;
+			return title.IsNull() ? "no text" : title.InnerText;
 		}
 
 		private string Author(XmlDocument rss)
 		{
 			var author = rss.SelectSingleNode(_author);
-			return author.IsNull() ? "nincs adat" : author.InnerText;
+			return author.IsNull() ? "no text" : author.InnerText;
 		}
 
 		private string Revision(XmlDocument rss)
@@ -171,26 +171,26 @@ namespace Schumix.SvnRssAddon
 			{
 				var title = rss.SelectSingleNode(_title);
 				if(title.IsNull())
-					return "nincs adat";
+					return "no text";
 
 				string rev = title.InnerText;
 				info = rev.Split('[');
 
 				if(info.Length < 2)
-					return "nincs adat";
+					return "no text";
 
 				if(info[0] != "Changeset ")
-					return "nincs adat";
+					return "no text";
 
 				string i = info[1];
 
 				if(i.IndexOf("]") == -1)
-					return "nincs adat";
+					return "no text";
 
 				return i.Substring(0, i.IndexOf("]"));
 			}
 
-			return "nincs adat";
+			return "no text";
 		}
 
 		private void Informations(string rev, string title, string author)

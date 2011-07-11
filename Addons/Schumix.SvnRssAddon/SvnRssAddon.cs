@@ -32,7 +32,13 @@ namespace Schumix.SvnRssAddon
 	public class SvnRssAddon : RssCommand, ISchumixAddon
 	{
 		public static readonly List<SvnRss> RssList = new List<SvnRss>();
+#if MONO
+#pragma warning disable 414
 		private AddonConfig _config;
+#pragma warning restore 414
+#else
+		private AddonConfig _config;
+#endif
 
 		public void Setup()
 		{

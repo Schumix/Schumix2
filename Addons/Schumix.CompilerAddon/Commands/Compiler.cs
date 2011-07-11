@@ -37,6 +37,7 @@ namespace Schumix.CompilerAddon.Commands
 {
 	public class Compiler : CommandInfo
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
@@ -86,7 +87,7 @@ namespace Schumix.CompilerAddon.Commands
 				var text = sLManager.GetCommandTexts("compiler", sIRCMessage.Channel);
 				if(text.Length < 5)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return true;
 				}
 

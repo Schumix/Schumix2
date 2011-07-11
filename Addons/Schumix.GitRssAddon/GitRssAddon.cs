@@ -32,7 +32,13 @@ namespace Schumix.GitRssAddon
 	public class GitRssAddon : RssCommand, ISchumixAddon
 	{
 		public static readonly List<GitRss> RssList = new List<GitRss>();
+#if MONO
+#pragma warning disable 414
 		private AddonConfig _config;
+#pragma warning restore 414
+#else
+		private AddonConfig _config;
+#endif
 
 		public void Setup()
 		{
