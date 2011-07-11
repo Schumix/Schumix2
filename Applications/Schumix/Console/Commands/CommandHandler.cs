@@ -36,37 +36,37 @@ namespace Schumix.Console.Commands
 	public partial class CommandHandler : ConsoleLog
 	{
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
-		///     LocalizationConsole segítségével állíthatóak be a konzol nyelvi tulajdonságai.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
 		/// </summary>
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     LocalizationManager segítségével állítható be az irc szerver felé menő tárolt üzenetek nyelvezete.
 		/// </summary>
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Addonok kezelése.
 		/// </summary>
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
-		///     Az eggyes csatornákról tárolt információkat lehet kezelni illetve csatornák számát módosítani.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     Az egyes csatornákról tárolt információkat lehet kezelni illetve csatornák számát módosítani.
 		/// </summary>
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     A nick név változtatását illetve jelenlegi kiírását teszi lehetővé.
 		/// </summary>
 		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Üzenet küldés az irc szerver felé.
 		/// </summary>
 		private readonly Sender sSender = Singleton<Sender>.Instance;
@@ -79,7 +79,7 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected string[] Info;
 		/// <summary>
-		///     Csatorna nevét tárólja.
+		///     Csatorna nevét tárolja.
 		/// </summary>
 		protected string _channel;
 

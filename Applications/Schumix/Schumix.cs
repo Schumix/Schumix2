@@ -28,13 +28,13 @@ using Schumix.Framework.Localization;
 namespace Schumix
 {
 	/// <summary>
-	///     Fő class. Innét indul a konzol vezérlés és az irc kapcsolat létrehozása.
+	///     Fő class. Innen indul a konzol vezérlés és az irc kapcsolat létrehozása.
 	/// </summary>
 	public sealed class SchumixBot : SchumixBase
 	{
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
-		///     LocalizationConsole segítségével állíthatóak be a konzol nyelvi tulajdonságai.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
 		/// </summary>
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 
