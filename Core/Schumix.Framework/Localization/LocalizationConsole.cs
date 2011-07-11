@@ -1071,7 +1071,7 @@ namespace Schumix.Framework.Localization
 				case "Text11":
 				{
 					if(Locale == "huHU")
-						return "A kapcsolat sikeresen létrejött.!";
+						return "A kapcsolat sikeresen létrejött!";
 					else if(Locale == "enUS")
 						return "";
 					else
