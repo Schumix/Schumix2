@@ -402,18 +402,18 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Mester csatorna frissitve lett erre: {0}";
 					else if(Locale == "enUS")
-						return "";
+						return "The master channel is updated to: {0}";
 					else
-						return "";
+						return "The master channel is updated to: {0}";
 				}
 				case "Text5":
 				{
 					if(Locale == "huHU")
 						return "AddonManager betöltése folyamatban...";
 					else if(Locale == "enUS")
-						return "";
+						return "AddonManager is loading...";
 					else
-						return "";
+						return "AddonManager is loading...";
 				}
 				default:
 					return string.Empty;
@@ -434,36 +434,36 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Timer sikeresen elindult.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully loaded the Timer.";
 					else
-						return "";
+						return "Successfully loaded the Timer.";
 				}
 				case "Text2":
 				{
 					if(Locale == "huHU")
 						return "Program indulási időpontja mentésre került.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully saved the Program's started time.";
 					else
-						return "";
+						return "Successfully saved the Program's started time.";
 				}
 				case "Text3":
 				{
 					if(Locale == "huHU")
 						return "A program {0}ms alatt indult el.";
 					else if(Locale == "enUS")
-						return "";
+						return "The program is loaded under {0}ms.";
 					else
-						return "";
+						return "The program is loaded under {0}ms.";
 				}
 				case "Uptime":
 				{
 					if(Locale == "huHU")
 						return "{0} nap, {1} óra, {2} perc, {3} másodperc.";
 					else if(Locale == "enUS")
-						return "";
+						return "{0} day(s), {1} hour(s), {2} min(s), {3} sec(s).";
 					else
-						return "";
+						return "{0} day(s), {1} hour(s), {2} min(s), {3} sec(s).";
 				}
 				default:
 					return string.Empty;
@@ -533,7 +533,7 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Program leállítása!";
 					else if(Locale == "enUS")
-						return "";
+						return "Program is shutting down!";
 					else
 						return "";
 				}
@@ -542,63 +542,63 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Kérlek töltsed ki a konfigot!";
 					else if(Locale == "enUS")
-						return "";
+						return "Please set up the Config file!";
 					else
-						return "";
+						return "Please set up the Config file!";
 				}
 				case "Text3":
 				{
 					if(Locale == "huHU")
 						return "Konfig fájl betöltése.";
 					else if(Locale == "enUS")
-						return "";
+						return "Config file is loading.";
 					else
-						return "";
+						return "Config file is loading.";
 				}
 				case "Text4":
 				{
 					if(Locale == "huHU")
 						return "Konfig adatbázis betöltve.";
 					else if(Locale == "enUS")
-						return "";
+						return "Config database is loading.";
 					else
-						return "";
+						return "Config database is loading.";
 				}
 				case "Text5":
 				{
 					if(Locale == "huHU")
 						return "Nincs konfig fájl!";
 					else if(Locale == "enUS")
-						return "";
+						return "No such config file!";
 					else
-						return "";
+						return "No such config file!";
 				}
 				case "Text6":
 				{
 					if(Locale == "huHU")
 						return "Elkészítése folyamatban...";
 					else if(Locale == "enUS")
-						return "";
+						return "Preparing...";
 					else
-						return "";
+						return "Preparing...";
 				}
 				case "Text7":
 				{
 					if(Locale == "huHU")
 						return "Konfig fájl elkészült!";
 					else if(Locale == "enUS")
-						return "";
+						return "Config file is completed!";
 					else
-						return "";
+						return "Config file is completed!";
 				}
 				case "Text8":
 				{
 					if(Locale == "huHU")
 						return "Meghibásodás az xml írása során. Részletek: {0}";
 					else if(Locale == "enUS")
-						return "";
+						return "Failure was handled during the xml writing. Details: {0}";
 					else
-						return "";
+						return "Failure was handled during the xml writing. Details: {0}";
 				}
 				default:
 					return string.Empty;
@@ -614,9 +614,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Irc beállításai betöltve.";
 					else if(Locale == "enUS")
-						return "";
+						return "Loaded the Irc settings.";
 					else
-						return "";
+						return "Loaded the Irc settings.";
 				}
 				default:
 					return string.Empty;
@@ -632,9 +632,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "MySql beállításai betöltve.";
 					else if(Locale == "enUS")
-						return "";
+						return "Loaded the MySql settings.";
 					else
-						return "";
+						return "Loaded the MySql settings.";
 				}
 				default:
 					return string.Empty;
@@ -650,9 +650,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "SQLite beállításai betöltve.";
 					else if(Locale == "enUS")
-						return "";
+						return "Loaded the SQLite settings.";
 					else
-						return "";
+						return "Loaded the SQLite settings.";
 				}
 				default:
 					return string.Empty;
@@ -668,9 +668,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Addons beállításai betöltve.";
 					else if(Locale == "enUS")
-						return "";
+						return "Loaded the Addons settings.";
 					else
-						return "";
+						return "Loaded the Addons settings.";
 				}
 				default:
 					return string.Empty;
@@ -686,9 +686,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Localization beállításai betöltve.";
 					else if(Locale == "enUS")
-						return "";
+						return "Loaded the Localization settings.";
 					else
-						return "";
+						return "Loaded the Localization settings.";
 				}
 				default:
 					return string.Empty;
