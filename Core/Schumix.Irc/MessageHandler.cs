@@ -36,11 +36,11 @@ namespace Schumix.Irc
 		protected void HandleSuccessfulAuth(IRCMessage sIRCMessage)
 		{
 			Console.WriteLine();
-			Log.Success("MessageHandler", "Sikeres kapcsolodas az irc kiszolgalohoz.");
+			Log.Success("MessageHandler", sLConsole.MessageHandler("Text"));
 
 			if(IRCConfig.UseNickServ)
 			{
-				Log.Notice("NickServ", "Azonosito jelszo kuldese a kiszolgalonak.");
+				Log.Notice("NickServ", sLConsole.NickServ("Text"));
 
 				if(!NewNick)
 					sSender.NickServ(IRCConfig.NickServPassword);
@@ -52,11 +52,11 @@ namespace Schumix.Irc
 				{
 					HostServStatus = true;
 					sSender.HostServ("on");
-					Log.Notice("HostServ", "Vhost be van kapcsolva.");
+					Log.Notice("HostServ", sLConsole.HostServ("Text"));
 				}
 				else
 				{
-					Log.Notice("HostServ", "Vhost ki van kapcsolva.");
+					Log.Notice("HostServ", sLConsole.HostServ("Text2"));
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
 					sChannelInfo.JoinChannel();
@@ -64,7 +64,7 @@ namespace Schumix.Irc
 			}
 			else
 			{
-				Log.Notice("HostServ", "Vhost ki van kapcsolva.");
+				Log.Notice("HostServ", sLConsole.HostServ("Text2"));
 				if(IRCConfig.HostServEnabled)
 					sSender.HostServ("off");
 
@@ -78,7 +78,7 @@ namespace Schumix.Irc
 
 		protected void HandleWaitingForConnection(IRCMessage sIRCMessage)
 		{
-			Log.Notice("MessageHandler", "Varakozas a kapcsolat feldolgozasara.");
+			Log.Notice("MessageHandler", sLConsole.MessageHandler("Text2"));
 		}
 
 		protected void HandleNotRegistered(IRCMessage sIRCMessage)
@@ -88,7 +88,7 @@ namespace Schumix.Irc
 
 		protected void HandleNoNickName(IRCMessage sIRCMessage)
 		{
-			Log.Warning("MessageHandler", "Nincs megadva a a bot nick neve!");
+			Log.Warning("MessageHandler", sLConsole.MessageHandler("Text3"));
 		}
 
 		/// <summary>
@@ -103,20 +103,20 @@ namespace Schumix.Irc
 			if(ConsoleLog.CLog)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write("[SERVER] ");
+				Console.Write(sLConsole.MessageHandler("Text4"));
 				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.Write(sIRCMessage.Args + "\n");
+				Console.Write(sIRCMessage.Args + Environment.NewLine);
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 
 			if(sIRCMessage.Nick == "NickServ")
 			{
 				if(sIRCMessage.Args.Contains("Password incorrect."))
-					Log.Error("NickServ", "Azonosito jelszo hibas!");
+					Log.Error("NickServ", sLConsole.NickServ("Text2"));
 				else if(sIRCMessage.Args.Contains("You are already identified."))
-					Log.Warning("NickServ", "Azonosito mar aktivalva van!");
+					Log.Warning("NickServ", sLConsole.NickServ("Text3"));
 				else if(sIRCMessage.Args.Contains("Password accepted - you are now recognized."))
-					Log.Success("NickServ", "Azonosito jelszo elfogadva.");
+					Log.Success("NickServ", sLConsole.NickServ("Text4"));
 			}
 
 			if(sIRCMessage.Nick == "HostServ" && IRCConfig.UseHostServ)
@@ -156,9 +156,9 @@ namespace Schumix.Irc
 			if(ConsoleLog.CLog)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write("[SERVER] ");
+				Console.Write(sLConsole.MessageHandler("Text4"));
 				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.Write("Nem letezo irc parancs\n");
+				Console.Write(sLConsole.MessageHandler("Text5"));
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}
@@ -169,9 +169,9 @@ namespace Schumix.Irc
 		/// </summary>
 		protected void HandleNickError(IRCMessage sIRCMessage)
 		{
-			Log.Error("MessageHandler", "{0}-t mar hasznalja valaki!", sNickInfo.NickStorage);
+			Log.Error("MessageHandler", sLConsole.MessageHandler("Text6"), sNickInfo.NickStorage);
 			string nick = sNickInfo.ChangeNick();
-			Log.Notice("MessageHandler", "Ujra probalom ezzel: {0}", nick);
+			Log.Notice("MessageHandler", sLConsole.MessageHandler("Text7"), nick);
 			NewNick = true;
 			sSender.Nick(nick);
 		}
@@ -185,7 +185,7 @@ namespace Schumix.Irc
 				return;
 
 			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'csatorna ban' WHERE Channel = '{0}'", sIRCMessage.Info[3].ToLower());
-			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: csatorna ban", sIRCMessage.Info[3]);
+			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, sLConsole.MessageHandler("Text8"), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -198,7 +198,7 @@ namespace Schumix.Irc
 				return;
 
 			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = 'hibas csatorna jelszo' WHERE Channel = '{0}'", sIRCMessage.Info[3].ToLower());
-			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, "{0}: hibás csatorna jelszó", sIRCMessage.Info[3]);
+			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, sLConsole.MessageHandler("Text9"), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 

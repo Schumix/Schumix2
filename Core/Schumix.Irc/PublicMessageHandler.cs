@@ -139,7 +139,7 @@ namespace Schumix.Irc
 					{
 						sNickInfo.ChangeNick(IRCConfig.NickName);
 						sSender.Nick(IRCConfig.NickName);
-						Log.Notice("NickServ", "Azonosito jelszo kuldese a kiszolgalonak.");
+						Log.Notice("NickServ", sLConsole.NickServ("Text"));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("schumix2/nick/identify", sIRCMessage.Channel));
 						sSender.NickServ(IRCConfig.NickServPassword);
 						NewNick = false;
@@ -148,7 +148,7 @@ namespace Schumix.Irc
 						{
 							HostServStatus = true;
 							sSender.HostServ("on");
-							Log.Notice("HostServ", "Vhost be van kapcsolva.");
+							Log.Notice("HostServ", sLConsole.HostServ("Text"));
 						}
 					}
 					else

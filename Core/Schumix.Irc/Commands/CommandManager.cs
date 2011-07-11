@@ -23,6 +23,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Commands
 {
@@ -54,7 +55,7 @@ namespace Schumix.Irc.Commands
 
 		protected CommandManager()
 		{
-			Log.Notice("CommandManager", "CommandManager sikeresen elindult.");
+			Log.Notice("CommandManager", sLConsole.CommandManager("Text"));
 			InitHandler();
 		}
 
@@ -97,7 +98,7 @@ namespace Schumix.Irc.Commands
 			AdminCRegisterHandler("reload",        new Action<IRCMessage>(HandleReload));
 			AdminCRegisterHandler("quit",          new Action<IRCMessage>(HandleQuit));
 
-			Log.Notice("CommandManager", "Osszes Command handler regisztralva.");
+			Log.Notice("CommandManager", sLConsole.CommandManager("Text2"));
 		}
 
 		public static void PublicCRegisterHandler(string code, Action<IRCMessage> method)

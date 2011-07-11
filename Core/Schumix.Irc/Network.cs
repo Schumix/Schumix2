@@ -76,22 +76,22 @@ namespace Schumix.Irc
 			_server = server;
 			_port = port;
 
-			Log.Notice("Network", "Network sikeresen elindult.");
+			Log.Notice("Network", sLConsole.Network("Text"));
 			sNickInfo.ChangeNick(IRCConfig.NickName);
 			InitHandler();
 
 			Task.Factory.StartNew(() => sChannelInfo.ChannelList());
 
-			Log.Debug("Network", "Kapcsolodas indul az irc szerver fele.");
+			Log.Debug("Network", sLConsole.Network("Text2"));
 			Connect();
 
 			// Start Opcodes thread
-			Log.Debug("Network", "Opcodes thread indul...");
+			Log.Debug("Network", sLConsole.Network("Text3"));
 			var opcodes = new Thread(Opcodes);
 			opcodes.Start();
 
 			// Start Ping thread
-			Log.Debug("Network", "Ping thread indul...");
+			Log.Debug("Network", sLConsole.Network("Text4"));
 			var ping = new Thread(Ping);
 			ping.Start();
 		}
@@ -111,7 +111,7 @@ namespace Schumix.Irc
 			RegisterHandler("439",     new Action<IRCMessage>(HandleWaitingForConnection));
 			RegisterHandler("451",     new Action<IRCMessage>(HandleNotRegistered));
 			RegisterHandler("431",     new Action<IRCMessage>(HandleNoNickName));
-			Log.Notice("Network", "Összes IRC handler regisztrálásra került.");
+			Log.Notice("Network", sLConsole.Network("Text5"));
 		}
 
 		private static void RegisterHandler(string code, Action<IRCMessage> method)
@@ -139,7 +139,7 @@ namespace Schumix.Irc
         /// </summary>
 		public void Connect()
 		{
-			Log.Notice("Network", "Kapcsolodas ide megindult: {0}.", _server);
+			Log.Notice("Network", sLConsole.Network("Text6"), _server);
 			Connection(true);
 		}
 
@@ -149,7 +149,7 @@ namespace Schumix.Irc
 		public void DisConnect()
 		{
 			Close();
-			Log.Notice("Network", "Kapcsolat bontva.");
+			Log.Notice("Network", sLConsole.Network("Text7"));
 		}
 
         /// <summary>
@@ -157,10 +157,10 @@ namespace Schumix.Irc
         /// </summary>
 		public void ReConnect()
 		{
-			Log.Notice("Network", "Kapcsolat bontasra kerult.");
+			Log.Notice("Network", sLConsole.Network("Text8"));
 			Connection(false);
 			NewNick = true;
-			Log.Debug("Network", "Ujrakapcsolodas ide megindult: {0}.", _server);
+			Log.Debug("Network", sLConsole.Network("Text9"), _server);
 		}
 
 		private void Connection(bool b)
@@ -172,15 +172,15 @@ namespace Schumix.Irc
 			}
 			catch(Exception)
 			{
-				Log.Error("Network", "Vegzetes hiba tortent a kapcsolat letrehozasanal!");
+				Log.Error("Network", sLConsole.Network("Text10"));
 				return;
 			}
 
 			if(client.Connected)
-				Log.Success("Network", "A kapcsolat sikeresen letrejott.");
+				Log.Success("Network", sLConsole.Network("Text11"));
 			else
 			{
-				Log.Error("Network", "Hiba tortent a kapcsolat letrehozasanal!");
+				Log.Error("Network", sLConsole.Network("Text12"));
 				return;
 			}
 
@@ -195,7 +195,7 @@ namespace Schumix.Irc
 			else
 				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
 
-			Log.Notice("Network", "Felhasznaloi informaciok el lettek kuldve.");
+			Log.Notice("Network", sLConsole.Network("Text13"));
 
 			NewNick = false;
 			HostServStatus = false;
@@ -217,10 +217,10 @@ namespace Schumix.Irc
         /// </remarks>
 		private void Opcodes()
 		{
-			Log.Notice("Opcodes", "A szal sikeresen elindult.");
+			Log.Notice("Opcodes", sLConsole.Network("Text14"));
 			byte number = 0;
 			bool enabled = false;
-			Log.Notice("Opcodes", "Elindult az irc adatok fogadasa.");
+			Log.Notice("Opcodes", sLConsole.Network("Text15"));
 
 			while(true)
 			{
@@ -229,7 +229,7 @@ namespace Schumix.Irc
 					string IrcMessage;
 					if((IrcMessage = reader.ReadLine()).IsNull())
 					{
-						Log.Error("Opcodes", "Nem jon informacio az irc szerver felol!");
+						Log.Error("Opcodes", sLConsole.Network("Text16"));
 						DisConnect();
 						break;
 					}
@@ -267,7 +267,7 @@ namespace Schumix.Irc
 			}
 
 			SchumixBase.timer.SaveUptime();
-			Log.Warning("Opcodes", "A program leáll!");
+			Log.Warning("Opcodes", sLConsole.Network("Text17"));
 			Thread.Sleep(1000);
 			Environment.Exit(1);
 		}
@@ -302,7 +302,7 @@ namespace Schumix.Irc
 			else
 			{
 				if(ConsoleLog.CLog)
-					Log.Notice("HandleIrcCommand", "Received unhandled opcode: {0}", opcode);
+					Log.Notice("HandleIrcCommand", sLConsole.Network("Text18"), opcode);
 			}
 		}
 
@@ -311,7 +311,7 @@ namespace Schumix.Irc
         /// </summary>
 		private void Ping()
 		{
-			Log.Notice("Ping", "A szal sikeresen elindult.");
+			Log.Notice("Ping", sLConsole.Network("Text14"));
 
 			while(true)
 			{
