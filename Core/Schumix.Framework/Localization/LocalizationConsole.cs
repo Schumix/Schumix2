@@ -285,27 +285,27 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Hiba történt az adatbázishoz való kapcsolodás során!";
 					else if(Locale == "enUS")
-						return "";
+						return "Error was handled when tried to connect to the database.";
 					else
-						return "";
+						return "Error was handled when tried to connect to the database.";
 				}
 				case "Text2":
 				{
 					if(Locale == "huHU")
 						return "MySql adatbázishoz sikeres a kapcsolodás.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully connected to the MySql database.";
 					else
-						return "";
+						return "Successfully connected to the MySql database.";
 				}
 				case "Text3":
 				{
 					if(Locale == "huHU")
 						return "Query hiba: {0}";
 					else if(Locale == "enUS")
-						return "";
+						return "Query error: {0}";
 					else
-						return "";
+						return "Query error: {0}";
 				}
 				default:
 					return string.Empty;
@@ -321,27 +321,27 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Hiba történt az adatbázishoz való kapcsolodás során!";
 					else if(Locale == "enUS")
-						return "";
+						return "Error was handled when tried to connect to the database!";
 					else
-						return "";
+						return "Error was handled when tried to connect to the database!";
 				}
 				case "Text2":
 				{
 					if(Locale == "huHU")
 						return "SQLite adatbázishoz sikeres a kapcsolodás.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully connected to the SQLite database.";
 					else
-						return "";
+						return "Successfully connected to the SQLite database.";
 				}
 				case "Text3":
 				{
 					if(Locale == "huHU")
 						return "Query hiba: {0}";
 					else if(Locale == "enUS")
-						return "";
+						return "Query error: {0}";
 					else
-						return "";
+						return "Query error: {0}";
 				}
 				default:
 					return string.Empty;
@@ -375,27 +375,27 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Timer indul...";
 					else if(Locale == "enUS")
-						return "";
+						return "Timer is starting...";
 					else
-						return "";
+						return "Timer is starting...";
 				}
 				case "Text2":
 				{
 					if(Locale == "huHU")
 						return "Mysql indul...";
 					else if(Locale == "enUS")
-						return "";
+						return "MySql is starting...";
 					else
-						return "";
+						return "MySql is starting...";
 				}
 				case "Text3":
 				{
 					if(Locale == "huHU")
 						return "Az adatbázishoz sikeres a kapcsolodás.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully connected to the database.";
 					else
-						return "";
+						return "Successfully connected to the database.";
 				}
 				case "Text4":
 				{
