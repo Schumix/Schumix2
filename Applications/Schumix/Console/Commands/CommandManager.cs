@@ -34,12 +34,12 @@ namespace Schumix.Console.Commands
 	public sealed class CCommandManager : CommandHandler
 	{
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
-		///     LocalizationConsole segítségével állíthatóak be a konzol nyelvi tulajdonságai.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
 		/// </summary>
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		/// <summary>
-		///     Tárólja a parancsokat és a hozzá tartozó függvényeket.
+		///     Tárolja a parancsokat és a hozzá tartozó függvényeket.
 		/// </summary>
 		private static readonly Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
 		/// <summary>
@@ -60,7 +60,7 @@ namespace Schumix.Console.Commands
 		}
 
 		/// <summary>
-		///     Csatorna nevét tárólja.
+		///     Csatorna nevét tárolja.
 		/// </summary>
 		public string Channel
 		{
@@ -69,7 +69,7 @@ namespace Schumix.Console.Commands
 		}
 
 		/// <summary>
-		///     Regisztrálja a kódban tárólt parancsokat.
+		///     Regisztrálja a kódban tárolt parancsokat.
 		/// </summary>
 		private void InitHandler()
 		{

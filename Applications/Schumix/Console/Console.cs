@@ -35,17 +35,17 @@ namespace Schumix.Console
 	public sealed class Console
 	{
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
-		///     LocalizationConsole segítségével állíthatóak be a konzol nyelvi tulajdonságai.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
 		/// </summary>
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Üzenet küldés az irc szerver felé.
 		/// </summary>
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		/// <summary>
-		///     ConsoleCommandManager class elérését tárólja.
+		///     ConsoleCommandManager class elérését tárolja.
 		/// </summary>
 		private readonly CCommandManager CCManager;
 

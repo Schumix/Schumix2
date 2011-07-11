@@ -32,17 +32,17 @@ namespace Schumix
 	class MainClass
 	{
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
-		///     LocalizationConsole segítségével állíthatóak be a konzol nyelvi tulajdonságai.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
 		/// </summary>
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		/// <summary>
-		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Üzenet küldés az irc szerver felé.
 		/// </summary>
 		private static readonly Sender sSender = Singleton<Sender>.Instance;
