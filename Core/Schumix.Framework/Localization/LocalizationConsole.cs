@@ -55,9 +55,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Rendszer indul...";
 					else if(Locale == "enUS")
-						return "System start...";
+						return "System starting...";
 					else
-						return "System start...";
+						return "System starting...";
 				}
 				default:
 					return string.Empty;
@@ -73,9 +73,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Meghibásodás részletei: {0}";
 					else if(Locale == "enUS")
-						return "";
+						return "Failure details: {0}";
 					else
-						return "";
+						return "Failure";
 				}
 				default:
 					return string.Empty;
@@ -105,9 +105,9 @@ namespace Schumix.Framework.Localization
 					if(Language == "huHU")
 						return "Nem található néhány fordítás!";
 					else if(Language == "enUS")
-						return "";
+						return "Any translations did not find!";
 					else
-						return "";
+						return "Any translations did not find!";
 				}
 				default:
 					return string.Empty;
@@ -123,27 +123,27 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "SchumixBot sikeresen elindult.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully started SchumixBot.";
 					else
-						return "";
+						return "Successfully started SchumixBot.";
 				}
 				case "Text2":
 				{
 					if(Locale == "huHU")
 						return "Network indul...";
 					else if(Locale == "enUS")
-						return "";
+						return "Network starting...";
 					else
-						return "";
+						return "Network starting...";
 				}
 				case "Text3":
 				{
 					if(Locale == "huHU")
 						return "Console indul...";
 					else if(Locale == "enUS")
-						return "";
+						return "Console starting...";
 					else
-						return "";
+						return "Console starting...";
 				}
 				default:
 					return string.Empty;
@@ -159,27 +159,27 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Console sikeresen elindult.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully started the Console.";
 					else
-						return "";
+						return "Successfully started the Console.";
 				}
 				case "Text2":
 				{
 					if(Locale == "huHU")
 						return "Console parancs olvasója indul...";
 					else if(Locale == "enUS")
-						return "";
+						return "Console reader starting...";
 					else
-						return "";
+						return "Console reader starting...";
 				}
 				case "Text3":
 				{
 					if(Locale == "huHU")
 						return "Console parancs olvasó része elindult.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully started the Console reader.";
 					else
-						return "";
+						return "Successfully started the Console reader.";
 				}
 				default:
 					return string.Empty;
@@ -195,18 +195,18 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "CCommandManager sikeresen elindult.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully started the CCommandManager.";
 					else
-						return "";
+						return "Successfully started the CCommandManager.";
 				}
 				case "Text2":
 				{
 					if(Locale == "huHU")
 						return "Összes Command handler regisztrálásra került.";
 					else if(Locale == "enUS")
-						return "";
+						return "All Command Handler are registered.";
 					else
-						return "";
+						return "All Command Handler are registered.";
 				}
 				default:
 					return string.Empty;
@@ -222,9 +222,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "\nIndulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
 					else if(Locale == "enUS")
-						return "";
+						return "Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
 					else
-						return "";
+						return "Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
 				}
 				default:
 					return string.Empty;
@@ -240,36 +240,36 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Adatbázis betöltése elindult.";
 					else if(Locale == "enUS")
-						return "";
+						return "Started the database loading.";
 					else
-						return "";
+						return "Started the database loading.";
 				}
 				case "Text2":
 				{
 					if(Locale == "huHU")
 						return "Adatbázis fajtájának kiválasztása folyamatban.";
 					else if(Locale == "enUS")
-						return "";
+						return "Selecting the Database.";
 					else
-						return "";
+						return "Selecting the Database.";
 				}
 				case "Text3":
 				{
 					if(Locale == "huHU")
-						return "Nincs az adatbázis tipusa kiválasztva!";
+						return "Nincs az adatbázis típusa kiválasztva!";
 					else if(Locale == "enUS")
-						return "";
+						return "Database type's is not selected!";
 					else
-						return "";
+						return "Database type's is not selected!";
 				}
 				case "Text4":
 				{
 					if(Locale == "huHU")
-						return "Kettő adatbázis van kiválasztva!";
+						return "Két adatbázis van kiválasztva!";
 					else if(Locale == "enUS")
-						return "";
+						return "2 Database are selected!";
 					else
-						return "";
+						return "2 Database are selected!";
 				}
 				default:
 					return string.Empty;
