@@ -29,19 +29,29 @@ using Schumix.Console.Commands;
 
 namespace Schumix.Console
 {
+	/// <summary>
+	///     Console class.
+	/// </summary>
 	public sealed class Console
 	{
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     LocalizationConsole segítségével állíthatóak be a konzol nyelvi tulajdonságai.
+		/// </summary>
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Üzenet küldés az irc szerver felé.
+		/// </summary>
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		/// <summary>
+		///     ConsoleCommandManager class elérését tárólja.
+		/// </summary>
 		private readonly CCommandManager CCManager;
 
 		/// <summary>
-		///     Console írást indítja.
+		///     Indulási függvény.
 		/// </summary>
-		/// <remarks>
-		///     Ha érzékel valamit, akkor alapértelmezésben az IRC szobába írja,
-		///     ha azt parancsnak érzékeli, akkor végrehajtja azt.
-		/// </remarks>
 		public Console(Network network)
 		{
 			Log.Notice("Console", sLConsole.Console("Text"));

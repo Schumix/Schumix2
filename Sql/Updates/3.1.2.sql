@@ -1,4 +1,4 @@
-/*INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'reload', '{0} újra lett indítva.\nA programban nincs ilyen rész!');
+INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'reload', '{0} újra lett indítva.\nA programban nincs ilyen rész!');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'reload', '{0} reloaded.\nThe program does not contains that part!');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('huHU', 'weather', '12Idõjárás otthon: {0}, minimum Hõmérséklet: {1}°, maximum Hõmérséklet: {2}°, Szélsebesség: {3}\n5{0} 12idõjárása: {1}, minimum Hõmérséklet: {2}°, maximum Hõmérséklet: {3}°, Szélsebesség: {4}\nNem szerepel ilyen város a listán!');
 INSERT INTO `localized_command` (Language, Command, Text) VALUES ('enUS', 'weather', '12Local weather: {0}, minimum temperature: {1}°, maximum temperature {2}°, wind speed: {3}\n5{0} 12weather: {1}, minimum temperature {2}°, maximum temperature: {3}°, wind speed. {4}\nNo such city in the list!');
@@ -6,7 +6,7 @@ INSERT INTO `localized_warning` (Language, Command, Text) VALUES ('huHU', 'NoCit
 INSERT INTO `localized_warning` (Language, Command, Text) VALUES ('enUS', 'NoCityName', 'No such city name!');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'reload', '2', 'Újraindítja a megadott programrészt.\nHasználata: {0}reload <név>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'weather', '9', 'Megmondja az idõjárást a megadott városban.\nHasználata: {0}weather <város>');
-*/
+
 -- ----------------------------
 -- Table structure for localized_console_command
 -- ----------------------------

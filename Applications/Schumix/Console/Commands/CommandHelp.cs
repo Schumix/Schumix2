@@ -25,8 +25,14 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Console.Commands
 {
+	/// <summary>
+	///     CommandHandler class.
+	/// </summary>
 	public partial class CommandHandler
 	{
+		/// <summary>
+		///     Help parancs függvénye.
+		/// </summary>
 		protected void HandleHelp()
 		{
 			if(Info.Length == 1)

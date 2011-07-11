@@ -26,14 +26,29 @@ using Schumix.Framework.Localization;
 
 namespace Schumix
 {
+	/// <summary>
+	///     Main class.
+	/// </summary>
 	class MainClass
 	{
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     LocalizationConsole segítségével állíthatóak be a konzol nyelvi tulajdonságai.
+		/// </summary>
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
+		/// </summary>
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     Üzenet küldés az irc szerver felé.
+		/// </summary>
 		private static readonly Sender sSender = Singleton<Sender>.Instance;
 
 		/// <summary>
-		///     A Main függvény. Itt indul el a debug.
+		///     A Main függvény. Itt indul el a program.
 		/// </summary>
 		/// <remarks>
 		///     Schumix2 IRC bot
@@ -54,7 +69,7 @@ namespace Schumix
 
 				if(arg == "-h" || arg == "--help")
 				{
-					//Help();
+					Help();
 					return;
 				}
 				else if(arg.Contains("--config-dir="))
@@ -106,6 +121,19 @@ namespace Schumix
 
 			new SchumixBot();
 			System.Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.timer.SaveUptime(); };
+		}
+
+		/// <summary>
+		///     Segítséget nyújt a kapcsolokhoz.
+		/// </summary>
+		private static void Help()
+		{
+			System.Console.WriteLine("Test");
+			System.Console.WriteLine("Test");
+			System.Console.WriteLine("Test");
+			System.Console.WriteLine("Test");
+			System.Console.WriteLine("Test");
+			System.Console.WriteLine("Test");
 		}
 	}
 }
