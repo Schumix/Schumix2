@@ -23,14 +23,16 @@ using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
 	public sealed class ChannelInfo
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly List<string> ChannelFunction = new List<string>();
 		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
-		private readonly Sender sSender = Singleton<Sender>.Instance;
 		public Dictionary<string, string> CList
 		{
 			get { return _ChannelList; }
@@ -51,7 +53,7 @@ namespace Schumix.Irc
 				}
 			}
 			else
-				Log.Error("ChannelInfo", "ChannelLista: Hibas lekerdezes!");
+				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text"));
 		}
 
 		public bool FSelect(string name)
@@ -64,7 +66,7 @@ namespace Schumix.Irc
 			}
 			else
 			{
-				Log.Error("ChannelInfo", "FSelect: Hibas lekerdezes!");
+				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text2"));
 				return false;
 			}
 		}
@@ -107,11 +109,11 @@ namespace Schumix.Irc
 							ChannelFunction.Add(channel + "." + comma[x]);
 					}
 					else
-						Log.Error("ChannelInfo", "ChannelFunkcioReload: Hibas lekerdezes!");
+						Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text3"));
 				}
 			}
 			else
-				Log.Error("ChannelInfo", "ChannelFunkcioReload: Hibas lekerdezes!");
+				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text3"));
 		}
 
 		public void ChannelListReload()
@@ -128,7 +130,7 @@ namespace Schumix.Irc
 				}
 			}
 			else
-				Log.Error("ChannelInfo", "ChannelListaReload: Hibas lekerdezes!");
+				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text4"));
 		}
 
 		public string ChannelFunctions(string name, string status, string channel)
@@ -209,7 +211,7 @@ namespace Schumix.Irc
 
 		public void JoinChannel()
 		{
-			Log.Debug("ChannelInfo", "Kapcsolodas a csatornakhoz...");
+			Log.Debug("ChannelInfo", sLConsole.ChannelInfo("Text5"));
 			bool error = false;
 
 			foreach(var channel in _ChannelList)
@@ -229,15 +231,15 @@ namespace Schumix.Irc
 				}
 			}
 			else
-				Log.Error("ChannelInfo", "JoinChannel: Hibas lekerdezes!");
+				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text6"));
 
 			if(!error)
-				Log.Success("ChannelInfo", "Sikeres kapcsolodas a csatornakhoz.");
+				Log.Success("ChannelInfo", sLConsole.ChannelInfo("Text7"));
 			else
-				Log.Warning("ChannelInfo", "Nehany kapcsolodas sikertelen!");
+				Log.Warning("ChannelInfo", sLConsole.ChannelInfo("Text8"));
 
 			if(IRCConfig.IgnoreChannels.Length > 0)
-				Log.Notice("ChannelInfo", "Letiltott csatornak: {0}", IRCConfig.IgnoreChannels);
+				Log.Notice("ChannelInfo", sLConsole.ChannelInfo("Text9"), IRCConfig.IgnoreChannels);
 
 			if(SchumixBase.STime)
 			{
