@@ -114,8 +114,10 @@ namespace Schumix
 
 			new Config(configdir, configfile);
 
-			if(localization != LocalizationConfig.Locale)
+			if(localization == "enUS")
 				sLConsole.Locale = LocalizationConfig.Locale;
+			else if(localization != "enUS")
+				sLConsole.Locale = localization;
 
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
 

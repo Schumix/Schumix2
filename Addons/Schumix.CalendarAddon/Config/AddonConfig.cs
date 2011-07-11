@@ -23,11 +23,16 @@ using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
+using Schumix.CalendarAddon.Localization;
 
 namespace Schumix.CalendarAddon.Config
 {
 	public sealed class AddonConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+
 		public AddonConfig(string configfile)
 		{
 			try
@@ -41,7 +46,7 @@ namespace Schumix.CalendarAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("CalendarAddonConfig", "Hiba oka: {0}", e.Message);
+				Log.Error("CalendarAddonConfig", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 
@@ -50,14 +55,14 @@ namespace Schumix.CalendarAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(string.Format("./{0}/{1}", SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("CalendarAddonConfig", "Config fajl betoltese.");
+			Log.Notice("CalendarAddonConfig", sLocalization.Config("Text"));
 
 			int Seconds = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").InnerText) : 10;
 			int NumberOfMessages = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").InnerText) : 5;
 			int NumberOfFlooding = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").InnerText) : 3;
 			new CalendarConfig(Seconds, NumberOfMessages, NumberOfFlooding);
 
-			Log.Success("CalendarAddonConfig", "Config adatbazis betoltve.");
+			Log.Success("CalendarAddonConfig", sLocalization.Config("Text2"));
 			Console.WriteLine();
 		}
 
@@ -67,8 +72,8 @@ namespace Schumix.CalendarAddon.Config
 				return true;
 			else
 			{
-				Log.Error("CalendarAddonConfig", "Nincs config fajl!");
-				Log.Debug("CalendarAddonConfig", "Elkeszitese folyamatban...");
+				Log.Error("CalendarAddonConfig", sLocalization.Config("Text3"));
+				Log.Debug("CalendarAddonConfig", sLocalization.Config("Text4"));
 				var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
 
 				try
@@ -96,12 +101,12 @@ namespace Schumix.CalendarAddon.Config
 					w.Flush();
 					w.Close();
 
-					Log.Success("CalendarAddonConfig", "Config fajl elkeszult!");
+					Log.Success("CalendarAddonConfig", sLocalization.Config("Text5"));
 					return false;
 				}
 				catch(Exception e)
 				{
-					Log.Error("CalendarAddonConfig", "Hiba az xml irasa soran: {0}", e.Message);
+					Log.Error("CalendarAddonConfig", sLocalization.Config("Text6"), e.Message);
 					return false;
 				}
 			}
@@ -110,6 +115,7 @@ namespace Schumix.CalendarAddon.Config
 
 	public sealed class CalendarConfig
 	{
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static int Seconds { get; private set; }
 		public static int NumberOfMessages { get; private set; }
 		public static int NumberOfFlooding { get; private set; }
@@ -119,7 +125,7 @@ namespace Schumix.CalendarAddon.Config
 			Seconds          = seconds;
 			NumberOfMessages = numberofmessages;
 			NumberOfFlooding = numberofflooding;
-			Log.Notice("CalendarConfig", "Calendar beallitasai betoltve.");
+			Log.Notice("CalendarConfig", sLocalization.CalendarConfig("Text"));
 		}
 	}
 }

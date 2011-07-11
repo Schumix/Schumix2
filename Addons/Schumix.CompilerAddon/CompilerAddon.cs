@@ -30,21 +30,31 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.CompilerAddon.Commands;
 using Schumix.CompilerAddon.Config;
+using Schumix.CompilerAddon.Commands;
+using Schumix.CompilerAddon.Localization;
 
 namespace Schumix.CompilerAddon
 {
 	public class CompilerAddon : Compiler, ISchumixAddon
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
+#if MONO
+#pragma warning disable 414
 		private AddonConfig _config;
+#pragma warning restore 414
+#else
+		private AddonConfig _config;
+#endif
 
 		public void Setup()
 		{
+			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
 			ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
 			EntryRegex = new Regex(" " + CompilerConfig.MainClass + @"\s*?\{");

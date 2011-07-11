@@ -119,7 +119,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Debug("Functions", "Hiba oka: {0}", e.Message);
+				Log.Debug("Functions", sLConsole.Exception("Error"), e.Message);
 				return;
 			}
 		}

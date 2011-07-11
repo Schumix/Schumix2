@@ -111,17 +111,17 @@ namespace Schumix.GitRssAddon
 								continue;
 
 							newrev = Revision(url);
-							if(newrev == "nincs adat")
+							if(newrev == "no text")
 								continue;
 
 							if(_oldrev != newrev)
 							{
 								title = Title(url);
-								if(title == "nincs adat")
+								if(title == "no text")
 									continue;
 
 								author = Author(url);
-								if(author == "nincs adat")
+								if(author == "no text")
 									continue;
 
 								Informations(newrev, title, author);
@@ -165,13 +165,13 @@ namespace Schumix.GitRssAddon
 		private string Title(XmlDocument rss)
 		{
 			var title = rss.SelectSingleNode(_title);
-			return title.IsNull() ? "nincs adat" : title.InnerText;
+			return title.IsNull() ? "no text" : title.InnerText;
 		}
 
 		private string Author(XmlDocument rss)
 		{
 			var author = rss.SelectSingleNode(_author);
-			return author.IsNull() ? "nincs adat" : author.InnerText;
+			return author.IsNull() ? "no text" : author.InnerText;
 		}
 
 		private string Revision(XmlDocument rss)
@@ -180,17 +180,17 @@ namespace Schumix.GitRssAddon
 			{
 				var id = rss.SelectSingleNode(_id);
 				if(id.IsNull())
-					return "nincs adat";
+					return "no text";
 
 				string rev = id.InnerText;
 
 				if(rev.IndexOf("Commit/") == -1)
-					return "nincs adat";
+					return "no text";
 
 				return rev.Substring(rev.IndexOf("Commit/")+1);
 			}
 
-			return "nincs adat";
+			return "no text";
 		}
 
 		private void Informations(string rev, string title, string author)

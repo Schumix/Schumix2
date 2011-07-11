@@ -31,6 +31,7 @@ namespace Schumix.ExtraAddon.Commands
 {
 	public partial class Functions : CommandInfo
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
@@ -50,7 +51,7 @@ namespace Schumix.ExtraAddon.Commands
 				var text = sLManager.GetCommandTexts("autofunction", sIRCMessage.Channel);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -115,7 +116,7 @@ namespace Schumix.ExtraAddon.Commands
 					var text = sLManager.GetCommandTexts("autofunction/hlmessage/function", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -164,7 +165,7 @@ namespace Schumix.ExtraAddon.Commands
 					var text = sLManager.GetCommandTexts("autofunction/kick/add", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -195,7 +196,7 @@ namespace Schumix.ExtraAddon.Commands
 					var text = sLManager.GetCommandTexts("autofunction/kick/remove", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -246,7 +247,7 @@ namespace Schumix.ExtraAddon.Commands
 						var text = sLManager.GetCommandTexts("autofunction/kick/channel/add", sIRCMessage.Channel);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 							return;
 						}
 
@@ -283,7 +284,7 @@ namespace Schumix.ExtraAddon.Commands
 						var text = sLManager.GetCommandTexts("autofunction/kick/channel/remove", sIRCMessage.Channel);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 							return;
 						}
 
@@ -337,7 +338,7 @@ namespace Schumix.ExtraAddon.Commands
 					var text = sLManager.GetCommandTexts("autofunction/mode/add", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -368,7 +369,7 @@ namespace Schumix.ExtraAddon.Commands
 					var text = sLManager.GetCommandTexts("autofunction/mode/remove", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -419,7 +420,7 @@ namespace Schumix.ExtraAddon.Commands
 						var text = sLManager.GetCommandTexts("autofunction/mode/channel/add", sIRCMessage.Channel);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 							return;
 						}
 
@@ -456,7 +457,7 @@ namespace Schumix.ExtraAddon.Commands
 						var text = sLManager.GetCommandTexts("autofunction/mode/channel/remove", sIRCMessage.Channel);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 							return;
 						}
 
@@ -548,6 +549,7 @@ namespace Schumix.ExtraAddon.Commands
 
 	public sealed class Notes : CommandInfo
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
@@ -603,7 +605,7 @@ namespace Schumix.ExtraAddon.Commands
 					var text = sLManager.GetCommandTexts("notes/user/access", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -631,7 +633,7 @@ namespace Schumix.ExtraAddon.Commands
 					var text = sLManager.GetCommandTexts("notes/user/newpassword", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -665,7 +667,7 @@ namespace Schumix.ExtraAddon.Commands
 					var text = sLManager.GetCommandTexts("notes/user/register", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -692,7 +694,7 @@ namespace Schumix.ExtraAddon.Commands
 					var text = sLManager.GetCommandTexts("notes/user/remove", sIRCMessage.Channel);
 					if(text.Length < 5)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -748,7 +750,7 @@ namespace Schumix.ExtraAddon.Commands
 					var text = sLManager.GetCommandTexts("notes/code/remove", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
@@ -782,7 +784,7 @@ namespace Schumix.ExtraAddon.Commands
 				var text = sLManager.GetCommandTexts("notes", sIRCMessage.Channel);
 				if(text.Length < 3)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
@@ -846,7 +848,7 @@ namespace Schumix.ExtraAddon.Commands
 				var text = sLManager.GetCommandTexts("notes/warning", sIRCMessage.Channel);
 				if(text.Length < 4)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return false;
 				}
 

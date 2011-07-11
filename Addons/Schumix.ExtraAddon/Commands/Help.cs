@@ -39,7 +39,7 @@ namespace Schumix.ExtraAddon.Commands
 						var text = sLManager.GetCommandHelpTexts("autofunction", sIRCMessage.Channel);
 						if(text.Length < 4)
 						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No translations found!");
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 							return true;
 						}
 

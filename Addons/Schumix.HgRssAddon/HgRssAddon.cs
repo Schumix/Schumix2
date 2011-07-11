@@ -32,7 +32,13 @@ namespace Schumix.HgRssAddon
 	public class HgRssAddon : RssCommand, ISchumixAddon
 	{
 		public static readonly List<HgRss> RssList = new List<HgRss>();
+#if MONO
+#pragma warning disable 414
 		private AddonConfig _config;
+#pragma warning restore 414
+#else
+		private AddonConfig _config;
+#endif
 
 		public void Setup()
 		{

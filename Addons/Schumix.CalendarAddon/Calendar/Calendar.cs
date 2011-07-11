@@ -26,12 +26,14 @@ using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.CalendarAddon.Config;
+using Schumix.CalendarAddon.Localization;
 
 namespace Schumix.CalendarAddon
 {
 	public sealed class Calendar
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Ban sBan = Singleton<Ban>.Instance;
 		private readonly Unban sUnban = Singleton<Unban>.Instance;
@@ -90,7 +92,7 @@ namespace Schumix.CalendarAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("Calendar", "[UpdateFlood] Hiba oka: {0}", e.Message);
+				Log.Error("Calendar", sLocalization.Exception("Error"), e.Message);
 			}
 		}
 
@@ -102,7 +104,7 @@ namespace Schumix.CalendarAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("Calendar", "[UpdateUnban] Hiba oka: {0}", e.Message);
+				Log.Error("Calendar", sLocalization.Exception("Error2"), e.Message);
 			}
 		}
 

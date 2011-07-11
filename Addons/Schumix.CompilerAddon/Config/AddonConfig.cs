@@ -23,11 +23,16 @@ using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
+using Schumix.CompilerAddon.Localization;
 
 namespace Schumix.CompilerAddon.Config
 {
 	public sealed class AddonConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+
 		public AddonConfig(string configfile)
 		{
 			try
@@ -41,7 +46,7 @@ namespace Schumix.CompilerAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("CompilerAddonConfig", "Hiba oka: {0}", e.Message);
+				Log.Error("CompilerAddonConfig", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 
@@ -50,7 +55,7 @@ namespace Schumix.CompilerAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(string.Format("./{0}/{1}", SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("CompilerAddonConfig", "Config fajl betoltese.");
+			Log.Notice("CompilerAddonConfig", sLocalization.Config("Text"));
 
 			bool CompilerEnabled = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/Enabled").InnerText) : true;
 			bool Enabled = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Enabled").InnerText) : true;
@@ -65,7 +70,7 @@ namespace Schumix.CompilerAddon.Config
 			string MainConstructor = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").InnerText : "Schumix";
 			new CompilerConfig(CompilerEnabled, Enabled, Memory, CompilerOptions, WarningLevel, TreatWarningsAsErrors, Referenced, ReferencedAssemblies, MainClass, MainConstructor);
 
-			Log.Success("CompilerAddonConfig", "Config adatbazis betoltve.");
+			Log.Success("CompilerAddonConfig", sLocalization.Config("Text2"));
 			Console.WriteLine();
 		}
 
@@ -75,8 +80,8 @@ namespace Schumix.CompilerAddon.Config
 				return true;
 			else
 			{
-				Log.Error("CompilerAddonConfig", "Nincs config fajl!");
-				Log.Debug("CompilerAddonConfig", "Elkeszitese folyamatban...");
+				Log.Error("CompilerAddonConfig", sLocalization.Config("Text3"));
+				Log.Debug("CompilerAddonConfig", sLocalization.Config("Text4"));
 				var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
 
 				try
@@ -119,12 +124,12 @@ namespace Schumix.CompilerAddon.Config
 					w.Flush();
 					w.Close();
 
-					Log.Success("CompilerAddonConfig", "Config fajl elkeszult!");
+					Log.Success("CompilerAddonConfig", sLocalization.Config("Text5"));
 					return false;
 				}
 				catch(Exception e)
 				{
-					Log.Error("CompilerAddonConfig", "Hiba az xml irasa soran: {0}", e.Message);
+					Log.Error("CompilerAddonConfig", sLocalization.Config("Text6"), e.Message);
 					return false;
 				}
 			}
@@ -133,6 +138,7 @@ namespace Schumix.CompilerAddon.Config
 
 	public sealed class CompilerConfig
 	{
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static bool CompilerEnabled { get; private set; }
 		public static bool MaxAllocatingE { get; private set; }
 		public static int MaxAllocatingM { get; private set; }
@@ -156,7 +162,7 @@ namespace Schumix.CompilerAddon.Config
 			ReferencedAssemblies  = referencedassemblies.Split(',');
 			MainClass             = mainclass;
 			MainConstructor       = mainconstructor;
-			Log.Notice("CompilerConfig", "Compile beallitasai betoltve.");
+			Log.Notice("CompilerConfig", sLocalization.CompilerConfig("Text"));
 		}
 	}
 }

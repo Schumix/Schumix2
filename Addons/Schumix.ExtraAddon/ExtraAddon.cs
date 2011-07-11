@@ -39,7 +39,13 @@ namespace Schumix.ExtraAddon
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
 		private readonly Notes sNotes = Singleton<Notes>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
+#if MONO
+#pragma warning disable 414
 		private AddonConfig _config;
+#pragma warning restore 414
+#else
+		private AddonConfig _config;
+#endif
 
 		public void Setup()
 		{

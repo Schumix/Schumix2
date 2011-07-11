@@ -101,6 +101,7 @@
     <Compile Include="Calendar\Calendar.cs" />
     <Compile Include="Ban\Ban.cs" />
     <Compile Include="Ban\Unban.cs" />
+    <Compile Include="Localization\PLocalization.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -110,6 +111,7 @@
     <Folder Include="Calendar\" />
     <Folder Include="Ban\" />
     <Folder Include="Config\" />
+    <Folder Include="Localization\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Schumix.API\Schumix.API.csproj">

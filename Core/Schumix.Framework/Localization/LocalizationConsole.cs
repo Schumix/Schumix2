@@ -18,8 +18,6 @@
  */
 
 using System;
-using Schumix.Framework;
-using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework.Localization
 {
@@ -75,7 +73,7 @@ namespace Schumix.Framework.Localization
 					else if(Locale == "enUS")
 						return "Failure details: {0}";
 					else
-						return "Failure";
+						return "Failure details: {0}";
 				}
 				default:
 					return string.Empty;
