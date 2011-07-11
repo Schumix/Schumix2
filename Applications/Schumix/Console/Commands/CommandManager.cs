@@ -28,27 +28,49 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Console.Commands
 {
+	/// <summary>
+	///     ConsoleCommandManager class.
+	/// </summary>
 	public sealed class CCommandManager : CommandHandler
 	{
+		/// <summary>
+		///     Hozzáférést bisztosít singleton-on keresztül a megadott class-hoz.
+		///     LocalizationConsole segítségével állíthatóak be a konzol nyelvi tulajdonságai.
+		/// </summary>
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		/// <summary>
+		///     Tárólja a parancsokat és a hozzá tartozó függvényeket.
+		/// </summary>
 		private static readonly Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
+		/// <summary>
+		///     Kimenetként kiírja a parancsokat és a hozzá tartozó függvényeket.
+		/// </summary>
 		public static Dictionary<string, Action> GetCommandHandler()
 		{
 			return _CommandHandler;
 		}
 
+		/// <summary>
+		///     Indulási függvény.
+		/// </summary>
 		public CCommandManager(Network network) : base(network)
 		{
 			Log.Notice("CCommandManager", sLConsole.CCommandManager("Text"));
 			InitHandler();
 		}
 
+		/// <summary>
+		///     Csatorna nevét tárólja.
+		/// </summary>
 		public string Channel
 		{
 			get { return _channel; }
 			set { _channel = value; }
 		}
 
+		/// <summary>
+		///     Regisztrálja a kódban tárólt parancsokat.
+		/// </summary>
 		private void InitHandler()
 		{
 			RegisterHandler("help",       HandleHelp);
@@ -70,16 +92,25 @@ namespace Schumix.Console.Commands
 			Log.Notice("CCommandManager", sLConsole.CCommandManager("Text2"));
 		}
 
+		/// <summary>
+		///     Parancs regisztráló függvény.
+		/// </summary>
 		private void RegisterHandler(string code, Action method)
 		{
 			_CommandHandler.Add(code, method);
 		}
 
+		/// <summary>
+		///     Parancs eltávolító függvény.
+		/// </summary>
 		private void RemoveHandler(string code)
 		{
 			_CommandHandler.Remove(code);
 		}
 
+		/// <summary>
+		///     A bejövő információkat dolgozza fel és meghívja a parancsot ha létezik olyan.
+		/// </summary>
 		public bool CIncomingInfo(string info)
 		{
 			try
