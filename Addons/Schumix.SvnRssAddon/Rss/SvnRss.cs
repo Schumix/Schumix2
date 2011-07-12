@@ -200,14 +200,14 @@ namespace Schumix.SvnRssAddon
 			{
 				string[] channel = db["Channel"].ToString().Split(',');
 
-				for(int x = 0; x < channel.Length; x++)
+				foreach(var chan in channel)
 				{
 					if(_website == "assembla")
 					{
 						if(title.IndexOf(":") != -1)
 						{
-							sSendMessage.SendCMPrivmsg(channel[x], "3{0} Revision: 10{1} by {2}", _name, rev, author);
-							sSendMessage.SendCMPrivmsg(channel[x], "3{0} Info:{1}", _name, title.Substring(title.IndexOf(":")+1));
+							sSendMessage.SendCMPrivmsg(chan, "3{0} Revision: 10{1} by {2}", _name, rev, author);
+							sSendMessage.SendCMPrivmsg(chan, "3{0} Info:{1}", _name, title.Substring(title.IndexOf(":")+1));
 						}
 					}
 

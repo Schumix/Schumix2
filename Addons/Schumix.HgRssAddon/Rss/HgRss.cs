@@ -212,20 +212,20 @@ namespace Schumix.HgRssAddon
 			{
 				string[] channel = db["Channel"].ToString().Split(',');
 
-				for(int x = 0; x < channel.Length; x++)
+				foreach(var chan in channel)
 				{
 					if(_website == "google")
 					{
 						if(title.IndexOf(":") != -1)
 						{
-							sSendMessage.SendCMPrivmsg(channel[x], "3{0} Revision: 10{1} by {2}", _name, rev.Substring(0, 10), author);
-							sSendMessage.SendCMPrivmsg(channel[x], "3{0} Info:{1}", _name, title.Substring(title.IndexOf(":")+1));
+							sSendMessage.SendCMPrivmsg(chan, "3{0} Revision: 10{1} by {2}", _name, rev.Substring(0, 10), author);
+							sSendMessage.SendCMPrivmsg(chan, "3{0} Info:{1}", _name, title.Substring(title.IndexOf(":")+1));
 						}
 					}
 					else if(_website == "bitbucket")
 					{
-						sSendMessage.SendCMPrivmsg(channel[x], "3{0} Revision: 10{1} by {2}", _name, rev.Substring(0, 10), author);
-						sSendMessage.SendCMPrivmsg(channel[x], "3{0} Info:{1}", _name, title);
+						sSendMessage.SendCMPrivmsg(chan, "3{0} Revision: 10{1} by {2}", _name, rev.Substring(0, 10), author);
+						sSendMessage.SendCMPrivmsg(chan, "3{0} Info:{1}", _name, title);
 					}
 
 					Thread.Sleep(1000);

@@ -23,14 +23,18 @@ using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.Irc.Commands;
-using Schumix.GitRssAddon.Commands;
 using Schumix.GitRssAddon.Config;
+using Schumix.GitRssAddon.Commands;
+using Schumix.GitRssAddon.Localization;
 
 namespace Schumix.GitRssAddon
 {
 	public class GitRssAddon : RssCommand, ISchumixAddon
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static readonly List<GitRss> RssList = new List<GitRss>();
 #if MONO
 #pragma warning disable 414
@@ -42,6 +46,7 @@ namespace Schumix.GitRssAddon
 
 		public void Setup()
 		{
+			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
 			CommandManager.OperatorCRegisterHandler("git", new Action<IRCMessage>(HandleGit));
 

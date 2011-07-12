@@ -97,7 +97,7 @@ namespace Schumix.ExtraAddon.Commands
 			try
 			{
 				var url = new Uri(msg);
-				var webTitle = WebHelper.GetWebTitle(url);
+				var webTitle = WebHelper.GetWebTitle(url, sLManager.GetChannelLocalization(channel));
 
 				if(string.IsNullOrEmpty(webTitle))
 					return;
