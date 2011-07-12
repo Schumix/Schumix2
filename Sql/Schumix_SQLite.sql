@@ -121,11 +121,11 @@ Message TEXT
 -- ----------------------------
 -- Records of irc_commands
 -- ----------------------------
-INSERT INTO "irc_commands" VALUES (1, 'rang', 'Rang hasznlata: /mode <channel> <rang> <nv>');
-INSERT INTO "irc_commands" VALUES (2, 'rang1', 'Rang mentse: /chanserv <rang (sop, aop, hop, vop)> <channel> ADD <nv>');
-INSERT INTO "irc_commands" VALUES (3, 'nick', 'Nick csere hasznlata: /nick <j nv>');
-INSERT INTO "irc_commands" VALUES (4, 'kick', 'Kick hasznlata: /kick <channel> <nv> (<oka> nem felttlen kell)');
-INSERT INTO "irc_commands" VALUES (5, 'owner', 'Ownermod hasznlata: /msg chanserv SET <channel> ownermode on');
+INSERT INTO "irc_commands" VALUES (1, 'rang', 'Rang használata: /mode <channel> <rang> <név>');
+INSERT INTO "irc_commands" VALUES (2, 'rang1', 'Rang mentése: /chanserv <rang (sop, aop, hop, vop)> <channel> ADD <név>');
+INSERT INTO "irc_commands" VALUES (3, 'nick', 'Nick csere használata: /nick <új név>');
+INSERT INTO "irc_commands" VALUES (4, 'kick', 'Kick használata: /kick <channel> <név> (<oka> nem feltétlen kell)');
+INSERT INTO "irc_commands" VALUES (5, 'owner', 'Ownermód használata: /msg chanserv SET <channel> ownermode on');
 
 -- ----------------------------
 -- Table structure for "kicklist"
@@ -143,6 +143,148 @@ Reason TEXT
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for "localized_console_command"
+-- ----------------------------
+DROP TABLE IF EXISTS "localized_console_command";
+CREATE TABLE "localized_console_command" (
+Id INTEGER  PRIMARY KEY AUTOINCREMENT,
+Language VARCHAR(4)    DEFAULT 'enUS',
+Command TEXT,
+Text TEXT
+);
+
+-- huHU
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'consolelog', 'Console logolás bekapcsolva.\nConsole logolás kikapcsolva.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'sys', 'Verzió: {0}\nPlatform: {0}\nOSVerzió: {0}\nProgramnyelv: c#\nMemória használat: {0} MB\nFutó szálak: {0}\nMûködési idõ: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'csatorna', 'Új csatorna ahova mostantól lehet írni: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/info', 'Jelenleg Fél Operátor vagy.\nJelenleg Operátor vagy.\nJelenleg Adminisztrátor vagy.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/list', '2Adminok: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/add', 'A név már szerepel az admin listán!\nAdmin hozzáadva: {0}\nJelenlegi jelszó:');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/remove', 'Ilyen név nem létezik!\nAdmin törölve: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/rank', 'Rang sikeresen módosítva.\nHibás rang!');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin', 'Parancsok: help | list | add | remove');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/channel/info', 'Bekapcsolva: {0}\nKikapcsolva: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/channel', '{0}: bekapcsolva\n{0}: kikapcsolva');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/update', 'Sikeresen frissítve {0} csatornán a funkciók.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/update/all', 'Sikeresen frissítve minden csatornán a funkciók.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/info', 'Bekapcsolva: {0}\nKikapcsolva: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function', '{0}: bekapcsolva\n{0}: kikapcsolva');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel', 'Parancsok: add | remove | info | update | language');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/add', 'A név már szerepel a csatorna listán!\nCsatorna hozzáadva: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/remove', 'A mester csatorna nem törölhetõ!\nIlyen csatorna nem létezik!\nCsatorna eltávolítva: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/update', 'A csatorna információk frissítésre kerültek.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/info', 'Aktív: {0}\nAktív: Nincs információ.\nInaktív: {0}\nInaktív: Nincs információ.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/language', 'Csatorna nyelvezete sikeresen meg lett változtatva erre: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'nick', 'Nick megváltoztatása erre: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'join', 'Kapcsolódás ehhez a csatornához: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'left', 'Lelépés errõl a csatornáról: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'reload', '{0} újra lett indítva.\nA programban nincs ilyen rész!');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'quit', 'Viszlát :(\nConsole: Program leállítása.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'help', 'Ha a parancs mögé írod a megadott parancs nevét vagy a nevet és alparancsát információt ad a használatáról.\nParancsok: {0}');
+
+-- enUS
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'consolelog', 'Console logging on.\nConsole logging off.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'sys', 'Version: {0}\nPlatform: {0}\nOSVersion: {0}\nProgramming language: c#\nMemory allocation: {0} MB\nThread count: {0}\nUptime: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'csatorna', 'The new channel to write to now: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/info', 'You are half operator now.\nYou are operator now.\nYou are administrator now.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/list', '2Admins: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/add', 'The name is already in the admin list!\nAdmin added to the list: {0}\nPassword:');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/remove', 'No such nick!\nAdmin was deleted: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/rank', 'Successfully changed the rank!\nRank error!');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin', 'Commands: help | list | add | remove');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/channel/info', 'On: {0}\nOff: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/channel', '{0}: On\n{0}: Off');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/update', 'Successfully updated the channel functions in: {0}.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/update/all', 'Successfully updated the information of all channels.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/info', 'On: {0}\nOff: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function', '{0}: are on.\n{0}: are off.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel', 'Commands: add | remove | info | update | language');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel/add', 'The name is already exists in the channel list.\nAdded channel: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel/remove', 'The master channel cannot delete!\nNo such channel!\nDeleted channel: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel/update', 'The channel informations are updated.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel/info', 'Active: {0}\nActive: Nothing information.\nInactive: {0}\nInactive: Nothing information.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel/language', 'Successfully changed the channel language to: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'nick', 'Nick changes to: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'join', 'Join to this channel: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'left', 'Part of this channel: {0}');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'reload', '{0} reloaded.\nThe program does not contains that part!');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'quit', 'Bye :(\nConsole: Program shut down.');
+INSERT INTO "localized_console_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'help', 'If you wrote behind the command the command or the name or co-command then gets information about usage.\nCommands: {0}');
+
+-- ----------------------------
+-- Table structure for localized_console_command_help
+-- ----------------------------
+DROP TABLE IF EXISTS "localized_console_command_help";
+CREATE TABLE "localized_console_command_help" (
+Id INTEGER  PRIMARY KEY AUTOINCREMENT,
+Language VARCHAR(4)    DEFAULT 'enUS',
+Command TEXT,
+Text TEXT
+);
+
+-- huHU
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin', 'Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.\nAdmin parancsai: info | list | add | remove | rank | access | newpassword');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/add', 'Új admin hozzáadása.\nHasználata: {0}admin add <admin neve>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/remove', 'Admin eltávolítása.\nHasználata: {0}admin remove <admin neve>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/rank', 'Admin rangjának megváltoztatása.\nHasználata: {0}admin rank <admin neve> <új rang pl halfoperator: 0, operator: 1, administrator: 2>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/info', 'Kiirja éppen milyen rangod van.');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/list', 'Kiirja az összes admin nevét aki az adatbázisban szerepel.');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function', 'Funkciók vezérlésére szolgáló parancs.\nFunkció parancsai: channel | update | info\nHasználata globálisan:\nGlobalis funkció kezelése: {0}function <on vagy off> <funkció név>\nGlobális funkciók kezelése: {0}function <on vagy off> <funkció név1> <funkció név2> ... stb');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/channel', 'Megadott channelen állíthatók ezzel a parancsal a funkciók.\nFunkció channel parancsai: info\nHasználata:\nChannel funkció kezelése: {0}function channel <on vagy off> <funkció név>\nChannel funkciók kezelése: {0}function channel <on vagy off> <funkció név1> <funkció név2> ... stb');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/channel/info', 'Kiírja a funkciók állapotát.');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/update', 'Frissíti a funkciókat vagy alapértelmezésre állítja.\nFunkció update parancsai: all\nHasználata:\nMás channel: {0}function update <channel neve>\nAhol tartozkodsz channel: {0}function update');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/update/all', 'Frissíti az összes funkciót vagy alapértelmezésre állítja.\Használata: {0}function update all');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/info', 'Kiírja a funkciók állapotát.');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel', 'Channel parancsai: add | remove | info | update | language');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/add', 'Új channel hozzáadása.\nHasználata: {0}channel add <channel> <ha van jelszó akkor az>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/remove', 'Nem használatos channel eltávolítása.\nHasználata: {0}channel remove <channel>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/info', 'Összes channel kiirása ami az adatbázisban van és a hozzájuk tartozó informáciok.');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/update', 'Channelekhez tartozó összes információ frissítése, alapértelmezésre állítása.');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/language', 'Frissíti a csatorna nyelvezetét.\nHasználata: {0}channel language <csatorna> <nyelvezet>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'nick', 'Bot nick nevének cseréje.\nHasználata: {0}nick <név>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'join', 'Kapcsolódás megadot csatornára.\nHasználata:\nJelszó nélküli csatorna: {0}join <csatorna>\nJelszóval ellátott csatorna: {0}join <csatorna> <jelszó>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'left', 'Lelépés megadot csatonáról.\nHasználata: {0}left <csatona>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'quit', 'Bot leállítására használható parancs.');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'reload', 'Újraindítja a megadott programrészt.\nHasználata: {0}reload <név>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'consolelog', 'Az irc adatok konzolra írását engedélyezi vagy tiltja. Alapértelmezésben ki van kapcsolva.\nHasználata: consolelog <on vagy off>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'sys', 'Kiírja a botról a rendszer információkat.');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'csatorna', 'A bot csatornára írását állíthatjuk vele.\nHasználata: csatorna <csatorna neve>');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'connect', 'Kapcsolodás az irc szerverhez.');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'disconnect', 'Kapcsolat bontása.');
+INSERT INTO "localized_console_command_help" (`Language`, `Command`, `Text`) VALUES ('huHU', 'reconnect', 'Újrakapcsolodás az irc szerverhez.');
+
+-- ----------------------------
+-- Table structure for localized_console_warning
+-- ----------------------------
+DROP TABLE IF EXISTS "localized_console_warning";
+CREATE TABLE "localized_console_warning" (
+Id INTEGER  PRIMARY KEY AUTOINCREMENT,
+Language VARCHAR(4)    DEFAULT 'enUS',
+Command TEXT,
+Text TEXT
+);
+
+-- huHU
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoName', 'A név nincs megadva!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoValue', 'Nincs paraméter!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'No1Value', 'Nincs megadva egy paraméter!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoChannelName', 'Nincs megadva a csatorna neve!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'FaultyQuery', 'Hibás lekérdezés!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoRank', 'Nincs megadva a rang!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoFunctionName', 'Nincs megadva a funkció neve!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoChannelLanguage', 'Nincs megadva a csatorna nyelvezete!');
+
+-- enUS
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoName', 'The name is not specified!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoValue', 'The parameters are not specified!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'No1Value', 'A parameter was not specified!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoChannelName', 'The channel name is not specified!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'FaultyQuery', 'Syntax error!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoRank', 'The rank is not specified!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoFunctionName', 'The function name is not specified!');
+INSERT INTO "localized_console_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoChannelLanguage', 'The channel language is not specified!');
+
+-- ----------------------------
 -- Table structure for "localized_command"
 -- ----------------------------
 DROP TABLE IF EXISTS "localized_command";
@@ -156,107 +298,203 @@ Text TEXT
 -- ----------------------------
 -- Records of localized_command
 -- ----------------------------
-INSERT INTO "localized_command" VALUES (1, 'huHU', 'schumix2/sys', X'0203335665727A69F33A0F0F200331307B307D0F5C6E020333506C6174666F726D3A0F0F207B307D5C6E0203334F535665727A69F33A0F0F207B307D5C6E02033350726F6772616D6E79656C763A0F0F2063235C6E0203334D656D6F726961206861737A6EE16C61743A0F0F0335207B307D0F204D425C6E0203334D656D6F726961206861737A6EE16C61743A0F0F0338207B307D0F204D425C6E0203334D656D6F726961206861737A6EE16C61743A0F0F0333207B307D0F204D425C6E020333557074696D653A0F0F207B307D');
-INSERT INTO "localized_command" VALUES (2, 'huHU', 'schumix2/help', X'020333506172616E63736F6B3A0F0F20026E69636B207C207379730F5C6E020333506172616E63736F6B3A0F0F200267686F7374207C206E69636B207C207379730F5C6E020333506172616E63736F6B3A0F0F200267686F7374207C206E69636B207C20737973207C20636C65616E0F5C6E020333506172616E63736F6B3A0F0F20027379730F');
-INSERT INTO "localized_command" VALUES (3, 'huHU', 'schumix2/ghost', 'Ghost paranccsal elsdleges nick visszaszerzse.');
-INSERT INTO "localized_command" VALUES (4, 'huHU', 'schumix2/nick', 'Nv megvltoztatsa erre: {0}');
-INSERT INTO "localized_command" VALUES (5, 'huHU', 'schumix2/nick/identify', 'Azonost jelsz kldse a kiszolglonak.');
-INSERT INTO "localized_command" VALUES (6, 'huHU', 'schumix2/clean', 'Lefoglalt memria felszabadtsra kerl.');
-INSERT INTO "localized_command" VALUES (7, 'huHU', 'help', 'Ha a parancs mg rod a megadott parancs nevt vagy a nevet s alparancst informcit ad a hasznlatrl.\nF parancsom: {0}xbot');
-INSERT INTO "localized_command" VALUES (8, 'huHU', 'xbot', X'0203335665727A69F33A0F0F200331307B307D0F5C6E020333506172616E63736F6B3A0F0F20027B307D0F5C6E0250726F6772616D6D65642062793A0F20033343736162610F');
-INSERT INTO "localized_command" VALUES (9, 'huHU', 'info', 'Programozm: Csaba, Jackneill.');
-INSERT INTO "localized_command" VALUES (10, 'huHU', 'time', 'Helyi id: {0}:0{1}\nHelyi id: {0}:{1}');
-INSERT INTO "localized_command" VALUES (11, 'huHU', 'date', 'Ma {0}. 0{1}. 0{2}. {3} napja van.\nMa {0}. 0{1}. {2}. {3} napja van.\nMa {0}. {1}. 0{2}. {3} napja van.\nMa {0}. {1}. {2}. {3} napja van.');
-INSERT INTO "localized_command" VALUES (12, 'huHU', 'roll', 'Szzalkos arnya {0}%');
-INSERT INTO "localized_command" VALUES (13, 'huHU', 'whois', 'Jelenleg itt van fent: {0}');
-INSERT INTO "localized_command" VALUES (14, 'huHU', 'warning', 'Keresnek tged itt: {0}');
-INSERT INTO "localized_command" VALUES (15, 'huHU', 'google', X'0203325469746C653A0F204E696E6373205469746C652E5C6E0203324C696E6B3A0F204E696E6373204C696E6B2E5C6E0203325469746C653A0F0F207B307D5C6E0203324C696E6B3A0F0F2003337B307D0F');
-INSERT INTO "localized_command" VALUES (16, 'huHU', 'translate', 'Nincs frdtott szveg.');
-INSERT INTO "localized_command" VALUES (17, 'huHU', 'prime', 'Nem csak szmot tartalmaz!\n{0} nem primszm.\n{0} primszm.');
-INSERT INTO "localized_command" VALUES (18, 'huHU', 'admin/access', 'Hozzfrs engedlyezve.\nHozzfrs megtagadva!');
-INSERT INTO "localized_command" VALUES (19, 'huHU', 'admin/password', 'Jelsz sikereset meg lett vltoztatva erre: {0}\nA mostani jelsz nem egyezik, modsits megtagadva');
-INSERT INTO "localized_command" VALUES (20, 'huHU', 'admin/info', 'Jelenleg Fl Opertor vagy.\nJelenleg Opertor vagy.\nJelenleg Adminisztrtor vagy.');
-INSERT INTO "localized_command" VALUES (21, 'huHU', 'admin/list', X'02033241646D696E6F6B3A0F0F20027B307D0F');
-INSERT INTO "localized_command" VALUES (22, 'huHU', 'admin/add', 'A nv mr szerepel az admin listn!\nAdmin hozzadva: {0}\nMostantl Schumix adminja vagy. A te mostani jelszavad: {0}\nHa megszeretnd vltoztatni hasznld az {0}admin newpassword parancsot. Hasznlata: {0}admin newpassword <rgi> <j>\nAdmin nick lestse: {0}admin access <jelsz>');
-INSERT INTO "localized_command" VALUES (23, 'huHU', 'admin/remove', 'Ilyen nv nem ltezik!\nAdmin trlve: {0}');
-INSERT INTO "localized_command" VALUES (24, 'huHU', 'admin/rank', 'Rang sikeresen mdostva.\nHibs rang!');
-INSERT INTO "localized_command" VALUES (25, 'huHU', 'admin', X'02033346E96C204F706572E1746F7220706172616E63736F6B210F0F5C6E020333506172616E63736F6B3A0F0F20027B307D0F5C6E0203334F706572E1746F7220706172616E63736F6B210F0F5C6E020333506172616E63736F6B3A0F0F20027B307D0F5C6E02033341646D696E69737A7472E1746F7220706172616E63736F6B210F0F5C6E020333506172616E63736F6B3A0F0F20027B307D0F');
-INSERT INTO "localized_command" VALUES (26, 'huHU', 'colors', X'03317465737A74310F2003327465737A74320F2003337465737A74330F2003347465737A74340F2003357465737A74350F2003367465737A74360F2003377465737A74370F2003387465737A74380F2003397465737A74390F200331307465737A7431300F200331317465737A7431310F200331327465737A7431320F200331337465737A7431330F200331347465737A7431340F200331357465737A7431350F');
-INSERT INTO "localized_command" VALUES (27, 'huHU', 'nick', 'Nick megvltoztatsa erre: {0}');
-INSERT INTO "localized_command" VALUES (28, 'huHU', 'join', 'Kapcsolds ehhez a csatornhoz: {0}');
-INSERT INTO "localized_command" VALUES (29, 'huHU', 'left', 'Lelps errl a csatornrl: {0}');
-INSERT INTO "localized_command" VALUES (30, 'huHU', 'function/info', X'02033242656B617063736F6C76613A0F0F20027B307D0F5C6E0203324B696B617063736F6C76613A0F0F20027B307D0F');
-INSERT INTO "localized_command" VALUES (31, 'huHU', 'function/all/info', X'02033242656B617063736F6C76613A0F0F20027B307D0F5C6E0203324B696B617063736F6C76613A0F0F20027B307D0F');
-INSERT INTO "localized_command" VALUES (32, 'huHU', 'function/all', '{0}: bekapcsolva\n{0}: kikapcsolva');
-INSERT INTO "localized_command" VALUES (33, 'huHU', 'function/channel/info', X'02033242656B617063736F6C76613A0F0F20027B307D0F5C6E0203324B696B617063736F6C76613A0F0F20027B307D0F');
-INSERT INTO "localized_command" VALUES (34, 'huHU', 'function/channel', '{0}: bekapcsolva\n{0}: kikapcsolva');
-INSERT INTO "localized_command" VALUES (35, 'huHU', 'function/update', 'Sikeresen frissitve {0} csatornn a funkcik.');
-INSERT INTO "localized_command" VALUES (36, 'huHU', 'function/update/all', '"Sikeresen frissitve minden csatornn a funkcik.');
-INSERT INTO "localized_command" VALUES (37, 'huHU', 'function', '{0}: bekapcsolva\n{0}: kikapcsolva');
-INSERT INTO "localized_command" VALUES (38, 'huHU', 'channel', X'020333506172616E63736F6B3A0F0F20616464207C2072656D6F7665207C20696E666F207C20757064617465207C206C616E6775616765');
-INSERT INTO "localized_command" VALUES (39, 'huHU', 'channel/add', 'A nv mr szerepel a csatorna listn!\nCsatorna hozzadva: {0}');
-INSERT INTO "localized_command" VALUES (40, 'huHU', 'channel/remove', 'A mester csatorna nem trlhet!\nIlyen csatorna nem ltezik!\nCsatorna eltvoltva: {0}');
-INSERT INTO "localized_command" VALUES (41, 'huHU', 'channel/update', 'A csatorna informcik frissitsre kerltek.');
-INSERT INTO "localized_command" VALUES (42, 'huHU', 'channel/info', X'020333416B74ED763A0F0F207B307D5C6E020333416B74ED763A0F0F204E696E637320696E666F726DE16369F32E5C6E020333496E616B74ED763A0F0F207B307D5C6E020333496E616B74ED763A0F0F204E696E637320696E666F726DE16369F32E');
-INSERT INTO "localized_command" VALUES (43, 'huHU', 'channel/language', 'Csatorna nyelvezete sikeresen meg lett vltoztatva erre: {0}');
-INSERT INTO "localized_command" VALUES (44, 'huHU', 'plugin/load', X'0203325B426574F66C74E9735D3A0F0F2002D673737A657320706C7567696E20626574F66C74E973650F20033373696B657265732E0F5C6E0203325B426574F66C74E9735D3A0F0F2002D673737A657320706C7567696E20626574F66C74E973650F20033573696B657274656C656E2E0F');
-INSERT INTO "localized_command" VALUES (45, 'huHU', 'plugin/unload', X'0203325B4C6576E16C61737A74E1735D3A0F0F2002D673737A657320706C7567696E206C6576E16C61737A74E173610F20033373696B657265732E0F5C6E0203325B4C6576E16C61737A74E1735D3A0F0F2002D673737A657320706C7567696E206C6576E16C61737A74E173610F20033573696B657274656C656E2E0F');
-INSERT INTO "localized_command" VALUES (46, 'huHU', 'plugin', X'027B307D3A0F2003336C6F616465642E0F');
-INSERT INTO "localized_command" VALUES (47, 'huHU', 'quit', 'Viszlt :(\n{0} lelltott paranccsal.');
-INSERT INTO "localized_command" VALUES (48, 'huHU', 'svn/info', X'0333027B307D0F0F20024368616E6E656C3A0F200203327B317D0F0F');
-INSERT INTO "localized_command" VALUES (49, 'huHU', 'svn/list', X'0203324C697374613A0F0F0203337B307D0F0F');
-INSERT INTO "localized_command" VALUES (50, 'huHU', 'svn/channel/add', 'Csatorna sikeresen hozzadva.\nNem ltezik ilyen nv!');
-INSERT INTO "localized_command" VALUES (51, 'huHU', 'svn/channel/remove', 'Csatorna sikeresen trlve.\nNem ltezik ilyen nv!');
-INSERT INTO "localized_command" VALUES (52, 'huHU', 'hg/info', X'0333027B307D0F0F20024368616E6E656C3A0F200203327B317D0F0F');
-INSERT INTO "localized_command" VALUES (53, 'huHU', 'hg/list', X'0203324C697374613A0F0F0203337B307D0F0F');
-INSERT INTO "localized_command" VALUES (54, 'huHU', 'hg/channel/add', 'Csatorna sikeresen hozzadva.\nNem ltezik ilyen nv!');
-INSERT INTO "localized_command" VALUES (55, 'huHU', 'hg/channel/remove', 'Csatorna sikeresen trlve.\nNem ltezik ilyen nv!');
-INSERT INTO "localized_command" VALUES (56, 'huHU', 'git/info', X'0333027B307D0F0F2003377B317D0F20024368616E6E656C3A0F200203327B327D0F0F');
-INSERT INTO "localized_command" VALUES (57, 'huHU', 'git/list', X'0203324C697374613A0F0F0203337B307D0F0F');
-INSERT INTO "localized_command" VALUES (58, 'huHU', 'git/channel/add', 'Csatorna sikeresen hozzadva.\nNem ltezik ilyen nv!');
-INSERT INTO "localized_command" VALUES (59, 'huHU', 'git/channel/remove', 'Csatorna sikeresen trlve.\nNem ltezik ilyen nv!');
-INSERT INTO "localized_command" VALUES (60, 'huHU', 'compiler/memory', 'Jelenleg tl sok memrit fogyaszt a bot ezrt ezen funkci nem elrhet!');
-INSERT INTO "localized_command" VALUES (61, 'huHU', 'compiler/warning', 'A kdban olyan rszek vannak melyek veszlyeztetik a programot. Ezrt lellt a fordts!');
-INSERT INTO "localized_command" VALUES (62, 'huHU', 'compiler', 'Nincs megadva a f fv! (Schumix)\nNincs megadva a f class!\nA kimeneti szveg tl hossz ezrt nem kerlt kiirsra!\nA kd sikeresen lefordult csak nincs kimen zenet!\nHtramaradt mg {0} kiirs!');
-INSERT INTO "localized_command" VALUES (63, 'huHU', 'compiler/code', 'Hibk: {0}');
-INSERT INTO "localized_command" VALUES (64, 'huHU', 'handlekick', '{0} kirgta a kvetkez felhasznlt: {1} oka: {2}');
-INSERT INTO "localized_command" VALUES (65, 'huHU', 'ban', 'Helytelen dtum formtum!');
-INSERT INTO "localized_command" VALUES (66, 'huHU', 'autofunction', X'020333506172616E63736F6B3A0F0F2002686C6D6573736167650F5C6E020333506172616E63736F6B3A0F0F20026B69636B207C206D6F6465207C20686C6D6573736167650F');
-INSERT INTO "localized_command" VALUES (67, 'huHU', 'autofunction/hlmessage/info', X'0203334CE974657AF5206E69636B656B3A0F0F20027B307D0F');
-INSERT INTO "localized_command" VALUES (68, 'huHU', 'autofunction/hlmessage/update', 'Az adatbzis sikeresen frissitsre kerlt.');
-INSERT INTO "localized_command" VALUES (69, 'huHU', 'autofunction/hlmessage/function', '{0}: bekapcsolva\n{0}: kikapcsolva');
-INSERT INTO "localized_command" VALUES (70, 'huHU', 'autofunction/hlmessage', 'Az zenet mdostsra kerlt.');
-INSERT INTO "localized_command" VALUES (71, 'huHU', 'autofunction/kick/add', 'A nv mr szerepel a kick listn!\nKick listhoz a nv hozzadva: {0}');
-INSERT INTO "localized_command" VALUES (72, 'huHU', 'autofunction/kick/remove', 'Ilyen nv nem ltezik!\nKick listbl a nv eltvltsra kerlt: {0}');
-INSERT INTO "localized_command" VALUES (73, 'huHU', 'autofunction/kick/info', 'Kick listn lvk: {0}');
-INSERT INTO "localized_command" VALUES (74, 'huHU', 'autofunction/kick/channel/add', 'A nv mr szerepel a kick listn!\nKick listhoz a nv hozzadva: {0}');
-INSERT INTO "localized_command" VALUES (75, 'huHU', 'autofunction/kick/channel/remove', 'Ilyen nv nem ltezik!\nKick listbl a nv eltvltsra kerlt: {0}');
-INSERT INTO "localized_command" VALUES (76, 'huHU', 'autofunction/kick/channel/info', 'Kick listn lvk: {0}');
-INSERT INTO "localized_command" VALUES (77, 'huHU', 'autofunction/mode/add', 'A nv mr szerepel a mode listn!\nMode listhoz a nv hozzadva: {0}');
-INSERT INTO "localized_command" VALUES (78, 'huHU', 'autofunction/mode/remove', 'Ilyen nv nem ltezik!\nMode listbl a nv eltvltsra kerlt: {0}');
-INSERT INTO "localized_command" VALUES (79, 'huHU', 'autofunction/mode/info', 'Mode listn lvk: {0}');
-INSERT INTO "localized_command" VALUES (80, 'huHU', 'autofunction/mode/channel/add', 'A nv mr szerepel a mode listn!\nMode listhoz a nv hozzadva: {0}');
-INSERT INTO "localized_command" VALUES (81, 'huHU', 'autofunction/mode/channel/remove', 'Ilyen nv nem ltezik!\nMode listbl a nv eltvltsra kerlt: {0}');
-INSERT INTO "localized_command" VALUES (82, 'huHU', 'autofunction/mode/channel/info', 'Mode listn lvk: {0}');
-INSERT INTO "localized_command" VALUES (83, 'huHU', 'message/channel', 'Az zenet sikeresen feljegyzsre kerlt.');
-INSERT INTO "localized_command" VALUES (84, 'huHU', 'message', 'Az zenet sikeresen feljegyzsre kerlt.');
-INSERT INTO "localized_command" VALUES (85, 'huHU', 'notes/info', 'Jegyzetek kdjai: {0}');
-INSERT INTO "localized_command" VALUES (86, 'huHU', 'notes/user/access', 'Hozzfrs engedlyezve.\nHozzfrs megtagadva!');
-INSERT INTO "localized_command" VALUES (87, 'huHU', 'notes/user/newpassword', 'Jelsz sikereset meg lett vltoztatva erre: {0}\nA mostani jelsz nem egyezik, modsits megtagadva!');
-INSERT INTO "localized_command" VALUES (88, 'huHU', 'notes/user/register', 'Mr szerepelsz a felhasznli listn!\nSikeresen hozz vagy adva a felhasznli listhoz.');
-INSERT INTO "localized_command" VALUES (89, 'huHU', 'notes/user/remove', 'Nincs megadva a jelsz a trls megerstshez!\nNem szerepelsz a felhasznli listn!\nA jelsz nem egyezik meg az adatbzisban trolttal!\nTrls meg lett szaktva!\nSikeresen trlve lett a felhasznld.');
-INSERT INTO "localized_command" VALUES (90, 'huHU', 'notes/code/remove', 'Ilyen kd nem szerepel a listn!\nA jegyzet sikeresen trlsre kerlt.');
-INSERT INTO "localized_command" VALUES (91, 'huHU', 'notes/code', 'Jegyzet: {0}');
-INSERT INTO "localized_command" VALUES (92, 'huHU', 'notes', 'Nincs megadva jegyzetnek semmi se!\nA jegyzet kdneve mr szerepel az adatbzisban!\nJegyzet kdja: {0}');
-INSERT INTO "localized_command" VALUES (93, 'huHU', 'notes/warning', 'Jelenleg nem szerepelsz a jegyzetek felhasznli listjn!\nAhoz hogy hozzad magad nem kell mst tenned mint az albbi parancsot vgrehajtani. (Lehetleg privt zenetknt ne hogy ms megtudja.)\n{0}jegyzet user register <jelsz>\nFelhasznli adatok frissitse (ha nem fogadn el adataidat) pedig: {0}jegyzet user hozzaferes <jelsz>');
-INSERT INTO "localized_command" VALUES (94, 'huHU', 'message2', 'zenetet hagyta neked: {0}');
-INSERT INTO "localized_command" VALUES (95, 'enUS', 'plugin/load', X'0203325B4C6F61645D3A0F0F2002416C6C20706C7567696E730F200333646F6E652E0F5C6E0203325B4C6F61645D3A0F0F2002416C6C20706C7567696E730F2003356661696C65642E0F');
-INSERT INTO "localized_command" VALUES (96, 'enUS', 'plugin/unload', X'0203325B556E6C6F61645D3A0F0F2002416C6C20706C7567696E730F200333646F6E652E0F5C6E0203325B556E6C6F61645D3A0F0F2002416C6C20706C7567696E730F2003356661696C65642E0F');
-INSERT INTO "localized_command" VALUES (97, 'enUS', 'plugin', X'027B307D3A0F2003336C6F616465642E0F');
-INSERT INTO "localized_command" VALUES (98, 'enUS', 'compiler/memory', 'This function is disabled, because currently too many memory is allocated!');
-INSERT INTO "localized_command" VALUES (99, 'enUS', 'compiler/warning', 'This code contains dangerous parts. Compiling stopped!');
-INSERT INTO "localized_command" VALUES (100, 'enUS', 'compiler', 'The main function is not specified! (Schumix)\nThe main class is not specified!\nThe output text is too long so do not written out.\nSuccessfully compiled the code, only nothing output text!\nResidual is {0} line!');
-INSERT INTO "localized_command" VALUES (101, 'enUS', 'compiler/code', 'Errors: {0}');
+-- huHU
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'schumix2/sys', '3Verzió: 10{0}\n3Platform: {0}\n3OSVerzió: {0}\n3Programnyelv: c#\n3Memória használat:5 {0} MB\n3Memória használat:8 {0} MB\n3Memória használat:3 {0} MB\n3Mûködési idõ: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'schumix2/help', '3Parancsok: nick | sys\n3Parancsok: ghost | nick | sys\n3Parancsok: ghost | nick | sys | clean\n3Parancsok: sys');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'schumix2/ghost', 'Ghost paranccsal elsõdleges nick visszaszerzése.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'schumix2/nick', 'Név megváltoztatása erre: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'schumix2/nick/identify', 'Azonosító jelszó küldése a kiszolgálónak.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'schumix2/clean', 'Lefoglalt memória felszabadításra kerül.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'help', 'Ha a parancs mögé írod a megadott parancs nevét vagy a nevet és alparancsát információt ad a használatáról.\nFõ parancsom: {0}xbot');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'xbot', '3Verzió: 10{0}\n3Parancsok: {0}\nProgrammed by: 3Csaba');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'info', 'Programozóm: Csaba, Jackneill.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'time', 'Helyi idõ: {0}:0{1}\nHelyi idõ: {0}:{1}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'date', 'Ma {0}. 0{1}. 0{2}. {3} napja van.\nMa {0}. 0{1}. {2}. {3} napja van.\nMa {0}. {1}. 0{2}. {3} napja van.\nMa {0}. {1}. {2}. {3} napja van.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'roll', 'Százalékos aránya {0}%');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'whois', 'Jelenleg itt van fent: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'warning', 'Keresnek téged itt: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'google', '2Title: Nincs Title.\n2Link: Nincs Link.\n2Title: {0}\n2Link: 3{0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'translate', 'Nincs fórdított szöveg.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'prime', 'Nem csak számot tartalmaz!\n{0} nem prímszám.\n{0} primszám.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/access', 'Hozzáférés engedélyezve.\nHozzáférés megtagadva!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/password', 'Jelszó sikeresen meg lett változtatva erre: {0}\nA mostani jelszó nem egyezik, modósitás megtagadva');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/info', 'Jelenleg Fél Operátor vagy.\nJelenleg Operátor vagy.\nJelenleg Adminisztrátor vagy.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/list', '2Adminok: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/add', 'A név már szerepel az admin listán!\nAdmin hozzáadva: {0}\nMostantól Schumix adminja vagy. A mostani jelszavad: {0}\nHa megszeretnéd változtatni használd az {0}admin newpassword parancsot. Használata: {0}admin newpassword <régi> <új>\nAdmin nick élesítése: {0}admin access <jelszó>');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/remove', 'Ilyen név nem létezik!\nAdmin törölve: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin/rank', 'Rang sikeresen módosítva.\nHibás rang!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'admin', '3Fél Operátor parancsok!\n3Parancsok: {0}\n3Operátor parancsok!\n3Parancsok: {0}\n3Adminisztrátor parancsok!\n3Parancsok: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'colors', '1teszt1 2teszt2 3teszt3 4teszt4 5teszt5 6teszt6 7teszt7 8teszt8 9teszt9 10teszt10 11teszt11 12teszt12 13teszt13 14teszt14 15teszt15');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'nick', 'Nick megváltoztatása erre: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'join', 'Kapcsolódás ehhez a csatornához: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'left', 'Lelépés errõl a csatornáról: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/info', '2Bekapcsolva: {0}\n2Kikapcsolva: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/all/info', '2Bekapcsolva: {0}\n2Kikapcsolva: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/all', '{0}: bekapcsolva\n{0}: kikapcsolva');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/channel/info', '2Bekapcsolva: {0}\n2Kikapcsolva: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/channel', '{0}: bekapcsolva\n{0}: kikapcsolva');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/update', 'Sikeresen frissítve {0} csatornán a funkciók.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function/update/all', 'Sikeresen frissítve minden csatornán a funkciók.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'function', '{0}: bekapcsolva\n{0}: kikapcsolva');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel', '3Parancsok: add | remove | info | update | language');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/add', 'A név már szerepel a csatorna listán!\nCsatorna hozzáadva: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/remove', 'A mester csatorna nem törölhetõ!\nIlyen csatorna nem létezik!\nCsatorna eltávolítva: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/update', 'A csatorna információk frissítésre kerültek.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/info', '3Aktív: {0}\n3Aktív: Nincs információ.\n3Inaktív: {0}\n3Inaktív: Nincs információ.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'channel/language', 'Csatorna nyelvezete sikeresen meg lett változtatva erre: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'plugin/load', '2[Betöltés]: Összes plugin betöltése 3sikeres.\n2[Betöltés]: Összes plugin betöltése 5sikertelen.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'plugin/unload', '2[Leválasztás]: Összes plugin leválasztása 3sikeres.\n2[Leválasztás]: Összes plugin leválasztása 5sikertelen.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'plugin', '{0}: 3loaded.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'quit', 'Viszlát :(\n{0} leállított paranccsal.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'svn/info', '3{0} Channel: 2{1}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'svn/list', '2Lista:3{0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'svn/channel/add', 'Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'svn/channel/remove', 'Csatorna sikeresen törölve.\nNem létezik ilyen név!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'hg/info', '3{0} Channel: 2{1}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'hg/list', '2Lista:3{0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'hg/channel/add', 'Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'hg/channel/remove', 'Csatorna sikeresen törölve.\nNem létezik ilyen név!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'git/info', '3{0} 7{1} Channel: 2{2}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'git/list', '2Lista:3{0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'git/channel/add', 'Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'git/channel/remove', 'Csatorna sikeresen törölve.\nNem létezik ilyen név!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'compiler/memory', 'Jelenleg túl sok memóriát fogyaszt a bot ezért ezen funkció nem elérhetõ!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'compiler/warning', 'A kódban olyan részek vannak melyek veszélyeztetik a programot. Ezért leállt a fordítás!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'compiler', 'Nincs megadva a fõ fv! (Schumix)\nNincs megadva a fõ class!\nA kimeneti szöveg túl hosszú ezért nem került kiirásra!\nA kód sikeresen lefordult csak nincs kimenõ üzenet!\nHátramaradt még {0} kiirás!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'compiler/code', 'Hibák: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'compiler/kill', 'Szál kilõve!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'handlekick', '{0} kirúgta a következõ felhasználót: {1} oka: {2}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'ban', 'Helytelen dátum formátum!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction', '3Parancsok: hlmessage\n3Parancsok: kick | mode | hlmessage');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/hlmessage/info', '3Létezõ nickek: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/hlmessage/update', 'Az adatbázis sikeresen frissítésre került.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/hlmessage/function', '{0}: bekapcsolva\n{0}: kikapcsolva');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/hlmessage', 'Az üzenet módosításra került.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/kick/add', 'A név már szerepel a kick listán!\nKick listához a név hozzáadva: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/kick/remove', 'Ilyen név nem létezik!\nKick listából a név eltávólításra került: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/kick/info', 'Kick listán lévõk: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/kick/channel/add', 'A név már szerepel a kick listán!\nKick listához a név hozzáadva: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/kick/channel/remove', 'Ilyen név nem létezik!\nKick listából a név eltávólításra került: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/kick/channel/info', 'Kick listán lévõk: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/mode/add', 'A név már szerepel a mode listán!\nMode listához a név hozzáadva: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/mode/remove', 'Ilyen név nem létezik!\nMode listából a név eltávólításra került: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/mode/info', 'Mode listán lévõk: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/mode/channel/add', 'A név már szerepel a mode listán!\nMode listához a név hozzáadva: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/mode/channel/remove', 'Ilyen név nem létezik!\nMode listából a név eltávólításra került: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'autofunction/mode/channel/info', 'Mode listán lévõk: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'message/channel', 'Az üzenet sikeresen feljegyzésre került.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'message', 'Az üzenet sikeresen feljegyzésre került.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'notes/info', 'Jegyzetek kódjai: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'notes/user/access', 'Hozzáférés engedélyezve.\nHozzáférés megtagadva!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'notes/user/newpassword', 'Jelszó sikeresen meg lett változtatva erre: {0}\nA mostani jelszó nem egyezik, módosítás megtagadva!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'notes/user/register', 'Már szerepelsz a felhasználói listán!\nSikeresen hozzá vagy adva a felhasználói listához.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'notes/user/remove', 'Nincs megadva a jelszó a törlés megerõsítéséhez!\nNem szerepelsz a felhasználói listán!\nA jelszó nem egyezik meg az adatbázisban tároltal!\nTörlés meg lett szakítva!\nSikeresen törölve lett a felhasználód.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'notes/code/remove', 'Ilyen kód nem szerepel a listán!\nA jegyzet sikeresen törlésre került.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'notes/code', 'Jegyzet: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'notes', 'Nincs megadva jegyzetnek semmi se!\nA jegyzet kódneve már szerepel az adatbázisban!\nJegyzet kódja: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'notes/warning', 'Jelenleg nem szerepelsz a jegyzetek felhasználói listáján!\nAhoz hogy hozzáadd magad nem kell mást tenned mint az alábbi parancsot végrehajtani. (Lehetõleg privát üzenetként nehogy más megtudja.)\n{0}jegyzet user register <jelszó>\nFelhasználói adatok frissítése (ha nem fogadná el adataidat) pedig: {0}jegyzet user hozzaferes <jelszó>');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'message2', 'Üzenetet hagyta neked: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'reload', '{0} újra lett indítva.\nA programban nincs ilyen rész!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('huHU', 'weather', '12Idõjárás otthon: {0}, minimum Hõmérséklet: {1}°, maximum Hõmérséklet: {2}°, Szélsebesség: {3}\n5{0} 12idõjárása: {1}, minimum Hõmérséklet: {2}°, maximum Hõmérséklet: {3}°, Szélsebesség: {4}\nNem szerepel ilyen város a listán!');
+
+-- enUS
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'schumix2/sys', '3Version: 10{0}\n3Platform: {0}\n3OSVersion: {0}\n3Programming language: c#\n3Memory allocation:5 {0} MB\n3Memory allocation:8 {0} MB\n3Memory allocation:3 {0} MB\n3Uptime: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'schumix2/help', '3Commands: nick | sys\n3Commands: ghost | nick | sys\n3Commands: ghost | nick | sys | clean\n3Commands: sys');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'schumix2/ghost', 'Return to the primary nick.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'schumix2/nick', 'Change nick to: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'schumix2/nick/identify', 'Send identifcation password to the server.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'schumix2/clean', 'Allocated memory will be freed.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'help', 'If you wrote behind the command the command or the name or co-command then gets information about usage.\nMain command: {0}xbot');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'xbot', '3Version: 10{0}\n3Commands: {0}\nProgrammed by: 3Csaba');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'info', 'My programmer(s): Csaba, Jackneill.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'time', 'Local time: {0}:0{1}\nLocal time: {0}:{1}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'date', "Today is {0}. 0{1}. 0{2}. and {3}'s day.\nToday is {0}. 0{1}. {2}. and {3}'s day.\nToday is {0}. {1}. 0{2}. and {3}'s day.\nToday is {0}. {1}. {2}. and {3}'s day.");
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'roll', 'Pencentage rate: {0}%');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'whois', 'Now online here: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'warning', 'Looking for you here: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'google', '2Title: Nothing Title.\n2Link: Nothing Link.\n2Title: {0}\n2Link: 3{0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'translate', 'Nothing translated text.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'prime', 'This is not a numeric text!\n{0} is not a prime number.\n{0} is a prime number.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/access', 'Access granted.\nAccess denied.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/password', 'Successfully changed to password to: {0}\nThe current password does not match, modification denied.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/info', 'You are half operator now.\nYou are operator now.\nYou are administrator now.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/list', '2Admins: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/add', "The name is already in the admin list!\nAdmin added to the list: {0}\nYou are schumix's admin now. Your current password is: {0}\nIf you want to change it, use this command: {0}admin newpassword. Usage: {0}admin newpassword <Old> <New>\nAdmin nick confirmation: {0}admin access <Password>");
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/remove', 'No such nick!\nAdmin was deleted: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/rank', 'Successfully changed the rank!\nRank error!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin', '3half operator commands!\n3Commands: {0}\n3Operator commands!\n3Commands: {0}\n3Administrator commands!\n3Commands: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'colors', '1test1 2test2 3test3 4test4 5test5 6test6 7test7 8test8 9test9 10test10 11test11 12test12 13test13 14test14 15test15');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'nick', 'Nick changes to: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'join', 'Join to this channel: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'left', 'Part of this channel: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/info', '2On: {0}\n2Off: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/all/info', '2Bekapcsolva: {0}\n2Kikapcsolva: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/all', '{0}: are on.\n{0}: are off.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/channel/info', '2On: {0}\n2Off: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/channel', '{0}: On\n{0}: Off');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/update', 'Successfully updated the channel functions in: {0}.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/update/all', 'Successfully updated the information of all channels.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'function', '{0}: are on.\n{0}: are off.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel', '3Commands: add | remove | info | update | language');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel/add', 'The name is already exists in the channel list.\nAdded channel: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel/remove', 'The master channel cannot delete!\nNo such channel!\nDeleted channel: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel/update', 'The channel informations are updated.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel/info', '3Active: {0}\n3Active: Nothing information.\n3Inactive: {0}\n3Inactive: Nothing information.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'channel/language', 'Successfully changed the channel language to: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'plugin/load', '2[Load]: All plugins 3done.\n2[Load]: All plugins 5failed.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'plugin/unload', '2[Unload]: All plugins 3done.\n2[Unload]: All plugins 5failed.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'plugin', '{0}: 3loaded.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'quit', 'Bye :(\n{0} shutted down me with command.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'svn/info', '3{0} Channel: 2{1}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'svn/list', '2List:3{0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'svn/channel/add', 'Successfully added channel.\nNo such name!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'svn/channel/remove', 'Successfully deleted channel!\nNo such name!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'hg/info', '3{0} Channel: 2{1}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'hg/list', '2List:3{0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'hg/channel/add', 'Sccessfully added channel!\nNo such name!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'hg/channel/remove', 'Successfully deleted channel!.\nNo such name!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'git/info', '3{0} 7{1} Channel: 2{2}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'git/list', '2List:3{0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'git/channel/add', 'Successfully added channel!\nNo such name!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'git/channel/remove', 'Successfully deleted channel!\nNo such name!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'compiler/memory', 'Currently too many memory is allocated so this function is disabled!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'compiler/warning', 'This code contains dangerous parts. Compiling stopped!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'compiler', 'The main function is not specified! (Schumix)\nThe main class is not specified!\nThe output text is too long so did not written out!\nSuccessfully compiled the code, only nothing output text!\nLeft: {0} line!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'compiler/code', 'Errors: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'compiler/kill', 'Killed thread!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'handlekick', '{0} kicked that user: {1} reason: {2}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'ban', 'Date format error!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction', '3Commands: hlmessage\n3Commands: kick | mode | hlmessage');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/hlmessage/info', '3Exciting nicks: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/hlmessage/update', 'Successfully updated the database.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/hlmessage/function', '{0}: are on\n{0}: are off.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/hlmessage', 'The message has been modified!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/kick/add', 'The name is already on the kick list!\nThe name has been added to the kick list: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/kick/remove', 'No such name!\nThe name has been deleted from the kick list: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/kick/info', 'On the kick list: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/kick/channel/add', 'The name is already on the kick list!A név már szerepel a kick listán!\nKick listához a név hozzáadva: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/kick/channel/remove', 'No such name!\nThe name has been deleted from the kick list: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/kick/channel/info', 'On the kick list: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/mode/add', 'The name is already on the mode list!\nThe name added to the mode list: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/mode/remove', 'No such name!\The name has been deleted from the mode list: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/mode/info', 'On the mode list: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/mode/channel/add', 'The name is already on the mode list!\nThe name added to the mode list: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/mode/channel/remove', 'No such name!\nThe name has been deleted from the mode list: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'autofunction/mode/channel/info', 'On the mode list: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'message/channel', 'Successfully recorded the message.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'message', 'Successfully recorded the message.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'notes/info', 'Recorded message (quotes) codes: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'notes/user/access', 'Access granted.\nAccess denied!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'notes/user/newpassword', 'Successfully changed the password to: {0}\nThe password does not match! Modification is denied!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'notes/user/register', 'You are already on the user list!\nSuccessfully added you to the user list!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'notes/user/remove', 'The password for confirmation is not specified!The password for delete confirmation is not specified!\nYou are not in user list!\nYour password does not match which is stored in database!\nThe password does not match which is stored in database!\nThe deleting is aborted!\nSuccessfully deleted your account.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'notes/code/remove', 'This code is not in the list!\nSuccessfully deleted the note.');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'notes/code', 'Note: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'notes', "No text found for note!\nNote's codename is alreadyin the database!\nNote's code: {0}");
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'notes/warning', "You are not in the note's user list!\nIf you want to add yourself, you have to do the following command. (Must be a private message, do not gather info someone else.)\n{0}jegyzet user register <password>\nUpdating user data (If do not accept your datas) Do: {0}jegyzet user hozzaferes <password>");
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'message2', 'Left the note for you: {0}');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'reload', '{0} reloaded.\nThe program does not contains that part!');
+INSERT INTO "localized_command" (`Language`, `Command`, `Text`) VALUES ('enUS', 'weather', '12Local weather: {0}, minimum temperature: {1}°, maximum temperature {2}°, wind speed: {3}\n5{0} 12weather: {1}, minimum temperature {2}°, maximum temperature: {3}°, wind speed. {4}\nNo such city in the list!');
 
 -- ----------------------------
 -- Table structure for "localized_command_help"
@@ -273,121 +511,124 @@ Text TEXT
 -- ----------------------------
 -- Records of localized_command_help
 -- ----------------------------
-INSERT INTO "localized_command_help" VALUES (1, 'huHU', 'xbot', 9, 'Felhasznlok szmra hasznlhat parancslista.');
-INSERT INTO "localized_command_help" VALUES (2, 'huHU', 'info', 9, 'Kis lers a botrl.');
-INSERT INTO "localized_command_help" VALUES (3, 'huHU', 'whois', 9, 'A parancs segtsgvel megtudhatjuk hogy egy nick milyen channelon van fent.\nHasznlata: {0}whois <nick>');
-INSERT INTO "localized_command_help" VALUES (4, 'huHU', 'roll', 9, 'Cspp szorakozs a wowbl, mr ha valaki felismeri :P');
-INSERT INTO "localized_command_help" VALUES (5, 'huHU', 'date', 9, 'Az aktulis dtumot rja ki s a hozz tartoz nvnapot.');
-INSERT INTO "localized_command_help" VALUES (6, 'huHU', 'time', 9, 'Az aktulis idt rja ki.');
-INSERT INTO "localized_command_help" VALUES (7, 'huHU', 'google', 9, 'Ha szksged lenne valamire a google-bl nem kell hozz weboldal csak ez a parancs.\nHasznlata: {0}google <ide jn a keresett szveg>');
-INSERT INTO "localized_command_help" VALUES (8, 'huHU', 'translate', 9, 'Ha rgtn kne fordtani msik nyelvre vagy -rl valamit, akkor megteheted ezzel a parancsal.\nHasznlata: {0}translate <kiindulsi nyelv|cl nyelv> <szveg>\nPldul: {0}translate hu|en Szp szveg.');
-INSERT INTO "localized_command_help" VALUES (9, 'huHU', 'irc', 9, 'Nhny parancs hasznlata az IRC-n.\nHasznlata: {0}irc <parancs neve>');
-INSERT INTO "localized_command_help" VALUES (10, 'huHU', 'calc', 9, 'Tbb funkcis szmolgp.\nHasznlata: {0}calc <szm>');
-INSERT INTO "localized_command_help" VALUES (11, 'huHU', 'warning', 9, 'Figyelmeztet zenet kldse, hogy keresik ezen a csatornn vagy egy tetszleges zenet kldse.\nHasznlata: {0}warning <ide jn a szemly> <ha nem felhvt kldenl hanem sajt zenetet>');
-INSERT INTO "localized_command_help" VALUES (12, 'huHU', 'sha1', 9, 'Sha1 kdolss talakit parancs.\nHasznlata: {0}sha1 <talaktand szveg>');
-INSERT INTO "localized_command_help" VALUES (13, 'huHU', 'md5', 9, 'Md5 kdolss talakt parancs.\nHasznlata: {0}md5 <talaktand szveg>');
-INSERT INTO "localized_command_help" VALUES (14, 'huHU', 'prime', 9, 'Meglaptja hogy a szm prmszm-e. Csak egsz szmmal tud szmolni!\nHasznlata: {0}prime <szm>');
-INSERT INTO "localized_command_help" VALUES (15, 'huHU', 'admin', 0, 'Kirja az opertorok vagy adminisztrtorok ltal hasznlhat parancsokat.\nAdmin parancsai: info | list | add | remove | rank | access | newpassword');
-INSERT INTO "localized_command_help" VALUES (16, 'huHU', 'admin/add', 0, '"j admin hozzadsa.\nHasznlata: {0}admin add <admin neve>');
-INSERT INTO "localized_command_help" VALUES (17, 'huHU', 'admin/remove', 0, 'Admin eltvoltsa.\nHasznlata: {0}admin remove <admin neve>');
-INSERT INTO "localized_command_help" VALUES (18, 'huHU', 'admin/rank', 0, 'Admin rangjnak megvltoztatsa.\nHasznlata: {0}admin rank <admin neve> <j rang pl halfoperator: 0, operator: 1, administrator: 2>');
-INSERT INTO "localized_command_help" VALUES (19, 'huHU', 'admin/info', 0, 'Kiirja ppen milyen rangod van.');
-INSERT INTO "localized_command_help" VALUES (20, 'huHU', 'admin/list', 0, 'Kiirja az sszes admin nevt aki az adatbzisban szerepel.');
-INSERT INTO "localized_command_help" VALUES (21, 'huHU', 'admin/access', 0, 'Az admin parancsok hasznlathoz szksges jelsz ellenrz s vhost aktivl.\nHasznlata: {0}admin access <jelsz>');
-INSERT INTO "localized_command_help" VALUES (22, 'huHU', 'admin/newpassword', 0, 'Az admin jelszavnak cserje ha j kne a rgi helyett.\nHasznlata: {0}admin newpassword <rgi jelsz> <j jelsz>');
-INSERT INTO "localized_command_help" VALUES (23, 'huHU', 'colors', 0, 'Adott sklj szinek kirsa amit lehet hasznlni IRC-n.');
-INSERT INTO "localized_command_help" VALUES (24, 'huHU', 'nick', 0, 'Bot nick nevnek cserje.\nHasznlata: {0}nick <nv>');
-INSERT INTO "localized_command_help" VALUES (25, 'huHU', 'join', 0, 'Kapcsolods megadot csatornra.\nHasznlata:\nJelsz nlkli csatorna: {0}join <csatorna>\nJelszval elltott csatorna: {0}join <csatorna> <jelsz>');
-INSERT INTO "localized_command_help" VALUES (26, 'huHU', 'left', 0, 'Lelps megadot csatonrl.\nHasznlata: {0}left <csatona>');
-INSERT INTO "localized_command_help" VALUES (27, 'huHU', 'channel', 1, 'Channel parancsai: add | remove | info | update | language');
-INSERT INTO "localized_command_help" VALUES (28, 'huHU', 'channel/add', 1, 'j channel hozzadsa.\nHasznlata: {0}channel add <channel> <ha van jelsz akkor az>');
-INSERT INTO "localized_command_help" VALUES (29, 'huHU', 'channel/remove', 1, 'Nem hasznlatos channel eltvoltsa.\nHasznlata: {0}channel remove <channel>');
-INSERT INTO "localized_command_help" VALUES (30, 'huHU', 'channel/info', 1, 'sszes channel kiirsa ami az adatbzisban van s a hozzjuk tartoz informciok.');
-INSERT INTO "localized_command_help" VALUES (31, 'huHU', 'channel/update', 1, 'Channelekhez tartoz sszes informci frisstse, alaprtelmezsre lltsa.');
-INSERT INTO "localized_command_help" VALUES (32, 'huHU', 'channel/language', 1, 'Frissti a csatorna nyelvezett.\nHasznlata: {0}channel language <csatorna> <nyelvezet>');
-INSERT INTO "localized_command_help" VALUES (33, 'huHU', 'function', 1, 'Funkcik vezrlsre szolgl parancs.\nFunkci parancsai: channel | all | update | info\nHasznlata ahol tartzkodsz:\nChannel funkci kezelse: {0}function <on vagy off> <funkci nv>\nChannel funkcik kezelse: {0}function <on vagy off> <funkci nv1> <funkci nv2> ... stb');
-INSERT INTO "localized_command_help" VALUES (34, 'huHU', 'function/channel', 1, '"Megadott channelen llithatk ezzel a parancsal a funkcik.\nFunkci channel parancsai: info\nHasznlata:\nChannel funkci kezelse: {0}function channel <on vagy off> <funkci nv>\nChannel funkcik kezelse: {0}function channel <on vagy off> <funkci nv1> <funkci nv2> ... stb');
-INSERT INTO "localized_command_help" VALUES (35, 'huHU', 'function/channel/info', 1, 'Kirja a funkcik llapott.');
-INSERT INTO "localized_command_help" VALUES (36, 'huHU', 'function/all', 1, 'Globlis funkcik kezelse.\nFunkci all parancsai: info\nEgyttes kezels: {0}function all <on vagy off> <funkci nv>\nEgyttes funkcik kezelse: {0}function all <on vagy off> <funkci nv1> <funkci nv2> ... stb');
-INSERT INTO "localized_command_help" VALUES (37, 'huHU', 'function/all/info', 1, 'Kirja a funkcik llapott.');
-INSERT INTO "localized_command_help" VALUES (38, 'huHU', 'function/update', 1, 'Frissti a funkcikat vagy alaprtelmezsre lltja.\nFunkci update parancsai: all\nHasznlata:\nMs channel: {0}function update <channel neve>\nAhol tartozkodsz channel: {0}function update');
-INSERT INTO "localized_command_help" VALUES (39, 'huHU', 'function/update/all', 1, 'Frissti az sszes funkcit vagy alaprtelmezsre lltja.\Hasznlata: {0}function update all');
-INSERT INTO "localized_command_help" VALUES (40, 'huHU', 'function/info', 1, 'Kirja a funkcik llapott.');
-INSERT INTO "localized_command_help" VALUES (41, 'huHU', 'kick', 1, 'Kirgja a nick-et a megadott channelrl.\nHasznlata:\nCsak kirgs: {0}kick <channel> <nv>\nKirgs okkal: {0}kick <channel> <nv> <oka>');
-INSERT INTO "localized_command_help" VALUES (42, 'huHU', 'mode', 1, 'Megvltoztatja a nick rangjt megadott channelen.\nHasznlata: {0}mode <rang> <nv vagy nevek>');
-INSERT INTO "localized_command_help" VALUES (43, 'huHU', 'plugin', 2, 'Kirja milyen pluginok vannak betltve.\nPlugin parancsok: load | unload');
-INSERT INTO "localized_command_help" VALUES (44, 'huHU', 'plugin/load', 2, 'Betlt minden plugint.');
-INSERT INTO "localized_command_help" VALUES (45, 'huHU', 'plugin/unload', 2, 'Eltvolt minden plugint.');
-INSERT INTO "localized_command_help" VALUES (46, 'huHU', 'quit', 2, 'Bot lelltsra hasznlhat parancs.');
-INSERT INTO "localized_command_help" VALUES (47, 'huHU', 'schumix2', 9, 'Parancsok: nick | sys\nParancsok: ghost | nick | sys\nParancsok: ghost | nick | sys | clean\nParancsok: sys');
-INSERT INTO "localized_command_help" VALUES (48, 'huHU', 'schumix2/sys', 9, 'Kirja a program informciit.');
-INSERT INTO "localized_command_help" VALUES (49, 'huHU', 'schumix2/ghost', 1, 'Kilpteti a f nick-et ha regisztrlva van.\nHasznlata: {0} ghost');
-INSERT INTO "localized_command_help" VALUES (50, 'huHU', 'schumix2/nick', 0, 'Bot nick nevnek cserje.\n"Hasznlata: {0} nick <nv>');
-INSERT INTO "localized_command_help" VALUES (51, 'huHU', 'schumix2/nick/identify', 0, 'Aktivlja a f nick jelszavt.\nHasznlata: {0} nick identify');
-INSERT INTO "localized_command_help" VALUES (52, 'huHU', 'schumix2/clean', 2, 'Felszabadtja a lefoglalt memrit.\nHasznlata: {0} clean');
-INSERT INTO "localized_command_help" VALUES (53, 'huHU', 'svn', 1, 'Svn rss-ek kezelse.\nSvn parancsai: channel | info | list | start | stop | reload');
-INSERT INTO "localized_command_help" VALUES (54, 'huHU', 'svn/channel', 1, 'Rss csatornkra val kiirsnak kezelse.\nChannel parancsai: add | remove');
-INSERT INTO "localized_command_help" VALUES (55, 'huHU', 'svn/channel/add', 1, 'j csatorna hozzadsa az rss-hez.\nHasznlata: {0}svn channel add <rss neve> <csatorna>');
-INSERT INTO "localized_command_help" VALUES (56, 'huHU', 'svn/channel/remove', 1, 'Nem hasznlatos csatorna eltvoltsa az rss-bl.\nHasznlata: {0}svn channel remove <rss neve> <csatorna>');
-INSERT INTO "localized_command_help" VALUES (57, 'huHU', 'svn/info', 1, 'Kiirja az rss-ek llapott.');
-INSERT INTO "localized_command_help" VALUES (58, 'huHU', 'svn/list', 1, 'Vlaszthat rss-ek listja.');
-INSERT INTO "localized_command_help" VALUES (59, 'huHU', 'svn/start', 1, 'j rss betltse.\nHasznlata: {0}svn start <rss neve>');
-INSERT INTO "localized_command_help" VALUES (60, 'huHU', 'svn/stop', 1, 'Rss lelltsa.\nHasznlata: {0}svn stop <rss neve>');
-INSERT INTO "localized_command_help" VALUES (61, 'huHU', 'svn/reload', 1, 'Megadott rss jratltse.\nSvn reload parancsai: all');
-INSERT INTO "localized_command_help" VALUES (62, 'huHU', 'svn/reload/all', 1, 'Minden rss jratltse.\nHasznlata: {0}svn reload <rss neve>');
-INSERT INTO "localized_command_help" VALUES (63, 'huHU', 'hg', 1, 'Hg rss-ek kezelse.\nHg parancsai: channel | info | list | start | stop | reload');
-INSERT INTO "localized_command_help" VALUES (64, 'huHU', 'hg/channel', 1, 'Rss csatornkra val kiirsnak kezelse.\nChannel parancsai: add | remove');
-INSERT INTO "localized_command_help" VALUES (65, 'huHU', 'hg/channel/add', 1, 'j csatorna hozzadsa az rss-hez.\nHasznlata: {0}hg channel add <rss neve> <csatorna>');
-INSERT INTO "localized_command_help" VALUES (66, 'huHU', 'hg/channel/remove', 1, 'Nem hasznlatos csatorna eltvoltsa az rss-bl.\nHasznlata: {0}hg channel remove <rss neve> <csatorna>');
-INSERT INTO "localized_command_help" VALUES (67, 'huHU', 'hg/info', 1, 'Kiirja az rss-ek llapott.');
-INSERT INTO "localized_command_help" VALUES (68, 'huHU', 'hg/list', 1, 'Vlaszthat rss-ek listja.');
-INSERT INTO "localized_command_help" VALUES (69, 'huHU', 'hg/start', 1, 'j rss betltse.\nHasznlata: {0}hg start <rss neve>');
-INSERT INTO "localized_command_help" VALUES (70, 'huHU', 'hg/stop', 1, 'Rss lelltsa.\nHasznlata: {0}hg stop <rss neve>');
-INSERT INTO "localized_command_help" VALUES (71, 'huHU', 'hg/reload', 1, 'Megadott rss jratltse.\nHg reload parancsai: all');
-INSERT INTO "localized_command_help" VALUES (72, 'huHU', 'hg/reload/all', 1, 'Minden rss jratltse.\nHasznlata: {0}hg reload <rss neve>');
-INSERT INTO "localized_command_help" VALUES (73, 'huHU', 'git', 1, 'Git rss-ek kezelse.\nGit parancsai: channel | info | list | start | stop | reload');
-INSERT INTO "localized_command_help" VALUES (74, 'huHU', 'git/channel', 1, 'Rss csatornkra val kiirsnak kezelse.\nChannel parancsai: add | remove');
-INSERT INTO "localized_command_help" VALUES (75, 'huHU', 'git/channel/add', 1, 'j csatorna hozzadsa az rss-hez.\nHasznlata: {0}git channel add <rss neve> <tipus> <csatorna>');
-INSERT INTO "localized_command_help" VALUES (76, 'huHU', 'git/channel/remove', 1, 'Nem hasznlatos csatorna eltvoltsa az rss-bl.\nHasznlata: {0}git channel remove <rss neve> <tipus> <csatorna>');
-INSERT INTO "localized_command_help" VALUES (77, 'huHU', 'git/info', 1, 'Kiirja az rss-ek llapott.');
-INSERT INTO "localized_command_help" VALUES (78, 'huHU', 'git/list', 1, 'Vlaszthat rss-ek listja.');
-INSERT INTO "localized_command_help" VALUES (79, 'huHU', 'git/start', 1, 'j rss betltse.\nHasznlata: {0}git start <rss neve> <tipus>');
-INSERT INTO "localized_command_help" VALUES (80, 'huHU', 'git/stop', 1, 'Rss lelltsa.\nHasznlata: {0}git stop <rss neve> <tipus>');
-INSERT INTO "localized_command_help" VALUES (81, 'huHU', 'git/reload', 1, 'Megadott rss jratltse.\nGit reload parancsai: all');
-INSERT INTO "localized_command_help" VALUES (82, 'huHU', 'git/reload/all', 1, 'Minden rss jratltse.\nHasznlata: {0}git reload <rss neve> <tipus>');
-INSERT INTO "localized_command_help" VALUES (83, 'huHU', 'ban', 1, 'Tiltst rak a megadott nvre vagy vhost-ra.\nHasznlata:\nra s perc: {0}ban <nv> <:pp> <oka>\nDtum, ra s perc: {0}ban <nv> <.hh.nn> <:pp> <oka>');
-INSERT INTO "localized_command_help" VALUES (84, 'huHU', 'unban', 1, 'Feloldja a tiltst a nvrl vagy vhost-rl ha szerepel a bot rendszerben.\nHasznlata: {0}unban <nv vagy vhost>');
-INSERT INTO "localized_command_help" VALUES (85, 'huHU', 'notes', 9, 'Klnbz adatokat jegyezhetnk fel a segtsgvel.\nJegyzet parancsai: user | code\nJegyzet bekldse: {0}notes <egy kd amit megjegyznk pl: schumix> <amit feljegyeznl>');
-INSERT INTO "localized_command_help" VALUES (86, 'huHU', 'notes/user', 9, 'Jegyzet felhasznl kezelse.\nUser parancsai: register | remove | access | newpassword');
-INSERT INTO "localized_command_help" VALUES (87, 'huHU', 'notes/user/register', 9, 'j felhasznl hozzadsa.\nHasznlata: {0}notes user register <jelsz>');
-INSERT INTO "localized_command_help" VALUES (88, 'huHU', 'notes/user/remove', 9, 'Felhasznl eltvoltsa.\nHasznlata: {0}notes user remove <jelsz>');
-INSERT INTO "localized_command_help" VALUES (89, 'huHU', 'notes/user/access', 9, 'Az jegyzet parancsok hasznlathoz szksges jelsz ellenrz s vhost aktivl.\nHasznlata: {0}notes user access <jelsz>');
-INSERT INTO "localized_command_help" VALUES (90, 'huHU', 'notes/user/newpassword', 9, 'Felhasznl jelszavnak cserje ha j kne a rgi helyet.\nHasznlata: {0}notes user newpassword <rgi jelsz> <j jelsz>');
-INSERT INTO "localized_command_help" VALUES (91, 'huHU', 'notes/code', 9, 'Jegyzet kiolvasshoz szksges kd.\nHasznlata: {0}notes code <jegyzet kdja>\nKd parancsai: remove');
-INSERT INTO "localized_command_help" VALUES (92, 'huHU', 'notes/code/remove', 9, 'Trli a jegyzetet kd alapjn.\nHasznlata: {0}notes code remove <jegyzet kdja>');
-INSERT INTO "localized_command_help" VALUES (93, 'huHU', 'message', 9, 'Ezzel a paranccsal zenetet lehet hagyni brkinek a megadott csatornn.\nHasznlata: {0}message <nv> <zenet>\nzenet parancsai: channel');
-INSERT INTO "localized_command_help" VALUES (94, 'huHU', 'message/channel', 9, 'Ezzel a paranccsal zenetet lehet hagyni brkinek a kivlasztott csatornn.\nHasznlata: {0}message channel <csatorna> <nv> <zenet>');
-INSERT INTO "localized_command_help" VALUES (95, 'huHU', 'autofunction', 0, 'Autmatikusan mkd kdrszek kezelse.\nAutofunkcio parancsai: hlmessage\nAutmatikusan mkd kdrszek kezelse.\nAutofunkcio parancsai: kick | mode | hlmessage');
-INSERT INTO "localized_command_help" VALUES (96, 'huHU', 'autofunction/hlmessage', 0, 'Autmatikusan hl-t kap nick-ek kezelse.\nHl zenet parancsai: function | update | info\nHasznlata: {0}autofunction hlmessage <zenet>');
-INSERT INTO "localized_command_help" VALUES (97, 'huHU', 'autofunction/hlmessage/function', 0, 'Ezzel a parancsal llithat a hl llapota.\nHasznlata: {0}autofunction hlmessage function <llapot>');
-INSERT INTO "localized_command_help" VALUES (98, 'huHU', 'autofunction/hlmessage/update', 0, 'Frissiti az adatbzisban szerepl hl listt!');
-INSERT INTO "localized_command_help" VALUES (99, 'huHU', 'autofunction/hlmessage/info', 0, 'Kiirja a hl-ek llapott.');
-INSERT INTO "localized_command_help" VALUES (100, 'huHU', 'autofunction/kick', 1, 'Autmatikusan kirgsra kerl nick-ek kezelse.\nKick parancsai: add | remove | info | channel');
-INSERT INTO "localized_command_help" VALUES (101, 'huHU', 'autofunction/kick/add', 1, 'Kirgand nevnek hozzadsa ahol tartozkodsz.\nHasznlata: {0}autofunction kick add <nv> <oka>');
-INSERT INTO "localized_command_help" VALUES (102, 'huHU', 'autofunction/kick/remove', 1, 'Kirgand nevnek eltvoltsa ahol tartozkodsz.\nHasznlata: {0}autofunction kick remove <nv>');
-INSERT INTO "localized_command_help" VALUES (103, 'huHU', 'autofunction/kick/info', 1, 'Kiirja a kirgandok llapott.');
-INSERT INTO "localized_command_help" VALUES (104, 'huHU', 'autofunction/kick/channel', 1, 'Autmatikusan kirgsra kerl nick-ek kezelse megadot channelen.\nKick channel parancsai: add | remove | info');
-INSERT INTO "localized_command_help" VALUES (105, 'huHU', 'autofunction/kick/channel/add', 1, 'Kirgand nevnek hozzadsa megadott channelen.\nHasznlata: {0}autofunction kick channel add <nv> <csatorna> <oka>');
-INSERT INTO "localized_command_help" VALUES (106, 'huHU', 'autofunction/kick/channel/remove', 1, 'Kirgand nevnek eltvoltsa megadott channelen.\nHasznlata: {0}autofunction kick channel remove <nv>');
-INSERT INTO "localized_command_help" VALUES (107, 'huHU', 'autofunction/kick/channel/info', 1, 'Kiirja a kirgandok llapott.');
-INSERT INTO "localized_command_help" VALUES (108, 'huHU', 'autofunction/mode', 1, 'Autmatikusan rangot kap nick-ek kezelse.\nMode parancsai: add | remove | info | channel');
-INSERT INTO "localized_command_help" VALUES (109, 'huHU', 'autofunction/mode/add', 1, 'Rangot kap nevnek hozzadsa ahol tartozkodsz.\nHasznlata: {0}autofunction mode add <nv> <rang>');
-INSERT INTO "localized_command_help" VALUES (110, 'huHU', 'autofunction/mode/remove', 1, 'Rangot kap nevnek eltvoltsa ahol tartozkodsz.\nHasznlata: {0}autofunction mode remove <nv>');
-INSERT INTO "localized_command_help" VALUES (111, 'huHU', 'autofunction/mode/info', 1, 'Kiirja a rangot kapk llapott.');
-INSERT INTO "localized_command_help" VALUES (112, 'huHU', 'autofunction/mode/channel', 1, 'Autmatikusan rangot kap nick-ek kezelse megadot channelen.\nMode channel parancsai: add | remove | info');
-INSERT INTO "localized_command_help" VALUES (113, 'huHU', 'autofunction/mode/channel/add', 1, 'Rangot kap nevnek hozzadsa megadott channelen.\nsSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Hasznlata: {0}autofunction mode channel add <nv> <csatorna> <rang>');
-INSERT INTO "localized_command_help" VALUES (114, 'huHU', 'autofunction/mode/channel/remove', 1, 'Rangot kap nevnek eltvoltsa megadott channelen.\nHasznlata: {0}autofunction mode channel remove <nv>');
-INSERT INTO "localized_command_help" VALUES (115, 'huHU', 'autofunction/mode/channel/info', 1, 'Kiirja a rangot kapk llapott.');
+-- huHU
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'xbot', '9', 'Felhasználók számára használható parancslista.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'info', '9', 'Kis leírás a botról.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'whois', '9', 'A parancs segítségével megtudhatjuk hogy egy nick milyen channelon van fent.\nHasználata: {0}whois <nick>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'roll', '9', 'Csöpp szorakozás a wowból, már ha valaki felismeri :P');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'date', '9', 'Az aktuális dátumot írja ki és a hozzá tartozó névnapot.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'time', '9', 'Az aktuális idõt írja ki.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'google', '9', 'Ha szükséged lenne valamire a google-bõl nem kell hozzá weboldal csak ez a parancs.\nHasználata: {0}google <ide jön a keresett szöveg>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'translate', '9', 'Ha rögtön kéne fordítani másik nyelvre vagy -rõl valamit, akkor megteheted ezzel a parancsal.\nHasználata: {0}translate <kiindulási nyelv|cél nyelv> <szöveg>\nPéldául: {0}translate hu|en Szép szöveg.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'irc', '9', 'Néhány parancs használata az IRC-n.\nHasználata: {0}irc <parancs neve>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'calc', '9', 'Több funkciós számológép.\nHasználata: {0}calc <szám>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'warning', '9', 'Figyelmeztetõ üzenet küldése, hogy keresik ezen a csatornán vagy egy tetszõleges üzenet küldése.\nHasználata: {0}warning <ide jön a személy> <ha nem felhívát küldenél hanem saját üzenetet>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'sha1', '9', 'Sha1 kódolássá átalakító parancs.\nHasználata: {0}sha1 <átalakítandó szöveg>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'md5', '9', 'Md5 kódolássá átalakító parancs.\nHasználata: {0}md5 <átalakítandó szöveg>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'prime', '9', 'Megálapítja hogy a szám prímszám-e. Csak egész számmal tud számolni!\nHasználata: {0}prime <szám>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'admin', '0', 'Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.\nAdmin parancsai: info | list | add | remove | rank | access | newpassword');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'admin/add', '0', 'Új admin hozzáadása.\nHasználata: {0}admin add <admin neve>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'admin/remove', '0', 'Admin eltávolítása.\nHasználata: {0}admin remove <admin neve>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'admin/rank', '0', 'Admin rangjának megváltoztatása.\nHasználata: {0}admin rank <admin neve> <új rang pl halfoperator: 0, operator: 1, administrator: 2>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'admin/info', '0', 'Kiirja éppen milyen rangod van.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'admin/list', '0', 'Kiirja az összes admin nevét aki az adatbázisban szerepel.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'admin/access', '0', 'Az admin parancsok használatához szükséges jelszó ellenörzõ és vhost aktiváló.\nHasználata: {0}admin access <jelszó>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'admin/newpassword', '0', 'Az admin jelszavának cseréje ha új kéne a régi helyett.\nHasználata: {0}admin newpassword <régi jelszó> <új jelszó>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'colors', '0', 'Adott skálájú színek kiírása amit lehet használni IRC-n.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'nick', '0', 'Bot nick nevének cseréje.\nHasználata: {0}nick <név>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'join', '0', 'Kapcsolódás megadot csatornára.\nHasználata:\nJelszó nélküli csatorna: {0}join <csatorna>\nJelszóval ellátott csatorna: {0}join <csatorna> <jelszó>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'left', '0', 'Lelépés megadot csatonáról.\nHasználata: {0}left <csatona>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'channel', '1', 'Channel parancsai: add | remove | info | update | language');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'channel/add', '1', 'Új channel hozzáadása.\nHasználata: {0}channel add <channel> <ha van jelszó akkor az>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'channel/remove', '1', 'Nem használatos channel eltávolítása.\nHasználata: {0}channel remove <channel>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'channel/info', '1', 'Összes channel kiírása ami az adatbázisban van és a hozzájuk tartozó informáciok.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'channel/update', '1', 'Channelekhez tartozó összes információ frissítése, alapértelmezésre állítása.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'channel/language', '1', 'Frissíti a csatorna nyelvezetét.\nHasználata: {0}channel language <csatorna> <nyelvezet>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'function', '1', 'Funkciók vezérlésére szolgáló parancs.\nFunkció parancsai: channel | all | update | info\nHasználata ahol tartózkodsz:\nChannel funkció kezelése: {0}function <on vagy off> <funkció név>\nChannel funkciók kezelése: {0}function <on vagy off> <funkció név1> <funkció név2> ... stb');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'function/channel', '1', 'Megadott channelen állithatók ezzel a parancsal a funkciók.\nFunkció channel parancsai: info\nHasználata:\nChannel funkció kezelése: {0}function channel <on vagy off> <funkció név>\nChannel funkciók kezelése: {0}function channel <on vagy off> <funkció név1> <funkció név2> ... stb');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'function/channel/info', '1', 'Kiírja a funkciók állapotát.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'function/all', '1', 'Globális funkciók kezelése.\nFunkció all parancsai: info\nEgyüttes kezelés: {0}function all <on vagy off> <funkció név>\nEgyüttes funkciók kezelése: {0}function all <on vagy off> <funkció név1> <funkció név2> ... stb');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'function/all/info', '1', 'Kiírja a funkciók állapotát.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'function/update', '1', 'Frissíti a funkciókat vagy alapértelmezésre állítja.\nFunkció update parancsai: all\nHasználata:\nMás channel: {0}function update <channel neve>\nAhol tartózkodsz channel: {0}function update');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'function/update/all', '1', 'Frissíti az összes funkciót vagy alapértelmezésre állítja.\Használata: {0}function update all');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'function/info', '1', 'Kiírja a funkciók állapotát.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'kick', '1', 'Kirúgja a nick-et a megadott channelrõl.\nHasználata:\nCsak kirúgás: {0}kick <channel> <név>\nKirúgás okkal: {0}kick <channel> <név> <oka>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mode', '1', 'Megváltoztatja a nick rangját megadott channelen.\nHasználata: {0}mode <rang> <név vagy nevek>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'plugin', '2', 'Kiírja milyen pluginok vannak betöltve.\nPlugin parancsok: load | unload');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'plugin/load', '2', 'Betölt minden plugint.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'plugin/unload', '2', 'Eltávolít minden plugint.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'quit', '2', 'Bot leállítására használható parancs.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2', '9', 'Parancsok: nick | sys\nParancsok: ghost | nick | sys\nParancsok: ghost | nick | sys | clean\nParancsok: sys');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2/sys', '9', 'Kiírja a program információit.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2/ghost', '1', 'Kilépteti a fõ nick-et ha regisztrálva van.\nHasználata: {0} ghost');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2/nick', '0', 'Bot nick nevének cseréje.\n"Használata: {0} nick <név>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2/nick/identify', '0', 'Aktiválja a fõ nick jelszavát.\nHasználata: {0} nick identify');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2/clean', '2', 'Felszabadítja a lefoglalt memóriát.\nHasználata: {0} clean');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'svn', '1', 'Svn rss-ek kezelése.\nSvn parancsai: channel | info | list | start | stop | reload');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'svn/channel', '1', 'Rss csatornákra való kiirásának kezelése.\nChannel parancsai: add | remove');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'svn/channel/add', '1', 'Új csatorna hozzáadása az rss-hez.\nHasználata: {0}svn channel add <rss neve> <csatorna>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'svn/channel/remove', '1', 'Nem használatos csatorna eltávolítása az rss-bõl.\nHasználata: {0}svn channel remove <rss neve> <csatorna>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'svn/info', '1', 'Kiírja az rss-ek állapotát.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'svn/list', '1', 'Választható rss-ek listája.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'svn/start', '1', 'Új rss betöltése.\nHasználata: {0}svn start <rss neve>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'svn/stop', '1', 'Rss leállítása.\nHasználata: {0}svn stop <rss neve>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'svn/reload', '1', 'Megadott rss újratöltése.\nSvn reload parancsai: all');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'svn/reload/all', '1', 'Minden rss újratöltése.\nHasználata: {0}svn reload <rss neve>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'hg', '1', 'Hg rss-ek kezelése.\nHg parancsai: channel | info | list | start | stop | reload');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'hg/channel', '1', 'Rss csatornákra való kiírásának kezelése.\nChannel parancsai: add | remove');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'hg/channel/add', '1', 'Új csatorna hozzáadása az rss-hez.\nHasználata: {0}hg channel add <rss neve> <csatorna>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'hg/channel/remove', '1', 'Nem használatos csatorna eltávolítása az rss-bõl.\nHasználata: {0}hg channel remove <rss neve> <csatorna>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'hg/info', '1', 'Kiirja az rss-ek állapotát.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'hg/list', '1', 'Választható rss-ek listája.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'hg/start', '1', 'Új rss betöltése.\nHasználata: {0}hg start <rss neve>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'hg/stop', '1', 'Rss leállítása.\nHasználata: {0}hg stop <rss neve>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'hg/reload', '1', 'Megadott rss újratöltése.\nHg reload parancsai: all');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'hg/reload/all', '1', 'Minden rss újratöltése.\nHasználata: {0}hg reload <rss neve>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'git', '1', 'Git rss-ek kezelése.\nGit parancsai: channel | info | list | start | stop | reload');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'git/channel', '1', 'Rss csatornákra való kiirásának kezelése.\nChannel parancsai: add | remove');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'git/channel/add', '1', 'Új csatorna hozzáadása az rss-hez.\nHasználata: {0}git channel add <rss neve> <tipus> <csatorna>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'git/channel/remove', '1', 'Nem használatos csatorna eltávolítása az rss-bõl.\nHasználata: {0}git channel remove <rss neve> <tipus> <csatorna>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'git/info', '1', 'Kiirja az rss-ek állapotát.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'git/list', '1', 'Választható rss-ek listája.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'git/start', '1', 'Új rss betöltése.\nHasználata: {0}git start <rss neve> <tipus>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'git/stop', '1', 'Rss leállítása.\nHasználata: {0}git stop <rss neve> <tipus>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'git/reload', '1', 'Megadott rss újratöltése.\nGit reload parancsai: all');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'git/reload/all', '1', 'Minden rss újratöltése.\nHasználata: {0}git reload <rss neve> <tipus>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'ban', '1', 'Tiltást rak a megadott névre vagy vhost-ra.\nHasználata:\nÓra és perc: {0}ban <név> <óó:pp> <oka>\nDátum, Óra és perc: {0}ban <név> <éééé.hh.nn> <óó:pp> <oka>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'unban', '1', 'Feloldja a tiltást a névrõl vagy vhost-ról ha szerepel a bot rendszerében.\nHasználata: {0}unban <név vagy vhost>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'notes', '9', 'Különbözõ adatokat jegyezhetünk fel a segítségével.\nJegyzet parancsai: user | code\nJegyzet beküldése: {0}notes <egy kód amit megjegyzünk pl: schumix> <amit feljegyeznél>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'notes/user', '9', 'Jegyzet felhasználó kezelése.\nUser parancsai: register | remove | access | newpassword');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'notes/user/register', '9', 'Új felhasználó hozzáadása.\nHasználata: {0}notes user register <jelszó>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'notes/user/remove', '9', 'Felhasználó eltávolítása.\nHasználata: {0}notes user remove <jelszó>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'notes/user/access', '9', 'Az jegyzet parancsok használatához szükséges jelszó ellenörzõ és vhost aktiváló.\nHasználata: {0}notes user access <jelszó>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'notes/user/newpassword', '9', 'Felhasználó jelszavának cseréje ha új kéne a régi helyet.\nHasználata: {0}notes user newpassword <régi jelszó> <új jelszó>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'notes/code', '9', 'Jegyzet kiolvasásához szükséges kód.\nHasználata: {0}notes code <jegyzet kódja>\nKód parancsai: remove');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'notes/code/remove', '9', 'Törli a jegyzetet kód alapján.\nHasználata: {0}notes code remove <jegyzet kódja>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'message', '9', 'Ezzel a paranccsal üzenetet lehet hagyni bárkinek a megadott csatornán.\nHasználata: {0}message <név> <üzenet>\nÜzenet parancsai: channel');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'message/channel', '9', 'Ezzel a paranccsal üzenetet lehet hagyni bárkinek a kiválasztott csatornán.\nHasználata: {0}message channel <csatorna> <név> <üzenet>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction', '0', 'Autómatikusan müködõ kódrészek kezelése.\nAutofunkcio parancsai: hlmessage\nAutómatikusan müködõ kódrészek kezelése.\nAutofunkcio parancsai: kick | mode | hlmessage');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/hlmessage', '0', 'Autómatikusan hl-t kapó nick-ek kezelése.\nHl üzenet parancsai: function | update | info\nHasználata: {0}autofunction hlmessage <üzenet>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/hlmessage/function', '0', 'Ezzel a parancsal állítható a hl állapota.\nHasználata: {0}autofunction hlmessage function <állapot>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/hlmessage/update', '0', 'Frissíti az adatbázisban szereplõ hl listát!');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/hlmessage/info', '0', 'Kiírja a hl-ek állapotát.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/kick', '1', 'Automatikusan kirugásra kerülõ nick-ek kezelése.\nKick parancsai: add | remove | info | channel');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/kick/add', '1', 'Kirugandó nevének hozzáadása ahol tartózkodsz.\nHasználata: {0}autofunction kick add <név> <oka>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/kick/remove', '1', 'Kirugandó nevének eltávolítása ahol tartózkodsz.\nHasználata: {0}autofunction kick remove <név>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/kick/info', '1', 'Kiírja a kirugandok állapotát.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/kick/channel', '1', 'Automatikusan kirugásra kerülõ nick-ek kezelése megadot channelen.\nKick channel parancsai: add | remove | info');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/kick/channel/add', '1', 'Kirugandó nevének hozzáadása megadott channelen.\nHasználata: {0}autofunction kick channel add <név> <csatorna> <oka>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/kick/channel/remove', '1', 'Kirugandó nevének eltávolítása megadott channelen.\nHasználata: {0}autofunction kick channel remove <név>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/kick/channel/info', '1', 'Kiírja a kirugandok állapotát.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/mode', '1', 'Automatikusan rangot kapó nick-ek kezelése.\nMode parancsai: add | remove | info | channel');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/mode/add', '1', 'Rangot kapó nevének hozzáadása ahol tartózkodsz.\nHasználata: {0}autofunction mode add <név> <rang>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/mode/remove', '1', 'Rangot kapó nevének eltávolítása ahol tartózkodsz.\nHasználata: {0}autofunction mode remove <név>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/mode/info', '1', 'Kiírja a rangot kapók állapotát.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/mode/channel', '1', 'Automatikusan rangot kapó nick-ek kezelése megadot channelen.\nMode channel parancsai: add | remove | info');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/mode/channel/add', '1', 'Rangot kapó nevének hozzáadása megadott channelen.\nsSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Használata: {0}autofunction mode channel add <név> <csatorna> <rang>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/mode/channel/remove', '1', 'Rangot kapó nevének eltávolítása megadott channelen.\nHasználata: {0}autofunction mode channel remove <név>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'autofunction/mode/channel/info', '1', 'Kiírja a rangot kapók állapotát.');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'reload', '2', 'Újraindítja a megadott programrészt.\nHasználata: {0}reload <név>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'weather', '9', 'Megmondja az idõjárást a megadott városban.\nHasználata: {0}weather <város>');
 
 -- ----------------------------
 -- Table structure for "localized_warning"
@@ -403,45 +644,83 @@ Text TEXT
 -- ----------------------------
 -- Records of localized_warning
 -- ----------------------------
-INSERT INTO "localized_warning" VALUES (1, 'huHU', 'NoName', 'A nv nincs megadva!');
-INSERT INTO "localized_warning" VALUES (2, 'huHU', 'NoValue', 'Nincs paramter!');
-INSERT INTO "localized_warning" VALUES (3, 'huHU', 'No1Value', 'Nincs megadva egy paramter!');
-INSERT INTO "localized_warning" VALUES (4, 'huHU', 'FaultyQuery', 'Hibs lekrdezs!');
-INSERT INTO "localized_warning" VALUES (5, 'huHU', 'NoIrcCommandName', 'Nincs megadva a parancs neve!');
-INSERT INTO "localized_warning" VALUES (6, 'huHU', 'NoWhoisName', 'Nincs megadva a keresend szemly neve!');
-INSERT INTO "localized_warning" VALUES (7, 'huHU', 'NoGoogleText', 'Nincs megadva a keresend szveg!');
-INSERT INTO "localized_warning" VALUES (8, 'huHU', 'NoTranslateText', 'Nincs megadva a fordtand szveg!');
-INSERT INTO "localized_warning" VALUES (9, 'huHU', 'NoTranslateLanguage', 'Nincs megadva melyik nyelvrl melyikre fordtsa le!');
-INSERT INTO "localized_warning" VALUES (10, 'huHU', 'NoNumber', 'Nincs megadva szm!');
-INSERT INTO "localized_warning" VALUES (11, 'huHU', 'NoPassword', 'Nincs megadva a jelsz!');
-INSERT INTO "localized_warning" VALUES (12, 'huHU', 'NoOldPassword', 'Nincs megadva a rgi jelsz!');
-INSERT INTO "localized_warning" VALUES (13, 'huHU', 'NoNewPassword', 'Nincs megadva az j jelsz!');
-INSERT INTO "localized_warning" VALUES (14, 'huHU', 'NoOperator', 'Nem vagy Opertor!');
-INSERT INTO "localized_warning" VALUES (15, 'huHU', 'NoAdministrator', 'Nem vagy Adminisztrtor!');
-INSERT INTO "localized_warning" VALUES (16, 'huHU', 'NoChannelName', 'Nincs megadva a csatorna neve!');
-INSERT INTO "localized_warning" VALUES (17, 'huHU', 'NoRank', 'Nincs megadva a rang!');
-INSERT INTO "localized_warning" VALUES (18, 'huHU', 'NoFunctionName', 'Nincs megadva a funkci neve!');
-INSERT INTO "localized_warning" VALUES (19, 'huHU', 'NoFunctionStatus', 'Nincs megadva a funkci llapota!');
-INSERT INTO "localized_warning" VALUES (20, 'huHU', 'NoCommand', 'Nincs megadva a parancs!');
-INSERT INTO "localized_warning" VALUES (21, 'huHU', 'NoTypeName', 'Nincs a tipus neve megadva!');
-INSERT INTO "localized_warning" VALUES (22, 'huHU', 'CapsLockOff', 'Kapcsold ki a caps lock-ot!');
-INSERT INTO "localized_warning" VALUES (23, 'huHU', 'NoTime', 'Nincs megadva az id!');
-INSERT INTO "localized_warning" VALUES (24, 'huHU', 'NoBanNameOrVhost', 'Nincs megadva a kitiltand neve vagy a vhost!');
-INSERT INTO "localized_warning" VALUES (25, 'huHU', 'NoUnbanNameOrVhost', 'Nincs megadva a kitiltott neve vagy a vhost!');
-INSERT INTO "localized_warning" VALUES (26, 'huHU', 'BanList', 'Mr szerepel a tilt listn!');
-INSERT INTO "localized_warning" VALUES (27, 'huHU', 'BanList1', 'Sikeresen hozz lett adva a tilt listhoz.');
-INSERT INTO "localized_warning" VALUES (28, 'huHU', 'UnbanList', 'Nem szerepel a tilt listn!');
-INSERT INTO "localized_warning" VALUES (29, 'huHU', 'UnbanList1', 'Sikeresen trlve lett a tilt listhoz.');
-INSERT INTO "localized_warning" VALUES (30, 'huHU', 'RecurrentFlooding', 'Ismtld flooding!');
-INSERT INTO "localized_warning" VALUES (31, 'huHU', 'StopFlooding', 'llj le a flooding!');
-INSERT INTO "localized_warning" VALUES (32, 'huHU', 'NoMessage', 'zenet nincs megadva!');
-INSERT INTO "localized_warning" VALUES (33, 'huHU', 'NoCode', 'A kd nincs megadva!');
-INSERT INTO "localized_warning" VALUES (34, 'huHU', 'NoReason', 'Nincs ok megadva!');
-INSERT INTO "localized_warning" VALUES (35, 'huHU', 'NoChannelLanguage', 'Nincs megadva a csatorna nyelvezete!');
-INSERT INTO "localized_warning" VALUES (36, 'huHU', 'NoDataNoCommand', 'Az adataid nem megfelelek ezrt nem folytathat a parancs!');
-INSERT INTO "localized_warning" VALUES (37, 'enUS', 'CapsLockOff', 'Turn caps lock OFF!');
-INSERT INTO "localized_warning" VALUES (38, 'enUS', 'RecurrentFlooding', 'Recurrent flooding!');
-INSERT INTO "localized_warning" VALUES (39, 'enUS', 'StopFlooding', 'Stop flooding!');
+-- huHU
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoName', 'A név nincs megadva!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoValue', 'Nincs paraméter!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'No1Value', 'Nincs megadva egy paraméter!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'FaultyQuery', 'Hibás lekérdezés!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoIrcCommandName', 'Nincs megadva a parancs neve!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoWhoisName', 'Nincs megadva a keresendõ személy neve!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoGoogleText', 'Nincs megadva a keresendõ szöveg!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoTranslateText', 'Nincs megadva a fordítandó szöveg!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoTranslateLanguage', 'Nincs megadva melyik nyelvrõl melyikre fordítsa le!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoNumber', 'Nincs megadva szám!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoPassword', 'Nincs megadva a jelszó!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoOldPassword', 'Nincs megadva a régi jelszó!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoNewPassword', 'Nincs megadva az új jelszó!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoOperator', 'Nem vagy Operátor!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoAdministrator', 'Nem vagy Adminisztrátor!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoChannelName', 'Nincs megadva a csatorna neve!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoRank', 'Nincs megadva a rang!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoFunctionName', 'Nincs megadva a funkció neve!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoFunctionStatus', 'Nincs megadva a funkció állapota!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoCommand', 'Nincs megadva a parancs!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoTypeName', 'Nincs a típus neve megadva!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'CapsLockOff', 'Kapcsold ki a caps lock-ot!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoTime', 'Nincs megadva az idõ!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoBanNameOrVhost', 'Nincs megadva a kitiltandó neve vagy a vhost!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoUnbanNameOrVhost', 'Nincs megadva a kitiltott neve vagy a vhost!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'BanList', 'Már szerepel a tíltó listán!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'BanList1', 'Sikeresen hozzá lett adva a tíltó listához.');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'UnbanList', 'Nem szerepel a tíltó listán!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'UnbanList1', 'Sikeresen törölve lett a tíltó listához.');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'RecurrentFlooding', 'Ismétlõdõ flooding!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'StopFlooding', 'Állj le a floodinggal!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoMessage', 'Üzenet nincs megadva!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoCode', 'A kód nincs megadva!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoReason', 'Nincs ok megadva!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoChannelLanguage', 'Nincs megadva a csatorna nyelvezete!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoDataNoCommand', 'Az adataid nem megfelelõek ezért nem folytatható a parancs!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoCityName', 'Nem adott meg egy városnevet sem!');
+
+-- enUS
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoName', 'The name is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoValue', 'The parameters are not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'No1Value', 'A parameter was not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'FaultyQuery', 'Syntax error!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoIrcCommandName', 'The name of the command is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoWhoisName', "The searching person's name are not specified!");
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoGoogleText', 'The searching text is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoTranslateText', 'The text to be translated is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoTranslateLanguage', 'Which language to other language text is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoNumber', 'The number is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoPassword', 'The password is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoOldPassword', 'The old password is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoNewPassword', 'The new password is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoOperator', 'You are not an operator!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoAdministrator', 'You are not an administrator!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoChannelName', 'The channel name is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoRank', 'The rank is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoFunctionName', 'The function name is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoFunctionStatus', 'The function status is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoCommand', 'The command is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoTypeName', 'The type is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'CapsLockOff', 'Turn caps lock OFF!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoTime', 'The time is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoBanNameOrVhost', "The banning person's name or his/her vhost is not specified!");
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoUnbanNameOrVhost', "The unbanning person's name or his/her vhost is not specified!");
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'BanList', 'Already on the bann list!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'BanList1', 'Successfully added to the bann list!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'UnbanList', 'He/She is not on the bann list!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'UnbanList1', 'Successfully deleted from the bann list!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'RecurrentFlooding', 'Recurrent flooding!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'StopFlooding', 'Stop flooding!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoMessage', 'Message is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoCode', 'The code is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoReason', 'Reason is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoChannelLanguage', 'The channel language is not specified!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoDataNoCommand', 'Your datas are bad, so aborted the command!');
+INSERT INTO "localized_warning" (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoCityName', 'No such city name!');
 
 -- ----------------------------
 -- Table structure for "message"
@@ -572,9 +851,9 @@ nap TINYINT
 DROP TABLE IF EXISTS "uptime";
 CREATE TABLE "uptime" (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
-datum TEXT,
-uptime TEXT,
-memory TEXT
+Date TEXT,
+Uptime TEXT,
+Memory TEXT
 );
 
 -- ----------------------------
