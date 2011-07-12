@@ -1,6 +1,5 @@
 Megírásra váró feladatok:
 
-<Megaxxx> { #ifndef Schumix #define Schumix { for(var v = 0; v <= 4; v++) \n Lib.printf("jackneill"); }  while (true) { Schumix } }
-<Schumacher> Hibák: Az előfeldolgozási direktíváknak a sor első szóköztől eltérő karakterének kell lenniük.
-<Schumacher> Hibák: Itt „}” karakternek kellene szerepelnie.
-<Schumacher> Hibák: Itt „}” karakternek kellene szerepelnie.
+<Megaxxx> { for(var v = 0; v <= 4; v++) }
+<Schumacher> Szál kilőve!
+Fixálni windows alatt a szál kilővési időt.
