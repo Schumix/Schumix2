@@ -23,11 +23,16 @@ using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
+using Schumix.HgRssAddon.Localization;
 
 namespace Schumix.HgRssAddon.Config
 {
 	public sealed class AddonConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+
 		public AddonConfig(string configfile)
 		{
 			try
@@ -41,7 +46,7 @@ namespace Schumix.HgRssAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("HgRssAddonConfig", "Hiba oka: {0}", e.Message);
+				Log.Error("HgRssAddonConfig", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 
@@ -50,12 +55,12 @@ namespace Schumix.HgRssAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(string.Format("./{0}/{1}", SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("HgRssAddonConfig", "Config fajl betoltese.");
+			Log.Notice("HgRssAddonConfig", sLocalization.Config("Text"));
 
 			int QueryTime = !xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").InnerText) : 60;
 			new RssConfig(QueryTime);
 
-			Log.Success("HgRssAddonConfig", "Config adatbazis betoltve.");
+			Log.Success("HgRssAddonConfig", sLocalization.Config("Text2"));
 			Console.WriteLine();
 		}
 
@@ -65,8 +70,8 @@ namespace Schumix.HgRssAddon.Config
 				return true;
 			else
 			{
-				Log.Error("HgRssAddonConfig", "Nincs config fajl!");
-				Log.Debug("HgRssAddonConfig", "Elkeszitese folyamatban...");
+				Log.Error("HgRssAddonConfig", sLocalization.Config("Text3"));
+				Log.Debug("HgRssAddonConfig", sLocalization.Config("Text4"));
 				var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
 
 				try
@@ -92,12 +97,12 @@ namespace Schumix.HgRssAddon.Config
 					w.Flush();
 					w.Close();
 
-					Log.Success("HgRssAddonConfig", "Config fajl elkeszult!");
+					Log.Success("HgRssAddonConfig", sLocalization.Config("Text5"));
 					return false;
 				}
 				catch(Exception e)
 				{
-					Log.Error("HgRssAddonConfig", "Hiba az xml irasa soran: {0}", e.Message);
+					Log.Error("HgRssAddonConfig", sLocalization.Config("Text6"), e.Message);
 					return false;
 				}
 			}
@@ -106,12 +111,13 @@ namespace Schumix.HgRssAddon.Config
 
 	public sealed class RssConfig
 	{
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static int QueryTime { get; private set; }
 
 		public RssConfig(int querytime)
 		{
 			QueryTime = querytime;
-			Log.Notice("HgRssConfig", "HgRssConfig beallitasai betoltve.");
+			Log.Notice("HgRssConfig", sLocalization.RssConfig("Text"));
 		}
 	}
 }

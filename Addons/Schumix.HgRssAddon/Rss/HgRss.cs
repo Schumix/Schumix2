@@ -23,12 +23,16 @@ using System.Threading;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.HgRssAddon.Config;
+using Schumix.HgRssAddon.Localization;
 
 namespace Schumix.HgRssAddon
 {
 	public sealed class HgRss
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private Thread _thread;
@@ -134,13 +138,13 @@ namespace Schumix.HgRssAddon
 					}
 					catch(Exception e)
 					{
-						Log.Error("HgRss", "[{0}] Hiba oka: {1}", _name, e.Message);
+						Log.Error("HgRss", sLocalization.Exception("Error"), _name, e.Message);
 					}
 				}
 			}
 			catch(Exception e)
 			{
-				Log.Error("HgRss", "[{0}] Vegzetes hiba oka: {1}", _name, e.Message);
+				Log.Error("HgRss", sLocalization.Exception("Error2"), _name, e.Message);
 				Update();
 			}
 		}
@@ -155,7 +159,7 @@ namespace Schumix.HgRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("HgRss", "[{0}] Hiba oka: {1}", _name, e.Message);
+				Log.Error("HgRss", sLocalization.Exception("Error"), _name, e.Message);
 			}
 
 			return null;
@@ -214,18 +218,20 @@ namespace Schumix.HgRssAddon
 
 				foreach(var chan in channel)
 				{
+					string language = sLManager.GetChannelLocalization(chan);
+
 					if(_website == "google")
 					{
 						if(title.IndexOf(":") != -1)
 						{
-							sSendMessage.SendCMPrivmsg(chan, "3{0} Revision: 10{1} by {2}", _name, rev.Substring(0, 10), author);
-							sSendMessage.SendCMPrivmsg(chan, "3{0} Info:{1}", _name, title.Substring(title.IndexOf(":")+1));
+							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google", language), _name, rev.Substring(0, 10), author);
+							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google2", language), _name, title.Substring(title.IndexOf(":")+1));
 						}
 					}
 					else if(_website == "bitbucket")
 					{
-						sSendMessage.SendCMPrivmsg(chan, "3{0} Revision: 10{1} by {2}", _name, rev.Substring(0, 10), author);
-						sSendMessage.SendCMPrivmsg(chan, "3{0} Info:{1}", _name, title);
+						sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("bitbucket", language), _name, rev.Substring(0, 10), author);
+						sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("bitbucket2", language), _name, title);
 					}
 
 					Thread.Sleep(1000);

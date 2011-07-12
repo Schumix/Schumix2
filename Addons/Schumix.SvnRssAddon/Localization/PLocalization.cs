@@ -19,7 +19,7 @@
 
 using System;
 
-namespace Schumix.GitRssAddon.Localization
+namespace Schumix.SvnRssAddon.Localization
 {
 	public sealed class PLocalization
 	{
@@ -114,45 +114,45 @@ namespace Schumix.GitRssAddon.Localization
 				case "Error":
 				{
 					if(Locale == "huHU")
-						return "[{0} {1}] Meghibásodás részletei: {2}";
+						return "[{0}] Meghibásodás részletei: {1}";
 					else if(Locale == "enUS")
-						return "[{0} {1}] Failure details: {2}";
+						return "[{0}] Failure details: {1}";
 					else
-						return "[{0} {1}] Failure details: {2}";
+						return "[{0}] Failure details: {1}";
 				}
 				case "Error2":
 				{
 					if(Locale == "huHU")
-						return "[{0} {1}] Végzetes meghibásodás részletei: {2}";
+						return "[{0}] Végzetes meghibásodás részletei: {1}";
 					else if(Locale == "enUS")
-						return "[{0} {1}] Fatal failure details: {2}";
+						return "[{0}] Fatal failure details: {1}";
 					else
-						return "[{0} {1}] Fatal failure details: {2}";
+						return "[{0}] Fatal failure details: {1}";
 				}
 				default:
 					return string.Empty;
 			}
 		}
 
-		public string GitRss(string Name)
+		public string SvnRss(string Name)
 		{
-			return GitRss(Name, Locale);
+			return SvnRss(Name, Locale);
 		}
 
-		public string GitRss(string Name, string Language)
+		public string SvnRss(string Name, string Language)
 		{
 			switch(Name)
 			{
-				case "github":
+				case "assembla":
 				{
 					if(Language == "huHU")
-						return "3{0} 7{1} Revision: 10{2} beküldte: {3}";
+						return "3{0} Revision: 10{1} beküldte: {2}";
 					else if(Language == "enUS")
-						return "3{0} 7{1} Revision: 10{2} by {3}";
+						return "3{0} Revision: 10{1} by {2}";
 					else
-						return "3{0} 7{1} Revision: 10{2} by {3}";
+						return "3{0} Revision: 10{1} by {2}";
 				}
-				case "github2":
+				case "assembla2":
 				{
 					if(Language == "huHU")
 						return "3{0} Infó:{1}";
@@ -166,7 +166,7 @@ namespace Schumix.GitRssAddon.Localization
 			}
 		}
 
-		public string GitRssAddon(string Name)
+		public string SvnRssAddon(string Name)
 		{
 			switch(Name)
 			{

@@ -204,15 +204,14 @@ namespace Schumix.GitRssAddon
 			{
 				string[] channel = db["Channel"].ToString().Split(',');
 
-
 				foreach(var chan in channel)
 				{
 					string language = sLManager.GetChannelLocalization(chan);
 
 					if(_website == "github")
 					{
-						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("Text", language), _name, _type, rev.Substring(0, 10), author);
-						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("Text2", language), _name, title);
+						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, _type, rev.Substring(0, 10), author);
+						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github2", language), _name, title);
 					}
 
 					Thread.Sleep(1000);
