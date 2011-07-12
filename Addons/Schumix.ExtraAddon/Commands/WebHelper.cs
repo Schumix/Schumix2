@@ -23,6 +23,7 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using Schumix.Framework;
+using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon.Commands
 {
@@ -31,6 +32,7 @@ namespace Schumix.ExtraAddon.Commands
 	/// </summary>
 	public static class WebHelper
 	{
+		private static readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
@@ -42,7 +44,7 @@ namespace Schumix.ExtraAddon.Commands
 		/// <returns>
 		///   The webpage's title.
 		/// </returns>
-		public static string GetWebTitle(Uri url)
+		public static string GetWebTitle(Uri url, string Language)
 		{
 			try
 			{
@@ -65,11 +67,11 @@ namespace Schumix.ExtraAddon.Commands
 				var getTitleRegex = new Regex(@"<title>(?<ttl>.*\s*.+\s*.*)\s*</title>", RegexOptions.IgnoreCase);
 				var match = getTitleRegex.Match(data);
 
-				return (match.Success) ? (match.Groups["ttl"].ToString()) : "No title found.";
+				return (match.Success) ? (match.Groups["ttl"].ToString()) : sLocalization.WebHelper("Text");
 			}
 			catch(Exception e)
 			{
-				Log.Debug("WebHelper", "Exception thrown while fetching web title: {0}", e.Message);
+				Log.Debug("WebHelper", sLocalization.WebHelper("Text2"), e.Message);
 				return string.Empty;
 			}
 		}

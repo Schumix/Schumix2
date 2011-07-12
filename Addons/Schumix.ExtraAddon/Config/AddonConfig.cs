@@ -23,11 +23,16 @@ using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
+using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon.Config
 {
 	public sealed class AddonConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+
 		public AddonConfig(string configfile)
 		{
 			try
@@ -41,7 +46,7 @@ namespace Schumix.ExtraAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("ExtraAddonConfig", "Hiba oka: {0}", e.Message);
+				Log.Error("ExtraAddonConfig", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 
@@ -50,13 +55,13 @@ namespace Schumix.ExtraAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(string.Format("./{0}/{1}", SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("ExtraAddonConfig", "Config fajl betoltese.");
+			Log.Notice("ExtraAddonConfig", sLocalization.Config("Text"));
 
 			bool Enabled = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText) : false;
 			string Type = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText : "aohv";
 			new ModeConfig(Enabled, Type);
 
-			Log.Success("ExtraAddonConfig", "Config adatbazis betoltve.");
+			Log.Success("ExtraAddonConfig", sLocalization.Config("Text2"));
 			Console.WriteLine();
 		}
 
@@ -66,8 +71,8 @@ namespace Schumix.ExtraAddon.Config
 				return true;
 			else
 			{
-				Log.Error("ExtraAddonConfig", "Nincs config fajl!");
-				Log.Debug("ExtraAddonConfig", "Elkeszitese folyamatban...");
+				Log.Error("ExtraAddonConfig", sLocalization.Config("Text3"));
+				Log.Debug("ExtraAddonConfig", sLocalization.Config("Text4"));
 				var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
 
 				try
@@ -100,12 +105,12 @@ namespace Schumix.ExtraAddon.Config
 					w.Flush();
 					w.Close();
 
-					Log.Success("ExtraAddonConfig", "Config fajl elkeszult!");
+					Log.Success("ExtraAddonConfig", sLocalization.Config("Text5"));
 					return false;
 				}
 				catch(Exception e)
 				{
-					Log.Error("ExtraAddonConfig", "Hiba az xml irasa soran: {0}", e.Message);
+					Log.Error("ExtraAddonConfig", sLocalization.Config("Text6"), e.Message);
 					return false;
 				}
 			}
@@ -114,6 +119,7 @@ namespace Schumix.ExtraAddon.Config
 
 	public sealed class ModeConfig
 	{
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static bool RemoveEnabled { get; private set; }
 		public static string RemoveType { get; private set; }
 
@@ -121,7 +127,7 @@ namespace Schumix.ExtraAddon.Config
 		{
 			RemoveEnabled = removeenabled;
 			RemoveType    = removetype;
-			Log.Notice("ModeConfig", "Mode beallitasai betoltve.");
+			Log.Notice("ModeConfig", sLocalization.ModeConfig("Text"));
 		}
 	}
 }

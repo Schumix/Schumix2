@@ -26,14 +26,17 @@ using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.ExtraAddon.Commands;
 using Schumix.ExtraAddon.Config;
+using Schumix.ExtraAddon.Commands;
+using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon
 {
 	public class ExtraAddon : IrcHandler, ISchumixAddon
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
@@ -49,6 +52,7 @@ namespace Schumix.ExtraAddon
 
 		public void Setup()
 		{
+			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
 			Network.PublicRegisterHandler("JOIN",                       new Action<IRCMessage>(HandleJoin));
 			Network.PublicRegisterHandler("PART",                       new Action<IRCMessage>(HandleLeft));

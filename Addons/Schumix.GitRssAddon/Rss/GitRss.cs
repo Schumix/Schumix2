@@ -23,12 +23,16 @@ using System.Threading;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.GitRssAddon.Config;
+using Schumix.GitRssAddon.Localization;
 
 namespace Schumix.GitRssAddon
 {
 	public sealed class GitRss
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private Thread _thread;
@@ -135,13 +139,13 @@ namespace Schumix.GitRssAddon
 					}
 					catch(Exception e)
 					{
-						Log.Error("GitRss", "[{0} {1}] Hiba oka: {2}", _name, _type, e.Message);
+						Log.Error("GitRss", sLocalization.Exception("Text"), _name, _type, e.Message);
 					}
 				}
 			}
 			catch(Exception e)
 			{
-				Log.Error("GitRss", "[{0} {1}] Vegzetes hiba oka: {2}", _name, _type, e.Message);
+				Log.Error("GitRss", sLocalization.Exception("Text2"), _name, _type, e.Message);
 				Update();
 			}
 		}
@@ -156,7 +160,7 @@ namespace Schumix.GitRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("GitRss", "[{0} {1}] Hiba oka: {2}", _name, _type, e.Message);
+				Log.Error("GitRss", sLocalization.Exception("Text"), _name, _type, e.Message);
 			}
 
 			return null;
@@ -200,12 +204,15 @@ namespace Schumix.GitRssAddon
 			{
 				string[] channel = db["Channel"].ToString().Split(',');
 
-				for(int x = 0; x < channel.Length; x++)
+
+				foreach(var chan in channel)
 				{
+					string language = sLManager.GetChannelLocalization(chan);
+
 					if(_website == "github")
 					{
-						sSendMessage.SendCMPrivmsg(channel[x], "3{0} 7{1} Revision: 10{2} by {3}", _name, _type, rev.Substring(0, 10), author);
-						sSendMessage.SendCMPrivmsg(channel[x], "3{0} Info:{1}", _name, title);
+						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("Text", language), _name, _type, rev.Substring(0, 10), author);
+						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("Text2", language), _name, title);
 					}
 
 					Thread.Sleep(1000);
