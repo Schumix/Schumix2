@@ -1,5 +1,5 @@
 Megírásra váró feladatok:
 
-<Megaxxx> { for(var v = 0; v <= 4; v++) }
+<Megaxxx> { for(var v = 0; v <= 4; v++); }
 <Schumacher> Szál kilőve!
 Fixálni windows alatt a szál kilővési időt.
