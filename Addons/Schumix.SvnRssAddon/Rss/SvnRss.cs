@@ -212,8 +212,8 @@ namespace Schumix.SvnRssAddon
 					{
 						if(title.IndexOf(":") != -1)
 						{
-							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("assembla", language), _name, rev, author);
-							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("assembla2", language), _name, title.Substring(title.IndexOf(":")+1));
+							sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla", language), _name, rev, author);
+							sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla2", language), _name, title.Substring(title.IndexOf(":")+1));
 						}
 					}
 
