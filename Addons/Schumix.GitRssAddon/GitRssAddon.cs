@@ -72,10 +72,10 @@ namespace Schumix.GitRssAddon
 					x++;
 				}
 
-				Log.Notice("GitRssAddon", "{0} rss kerult betoltesre.", x);
+				Log.Notice("GitRssAddon", sLocalization.GitRssAddon("Text"), x);
 			}
 			else
-				Log.Warning("GitRssAddon", "Ures az adatbazis!");
+				Log.Warning("GitRssAddon", sLocalization.GitRssAddon("Text2"));
 		}
 
 		public void Destroy()

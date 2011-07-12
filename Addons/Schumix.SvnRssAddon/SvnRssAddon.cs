@@ -23,14 +23,18 @@ using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.Irc.Commands;
-using Schumix.SvnRssAddon.Commands;
 using Schumix.SvnRssAddon.Config;
+using Schumix.SvnRssAddon.Commands;
+using Schumix.SvnRssAddon.Localization;
 
 namespace Schumix.SvnRssAddon
 {
 	public class SvnRssAddon : RssCommand, ISchumixAddon
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static readonly List<SvnRss> RssList = new List<SvnRss>();
 #if MONO
 #pragma warning disable 414
@@ -42,6 +46,7 @@ namespace Schumix.SvnRssAddon
 
 		public void Setup()
 		{
+			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
 			CommandManager.OperatorCRegisterHandler("svn", new Action<IRCMessage>(HandleSvn));
 
@@ -66,10 +71,10 @@ namespace Schumix.SvnRssAddon
 					x++;
 				}
 
-				Log.Notice("SvnRssAddon", "{0} rss kerult betoltesre.", x);
+				Log.Notice("SvnRssAddon", sLocalization.SvnRssAddon("Text"), x);
 			}
 			else
-				Log.Warning("SvnRssAddon", "Ures az adatbazis!");
+				Log.Warning("SvnRssAddon", sLocalization.SvnRssAddon("Text2"));
 		}
 
 		public void Destroy()

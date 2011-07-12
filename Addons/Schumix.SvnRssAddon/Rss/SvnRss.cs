@@ -23,12 +23,16 @@ using System.Threading;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.SvnRssAddon.Config;
+using Schumix.SvnRssAddon.Localization;
 
 namespace Schumix.SvnRssAddon
 {
 	public sealed class SvnRss
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private Thread _thread;
@@ -126,13 +130,13 @@ namespace Schumix.SvnRssAddon
 					}
 					catch(Exception e)
 					{
-						Log.Error("SvnRss", "[{0}] Hiba oka: {1}", _name, e.Message);
+						Log.Error("SvnRss", sLocalization.Exception("Error"), _name, e.Message);
 					}
 				}
 			}
 			catch(Exception e)
 			{
-				Log.Error("SvnRss", "[{0}] Vegzetes hiba oka: {1}", _name, e.Message);
+				Log.Error("SvnRss", sLocalization.Exception("Error2"), _name, e.Message);
 				Update();
 			}
 		}
@@ -147,7 +151,7 @@ namespace Schumix.SvnRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("SvnRss", "[{0}] Hiba oka: {1}", _name, e.Message);
+				Log.Error("SvnRss", sLocalization.Exception("Error"), _name, e.Message);
 			}
 
 			return null;
@@ -202,12 +206,14 @@ namespace Schumix.SvnRssAddon
 
 				foreach(var chan in channel)
 				{
+					string language = sLManager.GetChannelLocalization(chan);
+
 					if(_website == "assembla")
 					{
 						if(title.IndexOf(":") != -1)
 						{
-							sSendMessage.SendCMPrivmsg(chan, "3{0} Revision: 10{1} by {2}", _name, rev, author);
-							sSendMessage.SendCMPrivmsg(chan, "3{0} Info:{1}", _name, title.Substring(title.IndexOf(":")+1));
+							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("assembla", language), _name, rev, author);
+							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("assembla2", language), _name, title.Substring(title.IndexOf(":")+1));
 						}
 					}
 

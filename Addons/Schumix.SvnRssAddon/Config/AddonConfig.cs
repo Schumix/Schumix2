@@ -23,11 +23,16 @@ using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
+using Schumix.SvnRssAddon.Localization;
 
 namespace Schumix.SvnRssAddon.Config
 {
 	public sealed class AddonConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+
 		public AddonConfig(string configfile)
 		{
 			try
@@ -41,7 +46,7 @@ namespace Schumix.SvnRssAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("SvnRssAddonConfig", "Hiba oka: {0}", e.Message);
+				Log.Error("SvnRssAddonConfig", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 
@@ -50,12 +55,12 @@ namespace Schumix.SvnRssAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(string.Format("./{0}/{1}", SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("SvnRssAddonConfig", "Config fajl betoltese.");
+			Log.Notice("SvnRssAddonConfig", sLocalization.Config("Text"));
 
 			int QueryTime = !xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").InnerText) : 60;
 			new RssConfig(QueryTime);
 
-			Log.Success("SvnRssAddonConfig", "Config adatbazis betoltve.");
+			Log.Success("SvnRssAddonConfig", sLocalization.Config("Text2"));
 			Console.WriteLine();
 		}
 
@@ -65,8 +70,8 @@ namespace Schumix.SvnRssAddon.Config
 				return true;
 			else
 			{
-				Log.Error("SvnRssAddonConfig", "Nincs config fajl!");
-				Log.Debug("SvnRssAddonConfig", "Elkeszitese folyamatban...");
+				Log.Error("SvnRssAddonConfig", sLocalization.Config("Text3"));
+				Log.Debug("SvnRssAddonConfig", sLocalization.Config("Text4"));
 				var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
 
 				try
@@ -92,12 +97,12 @@ namespace Schumix.SvnRssAddon.Config
 					w.Flush();
 					w.Close();
 
-					Log.Success("SvnRssAddonConfig", "Config fajl elkeszult!");
+					Log.Success("SvnRssAddonConfig", sLocalization.Config("Text5"));
 					return false;
 				}
 				catch(Exception e)
 				{
-					Log.Error("SvnRssAddonConfig", "Hiba az xml irasa soran: {0}", e.Message);
+					Log.Error("SvnRssAddonConfig", sLocalization.Config("Text6"), e.Message);
 					return false;
 				}
 			}
@@ -106,12 +111,13 @@ namespace Schumix.SvnRssAddon.Config
 
 	public sealed class RssConfig
 	{
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static int QueryTime { get; private set; }
 
 		public RssConfig(int querytime)
 		{
 			QueryTime = querytime;
-			Log.Notice("SvnRssConfig", "SvnRssConfig beallitasai betoltve.");
+			Log.Notice("SvnRssConfig", sLocalization.RssConfig("Text"));
 		}
 	}
 }

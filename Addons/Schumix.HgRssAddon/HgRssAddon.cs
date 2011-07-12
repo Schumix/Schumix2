@@ -23,14 +23,18 @@ using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.Irc.Commands;
-using Schumix.HgRssAddon.Commands;
 using Schumix.HgRssAddon.Config;
+using Schumix.HgRssAddon.Commands;
+using Schumix.HgRssAddon.Localization;
 
 namespace Schumix.HgRssAddon
 {
 	public class HgRssAddon : RssCommand, ISchumixAddon
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static readonly List<HgRss> RssList = new List<HgRss>();
 #if MONO
 #pragma warning disable 414
@@ -42,6 +46,7 @@ namespace Schumix.HgRssAddon
 
 		public void Setup()
 		{
+			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
 			CommandManager.OperatorCRegisterHandler("hg", new Action<IRCMessage>(HandleHg));
 
@@ -66,10 +71,10 @@ namespace Schumix.HgRssAddon
 					x++;
 				}
 
-				Log.Notice("HgRssAddon", "{0} rss kerult betoltesre.", x);
+				Log.Notice("HgRssAddon", sLocalization.HgRssAddon("Text"), x);
 			}
 			else
-				Log.Warning("HgRssAddon", "Ures az adatbazis!");
+				Log.Warning("HgRssAddon", sLocalization.HgRssAddon("Text2"));
 		}
 
 		public void Destroy()
