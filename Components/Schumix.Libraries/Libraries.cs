@@ -35,6 +35,7 @@ namespace Schumix.Libraries
 		private static readonly DateTime UnixTimeStart = new DateTime(1970, 1, 1, 0, 0, 0);
 		private const int TicksPerSecond = 10000;
 		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
+		private static readonly object WriteLock = new object();
 
 		public static bool IsPrime(long x)
 		{
@@ -331,32 +332,50 @@ namespace Schumix.Libraries
 
 		public static void print(string text)
 		{
-			Console.Write(text);
+			lock(WriteLock)
+			{
+				Console.Write(text);
+			}
 		}
 
 		public static void print(object o)
 		{
-			Console.Write(o);
+			lock(WriteLock)
+			{
+				Console.Write(o);
+			}
 		}
 
 		public static void print(string text, params object[] args)
 		{
-			print(string.Format(text, args));
+			lock(WriteLock)
+			{
+				print(string.Format(text, args));
+			}
 		}
 
 		public static void printf(string text)
 		{
-			Console.Write(text);
+			lock(WriteLock)
+			{
+				Console.Write(text);
+			}
 		}
 
 		public static void printf(object o)
 		{
-			Console.Write(o);
+			lock(WriteLock)
+			{
+				Console.Write(o);
+			}
 		}
 
 		public static void printf(string text, params object[] args)
 		{
-			printf(string.Format(text, args));
+			lock(WriteLock)
+			{
+				printf(string.Format(text, args));
+			}
 		}
 	}
 }
