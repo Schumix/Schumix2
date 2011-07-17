@@ -328,54 +328,43 @@ namespace Schumix.Irc.Commands
 			if(sIRCMessage.Info[4].ToLower() == "home")
 				home = true;
 
-			if(home)
-				source = sUtilities.GetUrl("http://www.met.hu/elorejelzesek/Magyarorszag/index.php?v=Zalaegerszeg");
-			else
-			{
-				string s = sIRCMessage.Info[4].Replace("á", "a");
-				s = s.Replace("é", "e");
-				s = s.Replace("í", "i");
-				s = s.Replace("ű", "u");
-				s = s.Replace("ü", "u");
-				s = s.Replace("ú", "u");
-				s = s.Replace("ő", "o");
-				s = s.Replace("ö", "o");
-				s = s.Replace("ó", "o");
-				source = sUtilities.GetUrl(string.Format("http://www.met.hu/elorejelzesek/Magyarorszag/index.php?v={0}", s));
-			}
-
 			try
 			{
-				int first = source.IndexOf("<tr class='wrc0'>") + "<tr class='wrc1'>".Length;
-				int last = source.IndexOf("<tr class='wrc1'>");
-				source = source.Substring(first, last - first);
+				if(home)
+					source = sUtilities.GetUrl("http://www.meteoprog.hu/hu/weather/Zalaegerszeg");
+				else
+				{
+					string s = sIRCMessage.Info[4].Replace("á", "a");
+					s = s.Replace("é", "e");
+					s = s.Replace("í", "i");
+					s = s.Replace("ű", "u");
+					s = s.Replace("ü", "u");
+					s = s.Replace("ú", "u");
+					s = s.Replace("ő", "o");
+					s = s.Replace("ö", "o");
+					s = s.Replace("ó", "o");
+					source = sUtilities.GetUrl(string.Format("http://www.meteoprog.hu/hu/weather/{0}", s));
+				}
 
-				int date_first = source.IndexOf("<a href='index.php?k=Europa&o=Magyarorszag&no=1'>");
-				date_first = date_first + "<a href='index.php?k=Europa&o=Magyarorszag&no=1'>".Length + "ágos táblázat&#187; ' class='vnev'><a href='index.php?k=Europa&o=Magyarorszag&no=0'>".Length;
-				int date_last = source.IndexOf("<a></td>");
+				// TODO: Csapadék kiírása
+				source = source.Remove(0, source.IndexOf("<td colspan=4 align=center bgcolor=\"#1B8BB2\"><div id=\"day_1\" class=\"weather-pict\" style=\"position:relative;width:376px\"></div></td>"));
+				source = source.Remove(0, source.IndexOf("<td width=\"84\" align=right style=\"padding: 5px 10px 5px 0px;\">A levegő hőmérséklete</td>"));
+				source = source.Remove(0, source.IndexOf("</td>"));
+				source = source.Remove(0, source.IndexOf("</td>"));
+				source = source.Remove(0, source.IndexOf("<td class=\"wforecast-cell\">") + "<td class=\"wforecast-cell\">".Length);
+				string min_max = source.Substring(0, source.IndexOf("&deg;C"));
 
-				string weather = source.Substring(date_first, date_last - date_first).Replace("<br>", " ");
-				int weath_first = source.IndexOf("<td class='szirch'>") + "<td class='szirch'>".Length;
-				int weath_last = source.IndexOf("<td class='numt' title=' Minimum hőmérséklet '>");
-
-				string weath = source.Substring(weath_first, weath_last - weath_first).Replace("<td class='numt' title=' Minimum hőmérséklet '>", "").Replace("</td>", "").Trim();
-				weather = weather + " " + weath;
-
-				int min_first = source.IndexOf("<td class='numt' title=' Minimum hőmérséklet '>") + "<td class='numt' title=' Minimum hőmérséklet '>".Length;
-				int min_last = source.IndexOf("<td class='numt' title=' Maximum hőmérséklet '>");
-				string min = source.Substring(min_first, min_last - min_first).Replace("<td class='numt' title=' Maximum hőmérséklet '>", "").Replace("</td>", "").Trim();
-
-				int max_first = min_last + "<td class='numt' title=' Maximum hőmérséklet '>".Length;
-				int max_last = source.IndexOf("<td width=35 title='");
-				string max = source.Substring(max_first, max_last - max_first).Replace("<td width=35 title='", "").Replace("</td>", "").Trim();
-
-				int wind_first = source.IndexOf("<td class='numt' title=' Szélsebesség:") + "<td class='numt' title=' Szélsebesség:".Length;
-				string wind = source.Substring(wind_first, 11).Trim();
+				source = source.Remove(0, source.IndexOf("<td width=\"84\" align=right style=\"padding: 5px 10px 5px 0px;\">Szél</td>"));
+				source = source.Remove(0, source.IndexOf("</b></td>"));
+				source = source.Remove(0, source.IndexOf("</b></td>"));
+				source = source.Remove(0, source.IndexOf("<td align=center><b>") + "<td align=center><b>".Length);
+				string wind = source.Substring(0, source.IndexOf("</b></td>"));
+				wind = wind.Replace("&nbsp;", " ");
 
 				if(home)
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], weather, min, max, wind);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], /*weather*/ "-", min_max.Substring(0, min_max.IndexOf("...")), min_max.Substring(min_max.IndexOf("...")+3), wind.Substring(wind.IndexOf(", ")+2));
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[4], weather, min, max, wind);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], /*weather*/ "-", min_max.Substring(0, min_max.IndexOf("...")), min_max.Substring(min_max.IndexOf("...")+3), wind.Substring(wind.IndexOf(", ")+2));
 			}
 			catch
 			{
