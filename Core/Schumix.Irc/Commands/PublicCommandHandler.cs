@@ -364,7 +364,7 @@ namespace Schumix.Irc.Commands
 				if(home)
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], /*weather*/ "-", min_max.Substring(0, min_max.IndexOf("...")), min_max.Substring(min_max.IndexOf("...")+3), wind.Substring(wind.IndexOf(", ")+2));
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], /*weather*/ "-", min_max.Substring(0, min_max.IndexOf("...")), min_max.Substring(min_max.IndexOf("...")+3), wind.Substring(wind.IndexOf(", ")+2));
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[4], /*weather*/ "-", min_max.Substring(0, min_max.IndexOf("...")), min_max.Substring(min_max.IndexOf("...")+3), wind.Substring(wind.IndexOf(", ")+2));
 			}
 			catch
 			{
