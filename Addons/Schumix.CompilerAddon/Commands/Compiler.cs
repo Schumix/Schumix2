@@ -133,21 +133,7 @@ namespace Schumix.CompilerAddon.Commands
 					return true;
 				}
 
-				if(IsFor(data))
-				{
-					bool b = false;
-					var thread = new Thread(() => { o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
-					thread.Start();
-					thread.Join(1);
-					thread.Abort();
-
-					if(!b)
-					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
-						return true;
-					}
-				}
-				else if(IsDo(data) || IsWhile(data))
+				if(IsFor(data) || IsDo(data) || IsWhile(data))
 				{
 					bool b = false;
 					var thread = new Thread(() => { o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
