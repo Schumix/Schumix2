@@ -43,7 +43,7 @@ namespace Schumix.Irc.Commands
 		protected bool IsAdmin(string Name)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
-			return !db.IsNull() ? true : false;
+			return !db.IsNull();
 		}
 
 		protected bool IsAdmin(string Name, AdminFlag Flag)
@@ -52,7 +52,7 @@ namespace Schumix.Irc.Commands
 			if(!db.IsNull())
 			{
 				int flag = Convert.ToInt32(db["Flag"]);
-				return Flag != (AdminFlag)flag ? false : true;
+				return Flag != (AdminFlag)flag;
 			}
 
 			return false;
@@ -75,7 +75,7 @@ namespace Schumix.Irc.Commands
 					(flag == 2 && Flag == AdminFlag.Operator))
 					return true;
 
-				return Flag != (AdminFlag)flag ? false : true;
+				return Flag != (AdminFlag)flag;
 			}
 
 			return false;

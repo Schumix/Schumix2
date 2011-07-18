@@ -524,7 +524,10 @@ namespace Schumix.Irc.Commands
 			}
 
 			if(sIRCMessage.Info.Length == 5)
+			{
 				sSender.Mode(sIRCMessage.Channel, sIRCMessage.Info[4].ToLower());
+				return;
+			}
 
 			if(sIRCMessage.Info.Length < 6)
 			{
