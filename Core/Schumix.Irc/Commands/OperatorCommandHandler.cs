@@ -523,6 +523,9 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			if(sIRCMessage.Info.Length == 5)
+				sSender.Mode(sIRCMessage.Channel, sIRCMessage.Info[4].ToLower());
+
 			if(sIRCMessage.Info.Length < 6)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
