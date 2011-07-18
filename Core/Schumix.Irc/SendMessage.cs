@@ -45,9 +45,9 @@ namespace Schumix.Irc
 			lock(WriteLock)
 			{
 				if(type == MessageType.PRIVMSG)
-					WriteLine("PRIVMSG {0} :{1}", channel, message);
+					WriteLine("PRIVMSG {0} :{1}", channel.ToLower(), message);
 				else if(type == MessageType.NOTICE)
-					WriteLine("NOTICE {0} :{1}", channel, message);
+					WriteLine("NOTICE {0} :{1}", channel.ToLower(), message);
 				/*else if(type == MessageType.AMSG)
 					WriteLine("AMSG :{0}", message);
 				else if(type == MessageType.ME)

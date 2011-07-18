@@ -112,6 +112,14 @@ namespace Schumix.Irc
 			}
 		}
 
+		public void Mode(string channel, string status)
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("MODE {0} {1}", channel, status);
+			}
+		}
+
 		public void Mode(string channel, string status, string name)
 		{
 			lock(WriteLock)
