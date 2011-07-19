@@ -20,6 +20,7 @@
 
 using System;
 using System.Data;
+using System.Threading;
 using System.Text.RegularExpressions;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
@@ -97,7 +98,11 @@ namespace Schumix.ExtraAddon.Commands
 			try
 			{
 				var url = new Uri(msg);
-				var webTitle = WebHelper.GetWebTitle(url, sLManager.GetChannelLocalization(channel));
+				string webTitle = string.Empty;
+				var thread = new Thread(() => webTitle = WebHelper.GetWebTitle(url, sLManager.GetChannelLocalization(channel)));
+				thread.Start();
+				thread.Join(4000);
+				thread.Abort();
 
 				if(string.IsNullOrEmpty(webTitle))
 					return;
