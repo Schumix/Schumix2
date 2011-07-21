@@ -207,6 +207,7 @@ namespace Schumix.CompilerAddon.Commands
 			}
 			catch(Exception)
 			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, ":'(");
 				return true;
 			}
 		}
@@ -368,6 +369,13 @@ namespace Schumix.CompilerAddon.Commands
 
 			// Assembly
 			if(data.Contains("Assembly.Load") || data.Contains("Assembly.ReflectionOnlyLoad") || data.Contains("Assembly.UnsafeLoadFrom"))
+			{
+				Warning(channel);
+				return true;
+			}
+
+			// Type
+			if(data.Contains("GetMethod") || data.Contains("GetType") || data.Contains("GetInterfaces") || data.Contains("GetMember"))
 			{
 				Warning(channel);
 				return true;
