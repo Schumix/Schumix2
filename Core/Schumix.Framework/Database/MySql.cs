@@ -62,7 +62,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				Log.Error("MySql", "{0}", m.Message);
+				Log.Error("MySql", m.Message);
 				return false;
 			}
 		}
