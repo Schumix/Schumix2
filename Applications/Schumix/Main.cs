@@ -61,7 +61,7 @@ namespace Schumix
 			string configdir = "Configs";
 			string configfile = "Schumix.xml";
 			string console_encoding = "utf-8";
-			string localization = "enUS";
+			string localization = "start";
 
 			for(int i = 0; i < args.Length; i++)
 			{
@@ -114,9 +114,9 @@ namespace Schumix
 
 			new Config(configdir, configfile);
 
-			if(localization == "enUS")
+			if(localization == "start")
 				sLConsole.Locale = LocalizationConfig.Locale;
-			else if(localization != "enUS")
+			else if(localization != "start")
 				sLConsole.Locale = localization;
 
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
