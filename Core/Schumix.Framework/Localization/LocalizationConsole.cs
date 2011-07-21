@@ -961,7 +961,7 @@ namespace Schumix.Framework.Localization
 				case "Text9":
 				{
 					if(Locale == "huHU")
-						return "{0}: hibás csatorna jelszó!";
+						return "{0}: ezen csatorna jelszó hibás!";
 					else if(Locale == "enUS")
 						return "";
 					else

@@ -52,7 +52,7 @@ namespace Schumix.Irc.Commands
 			if(!db.IsNull())
 			{
 				int flag = Convert.ToInt32(db["Flag"]);
-				return Flag != (AdminFlag)flag;
+				return Flag == (AdminFlag)flag;
 			}
 
 			return false;
@@ -75,7 +75,7 @@ namespace Schumix.Irc.Commands
 					(flag == 2 && Flag == AdminFlag.Operator))
 					return true;
 
-				return Flag != (AdminFlag)flag;
+				return Flag == (AdminFlag)flag;
 			}
 
 			return false;

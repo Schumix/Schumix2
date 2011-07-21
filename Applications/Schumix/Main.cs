@@ -130,12 +130,13 @@ namespace Schumix
 		/// </summary>
 		private static void Help()
 		{
-			System.Console.WriteLine("Test");
-			System.Console.WriteLine("Test");
-			System.Console.WriteLine("Test");
-			System.Console.WriteLine("Test");
-			System.Console.WriteLine("Test");
-			System.Console.WriteLine("Test");
+			System.Console.WriteLine("[Schumix2] Version: {0}", sUtilities.GetVersion());
+			System.Console.WriteLine("Options:");
+			System.Console.WriteLine("\t-h, --help\t\t\tShow help");
+			System.Console.WriteLine("\t--config-dir=<dir>\t\tSet up the config folder's path and 'name");
+			System.Console.WriteLine("\t--config-file=<file>\t\tSet up the config file's place");
+			System.Console.WriteLine("\t--console-encoding=Value\tSet up the program's character encoding");
+			System.Console.WriteLine("\t--console-localization=Value\tSet up the program's console language settings");
 		}
 	}
 }

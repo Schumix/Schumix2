@@ -510,6 +510,12 @@ namespace Schumix.ExtraAddon.Commands
 				return;
 			}
 
+			if(!sChannelInfo.FSelect("message") || !sChannelInfo.FSelect("message", sIRCMessage.Channel))
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoMessageFunction", sIRCMessage.Channel));
+				return;
+			}
+
 			if(sIRCMessage.Info[4].ToLower() == "channel")
 			{
 				if(sIRCMessage.Info.Length < 6)
