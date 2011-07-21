@@ -61,7 +61,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(SQLiteException s)
 			{
-				Log.Error("SQLite", "{0}", s.Message);
+				Log.Error("SQLite", s.Message);
 				return false;
 			}
 		}
