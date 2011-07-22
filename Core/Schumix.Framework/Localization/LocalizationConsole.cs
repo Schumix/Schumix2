@@ -456,9 +456,9 @@ namespace Schumix.Framework.Localization
 				}
 				case "Uptime":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "{0} nap, {1} óra, {2} perc, {3} másodperc.";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "{0} day(s), {1} hour(s), {2} min(s), {3} sec(s).";
 					else
 						return "{0} day(s), {1} hour(s), {2} min(s), {3} sec(s).";
