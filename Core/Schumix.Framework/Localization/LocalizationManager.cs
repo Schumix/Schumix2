@@ -83,7 +83,6 @@ namespace Schumix.Framework.Localization
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
 			string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 			db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_command WHERE Language = '{0}' AND Command = '{1}'", locale, command.ToLower());
-			Console.WriteLine(db["Text"].ToString());
 			return !db.IsNull() ? db["Text"].ToString().Split('\n') : new string[] { sLConsole.Translations("NoFound", locale) };
 		}
 
