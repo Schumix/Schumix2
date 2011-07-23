@@ -106,9 +106,9 @@ namespace Schumix.ExtraAddon.Commands
 						break;
 				}
 
-				if(DateTime.Now.Hour <= 9)
+				if(DateTime.Now.Hour <= 5 && DateTime.Now.Hour <= 9)
 					sSendMessage.SendCMPrivmsg(channel, "Jó reggelt {0}", sIRCMessage.Nick);
-				else if(DateTime.Now.Hour >= 20)
+				else if(DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 5)
 					sSendMessage.SendCMPrivmsg(channel, "Jó estét {0}", sIRCMessage.Nick);
 				else
 				{
@@ -143,7 +143,7 @@ namespace Schumix.ExtraAddon.Commands
 						break;
 				}
 
-				if(DateTime.Now.Hour >= 20)
+				if(DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 5)
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jóét {0}", sIRCMessage.Nick);
 				else
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0} {1}", elkoszones, sIRCMessage.Nick);

@@ -368,7 +368,8 @@ namespace Schumix.CompilerAddon.Commands
 			}
 
 			// Assembly
-			if(data.Contains("Assembly.Load") || data.Contains("Assembly.ReflectionOnlyLoad") || data.Contains("Assembly.UnsafeLoadFrom"))
+			if(data.Contains("Assembly.Load") || data.Contains("Assembly.ReflectionOnlyLoad") || data.Contains("Assembly.UnsafeLoadFrom") ||
+				data.Contains("Assembly.Location") || data.Contains("Assembly.EscapedCodeBase") || data.Contains("Assembly.CodeBase"))
 			{
 				Warning(channel);
 				return true;
@@ -376,6 +377,13 @@ namespace Schumix.CompilerAddon.Commands
 
 			// Type
 			if(data.Contains("GetMethod") || data.Contains("GetType") || data.Contains("GetInterfaces") || data.Contains("GetMember"))
+			{
+				Warning(channel);
+				return true;
+			}
+
+			// DllImport
+			if(data.Contains("DllImport"))
 			{
 				Warning(channel);
 				return true;
