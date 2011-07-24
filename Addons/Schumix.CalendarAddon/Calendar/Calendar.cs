@@ -120,7 +120,12 @@ namespace Schumix.CalendarAddon
 				{
 					if(list.Piece == CalendarConfig.NumberOfFlooding)
 					{
-						sBan.BanName(list.Name, list.Channel, sLManager.GetWarningText("RecurrentFlooding", list.Channel), DateTime.Now);
+						var time = DateTime.Now;
+						if(time.Minute < 30)
+							sBan.BanName(list.Name, list.Channel, sLManager.GetWarningText("RecurrentFlooding", list.Channel), DateTime.Now.Hour, DateTime.Now.Minute+30);
+						else if(time.Minute >= 30)
+							sBan.BanName(list.Name, list.Channel, sLManager.GetWarningText("RecurrentFlooding", list.Channel), DateTime.Now.Hour+1, DateTime.Now.Minute-30);
+
 						list.Piece = 0;
 					}
 					else
