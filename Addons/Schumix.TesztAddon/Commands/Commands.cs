@@ -31,8 +31,8 @@ namespace Schumix.TesztAddon.Commands
 {
 	public class TesztCommand : CommandInfo
 	{
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 
 		protected void HandleTest(IRCMessage sIRCMessage)
 		{
