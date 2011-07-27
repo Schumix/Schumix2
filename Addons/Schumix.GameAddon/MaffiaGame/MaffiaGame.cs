@@ -23,19 +23,22 @@ using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.GameAddon;
 
 namespace Schumix.GameAddon.KillerGames
 {
 	public sealed partial class KillerGame
 	{
+		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Dictionary<int, string> _playerlist = new Dictionary<int, string>();
-		private readonly List<string> _detectivelist = new List<string>();
-		private readonly List<string> _killerlist = new List<string>();
-		private readonly List<string> _doctorlist = new List<string>();
-		private readonly List<string> _normalmanlist = new List<string>();
-		private readonly List<string> _ghostlist = new List<string>();
+		private readonly Dictionary<string, string> _detectivelist = new Dictionary<string, string>();
+		private readonly Dictionary<string, string> _killerlist = new Dictionary<string, string>();
+		private readonly Dictionary<string, string> _doctorlist = new Dictionary<string, string>();
+		private readonly Dictionary<string, string> _normallist = new Dictionary<string, string>();
+		private readonly Dictionary<string, string> _ghostlist = new Dictionary<string, string>();
+		private readonly Dictionary<string, string> _lynchlist = new Dictionary<string, string>();
 		private string _owner;
 		private string _channel;
 		private string newghost;
@@ -44,9 +47,20 @@ namespace Schumix.GameAddon.KillerGames
 		private bool _stop;
 		private bool _killer;
 		private bool _detective;
+		private bool _joinstop;
+		private int _lynchmaxnumber;
+		private string _rank;
+		private int _players;
+		private string killer_;
+		private string detective_;
 		public string GetOwner() { return _owner; }
+		public string GetKiller() { return killer_; }
+		public string GetDetective() { return detective_; }
 		public bool Started { get; private set; }
 		public Dictionary<int, string> GetPlayerList() { return _playerlist; }
+		public Dictionary<string, string> GetDetectiveList() { return _detectivelist; }
+		public Dictionary<string, string> GetKillerList() { return _killerlist; }
+		public Dictionary<string, string> GetNormalList() { return _normallist; }
 
 		public KillerGame(string Name, string Channel)
 		{
@@ -54,13 +68,36 @@ namespace Schumix.GameAddon.KillerGames
 			_stop = false;
 			_killer = false;
 			_detective = false;
+			_joinstop = false;
+			_players = 0;
+			_lynchmaxnumber = 0;
 			Started = false;
 			_owner = Name;
+			_rank = string.Empty;
+			killer_ = string.Empty;
+			detective_ = string.Empty;
 			_channel = Channel.ToLower();
 			_playerlist.Add(1, Name);
-			/*_playerlist.Add(2, "asd");
-			_playerlist.Add(3, "asd2");
-			_playerlist.Add(4, "asd3");*/
+			sSendMessage.SendCMPrivmsg(_channel, "{0} új játékot indított. Csatlakozni a '!join' paranccsal tudtok.", _owner);
+			sSendMessage.SendCMPrivmsg(_channel, "{0}: Írd be a '!start' parancsot, ha mindenki készen áll.", _owner);
+		}
+
+		public void NewGame(string Name, string Channel)
+		{
+			_day = false;
+			_stop = false;
+			_killer = false;
+			_detective = false;
+			_joinstop = false;
+			_players = 0;
+			_lynchmaxnumber = 0;
+			Started = false;
+			_owner = Name;
+			_rank = string.Empty;
+			killer_ = string.Empty;
+			detective_ = string.Empty;
+			_channel = Channel.ToLower();
+			_playerlist.Add(1, Name);
 			sSendMessage.SendCMPrivmsg(_channel, "{0} új játékot indított. Csatlakozni a '!join' paranccsal tudtok.", _owner);
 			sSendMessage.SendCMPrivmsg(_channel, "{0}: Írd be a '!start' parancsot, ha mindenki készen áll.", _owner);
 		}
@@ -71,22 +108,25 @@ namespace Schumix.GameAddon.KillerGames
 			_thread.Start();
 		}
 
-		private void StopThread()
+		public void StopThread()
 		{
+			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", GameAddon.GameChannelFunction[_channel], _channel);
+			sChannelInfo.ChannelFunctionReload();
 			_thread.Abort();
 			_playerlist.Clear();
 			_detectivelist.Clear();
 			_killerlist.Clear();
 			_doctorlist.Clear();
-			_normalmanlist.Clear();
+			_normallist.Clear();
 			_ghostlist.Clear();
+			GameAddon.GameChannelFunction.Remove(_channel);
 		}
 
 		private void Game()
 		{
-			if(_playerlist.Count < 8)
+			if(_players < 8)
 				sSendMessage.SendCMPrivmsg(_channel, "Nincs elég játékos két gyilkoshoz, csak egy gyilkos van játékban (illetve nincs orvos).");
-			else if(_playerlist.Count >= 8)
+			else if(_players >= 8)
 				sSendMessage.SendCMPrivmsg(_channel, "Mivel legalább 8 játékos van, ezért 2 gyilkos és egy orvos lesz.");
 
 			sSendMessage.SendCMPrivmsg(_channel, "Itt mindenki egyszerű civilnek tűnhet, de valójában köztetek van 1 vagy 2 4gyilkos, akiknek célja mindenkit megölni az éj leple alatt.");
@@ -102,10 +142,29 @@ namespace Schumix.GameAddon.KillerGames
 			for(;;)
 			{
 				Thread.Sleep(1000);
-				_detective = true;
 
-				if(_playerlist.Count < 8 && _killer && _detective)
+				if(_players < 8 && _killer && _detective)
 				{
+					if(_killerlist.ContainsKey(newghost.ToLower()))
+						_killerlist.Remove(newghost.ToLower());
+					else if(_detectivelist.ContainsKey(newghost.ToLower()))
+						_detectivelist.Remove(newghost.ToLower());
+					else if(_normallist.ContainsKey(newghost.ToLower()))
+						_normallist.Remove(newghost.ToLower());
+
+					int i = 0;
+					foreach(var player in _playerlist)
+					{
+						if(player.Value == newghost)
+						{
+							i = player.Key;
+							break;
+						}
+					}
+
+					_playerlist.Remove(i);
+					_ghostlist.Add(newghost.ToLower(), newghost);
+
 					_day = true;
 					_stop = false;
 					_killer = false;
@@ -113,6 +172,8 @@ namespace Schumix.GameAddon.KillerGames
 					sSender.Mode(_channel, "-v", newghost);
 					sSendMessage.SendCMPrivmsg(newghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
 				}
+
+				EndGame();
 
 				if(!Started)
 					StopThread();
@@ -123,18 +184,24 @@ namespace Schumix.GameAddon.KillerGames
 						continue;
 
 					_stop = true;
+					_lynchlist.Clear();
+					names = string.Empty;
+
+					foreach(var name in _playerlist)
+						names += ", " + name.Value;
+
 					sSendMessage.SendCMPrivmsg(_channel, "A következő személyek vannak még életben: {0}", names.Remove(0, 2, ", "));
 					sSendMessage.SendCMPrivmsg(_channel, "Leszállt az 4éj.");
 					sSendMessage.SendCMPrivmsg(_channel, "Az összes civil békésen szundikál...");
 					Thread.Sleep(1000);
 
-					if(_playerlist.Count < 8)
+					if(_players < 8)
 					{
 						foreach(var name in _killerlist)
 						{
-							sSendMessage.SendCMPrivmsg(name, "Miközben a falusiak alszanak, te eldöntöd, hogy kit ölsz meg az éj leple alatt.");
-							sSendMessage.SendCMPrivmsg(name, "Te és a másik gyilkos (ha létezik, és él egyáltalán) meg fogjátok vitatni (PM-ben), hogy ki legyen az áldozat.");
-							sSendMessage.SendCMPrivmsg(name, "Írd be PM-ként nekem: '!kill <nickname>'");
+							sSendMessage.SendCMPrivmsg(name.Key, "Miközben a falusiak alszanak, te eldöntöd, hogy kit ölsz meg az éj leple alatt.");
+							sSendMessage.SendCMPrivmsg(name.Key, "Te és a másik gyilkos (ha létezik, és él egyáltalán) meg fogjátok vitatni (PM-ben), hogy ki legyen az áldozat.");
+							sSendMessage.SendCMPrivmsg(name.Key, "Írd be PM-ként nekem: '!kill <nickname>'");
 							Thread.Sleep(400);
 						}
 					}
@@ -142,21 +209,21 @@ namespace Schumix.GameAddon.KillerGames
 					{
 						foreach(var name in _killerlist)
 						{
-							sSendMessage.SendCMPrivmsg(name, "");
+							sSendMessage.SendCMPrivmsg(name.Key, "");
 							Thread.Sleep(400);
 						}
 
 						foreach(var name in _doctorlist)
 						{
-							sSendMessage.SendCMPrivmsg(name, "");
+							sSendMessage.SendCMPrivmsg(name.Key, "");
 							Thread.Sleep(400);
 						}
 					}
 
 					foreach(var name in _detectivelist)
 					{
-						sSendMessage.SendCMPrivmsg(name, "A te dolgod megtudni egyes emberekről, hogy gyilkosok-e.");
-						sSendMessage.SendCMPrivmsg(name, "Most kell eldöntened kit kövess éjszaka: írd be PM-ként nekem: '!see <nickname>'. Így megtudhatod, ki is ő valójában.");
+						sSendMessage.SendCMPrivmsg(name.Key, "A te dolgod megtudni egyes emberekről, hogy gyilkosok-e.");
+						sSendMessage.SendCMPrivmsg(name.Key, "Most kell eldöntened kit kövess éjszaka: írd be PM-ként nekem: '!see <nickname>'. Így megtudhatod, ki is ő valójában.");
 						Thread.Sleep(400);
 					}
 				}
@@ -166,34 +233,67 @@ namespace Schumix.GameAddon.KillerGames
 						continue;
 
 					_stop = true;
-					_day = false;
 					sSendMessage.SendCMPrivmsg(_channel, "Felkelt a nap!");
 					sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newghost);
-					sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy egy ártatlan falusi volt.");
+
+					if(_rank == "killer")
+						sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4gyilkos volt.");
+					else if(_rank == "detective")
+						sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4nyomozó volt.");
+					else if(_rank == "normalman")
+						sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy egy ártatlan falusi volt.");
+
 					sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", newghost);
 
 					names = string.Empty;
-					foreach(var name in _killerlist)
-						names += ", " + name;
-
-					foreach(var name in _detectivelist)
-						names += ", " + name;
-
-					foreach(var name in _normalmanlist)
-						names += ", " + name;
+					foreach(var name in _playerlist)
+						names += ", " + name.Value;
 
 					sSendMessage.SendCMPrivmsg(_channel, "A következő személyek vannak még életben: {0}", names.Remove(0, 2, ", "));
 
 					names = string.Empty;
 					foreach(var name in _ghostlist)
-						names += ", " + name;
+						names += ", " + name.Value;
 
-					sSendMessage.SendCMPrivmsg(_channel, "A következő személyek halottak : {0}", names.Remove(0, 2, ", "));
+					sSendMessage.SendCMPrivmsg(_channel, "A következő személyek halottak: {0}", names.Remove(0, 2, ", "));
 					sSendMessage.SendCMPrivmsg(_channel, "Felkelt a nap... A falusiak kirohannak a főtérre, hogy megvitassák, ki lehet a gyilkos.");
 					sSendMessage.SendCMPrivmsg(_channel, "A falusiaknak el *kell* dönteniük, hogy kit lincseljenek meg.");
 					sSendMessage.SendCMPrivmsg(_channel, "Ha mindenki készen áll, írjátok be: '!lynch <nickname>',");
 					sSendMessage.SendCMPrivmsg(_channel, "Összeszámolom a szavazatokat, és a döntő többség szava fog érvényesülni.");
 					sSendMessage.SendCMPrivmsg(_channel, "Megjegyzés: a szavazatokat bármikor meg lehet változtatni.");
+				}
+			}
+		}
+
+		private void EndGame()
+		{
+			if(_killerlist.Count == 0)
+			{
+				foreach(var end in _playerlist)
+					sSender.Mode(_channel, "-v", end.Value);
+
+				sSender.Mode(_channel, "-m");
+				sSendMessage.SendCMPrivmsg(_channel, "A gyilkosok halottak! A falusiak győztek.");
+				sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig None. Mindenki más hétköznapi civil volt.", killer_, detective_);
+				StopThread();
+			}
+			else
+			{
+				if(_playerlist.Count == 2)
+				{
+					if(_players < 8)
+					{
+						foreach(var end in _playerlist)
+							sSender.Mode(_channel, "-v", end.Value);
+	
+						sSender.Mode(_channel, "-m");
+						StopThread();
+						sSendMessage.SendCMPrivmsg(_channel, "A falusiak halottak! A 4gyilkosok győztek.");
+						sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+						sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig None. Mindenki más hétköznapi civil volt.", killer_, detective_);
+						StopThread();
+					}
 				}
 			}
 		}
@@ -495,5 +595,11 @@ namespace Schumix.GameAddon.KillerGames
 /*
 <SzEMBot> Auryn eltűnt egy különös féreglyukban.
 <SzEMBot> Auryn -nak unalmas szerepe volt a játékban, mint civil. Remélhetőleg halála izgalmasabb lesz.*/
+/*<SzEMBot> Domokos arra szavazott, hogy esafrany legyen meglincselve!
+<SzEMBot> A többség esafrany lincselése mellett döntött! Elszabadulnak az indulatok.  Ő mostantól már halott.
+<SzEMBot> *** A holttest megvizsgálása után kiderült, hogy gyilkos volt!
+<SzEMBot> A gyilkosok halottak!  A falusiak győztek.
+<SzEMBot> A játék befejeződött.
+<SzEMBot> *** A két gyilkos esafrany és Kinti volt, a nyomozó Feherlo, az orvos pedig Karpatia102. Mindenki más hétköznapi civil volt.*/
 	}
 }

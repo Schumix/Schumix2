@@ -95,27 +95,28 @@
     <AssemblyName>Schumix.GameAddon</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
+    <Reference Include="System">
+    </Reference>
+    <Reference Include="System.Data">
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GameAddon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="KillerGame\KillerGame.cs" />
-    <Compile Include="KillerGame\Start.cs" />
-    <Compile Include="KillerGame\Join.cs" />
-    <Compile Include="KillerGame\Lynch.cs" />
-    <Compile Include="KillerGame\Kill.cs" />
-    <Compile Include="KillerGame\Apol.cs" />
-    <Compile Include="KillerGame\See.cs" />
     <Compile Include="Commands\Commands.cs" />
-    <Compile Include="KillerGame\Stats.cs" />
-    <Compile Include="KillerGame\Left.cs" />
+    <Compile Include="MaffiaGame\Apol.cs" />
+    <Compile Include="MaffiaGame\Join.cs" />
+    <Compile Include="MaffiaGame\Kill.cs" />
+    <Compile Include="MaffiaGame\Left.cs" />
+    <Compile Include="MaffiaGame\Lynch.cs" />
+    <Compile Include="MaffiaGame\MaffiaGame.cs" />
+    <Compile Include="MaffiaGame\See.cs" />
+    <Compile Include="MaffiaGame\Start.cs" />
+    <Compile Include="MaffiaGame\Stats.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
-    <Folder Include="KillerGame\" />
     <Folder Include="Commands\" />
   </ItemGroup>
   <ItemGroup>

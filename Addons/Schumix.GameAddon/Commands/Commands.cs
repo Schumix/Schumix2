@@ -35,6 +35,7 @@ namespace Schumix.GameAddon.Commands
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Sender sSender = Singleton<Sender>.Instance;
 
 		protected void HandleGame(IRCMessage sIRCMessage)
 		{
@@ -54,22 +55,35 @@ namespace Schumix.GameAddon.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", sIRCMessage.Channel);
-				if(!db.IsNull())
-					GameAddon.GameChannelFunction.Add(sIRCMessage.Channel, db["Functions"].ToString());
+				if(sIRCMessage.Info[5].ToLower() == "maffiagame")
+				{
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", sIRCMessage.Channel);
+					if(!db.IsNull())
+					{
+						if(!GameAddon.GameChannelFunction.ContainsKey(sIRCMessage.Channel.ToLower()))
+							GameAddon.GameChannelFunction.Add(sIRCMessage.Channel.ToLower(), db["Functions"].ToString());
+					}
 
-				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), sIRCMessage.Channel);
-				sChannelInfo.ChannelFunctionReload();
-				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("commands", "off", sIRCMessage.Channel), sIRCMessage.Channel);
-				sChannelInfo.ChannelFunctionReload();
-				//SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "on", sIRCMessage.Channel), sIRCMessage.Channel);
-				//sChannelInfo.ChannelFunctionReload();
-
-				if(sIRCMessage.Info[5].ToLower() == "killer")
-					GameAddon.KillerList.Add(sIRCMessage.Channel.ToLower(), new KillerGame(sIRCMessage.Nick, sIRCMessage.Channel));
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), sIRCMessage.Channel);
+					sChannelInfo.ChannelFunctionReload();
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("commands", "off", sIRCMessage.Channel), sIRCMessage.Channel);
+					sChannelInfo.ChannelFunctionReload();
+					//SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "on", sIRCMessage.Channel), sIRCMessage.Channel);
+					//sChannelInfo.ChannelFunctionReload();
+					sSender.Mode(sIRCMessage.Channel, "+v", sIRCMessage.Nick);
+					if(!GameAddon.KillerList.ContainsKey(sIRCMessage.Channel.ToLower()))
+						GameAddon.KillerList.Add(sIRCMessage.Channel.ToLower(), new KillerGame(sIRCMessage.Nick, sIRCMessage.Channel));
+					else
+						GameAddon.KillerList[sIRCMessage.Channel.ToLower()].NewGame(sIRCMessage.Nick, sIRCMessage.Channel);
+				}
 				else
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs ilyen játék!");
 			}
+		}
+
+		protected void HandleNewNick(IRCMessage sIRCMessage)
+		{
+
 		}
 	}
 }
