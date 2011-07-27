@@ -19,9 +19,9 @@
 
 using System;
 
-namespace Schumix.GameAddon.KillerGames
+namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class KillerGame
+	public sealed partial class MaffiaGame
 	{
 
 	}

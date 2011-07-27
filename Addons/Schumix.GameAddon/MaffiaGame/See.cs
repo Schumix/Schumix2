@@ -19,12 +19,18 @@
 
 using System;
 
-namespace Schumix.GameAddon.KillerGames
+namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class KillerGame
+	public sealed partial class MaffiaGame
 	{
 		public void See(string Name, string NickName)
 		{
+			if(!Running)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+				return;
+			}
+
 			if(_day)
 			{
 				sSendMessage.SendCMPrivmsg(NickName, "Csak este nyomozhatsz!");

@@ -25,7 +25,7 @@ using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.GameAddon.KillerGames;
+using Schumix.GameAddon.MaffiaGames;
 
 namespace Schumix.GameAddon.Commands
 {
@@ -71,10 +71,10 @@ namespace Schumix.GameAddon.Commands
 					//SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "on", sIRCMessage.Channel), sIRCMessage.Channel);
 					//sChannelInfo.ChannelFunctionReload();
 					sSender.Mode(sIRCMessage.Channel, "+v", sIRCMessage.Nick);
-					if(!GameAddon.KillerList.ContainsKey(sIRCMessage.Channel.ToLower()))
-						GameAddon.KillerList.Add(sIRCMessage.Channel.ToLower(), new KillerGame(sIRCMessage.Nick, sIRCMessage.Channel));
+					if(!GameAddon.MaffiaList.ContainsKey(sIRCMessage.Channel.ToLower()))
+						GameAddon.MaffiaList.Add(sIRCMessage.Channel.ToLower(), new MaffiaGame(sIRCMessage.Nick, sIRCMessage.Channel));
 					else
-						GameAddon.KillerList[sIRCMessage.Channel.ToLower()].NewGame(sIRCMessage.Nick, sIRCMessage.Channel);
+						GameAddon.MaffiaList[sIRCMessage.Channel.ToLower()].NewGame(sIRCMessage.Nick, sIRCMessage.Channel);
 				}
 				else
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs ilyen játék!");
@@ -83,7 +83,20 @@ namespace Schumix.GameAddon.Commands
 
 		protected void HandleNewNick(IRCMessage sIRCMessage)
 		{
+			foreach(var maffia in GameAddon.MaffiaList)
+			{
+				if(!maffia.Value.Running)
+					continue;
 
+				foreach(var player in maffia.Value.GetPlayerList())
+				{
+					if(player.Value == sIRCMessage.Nick)
+					{
+						maffia.Value.NewNick(player.Key, sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, ":"));
+						break;
+					}
+				}
+			}
 		}
 	}
 }

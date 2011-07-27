@@ -19,12 +19,18 @@
 
 using System;
 
-namespace Schumix.GameAddon.KillerGames
+namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class KillerGame
+	public sealed partial class MaffiaGame
 	{
 		public void Join(string Name)
 		{
+			if(!Running)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+				return;
+			}
+
 			if(_joinstop)
 			{
 				sSendMessage.SendCMPrivmsg(_channel, "{0}: A játék épp most indult. Kérlek ne zavard a játékosokat!", Name);

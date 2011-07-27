@@ -20,12 +20,18 @@
 using System;
 using Schumix.Framework.Extensions;
 
-namespace Schumix.GameAddon.KillerGames
+namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class KillerGame
+	public sealed partial class MaffiaGame
 	{
 		public void Stats()
 		{
+			if(!Running)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "Nem megy játék!");
+				return;
+			}
+
 			if(!Started)
 			{
 				string names = string.Empty;
