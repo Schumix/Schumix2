@@ -23,35 +23,28 @@ namespace Schumix.GameAddon.KillerGames
 {
 	public sealed partial class KillerGame
 	{
-		public void Kill(string Name, string Killer)
+		public void Join(string Name)
 		{
-			if(!_killerlist.Contains(Killer))
+			if(_joinstop)
 			{
-				sSendMessage.SendCMPrivmsg(Killer, "{0}: Nem vagy gyilkos!", Killer);
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: A játék épp most indult. Kérlek ne zavard a játékosokat!", Name);
+				return;
+			}
+
+			if(Started)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: A játék már megy. Kérlek ne zavard a játékosokat!", Name);
 				return;
 			}
 
 			if(!_playerlist.ContainsValue(Name))
 			{
-				sSendMessage.SendCMPrivmsg(Killer, "Kit akarsz megölni?");
-				return;
+				_playerlist.Add(_playerlist.Count+1, Name);
+				sSender.Mode(_channel, "+v", Name);
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Bekerültél a játékba!", Name);
 			}
-
-			if(_playerlist.Count < 8)
-			{
-				if(_killerlist.Contains(Name))
-					_killerlist.Remove(Name);
-				else if(_detectivelist.Contains(Name))
-					_detectivelist.Remove(Name);
-				else if(_normalmanlist.Contains(Name))
-					_normalmanlist.Remove(Name);
-
-				_ghostlist.Add(Name);
-				sSendMessage.SendCMPrivmsg(Killer, "Elkönyveltem a szavazatodat.");
-			}
-
-			newghost = Name;
-			_killer = true;
+			else 
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Már játékban vagy!", Name);
 		}
 	}
 }

@@ -143,14 +143,14 @@ namespace Schumix.CompilerAddon
 				sIRCMessage.Args = sIRCMessage.Args.Remove(0, args.Length);
 				var thread = new Thread(() => b = CompilerCommand(sIRCMessage, true));
 				thread.Start();
-				thread.Join(2000);
+				thread.Join(3000);
 				thread.Abort();
 			}
 			else
 			{
 				var thread = new Thread(() => b = CompilerCommand(sIRCMessage, false));
 				thread.Start();
-				thread.Join(2000);
+				thread.Join(3000);
 				thread.Abort();
 			}
 

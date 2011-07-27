@@ -27,15 +27,28 @@ namespace Schumix.GameAddon.KillerGames
 	{
 		public void Start()
 		{
-			if(_playerlist.Count < 4)
+			if(Started)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "teszt");
+				sSendMessage.SendCMPrivmsg(_channel, "A játék már megy!");
 				return;
 			}
+
+			if(_playerlist.Count < 4)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "A játék indításához minimum 4 játékos kell!");
+				return;
+			}
+
+			_joinstop = true;
 
 			var list = new Dictionary<int, string>();
 			foreach(var l in _playerlist)
 				list.Add(l.Key, l.Value);
+
+			_detectivelist.Clear();
+			_killerlist.Clear();
+			_doctorlist.Clear();
+			_normallist.Clear();
 
 			if(list.Count < 8)
 			{
@@ -50,44 +63,56 @@ namespace Schumix.GameAddon.KillerGames
 
 					if(killer)
 					{
-						string name = string.Empty;
-						list.TryGetValue(number, out name);
-						_killerlist.Add(name);
-						list.Remove(number);
-						killer = false;
+						if(list.ContainsKey(number))
+						{
+							string name = string.Empty;
+							list.TryGetValue(number, out name);
+							_killerlist.Add(name.ToLower(), name);
+							list.Remove(number);
+							killer = false;
+							killer_ = name;
+						}
+
 						continue;
 					}
 					else if(detective)
 					{
-						string name = string.Empty;
-						list.TryGetValue(number, out name);
-						_detectivelist.Add(name);
-						list.Remove(number);
-						detective = false;
+						if(list.ContainsKey(number))
+						{
+							string name = string.Empty;
+							list.TryGetValue(number, out name);
+							_detectivelist.Add(name.ToLower(), name);
+							list.Remove(number);
+							detective = false;
+							detective_ = name;
+						}
+
 						continue;
 					}
 					else
 					{
 						foreach(var llist in list)
-							_normalmanlist.Add(llist.Value);
-
+							_normallist.Add(llist.Value.ToLower(), llist.Value);
 						break;
 					}
 				}
 
 				foreach(var name in _killerlist)
-					sSendMessage.SendCMPrivmsg(name, "Te egy gyilkos vagy. Célod megölni minden falusit. Csak viselkedj természetesen!");
+					sSendMessage.SendCMPrivmsg(name.Key, "Te egy gyilkos vagy. Célod megölni minden falusit. Csak viselkedj természetesen!");
 
 				foreach(var name in _detectivelist)
-					sSendMessage.SendCMPrivmsg(name, "Te vagy a nyomozó. A te dolgod éjszakánként követni 1-1 embert, hogy megtudd, ki is ő valójában, mielőtt még túl késő lenne. Ha szerencséd van, a falusiak hisznek neked - és talán nem lincselnek meg...");
+					sSendMessage.SendCMPrivmsg(name.Key, "Te vagy a nyomozó. A te dolgod éjszakánként követni 1-1 embert, hogy megtudd, ki is ő valójában, mielőtt még túl késő lenne. Ha szerencséd van, a falusiak hisznek neked - és talán nem lincselnek meg...");
 
-				foreach(var name in _normalmanlist)
-					sSendMessage.SendCMPrivmsg(name, "Te egy teljesen hétköznapi civil vagy. Nincs más dolgod, mint kiválasztani nappal, hogy ki lehet a gyilkos, akit meglincseltek, éjszakánként pedig imádkozni az életedért...");
+				foreach(var name in _normallist)
+					sSendMessage.SendCMPrivmsg(name.Key, "Te egy teljesen hétköznapi civil vagy. Nincs más dolgod, mint kiválasztani nappal, hogy ki lehet a gyilkos, akit meglincseltek, éjszakánként pedig imádkozni az életedért...");
 			}
 
-			sSendMessage.SendCMPrivmsg(_channel, "Új játék lett indítva! Most mindenki megkapja a szerepét.");
-			sSender.Mode(_channel, "+m");
+			list.Clear();
 			Started = true;
+			_players = _playerlist.Count;
+			sSendMessage.SendCMPrivmsg(_channel, "Új játék lett indítva! Most mindenki megkapja a szerepét.");
+			_joinstop = false;
+			sSender.Mode(_channel, "+m");
 			Thread.Sleep(1000);
 			StartThread();
 		}

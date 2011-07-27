@@ -39,11 +39,13 @@ namespace Schumix.GameAddon
 
 		public void Setup()
 		{
-			CommandManager.PublicCRegisterHandler("game", new Action<IRCMessage>(HandleGame));
+			Network.PublicRegisterHandler("NICK",     		new Action<IRCMessage>(HandleNewNick));
+			CommandManager.PublicCRegisterHandler("game",	new Action<IRCMessage>(HandleGame));
 		}
 
 		public void Destroy()
 		{
+			Network.PublicRemoveHandler("NICK");
 			CommandManager.PublicCRemoveHandler("game");
 		}
 
@@ -54,94 +56,139 @@ namespace Schumix.GameAddon
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
-			string channel = sIRCMessage.Channel.ToLower();
-
-			if(KillerList.ContainsKey(channel) || sIRCMessage.Channel.Substring(0, 1) != "#")
+			//if(sChannelInfo.FSelect("gamecommands") || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(sIRCMessage.Info.Length < 4)
-					return;
+				//if(!sChannelInfo.FSelect("gamecommands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+					//return;
 
-				if(sIRCMessage.Channel.Substring(0, 1) != "#")
+				CNick(sIRCMessage);
+				string channel = sIRCMessage.Channel.ToLower();
+
+				if(KillerList.ContainsKey(channel) || sIRCMessage.Channel.Substring(0, 1) != "#")
 				{
-					foreach(var kill in KillerList)
+					if(sIRCMessage.Info.Length < 4)
+						return;
+	
+					if(sIRCMessage.Channel.Substring(0, 1) != "#")
 					{
-						foreach(var player in kill.Value.GetPlayerList())
+						foreach(var kill in KillerList)
 						{
-							if(player.Value == sIRCMessage.Nick)
+							foreach(var player in kill.Value.GetPlayerList())
 							{
-								channel = kill.Key;
-								break;
+								if(player.Value == sIRCMessage.Nick)
+								{
+									channel = kill.Key;
+									break;
+								}
 							}
 						}
 					}
-				}
 
-				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, ":");
-				switch(sIRCMessage.Info[3].ToLower())
-				{
-					case "!start":
+					sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, ":");
+					switch(sIRCMessage.Info[3].ToLower())
 					{
-						if(KillerList[channel].GetOwner() == sIRCMessage.Nick)
+						case "!start":
 						{
-							KillerList[channel].Start();
+							if(KillerList[channel].GetOwner() == sIRCMessage.Nick)
+								KillerList[channel].Start();
+							else
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játékot {0} indította!", KillerList[channel].GetOwner());
+							break;
 						}
-						else
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játékot {0} indította!", KillerList[channel].GetOwner());
-						break;
-					}
-					case "!join":
-					{
-						KillerList[channel].Join(sIRCMessage.Nick);
-						break;
-					}
-					case "!left":
-						break;
-					case "!kill":
-					{
-						if(sIRCMessage.Info.Length < 5)
+						case "!stats":
 						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz megölni?");
-							return;
+							KillerList[channel].Stats();
+							break;
 						}
-
-						KillerList[channel].Kill(sIRCMessage.Info[4], sIRCMessage.Nick);
-						break;
-					}
-					case "!lynch":
-						break;
-					case "!apol":
-						break;
-					case "!see":
-						break;
-					case "!end":
-					{
-						if(KillerList[channel].GetOwner() == sIRCMessage.Nick)
+						case "!join":
 						{
-							if(KillerList[channel].Started)
+							KillerList[channel].Join(sIRCMessage.Nick);
+							break;
+						}
+						case "!left":
+						{
+							if(sIRCMessage.Info.Length < 5)
 							{
-								SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", GameChannelFunction[channel], sIRCMessage.Channel);
-								sChannelInfo.ChannelFunctionReload();
-								KillerList.Remove(channel);
-								GameChannelFunction.Remove(channel);
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
+								KillerList[channel].Left(sIRCMessage.Nick);
+								return;
+							}
+
+							if(KillerList[channel].GetOwner() == sIRCMessage.Nick.ToLower())
+							{
+								if(!KillerList[channel].GetKillerList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
+									!KillerList[channel].GetDetectiveList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
+									!KillerList[channel].GetNormalList().ContainsKey(sIRCMessage.Info[4].ToLower()))
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Kit akarsz kiléptetni?", sIRCMessage.Nick);
+								else
+									KillerList[channel].Left(sIRCMessage.Info[4]);
 							}
 							else
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem te indítottad a játékot!", sIRCMessage.Nick);
+							break;
+						}
+						case "!kill":
+						{
+							if(sIRCMessage.Info.Length < 5)
 							{
-								SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", GameChannelFunction[channel], sIRCMessage.Channel);
-								sChannelInfo.ChannelFunctionReload();
-								KillerList.Remove(channel);
-								GameChannelFunction.Remove(channel);
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz megölni?");
+								return;
 							}
 
-							sSender.Mode(sIRCMessage.Channel, "-m");
+							KillerList[channel].Kill(sIRCMessage.Info[4], sIRCMessage.Nick);
+							break;
 						}
-						else
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sajnálom, de csak {0}, a játék indítója vethet véget a játéknak!", KillerList[channel].GetOwner());
-						break;
+						case "!lynch":
+						{
+							if(sIRCMessage.Info.Length < 5)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Kit akarsz lincselni?", sIRCMessage.Nick);
+								return;
+							}
+
+							KillerList[channel].Lynch(sIRCMessage.Info[4], sIRCMessage.Nick);
+							break;
+						}
+						case "!rescue":
+							break;
+						case "!see":
+						{
+							if(sIRCMessage.Info.Length < 5)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz kikérdezni?");
+								return;
+							}
+
+							KillerList[channel].See(sIRCMessage.Info[4], sIRCMessage.Nick);
+							break;
+						}
+						case "!end":
+						{
+							if(KillerList[channel].GetOwner() == sIRCMessage.Nick)
+							{
+								sSender.Mode(channel, "-m");
+
+								if(KillerList[channel].Started)
+								{
+									foreach(var end in KillerList[channel].GetPlayerList())
+										sSender.Mode(sIRCMessage.Channel, "-v", end.Value);
+
+									KillerList[channel].StopThread();
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig None. Mindenki más hétköznapi civil volt.", KillerList[channel].GetKiller(), KillerList[channel].GetDetective());
+								}
+								else
+								{
+									KillerList[channel].StopThread();
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
+								}
+							}
+							else
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sajnálom, de csak {0}, a játék indítója vethet véget a játéknak!", KillerList[channel].GetOwner());
+							break;
+						}
+						//default:
+							//sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem létezik ilyen parancs!", sIRCMessage.Nick);
 					}
-					//default:
-						//sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem létezik ilyen parancs!", sIRCMessage.Nick);
 				}
 			}
 		}

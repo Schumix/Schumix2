@@ -20,7 +20,7 @@
             <Vhost>false</Vhost>
         </HostServ>
         <Wait>
-            <MessageSending>50</MessageSending>
+            <MessageSending>400</MessageSending>
         </Wait>
         <Command>
             <Prefix>$</Prefix>
