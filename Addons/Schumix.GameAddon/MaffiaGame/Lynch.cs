@@ -20,16 +20,29 @@
 using System;
 using Schumix.Framework.Extensions;
 
-namespace Schumix.GameAddon.KillerGames
+namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class KillerGame
+	public sealed partial class MaffiaGame
 	{
 		public void Lynch(string Name, string NickName)
 		{
+			if(!Running)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+				return;
+			}
+
 			if(!_killerlist.ContainsKey(NickName.ToLower()) && !_detectivelist.ContainsKey(NickName.ToLower()) &&
 				!_normallist.ContainsKey(NickName.ToLower()))
 			{
 				sSendMessage.SendCMPrivmsg(_channel, "{0}: Kérlek maradj csendben amíg a játék véget ér.", NickName);
+				return;
+			}
+
+			if(!_killerlist.ContainsKey(Name.ToLower()) && !_detectivelist.ContainsKey(Name.ToLower()) &&
+				!_normallist.ContainsKey(Name.ToLower()) && !_ghostlist.ContainsKey(Name.ToLower()))
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Ilyen játékos nincs. Kérlek válasz mást!", NickName);
 				return;
 			}
 
@@ -153,6 +166,7 @@ namespace Schumix.GameAddon.KillerGames
 
 			if((_playerlist.Count/2)+1 == _lynchmaxnumber)
 			{
+				_lynchmaxnumber = 0;
 				sSender.Mode(_channel, "-v", Name);
 
 				foreach(var list in _lynchlist)
@@ -165,22 +179,37 @@ namespace Schumix.GameAddon.KillerGames
 
 				if(_killerlist.ContainsKey(Name.ToLower()))
 				{
+					newghost = _killerlist[Name.ToLower()];
 					_killerlist.Remove(Name.ToLower());
 					_rank = "killer";
 				}
 				else if(_detectivelist.ContainsKey(Name.ToLower()))
 				{
+					newghost = _detectivelist[Name.ToLower()];
 					_detectivelist.Remove(Name.ToLower());
+					_ghostdetective = true;
 					_rank = "detective";
 				}
 				else if(_normallist.ContainsKey(Name.ToLower()))
 				{
+					newghost = _normallist[Name.ToLower()];
 					_normallist.Remove(Name.ToLower());
 					_rank = "normal";
 				}
 
-				_ghostlist.Add(Name.ToLower(), Name);
-				sSendMessage.SendCMPrivmsg(_channel, "A többség 4{0} lincselése mellett döntött! Elszabadulnak az indulatok. Ő mostantól már halott.", namess);
+				int i = 0;
+				foreach(var player in _playerlist)
+				{
+					if(player.Value == newghost)
+					{
+						i = player.Key;
+						break;
+					}
+				}
+
+				_playerlist.Remove(i);
+				_ghostlist.Add(newghost.ToLower(), newghost);
+				sSendMessage.SendCMPrivmsg(_channel, "A többség 4{0} lincselése mellett döntött! Elszabadulnak az indulatok. Ő mostantól már halott.", newghost);
 
 				if(_rank == "killer")
 					sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4gyilkos volt.");
@@ -190,9 +219,10 @@ namespace Schumix.GameAddon.KillerGames
 					sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy egy ártatlan falusi volt.");
 
 				EndGame();
-				if(_playerlist.Count != 2)
+
+				if(_playerlist.Count >= 2)
 				{
-					sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", namess);
+					sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", newghost);
 					_day = false;
 					_stop = false;
 				}

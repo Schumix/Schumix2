@@ -19,12 +19,18 @@
 
 using System;
 
-namespace Schumix.GameAddon.KillerGames
+namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class KillerGame
+	public sealed partial class MaffiaGame
 	{
 		public void Kill(string Name, string Killer)
 		{
+			if(!Running)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+				return;
+			}
+
 			if(_day)
 			{
 				sSendMessage.SendCMPrivmsg(Killer, "Csak este ölhetsz!");
@@ -34,6 +40,12 @@ namespace Schumix.GameAddon.KillerGames
 			if(!_killerlist.ContainsKey(Killer.ToLower()))
 			{
 				sSendMessage.SendCMPrivmsg(Killer, "Nem vagy gyilkos!");
+				return;
+			}
+
+			if(_ghostlist.ContainsKey(Name.ToLower()))
+			{
+				sSendMessage.SendCMPrivmsg(Killer, "Ő már halott. Válasz mást!");
 				return;
 			}
 

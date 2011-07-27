@@ -19,17 +19,38 @@
 
 using System;
 
-namespace Schumix.GameAddon.KillerGames
+namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class KillerGame
+	public sealed partial class MaffiaGame
 	{
 		public void Left(string Name)
 		{
-			if(!_killerlist.ContainsKey(Name.ToLower()) && !_detectivelist.ContainsKey(Name.ToLower()) &&
-				!_normallist.ContainsKey(Name.ToLower()))
+			Left(Name, string.Empty);
+		}
+
+		public void Left(string Name, string NickName)
+		{
+			if(!Running)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Te már nem vagy játékos. Kérlek maradj csendben!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
 				return;
+			}
+
+			if(NickName == string.Empty)
+			{
+				if(!_playerlist.ContainsValue(Name))
+				{
+					sSendMessage.SendCMPrivmsg(_channel, "{0}: Te már nem vagy játékos. Kérlek maradj csendben!", Name);
+					return;
+				}
+			}
+			else
+			{
+				if(!_playerlist.ContainsValue(NickName))
+				{
+					sSendMessage.SendCMPrivmsg(_channel, "{0}: Te már nem vagy játékos. Kérlek maradj csendben!", NickName);
+					return;
+				}
 			}
 
 			_rank = string.Empty;
@@ -42,6 +63,7 @@ namespace Schumix.GameAddon.KillerGames
 			else if(_detectivelist.ContainsKey(Name.ToLower()))
 			{
 				_detectivelist.Remove(Name.ToLower());
+				_ghostdetective = true;
 				_rank = "detective";
 			}
 			else if(_normallist.ContainsKey(Name.ToLower()))
@@ -50,7 +72,21 @@ namespace Schumix.GameAddon.KillerGames
 				_rank = "normal";
 			}
 
-			_ghostlist.Add(Name.ToLower(), Name);
+			int i = 0;
+			foreach(var player in _playerlist)
+			{
+				if(player.Value == Name)
+				{
+					i = player.Key;
+					break;
+				}
+			}
+
+			_playerlist.Remove(i);
+
+			if(Started)
+				_ghostlist.Add(Name.ToLower(), Name);
+
 			sSender.Mode(_channel, "-v", Name);
 			sSendMessage.SendCMPrivmsg(_channel, "{0} eltűnt egy különös féreglyukban.", Name);
 
@@ -60,8 +96,11 @@ namespace Schumix.GameAddon.KillerGames
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint nyomozó. Remélhetőleg halála izgalmasabb lesz.", Name);
 			else if(_rank == "normal")
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak unalmas szerepe volt a játékban, mint civil. Remélhetőleg halála izgalmasabb lesz.", Name);
+			else
+				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak nem volt szerepe még a játékban. Remélhetőleg halála izgalmasabb lesz.", Name);
 
-			EndGame();
+			if(Started)
+				EndGame();
 		}
 	}
 }

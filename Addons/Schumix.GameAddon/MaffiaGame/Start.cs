@@ -21,9 +21,9 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 
-namespace Schumix.GameAddon.KillerGames
+namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class KillerGame
+	public sealed partial class MaffiaGame
 	{
 		public void Start()
 		{
