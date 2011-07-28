@@ -23,7 +23,7 @@ namespace Schumix.GameAddon.MaffiaGames
 {
 	public sealed partial class MaffiaGame
 	{
-		public void See(string Name, string NickName)
+		public void Rescue(string Name, string NickName)
 		{
 			if(!Running)
 			{
@@ -33,19 +33,13 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(_day)
 			{
-				sSendMessage.SendCMPrivmsg(NickName, "Csak este nyomozhatsz!");
+				sSendMessage.SendCMPrivmsg(NickName, "Csak este menthetsz életet!");
 				return;
 			}
 
-			if(_detectivelist.ContainsKey(NickName.ToLower()) && _detective)
+			if(!_doctorlist.ContainsKey(NickName.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(NickName, "Ma este már kikérdeztél valakit!");
-				return;
-			}
-
-			if(!_detectivelist.ContainsKey(NickName.ToLower()))
-			{
-				sSendMessage.SendCMPrivmsg(NickName, "Nem vagy nyomozó!");
+				sSendMessage.SendCMPrivmsg(NickName, "Nem vagy orvos!");
 				return;
 			}
 
@@ -56,36 +50,27 @@ namespace Schumix.GameAddon.MaffiaGames
 			}
 
 			if(!_killerlist.ContainsKey(Name.ToLower()) && !_detectivelist.ContainsKey(Name.ToLower()) &&
-				!_normallist.ContainsKey(Name.ToLower()) && !_doctorlist.ContainsKey(Name.ToLower()))
+				!_doctorlist.ContainsKey(Name.ToLower()) && !_normallist.ContainsKey(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(NickName, "Kit akarsz kikérdezni?");
+				sSendMessage.SendCMPrivmsg(NickName, "Kit akarsz megmenteni?");
 				return;
 			}
 
 			if(Name.ToLower() == NickName.ToLower())
-				sSendMessage.SendCMPrivmsg(NickName, "Önmagadat akarod kikérdezni? Te tudod :P");
+				sSendMessage.SendCMPrivmsg(NickName, "Önmagadat akarod megmenteni? Ennyire nem lehetsz félős!");
 
-			_rank = string.Empty;
+			sSendMessage.SendCMPrivmsg(NickName, "Elkönyveltem a kérésedet.");
 
 			if(_killerlist.ContainsKey(Name.ToLower()))
-				_rank = "killer";
+				rescued = string.Empty;
 			else if(_detectivelist.ContainsKey(Name.ToLower()))
-				_rank = "detective";
+				rescued = _detectivelist[Name.ToLower()];
 			else if(_doctorlist.ContainsKey(Name.ToLower()))
-				_rank = "doctor";
+				rescued = _doctorlist[Name.ToLower()];
 			else if(_normallist.ContainsKey(Name.ToLower()))
-				_rank = "normal";
+				rescued = _normallist[Name.ToLower()];
 
-			if(_rank == "killer")
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy ő a gyilkos! Buktasd le mielőtt még túl késő lenne...");
-			else if(_rank == "normal")
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy ő egy hétköznapi falusi.");
-			else if(_rank == "doctor")
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy ő a falu orvosa.");
-			else if(_rank == "detective")
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy te vagy az :D");
-
-			_detective = true;
+			_doctor = true;
 		}
 	}
 }

@@ -33,14 +33,15 @@ namespace Schumix.GameAddon.MaffiaGames
 			}
 
 			if(!_killerlist.ContainsKey(NickName.ToLower()) && !_detectivelist.ContainsKey(NickName.ToLower()) &&
-				!_normallist.ContainsKey(NickName.ToLower()))
+				!_normallist.ContainsKey(NickName.ToLower()) && !_doctorlist.ContainsKey(NickName.ToLower()))
 			{
 				sSendMessage.SendCMPrivmsg(_channel, "{0}: Kérlek maradj csendben amíg a játék véget ér.", NickName);
 				return;
 			}
 
 			if(!_killerlist.ContainsKey(Name.ToLower()) && !_detectivelist.ContainsKey(Name.ToLower()) &&
-				!_normallist.ContainsKey(Name.ToLower()) && !_ghostlist.ContainsKey(Name.ToLower()))
+				!_normallist.ContainsKey(Name.ToLower()) && !_ghostlist.ContainsKey(Name.ToLower()) &&
+				!_doctorlist.ContainsKey(Name.ToLower()))
 			{
 				sSendMessage.SendCMPrivmsg(_channel, "{0}: Ilyen játékos nincs. Kérlek válasz mást!", NickName);
 				return;
@@ -188,7 +189,16 @@ namespace Schumix.GameAddon.MaffiaGames
 					newghost = _detectivelist[Name.ToLower()];
 					_detectivelist.Remove(Name.ToLower());
 					_ghostdetective = true;
+					_detective = true;
 					_rank = "detective";
+				}
+				else if(_doctorlist.ContainsKey(Name.ToLower()))
+				{
+					newghost = _doctorlist[Name.ToLower()];
+					_doctorlist.Remove(Name.ToLower());
+					_ghostdoctor = true;
+					_doctor = true;
+					_rank = "doctor";
 				}
 				else if(_normallist.ContainsKey(Name.ToLower()))
 				{
@@ -215,6 +225,8 @@ namespace Schumix.GameAddon.MaffiaGames
 					sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4gyilkos volt.");
 				else if(_rank == "detective")
 					sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4nyomozó volt.");
+				else if(_rank == "doctor")
+					sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4orvos volt.");
 				else if(_rank == "normal")
 					sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy egy ártatlan falusi volt.");
 

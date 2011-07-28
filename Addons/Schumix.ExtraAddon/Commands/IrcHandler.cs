@@ -124,7 +124,7 @@ namespace Schumix.ExtraAddon.Commands
 		///     Ha ez a funkció be van kapcsolva, akkor
 		///     miután a nick elhagyta a szobát elköszön tőle.
 		/// </summary>
-		protected void HandleLeft(IRCMessage sIRCMessage)
+		protected void HandleLLeft(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Nick == sNickInfo.NickStorage)
 				return;

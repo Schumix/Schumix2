@@ -98,5 +98,23 @@ namespace Schumix.GameAddon.Commands
 				}
 			}
 		}
+
+		protected void HandleQuit(IRCMessage sIRCMessage)
+		{
+			foreach(var maffia in GameAddon.MaffiaList)
+			{
+				if(!maffia.Value.Running)
+					continue;
+
+				foreach(var player in maffia.Value.GetPlayerList())
+				{
+					if(player.Value == sIRCMessage.Nick)
+					{
+						maffia.Value.Leave(sIRCMessage.Nick);
+						break;
+					}
+				}
+			}
+		}
 	}
 }

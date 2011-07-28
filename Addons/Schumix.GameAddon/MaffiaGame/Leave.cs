@@ -23,12 +23,12 @@ namespace Schumix.GameAddon.MaffiaGames
 {
 	public sealed partial class MaffiaGame
 	{
-		public void Left(string Name)
+		public void Leave(string Name)
 		{
-			Left(Name, string.Empty);
+			Leave(Name, string.Empty);
 		}
 
-		public void Left(string Name, string NickName)
+		public void Leave(string Name, string NickName)
 		{
 			if(!Running)
 			{
@@ -53,6 +53,15 @@ namespace Schumix.GameAddon.MaffiaGames
 				}
 			}
 
+			if(_start)
+			{
+				_leftlist.Add(Name);
+				return;
+			}
+
+			if(_owner == Name)
+				_owner = string.Empty;
+
 			_rank = string.Empty;
 
 			if(_killerlist.ContainsKey(Name.ToLower()))
@@ -63,8 +72,26 @@ namespace Schumix.GameAddon.MaffiaGames
 			else if(_detectivelist.ContainsKey(Name.ToLower()))
 			{
 				_detectivelist.Remove(Name.ToLower());
-				_ghostdetective = true;
+
+				if(Started)
+				{
+					_ghostdetective = true;
+					_detective = true;
+				}
+
 				_rank = "detective";
+			}
+			else if(_doctorlist.ContainsKey(Name.ToLower()))
+			{
+				_doctorlist.Remove(Name.ToLower());
+
+				if(Started)
+				{
+					_ghostdoctor = true;
+					_doctor = true;
+				}
+
+				_rank = "doctor";
 			}
 			else if(_normallist.ContainsKey(Name.ToLower()))
 			{
@@ -94,6 +121,8 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint gyilkos. Remélhetőleg halála izgalmasabb lesz.", Name);
 			else if(_rank == "detective")
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint nyomozó. Remélhetőleg halála izgalmasabb lesz.", Name);
+			else if(_rank == "doctor")
+				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint orvos. Remélhetőleg halála izgalmasabb lesz.", Name);
 			else if(_rank == "normal")
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak unalmas szerepe volt a játékban, mint civil. Remélhetőleg halála izgalmasabb lesz.", Name);
 			else
@@ -101,6 +130,14 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(Started)
 				EndGame();
+			else
+			{
+				if(_playerlist.Count == 0)
+				{
+					sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+					StopThread();
+				}
+			}
 		}
 	}
 }

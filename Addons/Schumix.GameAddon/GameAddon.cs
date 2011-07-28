@@ -40,12 +40,14 @@ namespace Schumix.GameAddon
 		public void Setup()
 		{
 			Network.PublicRegisterHandler("NICK",     		new Action<IRCMessage>(HandleNewNick));
+			Network.PublicRegisterHandler("QUIT",     		new Action<IRCMessage>(HandleQuit));
 			CommandManager.PublicCRegisterHandler("game",	new Action<IRCMessage>(HandleGame));
 		}
 
 		public void Destroy()
 		{
 			Network.PublicRemoveHandler("NICK");
+			Network.PublicRemoveHandler("QUIT");
 			CommandManager.PublicCRemoveHandler("game");
 		}
 
@@ -89,7 +91,8 @@ namespace Schumix.GameAddon
 					{
 						case "!start":
 						{
-							if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick)
+							if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick || MaffiaList[channel].GetOwner() == string.Empty ||
+								IsAdmin(sIRCMessage.Nick))
 								MaffiaList[channel].Start();
 							else
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játékot {0} indította!", MaffiaList[channel].GetOwner());
@@ -109,7 +112,7 @@ namespace Schumix.GameAddon
 						{
 							if(sIRCMessage.Info.Length < 5)
 							{
-								MaffiaList[channel].Left(sIRCMessage.Nick);
+								MaffiaList[channel].Leave(sIRCMessage.Nick);
 								return;
 							}
 
@@ -121,7 +124,7 @@ namespace Schumix.GameAddon
 									!MaffiaList[channel].GetPlayerList().ContainsValue(sIRCMessage.Info[4]))
 									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Kit akarsz kiléptetni?", sIRCMessage.Nick);
 								else
-									MaffiaList[channel].Left(sIRCMessage.Info[4], sIRCMessage.Nick);
+									MaffiaList[channel].Leave(sIRCMessage.Info[4], sIRCMessage.Nick);
 							}
 							else
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem te indítottad a játékot!", sIRCMessage.Nick);
@@ -150,7 +153,16 @@ namespace Schumix.GameAddon
 							break;
 						}
 						case "!rescue":
+						{
+							if(sIRCMessage.Info.Length < 5)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz megmenteni?");
+								return;
+							}
+
+							MaffiaList[channel].Rescue(sIRCMessage.Info[4], sIRCMessage.Nick);
 							break;
+						}
 						case "!see":
 						{
 							if(sIRCMessage.Info.Length < 5)
@@ -164,7 +176,8 @@ namespace Schumix.GameAddon
 						}
 						case "!end":
 						{
-							if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick)
+							if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick || MaffiaList[channel].GetOwner() == string.Empty ||
+								IsAdmin(sIRCMessage.Nick))
 							{
 								sSender.Mode(channel, "-m");
 
@@ -175,7 +188,11 @@ namespace Schumix.GameAddon
 
 									MaffiaList[channel].StopThread();
 									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig None. Mindenki más hétköznapi civil volt.", MaffiaList[channel].GetKiller(), MaffiaList[channel].GetDetective());
+
+									if(MaffiaList[channel].GetPlayers() < 8)
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig nem volt. Mindenki más hétköznapi civil volt.", MaffiaList[channel].GetKiller(), MaffiaList[channel].GetDetective());
+									else
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.", MaffiaList[channel].GetKiller(), MaffiaList[channel].GetDetective(), MaffiaList[channel].GetDoctor());
 								}
 								else
 								{
@@ -200,6 +217,24 @@ namespace Schumix.GameAddon
 		public void HandleNotice(IRCMessage sIRCMessage)
 		{
 
+		}
+
+		public void HandleLeft(IRCMessage sIRCMessage)
+		{
+			foreach(var maffia in GameAddon.MaffiaList)
+			{
+				if(!maffia.Value.Running)
+					continue;
+
+				foreach(var player in maffia.Value.GetPlayerList())
+				{
+					if(player.Value == sIRCMessage.Nick)
+					{
+						maffia.Value.Leave(sIRCMessage.Nick);
+						break;
+					}
+				}
+			}
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

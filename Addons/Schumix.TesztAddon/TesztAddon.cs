@@ -55,6 +55,11 @@ namespace Schumix.TesztAddon
 
 		}
 
+		public void HandleLeft(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			// Adminisztrátor parancsok
