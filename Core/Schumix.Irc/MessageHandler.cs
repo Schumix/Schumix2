@@ -215,6 +215,12 @@ namespace Schumix.Irc
 			WhoisPrivmsg = sNickInfo.NickStorage;
 		}
 
+		protected void HandleLLeft(IRCMessage sIRCMessage)
+		{
+			foreach(var plugin in sAddonManager.GetPlugins())
+				plugin.HandleLeft(sIRCMessage);
+		}
+
 		/// <summary>
 		///     
 		/// </summary>

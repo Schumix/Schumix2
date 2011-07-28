@@ -103,6 +103,7 @@ namespace Schumix.Irc
 			RegisterHandler("PONG",    new Action<IRCMessage>(HandlePong));
 			RegisterHandler("PRIVMSG", new Action<IRCMessage>(HandlePrivmsg));
 			RegisterHandler("NOTICE",  new Action<IRCMessage>(HandleNotice));
+			RegisterHandler("PART",    new Action<IRCMessage>(HandleLLeft));
 			RegisterHandler("474",     new Action<IRCMessage>(HandleChannelBan));
 			RegisterHandler("475",     new Action<IRCMessage>(HandleNoChannelPassword));
 			RegisterHandler("319",     new Action<IRCMessage>(HandleMWhois));

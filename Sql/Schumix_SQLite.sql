@@ -561,7 +561,7 @@ INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2', '9', 'Parancsok: nick | sys\nParancsok: ghost | nick | sys\nParancsok: ghost | nick | sys | clean\nParancsok: sys');
 INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2/sys', '9', 'Kiírja a program információit.');
 INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2/ghost', '1', 'Kilépteti a fõ nick-et ha regisztrálva van.\nHasználata: {0} ghost');
-INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2/nick', '0', 'Bot nick nevének cseréje.\n"Használata: {0} nick <név>');
+INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2/nick', '0', 'Bot nick nevének cseréje.\nHasználata: {0} nick <név>');
 INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2/nick/identify', '0', 'Aktiválja a fõ nick jelszavát.\nHasználata: {0} nick identify');
 INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'schumix2/clean', '2', 'Felszabadítja a lefoglalt memóriát.\nHasználata: {0} clean');
 INSERT INTO "localized_command_help" (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'svn', '1', 'Svn rss-ek kezelése.\nSvn parancsai: channel | info | list | start | stop | reload');

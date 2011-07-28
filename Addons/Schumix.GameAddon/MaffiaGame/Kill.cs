@@ -31,6 +31,12 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
+			if(_killer && _players >= 8 && _killerlist.Count == 2)
+			{
+				sSendMessage.SendCMPrivmsg(Killer, "Már megegyeztek a gyilkosok!");
+				return;
+			}
+
 			if(_day)
 			{
 				sSendMessage.SendCMPrivmsg(Killer, "Csak este ölhetsz!");
@@ -50,7 +56,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			}
 
 			if(!_killerlist.ContainsKey(Name.ToLower()) && !_detectivelist.ContainsKey(Name.ToLower()) &&
-				!_normallist.ContainsKey(Name.ToLower()))
+				!_doctorlist.ContainsKey(Name.ToLower()) && !_normallist.ContainsKey(Name.ToLower()))
 			{
 				sSendMessage.SendCMPrivmsg(Killer, "Kit akarsz megölni?");
 				return;
@@ -61,14 +67,44 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			sSendMessage.SendCMPrivmsg(Killer, "Elkönyveltem a szavazatodat.");
 
-			if(_killerlist.ContainsKey(Name.ToLower()))
-				newghost = _killerlist[Name.ToLower()];
-			else if(_detectivelist.ContainsKey(Name.ToLower()))
-				newghost = _detectivelist[Name.ToLower()];
-			else if(_normallist.ContainsKey(Name.ToLower()))
-				newghost = _normallist[Name.ToLower()];
+			if(_players < 8 || _killerlist.Count == 1)
+			{
+				if(_killerlist.ContainsKey(Name.ToLower()))
+					newghost = _killerlist[Name.ToLower()];
+				else if(_detectivelist.ContainsKey(Name.ToLower()))
+					newghost = _detectivelist[Name.ToLower()];
+				else if(_doctorlist.ContainsKey(Name.ToLower()))
+					newghost = _doctorlist[Name.ToLower()];
+				else if(_normallist.ContainsKey(Name.ToLower()))
+					newghost = _normallist[Name.ToLower()];
+	
+				_killer = true;
+			}
+			else
+			{
+				if(killer_.ToLower() == Killer.ToLower())
+					_newghost = Name.ToLower();
 
-			_killer = true;
+				if(killer2_.ToLower() == Killer.ToLower())
+					_newghost2 = Name.ToLower();
+
+				if(_newghost == _newghost2)
+				{
+					if(_killerlist.ContainsKey(_newghost))
+						newghost = _killerlist[_newghost];
+					else if(_detectivelist.ContainsKey(_newghost))
+						newghost = _detectivelist[_newghost];
+					else if(_doctorlist.ContainsKey(_newghost))
+						newghost = _doctorlist[_newghost];
+					else if(_normallist.ContainsKey(_newghost))
+						newghost = _normallist[_newghost];
+
+					foreach(var name in _killerlist)
+						sSendMessage.SendCMPrivmsg(name.Key, "A gyilkosok megegyeztek!");
+
+					_killer = true;
+				}
+			}
 		}
 	}
 }

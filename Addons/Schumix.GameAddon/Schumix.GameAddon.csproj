@@ -104,15 +104,15 @@
     <Compile Include="GameAddon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\Commands.cs" />
-    <Compile Include="MaffiaGame\Apol.cs" />
     <Compile Include="MaffiaGame\Join.cs" />
     <Compile Include="MaffiaGame\Kill.cs" />
-    <Compile Include="MaffiaGame\Left.cs" />
     <Compile Include="MaffiaGame\Lynch.cs" />
     <Compile Include="MaffiaGame\MaffiaGame.cs" />
     <Compile Include="MaffiaGame\See.cs" />
     <Compile Include="MaffiaGame\Start.cs" />
     <Compile Include="MaffiaGame\Stats.cs" />
+    <Compile Include="MaffiaGame\Leave.cs" />
+    <Compile Include="MaffiaGame\Rescue.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

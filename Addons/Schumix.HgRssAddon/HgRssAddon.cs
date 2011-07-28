@@ -107,6 +107,11 @@ namespace Schumix.HgRssAddon
 
 		}
 
+		public void HandleLeft(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;

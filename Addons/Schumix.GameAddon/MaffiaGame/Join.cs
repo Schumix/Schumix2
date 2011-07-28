@@ -45,11 +45,12 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(!_playerlist.ContainsValue(Name))
 			{
+				sSendMessage.SendCMPrivmsg(_channel, string.Empty);
 				_playerlist.Add(_playerlist.Count+1, Name);
 				sSender.Mode(_channel, "+v", Name);
 				sSendMessage.SendCMPrivmsg(_channel, "{0}: Bekerültél a játékba!", Name);
 			}
-			else 
+			else
 				sSendMessage.SendCMPrivmsg(_channel, "{0}: Már játékban vagy!", Name);
 		}
 	}
