@@ -703,7 +703,7 @@ namespace Schumix.Console.Commands
 		/// <summary>
 		///     Left parancs függvénye.
 		/// </summary>
-		protected void HandleLeft()
+		protected void HandleLeave()
 		{
 			if(Info.Length < 2)
 			{
@@ -712,7 +712,7 @@ namespace Schumix.Console.Commands
 			}
 
 			sSender.Part(Info[1]);
-			Log.Notice("Console", sLManager.GetConsoleCommandText("left"), Info[1]);
+			Log.Notice("Console", sLManager.GetConsoleCommandText("leave"), Info[1]);
 		}
 
 		/// <summary>

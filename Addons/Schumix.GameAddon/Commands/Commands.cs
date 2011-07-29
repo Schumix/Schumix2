@@ -57,6 +57,21 @@ namespace Schumix.GameAddon.Commands
 
 				if(sIRCMessage.Info[5].ToLower() == "maffiagame")
 				{
+					foreach(var maffia in GameAddon.MaffiaList)
+					{
+						if(sIRCMessage.Channel.ToLower() != maffia.Key)
+						{
+							foreach(var player in maffia.Value.GetPlayerList())
+							{
+								if(player.Value == sIRCMessage.Nick)
+								{
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Te már játékban vagy itt: {1}", sIRCMessage.Nick, maffia.Key);
+									return;
+								}
+							}
+						}
+					}
+
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", sIRCMessage.Channel);
 					if(!db.IsNull())
 					{
@@ -68,8 +83,8 @@ namespace Schumix.GameAddon.Commands
 					sChannelInfo.ChannelFunctionReload();
 					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("commands", "off", sIRCMessage.Channel), sIRCMessage.Channel);
 					sChannelInfo.ChannelFunctionReload();
-					//SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "on", sIRCMessage.Channel), sIRCMessage.Channel);
-					//sChannelInfo.ChannelFunctionReload();
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "on", sIRCMessage.Channel), sIRCMessage.Channel);
+					sChannelInfo.ChannelFunctionReload();
 					sSender.Mode(sIRCMessage.Channel, "+v", sIRCMessage.Nick);
 					if(!GameAddon.MaffiaList.ContainsKey(sIRCMessage.Channel.ToLower()))
 						GameAddon.MaffiaList.Add(sIRCMessage.Channel.ToLower(), new MaffiaGame(sIRCMessage.Nick, sIRCMessage.Channel));

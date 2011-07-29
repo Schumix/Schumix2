@@ -85,7 +85,7 @@ namespace Schumix.Console.Commands
 			RegisterHandler("reconnect",  HandleReConnect);
 			RegisterHandler("nick",       HandleNick);
 			RegisterHandler("join",       HandleJoin);
-			RegisterHandler("left",       HandleLeft);
+			RegisterHandler("leave",      HandleLeave);
 			RegisterHandler("reload",     HandleReload);
 			RegisterHandler("quit",       HandleQuit);
 

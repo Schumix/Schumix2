@@ -58,10 +58,10 @@ namespace Schumix.GameAddon
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
-			//if(sChannelInfo.FSelect("gamecommands") || sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect("gamecommands") || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				//if(!sChannelInfo.FSelect("gamecommands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
-					//return;
+				if(!sChannelInfo.FSelect("gamecommands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+					return;
 
 				CNick(sIRCMessage);
 				string channel = sIRCMessage.Channel.ToLower();
@@ -105,6 +105,21 @@ namespace Schumix.GameAddon
 						}
 						case "!join":
 						{
+							foreach(var maffia in MaffiaList)
+							{
+								if(sIRCMessage.Channel.ToLower() != maffia.Key)
+								{
+									foreach(var player in maffia.Value.GetPlayerList())
+									{
+										if(player.Value == sIRCMessage.Nick)
+										{
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Te már játékban vagy itt: {1}", sIRCMessage.Nick, maffia.Key);
+											return;
+										}
+									}
+								}
+							}
+
 							MaffiaList[channel].Join(sIRCMessage.Nick);
 							break;
 						}
@@ -174,6 +189,8 @@ namespace Schumix.GameAddon
 							MaffiaList[channel].See(sIRCMessage.Info[4], sIRCMessage.Nick);
 							break;
 						}
+						case "!gameover":
+							break;
 						case "!end":
 						{
 							if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick || MaffiaList[channel].GetOwner() == string.Empty ||

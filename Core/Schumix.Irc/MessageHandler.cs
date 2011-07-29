@@ -211,11 +211,11 @@ namespace Schumix.Irc
 				return;
 
 			string text = sIRCMessage.Info.SplitToString(4, " ");
-			sSendMessage.SendCMPrivmsg(WhoisPrivmsg, sLManager.GetCommandText("whois", sIRCMessage.Channel), text.Remove(0, 1, ":"));
+			sSendMessage.SendCMPrivmsg(WhoisPrivmsg, sLManager.GetCommandText("whois", WhoisPrivmsg), text.Remove(0, 1, ":"));
 			WhoisPrivmsg = sNickInfo.NickStorage;
 		}
 
-		protected void HandleLLeft(IRCMessage sIRCMessage)
+		protected void HandleLeft(IRCMessage sIRCMessage)
 		{
 			foreach(var plugin in sAddonManager.GetPlugins())
 				plugin.HandleLeft(sIRCMessage);
