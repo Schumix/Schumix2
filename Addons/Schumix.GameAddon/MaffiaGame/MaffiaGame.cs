@@ -483,6 +483,13 @@ namespace Schumix.GameAddon.MaffiaGames
 				if((_playerlist.Count == 2) && Running)
 				{
 					RemoveRank();
+
+					if(_killerlist.Count >= 1)
+					{
+						sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newghost);
+						Corpse();
+					}
+						
 					sSendMessage.SendCMPrivmsg(_channel, "A falusiak halottak! A 4gyilkosok győztek.");
 					sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
 					EndText();
