@@ -107,8 +107,11 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sIRCMessage.Args.IsUpper() && sIRCMessage.Args.Length > 4)
-						sSender.Kick(sIRCMessage.Channel, sIRCMessage.Nick, sLManager.GetWarningText("CapsLockOff", sIRCMessage.Channel));
+					if(sChannelInfo.FSelect("randomkick") && sChannelInfo.FSelect("randomkick", sIRCMessage.Channel))
+					{
+						if(sIRCMessage.Args.IsUpper() && sIRCMessage.Args.Length > 4)
+							sSender.Kick(sIRCMessage.Channel, sIRCMessage.Nick, sLManager.GetWarningText("CapsLockOff", sIRCMessage.Channel));
+					}
 				});
 
 				Task.Factory.StartNew(() => sFunctions.HLMessage(sIRCMessage.Channel, sIRCMessage.Args));
@@ -116,28 +119,31 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(!SchumixBase.UrlTitleEnabled)
-						return;
-
-					string channel = sIRCMessage.Channel;
-
-					if(sIRCMessage.Nick.ToLower() == "py-bopm")
-						return;
-
-					var urlsin = sUtilities.GetUrls(sIRCMessage.Args);
-
-					if(urlsin.Count <= 0)
-						return;
-
-					try
+					if(sChannelInfo.FSelect("webtitle") && sChannelInfo.FSelect("webtitle", sIRCMessage.Channel))
 					{
-						Parallel.ForEach(urlsin, url => sFunctions.HandleWebTitle(channel, url));
-						return;
-					}
-					catch(Exception e)
-					{
-						Log.Error("ExtraAddon", "Invalid webpage address: {0}", e.Message);
-						return;
+						if(!SchumixBase.UrlTitleEnabled)
+							return;
+
+						string channel = sIRCMessage.Channel;
+
+						if(sIRCMessage.Nick.ToLower() == "py-bopm")
+							return;
+
+						var urlsin = sUtilities.GetUrls(sIRCMessage.Args);
+
+						if(urlsin.Count <= 0)
+							return;
+
+						try
+						{
+							Parallel.ForEach(urlsin, url => sFunctions.HandleWebTitle(channel, url));
+							return;
+						}
+						catch(Exception e)
+						{
+							Log.Error("ExtraAddon", "Invalid webpage address: {0}", e.Message);
+							return;
+						}
 					}
 				});
 			}

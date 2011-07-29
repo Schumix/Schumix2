@@ -18,6 +18,7 @@
  */
 
 using System;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
@@ -59,61 +60,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
-			if(_owner == Name)
-				_owner = string.Empty;
-
-			_rank = string.Empty;
-
-			if(_killerlist.ContainsKey(Name.ToLower()))
-			{
-				_killerlist.Remove(Name.ToLower());
-				_rank = "killer";
-			}
-			else if(_detectivelist.ContainsKey(Name.ToLower()))
-			{
-				_detectivelist.Remove(Name.ToLower());
-
-				if(Started)
-				{
-					_ghostdetective = true;
-					_detective = true;
-				}
-
-				_rank = "detective";
-			}
-			else if(_doctorlist.ContainsKey(Name.ToLower()))
-			{
-				_doctorlist.Remove(Name.ToLower());
-
-				if(Started)
-				{
-					_ghostdoctor = true;
-					_doctor = true;
-				}
-
-				_rank = "doctor";
-			}
-			else if(_normallist.ContainsKey(Name.ToLower()))
-			{
-				_normallist.Remove(Name.ToLower());
-				_rank = "normal";
-			}
-
-			int i = 0;
-			foreach(var player in _playerlist)
-			{
-				if(player.Value == Name)
-				{
-					i = player.Key;
-					break;
-				}
-			}
-
-			_playerlist.Remove(i);
-
-			if(Started)
-				_ghostlist.Add(Name.ToLower(), Name);
-
+			RemovePlayer(Name);
 			sSender.Mode(_channel, "-v", Name);
 			sSendMessage.SendCMPrivmsg(_channel, "{0} eltűnt egy különös féreglyukban.", Name);
 
@@ -128,8 +75,54 @@ namespace Schumix.GameAddon.MaffiaGames
 			else
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak nem volt szerepe még a játékban. Remélhetőleg halála izgalmasabb lesz.", Name);
 
+			if(_owner == Name)
+			{
+				_owner = string.Empty;
+				sSendMessage.SendCMPrivmsg(_channel, "A játékot mostantól bárki írányíthatja!");
+			}
+
 			if(Started)
+			{
+				string name = string.Empty;
+				string names = string.Empty;
+				string[] split = { string.Empty };
+
+				foreach(var list in _lynchlist)
+				{
+					if(list.Value.Contains(Name.ToLower()))
+					{
+						name = list.Key;
+						split = list.Value.Split(',');
+					}
+				}
+
+				_lynchlist.Remove(name);
+				_lynchlist.Remove(Name.ToLower());
+
+				if(split.Length > 1)
+				{
+					foreach(var spl in split)
+					{
+						if(Name.ToLower() == spl)
+							continue;
+						else
+							names += "," + spl;
+					}
+
+					_lynchlist.Add(name, names.Remove(0, 1, ","));
+				}
+
+				_lynchmaxnumber = 0;
+
+				foreach(var list in _lynchlist)
+				{
+					var sp = list.Value.Split(',').Length;
+					if(sp > _lynchmaxnumber)
+						_lynchmaxnumber = sp;
+				}
+
 				EndGame();
+			}
 			else
 			{
 				if(_playerlist.Count == 0)

@@ -408,7 +408,7 @@ namespace Schumix.Irc.Commands
 			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("join", sIRCMessage.Channel), sIRCMessage.Info[4]);
 		}
 
-		protected void HandleLeft(IRCMessage sIRCMessage)
+		protected void HandleLeave(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				return;
@@ -422,7 +422,7 @@ namespace Schumix.Irc.Commands
 			}
 
 			sSender.Part(sIRCMessage.Info[4]);
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("left", sIRCMessage.Channel), sIRCMessage.Info[4]);
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("leave", sIRCMessage.Channel), sIRCMessage.Info[4]);
 		}
 	}
 }

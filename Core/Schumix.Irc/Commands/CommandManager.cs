@@ -84,7 +84,7 @@ namespace Schumix.Irc.Commands
 			HalfOperatorCRegisterHandler("colors", new Action<IRCMessage>(HandleColors));
 			HalfOperatorCRegisterHandler("nick",   new Action<IRCMessage>(HandleNick));
 			HalfOperatorCRegisterHandler("join",   new Action<IRCMessage>(HandleJoin));
-			HalfOperatorCRegisterHandler("left",   new Action<IRCMessage>(HandleLeft));
+			HalfOperatorCRegisterHandler("leave",  new Action<IRCMessage>(HandleLeave));
 
 			// Operator
 			OperatorCRegisterHandler("function",   new Action<IRCMessage>(HandleFunction));

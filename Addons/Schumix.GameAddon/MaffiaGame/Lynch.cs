@@ -176,63 +176,12 @@ namespace Schumix.GameAddon.MaffiaGames
 						namess = list.Key;
 				}
 
-				_rank = string.Empty;
-
-				if(_killerlist.ContainsKey(Name.ToLower()))
-				{
-					newghost = _killerlist[Name.ToLower()];
-					_killerlist.Remove(Name.ToLower());
-					_rank = "killer";
-				}
-				else if(_detectivelist.ContainsKey(Name.ToLower()))
-				{
-					newghost = _detectivelist[Name.ToLower()];
-					_detectivelist.Remove(Name.ToLower());
-					_ghostdetective = true;
-					_detective = true;
-					_rank = "detective";
-				}
-				else if(_doctorlist.ContainsKey(Name.ToLower()))
-				{
-					newghost = _doctorlist[Name.ToLower()];
-					_doctorlist.Remove(Name.ToLower());
-					_ghostdoctor = true;
-					_doctor = true;
-					_rank = "doctor";
-				}
-				else if(_normallist.ContainsKey(Name.ToLower()))
-				{
-					newghost = _normallist[Name.ToLower()];
-					_normallist.Remove(Name.ToLower());
-					_rank = "normal";
-				}
-
-				int i = 0;
-				foreach(var player in _playerlist)
-				{
-					if(player.Value == newghost)
-					{
-						i = player.Key;
-						break;
-					}
-				}
-
-				_playerlist.Remove(i);
-				_ghostlist.Add(newghost.ToLower(), newghost);
+				RemovePlayer(Name);
 				sSendMessage.SendCMPrivmsg(_channel, "A többség 4{0} lincselése mellett döntött! Elszabadulnak az indulatok. Ő mostantól már halott.", newghost);
-
-				if(_rank == "killer")
-					sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4gyilkos volt.");
-				else if(_rank == "detective")
-					sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4nyomozó volt.");
-				else if(_rank == "doctor")
-					sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4orvos volt.");
-				else if(_rank == "normal")
-					sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy egy ártatlan falusi volt.");
-
+				Corpse();
 				EndGame();
 
-				if(_playerlist.Count >= 2)
+				if(_playerlist.Count >= 2 && Running)
 				{
 					sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", newghost);
 					_day = false;
