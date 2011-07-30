@@ -96,7 +96,9 @@ namespace Schumix.GameAddon.MaffiaGames
 				}
 
 				_lynchlist.Remove(name);
-				_lynchlist.Remove(Name.ToLower());
+
+				if(_lynchlist.ContainsKey(Name.ToLower()))
+					_lynchlist.Remove(Name.ToLower());
 
 				if(split.Length > 1)
 				{
