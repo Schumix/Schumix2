@@ -153,7 +153,7 @@ namespace Schumix.ExtraAddon.Commands
 		/// <summary>
 		///     Ha engedélyezett a ConsolLog, akkor kiírja a Console-ra ha kickelnek valakit.
 		/// </summary>
-		protected void HandleKick(IRCMessage sIRCMessage)
+		protected void HandleKKick(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Info.Length < 5)
 				return;

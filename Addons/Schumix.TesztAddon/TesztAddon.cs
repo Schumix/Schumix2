@@ -60,6 +60,11 @@ namespace Schumix.TesztAddon
 
 		}
 
+		public void HandleKick(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			// Adminisztrátor parancsok

@@ -24,18 +24,24 @@ namespace Schumix.GameAddon.MaffiaGames
 {
 	public sealed partial class MaffiaGame
 	{
-		public void Lynch(string Name, string NickName)
+		public void Lynch(string Name, string NickName, string Channel)
 		{
 			if(!Running)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+				sSendMessage.SendCMPrivmsg(Channel, "{0}: Nem megy játék!", Name);
 				return;
 			}
 
 			if(!_killerlist.ContainsKey(NickName.ToLower()) && !_detectivelist.ContainsKey(NickName.ToLower()) &&
 				!_normallist.ContainsKey(NickName.ToLower()) && !_doctorlist.ContainsKey(NickName.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Kérlek maradj csendben amíg a játék véget ér.", NickName);
+				sSendMessage.SendCMPrivmsg(Channel, "{0}: Kérlek maradj csendben amíg a játék véget ér.", NickName);
+				return;
+			}
+
+			if(!_day)
+			{
+				sSendMessage.SendCMPrivmsg(Channel, "{0}: Csak nappal lehet lincselni!", NickName);
 				return;
 			}
 
@@ -43,115 +49,28 @@ namespace Schumix.GameAddon.MaffiaGames
 				!_normallist.ContainsKey(Name.ToLower()) && !_ghostlist.ContainsKey(Name.ToLower()) &&
 				!_doctorlist.ContainsKey(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Ilyen játékos nincs. Kérlek válasz mást!", NickName);
+				sSendMessage.SendCMPrivmsg(Channel, "{0}: Ilyen játékos nincs. Kérlek válasz mást!", NickName);
 				return;
 			}
 
 			if(_ghostlist.ContainsKey(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Ő már halott. Szavazz másra!", NickName);
+				sSendMessage.SendCMPrivmsg(Channel, "{0}: Ő már halott. Szavazz másra!", NickName);
 				return;
 			}
 
 			if(Name.ToLower() == NickName.ToLower())
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Önmagadat lincselnéd meg? Hülye vagy?", NickName);
-				return;
-			}
-
-			if(!_day)
-			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Csak nappal lehet lincselni!", NickName);
+				sSendMessage.SendCMPrivmsg(Channel, "{0}: Önmagadat lincselnéd meg? Hülye vagy?", NickName);
 				return;
 			}
 
 			if(!_lynchlist.ContainsKey(Name.ToLower()))
-			{
-				string name = string.Empty;
-				string names = string.Empty;
-				string[] split = { string.Empty };
-
-				foreach(var list in _lynchlist)
-				{
-					if(list.Value.Contains(NickName.ToLower()))
-					{
-						name = list.Key;
-
-						if(Name.ToLower() == name)
-						{
-							sSendMessage.SendCMPrivmsg(_channel, "{0}: Már szavaztál rá!", NickName);
-							return;
-						}
-
-						split = list.Value.Split(',');
-					}
-				}
-
-				_lynchlist.Remove(name);
-				names = string.Empty;
-
-				if(split.Length > 1)
-				{
-					foreach(var spl in split)
-					{
-						if(NickName.ToLower() == spl)
-							continue;
-						else
-							names += "," + spl;
-					}
-	
-					_lynchlist.Add(name, names.Remove(0, 1, ","));
-				}
-				else
-					_lynchlist.Remove(name);
-
-				_lynchlist.Add(Name.ToLower(), NickName.ToLower());
-			}
+				Lynch(Name, NickName, "newlynch", "none");
 			else
-			{
-				string name = string.Empty;
-				string names = string.Empty;
-				string[] split = { string.Empty };
+				Lynch(Name, NickName, "lynch", "none");
 
-				foreach(var list in _lynchlist)
-				{
-					if(list.Key == Name.ToLower())
-						names = list.Value;
-
-					if(list.Value.Contains(NickName.ToLower()))
-					{
-						name = list.Key;
-
-						if(Name.ToLower() == name)
-						{
-							sSendMessage.SendCMPrivmsg(_channel, "{0}: Már szavaztál rá!", NickName);
-							return;
-						}
-
-						split = list.Value.Split(',');
-					}
-				}
-
-				_lynchlist.Remove(Name.ToLower());
-				_lynchlist.Add(Name.ToLower(), names + "," + NickName.ToLower());
-				_lynchlist.Remove(name);
-				names = string.Empty;
-
-				if(split.Length > 1)
-				{
-					foreach(var spl in split)
-					{
-						if(NickName.ToLower() == spl)
-							continue;
-						else
-							names += "," + spl;
-					}
-	
-					_lynchlist.Add(name, names.Remove(0, 1, ","));
-				}
-			}
-
-			sSendMessage.SendCMPrivmsg(_channel, "{0} arra szavazott, hogy {1} legyen meglincselve!", NickName, Name);
+			sSendMessage.SendCMPrivmsg(Channel, "{0} arra szavazott, hogy {1} legyen meglincselve!", NickName, Name);
 
 			string namess = string.Empty;
 			foreach(var list in _lynchlist)
@@ -168,7 +87,6 @@ namespace Schumix.GameAddon.MaffiaGames
 			if((_playerlist.Count/2)+1 == _lynchmaxnumber)
 			{
 				_lynchmaxnumber = 0;
-				sSender.Mode(_channel, "-v", Name);
 
 				foreach(var list in _lynchlist)
 				{
@@ -179,7 +97,9 @@ namespace Schumix.GameAddon.MaffiaGames
 				RemovePlayer(Name);
 				sSendMessage.SendCMPrivmsg(_channel, "A többség 4{0} lincselése mellett döntött! Elszabadulnak az indulatok. Ő mostantól már halott.", newghost);
 				Corpse();
+				_lynch = true;
 				EndGame();
+				_lynch = false;
 
 				if(_playerlist.Count >= 2 && Running)
 				{

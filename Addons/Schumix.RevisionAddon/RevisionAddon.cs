@@ -57,6 +57,11 @@ namespace Schumix.RevisionAddon
 
 		}
 
+		public void HandleKick(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;
