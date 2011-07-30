@@ -40,6 +40,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		private readonly Dictionary<string, string> _lynchlist = new Dictionary<string, string>();
 		private readonly Dictionary<int, string> _playerlist = new Dictionary<int, string>();
 		private readonly List<string> _leftlist = new List<string>();
+		private readonly List<string> _joinlist = new List<string>();
 		public Dictionary<string, string> GetDetectiveList() { return _detectivelist; }
 		public Dictionary<string, string> GetKillerList() { return _killerlist; }
 		public Dictionary<string, string> GetDoctorList() { return _doctorlist; }
@@ -90,6 +91,8 @@ namespace Schumix.GameAddon.MaffiaGames
 			_doctorlist.Clear();
 			_normallist.Clear();
 			_ghostlist.Clear();
+			_joinlist.Clear();
+			_leftlist.Clear();
 			_day = false;
 			_stop = false;
 			_killer = false;
@@ -127,25 +130,10 @@ namespace Schumix.GameAddon.MaffiaGames
 				_playerlist.Add(Id, NewName);
 			}
 
-			if(_killerlist.ContainsKey(OldName.ToLower()))
+			if(_joinlist.Contains(OldName.ToLower()))
 			{
-				_killerlist.Remove(OldName.ToLower());
-				_killerlist.Add(NewName.ToLower(), NewName);
-			}
-			else if(_detectivelist.ContainsKey(OldName.ToLower()))
-			{
-				_detectivelist.Remove(OldName.ToLower());
-				_detectivelist.Add(NewName.ToLower(), NewName);
-			}
-			else if(_doctorlist.ContainsKey(OldName.ToLower()))
-			{
-				_doctorlist.Remove(OldName.ToLower());
-				_doctorlist.Add(NewName.ToLower(), NewName);
-			}
-			else if(_normallist.ContainsKey(OldName.ToLower()))
-			{
-				_normallist.Remove(OldName.ToLower());
-				_normallist.Add(NewName.ToLower(), NewName);
+				_joinlist.Remove(OldName.ToLower());
+				_joinlist.Add(NewName.ToLower());
 			}
 
 			if(_owner == OldName)
@@ -153,6 +141,27 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(Started)
 			{
+				if(_killerlist.ContainsKey(OldName.ToLower()))
+				{
+					_killerlist.Remove(OldName.ToLower());
+					_killerlist.Add(NewName.ToLower(), NewName);
+				}
+				else if(_detectivelist.ContainsKey(OldName.ToLower()))
+				{
+					_detectivelist.Remove(OldName.ToLower());
+					_detectivelist.Add(NewName.ToLower(), NewName);
+				}
+				else if(_doctorlist.ContainsKey(OldName.ToLower()))
+				{
+					_doctorlist.Remove(OldName.ToLower());
+					_doctorlist.Add(NewName.ToLower(), NewName);
+				}
+				else if(_normallist.ContainsKey(OldName.ToLower()))
+				{
+					_normallist.Remove(OldName.ToLower());
+					_normallist.Add(NewName.ToLower(), NewName);
+				}
+
 				if(killer_.ToLower() == OldName.ToLower())
 					killer_ = NewName;
 	
@@ -168,70 +177,76 @@ namespace Schumix.GameAddon.MaffiaGames
 			_rank = string.Empty;
 			string name = string.Empty;
 
-			if(_killerlist.ContainsKey(Name.ToLower()))
+			if(Started)
 			{
-				name = _killerlist[Name.ToLower()];
-
-				if(Started && _killerlist.Count == 2)
+				if(_killerlist.ContainsKey(Name.ToLower()))
 				{
-					if(killer_.ToLower() == Name.ToLower())
-					{
-						if(_killerlist.ContainsKey(_newghost) && _detectivelist.ContainsKey(_newghost) &&
-							_normallist.ContainsKey(_newghost) && !_ghostlist.ContainsKey(_newghost) &&
-							_doctorlist.ContainsKey(_newghost))
-						{
-							newghost = _newghost;
-							_killer = true;
-						}
-					}
+					name = _killerlist[Name.ToLower()];
 	
-					if(killer2_.ToLower() == Name.ToLower())
+					if(Started && _killerlist.Count == 2)
 					{
-						if(_killerlist.ContainsKey(_newghost2) && _detectivelist.ContainsKey(_newghost2) &&
-							_normallist.ContainsKey(_newghost2) && !_ghostlist.ContainsKey(_newghost2) &&
-							_doctorlist.ContainsKey(_newghost2))
+						if(killer_.ToLower() == Name.ToLower())
 						{
-							newghost = _newghost2;
-							_killer = true;
+							if(_killerlist.ContainsKey(_newghost2) && _detectivelist.ContainsKey(_newghost2) &&
+								_normallist.ContainsKey(_newghost2) && !_ghostlist.ContainsKey(_newghost2) &&
+								_doctorlist.ContainsKey(_newghost2))
+							{
+								newghost = _newghost2;
+								_killer = true;
+							}
+						}
+
+						if(killer2_.ToLower() == Name.ToLower())
+						{
+							if(_killerlist.ContainsKey(_newghost) && _detectivelist.ContainsKey(_newghost) &&
+								_normallist.ContainsKey(_newghost) && !_ghostlist.ContainsKey(_newghost) &&
+								_doctorlist.ContainsKey(_newghost))
+							{
+								newghost = _newghost;
+								_killer = true;
+							}
 						}
 					}
+
+					_killerlist.Remove(Name.ToLower());
+					_rank = "killer";
 				}
-
-				_killerlist.Remove(Name.ToLower());
-				_rank = "killer";
-			}
-			else if(_detectivelist.ContainsKey(Name.ToLower()))
-			{
-				name = _detectivelist[Name.ToLower()];
-				_detectivelist.Remove(Name.ToLower());
-
-				if(Started)
+				else if(_detectivelist.ContainsKey(Name.ToLower()))
 				{
-					_ghostdetective = true;
-					_detective = true;
+					name = _detectivelist[Name.ToLower()];
+					_detectivelist.Remove(Name.ToLower());
+
+					if(Started)
+					{
+						_ghostdetective = true;
+						_detective = true;
+					}
+
+					_rank = "detective";
 				}
-
-				_rank = "detective";
-			}
-			else if(_doctorlist.ContainsKey(Name.ToLower()))
-			{
-				name = _doctorlist[Name.ToLower()];
-				_doctorlist.Remove(Name.ToLower());
-
-				if(Started)
+				else if(_doctorlist.ContainsKey(Name.ToLower()))
 				{
-					_ghostdoctor = true;
-					_doctor = true;
-				}
+					name = _doctorlist[Name.ToLower()];
+					_doctorlist.Remove(Name.ToLower());
 
-				_rank = "doctor";
+					if(Started)
+					{
+						_ghostdoctor = true;
+						_doctor = true;
+					}
+
+					_rank = "doctor";
+				}
+				else if(_normallist.ContainsKey(Name.ToLower()))
+				{
+					name = _normallist[Name.ToLower()];
+					_normallist.Remove(Name.ToLower());
+					_rank = "normal";
+				}
 			}
-			else if(_normallist.ContainsKey(Name.ToLower()))
-			{
-				name = _normallist[Name.ToLower()];
-				_normallist.Remove(Name.ToLower());
-				_rank = "normal";
-			}
+
+			if(_joinlist.Contains(Name.ToLower()))
+				_joinlist.Remove(Name.ToLower());
 
 			int i = 0;
 			foreach(var player in _playerlist)
@@ -367,6 +382,8 @@ namespace Schumix.GameAddon.MaffiaGames
 			_doctorlist.Clear();
 			_normallist.Clear();
 			_ghostlist.Clear();
+			_joinlist.Clear();
+			_leftlist.Clear();
 			GameAddon.GameChannelFunction.Remove(_channel);
 		}
 
