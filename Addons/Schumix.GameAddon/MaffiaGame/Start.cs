@@ -56,6 +56,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			_killerlist.Clear();
 			_doctorlist.Clear();
 			_normallist.Clear();
+			_joinlist.Clear();
 
 			if(list.Count < 8)
 			{

@@ -25,6 +25,14 @@ namespace Schumix.GameAddon.MaffiaGames
 	{
 		public void Join(string Name)
 		{
+			if(_joinlist.Contains(Name.ToLower()))
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Már játékban vagy!", Name);
+				return;
+			}
+
+			_joinlist.Add(Name.ToLower());
+
 			if(!Running)
 			{
 				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);

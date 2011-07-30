@@ -90,22 +90,35 @@ namespace Schumix.GameAddon.MaffiaGames
 			if((_playerlist.Count/2)+1 == _lynchmaxnumber)
 			{
 				_lynch = true;
-				_lynchmaxnumber = 0;
 
 				foreach(var list in _lynchlist)
 				{
 					if(_lynchmaxnumber == list.Value.Split(',').Length)
+					{
 						namess = list.Key;
+						break;
+					}
 				}
 
-				RemovePlayer(Name);
-				sSendMessage.SendCMPrivmsg(_channel, "A többség 4{0} lincselése mellett döntött! Elszabadulnak az indulatok. Ő mostantól már halott.", newghost);
+				_lynchmaxnumber = 0;
+
+				if(_killerlist.ContainsKey(namess))
+					namess = _killerlist[namess];
+				else if(_detectivelist.ContainsKey(namess))
+					namess = _detectivelist[namess];
+				else if(_doctorlist.ContainsKey(namess))
+					namess = _doctorlist[namess];
+				else if(_normallist.ContainsKey(namess))
+					namess = _normallist[namess];
+
+				RemovePlayer(namess);
+				sSendMessage.SendCMPrivmsg(_channel, "A többség 4{0} lincselése mellett döntött! Elszabadulnak az indulatok. Ő mostantól már halott.", namess);
 				Corpse();
 				EndGame();
 
 				if(_playerlist.Count >= 2 && Running)
 				{
-					sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", newghost);
+					sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", namess);
 					_day = false;
 					_stop = false;
 				}
