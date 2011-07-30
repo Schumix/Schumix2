@@ -55,7 +55,6 @@ namespace Schumix.ExtraAddon
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
 			Network.PublicRegisterHandler("JOIN",                       new Action<IRCMessage>(HandleJoin));
-			Network.PublicRegisterHandler("KICK",                       new Action<IRCMessage>(HandleKick));
 			CommandManager.PublicCRegisterHandler("notes",              new Action<IRCMessage>(sNotes.HandleNotes));
 			CommandManager.PublicCRegisterHandler("message",            new Action<IRCMessage>(sFunctions.HandleMessage));
 			CommandManager.HalfOperatorCRegisterHandler("autofunction", new Action<IRCMessage>(sFunctions.HandleAutoFunction));
@@ -64,7 +63,6 @@ namespace Schumix.ExtraAddon
 		public void Destroy()
 		{
 			Network.PublicRemoveHandler("JOIN");
-			Network.PublicRemoveHandler("KICK");
 			CommandManager.PublicCRemoveHandler("notes");
 			CommandManager.PublicCRemoveHandler("message");
 			CommandManager.HalfOperatorCRemoveHandler("autofunction");
@@ -187,6 +185,11 @@ namespace Schumix.ExtraAddon
 		public void HandleLeft(IRCMessage sIRCMessage)
 		{
 			HandleLLeft(sIRCMessage);
+		}
+
+		public void HandleKick(IRCMessage sIRCMessage)
+		{
+			HandleKKick(sIRCMessage);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

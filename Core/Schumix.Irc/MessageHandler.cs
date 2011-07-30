@@ -221,6 +221,12 @@ namespace Schumix.Irc
 				plugin.HandleLeft(sIRCMessage);
 		}
 
+		protected void HandleKick(IRCMessage sIRCMessage)
+		{
+			foreach(var plugin in sAddonManager.GetPlugins())
+				plugin.HandleKick(sIRCMessage);
+		}
+
 		/// <summary>
 		///     
 		/// </summary>

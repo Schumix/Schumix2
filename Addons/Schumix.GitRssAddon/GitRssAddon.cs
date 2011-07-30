@@ -113,6 +113,11 @@ namespace Schumix.GitRssAddon
 
 		}
 
+		public void HandleKick(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;

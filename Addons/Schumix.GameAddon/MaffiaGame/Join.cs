@@ -46,7 +46,15 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!_playerlist.ContainsValue(Name))
 			{
 				sSendMessage.SendCMPrivmsg(_channel, string.Empty);
-				_playerlist.Add(_playerlist.Count+1, Name);
+
+				int i = 0;
+				foreach(var player in _playerlist)
+				{
+					if(player.Key > i)
+						i = player.Key;
+				}
+
+				_playerlist.Add(i+1, Name);
 				sSender.Mode(_channel, "+v", Name);
 				sSendMessage.SendCMPrivmsg(_channel, "{0}: Bekerültél a játékba!", Name);
 			}

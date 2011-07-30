@@ -164,7 +164,7 @@ namespace Schumix.GameAddon
 								return;
 							}
 
-							MaffiaList[channel].Lynch(sIRCMessage.Info[4], sIRCMessage.Nick);
+							MaffiaList[channel].Lynch(sIRCMessage.Info[4], sIRCMessage.Nick, sIRCMessage.Channel);
 							break;
 						}
 						case "!rescue":
@@ -248,6 +248,24 @@ namespace Schumix.GameAddon
 					if(player.Value == sIRCMessage.Nick)
 					{
 						maffia.Value.Leave(sIRCMessage.Nick);
+						break;
+					}
+				}
+			}
+		}
+
+		public void HandleKick(IRCMessage sIRCMessage)
+		{
+			foreach(var maffia in GameAddon.MaffiaList)
+			{
+				if(!maffia.Value.Running)
+					continue;
+
+				foreach(var player in maffia.Value.GetPlayerList())
+				{
+					if(player.Value == sIRCMessage.Info[3])
+					{
+						maffia.Value.Leave(sIRCMessage.Info[3]);
 						break;
 					}
 				}

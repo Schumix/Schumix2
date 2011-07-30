@@ -73,6 +73,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		private bool _ghostdoctor;
 		private bool _joinstop;
 		private bool _start;
+		private bool _lynch;
 		private int _lynchmaxnumber;
 		private int _players;
 
@@ -98,6 +99,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			_ghostdetective = false;
 			_ghostdoctor = false;
 			_start = false;
+			_lynch = false;
 			_players = 0;
 			_lynchmaxnumber = 0;
 			Running = true;
@@ -157,35 +159,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				if(killer2_.ToLower() == OldName.ToLower())
 					killer2_ = NewName;
 
-				string name = string.Empty;
-				string names = string.Empty;
-				string[] split = { string.Empty };
-
-				foreach(var list in _lynchlist)
-				{
-					if(list.Value.Contains(OldName.ToLower()))
-					{
-						name = list.Key;
-						split = list.Value.Split(',');
-					}
-				}
-
-				_lynchlist.Remove(name);
-
-				if(split.Length > 1)
-				{
-					foreach(var spl in split)
-					{
-						if(OldName.ToLower() == spl)
-							continue;
-						else
-							names += "," + spl;
-					}
-
-					_lynchlist.Add(name, names.Remove(0, 1, ",") + "," + NewName.ToLower());
-				}
-				else
-					_lynchlist.Add(name, NewName.ToLower());
+				Lynch(NewName, OldName, "newname", "none");
 			}
 		}
 
@@ -245,10 +219,11 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			_playerlist.Remove(i);
 
-			if(Started)
+			if(Started && !_ghostlist.ContainsKey(name.ToLower()))
 				_ghostlist.Add(name.ToLower(), name);
 
 			newghost = name;
+			sSender.Mode(_channel, "-v", name);
 		}
 
 		private void Corpse()
@@ -279,6 +254,67 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSender.Mode(_channel, "-v", end.Value);
 
 			sSender.Mode(_channel, "-m");
+		}
+
+		private void Lynch(string Name, string NickName, string Mode, string none)
+		{
+			string name = string.Empty;
+			string names = string.Empty;
+			string[] split = { string.Empty };
+
+			foreach(var list in _lynchlist)
+			{
+				if(Mode == "lynch" && list.Key == Name.ToLower())
+					names = list.Value;
+
+				if(list.Value.Contains(NickName.ToLower()))
+				{
+					name = list.Key;
+
+					if((Mode == "lynch" || Mode == "newlynch") && Name.ToLower() == name)
+					{
+						sSendMessage.SendCMPrivmsg(_channel, "{0}: Már szavaztál rá!", NickName);
+						return;
+					}
+
+					split = list.Value.Split(',');
+				}
+			}
+
+			if(Mode == "lynch")
+			{
+				_lynchlist.Remove(Name.ToLower());
+				_lynchlist.Add(Name.ToLower(), names + "," + NickName.ToLower());
+			}
+
+			_lynchlist.Remove(name);
+			names = string.Empty;
+
+			if(split.Length > 1)
+			{
+				foreach(var spl in split)
+				{
+					if(NickName.ToLower() == spl)
+						continue;
+					else
+						names += "," + spl;
+				}
+
+				if(Mode == "newname")
+					_lynchlist.Add(name, names.Remove(0, 1, ",") + "," + Name.ToLower());
+				else
+					_lynchlist.Add(name, names.Remove(0, 1, ","));
+			}
+			else
+			{
+				if(Mode == "newlynch")
+					_lynchlist.Remove(name);
+				else if(Mode == "newname")
+					_lynchlist.Add(name, Name.ToLower());
+			}
+
+			if(Mode == "newlynch")
+				_lynchlist.Add(Name.ToLower(), NickName.ToLower());
 		}
 
 		private void StartThread()
@@ -341,7 +377,6 @@ namespace Schumix.GameAddon.MaffiaGames
 					else
 						_detective = true;
 
-					sSender.Mode(_channel, "-v", newghost);
 					sSendMessage.SendCMPrivmsg(newghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
 					EndGame();
 				}
@@ -368,7 +403,6 @@ namespace Schumix.GameAddon.MaffiaGames
 					else
 						_doctor = true;
 
-					sSender.Mode(_channel, "-v", newghost);
 					sSendMessage.SendCMPrivmsg(newghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
 					EndGame();
 				}
@@ -480,11 +514,11 @@ namespace Schumix.GameAddon.MaffiaGames
 			}
 			else
 			{
-				if((_playerlist.Count == 2) && Running)
+				if((_killerlist.Count >= _detectivelist.Count + _doctorlist.Count + _normallist.Count) && Running)
 				{
 					RemoveRank();
 
-					if(_killerlist.Count >= 1)
+					if(_killerlist.Count >= 1 && _lynch)
 					{
 						sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newghost);
 						Corpse();
@@ -496,7 +530,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					StopThread();
 					return;
 				}
-				else if((_playerlist.Count <= 1) && Running)
+				else if((_playerlist.Count <= 2) && Running)
 				{
 					RemoveRank();
 					sSendMessage.SendCMPrivmsg(_channel, "Elfogytak a játékosok!");
