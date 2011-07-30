@@ -26,6 +26,9 @@ namespace Schumix.GameAddon.MaffiaGames
 	{
 		public void Lynch(string Name, string NickName, string Channel)
 		{
+			if(_lynch)
+				return;
+
 			if(!Running)
 			{
 				sSendMessage.SendCMPrivmsg(Channel, "{0}: Nem megy játék!", Name);
@@ -86,6 +89,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if((_playerlist.Count/2)+1 == _lynchmaxnumber)
 			{
+				_lynch = true;
 				_lynchmaxnumber = 0;
 
 				foreach(var list in _lynchlist)
@@ -97,7 +101,6 @@ namespace Schumix.GameAddon.MaffiaGames
 				RemovePlayer(Name);
 				sSendMessage.SendCMPrivmsg(_channel, "A többség 4{0} lincselése mellett döntött! Elszabadulnak az indulatok. Ő mostantól már halott.", newghost);
 				Corpse();
-				_lynch = true;
 				EndGame();
 				_lynch = false;
 
