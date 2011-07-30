@@ -387,7 +387,10 @@ namespace Schumix.GameAddon.MaffiaGames
 					_rank = string.Empty;
 
 					if(newghost.ToLower() != rescued.ToLower())
+					{
 						RemovePlayer(newghost);
+						sSendMessage.SendCMPrivmsg(newghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
+					}
 
 					_day = true;
 					_stop = false;
@@ -403,7 +406,6 @@ namespace Schumix.GameAddon.MaffiaGames
 					else
 						_doctor = true;
 
-					sSendMessage.SendCMPrivmsg(newghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
 					EndGame();
 				}
 
