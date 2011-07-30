@@ -102,7 +102,6 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSendMessage.SendCMPrivmsg(_channel, "A többség 4{0} lincselése mellett döntött! Elszabadulnak az indulatok. Ő mostantól már halott.", newghost);
 				Corpse();
 				EndGame();
-				_lynch = false;
 
 				if(_playerlist.Count >= 2 && Running)
 				{
@@ -110,6 +109,8 @@ namespace Schumix.GameAddon.MaffiaGames
 					_day = false;
 					_stop = false;
 				}
+
+				_lynch = false;
 			}
 		}
 	}

@@ -171,6 +171,32 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(_killerlist.ContainsKey(Name.ToLower()))
 			{
 				name = _killerlist[Name.ToLower()];
+
+				if(Started && _killerlist.Count == 2)
+				{
+					if(killer_.ToLower() == Name.ToLower())
+					{
+						if(_killerlist.ContainsKey(_newghost) && _detectivelist.ContainsKey(_newghost) &&
+							_normallist.ContainsKey(_newghost) && !_ghostlist.ContainsKey(_newghost) &&
+							_doctorlist.ContainsKey(_newghost))
+						{
+							newghost = _newghost;
+							_killer = true;
+						}
+					}
+	
+					if(killer2_.ToLower() == Name.ToLower())
+					{
+						if(_killerlist.ContainsKey(_newghost2) && _detectivelist.ContainsKey(_newghost2) &&
+							_normallist.ContainsKey(_newghost2) && !_ghostlist.ContainsKey(_newghost2) &&
+							_doctorlist.ContainsKey(_newghost2))
+						{
+							newghost = _newghost2;
+							_killer = true;
+						}
+					}
+				}
+
 				_killerlist.Remove(Name.ToLower());
 				_rank = "killer";
 			}
@@ -386,6 +412,9 @@ namespace Schumix.GameAddon.MaffiaGames
 					_newghost2 = "new2";
 					_rank = string.Empty;
 
+					if(_ghostdoctor)
+						rescued = string.Empty;
+
 					if(newghost.ToLower() != rescued.ToLower())
 					{
 						RemovePlayer(newghost);
@@ -508,7 +537,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(_killerlist.Count == 0 && Running)
 			{
 				RemoveRank();
-				sSendMessage.SendCMPrivmsg(_channel, "A gyilkosok halottak! A falusiak győztek.");
+				sSendMessage.SendCMPrivmsg(_channel, "A gyilkosok halottak! A 4falusiak győztek.");
 				sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
 				EndText();
 				StopThread();
