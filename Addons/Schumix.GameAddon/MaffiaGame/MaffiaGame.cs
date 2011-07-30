@@ -518,7 +518,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				{
 					RemoveRank();
 
-					if(_killerlist.Count >= 1 && _lynch)
+					if(_killerlist.Count >= 1 && !_lynch)
 					{
 						sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newghost);
 						Corpse();
