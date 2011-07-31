@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Threading;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.GameAddon.MaffiaGames
@@ -79,7 +80,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			foreach(var list in _lynchlist)
 			{
 				var sp = list.Value.Split(',').Length;
-				if(sp > _lynchmaxnumber)
+				if(sp > _lynchmaxnumber && sp <= (_playerlist.Count/2)+1)
 					_lynchmaxnumber = sp;
 
 				namess += " (" + list.Key + ": " + sp + " szavazat)";
@@ -101,19 +102,11 @@ namespace Schumix.GameAddon.MaffiaGames
 				}
 
 				_lynchmaxnumber = 0;
-
-				if(_killerlist.ContainsKey(namess))
-					namess = _killerlist[namess];
-				else if(_detectivelist.ContainsKey(namess))
-					namess = _detectivelist[namess];
-				else if(_doctorlist.ContainsKey(namess))
-					namess = _doctorlist[namess];
-				else if(_normallist.ContainsKey(namess))
-					namess = _normallist[namess];
-
+				namess = GetPlayerName(namess);
 				RemovePlayer(namess);
 				sSendMessage.SendCMPrivmsg(_channel, "A többség 4{0} lincselése mellett döntött! Elszabadulnak az indulatok. Ő mostantól már halott.", namess);
 				Corpse();
+				Thread.Sleep(400);
 				EndGame();
 
 				if(_playerlist.Count >= 2 && Running)

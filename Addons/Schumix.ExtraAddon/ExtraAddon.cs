@@ -98,7 +98,7 @@ namespace Schumix.ExtraAddon
 					if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", sIRCMessage.Channel))
 					{
 						AutoMode = true;
-						ModeChannel = sIRCMessage.Channel;
+						ModeChannel = sIRCMessage.Channel.ToLower();
 						sSender.NickServStatus(sIRCMessage.Nick);
 					}
 				});

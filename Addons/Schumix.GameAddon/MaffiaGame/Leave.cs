@@ -82,43 +82,14 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(Started)
 			{
-				string name = string.Empty;
-				string names = string.Empty;
-				string[] split = { string.Empty };
-
-				foreach(var list in _lynchlist)
-				{
-					if(list.Value.Contains(Name.ToLower()))
-					{
-						name = list.Key;
-						split = list.Value.Split(',');
-					}
-				}
-
-				_lynchlist.Remove(name);
-
-				if(_lynchlist.ContainsKey(Name.ToLower()))
-					_lynchlist.Remove(Name.ToLower());
-
-				if(split.Length > 1)
-				{
-					foreach(var spl in split)
-					{
-						if(Name.ToLower() == spl)
-							continue;
-						else
-							names += "," + spl;
-					}
-
-					_lynchlist.Add(name, names.Remove(0, 1, ","));
-				}
+				Lynch(Name, Name, "leave", "none");
 
 				_lynchmaxnumber = 0;
 
 				foreach(var list in _lynchlist)
 				{
 					var sp = list.Value.Split(',').Length;
-					if(sp > _lynchmaxnumber)
+					if(sp > _lynchmaxnumber && sp <= (_playerlist.Count/2)+1)
 						_lynchmaxnumber = sp;
 				}
 

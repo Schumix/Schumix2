@@ -233,6 +233,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						_ghostdoctor = true;
 						_doctor = true;
+						rescued = string.Empty;
 					}
 
 					_rank = "doctor";
@@ -331,6 +332,12 @@ namespace Schumix.GameAddon.MaffiaGames
 			_lynchlist.Remove(name);
 			names = string.Empty;
 
+			if(Mode == "leave")
+			{
+				if(_lynchlist.ContainsKey(Name.ToLower()))
+					_lynchlist.Remove(Name.ToLower());
+			}
+
 			if(split.Length > 1)
 			{
 				foreach(var spl in split)
@@ -356,6 +363,22 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(Mode == "newlynch")
 				_lynchlist.Add(Name.ToLower(), NickName.ToLower());
+		}
+
+		private string GetPlayerName(string Name)
+		{
+			string player = string.Empty;
+
+			if(_killerlist.ContainsKey(Name))
+				player = _killerlist[Name];
+			else if(_detectivelist.ContainsKey(Name))
+				player = _detectivelist[Name];
+			else if(_doctorlist.ContainsKey(Name))
+				player = _doctorlist[Name];
+			else if(_normallist.ContainsKey(Name))
+				player = _normallist[Name];
+
+			return player;
 		}
 
 		private void StartThread()
@@ -428,9 +451,6 @@ namespace Schumix.GameAddon.MaffiaGames
 					_newghost = "new";
 					_newghost2 = "new2";
 					_rank = string.Empty;
-
-					if(_ghostdoctor)
-						rescued = string.Empty;
 
 					if(newghost.ToLower() != rescued.ToLower())
 					{
