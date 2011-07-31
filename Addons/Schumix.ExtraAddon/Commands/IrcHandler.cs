@@ -55,7 +55,7 @@ namespace Schumix.ExtraAddon.Commands
 			if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", channel))
 			{
 				AutoMode = true;
-				ModeChannel = channel;
+				ModeChannel = channel.ToLower();
 				sSender.NickServStatus(sIRCMessage.Nick);
 			}
 
