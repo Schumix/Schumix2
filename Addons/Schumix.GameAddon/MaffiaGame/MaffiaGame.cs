@@ -448,6 +448,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 					sSendMessage.SendCMPrivmsg(newghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
 					EndGame();
+					_ghosttext = false;
 				}
 				else if(_players >= 8 && _killer && _detective && _doctor)
 				{
@@ -477,6 +478,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						_doctor = true;
 
 					EndGame();
+					_ghosttext = false;
 				}
 
 				if(!Started)
@@ -592,7 +594,6 @@ namespace Schumix.GameAddon.MaffiaGames
 
 					if(_killerlist.Count >= 1 && _ghosttext)
 					{
-						_ghosttext = false;
 						sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newghost);
 						Corpse();
 					}
