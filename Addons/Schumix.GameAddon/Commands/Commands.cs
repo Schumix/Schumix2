@@ -49,6 +49,12 @@ namespace Schumix.GameAddon.Commands
 
 			if(sIRCMessage.Info[4].ToLower() == "start")
 			{
+				if(sIRCMessage.Channel.Substring(0, 1) != "#")
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ez nem csatorna! Ne pm-ben írj!");
+					return;
+				}
+
 				if(sIRCMessage.Info.Length < 6)
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a játék neve!");

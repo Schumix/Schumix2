@@ -58,84 +58,33 @@ namespace Schumix.GameAddon.MaffiaGames
 			_normallist.Clear();
 			_joinlist.Clear();
 
-			if(list.Count < 8)
+			var rand = new Random();
+			int number = rand.Next(1, list.Count);
+			int i = 0;
+			bool killer = true;
+			bool doctor = true;
+			bool detective = true;
+
+			for(;;)
 			{
-				var rand = new Random();
-				int number = rand.Next(1, list.Count);
-				bool killer = true;
-				bool detective = true;
+				number = rand.Next(1, list.Count);
 
-				for(;;)
+				if(killer)
 				{
-					number = rand.Next(1, list.Count);
-
-					if(killer)
+					if(list.ContainsKey(number))
 					{
-						if(list.ContainsKey(number))
+						string name = string.Empty;
+						list.TryGetValue(number, out name);
+						_killerlist.Add(name.ToLower(), name);
+						list.Remove(number);
+
+						if(list.Count < 8)
 						{
-							string name = string.Empty;
-							list.TryGetValue(number, out name);
-							_killerlist.Add(name.ToLower(), name);
-							list.Remove(number);
 							killer = false;
 							killer_ = name;
 						}
-
-						continue;
-					}
-					else if(detective)
-					{
-						if(list.ContainsKey(number))
+						else
 						{
-							string name = string.Empty;
-							list.TryGetValue(number, out name);
-							_detectivelist.Add(name.ToLower(), name);
-							list.Remove(number);
-							detective = false;
-							detective_ = name;
-						}
-
-						continue;
-					}
-					else
-					{
-						foreach(var llist in list)
-							_normallist.Add(llist.Value.ToLower(), llist.Value);
-						break;
-					}
-				}
-
-				foreach(var name in _killerlist)
-					sSendMessage.SendCMPrivmsg(name.Key, "Te egy gyilkos vagy. Célod megölni minden falusit. Csak viselkedj természetesen!");
-
-				foreach(var name in _detectivelist)
-					sSendMessage.SendCMPrivmsg(name.Key, "Te vagy a nyomozó. A te dolgod éjszakánként követni 1-1 embert, hogy megtudd, ki is ő valójában, mielőtt még túl késő lenne. Ha szerencséd van, a falusiak hisznek neked - és talán nem lincselnek meg...");
-
-				foreach(var name in _normallist)
-					sSendMessage.SendCMPrivmsg(name.Key, "Te egy teljesen hétköznapi civil vagy. Nincs más dolgod, mint kiválasztani nappal, hogy ki lehet a gyilkos, akit meglincseltek, éjszakánként pedig imádkozni az életedért...");
-			}
-			else
-			{
-				var rand = new Random();
-				int number = rand.Next(1, list.Count);
-				int i = 0;
-				bool killer = true;
-				bool doctor = true;
-				bool detective = true;
-
-				for(;;)
-				{
-					number = rand.Next(1, list.Count);
-
-					if(killer)
-					{
-						if(list.ContainsKey(number))
-						{
-							string name = string.Empty;
-							list.TryGetValue(number, out name);
-							_killerlist.Add(name.ToLower(), name);
-							list.Remove(number);
-
 							if(i == 0)
 								killer_ = name;
 							else
@@ -146,57 +95,60 @@ namespace Schumix.GameAddon.MaffiaGames
 							if(i == 2)
 								killer = false;
 						}
+					}
 
-						continue;
-					}
-					else if(detective)
-					{
-						if(list.ContainsKey(number))
-						{
-							string name = string.Empty;
-							list.TryGetValue(number, out name);
-							_detectivelist.Add(name.ToLower(), name);
-							list.Remove(number);
-							detective = false;
-							detective_ = name;
-						}
-
-						continue;
-					}
-					else if(doctor)
-					{
-						if(list.ContainsKey(number))
-						{
-							string name = string.Empty;
-							list.TryGetValue(number, out name);
-							_doctorlist.Add(name.ToLower(), name);
-							list.Remove(number);
-							doctor = false;
-							doctor_ = name;
-						}
-
-						continue;
-					}
-					else
-					{
-						foreach(var llist in list)
-							_normallist.Add(llist.Value.ToLower(), llist.Value);
-						break;
-					}
+					continue;
 				}
+				else if(detective)
+				{
+					if(list.ContainsKey(number))
+					{
+						string name = string.Empty;
+						list.TryGetValue(number, out name);
+						_detectivelist.Add(name.ToLower(), name);
+						list.Remove(number);
+						detective = false;
+						detective_ = name;
+					}
 
-				foreach(var name in _killerlist)
-					sSendMessage.SendCMPrivmsg(name.Key, "Te egy gyilkos vagy. Célod megölni minden falusit. Csak viselkedj természetesen!");
+					continue;
+				}
+				else if(doctor && list.Count >= 8)
+				{
+					if(list.ContainsKey(number))
+					{
+						string name = string.Empty;
+						list.TryGetValue(number, out name);
+						_doctorlist.Add(name.ToLower(), name);
+						list.Remove(number);
+						doctor = false;
+						doctor_ = name;
+					}
 
-				foreach(var name in _detectivelist)
-					sSendMessage.SendCMPrivmsg(name.Key, "Te vagy a nyomozó. A te dolgod éjszakánként követni 1-1 embert, hogy megtudd, ki is ő valójában, mielőtt még túl késő lenne. Ha szerencséd van, a falusiak hisznek neked - és talán nem lincselnek meg...");
+					continue;
+				}
+				else
+				{
+					foreach(var llist in list)
+						_normallist.Add(llist.Value.ToLower(), llist.Value);
+					break;
+				}
+			}
 
+			foreach(var name in _killerlist)
+				sSendMessage.SendCMPrivmsg(name.Key, "Te egy gyilkos vagy. Célod megölni minden falusit. Csak viselkedj természetesen!");
+
+			foreach(var name in _detectivelist)
+				sSendMessage.SendCMPrivmsg(name.Key, "Te vagy a nyomozó. A te dolgod éjszakánként követni 1-1 embert, hogy megtudd, ki is ő valójában, mielőtt még túl késő lenne. Ha szerencséd van, a falusiak hisznek neked - és talán nem lincselnek meg...");
+
+			if(list.Count >= 8)
+			{
 				foreach(var name in _doctorlist)
 					sSendMessage.SendCMPrivmsg(name.Key, "Te vagy a falu egyetlen orvosa. Éjszakánként megmenhtetsz egy-egy embert a zord haláltól. Ha szerencséd van, talán nem te leszel az első áldozat...");
-
-				foreach(var name in _normallist)
-					sSendMessage.SendCMPrivmsg(name.Key, "Te egy teljesen hétköznapi civil vagy. Nincs más dolgod, mint kiválasztani nappal, hogy ki lehet a gyilkos, akit meglincseltek, éjszakánként pedig imádkozni az életedért...");
 			}
+
+			foreach(var name in _normallist)
+				sSendMessage.SendCMPrivmsg(name.Key, "Te egy teljesen hétköznapi civil vagy. Nincs más dolgod, mint kiválasztani nappal, hogy ki lehet a gyilkos, akit meglincseltek, éjszakánként pedig imádkozni az életedért...");
 
 			list.Clear();
 			Started = true;
