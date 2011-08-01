@@ -142,7 +142,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			foreach(var name in _detectivelist)
 				sSendMessage.SendCMPrivmsg(name.Key, "Te vagy a nyomozó. A te dolgod éjszakánként követni 1-1 embert, hogy megtudd, ki is ő valójában, mielőtt még túl késő lenne. Ha szerencséd van, a falusiak hisznek neked - és talán nem lincselnek meg...");
 
-			if(list.Count >= 8)
+			if(count >= 8)
 			{
 				foreach(var name in _doctorlist)
 					sSendMessage.SendCMPrivmsg(name.Key, "Te vagy a falu egyetlen orvosa. Éjszakánként megmenhtetsz egy-egy embert a zord haláltól. Ha szerencséd van, talán nem te leszel az első áldozat...");
