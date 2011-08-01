@@ -70,9 +70,15 @@ namespace Schumix.GameAddon.MaffiaGames
 			}
 
 			if(!_lynchlist.ContainsKey(Name.ToLower()))
-				Lynch(Name, NickName, "newlynch", "none");
+			{
+				if(!Lynch(Name, NickName, "newlynch", "none"))
+					return;
+			}
 			else
-				Lynch(Name, NickName, "lynch", "none");
+			{
+				if(!Lynch(Name, NickName, "lynch", "none"))
+					return;
+			}
 
 			sSendMessage.SendCMPrivmsg(Channel, "{0} arra szavazott, hogy {1} legyen meglincselve!", NickName, Name);
 

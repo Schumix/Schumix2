@@ -300,7 +300,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			sSender.Mode(_channel, "-m");
 		}
 
-		private void Lynch(string Name, string NickName, string Mode, string none)
+		private bool Lynch(string Name, string NickName, string Mode, string none)
 		{
 			string name = string.Empty;
 			string names = string.Empty;
@@ -318,7 +318,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					if((Mode == "lynch" || Mode == "newlynch") && Name.ToLower() == name)
 					{
 						sSendMessage.SendCMPrivmsg(_channel, "{0}: Már szavaztál rá!", NickName);
-						return;
+						return false;
 					}
 
 					split = list.Value.Split(',');
@@ -365,6 +365,8 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(Mode == "newlynch")
 				_lynchlist.Add(Name.ToLower(), NickName.ToLower());
+
+			return true;
 		}
 
 		private string GetPlayerName(string Name)

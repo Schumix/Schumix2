@@ -60,6 +60,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
+			sSender.Mode(_channel, "-v", Name);
 			RemovePlayer(Name);
 			sSendMessage.SendCMPrivmsg(_channel, "{0} eltűnt egy különös féreglyukban.", Name);
 
