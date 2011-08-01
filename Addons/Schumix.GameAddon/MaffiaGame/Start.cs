@@ -64,6 +64,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			bool killer = true;
 			bool doctor = true;
 			bool detective = true;
+			int count = list.Count;
 
 			for(;;)
 			{
@@ -78,7 +79,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						_killerlist.Add(name.ToLower(), name);
 						list.Remove(number);
 
-						if(list.Count < 8)
+						if(count < 8)
 						{
 							killer = false;
 							killer_ = name;
@@ -113,7 +114,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 					continue;
 				}
-				else if(doctor && list.Count >= 8)
+				else if(doctor && count >= 8)
 				{
 					if(list.ContainsKey(number))
 					{
