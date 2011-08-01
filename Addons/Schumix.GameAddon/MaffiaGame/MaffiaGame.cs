@@ -75,6 +75,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		private bool _joinstop;
 		private bool _start;
 		private bool _lynch;
+		private bool _ghosttext;
 		private int _lynchmaxnumber;
 		private int _players;
 
@@ -103,6 +104,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			_ghostdoctor = false;
 			_start = false;
 			_lynch = false;
+			_ghosttext = false;
 			_players = 0;
 			_lynchmaxnumber = 0;
 			Running = true;
@@ -437,6 +439,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					_day = true;
 					_stop = false;
 					_killer = false;
+					_ghosttext = true;
 
 					if(!_ghostdetective)
 						_detective = false;
@@ -455,6 +458,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					if(newghost.ToLower() != rescued.ToLower())
 					{
 						RemovePlayer(newghost);
+						_ghosttext = true;
 						sSendMessage.SendCMPrivmsg(newghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
 					}
 
@@ -586,12 +590,13 @@ namespace Schumix.GameAddon.MaffiaGames
 				{
 					RemoveRank();
 
-					if(_killerlist.Count >= 1 && !_lynch)
+					if(_killerlist.Count >= 1 && _ghosttext)
 					{
+						_ghosttext = false;
 						sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newghost);
 						Corpse();
 					}
-						
+
 					sSendMessage.SendCMPrivmsg(_channel, "A falusiak halottak! A 4gyilkosok győztek.");
 					sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
 					EndText();
