@@ -376,12 +376,8 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private void AddedRanks()
 		{
-			Running = false;
-
-			foreach(var end in _playerlist)
-				sSender.Mode(_channel, "-v", end.Value);
-
-			sSender.Mode(_channel, "-m");
+			foreach(var player in _playerlist)
+				sSender.Mode(_channel, "+v", player.Value);
 		}
 
 		private void RemoveRanks()
