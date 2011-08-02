@@ -623,8 +623,10 @@ namespace Schumix.GameAddon.MaffiaGames
 
 					_stop = true;
 					_lynchlist.Clear();
-					RemoveRanks();
 					names = string.Empty;
+
+					foreach(var end in _playerlist)
+						sSender.Mode(_channel, "-v", end.Value);
 
 					foreach(var name in _playerlist)
 						names += ", " + name.Value;
