@@ -37,15 +37,16 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
-			if(_detectivelist.ContainsKey(NickName.ToLower()) && _detective)
-			{
-				sSendMessage.SendCMPrivmsg(NickName, "Ma este már kikérdeztél valakit!");
-				return;
-			}
-
 			if(!_detectivelist.ContainsKey(NickName.ToLower()))
 			{
 				sSendMessage.SendCMPrivmsg(NickName, "Nem vagy nyomozó!");
+				return;
+			}
+
+			if((detective_.ToLower() == NickName.ToLower() && _detective) ||
+				(detective2_.ToLower() == NickName.ToLower() && _detective2))
+			{
+				sSendMessage.SendCMPrivmsg(NickName, "Ma este már kikérdeztél valakit!");
 				return;
 			}
 
@@ -85,7 +86,10 @@ namespace Schumix.GameAddon.MaffiaGames
 			else if(_rank == "detective")
 				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy te vagy az :D");
 
-			_detective = true;
+			if(detective_.ToLower() == NickName.ToLower())
+				_detective = true;
+			else if(detective2_.ToLower() == NickName.ToLower())
+				_detective2 = true;
 		}
 	}
 }
