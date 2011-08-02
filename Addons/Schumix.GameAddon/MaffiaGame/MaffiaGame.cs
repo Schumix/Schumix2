@@ -374,11 +374,11 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective(), GetDoctor());
 		}
 
-		private void AddedRanks()
+		/*private void AddedRanks()
 		{
 			foreach(var player in _playerlist)
 				sSender.Mode(_channel, "+v", player.Value);
-		}
+		}*/
 
 		private void RemoveRanks()
 		{
@@ -625,8 +625,8 @@ namespace Schumix.GameAddon.MaffiaGames
 					_lynchlist.Clear();
 					names = string.Empty;
 
-					foreach(var end in _playerlist)
-						sSender.Mode(_channel, "-v", end.Value);
+					/*foreach(var end in _playerlist)
+						sSender.Mode(_channel, "-v", end.Value);*/
 
 					foreach(var name in _playerlist)
 						names += ", " + name.Value;
@@ -694,7 +694,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						continue;
 
 					_stop = true;
-					AddedRanks();
+					//AddedRanks();
 					sSendMessage.SendCMPrivmsg(_channel, "Felkelt a nap!");
 
 					if(newghost.ToLower() != rescued.ToLower())
