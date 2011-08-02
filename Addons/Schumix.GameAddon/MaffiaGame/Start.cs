@@ -60,7 +60,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			var rand = new Random();
 			int number = rand.Next(1, list.Count);
-			int i = 0;
+			int i = 0, x = 0;
 			bool killer = true;
 			bool doctor = true;
 			bool detective = true;
@@ -84,7 +84,7 @@ namespace Schumix.GameAddon.MaffiaGames
 							killer = false;
 							killer_ = name;
 						}
-						else
+						else if(count >= 8 && count < 15)
 						{
 							if(i == 0)
 								killer_ = name;
@@ -94,6 +94,20 @@ namespace Schumix.GameAddon.MaffiaGames
 							i++;
 
 							if(i == 2)
+								killer = false;
+						}
+						else
+						{
+							if(i == 0)
+								killer_ = name;
+							else if(i == 1)
+								killer2_ = name;
+							else
+								killer3_ = name;
+
+							i++;
+
+							if(i == 3)
 								killer = false;
 						}
 					}
@@ -108,8 +122,24 @@ namespace Schumix.GameAddon.MaffiaGames
 						list.TryGetValue(number, out name);
 						_detectivelist.Add(name.ToLower(), name);
 						list.Remove(number);
-						detective = false;
-						detective_ = name;
+
+						if(count < 15)
+						{
+							detective = false;
+							detective_ = name;
+						}
+						else if(count >= 8 && count < 15)
+						{
+							if(x == 0)
+								detective_ = name;
+							else
+								detective2_ = name;
+
+							x++;
+
+							if(x == 2)
+								detective = false;
+						}
 					}
 
 					continue;

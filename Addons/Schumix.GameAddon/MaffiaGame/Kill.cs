@@ -72,7 +72,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				newghost = GetPlayerName(Name.ToLower());
 				_killer = true;
 			}
-			else
+			else if((_players >= 8 && _players < 15) || _killerlist.Count == 2)
 			{
 				if(killer_.ToLower() == Killer.ToLower())
 					_newghost = Name.ToLower();
@@ -81,6 +81,27 @@ namespace Schumix.GameAddon.MaffiaGames
 					_newghost2 = Name.ToLower();
 
 				if(_newghost == _newghost2)
+				{
+					newghost = GetPlayerName(_newghost);
+
+					foreach(var name in _killerlist)
+						sSendMessage.SendCMPrivmsg(name.Key, "A gyilkosok megegyeztek!");
+
+					_killer = true;
+				}
+			}
+			else
+			{
+				if(killer_.ToLower() == Killer.ToLower())
+					_newghost = Name.ToLower();
+
+				if(killer2_.ToLower() == Killer.ToLower())
+					_newghost2 = Name.ToLower();
+
+				if(killer3_.ToLower() == Killer.ToLower())
+					_newghost3 = Name.ToLower();
+
+				if(_newghost == _newghost2 && _newghost == _newghost3)
 				{
 					newghost = GetPlayerName(_newghost);
 

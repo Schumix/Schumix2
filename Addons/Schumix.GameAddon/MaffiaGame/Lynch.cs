@@ -115,7 +115,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				Thread.Sleep(400);
 				EndGame();
 
-				if(_playerlist.Count >= 2 && Running)
+				if((_killerlist.Count >= _detectivelist.Count + _doctorlist.Count + _normallist.Count) && Running)
 				{
 					sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", namess);
 					_day = false;
