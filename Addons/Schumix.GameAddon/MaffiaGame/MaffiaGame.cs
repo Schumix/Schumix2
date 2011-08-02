@@ -374,7 +374,17 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective(), GetDoctor());
 		}
 
-		private void RemoveRank()
+		private void AddedRanks()
+		{
+			Running = false;
+
+			foreach(var end in _playerlist)
+				sSender.Mode(_channel, "-v", end.Value);
+
+			sSender.Mode(_channel, "-m");
+		}
+
+		private void RemoveRanks()
 		{
 			Running = false;
 
@@ -617,6 +627,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 					_stop = true;
 					_lynchlist.Clear();
+					RemoveRanks();
 					names = string.Empty;
 
 					foreach(var name in _playerlist)
@@ -685,6 +696,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						continue;
 
 					_stop = true;
+					AddedRanks();
 					sSendMessage.SendCMPrivmsg(_channel, "Felkelt a nap!");
 
 					if(newghost.ToLower() != rescued.ToLower())
@@ -720,7 +732,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		{
 			if(_killerlist.Count == 0 && Running)
 			{
-				RemoveRank();
+				RemoveRanks();
 				sSendMessage.SendCMPrivmsg(_channel, "A gyilkosok halottak! A 4falusiak győztek.");
 				sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
 				EndText();
@@ -731,7 +743,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				if((_killerlist.Count >= _detectivelist.Count + _doctorlist.Count + _normallist.Count) && Running)
 				{
-					RemoveRank();
+					RemoveRanks();
 
 					if(_killerlist.Count >= 1 && _ghosttext)
 					{
@@ -747,7 +759,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				}
 				else if((_playerlist.Count <= 2) && Running)
 				{
-					RemoveRank();
+					RemoveRanks();
 					sSendMessage.SendCMPrivmsg(_channel, "Elfogytak a játékosok!");
 					sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
 					EndText();
