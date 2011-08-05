@@ -26,6 +26,7 @@ using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.GameAddon.MaffiaGames;
+using Schumix.GameAddon.IJAGames;
 
 namespace Schumix.GameAddon.Commands
 {
@@ -97,6 +98,42 @@ namespace Schumix.GameAddon.Commands
 					else
 						GameAddon.MaffiaList[sIRCMessage.Channel.ToLower()].NewGame(sIRCMessage.Nick, sIRCMessage.Channel);
 				}
+				else if(sIRCMessage.Info[5].ToLower() == "ijagame")
+				{
+					foreach(var ija in GameAddon.IJAList)
+					{
+						if(sIRCMessage.Channel.ToLower() != ija.Key)
+						{
+							foreach(var player in ija.Value.GetPlayerList())
+							{
+								if(player.Value == sIRCMessage.Nick)
+								{
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Te már játékban vagy itt: {1}", sIRCMessage.Nick, ija.Key);
+									return;
+								}
+							}
+						}
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", sIRCMessage.Channel);
+					if(!db.IsNull())
+					{
+						if(!GameAddon.GameChannelFunction.ContainsKey(sIRCMessage.Channel.ToLower()))
+							GameAddon.GameChannelFunction.Add(sIRCMessage.Channel.ToLower(), db["Functions"].ToString());
+					}
+
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), sIRCMessage.Channel);
+					sChannelInfo.ChannelFunctionReload();
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("commands", "off", sIRCMessage.Channel), sIRCMessage.Channel);
+					sChannelInfo.ChannelFunctionReload();
+					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "on", sIRCMessage.Channel), sIRCMessage.Channel);
+					sChannelInfo.ChannelFunctionReload();
+					sSender.Mode(sIRCMessage.Channel, "+v", sIRCMessage.Nick);
+					if(!GameAddon.IJAList.ContainsKey(sIRCMessage.Channel.ToLower()))
+						GameAddon.IJAList.Add(sIRCMessage.Channel.ToLower(), new IJAGame(sIRCMessage.Nick, sIRCMessage.Channel));
+					else
+						GameAddon.IJAList[sIRCMessage.Channel.ToLower()].NewGame(sIRCMessage.Nick, sIRCMessage.Channel);
+				}
 				else
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs ilyen játék!");
 			}
@@ -118,6 +155,21 @@ namespace Schumix.GameAddon.Commands
 					}
 				}
 			}
+
+			foreach(var ija in GameAddon.IJAList)
+			{
+				if(!ija.Value.Running)
+					continue;
+
+				foreach(var player in ija.Value.GetPlayerList())
+				{
+					if(player.Value == sIRCMessage.Nick)
+					{
+						ija.Value.NewNick(player.Key, sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, ":"));
+						break;
+					}
+				}
+			}
 		}
 
 		protected void HandleQuit(IRCMessage sIRCMessage)
@@ -132,6 +184,21 @@ namespace Schumix.GameAddon.Commands
 					if(player.Value == sIRCMessage.Nick)
 					{
 						maffia.Value.Leave(sIRCMessage.Nick);
+						break;
+					}
+				}
+			}
+
+			foreach(var ija in GameAddon.IJAList)
+			{
+				if(!ija.Value.Running)
+					continue;
+
+				foreach(var player in ija.Value.GetPlayerList())
+				{
+					if(player.Value == sIRCMessage.Nick)
+					{
+						ija.Value.Leave(sIRCMessage.Nick);
 						break;
 					}
 				}
