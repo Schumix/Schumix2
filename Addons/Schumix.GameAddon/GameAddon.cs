@@ -26,6 +26,7 @@ using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.GameAddon.Commands;
 using Schumix.GameAddon.MaffiaGames;
+using Schumix.GameAddon.IJAGames;
 
 namespace Schumix.GameAddon
 {
@@ -34,8 +35,9 @@ namespace Schumix.GameAddon
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
-		public static readonly Dictionary<string, MaffiaGame> MaffiaList = new Dictionary<string, MaffiaGame>();
 		public static readonly Dictionary<string, string> GameChannelFunction = new Dictionary<string, string>();
+		public static readonly Dictionary<string, MaffiaGame> MaffiaList = new Dictionary<string, MaffiaGame>();
+		public static readonly Dictionary<string, IJAGame> IJAList = new Dictionary<string, IJAGame>();
 
 		public void Setup()
 		{
@@ -228,6 +230,168 @@ namespace Schumix.GameAddon
 							//sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem létezik ilyen parancs!", sIRCMessage.Nick);
 					}
 				}
+				else if(IJAList.ContainsKey(channel) || sIRCMessage.Channel.Substring(0, 1) != "#")
+				{
+					if(sIRCMessage.Info.Length < 4)
+						return;
+	
+					if(sIRCMessage.Channel.Substring(0, 1) != "#")
+					{
+						foreach(var ija in IJAList)
+						{
+							foreach(var player in ija.Value.GetPlayerList())
+							{
+								if(player.Value == sIRCMessage.Nick)
+								{
+									channel = ija.Key;
+									break;
+								}
+							}
+						}
+					}
+
+					sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, ":");
+					switch(sIRCMessage.Info[3].ToLower())
+					{
+						case "!start":
+						{
+							if(IJAList[channel].GetOwner() == sIRCMessage.Nick || IJAList[channel].GetOwner() == string.Empty ||
+								IsAdmin(sIRCMessage.Nick))
+								IJAList[channel].Start();
+							else
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játékot {0} indította!", IJAList[channel].GetOwner());
+							break;
+						}
+						case "!stats":
+						{
+							IJAList[channel].Stats();
+							break;
+						}
+						case "!join":
+						{
+							foreach(var ija in IJAList)
+							{
+								if(sIRCMessage.Channel.ToLower() != ija.Key)
+								{
+									foreach(var player in ija.Value.GetPlayerList())
+									{
+										if(player.Value == sIRCMessage.Nick)
+										{
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Te már játékban vagy itt: {1}", sIRCMessage.Nick, ija.Key);
+											return;
+										}
+									}
+								}
+							}
+
+							IJAList[channel].Join(sIRCMessage.Nick);
+							break;
+						}
+						case "!leave":
+						{
+							if(sIRCMessage.Info.Length < 5)
+							{
+								IJAList[channel].Leave(sIRCMessage.Nick);
+								return;
+							}
+
+							if(IJAList[channel].GetOwner() == sIRCMessage.Nick)
+							{
+								if(!IJAList[channel].GetKillerList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
+									!IJAList[channel].GetDetectiveList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
+									!IJAList[channel].GetNormalList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
+									!IJAList[channel].GetPlayerList().ContainsValue(sIRCMessage.Info[4]))
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Kit akarsz kiléptetni?", sIRCMessage.Nick);
+								else
+									IJAList[channel].Leave(sIRCMessage.Info[4], sIRCMessage.Nick);
+							}
+							else
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem te indítottad a játékot!", sIRCMessage.Nick);
+							break;
+						}
+						case "!kill":
+						{
+							if(sIRCMessage.Info.Length < 5)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz megölni?");
+								return;
+							}
+
+							IJAList[channel].Kill(sIRCMessage.Info[4], sIRCMessage.Nick);
+							break;
+						}
+						case "!lynch":
+						{
+							if(sIRCMessage.Info.Length < 5)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Kit akarsz lincselni?", sIRCMessage.Nick);
+								return;
+							}
+
+							IJAList[channel].Lynch(sIRCMessage.Info[4], sIRCMessage.Nick, sIRCMessage.Channel);
+							break;
+						}
+						case "!rescue":
+						{
+							if(sIRCMessage.Info.Length < 5)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz megmenteni?");
+								return;
+							}
+
+							IJAList[channel].Rescue(sIRCMessage.Info[4], sIRCMessage.Nick);
+							break;
+						}
+						case "!see":
+						{
+							if(sIRCMessage.Info.Length < 5)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz kikérdezni?");
+								return;
+							}
+
+							IJAList[channel].See(sIRCMessage.Info[4], sIRCMessage.Nick);
+							break;
+						}
+						case "!gameover":
+							break;
+						case "!end":
+						{
+							if(IJAList[channel].GetOwner() == sIRCMessage.Nick || IJAList[channel].GetOwner() == string.Empty ||
+								IsAdmin(sIRCMessage.Nick))
+							{
+								sSender.Mode(channel, "-m");
+
+								if(IJAList[channel].Started)
+								{
+									foreach(var end in IJAList[channel].GetPlayerList())
+										sSender.Mode(sIRCMessage.Channel, "-v", end.Value);
+
+									IJAList[channel].StopThread();
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
+
+									if(IJAList[channel].GetPlayers() < 8)
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig nem volt. Mindenki más hétköznapi civil volt.", IJAList[channel].GetKiller(), IJAList[channel].GetDetective());
+									else
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.", IJAList[channel].GetKiller(), IJAList[channel].GetDetective(), IJAList[channel].GetDoctor());
+								}
+								else
+								{
+									foreach(var end in IJAList[channel].GetPlayerList())
+										sSender.Mode(sIRCMessage.Channel, "-v", end.Value);
+
+									IJAList[channel].StopThread();
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
+								}
+							}
+							else
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sajnálom, de csak {0}, a játék indítója vethet véget a játéknak!", IJAList[channel].GetOwner());
+							break;
+						}
+						//default:
+							//sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem létezik ilyen parancs!", sIRCMessage.Nick);
+					}
+				}
 			}
 		}
 
@@ -252,6 +416,21 @@ namespace Schumix.GameAddon
 					}
 				}
 			}
+
+			foreach(var ija in GameAddon.IJAList)
+			{
+				if(!ija.Value.Running)
+					continue;
+
+				foreach(var player in ija.Value.GetPlayerList())
+				{
+					if(player.Value == sIRCMessage.Nick)
+					{
+						ija.Value.Leave(sIRCMessage.Nick);
+						break;
+					}
+				}
+			}
 		}
 
 		public void HandleKick(IRCMessage sIRCMessage)
@@ -266,6 +445,21 @@ namespace Schumix.GameAddon
 					if(player.Value == sIRCMessage.Info[3])
 					{
 						maffia.Value.Leave(sIRCMessage.Info[3]);
+						break;
+					}
+				}
+			}
+
+			foreach(var ija in GameAddon.IJAList)
+			{
+				if(!ija.Value.Running)
+					continue;
+
+				foreach(var player in ija.Value.GetPlayerList())
+				{
+					if(player.Value == sIRCMessage.Info[3])
+					{
+						ija.Value.Leave(sIRCMessage.Info[3]);
 						break;
 					}
 				}
