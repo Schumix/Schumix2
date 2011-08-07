@@ -407,6 +407,9 @@ namespace Schumix.GameAddon
 				if(!maffia.Value.Running)
 					continue;
 
+				if(maffia.Key != sIRCMessage.Channel.ToLower())
+					continue;
+
 				foreach(var player in maffia.Value.GetPlayerList())
 				{
 					if(player.Value == sIRCMessage.Nick)
@@ -420,6 +423,9 @@ namespace Schumix.GameAddon
 			foreach(var ija in GameAddon.IJAList)
 			{
 				if(!ija.Value.Running)
+					continue;
+
+				if(ija.Key != sIRCMessage.Channel.ToLower())
 					continue;
 
 				foreach(var player in ija.Value.GetPlayerList())
@@ -440,6 +446,9 @@ namespace Schumix.GameAddon
 				if(!maffia.Value.Running)
 					continue;
 
+				if(maffia.Key != sIRCMessage.Channel.ToLower())
+					continue;
+
 				foreach(var player in maffia.Value.GetPlayerList())
 				{
 					if(player.Value == sIRCMessage.Info[3])
@@ -453,6 +462,9 @@ namespace Schumix.GameAddon
 			foreach(var ija in GameAddon.IJAList)
 			{
 				if(!ija.Value.Running)
+					continue;
+
+				if(ija.Key != sIRCMessage.Channel.ToLower())
 					continue;
 
 				foreach(var player in ija.Value.GetPlayerList())
