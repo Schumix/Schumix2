@@ -52,21 +52,17 @@ namespace Schumix.Framework
 
 		public string GetUrl(string url, string args)
 		{
-			var _url = new Uri(url + HttpUtility.UrlEncode(args));
-
 			using(var client = new WebClient())
 			{
-				return client.DownloadString(_url);
+				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
 			}
 		}
 
 		public string GetUrl(string url, string args, string noencode)
 		{
-			var _url = new Uri(url + HttpUtility.UrlEncode(args) + noencode);
-
 			using(var client = new WebClient())
 			{
-				return client.DownloadString(_url);
+				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
 			}
 		}
 
@@ -231,7 +227,7 @@ namespace Schumix.Framework
 					Platform = "Xbox";
 					break;
 				default:
-					Platform = "Ismeretlen";
+					Platform = "Unknown";
 					break;
 			}
 
