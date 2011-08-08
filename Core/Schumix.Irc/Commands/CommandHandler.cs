@@ -150,6 +150,12 @@ namespace Schumix.Irc.Commands
 			}
 			else
 			{
+				if(!CommandManager.GetPublicCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
+					!CommandManager.GetHalfOperatorCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
+					!CommandManager.GetOperatorCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
+					!CommandManager.GetAdminCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()))
+					return;
+
 				int adminflag = Adminflag(sIRCMessage.Nick, sIRCMessage.Host);
 
 				if(adminflag != -1)
