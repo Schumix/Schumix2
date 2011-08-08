@@ -117,15 +117,41 @@ namespace Schumix.Framework.Extensions
 		/// <returns></returns>
 		public static string ConcatenateWithSpaces(this IEnumerable<string> arr)
 		{
-			return arr.Concatenate(" ");
+			return arr.Concatenate(SchumixBase.Space.ToString());
+		}
+
+		public static string SplitToString(this string[] split, char c)
+		{
+			string ss = string.Empty;
+
+			for(int x = 0; x < split.Length; x++)
+				ss += c + split[x];
+
+			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
+				ss = ss.Remove(0, c.ToString().Length);
+
+			return ss;
+		}
+
+		public static string SplitToString(this string[] split, int min, char c)
+		{
+			string ss = string.Empty;
+
+			for(int x = min; x < split.Length; x++)
+				ss += c + split[x];
+
+			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
+				ss = ss.Remove(0, c.ToString().Length);
+
+			return ss;
 		}
 
 		public static string SplitToString(this string[] split)
 		{
 			string ss = string.Empty;
 
-			for(int x = 0; x < split.Length; x++)
-				ss += split[x];
+			foreach(var s in split)
+				ss += s;
 
 			return ss;
 		}
@@ -154,6 +180,11 @@ namespace Schumix.Framework.Extensions
 				ss = ss.Remove(0, s.Length);
 
 			return ss;
+		}
+
+		public static string Remove(this string s, int min, int max, char value)
+		{
+			return (s.Length >= max && s.Substring(min, max) == value.ToString()) ? s.Remove(min, max) : s;
 		}
 
 		public static string Remove(this string s, int min, int max, string value)

@@ -84,7 +84,7 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							string name = row["Name"].ToString();
 							string status = row["Enabled"].ToString();
-							names += ", " + name + ":" + status;
+							names += ", " + name + SchumixBase.Point2 + status;
 						}
 
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("autofunction/hlmessage/info", sIRCMessage.Channel), names.Remove(0, 2, ", "));
@@ -141,7 +141,7 @@ namespace Schumix.ExtraAddon.Commands
 				else
 				{
 					string name = sIRCMessage.Nick.ToLower();
-					SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Info` = '{0}', `Enabled` = 'on' WHERE Name = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, " ")), name);
+					SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Info` = '{0}', `Enabled` = 'on' WHERE Name = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)), name);
 					SchumixBase.DManager.QueryFirstRow("UPDATE `schumix` SET `FunctionStatus` = 'on' WHERE FunctionName = 'autohl'");
 					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("autohl", "on", sIRCMessage.Channel), sIRCMessage.Channel.ToLower());
 					sChannelInfo.ChannelFunctionReload();
@@ -188,7 +188,7 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(7, " ")));
+					SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(7, SchumixBase.Space)));
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[6]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "remove")
@@ -226,7 +226,7 @@ namespace Schumix.ExtraAddon.Commands
 						foreach(DataRow row in db.Rows)
 						{
 							string name = row["Name"].ToString();
-							names += ", " + name + ":" + sIRCMessage.Channel;
+							names += ", " + name + SchumixBase.Point2 + sIRCMessage.Channel;
 						}
 
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("autofunction/kick/info", sIRCMessage.Channel), names.Remove(0, 2, ", "));
@@ -276,7 +276,7 @@ namespace Schumix.ExtraAddon.Commands
 							return;
 						}
 
-						SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(9, " ")));
+						SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(9, SchumixBase.Space)));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[7]);
 					}
 					else if(sIRCMessage.Info[6].ToLower() == "remove")
@@ -315,7 +315,7 @@ namespace Schumix.ExtraAddon.Commands
 							{
 								string name = row["Name"].ToString();
 								string channel = row["Channel"].ToString();
-								names += ", " + name + ":" + channel;
+								names += ", " + name + SchumixBase.Point2 + channel;
 							}
 
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("autofunction/kick/channel/info", sIRCMessage.Channel), names.Remove(0, 2, ", "));
@@ -399,7 +399,7 @@ namespace Schumix.ExtraAddon.Commands
 						foreach(DataRow row in db.Rows)
 						{
 							string name = row["Name"].ToString();
-							names += ", " + name + ":" + sIRCMessage.Channel;
+							names += ", " + name + SchumixBase.Point2 + sIRCMessage.Channel;
 						}
 
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("autofunction/mode/info", sIRCMessage.Channel), names.Remove(0, 2, ", "));
@@ -488,7 +488,7 @@ namespace Schumix.ExtraAddon.Commands
 							{
 								string name = row["Name"].ToString();
 								string channel = row["Channel"].ToString();
-								names += ", " + name + ":" + channel;
+								names += ", " + name + SchumixBase.Point2 + channel;
 							}
 
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("autofunction/mode/channel/info", sIRCMessage.Channel), names.Remove(0, 2, ", "));
@@ -536,7 +536,7 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `message`(Name, Channel, Message, Wrote) VALUES ('{0}', '{1}', '{2}', '{3}')", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(7, " ")), sIRCMessage.Nick);
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `message`(Name, Channel, Message, Wrote) VALUES ('{0}', '{1}', '{2}', '{3}')", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(7, SchumixBase.Space)), sIRCMessage.Nick);
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("message/channel", sIRCMessage.Channel));
 			}
 			else
@@ -547,7 +547,7 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `message`(Name, Channel, Message, Wrote) VALUES ('{0}', '{1}', '{2}', '{3}')", sUtilities.SqlEscape(sIRCMessage.Info[4].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, " ")), sIRCMessage.Nick);
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `message`(Name, Channel, Message, Wrote) VALUES ('{0}', '{1}', '{2}', '{3}')", sUtilities.SqlEscape(sIRCMessage.Info[4].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)), sIRCMessage.Nick);
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("message", sIRCMessage.Channel));
 			}
 		}
@@ -817,7 +817,7 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `notes`(Code, Name, Note) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(code.ToLower()), sIRCMessage.Nick.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, " ")));
+				SchumixBase.DManager.QueryFirstRow("INSERT INTO `notes`(Code, Name, Note) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(code.ToLower()), sIRCMessage.Nick.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)));
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], code);
 			}
 		}

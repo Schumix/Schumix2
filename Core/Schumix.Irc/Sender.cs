@@ -195,7 +195,7 @@ namespace Schumix.Irc
 		private bool IsIgnore(string channel)
 		{
 			bool enabled = false;
-			string[] ignore = IRCConfig.IgnoreChannels.Split(',');
+			string[] ignore = IRCConfig.IgnoreChannels.Split(SchumixBase.Comma);
 
 			if(ignore.Length > 1)
 			{

@@ -57,7 +57,7 @@ namespace Schumix.GitRssAddon.Commands
 					{
 						string name = row["Name"].ToString();
 						string type = row["Type"].ToString();
-						string[] channel = row["Channel"].ToString().Split(',');
+						string[] channel = row["Channel"].ToString().Split(SchumixBase.Comma);
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("git/info", sIRCMessage.Channel), name, type, channel.SplitToString(" "));
 					}
 				}
@@ -72,7 +72,7 @@ namespace Schumix.GitRssAddon.Commands
 					string list = string.Empty;
 
 					foreach(DataRow row in db.Rows)
-						list += " " + row["Name"].ToString() + " " + row["Type"].ToString() + ";";
+						list += SchumixBase.Space + row["Name"].ToString() + " " + row["Type"].ToString() + ";";
 
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("git/list", sIRCMessage.Channel), list);
 				}
@@ -180,13 +180,13 @@ namespace Schumix.GitRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
 					if(!db.IsNull())
 					{
-						string[] channel = db["Channel"].ToString().Split(',');
-						string data = channel.SplitToString(",");
+						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
+						string data = channel.SplitToString(SchumixBase.Comma);
 
 						if(channel.Length == 1 && data == string.Empty)
 							data += sIRCMessage.Info[8].ToLower();
 						else
-							data += "," + sIRCMessage.Info[8].ToLower();
+							data += SchumixBase.Comma + sIRCMessage.Info[8].ToLower();
 
 						SchumixBase.DManager.QueryFirstRow("UPDATE gitinfo SET Channel = '{0}' WHERE Name = '{1}' AND Type = '{2}'", data, sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
@@ -224,7 +224,7 @@ namespace Schumix.GitRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
 					if(!db.IsNull())
 					{
-						string[] channel = db["Channel"].ToString().Split(',');
+						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 						string data = string.Empty;
 
 						for(int x = 0; x < channel.Length; x++)
@@ -232,10 +232,10 @@ namespace Schumix.GitRssAddon.Commands
 							if(channel[x] == sIRCMessage.Info[8].ToLower())
 								continue;
 
-							data += "," + channel[x];
+							data += SchumixBase.Comma + channel[x];
 						}
 
-						SchumixBase.DManager.QueryFirstRow("UPDATE gitinfo SET Channel = '{0}' WHERE Name = '{1}' AND Type = '{2}'", data.Remove(0, 1, ","), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
+						SchumixBase.DManager.QueryFirstRow("UPDATE gitinfo SET Channel = '{0}' WHERE Name = '{1}' AND Type = '{2}'", data.Remove(0, 1, SchumixBase.Comma), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 					}
 					else

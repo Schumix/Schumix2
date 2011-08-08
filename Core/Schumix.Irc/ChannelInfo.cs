@@ -75,8 +75,8 @@ namespace Schumix.Irc
 		{
 			foreach(var channels in ChannelFunction)
 			{
-				string[] point = channels.Split('.');
-				string[] point2 = point[1].Split(':');
+				string[] point = channels.Split(SchumixBase.Point);
+				string[] point2 = point[1].Split(SchumixBase.Point2);
 
 				if(point[0] == channel.ToLower())
 				{
@@ -103,10 +103,10 @@ namespace Schumix.Irc
 					if(!db1.IsNull())
 					{
 						string functions = db1["Functions"].ToString();
-						string[] comma = functions.Split(',');
+						string[] comma = functions.Split(SchumixBase.Comma);
 
 						for(int x = 1; x < comma.Length; x++)
-							ChannelFunction.Add(channel + "." + comma[x]);
+							ChannelFunction.Add(channel + SchumixBase.Point + comma[x]);
 					}
 					else
 						Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text3"));
@@ -139,25 +139,25 @@ namespace Schumix.Irc
 
 			foreach(var channels in ChannelFunction)
 			{
-				string[] point = channels.Split('.');
-				string[] point2 = point[1].Split(':');
+				string[] point = channels.Split(SchumixBase.Point);
+				string[] point2 = point[1].Split(SchumixBase.Point2);
 
 				if(point[0] == channel.ToLower())
 				{
 					if(point2[0] != name.ToLower())
-						function += "," + point[1];
+						function += SchumixBase.Comma + point[1];
 				}
 			}
 
 			foreach(var channels in ChannelFunction)
 			{
-				string[] point = channels.Split('.');
-				string[] point2 = point[1].Split(':');
+				string[] point = channels.Split(SchumixBase.Point);
+				string[] point2 = point[1].Split(SchumixBase.Point2);
 
 				if(point[0] == channel.ToLower())
 				{
 					if(point2[0] == name.ToLower())
-						function += "," + name + ":" + status;
+						function += SchumixBase.Comma + name + SchumixBase.Point2 + status;
 				}
 			}
 
@@ -177,9 +177,9 @@ namespace Schumix.Irc
 					string status = row["FunctionStatus"].ToString();
 
 					if(status == "on")
-						on += name + " ";
+						on += name + SchumixBase.Space;
 					else
-						off += name + " ";
+						off += name + SchumixBase.Space;
 				}
 
 				return on + "|" + off;
@@ -194,15 +194,15 @@ namespace Schumix.Irc
 
 			foreach(var channels in ChannelFunction)
 			{
-				string[] point = channels.Split('.');
-				string[] point2 = point[1].Split(':');
+				string[] point = channels.Split(SchumixBase.Point);
+				string[] point2 = point[1].Split(SchumixBase.Point2);
 
 				if(point[0] == channel.ToLower())
 				{
 					if(point2[1] == "on")
-						on += point2[0] + " ";
+						on += point2[0] + SchumixBase.Space;
 					else
-						off += point2[0] + " ";
+						off += point2[0] + SchumixBase.Space;
 				}
 			}
 
@@ -251,7 +251,7 @@ namespace Schumix.Irc
 		public bool IsIgnore(string channel)
 		{
 			bool enabled = false;
-			string[] ignore = IRCConfig.IgnoreChannels.Split(',');
+			string[] ignore = IRCConfig.IgnoreChannels.Split(SchumixBase.Comma);
 
 			if(ignore.Length > 1)
 			{

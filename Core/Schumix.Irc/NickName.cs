@@ -19,6 +19,7 @@
 
 using System;
 using System.Collections.Generic;
+using Schumix.Framework;
 using Schumix.Framework.Config;
 
 namespace Schumix.Irc
@@ -29,7 +30,7 @@ namespace Schumix.Irc
 
 		private NickName()
 		{
-			string[] ignore = IRCConfig.IgnoreNames.Split(',');
+			string[] ignore = IRCConfig.IgnoreNames.Split(SchumixBase.Comma);
 
 			if(ignore.Length > 1)
 			{

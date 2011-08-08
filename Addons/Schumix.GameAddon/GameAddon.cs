@@ -88,7 +88,7 @@ namespace Schumix.GameAddon
 						}
 					}
 
-					sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, ":");
+					sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Point2);
 					switch(sIRCMessage.Info[3].ToLower())
 					{
 						case "!start":
@@ -250,7 +250,7 @@ namespace Schumix.GameAddon
 						}
 					}
 
-					sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, ":");
+					sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Point2);
 					switch(sIRCMessage.Info[3].ToLower())
 					{
 						case "!start":

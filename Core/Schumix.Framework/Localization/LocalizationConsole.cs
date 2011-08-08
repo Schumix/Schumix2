@@ -952,16 +952,16 @@ namespace Schumix.Framework.Localization
 				case "Text8":
 				{
 					if(Locale == "huHU")
-						return "{0}: csatornára való kapcsolódás letiltva!";
+						return "Csatornára való kapcsolódás letiltva: {0}";
 					else if(Locale == "enUS")
-						return "{0}: banned channel!";
+						return "Banned channel: {0}";
 					else
-						return "{0}: banned channel!";
+						return "Banned channel: {0}";
 				}
 				case "Text9":
 				{
 					if(Locale == "huHU")
-						return "{0}: ezen csatorna jelszava hibás!";
+						return "Ezen csatorna jelszava hibás: {0}";
 					else if(Locale == "enUS")
 						return "Bad password for channel: {0}";
 					else

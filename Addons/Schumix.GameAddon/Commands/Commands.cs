@@ -150,7 +150,7 @@ namespace Schumix.GameAddon.Commands
 				{
 					if(player.Value == sIRCMessage.Nick)
 					{
-						maffia.Value.NewNick(player.Key, sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, ":"));
+						maffia.Value.NewNick(player.Key, sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Point2));
 						break;
 					}
 				}
@@ -165,7 +165,7 @@ namespace Schumix.GameAddon.Commands
 				{
 					if(player.Value == sIRCMessage.Nick)
 					{
-						ija.Value.NewNick(player.Key, sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, ":"));
+						ija.Value.NewNick(player.Key, sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Point2));
 						break;
 					}
 				}

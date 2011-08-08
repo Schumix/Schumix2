@@ -277,8 +277,8 @@ namespace Schumix.Irc
 		private void HandleIrcCommand(string message)
 		{
 			var IMessage = new IRCMessage();
-			string[] IrcCommand = message.Split(' ');
-			IrcCommand[0] = IrcCommand[0].Remove(0, 1, ":");
+			string[] IrcCommand = message.Split(SchumixBase.Space);
+			IrcCommand[0] = IrcCommand[0].Remove(0, 1, SchumixBase.Point2);
 			IMessage.Hostmask = IrcCommand[0];
 
 			if(IrcCommand.Length > 2)
@@ -296,8 +296,8 @@ namespace Schumix.Irc
 
 			string opcode = IrcCommand[1];
 			IMessage.Info = IrcCommand;
-			IMessage.Args = IrcCommand.SplitToString(3, " ");
-			IMessage.Args = IMessage.Args.Remove(0, 1, ":");
+			IMessage.Args = IrcCommand.SplitToString(3, SchumixBase.Space);
+			IMessage.Args = IMessage.Args.Remove(0, 1, SchumixBase.Point2);
 
 			if(_IRCHandler.ContainsKey(opcode))
 				_IRCHandler[opcode].Invoke(IMessage);

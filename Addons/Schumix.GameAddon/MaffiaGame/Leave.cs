@@ -18,6 +18,7 @@
  */
 
 using System;
+using Schumix.Framework;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.GameAddon.MaffiaGames
@@ -89,7 +90,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 				foreach(var list in _lynchlist)
 				{
-					var sp = list.Value.Split(',').Length;
+					var sp = list.Value.Split(SchumixBase.Comma).Length;
 					if(sp > _lynchmaxnumber && sp <= (_playerlist.Count/2)+1)
 						_lynchmaxnumber = sp;
 				}

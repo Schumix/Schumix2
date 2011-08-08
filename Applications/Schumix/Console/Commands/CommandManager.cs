@@ -115,7 +115,7 @@ namespace Schumix.Console.Commands
 		{
 			try
 			{
-				Info = info.Split(' ');
+				Info = info.Split(SchumixBase.Space);
 				string cmd = Info[0].ToLower();
 
 				if(_CommandHandler.ContainsKey(cmd))

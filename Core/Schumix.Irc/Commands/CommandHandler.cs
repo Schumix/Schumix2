@@ -65,7 +65,7 @@ namespace Schumix.Irc.Commands
 					return;
 			}
 
-			string command = IRCConfig.NickName + ",";
+			string command = IRCConfig.NickName + SchumixBase.Comma;
 
 			if(sIRCMessage.Info[4].ToLower() == command.ToLower())
 			{

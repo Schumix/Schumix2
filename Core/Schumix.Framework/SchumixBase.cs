@@ -35,7 +35,12 @@ namespace Schumix.Framework
 		public static bool STime = true;
 		public static bool ExitStatus = false;
 		public static bool UrlTitleEnabled = false;
-		public static string Title { get { return "Schumix2 IRC Bot"; } }
+		public const string Title = "Schumix2 IRC Bot";
+		public const char Space = ' ';
+		public const char NewLine = '\n';
+		public const char Comma = ',';
+		public const char Point = '.';
+		public const char Point2 = ':';
 
 		public SchumixBase()
 		{

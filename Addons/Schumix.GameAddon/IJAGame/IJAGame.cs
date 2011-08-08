@@ -411,14 +411,14 @@ namespace Schumix.GameAddon.IJAGames
 						return false;
 					}
 
-					split = list.Value.Split(',');
+					split = list.Value.Split(SchumixBase.Comma);
 				}
 			}
 
 			if(Mode == "lynch")
 			{
 				_lynchlist.Remove(Name.ToLower());
-				_lynchlist.Add(Name.ToLower(), names + "," + NickName.ToLower());
+				_lynchlist.Add(Name.ToLower(), names + SchumixBase.Comma + NickName.ToLower());
 			}
 
 			_lynchlist.Remove(name);
@@ -437,13 +437,13 @@ namespace Schumix.GameAddon.IJAGames
 					if(NickName.ToLower() == spl)
 						continue;
 					else
-						names += "," + spl;
+						names += SchumixBase.Comma + spl;
 				}
 
 				if(Mode == "newname")
-					_lynchlist.Add(name, names.Remove(0, 1, ",") + "," + Name.ToLower());
+					_lynchlist.Add(name, names.Remove(0, 1, SchumixBase.Comma) + SchumixBase.Comma + Name.ToLower());
 				else
-					_lynchlist.Add(name, names.Remove(0, 1, ","));
+					_lynchlist.Add(name, names.Remove(0, 1, SchumixBase.Comma));
 			}
 			else
 			{

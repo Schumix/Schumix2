@@ -52,7 +52,7 @@ namespace Schumix.Irc
 				if(!sChannelInfo.FSelect("commands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
-				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, ":");
+				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Point2);
 				Schumix(sIRCMessage);
 
 				if(sIRCMessage.Info[3] == string.Empty || sIRCMessage.Info[3].Length < PLength || sIRCMessage.Info[3].Substring(0, PLength) != IRCConfig.CommandPrefix)
@@ -65,7 +65,7 @@ namespace Schumix.Irc
 
 		private void Schumix(IRCMessage sIRCMessage)
 		{
-			string command = IRCConfig.NickName + ",";
+			string command = IRCConfig.NickName + SchumixBase.Comma;
 
 			if(sIRCMessage.Info[3].ToLower() == command.ToLower())
 			{

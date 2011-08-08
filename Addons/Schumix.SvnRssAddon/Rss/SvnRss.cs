@@ -202,7 +202,7 @@ namespace Schumix.SvnRssAddon
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM svninfo WHERE Name = '{0}'", _name);
 			if(!db.IsNull())
 			{
-				string[] channel = db["Channel"].ToString().Split(',');
+				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 
 				foreach(var chan in channel)
 				{
@@ -210,7 +210,7 @@ namespace Schumix.SvnRssAddon
 
 					if(_website == "assembla")
 					{
-						if(title.IndexOf(":") != -1)
+						if(title.IndexOf(SchumixBase.Point2) != -1)
 						{
 							sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla", language), _name, rev, author);
 							sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla2", language), _name, title.Substring(title.IndexOf(":")+1));

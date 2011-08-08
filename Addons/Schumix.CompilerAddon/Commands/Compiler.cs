@@ -116,7 +116,7 @@ namespace Schumix.CompilerAddon.Commands
 						return true;
 					}
 
-					template = CompilerConfig.Referenced + " " + CleanText(data);
+					template = CompilerConfig.Referenced + SchumixBase.Space + CleanText(data);
 				}
 
 				var asm = CompileCode(template, sIRCMessage.Channel);
@@ -164,7 +164,7 @@ namespace Schumix.CompilerAddon.Commands
 					return true;
 				}
 
-				var lines = writer.ToString().Split('\n');
+				var lines = writer.ToString().Split(SchumixBase.NewLine);
 
 				if(lines.Length <= 5)
 				{

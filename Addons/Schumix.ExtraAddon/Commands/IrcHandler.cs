@@ -50,7 +50,7 @@ namespace Schumix.ExtraAddon.Commands
 			if(sFunctions.AutoKick("join", sIRCMessage.Nick, sIRCMessage.Channel))
 				return;
 
-			string channel = sIRCMessage.Channel.Remove(0, 1, ":");
+			string channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Point2);
 
 			if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", channel))
 			{
@@ -175,7 +175,7 @@ namespace Schumix.ExtraAddon.Commands
 				{
 					if(ConsoleLog.CLog)
 					{
-						string text = sIRCMessage.Info.SplitToString(4, " ");
+						string text = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
 						Console.WriteLine(sLManager.GetCommandText("handlekick", sIRCMessage.Channel), sIRCMessage.Nick, sIRCMessage.Info[3], text.Remove(0, 1, ":"));
 					}
 				}

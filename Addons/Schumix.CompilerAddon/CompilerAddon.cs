@@ -57,7 +57,7 @@ namespace Schumix.CompilerAddon
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
 			ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
-			EntryRegex = new Regex(" " + CompilerConfig.MainClass + @"\s*?\{");
+			EntryRegex = new Regex(SchumixBase.Space + CompilerConfig.MainClass + @"\s*?\{");
 			SchumixRegex = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)");
 		}
 
@@ -88,8 +88,8 @@ namespace Schumix.CompilerAddon
 				if(!CompilerConfig.CompilerEnabled)
 					return;
 
-				string command = IRCConfig.NickName + ",";
-				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, ":");
+				string command = IRCConfig.NickName + SchumixBase.Comma;
+				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Point2);
 
 				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage.Channel) && sIRCMessage.Args.Contains(";"))
 					Compiler(sIRCMessage, true, command);
