@@ -9,11 +9,11 @@
         <UserName>Schumix2</UserName>
         <UserInfo>Schumix2 IRC Bot</UserInfo>
         <MasterChannel>#schumix2</MasterChannel>
-        <IgnoreChannels>#test</IgnoreChannels>
+        <IgnoreChannels></IgnoreChannels>
         <IgnoreNames></IgnoreNames>
         <NickServ>
             <Enabled>false</Enabled>
-            <Password>pass</Password>
+            <Password>password</Password>
         </NickServ>
         <HostServ>
             <Enabled>false</Enabled>
@@ -36,7 +36,7 @@
         <Enabled>false</Enabled>
         <Host>localhost</Host>
         <User>root</User>
-        <Password>pass</Password>
+        <Password>password</Password>
         <Database>database</Database>
         <Charset>utf8</Charset>
     </MySql>

@@ -533,7 +533,7 @@ namespace Schumix.Framework.Localization
 					else if(Locale == "enUS")
 						return "Program is shutting down!";
 					else
-						return "";
+						return "Program is shutting down!";
 				}
 				case "Text2":
 				{
