@@ -214,7 +214,7 @@ namespace Schumix.HgRssAddon
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM hginfo WHERE Name = '{0}'", _name);
 			if(!db.IsNull())
 			{
-				string[] channel = db["Channel"].ToString().Split(',');
+				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 
 				foreach(var chan in channel)
 				{
@@ -222,7 +222,7 @@ namespace Schumix.HgRssAddon
 
 					if(_website == "google")
 					{
-						if(title.IndexOf(":") != -1)
+						if(title.IndexOf(SchumixBase.Point2) != -1)
 						{
 							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google", language), _name, rev.Substring(0, 10), author);
 							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google2", language), _name, title.Substring(title.IndexOf(":")+1));

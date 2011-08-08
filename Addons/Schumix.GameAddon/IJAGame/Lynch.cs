@@ -19,6 +19,7 @@
 
 using System;
 using System.Threading;
+using Schumix.Framework;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.GameAddon.IJAGames
@@ -85,7 +86,7 @@ namespace Schumix.GameAddon.IJAGames
 			string namess = string.Empty;
 			foreach(var list in _lynchlist)
 			{
-				var sp = list.Value.Split(',').Length;
+				var sp = list.Value.Split(SchumixBase.Comma).Length;
 				if(sp > _lynchmaxnumber && sp <= (_playerlist.Count/2)+1)
 					_lynchmaxnumber = sp;
 
@@ -100,7 +101,7 @@ namespace Schumix.GameAddon.IJAGames
 
 				foreach(var list in _lynchlist)
 				{
-					if(_lynchmaxnumber == list.Value.Split(',').Length)
+					if(_lynchmaxnumber == list.Value.Split(SchumixBase.Comma).Length)
 					{
 						namess = list.Key;
 						break;

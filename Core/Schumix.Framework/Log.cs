@@ -184,7 +184,7 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				var sp = message.Split('\n');
+				var sp = message.Split(SchumixBase.NewLine);
 				var lines = new List<string>(50);
 
 				foreach(string s in sp)
@@ -206,7 +206,7 @@ namespace Schumix.Framework
 					if(diff > 0)
 					{
 						for(uint u = 1; u < diff; ++u)
-							Console.Write(" ");
+							Console.Write(SchumixBase.Space);
 						
 						Console.Write("*\n");
 					}

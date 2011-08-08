@@ -210,8 +210,8 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			string text = sIRCMessage.Info.SplitToString(4, " ");
-			sSendMessage.SendCMPrivmsg(WhoisPrivmsg, sLManager.GetCommandText("whois", WhoisPrivmsg), text.Remove(0, 1, ":"));
+			string text = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
+			sSendMessage.SendCMPrivmsg(WhoisPrivmsg, sLManager.GetCommandText("whois", WhoisPrivmsg), text.Remove(0, 1, SchumixBase.Point2));
 			WhoisPrivmsg = sNickInfo.NickStorage;
 		}
 

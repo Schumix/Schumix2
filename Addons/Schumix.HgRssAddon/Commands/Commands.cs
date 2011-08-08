@@ -56,7 +56,7 @@ namespace Schumix.HgRssAddon.Commands
 					foreach(DataRow row in db.Rows)
 					{
 						string name = row["Name"].ToString();
-						string[] channel = row["Channel"].ToString().Split(',');
+						string[] channel = row["Channel"].ToString().Split(SchumixBase.Comma);
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("hg/info", sIRCMessage.Channel), name, channel.SplitToString(" "));
 					}
 				}
@@ -71,7 +71,7 @@ namespace Schumix.HgRssAddon.Commands
 					string list = string.Empty;
 
 					foreach(DataRow row in db.Rows)
-						list += " " + row["Name"].ToString();
+						list += SchumixBase.Space + row["Name"].ToString();
 
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("hg/list", sIRCMessage.Channel), list);
 				}
@@ -173,13 +173,13 @@ namespace Schumix.HgRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM hginfo WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
 					if(!db.IsNull())
 					{
-						string[] channel = db["Channel"].ToString().Split(',');
-						string data = channel.SplitToString(",");
+						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
+						string data = channel.SplitToString(SchumixBase.Comma);
 
 						if(channel.Length == 1 && data == string.Empty)
 							data += sIRCMessage.Info[7].ToLower();
 						else
-							data += "," + sIRCMessage.Info[7].ToLower();
+							data += SchumixBase.Comma + sIRCMessage.Info[7].ToLower();
 
 						SchumixBase.DManager.QueryFirstRow("UPDATE hginfo SET Channel = '{0}' WHERE Name = '{1}'", data, sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
@@ -211,7 +211,7 @@ namespace Schumix.HgRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM hginfo WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
 					if(!db.IsNull())
 					{
-						string[] channel = db["Channel"].ToString().Split(',');
+						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 						string data = string.Empty;
 
 						for(int x = 0; x < channel.Length; x++)
@@ -219,10 +219,10 @@ namespace Schumix.HgRssAddon.Commands
 							if(channel[x] == sIRCMessage.Info[7].ToLower())
 								continue;
 
-							data += "," + channel[x];
+							data += SchumixBase.Comma + channel[x];
 						}
 
-						SchumixBase.DManager.QueryFirstRow("UPDATE hginfo SET Channel = '{0}' WHERE Name = '{1}'", data.Remove(0, 1, ","), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						SchumixBase.DManager.QueryFirstRow("UPDATE hginfo SET Channel = '{0}' WHERE Name = '{1}'", data.Remove(0, 1, SchumixBase.Comma), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 					}
 					else

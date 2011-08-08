@@ -421,7 +421,7 @@ namespace Schumix.Irc.Commands
 						if(enabled)
 							ActiveChannels += ", " + channel;
 						else if(!enabled)
-							InActiveChannels += ", " + channel + ":" + row["Error"].ToString();
+							InActiveChannels += ", " + channel + SchumixBase.Point2 + row["Error"].ToString();
 					}
 
 					if(ActiveChannels.Length > 0)
@@ -520,7 +520,7 @@ namespace Schumix.Irc.Commands
 			else if(sIRCMessage.Info.Length >= 6)
 			{
 				if(kick != sNickInfo.NickStorage.ToLower())
-					sSender.Kick(sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, " "));
+					sSender.Kick(sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			}
 		}
 
@@ -550,7 +550,7 @@ namespace Schumix.Irc.Commands
 			}
 
 			string rank = sIRCMessage.Info[4].ToLower();
-			string name = sIRCMessage.Info.SplitToString(5, " ").ToLower();
+			string name = sIRCMessage.Info.SplitToString(5, SchumixBase.Space).ToLower();
 
 			if(!name.Contains(sNickInfo.NickStorage.ToLower()))
 				sSender.Mode(sIRCMessage.Channel, rank, name);

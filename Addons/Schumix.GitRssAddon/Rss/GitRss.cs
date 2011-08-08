@@ -202,7 +202,7 @@ namespace Schumix.GitRssAddon
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}", _name, _type);
 			if(!db.IsNull())
 			{
-				string[] channel = db["Channel"].ToString().Split(',');
+				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 
 				foreach(var chan in channel)
 				{

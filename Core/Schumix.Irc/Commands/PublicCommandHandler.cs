@@ -140,7 +140,7 @@ namespace Schumix.Irc.Commands
 			}
 
 			var client = new WAClient("557QYQ-UUUWTKX95V");
-			var solution = client.Solve(sIRCMessage.Info.SplitToString(4, " "));
+			var solution = client.Solve(sIRCMessage.Info.SplitToString(4, SchumixBase.Space));
 			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}", solution);
 		}
 
@@ -154,7 +154,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sUtilities.Sha1(sIRCMessage.Info.SplitToString(4, " ")));
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sUtilities.Sha1(sIRCMessage.Info.SplitToString(4, SchumixBase.Space)));
 		}
 
 		protected void HandleMd5(IRCMessage sIRCMessage)
@@ -167,7 +167,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sUtilities.Md5(sIRCMessage.Info.SplitToString(4, " ")));
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sUtilities.Md5(sIRCMessage.Info.SplitToString(4, SchumixBase.Space)));
 		}
 
 		protected void HandleIrc(IRCMessage sIRCMessage)
@@ -214,7 +214,7 @@ namespace Schumix.Irc.Commands
 			if(sIRCMessage.Info.Length == 5)
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Info[4], sLManager.GetCommandText("warning", sIRCMessage.Channel), sIRCMessage.Channel);
 			else if(sIRCMessage.Info.Length >= 6)
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Info[4], "{0}", sIRCMessage.Info.SplitToString(5, " "));
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Info[4], "{0}", sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 		}
 
 		protected void HandleGoogle(IRCMessage sIRCMessage)
@@ -233,7 +233,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=", sIRCMessage.Info.SplitToString(4, " "));
+			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=", sIRCMessage.Info.SplitToString(4, SchumixBase.Space));
 			var Regex = new Regex(@".unescapedUrl.\:.(?<url>\S+).,.url.+.titleNoFormatting.\:.(?<title>.+).,.content");
 
 			if(!Regex.IsMatch(url))
@@ -264,7 +264,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=", sIRCMessage.Info.SplitToString(5, " "), "&langpair=" + sIRCMessage.Info[4]);
+			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=", sIRCMessage.Info.SplitToString(5, SchumixBase.Space), "&langpair=" + sIRCMessage.Info[4]);
 			var Regex = new Regex(@"\{.translatedText.\:.(?<text>.+).\},");
 
 			if(!Regex.IsMatch(url))
@@ -359,7 +359,7 @@ namespace Schumix.Irc.Commands
 				source = source.Remove(0, source.IndexOf("</b></td>"));
 				source = source.Remove(0, source.IndexOf("<td align=center><b>") + "<td align=center><b>".Length);
 				string wind = source.Substring(0, source.IndexOf("</b></td>"));
-				wind = wind.Replace("&nbsp;", " ");
+				wind = wind.Replace("&nbsp;", SchumixBase.Space.ToString());
 
 				if(home)
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], /*weather*/ "-", min_max.Substring(0, min_max.IndexOf("...")), min_max.Substring(min_max.IndexOf("...")+3), wind.Substring(wind.IndexOf(", ")+2));

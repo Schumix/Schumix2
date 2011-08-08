@@ -60,7 +60,7 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			if(status == "join")
 			{
-				string channel = _channel.Remove(0, 1, ":");
+				string channel = _channel.Remove(0, 1, SchumixBase.Point2);
 
 				if(sChannelInfo.FSelect("autokick") && sChannelInfo.FSelect("autokick", channel))
 				{
@@ -107,7 +107,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(string.IsNullOrEmpty(webTitle))
 					return;
 
-				var title = Regex.Replace(webTitle, @"\s+", " ");
+				var title = Regex.Replace(webTitle, @"\s+", SchumixBase.Space.ToString());
 
 				// check if it's youtube.
 				var youtubeRegex = new Regex(@"\s*YouTube\s*\-(?<song>.+)", RegexOptions.IgnoreCase);

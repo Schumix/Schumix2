@@ -109,7 +109,7 @@ namespace Schumix.Framework
 		public string GetRandomString()
 		{
 			string path = Path.GetRandomFileName();
-			return path.Replace(".", "");
+			return path.Replace(".", string.Empty);
 		}
 
 		public string Sha1(string value)
@@ -288,7 +288,7 @@ namespace Schumix.Framework
 			}
 
 			var match = getBrandRegex.Match(content);
-			string cpu = (match.Groups["first"].ToString() + " " + match.Groups["second"].ToString());
+			string cpu = (match.Groups["first"].ToString() + SchumixBase.Space + match.Groups["second"].ToString());
 			return cpu;
 #endif
         }

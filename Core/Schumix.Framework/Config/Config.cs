@@ -41,8 +41,8 @@ namespace Schumix.Framework.Config
 		private const string _username = "Schumix2";
 		private const string _userinfo = "Schumix2 IRC Bot";
 		private const string _masterchannel = "#schumix2";
-		private const string _ignorechannels = "#test";
-		private const string _ignorenames = "test";
+		private const string _ignorechannels = " ";
+		private const string _ignorenames = " ";
 		private const bool _usenickserv = false;
 		private const string _nickservpassword = "password";
 		private const bool _usehostserv = false;

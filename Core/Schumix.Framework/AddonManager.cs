@@ -73,7 +73,7 @@ namespace Schumix.Framework
 			try
 			{
 				string file = string.Empty;
-				string[] ignore = AddonsConfig.Ignore.Split(',');
+				string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);
 				var dir = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, directory));
 				Log.Notice("AddonManager", sLConsole.AddonManager("Text"), dir.FullName);
 
