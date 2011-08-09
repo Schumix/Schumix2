@@ -89,14 +89,7 @@ namespace Schumix.Irc.Commands
 
 					return;
 				}
-				if(sIRCMessage.Info[5].ToLower() == "csc")
-				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick, "C# Compiler version: 0.0.0.0");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick, "The main class's name: class Schumix { /* program... */ }");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick, "The main function's name: void Schumix() { /* program... */ }");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick, "If you need more help, please contact with Megaxxx.");
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick, "Programmed by: Megax");
-				}
+
 				if(sIRCMessage.Info[5].ToLower() == "sys")
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandHelpText("schumix2/sys", sIRCMessage.Channel));
