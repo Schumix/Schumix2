@@ -101,7 +101,7 @@ namespace Schumix.CompilerAddon
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "The main class's name: class " + CompilerConfig.MainClass + " { /* program... */ }");
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "The main function's name: void " + CompilerConfig.MainConstructor + "() { /* program... */ }");
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "You can use simply: '{ /* program */ }'. This is the man function's content.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Also you can use: '<bot's nickname>, /* program */'. Here is /* program */ is the main function's content.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Also you can use: '{0} /* program */'. Here is /* program */ is the main function's content.", command.ToLower());
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "If you need more help, please contact with Jackneill.");
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Programmed by: Csaba (Megaxxx)");
 					}
