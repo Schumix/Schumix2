@@ -91,8 +91,19 @@ namespace Schumix.CompilerAddon
 				string command = IRCConfig.NickName + SchumixBase.Comma;
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Point2);
 
-				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage.Channel) && sIRCMessage.Args.Contains(";"))
+				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage.Channel) && (sIRCMessage.Args.Contains(";") || sIRCMessage.Args.Contains("}")))
 					Compiler(sIRCMessage, true, command);
+				else
+				{
+					if(sIRCMessage.Info.Length >= 5 && (sIRCMessage.Info[4].ToLower() == "csc" || sIRCMessage.Info[4].ToLower() == "c#compiler"))
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "C# Compiler version: {0}", Environment.Version);
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "The main class's name: class " + CompilerConfig.MainClass + " { /* program... */ }");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "The main function's name: void " + CompilerConfig.MainConstructor + "() { /* program... */ }");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "If you need more help, please contact with Megaxxx.");
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Programmed by: Csaba");
+					}
+				}
 
 				if(sIRCMessage.Channel.Substring(0, 1) != "#")
 				{
