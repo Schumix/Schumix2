@@ -184,7 +184,7 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 4)
 				return;
 
-			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = '{0}' WHERE Channel = '{1}'", sLConsole.MessageHandler("Text8"), sIRCMessage.Info[3].ToLower());
+			SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text8")), string.Format("Channel = '{0}'", sIRCMessage.Info[3].ToLower()));
 			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, sLConsole.MessageHandler("Text8"), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
@@ -197,7 +197,7 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 4)
 				return;
 
-			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'false', Error = '{0}' WHERE Channel = '{1}'", sLConsole.MessageHandler("Text9"), sIRCMessage.Info[3].ToLower());
+			SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text9")), string.Format("Channel = '{0}'", sIRCMessage.Info[3].ToLower()));
 			sSendMessage.SendCMPrivmsg(ChannelPrivmsg, sLConsole.MessageHandler("Text9"), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}

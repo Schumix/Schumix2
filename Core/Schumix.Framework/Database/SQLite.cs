@@ -105,5 +105,112 @@ namespace Schumix.Framework.Database
 			var table = Query(query);
 			return !table.Equals(null) && table.Rows.Count > 0 ? table.Rows[0] : null;
 		}
+
+		private void ExecuteNonQuery(string sql)
+		{
+			var command = Connection.CreateCommand();
+			command.CommandText = sql;
+			command.ExecuteNonQuery();
+		}
+
+		public bool Update(string sql)
+		{
+			try
+			{
+				ExecuteNonQuery("UPDATE " + sql);
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		public bool Update(string TableName, string Set)
+		{
+			try
+			{
+				return Update(TableName + " SET " + Set);
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		public bool Update(string TableName, string Set, string Where)
+		{
+			try
+			{
+				return Update(TableName + " SET " + Set + " WHERE " + Where);
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		public bool Insert(string sql)
+		{
+			try
+			{
+				ExecuteNonQuery("INSERT INTO " + sql);
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		public bool Insert(string TableName, string Values)
+		{
+			try
+			{
+				return Insert(TableName + " VALUES (" + Values + ")");
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		public bool Delete(string sql)
+		{
+			try
+			{
+				ExecuteNonQuery("DELETE FROM " + sql);
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		public bool Delete(string TableName, string Where)
+		{
+			try
+			{
+				return Delete(TableName + " WHERE " + Where);
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		public bool RemoveTable(string Table)
+		{
+			try
+			{
+				ExecuteNonQuery(string.Format("DROP TABLE IF EXISTS `{0}`", Table));
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
 	}
 }

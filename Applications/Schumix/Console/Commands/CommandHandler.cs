@@ -231,8 +231,8 @@ namespace Schumix.Console.Commands
 				}
 
 				string pass = sUtilities.GetRandomString();
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `admins`(Name, Password) VALUES ('{0}', '{1}')", name.ToLower(), sUtilities.Sha1(pass));
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'ki')", name.ToLower());
+				SchumixBase.DManager.Insert("`admins`(Name, Password)", name.ToLower(), sUtilities.Sha1(pass));
+				SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", name.ToLower(), "off");
 				Log.Notice("Console", text[1], name);
 				Log.Notice("Console", text[2], pass);
 			}
@@ -259,8 +259,8 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `admins` WHERE Name = '{0}'", name.ToLower());
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `hlmessage` WHERE Name = '{0}'", name.ToLower());
+				SchumixBase.DManager.Delete("admins", string.Format("Name = '{0}'", name.ToLower()));
+				SchumixBase.DManager.Delete("hlmessage", string.Format("Name = '{0}'", name.ToLower()));
 				Log.Notice("Console", text[1], name);
 			}
 			else if(Info.Length >= 2 && Info[1].ToLower() == "rank")
@@ -289,7 +289,7 @@ namespace Schumix.Console.Commands
 
 				if((AdminFlag)rank == AdminFlag.Administrator || (AdminFlag)rank == AdminFlag.Operator || (AdminFlag)rank == AdminFlag.HalfOperator)
 				{
-					SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Flag = '{0}' WHERE Name = '{1}'", rank, name);
+					SchumixBase.DManager.Update("admins", string.Format("Flag = '{0}'", rank), string.Format("Name = '{0}'", name));
 					Log.Notice("Console", text[0]);
 				}
 				else
@@ -365,7 +365,7 @@ namespace Schumix.Console.Commands
 						for(int i = 4; i < Info.Length; i++)
 						{
 							args += ", " + Info[i].ToLower();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions(Info[i].ToLower(), status, channel), channel);
+							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(Info[i].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
 							sChannelInfo.ChannelFunctionReload();
 						}
 
@@ -381,7 +381,7 @@ namespace Schumix.Console.Commands
 						else
 							Log.Notice("Console", text[1], status);
 
-						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions(Info[4].ToLower(), status, channel), channel);
+						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(Info[4].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
 						sChannelInfo.ChannelFunctionReload();
 					}
 				}
@@ -402,7 +402,7 @@ namespace Schumix.Console.Commands
 						foreach(DataRow row in db.Rows)
 						{
 							string channel = row["Channel"].ToString();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), channel);
+							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", channel));
 						}
 
 						sChannelInfo.ChannelFunctionReload();
@@ -414,7 +414,7 @@ namespace Schumix.Console.Commands
 				else
 				{
 					Log.Notice("Console", sLManager.GetConsoleCommandText("function/update"), Info[2].ToLower());
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), Info[2].ToLower());
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", Info[2].ToLower()));
 					sChannelInfo.ChannelFunctionReload();
 				}
 			}
@@ -463,7 +463,7 @@ namespace Schumix.Console.Commands
 					else
 						Log.Notice("Console", text[1], Info[2].ToLower());
 
-					SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET FunctionStatus = '{0}' WHERE FunctionName = '{1}'", Info[1].ToLower(), Info[2].ToLower());
+					SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", Info[2].ToLower()));
 				}
 			}
 		}
@@ -506,14 +506,14 @@ namespace Schumix.Console.Commands
 				{
 					string pass = Info[3];
 					sSender.Join(channel, pass);
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password) VALUES ('{0}', '{1}', '{2}')", channel, pass, sLManager.Locale);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", channel);
+					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", channel, pass, sLManager.Locale);
+					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", channel));
 				}
 				else
 				{
 					sSender.Join(channel);
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password) VALUES ('{0}', '', '{1}')", channel, sLManager.Locale);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", channel);
+					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", channel, string.Empty, sLManager.Locale);
+					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", channel));
 				}
 
 				Log.Notice("Console", text[1], channel);
@@ -555,7 +555,7 @@ namespace Schumix.Console.Commands
 				}
 
 				sSender.Part(channel);
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE Channel = '{0}'", channel);
+				SchumixBase.DManager.Delete("channel", string.Format("Channel = '{0}'", channel));
 				Log.Notice("Console", text[2], channel);
 
 				sChannelInfo.ChannelListReload();
@@ -633,7 +633,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Language = '{0}' WHERE Channel = '{1}'", Info[3], Info[2].ToLower());
+				SchumixBase.DManager.Update("channel", string.Format("Language = '{0}'", Info[3]), string.Format("Channel = '{0}'", Info[2].ToLower()));
 				Log.Notice("Console", sLManager.GetConsoleCommandText("channel/language"), Info[3]);
 			}
 		}

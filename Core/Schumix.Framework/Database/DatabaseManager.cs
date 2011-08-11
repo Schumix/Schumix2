@@ -19,11 +19,13 @@
  */
 
 using System;
+using System.Text;
 using System.Data;
 using System.Data.SQLite;
 using System.Threading;
 using MySql.Data;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Database
@@ -83,7 +85,10 @@ namespace Schumix.Framework.Database
 
 		public DataTable Query(string query, params object[] args)
 		{
-			return Query(string.Format(query, args));
+			lock(_lock)
+			{
+				return Query(string.Format(query, args));
+			}
 		}
 
 		public DataRow QueryFirstRow(string query)
@@ -96,7 +101,79 @@ namespace Schumix.Framework.Database
 
 		public DataRow QueryFirstRow(string query, params object[] args)
 		{
-			return QueryFirstRow(string.Format(query, args));
+			lock(_lock)
+			{
+				return QueryFirstRow(string.Format(query, args));
+			}
+		}
+
+		public bool Update(string sql)
+		{
+			lock(_lock)
+			{
+				return SQLiteConfig.Enabled ? sdatabase.Update(sql) : mdatabase.Update(sql);
+			}
+		}
+
+		public bool Update(string TableName, string Set)
+		{
+			lock(_lock)
+			{
+				return SQLiteConfig.Enabled ? sdatabase.Update(TableName, Set) : mdatabase.Update(TableName, Set);
+			}
+		}
+
+		public bool Update(string TableName, string Set, string Where)
+		{
+			lock(_lock)
+			{
+				return SQLiteConfig.Enabled ? sdatabase.Update(TableName, Set, Where) : mdatabase.Update(TableName, Set, Where);
+			}
+		}
+
+		public bool Insert(string sql)
+		{
+			lock(_lock)
+			{
+				return SQLiteConfig.Enabled ? sdatabase.Insert(sql) : mdatabase.Insert(sql);
+			}
+		}
+
+		public bool Insert(string TableName, params object[] Values)
+		{
+			lock(_lock)
+			{
+				var sb = new StringBuilder();
+
+				foreach(var value in Values)
+					sb.Append(",'" + value + "'");
+
+				return SQLiteConfig.Enabled ? sdatabase.Insert(TableName, sb.ToString().Remove(0, 1, SchumixBase.Comma)) : mdatabase.Insert(TableName, sb.ToString().Remove(0, 1, SchumixBase.Comma));
+			}
+		}
+
+		public bool Delete(string sql)
+		{
+			lock(_lock)
+			{
+				return SQLiteConfig.Enabled ? sdatabase.Delete(sql) : mdatabase.Delete(sql);
+			}
+		}
+
+		public bool Delete(string TableName, string Where)
+		{
+			lock(_lock)
+			{
+				return SQLiteConfig.Enabled ? sdatabase.Delete(TableName, Where) : mdatabase.Delete(TableName, Where);
+			}
+		}
+
+		public bool RemoveTable(string Table)
+		{
+			lock(_lock)
+			{
+				return SQLiteConfig.Enabled ? sdatabase.RemoveTable(Table) : mdatabase.RemoveTable(Table);
+			}
 		}
 	}
 }

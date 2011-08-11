@@ -25,7 +25,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
-	public class SchumixBase
+	public abstract class SchumixBase
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
@@ -42,7 +42,7 @@ namespace Schumix.Framework
 		public const char Point = '.';
 		public const char Point2 = ':';
 
-		public SchumixBase()
+		protected SchumixBase()
 		{
 			try
 			{
@@ -52,7 +52,7 @@ namespace Schumix.Framework
 				DManager = new DatabaseManager();
 				Log.Notice("SchumixBase", sLConsole.SchumixBase("Text3"));
 
-				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Channel = '{0}' WHERE Id = '1'", IRCConfig.MasterChannel);
+				SchumixBase.DManager.Update("channel", string.Format("Channel = '{0}'", IRCConfig.MasterChannel), "Id = '1'");
 				Log.Notice("SchumixBase", sLConsole.SchumixBase("Text4"), IRCConfig.MasterChannel);
 
 				if(AddonsConfig.Enabled)

@@ -93,7 +93,7 @@ namespace Schumix.CompilerAddon
 
 				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage.Channel) && (sIRCMessage.Args.Contains(";") || sIRCMessage.Args.Contains("}")))
 					Compiler(sIRCMessage, true, command);
-				else
+				else if(sIRCMessage.Info[3].ToLower() == command.ToLower())
 				{
 					if(sIRCMessage.Info.Length >= 5 && (sIRCMessage.Info[4].ToLower() == "csc" || sIRCMessage.Info[4].ToLower() == "c#compiler"))
 					{
