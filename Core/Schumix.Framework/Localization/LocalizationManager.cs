@@ -18,9 +18,7 @@
  */
 
 using System;
-using System.Text;
 using Schumix.Framework;
-using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework.Localization

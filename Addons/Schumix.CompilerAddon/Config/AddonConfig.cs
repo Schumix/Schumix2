@@ -64,7 +64,7 @@ namespace Schumix.CompilerAddon.Config
 			int WarningLevel = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/WarningLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CompilerAddon/Compiler/WarningLevel").InnerText) : 4;
 			bool TreatWarningsAsErrors = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/TreatWarningsAsErrors").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/TreatWarningsAsErrors").InnerText) : false;
 			string Referenced = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/Referenced").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/Referenced").InnerText : "using System; using System.Threading; " +
-			"using System.Reflection; using System.Linq; using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
+			"using System.Reflection; using System.Threading.Tasks; using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
 			string ReferencedAssemblies = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/ReferencedAssemblies").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/ReferencedAssemblies").InnerText : "System.dll,Schumix.Libraries.dll";
 			string MainClass = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainClass").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainClass").InnerText : "Entry";
 			string MainConstructor = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").InnerText : "Schumix";
@@ -109,7 +109,7 @@ namespace Schumix.CompilerAddon.Config
 					w.WriteElementString("CompilerOptions", "/optimize");
 					w.WriteElementString("WarningLevel", "4");
 					w.WriteElementString("TreatWarningsAsErrors", "false");
-					w.WriteElementString("Referenced", "using System; using System.Threading; using System.Reflection; using System.Linq; " +
+					w.WriteElementString("Referenced", "using System; using System.Threading; using System.Reflection; using System.Threading.Tasks; " +
 					"using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;");
 					w.WriteElementString("ReferencedAssemblies", "System.dll,Schumix.Libraries.dll");
 					w.WriteElementString("MainClass", "Entry");
