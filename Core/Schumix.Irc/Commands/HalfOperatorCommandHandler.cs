@@ -57,7 +57,7 @@ namespace Schumix.Irc.Commands
 				{
 					if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[5]))
 					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Vhost = '{0}' WHERE Name = '{1}'", sIRCMessage.Host, name);
+						SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sIRCMessage.Host), string.Format("Name = '{0}'", name));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 					}
 					else
@@ -93,7 +93,7 @@ namespace Schumix.Irc.Commands
 				{
 					if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[5]))
 					{
-						SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Password = '{0}' WHERE Name = '{1}'", sUtilities.Sha1(sIRCMessage.Info[6]), name);
+						SchumixBase.DManager.Update("admins", string.Format("Password = '{0}'", sUtilities.Sha1(sIRCMessage.Info[6])), string.Format("Name = '{0}'", name));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Info[6]);
 					}
 					else
@@ -167,8 +167,8 @@ namespace Schumix.Irc.Commands
 				}
 
 				string pass = sUtilities.GetRandomString();
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `admins`(Name, Password) VALUES ('{0}', '{1}')", sUtilities.SqlEscape(name.ToLower()), sUtilities.Sha1(pass));
-				SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'off')", sUtilities.SqlEscape(name.ToLower()));
+				SchumixBase.DManager.Insert("`admins`(Name, Password)", sUtilities.SqlEscape(name.ToLower()), sUtilities.Sha1(pass));
+				SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", sUtilities.SqlEscape(name.ToLower()), "off");
 
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], name);
 				sSendMessage.SendCMPrivmsg(name, text[2], pass);
@@ -216,8 +216,8 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `admins` WHERE Name = '{0}'", sUtilities.SqlEscape(name.ToLower()));
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `hlmessage` WHERE Name = '{0}'", sUtilities.SqlEscape(name.ToLower()));
+				SchumixBase.DManager.Delete("admins", string.Format("Name = '{0}'", sUtilities.SqlEscape(name.ToLower())));
+				SchumixBase.DManager.Delete("hlmessage", string.Format("Name = '{0}'", sUtilities.SqlEscape(name.ToLower())));
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], name);
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "rank")
@@ -282,7 +282,7 @@ namespace Schumix.Irc.Commands
 		
 				if((AdminFlag)rank == AdminFlag.Administrator || (AdminFlag)rank == AdminFlag.Operator || (AdminFlag)rank == AdminFlag.HalfOperator)
 				{
-					SchumixBase.DManager.QueryFirstRow("UPDATE admins SET Flag = '{0}' WHERE Name = '{1}'", rank, sUtilities.SqlEscape(name));
+					SchumixBase.DManager.Update("admins", string.Format("Flag = '{0}'", rank), string.Format("Name = '{0}'", sUtilities.SqlEscape(name)));
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 				}
 				else

@@ -112,7 +112,7 @@ namespace Schumix.Irc.Commands
 							for(int i = 6; i < sIRCMessage.Info.Length; i++)
 							{
 								args += ", " + sIRCMessage.Info[i].ToLower();
-								SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET FunctionStatus = '{0}' WHERE FunctionName = '{1}'", sIRCMessage.Info[5].ToLower(), sUtilities.SqlEscape(sIRCMessage.Info[i].ToLower()));
+								SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", sIRCMessage.Info[5].ToLower()), string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[i].ToLower())));
 							}
 
 							if(sIRCMessage.Info[5].ToLower() == "on")
@@ -127,7 +127,7 @@ namespace Schumix.Irc.Commands
 							else
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[6].ToLower());
 
-							SchumixBase.DManager.QueryFirstRow("UPDATE schumix SET FunctionStatus = '{0}' WHERE FunctionName = '{1}'", sIRCMessage.Info[5].ToLower(), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+							SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", sIRCMessage.Info[5].ToLower()), string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower())));
 						}
 					}
 				}
@@ -187,7 +187,7 @@ namespace Schumix.Irc.Commands
 						for(int i = 7; i < sIRCMessage.Info.Length; i++)
 						{
 							args += ", " + sIRCMessage.Info[i].ToLower();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[i].ToLower(), status, channel), channel);
+							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[i].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
 							sChannelInfo.ChannelFunctionReload();
 						}
 
@@ -203,7 +203,7 @@ namespace Schumix.Irc.Commands
 						else
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[7].ToLower());
 
-						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[7].ToLower(), status, channel), channel);
+						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[7].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
 						sChannelInfo.ChannelFunctionReload();
 					}
 				}
@@ -213,7 +213,7 @@ namespace Schumix.Irc.Commands
 				if(sIRCMessage.Info.Length < 6)
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("function/update", sIRCMessage.Channel), sIRCMessage.Channel);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), sIRCMessage.Channel);
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", sIRCMessage.Channel));
 					sChannelInfo.ChannelFunctionReload();
 					return;
 				}
@@ -226,7 +226,7 @@ namespace Schumix.Irc.Commands
 						foreach(DataRow row in db.Rows)
 						{
 							string channel = row["Channel"].ToString();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), channel);
+							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", channel));
 						}
 
 						sChannelInfo.ChannelFunctionReload();
@@ -238,7 +238,7 @@ namespace Schumix.Irc.Commands
 				else
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("function/update", sIRCMessage.Channel), sIRCMessage.Info[5].ToLower());
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()));
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower())));
 					sChannelInfo.ChannelFunctionReload();
 				}
 			}
@@ -274,7 +274,7 @@ namespace Schumix.Irc.Commands
 						for(int i = 5; i < sIRCMessage.Info.Length; i++)
 						{
 							args += ", " + sIRCMessage.Info[i].ToLower();
-							SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[i].ToLower(), status, sIRCMessage.Channel), sIRCMessage.Channel);
+							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[i].ToLower(), status, sIRCMessage.Channel)), string.Format("Channel = '{0}'", sIRCMessage.Channel));
 							sChannelInfo.ChannelFunctionReload();
 						}
 
@@ -290,7 +290,7 @@ namespace Schumix.Irc.Commands
 						else
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[5].ToLower());
 
-						SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[5].ToLower(), status, sIRCMessage.Channel), sIRCMessage.Channel);
+						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(sIRCMessage.Info[5].ToLower(), status, sIRCMessage.Channel)), string.Format("Channel = '{0}'", sIRCMessage.Channel));
 						sChannelInfo.ChannelFunctionReload();
 					}
 				}
@@ -338,15 +338,15 @@ namespace Schumix.Irc.Commands
 					ChannelPrivmsg = sIRCMessage.Channel;
 					string pass = sIRCMessage.Info[6];
 					sSender.Join(channel, pass);
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password, Language) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(channel), sUtilities.SqlEscape(pass), sLManager.Locale);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
+					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", sUtilities.SqlEscape(channel), sUtilities.SqlEscape(pass), sLManager.Locale);
+					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
 				}
 				else
 				{
 					ChannelPrivmsg = sIRCMessage.Channel;
 					sSender.Join(channel);
-					SchumixBase.DManager.QueryFirstRow("INSERT INTO `channel`(Channel, Password, Language) VALUES ('{0}', '', '{1}')", sUtilities.SqlEscape(channel), sLManager.Locale);
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true' WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
+					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", sUtilities.SqlEscape(channel), string.Empty, sLManager.Locale);
+					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
 				}
 
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], channel);
@@ -388,7 +388,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				sSender.Part(channel);
-				SchumixBase.DManager.QueryFirstRow("DELETE FROM `channel` WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
+				SchumixBase.DManager.Delete("channel", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], channel);
 				sChannelInfo.ChannelListReload();
 				sChannelInfo.ChannelFunctionReload();
@@ -465,7 +465,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Language = '{0}' WHERE Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()));
+				SchumixBase.DManager.Update("channel", string.Format("Language = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6])), string.Format("Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower())));
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("channel/language", sIRCMessage.Channel), sIRCMessage.Info[6]);
 			}
 		}

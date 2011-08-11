@@ -217,7 +217,7 @@ namespace Schumix.Irc
 			foreach(var channel in _ChannelList)
 			{
 				sSender.Join(channel.Key, channel.Value);
-				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Enabled = 'true', Error = '' WHERE Channel = '{0}'", channel.Key);
+				SchumixBase.DManager.Update("channel", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}'", channel.Key));
 			}
 
 			ChannelFunctionReload();

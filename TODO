@@ -3,3 +3,5 @@ Megírásra váró feladatok:
 <Megaxxx> { for(var v = 0; v <= 4; v++); }
 <Schumacher> Szál kilőve!
 Fixálni windows alatt a szál kilővési időt.
+
+- frissiteni az új sql fv-kel az addonokat is.
