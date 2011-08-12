@@ -18,8 +18,10 @@
  */
 
 using System;
+using System.IO;
 using System.Text;
 using Schumix.Irc;
+using Schumix.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
@@ -120,6 +122,11 @@ namespace Schumix
 				sLConsole.Locale = localization;
 
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
+
+			new Update();
+
+			if(File.Exists("Schumix.Config.exe"))
+				File.Delete("Schumix.Config.exe");
 
 			new SchumixBot();
 			System.Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.timer.SaveUptime(); };

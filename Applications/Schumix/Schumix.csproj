@@ -118,6 +118,10 @@
       <Project>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</Project>
       <Name>Schumix.API</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Core\Schumix.Updater\Schumix.Updater.csproj">
+      <Project>{33ABC53E-F210-442F-B4F7-D0A7642F2584}</Project>
+      <Name>Schumix.Updater</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Console\Commands\" />

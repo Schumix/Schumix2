@@ -66,6 +66,14 @@ namespace Schumix.Framework
 			}
 		}
 
+		public void DownloadFile(string url, string filename)
+		{
+			using(var client = new WebClient())
+			{
+				client.DownloadFile(url, filename);
+			}
+		}
+
 		/// <summary>
 		/// Gets the URLs in the specified text.
 		/// </summary>
