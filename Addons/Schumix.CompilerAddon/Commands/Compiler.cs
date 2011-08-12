@@ -317,8 +317,8 @@ namespace Schumix.CompilerAddon.Commands
 				return true;
 			}
 
-			// Process
-			if(data.Contains("System.Diagnostics.Process"))
+			// Diagnostics
+			if(data.Contains("System.Diagnostics"))
 			{
 				Warning(channel);
 				return true;

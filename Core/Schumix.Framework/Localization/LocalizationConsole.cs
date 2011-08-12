@@ -693,6 +693,24 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
+		public string UpdateConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Update beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the Update settings.";
+					else
+						return "Loaded the Update settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
 		public string CommandManager(string Name)
 		{
 			switch(Name)
@@ -1137,6 +1155,150 @@ namespace Schumix.Framework.Localization
 						return "Received unhandled opcode: {0}";
 					else
 						return "Received unhandled opcode: {0}";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string Update(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Automatikus frissítés ki van kapcsolva.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Újabb stabil verzió keresése megindult.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Nincs frissebb verzió!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "Új verziót találtam. Verzió: {0}";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "Új forrás letöltése.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text6":
+				{
+					if(Locale == "huHU")
+						return "Forrás sikeresen le lett töltve.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text7":
+				{
+					if(Locale == "huHU")
+						return "Letöltés sikertelen!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text8":
+				{
+					if(Locale == "huHU")
+						return "A frissítés befejeződött!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text9":
+				{
+					if(Locale == "huHU")
+						return "Új forrás kibontása.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text10":
+				{
+					if(Locale == "huHU")
+						return "Az állomány sikeresen ki lett bontva.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text11":
+				{
+					if(Locale == "huHU")
+						return "Kibontás sikertelen!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text12":
+				{
+					if(Locale == "huHU")
+						return "Fordítás megkezdése.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text13":
+				{
+					if(Locale == "huHU")
+						return "Hiba történt a fordítás közben!";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text14":
+				{
+					if(Locale == "huHU")
+						return "Fordítás sikeresen befejeződött.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text15":
+				{
+					if(Locale == "huHU")
+						return "Frissítés ezen szakasza befejeződött. Következik a beállítás.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
 				}
 				default:
 					return string.Empty;

@@ -52,4 +52,8 @@
     <Localization>
         <Locale>enUS</Locale>
     </Localization>
+    <Update>
+        <Enabled>true</Enabled>
+        <WebPage>http://megax.uw.hu/Schumix2/</WebPage>
+    </Update>
 </Schumix>
