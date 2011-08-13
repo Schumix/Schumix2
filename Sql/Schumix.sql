@@ -62,8 +62,8 @@ CREATE TABLE `gitinfo` (
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
--- INSERT INTO `gitinfo` VALUES ('1', 'Schumix2', 'master', 'http://github.com/megax/Schumix2/commits/master.atom', 'github', '#hun_bot,#schumix'); Példa a használatra
-INSERT INTO `gitinfo` VALUES ('1', 'Schumix2', 'master', 'http://github.com/megax/Schumix2/commits/master.atom', 'github', '#schumix');
+-- INSERT INTO `gitinfo` VALUES ('1', 'Schumix2', 'master', 'https://github.com/megax/Schumix2/commits/master.atom', 'github', '#hun_bot,#schumix'); Példa a használatra
+INSERT INTO `gitinfo` VALUES ('1', 'Schumix2', 'master', 'https://github.com/megax/Schumix2/commits/master.atom', 'github', '#schumix');
 
 -- ----------------------------
 -- Table structure for hginfo

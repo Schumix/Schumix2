@@ -82,6 +82,13 @@ namespace Schumix.SvnRssAddon
 			_thread.Abort();
 		}
 
+		public void Reload()
+		{
+			_thread.Abort();
+			_thread = new Thread(Update);
+			_thread.Start();
+		}
+
 		private void Update()
 		{
 			try

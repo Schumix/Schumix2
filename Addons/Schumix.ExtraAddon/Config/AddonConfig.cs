@@ -32,6 +32,8 @@ namespace Schumix.ExtraAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private const bool _enabled = false;
+		private const string _type = "aohv";
 
 		public AddonConfig(string configfile)
 		{
@@ -57,8 +59,8 @@ namespace Schumix.ExtraAddon.Config
 
 			Log.Notice("ExtraAddonConfig", sLocalization.Config("Text"));
 
-			bool Enabled = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText) : false;
-			string Type = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText : "aohv";
+			bool Enabled = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText) : _enabled;
+			string Type = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText : _type;
 			new ModeConfig(Enabled, Type);
 
 			Log.Success("ExtraAddonConfig", sLocalization.Config("Text2"));
@@ -74,6 +76,10 @@ namespace Schumix.ExtraAddon.Config
 				Log.Error("ExtraAddonConfig", sLocalization.Config("Text3"));
 				Log.Debug("ExtraAddonConfig", sLocalization.Config("Text4"));
 				var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
+				var xmldoc = new XmlDocument();
+
+				if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
+					xmldoc.Load(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
 
 				try
 				{
@@ -90,8 +96,8 @@ namespace Schumix.ExtraAddon.Config
 
 					// <Remove>
 					w.WriteStartElement("Remove");
-					w.WriteElementString("Enabled", "false");
-					w.WriteElementString("Type", "aohv");
+					w.WriteElementString("Enabled", (!xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText : _enabled.ToString()));
+					w.WriteElementString("Type",    (!xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText : _type));
 
 					// </Remove>
 					w.WriteEndElement();
@@ -104,6 +110,9 @@ namespace Schumix.ExtraAddon.Config
 
 					w.Flush();
 					w.Close();
+
+					if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
+						File.Delete(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
 
 					Log.Success("ExtraAddonConfig", sLocalization.Config("Text5"));
 					return false;

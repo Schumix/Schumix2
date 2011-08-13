@@ -80,9 +80,12 @@ namespace Schumix.SvnRssAddon
 		public void Destroy()
 		{
 			CommandManager.OperatorCRemoveHandler("svn");
+			_config = null;
 
 			foreach(var list in RssList)
 				list.Stop();
+
+			RssList.Clear();
 		}
 
 		public bool Reload(string RName)

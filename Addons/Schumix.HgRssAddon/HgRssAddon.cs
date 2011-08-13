@@ -80,9 +80,12 @@ namespace Schumix.HgRssAddon
 		public void Destroy()
 		{
 			CommandManager.OperatorCRemoveHandler("hg");
+			_config = null;
 
 			foreach(var list in RssList)
 				list.Stop();
+
+			RssList.Clear();
 		}
 
 		public bool Reload(string RName)

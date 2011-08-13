@@ -32,6 +32,9 @@ namespace Schumix.CalendarAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private const int _seconds = 10;
+		private const int _numberofmessages = 5;
+		private const int _numberofflooding = 3;
 
 		public AddonConfig(string configfile)
 		{
@@ -57,9 +60,9 @@ namespace Schumix.CalendarAddon.Config
 
 			Log.Notice("CalendarAddonConfig", sLocalization.Config("Text"));
 
-			int Seconds = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").InnerText) : 10;
-			int NumberOfMessages = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").InnerText) : 5;
-			int NumberOfFlooding = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").InnerText) : 3;
+			int Seconds = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").InnerText) : _seconds;
+			int NumberOfMessages = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").InnerText) : _numberofmessages;
+			int NumberOfFlooding = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").InnerText) : _numberofflooding;
 			new CalendarConfig(Seconds, NumberOfMessages, NumberOfFlooding);
 
 			Log.Success("CalendarAddonConfig", sLocalization.Config("Text2"));
@@ -75,6 +78,10 @@ namespace Schumix.CalendarAddon.Config
 				Log.Error("CalendarAddonConfig", sLocalization.Config("Text3"));
 				Log.Debug("CalendarAddonConfig", sLocalization.Config("Text4"));
 				var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
+				var xmldoc = new XmlDocument();
+
+				if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
+					xmldoc.Load(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
 
 				try
 				{
@@ -88,9 +95,9 @@ namespace Schumix.CalendarAddon.Config
 
 					// <Flooding>
 					w.WriteStartElement("Flooding");
-					w.WriteElementString("Seconds", "10");
-					w.WriteElementString("NumberOfMessages", "5");
-					w.WriteElementString("NumberOfFlooding", "3");
+					w.WriteElementString("Seconds",          (!xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").IsNull() ? xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").InnerText : _seconds.ToString()));
+					w.WriteElementString("NumberOfMessages", (!xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").IsNull() ? xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").InnerText : _numberofmessages.ToString()));
+					w.WriteElementString("NumberOfFlooding", (!xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").IsNull() ? xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").InnerText : _numberofflooding.ToString()));
 
 					// </Flooding>
 					w.WriteEndElement();
@@ -100,6 +107,9 @@ namespace Schumix.CalendarAddon.Config
 
 					w.Flush();
 					w.Close();
+
+					if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
+						File.Delete(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
 
 					Log.Success("CalendarAddonConfig", sLocalization.Config("Text5"));
 					return false;

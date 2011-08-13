@@ -91,6 +91,13 @@ namespace Schumix.GitRssAddon
 			_thread.Abort();
 		}
 
+		public void Reload()
+		{
+			_thread.Abort();
+			_thread = new Thread(Update);
+			_thread.Start();
+		}
+
 		private void Update()
 		{
 			try
@@ -139,13 +146,13 @@ namespace Schumix.GitRssAddon
 					}
 					catch(Exception e)
 					{
-						Log.Error("GitRss", sLocalization.Exception("Text"), _name, _type, e.Message);
+						Log.Error("GitRss", sLocalization.Exception("Error"), _name, _type, e.Message);
 					}
 				}
 			}
 			catch(Exception e)
 			{
-				Log.Error("GitRss", sLocalization.Exception("Text2"), _name, _type, e.Message);
+				Log.Error("GitRss", sLocalization.Exception("Error2"), _name, _type, e.Message);
 				Update();
 			}
 		}
@@ -160,7 +167,7 @@ namespace Schumix.GitRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("GitRss", sLocalization.Exception("Text"), _name, _type, e.Message);
+				Log.Error("GitRss", sLocalization.Exception("Error"), _name, _type, e.Message);
 			}
 
 			return null;

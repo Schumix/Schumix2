@@ -81,9 +81,12 @@ namespace Schumix.GitRssAddon
 		public void Destroy()
 		{
 			CommandManager.OperatorCRemoveHandler("git");
+			_config = null;
 
 			foreach(var list in RssList)
 				list.Stop();
+
+			RssList.Clear();
 		}
 
 		public bool Reload(string RName)

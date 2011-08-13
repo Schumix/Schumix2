@@ -32,6 +32,16 @@ namespace Schumix.CompilerAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private const bool _compilerenabled = true;
+		private const bool _enabled = true;
+		private const int _memory = 50;
+		private const string _compileroptions = "/optimize";
+		private const int _warninglevel = 4;
+		private const bool _treatwarningsaserrors = false;
+		private const string _referenced = "using System; using System.Threading; using System.Reflection; using System.Threading.Tasks; using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
+		private const string _referencedassemblies = "System.dll,Schumix.Libraries.dll";
+		private const string _mainclass = "Entry";
+		private const string _mainconstructor = "Schumix";
 
 		public AddonConfig(string configfile)
 		{
@@ -57,17 +67,16 @@ namespace Schumix.CompilerAddon.Config
 
 			Log.Notice("CompilerAddonConfig", sLocalization.Config("Text"));
 
-			bool CompilerEnabled = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/Enabled").InnerText) : true;
-			bool Enabled = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Enabled").InnerText) : true;
-			int Memory = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Memory").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Memory").InnerText) : 50;
-			string CompilerOptions = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/CompilerOptions").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/CompilerOptions").InnerText : "/optimize";
-			int WarningLevel = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/WarningLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CompilerAddon/Compiler/WarningLevel").InnerText) : 4;
-			bool TreatWarningsAsErrors = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/TreatWarningsAsErrors").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/TreatWarningsAsErrors").InnerText) : false;
-			string Referenced = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/Referenced").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/Referenced").InnerText : "using System; using System.Threading; " +
-			"using System.Reflection; using System.Threading.Tasks; using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
-			string ReferencedAssemblies = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/ReferencedAssemblies").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/ReferencedAssemblies").InnerText : "System.dll,Schumix.Libraries.dll";
-			string MainClass = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainClass").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainClass").InnerText : "Entry";
-			string MainConstructor = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").InnerText : "Schumix";
+			bool CompilerEnabled = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/Enabled").InnerText) : _compilerenabled;
+			bool Enabled = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Enabled").InnerText) : _enabled;
+			int Memory = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Memory").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Memory").InnerText) : _memory;
+			string CompilerOptions = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/CompilerOptions").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/CompilerOptions").InnerText : _compileroptions;
+			int WarningLevel = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/WarningLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CompilerAddon/Compiler/WarningLevel").InnerText) : _warninglevel;
+			bool TreatWarningsAsErrors = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/TreatWarningsAsErrors").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/TreatWarningsAsErrors").InnerText) : _treatwarningsaserrors;
+			string Referenced = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/Referenced").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/Referenced").InnerText : _referenced;
+			string ReferencedAssemblies = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/ReferencedAssemblies").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/ReferencedAssemblies").InnerText : _referencedassemblies;
+			string MainClass = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainClass").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainClass").InnerText : _mainclass;
+			string MainConstructor = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").InnerText : _mainconstructor;
 			new CompilerConfig(CompilerEnabled, Enabled, Memory, CompilerOptions, WarningLevel, TreatWarningsAsErrors, Referenced, ReferencedAssemblies, MainClass, MainConstructor);
 
 			Log.Success("CompilerAddonConfig", sLocalization.Config("Text2"));
@@ -83,6 +92,10 @@ namespace Schumix.CompilerAddon.Config
 				Log.Error("CompilerAddonConfig", sLocalization.Config("Text3"));
 				Log.Debug("CompilerAddonConfig", sLocalization.Config("Text4"));
 				var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
+				var xmldoc = new XmlDocument();
+
+				if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
+					xmldoc.Load(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
 
 				try
 				{
@@ -96,24 +109,23 @@ namespace Schumix.CompilerAddon.Config
 
 					// <Compiler>
 					w.WriteStartElement("Compiler");
-					w.WriteElementString("Enabled", "true");
+					w.WriteElementString("Enabled",               (!xmldoc.SelectSingleNode("CompilerAddon/Compiler/Enabled").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/Enabled").InnerText : _compilerenabled.ToString()));
 
 					// <MaxAllocating>
 					w.WriteStartElement("MaxAllocating");
-					w.WriteElementString("Enabled", "true");
-					w.WriteElementString("Memory", "50");
+					w.WriteElementString("Enabled",               (!xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Enabled").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Enabled").InnerText : _enabled.ToString()));
+					w.WriteElementString("Memory",                (!xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Memory").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Memory").InnerText : _memory.ToString()));
 
 					// </MaxAllocating>
 					w.WriteEndElement();
 
-					w.WriteElementString("CompilerOptions", "/optimize");
-					w.WriteElementString("WarningLevel", "4");
-					w.WriteElementString("TreatWarningsAsErrors", "false");
-					w.WriteElementString("Referenced", "using System; using System.Threading; using System.Reflection; using System.Threading.Tasks; " +
-					"using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;");
-					w.WriteElementString("ReferencedAssemblies", "System.dll,Schumix.Libraries.dll");
-					w.WriteElementString("MainClass", "Entry");
-					w.WriteElementString("MainConstructor", "Schumix");
+					w.WriteElementString("CompilerOptions",       (!xmldoc.SelectSingleNode("CompilerAddon/Compiler/CompilerOptions").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/CompilerOptions").InnerText : _compileroptions));
+					w.WriteElementString("WarningLevel",          (!xmldoc.SelectSingleNode("CompilerAddon/Compiler/WarningLevel").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/WarningLevel").InnerText : _warninglevel.ToString()));
+					w.WriteElementString("TreatWarningsAsErrors", (!xmldoc.SelectSingleNode("CompilerAddon/Compiler/TreatWarningsAsErrors").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/TreatWarningsAsErrors").InnerText : _treatwarningsaserrors.ToString()));
+					w.WriteElementString("Referenced",            (!xmldoc.SelectSingleNode("CompilerAddon/Compiler/Referenced").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/Referenced").InnerText : _referenced));
+					w.WriteElementString("ReferencedAssemblies",  (!xmldoc.SelectSingleNode("CompilerAddon/Compiler/ReferencedAssemblies").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/ReferencedAssemblies").InnerText : _referencedassemblies));
+					w.WriteElementString("MainClass",             (!xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainClass").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainClass").InnerText : _mainclass));
+					w.WriteElementString("MainConstructor",       (!xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").InnerText : _mainconstructor));
 
 					// </Compiler>
 					w.WriteEndElement();
@@ -123,6 +135,9 @@ namespace Schumix.CompilerAddon.Config
 
 					w.Flush();
 					w.Close();
+
+					if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
+						File.Delete(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
 
 					Log.Success("CompilerAddonConfig", sLocalization.Config("Text5"));
 					return false;

@@ -32,6 +32,7 @@ namespace Schumix.HgRssAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private const int _querytime = 60;
 
 		public AddonConfig(string configfile)
 		{
@@ -57,7 +58,7 @@ namespace Schumix.HgRssAddon.Config
 
 			Log.Notice("HgRssAddonConfig", sLocalization.Config("Text"));
 
-			int QueryTime = !xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").InnerText) : 60;
+			int QueryTime = !xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").InnerText) : _querytime;
 			new RssConfig(QueryTime);
 
 			Log.Success("HgRssAddonConfig", sLocalization.Config("Text2"));
@@ -73,6 +74,10 @@ namespace Schumix.HgRssAddon.Config
 				Log.Error("HgRssAddonConfig", sLocalization.Config("Text3"));
 				Log.Debug("HgRssAddonConfig", sLocalization.Config("Text4"));
 				var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
+				var xmldoc = new XmlDocument();
+
+				if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
+					xmldoc.Load(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
 
 				try
 				{
@@ -86,7 +91,7 @@ namespace Schumix.HgRssAddon.Config
 
 					// <Rss>
 					w.WriteStartElement("Rss");
-					w.WriteElementString("QueryTime", "60");
+					w.WriteElementString("QueryTime", (!xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").IsNull() ? xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").InnerText : _querytime.ToString()));
 
 					// </Rss>
 					w.WriteEndElement();
@@ -96,6 +101,9 @@ namespace Schumix.HgRssAddon.Config
 
 					w.Flush();
 					w.Close();
+
+					if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
+						File.Delete(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
 
 					Log.Success("HgRssAddonConfig", sLocalization.Config("Text5"));
 					return false;
