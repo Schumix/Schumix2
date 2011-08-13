@@ -37,7 +37,7 @@ namespace Schumix.Updater
 
 		public Update()
 		{
-			if(UpdateConfig.Enabled)
+			if(!UpdateConfig.Enabled)
 			{
 				Log.Notice("Update", sLConsole.Update("Text"));
 				return;
