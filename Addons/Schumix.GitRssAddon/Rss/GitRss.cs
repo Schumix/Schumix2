@@ -125,7 +125,7 @@ namespace Schumix.GitRssAddon
 							if(newrev == "no text")
 								continue;
 
-							if(_oldrev != newrev)
+							if(_oldrev == newrev)
 							{
 								title = Title(url);
 								if(title == "no text")

@@ -375,6 +375,20 @@ namespace Schumix.CompilerAddon.Commands
 				return true;
 			}
 
+			// AppDomain
+			if(data.Contains("AppDomain"))
+			{
+				Warning(channel);
+				return true;
+			}
+
+			// Activator
+			if(data.Contains("Activator"))
+			{
+				Warning(channel);
+				return true;
+			}
+
 			// Type
 			if(data.Contains("GetMethod") || data.Contains("GetType") || data.Contains("GetInterfaces") || data.Contains("GetMember"))
 			{

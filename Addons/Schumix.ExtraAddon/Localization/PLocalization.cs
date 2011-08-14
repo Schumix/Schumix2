@@ -128,7 +128,7 @@ namespace Schumix.ExtraAddon.Localization
 				case "Text2":
 				{
 					if(Language == "huHU")
-						return "Kivétel dobott letöltése közben web title: {0}";
+						return "Kivételt dobott letöltése közben a web title: {0}";
 					else if(Language == "enUS")
 						return "Exception thrown while fetching web title: {0}";
 					else

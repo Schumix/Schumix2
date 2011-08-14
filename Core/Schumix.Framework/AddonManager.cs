@@ -150,13 +150,10 @@ namespace Schumix.Framework
 		{
 			lock(LoadLock)
 			{
-				for(var i = 0; i < _addons.Count; ++i)
-				{
-					var pl = _addons[i];
-					pl.Destroy();
-					_addons.Remove(pl);
-				}
+				foreach(var addon in _addons)
+					addon.Destroy();
 
+				_addons.Clear();
 				Assemblies.Clear();
 			}
 
