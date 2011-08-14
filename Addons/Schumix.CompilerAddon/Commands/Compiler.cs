@@ -369,7 +369,8 @@ namespace Schumix.CompilerAddon.Commands
 
 			// Assembly
 			if(data.Contains("Assembly.Load") || data.Contains("Assembly.ReflectionOnlyLoad") || data.Contains("Assembly.UnsafeLoadFrom") ||
-				data.Contains("Assembly.Location") || data.Contains("Assembly.EscapedCodeBase") || data.Contains("Assembly.CodeBase"))
+				data.Contains("Assembly.Location") || data.Contains("Assembly.EscapedCodeBase") || data.Contains("Assembly.CodeBase") ||
+				data.Contains("Assembly.GetAssembly"))
 			{
 				Warning(channel);
 				return true;
