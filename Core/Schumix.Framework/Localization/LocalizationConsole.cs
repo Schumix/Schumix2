@@ -1170,135 +1170,135 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Automatikus frissítés ki van kapcsolva.";
 					else if(Locale == "enUS")
-						return "";
+						return "Automatic updater is off.";
 					else
-						return "";
+						return "Automatic updater is off.";
 				}
 				case "Text2":
 				{
 					if(Locale == "huHU")
 						return "Újabb stabil verzió keresése megindult.";
 					else if(Locale == "enUS")
-						return "";
+						return "Searching for new stable version.";
 					else
-						return "";
+						return "Searching for new stable version.";
 				}
 				case "Text3":
 				{
 					if(Locale == "huHU")
 						return "Nincs frissebb verzió!";
 					else if(Locale == "enUS")
-						return "";
+						return "Nothing newer version!";
 					else
-						return "";
+						return "Nothing newer version!";
 				}
 				case "Text4":
 				{
 					if(Locale == "huHU")
 						return "Új verziót találtam. Verzió: {0}";
 					else if(Locale == "enUS")
-						return "";
+						return "Found new version. Version: {0}";
 					else
-						return "";
+						return "Found new version. Version: {0}";
 				}
 				case "Text5":
 				{
 					if(Locale == "huHU")
 						return "Új forrás letöltése.";
 					else if(Locale == "enUS")
-						return "";
+						return "Downloading new version.";
 					else
-						return "";
+						return "Downloading new version.";
 				}
 				case "Text6":
 				{
 					if(Locale == "huHU")
 						return "Forrás sikeresen le lett töltve.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully downloaded new version.";
 					else
-						return "";
+						return "Successfully downloaded new version.";
 				}
 				case "Text7":
 				{
 					if(Locale == "huHU")
 						return "Letöltés sikertelen!";
 					else if(Locale == "enUS")
-						return "";
+						return "Downloading unsuccessful.";
 					else
-						return "";
+						return "Downloading unsuccessful.";
 				}
 				case "Text8":
 				{
 					if(Locale == "huHU")
 						return "A frissítés befejeződött!";
 					else if(Locale == "enUS")
-						return "";
+						return "Updating successful.";
 					else
-						return "";
+						return "Updating successful.";
 				}
 				case "Text9":
 				{
 					if(Locale == "huHU")
 						return "Új forrás kibontása.";
 					else if(Locale == "enUS")
-						return "";
+						return "Extracting new version.";
 					else
-						return "";
+						return "Extracting new version.";
 				}
 				case "Text10":
 				{
 					if(Locale == "huHU")
 						return "Az állomány sikeresen ki lett bontva.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully extracted the staff.";
 					else
-						return "";
+						return "Successfully extracted the staff.";
 				}
 				case "Text11":
 				{
 					if(Locale == "huHU")
 						return "Kibontás sikertelen!";
 					else if(Locale == "enUS")
-						return "";
+						return "Extracting unsuccessful.";
 					else
-						return "";
+						return "Extracting unsuccessful.";
 				}
 				case "Text12":
 				{
 					if(Locale == "huHU")
 						return "Fordítás megkezdése.";
 					else if(Locale == "enUS")
-						return "";
+						return "Started translating.";
 					else
-						return "";
+						return "Started translating.";
 				}
 				case "Text13":
 				{
 					if(Locale == "huHU")
 						return "Hiba történt a fordítás közben!";
 					else if(Locale == "enUS")
-						return "";
+						return "Error was handled while translated.";
 					else
-						return "";
+						return "Error was handled while translated.";
 				}
 				case "Text14":
 				{
 					if(Locale == "huHU")
 						return "Fordítás sikeresen befejeződött.";
 					else if(Locale == "enUS")
-						return "";
+						return "Successfully finished the translation.";
 					else
-						return "";
+						return "Successfully finished the translation.";
 				}
 				case "Text15":
 				{
 					if(Locale == "huHU")
 						return "Frissítés ezen szakasza befejeződött. Következik a beállítás.";
 					else if(Locale == "enUS")
-						return "";
+						return "This step of updateing is finished. Continue with next step.";
 					else
-						return "";
+						return "This step of updateing is finished. Continue with next step.";
 				}
 				default:
 					return string.Empty;
