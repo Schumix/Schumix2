@@ -99,6 +99,11 @@ Meghatározza hogy a konzolba milyen üzenetek kerülnek kiirásra. Alapértelme
 * **Locale:** Meghatározza hogy a kód milyen nyelven fusson. (csak az irc és konzol parancsokra vonatkozik)
         Alapértelmezés: `enUS`
 
+## Update
+
+* **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi az automatikus frissítést. Alapértelmezés: `false`
+* **WebPage:** A megadott weboldalcímről tölti le a kód a frissítéseket. Alapértelmezés: `http://megax.uw.hu/Schumix2/`
+
 # Adatbázis beüzemelése
 
 ## MySql
