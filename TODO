@@ -4,5 +4,11 @@ Megírásra váró feladatok:
 <Schumacher> Szál kilőve!
 Fixálni windows alatt a szál kilővési időt.
 
-- frissiteni az új sql fv-kel az addonokat is.
+- Frissíteni az új sql fv-kel az addonokat is.
 - Megírni az rss-ek start, stop és reload parancsát
+- Az updaterbe beleépíteni a megadott verzióra való frissítést.
+- Updaterben befejezni a kicsomagolást.
+- Installer írása mellyel bárhonnét telepíthető schumix.
+- Időjárás lekérdezést befejezni.
+- Az angol nyelvet befejezni minden téren.
+- Online parancs hozzáadása a kódhoz.
