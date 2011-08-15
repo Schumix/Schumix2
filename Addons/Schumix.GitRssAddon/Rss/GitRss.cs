@@ -44,6 +44,7 @@ namespace Schumix.GitRssAddon
 		private string _id;
 		private string _title;
 		private string _author;
+		public bool Started { get; private set; }
 
 		public GitRss(string name, string type, string url, string website)
 		{
@@ -82,12 +83,14 @@ namespace Schumix.GitRssAddon
 
 		public void Start()
 		{
+			Started = true;
 			_thread = new Thread(Update);
 			_thread.Start();
 		}
 
 		public void Stop()
 		{
+			Started = false;
 			_thread.Abort();
 		}
 

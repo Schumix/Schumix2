@@ -43,6 +43,7 @@ namespace Schumix.SvnRssAddon
 		private string _title;
 		private string _author;
 		private string[] info;
+		public bool Started { get; private set; }
 
 		public SvnRss(string name, string url, string website)
 		{
@@ -73,12 +74,14 @@ namespace Schumix.SvnRssAddon
 
 		public void Start()
 		{
+			Started = true;
 			_thread = new Thread(Update);
 			_thread.Start();
 		}
 
 		public void Stop()
 		{
+			Started = false;
 			_thread.Abort();
 		}
 
