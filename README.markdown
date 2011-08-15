@@ -102,7 +102,7 @@ Meghatározza hogy a konzolba milyen üzenetek kerülnek kiirásra. Alapértelme
 ## Update
 
 * **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi az automatikus frissítést. Alapértelmezés: `false`
-* **WebPage:** A megadott weboldalcímről tölti le a kód a frissítéseket. Alapértelmezés: `http://megax.uw.hu/Schumix2/`
+* **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: `http://megax.uw.hu/Schumix2/`
 
 # Adatbázis beüzemelése
 
