@@ -80,66 +80,112 @@ namespace Schumix.SvnRssAddon.Commands
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "start")
 			{
-				/*if(res.size() < 3)
+				var text = sLManager.GetCommandTexts("svn/start", sIRCMessage.Channel);
+				if(text.Length < 3)
 				{
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Nincs név megadva!");
-					res.clear();
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
-				QueryResultPointer db = sVezerlo.GetSQLConn()->Query("SELECT id FROM svninfo WHERE nev = '%s'", sVezerlo.GetSQLConn()->EscapeString(res[2]).c_str());
-				if(db)
+				if(sIRCMessage.Info.Length < 6)
 				{
-					sSvnInfo.NewThread(db->Fetch()[0].GetUInt32());
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "%s thread hozzáadva", res[2].c_str());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+					return;
 				}
-				else
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Sikertelen hozzáadás!");*/
-				//SvnRssAddon.RssList
+
+				foreach(var list in SvnRssAddon.RssList)
+				{
+					if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower())
+					{
+						if(list.Started)
+						{
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], list.Name);
+							return;
+						}
+
+						list.Start();
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], list.Name);
+						return;
+					}
+				}
+
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], sIRCMessage.Info[5]);
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "stop")
 			{
-				/*if(res.size() < 3)
+				var text = sLManager.GetCommandTexts("svn/stop", sIRCMessage.Channel);
+				if(text.Length < 3)
 				{
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Nincs név megadva!");
-					res.clear();
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
-				QueryResultPointer db = sVezerlo.GetSQLConn()->Query("SELECT id FROM svninfo WHERE nev = '%s'", sVezerlo.GetSQLConn()->EscapeString(res[2]).c_str());
-				if(db)
+				if(sIRCMessage.Info.Length < 6)
 				{
-					sSvnInfo.StopThread(db->Fetch()[0].GetUInt32());
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "%s thread leállitva", res[2].c_str());
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+					return;
 				}
-				else
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Sikertelen leállitás!");*/
+
+				foreach(var list in SvnRssAddon.RssList)
+				{
+					if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower())
+					{
+						if(!list.Started)
+						{
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], list.Name);
+							return;
+						}
+
+						list.Stop();
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], list.Name);
+						return;
+					}
+				}
+
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], sIRCMessage.Info[5]);
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "reload")
 			{
-				/*if(res.size() < 3)
+				if(sIRCMessage.Info.Length < 6)
 				{
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Nincs név vagy all megadva!");
-					res.clear();
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
 					return;
 				}
 
-				if(res[2] == "all")
+				if(sIRCMessage.Info[5].ToLower() == "all")
 				{
-					sSvnInfo.ReloadAllThread();
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "SvnInfo újrainditás kész.");
+					foreach(var list in SvnRssAddon.RssList)
+						list.Reload();
+
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("svn/reload/all", sIRCMessage.Channel));
 				}
 				else
 				{
-					QueryResultPointer db = sVezerlo.GetSQLConn()->Query("SELECT id FROM svninfo WHERE nev = '%s'", sVezerlo.GetSQLConn()->EscapeString(res[2]).c_str());
-					if(db)
+					var text = sLManager.GetCommandTexts("svn/reload", sIRCMessage.Channel);
+					if(text.Length < 2)
 					{
-						sSvnInfo.ReloadThread(db->Fetch()[0].GetUInt32());
-						sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "%s thread újrainditva.", res[2].c_str());
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
 					}
-					else
-						sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Sikertelen újrainditás!");
-				}*/
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						return;
+					}
+
+					foreach(var list in SvnRssAddon.RssList)
+					{
+						if(sIRCMessage.Info[6].ToLower() == list.Name.ToLower())
+						{
+							list.Reload();
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], list.Name);
+							return;
+						}
+					}
+
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[6]);
+				}
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "channel")
 			{

@@ -142,6 +142,133 @@ namespace Schumix.GitRssAddon.Commands
 						sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Sikertelen újrainditás!");
 				}*/
 			}
+			else if(sIRCMessage.Info[4].ToLower() == "start")
+			{
+				var text = sLManager.GetCommandTexts("git/start", sIRCMessage.Channel);
+				if(text.Length < 3)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					return;
+				}
+
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info.Length < 7)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel));
+					return;
+				}
+
+				foreach(var list in GitRssAddon.RssList)
+				{
+					if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
+					{
+						if(list.Started)
+						{
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], list.Name, list.Type);
+							return;
+						}
+
+						list.Start();
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], list.Name, list.Type);
+						return;
+					}
+				}
+
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], sIRCMessage.Info[5], sIRCMessage.Info[6]);
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "stop")
+			{
+				var text = sLManager.GetCommandTexts("git/stop", sIRCMessage.Channel);
+				if(text.Length < 3)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					return;
+				}
+
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info.Length < 7)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel));
+					return;
+				}
+
+				foreach(var list in GitRssAddon.RssList)
+				{
+					if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
+					{
+						if(!list.Started)
+						{
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], list.Name, list.Type);
+							return;
+						}
+
+						list.Stop();
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], list.Name, list.Type);
+						return;
+					}
+				}
+
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], sIRCMessage.Info[5], sIRCMessage.Info[6]);
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "reload")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "all")
+				{
+					foreach(var list in GitRssAddon.RssList)
+						list.Reload();
+
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("git/reload/all", sIRCMessage.Channel));
+				}
+				else
+				{
+					var text = sLManager.GetCommandTexts("git/reload", sIRCMessage.Channel);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel));
+						return;
+					}
+
+					foreach(var list in GitRssAddon.RssList)
+					{
+						if(sIRCMessage.Info[6].ToLower() == list.Name.ToLower() && sIRCMessage.Info[7].ToLower() == list.Type.ToLower())
+						{
+							list.Reload();
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], list.Name, list.Type);
+							return;
+						}
+					}
+
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[6], sIRCMessage.Info[7]);
+				}
+			}
 			else if(sIRCMessage.Info[4].ToLower() == "channel")
 			{
 				if(sIRCMessage.Info.Length < 6)
