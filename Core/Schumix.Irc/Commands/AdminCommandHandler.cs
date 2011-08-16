@@ -124,6 +124,9 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			foreach(var plugin in sAddonManager.GetPlugins())
+				plugin.Destroy();
+
 			SchumixBase.ExitStatus = true;
 			SchumixBase.timer.SaveUptime();
 			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);

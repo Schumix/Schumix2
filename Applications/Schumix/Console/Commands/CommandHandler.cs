@@ -767,6 +767,9 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
+			foreach(var plugin in sAddonManager.GetPlugins())
+				plugin.Destroy();
+
 			SchumixBase.ExitStatus = true;
 			SchumixBase.timer.SaveUptime();
 			Log.Notice("Console", text[0]);
