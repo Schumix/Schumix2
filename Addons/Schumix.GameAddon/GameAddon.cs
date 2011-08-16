@@ -76,6 +76,28 @@ namespace Schumix.GameAddon
 			Network.PublicRemoveHandler("NICK");
 			Network.PublicRemoveHandler("QUIT");
 			CommandManager.PublicCRemoveHandler("game");
+
+			foreach(var function in GameChannelFunction)
+			{
+				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", function.Value, function.Key);
+				sChannelInfo.ChannelFunctionReload();
+				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "off", function.Key), function.Key);
+				sChannelInfo.ChannelFunctionReload();
+			}
+
+			foreach(var mlist in MaffiaList)
+			{
+				foreach(var player in mlist.Value.GetPlayerList())
+					sSender.Mode(mlist.Key, "-v", player.Value);
+			}
+
+			foreach(var ilist in IJAList)
+			{
+				foreach(var player in ilist.Value.GetPlayerList())
+					sSender.Mode(ilist.Key, "-v", player.Value);
+			}
+
+			GameChannelFunction.Clear();
 		}
 
 		public bool Reload(string RName)

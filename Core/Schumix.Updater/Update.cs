@@ -96,19 +96,19 @@ namespace Schumix.Updater
 
 			Log.Success("Update", sLConsole.Update("Text14"));
 
-			if(File.Exists("Schumix.Config.exe"))
-				File.Delete("Schumix.Config.exe");
+			if(File.Exists("Config.exe"))
+				File.Delete("Config.exe");
 
-			File.Move(version + "/Run/Release/Schumix.Config.exe", "Schumix.Config.exe");
+			File.Move(version + "/Run/Release/Config.exe", "Config.exe");
 			var config = new Process();
 			config.StartInfo.UseShellExecute = false;
 			config.StartInfo.RedirectStandardOutput = true;
 			config.StartInfo.RedirectStandardError = true;
 #if MONO
 			config.StartInfo.FileName = "mono";
-			config.StartInfo.Arguments = "Schumix.Config.exe " + version;
+			config.StartInfo.Arguments = "Config.exe " + version;
 #else
-			config.StartInfo.FileName = "Schumix.Config.exe " + version;
+			config.StartInfo.FileName = "Config.exe " + version;
 #endif
 			Log.Notice("Update", sLConsole.Update("Text15"));
 			config.Start();

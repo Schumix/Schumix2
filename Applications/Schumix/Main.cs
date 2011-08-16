@@ -125,8 +125,8 @@ namespace Schumix
 
 			new Update();
 
-			if(File.Exists("Schumix.Config.exe"))
-				File.Delete("Schumix.Config.exe");
+			if(File.Exists("Config.exe"))
+				File.Delete("Config.exe");
 
 			new SchumixBot();
 			System.Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.timer.SaveUptime(); };
