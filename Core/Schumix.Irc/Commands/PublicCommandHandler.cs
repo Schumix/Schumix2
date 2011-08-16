@@ -211,6 +211,9 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			if(!IsAdmin(sIRCMessage.Nick) && sIRCMessage.Info[4].Contains("#"))
+				return;
+
 			if(sIRCMessage.Info.Length == 5)
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Info[4], sLManager.GetCommandText("warning", sIRCMessage.Channel), sIRCMessage.Channel);
 			else if(sIRCMessage.Info.Length >= 6)
