@@ -237,7 +237,7 @@ namespace Schumix.Irc.Commands
 			}
 
 			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&start=0&rsz=small&q=", sIRCMessage.Info.SplitToString(4, SchumixBase.Space));
-			var Regex = new Regex(@".unescapedUrl.\:.(?<url>\S+).,.url.+.titleNoFormatting.\:.(?<title>.+).,.content");
+			var Regex = new Regex(@".unescapedUrl.\:.(?<url>\S+).\,.url.\:.\S+.\,.visibleUrl.\:\S+.\,.cacheUrl.\:.\S+.\,.title.\:.\S*\s*\S*\s*\S*.\,.titleNoFormatting.\:.(?<title>\S*\s*\S*\s*\S*).\,.content");
 
 			if(!Regex.IsMatch(url))
 			{
