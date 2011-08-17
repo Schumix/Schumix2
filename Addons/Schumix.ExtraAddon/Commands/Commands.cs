@@ -181,7 +181,7 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower());
 					if(!db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
@@ -206,14 +206,14 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower());
 					if(db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 						return;
 					}
 
-					SchumixBase.DManager.QueryFirstRow("DELETE FROM `kicklist` WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `kicklist` WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower());
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[6]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "info")
@@ -238,11 +238,17 @@ namespace Schumix.ExtraAddon.Commands
 				{
 					if(sIRCMessage.Info.Length < 7)
 					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 8)
+					{
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
 						return;
 					}
 
-					if(sIRCMessage.Info[6].ToLower() == "add")
+					if(sIRCMessage.Info[7].ToLower() == "add")
 					{
 						var text = sLManager.GetCommandTexts("autofunction/kick/channel/add", sIRCMessage.Channel);
 						if(text.Length < 2)
@@ -251,15 +257,9 @@ namespace Schumix.ExtraAddon.Commands
 							return;
 						}
 
-						if(sIRCMessage.Info.Length < 8)
-						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
-							return;
-						}
-
 						if(sIRCMessage.Info.Length < 9)
 						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 							return;
 						}
 
@@ -269,17 +269,17 @@ namespace Schumix.ExtraAddon.Commands
 							return;
 						}
 	
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sIRCMessage.Info[6].ToLower());
 						if(!db.IsNull())
 						{
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 							return;
 						}
 
-						SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(9, SchumixBase.Space)));
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[7]);
+						SchumixBase.DManager.QueryFirstRow("INSERT INTO `kicklist`(Name, Channel, Reason) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(9, SchumixBase.Space)));
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[8]);
 					}
-					else if(sIRCMessage.Info[6].ToLower() == "remove")
+					else if(sIRCMessage.Info[7].ToLower() == "remove")
 					{
 						var text = sLManager.GetCommandTexts("autofunction/kick/channel/remove", sIRCMessage.Channel);
 						if(text.Length < 2)
@@ -288,25 +288,25 @@ namespace Schumix.ExtraAddon.Commands
 							return;
 						}
 
-						if(sIRCMessage.Info.Length < 8)
+						if(sIRCMessage.Info.Length < 9)
 						{
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 							return;
 						}
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sIRCMessage.Info[6].ToLower());
 						if(db.IsNull())
 						{
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 							return;
 						}
 
-						SchumixBase.DManager.QueryFirstRow("DELETE FROM `kicklist` WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[7]);
+						SchumixBase.DManager.QueryFirstRow("DELETE FROM `kicklist` WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sIRCMessage.Info[6].ToLower());
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[8]);
 					}
-					else if(sIRCMessage.Info[6].ToLower() == "info")
+					else if(sIRCMessage.Info[7].ToLower() == "info")
 					{
-						var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM kicklist");
+						var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM kicklist WHERE Channel = '{0}'", sIRCMessage.Info[6].ToLower());
 						if(!db.IsNull())
 						{
 							string names = string.Empty;
@@ -314,8 +314,7 @@ namespace Schumix.ExtraAddon.Commands
 							foreach(DataRow row in db.Rows)
 							{
 								string name = row["Name"].ToString();
-								string channel = row["Channel"].ToString();
-								names += ", " + name + SchumixBase.Point2 + channel;
+								names += ", " + name + SchumixBase.Point2 + row["Channel"].ToString();
 							}
 
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("autofunction/kick/channel/info", sIRCMessage.Channel), names.Remove(0, 2, ", "));
@@ -354,7 +353,7 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower());
 					if(!db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
@@ -379,14 +378,20 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower());
 					if(db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 						return;
 					}
+					else
+					{
+						string rank = db["Rank"].ToString();
+						if(rank.Substring(0, 1) == "+")
+							sSender.Mode(sIRCMessage.Channel.ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[6].ToLower());	
+					}
 
-					SchumixBase.DManager.QueryFirstRow("DELETE FROM `modelist` WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `modelist` WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower());
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[6]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "info")
@@ -411,11 +416,17 @@ namespace Schumix.ExtraAddon.Commands
 				{
 					if(sIRCMessage.Info.Length < 7)
 					{
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 8)
+					{
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
 						return;
 					}
 		
-					if(sIRCMessage.Info[6].ToLower() == "add")
+					if(sIRCMessage.Info[7].ToLower() == "add")
 					{
 						var text = sLManager.GetCommandTexts("autofunction/mode/channel/add", sIRCMessage.Channel);
 						if(text.Length < 2)
@@ -424,35 +435,29 @@ namespace Schumix.ExtraAddon.Commands
 							return;
 						}
 
-						if(sIRCMessage.Info.Length < 8)
+						if(sIRCMessage.Info.Length < 9)
 						{
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 							return;
 						}
-		
-						if(sIRCMessage.Info.Length < 9)
-						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
-							return;
-						}
-		
+
 						if(sIRCMessage.Info.Length < 10)
 						{
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoRank", sIRCMessage.Channel));
 							return;
 						}
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
 						if(!db.IsNull())
 						{
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 							return;
 						}
 
-						SchumixBase.DManager.QueryFirstRow("INSERT INTO `modelist`(Name, Channel, Rank) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[9]));
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[7]);
+						SchumixBase.DManager.QueryFirstRow("INSERT INTO `modelist`(Name, Channel, Rank) VALUES ('{0}', '{1}', '{2}')", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[9]));
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[8]);
 					}
-					else if(sIRCMessage.Info[6].ToLower() == "remove")
+					else if(sIRCMessage.Info[7].ToLower() == "remove")
 					{
 						var text = sLManager.GetCommandTexts("autofunction/mode/channel/remove", sIRCMessage.Channel);
 						if(text.Length < 2)
@@ -461,25 +466,31 @@ namespace Schumix.ExtraAddon.Commands
 							return;
 						}
 
-						if(sIRCMessage.Info.Length < 8)
+						if(sIRCMessage.Info.Length < 9)
 						{
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 							return;
 						}
 		
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
 						if(db.IsNull())
 						{
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 							return;
 						}
+						else
+						{
+							string rank = db["Rank"].ToString();
+							if(rank.Substring(0, 1) == "+")
+								sSender.Mode(sIRCMessage.Info[6].ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[8].ToLower());	
+						}
 
-						SchumixBase.DManager.QueryFirstRow("DELETE FROM `modelist` WHERE Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[7]);
+						SchumixBase.DManager.QueryFirstRow("DELETE FROM `modelist` WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[8]);
 					}
-					else if(sIRCMessage.Info[6].ToLower() == "info")
+					else if(sIRCMessage.Info[7].ToLower() == "info")
 					{
-						var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM modelist");
+						var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM modelist WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
 						if(!db.IsNull())
 						{
 							string names = string.Empty;
@@ -487,8 +498,7 @@ namespace Schumix.ExtraAddon.Commands
 							foreach(DataRow row in db.Rows)
 							{
 								string name = row["Name"].ToString();
-								string channel = row["Channel"].ToString();
-								names += ", " + name + SchumixBase.Point2 + channel;
+								names += ", " + name + SchumixBase.Point2 + row["Channel"].ToString();
 							}
 
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("autofunction/mode/channel/info", sIRCMessage.Channel), names.Remove(0, 2, ", "));

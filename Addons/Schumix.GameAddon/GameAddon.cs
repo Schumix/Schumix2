@@ -44,31 +44,7 @@ namespace Schumix.GameAddon
 			Network.PublicRegisterHandler("NICK",     		new Action<IRCMessage>(HandleNewNick));
 			Network.PublicRegisterHandler("QUIT",     		new Action<IRCMessage>(HandleQuit));
 			CommandManager.PublicCRegisterHandler("game",	new Action<IRCMessage>(HandleGame));
-
-			Console.CancelKeyPress += (sender, e) =>
-			{
-				foreach(var function in GameChannelFunction)
-				{
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", function.Value, function.Key);
-					sChannelInfo.ChannelFunctionReload();
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "off", function.Key), function.Key);
-					sChannelInfo.ChannelFunctionReload();
-				}
-
-				foreach(var mlist in MaffiaList)
-				{
-					foreach(var player in mlist.Value.GetPlayerList())
-						sSender.Mode(mlist.Key, "-v", player.Value);
-				}
-
-				foreach(var ilist in IJAList)
-				{
-					foreach(var player in ilist.Value.GetPlayerList())
-						sSender.Mode(ilist.Key, "-v", player.Value);
-				}
-
-				GameChannelFunction.Clear();
-			};
+			Console.CancelKeyPress += (sender, e) => { Clean(); };
 		}
 
 		public void Destroy()
@@ -76,28 +52,7 @@ namespace Schumix.GameAddon
 			Network.PublicRemoveHandler("NICK");
 			Network.PublicRemoveHandler("QUIT");
 			CommandManager.PublicCRemoveHandler("game");
-
-			foreach(var function in GameChannelFunction)
-			{
-				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", function.Value, function.Key);
-				sChannelInfo.ChannelFunctionReload();
-				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "off", function.Key), function.Key);
-				sChannelInfo.ChannelFunctionReload();
-			}
-
-			foreach(var mlist in MaffiaList)
-			{
-				foreach(var player in mlist.Value.GetPlayerList())
-					sSender.Mode(mlist.Key, "-v", player.Value);
-			}
-
-			foreach(var ilist in IJAList)
-			{
-				foreach(var player in ilist.Value.GetPlayerList())
-					sSender.Mode(ilist.Key, "-v", player.Value);
-			}
-
-			GameChannelFunction.Clear();
+			Clean();
 		}
 
 		public bool Reload(string RName)
@@ -528,6 +483,35 @@ namespace Schumix.GameAddon
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;
+		}
+
+		private void Clean()
+		{
+			foreach(var function in GameChannelFunction)
+			{
+				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", function.Value, function.Key);
+				sChannelInfo.ChannelFunctionReload();
+				SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "off", function.Key), function.Key);
+				sChannelInfo.ChannelFunctionReload();
+			}
+
+			foreach(var mlist in MaffiaList)
+			{
+				foreach(var player in mlist.Value.GetPlayerList())
+					sSender.Mode(mlist.Key, "-v", player.Value);
+
+				sSender.Mode(mlist.Key, "-m");
+			}
+
+			foreach(var ilist in IJAList)
+			{
+				foreach(var player in ilist.Value.GetPlayerList())
+					sSender.Mode(ilist.Key, "-v", player.Value);
+
+				sSender.Mode(ilist.Key, "-m");
+			}
+
+			GameChannelFunction.Clear();
 		}
 
 		/// <summary>
