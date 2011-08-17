@@ -1,8 +1,8 @@
 Megírásra váró feladatok:
 - Frissíteni az új sql fv-kel az addonokat is.
-- Az updaterbe beleépíteni a megadott verzióra való frissítést.
-- Updaterben befejezni a kicsomagolást.
 - Installer írása mellyel bárhonnét telepíthető schumix.
 - Időjárás lekérdezést befejezni.
 - Az angol nyelvet befejezni minden téren.
 - Online parancs hozzáadása a kódhoz és bot nick visszavétel beleépítése a kódba.
+- SQLite hiba javítása.
+- SSL-en keresztüli kapcsolódás megírása.

@@ -41,7 +41,7 @@ namespace Schumix.Framework.Config
 		public const string SchumixProduct = "Schumix";
 		public const string SchumixCopyright = "Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>";
 		public const string SchumixTrademark = "GNU General Public License";
-		public const string SchumixVersion = "3.3.4";
-		public const string SchumixFileVersion = "3.3.4.0";
+		public const string SchumixVersion = "3.3.5";
+		public const string SchumixFileVersion = "3.3.5.0";
 	}
 }

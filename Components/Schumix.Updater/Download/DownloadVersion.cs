@@ -22,13 +22,24 @@ using Schumix.Framework;
 
 namespace Schumix.Updater.Download
 {
-	public sealed class DownloadFile
+	public sealed class DownloadVersion
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private string _url;
 
-		public DownloadFile(string Url, string Version)
+		public DownloadVersion(string Url)
 		{
-			sUtilities.DownloadFile(Url, Version + ".tar.gz");
+			_url = Url;
+		}
+
+		public string GetVersion()
+		{
+			return sUtilities.GetUrl(_url + "version.txt");
+		}
+
+		public bool GetVersion(string Version)
+		{
+			return sUtilities.GetUrl(_url + "versions.txt").Contains(Version);
 		}
 	}
 }

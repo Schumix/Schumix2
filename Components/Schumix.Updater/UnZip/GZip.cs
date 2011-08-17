@@ -19,8 +19,8 @@
 
 using System;
 using System.IO;
-using System.IO.Compression;
 using System.Reflection;
+using ICSharpCode.SharpZipLib.Tar;
 
 namespace Schumix.Updater.UnZip
 {
@@ -28,29 +28,44 @@ namespace Schumix.Updater.UnZip
 	{
 		public GZip(string Version)
 		{
-			//Decompress("3.4.0.tar.gz", "3.4.0");
+			Tar(Version + ".tar");
 		}
 
-		/*private byte[] Decompress(byte[] gzip)
+		private void Tar(string FileName)
 		{
-			using(var stream = new GZipStream(new MemoryStream(gzip), CompressionMode.Decompress))
+			using(var s = new TarInputStream(File.OpenRead(FileName)))
 			{
-				const int size = 4096;
-				byte[] buffer = new byte[size];
+				TarEntry theEntry;
 
-				using(var memory = new MemoryStream())
+				while((theEntry = s.GetNextEntry()) != null)
 				{
-					int count = 0;
-					do
+					string fileName      = Path.GetFileName(theEntry.Name);
+					string directoryName = Path.GetDirectoryName(theEntry.Name);
+
+					// create directory
+					if(directoryName.Length > 0)
+						Directory.CreateDirectory(directoryName);
+
+					if(fileName != string.Empty)
 					{
-						count = stream.Read(buffer, 0, size);
-						if(count > 0)
-							memory.Write(buffer, 0, count);
+						using(var streamWriter = File.Create(theEntry.Name))
+						{
+							int size = 2048;
+							byte[] data = new byte[2048];
+
+							while(true)
+							{
+								size = s.Read(data, 0, data.Length);
+
+								if(size > 0)
+									streamWriter.Write(data, 0, size);
+								else
+									break;
+							}
+						}
 					}
-					while(count > 0);
-						return memory.ToArray();
 				}
 			}
-		}*/
+		}
 	}
 }

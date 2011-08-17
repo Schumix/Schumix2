@@ -26,8 +26,8 @@ namespace Schumix.Config.Clean
 	{
 		public FileClean(string Version)
 		{
-			if(File.Exists(Version + ".tar.gz"))
-				File.Delete(Version + ".tar.gz");
+			if(File.Exists(Version + ".tar"))
+				File.Delete(Version + ".tar");
 		}
 	}
 }
