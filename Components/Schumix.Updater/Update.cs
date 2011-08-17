@@ -44,15 +44,35 @@ namespace Schumix.Updater
 			}
 
 			Log.Notice("Update", sLConsole.Update("Text2"));
-			var version = new DownloadVersion(UpdateConfig.WebPage).GetVersion();
+			string version = string.Empty;
 
-			if(sUtilities.GetVersion() == version)
+			if(UpdateConfig.VersionsEnabled)
 			{
-				Log.Warning("Update", sLConsole.Update("Text3"));
-				return;
-			}
+				bool b = new DownloadVersion(UpdateConfig.WebPage).GetVersion(UpdateConfig.Version);
 
-			Log.Notice("Update", sLConsole.Update("Text4"), version);
+				if(b)
+				{
+					Log.Notice("Update", sLConsole.Update("Text4"), UpdateConfig.Version);
+					version = UpdateConfig.Version;
+				}
+				else
+				{
+					Log.Error("Update", sLConsole.Update("Text16"), UpdateConfig.Version);
+					return;
+				}
+			}
+			else
+			{
+				version = new DownloadVersion(UpdateConfig.WebPage).GetVersion();
+
+				if(sUtilities.GetVersion() == version)
+				{
+					Log.Warning("Update", sLConsole.Update("Text3"));
+					return;
+				}
+
+				Log.Notice("Update", sLConsole.Update("Text4"), version);
+			}
 			Log.Notice("Update", sLConsole.Update("Text5"));
 
 			try

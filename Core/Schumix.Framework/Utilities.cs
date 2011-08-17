@@ -24,7 +24,9 @@ using System.Net;
 using System.Web;
 using System.Linq;
 using System.Reflection;
+#if !MONO
 using System.Management;
+#endif
 using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Text;

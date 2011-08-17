@@ -19,7 +19,6 @@
 
 using System;
 using Schumix.Framework;
-using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -61,10 +60,7 @@ namespace Schumix.Console.Commands
 
 			foreach(var t in sLManager.GetConsoleCommandHelpTexts(Info.SplitToString(1, "/")))
 			{
-				if(t.Contains("{0}"))
-					Log.Notice("Console", t, IRCConfig.CommandPrefix);
-				else
-					Log.Notice("Console", t);
+				Log.Notice("Console", t);
 			}
 		}
 	}

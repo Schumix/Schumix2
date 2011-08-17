@@ -20,7 +20,9 @@
 using System;
 using System.IO;
 using System.Linq;
+#if !MONO
 using System.Management;
+#endif
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Security.Cryptography;

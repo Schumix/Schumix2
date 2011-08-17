@@ -89,6 +89,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -106,7 +110,7 @@
     <Folder Include="UnZip\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Schumix.Framework\Schumix.Framework.csproj">
+    <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">
       <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
       <Name>Schumix.Framework</Name>
     </ProjectReference>
