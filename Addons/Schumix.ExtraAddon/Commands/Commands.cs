@@ -796,10 +796,15 @@ namespace Schumix.ExtraAddon.Commands
 					source = source.Remove(0, source.IndexOf("<div class=\"fctText\">") + "<div class=\"fctText\">".Length);
 					day = source.Substring(0, source.IndexOf("</div>"));
 				}
-				else
+				else if(source.Contains("<td class=\"vaT full\">"))
 				{
 					source = source.Remove(0, source.IndexOf("<td class=\"vaT full\">") + "<td class=\"vaT full\">".Length);
 					day = source.Substring(0, source.IndexOf("</td>"));
+				}
+				else
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4]);
+					return;
 				}
 
 				if(source.Contains("<div class=\"fctText\">"))
@@ -807,10 +812,15 @@ namespace Schumix.ExtraAddon.Commands
 					source = source.Remove(0, source.IndexOf("<div class=\"fctText\">") + "<div class=\"fctText\">".Length);
 					night = source.Substring(0, source.IndexOf("</div>"));
 				}
-				else
+				else if(source.Contains("<td class=\"vaT full\">"))
 				{
 					source = source.Remove(0, source.IndexOf("<td class=\"vaT full\">") + "<td class=\"vaT full\">".Length);
 					night = source.Substring(0, source.IndexOf("</td>"));
+				}
+				else
+				{
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4]);
+					return;
 				}
 
 				if(home)
