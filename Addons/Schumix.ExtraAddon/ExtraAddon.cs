@@ -57,6 +57,7 @@ namespace Schumix.ExtraAddon
 			Network.PublicRegisterHandler("JOIN",                       new Action<IRCMessage>(HandleJoin));
 			CommandManager.PublicCRegisterHandler("notes",              new Action<IRCMessage>(sNotes.HandleNotes));
 			CommandManager.PublicCRegisterHandler("message",            new Action<IRCMessage>(sFunctions.HandleMessage));
+			CommandManager.PublicCRegisterHandler("weather",            new Action<IRCMessage>(sFunctions.HandleWeather));
 			CommandManager.HalfOperatorCRegisterHandler("autofunction", new Action<IRCMessage>(sFunctions.HandleAutoFunction));
 		}
 
@@ -65,6 +66,7 @@ namespace Schumix.ExtraAddon
 			Network.PublicRemoveHandler("JOIN");
 			CommandManager.PublicCRemoveHandler("notes");
 			CommandManager.PublicCRemoveHandler("message");
+			CommandManager.PublicCRemoveHandler("weather");
 			CommandManager.HalfOperatorCRemoveHandler("autofunction");
 		}
 

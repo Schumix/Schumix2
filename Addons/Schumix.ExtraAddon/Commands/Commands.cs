@@ -26,6 +26,7 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.ExtraAddon.Config;
 
 namespace Schumix.ExtraAddon.Commands
 {
@@ -739,6 +740,90 @@ namespace Schumix.ExtraAddon.Commands
 
 				SchumixBase.DManager.QueryFirstRow("INSERT INTO `message`(Name, Channel, Message, Wrote) VALUES ('{0}', '{1}', '{2}', '{3}')", sUtilities.SqlEscape(sIRCMessage.Info[4].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)), sIRCMessage.Nick);
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("message", sIRCMessage.Channel));
+			}
+		}
+
+		public void HandleWeather(IRCMessage sIRCMessage)
+		{
+			CNick(sIRCMessage);
+			var text = sLManager.GetCommandTexts("weather", sIRCMessage.Channel);
+			if(text.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+				return;
+			}
+
+			if(sIRCMessage.Info.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoCityName", sIRCMessage.Channel));
+				return;
+			}
+
+			bool home = false;
+			string url = string.Empty;
+			string source = string.Empty;
+
+			switch(sLManager.GetChannelLocalization(sIRCMessage.Channel))
+			{
+				case "huHU":
+					url = "http://hungarian.wunderground.com/cgi-bin/findweather/hdfForecast?query=";
+					break;
+				case "enUS":
+					url = "http://www.wunderground.com/cgi-bin/findweather/hdfForecast?query=";
+					break;
+				case "enGB":
+					url = "http://www.wunderground.com/cgi-bin/findweather/hdfForecast?query=";
+					break;
+			}
+
+			if(sIRCMessage.Info[4].ToLower() == "home")
+				home = true;
+
+			try
+			{
+				if(home)
+					source = sUtilities.GetUrl(string.Format("{0}{1}", url, WeatherConfig.City));
+				else
+					source = sUtilities.GetUrl(string.Format("{0}{1}", url, sIRCMessage.Info[4]));
+
+				string day = string.Empty;
+				string night = string.Empty;
+				source = source.Replace("\n\t\t", SchumixBase.Space.ToString());
+				source = source.Replace("&deg;C", "°C");
+
+				if(source.Contains("<div class=\"fctText\">"))
+				{
+					source = source.Remove(0, source.IndexOf("<div class=\"fctText\">") + "<div class=\"fctText\">".Length);
+					day = source.Substring(0, source.IndexOf("</div>"));
+				}
+				else
+				{
+					source = source.Remove(0, source.IndexOf("<td class=\"vaT full\">") + "<td class=\"vaT full\">".Length);
+					day = source.Substring(0, source.IndexOf("</td>"));
+				}
+
+				if(source.Contains("<div class=\"fctText\">"))
+				{
+					source = source.Remove(0, source.IndexOf("<div class=\"fctText\">") + "<div class=\"fctText\">".Length);
+					night = source.Substring(0, source.IndexOf("</div>"));
+				}
+				else
+				{
+					source = source.Remove(0, source.IndexOf("<td class=\"vaT full\">") + "<td class=\"vaT full\">".Length);
+					night = source.Substring(0, source.IndexOf("</td>"));
+				}
+
+				if(home)
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+				else
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[4]);
+
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], day.Remove(0, 1, SchumixBase.Space));
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3], night.Remove(0, 1, SchumixBase.Space));
+			}
+			catch
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4]);
 			}
 		}
 	}

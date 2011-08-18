@@ -34,6 +34,7 @@ namespace Schumix.ExtraAddon.Config
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private const bool _enabled = false;
 		private const string _type = "aohv";
+		private const string _weatherhomecity = "Zalaegerszeg";
 
 		public AddonConfig(string configfile)
 		{
@@ -62,6 +63,9 @@ namespace Schumix.ExtraAddon.Config
 			bool Enabled = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText) : _enabled;
 			string Type = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText : _type;
 			new ModeConfig(Enabled, Type);
+
+			string City = !xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").InnerText : _weatherhomecity;
+			new WeatherConfig(City);
 
 			Log.Success("ExtraAddonConfig", sLocalization.Config("Text2"));
 			Console.WriteLine();
@@ -105,6 +109,19 @@ namespace Schumix.ExtraAddon.Config
 					// </Mode>
 					w.WriteEndElement();
 
+					// <Weather>
+					w.WriteStartElement("Weather");
+
+					// <Remove>
+					w.WriteStartElement("Home");
+					w.WriteElementString("City", (!xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").InnerText : _weatherhomecity));
+
+					// </Remove>
+					w.WriteEndElement();
+
+					// </Weather>
+					w.WriteEndElement();
+
 					// </ExtraAddon>
 					w.WriteEndElement();
 
@@ -137,6 +154,18 @@ namespace Schumix.ExtraAddon.Config
 			RemoveEnabled = removeenabled;
 			RemoveType    = removetype;
 			Log.Notice("ModeConfig", sLocalization.ModeConfig("Text"));
+		}
+	}
+
+	public sealed class WeatherConfig
+	{
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		public static string City { get; private set; }
+
+		public WeatherConfig(string city)
+		{
+			City = city;
+			Log.Notice("WeatherConfig", sLocalization.WeatherConfig("Text"));
 		}
 	}
 }
