@@ -107,6 +107,24 @@ namespace Schumix.ExtraAddon.Localization
 			}
 		}
 
+		public string WeatherConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Weather beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the Weather settings.";
+					else
+						return "Loaded the Weather settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
 		public string WebHelper(string Name)
 		{
 			return WebHelper(Name, Locale);
