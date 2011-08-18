@@ -240,10 +240,33 @@ namespace Schumix.Irc
 				try
 				{
 					sUtilities.CreateDirectory(LogConfig.IrcLogDirectory);
-					string logfile = string.Format("./{0}/{1}.log", LogConfig.IrcLogDirectory, channel);
+					string logdir = string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, channel);
+					string logfile = string.Empty;
+
+					if(DateTime.Now.Month < 10)
+					{
+						if(DateTime.Now.Day < 10)
+							logfile = string.Format("{0}/{1}-0{2}-0{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+						else
+							logfile = string.Format("{0}/{1}-0{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+					}
+					else
+					{
+						if(DateTime.Now.Day < 10)
+							logfile = string.Format("{0}/{1}-{2}-0{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+						else
+							logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+					}
+
+					sUtilities.CreateDirectory(logdir);
 					sUtilities.CreateFile(logfile);
 					var file = new StreamWriter(logfile, true) { AutoFlush = true };
-					file.WriteLine("[{0}] <{1}> {2}", DateTime.Now, user, args);
+
+					if(DateTime.Now.Minute < 10)
+						file.WriteLine("[{0}:0{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
+					else
+						file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
+
 					file.Close();
 				}
 				catch(Exception)
