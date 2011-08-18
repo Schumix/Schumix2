@@ -25,6 +25,7 @@ using System.Management;
 #endif
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Collections.Generic;
 using Schumix.Framework;
@@ -75,6 +76,9 @@ namespace Schumix.Libraries
 		/// <returns>The casted object.</returns>
 		public static T Cast<T>(this object ob)
 		{
+			if(ob == null)
+				throw new ArgumentNullException("ob");
+
 			return (T)ob;
 		}
 
@@ -100,6 +104,9 @@ namespace Schumix.Libraries
 		/// </returns>
 		public static bool IsOfType(this object obj, Type type)
 		{
+			if(obj == null)
+				return false;
+
 			return (obj.GetType() == type);
 		}
 
@@ -113,6 +120,9 @@ namespace Schumix.Libraries
 		/// </returns>
 		public static bool CanBeCastedTo<T>(this object obj)
 		{
+			if(obj == null)
+				throw new ArgumentNullException("obj");
+
 			return (obj is T);
 		}
 
@@ -140,11 +150,30 @@ namespace Schumix.Libraries
 		public static string Concatenate(this IEnumerable<string> arr, string separator)
 		{
 			var sb = new StringBuilder();
+			var warr = arr.ToArray();
 
-			foreach(var str in arr)
-				sb.AppendFormat("{0}{1}", str, separator);
+			for(var index = 0; index < warr.Length; index++)
+			{
+				var str = warr[index];
+
+				if(index == warr.Length - 1)
+					sb.AppendFormat("{0}", str);
+				else
+					sb.AppendFormat("{0}{1}", str, separator);
+			}
 
 			return sb.ToString();
+		}
+
+		/// <summary>
+		/// Concatenates the string in the specified array and returns the sum string.
+		/// Uses spaces as separators.
+		/// </summary>
+		/// <param name="arr"></param>
+		/// <returns></returns>
+		public static string ConcatenateWithSpaces(this IEnumerable<string> arr)
+		{
+			return arr.Concatenate(SchumixBase.Space.ToString());
 		}
 
 		public static string SplitToString(this string[] split, char c)
@@ -241,6 +270,18 @@ namespace Schumix.Libraries
 			}
 
 			return true;
+		}
+
+		/// <summary>
+		/// Waits for the pending tasks in the specified collection.
+		/// </summary>
+		/// <param name="coll">The collection.</param>
+		public static void WaitTasks(this IEnumerable<Task> coll)
+		{
+			if(coll == null)
+				throw new ArgumentNullException("coll");
+
+			Task.WaitAll(coll.ToArray());
 		}
 
 		/// <summary>
