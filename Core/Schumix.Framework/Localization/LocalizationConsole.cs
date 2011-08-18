@@ -1305,9 +1305,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Nem létezik ezen verzió: {0}";
 					else if(Locale == "enUS")
-						return "No such this version: {0}";
+						return "No such version: {0}";
 					else
-						return "No such this version: {0}";
+						return "No such version: {0}";
 				}
 				default:
 					return string.Empty;

@@ -121,11 +121,11 @@
     <Compile Include="Database\MySql.cs" />
     <Compile Include="Exceptions\SchumixException.cs" />
     <Compile Include="AddonManager.cs" />
-    <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Localization\LocalizationManager.cs" />
     <Compile Include="Localization\LocalizationConsole.cs" />
+    <Compile Include="Extensions\GeneralExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

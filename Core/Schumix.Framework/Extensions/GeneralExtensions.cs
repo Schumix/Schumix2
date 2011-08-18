@@ -20,6 +20,8 @@
 
 using System;
 using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 
 namespace Schumix.Framework.Extensions
@@ -27,7 +29,7 @@ namespace Schumix.Framework.Extensions
 	/// <summary>
 	/// Some random extension stuff.
 	/// </summary>
-	public static class RandomExtensions
+	public static class GeneralExtensions
 	{
 		/// <summary>
 		/// Casts the object to the specified type.
@@ -37,6 +39,9 @@ namespace Schumix.Framework.Extensions
 		/// <returns>The casted object.</returns>
 		public static T Cast<T>(this object ob)
 		{
+			if(ob == null)
+				throw new ArgumentNullException("ob");
+
 			return (T)ob;
 		}
 
@@ -62,6 +67,9 @@ namespace Schumix.Framework.Extensions
 		/// </returns>
 		public static bool IsOfType(this object obj, Type type)
 		{
+			if(obj == null)
+				return false;
+
 			return (obj.GetType() == type);
 		}
 
@@ -75,6 +83,9 @@ namespace Schumix.Framework.Extensions
 		/// </returns>
 		public static bool CanBeCastedTo<T>(this object obj)
 		{
+			if(obj == null)
+				throw new ArgumentNullException("obj");
+
 			return (obj is T);
 		}
 
@@ -102,9 +113,17 @@ namespace Schumix.Framework.Extensions
 		public static string Concatenate(this IEnumerable<string> arr, string separator)
 		{
 			var sb = new StringBuilder();
+			var warr = arr.ToArray();
 
-			foreach(var str in arr)
-				sb.AppendFormat("{0}{1}", str, separator);
+			for(var index = 0; index < warr.Length; index++)
+			{
+				var str = warr[index];
+
+				if(index == warr.Length - 1)
+					sb.AppendFormat("{0}", str);
+				else
+					sb.AppendFormat("{0}{1}", str, separator);
+			}
 
 			return sb.ToString();
 		}
@@ -214,6 +233,18 @@ namespace Schumix.Framework.Extensions
 			}
 
 			return true;
+		}
+
+		/// <summary>
+		/// Waits for the pending tasks in the specified collection.
+		/// </summary>
+		/// <param name="coll">The collection.</param>
+		public static void WaitTasks(this IEnumerable<Task> coll)
+		{
+			if(coll == null)
+				throw new ArgumentNullException("coll");
+
+			Task.WaitAll(coll.ToArray());
 		}
 	}
 }
