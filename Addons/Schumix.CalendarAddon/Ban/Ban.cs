@@ -40,7 +40,7 @@ namespace Schumix.CalendarAddon
 
 			sSender.Ban(channel, name);
 			sSender.Kick(channel, name, reason);
-			SchumixBase.DManager.QueryFirstRow("INSERT INTO `banned`(Name, Channel, Reason, Year, Month, Day, Hour, Minute) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), time.Year, time.Month, time.Day, time.Hour, time.Minute);
+			SchumixBase.DManager.Insert("`banned`(Name, Channel, Reason, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), time.Year, time.Month, time.Day, time.Hour, time.Minute);
 			return sLManager.GetWarningText("BanList1", channel);
 		}
 
@@ -53,7 +53,7 @@ namespace Schumix.CalendarAddon
 
 			sSender.Ban(channel, name);
 			sSender.Kick(channel, name, reason);
-			SchumixBase.DManager.QueryFirstRow("INSERT INTO `banned`(Name, Channel, Reason, Year, Month, Day, Hour, Minute) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), time.Year, time.Month, time.Day, hour, minute);
+			SchumixBase.DManager.Insert("`banned`(Name, Channel, Reason, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), time.Year, time.Month, time.Day, hour, minute);
 			return sLManager.GetWarningText("BanList1", channel);
 		}
 
@@ -65,7 +65,7 @@ namespace Schumix.CalendarAddon
 
 			sSender.Ban(channel, name);
 			sSender.Kick(channel, name, reason);
-			SchumixBase.DManager.QueryFirstRow("INSERT INTO `banned`(Name, Channel, Reason, Year, Month, Day, Hour, Minute) VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), year, month, day, hour, minute);
+			SchumixBase.DManager.Insert("`banned`(Name, Channel, Reason, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), year, month, day, hour, minute);
 			return sLManager.GetWarningText("BanList1", channel);
 		}
 	}

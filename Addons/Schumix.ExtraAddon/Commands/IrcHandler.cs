@@ -29,6 +29,7 @@ namespace Schumix.ExtraAddon.Commands
 {
 	public class IrcHandler : CommandInfo
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
@@ -63,57 +64,24 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				var rand = new Random();
 				string Koszones = string.Empty;
-				switch(rand.Next(0, 12))
+				var text = sLManager.GetCommandTexts("handlejoin", channel);
+				if(text.Length < 3)
 				{
-					case 0:
-						Koszones = "Hello";
-						break;
-					case 1:
-						Koszones = "Csáó";
-						break;
-					case 2:
-						Koszones = "Hy";
-						break;
-					case 3:
-						Koszones = "Szevasz";
-						break;
-					case 4:
-						Koszones = "Üdv";
-						break;
-					case 5:
-						Koszones = "Szervusz";
-						break;
-					case 6:
-						Koszones = "Aloha";
-						break;
-					case 7:
-						Koszones = "Jó napot";
-						break;
-					case 8:
-						Koszones = "Szia";
-						break;
-					case 9:
-						Koszones = "Hi";
-						break;
-					case 10:
-						Koszones = "Szerbusz";
-						break;
-					case 11:
-						Koszones = "Hali";
-						break;
-					case 12:
-						Koszones = "Szeva";
-						break;
+					sSendMessage.SendCMPrivmsg(channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel)));
+					return;
 				}
 
+				var text2 = sLManager.GetCommandTexts("handlejoin/random", channel);
+				Koszones = text2[rand.Next(0, text2.Length-1)];
+
 				if(DateTime.Now.Hour >= 3 && DateTime.Now.Hour <= 9)
-					sSendMessage.SendCMPrivmsg(channel, "Jó reggelt {0}", sIRCMessage.Nick);
+					sSendMessage.SendCMPrivmsg(channel, text[0], sIRCMessage.Nick);
 				else if(DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 3)
-					sSendMessage.SendCMPrivmsg(channel, "Jó estét {0}", sIRCMessage.Nick);
+					sSendMessage.SendCMPrivmsg(channel, text[1], sIRCMessage.Nick);
 				else
 				{
 					if(IsAdmin(sIRCMessage.Nick))
-						sSendMessage.SendCMPrivmsg(channel, "Üdv főnök");
+						sSendMessage.SendCMPrivmsg(channel, text[2]);
 					else
 						sSendMessage.SendCMPrivmsg(channel, "{0} {1}", Koszones, sIRCMessage.Nick);
 				}
@@ -133,18 +101,11 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				var rand = new Random();
 				string elkoszones = string.Empty;
-				switch(rand.Next(0, 1))
-				{
-					case 0:
-						elkoszones = "Viszlát";
-						break;
-					case 1:
-						elkoszones = "Bye";
-						break;
-				}
+				var text2 = sLManager.GetCommandTexts("handleleft/random", sIRCMessage.Channel);
+				elkoszones = text2[rand.Next(0, text2.Length-1)];
 
 				if(DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 3)
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Jóét {0}", sIRCMessage.Nick);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("handleleft", sIRCMessage.Channel), sIRCMessage.Nick);
 				else
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0} {1}", elkoszones, sIRCMessage.Nick);
 			}

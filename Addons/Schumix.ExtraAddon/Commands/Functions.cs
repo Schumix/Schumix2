@@ -142,7 +142,7 @@ namespace Schumix.ExtraAddon.Commands
 						sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("message2", channel), row["Wrote"].ToString());
 					}
 
-					SchumixBase.DManager.QueryFirstRow("DELETE FROM `message` WHERE Name = '{0}'", name.ToLower());
+					SchumixBase.DManager.Delete("message", string.Format("Name = '{0}'", name.ToLower()));
 				}
 			}
 		}

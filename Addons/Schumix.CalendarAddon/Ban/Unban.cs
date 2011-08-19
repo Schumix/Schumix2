@@ -39,7 +39,7 @@ namespace Schumix.CalendarAddon
 				return sLManager.GetWarningText("UnbanList", channel);
 
 			sSender.Unban(channel, name);
-			SchumixBase.DManager.QueryFirstRow("DELETE FROM `banned` WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower());
+			SchumixBase.DManager.Delete("banned", string.Format("Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower()));
 			return sLManager.GetWarningText("UnbanList1", channel);
 		}
 	}
