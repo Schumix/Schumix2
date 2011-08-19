@@ -976,6 +976,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Banned channel: {0}";
 				}
+				case "Text8-1":
+				{
+					if(Locale == "huHU")
+						return "Csatornára való kapcsolódás letiltva!";
+					else if(Locale == "enUS")
+						return "Banned channel!";
+					else
+						return "Banned channel!";
+				}
 				case "Text9":
 				{
 					if(Locale == "huHU")
@@ -984,6 +993,15 @@ namespace Schumix.Framework.Localization
 						return "Bad password for channel: {0}";
 					else
 						return "Bad password for channel: {0}";
+				}
+				case "Text9-1":
+				{
+					if(Locale == "huHU")
+						return "Csatorna jelszava hibás!";
+					else if(Locale == "enUS")
+						return "Bad password for channel!";
+					else
+						return "Bad password for channel!";
 				}
 				default:
 					return string.Empty;
