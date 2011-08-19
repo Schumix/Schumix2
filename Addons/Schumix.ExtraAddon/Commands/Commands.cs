@@ -769,9 +769,10 @@ namespace Schumix.ExtraAddon.Commands
 					url = "http://hungarian.wunderground.com/cgi-bin/findweather/hdfForecast?query=";
 					break;
 				case "enUS":
+				case "enGB":
 					url = "http://www.wunderground.com/cgi-bin/findweather/hdfForecast?query=";
 					break;
-				case "enGB":
+				default:
 					url = "http://www.wunderground.com/cgi-bin/findweather/hdfForecast?query=";
 					break;
 			}

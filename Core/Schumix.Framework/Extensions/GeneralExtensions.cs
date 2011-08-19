@@ -21,8 +21,10 @@
 using System;
 using System.Text;
 using System.Linq;
+using System.Globalization;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 
 namespace Schumix.Framework.Extensions
 {
@@ -39,10 +41,39 @@ namespace Schumix.Framework.Extensions
 		/// <returns>The casted object.</returns>
 		public static T Cast<T>(this object ob)
 		{
-			if(ob == null)
-				throw new ArgumentNullException("ob");
+			Contract.Requires(ob != null);
+			Contract.Ensures(Contract.Result<T>() != null);
+			var value = (T)Cast(ob, typeof(T));
+			Contract.Assume(value != null);
+			return value;
+		}
 
-			return (T)ob;
+		/// <summary>
+		/// Casts the specified object to the specified type.
+		/// </summary>
+		/// <param name="ob">The object to cast.</param>
+		/// <param name="targetType">Type of the target.</param>
+		/// <returns></returns>
+		public static object Cast(this object ob, Type targetType)
+		{
+			Contract.Requires(ob != null);
+			Contract.Requires(targetType != null);
+			Contract.Ensures(Contract.Result<object>() != null);
+
+			if(targetType.IsEnum)
+			{
+				var str = ob as string;
+				return str != null ? Enum.Parse(targetType, str) : Enum.ToObject(targetType, ob);
+			}
+
+			var currentType = ob.GetType();
+
+			if(currentType.IsInteger() && targetType == typeof(bool))
+				return ob.Equals(0.Cast(targetType)) ? false : true;
+
+			var end = Convert.ChangeType(ob, targetType, CultureInfo.InvariantCulture);
+			Contract.Assume(end != null);
+			return end;
 		}
 
 		/// <summary>
