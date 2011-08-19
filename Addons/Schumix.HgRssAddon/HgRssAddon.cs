@@ -105,7 +105,7 @@ namespace Schumix.HgRssAddon
 
 		}
 
-		public void HandleNotice(IRCMessage sIRCMessage)
+		public void HandleNotice(IRCMessage sIRCMessage)d
 		{
 
 		}
