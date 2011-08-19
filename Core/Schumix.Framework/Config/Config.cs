@@ -35,6 +35,7 @@ namespace Schumix.Framework.Config
 		private const bool _irclog = false;
 		private const string _server = "localhost";
 		private const int _port = 6667;
+		private const bool _ssl = false;
 		private const string _nickname = "Schumix2";
 		private const string _nickname2 = "_Schumix2";
 		private const string _nickname3 = "__Schumix2";
@@ -102,6 +103,7 @@ namespace Schumix.Framework.Config
 					Log.Notice("Config", sLConsole.Config("Text3"));
 					string Server = !xmldoc.SelectSingleNode("Schumix/Irc/Server").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText : _server;
 					int Port = !xmldoc.SelectSingleNode("Schumix/Irc/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText) : _port;
+					bool Ssl = !xmldoc.SelectSingleNode("Schumix/Irc/Ssl").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/Ssl").InnerText) : _ssl;
 					string NickName = !xmldoc.SelectSingleNode("Schumix/Irc/NickName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName").InnerText : _nickname;
 					string NickName2 = !xmldoc.SelectSingleNode("Schumix/Irc/NickName2").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName2").InnerText : _nickname2;
 					string NickName3 = !xmldoc.SelectSingleNode("Schumix/Irc/NickName3").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName3").InnerText : _nickname3;
@@ -117,7 +119,7 @@ namespace Schumix.Framework.Config
 					int MessageSending = !xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").InnerText) : _messagesending;
 					string CommandPrefix = !xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").InnerText : _commandprefix;
 
-					new IRCConfig(Server, Port, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix);
+					new IRCConfig(Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix);
 
 					bool Enabled = !xmldoc.SelectSingleNode("Schumix/MySql/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText) : _mysqlenabled;
 					string Host = !xmldoc.SelectSingleNode("Schumix/MySql/Host").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText : _mysqlhost;
@@ -195,6 +197,7 @@ namespace Schumix.Framework.Config
 						w.WriteStartElement("Irc");
 						w.WriteElementString("Server",          (!xmldoc.SelectSingleNode("Schumix/Irc/Server").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText : _server));
 						w.WriteElementString("Port",            (!xmldoc.SelectSingleNode("Schumix/Irc/Port").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText : _port.ToString()));
+						w.WriteElementString("Ssl",             (!xmldoc.SelectSingleNode("Schumix/Irc/Ssl").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Ssl").InnerText : _ssl.ToString()));
 						w.WriteElementString("NickName",        (!xmldoc.SelectSingleNode("Schumix/Irc/NickName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName").InnerText : _nickname));
 						w.WriteElementString("NickName2",       (!xmldoc.SelectSingleNode("Schumix/Irc/NickName2").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName2").InnerText : _nickname2));
 						w.WriteElementString("NickName3",       (!xmldoc.SelectSingleNode("Schumix/Irc/NickName3").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName3").InnerText : _nickname3));
@@ -346,6 +349,7 @@ namespace Schumix.Framework.Config
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static string Server { get; private set; }
 		public static int Port { get; private set; }
+		public static bool Ssl { get; private set; }
 		public static string NickName { get; private set; }
 		public static string NickName2 { get; private set; }
 		public static string NickName3 { get; private set; }
@@ -361,10 +365,11 @@ namespace Schumix.Framework.Config
 		public static int MessageSending { get; private set; }
 		public static string CommandPrefix { get; private set; }
 
-		public IRCConfig(string server, int port, string nickname, string nickname2, string nickname3, string username, string userinfo, string masterchannel, string ignorechannels, string ignorenames, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, int messagesending, string commandprefix)
+		public IRCConfig(string server, int port, bool ssl, string nickname, string nickname2, string nickname3, string username, string userinfo, string masterchannel, string ignorechannels, string ignorenames, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, int messagesending, string commandprefix)
 		{
 			Server           = server;
 			Port             = port;
+			Ssl              = ssl;
 			NickName         = nickname;
 			NickName2        = nickname2;
 			NickName3        = nickname3;
