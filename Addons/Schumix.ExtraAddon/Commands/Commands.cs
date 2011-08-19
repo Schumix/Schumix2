@@ -448,27 +448,27 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							string rank = row["Rank"].ToString().Length > 1 ? row["Rank"].ToString().Remove(0, 1) : row["Rank"].ToString();
 
-							if(rank.Length > 1 && rank.Substring(0, 1) == "v")
+							if(rank.Length >= 1 && rank.Substring(0, 1) == "v")
 							{
 								voices += ", " + row["Name"].ToString();
 								continue;
 							}
-							else if(rank.Length > 1 && rank.Substring(0, 1) == "h")
+							else if(rank.Length >= 1 && rank.Substring(0, 1) == "h")
 							{
 								halfoperators += ", " + row["Name"].ToString();
 								continue;
 							}
-							else if(rank.Length > 1 && rank.Substring(0, 1) == "o")
+							else if(rank.Length >= 1 && rank.Substring(0, 1) == "o")
 							{
 								operators += ", " + row["Name"].ToString();
 								continue;
 							}
-							else if(rank.Length > 1 && rank.Substring(0, 1) == "a")
+							else if(rank.Length >= 1 && rank.Substring(0, 1) == "a")
 							{
 								admins += ", " + row["Name"].ToString();
 								continue;
 							}
-							else if(rank.Length > 1 && rank.Substring(0, 1) == "q")
+							else if(rank.Length >= 1 && rank.Substring(0, 1) == "q")
 							{
 								owners += ", " + row["Name"].ToString();
 								continue;
@@ -632,27 +632,27 @@ namespace Schumix.ExtraAddon.Commands
 							{
 								string rank = row["Rank"].ToString().Length > 1 ? row["Rank"].ToString().Remove(0, 1) : row["Rank"].ToString();
 
-								if(rank.Length > 1 && rank.Substring(0, 1) == "v")
+								if(rank.Length >= 1 && rank.Substring(0, 1) == "v")
 								{
 									voices += ", " + row["Name"].ToString();
 									continue;
 								}
-								else if(rank.Length > 1 && rank.Substring(0, 1) == "h")
+								else if(rank.Length >= 1 && rank.Substring(0, 1) == "h")
 								{
 									halfoperators += ", " + row["Name"].ToString();
 									continue;
 								}
-								else if(rank.Length > 1 && rank.Substring(0, 1) == "o")
+								else if(rank.Length >= 1 && rank.Substring(0, 1) == "o")
 								{
 									operators += ", " + row["Name"].ToString();
 									continue;
 								}
-								else if(rank.Length > 1 && rank.Substring(0, 1) == "a")
+								else if(rank.Length >= 1 && rank.Substring(0, 1) == "a")
 								{
 									admins += ", " + row["Name"].ToString();
 									continue;
 								}
-								else if(rank.Length > 1 && rank.Substring(0, 1) == "q")
+								else if(rank.Length >= 1 && rank.Substring(0, 1) == "q")
 								{
 									owners += ", " + row["Name"].ToString();
 									continue;
