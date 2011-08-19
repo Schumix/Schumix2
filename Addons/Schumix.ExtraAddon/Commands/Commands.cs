@@ -791,6 +791,7 @@ namespace Schumix.ExtraAddon.Commands
 				string night = string.Empty;
 				source = source.Replace("\n\t\t", SchumixBase.Space.ToString());
 				source = source.Replace("&deg;C", "°C");
+				source = source.Replace("&#369;", "ű");
 
 				if(source.Contains("<div class=\"fctText\">"))
 				{
