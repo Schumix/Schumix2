@@ -128,7 +128,7 @@ namespace Schumix.GameAddon.IJAGames
 							detective = false;
 							detective_ = name;
 						}
-						else if(count >= 8 && count < 15)
+						else
 						{
 							if(x == 0)
 								detective_ = name;
