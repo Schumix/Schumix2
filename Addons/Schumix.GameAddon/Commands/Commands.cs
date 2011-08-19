@@ -86,11 +86,11 @@ namespace Schumix.GameAddon.Commands
 							GameAddon.GameChannelFunction.Add(sIRCMessage.Channel.ToLower(), db["Functions"].ToString());
 					}
 
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), sIRCMessage.Channel);
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
 					sChannelInfo.ChannelFunctionReload();
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("commands", "off", sIRCMessage.Channel), sIRCMessage.Channel);
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("commands", "off", sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
 					sChannelInfo.ChannelFunctionReload();
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "on", sIRCMessage.Channel), sIRCMessage.Channel);
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", "on", sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
 					sChannelInfo.ChannelFunctionReload();
 					sSender.Mode(sIRCMessage.Channel, "+v", sIRCMessage.Nick);
 					if(!GameAddon.MaffiaList.ContainsKey(sIRCMessage.Channel.ToLower()))
@@ -122,11 +122,11 @@ namespace Schumix.GameAddon.Commands
 							GameAddon.GameChannelFunction.Add(sIRCMessage.Channel.ToLower(), db["Functions"].ToString());
 					}
 
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sUtilities.GetFunctionUpdate(), sIRCMessage.Channel);
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
 					sChannelInfo.ChannelFunctionReload();
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("commands", "off", sIRCMessage.Channel), sIRCMessage.Channel);
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("commands", "off", sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
 					sChannelInfo.ChannelFunctionReload();
-					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "on", sIRCMessage.Channel), sIRCMessage.Channel);
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", "on", sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
 					sChannelInfo.ChannelFunctionReload();
 					sSender.Mode(sIRCMessage.Channel, "+v", sIRCMessage.Nick);
 					if(!GameAddon.IJAList.ContainsKey(sIRCMessage.Channel.ToLower()))

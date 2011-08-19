@@ -484,9 +484,9 @@ namespace Schumix.GameAddon.IJAGames
 		public void StopThread()
 		{
 			Running = false;
-			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", GameAddon.GameChannelFunction[_channel], _channel);
+			SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", GameAddon.GameChannelFunction[_channel]), string.Format("Channel = '{0}'", _channel));
 			sChannelInfo.ChannelFunctionReload();
-			SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("gamecommands", "off", _channel), _channel);
+			SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", "off", _channel)), string.Format("Channel = '{0}'", _channel));
 			sChannelInfo.ChannelFunctionReload();
 
 			if(Started)
