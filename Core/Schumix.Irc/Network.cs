@@ -24,6 +24,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
+using Org.Mentalis.Security.Ssl;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
@@ -45,6 +46,7 @@ namespace Schumix.Irc
         ///     A kapcsolatot tároljra.
         /// </summary>
 		private TcpClient client;
+		private SecureTcpClient sclient;
 
         /// <summary>
         ///     A bejövő információkat fogadja.
@@ -169,8 +171,22 @@ namespace Schumix.Irc
 		{
 			try
 			{
-				client = new TcpClient();
-				client.Connect(_server, _port);
+				if(IRCConfig.Ssl)
+				{
+					var options = new SecurityOptions(SecureProtocol.Tls1);
+					options.Certificate = null;
+					options.Entity = ConnectionEnd.Client;
+					options.VerificationType = CredentialVerification.None;
+					options.Flags = SecurityFlags.Default;
+					options.AllowedAlgorithms = SslAlgorithms.SECURE_CIPHERS;
+					sclient = new SecureTcpClient(options);		
+					sclient.Connect(_server, _port);
+				}
+				else
+				{
+					client = new TcpClient();
+					client.Connect(_server, _port);
+				}
 			}
 			catch(Exception)
 			{
@@ -178,16 +194,24 @@ namespace Schumix.Irc
 				return;
 			}
 
-			if(client.Connected)
-				Log.Success("Network", sLConsole.Network("Text11"));
+			if(!IRCConfig.Ssl)
+			{
+				if(client.Connected)
+					Log.Success("Network", sLConsole.Network("Text11"));
+				else
+				{
+					Log.Error("Network", sLConsole.Network("Text12"));
+					return;
+				}
+
+				reader = new StreamReader(client.GetStream());
+				writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
+			}
 			else
 			{
-				Log.Error("Network", sLConsole.Network("Text12"));
-				return;
+				reader = new StreamReader(sclient.GetStream());
+				writer = new StreamWriter(sclient.GetStream()) { AutoFlush = true };
 			}
-
-			reader = new StreamReader(client.GetStream());
-			writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
 
 			if(b)
 			{
@@ -206,7 +230,9 @@ namespace Schumix.Irc
 
 		private void Close()
 		{
-			client.Close();
+			if(!IRCConfig.Ssl)
+				client.Close();
+
 			writer.Dispose();
 			reader.Dispose();
 		}

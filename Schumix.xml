@@ -3,6 +3,7 @@
     <Irc>
         <Server>localhost</Server>
         <Port>6667</Port>
+        <Ssl>false</Ssl>
         <NickName>Schumix2</NickName>
         <NickName2>_Schumix2</NickName2>
         <NickName3>__Schumix2</NickName3>

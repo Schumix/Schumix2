@@ -94,6 +94,10 @@
     </Reference>
     <Reference Include="System.Data">
     </Reference>
+    <Reference Include="Org.Mentalis.Security, Version=1.0.13.715, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\Org.Mentalis.Security.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AdminCommandHandler.cs" />

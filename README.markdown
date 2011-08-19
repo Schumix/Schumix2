@@ -36,6 +36,7 @@ a `Schumix.xml` nevû fájlt.
 
 * **Server:** Ide kell beírni a szerver nevét ahova csatlakozni szeretnénk.
 * **Port:** A szerver portja. Alapértelmezés: `6667`
+* **Ssl:** Értéke `true` vagy `false` lehet. Ezzel aktiválható a kapcsolódás olyan irc szerverre ahol ssl protokol van használva. Alapértelmezés: `false`
 * **NickName:** Elsõdleges név.
 * **NickName2:** Másodlagos név.
 * **NickName3:** Harmadlagos név.
