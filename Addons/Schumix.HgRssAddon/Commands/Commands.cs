@@ -227,7 +227,7 @@ namespace Schumix.HgRssAddon.Commands
 						else
 							data += SchumixBase.Comma + sIRCMessage.Info[7].ToLower();
 
-						SchumixBase.DManager.QueryFirstRow("UPDATE hginfo SET Channel = '{0}' WHERE Name = '{1}'", data, sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						SchumixBase.DManager.Update("hginfo", string.Format("Channel = '{0}'", data), string.Format("Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower())));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 					}
 					else
@@ -268,7 +268,7 @@ namespace Schumix.HgRssAddon.Commands
 							data += SchumixBase.Comma + channel[x];
 						}
 
-						SchumixBase.DManager.QueryFirstRow("UPDATE hginfo SET Channel = '{0}' WHERE Name = '{1}'", data.Remove(0, 1, SchumixBase.Comma), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						SchumixBase.DManager.Update("hginfo", string.Format("Channel = '{0}'", data.Remove(0, 1, SchumixBase.Comma)), string.Format("Name = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower())));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 					}
 					else

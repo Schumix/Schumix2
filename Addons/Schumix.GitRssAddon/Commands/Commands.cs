@@ -81,69 +81,6 @@ namespace Schumix.GitRssAddon.Commands
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "start")
 			{
-				/*if(res.size() < 3)
-				{
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Nincs név megadva!");
-					res.clear();
-					return;
-				}
-
-				QueryResultPointer db = sVezerlo.GetSQLConn()->Query("SELECT id FROM svninfo WHERE nev = '%s'", sVezerlo.GetSQLConn()->EscapeString(res[2]).c_str());
-				if(db)
-				{
-					sSvnInfo.NewThread(db->Fetch()[0].GetUInt32());
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "%s thread hozzáadva", res[2].c_str());
-				}
-				else
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Sikertelen hozzáadás!");*/
-				//SvnRssAddon.RssList
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "stop")
-			{
-				/*if(res.size() < 3)
-				{
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Nincs név megadva!");
-					res.clear();
-					return;
-				}
-
-				QueryResultPointer db = sVezerlo.GetSQLConn()->Query("SELECT id FROM svninfo WHERE nev = '%s'", sVezerlo.GetSQLConn()->EscapeString(res[2]).c_str());
-				if(db)
-				{
-					sSvnInfo.StopThread(db->Fetch()[0].GetUInt32());
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "%s thread leállitva", res[2].c_str());
-				}
-				else
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Sikertelen leállitás!");*/
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "reload")
-			{
-				/*if(res.size() < 3)
-				{
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Nincs név vagy all megadva!");
-					res.clear();
-					return;
-				}
-
-				if(res[2] == "all")
-				{
-					sSvnInfo.ReloadAllThread();
-					sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "SvnInfo újrainditás kész.");
-				}
-				else
-				{
-					QueryResultPointer db = sVezerlo.GetSQLConn()->Query("SELECT id FROM svninfo WHERE nev = '%s'", sVezerlo.GetSQLConn()->EscapeString(res[2]).c_str());
-					if(db)
-					{
-						sSvnInfo.ReloadThread(db->Fetch()[0].GetUInt32());
-						sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "%s thread újrainditva.", res[2].c_str());
-					}
-					else
-						sIRCSession.SendChatMessage(PRIVMSG, recvData.GetChannel(), "Sikertelen újrainditás!");
-				}*/
-			}
-			else if(sIRCMessage.Info[4].ToLower() == "start")
-			{
 				var text = sLManager.GetCommandTexts("git/start", sIRCMessage.Channel);
 				if(text.Length < 3)
 				{
@@ -315,7 +252,7 @@ namespace Schumix.GitRssAddon.Commands
 						else
 							data += SchumixBase.Comma + sIRCMessage.Info[8].ToLower();
 
-						SchumixBase.DManager.QueryFirstRow("UPDATE gitinfo SET Channel = '{0}' WHERE Name = '{1}' AND Type = '{2}'", data, sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
+						SchumixBase.DManager.Update("gitinfo", string.Format("Channel = '{0}'", data), string.Format("Name = '{0}' AND Type = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower())));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 					}
 					else
@@ -362,7 +299,7 @@ namespace Schumix.GitRssAddon.Commands
 							data += SchumixBase.Comma + channel[x];
 						}
 
-						SchumixBase.DManager.QueryFirstRow("UPDATE gitinfo SET Channel = '{0}' WHERE Name = '{1}' AND Type = '{2}'", data.Remove(0, 1, SchumixBase.Comma), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
+						SchumixBase.DManager.Update("gitinfo", string.Format("Channel = '{0}'", data.Remove(0, 1, SchumixBase.Comma)), string.Format("Name = '{0}' AND Type = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower())));
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 					}
 					else
