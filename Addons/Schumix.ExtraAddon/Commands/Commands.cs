@@ -613,9 +613,16 @@ namespace Schumix.ExtraAddon.Commands
 					else if(sIRCMessage.Info[7].ToLower() == "list")
 					{
 						var text = sLManager.GetCommandTexts("autofunction/mode/channel/list", sIRCMessage.Channel);
-						if(text.Length < 5)
+						if(text.Length < 6)
 						{
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							return;
+						}
+
+						var db0 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						if(db0.IsNull())
+						{
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[5]);
 							return;
 						}
 
@@ -1112,10 +1119,7 @@ namespace Schumix.ExtraAddon.Commands
 		private bool IsUser(string Name)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM notes_users WHERE Name = '{0}'", Name.ToLower());
-			if(!db.IsNull())
-				return true;
-
-			return false;
+			return !db.IsNull();
 		}
 
 		private bool IsUser(string Name, string Vhost)

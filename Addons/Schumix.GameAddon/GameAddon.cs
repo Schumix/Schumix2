@@ -228,9 +228,9 @@ namespace Schumix.GameAddon
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sajnálom, de csak {0}, a játék indítója vethet véget a játéknak!", MaffiaList[channel].GetOwner());
 							break;
 						}
-						default:
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem létezik ilyen parancs!", sIRCMessage.Nick);
-							break;
+						//default:
+							//sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem létezik ilyen parancs!", sIRCMessage.Nick);
+							//break;
 					}
 				}
 				else if(IJAList.ContainsKey(channel) || sIRCMessage.Channel.Substring(0, 1) != "#")
@@ -391,9 +391,9 @@ namespace Schumix.GameAddon
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sajnálom, de csak {0}, a játék indítója vethet véget a játéknak!", IJAList[channel].GetOwner());
 							break;
 						}
-						default:
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem létezik ilyen parancs!", sIRCMessage.Nick);
-							break;
+						//default:
+							//sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem létezik ilyen parancs!", sIRCMessage.Nick);
+							//break;
 					}
 				}
 			}
