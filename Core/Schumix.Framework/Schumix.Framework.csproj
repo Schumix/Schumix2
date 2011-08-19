@@ -126,6 +126,8 @@
     <Compile Include="Localization\LocalizationManager.cs" />
     <Compile Include="Localization\LocalizationConsole.cs" />
     <Compile Include="Extensions\GeneralExtensions.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

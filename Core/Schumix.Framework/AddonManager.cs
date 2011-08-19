@@ -110,11 +110,11 @@ namespace Schumix.Framework
 					if(asm.IsNull())
 						continue;
 
-					ISchumixAddon pl = null;
+					ISchumixAddon pl;
 
-					foreach(var type in from t in asm.GetTypes().AsParallel() where t.GetInterfaces().Contains(typeof(ISchumixAddon)) select t)
+					foreach(var type in asm.GetTypesWithInterface(typeof(ISchumixAddon)))
 					{
-						pl = Activator.CreateInstance(type).Cast<ISchumixAddon>();
+						pl = (ISchumixAddon)Activator.CreateInstance(type);
 
 						if(pl.IsNull() || Assemblies.Contains(asm))
 							continue;
