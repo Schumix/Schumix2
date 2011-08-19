@@ -1,4 +1,21 @@
 -- ----------------------------
+-- Table structure for irc_commands
+-- ----------------------------
+DROP TABLE IF EXISTS `irc_commands`;
+CREATE TABLE `irc_commands` (
+  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Command` varchar(30) collate utf8_hungarian_ci NOT NULL default '',
+  `Message` text collate utf8_hungarian_ci NOT NULL,
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+INSERT INTO `irc_commands` VALUES ('1', 'rang', 'Rang használata: /mode <csatorna> <rang> <név>');
+INSERT INTO `irc_commands` VALUES ('2', 'rang1', 'Rang mentése: /chanserv <rang (sop, aop, hop, vop)> <csatorna> ADD <név>');
+INSERT INTO `irc_commands` VALUES ('3', 'nick', 'Nick csere használata: /nick <új név>');
+INSERT INTO `irc_commands` VALUES ('4', 'kick', 'Kick használata: /kick <csatorna> <név> (<oka> nem feltétlen kell)');
+INSERT INTO `irc_commands` VALUES ('5', 'owner', 'Ownermód használata: /msg chanserv SET <csatorna> ownermode on');
+
+-- ----------------------------
 -- Table structure for localized_console_command
 -- ----------------------------
 DROP TABLE IF EXISTS `localized_console_command`;
