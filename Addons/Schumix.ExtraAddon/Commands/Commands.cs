@@ -230,7 +230,10 @@ namespace Schumix.ExtraAddon.Commands
 							names += ", " + name;
 						}
 
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("autofunction/kick/list", sIRCMessage.Channel), names.Remove(0, 2, ", "));
+						if(names == string.Empty)
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("autofunction/kick/list", sIRCMessage.Channel), "none");
+						else
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("autofunction/kick/list", sIRCMessage.Channel), names.Remove(0, 2, ", "));
 					}
 					else
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
@@ -338,7 +341,10 @@ namespace Schumix.ExtraAddon.Commands
 								names += ", " + name;
 							}
 
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], names.Remove(0, 2, ", "));
+							if(names == string.Empty)
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], "none");
+							else
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], names.Remove(0, 2, ", "));
 						}
 						else
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
@@ -913,7 +919,10 @@ namespace Schumix.ExtraAddon.Commands
 						codes += ", " + code;
 					}
 
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("notes/info", sIRCMessage.Channel), codes.Remove(0, 2, ", "));
+					if(codes == string.Empty)
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("notes/info", sIRCMessage.Channel), "none");
+					else
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("notes/info", sIRCMessage.Channel), codes.Remove(0, 2, ", "));
 				}
 				else
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
