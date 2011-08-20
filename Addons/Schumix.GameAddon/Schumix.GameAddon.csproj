@@ -113,15 +113,6 @@
     <Compile Include="MaffiaGame\Stats.cs" />
     <Compile Include="MaffiaGame\Leave.cs" />
     <Compile Include="MaffiaGame\Rescue.cs" />
-    <Compile Include="IJAGame\IJAGame.cs" />
-    <Compile Include="IJAGame\Join.cs" />
-    <Compile Include="IJAGame\Kill.cs" />
-    <Compile Include="IJAGame\Leave.cs" />
-    <Compile Include="IJAGame\Lynch.cs" />
-    <Compile Include="IJAGame\Rescue.cs" />
-    <Compile Include="IJAGame\See.cs" />
-    <Compile Include="IJAGame\Start.cs" />
-    <Compile Include="IJAGame\Stats.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

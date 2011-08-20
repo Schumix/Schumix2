@@ -106,6 +106,7 @@
     </Reference>
     <Reference Include="System.Management">
     </Reference>
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
