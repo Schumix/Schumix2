@@ -398,6 +398,12 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			if(!IsChannel(sIRCMessage.Info[4]))
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+				return;
+			}
+
 			ChannelPrivmsg = sIRCMessage.Channel;
 
 			if(sIRCMessage.Info.Length == 5)
@@ -418,6 +424,12 @@ namespace Schumix.Irc.Commands
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+				return;
+			}
+
+			if(!IsChannel(sIRCMessage.Info[4]))
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
 				return;
 			}
 

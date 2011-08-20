@@ -58,7 +58,16 @@ namespace Schumix.Irc.Commands
 		protected void HandleInfo(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("info", sIRCMessage.Channel));
+			var text = sLManager.GetCommandTexts("info", sIRCMessage.Channel);
+			if(text.Length < 3)
+			{
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+				return;
+			}
+
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
+			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2]);
 		}
 
 		protected void HandleTime(IRCMessage sIRCMessage)

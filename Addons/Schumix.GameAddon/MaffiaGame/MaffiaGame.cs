@@ -23,14 +23,17 @@ using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.GameAddon;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
 	public sealed partial class MaffiaGame
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Dictionary<string, string> _detectivelist = new Dictionary<string, string>();
 		private readonly Dictionary<string, string> _killerlist = new Dictionary<string, string>();
@@ -67,6 +70,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		private string killer2_;
 		private string killer3_;
 		private string rescued;
+		private string _killerchannel;
 		private bool _day;
 		private bool _stop;
 		private bool _killer;
@@ -138,6 +142,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			detective_ = string.Empty;
 			detective2_ = string.Empty;
 			_channel = Channel.ToLower();
+			_killerchannel = string.Empty;
 			_playerlist.Add(1, Name);
 			sSendMessage.SendCMPrivmsg(_channel, "{0} új játékot indított. Csatlakozni a '!join' paranccsal tudtok.", _owner);
 			sSendMessage.SendCMPrivmsg(_channel, "{0}: Írd be a '!start' parancsot, ha mindenki készen áll.", _owner);
@@ -492,6 +497,14 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(Started)
 				_thread.Abort();
 
+			if(_players >= 15)
+			{
+				sSender.Part(_killerchannel);
+				SchumixBase.DManager.Delete("channel", string.Format("Channel = '{0}'", sUtilities.SqlEscape(_killerchannel)));
+				sChannelInfo.ChannelListReload();
+				sChannelInfo.ChannelFunctionReload();
+			}
+
 			Started = false;
 			_playerlist.Clear();
 			_detectivelist.Clear();
@@ -660,13 +673,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						foreach(var name in _killerlist)
 						{
-							if(name.Key == killer_.ToLower())
-								sSendMessage.SendCMPrivmsg(name.Key, "A másik gyilkos(ok) {0} és {1}. PM-ben beszélgessetek.", killer2_, killer3_);
-							else if(name.Key == killer2_.ToLower())
-								sSendMessage.SendCMPrivmsg(name.Key, "A másik gyilkos(ok) {0} és {1}. PM-ben beszélgessetek.", killer_, killer3_);
-							else
-								sSendMessage.SendCMPrivmsg(name.Key, "A másik gyilkos(ok) {0} és {1}. PM-ben beszélgessetek.", killer_, killer2_);
-
+							sSendMessage.SendCMPrivmsg(name.Key, "Csatlakoz ide: {0} és beszéljétek meg ki haljon meg!", _killerchannel);
 							Thread.Sleep(400);
 						}
 					}

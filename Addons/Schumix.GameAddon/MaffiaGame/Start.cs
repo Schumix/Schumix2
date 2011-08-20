@@ -20,6 +20,7 @@
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using Schumix.Framework;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
@@ -197,6 +198,15 @@ namespace Schumix.GameAddon.MaffiaGames
 
 				_leftlist.Clear();
 				EndGame();
+			}
+
+			if(_players >= 15)
+			{
+				_killerchannel = "#" + sUtilities.GetRandomString();
+				sSender.Join(_killerchannel);
+				sSender.Mode(_killerchannel, "+s");
+				SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", sUtilities.SqlEscape(_killerchannel), string.Empty, sLManager.Locale);
+				SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", sUtilities.SqlEscape(_killerchannel)));
 			}
 
 			StartThread();

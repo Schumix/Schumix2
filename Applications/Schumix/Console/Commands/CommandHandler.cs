@@ -91,6 +91,11 @@ namespace Schumix.Console.Commands
 			_network = network;
 		}
 
+		private bool IsChannel(string Name)
+		{
+			return (Name.Length >= 1 && Name.Substring(0, 1) == "#");
+		}
+
 		/// <summary>
 		///     Consolelog parancs függvénye.
 		/// </summary>
@@ -312,9 +317,29 @@ namespace Schumix.Console.Commands
 
 			if(Info[1].ToLower() == "channel")
 			{
+				var text = sLManager.GetConsoleCommandTexts("function/channel");
+				if(text.Length < 3)
+				{
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
+					return;
+				}
+
 				if(Info.Length < 3)
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+					return;
+				}
+
+				if(!IsChannel(Info[2]))
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+					return;
+				}
+
+				var db0 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[2].ToLower()));
+				if(db0.IsNull())
+				{
+					Log.Error("Console", text[2]);
 					return;
 				}
 
@@ -329,8 +354,8 @@ namespace Schumix.Console.Commands
 			
 				if(Info[3].ToLower() == "info")
 				{
-					var text = sLManager.GetConsoleCommandTexts("function/channel/info");
-					if(text.Length < 2)
+					var text2 = sLManager.GetConsoleCommandTexts("function/channel/info");
+					if(text2.Length < 2)
 					{
 						Log.Error("Console", sLConsole.Translations("NoFound2"));
 						return;
@@ -340,21 +365,14 @@ namespace Schumix.Console.Commands
 					if(ChannelInfo.Length < 2)
 						return;
 
-					Log.Notice("Console", text[0], ChannelInfo[0]);
-					Log.Notice("Console", text[1], ChannelInfo[1]);
+					Log.Notice("Console", text2[0], ChannelInfo[0]);
+					Log.Notice("Console", text2[1], ChannelInfo[1]);
 				}
 				else if(status == "on" || status == "off")
 				{
 					if(Info.Length < 5)
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NoFunctionName"));
-						return;
-					}
-
-					var text = sLManager.GetConsoleCommandTexts("function/channel");
-					if(text.Length < 2)
-					{
-						Log.Error("Console", sLConsole.Translations("NoFound2"));
 						return;
 					}
 
@@ -413,6 +431,12 @@ namespace Schumix.Console.Commands
 				}
 				else
 				{
+					if(!IsChannel(Info[2]))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+						return;
+					}
+
 					Log.Notice("Console", sLManager.GetConsoleCommandText("function/update"), Info[2].ToLower());
 					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", Info[2].ToLower()));
 					sChannelInfo.ChannelFunctionReload();
@@ -495,6 +519,13 @@ namespace Schumix.Console.Commands
 				}
 
 				string channel = Info[2].ToLower();
+
+				if(!IsChannel(channel))
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+					return;
+				}
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", channel);
 				if(!db.IsNull())
 				{
@@ -536,6 +567,13 @@ namespace Schumix.Console.Commands
 				}
 
 				string channel = Info[2].ToLower();
+
+				if(!IsChannel(channel))
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+					return;
+				}
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channel WHERE Channel = '{0}'", channel);
 				if(!db.IsNull())
 				{
@@ -607,8 +645,8 @@ namespace Schumix.Console.Commands
 			}
 			else if(Info[1].ToLower() == "language")
 			{
-				var text = sLManager.GetConsoleCommandTexts("channel/remove");
-				if(text.Length < 3)
+				var text = sLManager.GetConsoleCommandTexts("channel/language");
+				if(text.Length < 2)
 				{
 					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
@@ -620,9 +658,9 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				if(Info.Length < 4)
+				if(!IsChannel(Info[2]))
 				{
-					Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelLanguage"));
+					Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 					return;
 				}
 
@@ -633,8 +671,14 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
+				if(Info.Length < 4)
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelLanguage"));
+					return;
+				}
+
 				SchumixBase.DManager.Update("channel", string.Format("Language = '{0}'", Info[3]), string.Format("Channel = '{0}'", Info[2].ToLower()));
-				Log.Notice("Console", sLManager.GetConsoleCommandText("channel/language"), Info[3]);
+				Log.Notice("Console", text[0], Info[3]);
 			}
 		}
 
@@ -692,6 +736,12 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
+			if(!IsChannel(Info[1]))
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+				return;
+			}
+
 			if(Info.Length == 2)
 				sSender.Join(Info[1]);
 			else if(Info.Length == 3)
@@ -708,6 +758,12 @@ namespace Schumix.Console.Commands
 			if(Info.Length < 2)
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+				return;
+			}
+
+			if(!IsChannel(Info[1]))
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 				return;
 			}
 

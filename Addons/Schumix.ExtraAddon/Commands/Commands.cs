@@ -307,6 +307,26 @@ namespace Schumix.ExtraAddon.Commands
 					}
 					else if(sIRCMessage.Info[7].ToLower() == "list")
 					{
+						var text = sLManager.GetCommandTexts("autofunction/kick/channel/list", sIRCMessage.Channel);
+						if(text.Length < 2)
+						{
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							return;
+						}
+
+						if(!IsChannel(sIRCMessage.Info[6].ToLower()))
+						{
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+							return;
+						}
+
+						var db0 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						if(db0.IsNull())
+						{
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
+							return;
+						}
+
 						var db = SchumixBase.DManager.Query("SELECT Name FROM kicklist WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
 						if(!db.IsNull())
 						{
@@ -318,7 +338,7 @@ namespace Schumix.ExtraAddon.Commands
 								names += ", " + name;
 							}
 
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("autofunction/kick/channel/list", sIRCMessage.Channel), names.Remove(0, 2, ", "));
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], names.Remove(0, 2, ", "));
 						}
 						else
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
@@ -616,6 +636,12 @@ namespace Schumix.ExtraAddon.Commands
 						if(text.Length < 6)
 						{
 							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							return;
+						}
+
+						if(!IsChannel(sIRCMessage.Info[6].ToLower()))
+						{
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
 							return;
 						}
 
