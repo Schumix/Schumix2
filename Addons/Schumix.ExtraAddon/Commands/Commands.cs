@@ -902,7 +902,7 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.Query("SELECT Code FROM notes");
+				var db = SchumixBase.DManager.Query("SELECT Code FROM notes WHERE Name = '{0}'", sIRCMessage.Nick.ToLower());
 				if(!db.IsNull())
 				{
 					string codes = string.Empty;
@@ -1086,19 +1086,19 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}' AND Name = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Nick.ToLower());
 					if(db.IsNull())
 					{
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 						return;
 					}
 
-					SchumixBase.DManager.QueryFirstRow("DELETE FROM `notes` WHERE Code = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					SchumixBase.DManager.QueryFirstRow("DELETE FROM `notes` WHERE Code = '{0}' AND Name = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Nick.ToLower());
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
 				}
 				else
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Note FROM notes WHERE Code = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Note FROM notes WHERE Code = '{0}' AND Name = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.Nick.ToLower());
 					if(!db.IsNull())
 						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("notes/code", sIRCMessage.Channel), db["Note"].ToString());
 					else
@@ -1130,7 +1130,7 @@ namespace Schumix.ExtraAddon.Commands
 				}
 
 				string code = sIRCMessage.Info[4];
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}'", sUtilities.SqlEscape(code.ToLower()));
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}' AND Name = '{1}'", sUtilities.SqlEscape(code.ToLower()), sIRCMessage.Nick.ToLower());
 				if(!db.IsNull())
 				{
 					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
