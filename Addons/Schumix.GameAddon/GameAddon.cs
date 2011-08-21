@@ -92,7 +92,7 @@ namespace Schumix.GameAddon
 						return;
 
 					sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Point2);
-					if(sIRCMessage.Info[3].Length > 0 && sIRCMessage.Info[3].Substring(0, 1) != "!")
+					if((sIRCMessage.Info[3].Length > 0 && sIRCMessage.Info[3].Substring(0, 1) != "!") || sIRCMessage.Info[3].Length == 0)
 						return;
 
 					switch(sIRCMessage.Info[3].ToLower())
