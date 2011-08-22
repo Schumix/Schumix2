@@ -112,6 +112,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			_ghostlist.Clear();
 			_joinlist.Clear();
 			_leftlist.Clear();
+			_lynchlist.Clear();
 			_day = false;
 			_stop = false;
 			_killer = false;
