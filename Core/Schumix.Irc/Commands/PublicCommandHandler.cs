@@ -130,14 +130,6 @@ namespace Schumix.Irc.Commands
 			}
 		}
 
-		protected void HandleRoll(IRCMessage sIRCMessage)
-		{
-			CNick(sIRCMessage);
-			var rand = new Random();
-			int number = rand.Next(0, 100);
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("roll", sIRCMessage.Channel), number);
-		}
-
 		protected void HandleCalc(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
@@ -151,32 +143,6 @@ namespace Schumix.Irc.Commands
 			var client = new WAClient("557QYQ-UUUWTKX95V");
 			var solution = client.Solve(sIRCMessage.Info.SplitToString(4, SchumixBase.Space));
 			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}", solution);
-		}
-
-		protected void HandleSha1(IRCMessage sIRCMessage)
-		{
-			CNick(sIRCMessage);
-
-			if(sIRCMessage.Info.Length < 5)
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
-				return;
-			}
-
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sUtilities.Sha1(sIRCMessage.Info.SplitToString(4, SchumixBase.Space)));
-		}
-
-		protected void HandleMd5(IRCMessage sIRCMessage)
-		{
-			CNick(sIRCMessage);
-
-			if(sIRCMessage.Info.Length < 5)
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
-				return;
-			}
-
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sUtilities.Md5(sIRCMessage.Info.SplitToString(4, SchumixBase.Space)));
 		}
 
 		protected void HandleIrc(IRCMessage sIRCMessage)
@@ -283,39 +249,6 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("translate", sIRCMessage.Channel));
 			else
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}", Regex.Match(url).Groups["text"].ToString());
-		}
-
-		protected void HandlePrime(IRCMessage sIRCMessage)
-		{
-			CNick(sIRCMessage);
-			var text = sLManager.GetCommandTexts("prime", sIRCMessage.Channel);
-			if(text.Length < 3)
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
-				return;
-			}
-
-			if(sIRCMessage.Info.Length < 5)
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoNumber", sIRCMessage.Channel));
-				return;
-			}
-
-			double Num;
-			bool isNum = double.TryParse(sIRCMessage.Info[4], out Num);
-
-			if(!isNum)
-			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
-				return;
-			}
-
-			bool prim = sUtilities.IsPrime(Convert.ToInt32(Num));
-
-			if(!prim)
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Info[4]);
-			else
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], sIRCMessage.Info[4]);
 		}
 	}
 }
