@@ -106,7 +106,8 @@
     </Reference>
     <Reference Include="System.Management">
     </Reference>
-    <Reference Include="System.Core" />
+    <Reference Include="System.Core">
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -140,5 +141,15 @@
   <ItemGroup>
     <Folder Include="Extensions\" />
     <Folder Include="Localization\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Dependencies\sqlite3.dll">
+      <Link>sqlite3.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Sql\Schumix.db3">
+      <Link>Schumix.db3</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
