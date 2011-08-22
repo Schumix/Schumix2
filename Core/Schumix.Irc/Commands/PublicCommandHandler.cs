@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.API;
@@ -148,18 +149,39 @@ namespace Schumix.Irc.Commands
 		protected void HandleIrc(IRCMessage sIRCMessage)
 		{
 			CNick(sIRCMessage);
-
-			if(sIRCMessage.Info.Length < 5)
+			var text = sLManager.GetCommandTexts("irc", sIRCMessage.Channel);
+			if(text.Length < 2)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoIrcCommandName", sIRCMessage.Channel));
+				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
 			}
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Message FROM irc_commands WHERE command = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[4]));
-			if(!db.IsNull())
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, db["Message"].ToString());
+			if(sIRCMessage.Info.Length == 4)
+			{
+				var db = SchumixBase.DManager.Query("SELECT Command FROM irc_commands WHERE Language = '{0}'", sLManager.GetChannelLocalization(sIRCMessage.Channel));
+				if(!db.IsNull())
+				{
+					string commands = string.Empty;
+
+					foreach(DataRow row in db.Rows)
+						commands += " | " + row["Command"].ToString();
+
+					if(commands == string.Empty)
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], "none");
+					else
+						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], commands.Remove(0, 3, " | "));
+				}
+				else
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+			}
 			else
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+			{
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM irc_commands WHERE Command = '{0}' AND Language = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[4]), sLManager.GetChannelLocalization(sIRCMessage.Channel));
+				if(!db.IsNull())
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, db["Text"].ToString());
+				else
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
+			}
 		}
 
 		protected void HandleWhois(IRCMessage sIRCMessage)

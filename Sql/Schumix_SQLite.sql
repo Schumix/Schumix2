@@ -114,18 +114,24 @@ Enabled VARCHAR(3)
 DROP TABLE IF EXISTS "irc_commands";
 CREATE TABLE "irc_commands" (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
+Language VARCHAR(4)    DEFAULT 'enUS',
 Command VARCHAR(30),
-Message TEXT
+Text TEXT
 );
 
--- ----------------------------
--- Records of irc_commands
--- ----------------------------
-INSERT INTO "irc_commands" VALUES (1, 'rang', 'Rang használata: /mode <csatorna> <rang> <név>');
-INSERT INTO "irc_commands" VALUES (2, 'rang1', 'Rang mentése: /chanserv <rang (sop, aop, hop, vop)> <csatorna> ADD <név>');
-INSERT INTO "irc_commands" VALUES (3, 'nick', 'Nick csere használata: /nick <új név>');
-INSERT INTO "irc_commands" VALUES (4, 'kick', 'Kick használata: /kick <csatorna> <név> (<oka> nem feltétlen kell)');
-INSERT INTO "irc_commands" VALUES (5, 'owner', 'Ownermód használata: /msg chanserv SET <csatorna> ownermode on');
+-- huHU
+INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mode', 'Mode használata: /mode <csatorna> <rang> <név>');
+INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ('huHU', 'fixrank', 'Rang mentése: /chanserv <rang (sop, aop, hop, vop)> <csatorna> ADD <név>');
+INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ('huHU', 'nick', 'Nick név megváltoztatása: /nick <új név>');
+INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ('huHU', 'kick', 'Kick használata: /kick <csatorna> <név> (<oka> nem feltétlen kell)');
+INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ('huHU', 'owner', 'Owner mód bekapcsolása a csatornán: /msg chanserv SET <csatorna> ownermode on');
+
+-- enUS
+INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mode', 'Mode usage: /mode <channel> <rank> <name>');
+INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ('enUS', 'fixrank', 'Save rank: /chanserv <rank (sop, aop, hop, vop)> <channel> ADD <name>');
+INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ('enUS', 'nick', 'Nick change usage: /nick <new nick>');
+INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ('enUS', 'kick', 'Kick usage: /kick <channel> <name> (<reason>)');
+INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ('enUS', 'owner', 'Turn on owner mode: /msg chanserv SET <channel> ownermode on');
 
 -- ----------------------------
 -- Table structure for "kicklist"
@@ -682,7 +688,6 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoValue', 'Nincs paraméter!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'No1Value', 'Nincs megadva egy paraméter!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'FaultyQuery', 'Hibás lekérdezés!');
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoIrcCommandName', 'Nincs megadva a parancs neve!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoWhoisName', 'Nincs megadva a keresendő személy neve!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoGoogleText', 'Nincs megadva a keresendő szöveg!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoTranslateText', 'Nincs megadva a fordítandó szöveg!');
@@ -723,7 +728,6 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoValue', 'The parameters are not specified!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'No1Value', 'A parameter was not specified!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'FaultyQuery', 'Syntax error!');
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoIrcCommandName', 'The name of the command is not specified!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoWhoisName', "The searching person's name are not specified!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoGoogleText', 'The searching text is not specified!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoTranslateText', 'The text to be translated is not specified!');
