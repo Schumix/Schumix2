@@ -58,6 +58,10 @@ namespace Schumix.ExtraAddon
 			CommandManager.PublicCRegisterHandler("notes",              new Action<IRCMessage>(sNotes.HandleNotes));
 			CommandManager.PublicCRegisterHandler("message",            new Action<IRCMessage>(sFunctions.HandleMessage));
 			CommandManager.PublicCRegisterHandler("weather",            new Action<IRCMessage>(sFunctions.HandleWeather));
+			CommandManager.PublicCRegisterHandler("roll",               new Action<IRCMessage>(sFunctions.HandleRoll));
+			CommandManager.PublicCRegisterHandler("sha1",               new Action<IRCMessage>(sFunctions.HandleSha1));
+			CommandManager.PublicCRegisterHandler("md5",                new Action<IRCMessage>(sFunctions.HandleMd5));
+			CommandManager.PublicCRegisterHandler("prime",              new Action<IRCMessage>(sFunctions.HandlePrime));
 			CommandManager.HalfOperatorCRegisterHandler("autofunction", new Action<IRCMessage>(sFunctions.HandleAutoFunction));
 		}
 
@@ -67,6 +71,10 @@ namespace Schumix.ExtraAddon
 			CommandManager.PublicCRemoveHandler("notes");
 			CommandManager.PublicCRemoveHandler("message");
 			CommandManager.PublicCRemoveHandler("weather");
+			CommandManager.PublicCRemoveHandler("roll");
+			CommandManager.PublicCRemoveHandler("sha1");
+			CommandManager.PublicCRemoveHandler("md5");
+			CommandManager.PublicCRemoveHandler("prime");
 			CommandManager.HalfOperatorCRemoveHandler("autofunction");
 		}
 

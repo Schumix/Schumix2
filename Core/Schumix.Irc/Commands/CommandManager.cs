@@ -67,16 +67,12 @@ namespace Schumix.Irc.Commands
 			PublicCRegisterHandler("help",         new Action<IRCMessage>(HandleHelp));
 			PublicCRegisterHandler("time",         new Action<IRCMessage>(HandleTime));
 			PublicCRegisterHandler("date",         new Action<IRCMessage>(HandleDate));
-			PublicCRegisterHandler("roll",         new Action<IRCMessage>(HandleRoll));
 			PublicCRegisterHandler("calc",         new Action<IRCMessage>(HandleCalc));
-			PublicCRegisterHandler("sha1",         new Action<IRCMessage>(HandleSha1));
-			PublicCRegisterHandler("md5",          new Action<IRCMessage>(HandleMd5));
 			PublicCRegisterHandler("irc",          new Action<IRCMessage>(HandleIrc));
 			PublicCRegisterHandler("whois",        new Action<IRCMessage>(HandleWhois));
 			PublicCRegisterHandler("warning",      new Action<IRCMessage>(HandleWarning));
 			PublicCRegisterHandler("google",       new Action<IRCMessage>(HandleGoogle));
 			PublicCRegisterHandler("translate",    new Action<IRCMessage>(HandleTranslate));
-			PublicCRegisterHandler("prime",        new Action<IRCMessage>(HandlePrime));
 
 			// Half Operator
 			HalfOperatorCRegisterHandler("admin",  new Action<IRCMessage>(HandleAdmin));
