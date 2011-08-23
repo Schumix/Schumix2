@@ -40,8 +40,6 @@ namespace Schumix.SvnRssAddon.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));

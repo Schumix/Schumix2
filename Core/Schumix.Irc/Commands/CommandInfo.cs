@@ -81,12 +81,6 @@ namespace Schumix.Irc.Commands
 			return false;
 		}
 
-		protected void CNick(IRCMessage sIRCMessage)
-		{
-			if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
-				sIRCMessage.Channel = sIRCMessage.Nick;
-		}
-
 		protected bool IsChannel(string Name)
 		{
 			return (Name.Length >= 1 && Name.Substring(0, 1) == "#");

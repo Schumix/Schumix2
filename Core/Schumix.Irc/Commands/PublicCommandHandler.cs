@@ -33,7 +33,6 @@ namespace Schumix.Irc.Commands
 	{
 		protected void HandleXbot(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
 			var text = sLManager.GetCommandTexts("xbot", sIRCMessage.Channel);
 			if(text.Length < 3)
 			{
@@ -58,7 +57,6 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleInfo(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
 			var text = sLManager.GetCommandTexts("info", sIRCMessage.Channel);
 			if(text.Length < 3)
 			{
@@ -73,7 +71,6 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleTime(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
 			var text = sLManager.GetCommandTexts("time", sIRCMessage.Channel);
 			if(text.Length < 2)
 			{
@@ -89,7 +86,6 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleDate(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
 			var text = sLManager.GetCommandTexts("date", sIRCMessage.Channel);
 			if(text.Length < 4)
 			{
@@ -133,8 +129,6 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleCalc(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
@@ -148,7 +142,6 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleIrc(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
 			var text = sLManager.GetCommandTexts("irc", sIRCMessage.Channel);
 			if(text.Length < 2)
 			{
@@ -186,8 +179,6 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleWhois(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoWhoisName", sIRCMessage.Channel));
@@ -200,8 +191,6 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleWarning(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
@@ -219,7 +208,6 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleGoogle(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
 			var text = sLManager.GetCommandTexts("google", sIRCMessage.Channel);
 			if(text.Length < 4)
 			{
@@ -250,8 +238,6 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleTranslate(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoTranslateLanguage", sIRCMessage.Channel));

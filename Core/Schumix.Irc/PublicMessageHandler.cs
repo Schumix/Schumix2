@@ -35,9 +35,6 @@ namespace Schumix.Irc
 			if(sNickName.Ignore(sIRCMessage.Nick))
 				return;
 
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.HandlePrivmsg(sIRCMessage);
-
 			if(ConsoleLog.CLog)
 			{
 				Console.ForegroundColor = ConsoleColor.Yellow;
@@ -46,6 +43,12 @@ namespace Schumix.Irc
 			}
 
 			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
+
+			if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
+				sIRCMessage.Channel = sIRCMessage.Nick;
+
+			foreach(var plugin in sAddonManager.GetPlugins())
+				plugin.HandlePrivmsg(sIRCMessage);
 
 			if(sChannelInfo.FSelect("commands") || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
@@ -69,8 +72,6 @@ namespace Schumix.Irc
 
 			if(sIRCMessage.Info[3].ToLower() == command.ToLower())
 			{
-				CNick(sIRCMessage);
-
 				if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "sys")
 				{
 					var text = sLManager.GetCommandTexts("schumix2/sys", sIRCMessage.Channel);

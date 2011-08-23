@@ -39,8 +39,6 @@ namespace Schumix.GameAddon.Commands
 
 		protected void HandleGame(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));

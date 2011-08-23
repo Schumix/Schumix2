@@ -105,6 +105,7 @@
     <Compile Include="Console\Commands\CommandHandler.cs" />
     <Compile Include="Console\Commands\CommandManager.cs" />
     <Compile Include="Console\Commands\CommandHelp.cs" />
+    <Compile Include="ScriptManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -123,6 +124,10 @@
     <ProjectReference Include="..\..\Components\Schumix.Updater\Schumix.Updater.csproj">
       <Project>{33ABC53E-F210-442F-B4F7-D0A7642F2584}</Project>
       <Name>Schumix.Updater</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Components\Schumix.LuaEngine\Schumix.LuaEngine.csproj">
+      <Project>{D6E5F82D-5385-45AD-A0D1-1091EC6A5393}</Project>
+      <Name>Schumix.LuaEngine</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

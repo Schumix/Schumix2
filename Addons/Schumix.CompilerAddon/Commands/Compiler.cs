@@ -83,7 +83,6 @@ namespace Schumix.CompilerAddon.Commands
 		{
 			try
 			{
-				CNick(sIRCMessage);
 				var text = sLManager.GetCommandTexts("compiler", sIRCMessage.Channel);
 				if(text.Length < 5)
 				{

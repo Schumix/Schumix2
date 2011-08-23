@@ -33,8 +33,6 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
@@ -321,8 +319,6 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("channel", sIRCMessage.Channel));
@@ -514,8 +510,6 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
@@ -541,8 +535,6 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
@@ -567,8 +559,6 @@ namespace Schumix.Irc.Commands
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
-
-			CNick(sIRCMessage);
 
 			if(sIRCMessage.Info.Length < 5)
 			{

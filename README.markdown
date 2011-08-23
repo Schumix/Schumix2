@@ -95,6 +95,11 @@ Meghatározza hogy a konzolba milyen üzenetek kerülnek kiirásra. Alapértelme
         Alapértelmezés: `SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon`
 * **Directory:** Az addonok mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Addons`
 
+## Scripts
+
+* **Lua:** Értéke `true` vagy `false` lehet. Engedélyezi a lua fájlok betöltését. Alapértelmezés: `true`
+* **Directory:** A script-ek mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Scripts`
+
 ## Localization
 
 * **Locale:** Meghatározza hogy a kód milyen nyelven fusson. (csak az irc és konzol parancsokra vonatkozik)

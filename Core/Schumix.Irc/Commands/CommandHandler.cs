@@ -43,8 +43,6 @@ namespace Schumix.Irc.Commands
 
 		protected void HandleHelp(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length == 4)
 			{
 				var text = sLManager.GetCommandTexts("help", sIRCMessage.Channel);

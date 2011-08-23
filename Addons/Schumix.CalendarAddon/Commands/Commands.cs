@@ -41,8 +41,6 @@ namespace Schumix.CalendarAddon.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
@@ -119,8 +117,6 @@ namespace Schumix.CalendarAddon.Commands
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
-
-			CNick(sIRCMessage);
 
 			if(sIRCMessage.Info.Length < 5)
 			{

@@ -65,7 +65,6 @@ namespace Schumix.GameAddon
 				if(!sChannelInfo.FSelect("gamecommands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
-				CNick(sIRCMessage);
 				string channel = sIRCMessage.Channel.ToLower();
 
 				if(MaffiaList.ContainsKey(channel) || sIRCMessage.Channel.Substring(0, 1) != "#")

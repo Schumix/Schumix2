@@ -45,8 +45,6 @@ namespace Schumix.ExtraAddon.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				return;
 
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				var text = sLManager.GetCommandTexts("autofunction", sIRCMessage.Channel);
@@ -732,8 +730,6 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleMessage(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
@@ -784,7 +780,6 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleWeather(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
 			var text = sLManager.GetCommandTexts("weather", sIRCMessage.Channel);
 			if(text.Length < 5)
 			{
@@ -880,7 +875,6 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleRoll(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
 			var rand = new Random();
 			int number = rand.Next(0, 100);
 			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("roll", sIRCMessage.Channel), number);
@@ -888,8 +882,6 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleSha1(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
@@ -901,8 +893,6 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleMd5(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
@@ -914,7 +904,6 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandlePrime(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
 			var text = sLManager.GetCommandTexts("prime", sIRCMessage.Channel);
 			if(text.Length < 3)
 			{
@@ -956,8 +945,6 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleNotes(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));

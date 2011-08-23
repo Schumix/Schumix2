@@ -28,8 +28,6 @@ namespace Schumix.RevisionAddon.Commands
 	{
 		protected void HandleXrev(IRCMessage sIRCMessage)
 		{
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length < 5)
 			{
 				//sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs paraméter!");

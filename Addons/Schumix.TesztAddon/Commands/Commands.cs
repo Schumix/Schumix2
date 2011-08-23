@@ -39,8 +39,6 @@ namespace Schumix.TesztAddon.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
 
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "adat")
 			{
 				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Teszt probálkozás");

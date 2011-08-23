@@ -146,10 +146,12 @@
     <None Include="..\..\Dependencies\sqlite3.dll">
       <Link>sqlite3.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
     </None>
     <None Include="..\..\Sql\Schumix.db3">
       <Link>Schumix.db3</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
     </None>
   </ItemGroup>
 </Project>
