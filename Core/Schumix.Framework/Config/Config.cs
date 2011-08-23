@@ -61,7 +61,7 @@ namespace Schumix.Framework.Config
 		private const bool _addonenabled = true;
 		private const string _addonignore = "SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon";
 		private const string _addondirectory = "Addons";
-		private const bool _scriptenabled = true;
+		private const bool _scriptenabled = false;
 		private const string _scriptdirectory = "Scripts";
 		private const string _locale = "enUS";
 		private const bool _updateenabled = false;
