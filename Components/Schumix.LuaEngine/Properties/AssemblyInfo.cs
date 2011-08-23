@@ -28,9 +28,9 @@ using Schumix.Framework.Config;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Schumix.LuaEngine")]
-[assembly: AssemblyDescription("Alaris bot's Lua interpreter engine.")]
+[assembly: AssemblyDescription("Alaris and Schumix bot's Lua interpreter engine.")]
 [assembly: AssemblyConfiguration(Consts.SchumixConfiguration)]
-[assembly: AssemblyCompany("Twl Productions")]
+[assembly: AssemblyCompany("Twl and Megax Productions")]
 [assembly: AssemblyProduct("Alaris and Schumix")]
 [assembly: AssemblyCopyright("Copyright (C) 2010-2011 Twl and Megax")]
 [assembly: AssemblyTrademark(Consts.SchumixTrademark)]
