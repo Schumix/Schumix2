@@ -31,8 +31,8 @@ using Schumix.Framework.Config;
 [assembly: AssemblyDescription("Alaris bot's Lua interpreter engine.")]
 [assembly: AssemblyConfiguration(Consts.SchumixConfiguration)]
 [assembly: AssemblyCompany("Twl Productions")]
-[assembly: AssemblyProduct("Alaris")]
-[assembly: AssemblyCopyright("Copyright © Twl 2010-2011")]
+[assembly: AssemblyProduct("Alaris and Schumix")]
+[assembly: AssemblyCopyright("Copyright (C) 2010-2011 Twl and Megax")]
 [assembly: AssemblyTrademark(Consts.SchumixTrademark)]
 
 [assembly: CLSCompliant(true)]
@@ -52,5 +52,5 @@ using Schumix.Framework.Config;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(Consts.SchumixVersion)]
-[assembly: AssemblyFileVersion(Consts.SchumixFileVersion)]
+[assembly: AssemblyVersion("0.0.1")]
+[assembly: AssemblyFileVersion("0.0.1.0")]

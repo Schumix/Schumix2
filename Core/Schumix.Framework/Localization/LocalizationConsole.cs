@@ -675,6 +675,24 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
+		public string ScriptsConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Scripts beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the Scripts settings.";
+					else
+						return "Loaded the Scripts settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
 		public string LocalizationConfig(string Name)
 		{
 			switch(Name)
@@ -1326,6 +1344,87 @@ namespace Schumix.Framework.Localization
 						return "No such version: {0}";
 					else
 						return "No such version: {0}";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string ScriptManager(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Lua támogatása le van tiltva!";
+					else if(Locale == "enUS")
+						return "Lua support is disabled!";
+					else
+						return "Lua support is disabled!";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string LuaEngine(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Lua motor betöltése.";
+					else if(Locale == "enUS")
+						return "Initializing Lua engine.";
+					else
+						return "Initializing Lua engine.";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Lua script betöltése: {0}";
+					else if(Locale == "enUS")
+						return "Loading Lua script: {0}";
+					else
+						return "Loading Lua script: {0}";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Kivétel dobott betöltése közben a Lua script: {0} Error: {1}";
+					else if(Locale == "enUS")
+						return "Exception thrown while loading Lua script: {0} Error: {1}";
+					else
+						return "Exception thrown while loading Lua script: {0} Error: {1}";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string LuaHelper(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Funkció {0} (exportált {1}): argumentum szám nem egyezik. Nyilvánítva {2}, de ehhez {3}!";
+					else if(Locale == "enUS")
+						return "Function {0} (exported as {1}): argument number mismatch. Declared {2}, but requires {3}!";
+					else
+						return "Function {0} (exported as {1}): argument number mismatch. Declared {2}, but requires {3}!";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Lua fordítási hiba: {0}";
+					else if(Locale == "enUS")
+						return "Lua compile error: {0}";
+					else
+						return "Lua compile error: {0}";
 				}
 				default:
 					return string.Empty;

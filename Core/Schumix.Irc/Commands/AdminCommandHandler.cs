@@ -32,8 +32,6 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
 
-			CNick(sIRCMessage);
-
 			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "load")
 			{
 				var text = sLManager.GetCommandTexts("plugin/load", sIRCMessage.Channel);
@@ -73,8 +71,6 @@ namespace Schumix.Irc.Commands
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
-
-			CNick(sIRCMessage);
 
 			if(sIRCMessage.Info.Length < 5)
 			{
@@ -116,7 +112,6 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
 
-			CNick(sIRCMessage);
 			var text = sLManager.GetCommandTexts("quit", sIRCMessage.Channel);
 			if(text.Length < 2)
 			{

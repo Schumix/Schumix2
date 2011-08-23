@@ -50,6 +50,10 @@
         <Ignore>SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon</Ignore>
         <Directory>Addons</Directory>
     </Addons>
+    <Scripts>
+        <Lua>false</Lua>
+        <Directory>Scripts</Directory>
+    </Scripts>
     <Localization>
         <Locale>enUS</Locale>
     </Localization>

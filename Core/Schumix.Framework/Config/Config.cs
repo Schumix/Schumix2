@@ -61,6 +61,8 @@ namespace Schumix.Framework.Config
 		private const bool _addonenabled = true;
 		private const string _addonignore = "SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon";
 		private const string _addondirectory = "Addons";
+		private const bool _scriptenabled = true;
+		private const string _scriptdirectory = "Scripts";
 		private const string _locale = "enUS";
 		private const bool _updateenabled = false;
 		private const bool _updateversionsenabled = false;
@@ -140,6 +142,11 @@ namespace Schumix.Framework.Config
 					string Directory = !xmldoc.SelectSingleNode("Schumix/Addons/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Addons/Directory").InnerText : _addondirectory;
 
 					new AddonsConfig(Enabled, Ignore, Directory);
+
+					bool Lua = !xmldoc.SelectSingleNode("Schumix/Scripts/Lua").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Scripts/Lua").InnerText) : _scriptenabled;
+					Directory = !xmldoc.SelectSingleNode("Schumix/Scripts/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Directory").InnerText : _scriptdirectory;
+
+					new ScriptsConfig(Lua, Directory);
 
 					string Locale = !xmldoc.SelectSingleNode("Schumix/Localization/Locale").IsNull() ? xmldoc.SelectSingleNode("Schumix/Localization/Locale").InnerText : _locale;
 
@@ -453,6 +460,20 @@ namespace Schumix.Framework.Config
 			Ignore    = ignore;
 			Directory = directory;
 			Log.Notice("AddonsConfig", sLConsole.AddonsConfig("Text"));
+		}
+	}
+
+	public sealed class ScriptsConfig
+	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		public static bool Lua { get; private set; }
+		public static string Directory { get; private set; }
+
+		public ScriptsConfig(bool lua, string directory)
+		{
+			Lua   = lua;
+			Directory = directory;
+			Log.Notice("ScriptsConfig", sLConsole.ScriptsConfig("Text"));
 		}
 	}
 

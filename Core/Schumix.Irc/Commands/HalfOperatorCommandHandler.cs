@@ -33,7 +33,6 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(sIRCMessage.Nick))
 				return;
 
-			CNick(sIRCMessage);
 			bool status = true;
 
 			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "access")
@@ -362,7 +361,6 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				return;
 
-			CNick(sIRCMessage);
 			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("colors", sIRCMessage.Channel));
 		}
 
@@ -370,8 +368,6 @@ namespace Schumix.Irc.Commands
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				return;
-
-			CNick(sIRCMessage);
 
 			if(sIRCMessage.Info.Length < 5)
 			{
@@ -389,8 +385,6 @@ namespace Schumix.Irc.Commands
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				return;
-
-			CNick(sIRCMessage);
 
 			if(sIRCMessage.Info.Length < 5)
 			{
@@ -418,8 +412,6 @@ namespace Schumix.Irc.Commands
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				return;
-
-			CNick(sIRCMessage);
 
 			if(sIRCMessage.Info.Length < 5)
 			{

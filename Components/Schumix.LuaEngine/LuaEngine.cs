@@ -19,108 +19,117 @@
  */
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using LuaInterface;
+using Schumix.Irc;
+using Schumix.Irc.Commands;
+using Schumix.Framework;
+using Schumix.Framework.Localization;
 
 namespace Schumix.LuaEngine
 {
-    /// <summary>
-    /// Class used to load Lua script files.
-    /// This script engine is an optional one and can be disabled by commenting a single line of code.
-    /// </summary>
-    public sealed class LuaEngine
-    {
-        private readonly Lua _lua;
-        private readonly Dictionary<string, LuaFunctionDescriptor> _luaFunctions;
-        private readonly string _scriptPath;
-        private readonly LuaFunctions _functions;
-        //private readonly Connection _connection;
-        private readonly FileSystemWatcher _watcher;
+	/// <summary>
+	/// Class used to load Lua script files.
+	/// This script engine is an optional one and can be disabled by commenting a single line of code.
+	/// </summary>
+	public sealed class LuaEngine
+	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Dictionary<string, LuaFunctionDescriptor> _luaFunctions;
+		private readonly FileSystemWatcher _watcher;
+		private readonly LuaFunctions _functions;
+		private readonly string _scriptPath;
+		private readonly Lua _lua;
 
-        #region Properties
+		#region Properties
 
-        /// <summary>
-        /// Gets the Lua virtual machine.
-        /// </summary>
-        public Lua LuaVM
-        {
-            get
-            {
-                return _lua;
-            }
-        }
+		/// <summary>
+		/// Gets the Lua virtual machine.
+		/// </summary>
+		public Lua LuaVM
+		{
+			get { return _lua; }
+		}
 
-        #endregion
+		#endregion
 
-        /// <summary>
-        /// Creates a new instance of <c>LuaEngine</c>
-        /// </summary>
-        /// <param name="conn">IRC Connection</param>
-        /// <param name="scriptsPath">The directory where the Lua scripts are located.</param>
-        public LuaEngine(/*ref Connection conn, */string scriptsPath)
-        {
-            Log.Info("Initializing Lua engine");
-            _lua = new Lua();
-            _luaFunctions = new Dictionary<string, LuaFunctionDescriptor>();
-            _scriptPath = scriptsPath;
-            _connection = conn;
-            _functions = new LuaFunctions(ref _lua, ref _connection);
+		/// <summary>
+		/// Creates a new instance of <c>LuaEngine</c>
+		/// </summary>
+		/// <param name="conn">IRC Connection</param>
+		/// <param name="scriptsPath">The directory where the Lua scripts are located.</param>
+		public LuaEngine(/*ref Connection conn, */string scriptsPath)
+		{
+			Log.Notice("LuaEngine", sLConsole.LuaEngine("Text"));
+			_lua = new Lua();
+			_luaFunctions = new Dictionary<string, LuaFunctionDescriptor>();
+			_scriptPath = scriptsPath;
+			_functions = new LuaFunctions(ref _lua);
+			LuaHelper.RegisterLuaFunctions(_lua, ref _luaFunctions, _functions);
+			LoadScripts();
 
-            LuaHelper.RegisterLuaFunctions(_lua, ref _luaFunctions, _functions);
+			_watcher = new FileSystemWatcher(_scriptPath)
+			{
+				NotifyFilter = NotifyFilters.FileName | NotifyFilters.Attributes | NotifyFilters.LastAccess |
+				NotifyFilters.LastWrite | NotifyFilters.Security | NotifyFilters.Size,
+				EnableRaisingEvents = true
+			};
 
-            LoadScripts();
+			_watcher.Created += (s, e) => LoadScripts(true);
+			_watcher.Changed += (s, e) => LoadScripts(true);
+			_watcher.Deleted += (s, e) => LoadScripts(true);
+			_watcher.Renamed += (s, e) => LoadScripts(true);
+		}
 
-            _watcher = new FileSystemWatcher(_scriptPath)
-                           {
-                               NotifyFilter =
-                                   NotifyFilters.FileName | NotifyFilters.Attributes | NotifyFilters.LastAccess |
-                                   NotifyFilters.LastWrite | NotifyFilters.Security | NotifyFilters.Size,
+		/// <summary>
+		/// Loads the Lua scripts.
+		/// </summary>
+		/// <param name="reload">Is it a reload or not.</param>
+		public void LoadScripts(bool reload = false)
+		{
+			if(reload)
+			{
+				foreach(var name in _functions.RegisteredCommand.AsParallel())
+				{
+					if(CommandManager.GetPublicCommandHandler().ContainsKey(name))
+						CommandManager.PublicCRemoveHandler(name);
+					else if(CommandManager.GetHalfOperatorCommandHandler().ContainsKey(name))
+						CommandManager.HalfOperatorCRemoveHandler(name);
+					else if(CommandManager.GetOperatorCommandHandler().ContainsKey(name))
+						CommandManager.OperatorCRemoveHandler(name);
+					else if(CommandManager.GetAdminCommandHandler().ContainsKey(name))
+						CommandManager.AdminCRemoveHandler(name);
+				}
 
-                               EnableRaisingEvents = true
-                           };
+				foreach(var name in _functions.RegisteredHandler.AsParallel())
+					Network.PublicRemoveHandler(name);
+			}
 
-            _watcher.Created += (s, e) => LoadScripts(true);
-            _watcher.Changed += (s, e) => LoadScripts(true);
-            _watcher.Deleted += (s, e) => LoadScripts(true);
-            _watcher.Renamed += (s, e) => LoadScripts(true);
-        }
+			var di = new DirectoryInfo(_scriptPath);
 
-        /// <summary>
-        /// Loads the Lua scripts.
-        /// </summary>
-        /// <param name="reload">Is it a reload or not.</param>
-        public void LoadScripts(bool reload = false)
-        {
-            if(reload)
-            {
-                foreach(var handler in _functions.RegisteredOnPM.AsParallel())
-                {
-                    _connection.Listener.OnPublic -= handler;
-                }
-            }
+			foreach(var file in di.GetFiles("*.lua").AsParallel())
+			{
+				Log.Notice("LuaEngine", sLConsole.LuaEngine("Text2"), file.Name);
 
-            var di = new DirectoryInfo(_scriptPath);
+				try
+				{
+					_lua.DoFile(file.FullName);
+				}
+				catch(Exception x)
+				{
+					Log.Error("LuaEngine", sLConsole.LuaEngine("Text3"), file.Name, x);
+				}
+			}
+		}
 
-            foreach(var file in di.GetFiles("*.lua").AsParallel())
-            {
-                Log.Info("Loading Lua script: {0}", file.Name);
-                try {_lua.DoFile(file.FullName);}
-                catch(Exception x)
-                {
-                    Log.ErrorException(string.Format("Exception thrown while loading Lua script {0}", file.Name), x);
-                }
-                
-            }
-        }
-
-        /// <summary>
-        /// Frees up resources.
-        /// </summary>
-        public void Free()
-        {
-            _lua.Dispose();
-        }
-    }
+		/// <summary>
+		/// Frees up resources.
+		/// </summary>
+		public void Free()
+		{
+			_lua.Dispose();
+		}
+	}
 }
