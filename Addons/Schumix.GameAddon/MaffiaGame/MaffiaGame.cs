@@ -188,6 +188,11 @@ namespace Schumix.GameAddon.MaffiaGames
 					_normallist.Remove(OldName.ToLower());
 					_normallist.Add(NewName.ToLower(), NewName);
 				}
+				else if(_ghostlist.ContainsKey(OldName.ToLower()))
+				{
+					_ghostlist.Remove(OldName.ToLower());
+					_ghostlist.Add(NewName.ToLower(), NewName);
+				}
 
 				if(killer_.ToLower() == OldName.ToLower())
 					killer_ = NewName;
@@ -206,6 +211,9 @@ namespace Schumix.GameAddon.MaffiaGames
 
 				if(doctor_.ToLower() == OldName.ToLower())
 					doctor_ = NewName;
+
+				if(newghost.ToLower() == OldName.ToLower())
+					newghost = NewName;
 
 				Lynch(NewName, OldName, "newname", "none");
 			}
