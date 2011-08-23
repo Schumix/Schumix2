@@ -98,7 +98,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\Org.Mentalis.Security.dll</HintPath>
     </Reference>
-    <Reference Include="System.Core" />
+    <Reference Include="System.Core">
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AdminCommandHandler.cs" />

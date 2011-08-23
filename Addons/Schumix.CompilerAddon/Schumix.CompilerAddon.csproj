@@ -97,7 +97,8 @@
   <ItemGroup>
     <Reference Include="System">
     </Reference>
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml">
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
