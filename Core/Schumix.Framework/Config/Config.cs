@@ -286,6 +286,14 @@ namespace Schumix.Framework.Config
 						// </Plugins>
 						w.WriteEndElement();
 
+						// <Scripts>
+						w.WriteStartElement("Scripts");
+						w.WriteElementString("Lua",             (!xmldoc.SelectSingleNode("Schumix/Scripts/Lua").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Lua").InnerText : _scriptenabled.ToString()));
+						w.WriteElementString("Directory",       (!xmldoc.SelectSingleNode("Schumix/Scripts/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Directory").InnerText : _scriptdirectory));
+
+						// </Scripts>
+						w.WriteEndElement();
+
 						// <Localization>
 						w.WriteStartElement("Localization");
 						w.WriteElementString("Locale",          (!xmldoc.SelectSingleNode("Schumix/Localization/Locale").IsNull() ? xmldoc.SelectSingleNode("Schumix/Localization/Locale").InnerText : _locale));
