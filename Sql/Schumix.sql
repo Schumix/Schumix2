@@ -244,12 +244,12 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ('huHU', 'disconnect', 'Kapcsolat bontása.');
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ('huHU', 'reconnect', 'Újrakapcsolodás az irc szerverhez.');
 
---enUS
+-- enUS
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin', 'Print Operators or Administrators can use commands.\nAdmin commands: info | list | add | remove | rank | access | newpassword');
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/add', 'Add new admin.\nUse: admin add <admin name>');
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/remove', 'Removing admin.\nUse: admin remove <admin name>');
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/rank', 'Admin rank change.\nUse: admin rank <admin name> <new rank e.g. halfoperator: 0, operator: 1, administrator: 2>');
-INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/info', 'Show the admin's rank.\nUse: admin info <admin name>');
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/info', 'Show the admin\'s rank.\nUse: admin info <admin name>');
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ('enUS', 'admin/list', 'Show the names of all the admin, who is included in the database.');
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ('enUS', 'function', 'Function control command.\nFunction commands: channel | update | info\nUse globally:\nGlobal management function: function <on or off> <function name>\nGlobal management functions: function <on or off> <function name1> <function name2> ... e.g.');
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ('enUS', 'function/channel', 'The specified channel, use this command to set functions.\nFunction channel commands: info\nUse:\nChannel management function: function channel <channel> <on or off> <function name>\nChannel management functions: function channel <channel> <on or off> <function name1> <function name2> ... e.g.');
@@ -746,7 +746,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'schumix2/nick', '0', 'Bot nick change.\nCommands: identify\nUse: {0} nick <name>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'schumix2/nick/identify', '0', 'Turn on the main nick password.\nNick: {0} nick identify');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'schumix2/clean', '2', 'Frees allocated memory.\nUse: {0} clean');
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'svn', '1', 'Rss svn 's management.\nSvn commands: channel | info | list | start | stop | reload');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'svn', '1', 'Rss svn \'s management.\nSvn commands: channel | info | list | start | stop | reload');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'svn/channel', '1', 'RSS feeds on their handling of the announcement.\nChannel commands: add | remove');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'svn/channel/add', '1', 'New channel added to the rss.\nUse: {0}svn channel add <rss name> <channel name>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'svn/channel/remove', '1', 'Removed from the RSS Channel.\nUse: {0}svn channel remove <rss name> <channel name>');
@@ -756,7 +756,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'svn/stop', '1', 'Rss stop.\nUse: {0}svn stop <rss name>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'svn/reload', '1', 'Specify rss reload.\nSvn reload command: all');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'svn/reload/all', '1', 'All RSS reload.\nUse: {0}svn reload <rss name>');
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'hg', '1', 'Rss hg 's management.\nHg commands: channel | info | list | start | stop | reload');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'hg', '1', 'Rss hg \'s management.\nHg commands: channel | info | list | start | stop | reload');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'hg/channel', '1', 'RSS feeds on their handling of the announcement.\nChannel commands: add | remove');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'hg/channel/add', '1', 'New channel added to the rss.\nUse: {0}hg channel add <rss name> <channel name>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'hg/channel/remove', '1', 'Removed from the RSS Channel.\nUse: {0}hg channel remove <rss name> <channel name>');
@@ -766,7 +766,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'hg/stop', '1', 'Rss stop.\nUse: {0}hg stop <rss name>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'hg/reload', '1', 'Specify rss reload.\nHg reload command: all');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'hg/reload/all', '1', 'All RSS reload.\nUse: {0}hg reload <rss name>');
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'git', '1', 'Rss git 's management.\nGit commands: channel | info | list | start | stop | reload');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'git', '1', 'Rss git \'s management.\nGit commands: channel | info | list | start | stop | reload');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'git/channel', '1', 'RSS feeds on their handling of the announcement.\nChannel commands: add | remove');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'git/channel/add', '1', 'New channel added to the rss.\nUse: {0}git channel add <rss name> <type> <channel name>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'git/channel/remove', '1', 'Removed from the RSS Channel.\nUse: {0}git channel remove <rss name> <type> <channel name>');
@@ -815,7 +815,6 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'weather', '9', 'Displays of the canal, what is the weather in the town.\nUse: {0}weather <name>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'game', '9', 'Games start on IRC.\nGame command: start');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'game/start', '9', 'Game launching commands.\nUse: {0}game start <game name>');
-
 
 -- ----------------------------
 -- Table structure for localized_warning

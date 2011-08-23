@@ -92,7 +92,8 @@
     </Reference>
     <Reference Include="System.Management">
     </Reference>
-    <Reference Include="System.Core" />
+    <Reference Include="System.Core">
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Libraries.cs" />
