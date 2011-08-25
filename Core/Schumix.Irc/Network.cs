@@ -345,7 +345,7 @@ namespace Schumix.Irc
 			{
 				try
 				{
-					//sSender.Ping(_server);
+					sSender.Ping(_server);
 				}
 				catch(IOException)
 				{
