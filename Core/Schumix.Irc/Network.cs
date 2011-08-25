@@ -215,9 +215,8 @@ namespace Schumix.Irc
 
 			if(b)
 			{
-				writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
 				writer.WriteLine("NICK {0}", sNickInfo.NickStorage);
-				//writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
+				writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
 			}
 			else
 				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
@@ -330,8 +329,13 @@ namespace Schumix.Irc
 				_IRCHandler[opcode].Invoke(IMessage);
 			else
 			{
-				if(ConsoleLog.CLog)
-					Log.Notice("HandleIrcCommand", sLConsole.Network("Text18"), opcode);
+				if(IrcCommand[0] == "PING")
+					sSender.Pong(IrcCommand[1].Remove(0, 1, SchumixBase.Point2));
+				else
+				{
+					if(ConsoleLog.CLog)
+						Log.Notice("HandleIrcCommand", sLConsole.Network("Text18"), opcode);
+				}
 			}
 		}
 
