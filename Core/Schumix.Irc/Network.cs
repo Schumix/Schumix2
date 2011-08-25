@@ -302,7 +302,6 @@ namespace Schumix.Irc
 
 		private void HandleIrcCommand(string message)
 		{
-			Console.WriteLine(message);
 			var IMessage = new IRCMessage();
 			string[] IrcCommand = message.Split(SchumixBase.Space);
 			IrcCommand[0] = IrcCommand[0].Remove(0, 1, SchumixBase.Point2);
