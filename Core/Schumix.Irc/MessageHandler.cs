@@ -83,7 +83,7 @@ namespace Schumix.Irc
 
 		protected void HandleNotRegistered(IRCMessage sIRCMessage)
 		{
-			//Log.Notice("MessageHandler", "Test.");
+			Log.Notice("MessageHandler", sLConsole.MessageHandler("Text10"));
 		}
 
 		protected void HandleNoNickName(IRCMessage sIRCMessage)
@@ -151,7 +151,7 @@ namespace Schumix.Irc
 		/// <summary>
 		///     Ha ismeretlen parancs jön, akkor kiírja.
 		/// </summary>
-		protected void HandleIsmeretlenParancs(IRCMessage sIRCMessage)
+		protected void HandleUnknownCommand(IRCMessage sIRCMessage)
 		{
 			if(ConsoleLog.CLog)
 			{
