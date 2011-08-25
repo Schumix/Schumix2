@@ -100,21 +100,21 @@ namespace Schumix.Irc
 
 		private void InitHandler()
 		{
-			RegisterHandler("001",     new Action<IRCMessage>(HandleSuccessfulAuth));
-			RegisterHandler("PING",    new Action<IRCMessage>(HandlePing));
-			RegisterHandler("PONG",    new Action<IRCMessage>(HandlePong));
-			RegisterHandler("PRIVMSG", new Action<IRCMessage>(HandlePrivmsg));
-			RegisterHandler("NOTICE",  new Action<IRCMessage>(HandleNotice));
-			RegisterHandler("PART",    new Action<IRCMessage>(HandleLeft));
-			RegisterHandler("KICK",    new Action<IRCMessage>(HandleKKick));
-			RegisterHandler("474",     new Action<IRCMessage>(HandleChannelBan));
-			RegisterHandler("475",     new Action<IRCMessage>(HandleNoChannelPassword));
-			RegisterHandler("319",     new Action<IRCMessage>(HandleMWhois));
-			RegisterHandler("421",     new Action<IRCMessage>(HandleIsmeretlenParancs));
-			RegisterHandler("433",     new Action<IRCMessage>(HandleNickError));
-			RegisterHandler("439",     new Action<IRCMessage>(HandleWaitingForConnection));
-			RegisterHandler("451",     new Action<IRCMessage>(HandleNotRegistered));
-			RegisterHandler("431",     new Action<IRCMessage>(HandleNoNickName));
+			RegisterHandler(ReplyCode.RPL_WELCOME.ToString(),         new Action<IRCMessage>(HandleSuccessfulAuth));
+			RegisterHandler("PING",                                   new Action<IRCMessage>(HandlePing));
+			RegisterHandler("PONG",                                   new Action<IRCMessage>(HandlePong));
+			RegisterHandler("PRIVMSG",                                new Action<IRCMessage>(HandlePrivmsg));
+			RegisterHandler("NOTICE",                                 new Action<IRCMessage>(HandleNotice));
+			RegisterHandler("PART",                                   new Action<IRCMessage>(HandleLeft));
+			RegisterHandler("KICK",                                   new Action<IRCMessage>(HandleKKick));
+			RegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN.ToString(),  new Action<IRCMessage>(HandleChannelBan));
+			RegisterHandler(ReplyCode.ERR_BADCHANNELKEY.ToString(),   new Action<IRCMessage>(HandleNoChannelPassword));
+			RegisterHandler(ReplyCode.RPL_WHOISCHANNELS.ToString(),   new Action<IRCMessage>(HandleMWhois));
+			RegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND.ToString(),  new Action<IRCMessage>(HandleUnknownCommand));
+			RegisterHandler(ReplyCode.ERR_NICKNAMEINUSE.ToString(),   new Action<IRCMessage>(HandleNickError));
+			RegisterHandler("439",                                    new Action<IRCMessage>(HandleWaitingForConnection));
+			RegisterHandler(ReplyCode.ERR_NOTREGISTERED.ToString(),   new Action<IRCMessage>(HandleNotRegistered));
+			RegisterHandler(ReplyCode.ERR_NONICKNAMEGIVEN.ToString(), new Action<IRCMessage>(HandleNoNickName));
 			Log.Notice("Network", sLConsole.Network("Text5"));
 		}
 
@@ -302,6 +302,7 @@ namespace Schumix.Irc
 
 		private void HandleIrcCommand(string message)
 		{
+			Console.WriteLine(message);
 			var IMessage = new IRCMessage();
 			string[] IrcCommand = message.Split(SchumixBase.Space);
 			IrcCommand[0] = IrcCommand[0].Remove(0, 1, SchumixBase.Point2);
@@ -345,7 +346,7 @@ namespace Schumix.Irc
 			{
 				try
 				{
-					sSender.Ping(_server);
+					//sSender.Ping(_server);
 				}
 				catch(IOException)
 				{

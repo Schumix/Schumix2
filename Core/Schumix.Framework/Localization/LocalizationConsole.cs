@@ -1021,6 +1021,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Bad password for channel!";
 				}
+				case "Text10":
+				{
+					if(Locale == "huHU")
+						return "Nem regisztrált!";
+					else if(Locale == "enUS")
+						return "You have not registered!";
+					else
+						return "You have not registered!";
+				}
 				default:
 					return string.Empty;
 			}

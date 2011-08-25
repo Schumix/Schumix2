@@ -118,6 +118,7 @@
     <Compile Include="Commands\CommandInfo.cs" />
     <Compile Include="Commands\HalfOperatorCommandHandler.cs" />
     <Compile Include="NickName.cs" />
+    <Compile Include="ReplyCode.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
