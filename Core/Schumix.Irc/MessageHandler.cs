@@ -136,8 +136,7 @@ namespace Schumix.Irc
 		/// </summary>
 		protected void HandlePing(IRCMessage sIRCMessage)
 		{
-			sSender.Ping(sIRCMessage.Args);
-			Console.WriteLine(sIRCMessage.Args);
+			sSender.Pong(sIRCMessage.Args);
 		}
 
 		/// <summary>
