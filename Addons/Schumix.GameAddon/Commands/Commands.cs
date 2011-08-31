@@ -41,7 +41,7 @@ namespace Schumix.GameAddon.Commands
 		{
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
 				return;
 			}
 
@@ -49,13 +49,19 @@ namespace Schumix.GameAddon.Commands
 			{
 				if(sIRCMessage.Channel.Substring(0, 1) != "#")
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Ez nem csatorna! Ne pm-ben írj!");
+					sSendMessage.SendChatMessage(sIRCMessage, "Ez nem csatorna! Ne pm-ben írj!");
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs megadva a játék neve!");
+					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva a játék neve!");
+					return;
+				}
+
+				if(sChannelInfo.FSelect("gamecommands", sIRCMessage.Channel))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Fut már játék!");
 					return;
 				}
 
@@ -69,7 +75,7 @@ namespace Schumix.GameAddon.Commands
 							{
 								if(player.Value == sIRCMessage.Nick)
 								{
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Te már játékban vagy itt: {1}", sIRCMessage.Nick, maffia.Key);
+									sSendMessage.SendChatMessage(sIRCMessage, "{0}: Te már játékban vagy itt: {1}", sIRCMessage.Nick, maffia.Key);
 									return;
 								}
 							}
@@ -96,7 +102,7 @@ namespace Schumix.GameAddon.Commands
 						GameAddon.MaffiaList[sIRCMessage.Channel.ToLower()].NewGame(sIRCMessage.Nick, sIRCMessage.Channel);
 				}
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs ilyen játék!");
+					sSendMessage.SendChatMessage(sIRCMessage, "Nincs ilyen játék!");
 			}
 		}
 

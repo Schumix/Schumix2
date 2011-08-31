@@ -51,39 +51,39 @@ namespace Schumix.ExtraAddon.Commands
 			if(sFunctions.AutoKick("join", sIRCMessage.Nick, sIRCMessage.Channel))
 				return;
 
-			string channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Point2);
+			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Point2);
 
-			if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", channel))
+			if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", sIRCMessage.Channel))
 			{
 				AutoMode = true;
-				ModeChannel = channel.ToLower();
+				ModeChannel = sIRCMessage.Channel;
 				sSender.NickServStatus(sIRCMessage.Nick);
 			}
 
-			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", channel))
+			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", sIRCMessage.Channel))
 			{
 				var rand = new Random();
 				string Koszones = string.Empty;
-				var text = sLManager.GetCommandTexts("handlejoin", channel);
+				var text = sLManager.GetCommandTexts("handlejoin", sIRCMessage.Channel);
 				if(text.Length < 3)
 				{
-					sSendMessage.SendCMPrivmsg(channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
-				var text2 = sLManager.GetCommandTexts("handlejoin/random", channel);
+				var text2 = sLManager.GetCommandTexts("handlejoin/random", sIRCMessage.Channel);
 				Koszones = text2[rand.Next(0, text2.Length-1)];
 
 				if(DateTime.Now.Hour >= 3 && DateTime.Now.Hour <= 9)
-					sSendMessage.SendCMPrivmsg(channel, text[0], sIRCMessage.Nick);
+					sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.Nick);
 				else if(DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 3)
-					sSendMessage.SendCMPrivmsg(channel, text[1], sIRCMessage.Nick);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Nick);
 				else
 				{
 					if(IsAdmin(sIRCMessage.Nick))
-						sSendMessage.SendCMPrivmsg(channel, text[2]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					else
-						sSendMessage.SendCMPrivmsg(channel, "{0} {1}", Koszones, sIRCMessage.Nick);
+						sSendMessage.SendChatMessage(sIRCMessage, "{0} {1}", Koszones, sIRCMessage.Nick);
 				}
 			}
 		}
@@ -105,9 +105,9 @@ namespace Schumix.ExtraAddon.Commands
 				elkoszones = text2[rand.Next(0, text2.Length-1)];
 
 				if(DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 3)
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("handleleft", sIRCMessage.Channel), sIRCMessage.Nick);
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("handleleft", sIRCMessage.Channel), sIRCMessage.Nick);
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0} {1}", elkoszones, sIRCMessage.Nick);
+					sSendMessage.SendChatMessage(sIRCMessage, "{0} {1}", elkoszones, sIRCMessage.Nick);
 			}
 		}
 

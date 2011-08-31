@@ -37,33 +37,33 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("plugin/load", sIRCMessage.Channel);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
 				if(sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "unload")
 			{
 				var text = sLManager.GetCommandTexts("plugin/unload", sIRCMessage.Channel);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
 				if(sAddonManager.UnloadPlugins())
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 			}
 			else
 			{
 				foreach(var plugin in sAddonManager.GetPlugins())
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("plugin", sIRCMessage.Channel), plugin.Name.Replace("Plugin", string.Empty));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("plugin", sIRCMessage.Channel), plugin.Name.Replace("Plugin", string.Empty));
 			}
 		}
 
@@ -74,14 +74,14 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 				return;
 			}
 
 			var text = sLManager.GetCommandTexts("reload", sIRCMessage.Channel);
 			if(text.Length < 2)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
 			}
 
@@ -102,9 +102,9 @@ namespace Schumix.Irc.Commands
 			}
 
 			if(status)
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Info[4]);
+				sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.Info[4]);
 			else
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
+				sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 		}
 
 		protected void HandleQuit(IRCMessage sIRCMessage)
@@ -115,7 +115,7 @@ namespace Schumix.Irc.Commands
 			var text = sLManager.GetCommandTexts("quit", sIRCMessage.Channel);
 			if(text.Length < 2)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
 			}
 
@@ -124,7 +124,7 @@ namespace Schumix.Irc.Commands
 
 			SchumixBase.ExitStatus = true;
 			SchumixBase.timer.SaveUptime();
-			sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+			sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 			sSender.Quit(string.Format(text[1], sIRCMessage.Nick));
 			Thread.Sleep(1000);
 			Environment.Exit(1);

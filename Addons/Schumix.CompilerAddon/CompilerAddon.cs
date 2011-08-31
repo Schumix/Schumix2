@@ -91,31 +91,31 @@ namespace Schumix.CompilerAddon
 				string command = IRCConfig.NickName + SchumixBase.Comma;
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Point2);
 
-				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage.Channel) && (sIRCMessage.Args.Contains(";") || sIRCMessage.Args.Contains("}")))
+				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage) && (sIRCMessage.Args.Contains(";") || sIRCMessage.Args.Contains("}")))
 					Compiler(sIRCMessage, true, command);
 				else if(sIRCMessage.Info[3].ToLower() == command.ToLower())
 				{
 					if(sIRCMessage.Info.Length >= 5 && (sIRCMessage.Info[4].ToLower() == "csc" || sIRCMessage.Info[4].ToLower() == "c#compiler"))
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "C# Compiler version: {0}", Environment.Version);
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "The main class's name: class " + CompilerConfig.MainClass + " { /* program... */ }");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "The main function's name: void " + CompilerConfig.MainConstructor + "() { /* program... */ }");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "You can use simply: '{ /* program */ }'. This is the man function's content.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Also you can use: '{0} /* program */'. Here is /* program */ is the main function's content.", command.ToLower());
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "If you need more help, please contact with Jackneill.");
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Programmed by: Csaba (Megaxxx)");
+						sSendMessage.SendChatMessage(sIRCMessage, "C# Compiler version: {0}", Environment.Version);
+						sSendMessage.SendChatMessage(sIRCMessage, "The main class's name: class " + CompilerConfig.MainClass + " { /* program... */ }");
+						sSendMessage.SendChatMessage(sIRCMessage, "The main function's name: void " + CompilerConfig.MainConstructor + "() { /* program... */ }");
+						sSendMessage.SendChatMessage(sIRCMessage, "You can use simply: '{ /* program */ }'. This is the man function's content.");
+						sSendMessage.SendChatMessage(sIRCMessage, "Also you can use: '{0} /* program */'. Here is /* program */ is the main function's content.", command.ToLower());
+						sSendMessage.SendChatMessage(sIRCMessage, "If you need more help, please contact with Jackneill.");
+						sSendMessage.SendChatMessage(sIRCMessage, "Programmed by: Csaba (Megaxxx)");
 					}
 				}
 
 				if(sIRCMessage.Channel.Substring(0, 1) != "#")
 				{
-					if(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage.Channel))
+					if(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage))
 						Compiler(sIRCMessage, false, command);
 				}
 				else
 				{
 					if((sChannelInfo.FSelect("compiler") && sChannelInfo.FSelect("compiler", sIRCMessage.Channel)) &&
-						(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage.Channel)))
+						(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage)))
 						Compiler(sIRCMessage, false, command);
 				}
 			}
@@ -141,7 +141,7 @@ namespace Schumix.CompilerAddon
 			return false;
 		}
 
-		private bool Enabled(string channel)
+		private bool Enabled(IRCMessage sIRCMessage)
 		{
 			if(CompilerConfig.MaxAllocatingE)
 			{
@@ -149,7 +149,7 @@ namespace Schumix.CompilerAddon
 
 				if(memory > CompilerConfig.MaxAllocatingM)
 				{
-					sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/memory", channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/memory", sIRCMessage.Channel));
 					return false;
 				}
 			}
@@ -178,7 +178,7 @@ namespace Schumix.CompilerAddon
 			}
 
 			if(!b)
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
 
 			var sw = new StreamWriter(Console.OpenStandardOutput());
 			sw.AutoFlush = true;

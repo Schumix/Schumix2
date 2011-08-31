@@ -26,6 +26,7 @@
         <Command>
             <Prefix>$</Prefix>
         </Command>
+        <MessageType>Privmsg</MessageType>
     </Irc>
     <Log>
         <LogLevel>2</LogLevel>

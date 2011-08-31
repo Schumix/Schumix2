@@ -19,22 +19,12 @@
 
 using System;
 using System.Threading;
+using Schumix.API;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
 {
-	/// <summary>
-	///     Meghatározza, hogy PRIVMSG vagy NOTICE legyen az üzenetküldés módja.
-	/// </summary>
-	public enum MessageType
-	{
-		PRIVMSG,
-		NOTICE
-		/*AMSG,
-		ME*/
-	};
-
 	public sealed class SendMessage
 	{
 		private readonly object WriteLock = new object();
@@ -44,14 +34,27 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(type == MessageType.PRIVMSG)
-					WriteLine("PRIVMSG {0} :{1}", channel.ToLower(), message);
-				else if(type == MessageType.NOTICE)
-					WriteLine("NOTICE {0} :{1}", channel.ToLower(), message);
-				/*else if(type == MessageType.AMSG)
-					WriteLine("AMSG :{0}", message);
-				else if(type == MessageType.ME)
-					WriteLine("ME :{0}", message); // egyenlőre nem megy*/
+				switch(type)
+				{
+					case MessageType.Privmsg:
+						WriteLine("PRIVMSG {0} :{1}", channel.ToLower(), message);
+						break;
+					case MessageType.Notice:
+						WriteLine("NOTICE {0} :{1}", channel, message);
+						break;
+					/*case MessageType.AMSG:
+						WriteLine("AMSG :{0}", message); // egyenlőre nem megy
+						break;*/
+					case MessageType.Action:
+						WriteLine("PRIVMSG {0} :ACTION {1}", channel.ToLower(), message);
+						break;
+					case MessageType.CtcpRequest:
+						WriteLine("PRIVMSG {0} :{1}", channel.ToLower(), message);
+						break;
+					case MessageType.CtcpReply:
+						WriteLine("NOTICE {0} :{1}", channel, message);
+						break;
+				}
 			}
 		}
 
@@ -63,11 +66,38 @@ namespace Schumix.Irc
 			}
 		}
 
+		public void SendChatMessage(IRCMessage sIRCMessage, string message)
+		{
+			lock(WriteLock)
+			{
+				switch(IRCConfig.MessageType.ToLower())
+				{
+					case "privmsg":
+						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Channel, message);
+						break;
+					case "notice":
+						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Nick, message);
+						break;
+					default:
+						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Channel, message);
+						break;
+				}
+			}
+		}
+
+		public void SendChatMessage(IRCMessage sIRCMessage, string message, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(sIRCMessage, string.Format(message, args));
+			}
+		}
+
 		public void SendCMPrivmsg(string channel, string message)
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.PRIVMSG, channel, message);
+				SendChatMessage(MessageType.Privmsg, channel, message);
 			}
 		}
 
@@ -83,7 +113,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.NOTICE, channel, message);
+				SendChatMessage(MessageType.Notice, channel, message);
 			}
 		}
 
@@ -109,23 +139,55 @@ namespace Schumix.Irc
 			{
 				SendCMAmsg(string.Format(message, args));
 			}
-		}
-
-		public void SendCMMe(string message)
-		{
-			lock(WriteLock)
-			{
-				SendChatMessage(MessageType.ME, string.Empty, message);
-			}
-		}
-
-		public void SendCMMe(string message, params object[] args)
-		{
-			lock(WriteLock)
-			{
-				SendCMMe(string.Format(message, args));
-			}
 		}*/
+
+		public void SendCMAction(string channel, string message)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(MessageType.Action, channel, message);
+			}
+		}
+
+		public void SendCMAction(string channel, string message, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				SendCMAction(channel, string.Format(message, args));
+			}
+		}
+
+		public void SendCMCtcpRequest(string channel, string message)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(MessageType.CtcpRequest, channel, message);
+			}
+		}
+
+		public void SendCMCtcpRequest(string channel, string message, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				SendCMCtcpRequest(channel, string.Format(message, args));
+			}
+		}
+
+		public void SendCMCtcpReply(string channel, string message)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(MessageType.CtcpReply, channel, message);
+			}
+		}
+
+		public void SendCMCtcpReply(string channel, string message, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				SendCMCtcpReply(channel, string.Format(message, args));
+			}
+		}
 
 		public void WriteLine(string message)
 		{

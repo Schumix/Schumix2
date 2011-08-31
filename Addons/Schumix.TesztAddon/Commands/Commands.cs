@@ -41,7 +41,7 @@ namespace Schumix.TesztAddon.Commands
 
 			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "adat")
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Teszt probálkozás");
+				sSendMessage.SendChatMessage(sIRCMessage, "Teszt probálkozás");
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "db")
 			{
@@ -51,11 +51,11 @@ namespace Schumix.TesztAddon.Commands
 					foreach(DataRow row in db.Rows)
 					{
 						string admin = row["Name"].ToString();
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}", admin);
+						sSendMessage.SendChatMessage(sIRCMessage, "{0}", admin);
 					}
 				}
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "rss")
 			{
@@ -66,18 +66,22 @@ namespace Schumix.TesztAddon.Commands
 				var node = rss.SelectSingleNode("rss/channel/item/title");
 				//var node = rss.SelectSingleNode("feed/title");
 				string title = !node.IsNull() ? node.InnerText : string.Empty;
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, title);
+				sSendMessage.SendChatMessage(sIRCMessage, title);
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "vhost")
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sIRCMessage.Host);
+				sSendMessage.SendChatMessage(sIRCMessage, sIRCMessage.Host);
 			/*else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "amsg")
-				sSendMessage.SendCMAmsg("teszt");
+				sSendMessage.SendCMAmsg("teszt");*/
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "me")
-				sSendMessage.SendCMMe("teszt");*/
+				sSendMessage.SendCMAction(sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "ctcprequest")
+				sSendMessage.SendCMCtcpRequest(sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "ctcpreply")
+				sSendMessage.SendCMCtcpReply(sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "text")
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 			else
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}", sIRCMessage.Info.Length);
+				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);
 		}
 	}
 }

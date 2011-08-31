@@ -29,46 +29,47 @@ namespace Schumix.Framework.Config
 	public sealed class Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private const int _loglevel = 2;
-		private const string _logdirectory = "Logs";
-		private const string _irclogdirectory = "Channels";
-		private const bool _irclog = false;
-		private const string _server = "localhost";
-		private const int _port = 6667;
-		private const bool _ssl = false;
-		private const string _nickname = "Schumix2";
-		private const string _nickname2 = "_Schumix2";
-		private const string _nickname3 = "__Schumix2";
-		private const string _username = "Schumix2";
-		private const string _userinfo = "Schumix2 IRC Bot";
-		private const string _masterchannel = "#schumix2";
-		private const string _ignorechannels = " ";
-		private const string _ignorenames = " ";
-		private const bool _usenickserv = false;
-		private const string _nickservpassword = "password";
-		private const bool _usehostserv = false;
-		private const bool _hostservstatus = false;
-		private const int _messagesending = 400;
-		private const string _commandprefix = "$";
-		private const bool _mysqlenabled = false;
-		private const string _mysqlhost = "localhost";
-		private const string _mysqluser = "root";
-		private const string _mysqlpassword = "password";
-		private const string _mysqldatabase = "database";
-		private const string _mysqlcharset = "utf8";
-		private const bool _sqliteenabled = false;
-		private const string _sqlitefilename = "Schumix.db3";
-		private const bool _addonenabled = true;
-		private const string _addonignore = "SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon";
-		private const string _addondirectory = "Addons";
-		private const bool _scriptenabled = false;
-		private const string _scriptdirectory = "Scripts";
-		private const string _locale = "enUS";
-		private const bool _updateenabled = false;
-		private const bool _updateversionsenabled = false;
+		private const int _loglevel                 = 2;
+		private const string _logdirectory          = "Logs";
+		private const string _irclogdirectory       = "Channels";
+		private const bool _irclog                  = false;
+		private const string _server                = "localhost";
+		private const int _port                     = 6667;
+		private const bool _ssl                     = false;
+		private const string _nickname              = "Schumix2";
+		private const string _nickname2             = "_Schumix2";
+		private const string _nickname3             = "__Schumix2";
+		private const string _username              = "Schumix2";
+		private const string _userinfo              = "Schumix2 IRC Bot";
+		private const string _masterchannel         = "#schumix2";
+		private const string _ignorechannels        = " ";
+		private const string _ignorenames           = " ";
+		private const bool _usenickserv             = false;
+		private const string _nickservpassword      = "password";
+		private const bool _usehostserv             = false;
+		private const bool _hostservstatus          = false;
+		private const int _messagesending           = 400;
+		private const string _commandprefix         = "$";
+		private const string _messagetype           = "Privmsg";
+		private const bool _mysqlenabled            = false;
+		private const string _mysqlhost             = "localhost";
+		private const string _mysqluser             = "root";
+		private const string _mysqlpassword         = "password";
+		private const string _mysqldatabase         = "database";
+		private const string _mysqlcharset          = "utf8";
+		private const bool _sqliteenabled           = false;
+		private const string _sqlitefilename        = "Schumix.db3";
+		private const bool _addonenabled            = true;
+		private const string _addonignore           = "SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon";
+		private const string _addondirectory        = "Addons";
+		private const bool _scriptenabled           = false;
+		private const string _scriptdirectory       = "Scripts";
+		private const string _locale                = "enUS";
+		private const bool _updateenabled           = false;
+		private const bool _updateversionsenabled   = false;
 		private const string _updateversionsversion = "x.x.x";
-		private const string _updatewebpage = "http://megax.uw.hu/Schumix2/";
-		private bool error = false;
+		private const string _updatewebpage         = "http://megax.uw.hu/Schumix2/";
+		private bool error                          = false;
 
 		public Config(string configdir, string configfile)
 		{
@@ -120,8 +121,9 @@ namespace Schumix.Framework.Config
 					bool HostServStatus = !xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText) : _hostservstatus;
 					int MessageSending = !xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").InnerText) : _messagesending;
 					string CommandPrefix = !xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").InnerText : _commandprefix;
+					string MessageType = !xmldoc.SelectSingleNode("Schumix/Irc/MessageType").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/MessageType").InnerText : _messagetype;
 
-					new IRCConfig(Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix);
+					new IRCConfig(Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType);
 
 					bool Enabled = !xmldoc.SelectSingleNode("Schumix/MySql/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText) : _mysqlenabled;
 					string Host = !xmldoc.SelectSingleNode("Schumix/MySql/Host").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText : _mysqlhost;
@@ -243,6 +245,8 @@ namespace Schumix.Framework.Config
 
 						// </Command>
 						w.WriteEndElement();
+
+						w.WriteElementString("MessageType",     (!xmldoc.SelectSingleNode("Schumix/Irc/MessageType").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/MessageType").InnerText : _messagetype));
 
 						// </Irc>
 						w.WriteEndElement();
@@ -379,8 +383,9 @@ namespace Schumix.Framework.Config
 		public static bool HostServEnabled { get; private set; }
 		public static int MessageSending { get; private set; }
 		public static string CommandPrefix { get; private set; }
+		public static string MessageType { get; private set; }
 
-		public IRCConfig(string server, int port, bool ssl, string nickname, string nickname2, string nickname3, string username, string userinfo, string masterchannel, string ignorechannels, string ignorenames, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, int messagesending, string commandprefix)
+		public IRCConfig(string server, int port, bool ssl, string nickname, string nickname2, string nickname3, string username, string userinfo, string masterchannel, string ignorechannels, string ignorenames, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, int messagesending, string commandprefix, string messagetype)
 		{
 			Server           = server;
 			Port             = port;
@@ -399,6 +404,7 @@ namespace Schumix.Framework.Config
 			HostServEnabled  = hostservenabled;
 			MessageSending   = messagesending;
 			CommandPrefix    = commandprefix;
+			MessageType      = messagetype;
 			Log.Notice("IRCConfig", sLConsole.IRCConfig("Text"));
 		}
 	}

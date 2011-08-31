@@ -86,7 +86,7 @@ namespace Schumix.CompilerAddon.Commands
 				var text = sLManager.GetCommandTexts("compiler", sIRCMessage.Channel);
 				if(text.Length < 5)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return true;
 				}
 
@@ -97,7 +97,7 @@ namespace Schumix.CompilerAddon.Commands
 				else if(command)
 					data = sIRCMessage.Args.Trim();
 
-				if(Ban(data, sIRCMessage.Channel))
+				if(Ban(data, sIRCMessage))
 					return true;
 
 				if(!IsClass(data))
@@ -111,14 +111,14 @@ namespace Schumix.CompilerAddon.Commands
 				{
 					if(!IsSchumix(data))
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return true;
 					}
 
 					template = CompilerConfig.Referenced + SchumixBase.Space + CleanText(data);
 				}
 
-				var asm = CompileCode(template, sIRCMessage.Channel);
+				var asm = CompileCode(template, sIRCMessage);
 				if(asm.IsNull())
 					return true;
 
@@ -128,7 +128,7 @@ namespace Schumix.CompilerAddon.Commands
 				object o = asm.CreateInstance(CompilerConfig.MainClass);
 				if(o.IsNull())
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 					return true;
 				}
 
@@ -142,24 +142,24 @@ namespace Schumix.CompilerAddon.Commands
 
 					if(!b)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
 						return true;
 					}
 				}
 				else
 					o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
 
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, string.Empty);
+				sSendMessage.SendChatMessage(sIRCMessage, string.Empty);
 
 				if(writer.ToString().Length > 2000)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					return true;
 				}
 
 				if(writer.ToString().Length == 0)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 					return true;
 				}
 
@@ -176,11 +176,11 @@ namespace Schumix.CompilerAddon.Commands
 						if(line == string.Empty)
 							x++;
 						else
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, line);
+							sSendMessage.SendChatMessage(sIRCMessage, line);
 					}
 
 					if(i == x)
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 				}
 				else if(lines.Length > 5)
 				{
@@ -193,20 +193,20 @@ namespace Schumix.CompilerAddon.Commands
 						if(lines[b] == string.Empty)
 							x++;
 						else
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, lines[b]);
+							sSendMessage.SendChatMessage(sIRCMessage, lines[b]);
 					}
 
 					if(i == x)
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4], lines.Length-1);
+						sSendMessage.SendChatMessage(sIRCMessage, text[4], lines.Length-1);
 					else
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[4], lines.Length-5);
+						sSendMessage.SendChatMessage(sIRCMessage, text[4], lines.Length-5);
 				}
 
 				return true;
 			}
 			catch(Exception)
 			{
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, ":'(");
+				sSendMessage.SendChatMessage(sIRCMessage, ":'(");
 				return true;
 			}
 		}
@@ -226,7 +226,7 @@ namespace Schumix.CompilerAddon.Commands
 			return cparams;
 		}
 
-		private Assembly CompileCode(string code, string channel)
+		private Assembly CompileCode(string code, IRCMessage sIRCMessage)
 		{
 			try
 			{
@@ -237,7 +237,7 @@ namespace Schumix.CompilerAddon.Commands
 #else
 				var compiler = CodeDomProvider.CreateProvider("CSharp");
 #endif
-				return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), channel);
+				return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
 			}
 			catch(Exception)
 			{
@@ -245,7 +245,7 @@ namespace Schumix.CompilerAddon.Commands
 			}
 		}
 
-		private Assembly CompilerErrors(CompilerResults results, string channel)
+		private Assembly CompilerErrors(CompilerResults results, IRCMessage sIRCMessage)
 		{
 			if(results.Errors.HasErrors)
 			{
@@ -270,7 +270,7 @@ namespace Schumix.CompilerAddon.Commands
 						}
 
 						string s = "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
-						sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/code", channel), s);
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), s);
 #else
 						for(;;)
 						{
@@ -286,12 +286,12 @@ namespace Schumix.CompilerAddon.Commands
 						}
 
 						string s = "*:\\***\\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
-						sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/code", channel), s);
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), s);
 #endif
 						continue;
 					}
 
-					sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/code", channel), errortext);
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), errortext);
 				}
 
 				return null;
@@ -300,47 +300,47 @@ namespace Schumix.CompilerAddon.Commands
 				return results.CompiledAssembly;
 		}
 
-		private bool Ban(string data, string channel)
+		private bool Ban(string data, IRCMessage sIRCMessage)
 		{
 			// Environment and Security
 			if(data.Contains("Environment") || data.Contains("System.Security"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
 			// Input, Output
 			if(data.Contains("System.IO"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
 			// Diagnostics
 			if(data.Contains("System.Diagnostics"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
 			// Microsoft
 			if(data.Contains("Microsoft.Win32") || data.Contains("Microsoft.CSharp"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
 			// Compile
 			if(data.Contains("System.CodeDom"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
 			// Timers
 			if(data.Contains("System.Timers"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
@@ -354,7 +354,7 @@ namespace Schumix.CompilerAddon.Commands
 				data.Contains("Console.NumberLock") || data.Contains("Console.OutputEncoding") ||
 				data.Contains("Console.TreatControlCAsInput") || data.Contains("Console.Window"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
@@ -362,7 +362,7 @@ namespace Schumix.CompilerAddon.Commands
 			if(data.Contains("System.Net.Dns") || data.Contains("System.Net.IPAddress") || data.Contains("System.Net.IPEndPoint") ||
 				data.Contains("System.Net.IPHostEntry") || SystemNetRegex.IsMatch(data))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
@@ -371,35 +371,35 @@ namespace Schumix.CompilerAddon.Commands
 				data.Contains("Assembly.Location") || data.Contains("Assembly.EscapedCodeBase") || data.Contains("Assembly.CodeBase") ||
 				data.Contains("Assembly.GetAssembly"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
 			// AppDomain
 			if(data.Contains("AppDomain"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
 			// Activator
 			if(data.Contains("Activator"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
 			// Type
 			if(data.Contains("GetMethod") || data.Contains("GetType") || data.Contains("GetInterfaces") || data.Contains("GetMember"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
 			// DllImport
 			if(data.Contains("DllImport"))
 			{
-				Warning(channel);
+				Warning(sIRCMessage);
 				return true;
 			}
 
@@ -516,9 +516,9 @@ namespace Schumix.CompilerAddon.Commands
 			return text;
 		}
 
-		private void Warning(string channel)
+		private void Warning(IRCMessage sIRCMessage)
 		{
-			sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("compiler/warning", channel));
+			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/warning", sIRCMessage.Channel));
 		}
 	}
 }

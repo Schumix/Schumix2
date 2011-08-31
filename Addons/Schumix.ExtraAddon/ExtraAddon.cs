@@ -122,8 +122,8 @@ namespace Schumix.ExtraAddon
 					}
 				});
 
-				Task.Factory.StartNew(() => sFunctions.HLMessage(sIRCMessage.Channel, sIRCMessage.Args));
-				Task.Factory.StartNew(() => sFunctions.Message(sIRCMessage.Nick, sIRCMessage.Channel));
+				Task.Factory.StartNew(() => sFunctions.HLMessage(sIRCMessage));
+				Task.Factory.StartNew(() => sFunctions.Message(sIRCMessage));
 
 				Task.Factory.StartNew(() =>
 				{
@@ -131,8 +131,6 @@ namespace Schumix.ExtraAddon
 					{
 						if(!SchumixBase.UrlTitleEnabled)
 							return;
-
-						string channel = sIRCMessage.Channel;
 
 						if(sIRCMessage.Nick.ToLower() == "py-bopm")
 							return;
@@ -144,7 +142,7 @@ namespace Schumix.ExtraAddon
 
 						try
 						{
-							Parallel.ForEach(urlsin, url => sFunctions.HandleWebTitle(channel, url));
+							Parallel.ForEach(urlsin, url => sFunctions.HandleWebTitle(sIRCMessage, url));
 							return;
 						}
 						catch(Exception e)
