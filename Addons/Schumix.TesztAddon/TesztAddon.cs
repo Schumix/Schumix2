@@ -72,7 +72,7 @@ namespace Schumix.TesztAddon
 			{
 				if(sIRCMessage.Info[4].ToLower() == "test")
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Teszt célokra használt parancs.");
+					sSendMessage.SendChatMessage(sIRCMessage, "Teszt célokra használt parancs.");
 					return true;
 				}
 			}

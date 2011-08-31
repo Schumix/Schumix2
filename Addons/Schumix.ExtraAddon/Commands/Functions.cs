@@ -22,6 +22,7 @@ using System;
 using System.Data;
 using System.Threading;
 using System.Text.RegularExpressions;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -31,9 +32,9 @@ namespace Schumix.ExtraAddon.Commands
 {
 	public partial class Functions
 	{
-		public void HLMessage(string channel, string args)
+		public void HLMessage(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("autohl") && sChannelInfo.FSelect("autohl", channel))
+			if(sChannelInfo.FSelect("autohl") && sChannelInfo.FSelect("autohl", sIRCMessage.Channel))
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name, Info, Enabled FROM hlmessage");
 				if(!db.IsNull())
@@ -42,14 +43,14 @@ namespace Schumix.ExtraAddon.Commands
 					{
 						var regex = new Regex(row["Name"].ToString());
 
-						if(regex.IsMatch(args.ToLower()))
+						if(regex.IsMatch(sIRCMessage.Args.ToLower()))
 						{
 							string status = row["Enabled"].ToString();
 
 							if(status != "on")
 								return;
 
-							sSendMessage.SendCMPrivmsg(channel, "{0}", row["Info"].ToString());
+							sSendMessage.SendChatMessage(sIRCMessage, "{0}", row["Info"].ToString());
 						}
 					}
 				}
@@ -93,13 +94,13 @@ namespace Schumix.ExtraAddon.Commands
 			return false;
 		}
 
-		public void HandleWebTitle(string channel, string msg)
+		public void HandleWebTitle(IRCMessage sIRCMessage, string msg)
 		{
 			try
 			{
 				var url = new Uri(msg);
 				string webTitle = string.Empty;
-				var thread = new Thread(() => webTitle = WebHelper.GetWebTitle(url, sLManager.GetChannelLocalization(channel)));
+				var thread = new Thread(() => webTitle = WebHelper.GetWebTitle(url, sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				thread.Start();
 				thread.Join(4000);
 				thread.Abort();
@@ -116,11 +117,11 @@ namespace Schumix.ExtraAddon.Commands
 				{
 					var match = youtubeRegex.Match(title);
 					var song = match.Groups["song"].ToString();
-					sSendMessage.SendCMPrivmsg(channel, "1,0You0,4Tube: {0}", song.Substring(1));
+					sSendMessage.SendChatMessage(sIRCMessage, "1,0You0,4Tube: {0}", song.Substring(1));
 					return;
 				}
 
-				sSendMessage.SendCMPrivmsg(channel, "1,0Title: {0}", title);
+				sSendMessage.SendChatMessage(sIRCMessage, "1,0Title: {0}", title);
 			}
 			catch(Exception e)
 			{
@@ -129,20 +130,20 @@ namespace Schumix.ExtraAddon.Commands
 			}
 		}
 
-		public void Message(string name, string channel)
+		public void Message(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("message") && sChannelInfo.FSelect("message", channel))
+			if(sChannelInfo.FSelect("message") && sChannelInfo.FSelect("message", sIRCMessage.Channel))
 			{
-				var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}'", name.ToLower(), channel.ToLower());
+				var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower());
 				if(!db.IsNull())
 				{
 					foreach(DataRow row in db.Rows)
 					{
-						sSendMessage.SendCMPrivmsg(channel, "{0}: {1}", name, row["Message"].ToString());
-						sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("message2", channel), row["Wrote"].ToString());
+						sSendMessage.SendChatMessage(sIRCMessage, "{0}: {1}", sIRCMessage.Nick, row["Message"].ToString());
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message2", sIRCMessage.Channel), row["Wrote"].ToString());
 					}
 
-					SchumixBase.DManager.Delete("message", string.Format("Name = '{0}'", name.ToLower()));
+					SchumixBase.DManager.Delete("message", string.Format("Name = '{0}'", sIRCMessage.Nick.ToLower()));
 				}
 			}
 		}

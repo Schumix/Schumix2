@@ -325,6 +325,19 @@ namespace Schumix.Irc
 			IMessage.Args = IrcCommand.SplitToString(3, SchumixBase.Space);
 			IMessage.Args = IMessage.Args.Remove(0, 1, SchumixBase.Point2);
 
+			switch(IRCConfig.MessageType.ToLower())
+			{
+				case "privmsg":
+					IMessage.MessageType = MessageType.Privmsg;
+					break;
+				case "notice":
+					IMessage.MessageType = MessageType.Notice;
+					break;
+				default:
+					IMessage.MessageType = MessageType.Privmsg;
+					break;
+			}
+
 			if(_IRCHandler.ContainsKey(opcode))
 				_IRCHandler[opcode].Invoke(IMessage);
 			else

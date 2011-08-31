@@ -60,6 +60,7 @@ a `Schumix.xml` nevû fájlt.
     	**MessageSending:** Üzenet küldésének késleltetése. Legföbbként flood ellen van.
 * **Command:**
         **Prefix:** A parancsok elõjele. Alapértelmezés: `$` (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: `$xbot`)
+* **MessageType:** Értéke `Privmsg` vagy `Notice` lehet. Meghatározza hogy milyen formában küldje az üzeneteket a szerver felé. Alapértelmezés: `Privmsg`
 
 ## Log
 

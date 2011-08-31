@@ -21,6 +21,19 @@ using System;
 
 namespace Schumix.API
 {
+	/// <summary>
+	///     Meghatározza, hogy PRIVMSG vagy NOTICE legyen az üzenetküldés módja.
+	/// </summary>
+	public enum MessageType
+	{
+		Privmsg,
+		Notice,
+		//Amsg,
+		Action,
+		CtcpRequest,
+		CtcpReply
+	};
+
 	public class IRCMessage
 	{
 		public string Hostmask { get; set; }
@@ -30,5 +43,6 @@ namespace Schumix.API
 		public string User { get; set; }
 		public string Host { get; set; }
 		public string[] Info { get; set; }
+		public MessageType MessageType { get; set; }
 	}
 }

@@ -48,12 +48,12 @@ namespace Schumix.Irc.Commands
 				var text = sLManager.GetCommandTexts("help", sIRCMessage.Channel);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
 
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
-				sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], IRCConfig.CommandPrefix);
+				sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+				sSendMessage.SendChatMessage(sIRCMessage, text[1], IRCConfig.CommandPrefix);
 				return;
 			}
 
@@ -72,37 +72,37 @@ namespace Schumix.Irc.Commands
 					var text = sLManager.GetCommandHelpTexts("schumix2", sIRCMessage.Channel);
 					if(text.Length < 4)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
 					if(IsAdmin(sIRCMessage.Nick, AdminFlag.HalfOperator))
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator))
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 					else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Administrator))
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					else
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[3]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 
 					return;
 				}
 
 				if(sIRCMessage.Info[5].ToLower() == "sys")
 				{
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandHelpText("schumix2/sys", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandHelpText("schumix2/sys", sIRCMessage.Channel));
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "ghost" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				{
 					var text = sLManager.GetCommandHelpTexts("schumix2/ghost", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], command.ToLower());
+					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], command.ToLower());
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "nick" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				{
@@ -111,12 +111,12 @@ namespace Schumix.Irc.Commands
 						var text = sLManager.GetCommandHelpTexts("schumix2/nick", sIRCMessage.Channel);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 							return;
 						}
 
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], command.ToLower());
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[1], command.ToLower());
 						return;
 					}
 
@@ -125,12 +125,12 @@ namespace Schumix.Irc.Commands
 						var text = sLManager.GetCommandHelpTexts("schumix2/nick/identify", sIRCMessage.Channel);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 							return;
 						}
 
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], command.ToLower());
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[1], command.ToLower());
 					}
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "clean" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
@@ -138,12 +138,12 @@ namespace Schumix.Irc.Commands
 					var text = sLManager.GetCommandHelpTexts("schumix2/clean", sIRCMessage.Channel);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
 					}
 
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], command.ToLower());
+					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], command.ToLower());
 				}
 			}
 			else
@@ -182,9 +182,9 @@ namespace Schumix.Irc.Commands
 			foreach(var t in text)
 			{
 				if(t.Contains("{0}"))
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, t, IRCConfig.CommandPrefix);
+					sSendMessage.SendChatMessage(sIRCMessage, t, IRCConfig.CommandPrefix);
 				else
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, t);
+					sSendMessage.SendChatMessage(sIRCMessage, t);
 			}
 		}
 	}
