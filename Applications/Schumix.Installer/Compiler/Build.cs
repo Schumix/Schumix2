@@ -22,7 +22,7 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 
-namespace Schumix.Updater.Compiler
+namespace Schumix.Installer.Compiler
 {
 	public sealed class Build
 	{
