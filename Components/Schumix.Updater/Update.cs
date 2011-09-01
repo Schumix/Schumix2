@@ -65,7 +65,21 @@ namespace Schumix.Updater
 			{
 				version = new DownloadVersion(UpdateConfig.WebPage).GetVersion();
 
-				if(sUtilities.GetVersion() == version)
+				var split = version.Split(SchumixBase.Point);
+				var split2 = sUtilities.GetVersion().Split(SchumixBase.Point);
+
+				bool newversion = false;
+
+				for(int i = 0; i < split.Length; i++)
+				{
+					if(split[i] != split2[i])
+					{
+						newversion = true;
+						break;
+					}
+				}
+
+				if(!newversion)
 				{
 					Log.Warning("Update", sLConsole.Update("Text3"));
 					return;
@@ -73,6 +87,7 @@ namespace Schumix.Updater
 
 				Log.Notice("Update", sLConsole.Update("Text4"), version);
 			}
+
 			Log.Notice("Update", sLConsole.Update("Text5"));
 
 			try
@@ -108,8 +123,8 @@ namespace Schumix.Updater
 
 			if(build.HasError)
 			{
-				Log.Error("Update", "Hiba történt a fordítás közben!");
-				Log.Warning("Update", sLConsole.Update("Text13"));
+				Log.Error("Update", sLConsole.Update("Text13"));
+				Log.Warning("Update", sLConsole.Update("Text8"));
 				Thread.Sleep(5*1000);
 				Environment.Exit(1);
 			}

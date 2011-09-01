@@ -42,7 +42,13 @@ namespace Schumix
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+#if MONO
+#pragma warning disable 414
 		private readonly string _scriptsPath;
+#pragma warning restore 414
+#else
+		private readonly string _scriptsPath;
+#endif
 		private LuaEngine.LuaEngine _luaEngine;
 
 		/// <summary>

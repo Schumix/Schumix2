@@ -128,6 +128,9 @@ namespace Schumix
 			if(File.Exists("Config.exe"))
 				File.Delete("Config.exe");
 
+			if(File.Exists("Installer.exe"))
+				File.Delete("Installer.exe");
+
 			new SchumixBot();
 			System.Console.CancelKeyPress += (sender, e) => { sSender.Quit("Daemon killed."); SchumixBase.timer.SaveUptime(); };
 		}
