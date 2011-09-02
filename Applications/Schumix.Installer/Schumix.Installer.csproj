@@ -120,10 +120,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
     </None>
-    <None Include="..\..\Dependencies\xbuild.rsp">
-      <Link>xbuild.rsp</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
-    </None>
   </ItemGroup>
 </Project>
