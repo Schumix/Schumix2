@@ -294,6 +294,11 @@ namespace Schumix.Framework.Extensions
 			return ss;
 		}
 
+		public static string Reverse(this string value)
+		{
+			return value.Reverse().ToArray().SplitToString();
+		}
+
 		public static string Remove(this string s, int min, int max, char value)
 		{
 			return (s.Length >= max && s.Substring(min, max) == value.ToString()) ? s.Remove(min, max) : s;
