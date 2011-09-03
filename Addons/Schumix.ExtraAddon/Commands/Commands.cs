@@ -102,7 +102,7 @@ namespace Schumix.ExtraAddon.Commands
 
 							var db1 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM hlmessage WHERE Name = '{0}'", name);
 							if(db1.IsNull())
-								SchumixBase.DManager.QueryFirstRow("INSERT INTO `hlmessage`(Name, Enabled) VALUES ('{0}', 'off')", name);
+								SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", name, "off");
 						}
 
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage/update", sIRCMessage.Channel));
@@ -129,7 +129,7 @@ namespace Schumix.ExtraAddon.Commands
 					if(status == "on" || status == "off")
 					{
 						string name = sIRCMessage.Nick.ToLower();
-						SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Enabled` = '{0}' WHERE Name = '{1}'", status, name);
+						SchumixBase.DManager.Update("hlmessage", string.Format("Enabled = '{0}'", status), string.Format("Name = '{0}'", name));
 	
 						if(status == "on")
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], name);
@@ -140,8 +140,8 @@ namespace Schumix.ExtraAddon.Commands
 				else
 				{
 					string name = sIRCMessage.Nick.ToLower();
-					SchumixBase.DManager.QueryFirstRow("UPDATE `hlmessage` SET `Info` = '{0}', `Enabled` = 'on' WHERE Name = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)), name);
-					SchumixBase.DManager.QueryFirstRow("UPDATE `schumix` SET `FunctionStatus` = 'on' WHERE FunctionName = 'autohl'");
+					SchumixBase.DManager.Update("hlmessage", string.Format("Info = '{0}', Enabled = 'on'", sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space))), string.Format("Name = '{0}'", name));
+					SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", "FunctionName = 'autohl'");
 					SchumixBase.DManager.QueryFirstRow("UPDATE channel SET Functions = '{0}' WHERE Channel = '{1}'", sChannelInfo.ChannelFunctions("autohl", "on", sIRCMessage.Channel), sIRCMessage.Channel.ToLower());
 					sChannelInfo.ChannelFunctionReload();
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage", sIRCMessage.Channel));
