@@ -40,7 +40,7 @@ namespace Schumix.Libraries
 		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
 		private static readonly object WriteLock = new object();
 
-		public static bool IsPrime(long x)
+		public static bool IsPrime(this long x)
 		{
 			return sUtilities.IsPrime(x);
 		}
@@ -226,6 +226,68 @@ namespace Schumix.Libraries
 		}
 
 		public static string SplitToString(this string[] split, int min, string s)
+		{
+			string ss = string.Empty;
+
+			for(int x = min; x < split.Length; x++)
+				ss += s + split[x];
+
+			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
+				ss = ss.Remove(0, s.Length);
+
+			return ss;
+		}
+
+		public static string SplitToString(this char[] split, char c)
+		{
+			string ss = string.Empty;
+
+			for(int x = 0; x < split.Length; x++)
+				ss += c + split[x];
+
+			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
+				ss = ss.Remove(0, c.ToString().Length);
+
+			return ss;
+		}
+
+		public static string SplitToString(this char[] split, int min, char c)
+		{
+			string ss = string.Empty;
+
+			for(int x = min; x < split.Length; x++)
+				ss += c + split[x];
+
+			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
+				ss = ss.Remove(0, c.ToString().Length);
+
+			return ss;
+		}
+
+		public static string SplitToString(this char[] split)
+		{
+			string ss = string.Empty;
+
+			foreach(var s in split)
+				ss += s;
+
+			return ss;
+		}
+
+		public static string SplitToString(this char[] split, string s)
+		{
+			string ss = string.Empty;
+
+			for(int x = 0; x < split.Length; x++)
+				ss += s + split[x];
+
+			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
+				ss = ss.Remove(0, s.Length);
+
+			return ss;
+		}
+
+		public static string SplitToString(this char[] split, int min, string s)
 		{
 			string ss = string.Empty;
 
