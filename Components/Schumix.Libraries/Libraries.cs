@@ -300,7 +300,7 @@ namespace Schumix.Libraries
 			return ss;
 		}
 
-		public static string Reverse(this string value)
+		public static string SReverse(this string value)
 		{
 			return value.Reverse().ToArray().SplitToString();
 		}
