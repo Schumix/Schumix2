@@ -61,6 +61,8 @@ namespace Schumix.Irc
 						WriteLine("NOTICE {0} :{1}", channel, message);
 						break;
 				}
+
+				_timeLastSent = DateTime.Now;
 			}
 		}
 
@@ -203,7 +205,6 @@ namespace Schumix.Irc
 					Network.writer.WriteLine(message);
 
 				Thread.Sleep(IRCConfig.MessageSending);
-				_timeLastSent = DateTime.Now;
 			}
 		}
 
