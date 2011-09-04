@@ -119,6 +119,8 @@
     <Compile Include="Commands\HalfOperatorCommandHandler.cs" />
     <Compile Include="NickName.cs" />
     <Compile Include="ReplyCode.cs" />
+    <Compile Include="Ctcp\CtcpSender.cs" />
+    <Compile Include="Ctcp\CtcpUtil.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

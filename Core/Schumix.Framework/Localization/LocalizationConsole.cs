@@ -1439,5 +1439,86 @@ namespace Schumix.Framework.Localization
 					return string.Empty;
 			}
 		}
+
+		public string CtcpSender(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Ez a kliens támogatja: UserInfo, Finger, Version, Source, Ping, Time és ClientInfo";
+					else if(Locale == "enUS")
+						return "This client supports: UserInfo, Finger, Version, Source, Ping, Time and ClientInfo";
+					else
+						return "This client supports: UserInfo, Finger, Version, Source, Ping, Time and ClientInfo";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return " óra, ";
+					else if(Locale == "enUS")
+						return " Hours, ";
+					else
+						return " Hours, ";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return " perc, ";
+					else if(Locale == "enUS")
+						return " Minutes, ";
+					else
+						return " Minutes, ";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return " másodperc.";
+					else if(Locale == "enUS")
+						return " Seconds.";
+					else
+						return " Seconds.";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return " Tétlenségi idő ";
+					else if(Locale == "enUS")
+						return " Idle time ";
+					else
+						return " Idle time ";
+				}
+				case "Text6":
+				{
+					if(Locale == "huHU")
+						return "{0} nem támogatott Ctcp lekérdezés.";
+					else if(Locale == "enUS")
+						return "{0} is not a supported Ctcp query.";
+					else
+						return "{0} is not a supported Ctcp query.";
+				}
+				case "Text7":
+				{
+					if(Locale == "huHU")
+						return "Operácios Rendszer:";
+					else if(Locale == "enUS")
+						return "Operating System:";
+					else
+						return "Operating System:";
+				}
+				case "Text8":
+				{
+					if(Locale == "huHU")
+						return "Processzor:";
+					else if(Locale == "enUS")
+						return "Processor:";
+					else
+						return "Processor:";
+				}
+				default:
+					return string.Empty;
+			}
+		}
 	}
 }
