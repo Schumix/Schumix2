@@ -40,6 +40,11 @@ namespace Schumix.Libraries
 		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
 		private static readonly object WriteLock = new object();
 
+		public static bool IsPrime(this int x)
+		{
+			return sUtilities.IsPrime((long)x);
+		}
+
 		public static bool IsPrime(this long x)
 		{
 			return sUtilities.IsPrime(x);
