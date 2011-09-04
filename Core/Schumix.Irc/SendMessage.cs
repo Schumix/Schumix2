@@ -28,7 +28,13 @@ namespace Schumix.Irc
 	public sealed class SendMessage
 	{
 		private readonly object WriteLock = new object();
+		private DateTime _timeLastSent = DateTime.Now;
 		private SendMessage() {}
+
+        public TimeSpan IdleTime
+        {
+            get { return DateTime.Now - _timeLastSent; }
+        }
 
 		public void SendChatMessage(MessageType type, string channel, string message)
 		{
@@ -197,6 +203,7 @@ namespace Schumix.Irc
 					Network.writer.WriteLine(message);
 
 				Thread.Sleep(IRCConfig.MessageSending);
+				_timeLastSent = DateTime.Now;
 			}
 		}
 
