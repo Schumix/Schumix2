@@ -31,6 +31,7 @@ namespace Schumix.Installer.CopyTo
 
 			Directory.Move(Version + "/Run/Release/Addons", "Addons");
 			var dir = new DirectoryInfo(Version + "/Run/Release/");
+			
 
 			foreach(var file in dir.GetFiles())
 			{

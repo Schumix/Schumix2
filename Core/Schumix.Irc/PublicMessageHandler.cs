@@ -50,6 +50,18 @@ namespace Schumix.Irc
 			foreach(var plugin in sAddonManager.GetPlugins())
 				plugin.HandlePrivmsg(sIRCMessage);
 
+			if(sIRCMessage.Args.Contains("VERSION") && sIRCMessage.Args.Substring(0, 8) == "VERSION" && sIRCMessage.Args.EndsWith(""))
+			{
+				sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, "VERSION Schumix {0} {1} [{2}]", sUtilities.GetVersion(), sUtilities.GetOSName(), sUtilities.GetCpuId());
+				return;
+			}
+			else if(sIRCMessage.Args.Contains("PING") && sIRCMessage.Args.Substring(0, 5) == "PING" && sIRCMessage.Args.EndsWith(""))
+			{
+				sIRCMessage.Args = sIRCMessage.Args.Remove(0, 1, "");
+				sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, sIRCMessage.Args.Substring(0, sIRCMessage.Args.IndexOf("")));
+				return;
+			}
+
 			if(sChannelInfo.FSelect("commands") || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
 				if(!sChannelInfo.FSelect("commands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")

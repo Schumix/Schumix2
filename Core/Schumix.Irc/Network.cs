@@ -35,7 +35,9 @@ namespace Schumix.Irc
 {
 	public sealed class Network : MessageHandler
 	{
-		private static readonly Dictionary<string, Action<IRCMessage>> _IRCHandler = new Dictionary<string, Action<IRCMessage>>();
+		private static readonly Dictionary<ReplyCode, Action<IRCMessage>> _IRCHandler = new Dictionary<ReplyCode, Action<IRCMessage>>();
+		private static readonly Dictionary<string, Action<IRCMessage>> _IRCHandler2 = new Dictionary<string, Action<IRCMessage>>();
+		private static readonly Dictionary<int, Action<IRCMessage>> _IRCHandler3 = new Dictionary<int, Action<IRCMessage>>();
 
         ///<summary>
         ///     A kimeneti adatokat külddi az IRC felé.
@@ -100,32 +102,52 @@ namespace Schumix.Irc
 
 		private void InitHandler()
 		{
-			RegisterHandler("001",     new Action<IRCMessage>(HandleSuccessfulAuth));
-			RegisterHandler("PING",    new Action<IRCMessage>(HandlePing));
-			RegisterHandler("PONG",    new Action<IRCMessage>(HandlePong));
-			RegisterHandler("PRIVMSG", new Action<IRCMessage>(HandlePrivmsg));
-			RegisterHandler("NOTICE",  new Action<IRCMessage>(HandleNotice));
-			RegisterHandler("PART",    new Action<IRCMessage>(HandleLeft));
-			RegisterHandler("KICK",    new Action<IRCMessage>(HandleKKick));
-			RegisterHandler("474",     new Action<IRCMessage>(HandleChannelBan));
-			RegisterHandler("475",     new Action<IRCMessage>(HandleNoChannelPassword));
-			RegisterHandler("319",     new Action<IRCMessage>(HandleMWhois));
-			RegisterHandler("421",     new Action<IRCMessage>(HandleUnknownCommand));
-			RegisterHandler("433",     new Action<IRCMessage>(HandleNickError));
-			RegisterHandler("439",     new Action<IRCMessage>(HandleWaitingForConnection));
-			RegisterHandler("451",     new Action<IRCMessage>(HandleNotRegistered));
-			RegisterHandler("431",     new Action<IRCMessage>(HandleNoNickName));
+			RegisterHandler(ReplyCode.RPL_WELCOME,         new Action<IRCMessage>(HandleSuccessfulAuth));
+			RegisterHandler("PING",                        new Action<IRCMessage>(HandlePing));
+			RegisterHandler("PONG",                        new Action<IRCMessage>(HandlePong));
+			RegisterHandler("PRIVMSG",                     new Action<IRCMessage>(HandlePrivmsg));
+			RegisterHandler("NOTICE",                      new Action<IRCMessage>(HandleNotice));
+			RegisterHandler("PART",                        new Action<IRCMessage>(HandleLeft));
+			RegisterHandler("KICK",                        new Action<IRCMessage>(HandleKKick));
+			RegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,  new Action<IRCMessage>(HandleChannelBan));
+			RegisterHandler(ReplyCode.ERR_BADCHANNELKEY,   new Action<IRCMessage>(HandleNoChannelPassword));
+			RegisterHandler(ReplyCode.RPL_WHOISCHANNELS,   new Action<IRCMessage>(HandleMWhois));
+			RegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND,  new Action<IRCMessage>(HandleUnknownCommand));
+			RegisterHandler(ReplyCode.ERR_NICKNAMEINUSE,   new Action<IRCMessage>(HandleNickError));
+			RegisterHandler(439,                           new Action<IRCMessage>(HandleWaitingForConnection));
+			RegisterHandler(ReplyCode.ERR_NOTREGISTERED,   new Action<IRCMessage>(HandleNotRegistered));
+			RegisterHandler(ReplyCode.ERR_NONICKNAMEGIVEN, new Action<IRCMessage>(HandleNoNickName));
 			Log.Notice("Network", sLConsole.Network("Text5"));
 		}
 
-		private static void RegisterHandler(string code, Action<IRCMessage> method)
+		private static void RegisterHandler(ReplyCode code, Action<IRCMessage> method)
 		{
 			_IRCHandler.Add(code, method);
 		}
 
-		private static void RemoveHandler(string code)
+		private static void RemoveHandler(ReplyCode code)
 		{
 			_IRCHandler.Remove(code);
+		}
+
+		public static void PublicRegisterHandler(ReplyCode code, Action<IRCMessage> method)
+		{
+			RegisterHandler(code, method);
+		}
+
+		public static void PublicRemoveHandler(ReplyCode code)
+		{
+			RemoveHandler(code);
+		}
+
+		private static void RegisterHandler(string code, Action<IRCMessage> method)
+		{
+			_IRCHandler2.Add(code, method);
+		}
+
+		private static void RemoveHandler(string code)
+		{
+			_IRCHandler2.Remove(code);
 		}
 
 		public static void PublicRegisterHandler(string code, Action<IRCMessage> method)
@@ -134,6 +156,26 @@ namespace Schumix.Irc
 		}
 
 		public static void PublicRemoveHandler(string code)
+		{
+			RemoveHandler(code);
+		}
+
+		private static void RegisterHandler(int code, Action<IRCMessage> method)
+		{
+			_IRCHandler3.Add(code, method);
+		}
+
+		private static void RemoveHandler(int code)
+		{
+			_IRCHandler3.Remove(code);
+		}
+
+		public static void PublicRegisterHandler(int code, Action<IRCMessage> method)
+		{
+			RegisterHandler(code, method);
+		}
+
+		public static void PublicRemoveHandler(int code)
 		{
 			RemoveHandler(code);
 		}
@@ -338,8 +380,12 @@ namespace Schumix.Irc
 					break;
 			}
 
-			if(_IRCHandler.ContainsKey(opcode))
-				_IRCHandler[opcode].Invoke(IMessage);
+			if(_IRCHandler2.ContainsKey(opcode))
+				_IRCHandler2[opcode].Invoke(IMessage);
+			else if(_IRCHandler.ContainsKey((ReplyCode)Convert.ToInt32(opcode)))
+				_IRCHandler[(ReplyCode)Convert.ToInt32(opcode)].Invoke(IMessage);
+			else if(_IRCHandler3.ContainsKey(Convert.ToInt32(opcode)))
+				_IRCHandler3[Convert.ToInt32(opcode)].Invoke(IMessage);
 			else
 			{
 				if(IrcCommand[0] == "PING")
