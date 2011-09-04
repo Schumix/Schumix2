@@ -97,7 +97,7 @@ namespace Schumix.Irc.Ctcp
 		{
 			get
 			{
-				return _fingerMessage + " Idle time " + FormatIdleTime() + ".";
+				return _fingerMessage + sLConsole.CtcpSender("Text5") + FormatIdleTime() + ".";
 			}
 			set
 			{
