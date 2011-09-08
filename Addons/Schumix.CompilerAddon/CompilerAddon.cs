@@ -159,26 +159,38 @@ namespace Schumix.CompilerAddon
 
 		private void Compiler(IRCMessage sIRCMessage, bool command, string args)
 		{
-			bool b = false;
+			int ReturnCode = 0;
 
 			if(command)
 			{
 				sIRCMessage.Args = sIRCMessage.Args.Remove(0, args.Length);
-				var thread = new Thread(() => b = CompilerCommand(sIRCMessage, true));
+				var thread = new Thread(() => ReturnCode = CompilerCommand(sIRCMessage, true));
 				thread.Start();
 				thread.Join(3000);
 				thread.Abort();
 			}
 			else
 			{
-				var thread = new Thread(() => b = CompilerCommand(sIRCMessage, false));
+				var thread = new Thread(() => ReturnCode = CompilerCommand(sIRCMessage, false));
 				thread.Start();
 				thread.Join(3000);
 				thread.Abort();
 			}
 
-			if(!b)
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
+			switch(ReturnCode)
+			{
+				case -1:
+					sSendMessage.SendChatMessage(sIRCMessage, ":'(");
+					break;
+				case 0:
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
+					break;
+				case 2:
+					sSendMessage.SendChatMessage(sIRCMessage, MessageText(3, sIRCMessage.Channel));
+					break;
+				default:
+					break;
+			}
 
 			var sw = new StreamWriter(Console.OpenStandardOutput());
 			sw.AutoFlush = true;
