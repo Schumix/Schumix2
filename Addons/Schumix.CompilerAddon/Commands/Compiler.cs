@@ -79,7 +79,12 @@ namespace Schumix.CompilerAddon.Commands
 			return DoRegex.IsMatch(data);
 		}
 
-		protected bool CompilerCommand(IRCMessage sIRCMessage, bool command)
+		protected string MessageText(int Code, string Channel)
+		{
+			return sLManager.GetCommandTexts("compiler", Channel).Length > Code ? sLManager.GetCommandTexts("compiler", Channel)[Code] : sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(Channel));
+		}
+
+		protected int CompilerCommand(IRCMessage sIRCMessage, bool command)
 		{
 			try
 			{
@@ -87,7 +92,7 @@ namespace Schumix.CompilerAddon.Commands
 				if(text.Length < 5)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
-					return true;
+					return 1;
 				}
 
 				string data = string.Empty, template = string.Empty;
@@ -98,7 +103,7 @@ namespace Schumix.CompilerAddon.Commands
 					data = sIRCMessage.Args.Trim();
 
 				if(Ban(data, sIRCMessage))
-					return true;
+					return 1;
 
 				if(!IsClass(data))
 				{
@@ -112,7 +117,7 @@ namespace Schumix.CompilerAddon.Commands
 					if(!IsSchumix(data))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
-						return true;
+						return 1;
 					}
 
 					template = CompilerConfig.Referenced + SchumixBase.Space + CleanText(data);
@@ -120,7 +125,7 @@ namespace Schumix.CompilerAddon.Commands
 
 				var asm = CompileCode(template, sIRCMessage);
 				if(asm.IsNull())
-					return true;
+					return 1;
 
 				var writer = new StringWriter();
 				Console.SetOut(writer);
@@ -129,7 +134,7 @@ namespace Schumix.CompilerAddon.Commands
 				if(o.IsNull())
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
-					return true;
+					return 1;
 				}
 
 				if(IsFor(data) || IsDo(data) || IsWhile(data))
@@ -143,7 +148,7 @@ namespace Schumix.CompilerAddon.Commands
 					if(!b)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
-						return true;
+						return 1;
 					}
 				}
 				else
@@ -151,21 +156,18 @@ namespace Schumix.CompilerAddon.Commands
 
 				sSendMessage.SendChatMessage(sIRCMessage, string.Empty);
 
-				if(writer.ToString().Length > 2000)
+				if(writer.ToString().Length == 0)
+					return 2;
+
+				var length = writer.ToString().Length;
+				var lines = CleanIrcText(writer.ToString()).Split(SchumixBase.NewLine);
+
+				if(length > 1000 && lines.Length == 1)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
-					return true;
+					return 1;
 				}
-
-				if(writer.ToString().Length == 0)
-				{
-					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
-					return true;
-				}
-
-				var lines = writer.ToString().Split(SchumixBase.NewLine);
-
-				if(lines.Length <= 5)
+				else if(length <= 1000 && lines.Length == 1)
 				{
 					byte i = 0, x = 0;
 
@@ -181,33 +183,21 @@ namespace Schumix.CompilerAddon.Commands
 
 					if(i == x)
 						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
+
+					return 1;
 				}
-				else if(lines.Length > 5)
+				else if(lines.Length >= 2)
 				{
-					int i = 0, x = 0;
-
-					for(var b = 0; b < 4; b++)
-					{
-						i++;
-
-						if(lines[b] == string.Empty)
-							x++;
-						else
-							sSendMessage.SendChatMessage(sIRCMessage, lines[b]);
-					}
-
-					if(i == x)
-						sSendMessage.SendChatMessage(sIRCMessage, text[4], lines.Length-1);
-					else
-						sSendMessage.SendChatMessage(sIRCMessage, text[4], lines.Length-5);
+					sSendMessage.SendChatMessage(sIRCMessage, lines[0]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[4], lines.Length-1);
+					return 1;
 				}
 
-				return true;
+				return 1;
 			}
 			catch(Exception)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, ":'(");
-				return true;
+				return -1;
 			}
 		}
 
@@ -511,6 +501,17 @@ namespace Schumix.CompilerAddon.Commands
 
 					text = s.Remove(0, 1, ";");
 				}
+			}
+
+			return text;
+		}
+
+		private string CleanIrcText(string text)
+		{
+			for(int i = 0; i < 16; i++)
+			{
+				if(text.Contains(((char)i).ToString()) && i != 10)
+					text = text.Replace(((char)i).ToString(), string.Empty);
 			}
 
 			return text;
