@@ -89,7 +89,7 @@ namespace Schumix.CompilerAddon
 					return;
 
 				string command = IRCConfig.NickName + SchumixBase.Comma;
-				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Point2);
+				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
 
 				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage) && (sIRCMessage.Args.Contains(";") || sIRCMessage.Args.Contains("}")))
 					Compiler(sIRCMessage, true, command);
@@ -103,7 +103,7 @@ namespace Schumix.CompilerAddon
 						sSendMessage.SendChatMessage(sIRCMessage, "You can use simply: '{ /* program */ }'. This is the man function's content.");
 						sSendMessage.SendChatMessage(sIRCMessage, "Also you can use: '{0} /* program */'. Here is /* program */ is the main function's content.", command.ToLower());
 						sSendMessage.SendChatMessage(sIRCMessage, "If you need more help, please contact with Jackneill.");
-						sSendMessage.SendChatMessage(sIRCMessage, "Programmed by: Csaba (Megaxxx)");
+						sSendMessage.SendChatMessage(sIRCMessage, "Programmed by: {0}", Consts.SchumixProgrammedBy);
 					}
 				}
 
@@ -132,6 +132,11 @@ namespace Schumix.CompilerAddon
 		}
 
 		public void HandleKick(IRCMessage sIRCMessage)
+		{
+
+		}
+
+		public void HandleQuit(IRCMessage sIRCMessage)
 		{
 
 		}
@@ -210,7 +215,7 @@ namespace Schumix.CompilerAddon
 		/// </summary>
 		public string Author
 		{
-			get { return "Megax"; }
+			get { return Consts.SchumixProgrammedBy; }
 		}
 
 		/// <summary>
@@ -218,7 +223,7 @@ namespace Schumix.CompilerAddon
 		/// </summary>
 		public string Website
 		{
-			get { return "http://www.github.com/megax/Schumix2"; }
+			get { return Consts.SchumixWebsite; }
 		}
 	}
 }

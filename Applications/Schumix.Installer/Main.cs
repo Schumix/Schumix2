@@ -36,6 +36,7 @@ namespace Schumix.Installer
 
 		public static void Main(string[] args)
 		{
+			Console.BackgroundColor = ConsoleColor.Black;
 			string url = "http://megax.uw.hu/Schumix2/";
 			string version = new DownloadVersion(url).GetNewVersion();
 

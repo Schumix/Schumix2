@@ -97,6 +97,7 @@
     <Compile Include="Config\AddonConfig.cs" />
     <Compile Include="Commands\WebHelper.cs" />
     <Compile Include="Localization\PLocalization.cs" />
+    <Compile Include="Commands\NameList.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

@@ -83,7 +83,7 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							string name = row["Name"].ToString();
 							string status = row["Enabled"].ToString();
-							names += ", " + name + SchumixBase.Point2 + status;
+							names += ", " + name + SchumixBase.Colon + status;
 						}
 
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage/info", sIRCMessage.Channel), names.Remove(0, 2, ", "));
@@ -825,12 +825,14 @@ namespace Schumix.ExtraAddon.Commands
 				string night = string.Empty;
 				source = source.Replace("\n\t\t", SchumixBase.Space.ToString());
 				source = source.Replace("&deg;C", "°C");
+				source = source.Replace("&#176;C", "°C");
 				source = source.Replace("&#369;", "ű");
 
-				if(source.Contains("<div class=\"fctText\">"))
+				if(source.Contains("<td class=\"vaT\">"))
 				{
-					source = source.Remove(0, source.IndexOf("<div class=\"fctText\">") + "<div class=\"fctText\">".Length);
-					day = source.Substring(0, source.IndexOf("</div>"));
+					source = source.Remove(0, source.IndexOf("<td class=\"vaT\">") + "<td class=\"vaT\">".Length);
+					source = source.Remove(0, source.IndexOf("<td class=\"vaT\">") + "<td class=\"vaT\">".Length);
+					day = source.Substring(0, source.IndexOf(" <? END CHANCE OF PRECIP"));
 				}
 				else if(source.Contains("<td class=\"vaT full\">"))
 				{
@@ -843,10 +845,11 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
-				if(source.Contains("<div class=\"fctText\">"))
+				if(source.Contains("<td class=\"vaT\">"))
 				{
-					source = source.Remove(0, source.IndexOf("<div class=\"fctText\">") + "<div class=\"fctText\">".Length);
-					night = source.Substring(0, source.IndexOf("</div>"));
+					source = source.Remove(0, source.IndexOf("<td class=\"vaT\">") + "<td class=\"vaT\">".Length);
+					source = source.Remove(0, source.IndexOf("<td class=\"vaT\">") + "<td class=\"vaT\">".Length);
+					night = source.Substring(0, source.IndexOf(" <? END CHANCE OF PRECIP"));
 				}
 				else if(source.Contains("<td class=\"vaT full\">"))
 				{

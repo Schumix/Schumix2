@@ -73,6 +73,7 @@ namespace Schumix.Irc.Commands
 			PublicCRegisterHandler("warning",      new Action<IRCMessage>(HandleWarning));
 			PublicCRegisterHandler("google",       new Action<IRCMessage>(HandleGoogle));
 			PublicCRegisterHandler("translate",    new Action<IRCMessage>(HandleTranslate));
+			PublicCRegisterHandler("online",       new Action<IRCMessage>(HandleOnline));
 
 			// Half Operator
 			HalfOperatorCRegisterHandler("admin",  new Action<IRCMessage>(HandleAdmin));

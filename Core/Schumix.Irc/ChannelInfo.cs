@@ -76,7 +76,7 @@ namespace Schumix.Irc
 			foreach(var channels in ChannelFunction)
 			{
 				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Point2);
+				string[] point2 = point[1].Split(SchumixBase.Colon);
 
 				if(point[0] == channel.ToLower())
 				{
@@ -140,7 +140,7 @@ namespace Schumix.Irc
 			foreach(var channels in ChannelFunction)
 			{
 				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Point2);
+				string[] point2 = point[1].Split(SchumixBase.Colon);
 
 				if(point[0] == channel.ToLower())
 				{
@@ -152,12 +152,12 @@ namespace Schumix.Irc
 			foreach(var channels in ChannelFunction)
 			{
 				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Point2);
+				string[] point2 = point[1].Split(SchumixBase.Colon);
 
 				if(point[0] == channel.ToLower())
 				{
 					if(point2[0] == name.ToLower())
-						function += SchumixBase.Comma + name + SchumixBase.Point2 + status;
+						function += SchumixBase.Comma + name + SchumixBase.Colon + status;
 				}
 			}
 
@@ -195,7 +195,7 @@ namespace Schumix.Irc
 			foreach(var channels in ChannelFunction)
 			{
 				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Point2);
+				string[] point2 = point[1].Split(SchumixBase.Colon);
 
 				if(point[0] == channel.ToLower())
 				{
@@ -217,7 +217,14 @@ namespace Schumix.Irc
 			foreach(var channel in _ChannelList)
 			{
 				sSender.Join(channel.Key, channel.Value);
-				SchumixBase.DManager.Update("channel", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}'", channel.Key));
+
+				if(IsIgnore(channel.Key))
+				{
+					error = IsIgnore(channel.Key);
+					SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.ChannelInfo("Text10")), string.Format("Channel = '{0}'", channel.Key));
+				}
+				else
+					SchumixBase.DManager.Update("channel", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}'", channel.Key));
 			}
 
 			ChannelFunctionReload();

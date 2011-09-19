@@ -34,7 +34,7 @@ namespace Schumix.Irc.Commands
 		protected void HandleXbot(IRCMessage sIRCMessage)
 		{
 			var text = sLManager.GetCommandTexts("xbot", sIRCMessage.Channel);
-			if(text.Length < 3)
+			if(text.Length < 4)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
@@ -51,8 +51,9 @@ namespace Schumix.Irc.Commands
 				commands += " | " + IRCConfig.CommandPrefix + command.Key;
 			}
 
-			sSendMessage.SendChatMessage(sIRCMessage, text[1], commands.Remove(0, 3, " | "));
-			sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+			sSendMessage.SendChatMessage(sIRCMessage, text[1], Consts.SchumixProgrammedBy);
+			sSendMessage.SendChatMessage(sIRCMessage, text[2], Consts.SchumixDevelopers);
+			sSendMessage.SendChatMessage(sIRCMessage, text[3], commands.Remove(0, 3, " | "));
 		}
 
 		protected void HandleInfo(IRCMessage sIRCMessage)
@@ -64,8 +65,8 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			sSendMessage.SendChatMessage(sIRCMessage, text[0]);
-			sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+			sSendMessage.SendChatMessage(sIRCMessage, text[0], Consts.SchumixDevelopers);
+			sSendMessage.SendChatMessage(sIRCMessage, text[1], Consts.SchumixWebsite);
 			sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 		}
 
@@ -201,7 +202,7 @@ namespace Schumix.Irc.Commands
 				return;
 
 			if(sIRCMessage.Info.Length == 5)
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[4], sLManager.GetCommandText("warning", sIRCMessage.Channel), sIRCMessage.Channel);
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[4], sLManager.GetCommandText("warning", sIRCMessage.Channel), sIRCMessage.Nick, sIRCMessage.Channel);
 			else if(sIRCMessage.Info.Length >= 6)
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[4], "{0}", sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 		}
@@ -257,6 +258,19 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("translate", sIRCMessage.Channel));
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", Regex.Match(url).Groups["text"].ToString());
+		}
+
+		protected void HandleOnline(IRCMessage sIRCMessage)
+		{
+			if(sIRCMessage.Info.Length < 5)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+				return;
+			}
+
+			IsOnline = true;
+			OnlinePrivmsg = sIRCMessage.Channel;
+			sSender.NickServInfo(sIRCMessage.Info[4]);
 		}
 	}
 }

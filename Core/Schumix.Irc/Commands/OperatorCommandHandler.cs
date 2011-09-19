@@ -450,7 +450,7 @@ namespace Schumix.Irc.Commands
 						if(enabled)
 							ActiveChannels += ", " + channel;
 						else if(!enabled)
-							InActiveChannels += ", " + channel + SchumixBase.Point2 + row["Error"].ToString();
+							InActiveChannels += ", " + channel + SchumixBase.Colon + row["Error"].ToString();
 					}
 
 					if(ActiveChannels.Length > 0)

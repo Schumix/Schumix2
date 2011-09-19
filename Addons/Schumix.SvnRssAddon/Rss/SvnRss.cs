@@ -220,7 +220,7 @@ namespace Schumix.SvnRssAddon
 
 					if(_website == "assembla")
 					{
-						if(title.IndexOf(SchumixBase.Point2) != -1)
+						if(title.Contains(SchumixBase.Colon.ToString()))
 						{
 							sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla", language), _name, rev, author);
 							sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla2", language), _name, title.Substring(title.IndexOf(":")+1));

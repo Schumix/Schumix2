@@ -33,9 +33,10 @@ namespace Schumix.ExtraAddon.Commands
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
+		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		private readonly NameList sNameList = Singleton<NameList>.Instance;
+		private readonly Sender sSender = Singleton<Sender>.Instance;
 		protected bool AutoMode = false;
 		protected string ModeChannel;
 
@@ -51,7 +52,8 @@ namespace Schumix.ExtraAddon.Commands
 			if(sFunctions.AutoKick("join", sIRCMessage.Nick, sIRCMessage.Channel))
 				return;
 
-			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Point2);
+			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
+			sNameList.Add(sIRCMessage.Channel, sIRCMessage.Nick);
 
 			if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", sIRCMessage.Channel))
 			{
@@ -97,6 +99,8 @@ namespace Schumix.ExtraAddon.Commands
 			if(sIRCMessage.Nick == sNickInfo.NickStorage)
 				return;
 
+			sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Nick);
+
 			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", sIRCMessage.Channel))
 			{
 				var rand = new Random();
@@ -111,6 +115,14 @@ namespace Schumix.ExtraAddon.Commands
 			}
 		}
 
+		protected void HandleQQuit(IRCMessage sIRCMessage)
+		{
+			Console.WriteLine("asd2");
+			Console.WriteLine(sIRCMessage.Nick);
+			sNameList.Remove(string.Empty, sIRCMessage.Nick, false);
+			Console.WriteLine(sIRCMessage.Nick);
+		}
+
 		/// <summary>
 		///     Ha engedélyezett a ConsolLog, akkor kiírja a Console-ra ha kickelnek valakit.
 		/// </summary>
@@ -118,6 +130,8 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			if(sIRCMessage.Info.Length < 5)
 				return;
+
+			sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Info[3]);
 
 			if(sIRCMessage.Info[3] == sNickInfo.NickStorage)
 			{
@@ -140,6 +154,43 @@ namespace Schumix.ExtraAddon.Commands
 						Console.WriteLine(sLManager.GetCommandText("handlekick", sIRCMessage.Channel), sIRCMessage.Nick, sIRCMessage.Info[3], text.Remove(0, 1, ":"));
 					}
 				}
+			}
+		}
+
+		protected void HandleNameList(IRCMessage sIRCMessage)
+		{
+			int i = 0;
+			var split = sIRCMessage.Args.Split(SchumixBase.Space);
+			string Channel = split[1];
+			sNameList.Remove(Channel);
+
+			foreach(var name in sIRCMessage.Args.Split(SchumixBase.Space))
+			{
+				i++;
+
+				if(i < 3)
+					continue;
+
+				sNameList.Add(Channel, Parse(name));
+			}
+		}
+
+		private string Parse(string Name)
+		{
+			if(Name.Length < 1)
+				return string.Empty;
+
+			switch(Name.Substring(0, 1))
+			{
+				case ":":
+				case "~":
+				case "&":
+				case "@":
+				case "%":
+				case "+":
+					return Name.Remove(0, 1);
+				default:
+					return Name;
 			}
 		}
 	}

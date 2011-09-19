@@ -29,8 +29,8 @@ namespace Schumix.Irc
 {
 	public partial class MessageHandler : CommandManager
 	{
-		protected bool HostServStatus;
-		protected bool NewNick;
+		public static bool HostServStatus;
+		public static bool NewNick;
 		protected MessageHandler() {}
 
 		protected void HandleSuccessfulAuth(IRCMessage sIRCMessage)
@@ -105,7 +105,13 @@ namespace Schumix.Irc
 			if(ConsoleLog.CLog)
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write(sLConsole.MessageHandler("Text4"));
+
+				if(sIRCMessage.Nick == "NickServ" || sIRCMessage.Nick == "MemoServ" ||
+					sIRCMessage.Nick == "ChanServ" || sIRCMessage.Nick == "HostServ")
+					Console.Write(sLConsole.MessageHandler("Text4"));
+				else
+					Console.Write(string.Format("[{0}] ", sIRCMessage.Nick));
+
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.Write(sIRCMessage.Args + Environment.NewLine);
 				Console.ForegroundColor = ConsoleColor.Gray;
@@ -122,6 +128,43 @@ namespace Schumix.Irc
 					Log.Warning("NickServ", sLConsole.NickServ("Text3"));
 				else if(sIRCMessage.Args.Contains("Password accepted - you are now recognized."))
 					Log.Success("NickServ", sLConsole.NickServ("Text4"));
+
+				if(IsOnline)
+				{
+					switch(IRCConfig.MessageType.ToLower())
+					{
+						case "privmsg":
+							sIRCMessage.MessageType = MessageType.Privmsg;
+							break;
+						case "notice":
+							sIRCMessage.MessageType = MessageType.Notice;
+							break;
+						default:
+							sIRCMessage.MessageType = MessageType.Privmsg;
+							break;
+					}
+
+					if(sIRCMessage.Args.Contains("   Is online from:"))
+					{
+						sIRCMessage.Channel = OnlinePrivmsg;
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text11"));
+						IsOnline = false;
+					}
+					else if(sIRCMessage.Args.Contains("isn't registered."))
+					{
+						sIRCMessage.Channel = OnlinePrivmsg;
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text12"));
+						IsOnline = false;
+					}
+					else if(sIRCMessage.Args.Contains("   Last seen time:"))
+					{
+						sIRCMessage.Channel = OnlinePrivmsg;
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text13"), sIRCMessage.Args.Remove(0, "   Last seen time: ".Length, "   Last seen time: "));
+						IsOnline = false;
+					}
+
+					sIRCMessage.MessageType = MessageType.Notice;
+				}
 			}
 
 			if(sIRCMessage.Nick == "HostServ" && IRCConfig.UseHostServ)
@@ -136,7 +179,7 @@ namespace Schumix.Irc
 			}
 
 			sIRCMessage.Channel = sIRCMessage.Nick;
-			sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Point2);
+			sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
 			Schumix(sIRCMessage);
 
 			if(sIRCMessage.Info[3] == string.Empty || sIRCMessage.Info[3].Length < PLength || sIRCMessage.Info[3].Substring(0, PLength) != IRCConfig.CommandPrefix)
@@ -224,8 +267,28 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			string text = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisPrivmsg, sLManager.GetCommandText("whois", WhoisPrivmsg), text.Remove(0, 1, SchumixBase.Point2));
+			var text = sLManager.GetCommandTexts("whois", WhoisPrivmsg);
+			if(text.Length < 2)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(WhoisPrivmsg)));
+				return;
+			}
+
+			string text2 = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisPrivmsg, text[0], text2.Remove(0, 1, SchumixBase.Colon));
+			WhoisPrivmsg = sNickInfo.NickStorage;
+		}
+
+		protected void HandleNoWhois(IRCMessage sIRCMessage)
+		{
+			var text = sLManager.GetCommandTexts("whois", WhoisPrivmsg);
+			if(text.Length < 2)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(WhoisPrivmsg)));
+				return;
+			}
+
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisPrivmsg, text[1]);
 			WhoisPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -239,6 +302,12 @@ namespace Schumix.Irc
 		{
 			foreach(var plugin in sAddonManager.GetPlugins())
 				plugin.HandleKick(sIRCMessage);
+		}
+
+		protected void HandleQQuit(IRCMessage sIRCMessage)
+		{
+			foreach(var plugin in sAddonManager.GetPlugins())
+				plugin.HandleQuit(sIRCMessage);
 		}
 
 		/// <summary>

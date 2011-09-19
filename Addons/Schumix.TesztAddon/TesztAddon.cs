@@ -22,6 +22,7 @@ using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.TesztAddon.Commands;
 
 namespace Schumix.TesztAddon
@@ -65,6 +66,11 @@ namespace Schumix.TesztAddon
 
 		}
 
+		public void HandleQuit(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			// Adminisztrátor parancsok
@@ -93,7 +99,7 @@ namespace Schumix.TesztAddon
 		/// </summary>
 		public string Author
 		{
-			get { return "Megax"; }
+			get { return Consts.SchumixProgrammedBy; }
 		}
 
 		/// <summary>
@@ -101,7 +107,7 @@ namespace Schumix.TesztAddon
 		/// </summary>
 		public string Website
 		{
-			get { return "http://www.github.com/megax/Schumix2"; }
+			get { return Consts.SchumixWebsite; }
 		}
 	}
 }

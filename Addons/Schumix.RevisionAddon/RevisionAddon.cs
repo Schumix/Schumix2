@@ -20,6 +20,7 @@
 using System;
 using Schumix.API;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Irc.Commands;
 using Schumix.RevisionAddon.Commands;
 
@@ -62,6 +63,11 @@ namespace Schumix.RevisionAddon
 
 		}
 
+		public void HandleQuit(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;
@@ -80,7 +86,7 @@ namespace Schumix.RevisionAddon
 		/// </summary>
 		public string Author
 		{
-			get { return "Megax"; }
+			get { return Consts.SchumixProgrammedBy; }
 		}
 
 		/// <summary>
@@ -88,7 +94,7 @@ namespace Schumix.RevisionAddon
 		/// </summary>
 		public string Website
 		{
-			get { return "http://www.github.com/megax/Schumix2"; }
+			get { return Consts.SchumixWebsite; }
 		}
 	}
 }

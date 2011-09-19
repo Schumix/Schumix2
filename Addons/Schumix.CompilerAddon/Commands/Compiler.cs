@@ -195,8 +195,9 @@ namespace Schumix.CompilerAddon.Commands
 
 				return 1;
 			}
-			catch(Exception)
+			catch(Exception e)
 			{
+				Log.Debug("CompilerCommand", sLConsole.Exception("Error"), e.Message);
 				return -1;
 			}
 		}

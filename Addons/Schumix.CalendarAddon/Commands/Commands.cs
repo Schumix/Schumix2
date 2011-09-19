@@ -53,7 +53,7 @@ namespace Schumix.CalendarAddon.Commands
 				return;
 			}
 
-			if(sIRCMessage.Info[5].Contains(SchumixBase.Point2.ToString()))
+			if(sIRCMessage.Info[5].Contains(SchumixBase.Colon.ToString()))
 			{
 				if(sIRCMessage.Info.Length < 7)
 				{
@@ -61,11 +61,11 @@ namespace Schumix.CalendarAddon.Commands
 					return;
 				}
 
-				int hour = Convert.ToInt32(sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(SchumixBase.Point2)));
+				int hour = Convert.ToInt32(sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)));
 				if(hour > 24)
 					return;
 
-				int minute = Convert.ToInt32(sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(SchumixBase.Point2)+1));
+				int minute = Convert.ToInt32(sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)+1));
 				if(minute > 60)
 					return;
 
@@ -101,11 +101,11 @@ namespace Schumix.CalendarAddon.Commands
 				if(day > 31)
 					return;
 
-				int hour = Convert.ToInt32(sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Point2)));
+				int hour = Convert.ToInt32(sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)));
 				if(hour > 24)
 					return;
 
-				int minute = Convert.ToInt32(sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Point2)+1));
+				int minute = Convert.ToInt32(sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)+1));
 				if(minute > 60)
 					return;
 

@@ -168,6 +168,14 @@ namespace Schumix.Irc
 			}
 		}
 
+		public void NickServInfo(string info)
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("NickServ info {0}", info);
+			}
+		}
+
 		public void HostServ(string h)
 		{
 			lock(WriteLock)
