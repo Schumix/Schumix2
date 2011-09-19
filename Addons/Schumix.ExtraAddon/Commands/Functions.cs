@@ -61,7 +61,7 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			if(status == "join")
 			{
-				string channel = _channel.Remove(0, 1, SchumixBase.Point2);
+				string channel = _channel.Remove(0, 1, SchumixBase.Colon);
 
 				if(sChannelInfo.FSelect("autokick") && sChannelInfo.FSelect("autokick", channel))
 				{

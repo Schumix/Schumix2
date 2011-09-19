@@ -377,8 +377,8 @@ namespace Schumix.Irc.Commands
 
 			string nick = sIRCMessage.Info[4];
 			sNickInfo.ChangeNick(nick);
-			sSender.Nick(nick);
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("nick", sIRCMessage.Channel), nick);
+			sSender.Nick(nick);
 		}
 
 		protected void HandleJoin(IRCMessage sIRCMessage)

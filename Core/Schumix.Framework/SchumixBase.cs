@@ -40,7 +40,7 @@ namespace Schumix.Framework
 		public const char NewLine = '\n';
 		public const char Comma = ',';
 		public const char Point = '.';
-		public const char Point2 = ':';
+		public const char Colon = ':';
 
 		protected SchumixBase()
 		{

@@ -24,6 +24,7 @@ using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
 using Schumix.CalendarAddon.Config;
 using Schumix.CalendarAddon.Commands;
@@ -123,6 +124,11 @@ namespace Schumix.CalendarAddon
 
 		}
 
+		public void HandleQuit(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;
@@ -141,7 +147,7 @@ namespace Schumix.CalendarAddon
 		/// </summary>
 		public string Author
 		{
-			get { return "Megax"; }
+			get { return Consts.SchumixProgrammedBy; }
 		}
 
 		/// <summary>
@@ -149,7 +155,7 @@ namespace Schumix.CalendarAddon
 		/// </summary>
 		public string Website
 		{
-			get { return "http://www.github.com/megax/Schumix2"; }
+			get { return Consts.SchumixWebsite; }
 		}
 	}
 }

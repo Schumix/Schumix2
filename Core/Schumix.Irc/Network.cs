@@ -109,9 +109,11 @@ namespace Schumix.Irc
 			RegisterHandler("NOTICE",                      new Action<IRCMessage>(HandleNotice));
 			RegisterHandler("PART",                        new Action<IRCMessage>(HandleLeft));
 			RegisterHandler("KICK",                        new Action<IRCMessage>(HandleKKick));
+			RegisterHandler("QUIT",                        new Action<IRCMessage>(HandleQQuit));
 			RegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,  new Action<IRCMessage>(HandleChannelBan));
 			RegisterHandler(ReplyCode.ERR_BADCHANNELKEY,   new Action<IRCMessage>(HandleNoChannelPassword));
 			RegisterHandler(ReplyCode.RPL_WHOISCHANNELS,   new Action<IRCMessage>(HandleMWhois));
+			RegisterHandler(ReplyCode.ERR_NOSUCHNICK,      new Action<IRCMessage>(HandleNoWhois));
 			RegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND,  new Action<IRCMessage>(HandleUnknownCommand));
 			RegisterHandler(ReplyCode.ERR_NICKNAMEINUSE,   new Action<IRCMessage>(HandleNickError));
 			RegisterHandler(439,                           new Action<IRCMessage>(HandleWaitingForConnection));
@@ -346,7 +348,7 @@ namespace Schumix.Irc
 		{
 			var IMessage = new IRCMessage();
 			string[] IrcCommand = message.Split(SchumixBase.Space);
-			IrcCommand[0] = IrcCommand[0].Remove(0, 1, SchumixBase.Point2);
+			IrcCommand[0] = IrcCommand[0].Remove(0, 1, SchumixBase.Colon);
 			IMessage.Hostmask = IrcCommand[0];
 
 			if(IrcCommand.Length > 2)
@@ -365,7 +367,7 @@ namespace Schumix.Irc
 			string opcode = IrcCommand[1];
 			IMessage.Info = IrcCommand;
 			IMessage.Args = IrcCommand.SplitToString(3, SchumixBase.Space);
-			IMessage.Args = IMessage.Args.Remove(0, 1, SchumixBase.Point2);
+			IMessage.Args = IMessage.Args.Remove(0, 1, SchumixBase.Colon);
 
 			switch(IRCConfig.MessageType.ToLower())
 			{
@@ -389,9 +391,10 @@ namespace Schumix.Irc
 			else
 			{
 				if(IrcCommand[0] == "PING")
-					sSender.Pong(IrcCommand[1].Remove(0, 1, SchumixBase.Point2));
+					sSender.Pong(IrcCommand[1].Remove(0, 1, SchumixBase.Colon));
 				else
 				{
+					Console.WriteLine(message);
 					if(ConsoleLog.CLog)
 						Log.Notice("HandleIrcCommand", sLConsole.Network("Text18"), opcode);
 				}

@@ -106,5 +106,23 @@ namespace Schumix.CompilerAddon.Localization
 					return string.Empty;
 			}
 		}
+
+		public string Exception(string Name)
+		{
+			switch(Name)
+			{
+				case "Error":
+				{
+					if(Locale == "huHU")
+						return "Meghibásodás részletei: {0}";
+					else if(Locale == "enUS")
+						return "Failure details: {0}";
+					else
+						return "Failure details: {0}";
+				}
+				default:
+					return string.Empty;
+			}
+		}
 	}
 }

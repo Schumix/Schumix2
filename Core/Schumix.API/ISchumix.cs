@@ -39,6 +39,7 @@ namespace Schumix.API
 		void HandleNotice(IRCMessage sIRCMessage);
 		void HandleLeft(IRCMessage sIRCMessage);
 		void HandleKick(IRCMessage sIRCMessage);
+		void HandleQuit(IRCMessage sIRCMessage);
 		bool HandleHelp(IRCMessage sIRCMessage);
 
 		/// <summary>

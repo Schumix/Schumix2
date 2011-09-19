@@ -18,6 +18,7 @@
  */
 
 using System;
+using Schumix.Framework.Config;
 
 namespace Schumix.Framework.Localization
 {
@@ -33,20 +34,47 @@ namespace Schumix.Framework.Localization
 				case "StartText":
 				{
 					if(Locale == "huHU")
-						return "A program leállításához használd a <Ctrl+C> vagy <quit> parancsot!\n";
+						return "A program leállításához használd a <Ctrl+C> vagy <quit> parancsot!";
 					else if(Locale == "enUS")
-						return "To shut down the program use the <Ctrl+C> or the <quit> command!\n";
+						return "To shut down the program use the <Ctrl+C> or the <quit> command!";
 					else
-						return "To shut down the program use the <Ctrl+C> or the <quit> command!\n";
+						return "To shut down the program use the <Ctrl+C> or the <quit> command!";
 				}
 				case "StartText2":
 				{
 					if(Locale == "huHU")
-						return "Programot készítette Megax, Jackneill. Schumix Verzió: {0} http://megaxx.info";
+						return "Schumix Verzió: {0}";
 					else if(Locale == "enUS")
-						return "Programmed by Megax, Jackneill. Schumix Version: {0} http://megaxx.info";
+						return "Schumix Version: {0}";
 					else
-						return "Programmed by Megax, Jackneill. Schumix Version: {0} http://megaxx.info";
+						return "Schumix Version: {0}";
+				}
+				case "StartText2-2":
+				{
+					if(Locale == "huHU")
+						return "Weboldal: {0}";
+					else if(Locale == "enUS")
+						return "Website: {0}";
+					else
+						return "Website: {0}";
+				}
+				case "StartText2-3":
+				{
+					if(Locale == "huHU")
+						return "Programot készítette: {0}";
+					else if(Locale == "enUS")
+						return "Programmed by: {0}";
+					else
+						return "Programmed by: {0}";
+				}
+				case "StartText2-4":
+				{
+					if(Locale == "huHU")
+						return "Fejlesztők: {0}";
+					else if(Locale == "enUS")
+						return "Developers: {0}";
+					else
+						return "Developers: {0}";
 				}
 				case "StartText3":
 				{
@@ -841,6 +869,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Banned channels: {0}";
 				}
+				case "Text10":
+				{
+					if(Locale == "huHU")
+						return "Konfig által letiltva!";
+					else if(Locale == "enUS")
+						return "Disabled by Config!";
+					else
+						return "Disabled by Config!";
+				}
 				default:
 					return string.Empty;
 			}
@@ -963,9 +1000,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Nem létező irc parancs\n";
 					else if(Locale == "enUS")
-						return "No such irc command.";
+						return "No such irc command.\n";
 					else
-						return "No such irc command.";
+						return "No such irc command.\n";
 				}
 				case "Text6":
 				{
@@ -1029,6 +1066,33 @@ namespace Schumix.Framework.Localization
 						return "You have not registered!";
 					else
 						return "You have not registered!";
+				}
+				case "Text11":
+				{
+					if(Locale == "huHU")
+						return "Jelenleg fent van.";
+					else if(Locale == "enUS")
+						return "Currently online.";
+					else
+						return "Currently online.";
+				}
+				case "Text12":
+				{
+					if(Locale == "huHU")
+						return "Ez a név nincs beregisztrálva!";
+					else if(Locale == "enUS")
+						return "This nickname isn't registered!";
+					else
+						return "This nickname isn't registered!";
+				}
+				case "Text13":
+				{
+					if(Locale == "huHU")
+						return "Nincs fent ekkortól: {0}";
+					else if(Locale == "enUS")
+						return "Last seen time:: {0}";
+					else
+						return "Last seen time:: {0}";
 				}
 				default:
 					return string.Empty;

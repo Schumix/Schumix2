@@ -23,6 +23,7 @@ using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.GameAddon.Commands;
 using Schumix.GameAddon.MaffiaGames;
@@ -40,7 +41,6 @@ namespace Schumix.GameAddon
 		public void Setup()
 		{
 			Network.PublicRegisterHandler("NICK",     		new Action<IRCMessage>(HandleNewNick));
-			Network.PublicRegisterHandler("QUIT",     		new Action<IRCMessage>(HandleQuit));
 			CommandManager.PublicCRegisterHandler("game",	new Action<IRCMessage>(HandleGame));
 			Console.CancelKeyPress += (sender, e) => { Clean(); };
 		}
@@ -48,7 +48,6 @@ namespace Schumix.GameAddon
 		public void Destroy()
 		{
 			Network.PublicRemoveHandler("NICK");
-			Network.PublicRemoveHandler("QUIT");
 			CommandManager.PublicCRemoveHandler("game");
 			Clean();
 		}
@@ -90,7 +89,7 @@ namespace Schumix.GameAddon
 					if(sIRCMessage.Channel.Substring(0, 1) != "#" && channel == sIRCMessage.Channel.ToLower())
 						return;
 
-					sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Point2);
+					sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
 					if((sIRCMessage.Info[3].Length > 0 && sIRCMessage.Info[3].Substring(0, 1) != "!") || sIRCMessage.Info[3].Length == 0)
 						return;
 
@@ -286,6 +285,24 @@ namespace Schumix.GameAddon
 			}
 		}
 
+		public void HandleQuit(IRCMessage sIRCMessage)
+		{
+			foreach(var maffia in GameAddon.MaffiaList)
+			{
+				if(!maffia.Value.Running)
+					continue;
+
+				foreach(var player in maffia.Value.GetPlayerList())
+				{
+					if(player.Value == sIRCMessage.Nick)
+					{
+						maffia.Value.Leave(sIRCMessage.Nick);
+						break;
+					}
+				}
+			}
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;
@@ -319,7 +336,7 @@ namespace Schumix.GameAddon
 		/// </summary>
 		public string Author
 		{
-			get { return "Megax"; }
+			get { return Consts.SchumixProgrammedBy; }
 		}
 
 		/// <summary>
@@ -327,7 +344,7 @@ namespace Schumix.GameAddon
 		/// </summary>
 		public string Website
 		{
-			get { return "http://www.github.com/megax/Schumix2"; }
+			get { return Consts.SchumixWebsite; }
 		}
 	}
 }

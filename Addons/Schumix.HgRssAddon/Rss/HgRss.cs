@@ -232,7 +232,7 @@ namespace Schumix.HgRssAddon
 
 					if(_website == "google")
 					{
-						if(title.IndexOf(SchumixBase.Point2) != -1)
+						if(title.Contains(SchumixBase.Colon.ToString()))
 						{
 							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google", language), _name, rev.Substring(0, 10), author);
 							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google2", language), _name, title.Substring(title.IndexOf(":")+1));

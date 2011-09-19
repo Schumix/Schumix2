@@ -81,7 +81,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					return;
 			}
 
-			sSendMessage.SendCMPrivmsg(Channel, "{0} arra szavazott, hogy {1} legyen meglincselve!", NickName, Name);
+			sSendMessage.SendCMPrivmsg(_channel, "{0} arra szavazott, hogy {1} legyen meglincselve!", NickName, Name);
 
 			string namess = string.Empty;
 			foreach(var list in _lynchlist)

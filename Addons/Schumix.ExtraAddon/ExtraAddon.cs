@@ -24,6 +24,7 @@ using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.ExtraAddon.Config;
@@ -37,11 +38,13 @@ namespace Schumix.ExtraAddon
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
-		private readonly Notes sNotes = Singleton<Notes>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		private readonly NameList sNameList = Singleton<NameList>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
+		private readonly Notes sNotes = Singleton<Notes>.Instance;
 #if MONO
 #pragma warning disable 414
 		private AddonConfig _config;
@@ -49,12 +52,15 @@ namespace Schumix.ExtraAddon
 #else
 		private AddonConfig _config;
 #endif
+		public static bool IsOnline { get; set; }
 
 		public void Setup()
 		{
+			IsOnline = false;
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
 			Network.PublicRegisterHandler("JOIN",                       new Action<IRCMessage>(HandleJoin));
+			Network.PublicRegisterHandler(ReplyCode.RPL_NAMREPLY,       new Action<IRCMessage>(HandleNameList));
 			CommandManager.PublicCRegisterHandler("notes",              new Action<IRCMessage>(sNotes.HandleNotes));
 			CommandManager.PublicCRegisterHandler("message",            new Action<IRCMessage>(sFunctions.HandleMessage));
 			CommandManager.PublicCRegisterHandler("weather",            new Action<IRCMessage>(sFunctions.HandleWeather));
@@ -68,6 +74,7 @@ namespace Schumix.ExtraAddon
 		public void Destroy()
 		{
 			Network.PublicRemoveHandler("JOIN");
+			Network.PublicRemoveHandler(ReplyCode.RPL_NAMREPLY);
 			CommandManager.PublicCRemoveHandler("notes");
 			CommandManager.PublicCRemoveHandler("message");
 			CommandManager.PublicCRemoveHandler("weather");
@@ -76,6 +83,7 @@ namespace Schumix.ExtraAddon
 			CommandManager.PublicCRemoveHandler("md5");
 			CommandManager.PublicCRemoveHandler("prime");
 			CommandManager.HalfOperatorCRemoveHandler("autofunction");
+			sNameList.RemoveAll();
 		}
 
 		public bool Reload(string RName)
@@ -188,6 +196,28 @@ namespace Schumix.ExtraAddon
 
 				AutoMode = false;
 			}
+
+			if(sIRCMessage.Nick == "NickServ" && IsOnline)
+			{
+				if(sIRCMessage.Args.Contains("isn't registered.") || sIRCMessage.Args.Contains("   Last seen time:"))
+				{
+					//sNameList.Change(IRCConfig.NickName);
+					sNickInfo.ChangeNick(IRCConfig.NickName);
+					sSender.Nick(IRCConfig.NickName);
+					Log.Notice("NickServ", sLConsole.NickServ("Text"));
+					sSender.NickServ(IRCConfig.NickServPassword);
+					MessageHandler.NewNick = false;
+		
+					if(IRCConfig.UseHostServ)
+					{
+						MessageHandler.HostServStatus = true;
+						sSender.HostServ("on");
+						Log.Notice("HostServ", sLConsole.HostServ("Text"));
+					}
+
+					IsOnline = false;
+				}
+			}
 		}
 
 		public void HandleLeft(IRCMessage sIRCMessage)
@@ -198,6 +228,11 @@ namespace Schumix.ExtraAddon
 		public void HandleKick(IRCMessage sIRCMessage)
 		{
 			HandleKKick(sIRCMessage);
+		}
+
+		public void HandleQuit(IRCMessage sIRCMessage)
+		{
+			HandleQQuit(sIRCMessage);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)
@@ -218,7 +253,7 @@ namespace Schumix.ExtraAddon
 		/// </summary>
 		public string Author
 		{
-			get { return "Megax"; }
+			get { return Consts.SchumixProgrammedBy; }
 		}
 
 		/// <summary>
@@ -226,7 +261,7 @@ namespace Schumix.ExtraAddon
 		/// </summary>
 		public string Website
 		{
-			get { return "http://www.github.com/megax/Schumix2"; }
+			get { return Consts.SchumixWebsite; }
 		}
 	}
 }

@@ -64,6 +64,8 @@ namespace Schumix
 			string configfile = "Schumix.xml";
 			string console_encoding = "utf-8";
 			string localization = "start";
+			System.Console.BackgroundColor = ConsoleColor.Black;
+			System.Console.ForegroundColor = ConsoleColor.Gray;
 
 			for(int i = 0; i < args.Length; i++)
 			{
@@ -109,9 +111,12 @@ namespace Schumix
 			System.Console.ForegroundColor = ConsoleColor.Blue;
 			System.Console.WriteLine("[Schumix2]");
 			System.Console.WriteLine(sLConsole.MainText("StartText"));
-			System.Console.ForegroundColor = ConsoleColor.Gray;
 			System.Console.WriteLine(sLConsole.MainText("StartText2"), sUtilities.GetVersion());
+			System.Console.WriteLine(sLConsole.MainText("StartText2-2"), Consts.SchumixWebsite);
+			System.Console.WriteLine(sLConsole.MainText("StartText2-3"), Consts.SchumixProgrammedBy);
+			System.Console.WriteLine(sLConsole.MainText("StartText2-4"), Consts.SchumixDevelopers);
 			System.Console.WriteLine("================================================================================"); // 80
+			System.Console.ForegroundColor = ConsoleColor.Gray;
 			System.Console.WriteLine();
 
 			new Config(configdir, configfile);

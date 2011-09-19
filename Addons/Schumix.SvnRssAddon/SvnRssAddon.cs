@@ -22,6 +22,7 @@ using System.Data;
 using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.Irc.Commands;
@@ -120,6 +121,11 @@ namespace Schumix.SvnRssAddon
 
 		}
 
+		public void HandleQuit(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;
@@ -138,7 +144,7 @@ namespace Schumix.SvnRssAddon
 		/// </summary>
 		public string Author
 		{
-			get { return "Megax"; }
+			get { return Consts.SchumixProgrammedBy; }
 		}
 
 		/// <summary>
@@ -146,7 +152,7 @@ namespace Schumix.SvnRssAddon
 		/// </summary>
 		public string Website
 		{
-			get { return "http://www.github.com/megax/Schumix2"; }
+			get { return Consts.SchumixWebsite; }
 		}
 	}
 }
