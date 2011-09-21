@@ -355,7 +355,7 @@ namespace Schumix.Framework
 
 		public string GetFunctionUpdate()
 		{
-			return ",koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,mantisbt:off";
+			return ",koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off";
 		}
 
 		public string SqlEscape(string text)

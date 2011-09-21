@@ -44,7 +44,7 @@ Minute INTEGER DEFAULT 0
 DROP TABLE IF EXISTS "channel";
 CREATE TABLE "channel" (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
-Functions VARCHAR(255)    DEFAULT ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,mantisbt:off',
+Functions VARCHAR(255)    DEFAULT ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off',
 Channel VARCHAR(20),
 Password VARCHAR(30),
 Enabled VARCHAR(5),
@@ -55,7 +55,7 @@ Language VARCHAR(4)    DEFAULT 'enUS'
 -- ----------------------------
 -- Records of channel
 -- ----------------------------
-INSERT INTO "channel" VALUES (1, ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,mantisbt:off', '#schumix2', null, null, null, 'huHU');
+INSERT INTO "channel" VALUES (1, ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off', '#schumix2', null, null, null, 'huHU');
 
 -- ----------------------------
 -- Table structure for "gitinfo"
