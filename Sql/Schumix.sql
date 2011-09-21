@@ -37,7 +37,7 @@ CREATE TABLE `banned` (
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
   `Id` int(3) unsigned NOT NULL auto_increment,
-  `Functions` varchar(500) NOT NULL default ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off',
+  `Functions` varchar(500) NOT NULL default ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,mantisbt:off',
   `Channel` varchar(20) NOT NULL default '',
   `Password` varchar(30) NOT NULL default '',
   `Enabled` varchar(5) NOT NULL default '',
@@ -46,7 +46,7 @@ CREATE TABLE `channel` (
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-INSERT INTO `channel` VALUES ('1', ',koszones:on,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off', '#schumix2', '', '', '', 'huHU');
+INSERT INTO `channel` VALUES ('1', ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,mantisbt:off', '#schumix2', '', '', '', 'huHU');
 
 -- ----------------------------
 -- Table structure for gitinfo
@@ -80,6 +80,20 @@ CREATE TABLE `hginfo` (
 
 -- INSERT INTO `hginfo` VALUES ('1', 'TrinityDB', 'http://code.google.com/feeds/p/trinitydb/hgchanges/basic', 'google', '#hun_bot,#schumix'); Példa a használatra
 -- INSERT INTO `hginfo` VALUES ('2', 'NeoCore', 'http://bitbucket.org/skyne/neocore/rss?token=2b6ceaf25f0a4c993ddc905327806e9c', 'bitbucket', '#hun_bot,#schumix'); Példa a használatra
+
+-- ----------------------------
+-- Table structure for mantisbt
+-- ----------------------------
+DROP TABLE IF EXISTS `mantisbt`;
+CREATE TABLE `mantisbt` (
+  `Id` int(10) unsigned NOT NULL auto_increment,
+  `Name` varchar(20) NOT NULL default '',
+  `Link` varchar(255) NOT NULL default '',
+  `Channel` text NOT NULL,
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 CHARSET=latin1;
+
+-- INSERT INTO `mantisbt` VALUES ('1', 'Teszt', 'http://teszt.hu/issues_rss.php?username=Megax&key=KEY-CODE', '#hun_bot,#schumix'); Példa a használatra
 
 -- ----------------------------
 -- Table structure for hlmessage
@@ -438,6 +452,15 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'handlejoin', 'Jó reggelt {0}\nJó estét {0}\nÜdv főnök');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'handleleft/random', 'Viszlát\nBye');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'handleleft', 'Jóét {0}');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/info', '3{0} Channel: 2{1}');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/list', '2Lista:3{0}');
+
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/start', '{0} már el van indítva!\n{0} sikeresen el lett indítva.\n{0} nem létezik!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/stop', '{0} már le van állítva!\n{0} sikeresen le lett állítva.\n{0} nem létezik!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/reload', '{0} sikeresen újra lett indítva.\n{0} nem létezik!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/reload/all', 'Minden rss újra lett indítva.');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/channel/add', 'Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/channel/remove', 'Csatorna sikeresen törölve.\nNem létezik ilyen név!');
 
 -- enUS
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'schumix2/sys', '3Version: 10{0}\n3Platform: {0}\n3OSVersion: {0}\n3Programming language: c#\n3Memory allocation:5 {0} MB\n3Memory allocation:8 {0} MB\n3Memory allocation:3 {0} MB\n3Uptime: {0}');
@@ -556,6 +579,14 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'handlejoin', 'Good Morning {0}\nGood Night {0}\nWelcome boss!');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'handleleft/random', 'ByeBye\nBye');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'handleleft', 'Goodbye {0}');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/info', '3{0} Channel: 2{1}');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/list', '2List:3{0}');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/start', '{0} already translated!\n{0} successfully started.\n{0} no such!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/stop', '{0} already stopped!\n{0} successfully stopped.\n{0} no such!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/reload', '{0} successfully restarted.\n{0} no such!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/reload/all', 'All of Rss is restarted.');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/channel/add', 'Successfully added channel.\nNo such name!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/channel/remove', 'Successfully deleted channel!\nNo such name!');
 
 -- ----------------------------
 -- Table structure for localized_command_help
@@ -692,6 +723,16 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'weather', '9', 'Megmondja az időjárást a megadott városban.\nHasználata: {0}weather <város>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'game', '9', 'Játékok indítása irc-n.\nJáték parancsai: start');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'game/start', '9', 'Játék indítására szolgáló parancs.\nHasználata: {0}game start <játék neve>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt', '1', 'MantisBT rss-ek kezelése.\nMantisBT parancsai: channel | info | list | start | stop | reload');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/channel', '1', 'Rss csatornákra való kiírásának kezelése.\nChannel parancsai: add | remove');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/channel/add', '1', 'Új csatorna hozzáadása az rss-hez.\nHasználata: {0}mantisbt channel add <rss neve> <csatorna neve>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/channel/remove', '1', 'Nem használatos csatorna eltávolítása az rss-ből.\nHasználata: {0}mantisbt channel remove <rss neve> <csatorna neve>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/info', '1', 'Kiírja az rss-ek állapotát.');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/list', '1', 'Választható rss-ek listája.');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/start', '1', 'Új rss betöltése.\nHasználata: {0}mantisbt start <rss neve>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/stop', '1', 'Rss leállítása.\nHasználata: {0}mantisbt stop <rss neve>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/reload', '1', 'Megadott rss újratöltése.\nMantisBT reload parancsai: all');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/reload/all', '1', 'Minden rss újratöltése.\nHasználata: {0}mantisbt reload <rss neve>');
 
 -- enUS
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'xbot', '9', 'Users to use the command list.');
@@ -815,6 +856,16 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'weather', '9', 'Displays of the canal, what is the weather in the town.\nUse: {0}weather <name>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'game', '9', 'Games start on IRC.\nGame command: start');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'game/start', '9', 'Game launching commands.\nUse: {0}game start <game name>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt', '1', 'Rss mantisbt \'s management.\nMantisBT commands: channel | info | list | start | stop | reload');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/channel', '1', 'RSS feeds on their handling of the announcement.\nChannel commands: add | remove');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/channel/add', '1', 'New channel added to the rss.\nUse: {0}mantisbt channel add <rss name> <channel name>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/channel/remove', '1', 'Removed from the RSS Channel.\nUse: {0}mantisbt channel remove <rss name> <channel name>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/info', '1', 'Prints rss-s condition.');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/list', '1', 'Optional list of rss.');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/start', '1', 'New RSS feeds.\nUse: {0}mantisbt start <rss name>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/stop', '1', 'Rss stop.\nUse: {0}mantisbt stop <rss name>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/reload', '1', 'Specify rss reload.\nMantisBT reload command: all');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/reload/all', '1', 'All RSS reload.\nUse: {0}mantisbt reload <rss name>');
 
 -- ----------------------------
 -- Table structure for localized_warning
@@ -985,6 +1036,7 @@ INSERT INTO `schumix` VALUES ('14', 'compiler', 'on');
 INSERT INTO `schumix` VALUES ('15', 'gamecommands', 'on');
 INSERT INTO `schumix` VALUES ('16', 'webtitle', 'on');
 INSERT INTO `schumix` VALUES ('17', 'randomkick', 'off');
+INSERT INTO `schumix` VALUES ('18', 'mantisbt', 'off');
 
 -- ----------------------------
 -- Table structure for svninfo

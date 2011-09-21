@@ -235,7 +235,7 @@ namespace Schumix.HgRssAddon
 						if(title.Contains(SchumixBase.Colon.ToString()))
 						{
 							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google", language), _name, rev.Substring(0, 10), author);
-							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google2", language), _name, title.Substring(title.IndexOf(":")+1));
+							sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
 						}
 					}
 					else if(_website == "bitbucket")

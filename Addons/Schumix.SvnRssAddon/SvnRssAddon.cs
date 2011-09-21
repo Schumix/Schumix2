@@ -59,7 +59,6 @@ namespace Schumix.SvnRssAddon
 					string name = row["Name"].ToString();
 					string link = row["Link"].ToString();
 					string website = row["Website"].ToString();
-
 					var rss = new SvnRss(name, link, website);
 					RssList.Add(rss);
 				}

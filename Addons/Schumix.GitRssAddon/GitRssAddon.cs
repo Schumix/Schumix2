@@ -60,7 +60,6 @@ namespace Schumix.GitRssAddon
 					string type = row["Type"].ToString();
 					string link = row["Link"].ToString();
 					string website = row["Website"].ToString();
-
 					var rss = new GitRss(name, type, link, website);
 					RssList.Add(rss);
 				}
