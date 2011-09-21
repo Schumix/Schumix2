@@ -37,7 +37,7 @@ CREATE TABLE `banned` (
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
   `Id` int(3) unsigned NOT NULL auto_increment,
-  `Functions` varchar(500) NOT NULL default ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,mantisbt:off',
+  `Functions` varchar(500) NOT NULL default ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off',
   `Channel` varchar(20) NOT NULL default '',
   `Password` varchar(30) NOT NULL default '',
   `Enabled` varchar(5) NOT NULL default '',
@@ -46,7 +46,7 @@ CREATE TABLE `channel` (
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-INSERT INTO `channel` VALUES ('1', ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,mantisbt:off', '#schumix2', '', '', '', 'huHU');
+INSERT INTO `channel` VALUES ('1', ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off', '#schumix2', '', '', '', 'huHU');
 
 -- ----------------------------
 -- Table structure for gitinfo

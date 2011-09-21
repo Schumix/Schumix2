@@ -553,5 +553,3 @@ Channel TEXT
 -- INSERT INTO `mantisbt` VALUES ('1', 'Teszt', 'http://teszt.hu/issues_rss.php?username=Megax&key=KEY-CODE', '#hun_bot,#schumix'); Példa a használatra
 
 INSERT INTO "schumix" VALUES (18, 'mantisbt', 'off');
-ALTER TABLE channel CHANGE column `Functions` `Functions` varchar(500) NOT NULL default ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,mantisbt:off';
-UPDATE `channel` SET `Functions` = concat(Functions, ',mantisbt:off');
