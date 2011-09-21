@@ -394,7 +394,6 @@ namespace Schumix.Irc
 					sSender.Pong(IrcCommand[1].Remove(0, 1, SchumixBase.Colon));
 				else
 				{
-					Console.WriteLine(message);
 					if(ConsoleLog.CLog)
 						Log.Notice("HandleIrcCommand", sLConsole.Network("Text18"), opcode);
 				}
