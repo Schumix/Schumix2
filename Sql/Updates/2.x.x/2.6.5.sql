@@ -1,0 +1,11 @@
+ALTER TABLE adminok CHANGE column `id` `Id` int(3) unsigned NOT NULL auto_increment;
+ALTER TABLE adminok CHANGE column `nev` `Name` varchar(20) NOT NULL default '';
+ALTER TABLE adminok CHANGE column `jelszo` `Password` varchar(40) NOT NULL default '';
+ALTER TABLE adminok CHANGE column `vhost` `Vhost` varchar(50) NOT NULL default '';
+ALTER TABLE adminok CHANGE column `flag` `Flag` int(1) NOT NULL DEFAULT '0';
+ALTER TABLE channel CHANGE column `id` `Id` int(3) unsigned NOT NULL auto_increment;
+ALTER TABLE channel CHANGE column `funkciok` `Functions` varchar(255) NOT NULL default ',koszones:ki,log:be,rejoin:be,parancsok:be';
+ALTER TABLE channel CHANGE column `szoba` `Channel` varchar(20) NOT NULL default '';
+ALTER TABLE channel CHANGE column `jelszo` `Password` varchar(30) NOT NULL default '';
+ALTER TABLE channel CHANGE column `aktivitas` `Enabled` varchar(5) NOT NULL default '';
+ALTER TABLE channel CHANGE column `error` `Error` text NOT NULL default '';
