@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.ExtraAddon;
 
 namespace Schumix.ExtraAddon.Commands
@@ -29,54 +30,132 @@ namespace Schumix.ExtraAddon.Commands
 	public class NameList
 	{
 		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly List<string> _names = new List<string>();
+		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
 		private NameList() {}
 
 		public void Add(string Channel, string Name)
 		{
-			//Console.WriteLine(Name.ToLower());
-			//_names.Add(Channel.ToLower() + SchumixBase.Colon + Name.ToLower());
+			if(_names.ContainsKey(Channel.ToLower()))
+			{
+				string channel = _names[Channel.ToLower()];
+
+				if(!channel.Contains(Name.ToLower()))
+				{
+					_names.Remove(Channel.ToLower());
+					_names.Add(Channel.ToLower(), channel + SchumixBase.Comma + Name.ToLower());
+				}
+			}
+			else
+				_names.Add(Channel.ToLower(), Name.ToLower());
 		}
 
 		public void Remove(string Channel)
 		{
-			/*for(int i = 0; i < _names.Count; i++)
-			{
-				if(_names.Contains(Channel.ToLower()))
-					_names.Remove(_names[i]);
-				Console.WriteLine(_names[i]);
-			}*/
+			if(_names.ContainsKey(Channel.ToLower()))
+				_names.Remove(Channel.ToLower());
 		}
 
-		public void Remove(string Channel, string Name, bool NewNick)
+		public void Remove(string Channel, string Name, bool Quit = false)
 		{
-			/*Console.WriteLine(_names.Count);
-			int x = _names.Count;
-
-			for(int i = 0; i < x; i++)
+			if(_names.ContainsKey(Channel.ToLower()))
 			{
-				if(_names[i].Contains(Name.ToLower()) && !NewNick)
-					_names.Remove(_names[i]);
-				else if(_names[i].Contains(Channel.ToLower() + SchumixBase.Colon + Name.ToLower()) && NewNick)
-					_names.Remove(_names[i]);
+				if(_names[Channel.ToLower()].Contains(Name.ToLower()))
+				{
+					string value = _names[Channel.ToLower()];
+					_names.Remove(Channel.ToLower());
+					string names = string.Empty;
+					var split = value.Split(SchumixBase.Comma);
 
-				Console.WriteLine(_names[i]);
-				Console.WriteLine(x);
+					foreach(var name in split)
+					{
+						if(name != Name.ToLower())
+							names += SchumixBase.Comma + name;
+					}
+
+					_names.Add(Channel.ToLower(), names.Remove(0, 1, SchumixBase.Comma));
+				}
+			}
+			else if(Quit)
+			{
+				var channel = new Dictionary<string, string>();
+
+				foreach(var chan in _names)
+				{
+					if(chan.Value.Contains(Name.ToLower()))
+						channel.Add(chan.Key, chan.Value);
+				}
+
+				if(channel.Count.IsNull())
+				{
+					channel.Clear();
+					return;
+				}
+
+				foreach(var chan in channel)
+				{
+					_names.Remove(chan.Key);
+					string names = string.Empty;
+					var split = chan.Value.Split(SchumixBase.Comma);
+
+					foreach(var name in split)
+					{
+						if(name != Name.ToLower())
+							names += SchumixBase.Comma + name;
+					}
+
+					_names.Add(chan.Key, names.Remove(0, 1, SchumixBase.Comma));
+				}
+
+				channel.Clear();
+
+				if(IRCConfig.NickName.ToLower() == Name.ToLower())
+				{
+					ExtraAddon.IsOnline = true;
+					sSender.NickServInfo(Name);
+				}
+			}
+		}
+
+		public void Change(string Name, string NewName, bool Identify = false)
+		{
+			var channel = new Dictionary<string, string>();
+
+			foreach(var chan in _names)
+			{
+				if(chan.Value.Contains(Name.ToLower()))
+					channel.Add(chan.Key, chan.Value);
 			}
 
-			Console.WriteLine(_names.Count);
+			if(channel.Count.IsNull())
+			{
+				channel.Clear();
+				return;
+			}
 
-			if(IRCConfig.NickName.ToLower() == Name.ToLower() && !_names.Contains(Name.ToLower()) && !NewNick)
+			foreach(var chan in channel)
+			{
+				_names.Remove(chan.Key);
+				string names = string.Empty;
+				var split = chan.Value.Split(SchumixBase.Comma);
+
+				foreach(var name in split)
+				{
+					if(name != Name.ToLower())
+						names += SchumixBase.Comma + name;
+					else
+						names += SchumixBase.Comma + NewName.ToLower();
+				}
+
+				_names.Add(chan.Key, names.Remove(0, 1, SchumixBase.Comma));
+			}
+
+			channel.Clear();
+
+			if(IRCConfig.NickName.ToLower() == Name.ToLower() && !Identify)
 			{
 				ExtraAddon.IsOnline = true;
 				sSender.NickServInfo(Name);
-			}*/
-		}
-
-		public void Remove(string Channel, string Name)
-		{
-			//if(_names.Contains(Channel.ToLower() + SchumixBase.Colon + Name.ToLower()))
-			//	_names.Remove(Channel.ToLower() + SchumixBase.Colon + Name.ToLower());
+			}
 		}
 
 		public void RemoveAll()

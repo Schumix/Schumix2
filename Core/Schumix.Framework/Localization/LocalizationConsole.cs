@@ -957,142 +957,147 @@ namespace Schumix.Framework.Localization
 
 		public string MessageHandler(string Name)
 		{
+			return MessageHandler(Name, Locale);
+		}
+
+		public string MessageHandler(string Name, string Language)
+		{
 			switch(Name)
 			{
 				case "Text":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Sikeres kapcsolódás az irc kiszolgálóhoz.";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Successfully connected to IRC server.";
 					else
 						return "Successfully connected to IRC server.";
 				}
 				case "Text2":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Várakozás a kapcsolat feldolgozására.";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Waiting for connection processing.";
 					else
 						return "Waiting for connection processing.";
 				}
 				case "Text3":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Nincs megadva a bot nick neve!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "No such Bot's nickname.";
 					else
 						return "No such Bot's nickname.";
 				}
 				case "Text4":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "[SZERVER] ";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "[SERVER] ";
 					else
 						return "[SERVER] ";
 				}
 				case "Text5":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Nem létező irc parancs\n";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "No such irc command.\n";
 					else
 						return "No such irc command.\n";
 				}
 				case "Text6":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "{0}-t már használja valaki!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "{0} already in use.";
 					else
 						return "{0} already in use.";
 				}
 				case "Text7":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Újra próbálom ezzel: {0}";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Retrying with: {0}";
 					else
 						return "Retrying with: {0}";
 				}
 				case "Text8":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Csatornára való kapcsolódás letiltva: {0}";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Banned channel: {0}";
 					else
 						return "Banned channel: {0}";
 				}
 				case "Text8-1":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Csatornára való kapcsolódás letiltva!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Banned channel!";
 					else
 						return "Banned channel!";
 				}
 				case "Text9":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Ezen csatorna jelszava hibás: {0}";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Bad password for channel: {0}";
 					else
 						return "Bad password for channel: {0}";
 				}
 				case "Text9-1":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Csatorna jelszava hibás!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Bad password for channel!";
 					else
 						return "Bad password for channel!";
 				}
 				case "Text10":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Nem regisztrált!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "You have not registered!";
 					else
 						return "You have not registered!";
 				}
 				case "Text11":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Jelenleg fent van.";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Currently online.";
 					else
 						return "Currently online.";
 				}
 				case "Text12":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Ez a név nincs beregisztrálva!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "This nickname isn't registered!";
 					else
 						return "This nickname isn't registered!";
 				}
 				case "Text13":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Nincs fent ekkortól: {0}";
-					else if(Locale == "enUS")
-						return "Last seen time:: {0}";
+					else if(Language == "enUS")
+						return "Last seen time: {0}";
 					else
-						return "Last seen time:: {0}";
+						return "Last seen time: {0}";
 				}
 				default:
 					return string.Empty;
@@ -1579,6 +1584,24 @@ namespace Schumix.Framework.Localization
 						return "Processor:";
 					else
 						return "Processor:";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string Other(string Name)
+		{
+			switch(Name)
+			{
+				case "Nothing":
+				{
+					if(Locale == "huHU")
+						return "Semmi";
+					else if(Locale == "enUS")
+						return "Nothing";
+					else
+						return "nothing";
 				}
 				default:
 					return string.Empty;

@@ -461,6 +461,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/reload/all', 'Minden rss újra lett indítva.');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/channel/add', 'Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/channel/remove', 'Csatorna sikeresen törölve.\nNem létezik ilyen név!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'wiki', '3Címe: {0}\n3Link: {0}\n3Leírás: {0}\n3Leírás: {0}...\nNincs találat!');
 
 -- enUS
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'schumix2/sys', '3Version: 10{0}\n3Platform: {0}\n3OSVersion: {0}\n3Programming language: c#\n3Memory allocation:5 {0} MB\n3Memory allocation:8 {0} MB\n3Memory allocation:3 {0} MB\n3Uptime: {0}');
@@ -587,6 +588,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/reload/all', 'All of Rss is restarted.');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/channel/add', 'Successfully added channel.\nNo such name!');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/channel/remove', 'Successfully deleted channel!\nNo such name!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'wiki', '3Title: {0}\n3Link: {0}\n3Description: {0}\n3Description: {0}...\nNo result!');
 
 -- ----------------------------
 -- Table structure for localized_command_help
@@ -733,6 +735,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/stop', '1', 'Rss leállítása.\nHasználata: {0}mantisbt stop <rss neve>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/reload', '1', 'Megadott rss újratöltése.\nMantisBT reload parancsai: all');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/reload/all', '1', 'Minden rss újratöltése.\nHasználata: {0}mantisbt reload <rss neve>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'online', '9', 'A parancs segítségével megállapítható ki elérhető és ki nem.\nHasználata: {0}online <név>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'wiki', '9', 'A parancs segítségével kereshetünk a Wikipedia oldalán.\nHasználata: {0}wiki <keresendő szöveg>');
 
 -- enUS
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'xbot', '9', 'Users to use the command list.');
@@ -866,6 +870,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/stop', '1', 'Rss stop.\nUse: {0}mantisbt stop <rss name>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/reload', '1', 'Specify rss reload.\nMantisBT reload command: all');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/reload/all', '1', 'All RSS reload.\nUse: {0}mantisbt reload <rss name>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'online', '9', 'If you look at who is available and who is not available. If not available, when it was last above.\nUse: {0}online <Name>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'wiki', '9', 'If you want something to look for a Wikipedia page.\nUse: {0}wiki <search text>');
 
 -- ----------------------------
 -- Table structure for localized_warning

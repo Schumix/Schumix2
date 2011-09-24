@@ -125,6 +125,11 @@ namespace Schumix.HgRssAddon
 
 		}
 
+		public void HandleNewNick(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;

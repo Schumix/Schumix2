@@ -156,6 +156,7 @@ namespace Schumix.Irc
 					}
 					else
 					{
+						SchumixBase.NewNick = true;
 						string nick = sIRCMessage.Info[5];
 						sNickInfo.ChangeNick(nick);
 						sSender.Nick(nick);

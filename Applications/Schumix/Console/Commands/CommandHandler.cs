@@ -719,6 +719,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
+			SchumixBase.NewNick = true;
 			string nick = Info[1];
 			sNickInfo.ChangeNick(nick);
 			sSender.Nick(nick);

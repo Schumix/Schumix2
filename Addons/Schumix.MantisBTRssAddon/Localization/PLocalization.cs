@@ -146,11 +146,11 @@ namespace Schumix.MantisBTRssAddon.Localization
 				case "Text":
 				{
 					if(Language == "huHU")
-						return "3{0} BugKód: 10{1} link: {2}";
+						return "3{0} BugKód: 10{1} Link: {2}";
 					else if(Language == "enUS")
-						return "3{0} BugCode: 10{1} link {2}";
+						return "3{0} BugCode: 10{1} Link: {2}";
 					else
-						return "3{0} BugCode: 10{1} link {2}";
+						return "3{0} BugCode: 10{1} Link: {2}";
 				}
 				case "Text2":
 				{

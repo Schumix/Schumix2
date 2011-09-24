@@ -126,6 +126,11 @@ namespace Schumix.GitRssAddon
 
 		}
 
+		public void HandleNewNick(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;
