@@ -1601,7 +1601,16 @@ namespace Schumix.Framework.Localization
 					else if(Locale == "enUS")
 						return "Nothing";
 					else
-						return "nothing";
+						return "Nothing";
+				}
+				case "Nobody":
+				{
+					if(Locale == "huHU")
+						return "Senki";
+					else if(Locale == "enUS")
+						return "Nobody";
+					else
+						return "Nobody";
 				}
 				default:
 					return string.Empty;
