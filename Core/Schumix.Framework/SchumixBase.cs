@@ -33,6 +33,7 @@ namespace Schumix.Framework
 		public static DatabaseManager DManager { get; private set; }
 		public static Timer timer { get; private set; }
 		public static bool STime = true;
+		public static bool NewNick = false;
 		public static bool ExitStatus = false;
 		public static bool UrlTitleEnabled = false;
 		public const string Title = "Schumix2 IRC Bot";

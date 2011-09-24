@@ -40,14 +40,12 @@ namespace Schumix.GameAddon
 
 		public void Setup()
 		{
-			Network.PublicRegisterHandler("NICK",     		new Action<IRCMessage>(HandleNewNick));
 			CommandManager.PublicCRegisterHandler("game",	new Action<IRCMessage>(HandleGame));
 			Console.CancelKeyPress += (sender, e) => { Clean(); };
 		}
 
 		public void Destroy()
 		{
-			Network.PublicRemoveHandler("NICK");
 			CommandManager.PublicCRemoveHandler("game");
 			Clean();
 		}
@@ -297,6 +295,24 @@ namespace Schumix.GameAddon
 					if(player.Value == sIRCMessage.Nick)
 					{
 						maffia.Value.Leave(sIRCMessage.Nick);
+						break;
+					}
+				}
+			}
+		}
+
+		public void HandleNewNick(IRCMessage sIRCMessage)
+		{
+			foreach(var maffia in GameAddon.MaffiaList)
+			{
+				if(!maffia.Value.Running)
+					continue;
+
+				foreach(var player in maffia.Value.GetPlayerList())
+				{
+					if(player.Value == sIRCMessage.Nick)
+					{
+						maffia.Value.NewNick(player.Key, sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 						break;
 					}
 				}

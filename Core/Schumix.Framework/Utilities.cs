@@ -48,6 +48,7 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("user-agent", "Query :)");
 				return client.DownloadString(url);
 			}
 		}
@@ -56,6 +57,7 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("user-agent", "Query :)");
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
 			}
 		}
@@ -64,6 +66,7 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("user-agent", "Query :)");
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
 			}
 		}
@@ -72,6 +75,7 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("user-agent", "Query :)");
 				client.DownloadFile(url, filename);
 			}
 		}
@@ -119,7 +123,7 @@ namespace Schumix.Framework
 		public string GetRandomString()
 		{
 			string path = Path.GetRandomFileName();
-			return path.Replace(".", string.Empty);
+			return path.Replace(SchumixBase.Point.ToString(), string.Empty);
 		}
 
 		public string Sha1(string value)

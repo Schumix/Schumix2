@@ -147,19 +147,19 @@ namespace Schumix.Irc
 					if(sIRCMessage.Args.Contains("   Is online from:"))
 					{
 						sIRCMessage.Channel = OnlinePrivmsg;
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text11"));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text11", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						IsOnline = false;
 					}
 					else if(sIRCMessage.Args.Contains("isn't registered."))
 					{
 						sIRCMessage.Channel = OnlinePrivmsg;
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text12"));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text12", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						IsOnline = false;
 					}
 					else if(sIRCMessage.Args.Contains("   Last seen time:"))
 					{
 						sIRCMessage.Channel = OnlinePrivmsg;
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text13"), sIRCMessage.Args.Remove(0, "   Last seen time: ".Length, "   Last seen time: "));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text13", sLManager.GetChannelLocalization(sIRCMessage.Channel)), sIRCMessage.Args.Remove(0, "   Last seen time: ".Length, "   Last seen time: "));
 						IsOnline = false;
 					}
 
@@ -308,6 +308,12 @@ namespace Schumix.Irc
 		{
 			foreach(var plugin in sAddonManager.GetPlugins())
 				plugin.HandleQuit(sIRCMessage);
+		}
+
+		protected void HandleNewNick(IRCMessage sIRCMessage)
+		{
+			foreach(var plugin in sAddonManager.GetPlugins())
+				plugin.HandleNewNick(sIRCMessage);
 		}
 
 		/// <summary>

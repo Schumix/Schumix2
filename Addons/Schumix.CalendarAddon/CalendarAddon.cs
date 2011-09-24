@@ -129,6 +129,11 @@ namespace Schumix.CalendarAddon
 
 		}
 
+		public void HandleNewNick(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;

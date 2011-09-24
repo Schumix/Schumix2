@@ -375,6 +375,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			SchumixBase.NewNick = true;
 			string nick = sIRCMessage.Info[4];
 			sNickInfo.ChangeNick(nick);
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("nick", sIRCMessage.Channel), nick);

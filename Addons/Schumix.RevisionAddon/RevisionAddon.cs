@@ -68,6 +68,11 @@ namespace Schumix.RevisionAddon
 
 		}
 
+		public void HandleNewNick(IRCMessage sIRCMessage)
+		{
+
+		}
+
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
 			return false;

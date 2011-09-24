@@ -110,6 +110,7 @@ namespace Schumix.Irc
 			RegisterHandler("PART",                        new Action<IRCMessage>(HandleLeft));
 			RegisterHandler("KICK",                        new Action<IRCMessage>(HandleKKick));
 			RegisterHandler("QUIT",                        new Action<IRCMessage>(HandleQQuit));
+			RegisterHandler("NICK",     		           new Action<IRCMessage>(HandleNewNick));
 			RegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,  new Action<IRCMessage>(HandleChannelBan));
 			RegisterHandler(ReplyCode.ERR_BADCHANNELKEY,   new Action<IRCMessage>(HandleNoChannelPassword));
 			RegisterHandler(ReplyCode.RPL_WHOISCHANNELS,   new Action<IRCMessage>(HandleMWhois));

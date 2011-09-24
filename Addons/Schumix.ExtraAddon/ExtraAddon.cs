@@ -68,6 +68,7 @@ namespace Schumix.ExtraAddon
 			CommandManager.PublicCRegisterHandler("sha1",               new Action<IRCMessage>(sFunctions.HandleSha1));
 			CommandManager.PublicCRegisterHandler("md5",                new Action<IRCMessage>(sFunctions.HandleMd5));
 			CommandManager.PublicCRegisterHandler("prime",              new Action<IRCMessage>(sFunctions.HandlePrime));
+			CommandManager.PublicCRegisterHandler("wiki",               new Action<IRCMessage>(sFunctions.HandleWiki));
 			CommandManager.HalfOperatorCRegisterHandler("autofunction", new Action<IRCMessage>(sFunctions.HandleAutoFunction));
 		}
 
@@ -82,6 +83,7 @@ namespace Schumix.ExtraAddon
 			CommandManager.PublicCRemoveHandler("sha1");
 			CommandManager.PublicCRemoveHandler("md5");
 			CommandManager.PublicCRemoveHandler("prime");
+			CommandManager.PublicCRemoveHandler("wiki");
 			CommandManager.HalfOperatorCRemoveHandler("autofunction");
 			sNameList.RemoveAll();
 		}
@@ -201,7 +203,7 @@ namespace Schumix.ExtraAddon
 			{
 				if(sIRCMessage.Args.Contains("isn't registered.") || sIRCMessage.Args.Contains("   Last seen time:"))
 				{
-					//sNameList.Change(IRCConfig.NickName);
+					sNameList.Change(sNickInfo.NickStorage, IRCConfig.NickName, true);
 					sNickInfo.ChangeNick(IRCConfig.NickName);
 					sSender.Nick(IRCConfig.NickName);
 					Log.Notice("NickServ", sLConsole.NickServ("Text"));
@@ -233,6 +235,11 @@ namespace Schumix.ExtraAddon
 		public void HandleQuit(IRCMessage sIRCMessage)
 		{
 			HandleQQuit(sIRCMessage);
+		}
+
+		public void HandleNewNick(IRCMessage sIRCMessage)
+		{
+			HandleNNewNick(sIRCMessage);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

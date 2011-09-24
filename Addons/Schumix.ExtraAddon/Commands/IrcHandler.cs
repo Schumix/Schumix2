@@ -117,10 +117,15 @@ namespace Schumix.ExtraAddon.Commands
 
 		protected void HandleQQuit(IRCMessage sIRCMessage)
 		{
-			Console.WriteLine("asd2");
-			Console.WriteLine(sIRCMessage.Nick);
-			sNameList.Remove(string.Empty, sIRCMessage.Nick, false);
-			Console.WriteLine(sIRCMessage.Nick);
+			sNameList.Remove(string.Empty, sIRCMessage.Nick, true);
+		}
+
+		protected void HandleNNewNick(IRCMessage sIRCMessage)
+		{
+			if(!SchumixBase.NewNick)
+				sNameList.Change(sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
+			else
+				SchumixBase.NewNick = false;
 		}
 
 		/// <summary>
