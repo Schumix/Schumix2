@@ -952,7 +952,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 
 			string url = sUtilities.GetUrl("http://" + sLManager.GetChannelLocalization(sIRCMessage.Channel).Substring(0, 2).ToLower()
-				+ ".wikipedia.org/w/api.php?action=opensearch&format=xml&search=", sIRCMessage.Info.SplitToString(4, SchumixBase.Space));
+				+ ".wikipedia.org/w/api.php?action=opensearch&format=xml&search=", HttpUtility.UrlEncode(sIRCMessage.Info.SplitToString(4, SchumixBase.Space)));
 
 			if(url.Contains("<Text xml:space=\"preserve\">"))
 			{

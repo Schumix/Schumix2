@@ -71,7 +71,10 @@ namespace Schumix.SvnRssAddon.Commands
 					foreach(DataRow row in db.Rows)
 						list += SchumixBase.Space + row["Name"].ToString();
 
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("svn/list", sIRCMessage.Channel), list);
+					if(list == string.Empty)
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("svn/list", sIRCMessage.Channel), sLConsole.Other("Nothing"));
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("svn/list", sIRCMessage.Channel), list);
 				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
