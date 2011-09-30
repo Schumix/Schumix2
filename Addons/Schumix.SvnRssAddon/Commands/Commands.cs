@@ -72,7 +72,7 @@ namespace Schumix.SvnRssAddon.Commands
 						list += SchumixBase.Space + row["Name"].ToString();
 
 					if(list == string.Empty)
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("svn/list", sIRCMessage.Channel), sLConsole.Other("Nothing"));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("svn/list", sIRCMessage.Channel), SchumixBase.Space + sLConsole.Other("Nothing"));
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("svn/list", sIRCMessage.Channel), list);
 				}

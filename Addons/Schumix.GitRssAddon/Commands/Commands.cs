@@ -70,10 +70,10 @@ namespace Schumix.GitRssAddon.Commands
 					string list = string.Empty;
 
 					foreach(DataRow row in db.Rows)
-						list += SchumixBase.Space + row["Name"].ToString() + " " + row["Type"].ToString() + ";";
+						list += SchumixBase.Space + row["Name"].ToString() + SchumixBase.Space + row["Type"].ToString() + ";";
 
 					if(list == string.Empty)
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/list", sIRCMessage.Channel), sLConsole.Other("Nothing"));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/list", sIRCMessage.Channel), SchumixBase.Space + sLConsole.Other("Nothing"));
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/list", sIRCMessage.Channel), list);
 				}
