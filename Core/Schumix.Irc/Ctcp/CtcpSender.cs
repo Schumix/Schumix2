@@ -20,13 +20,14 @@
 using System;
 using System.Text;
 using Schumix.API;
+using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Ctcp
 {
-	public sealed class CtcpSender
+	public sealed class CtcpSender : CommandInfo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
@@ -51,6 +52,9 @@ namespace Schumix.Irc.Ctcp
 			string args = sIRCMessage.Args;
 
 			if(!args.Contains(""))
+				return;
+
+			if(IsChannel(sIRCMessage.Channel))
 				return;
 
 			args = args.Remove(0, 1, "");
