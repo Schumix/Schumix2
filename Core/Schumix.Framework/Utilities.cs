@@ -95,7 +95,15 @@ namespace Schumix.Framework
 
 			try
 			{
-				var urlFind = new Regex(@"(?<url>(http://)?(www\.)?\S+\.\S{2,6}([/]*\S+))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+				var urlFind = new Regex(@"(?<url>(http[s]?://)?(\S+\.(cat|biz|edu|com|net|org|info|co\.uk|co\.cc|ac|" +
+				"ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bw|by|" +
+				"bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|" +
+				"fk|fm|fo|fr|ga|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|" +
+				"iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|me|md|" +
+				"mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|" +
+				"pg|ph|pk|pl|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sk|sl|sm|sn|sr|st|su|sv|sy|sz|" +
+				"tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|za|zm|" +
+				@"zw))(/\S+)?)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 				if(urlFind.IsMatch(text))
 				{
@@ -104,6 +112,38 @@ namespace Schumix.Framework
 					foreach(var url in from Match match in matches select match.Groups["url"].ToString())
 					{
 						var lurl = url;
+						if(!lurl.StartsWith("http://") && !url.StartsWith("https://"))
+							lurl = string.Format("http://{0}", url);
+
+						Log.Debug("Utilities", sLConsole.Utilities("Text"), url);
+						urls.Add(lurl);
+					}
+				}
+
+				urlFind = new Regex(@"(?<ip>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(/\S+)?)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+				if(urlFind.IsMatch(text))
+				{
+					var matches = urlFind.Matches(text);
+
+					foreach(var url in from Match match in matches select match.Groups["ip"].ToString())
+					{
+						var lurl = url;
+						bool valid = false;
+
+						try
+						{
+							IPAddress ip;
+							valid = IPAddress.TryParse(lurl, out ip);
+						}
+						catch(ArgumentException ae)
+						{
+							Log.Error("Utilities", sLConsole.Exception("Error"), ae.Message);
+						}
+
+						if(!valid)
+							continue;
+
 						if(!lurl.StartsWith("http://") && !url.StartsWith("https://"))
 							lurl = string.Format("http://{0}", url);
 
