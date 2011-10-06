@@ -44,13 +44,22 @@ namespace Schumix.Framework
 		{
 			try
 			{
-				var file = new StreamWriter(string.Format("./{0}/{1}", LogConfig.LogDirectory, "Schumix.log"), true) { AutoFlush = true };
+				string filename = string.Format("./{0}/{1}", LogConfig.LogDirectory, "Schumix.log");
+				var filesize = new FileInfo(filename);
+
+				if(filesize.Length >= 10000000)
+				{
+					File.Delete(filename);
+					sUtilities.CreateFile(filename);
+				}
+
+				var file = new StreamWriter(filename, true) { AutoFlush = true };
 				file.Write(log);
 				file.Close();
 			}
 			catch(Exception)
 			{
-				// semmi
+				LogToFile(log);
 			}
 		}
 
