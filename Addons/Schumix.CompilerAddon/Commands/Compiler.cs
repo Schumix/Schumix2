@@ -186,7 +186,19 @@ namespace Schumix.CompilerAddon.Commands
 
 					return 1;
 				}
-				else if(lines.Length >= 2)
+				else if(lines.Length == 2)
+				{
+					foreach(var line in lines)
+					{
+						if(line == string.Empty)
+							continue;
+						else
+							sSendMessage.SendChatMessage(sIRCMessage, line);
+					}
+
+					return 1;
+				}
+				else if(lines.Length > 2)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, lines[0]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[4], lines.Length-1);
