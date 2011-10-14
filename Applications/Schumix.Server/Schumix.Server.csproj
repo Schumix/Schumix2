@@ -110,5 +110,9 @@
       <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
       <Name>Schumix.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Components\Schumix.Updater\Schumix.Updater.csproj">
+      <Project>{33ABC53E-F210-442F-B4F7-D0A7642F2584}</Project>
+      <Name>Schumix.Updater</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

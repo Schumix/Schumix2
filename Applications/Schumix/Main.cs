@@ -155,7 +155,8 @@ namespace Schumix
 
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
 
-			new Update();
+			if(!ServerConfig.Enabled)
+				new Update();
 
 			if(File.Exists("Config.exe"))
 				File.Delete("Config.exe");
