@@ -61,6 +61,7 @@ namespace Schumix.Installer.Compiler
 				//HasError = true;
 
 			build.WaitForExit();
+			build.Dispose();
 		}
 	}
 }

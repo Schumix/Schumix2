@@ -19,6 +19,8 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
+using Schumix.Framework.Client;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
 using Schumix.Framework.Localization;
@@ -30,23 +32,40 @@ namespace Schumix.Framework
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
+		private static readonly Guid _guid = Guid.NewGuid();
 		public static DatabaseManager DManager { get; private set; }
 		public static Timer timer { get; private set; }
-		public static bool STime = true;
-		public static bool NewNick = false;
-		public static bool ExitStatus = false;
-		public static bool UrlTitleEnabled = false;
 		public const string Title = "Schumix2 IRC Bot";
-		public const char Space = ' ';
+		public static bool UrlTitleEnabled = false;
+		public static bool ExitStatus = false;
+		public static bool ThreadStop = true;
+		public static bool NewNick = false;
+		public static bool STime = true;
 		public const char NewLine = '\n';
+		public const char Space = ' ';
 		public const char Comma = ',';
 		public const char Point = '.';
 		public const char Colon = ':';
+
+		/// <summary>
+		/// Gets the GUID.
+		/// </summary>
+		public static Guid GetGuid() { return _guid; }
 
 		protected SchumixBase()
 		{
 			try
 			{
+				if(ServerConfig.Enabled)
+				{
+					var listener = new ClientSocket(ServerConfig.Host, ServerConfig.Port, ServerConfig.Password);
+					Log.Debug("SchumixServer", sLConsole.SchumixBase("Text6"));
+					listener.Socket();
+
+					while(ThreadStop)
+						Thread.Sleep(100);
+				}
+
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text"));
 				timer = new Timer();
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text2"));
@@ -78,6 +97,21 @@ namespace Schumix.Framework
 		~SchumixBase()
 		{
 			Log.Debug("SchumixBase", "~SchumixBase()");
+		}
+
+		public static void ServerDisconnect()
+		{
+			if(!ServerConfig.Enabled)
+				return;
+
+			var packet = new SchumixPacket();
+			packet.Write<int>((int)Opcode.CMSG_CLOSE_CONNECTION);
+			packet.Write<string>(_guid.ToString());
+			packet.Write<string>(SchumixConfig.ConfigFile);
+			packet.Write<string>(SchumixConfig.ConfigDirectory);
+			packet.Write<string>("utf-8");
+			packet.Write<string>(LocalizationConfig.Locale);
+			ClientSocket.SendPacketToSCS(packet);
 		}
 	}
 }

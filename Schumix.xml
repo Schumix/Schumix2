@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Schumix>
+    <Server>
+        <Enabled>false</Enabled>
+        <Host>127.0.0.1</Host>
+        <Port>35220</Port>
+        <Password>schumix</Password>
+    </Server>
     <Irc>
         <Server>localhost</Server>
         <Port>6667</Port>
@@ -29,6 +35,7 @@
         <MessageType>Privmsg</MessageType>
     </Irc>
     <Log>
+        <FileName>Schumix.log</FileName>
         <LogLevel>2</LogLevel>
         <LogDirectory>Logs</LogDirectory>
         <IrcLogDirectory>Channels</IrcLogDirectory>
@@ -48,7 +55,7 @@
     </SQLite>
     <Addons>
         <Enabled>true</Enabled>
-        <Ignore>SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon</Ignore>
+        <Ignore>MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon</Ignore>
         <Directory>Addons</Directory>
     </Addons>
     <Scripts>

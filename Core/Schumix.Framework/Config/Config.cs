@@ -29,10 +29,15 @@ namespace Schumix.Framework.Config
 	public sealed class Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private const string _logfilename           = "Schumix.log";
 		private const int _loglevel                 = 2;
 		private const string _logdirectory          = "Logs";
 		private const string _irclogdirectory       = "Channels";
 		private const bool _irclog                  = false;
+		private const bool _serverenabled           = false;
+		private const string _serverhost            = "127.0.0.1";
+		private const int _serverport               = 35220;
+		private const string _serverpassword        = "schumix";
 		private const string _server                = "localhost";
 		private const int _port                     = 6667;
 		private const bool _ssl                     = false;
@@ -93,17 +98,25 @@ namespace Schumix.Framework.Config
 					var xmldoc = new XmlDocument();
 					xmldoc.Load(string.Format("./{0}/{1}", configdir, configfile));
 
+					string LogFileName = !xmldoc.SelectSingleNode("Schumix/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/FileName").InnerText : _logfilename;
 					int LogLevel = !xmldoc.SelectSingleNode("Schumix/Log/LogLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText) : _loglevel;
 					string LogDirectory = !xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").InnerText : _logdirectory;
 					string IrcLogDirectory = !xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").InnerText : _irclogdirectory;
 					bool IrcLog = !xmldoc.SelectSingleNode("Schumix/Log/IrcLog").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText) : _irclog;
 
-					new LogConfig(LogLevel, LogDirectory, IrcLogDirectory, IrcLog);
+					new LogConfig(LogFileName, LogLevel, LogDirectory, IrcLogDirectory, IrcLog);
 
-					Log.Init();
+					Log.Init(LogFileName);
 					Log.Debug("Config", ">> {0}", configfile);
 
 					Log.Notice("Config", sLConsole.Config("Text3"));
+					bool ServerEnabled = !xmldoc.SelectSingleNode("Schumix/Server/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Server/Enabled").InnerText) : _serverenabled;
+					string ServerHost = !xmldoc.SelectSingleNode("Schumix/Server/Host").IsNull() ? xmldoc.SelectSingleNode("Schumix/Server/Host").InnerText : _serverhost;
+					int ServerPort = !xmldoc.SelectSingleNode("Schumix/Server/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Server/Port").InnerText) : _serverport;
+					string ServerPassword = !xmldoc.SelectSingleNode("Schumix/Server/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Server/Password").InnerText : _serverpassword;
+
+					new ServerConfig(ServerEnabled, ServerHost, ServerPort, ServerPassword);
+
 					string Server = !xmldoc.SelectSingleNode("Schumix/Irc/Server").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText : _server;
 					int Port = !xmldoc.SelectSingleNode("Schumix/Irc/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText) : _port;
 					bool Ssl = !xmldoc.SelectSingleNode("Schumix/Irc/Ssl").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/Ssl").InnerText) : _ssl;
@@ -167,7 +180,7 @@ namespace Schumix.Framework.Config
 			}
 			catch(Exception e)
 			{
-				new LogConfig(3, "Logs", "Channels", false);
+				new LogConfig(_logfilename, 3, _logdirectory, _irclogdirectory, _irclog);
 				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
@@ -183,7 +196,8 @@ namespace Schumix.Framework.Config
 					return true;
 				else
 				{
-					new LogConfig(3, "Logs", "Channels", false);
+					new LogConfig(_logfilename, 3, _logdirectory, _irclogdirectory, _irclog);
+					Log.Init(_logfilename);
 					Log.Error("Config", sLConsole.Config("Text5"));
 					Log.Debug("Config", sLConsole.Config("Text6"));
 					var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
@@ -201,6 +215,16 @@ namespace Schumix.Framework.Config
 
 						// <Schumix>
 						w.WriteStartElement("Schumix");
+
+						// <Server>
+						w.WriteStartElement("Server");
+						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Schumix/Server/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/Server/Enabled").InnerText : _serverenabled.ToString()));
+						w.WriteElementString("Host",            (!xmldoc.SelectSingleNode("Schumix/Server/Host").IsNull() ? xmldoc.SelectSingleNode("Schumix/Server/Host").InnerText : _serverhost));
+						w.WriteElementString("Port",            (!xmldoc.SelectSingleNode("Schumix/Server/Port").IsNull() ? xmldoc.SelectSingleNode("Schumix/Server/Port").InnerText : _serverport.ToString()));
+						w.WriteElementString("Password",        (!xmldoc.SelectSingleNode("Schumix/Server/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Server/Password").InnerText : _serverpassword));
+
+						// </Server>
+						w.WriteEndElement();
 
 						// <Irc>
 						w.WriteStartElement("Irc");
@@ -253,6 +277,7 @@ namespace Schumix.Framework.Config
 
 						// <Log>
 						w.WriteStartElement("Log");
+						w.WriteElementString("FileName",        (!xmldoc.SelectSingleNode("Schumix/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/FileName").InnerText : _logfilename));
 						w.WriteElementString("LogLevel",        (!xmldoc.SelectSingleNode("Schumix/Log/LogLevel").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText : _loglevel.ToString()));
 						w.WriteElementString("LogDirectory",    (!xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").InnerText : _logdirectory));
 						w.WriteElementString("IrcLogDirectory", (!xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").InnerText : _irclogdirectory));
@@ -447,13 +472,15 @@ namespace Schumix.Framework.Config
 
 	public sealed class LogConfig
 	{
+		public static string FileName { get; private set; }
 		public static int LogLevel { get; private set; }
 		public static string LogDirectory { get; private set; }
 		public static string IrcLogDirectory { get; private set; }
 		public static bool IrcLog { get; private set; }
 
-		public LogConfig(int loglevel, string logdirectory, string irclogdirectory, bool irclog)
+		public LogConfig(string filename, int loglevel, string logdirectory, string irclogdirectory, bool irclog)
 		{
+			FileName        = filename;
 			LogLevel        = loglevel;
 			LogDirectory    = logdirectory;
 			IrcLogDirectory = irclogdirectory;
@@ -518,6 +545,24 @@ namespace Schumix.Framework.Config
 			Version         = version;
 			WebPage         = webpage;
 			Log.Notice("UpdateConfig", sLConsole.UpdateConfig("Text"));
+		}
+	}
+
+	public sealed class ServerConfig
+	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		public static bool Enabled { get; private set; }
+		public static string Host { get; private set; }
+		public static int Port { get; private set; }
+		public static string Password { get; private set; }
+
+		public ServerConfig(bool enabled, string host, int port, string password)
+		{
+			Enabled  = enabled;
+			Host     = host;
+			Port     = port;
+			Password = password;
+			Log.Notice("ServerConfig", sLConsole.ServerConfig("Text"));
 		}
 	}
 }
