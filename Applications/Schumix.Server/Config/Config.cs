@@ -91,10 +91,10 @@ namespace Schumix.Server.Config
 
 					new LocalizationConfig(Locale);
 
-					bool Enabled = !xmldoc.SelectSingleNode("Schumix/Update/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Update/Enabled").InnerText) : _updateenabled;
-					bool VersionsEnabled = !xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").InnerText) : _updateversionsenabled;
-					string Version = !xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").InnerText : _updateversionsversion;
-					string WebPage = !xmldoc.SelectSingleNode("Schumix/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/WebPage").InnerText : _updatewebpage;
+					bool Enabled = !xmldoc.SelectSingleNode("Server/Update/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Update/Enabled").InnerText) : _updateenabled;
+					bool VersionsEnabled = !xmldoc.SelectSingleNode("Server/Update/Versions/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Update/Versions/Enabled").InnerText) : _updateversionsenabled;
+					string Version = !xmldoc.SelectSingleNode("Server/Update/Versions/Version").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Versions/Version").InnerText : _updateversionsversion;
+					string WebPage = !xmldoc.SelectSingleNode("Server/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Server/Update/WebPage").InnerText : _updatewebpage;
 
 					new Framework.Config.UpdateConfig(Enabled, VersionsEnabled, Version, WebPage);
 
@@ -195,17 +195,17 @@ namespace Schumix.Server.Config
 
 						// <Update>
 						w.WriteStartElement("Update");
-						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Schumix/Update/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Enabled").InnerText : _updateenabled.ToString()));
+						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Server/Update/Enabled").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Enabled").InnerText : _updateenabled.ToString()));
 
 						// <Versions>
 						w.WriteStartElement("Versions");
-						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").InnerText : _updateversionsenabled.ToString()));
-						w.WriteElementString("Version",         (!xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").InnerText : _updateversionsversion));
+						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Server/Update/Versions/Enabled").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Versions/Enabled").InnerText : _updateversionsenabled.ToString()));
+						w.WriteElementString("Version",         (!xmldoc.SelectSingleNode("Server/Update/Versions/Version").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Versions/Version").InnerText : _updateversionsversion));
 
 						// </Versions>
 						w.WriteEndElement();
 
-						w.WriteElementString("WebPage",         (!xmldoc.SelectSingleNode("Schumix/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/WebPage").InnerText : _updatewebpage));
+						w.WriteElementString("WebPage",         (!xmldoc.SelectSingleNode("Server/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Server/Update/WebPage").InnerText : _updatewebpage));
 
 						// </Update>
 						w.WriteEndElement();
