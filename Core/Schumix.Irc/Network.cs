@@ -339,6 +339,7 @@ namespace Schumix.Irc
 				}
 			}
 
+			SchumixBase.ServerDisconnect();
 			SchumixBase.timer.SaveUptime();
 			Log.Warning("Opcodes", sLConsole.Network("Text17"));
 			Thread.Sleep(1000);
