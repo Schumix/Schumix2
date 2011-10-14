@@ -19,18 +19,7 @@
  */
 
 using System;
-using System.IO;
-using System.Collections;
 using System.Collections.Generic;
-using System.Net;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
-using Mono.Math;
-using System.Reflection;
-using System.Threading;
-using System.Timers;
-using System.Net.Sockets;
 
 namespace Schumix.Framework.Client
 {
@@ -39,10 +28,10 @@ namespace Schumix.Framework.Client
 	/// </summary>
 	public class SchumixPacket : IDisposable
 	{
-		private string _netmsg;
 		private readonly List<string> split_buffer;
 		private const string Separator = "|;|";
 		private int read_position = 0;
+		private string _netmsg;
 		
 		/// <summary>
 		/// Initializes a new instance of the SchumixPacket class.
