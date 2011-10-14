@@ -18,9 +18,11 @@
  */
 
 using System;
+using System.IO;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using Schumix.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Client;
 using Schumix.Framework.Config;
@@ -105,6 +107,14 @@ namespace Schumix.Server
 				sLConsole.Locale = localization;
 
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
+
+			new Update();
+
+			if(File.Exists("Config.exe"))
+				File.Delete("Config.exe");
+
+			if(File.Exists("Installer.exe"))
+				File.Delete("Installer.exe");
 
 			System.Console.CancelKeyPress += (sender, e) =>
 			{

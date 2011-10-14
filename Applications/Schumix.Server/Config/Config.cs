@@ -38,6 +38,10 @@ namespace Schumix.Server.Config
 		private const int _listenerport               = 35220;
 		private const string _password                = "schumix";
 		private const string _locale                  = "enUS";
+		private const bool _updateenabled           = false;
+		private const bool _updateversionsenabled   = false;
+		private const string _updateversionsversion = "x.x.x";
+		private const string _updatewebpage         = "http://megax.uw.hu/Schumix2/";
 		private const bool _schumixsenabled           = false;
 		private const int _schumixsnumber             = 1;
 		private const string _schumix0file            = "Schumix.xml";
@@ -86,6 +90,13 @@ namespace Schumix.Server.Config
 					string Locale = !xmldoc.SelectSingleNode("Server/Localization/Locale").IsNull() ? xmldoc.SelectSingleNode("Server/Localization/Locale").InnerText : _locale;
 
 					new LocalizationConfig(Locale);
+
+					bool Enabled = !xmldoc.SelectSingleNode("Schumix/Update/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Update/Enabled").InnerText) : _updateenabled;
+					bool VersionsEnabled = !xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").InnerText) : _updateversionsenabled;
+					string Version = !xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").InnerText : _updateversionsversion;
+					string WebPage = !xmldoc.SelectSingleNode("Schumix/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/WebPage").InnerText : _updatewebpage;
+
+					new Framework.Config.UpdateConfig(Enabled, VersionsEnabled, Version, WebPage);
 
 					int number = !xmldoc.SelectSingleNode("Server/Schumixs/Number").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Schumixs/Number").InnerText) : _schumixsnumber;
 
@@ -180,6 +191,23 @@ namespace Schumix.Server.Config
 						w.WriteElementString("Locale",          (!xmldoc.SelectSingleNode("Server/Localization/Locale").IsNull() ? xmldoc.SelectSingleNode("Server/Localization/Locale").InnerText : _locale));
 
 						// </Localization>
+						w.WriteEndElement();
+
+						// <Update>
+						w.WriteStartElement("Update");
+						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Schumix/Update/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Enabled").InnerText : _updateenabled.ToString()));
+
+						// <Versions>
+						w.WriteStartElement("Versions");
+						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").InnerText : _updateversionsenabled.ToString()));
+						w.WriteElementString("Version",         (!xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").InnerText : _updateversionsversion));
+
+						// </Versions>
+						w.WriteEndElement();
+
+						w.WriteElementString("WebPage",         (!xmldoc.SelectSingleNode("Schumix/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/WebPage").InnerText : _updatewebpage));
+
+						// </Update>
 						w.WriteEndElement();
 
 						// <Schumixs>
