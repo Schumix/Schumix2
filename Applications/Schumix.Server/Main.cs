@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
@@ -18,56 +18,30 @@
  */
 
 using System;
-using System.IO;
 using System.Text;
-using Schumix.Irc;
-using Schumix.Updater;
+using System.Net;
+using System.Net.Sockets;
 using Schumix.Framework;
+using Schumix.Framework.Client;
 using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
+using Schumix.Server.Config;
 
-namespace Schumix
+namespace Schumix.Server
 {
-	/// <summary>
-	///     Main class.
-	/// </summary>
 	class MainClass
 	{
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
-		/// </summary>
+		private static readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
-		/// </summary>
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     Üzenet küldés az irc szerver felé.
-		/// </summary>
-		private static readonly Sender sSender = Singleton<Sender>.Instance;
 
-		/// <summary>
-		///     A Main függvény. Itt indul el a program.
-		/// </summary>
-		/// <remarks>
-		///     Schumix2 IRC bot
-		///     <para>
-		///         Készítette Megaxxx és Jackneill.
-		///     </para>
-		/// </remarks>
 		private static void Main(string[] args)
 		{
 			string configdir = "Configs";
-			string configfile = "Schumix.xml";
+			string configfile = "Server.xml";
 			string console_encoding = "utf-8";
 			string localization = "start";
-			bool serverenabled = false;
-			int serverport = -1;
-			string serverhost = "0.0.0.0";
-			string serverpassword = "0";
+			System.Console.CursorVisible = false;
 			System.Console.BackgroundColor = ConsoleColor.Black;
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 
@@ -100,26 +74,6 @@ namespace Schumix
 					localization = arg.Substring(arg.IndexOf("=")+1);
 					continue;
 				}
-				else if(arg.Contains("--server-enabled="))
-				{
-					serverenabled = Convert.ToBoolean(arg.Substring(arg.IndexOf("=")+1));
-					continue;
-				}
-				else if(arg.Contains("--server-host="))
-				{
-					serverhost = arg.Substring(arg.IndexOf("=")+1);
-					continue;
-				}
-				else if(arg.Contains("--server-port="))
-				{
-					serverport = Convert.ToInt32(arg.Substring(arg.IndexOf("=")+1));
-					continue;
-				}
-				else if(arg.Contains("--server-password="))
-				{
-					serverpassword = arg.Substring(arg.IndexOf("=")+1);
-					continue;
-				}
 			}
 
 			double Num;
@@ -131,9 +85,9 @@ namespace Schumix
 				System.Console.OutputEncoding = Encoding.GetEncoding(Convert.ToInt32(Num)); // Magyar karakterkódolás windows xp-n: 852
 
 			sLConsole.Locale = localization;
-			System.Console.Title = SchumixBase.Title;
+			System.Console.Title = "Schumix2 Server";
 			System.Console.ForegroundColor = ConsoleColor.Blue;
-			System.Console.WriteLine("[Schumix2]");
+			System.Console.WriteLine("[Server]");
 			System.Console.WriteLine(sLConsole.MainText("StartText"));
 			System.Console.WriteLine(sLConsole.MainText("StartText2"), sUtilities.GetVersion());
 			System.Console.WriteLine(sLConsole.MainText("StartText2-2"), Consts.SchumixWebsite);
@@ -143,33 +97,27 @@ namespace Schumix
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 			System.Console.WriteLine();
 
-			new Config(configdir, configfile);
+			new Server.Config.Config(configdir, configfile);
 
 			if(localization == "start")
-				sLConsole.Locale = LocalizationConfig.Locale;
+				sLConsole.Locale = Server.Config.LocalizationConfig.Locale;
 			else if(localization != "start")
 				sLConsole.Locale = localization;
 
-			new ServerConfig(serverenabled ? serverenabled : ServerConfig.Enabled, serverhost != "0.0.0.0" ? serverhost : ServerConfig.Host,
-				serverport != -1 ? serverport : ServerConfig.Port, serverpassword != "0" ? serverpassword : ServerConfig.Password);
-
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
 
-			new Update();
-
-			if(File.Exists("Config.exe"))
-				File.Delete("Config.exe");
-
-			if(File.Exists("Installer.exe"))
-				File.Delete("Installer.exe");
-
-			new SchumixBot();
 			System.Console.CancelKeyPress += (sender, e) =>
 			{
-				sSender.Quit("Daemon killed.");
-				SchumixBase.timer.SaveUptime();
-				SchumixBase.ServerDisconnect();
+				var packet = new SchumixPacket();
+				packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
+				packet.Write<int>((int)0);
+
+				foreach(var list in sServerPacketHandler.HostList)
+					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 			};
+
+			var listener = new ServerListener(ServerConfigs.ListenerPort);
+			listener.Listen();
 		}
 
 		/// <summary>
@@ -177,7 +125,7 @@ namespace Schumix
 		/// </summary>
 		private static void Help()
 		{
-			System.Console.WriteLine("[Schumix2] Version: {0}", sUtilities.GetVersion());
+			System.Console.WriteLine("[Server] Version: {0}", sUtilities.GetVersion());
 			System.Console.WriteLine("Options:");
 			System.Console.WriteLine("\t-h, --help\t\t\tShow help");
 			System.Console.WriteLine("\t--config-dir=<dir>\t\tSet up the config folder's path and 'name");

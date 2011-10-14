@@ -124,6 +124,7 @@ namespace Schumix.Irc.Commands
 
 			SchumixBase.ExitStatus = true;
 			SchumixBase.timer.SaveUptime();
+			SchumixBase.ServerDisconnect();
 			sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 			sSender.Quit(string.Format(text[1], sIRCMessage.Nick));
 			Thread.Sleep(1000);

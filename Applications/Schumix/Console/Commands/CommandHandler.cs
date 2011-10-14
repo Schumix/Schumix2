@@ -829,6 +829,7 @@ namespace Schumix.Console.Commands
 
 			SchumixBase.ExitStatus = true;
 			SchumixBase.timer.SaveUptime();
+			SchumixBase.ServerDisconnect();
 			Log.Notice("Console", text[0]);
 			sSender.Quit(text[1]);
 			Thread.Sleep(1000);

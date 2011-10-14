@@ -108,6 +108,7 @@
     </Reference>
     <Reference Include="System.Core">
     </Reference>
+    <Reference Include="System.Net" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -130,6 +131,10 @@
     <Compile Include="Extensions\GeneralExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Network\ClientPacketHandler.cs" />
+    <Compile Include="Network\Opcodes.cs" />
+    <Compile Include="Network\SchumixPacket.cs" />
+    <Compile Include="Network\ClientSocket.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
