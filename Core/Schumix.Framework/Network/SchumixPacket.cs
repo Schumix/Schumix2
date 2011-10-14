@@ -155,10 +155,3 @@ namespace Schumix.Framework.Client
 		}
 	}
 }
-
-
-
-
-
-
-
