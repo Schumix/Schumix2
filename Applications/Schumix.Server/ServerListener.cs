@@ -19,17 +19,10 @@
 
 using System;
 using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net;
 using System.Text;
-using System.Text.RegularExpressions;
-using System.Diagnostics;
-using Mono.Math;
-using System.Reflection;
-using System.Threading;
-using System.Timers;
+using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using Schumix.Framework;
 using Schumix.Framework.Client;
 using Schumix.Framework.Localization;
