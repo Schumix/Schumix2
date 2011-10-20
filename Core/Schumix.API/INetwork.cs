@@ -20,34 +20,10 @@
 using System;
 using System.IO;
 
-namespace Schumix.Config.CopyTo
+namespace Schumix.API
 {
-	public sealed class Copy
+	public sealed class INetwork
 	{
-		/// <summary>
-		///     Több helyről átmásolja az új fájlokat.
-		/// </summary>
-		public Copy(string Version)
-		{
-			if(Directory.Exists("Addons"))
-				Directory.Delete("Addons", true);
-
-			Directory.Move(Version + "/Run/Release/Addons", "Addons");
-			var dir = new DirectoryInfo(Version + "/Run/Release/");
-
-			foreach(var file in dir.GetFiles())
-			{
-				File.Delete(file.Name);
-				File.Move(Version + "/Run/Release/" + file.Name, file.Name);
-			}
-
-			dir = new DirectoryInfo("Configs");
-
-			foreach(var fi in dir.GetFiles())
-			{
-				Console.WriteLine(fi.Name);
-				File.Move("Configs/" + fi.Name, "Configs/_" + fi.Name);
-			}
-		}
+		public static StreamWriter Writer { get; set; }
 	}
 }

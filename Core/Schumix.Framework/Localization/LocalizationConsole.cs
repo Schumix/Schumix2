@@ -1967,5 +1967,32 @@ namespace Schumix.Framework.Localization
 					return string.Empty;
 			}
 		}
+
+		public string Runtime(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Nem sikerült beállítani folyamat nevét: {0}";
+					else if(Locale == "enUS")
+						return "Failed to set process name: {0}";
+					else
+						return "Failed to set process name: {0}";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Hiba a folyamat nevének beállításában!";
+					else if(Locale == "enUS")
+						return "Error setting process name!";
+					else
+						return "Error setting process name!";
+				}
+				default:
+					return string.Empty;
+			}
+		}
 	}
 }

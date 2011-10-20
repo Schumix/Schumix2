@@ -24,6 +24,9 @@ namespace Schumix.Config.Clean
 {
 	public sealed class FileClean
 	{
+		/// <summary>
+		///     Törli a tömörített verzió fájlt.
+		/// </summary>
 		public FileClean(string Version)
 		{
 			if(File.Exists(Version + ".tar"))

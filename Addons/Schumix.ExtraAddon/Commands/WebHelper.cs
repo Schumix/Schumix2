@@ -51,7 +51,7 @@ namespace Schumix.ExtraAddon.Commands
 				var request = (HttpWebRequest)WebRequest.Create(url);
 				request.Timeout = 3500;
 				request.AllowAutoRedirect = true;
-				request.UserAgent = "Schumix2 IRC Bot " + sUtilities.GetVersion() + " / .NET " + Environment.Version;
+				request.UserAgent = SchumixBase.Title + SchumixBase.Space + sUtilities.GetVersion() + " / .NET " + Environment.Version;
 				request.Referer = "http://www.wowemuf.org";
 
 				var response = request.GetResponse();
@@ -67,7 +67,7 @@ namespace Schumix.ExtraAddon.Commands
 				var getTitleRegex = new Regex(@"<title>(?<ttl>.*\s*.+\s*.*)\s*</title>", RegexOptions.IgnoreCase);
 				var match = getTitleRegex.Match(data);
 
-				return (match.Success) ? (match.Groups["ttl"].ToString()) : sLocalization.WebHelper("Text");
+				return (match.Success) ? (match.Groups["ttl"].ToString()) : sLocalization.WebHelper("Text", Language);
 			}
 			catch(Exception e)
 			{

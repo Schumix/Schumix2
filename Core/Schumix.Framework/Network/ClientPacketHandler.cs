@@ -21,7 +21,9 @@
 using System;
 using System.Threading;
 using System.Net.Sockets;
+using Schumix.API;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Client
@@ -147,7 +149,13 @@ namespace Schumix.Framework.Client
 		{
 			Log.Warning("CloseHandler", sLConsole.ClientPacketHandler("Text3"));
 			Log.Warning("CloseHandler", sLConsole.ClientPacketHandler("Text4"));
+
+			SchumixBase.ExitStatus = true;
 			SchumixBase.timer.SaveUptime();
+
+			if(!INetwork.Writer.IsNull())
+				INetwork.Writer.WriteLine("QUIT :Server killed.");
+
 			Thread.Sleep(1000);
 			Environment.Exit(1);
 		}

@@ -38,10 +38,10 @@ namespace Schumix.Server.Config
 		private const int _listenerport               = 35220;
 		private const string _password                = "schumix";
 		private const string _locale                  = "enUS";
-		private const bool _updateenabled           = false;
-		private const bool _updateversionsenabled   = false;
-		private const string _updateversionsversion = "x.x.x";
-		private const string _updatewebpage         = "http://megax.uw.hu/Schumix2/";
+		private const bool _updateenabled            = false;
+		private const bool _updateversionsenabled    = false;
+		private const string _updateversionsversion  = "x.x.x";
+		private const string _updatewebpage          = "http://megax.uw.hu/Schumix2/";
 		private const bool _schumixsenabled           = false;
 		private const int _schumixsnumber             = 1;
 		private const string _schumix0file            = "Schumix.xml";

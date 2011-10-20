@@ -40,7 +40,7 @@ namespace Schumix.GameAddon
 
 		public void Setup()
 		{
-			CommandManager.PublicCRegisterHandler("game",	new Action<IRCMessage>(HandleGame));
+			CommandManager.PublicCRegisterHandler("game", new Action<IRCMessage>(HandleGame));
 			Console.CancelKeyPress += (sender, e) => { Clean(); };
 		}
 

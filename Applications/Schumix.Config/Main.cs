@@ -26,6 +26,9 @@ namespace Schumix.Config
 {
 	class MainClass
 	{
+		/// <summary>
+		///     A Main függvény. Itt indul el a program.
+		/// </summary>
 		public static void Main(string[] args)
 		{
 			Thread.Sleep(2000);

@@ -41,7 +41,7 @@ namespace Schumix.Irc
 				Names.Add(IRCConfig.IgnoreNames.ToLower());
 		}
 
-		public bool Ignore(string Name)
+		public bool IsIgnore(string Name)
 		{
 			foreach(var name in Names)
 			{
@@ -50,6 +50,21 @@ namespace Schumix.Irc
 			}
 
 			return false;
+		}
+
+		public void Add(string Name)
+		{
+
+		}
+
+		public void Remove(string Name)
+		{
+
+		}
+
+		public void Clean()
+		{
+			Names.Clear();
 		}
 	}
 }
