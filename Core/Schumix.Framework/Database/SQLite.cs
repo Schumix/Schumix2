@@ -23,6 +23,7 @@ using System.Threading;
 using System.Data;
 using System.Data.SQLite;
 using System.Text.RegularExpressions;
+using Schumix.API;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -90,6 +91,19 @@ namespace Schumix.Framework.Database
 			}
 			catch(SQLiteException s)
 			{
+				if(s.Message == "Fatal error encountered during command execution.")
+				{
+					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
 				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 				return null;
 			}
@@ -108,9 +122,30 @@ namespace Schumix.Framework.Database
 
 		private void ExecuteNonQuery(string sql)
 		{
-			var command = Connection.CreateCommand();
-			command.CommandText = sql;
-			command.ExecuteNonQuery();
+			try
+			{
+				var command = Connection.CreateCommand();
+				command.CommandText = sql;
+				command.ExecuteNonQuery();
+			}
+			catch(SQLiteException s)
+			{
+				if(s.Message == "Fatal error encountered during command execution.")
+				{
+					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
+				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+				return;
+			}
 		}
 
 		public bool Update(string sql)
