@@ -24,6 +24,7 @@ using System.Threading;
 using System.Text.RegularExpressions;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using Schumix.API;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -86,6 +87,19 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
+				if(m.Message == "Fatal error encountered during command execution.")
+				{
+					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+					Log.Warning("MySql", sLConsole.MySql("Text4"));
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
 				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 				return null;
 			}
@@ -99,9 +113,30 @@ namespace Schumix.Framework.Database
 
 		private void ExecuteNonQuery(string sql)
 		{
-			var command = Connection.CreateCommand();
-			command.CommandText = sql;
-			command.ExecuteNonQuery();
+			try
+			{
+				var command = Connection.CreateCommand();
+				command.CommandText = sql;
+				command.ExecuteNonQuery();
+			}
+			catch(MySqlException m)
+			{
+				if(m.Message == "Fatal error encountered during command execution.")
+				{
+					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+					Log.Warning("MySql", sLConsole.MySql("Text4"));
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
+				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+				return;
+			}
 		}
 
 		public bool Update(string sql)

@@ -333,6 +333,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Query error: {0}";
 				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "A program leáll!";
+					else if(Locale == "enUS")
+						return "Program shutting down!";
+					else
+						return "Program shutting down!";
+				}
 				default:
 					return string.Empty;
 			}
@@ -368,6 +377,15 @@ namespace Schumix.Framework.Localization
 						return "Query error: {0}";
 					else
 						return "Query error: {0}";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "A program leáll!";
+					else if(Locale == "enUS")
+						return "Program shutting down!";
+					else
+						return "Program shutting down!";
 				}
 				default:
 					return string.Empty;
