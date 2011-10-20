@@ -39,11 +39,6 @@ namespace Schumix.Irc
 		private static readonly Dictionary<string, Action<IRCMessage>> _IRCHandler2 = new Dictionary<string, Action<IRCMessage>>();
 		private static readonly Dictionary<int, Action<IRCMessage>> _IRCHandler3 = new Dictionary<int, Action<IRCMessage>>();
 
-        ///<summary>
-        ///     A kimeneti adatokat külddi az IRC felé.
-        ///</summary>
-		public static StreamWriter writer { get; private set; }
-
         /// <summary>
         ///     A kapcsolatot tároljra.
         /// </summary>
@@ -250,18 +245,18 @@ namespace Schumix.Irc
 				}
 
 				reader = new StreamReader(client.GetStream());
-				writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
+				INetwork.Writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
 			}
 			else
 			{
 				reader = new StreamReader(sclient.GetStream());
-				writer = new StreamWriter(sclient.GetStream()) { AutoFlush = true };
+				INetwork.Writer = new StreamWriter(sclient.GetStream()) { AutoFlush = true };
 			}
 
 			if(b)
 			{
-				writer.WriteLine("NICK {0}", sNickInfo.NickStorage);
-				writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
+				INetwork.Writer.WriteLine("NICK {0}", sNickInfo.NickStorage);
+				INetwork.Writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
 			}
 			else
 				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
@@ -278,7 +273,7 @@ namespace Schumix.Irc
 			if(!IRCConfig.Ssl)
 				client.Close();
 
-			writer.Dispose();
+			INetwork.Writer.Dispose();
 			reader.Dispose();
 		}
 

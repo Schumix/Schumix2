@@ -24,6 +24,9 @@ namespace Schumix.Config.Clean
 {
 	public sealed class DirectoryClean
 	{
+		/// <summary>
+		///     Törli azon mappát melyet megadunk a paraméterben. Ez elsősorban egy verziószám.
+		/// </summary>
 		public DirectoryClean(string Version)
 		{
 			if(Directory.Exists(Version))

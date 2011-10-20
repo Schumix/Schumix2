@@ -201,8 +201,8 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(!Network.writer.IsNull() && message.Length <= 2000)
-					Network.writer.WriteLine(message);
+				if(!INetwork.Writer.IsNull() && message.Length <= 2000)
+					INetwork.Writer.WriteLine(message);
 
 				Thread.Sleep(IRCConfig.MessageSending);
 			}

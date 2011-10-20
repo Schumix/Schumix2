@@ -35,7 +35,7 @@ namespace Schumix.Framework
 		private static readonly Guid _guid = Guid.NewGuid();
 		public static DatabaseManager DManager { get; private set; }
 		public static Timer timer { get; private set; }
-		public const string Title = "Schumix2 IRC Bot";
+		public const string Title = "Schumix2 IRC Bot and Framework";
 		public static bool UrlTitleEnabled = false;
 		public static bool ExitStatus = false;
 		public static bool ThreadStop = true;

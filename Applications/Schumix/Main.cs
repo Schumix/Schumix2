@@ -60,6 +60,7 @@ namespace Schumix
 		/// </remarks>
 		private static void Main(string[] args)
 		{
+			Runtime.SetProcessName("Schumix");
 			string configdir = "Configs";
 			string configfile = "Schumix.xml";
 			string console_encoding = "utf-8";

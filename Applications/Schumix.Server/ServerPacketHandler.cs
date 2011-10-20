@@ -43,6 +43,7 @@ namespace Schumix.Server
 		public event ServerPacketHandlerDelegate OnScsRandomRequest;
 		public event ServerPacketHandlerDelegate OnCloseConnection;
 		public event ServerPacketHandlerDelegate OnAuthRequest;
+		public event ServerPacketHandlerDelegate OnNickName;
 		private ServerPacketHandler() {}
 
 		public void Init()
@@ -50,6 +51,7 @@ namespace Schumix.Server
 			OnAuthRequest      += AuthRequestPacketHandler;
 			OnScsRandomRequest += ScsRandomHandler;
 			OnCloseConnection  += CloseHandler;
+			OnNickName         += NickNameHandler;
 		}
 
 		public void HandlePacket(SchumixPacket packet, TcpClient client, NetworkStream stream)
@@ -83,6 +85,8 @@ namespace Schumix.Server
 				OnScsRandomRequest(packet, stream, hst, bck);
 			else if(packetid == (int)Opcode.CMSG_CLOSE_CONNECTION)
 				OnCloseConnection(packet, stream, hst, bck);
+			else if(packetid == (int)Opcode.CMSG_NICK_NAME)
+				OnNickName(packet, stream, hst, bck);
 		}
 
 		private void ScsRandomHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
@@ -150,6 +154,11 @@ namespace Schumix.Server
 
 			Log.Notice("CloseHandler", sLConsole.ServerPacketHandler("Text7"));
 			sSchumix.Start(file, dir, ce, locale);
+		}
+
+		private void NickNameHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
+		{
+
 		}
 
 		public void SendPacketBack(SchumixPacket packet, NetworkStream stream, string hst, int backport)
