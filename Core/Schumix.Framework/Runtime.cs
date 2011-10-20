@@ -19,16 +19,47 @@
 
 using System;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Schumix.API;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
 	public sealed class Runtime
 	{
-		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private Runtime()
+		{
+			Task.Factory.StartNew(() => MemoryThread());
+		}
 
-		public static void SetProcessName(string Name)
+		public void MemoryThread()
+		{
+			while(true)
+			{
+				if(Process.GetCurrentProcess().WorkingSet64/1024/1024 >= 100)
+				{
+					Log.Warning("Runtime", sLConsole.Runtime("Text3"));
+					Log.Warning("Runtime", sLConsole.Runtime("Text4"));
+					SchumixBase.ExitStatus = true;
+					SchumixBase.timer.SaveUptime();
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Memory over-consumption.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
+				Thread.Sleep(60*1000);
+			}
+		}
+
+		public void SetProcessName(string Name)
 		{
 #if MONO
 			if(Environment.OSVersion.Platform == PlatformID.Unix)
@@ -53,7 +84,7 @@ namespace Schumix.Framework
 		private static extern void setproctitle(byte[] fmt, byte[] str_arg);
 
 		//this is from http://abock.org/2006/02/09/changing-process-name-in-mono/
-		private static void unixSetProcessName(string Name)
+		private void unixSetProcessName(string Name)
 		{
 			try
 			{

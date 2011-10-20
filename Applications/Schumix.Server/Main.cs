@@ -22,6 +22,7 @@ using System.IO;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using Schumix.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Client;
@@ -36,13 +37,14 @@ namespace Schumix.Server
 		private static readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
 		/// </summary>
 		private static void Main(string[] args)
 		{
-			Runtime.SetProcessName("Server");
+			sRuntime.SetProcessName("Server");
 			string configdir = "Configs";
 			string configfile = "Server.xml";
 			string console_encoding = "utf-8";

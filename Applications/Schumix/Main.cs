@@ -20,6 +20,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using Schumix.Irc;
 using Schumix.Updater;
 using Schumix.Framework;
@@ -48,6 +49,7 @@ namespace Schumix
 		///     Üzenet küldés az irc szerver felé.
 		/// </summary>
 		private static readonly Sender sSender = Singleton<Sender>.Instance;
+		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
@@ -60,7 +62,7 @@ namespace Schumix
 		/// </remarks>
 		private static void Main(string[] args)
 		{
-			Runtime.SetProcessName("Schumix");
+			sRuntime.SetProcessName("Schumix");
 			string configdir = "Configs";
 			string configfile = "Schumix.xml";
 			string console_encoding = "utf-8";

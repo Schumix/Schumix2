@@ -2008,6 +2008,24 @@ namespace Schumix.Framework.Localization
 					else
 						return "Error setting process name!";
 				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "A program több mint 100 mb-ot fogyaszt!";
+					else if(Locale == "enUS")
+						return "The program, more than 100 MB consumed!";
+					else
+						return "The program, more than 100 MB consumed!";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "A program leáll!";
+					else if(Locale == "enUS")
+						return "Program shutting down!";
+					else
+						return "Program shutting down!";
+				}
 				default:
 					return string.Empty;
 			}
