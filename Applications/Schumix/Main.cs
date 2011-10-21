@@ -20,7 +20,6 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Threading;
 using Schumix.Irc;
 using Schumix.Updater;
 using Schumix.Framework;

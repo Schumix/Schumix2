@@ -19,8 +19,8 @@
 
 using System;
 using System.Text;
+using System.Timers;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Schumix.API;
@@ -32,30 +32,30 @@ namespace Schumix.Framework
 	public sealed class Runtime
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private System.Timers.Timer _timer = new System.Timers.Timer();
+
 		private Runtime()
 		{
-			Task.Factory.StartNew(() => MemoryThread());
+			_timer.Interval = 60*1000;
+			_timer.Elapsed += HandleTimerMemory;
+			_timer.Enabled = true;
+			_timer.Start();
 		}
 
-		public void MemoryThread()
+		private void HandleTimerMemory(object sender, ElapsedEventArgs e)
 		{
-			while(true)
+			if(Process.GetCurrentProcess().WorkingSet64/1024/1024 >= 100)
 			{
-				if(Process.GetCurrentProcess().WorkingSet64/1024/1024 >= 100)
-				{
-					Log.Warning("Runtime", sLConsole.Runtime("Text3"));
-					Log.Warning("Runtime", sLConsole.Runtime("Text4"));
-					SchumixBase.ExitStatus = true;
-					SchumixBase.timer.SaveUptime();
+				Log.Warning("Runtime", sLConsole.Runtime("Text3"));
+				Log.Warning("Runtime", sLConsole.Runtime("Text4"));
+				SchumixBase.ExitStatus = true;
+				SchumixBase.timer.SaveUptime();
 
-					if(!INetwork.Writer.IsNull())
-						INetwork.Writer.WriteLine("QUIT :Memory over-consumption.");
+				if(!INetwork.Writer.IsNull())
+					INetwork.Writer.WriteLine("QUIT :Memory over-consumption.");
 
-					Thread.Sleep(1000);
-					Environment.Exit(1);
-				}
-
-				Thread.Sleep(60*1000);
+				Thread.Sleep(1000);
+				Environment.Exit(1);
 			}
 		}
 
