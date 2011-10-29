@@ -146,11 +146,11 @@ namespace Schumix.GitRssAddon.Localization
 				case "github":
 				{
 					if(Language == "huHU")
-						return "3{0} 7{1} Revision: 10{2} beküldte: {3}";
+						return "3{0} 7{1} Revision: 10{2}";
 					else if(Language == "enUS")
-						return "3{0} 7{1} Revision: 10{2} by {3}";
+						return "3{0} 7{1} Revision: 10{2}";
 					else
-						return "3{0} 7{1} Revision: 10{2} by {3}";
+						return "3{0} 7{1} Revision: 10{2}";
 				}
 				case "github2":
 				{
@@ -173,11 +173,11 @@ namespace Schumix.GitRssAddon.Localization
 				case "gitweb2":
 				{
 					if(Language == "huHU")
-						return "3{0} Infó:{1}";
+						return "3{0} Infó: {1}";
 					else if(Language == "enUS")
-						return "3{0} Info:{1}";
+						return "3{0} Info: {1}";
 					else
-						return "3{0} Info:{1}";
+						return "3{0} Info: {1}";
 				}
 				default:
 					return string.Empty;
