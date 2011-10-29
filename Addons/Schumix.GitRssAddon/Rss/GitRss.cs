@@ -18,7 +18,9 @@
  */
 
 using System;
+using System.IO;
 using System.Xml;
+using System.Net;
 using System.Threading;
 using Schumix.Irc;
 using Schumix.Framework;
@@ -58,6 +60,12 @@ namespace Schumix.GitRssAddon
 		private void Init()
 		{
 			if(_website == "github")
+			{
+				_id = "feed/entry/id";
+				_title = "feed/entry/title";
+				_author = "feed/entry/author/name";
+			}
+			else if(_website == "gitweb")
 			{
 				_id = "feed/entry/id";
 				_title = "feed/entry/title";
@@ -131,6 +139,7 @@ namespace Schumix.GitRssAddon
 							if(_oldrev != newrev)
 							{
 								title = Title(url);
+								Console.WriteLine(title);
 								if(title == "no text")
 									continue;
 
@@ -150,6 +159,7 @@ namespace Schumix.GitRssAddon
 					catch(Exception e)
 					{
 						Log.Error("GitRss", sLocalization.Exception("Error"), _name, _type, e.Message);
+						Thread.Sleep(RssConfig.QueryTime*1000);
 					}
 				}
 			}
@@ -203,6 +213,19 @@ namespace Schumix.GitRssAddon
 
 				return rev.Substring(rev.IndexOf("Commit/")+1);
 			}
+			else if(_website == "gitweb")
+			{
+				var id = rss.SelectSingleNode(_id);
+				if(id.IsNull())
+					return "no text";
+
+				string rev = id.InnerText;
+
+				if(rev.IndexOf("a=commitdiff;h=") == -1)
+					return "no text";
+
+				return rev.Substring(rev.IndexOf("a=commitdiff;h=")+1);
+			}
 
 			return "no text";
 		}
@@ -222,6 +245,11 @@ namespace Schumix.GitRssAddon
 					{
 						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, _type, rev.Substring(0, 10), author);
 						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github2", language), _name, title);
+					}
+					else if(_website == "gitweb")
+					{
+						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb", language), _name, _type, rev.Substring(0, 10), author);
+						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb2", language), _name, title);
 					}
 
 					Thread.Sleep(1000);

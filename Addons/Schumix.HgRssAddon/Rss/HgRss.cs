@@ -149,6 +149,7 @@ namespace Schumix.HgRssAddon
 					catch(Exception e)
 					{
 						Log.Error("HgRss", sLocalization.Exception("Error"), _name, e.Message);
+						Thread.Sleep(RssConfig.QueryTime*1000);
 					}
 				}
 			}

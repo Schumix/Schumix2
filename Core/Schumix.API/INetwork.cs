@@ -22,8 +22,14 @@ using System.IO;
 
 namespace Schumix.API
 {
+	/// <summary>
+	///     A Network class része. Ezzel elérhető bárhonnét eggyes része.
+	/// </summary>
 	public sealed class INetwork
 	{
+		/// <summary>
+		///     Üzenet küldés az irc szerver felé.
+		/// </summary>
 		public static StreamWriter Writer { get; set; }
 	}
 }

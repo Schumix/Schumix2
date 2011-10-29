@@ -22,7 +22,7 @@ using System;
 namespace Schumix.API
 {
 	/// <summary>
-	///     Meghatározza, hogy PRIVMSG vagy NOTICE legyen az üzenetküldés módja.
+	///     Meghatározza az üzenet küldési típusokat.
 	/// </summary>
 	public enum MessageType
 	{
