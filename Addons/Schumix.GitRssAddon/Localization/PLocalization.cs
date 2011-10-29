@@ -155,11 +155,11 @@ namespace Schumix.GitRssAddon.Localization
 				case "github2":
 				{
 					if(Language == "huHU")
-						return "3{0} Infó:{1}";
+						return "3{0} Infó: {1}";
 					else if(Language == "enUS")
-						return "3{0} Info:{1}";
+						return "3{0} Info: {1}";
 					else
-						return "3{0} Info:{1}";
+						return "3{0} Info: {1}";
 				}
 				case "gitweb":
 				{
