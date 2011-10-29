@@ -236,7 +236,7 @@ namespace Schumix.SvnRssAddon
 
 				string i = info[1];
 
-				if(i.IndexOf("]") == -1)
+				if(!i.Contains("]"))
 					return "no text";
 
 				return i.Substring(0, i.IndexOf("]"));

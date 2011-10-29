@@ -235,7 +235,7 @@ namespace Schumix.HgRssAddon
 
 				string rev = id.InnerText;
 
-				if(rev.IndexOf("hgchanges/basic/") == -1)
+				if(!rev.Contains("hgchanges/basic/"))
 					return "no text";
 
 				return rev.Substring(rev.IndexOf("hgchanges/basic/")+1);
@@ -248,7 +248,7 @@ namespace Schumix.HgRssAddon
 
 				string rev = id.InnerText;
 
-				if(rev.IndexOf("changeset/") == -1)
+				if(!rev.Contains("changeset/"))
 					return "no text";
 
 				return rev.Substring(rev.IndexOf("changeset/")+1);
