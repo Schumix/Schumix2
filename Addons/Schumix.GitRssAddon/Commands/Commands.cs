@@ -182,13 +182,13 @@ namespace Schumix.GitRssAddon.Commands
 						return;
 					}
 
-					if(sIRCMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 6)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 						return;
 					}
 
-					if(sIRCMessage.Info.Length < 8)
+					if(sIRCMessage.Info.Length < 7)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel));
 						return;
@@ -196,7 +196,7 @@ namespace Schumix.GitRssAddon.Commands
 
 					foreach(var list in GitRssAddon.RssList)
 					{
-						if(sIRCMessage.Info[6].ToLower() == list.Name.ToLower() && sIRCMessage.Info[7].ToLower() == list.Type.ToLower())
+						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
 						{
 							list.Reload();
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], list.Name, list.Type);
@@ -204,7 +204,7 @@ namespace Schumix.GitRssAddon.Commands
 						}
 					}
 
-					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[6], sIRCMessage.Info[7]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[5], sIRCMessage.Info[6]);
 				}
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "channel")

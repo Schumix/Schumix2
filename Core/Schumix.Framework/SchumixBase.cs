@@ -66,6 +66,9 @@ namespace Schumix.Framework
 						Thread.Sleep(100);
 				}
 
+#if MONO
+				System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
+#endif
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text"));
 				timer = new Timer();
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text2"));

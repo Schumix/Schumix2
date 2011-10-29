@@ -169,7 +169,7 @@ namespace Schumix.SvnRssAddon.Commands
 						return;
 					}
 
-					if(sIRCMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 6)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 						return;
@@ -177,7 +177,7 @@ namespace Schumix.SvnRssAddon.Commands
 
 					foreach(var list in SvnRssAddon.RssList)
 					{
-						if(sIRCMessage.Info[6].ToLower() == list.Name.ToLower())
+						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower())
 						{
 							list.Reload();
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], list.Name);
@@ -185,7 +185,7 @@ namespace Schumix.SvnRssAddon.Commands
 						}
 					}
 
-					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[6]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[5]);
 				}
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "channel")
