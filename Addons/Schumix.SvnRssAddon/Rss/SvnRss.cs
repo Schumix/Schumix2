@@ -19,6 +19,7 @@
 
 using System;
 using System.Xml;
+using System.Net;
 using System.Threading;
 using Schumix.Irc;
 using Schumix.Framework;
@@ -43,12 +44,31 @@ namespace Schumix.SvnRssAddon
 		private string _title;
 		private string _author;
 		private string[] info;
+		private string _username;
+		private string _password;
 		public bool Started { get; private set; }
 
 		public SvnRss(string name, string url, string website)
 		{
 			_name = name;
-			_url = url;
+
+			if(url.Contains(SchumixBase.Colon.ToString()) && url.Contains("@"))
+			{
+				_url = url.Substring(0, url.IndexOf("//")+2);
+				url = url.Remove(0, url.IndexOf("//")+2);
+				_username = url.Substring(0, url.IndexOf(SchumixBase.Colon));
+				url = url.Remove(0, url.IndexOf(SchumixBase.Colon)+1);
+				_password = url.Substring(0, url.IndexOf("@"));
+				url = url.Remove(0, url.IndexOf("@")+1);
+				_url += url;
+			}
+			else
+			{
+				_url = url;
+				_username = string.Empty;
+				_password = string.Empty;
+			}
+
 			_website = website;
 			Init();
 		}
@@ -133,6 +153,8 @@ namespace Schumix.SvnRssAddon
 								_oldrev = newrev;
 							}
 
+							url.RemoveAll();
+							url = null;
 							Thread.Sleep(RssConfig.QueryTime*1000);
 						}
 						else 
@@ -156,9 +178,24 @@ namespace Schumix.SvnRssAddon
 		{
 			try
 			{
-				var rss = new XmlDocument();
-				rss.Load(_url);
-				return rss;
+				if(_username != string.Empty && _password != string.Empty)
+				{
+					using(var client = new WebClient())
+					{
+						client.Credentials = new NetworkCredential(_username, _password);
+						string xml = client.DownloadString(_url);
+						var rss = new XmlDocument();
+						rss.LoadXml(xml);
+						client.Dispose();
+						return rss;
+					}
+				}
+				else
+				{
+					var rss = new XmlDocument();
+					rss.Load(_url);
+					return rss;
+				}
 			}
 			catch(Exception e)
 			{
