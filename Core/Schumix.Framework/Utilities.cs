@@ -31,6 +31,7 @@ using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using Schumix.API;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -399,7 +400,18 @@ namespace Schumix.Framework
 
 		public string GetFunctionUpdate()
 		{
-			return ",koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off";
+			string functions = string.Empty;
+
+			foreach(var function in Enum.GetNames(typeof(IFunctions)))
+			{
+				if(function == IFunctions.Log.ToString() || function == IFunctions.Rejoin.ToString() ||
+					function == IFunctions.Commands.ToString())
+					functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + "on";
+				else
+					functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + "off";
+			}
+
+			return functions;
 		}
 
 		public string SqlEscape(string text)
@@ -438,7 +450,7 @@ namespace Schumix.Framework
 				var amdRegex = new Regex(@"model\sname\s:\s*(?<cpu>.+)");
 
 				if(!amdRegex.IsMatch(content))
-					return "Not found";
+					return sLConsole.Other("Notfound");
 
 				var amatch = amdRegex.Match(content);
 				string amd = amatch.Groups["cpu"].ToString();

@@ -80,9 +80,9 @@ namespace Schumix.CompilerAddon
 
 		public void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("commands") || sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!sChannelInfo.FSelect("commands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect(IFunctions.Commands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				if(!CompilerConfig.CompilerEnabled)
@@ -114,7 +114,7 @@ namespace Schumix.CompilerAddon
 				}
 				else
 				{
-					if((sChannelInfo.FSelect("compiler") && sChannelInfo.FSelect("compiler", sIRCMessage.Channel)) &&
+					if((sChannelInfo.FSelect(IFunctions.Compiler) && sChannelInfo.FSelect(IFunctions.Compiler, sIRCMessage.Channel)) &&
 						(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage)))
 						Compiler(sIRCMessage, false, command);
 				}

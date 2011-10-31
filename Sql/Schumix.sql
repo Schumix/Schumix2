@@ -37,7 +37,7 @@ CREATE TABLE `banned` (
 DROP TABLE IF EXISTS `channel`;
 CREATE TABLE `channel` (
   `Id` int(3) unsigned NOT NULL auto_increment,
-  `Functions` varchar(500) NOT NULL default ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off',
+  `Functions` varchar(500) NOT NULL default ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off',
   `Channel` varchar(20) NOT NULL default '',
   `Password` varchar(30) NOT NULL default '',
   `Enabled` varchar(5) NOT NULL default '',
@@ -46,7 +46,7 @@ CREATE TABLE `channel` (
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-INSERT INTO `channel` VALUES ('1', ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off', '#schumix2', '', '', '', 'huHU');
+INSERT INTO `channel` VALUES ('1', ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off', '#schumix2', '', '', '', 'huHU');
 
 -- ----------------------------
 -- Table structure for gitinfo
@@ -1025,7 +1025,7 @@ CREATE TABLE `schumix` (
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-INSERT INTO `schumix` VALUES ('1', 'koszones', 'on');
+INSERT INTO `schumix` VALUES ('1', 'greeter', 'on');
 INSERT INTO `schumix` VALUES ('2', 'log', 'on');
 INSERT INTO `schumix` VALUES ('3', 'rejoin', 'on');
 INSERT INTO `schumix` VALUES ('4', 'commands', 'on');

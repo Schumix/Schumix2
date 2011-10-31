@@ -92,6 +92,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IRCMessage.cs" />
     <Compile Include="INetwork.cs" />
+    <Compile Include="IFunctions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System">

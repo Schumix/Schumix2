@@ -44,7 +44,7 @@ Minute INTEGER DEFAULT 0
 DROP TABLE IF EXISTS "channel";
 CREATE TABLE "channel" (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
-Functions VARCHAR(255)    DEFAULT ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off',
+Functions VARCHAR(255)    DEFAULT ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off',
 Channel VARCHAR(20),
 Password VARCHAR(30),
 Enabled VARCHAR(5),
@@ -55,7 +55,7 @@ Language VARCHAR(4)    DEFAULT 'enUS'
 -- ----------------------------
 -- Records of channel
 -- ----------------------------
-INSERT INTO "channel" VALUES (1, ',koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off', '#schumix2', null, null, null, 'huHU');
+INSERT INTO "channel" VALUES (1, ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off', '#schumix2', null, null, null, 'huHU');
 
 -- ----------------------------
 -- Table structure for "gitinfo"
@@ -1036,7 +1036,7 @@ FunctionStatus VARCHAR(3)
 -- ----------------------------
 -- Records of schumix
 -- ----------------------------
-INSERT INTO "schumix" VALUES (1, 'koszones', 'on');
+INSERT INTO "schumix" VALUES (1, 'greeter', 'on');
 INSERT INTO "schumix" VALUES (2, 'log', 'on');
 INSERT INTO "schumix" VALUES (3, 'rejoin', 'on');
 INSERT INTO "schumix" VALUES (4, 'commands', 'on');

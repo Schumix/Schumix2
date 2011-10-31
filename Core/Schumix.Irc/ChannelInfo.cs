@@ -20,6 +20,7 @@
 using System;
 using System.Data;
 using System.Collections.Generic;
+using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -56,9 +57,9 @@ namespace Schumix.Irc
 				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text"));
 		}
 
-		public bool FSelect(string name)
+		public bool FSelect(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT FunctionStatus FROM schumix WHERE FunctionName = '{0}'", name);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT FunctionStatus FROM schumix WHERE FunctionName = '{0}'", Name.ToLower());
 			if(!db.IsNull())
 			{
 				string status = db["FunctionStatus"].ToString();
@@ -71,16 +72,48 @@ namespace Schumix.Irc
 			}
 		}
 
-		public bool FSelect(string name, string channel)
+		public bool FSelect(string Name, string Channel)
 		{
 			foreach(var channels in ChannelFunction)
 			{
 				string[] point = channels.Split(SchumixBase.Point);
 				string[] point2 = point[1].Split(SchumixBase.Colon);
 
-				if(point[0] == channel.ToLower())
+				if(point[0] == Channel.ToLower())
 				{
-					if(point2[0] == name.ToLower())
+					if(point2[0] == Name.ToLower())
+						return point2[1] == "on";
+				}
+			}
+
+			return false;
+		}
+
+		public bool FSelect(IFunctions Name)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT FunctionStatus FROM schumix WHERE FunctionName = '{0}'", Name.ToString().ToLower());
+			if(!db.IsNull())
+			{
+				string status = db["FunctionStatus"].ToString();
+				return status == "on";
+			}
+			else
+			{
+				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text2"));
+				return false;
+			}
+		}
+
+		public bool FSelect(IFunctions Name, string Channel)
+		{
+			foreach(var channels in ChannelFunction)
+			{
+				string[] point = channels.Split(SchumixBase.Point);
+				string[] point2 = point[1].Split(SchumixBase.Colon);
+
+				if(point[0] == Channel.ToLower())
+				{
+					if(point2[0] == Name.ToString().ToLower())
 						return point2[1] == "on";
 				}
 			}

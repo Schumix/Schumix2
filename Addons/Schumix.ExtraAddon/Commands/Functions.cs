@@ -34,7 +34,7 @@ namespace Schumix.ExtraAddon.Commands
 	{
 		public void HLMessage(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("autohl") && sChannelInfo.FSelect("autohl", sIRCMessage.Channel))
+			if(sChannelInfo.FSelect(IFunctions.Autohl) && sChannelInfo.FSelect(IFunctions.Autohl, sIRCMessage.Channel))
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name, Info, Enabled FROM hlmessage");
 				if(!db.IsNull())
@@ -63,7 +63,7 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				string channel = _channel.Remove(0, 1, SchumixBase.Colon);
 
-				if(sChannelInfo.FSelect("autokick") && sChannelInfo.FSelect("autokick", channel))
+				if(sChannelInfo.FSelect(IFunctions.Autokick) && sChannelInfo.FSelect(IFunctions.Autokick, channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
@@ -78,7 +78,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(status == "privmsg")
 			{
-				if(sChannelInfo.FSelect("autokick") && sChannelInfo.FSelect("autokick", _channel))
+				if(sChannelInfo.FSelect(IFunctions.Autokick) && sChannelInfo.FSelect(IFunctions.Autokick, _channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
@@ -132,7 +132,7 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void Message(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("message") && sChannelInfo.FSelect("message", sIRCMessage.Channel))
+			if(sChannelInfo.FSelect(IFunctions.Message) && sChannelInfo.FSelect(IFunctions.Message, sIRCMessage.Channel))
 			{
 				var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower());
 				if(!db.IsNull())
