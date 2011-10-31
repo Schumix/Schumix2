@@ -132,10 +132,8 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void Message(IRCMessage sIRCMessage)
 		{
-			Console.WriteLine("hehe");
 			if(sChannelInfo.FSelect(IFunctions.Message) && sChannelInfo.FSelect(IFunctions.Message, sIRCMessage.Channel))
 			{
-				Console.WriteLine("hehe2");
 				var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower());
 				if(!db.IsNull())
 				{
