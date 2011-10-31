@@ -55,14 +55,14 @@ namespace Schumix.ExtraAddon.Commands
 			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
 			sNameList.Add(sIRCMessage.Channel, sIRCMessage.Nick);
 
-			if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", sIRCMessage.Channel))
+			if(sChannelInfo.FSelect(IFunctions.Automode) && sChannelInfo.FSelect(IFunctions.Automode, sIRCMessage.Channel))
 			{
 				AutoMode = true;
 				ModeChannel = sIRCMessage.Channel;
 				sSender.NickServStatus(sIRCMessage.Nick);
 			}
 
-			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", sIRCMessage.Channel))
+			if(sChannelInfo.FSelect(IFunctions.Greeter) && sChannelInfo.FSelect(IFunctions.Greeter, sIRCMessage.Channel))
 			{
 				var rand = new Random();
 				string Koszones = string.Empty;
@@ -101,7 +101,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Nick);
 
-			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", sIRCMessage.Channel))
+			if(sChannelInfo.FSelect(IFunctions.Greeter) && sChannelInfo.FSelect(IFunctions.Greeter, sIRCMessage.Channel))
 			{
 				var rand = new Random();
 				string elkoszones = string.Empty;
@@ -140,7 +140,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(sIRCMessage.Info[3] == sNickInfo.NickStorage)
 			{
-				if(sChannelInfo.FSelect("rejoin") && sChannelInfo.FSelect("rejoin", sIRCMessage.Channel))
+				if(sChannelInfo.FSelect(IFunctions.Rejoin) && sChannelInfo.FSelect(IFunctions.Rejoin, sIRCMessage.Channel))
 				{
 					foreach(var m_channel in sChannelInfo.CList)
 					{
@@ -151,7 +151,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			else
 			{
-				if(sChannelInfo.FSelect("commands") && sChannelInfo.FSelect("commands", sIRCMessage.Channel))
+				if(sChannelInfo.FSelect(IFunctions.Commands) && sChannelInfo.FSelect(IFunctions.Commands, sIRCMessage.Channel))
 				{
 					if(ConsoleLog.CLog)
 					{

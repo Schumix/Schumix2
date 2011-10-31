@@ -84,7 +84,7 @@ namespace Schumix.CalendarAddon
 			{
 				string channel = sIRCMessage.Channel.ToLower();
 
-				if(sChannelInfo.FSelect("antiflood") && sChannelInfo.FSelect("antiflood", channel))
+				if(sChannelInfo.FSelect(IFunctions.Antiflood) && sChannelInfo.FSelect(IFunctions.Antiflood, channel))
 				{
 					string nick = sIRCMessage.Nick.ToLower();
 					int i = 0;

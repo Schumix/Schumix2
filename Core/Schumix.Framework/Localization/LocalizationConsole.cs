@@ -1702,6 +1702,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Nobody";
 				}
+				case "Notfound":
+				{
+					if(Locale == "huHU")
+						return "Nem található!";
+					else if(Locale == "enUS")
+						return "Not found!";
+					else
+						return "Not found!";
+				}
 				default:
 					return string.Empty;
 			}

@@ -59,7 +59,7 @@ namespace Schumix.GameAddon.Commands
 					return;
 				}
 
-				if(sChannelInfo.FSelect("gamecommands", sIRCMessage.Channel))
+				if(sChannelInfo.FSelect(IFunctions.Gamecommands, sIRCMessage.Channel))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, "Fut már játék!");
 					return;

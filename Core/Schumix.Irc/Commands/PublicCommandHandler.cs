@@ -58,7 +58,7 @@ namespace Schumix.Irc.Commands
 		protected void HandleInfo(IRCMessage sIRCMessage)
 		{
 			var text = sLManager.GetCommandTexts("info", sIRCMessage.Channel);
-			if(text.Length < 3)
+			if(text.Length < 4)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
