@@ -775,7 +775,7 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
-				SchumixBase.DManager.Insert("INSERT INTO `message`(Name, Channel, Message, Wrote)", sUtilities.SqlEscape(sIRCMessage.Info[4].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)), sIRCMessage.Nick);
+				SchumixBase.DManager.Insert("`message`(Name, Channel, Message, Wrote)", sUtilities.SqlEscape(sIRCMessage.Info[4].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)), sIRCMessage.Nick);
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message", sIRCMessage.Channel));
 			}
 		}
