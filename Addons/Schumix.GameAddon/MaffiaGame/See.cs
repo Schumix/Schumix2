@@ -31,6 +31,12 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
+			if(!Started)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Még nem kezdődött el játék!", Name);
+				return;
+			}
+
 			if(_day)
 			{
 				sSendMessage.SendCMPrivmsg(NickName, "Csak este nyomozhatsz!");

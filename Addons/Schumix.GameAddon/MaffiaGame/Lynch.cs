@@ -37,6 +37,12 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
+			if(!Started)
+			{
+				sSendMessage.SendCMPrivmsg(Channel, "{0}: Még nem kezdődött el játék!", Name);
+				return;
+			}
+
 			if(!_killerlist.ContainsKey(NickName.ToLower()) && !_detectivelist.ContainsKey(NickName.ToLower()) &&
 				!_normallist.ContainsKey(NickName.ToLower()) && !_doctorlist.ContainsKey(NickName.ToLower()))
 			{

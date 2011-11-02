@@ -221,6 +221,9 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private void RemovePlayer(string Name)
 		{
+			if(Name.Replace(SchumixBase.Space.ToString(), string.Empty) == string.Empty)
+				return;
+
 			_rank = string.Empty;
 			string name = string.Empty;
 
