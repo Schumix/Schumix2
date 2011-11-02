@@ -39,6 +39,7 @@ namespace Schumix.Framework.Client
 	public class ClientPacketHandler
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		/// <summary>
 		/// Occurs when auth is denied.
 		/// </summary>
@@ -149,6 +150,9 @@ namespace Schumix.Framework.Client
 		{
 			Log.Warning("CloseHandler", sLConsole.ClientPacketHandler("Text3"));
 			Log.Warning("CloseHandler", sLConsole.ClientPacketHandler("Text4"));
+
+			foreach(var plugin in sAddonManager.GetPlugins())
+				plugin.Destroy();
 
 			SchumixBase.ExitStatus = true;
 			SchumixBase.timer.SaveUptime();

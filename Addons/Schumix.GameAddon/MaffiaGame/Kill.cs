@@ -31,6 +31,12 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
+			if(!Started)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Még nem kezdődött el játék!", Name);
+				return;
+			}
+
 			if(_killer && _players >= 8 && _killerlist.Count == 2)
 			{
 				sSendMessage.SendCMPrivmsg(Killer, "Már megegyeztek a gyilkosok!");
