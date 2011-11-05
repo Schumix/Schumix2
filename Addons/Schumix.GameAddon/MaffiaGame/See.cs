@@ -58,13 +58,6 @@ namespace Schumix.GameAddon.MaffiaGames
 				}
 			}
 
-			/*if((detective_.ToLower() == NickName.ToLower() && _detective) ||
-				(detective2_.ToLower() == NickName.ToLower() && _detective2))
-			{
-				sSendMessage.SendCMPrivmsg(NickName, "Ma este már kikérdeztél valakit!");
-				return;
-			}*/
-
 			if(_ghostlist.ContainsKey(Name.ToLower()))
 			{
 				sSendMessage.SendCMPrivmsg(NickName, "Ő már halott. Válasz mást!");
