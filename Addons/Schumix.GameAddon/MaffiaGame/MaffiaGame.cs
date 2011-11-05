@@ -279,7 +279,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(newkillghost.ToLower() == name.ToLower())
 				newkillghost = name;
 
-			sSender.Mode(_channel, "-hv", string.Format("{0} {0}", name));
+			sSender.Mode(_channel, "-v", name);
 		}
 
 		private void Corpse()
@@ -304,6 +304,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		public void RemoveRanks()
 		{
+			Running = false;
 			int i = 0;
 			string namesss = string.Empty;
 			var list = new List<string>();
@@ -334,6 +335,9 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSender.Mode(_channel, "-vv", split[1]);
 			else if(split.Length == 3)
 				sSender.Mode(_channel, "-vvv", split[2]);
+
+			foreach(var end in _playerlist)
+				sSender.Mode(_channel, "-v", end.Value);
 
 			sSender.Mode(_channel, "-m");
 		}
