@@ -34,7 +34,6 @@ namespace Schumix.GameAddon
 	{
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
 		public static readonly Dictionary<string, string> GameChannelFunction = new Dictionary<string, string>();
 		public static readonly Dictionary<string, MaffiaGame> MaffiaList = new Dictionary<string, MaffiaGame>();
 
@@ -194,19 +193,18 @@ namespace Schumix.GameAddon
 							break;
 						}
 						case "!gameover":
+						{
+							MaffiaList[channel].GameOver(sIRCMessage.Nick);
 							break;
+						}
 						case "!end":
 						{
 							if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick || MaffiaList[channel].GetOwner() == string.Empty ||
 								IsAdmin(sIRCMessage.Nick))
 							{
-								sSender.Mode(channel, "-m");
-
 								if(MaffiaList[channel].Started)
 								{
-									foreach(var end in MaffiaList[channel].GetPlayerList())
-										sSender.Mode(sIRCMessage.Channel, "-v", end.Value);
-
+									MaffiaList[channel].RemoveRanks();
 									MaffiaList[channel].StopThread();
 									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
 
@@ -217,9 +215,7 @@ namespace Schumix.GameAddon
 								}
 								else
 								{
-									foreach(var end in MaffiaList[channel].GetPlayerList())
-										sSender.Mode(sIRCMessage.Channel, "-v", end.Value);
-
+									MaffiaList[channel].RemoveRanks();
 									MaffiaList[channel].StopThread();
 									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
 								}
@@ -328,12 +324,8 @@ namespace Schumix.GameAddon
 		{
 			foreach(var mlist in MaffiaList)
 			{
+				mlist.Value.RemoveRanks();
 				mlist.Value.StopThread();
-
-				foreach(var player in mlist.Value.GetPlayerList())
-					sSender.Mode(mlist.Key, "-v", player.Value);
-
-				sSender.Mode(mlist.Key, "-m");
 			}
 
 			GameChannelFunction.Clear();

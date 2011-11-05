@@ -61,17 +61,29 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
+			if(_playerflist.ContainsKey(Name.ToLower()))
+			{
+				foreach(var function in _playerflist)
+				{
+					if(function.Value.Lynch.Contains(Name.ToLower()))
+						function.Value.Lynch.Remove(Name.ToLower());
+				}
+
+				_playerflist[Name.ToLower()].Lynch.Clear();
+				_playerflist.Remove(Name.ToLower());		
+			}
+
 			sSender.Mode(_channel, "-v", Name);
 			RemovePlayer(Name);
 			sSendMessage.SendCMPrivmsg(_channel, "{0} eltűnt egy különös féreglyukban.", Name);
 
-			if(_rank == "killer")
+			if(_rank == Rank.Killer)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint gyilkos. Remélhetőleg halála izgalmasabb lesz.", Name);
-			else if(_rank == "detective")
+			else if(_rank == Rank.Detective)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint nyomozó. Remélhetőleg halála izgalmasabb lesz.", Name);
-			else if(_rank == "doctor")
+			else if(_rank == Rank.Doctor)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint orvos. Remélhetőleg halála izgalmasabb lesz.", Name);
-			else if(_rank == "normal")
+			else if(_rank == Rank.Normal)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak unalmas szerepe volt a játékban, mint civil. Remélhetőleg halála izgalmasabb lesz.", Name);
 			else
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak nem volt szerepe még a játékban. Remélhetőleg halála izgalmasabb lesz.", Name);
@@ -86,13 +98,11 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(Started)
 			{
-				Lynch(Name, Name, "leave", "none");
-
 				_lynchmaxnumber = 0;
 
-				foreach(var list in _lynchlist)
+				foreach(var function in _playerflist)
 				{
-					var sp = list.Value.Split(SchumixBase.Comma).Length;
+					var sp = function.Value.Lynch.Count;
 					if(sp > _lynchmaxnumber && sp <= (_playerlist.Count/2)+1)
 						_lynchmaxnumber = sp;
 				}

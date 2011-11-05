@@ -27,19 +27,13 @@ namespace Schumix.GameAddon.MaffiaGames
 		{
 			if(!Running)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Killer);
 				return;
 			}
 
 			if(!Started)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Még nem kezdődött el játék!", Name);
-				return;
-			}
-
-			if(_killer && _players >= 8 && _killerlist.Count == 2)
-			{
-				sSendMessage.SendCMPrivmsg(Killer, "Már megegyeztek a gyilkosok!");
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Még nem kezdődött el játék!", Killer);
 				return;
 			}
 
@@ -73,49 +67,10 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			sSendMessage.SendCMPrivmsg(Killer, "Elkönyveltem a szavazatodat.");
 
-			if(_players < 8 || _killerlist.Count == 1)
+			foreach(var function in _playerflist)
 			{
-				newghost = GetPlayerName(Name.ToLower());
-				_killer = true;
-			}
-			else if((_players >= 8 && _players < 15) || _killerlist.Count == 2)
-			{
-				if(killer_.ToLower() == Killer.ToLower())
-					_newghost = Name.ToLower();
-
-				if(killer2_.ToLower() == Killer.ToLower())
-					_newghost2 = Name.ToLower();
-
-				if(_newghost == _newghost2)
-				{
-					newghost = GetPlayerName(_newghost);
-
-					foreach(var name in _killerlist)
-						sSendMessage.SendCMPrivmsg(name.Key, "A gyilkosok megegyeztek!");
-
-					_killer = true;
-				}
-			}
-			else
-			{
-				if(killer_.ToLower() == Killer.ToLower())
-					_newghost = Name.ToLower();
-
-				if(killer2_.ToLower() == Killer.ToLower())
-					_newghost2 = Name.ToLower();
-
-				if(killer3_.ToLower() == Killer.ToLower())
-					_newghost3 = Name.ToLower();
-
-				if(_newghost == _newghost2 && _newghost == _newghost3)
-				{
-					newghost = GetPlayerName(_newghost);
-
-					foreach(var name in _killerlist)
-						sSendMessage.SendCMPrivmsg(name.Key, "A gyilkosok megegyeztek!");
-
-					_killer = true;
-				}
+				if(function.Key == Killer.ToLower())
+					function.Value.RName = Name.ToLower();
 			}
 		}
 	}

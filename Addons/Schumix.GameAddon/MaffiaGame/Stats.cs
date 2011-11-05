@@ -38,7 +38,8 @@ namespace Schumix.GameAddon.MaffiaGames
 				foreach(var name in _playerlist)
 					names += ", " + name.Value;
 
-				sSendMessage.SendCMPrivmsg(_channel, "Új játék indul. Játékosok: {0}", names.Remove(0, 2, ", "));
+				sSendMessage.SendCMPrivmsg(_channel, "Új játék indul. Jelenleg {0} játékos van.", _playerlist.Count);
+				sSendMessage.SendCMPrivmsg(_channel, "Játékosok: {0}", names.Remove(0, 2, ", "));
 				return;
 			}
 			else

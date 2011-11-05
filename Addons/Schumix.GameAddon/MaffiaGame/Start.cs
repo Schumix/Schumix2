@@ -78,6 +78,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						string name = string.Empty;
 						list.TryGetValue(number, out name);
 						_killerlist.Add(name.ToLower(), name);
+						_playerflist.Add(name.ToLower(), new Player(Rank.Killer));
 						list.Remove(number);
 
 						if(count < 8)
@@ -122,6 +123,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						string name = string.Empty;
 						list.TryGetValue(number, out name);
 						_detectivelist.Add(name.ToLower(), name);
+						_playerflist.Add(name.ToLower(), new Player(Rank.Detective));
 						list.Remove(number);
 
 						if(count < 15)
@@ -152,6 +154,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						string name = string.Empty;
 						list.TryGetValue(number, out name);
 						_doctorlist.Add(name.ToLower(), name);
+						_playerflist.Add(name.ToLower(), new Player(Rank.Doctor));
 						list.Remove(number);
 						doctor = false;
 						doctor_ = name;
@@ -162,7 +165,11 @@ namespace Schumix.GameAddon.MaffiaGames
 				else
 				{
 					foreach(var llist in list)
+					{
 						_normallist.Add(llist.Value.ToLower(), llist.Value);
+						_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal));
+					}
+
 					break;
 				}
 			}

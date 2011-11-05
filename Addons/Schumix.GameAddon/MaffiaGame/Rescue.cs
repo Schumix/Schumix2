@@ -27,13 +27,13 @@ namespace Schumix.GameAddon.MaffiaGames
 		{
 			if(!Running)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", NickName);
 				return;
 			}
 
 			if(!Started)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Még nem kezdődött el játék!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Még nem kezdődött el játék!", NickName);
 				return;
 			}
 
@@ -75,8 +75,6 @@ namespace Schumix.GameAddon.MaffiaGames
 				rescued = _doctorlist[Name.ToLower()];
 			else if(_normallist.ContainsKey(Name.ToLower()))
 				rescued = _normallist[Name.ToLower()];
-
-			_doctor = true;
 		}
 	}
 }
