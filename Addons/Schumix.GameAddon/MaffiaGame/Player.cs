@@ -28,10 +28,12 @@ namespace Schumix.GameAddon.MaffiaGames
 		public Rank Rank { get; private set; }
 		public bool Detective { get; set; }
 		public string RName { get; set; }
+		public Rank DRank { get; set; }
 
 		public Player(Rank rank)
 		{
 			Rank = rank;
+			DRank = Rank.None;
 			Detective = false;
 			RName = string.Empty;
 		}
