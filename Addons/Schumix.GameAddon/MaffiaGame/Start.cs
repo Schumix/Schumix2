@@ -60,7 +60,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			_joinlist.Clear();
 
 			var rand = new Random();
-			int number = rand.Next(1, list.Count);
+			int number = 0;
 			int i = 0, x = 0;
 			bool killer = true;
 			bool doctor = true;
@@ -69,7 +69,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			for(;;)
 			{
-				number = rand.Next(1, list.Count);
+				number = rand.Next(1, list.Count+1);
 
 				if(killer)
 				{

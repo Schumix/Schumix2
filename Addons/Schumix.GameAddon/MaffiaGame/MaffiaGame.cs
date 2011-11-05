@@ -528,7 +528,19 @@ namespace Schumix.GameAddon.MaffiaGames
 					foreach(var function in _playerflist)
 					{
 						if(function.Value.Rank == Rank.Detective)
+						{
+							if(function.Value.DRank == Rank.Killer)
+								sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő a gyilkos! Buktasd le mielőtt még túl késő lenne...");
+							else if(function.Value.DRank == Rank.Normal)
+								sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő egy hétköznapi falusi.");
+							else if(function.Value.DRank == Rank.Doctor)
+								sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő a falu orvosa.");
+							else if(function.Value.DRank == Rank.Detective)
+								sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő egy nyomozó.");
+
 							function.Value.Detective = false;
+							function.Value.DRank = Rank.None;
+						}
 
 						function.Value.RName = string.Empty;
 					}
@@ -609,7 +621,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						foreach(var name in _killerlist)
 						{
-							sSendMessage.SendCMPrivmsg(name.Key, "Csatlakoz ide: {0} és beszéljétek meg ki haljon meg!", _killerchannel);
+							sSendMessage.SendCMPrivmsg(name.Key, "Csatlakozz ide: {0} és beszéljétek meg ki haljon meg!", _killerchannel);
 							Thread.Sleep(400);
 						}
 					}

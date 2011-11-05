@@ -85,19 +85,15 @@ namespace Schumix.GameAddon.MaffiaGames
 			else if(_normallist.ContainsKey(Name.ToLower()))
 				_rank = Rank.Normal;
 
-			if(_rank == Rank.Killer)
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy ő a gyilkos! Buktasd le mielőtt még túl késő lenne...");
-			else if(_rank == Rank.Normal)
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy ő egy hétköznapi falusi.");
-			else if(_rank == Rank.Doctor)
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy ő a falu orvosa.");
-			else if(_rank == Rank.Detective)
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy te vagy az :D");
+			sSendMessage.SendCMPrivmsg(NickName, "A jelentést reggel kapod meg!");
 
 			foreach(var function in _playerflist)
 			{
 				if(function.Key == NickName.ToLower())
+				{
 					function.Value.Detective = true;
+					function.Value.DRank = _rank;
+				}
 			}
 		}
 	}
