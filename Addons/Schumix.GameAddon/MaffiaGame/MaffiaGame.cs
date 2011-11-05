@@ -575,7 +575,8 @@ namespace Schumix.GameAddon.MaffiaGames
 				if(!Started)
 					StopThread();
 
-				EndGame();
+				if(!_lynch)
+					EndGame();
 
 				if(!_day)
 				{
