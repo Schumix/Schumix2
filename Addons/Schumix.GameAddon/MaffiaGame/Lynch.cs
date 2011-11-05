@@ -76,27 +76,36 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
-			if(!_lynchlist.ContainsKey(Name.ToLower()))
+			foreach(var function in _playerflist)
 			{
-				if(!Lynch(Name, NickName, "newlynch", "none"))
-					return;
-			}
-			else
-			{
-				if(!Lynch(Name, NickName, "lynch", "none"))
-					return;
+				if(function.Key == Name.ToLower())
+				{
+					if(function.Value.Lynch.Contains(NickName.ToLower()))
+					{
+						sSendMessage.SendCMPrivmsg(_channel, "{0}: Már szavaztál rá!", NickName);
+						return;
+					}
+					else
+						function.Value.Lynch.Add(NickName.ToLower());
+				}
+				else
+				{
+					if(function.Value.Lynch.Contains(NickName.ToLower()))
+						function.Value.Lynch.Remove(NickName.ToLower());
+				}
 			}
 
 			sSendMessage.SendCMPrivmsg(_channel, "{0} arra szavazott, hogy {1} legyen meglincselve!", NickName, Name);
 
 			string namess = string.Empty;
-			foreach(var list in _lynchlist)
+			foreach(var function in _playerflist)
 			{
-				var sp = list.Value.Split(SchumixBase.Comma).Length;
+				var sp = function.Value.Lynch.Count;
 				if(sp > _lynchmaxnumber && sp <= (_playerlist.Count/2)+1)
 					_lynchmaxnumber = sp;
 
-				namess += " (" + list.Key + ": " + sp + " szavazat)";
+				if(sp > 0)
+					namess += " (" + function.Key + ": " + sp + " szavazat)";
 			}
 
 			sSendMessage.SendCMPrivmsg(_channel, "{0} szavazat kell a többséghez. Jelenlegi szavazatok:{1}", (_playerlist.Count/2)+1, namess);
@@ -105,11 +114,11 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				_lynch = true;
 
-				foreach(var list in _lynchlist)
+				foreach(var function in _playerflist)
 				{
-					if(_lynchmaxnumber == list.Value.Split(SchumixBase.Comma).Length)
+					if(_lynchmaxnumber == function.Value.Lynch.Count)
 					{
-						namess = list.Key;
+						namess = function.Key;
 						break;
 					}
 				}
@@ -125,6 +134,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				if(_playerlist.Count >= 2 && Running)
 				{
 					sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", namess);
+					sSendMessage.SendCMPrivmsg(namess, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
 					_day = false;
 					_stop = false;
 				}

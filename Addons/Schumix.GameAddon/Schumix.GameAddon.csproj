@@ -113,6 +113,9 @@
     <Compile Include="MaffiaGame\Stats.cs" />
     <Compile Include="MaffiaGame\Leave.cs" />
     <Compile Include="MaffiaGame\Rescue.cs" />
+    <Compile Include="MaffiaGame\Player.cs" />
+    <Compile Include="MaffiaGame\Rank.cs" />
+    <Compile Include="MaffiaGame\GameOver.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
