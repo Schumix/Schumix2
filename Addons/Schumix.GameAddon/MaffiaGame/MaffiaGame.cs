@@ -330,14 +330,11 @@ namespace Schumix.GameAddon.MaffiaGames
 			var split = namesss.Split(SchumixBase.Space);
 
 			if(split.Length == 1)
-				sSender.Mode(_channel, "-v", split[0]);
+				sSender.Mode(_channel, "-v", namesss);
 			else if(split.Length == 2)
-				sSender.Mode(_channel, "-vv", split[1]);
+				sSender.Mode(_channel, "-vv", namesss);
 			else if(split.Length == 3)
-				sSender.Mode(_channel, "-vvv", split[2]);
-
-			foreach(var end in _playerlist)
-				sSender.Mode(_channel, "-v", end.Value);
+				sSender.Mode(_channel, "-vvv", namesss);
 
 			sSender.Mode(_channel, "-m");
 		}
@@ -416,7 +413,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				Thread.Sleep(1000);
 
-				if(_killerlist.Count == 1)
+				if(_killerlist.Count == 1 && Started)
 				{
 					foreach(var function in _playerflist)
 					{
@@ -427,7 +424,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						}
 					}
 				}
-				else if(_killerlist.Count == 2)
+				else if(_killerlist.Count == 2 && Started)
 				{
 					var list = new List<string>();
 
@@ -451,7 +448,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 					list.Clear();
 				}
-				else if(_killerlist.Count == 3)
+				else if(_killerlist.Count == 3 && Started)
 				{
 					var list = new List<string>();
 
@@ -488,7 +485,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					list.Clear();
 				}
 
-				if(_detectivelist.Count == 1)
+				if(_detectivelist.Count == 1 && Started)
 				{
 					foreach(var function in _playerflist)
 					{
@@ -496,7 +493,7 @@ namespace Schumix.GameAddon.MaffiaGames
 							enableddetective = true;
 					}
 				}
-				else if(_detectivelist.Count == 2)
+				else if(_detectivelist.Count == 2 && Started)
 				{
 					int number = 0;
 
@@ -509,10 +506,10 @@ namespace Schumix.GameAddon.MaffiaGames
 					if(number == 2)
 						enableddetective = true;
 				}
-				else if(_detectivelist.Count == 0)
+				else if(_detectivelist.Count == 0 && Started)
 					enableddetective = true;
 
-				if(_doctorlist.Count == 1)
+				if(_doctorlist.Count == 1 && Started)
 				{
 					foreach(var function in _playerflist)
 					{
@@ -520,7 +517,7 @@ namespace Schumix.GameAddon.MaffiaGames
 							enableddoctor = true;
 					}
 				}
-				else if(_doctorlist.Count == 0)
+				else if(_doctorlist.Count == 0 && Started)
 					enableddoctor = true;
 
 				if(enabledkiller && enableddetective && enableddoctor)
@@ -703,7 +700,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 					if(_killerlist.Count >= 1 && _ghosttext)
 					{
-						if(newkillghost != string.Empty)
+						if(newkillghost != "new")
 							sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newkillghost);
 
 						Corpse();
