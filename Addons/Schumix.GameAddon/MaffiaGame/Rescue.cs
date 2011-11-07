@@ -67,14 +67,18 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			sSendMessage.SendCMPrivmsg(NickName, "Elkönyveltem a kérésedet.");
 
+			string rescued = string.Empty;
+
 			if(_killerlist.ContainsKey(Name.ToLower()))
 				rescued = string.Empty;
 			else if(_detectivelist.ContainsKey(Name.ToLower()))
-				rescued = _detectivelist[Name.ToLower()];
+				rescued = Name.ToLower();
 			else if(_doctorlist.ContainsKey(Name.ToLower()))
-				rescued = _doctorlist[Name.ToLower()];
+				rescued = Name.ToLower();
 			else if(_normallist.ContainsKey(Name.ToLower()))
-				rescued = _normallist[Name.ToLower()];
+				rescued = Name.ToLower();
+
+			_playerflist[NickName.ToLower()].RName = rescued;
 		}
 	}
 }
