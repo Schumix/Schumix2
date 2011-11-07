@@ -45,7 +45,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			_gameoverlist.Add(Name.ToLower());
 			sSendMessage.SendCMPrivmsg(_channel, "{0} arra szavazott, hogy vége legyen a játéknak!", Name);
-			sSendMessage.SendCMPrivmsg(_channel, "Jelenleg {0} játékos kívánják leállítani!", _gameoverlist.Count);
+			sSendMessage.SendCMPrivmsg(_channel, "Jelenleg {0} játékos kívánja leállítani!", _gameoverlist.Count);
 
 			if(_gameoverlist.Count >= (_playerlist.Count/2)+1)
 			{
