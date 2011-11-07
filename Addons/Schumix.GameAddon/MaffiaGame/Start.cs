@@ -82,33 +82,16 @@ namespace Schumix.GameAddon.MaffiaGames
 						list.Remove(number);
 
 						if(count < 8)
-						{
 							killer = false;
-							killer_ = name;
-						}
 						else if(count >= 8 && count < 15)
 						{
-							if(i == 0)
-								killer_ = name;
-							else
-								killer2_ = name;
-
 							i++;
-
 							if(i == 2)
 								killer = false;
 						}
 						else
 						{
-							if(i == 0)
-								killer_ = name;
-							else if(i == 1)
-								killer2_ = name;
-							else
-								killer3_ = name;
-
 							i++;
-
 							if(i == 3)
 								killer = false;
 						}
@@ -127,19 +110,10 @@ namespace Schumix.GameAddon.MaffiaGames
 						list.Remove(number);
 
 						if(count < 15)
-						{
 							detective = false;
-							detective_ = name;
-						}
 						else
 						{
-							if(x == 0)
-								detective_ = name;
-							else
-								detective2_ = name;
-
 							x++;
-
 							if(x == 2)
 								detective = false;
 						}
@@ -157,7 +131,6 @@ namespace Schumix.GameAddon.MaffiaGames
 						_playerflist.Add(name.ToLower(), new Player(Rank.Doctor));
 						list.Remove(number);
 						doctor = false;
-						doctor_ = name;
 					}
 
 					continue;
