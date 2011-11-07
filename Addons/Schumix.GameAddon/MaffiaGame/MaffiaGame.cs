@@ -364,6 +364,10 @@ namespace Schumix.GameAddon.MaffiaGames
 		public void StopThread()
 		{
 			Running = false;
+
+			if(!GameAddon.GameChannelFunction.ContainsKey(_channel))
+				return;
+
 			SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", GameAddon.GameChannelFunction[_channel]), string.Format("Channel = '{0}'", _channel));
 			sChannelInfo.ChannelFunctionReload();
 			SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", "off", _channel)), string.Format("Channel = '{0}'", _channel));
