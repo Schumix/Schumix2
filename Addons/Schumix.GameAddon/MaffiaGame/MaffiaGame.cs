@@ -465,306 +465,318 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private void Game()
 		{
-			bool newghost = false;
-			bool enabledk = false;
-			bool enableddoctor = false;
-			bool enabledkiller = false;
-			bool enableddetective = false;
-			string names = string.Empty;
-			string newkillghost = string.Empty;
-
-			if(_players < 8)
-				sSendMessage.SendCMPrivmsg(_channel, "Nincs elég játékos két gyilkoshoz, csak egy gyilkos van játékban (illetve nincs orvos).");
-			else if(_players >= 8 && _players < 15)
-				sSendMessage.SendCMPrivmsg(_channel, "Mivel legalább 8 játékos van, ezért 2 gyilkos és egy orvos lesz.");
-			else if(_players >= 15)
-				sSendMessage.SendCMPrivmsg(_channel, "Mivel legalább 15 játékos van, ezért 3 gyilkos, 2 nyomozó és egy orvos lesz.");
-
-			sSendMessage.SendCMPrivmsg(_channel, "Itt mindenki egyszerű civilnek tűnhet, de valójában köztetek van 1, 2 vagy 3 4gyilkos, akiknek célja mindenkit megölni az éj leple alatt.");
-			sSendMessage.SendCMPrivmsg(_channel, "Köztetek van egy vagy kettő 4nyomozó is: ő képes éjszakánként megtudni 1-1 emberről, hogy gyilkos-e, és lebuktatni őt a falusiak előtt, illetve a falu 4orvosa, aki minden éjjel megmenthet valakit...");
-			sSendMessage.SendCMPrivmsg(_channel, "A csoport célja tehát lebuktatni és meglincselni a gyilkos(oka)t, mielőtt mindenkit megölnek álmukban.");
-			Thread.Sleep(2000);
-
-			for(;;)
+			try
 			{
-				Thread.Sleep(1000);
+				bool newghost = false;
+				bool enabledk = false;
+				bool enableddoctor = false;
+				bool enabledkiller = false;
+				bool enableddetective = false;
+				string names = string.Empty;
+				string newkillghost = string.Empty;
 
-				if(_killerlist.Count == 1 && Started)
+				if(_players < 8)
+					sSendMessage.SendCMPrivmsg(_channel, "Nincs elég játékos két gyilkoshoz, csak egy gyilkos van játékban (illetve nincs orvos).");
+				else if(_players >= 8 && _players < 15)
+					sSendMessage.SendCMPrivmsg(_channel, "Mivel legalább 8 játékos van, ezért 2 gyilkos és egy orvos lesz.");
+				else if(_players >= 15)
+					sSendMessage.SendCMPrivmsg(_channel, "Mivel legalább 15 játékos van, ezért 3 gyilkos, 2 nyomozó és egy orvos lesz.");
+
+				sSendMessage.SendCMPrivmsg(_channel, "Itt mindenki egyszerű civilnek tűnhet, de valójában köztetek van 1, 2 vagy 3 4gyilkos, akiknek célja mindenkit megölni az éj leple alatt.");
+				sSendMessage.SendCMPrivmsg(_channel, "Köztetek van egy vagy kettő 4nyomozó is: ő képes éjszakánként megtudni 1-1 emberről, hogy gyilkos-e, és lebuktatni őt a falusiak előtt, illetve a falu 4orvosa, aki minden éjjel megmenthet valakit...");
+				sSendMessage.SendCMPrivmsg(_channel, "A csoport célja tehát lebuktatni és meglincselni a gyilkos(oka)t, mielőtt mindenkit megölnek álmukban.");
+				Thread.Sleep(2000);
+
+				for(;;)
 				{
-					foreach(var function in _playerflist)
+					Thread.Sleep(1000);
+
+					if(_killerlist.Count == 1 && Started)
 					{
-						if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
+						foreach(var function in _playerflist)
 						{
-							newkillghost = function.Value.RName;
+							if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
+							{
+								newkillghost = GetPlayerName(function.Value.RName);
+								enabledkiller = true;
+							}
+						}
+					}
+					else if(_killerlist.Count == 2 && Started)
+					{
+						var list = new List<string>();
+
+						foreach(var function in _playerflist)
+						{
+							if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
+								list.Add(function.Value.RName);
+						}
+
+						if(list.Count == 2 && list[0] == list[1] && !enabledk)
+						{
+							foreach(var kill in _killerlist)
+								sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
+
+							enabledk = true;
+							newkillghost = GetPlayerName(list[0]);
 							enabledkiller = true;
 						}
+						else if(list.Count == 2 && list[0] != list[1])
+							enabledk = false;
+
+						list.Clear();
 					}
-				}
-				else if(_killerlist.Count == 2 && Started)
-				{
-					var list = new List<string>();
-
-					foreach(var function in _playerflist)
+					else if(_killerlist.Count == 3 && Started)
 					{
-						if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
-							list.Add(function.Value.RName);
+						var list = new List<string>();
+
+						foreach(var function in _playerflist)
+						{
+							if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
+								list.Add(function.Value.RName);
+						}
+
+						if(list.Count == 3 && list[0] == list[1] && list[0] == list[2] && list[1] == list[2] && !enabledk)
+						{
+							foreach(var kill in _killerlist)
+								sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
+
+							enabledk = true;
+							newkillghost = GetPlayerName(list[0]);
+							enabledkiller = true;
+						}
+						else if(list.Count == 3 && list[0] != list[1] && list[0] == list[2] && list[1] == list[2])
+							enabledk = false;
+						else if(list.Count == 3 && list[0] == list[1] && list[0] != list[2] && list[1] == list[2])
+							enabledk = false;
+						else if(list.Count == 3 && list[0] == list[1] && list[0] == list[2] && list[1] != list[2])
+							enabledk = false;
+						else if(list.Count == 3 && list[0] != list[1] && list[0] != list[2] && list[1] == list[2])
+							enabledk = false;
+						else if(list.Count == 3 && list[0] == list[1] && list[0] != list[2] && list[1] != list[2])
+							enabledk = false;
+						else if(list.Count == 3 && list[0] != list[1] && list[0] == list[2] && list[1] != list[2])
+							enabledk = false;
+						else if(list.Count == 3 && list[0] != list[1] && list[0] != list[2] && list[1] != list[2])
+							enabledk = false;
+
+						list.Clear();
 					}
 
-					if(list.Count == 2 && list[0] == list[1] && !enabledk)
+					if(_detectivelist.Count == 1 && Started)
 					{
-						foreach(var kill in _killerlist)
-							sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
-
-						enabledk = true;
-						newkillghost = list[0];
-						enabledkiller = true;
+						foreach(var function in _playerflist)
+						{
+							if(function.Value.Rank == Rank.Detective && function.Value.Detective && !function.Value.Ghost)
+								enableddetective = true;
+						}
 					}
-					else if(list.Count == 2 && list[0] != list[1])
-						enabledk = false;
-
-					list.Clear();
-				}
-				else if(_killerlist.Count == 3 && Started)
-				{
-					var list = new List<string>();
-
-					foreach(var function in _playerflist)
+					else if(_detectivelist.Count == 2 && Started)
 					{
-						if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
-							list.Add(function.Value.RName);
-					}
+						int number = 0;
 
-					if(list.Count == 3 && list[0] == list[1] && list[0] == list[2] && list[1] == list[2] && !enabledk)
-					{
-						foreach(var kill in _killerlist)
-							sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
+						foreach(var function in _playerflist)
+						{
+							if(function.Value.Rank == Rank.Detective && function.Value.Detective && !function.Value.Ghost)
+								number++;
+						}
 
-						enabledk = true;
-						newkillghost = list[0];
-						enabledkiller = true;
-					}
-					else if(list.Count == 3 && list[0] != list[1] && list[0] == list[2] && list[1] == list[2])
-						enabledk = false;
-					else if(list.Count == 3 && list[0] == list[1] && list[0] != list[2] && list[1] == list[2])
-						enabledk = false;
-					else if(list.Count == 3 && list[0] == list[1] && list[0] == list[2] && list[1] != list[2])
-						enabledk = false;
-					else if(list.Count == 3 && list[0] != list[1] && list[0] != list[2] && list[1] == list[2])
-						enabledk = false;
-					else if(list.Count == 3 && list[0] == list[1] && list[0] != list[2] && list[1] != list[2])
-						enabledk = false;
-					else if(list.Count == 3 && list[0] != list[1] && list[0] == list[2] && list[1] != list[2])
-						enabledk = false;
-					else if(list.Count == 3 && list[0] != list[1] && list[0] != list[2] && list[1] != list[2])
-						enabledk = false;
-
-					list.Clear();
-				}
-
-				if(_detectivelist.Count == 1 && Started)
-				{
-					foreach(var function in _playerflist)
-					{
-						if(function.Value.Rank == Rank.Detective && function.Value.Detective && !function.Value.Ghost)
+						if(number == 2)
 							enableddetective = true;
 					}
-				}
-				else if(_detectivelist.Count == 2 && Started)
-				{
-					int number = 0;
-
-					foreach(var function in _playerflist)
-					{
-						if(function.Value.Rank == Rank.Detective && function.Value.Detective && !function.Value.Ghost)
-							number++;
-					}
-
-					if(number == 2)
+					else if(_detectivelist.Count == 0 && Started)
 						enableddetective = true;
-				}
-				else if(_detectivelist.Count == 0 && Started)
-					enableddetective = true;
 
-				if(_doctorlist.Count == 1 && Started)
-				{
-					foreach(var function in _playerflist)
+					if(_doctorlist.Count == 1 && Started)
 					{
-						if(function.Value.Rank == Rank.Doctor && function.Value.RName != string.Empty && !function.Value.Ghost)
-							enableddoctor = true;
-					}
-				}
-				else if(_doctorlist.Count == 0 && Started)
-					enableddoctor = true;
-
-				if(enabledkiller && enableddetective && enableddoctor)
-				{
-					foreach(var function in _playerflist)
-					{
-						if(function.Value.Rank == Rank.Detective)
+						foreach(var function in _playerflist)
 						{
-							if(function.Value.DRank == Rank.Killer)
-								sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő a gyilkos! Buktasd le mielőtt még túl késő lenne...");
-							else if(function.Value.DRank == Rank.Normal)
-								sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő egy hétköznapi falusi.");
-							else if(function.Value.DRank == Rank.Doctor)
-								sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő a falu orvosa.");
-							else if(function.Value.DRank == Rank.Detective)
-								sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő egy nyomozó.");
+							if(function.Value.Rank == Rank.Doctor && function.Value.RName != string.Empty && !function.Value.Ghost)
+								enableddoctor = true;
+						}
+					}
+					else if(_doctorlist.Count == 0 && Started)
+						enableddoctor = true;
 
-							function.Value.Detective = false;
-							function.Value.DRank = Rank.None;
+					if(enabledkiller && enableddetective && enableddoctor)
+					{
+						foreach(var function in _playerflist)
+						{
+							if(function.Value.Rank == Rank.Detective)
+							{
+								if(function.Value.DRank == Rank.Killer)
+									sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő a gyilkos! Buktasd le mielőtt még túl késő lenne...");
+								else if(function.Value.DRank == Rank.Normal)
+									sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő egy hétköznapi falusi.");
+								else if(function.Value.DRank == Rank.Doctor)
+									sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő a falu orvosa.");
+								else if(function.Value.DRank == Rank.Detective)
+									sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő egy nyomozó.");
+
+								function.Value.Detective = false;
+								function.Value.DRank = Rank.None;
+							}
+
+							if(function.Value.Rank == Rank.Doctor)
+							{
+								if(newkillghost.ToLower() != function.Value.RName)
+									newghost = true;
+							}
+
+							function.Value.RName = string.Empty;
 						}
 
-						if(function.Value.Rank == Rank.Doctor)
+						_day = true;
+						_stop = false;
+						enabledk = false;
+						enabledkiller = false;
+						enableddoctor = false;
+						enableddetective = false;
+
+						if(_players >= 8)
 						{
-							if(newkillghost != function.Value.RName)
-								newghost = true;
+							if(newghost)
+							{
+								RemovePlayer(newkillghost);
+								sSendMessage.SendCMPrivmsg(newkillghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
+							}
 						}
-
-						function.Value.RName = string.Empty;
-					}
-
-					_day = true;
-					_stop = false;
-					enabledk = false;
-					enabledkiller = false;
-					enableddoctor = false;
-					enableddetective = false;
-
-					if(_players >= 8)
-					{
-						if(newghost)
+						else
 						{
+							newghost = true;
 							RemovePlayer(newkillghost);
 							sSendMessage.SendCMPrivmsg(newkillghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
 						}
-					}
-					else
-					{
-						newghost = true;
-						RemovePlayer(newkillghost);
-						sSendMessage.SendCMPrivmsg(newkillghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
+
+						EndGame(newkillghost, true);
 					}
 
-					EndGame(newkillghost, true);
-				}
+					if(!Started)
+						StopThread();
 
-				if(!Started)
-					StopThread();
+					if(!_lynch)
+						EndGame();
 
-				if(!_lynch)
-					EndGame();
-
-				if(!_day)
-				{
-					if(_stop)
-						continue;
-
-					_stop = true;
-
-					foreach(var function in _playerflist)
-						function.Value.Lynch.Clear();
-
-					names = string.Empty;
-
-					foreach(var name in _playerlist)
-						names += ", " + name.Value;
-
-					sSendMessage.SendCMPrivmsg(_channel, "A következő személyek vannak még életben: {0}", names.Remove(0, 2, ", "));
-					sSendMessage.SendCMPrivmsg(_channel, "Leszállt az 4éj.");
-					sSendMessage.SendCMPrivmsg(_channel, "Az összes civil békésen szundikál...");
-					Thread.Sleep(1000);
-
-					foreach(var name in _killerlist)
+					if(!_day)
 					{
-						sSendMessage.SendCMPrivmsg(name.Key, "Miközben a falusiak alszanak, te eldöntöd, hogy kit ölsz meg az éj leple alatt.");
-						sSendMessage.SendCMPrivmsg(name.Key, "Te és a másik gyilkos (ha létezik, és él egyáltalán) meg fogjátok vitatni (PM-ben), hogy ki legyen az áldozat.");
-						sSendMessage.SendCMPrivmsg(name.Key, "Írd be PM-ként nekem: '!kill <nickname>'");
-						Thread.Sleep(400);
-					}
+						if(_stop)
+							continue;
 
-					if(_players >= 8 && _players < 15)
-					{
+						_stop = true;
+
+						foreach(var function in _playerflist)
+							function.Value.Lynch.Clear();
+
 						names = string.Empty;
-						foreach(var name in _killerlist)
-							names += SchumixBase.Space + name.Key;
 
-						names = names.Remove(0, 1, SchumixBase.Space);
-						var split = names.Split(SchumixBase.Space);
+						foreach(var name in _playerlist)
+							names += ", " + name.Value;
 
-						foreach(var name in _killerlist)
-						{
-							if(name.Key == split[0])
-								sSendMessage.SendCMPrivmsg(name.Key, "A másik gyilkos {0}. PM-ben beszélgessetek.", split[1]);
-							else
-								sSendMessage.SendCMPrivmsg(name.Key, "A másik gyilkos {0}. PM-ben beszélgessetek.", split[0]);
+						sSendMessage.SendCMPrivmsg(_channel, "A következő személyek vannak még életben: {0}", names.Remove(0, 2, ", "));
+						sSendMessage.SendCMPrivmsg(_channel, "Leszállt az 4éj.");
+						sSendMessage.SendCMPrivmsg(_channel, "Az összes civil békésen szundikál...");
+						Thread.Sleep(1000);
 
-							Thread.Sleep(400);
-						}
-					}
-					else if(_players >= 15)
-					{
 						foreach(var name in _killerlist)
 						{
-							sSendMessage.SendCMPrivmsg(name.Key, "Csatlakozz ide: {0} és beszéljétek meg ki haljon meg!", _killerchannel);
+							sSendMessage.SendCMPrivmsg(name.Key, "Miközben a falusiak alszanak, te eldöntöd, hogy kit ölsz meg az éj leple alatt.");
+							sSendMessage.SendCMPrivmsg(name.Key, "Te és a másik gyilkos (ha létezik, és él egyáltalán) meg fogjátok vitatni (PM-ben), hogy ki legyen az áldozat.");
+							sSendMessage.SendCMPrivmsg(name.Key, "Írd be PM-ként nekem: '!kill <nickname>'");
 							Thread.Sleep(400);
 						}
-					}
 
-					if(_players >= 8)
-					{
-						foreach(var name in _doctorlist)
+						if(_players >= 8 && _players < 15 && _killerlist.Count == 2)
 						{
-							sSendMessage.SendCMPrivmsg(name.Key, "A te dolgod éjszaka vigyázni a falu betegére.");
-							sSendMessage.SendCMPrivmsg(name.Key, "Most kell eldöntened hogy kit akarsz vizsgálni éjszaka: írd be PM-ként nekem: '!rescue <nickname>'.");
+							names = string.Empty;
+							foreach(var name in _killerlist)
+								names += SchumixBase.Space + name.Key;
+
+							names = names.Remove(0, 1, SchumixBase.Space);
+							var split = names.Split(SchumixBase.Space);
+
+							foreach(var name in _killerlist)
+							{
+								if(name.Key == split[0])
+									sSendMessage.SendCMPrivmsg(name.Key, "A másik gyilkos {0}. PM-ben beszélgessetek.", split[1]);
+								else
+									sSendMessage.SendCMPrivmsg(name.Key, "A másik gyilkos {0}. PM-ben beszélgessetek.", split[0]);
+
+								Thread.Sleep(400);
+							}
+						}
+						else if(_players >= 15)
+						{
+							foreach(var name in _killerlist)
+							{
+								sSendMessage.SendCMPrivmsg(name.Key, "Csatlakozz ide: {0} és beszéljétek meg ki haljon meg!", _killerchannel);
+								Thread.Sleep(400);
+							}
+						}
+
+						if(_players >= 8)
+						{
+							foreach(var name in _doctorlist)
+							{
+								sSendMessage.SendCMPrivmsg(name.Key, "A te dolgod éjszaka vigyázni a falu betegére.");
+								sSendMessage.SendCMPrivmsg(name.Key, "Most kell eldöntened hogy kit akarsz vizsgálni éjszaka: írd be PM-ként nekem: '!rescue <nickname>'.");
+								Thread.Sleep(400);
+							}
+						}
+
+						foreach(var name in _detectivelist)
+						{
+							sSendMessage.SendCMPrivmsg(name.Key, "A te dolgod megtudni egyes emberekről, hogy gyilkosok-e.");
+							sSendMessage.SendCMPrivmsg(name.Key, "Most kell eldöntened kit kövess éjszaka: írd be PM-ként nekem: '!see <nickname>'. Így megtudhatod, ki is ő valójában.");
 							Thread.Sleep(400);
 						}
-					}
-
-					foreach(var name in _detectivelist)
-					{
-						sSendMessage.SendCMPrivmsg(name.Key, "A te dolgod megtudni egyes emberekről, hogy gyilkosok-e.");
-						sSendMessage.SendCMPrivmsg(name.Key, "Most kell eldöntened kit kövess éjszaka: írd be PM-ként nekem: '!see <nickname>'. Így megtudhatod, ki is ő valójában.");
-						Thread.Sleep(400);
-					}
-				}
-				else
-				{
-					if(_stop)
-						continue;
-
-					_stop = true;
-					sSendMessage.SendCMPrivmsg(_channel, "Felkelt a nap!");
-
-					if(newghost)
-					{
-						sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newkillghost);
-						Corpse();
-						sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", newkillghost);
 					}
 					else
-						sSendMessage.SendCMPrivmsg(_channel, "Nem halt meg senki!");
+					{
+						if(_stop)
+							continue;
 
-					newghost = false;
-					newkillghost = string.Empty;
+						_stop = true;
+						sSendMessage.SendCMPrivmsg(_channel, "Felkelt a nap!");
 
-					names = string.Empty;
-					foreach(var name in _playerlist)
-						names += ", " + name.Value;
+						if(newghost)
+						{
+							sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newkillghost);
+							Corpse();
+							sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", newkillghost);
+						}
+						else
+							sSendMessage.SendCMPrivmsg(_channel, "Nem halt meg senki!");
 
-					sSendMessage.SendCMPrivmsg(_channel, "A következő személyek vannak még életben: {0}", names.Remove(0, 2, ", "));
+						newghost = false;
+						newkillghost = string.Empty;
 
-					names = string.Empty;
-					foreach(var name in _ghostlist)
-						names += ", " + name.Value;
+						names = string.Empty;
+						foreach(var name in _playerlist)
+							names += ", " + name.Value;
 
-					sSendMessage.SendCMPrivmsg(_channel, "A következő személyek halottak: {0}", names.Remove(0, 2, ", "));
-					sSendMessage.SendCMPrivmsg(_channel, "Felkelt a nap... A falusiak kirohannak a főtérre, hogy megvitassák, ki lehet a gyilkos.");
-					sSendMessage.SendCMPrivmsg(_channel, "A falusiaknak el *kell* dönteniük, hogy kit lincseljenek meg.");
-					sSendMessage.SendCMPrivmsg(_channel, "Ha mindenki készen áll, írjátok be: '!lynch <nickname>',");
-					sSendMessage.SendCMPrivmsg(_channel, "Összeszámolom a szavazatokat, és a döntő többség szava fog érvényesülni.");
-					sSendMessage.SendCMPrivmsg(_channel, "Megjegyzés: a szavazatokat bármikor meg lehet változtatni.");
+						sSendMessage.SendCMPrivmsg(_channel, "A következő személyek vannak még életben: {0}", names.Remove(0, 2, ", "));
+
+						names = string.Empty;
+						foreach(var name in _ghostlist)
+							names += ", " + name.Value;
+
+						sSendMessage.SendCMPrivmsg(_channel, "A következő személyek halottak: {0}", names.Remove(0, 2, ", "));
+						sSendMessage.SendCMPrivmsg(_channel, "Felkelt a nap... A falusiak kirohannak a főtérre, hogy megvitassák, ki lehet a gyilkos.");
+						sSendMessage.SendCMPrivmsg(_channel, "A falusiaknak el *kell* dönteniük, hogy kit lincseljenek meg.");
+						sSendMessage.SendCMPrivmsg(_channel, "Ha mindenki készen áll, írjátok be: '!lynch <nickname>',");
+						sSendMessage.SendCMPrivmsg(_channel, "Összeszámolom a szavazatokat, és a döntő többség szava fog érvényesülni.");
+						sSendMessage.SendCMPrivmsg(_channel, "Megjegyzés: a szavazatokat bármikor meg lehet változtatni.");
+					}
 				}
+			}
+			catch(Exception e)
+			{
+				RemoveRanks();
+				sSendMessage.SendCMPrivmsg(_channel, "Meghibásodás történt a játékban! Oka: ", e.Message);
+				sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+				EndText();
+				StopThread();
+				return;
 			}
 		}
 

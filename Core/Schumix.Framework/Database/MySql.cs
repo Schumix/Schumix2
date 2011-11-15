@@ -87,7 +87,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				if(m.Message == "Fatal error encountered during command execution.")
+				if(m.Message.Contains("Fatal error encountered during command execution."))
 				{
 					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 					Log.Warning("MySql", sLConsole.MySql("Text4"));
@@ -95,6 +95,19 @@ namespace Schumix.Framework.Database
 
 					if(!INetwork.Writer.IsNull())
 						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
+				if(m.Message.Contains("Timeout expired."))
+				{
+					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+					Log.Warning("MySql", sLConsole.MySql("Text4"));
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
 
 					Thread.Sleep(1000);
 					Environment.Exit(1);
@@ -121,7 +134,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				if(m.Message == "Fatal error encountered during command execution.")
+				if(m.Message.Contains("Fatal error encountered during command execution."))
 				{
 					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 					Log.Warning("MySql", sLConsole.MySql("Text4"));
@@ -129,6 +142,19 @@ namespace Schumix.Framework.Database
 
 					if(!INetwork.Writer.IsNull())
 						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
+				if(m.Message.Contains("Timeout expired."))
+				{
+					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+					Log.Warning("MySql", sLConsole.MySql("Text4"));
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
 
 					Thread.Sleep(1000);
 					Environment.Exit(1);

@@ -41,6 +41,7 @@ namespace Schumix.GameAddon
 		{
 			CommandManager.PublicCRegisterHandler("game", new Action<IRCMessage>(HandleGame));
 			Console.CancelKeyPress += (sender, e) => { Clean(); };
+			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => { Clean(); };
 		}
 
 		public void Destroy()

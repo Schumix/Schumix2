@@ -38,17 +38,18 @@ namespace Schumix
 		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
 		/// </summary>
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Üzenet küldés az irc szerver felé.
 		/// </summary>
 		private static readonly Sender sSender = Singleton<Sender>.Instance;
-		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
@@ -171,6 +172,15 @@ namespace Schumix
 			{
 				sSender.Quit("Daemon killed.");
 				SchumixBase.timer.SaveUptime();
+				SchumixBase.ServerDisconnect();
+			};
+
+			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
+			{
+				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
+				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
+				SchumixBase.timer.SaveUptime();
+				sSender.Quit("Crash.");
 				SchumixBase.ServerDisconnect();
 			};
 		}

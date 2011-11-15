@@ -107,13 +107,13 @@
     </Reference>
     <Reference Include="System.Xml">
     </Reference>
-    <Reference Include="lua51, Version=0.0.0.0, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Dependencies\lua51.dll</HintPath>
-    </Reference>
     <Reference Include="LuaInterface, Version=2.0.4.24053, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\LuaInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="lua51, Version=0.0.0.0, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\lua51.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
