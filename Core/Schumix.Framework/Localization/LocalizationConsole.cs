@@ -85,6 +85,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "System starting...";
 				}
+				case "StartText4":
+				{
+					if(Locale == "huHU")
+						return "Nem kezelt kivétel keletkezett. ({0})";
+					else if(Locale == "enUS")
+						return "An unhandled exception has been thrown. ({0})";
+					else
+						return "An unhandled exception has been thrown. ({0})";
+				}
 				default:
 					return string.Empty;
 			}
@@ -2034,6 +2043,42 @@ namespace Schumix.Framework.Localization
 						return "Program shutting down!";
 					else
 						return "Program shutting down!";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string CrashDumper(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Crash dump készítése...";
+					else if(Locale == "enUS")
+						return "Creating crash dump...";
+					else
+						return "Creating crash dump...";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Nem sikerült crash dump-ot írni! ({0})";
+					else if(Locale == "enUS")
+						return "Failed to write crash dump! ({0})";
+					else
+						return "Failed to write crash dump! ({0})";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Crash dump létrehozva.";
+					else if(Locale == "enUS")
+						return "Crash dump created.";
+					else
+						return "Crash dump created.";
 				}
 				default:
 					return string.Empty;

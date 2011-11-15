@@ -35,6 +35,7 @@ namespace Schumix.Server
 	{
 		private static readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 
@@ -123,6 +124,18 @@ namespace Schumix.Server
 
 			System.Console.CancelKeyPress += (sender, e) =>
 			{
+				var packet = new SchumixPacket();
+				packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
+				packet.Write<int>((int)0);
+
+				foreach(var list in sServerPacketHandler.HostList)
+					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+			};
+
+			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
+			{
+				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
+				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
 				var packet = new SchumixPacket();
 				packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
 				packet.Write<int>((int)0);

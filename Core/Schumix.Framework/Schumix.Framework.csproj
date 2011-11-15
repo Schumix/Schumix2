@@ -136,6 +136,7 @@
     <Compile Include="Network\SchumixPacket.cs" />
     <Compile Include="Network\ClientSocket.cs" />
     <Compile Include="Runtime.cs" />
+    <Compile Include="CrashDumper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

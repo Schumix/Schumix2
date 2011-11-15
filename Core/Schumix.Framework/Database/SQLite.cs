@@ -91,7 +91,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(SQLiteException s)
 			{
-				if(s.Message == "Fatal error encountered during command execution.")
+				if(s.Message.Contains("Fatal error encountered during command execution."))
 				{
 					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
@@ -99,6 +99,19 @@ namespace Schumix.Framework.Database
 
 					if(!INetwork.Writer.IsNull())
 						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
+				if(s.Message.Contains("Timeout expired."))
+				{
+					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
 
 					Thread.Sleep(1000);
 					Environment.Exit(1);
@@ -130,7 +143,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(SQLiteException s)
 			{
-				if(s.Message == "Fatal error encountered during command execution.")
+				if(s.Message.Contains("Fatal error encountered during command execution."))
 				{
 					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
@@ -138,6 +151,19 @@ namespace Schumix.Framework.Database
 
 					if(!INetwork.Writer.IsNull())
 						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
+				if(s.Message.Contains("Timeout expired."))
+				{
+					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
 
 					Thread.Sleep(1000);
 					Environment.Exit(1);
