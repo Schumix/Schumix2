@@ -771,11 +771,15 @@ namespace Schumix.GameAddon.MaffiaGames
 			}
 			catch(Exception e)
 			{
-				RemoveRanks();
-				sSendMessage.SendCMPrivmsg(_channel, "Meghibásodás történt a játékban! Oka: ", e.Message);
-				sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
-				EndText();
-				StopThread();
+				if(Running && Started)
+				{
+					RemoveRanks();
+					sSendMessage.SendCMPrivmsg(_channel, "Meghibásodás történt a játékban! Oka: ", e.Message);
+					sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+					EndText();
+					StopThread();
+				}
+
 				return;
 			}
 		}
