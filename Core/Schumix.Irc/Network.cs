@@ -334,6 +334,9 @@ namespace Schumix.Irc
 				}
 			}
 
+			foreach(var plugin in sAddonManager.GetPlugins())
+				plugin.Destroy();
+
 			SchumixBase.ServerDisconnect();
 			SchumixBase.timer.SaveUptime();
 			Log.Warning("Opcodes", sLConsole.Network("Text17"));
