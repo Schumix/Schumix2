@@ -21,10 +21,11 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using Schumix.Framework;
+using Schumix.Irc.Commands;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class MaffiaGame
+	public sealed partial class MaffiaGame : CommandInfo
 	{
 		public void Start()
 		{
@@ -78,7 +79,12 @@ namespace Schumix.GameAddon.MaffiaGames
 						string name = string.Empty;
 						list.TryGetValue(number, out name);
 						_killerlist.Add(name.ToLower(), name);
-						_playerflist.Add(name.ToLower(), new Player(Rank.Killer));
+
+						if(Adminflag(name.ToLower()) == 3)
+							_playerflist.Add(name.ToLower(), new Player(Rank.Killer, true));
+						else
+							_playerflist.Add(name.ToLower(), new Player(Rank.Killer));
+
 						list.Remove(number);
 
 						if(count < 8)
@@ -106,7 +112,12 @@ namespace Schumix.GameAddon.MaffiaGames
 						string name = string.Empty;
 						list.TryGetValue(number, out name);
 						_detectivelist.Add(name.ToLower(), name);
-						_playerflist.Add(name.ToLower(), new Player(Rank.Detective));
+
+						if(Adminflag(name.ToLower()) == 3)
+							_playerflist.Add(name.ToLower(), new Player(Rank.Detective, true));
+						else
+							_playerflist.Add(name.ToLower(), new Player(Rank.Detective));
+
 						list.Remove(number);
 
 						if(count < 15)
@@ -128,7 +139,12 @@ namespace Schumix.GameAddon.MaffiaGames
 						string name = string.Empty;
 						list.TryGetValue(number, out name);
 						_doctorlist.Add(name.ToLower(), name);
-						_playerflist.Add(name.ToLower(), new Player(Rank.Doctor));
+
+						if(Adminflag(name.ToLower()) == 3)
+							_playerflist.Add(name.ToLower(), new Player(Rank.Doctor, true));
+						else
+							_playerflist.Add(name.ToLower(), new Player(Rank.Doctor));
+
 						list.Remove(number);
 						doctor = false;
 					}
@@ -140,7 +156,11 @@ namespace Schumix.GameAddon.MaffiaGames
 					foreach(var llist in list)
 					{
 						_normallist.Add(llist.Value.ToLower(), llist.Value);
-						_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal));
+
+						if(Adminflag(llist.Value.ToLower()) == 3)
+							_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal, true));
+						else
+							_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal));
 					}
 
 					break;
