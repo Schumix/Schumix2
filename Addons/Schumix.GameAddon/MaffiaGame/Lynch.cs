@@ -127,6 +127,10 @@ namespace Schumix.GameAddon.MaffiaGames
 				namess = GetPlayerName(namess);
 				RemovePlayer(namess);
 				sSendMessage.SendCMPrivmsg(_channel, "A többség 4{0} lincselése mellett döntött! Elszabadulnak az indulatok. Ő mostantól már halott.", namess);
+
+				if(GetPlayerMaster(namess))
+					sSendMessage.SendCMPrivmsg(_channel, "Megölték a főnököt! Szemetek!!!");
+
 				Corpse();
 				Thread.Sleep(400);
 				EndGame();

@@ -140,7 +140,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 				if(_playerflist.ContainsKey(OldName.ToLower()))
 				{
-					_playerflist.Add(NewName.ToLower(), new Player(_playerflist[OldName.ToLower()].Rank));
+					_playerflist.Add(NewName.ToLower(), new Player(_playerflist[OldName.ToLower()].Rank, _playerflist[OldName.ToLower()].Master));
 					_playerflist[NewName.ToLower()].RName = _playerflist[OldName.ToLower()].RName;
 					_playerflist[NewName.ToLower()].DRank = _playerflist[OldName.ToLower()].DRank;
 					_playerflist[NewName.ToLower()].Ghost = _playerflist[OldName.ToLower()].Ghost;
@@ -427,6 +427,19 @@ namespace Schumix.GameAddon.MaffiaGames
 				player = _normallist[Name];
 
 			return player;
+		}
+
+		private bool GetPlayerMaster(string Name)
+		{
+			bool master = false;
+
+			foreach(var function in _playerflist)
+			{
+				if(function.Key == Name.ToLower())
+					master = function.Value.Master;
+			}
+
+			return master;
 		}
 
 		private void StartThread()
@@ -741,6 +754,10 @@ namespace Schumix.GameAddon.MaffiaGames
 						if(newghost)
 						{
 							sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newkillghost);
+
+							if(GetPlayerMaster(newkillghost))
+								sSendMessage.SendCMPrivmsg(_channel, "Megölték a főnököt! Szemetek!!!");
+
 							Corpse();
 							sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", newkillghost);
 						}
