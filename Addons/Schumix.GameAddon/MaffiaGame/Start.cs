@@ -80,7 +80,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						list.TryGetValue(number, out name);
 						_killerlist.Add(name.ToLower(), name);
 
-						if(Adminflag(name.ToLower()) == 3)
+						if(Adminflag(name.ToLower()) == 2)
 							_playerflist.Add(name.ToLower(), new Player(Rank.Killer, true));
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Killer));
@@ -113,7 +113,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						list.TryGetValue(number, out name);
 						_detectivelist.Add(name.ToLower(), name);
 
-						if(Adminflag(name.ToLower()) == 3)
+						if(Adminflag(name.ToLower()) == 2)
 							_playerflist.Add(name.ToLower(), new Player(Rank.Detective, true));
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Detective));
@@ -140,7 +140,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						list.TryGetValue(number, out name);
 						_doctorlist.Add(name.ToLower(), name);
 
-						if(Adminflag(name.ToLower()) == 3)
+						if(Adminflag(name.ToLower()) == 2)
 							_playerflist.Add(name.ToLower(), new Player(Rank.Doctor, true));
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Doctor));
@@ -157,7 +157,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						_normallist.Add(llist.Value.ToLower(), llist.Value);
 
-						if(Adminflag(llist.Value.ToLower()) == 3)
+						if(Adminflag(llist.Value.ToLower()) == 2)
 							_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal, true));
 						else
 							_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal));
