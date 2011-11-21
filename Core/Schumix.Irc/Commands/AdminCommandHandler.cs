@@ -119,16 +119,9 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.Destroy();
-
-			SchumixBase.ExitStatus = true;
-			SchumixBase.timer.SaveUptime();
-			SchumixBase.ServerDisconnect();
 			sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+			SchumixBase.Quit();
 			sSender.Quit(string.Format(text[1], sIRCMessage.Nick));
-			Thread.Sleep(1000);
-			Environment.Exit(1);
 		}
 	}
 }

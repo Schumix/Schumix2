@@ -824,16 +824,9 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.Destroy();
-
-			SchumixBase.ExitStatus = true;
-			SchumixBase.timer.SaveUptime();
-			SchumixBase.ServerDisconnect();
 			Log.Notice("Console", text[0]);
+			SchumixBase.Quit();
 			sSender.Quit(text[1]);
-			Thread.Sleep(1000);
-			Environment.Exit(1);
 		}
 	}
 }

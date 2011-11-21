@@ -22,6 +22,7 @@ using System.IO;
 using System.Text;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using Schumix.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Client;

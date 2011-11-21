@@ -20,6 +20,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using Schumix.Irc;
 using Schumix.Updater;
 using Schumix.Framework;
@@ -170,18 +171,18 @@ namespace Schumix
 			new SchumixBot();
 			System.Console.CancelKeyPress += (sender, e) =>
 			{
+				SchumixBase.Quit();
 				sSender.Quit("Daemon killed.");
-				SchumixBase.timer.SaveUptime();
-				SchumixBase.ServerDisconnect();
+				Thread.Sleep(5*1000);
 			};
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
 				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
 				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
-				SchumixBase.timer.SaveUptime();
+				SchumixBase.Quit();
 				sSender.Quit("Crash.");
-				SchumixBase.ServerDisconnect();
+				Thread.Sleep(5*1000);
 			};
 		}
 
