@@ -59,6 +59,7 @@ namespace Schumix.Irc
         ///     IRC port száma.
         /// </summary>
 		private readonly int _port;
+		private bool _enabled = false;
 
         /// <summary>
         ///     Internet kapcsolat függvénye.
@@ -201,6 +202,9 @@ namespace Schumix.Irc
         /// </summary>
 		public void ReConnect()
 		{
+			if(SchumixBase.ExitStatus)
+				return;
+
 			Log.Notice("Network", sLConsole.Network("Text8"));
 			Connection(false);
 			NewNick = true;
@@ -262,7 +266,7 @@ namespace Schumix.Irc
 				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
-
+			_enabled = true;
 			NewNick = false;
 			HostServStatus = false;
 			SchumixBase.UrlTitleEnabled = false;
@@ -287,25 +291,39 @@ namespace Schumix.Irc
 		{
 			Log.Notice("Opcodes", sLConsole.Network("Text14"));
 			byte number = 0;
-			bool enabled = false;
 			Log.Notice("Opcodes", sLConsole.Network("Text15"));
 
 			while(true)
 			{
 				try
 				{
+					if(SchumixBase.ExitStatus)
+						break;
+
 					string IrcMessage;
 					if((IrcMessage = reader.ReadLine()).IsNull())
 					{
 						Log.Error("Opcodes", sLConsole.Network("Text16"));
-						DisConnect();
-						break;
+
+						if(sChannelInfo.FSelect("reconnect"))
+						{
+							if(number <= 6)
+							{
+								Thread.Sleep(10*1000);
+								number++;
+							}
+							else
+								Thread.Sleep(120*1000);
+
+							ReConnect();
+							continue;
+						}
 					}
 
-					if(enabled)
+					if(_enabled)
 					{
 						number = 0;
-						enabled = false;
+						_enabled = false;
 					}
 
 					Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage));
@@ -322,7 +340,6 @@ namespace Schumix.Irc
 						else
 							Thread.Sleep(120*1000);
 
-						enabled = true;
 						ReConnect();
 						continue;
 					}
@@ -334,11 +351,8 @@ namespace Schumix.Irc
 				}
 			}
 
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.Destroy();
-
-			SchumixBase.ServerDisconnect();
-			SchumixBase.timer.SaveUptime();
+			Thread.Sleep(1000);
+			DisConnect();
 			Log.Warning("Opcodes", sLConsole.Network("Text17"));
 			Thread.Sleep(1000);
 			Environment.Exit(1);

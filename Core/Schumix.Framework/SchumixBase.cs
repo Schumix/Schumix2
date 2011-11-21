@@ -31,7 +31,7 @@ namespace Schumix.Framework
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
+		private static readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		private static readonly Guid _guid = Guid.NewGuid();
 		public static DatabaseManager DManager { get; private set; }
 		public static Timer timer { get; private set; }
@@ -115,6 +115,16 @@ namespace Schumix.Framework
 			packet.Write<string>("utf-8");
 			packet.Write<string>(LocalizationConfig.Locale);
 			ClientSocket.SendPacketToSCS(packet);
+		}
+
+		public static void Quit()
+		{
+			foreach(var plugin in sAddonManager.GetPlugins())
+				plugin.Destroy();
+
+			SchumixBase.timer.SaveUptime();
+			SchumixBase.ServerDisconnect();
+			SchumixBase.ExitStatus = true;
 		}
 	}
 }
