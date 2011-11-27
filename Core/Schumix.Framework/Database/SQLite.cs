@@ -39,7 +39,8 @@ namespace Schumix.Framework.Database
 			if(!Initialize(file))
 			{
 				Log.Error("SQLite", sLConsole.SQLite("Text"));
-				Thread.Sleep(200);
+				SchumixBase.ServerDisconnect(false);
+				Thread.Sleep(1000);
 				Environment.Exit(1);
 			}
 			else
@@ -95,6 +96,7 @@ namespace Schumix.Framework.Database
 				{
 					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+					SchumixBase.ServerDisconnect(false);
 					SchumixBase.ExitStatus = true;
 
 					if(!INetwork.Writer.IsNull())
@@ -108,6 +110,7 @@ namespace Schumix.Framework.Database
 				{
 					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+					SchumixBase.ServerDisconnect(false);
 					SchumixBase.ExitStatus = true;
 
 					if(!INetwork.Writer.IsNull())
@@ -147,6 +150,7 @@ namespace Schumix.Framework.Database
 				{
 					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+					SchumixBase.ServerDisconnect(false);
 					SchumixBase.ExitStatus = true;
 
 					if(!INetwork.Writer.IsNull())
@@ -160,6 +164,7 @@ namespace Schumix.Framework.Database
 				{
 					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+					SchumixBase.ServerDisconnect(false);
 					SchumixBase.ExitStatus = true;
 
 					if(!INetwork.Writer.IsNull())

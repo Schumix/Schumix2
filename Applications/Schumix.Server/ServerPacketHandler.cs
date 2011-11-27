@@ -147,9 +147,13 @@ namespace Schumix.Server
 			string dir = pck.Read<string>();
 			string ce = pck.Read<string>();
 			string locale = pck.Read<string>();
+			bool reconnect = pck.Read<bool>();
 			Log.Warning("CloseHandler", sLConsole.ServerPacketHandler("Text6"), guid);
 
 			if(hst != "127.0.0.1")
+				return;
+
+			if(!reconnect)
 				return;
 
 			Log.Notice("CloseHandler", sLConsole.ServerPacketHandler("Text7"));

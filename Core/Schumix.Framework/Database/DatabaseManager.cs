@@ -59,13 +59,15 @@ namespace Schumix.Framework.Database
 			if(x == 0)
 			{
 				Log.Error("DatabaseManager", sLConsole.DatabaseManager("Text3"));
-				Thread.Sleep(200);
+				SchumixBase.ServerDisconnect(false);
+				Thread.Sleep(1000);
 				Environment.Exit(1);
 			}
 			else if(x == 2)
 			{
 				Log.Error("DatabaseManager", sLConsole.DatabaseManager("Text4"));
-				Thread.Sleep(200);
+				SchumixBase.ServerDisconnect(false);
+				Thread.Sleep(1000);
 				Environment.Exit(1);
 			}
 		}

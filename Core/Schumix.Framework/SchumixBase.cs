@@ -102,7 +102,7 @@ namespace Schumix.Framework
 			Log.Debug("SchumixBase", "~SchumixBase()");
 		}
 
-		public static void ServerDisconnect()
+		public static void ServerDisconnect(bool Reconnect = true)
 		{
 			if(!ServerConfig.Enabled)
 				return;
@@ -114,6 +114,7 @@ namespace Schumix.Framework
 			packet.Write<string>(SchumixConfig.ConfigDirectory);
 			packet.Write<string>("utf-8");
 			packet.Write<string>(LocalizationConfig.Locale);
+			packet.Write<bool>(Reconnect);
 			ClientSocket.SendPacketToSCS(packet);
 		}
 

@@ -48,14 +48,10 @@ namespace Schumix.Framework
 			{
 				Log.Warning("Runtime", sLConsole.Runtime("Text3"));
 				Log.Warning("Runtime", sLConsole.Runtime("Text4"));
-				SchumixBase.ExitStatus = true;
-				SchumixBase.timer.SaveUptime();
+				SchumixBase.Quit();
 
 				if(!INetwork.Writer.IsNull())
 					INetwork.Writer.WriteLine("QUIT :Memory over-consumption.");
-
-				Thread.Sleep(1000);
-				Environment.Exit(1);
 			}
 		}
 

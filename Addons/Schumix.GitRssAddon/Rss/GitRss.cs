@@ -83,9 +83,9 @@ namespace Schumix.GitRssAddon
 					string xml = client.DownloadString(_url);
 					var rss = new XmlDocument();
 					rss.LoadXml(xml);
+					xml = string.Empty;
 					_ns = new XmlNamespaceManager(rss.NameTable);
 					_ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
-					client.Dispose();
 				}
 			}
 			else
@@ -229,7 +229,7 @@ namespace Schumix.GitRssAddon
 						string xml = client.DownloadString(_url);
 						var rss = new XmlDocument();
 						rss.LoadXml(xml);
-						client.Dispose();
+						xml = string.Empty;
 						return rss;
 					}
 				}
