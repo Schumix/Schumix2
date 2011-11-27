@@ -40,7 +40,8 @@ namespace Schumix.Framework.Database
 			if(!Initialize(host, username, password, database, charset))
 			{
 				Log.Error("MySql", sLConsole.MySql("Text"));
-				Thread.Sleep(200);
+				SchumixBase.ServerDisconnect(false);
+				Thread.Sleep(1000);
 				Environment.Exit(1);
 			}
 			else
@@ -91,6 +92,7 @@ namespace Schumix.Framework.Database
 				{
 					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 					Log.Warning("MySql", sLConsole.MySql("Text4"));
+					SchumixBase.ServerDisconnect(false);
 					SchumixBase.ExitStatus = true;
 
 					if(!INetwork.Writer.IsNull())
@@ -104,6 +106,7 @@ namespace Schumix.Framework.Database
 				{
 					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 					Log.Warning("MySql", sLConsole.MySql("Text4"));
+					SchumixBase.ServerDisconnect(false);
 					SchumixBase.ExitStatus = true;
 
 					if(!INetwork.Writer.IsNull())
@@ -138,6 +141,7 @@ namespace Schumix.Framework.Database
 				{
 					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 					Log.Warning("MySql", sLConsole.MySql("Text4"));
+					SchumixBase.ServerDisconnect(false);
 					SchumixBase.ExitStatus = true;
 
 					if(!INetwork.Writer.IsNull())
@@ -151,6 +155,7 @@ namespace Schumix.Framework.Database
 				{
 					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 					Log.Warning("MySql", sLConsole.MySql("Text4"));
+					SchumixBase.ServerDisconnect(false);
 					SchumixBase.ExitStatus = true;
 
 					if(!INetwork.Writer.IsNull())
