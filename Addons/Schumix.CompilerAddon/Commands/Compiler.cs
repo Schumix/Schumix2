@@ -35,11 +35,12 @@ using Schumix.CompilerAddon.Config;
 
 namespace Schumix.CompilerAddon.Commands
 {
-	public class Compiler : CommandInfo
+	public class SCompiler : CommandInfo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 		private readonly Regex ForRegex = new Regex(@"for\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
@@ -233,14 +234,20 @@ namespace Schumix.CompilerAddon.Commands
 		{
 			try
 			{
-#if MONO
+				if(sUtilities.GetCompiler() == Compiler.Mono)
+				{
 #pragma warning disable 618
-				var compiler = new CSharpCodeProvider().CreateCompiler();
+					var compiler = new CSharpCodeProvider().CreateCompiler();
 #pragma warning restore 618
-#else
-				var compiler = CodeDomProvider.CreateProvider("CSharp");
-#endif
-				return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
+					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
+				}
+				else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+				{
+					var compiler = CodeDomProvider.CreateProvider("CSharp");
+					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
+				}
+
+				return null;
 			}
 			catch(Exception)
 			{
@@ -258,39 +265,43 @@ namespace Schumix.CompilerAddon.Commands
 
 					if(errortext.Contains("Location of the symbol related to previous error"))
 					{
-#if MONO
-						for(;;)
+						if(sUtilities.GetCompiler() == Compiler.Mono)
 						{
-							if(errortext.Contains("/"))
+							for(;;)
 							{
-								if(errortext.Substring(0, 1) == "/")
-									errortext = errortext.Remove(0, 1);
+								if(errortext.Contains("/"))
+								{
+									if(errortext.Substring(0, 1) == "/")
+										errortext = errortext.Remove(0, 1);
+									else
+										errortext = errortext.Remove(0, errortext.IndexOf("/"));
+								}
 								else
-									errortext = errortext.Remove(0, errortext.IndexOf("/"));
+									break;
 							}
-							else
-								break;
+
+							string s = "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), s);
+						}
+						else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+						{
+							for(;;)
+							{
+								if(errortext.Contains("\\"))
+								{
+									if(errortext.Substring(0, 1) == "\\")
+										errortext = errortext.Remove(0, 1);
+									else
+										errortext = errortext.Remove(0, errortext.IndexOf("\\"));
+								}
+								else
+									break;
+							}
+
+							string s = "*:\\***\\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), s);
 						}
 
-						string s = "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), s);
-#else
-						for(;;)
-						{
-							if(errortext.Contains("\\"))
-							{
-								if(errortext.Substring(0, 1) == "\\")
-									errortext = errortext.Remove(0, 1);
-								else
-									errortext = errortext.Remove(0, errortext.IndexOf("\\"));
-							}
-							else
-								break;
-						}
-
-						string s = "*:\\***\\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), s);
-#endif
 						continue;
 					}
 

@@ -32,6 +32,7 @@ namespace Schumix.Framework
 	public sealed class Runtime
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private System.Timers.Timer _timer = new System.Timers.Timer();
 
 		private Runtime()
@@ -57,7 +58,9 @@ namespace Schumix.Framework
 
 		public void SetProcessName(string Name)
 		{
-#if MONO
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+				return;
+
 			if(Environment.OSVersion.Platform == PlatformID.Unix)
 			{
 				try
@@ -68,11 +71,9 @@ namespace Schumix.Framework
 				{
 					Log.Error("Runtime", sLConsole.Runtime("Text"), e.Message);
 				}
-#endif
 			}
 		}
 
-#if MONO
 		[DllImport ("libc")] // Linux
 		private static extern int prctl(int option, byte[] arg2, IntPtr arg3, IntPtr arg4, IntPtr arg5);
 
@@ -100,6 +101,5 @@ namespace Schumix.Framework
 				}
       		}
 		}
-#endif
 	}
 }

@@ -20,9 +20,6 @@
 using System;
 using System.IO;
 using System.Linq;
-#if !MONO
-using System.Management;
-#endif
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -549,32 +546,7 @@ namespace Schumix.Libraries
 
 		public static string GetPlatform()
 		{
-			string Platform = string.Empty;
-			var pid = Environment.OSVersion.Platform;
-
-			switch(pid)
-			{
-				case PlatformID.Win32NT:
-				case PlatformID.Win32S:
-				case PlatformID.Win32Windows:
-				case PlatformID.WinCE:
-					Platform = "Windows";
-					break;
-				case PlatformID.Unix:
-					Platform = "Linux";
-					break;
-				case PlatformID.MacOSX:
-					Platform = "MacOSX";
-					break;
-				case PlatformID.Xbox:
-					Platform = "Xbox";
-					break;
-				default:
-					Platform = "Unknown";
-					break;
-			}
-
-			return Platform;
+			return GetPlatform();
 		}
 
 		/// <summary>
@@ -583,102 +555,7 @@ namespace Schumix.Libraries
 		/// <returns>A string containing the the operating system name.</returns>
 		public static string GetOSName()
 		{
-			var Info = Environment.OSVersion;
-			string Name = string.Empty;
-			
-			switch(Info.Platform)
-			{
-				case PlatformID.Win32Windows:
-				{
-					switch(Info.Version.Minor)
-					{
-						case 0:
-						{
-							Name = "Windows 95";
-							break;
-						}
-						case 10:
-						{
-							if(Info.Version.Revision.ToString() == "2222A")
-								Name = "Windows 98 Second Edition";
-							else
-								Name = "Windows 98";
-
-							break;
-						}
-						case 90:
-						{
-							Name = "Windows Me";
-							break;
-						}
-					}
-
-					break;
-				}
-				case PlatformID.Win32NT:
-				{
-					switch(Info.Version.Major)
-					{
-						case 3:
-						{
-							Name = "Windows NT 3.51";
-							break;
-						}
-						case 4:
-						{
-							Name = "Windows NT 4.0";
-							break;
-						}
-						case 5:
-						{
-							if(Info.Version.Minor == 0)
-								Name = "Windows 2000";
-							else if(Info.Version.Minor == 1)
-								Name = "Windows XP";
-							else if(Info.Version.Minor == 2)
-								Name = "Windows Server 2003";
-							break;
-						}
-						case 6:
-						{
-							if(Info.Version.Minor == 0)
-								Name = "Windows Vista";
-							else if(Info.Version.Minor == 1)
-								Name = "Windows 7";
-							break;
-						}
-					}
-
-					break;
-				}
-				case PlatformID.WinCE:
-				{
-					Name = "Windows CE";
-					break;
-				}
-				case PlatformID.Unix:
-				{
-					Name = "Linux " + Info.Version;
-					break;
-				}
-				case PlatformID.MacOSX:
-				{
-					Name = "MacOSX";
-					break;
-				}
-				case PlatformID.Xbox:
-				{
-					Name = "Xbox";
-					break;
-				}
-				default:
-				{
-					Name = "Unknown";
-					break;
-				}
-			}
-
-			return Name;
+			return sUtilities.GetOSName();
 		}
 	}
 }

@@ -36,7 +36,7 @@ using Schumix.CompilerAddon.Localization;
 
 namespace Schumix.CompilerAddon
 {
-	public class CompilerAddon : Compiler, ISchumixAddon
+	public class CompilerAddon : SCompiler, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
@@ -44,13 +44,9 @@ namespace Schumix.CompilerAddon
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
-#if MONO
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
-#else
-		private AddonConfig _config;
-#endif
 
 		public void Setup()
 		{

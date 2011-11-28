@@ -21,11 +21,13 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
+using Schumix.Framework;
 
 namespace Schumix.Updater.Compiler
 {
 	public sealed class Build
 	{
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public bool HasError { get; private set; }
 
 		public Build(string Version)
@@ -46,13 +48,18 @@ namespace Schumix.Updater.Compiler
 			build.StartInfo.UseShellExecute = false;
 			build.StartInfo.RedirectStandardOutput = true;
 			build.StartInfo.RedirectStandardError = true;
-#if MONO
-			build.StartInfo.FileName = "mono";
-			build.StartInfo.Arguments = "xbuild.exe /p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE,MONO\" /p:Configuration=\"Mono-Release\" /p:Platform=\"x86\" " + Version + "/Schumix.sln";
-#else
-			build.StartInfo.FileName = "xbuild.exe";
-			build.StartInfo.Arguments = "/p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + Version + "/Schumix.sln";
-#endif
+
+			if(sUtilities.GetCompiler() == Schumix.Framework.Compiler.Mono)
+			{
+				build.StartInfo.FileName = "mono";
+				build.StartInfo.Arguments = "xbuild.exe /p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + Version + "/Schumix.sln";
+			}
+			else if(sUtilities.GetCompiler() == Schumix.Framework.Compiler.VisualStudio)
+			{
+				build.StartInfo.FileName = "xbuild.exe";
+				build.StartInfo.Arguments = "/p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + Version + "/Schumix.sln";
+			}
+
 			build.Start();
 			//var error = build.StandardError;
 			HasError = false;

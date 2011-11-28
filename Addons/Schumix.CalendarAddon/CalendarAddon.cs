@@ -40,13 +40,9 @@ namespace Schumix.CalendarAddon
 		private readonly BanCommand sBanCommand = Singleton<BanCommand>.Instance;
 		private Calendar _calendar;
 		public static readonly List<Flood> FloodList = new List<Flood>();
-#if MONO
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
-#else
-		private AddonConfig _config;
-#endif
 
 		public void Setup()
 		{

@@ -25,17 +25,9 @@ namespace Schumix.Framework.Config
 	{
 		public const string SchumixDescription = "Schumix IRC bot";
 #if DEBUG
-#if MONO
-		public const string SchumixConfiguration = "Mono-Debug";
-#else
 		public const string SchumixConfiguration = "Debug";
-#endif
-#else
-#if MONO
-		public const string SchumixConfiguration = "Mono-Release";
 #else
 		public const string SchumixConfiguration = "Release";
-#endif
 #endif
 		public const string SchumixCompany = "Megax Productions";
 		public const string SchumixProduct = "Schumix";

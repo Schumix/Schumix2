@@ -4,6 +4,7 @@
     using System.Diagnostics.Contracts;
     using System.Xml.Serialization;
     using Collections;
+	using Schumix.Framework;
 
     /// <summary>
     /// The QueryResult (main) part of the response.
@@ -11,6 +12,8 @@
     [Serializable, CLSCompliant(true), XmlRoot("queryresult")]
     public sealed class WAResult : XmlSerialized, IEquatable<WAResult>, IEquatable<string>, ICloneable
     {
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="WAResult"/> class.
         /// </summary>
@@ -159,9 +162,8 @@
         /// <returns>The string representation</returns>
         public override string ToString()
         {
-#if !MONO
-            Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+            	Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 
             var sd = Serialize();
 
@@ -221,9 +223,8 @@
         /// <filterpriority>2</filterpriority>
         public object Clone()
         {
-#if !MONO
-            Contract.Ensures(Contract.Result<object>() != null);
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+            	Contract.Ensures(Contract.Result<object>() != null);
 
             return new WAResult(Success, Error, NumPods, DataTypes, TimedOut, Timing, ParseTiming, ParseTimedOut,
                                 Recalculate, Version, Pods);

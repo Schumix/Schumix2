@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Xml.Serialization;
     using Collections;
+	using Schumix.Framework;
 
     /// <summary>
     ///   The pod element in the response.
@@ -12,6 +13,8 @@
     [Serializable, CLSCompliant(true)]
     public sealed class WAPod : IEquatable<string>, IEquatable<WAPod>
     {
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
         /// <summary>
         ///   Gets or sets the pod's title.
         /// </summary>
@@ -63,13 +66,10 @@
         {
             get
             {
-#if !MONO
-                Contract.Requires(SubPods != null);
-#endif
+				if(sUtilities.GetCompiler() != Compiler.Mono)
+                	Contract.Requires(SubPods != null);
 
-                return (from sp in SubPods
-                        where sp.Title.ToLower().Equals(name)
-                        select sp).FirstOrDefault();
+                return (from sp in SubPods where sp.Title.ToLower().Equals(name) select sp).FirstOrDefault();
             }
         }
 

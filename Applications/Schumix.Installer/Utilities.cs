@@ -24,6 +24,13 @@ using System.Web;
 
 namespace Schumix.Installer
 {
+	public enum SCompiler
+	{
+		VisualStudio,
+		Mono,
+		None
+	}
+
 	public sealed class Utilities
 	{
 		private Utilities() {}
@@ -32,6 +39,7 @@ namespace Schumix.Installer
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("user-agent", "Query :)");
 				return client.DownloadString(url);
 			}
 		}
@@ -40,6 +48,7 @@ namespace Schumix.Installer
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("user-agent", "Query :)");
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
 			}
 		}
@@ -48,6 +57,7 @@ namespace Schumix.Installer
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("user-agent", "Query :)");
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
 			}
 		}
@@ -56,8 +66,37 @@ namespace Schumix.Installer
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("user-agent", "Query :)");
 				client.DownloadFile(url, filename);
 			}
+		}
+
+		public SCompiler GetCompiler()
+		{
+			SCompiler compiler = SCompiler.None;
+			var pid = Environment.OSVersion.Platform;
+
+			switch(pid)
+			{
+				case PlatformID.Win32NT:
+				case PlatformID.Win32S:
+				case PlatformID.Win32Windows:
+				case PlatformID.WinCE:
+					compiler = SCompiler.VisualStudio;
+					break;
+				case PlatformID.Unix:
+				case PlatformID.MacOSX:
+					compiler = SCompiler.Mono;
+					break;
+				case PlatformID.Xbox:
+					compiler = SCompiler.None;
+					break;
+				default:
+					compiler = SCompiler.None;
+					break;
+			}
+
+			return compiler;
 		}
 	}
 }

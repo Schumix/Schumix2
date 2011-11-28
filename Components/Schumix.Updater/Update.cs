@@ -139,12 +139,15 @@ namespace Schumix.Updater
 			config.StartInfo.UseShellExecute = false;
 			config.StartInfo.RedirectStandardOutput = true;
 			config.StartInfo.RedirectStandardError = true;
-#if MONO
-			config.StartInfo.FileName = "mono";
-			config.StartInfo.Arguments = "Config.exe " + version;
-#else
-			config.StartInfo.FileName = "Config.exe " + version;
-#endif
+
+			if(sUtilities.GetCompiler() == Schumix.Framework.Compiler.Mono)
+			{
+				config.StartInfo.FileName = "mono";
+				config.StartInfo.Arguments = "Config.exe " + version;
+			}
+			else if(sUtilities.GetCompiler() == Schumix.Framework.Compiler.VisualStudio)
+				config.StartInfo.FileName = "Config.exe " + version;
+
 			Log.Notice("Update", sLConsole.Update("Text15"));
 			config.Start();
 			Environment.Exit(0);

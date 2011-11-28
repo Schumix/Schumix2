@@ -54,12 +54,14 @@ namespace Schumix.Irc
 
 		public void Add(string Name)
 		{
-
+			if(!Names.Contains(Name.ToLower()))
+				Names.Add(Name.ToLower());
 		}
 
 		public void Remove(string Name)
 		{
-
+			if(Names.Contains(Name.ToLower()))
+				Names.Remove(Name.ToLower());
 		}
 
 		public void Clean()
