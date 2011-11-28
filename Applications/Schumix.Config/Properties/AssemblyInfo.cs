@@ -28,17 +28,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Schumix.Config")]
 [assembly: AssemblyDescription("Schumix IRC bot")]
 #if DEBUG
-#if MONO
-[assembly: AssemblyConfiguration("Mono-Debug")]
-#else
 [assembly: AssemblyConfiguration("Debug")]
-#endif
-#else
-#if MONO
-[assembly: AssemblyConfiguration("Mono-Release")]
 #else
 [assembly: AssemblyConfiguration("Release")]
-#endif
 #endif
 [assembly: AssemblyCompany("Megax Productions")]
 [assembly: AssemblyProduct("Schumix")]

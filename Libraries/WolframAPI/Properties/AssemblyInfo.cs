@@ -2,18 +2,18 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Schumix.Framework.Config;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("WolframAPI")]
 [assembly: AssemblyDescription("Set of classes providing access to the Wolfram Alpha API.")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyConfiguration(Consts.SchumixConfiguration)]
+[assembly: AssemblyCompany(Consts.SchumixCompany)]
 [assembly: AssemblyProduct("WolframAPI")]
 [assembly: AssemblyCopyright("Copyright © Twl 2011")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
+[assembly: AssemblyTrademark(Consts.SchumixTrademark)]
 
 [assembly: CLSCompliant(true)]
 

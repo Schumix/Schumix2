@@ -15,11 +15,9 @@ Monon jelenleg minimum követelmény a `2.10` vagy újabb.
 
 ## Windows
 A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
-**Figyelem! `A mono` elõtaggal kezdõdõ konfiguráció monora van. Nem ajánlott használni.**
 
 ## Linux
 Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
-**Figyelem! Csak a mono elõtaggal kezdõdõ konfigurációt használjuk. A többit nem ajánlott.**
 
 ## Linux terminál
 Telepítsük a `mono-xbuild` csomagot vagy forrásból. Ezután inditsuk el a `build.sh`-t és lefordul a kód.

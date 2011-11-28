@@ -24,9 +24,7 @@ using System.Net;
 using System.Web;
 using System.Linq;
 using System.Reflection;
-#if !MONO
 using System.Management;
-#endif
 using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Text;
@@ -37,6 +35,13 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
+	public enum Compiler
+	{
+		VisualStudio,
+		Mono,
+		None
+	}
+
 	public sealed class Utilities
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
@@ -175,9 +180,9 @@ namespace Schumix.Framework
 			var x = new SHA1CryptoServiceProvider();
 			var data = Encoding.ASCII.GetBytes(value);
 			data = x.ComputeHash(data);
-#if !MONO
-			x.Dispose();
-#endif
+//#if !MONO
+			//x.Dispose();
+//#endif
 			var ret = string.Empty;
 
 			for(var i = 0; i < data.Length; i++)
@@ -194,9 +199,9 @@ namespace Schumix.Framework
 			var x = new MD5CryptoServiceProvider();
 			var data = Encoding.ASCII.GetBytes(value);
 			data = x.ComputeHash(data);
-#if !MONO
-			x.Dispose();
-#endif
+//#if !MONO
+			//x.Dispose();
+//#endif
 			var ret = string.Empty;
 
 			for(var i = 0; i < data.Length; i++)
@@ -216,9 +221,9 @@ namespace Schumix.Framework
 			{
 				var md5 = new MD5CryptoServiceProvider();
 				retVal = md5.ComputeHash(file);
-#if !MONO
-				md5.Dispose();
-#endif
+//#if !MONO
+				//md5.Dispose();
+//#endif
 			}
 
 			var sb = new StringBuilder();
@@ -393,6 +398,34 @@ namespace Schumix.Framework
 			return Name;
 		}
 
+		public Compiler GetCompiler()
+		{
+			Compiler compiler = Compiler.None;
+			var pid = Environment.OSVersion.Platform;
+
+			switch(pid)
+			{
+				case PlatformID.Win32NT:
+				case PlatformID.Win32S:
+				case PlatformID.Win32Windows:
+				case PlatformID.WinCE:
+					compiler = Compiler.VisualStudio;
+					break;
+				case PlatformID.Unix:
+				case PlatformID.MacOSX:
+					compiler = Compiler.Mono;
+					break;
+				case PlatformID.Xbox:
+					compiler = Compiler.None;
+					break;
+				default:
+					compiler = Compiler.None;
+					break;
+			}
+
+			return compiler;
+		}
+
 		public string GetVersion()
 		{
 			return Schumix.Framework.Config.Consts.SchumixVersion;
@@ -434,33 +467,38 @@ namespace Schumix.Framework
 		/// </returns>
 		public string GetCpuId()
 		{
-#if !MONO
-			var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
-			return (from ManagementObject mo in mos.Get() select (Regex.Replace(Convert.ToString(mo["Name"]), @"\s+", " "))).FirstOrDefault();
-#else
-			var reader = new StreamReader("/proc/cpuinfo");
-			string content = reader.ReadToEnd();
-			reader.Close();
-			reader.Dispose();
-			var getBrandRegex = new Regex(@"model\sname\s:\s*(?<first>.+\sCPU)\s*(?<second>.+)", RegexOptions.IgnoreCase);
-
-			if(!getBrandRegex.IsMatch(content))
+			if(GetCompiler() == Compiler.VisualStudio)
 			{
-				// not intel
-				var amdRegex = new Regex(@"model\sname\s:\s*(?<cpu>.+)");
+				var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
+				return (from ManagementObject mo in mos.Get() select (Regex.Replace(Convert.ToString(mo["Name"]), @"\s+", SchumixBase.Space.ToString()))).FirstOrDefault();
+			}
+			else if(GetCompiler() == Compiler.Mono)
+			{
+				var reader = new StreamReader("/proc/cpuinfo");
+				string content = reader.ReadToEnd();
+				reader.Close();
+				reader.Dispose();
+				var getBrandRegex = new Regex(@"model\sname\s:\s*(?<first>.+\sCPU)\s*(?<second>.+)", RegexOptions.IgnoreCase);
 
-				if(!amdRegex.IsMatch(content))
-					return sLConsole.Other("Notfound");
+				if(!getBrandRegex.IsMatch(content))
+				{
+					// not intel
+					var amdRegex = new Regex(@"model\sname\s:\s*(?<cpu>.+)");
 
-				var amatch = amdRegex.Match(content);
-				string amd = amatch.Groups["cpu"].ToString();
-				return amd;
+					if(!amdRegex.IsMatch(content))
+						return sLConsole.Other("Notfound");
+
+					var amatch = amdRegex.Match(content);
+					string amd = amatch.Groups["cpu"].ToString();
+					return amd;
+				}
+
+				var match = getBrandRegex.Match(content);
+				string cpu = (match.Groups["first"].ToString() + SchumixBase.Space + match.Groups["second"].ToString());
+				return cpu;
 			}
 
-			var match = getBrandRegex.Match(content);
-			string cpu = (match.Groups["first"].ToString() + SchumixBase.Space + match.Groups["second"].ToString());
-			return cpu;
-#endif
+			return sLConsole.Other("Notfound");
         }
 
 		/// <summary>
@@ -474,28 +512,6 @@ namespace Schumix.Framework
 				return (elapsed.TotalSeconds);
 			}
 		}
-
-#if MONO
-		/// <summary>
-		/// Converts DateTime to miliseconds.
-		/// </summary>
-		/// <param name="time"></param>
-		/// <returns></returns>
-		public int ToMilliSecondsInt(this DateTime time)
-		{
-			return (int)(time.Ticks/TicksPerSecond);
-		}
-
-		/// <summary>
-		/// Converts TimeSpan to miliseconds.
-		/// </summary>
-		/// <param name="time"></param>
-		/// <returns></returns>
-		public int ToMilliSecondsInt(this TimeSpan time)
-		{
-			return (int)(time.Ticks)/TicksPerSecond;
-		}
-#endif
 
 		/// <summary>
 		/// Converts ticks to miliseconds.

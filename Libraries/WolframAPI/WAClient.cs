@@ -10,6 +10,7 @@
     using System.Web;
     using System.Xml.Serialization;
     using Exceptions;
+	using Schumix.Framework;
 
     /// <summary>
     /// Used to handle the response received event which occurs when a response is successfully
@@ -45,6 +46,8 @@
     /// </summary>
     public sealed class WAClient
     {
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
         /// <summary>
         /// The base WA API url.
         /// </summary>
@@ -99,10 +102,11 @@
         /// <returns>The solution of the given expression</returns>
         public string Solve(string expression)
         {
-#if !MONO
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
-            Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+			{
+	            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+	            Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+			}
 
             var response = Submit(expression);
             var result = Parse(response);
@@ -130,9 +134,8 @@
                 return "No solution found. The response might have been malformed.";
             }
 
-#if !MONO
-            Contract.Assume(solution.SubPods[0] != null);
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+				Contract.Assume(solution.SubPods[0] != null);
 
             if (string.IsNullOrEmpty(solution.SubPods[0].PlainText))
             {
@@ -175,10 +178,11 @@
         /// <returns>Raw response</returns>
         public string Submit(string expression)
         {
-#if !MONO
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
-            Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+			{
+	            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+	            Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+			}
 
             try
             {
@@ -220,10 +224,11 @@
         /// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
         public static WAResult Parse(string response)
         {
-#if !MONO
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(response));
-            Contract.Ensures(Contract.Result<WAResult>() != null);
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+			{
+	            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(response));
+	            Contract.Ensures(Contract.Result<WAResult>() != null);
+			}
 
             try
             {
@@ -254,10 +259,11 @@
 #if WITH_ASYNC
         private void HandleSolutionReceived(IAsyncResult ar)
         {
-#if !MONO
-            Contract.Requires<ArgumentNullException>(ar != null);
-            Contract.Requires<ArgumentNullException>(((AsyncResult)ar).AsyncDelegate != null);
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+			{
+	            Contract.Requires<ArgumentNullException>(ar != null);
+	            Contract.Requires<ArgumentNullException>(((AsyncResult)ar).AsyncDelegate != null);
+			}
 
             if (ar != null)
             {
@@ -287,9 +293,8 @@
         /// <returns>The solution of the given expression</returns>
         public void SolveAsync(string expression)
         {
-#if !MONO
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
 
             var procedure = new ExpressionProcessorMethod(Solve);
 
@@ -301,10 +306,11 @@
 
         private void HandleResultReceived(IAsyncResult ar)
         {
-#if !MONO
-            Contract.Requires<ArgumentNullException>(ar != null);
-            Contract.Requires<ArgumentNullException>(((AsyncResult)ar).AsyncDelegate != null);
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+			{
+	            Contract.Requires<ArgumentNullException>(ar != null);
+	            Contract.Requires<ArgumentNullException>(((AsyncResult)ar).AsyncDelegate != null);
+			}
 
             if (ar != null)
             {
@@ -337,9 +343,8 @@
         /// <returns>The result</returns>
         public void GetResultAsync(string expression)
         {
-#if !MONO
-            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
 
             var procedure = new RetrieveResultMethod(GetResult);
 

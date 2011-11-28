@@ -19,11 +19,13 @@
 
 using System;
 using System.Diagnostics;
+using Schumix.Framework;
 
 namespace Schumix.Server.New
 {
 	public class Schumix
 	{
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private Schumix() {}
 
 		public void Start(string File, string Dir, string Encoding, string Locale)
@@ -32,13 +34,18 @@ namespace Schumix.Server.New
 			exe.StartInfo.UseShellExecute = false;
 			exe.StartInfo.RedirectStandardOutput = true;
 			exe.StartInfo.RedirectStandardError = true;
-#if MONO
-			exe.StartInfo.FileName = "mono";
-			exe.StartInfo.Arguments = string.Format("Schumix.exe --config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password);
-#else
-			exe.StartInfo.FileName = "Schumix.exe";
-			exe.StartInfo.Arguments = string.Format("--config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password);
-#endif
+
+			if(sUtilities.GetCompiler() == Compiler.Mono)
+			{
+				exe.StartInfo.FileName = "mono";
+				exe.StartInfo.Arguments = string.Format("Schumix.exe --config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password);
+			}
+			else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			{
+				exe.StartInfo.FileName = "Schumix.exe";
+				exe.StartInfo.Arguments = string.Format("--config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password);
+			}
+
 			exe.Start();
 			exe.Dispose();
 		}

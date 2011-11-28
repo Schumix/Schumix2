@@ -45,13 +45,9 @@ namespace Schumix.ExtraAddon
 		private readonly NameList sNameList = Singleton<NameList>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Notes sNotes = Singleton<Notes>.Instance;
-#if MONO
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
-#else
-		private AddonConfig _config;
-#endif
 		public static bool IsOnline { get; set; }
 
 		public void Setup()

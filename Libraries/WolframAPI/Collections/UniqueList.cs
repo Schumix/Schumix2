@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Diagnostics.Contracts;
     using System.Linq;
+	using Schumix.Framework;
 
     /// <summary>
     /// Provides a list type which supports only unique list of elements.
@@ -12,15 +13,16 @@
     public sealed class UniqueList<T> : List<T>
         where T : IEquatable<T>, IEquatable<string>
     {
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
         /// <summary>
         /// Adds the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
         public new void Add(T item)
         {
-#if !MONO
-            Contract.Requires(!Equals(item, null));
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+            	Contract.Requires(!Equals(item, null));
             
             if (Contains(item) || FindIndex(it => it.Equals(item)) != -1)
             {
@@ -38,9 +40,8 @@
         {
             get
             {
-#if !MONO
-                Contract.Requires(!Equals(ind, null));
-#endif
+				if(sUtilities.GetCompiler() != Compiler.Mono)
+                	Contract.Requires(!Equals(ind, null));
 
                 return (from elem in this
                         where elem.Equals(ind)
@@ -49,10 +50,11 @@
 
             set
             {
-#if !MONO
-                Contract.Requires(!Equals(ind, null));
-                Contract.Requires(!Equals(value, null));
-#endif
+				if(sUtilities.GetCompiler() != Compiler.Mono)
+				{
+	                Contract.Requires(!Equals(ind, null));
+	                Contract.Requires(!Equals(value, null));
+				}
 
                 int index;
 
@@ -71,9 +73,7 @@
         {
             get
             {
-                return (from elem in this
-                        where elem.Equals(ind)
-                        select elem).FirstOrDefault();
+                return (from elem in this where elem.Equals(ind) select elem).FirstOrDefault();
             }
 
             set

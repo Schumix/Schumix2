@@ -5,6 +5,7 @@
     using System.IO;
     using System.Xml.Serialization;
     using Exceptions;
+	using Schumix.Framework;
 
     ///<summary>
     /// Base class for XML-serialized types.
@@ -12,6 +13,7 @@
     public abstract class XmlSerialized : ISerializableType
     {
         #region Implementation of ISerializableType
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
         /// <summary>
         /// Serializes the current instance and returns the result as a <see cref="string"/>
@@ -20,9 +22,8 @@
         /// <returns>The serialized instance.</returns>
         public string Serialize()
         {
-#if !MONO
-            Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
-#endif
+			if(sUtilities.GetCompiler() != Compiler.Mono)
+				Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 
             string data;
 
