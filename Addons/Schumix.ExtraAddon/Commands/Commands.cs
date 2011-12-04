@@ -104,7 +104,7 @@ namespace Schumix.ExtraAddon.Commands
 
 							var db1 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM hlmessage WHERE Name = '{0}'", name);
 							if(db1.IsNull())
-								SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", name, "off");
+								SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", name, SchumixBase.Off);
 						}
 
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage/update", sIRCMessage.Channel));
@@ -128,12 +128,12 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					string status = sIRCMessage.Info[6].ToLower();
-					if(status == "on" || status == "off")
+					if(status == SchumixBase.On || status == SchumixBase.Off)
 					{
 						string name = sIRCMessage.Nick.ToLower();
 						SchumixBase.DManager.Update("hlmessage", string.Format("Enabled = '{0}'", status), string.Format("Name = '{0}'", name));
 	
-						if(status == "on")
+						if(status == SchumixBase.On)
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], name);
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, text[1], name);
@@ -144,8 +144,9 @@ namespace Schumix.ExtraAddon.Commands
 					string name = sIRCMessage.Nick.ToLower();
 					SchumixBase.DManager.Update("hlmessage", string.Format("Info = '{0}', Enabled = 'on'", sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space))), string.Format("Name = '{0}'", name));
 					SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", "FunctionName = 'autohl'");
-					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("autohl", "on", sIRCMessage.Channel)), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
-					sChannelInfo.ChannelFunctionReload();
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("autohl", SchumixBase.On, sIRCMessage.Channel)), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
+					sChannelInfo.FunctionsReload();
+					sChannelInfo.ChannelFunctionsReload();
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage", sIRCMessage.Channel));
 				}
 			}

@@ -330,7 +330,7 @@ namespace Schumix.Irc
 				}
 				catch(IOException)
 				{
-					if(sChannelInfo.FSelect("reconnect"))
+					if(sChannelInfo.FSelect(IFunctions.Reconnect))
 					{
 						if(number <= 6)
 						{

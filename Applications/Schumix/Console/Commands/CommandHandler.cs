@@ -114,12 +114,12 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(Info[1].ToLower() == "on")
+			if(Info[1].ToLower() == SchumixBase.On)
 			{
 				Log.Notice("Console", text[0]);
 				ChangeLog(true);
 			}
-			else if(Info[1].ToLower() == "off")
+			else if(Info[1].ToLower() == SchumixBase.Off)
 			{
 				Log.Notice("Console", text[1]);
 				ChangeLog(false);
@@ -237,7 +237,7 @@ namespace Schumix.Console.Commands
 
 				string pass = sUtilities.GetRandomString();
 				SchumixBase.DManager.Insert("`admins`(Name, Password)", name.ToLower(), sUtilities.Sha1(pass));
-				SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", name.ToLower(), "off");
+				SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", name.ToLower(), SchumixBase.Off);
 				Log.Notice("Console", text[1], name);
 				Log.Notice("Console", text[2], pass);
 			}
@@ -368,7 +368,7 @@ namespace Schumix.Console.Commands
 					Log.Notice("Console", text2[0], ChannelInfo[0]);
 					Log.Notice("Console", text2[1], ChannelInfo[1]);
 				}
-				else if(status == "on" || status == "off")
+				else if(status == SchumixBase.On || status == SchumixBase.Off)
 				{
 					if(Info.Length < 5)
 					{
@@ -382,25 +382,40 @@ namespace Schumix.Console.Commands
 
 						for(int i = 4; i < Info.Length; i++)
 						{
+							if(!sChannelInfo.SearchChannelFunction(Info[i]))
+							{
+								Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), Info[i]);
+								continue;
+							}
+
 							args += ", " + Info[i].ToLower();
 							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(Info[i].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
-							sChannelInfo.ChannelFunctionReload();
+							sChannelInfo.ChannelFunctionsReload();
 						}
 
-						if(status == "on")
+						if(args.Length == 0)
+							return;
+
+						if(status == SchumixBase.On)
 							Log.Notice("Console", text[0],  args.Remove(0, 2, ", "));
 						else
 							Log.Notice("Console", text[1],  args.Remove(0, 2, ", "));
 					}
 					else
 					{
-						if(status == "on")
-							Log.Notice("Console", text[0], status);
+						if(!sChannelInfo.SearchChannelFunction(Info[4]))
+						{
+							Log.Error("Console", sLConsole.Other("NoSuchFunctions"));
+							return;
+						}
+
+						if(status == SchumixBase.On)
+							Log.Notice("Console", text[0], Info[4].ToLower());
 						else
-							Log.Notice("Console", text[1], status);
+							Log.Notice("Console", text[1], Info[4].ToLower());
 
 						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(Info[4].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
-						sChannelInfo.ChannelFunctionReload();
+						sChannelInfo.ChannelFunctionsReload();
 					}
 				}
 			}
@@ -423,7 +438,7 @@ namespace Schumix.Console.Commands
 							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", channel));
 						}
 
-						sChannelInfo.ChannelFunctionReload();
+						sChannelInfo.ChannelFunctionsReload();
 						Log.Notice("Console", sLManager.GetConsoleCommandText("function/update/all"));
 					}
 					else
@@ -439,7 +454,7 @@ namespace Schumix.Console.Commands
 
 					Log.Notice("Console", sLManager.GetConsoleCommandText("function/update"), Info[2].ToLower());
 					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", Info[2].ToLower()));
-					sChannelInfo.ChannelFunctionReload();
+					sChannelInfo.ChannelFunctionsReload();
 				}
 			}
 			else if(Info[1].ToLower() == "info")
@@ -480,14 +495,49 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				if(Info[1].ToLower() == "on" || Info[1].ToLower() == "off")
+				if(Info[1].ToLower() == SchumixBase.On || Info[1].ToLower() == SchumixBase.Off)
 				{
-					if(Info[1].ToLower() == "on")
-						Log.Notice("Console", text[0], Info[2].ToLower());
-					else
-						Log.Notice("Console", text[1], Info[2].ToLower());
+					if(Info.Length >= 4)
+					{
+						string args = string.Empty;
 
-					SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", Info[2].ToLower()));
+						for(int i = 2; i < Info.Length; i++)
+						{
+							if(!sChannelInfo.SearchFunction(Info[i]))
+							{
+								Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), Info[i]);
+								continue;
+							}
+
+							args += ", " + Info[i].ToLower();
+							SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[i].ToLower())));
+							sChannelInfo.FunctionsReload();
+						}
+
+						if(args.Length == 0)
+							return;
+
+						if(Info[1].ToLower() == SchumixBase.On)
+							Log.Notice("Console", text[0],  args.Remove(0, 2, ", "));
+						else
+							Log.Notice("Console", text[1],  args.Remove(0, 2, ", "));
+					}
+					else
+					{
+						if(!sChannelInfo.SearchFunction(Info[2]))
+						{
+							Log.Error("Console", sLConsole.Other("NoSuchFunctions"));
+							return;
+						}
+
+						if(Info[1].ToLower() == SchumixBase.On)
+							Log.Notice("Console", text[0], Info[2].ToLower());
+						else
+							Log.Notice("Console", text[1], Info[2].ToLower());
+
+						SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", Info[2].ToLower()));
+						sChannelInfo.FunctionsReload();
+					}
 				}
 			}
 		}
@@ -549,7 +599,7 @@ namespace Schumix.Console.Commands
 
 				Log.Notice("Console", text[1], channel);
 				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionReload();
+				sChannelInfo.ChannelFunctionsReload();
 			}
 			else if(Info[1].ToLower() == "remove")
 			{
@@ -597,12 +647,12 @@ namespace Schumix.Console.Commands
 				Log.Notice("Console", text[2], channel);
 
 				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionReload();
+				sChannelInfo.ChannelFunctionsReload();
 			}
 			else if(Info[1].ToLower() == "update")
 			{
 				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionReload();
+				sChannelInfo.ChannelFunctionsReload();
 				Log.Notice("Console", sLManager.GetConsoleCommandText("channel/update"));
 			}
 			else if(Info[1].ToLower() == "info")

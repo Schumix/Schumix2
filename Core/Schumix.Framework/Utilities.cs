@@ -435,10 +435,10 @@ namespace Schumix.Framework
 		{
 			string functions = string.Empty;
 
-			foreach(var function in Enum.GetNames(typeof(IFunctions)))
+			foreach(var function in Enum.GetNames(typeof(IChannelFunctions)))
 			{
-				if(function == IFunctions.Log.ToString() || function == IFunctions.Rejoin.ToString() ||
-					function == IFunctions.Commands.ToString())
+				if(function == IChannelFunctions.Log.ToString() || function == IChannelFunctions.Rejoin.ToString() ||
+					function == IChannelFunctions.Commands.ToString())
 					functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + "on";
 				else
 					functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + "off";

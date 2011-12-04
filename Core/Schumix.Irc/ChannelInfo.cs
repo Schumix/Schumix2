@@ -32,8 +32,9 @@ namespace Schumix.Irc
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly List<string> ChannelFunction = new List<string>();
 		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
+		private readonly List<string> ChannelFunction = new List<string>();
+
 		public Dictionary<string, string> CList
 		{
 			get { return _ChannelList; }
@@ -59,17 +60,10 @@ namespace Schumix.Irc
 
 		public bool FSelect(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT FunctionStatus FROM schumix WHERE FunctionName = '{0}'", Name.ToLower());
-			if(!db.IsNull())
-			{
-				string status = db["FunctionStatus"].ToString();
-				return status == "on";
-			}
-			else
-			{
-				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text2"));
-				return false;
-			}
+			if(IFunctionsClass.Functions.ContainsKey(Name.ToLower()))
+				return IFunctionsClass.Functions[Name.ToLower()] == SchumixBase.On;
+
+			return false;
 		}
 
 		public bool FSelect(string Name, string Channel)
@@ -82,8 +76,24 @@ namespace Schumix.Irc
 				if(point[0] == Channel.ToLower())
 				{
 					if(point2[0] == Name.ToLower())
-						return point2[1] == "on";
+						return point2[1] == SchumixBase.On;
 				}
+			}
+
+			return false;
+		}
+
+		public bool SearchFunction(string Name)
+		{
+			return IFunctionsClass.Functions.ContainsKey(Name.ToString().ToLower());
+		}
+
+		public bool SearchChannelFunction(string Name)
+		{
+			foreach(var name in Enum.GetNames(typeof(IChannelFunctions)))
+			{
+				if(Name.ToLower() == name.ToString().ToLower())
+					return true;
 			}
 
 			return false;
@@ -91,20 +101,13 @@ namespace Schumix.Irc
 
 		public bool FSelect(IFunctions Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT FunctionStatus FROM schumix WHERE FunctionName = '{0}'", Name.ToString().ToLower());
-			if(!db.IsNull())
-			{
-				string status = db["FunctionStatus"].ToString();
-				return status == "on";
-			}
-			else
-			{
-				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text2"));
-				return false;
-			}
+			if(IFunctionsClass.Functions.ContainsKey(Name.ToString().ToLower()))
+				return IFunctionsClass.Functions[Name.ToString().ToLower()] == SchumixBase.On;
+
+			return false;
 		}
 
-		public bool FSelect(IFunctions Name, string Channel)
+		public bool FSelect(IChannelFunctions Name, string Channel)
 		{
 			foreach(var channels in ChannelFunction)
 			{
@@ -114,14 +117,32 @@ namespace Schumix.Irc
 				if(point[0] == Channel.ToLower())
 				{
 					if(point2[0] == Name.ToString().ToLower())
-						return point2[1] == "on";
+						return point2[1] == SchumixBase.On;
 				}
 			}
 
 			return false;
 		}
 
-		public void ChannelFunctionReload()
+		public void FunctionsReload()
+		{
+			IFunctionsClass.Functions.Clear();
+
+			var db = SchumixBase.DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix");
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string name = row["FunctionName"].ToString();
+					string status = row["FunctionStatus"].ToString();
+					IFunctionsClass.Functions.Add(name.ToLower(), status.ToLower());
+				}
+			}
+			else
+				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text11"));
+		}
+
+		public void ChannelFunctionsReload()
 		{
 			ChannelFunction.Clear();
 
@@ -139,7 +160,7 @@ namespace Schumix.Irc
 						string[] comma = functions.Split(SchumixBase.Comma);
 
 						for(int x = 1; x < comma.Length; x++)
-							ChannelFunction.Add(channel + SchumixBase.Point + comma[x]);
+							ChannelFunction.Add(channel + SchumixBase.Point + comma[x].ToString().ToLower());
 					}
 					else
 						Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text3"));
@@ -209,7 +230,7 @@ namespace Schumix.Irc
 					string name = row["FunctionName"].ToString();
 					string status = row["FunctionStatus"].ToString();
 
-					if(status == "on")
+					if(status == SchumixBase.On)
 						on += name + SchumixBase.Space;
 					else
 						off += name + SchumixBase.Space;
@@ -232,7 +253,7 @@ namespace Schumix.Irc
 
 				if(point[0] == channel.ToLower())
 				{
-					if(point2[1] == "on")
+					if(point2[1] == SchumixBase.On)
 						on += point2[0] + SchumixBase.Space;
 					else
 						off += point2[0] + SchumixBase.Space;
@@ -260,7 +281,7 @@ namespace Schumix.Irc
 					SchumixBase.DManager.Update("channel", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}'", channel.Key));
 			}
 
-			ChannelFunctionReload();
+			ChannelFunctionsReload();
 			var db = SchumixBase.DManager.Query("SELECT Enabled FROM channel");
 			if(!db.IsNull())
 			{

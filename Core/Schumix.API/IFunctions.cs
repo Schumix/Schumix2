@@ -18,10 +18,33 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace Schumix.API
 {
 	public enum IFunctions
+	{
+		Greeter,
+		Log,
+		Rejoin,
+		Commands,
+		Reconnect,
+		Autohl,
+		Autokick,
+		Automode,
+		Svn,
+		Hg,
+		Git,
+		Antiflood,
+		Message,
+		Compiler,
+		Gamecommands,
+		Webtitle,
+		Randomkick,
+		Mantisbt
+	};
+
+	public enum IChannelFunctions
 	{
 		Greeter,
 		Log,
@@ -37,4 +60,9 @@ namespace Schumix.API
 		Webtitle,
 		Randomkick
 	};
+
+	public class IFunctionsClass
+	{
+		public static readonly Dictionary<string, string> Functions = new Dictionary<string, string>();
+	}
 }

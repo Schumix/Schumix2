@@ -59,7 +59,7 @@ namespace Schumix.GameAddon.Commands
 					return;
 				}
 
-				if(sChannelInfo.FSelect(IFunctions.Gamecommands, sIRCMessage.Channel))
+				if(sChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, "Fut már játék!");
 					return;
@@ -90,11 +90,11 @@ namespace Schumix.GameAddon.Commands
 					}
 
 					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
-					sChannelInfo.ChannelFunctionReload();
-					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("commands", "off", sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
-					sChannelInfo.ChannelFunctionReload();
-					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", "on", sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
-					sChannelInfo.ChannelFunctionReload();
+					sChannelInfo.ChannelFunctionsReload();
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("commands", SchumixBase.Off, sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
+					sChannelInfo.ChannelFunctionsReload();
+					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.On, sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
+					sChannelInfo.ChannelFunctionsReload();
 					sSender.Mode(sIRCMessage.Channel, "+v", sIRCMessage.Nick);
 					if(!GameAddon.MaffiaList.ContainsKey(sIRCMessage.Channel.ToLower()))
 						GameAddon.MaffiaList.Add(sIRCMessage.Channel.ToLower(), new MaffiaGame(sIRCMessage.Nick, sIRCMessage.Channel));

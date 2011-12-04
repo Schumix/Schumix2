@@ -21,6 +21,7 @@ using System;
 using System.Xml;
 using System.Net;
 using System.Threading;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -129,7 +130,7 @@ namespace Schumix.SvnRssAddon
 				{
 					try
 					{
-						if(sChannelInfo.FSelect("svn"))
+						if(sChannelInfo.FSelect(IFunctions.Svn))
 						{
 							url = GetUrl();
 							if(url.IsNull())

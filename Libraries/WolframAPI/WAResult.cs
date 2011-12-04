@@ -1,4 +1,24 @@
-﻿namespace WolframAPI
+﻿/*
+ * This file is part of Schumix.
+ * 
+ * Copyright (C) 2010-2011 Twl
+ * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * 
+ * Schumix is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Schumix is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace WolframAPI
 {
     using System;
     using System.Diagnostics.Contracts;
@@ -117,8 +137,12 @@
         /// <param name="other">An object to compare with this object.</param>
         public bool Equals(WAResult other)
         {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
+            if(ReferenceEquals(null, other))
+				return false;
+
+            if(ReferenceEquals(this, other))
+				return true;
+
             return other.Success.Equals(Success) && other.Error.Equals(Error) && other.NumPods == NumPods && Equals(other.DataTypes, DataTypes) && Equals(other.TimedOut, TimedOut) && other.Timing.Equals(Timing) && other.ParseTiming.Equals(ParseTiming) && other.ParseTimedOut.Equals(ParseTimedOut) && Equals(other.Recalculate, Recalculate) && Equals(other.Version, Version) && Equals(other.Pods, Pods);
         }
 
@@ -167,7 +191,7 @@
 
             var sd = Serialize();
 
-            if (string.IsNullOrEmpty(sd))
+            if(string.IsNullOrEmpty(sd))
                 sd = GetType().FullName;
             
             return sd;
@@ -183,8 +207,11 @@
         /// </returns>
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
-            if (ReferenceEquals(this, obj)) return true;
+            if(ReferenceEquals(null, obj))
+				return false;
+
+            if(ReferenceEquals(this, obj))
+				return true;
 
             return obj.GetType() == typeof (WAResult) && Equals((WAResult) obj);
         }

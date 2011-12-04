@@ -20,6 +20,7 @@
 using System;
 using System.Xml;
 using System.Threading;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -98,7 +99,7 @@ namespace Schumix.MantisBTRssAddon
 				{
 					try
 					{
-						if(sChannelInfo.FSelect("mantisbt"))
+						if(sChannelInfo.FSelect(IFunctions.Mantisbt))
 						{
 							url = GetUrl();
 							if(url.IsNull())
