@@ -456,9 +456,9 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 
 			SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", GameAddon.GameChannelFunction[_channel]), string.Format("Channel = '{0}'", _channel));
-			sChannelInfo.ChannelFunctionReload();
-			SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", "off", _channel)), string.Format("Channel = '{0}'", _channel));
-			sChannelInfo.ChannelFunctionReload();
+			sChannelInfo.ChannelFunctionsReload();
+			SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, _channel)), string.Format("Channel = '{0}'", _channel));
+			sChannelInfo.ChannelFunctionsReload();
 
 			if(Started)
 				_thread.Abort();
@@ -468,7 +468,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSender.Part(_killerchannel);
 				SchumixBase.DManager.Delete("channel", string.Format("Channel = '{0}'", sUtilities.SqlEscape(_killerchannel)));
 				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionReload();
+				sChannelInfo.ChannelFunctionsReload();
 			}
 
 			Clean();

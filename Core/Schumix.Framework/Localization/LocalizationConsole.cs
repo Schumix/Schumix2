@@ -896,7 +896,7 @@ namespace Schumix.Framework.Localization
 					else
 						return "ChannelList: Failure request!";
 				}
-				case "Text2":
+				/*case "Text2":
 				{
 					if(Locale == "huHU")
 						return "FSelect: Hibás lekérdezés!";
@@ -904,7 +904,7 @@ namespace Schumix.Framework.Localization
 						return "FSelect: Failure reuqest!";
 					else
 						return "FSelect: Failure reuqest!";
-				}
+				}*/
 				case "Text3":
 				{
 					if(Locale == "huHU")
@@ -976,6 +976,15 @@ namespace Schumix.Framework.Localization
 						return "Disabled by Config!";
 					else
 						return "Disabled by Config!";
+				}
+				case "Text11":
+				{
+					if(Locale == "huHU")
+						return "FunctionReload: Hibás lekérdezés!";
+					else if(Locale == "enUS")
+						return "FunctionReload: Failre request!";
+					else
+						return "FunctionReload: Failre request!";
 				}
 				default:
 					return string.Empty;
@@ -1719,6 +1728,24 @@ namespace Schumix.Framework.Localization
 						return "Not found!";
 					else
 						return "Not found!";
+				}
+				case "NoSuchFunctions":
+				{
+					if(Locale == "huHU")
+						return "Ilyen funkció nem létezik!";
+					else if(Locale == "enUS")
+						return "No such function!";
+					else
+						return "No such function!";
+				}
+				case "NoSuchFunctions2":
+				{
+					if(Locale == "huHU")
+						return "Ilyen funkció nem létezik: {0}";
+					else if(Locale == "enUS")
+						return "No such function: {0}";
+					else
+						return "No such function: {0}";
 				}
 				default:
 					return string.Empty;

@@ -100,7 +100,7 @@ namespace Schumix.ExtraAddon
 		{
 			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!sChannelInfo.FSelect(IFunctions.Commands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				Task.Factory.StartNew(() =>
@@ -111,7 +111,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect(IFunctions.Automode) && sChannelInfo.FSelect(IFunctions.Automode, sIRCMessage.Channel))
+					if(sChannelInfo.FSelect(IFunctions.Automode) && sChannelInfo.FSelect(IChannelFunctions.Automode, sIRCMessage.Channel))
 					{
 						AutoMode = true;
 						ModeChannel = sIRCMessage.Channel.ToLower();
@@ -121,7 +121,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect(IFunctions.Randomkick) && sChannelInfo.FSelect(IFunctions.Randomkick, sIRCMessage.Channel))
+					if(sChannelInfo.FSelect(IFunctions.Randomkick) && sChannelInfo.FSelect(IChannelFunctions.Randomkick, sIRCMessage.Channel))
 					{
 						if(sIRCMessage.Args.IsUpper() && sIRCMessage.Args.Length > 4)
 							sSender.Kick(sIRCMessage.Channel, sIRCMessage.Nick, sLManager.GetWarningText("CapsLockOff", sIRCMessage.Channel));
@@ -133,7 +133,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect(IFunctions.Webtitle) && sChannelInfo.FSelect(IFunctions.Webtitle, sIRCMessage.Channel))
+					if(sChannelInfo.FSelect(IFunctions.Webtitle) && sChannelInfo.FSelect(IChannelFunctions.Webtitle, sIRCMessage.Channel))
 					{
 						if(!SchumixBase.UrlTitleEnabled)
 							return;

@@ -18,11 +18,14 @@
  */
 
 using System;
+using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
+using Schumix.API;
 using Schumix.Framework.Client;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
@@ -41,6 +44,8 @@ namespace Schumix.Framework
 		public static bool ThreadStop = true;
 		public static bool NewNick = false;
 		public static bool STime = true;
+		public const string On = "on";
+		public const string Off = "off";
 		public const char NewLine = '\n';
 		public const char Space = ' ';
 		public const char Comma = ',';
@@ -74,6 +79,19 @@ namespace Schumix.Framework
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text2"));
 				DManager = new DatabaseManager();
 				Log.Notice("SchumixBase", sLConsole.SchumixBase("Text3"));
+
+				var db = SchumixBase.DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix");
+				if(!db.IsNull())
+				{
+					foreach(DataRow row in db.Rows)
+					{
+						string name = row["FunctionName"].ToString();
+						string status = row["FunctionStatus"].ToString();
+						IFunctionsClass.Functions.Add(name.ToLower(), status.ToLower());
+					}
+				}
+				else
+					Log.Error("SchumixBase", sLConsole.ChannelInfo("Text11"));
 
 				SchumixBase.DManager.Update("channel", string.Format("Channel = '{0}'", IRCConfig.MasterChannel), "Id = '1'");
 				Log.Notice("SchumixBase", sLConsole.SchumixBase("Text4"), IRCConfig.MasterChannel);

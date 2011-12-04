@@ -324,7 +324,7 @@ namespace Schumix.Irc
 		/// <param name="args"></param>
 		private void LogToFile(string channel, string user, string args)
 		{
-			if(sChannelInfo.FSelect(IFunctions.Log) && sChannelInfo.FSelect(IFunctions.Log, channel))
+			if(sChannelInfo.FSelect(IFunctions.Log) && sChannelInfo.FSelect(IChannelFunctions.Log, channel))
 			{
 				try
 				{

@@ -21,6 +21,7 @@ using System;
 using System.Xml;
 using System.Net;
 using System.Threading;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -137,7 +138,7 @@ namespace Schumix.HgRssAddon
 				{
 					try
 					{
-						if(sChannelInfo.FSelect("hg"))
+						if(sChannelInfo.FSelect(IFunctions.Hg))
 						{
 							url = GetUrl();
 							if(url.IsNull())

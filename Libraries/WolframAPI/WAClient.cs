@@ -1,97 +1,116 @@
-﻿namespace WolframAPI
+﻿/*
+ * This file is part of Schumix.
+ * 
+ * Copyright (C) 2010-2011 Twl
+ * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * 
+ * Schumix is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * Schumix is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace WolframAPI
 {
-    using System;
-    using System.Diagnostics.Contracts;
-    using System.IO;
-    using System.Linq;
-    using System.Net;
-    using System.Reflection;
-    using System.Runtime.Remoting.Messaging;
-    using System.Web;
-    using System.Xml.Serialization;
-    using Exceptions;
+	using System;
+	using System.Diagnostics.Contracts;
+	using System.IO;
+	using System.Linq;
+	using System.Net;
+	using System.Reflection;
+	using System.Runtime.Remoting.Messaging;
+	using System.Web;
+	using System.Xml.Serialization;
+	using Exceptions;
 	using Schumix.Framework;
+	using Schumix.Framework.Extensions;
 
-    /// <summary>
-    /// Used to handle the response received event which occurs when a response is successfully
-    /// retrieved using the API.
-    /// </summary>
-    /// <param name="response">The (raw) response returned.</param>
-    /// <param name="expression">The expression submitted.</param>
-    public delegate void SolutionReceivedEventHandler(string response, string expression = "");
+	/// <summary>
+	/// Used to handle the response received event which occurs when a response is successfully
+	/// retrieved using the API.
+	/// </summary>
+	/// <param name="response">The (raw) response returned.</param>
+	/// <param name="expression">The expression submitted.</param>
+	public delegate void SolutionReceivedEventHandler(string response, string expression = "");
 
-    /// <summary>
-    /// Used to handle the result response which is used in the <see cref="WAClient.GetResult"/> method.
-    /// </summary>
+	/// <summary>
+	/// Used to handle the result response which is used in the <see cref="WAClient.GetResult"/> method.
+	/// </summary>
     /// <param name="result">The result received</param>
     /// <param name="expression">The expression submitted</param>
     public delegate void ResultReceivedEventHandler(WAResult result, string expression = "");
 
-    /// <summary>
-    /// Used to asynchronously call the expression processor methods.
-    /// <param name="expression">The expression submitted.</param>
-    /// </summary>
-    public delegate string ExpressionProcessorMethod(string expression);
+	/// <summary>
+	/// Used to asynchronously call the expression processor methods.
+	/// <param name="expression">The expression submitted.</param>
+	/// </summary>
+	public delegate string ExpressionProcessorMethod(string expression);
 
-    /// <summary>
-    /// Used to asynchronously fetch the result from Wolfram.
-    /// </summary>
-    /// <param name="expression">Expression to submit.</param>
-    /// <returns>The fetched result.</returns>
-    public delegate WAResult RetrieveResultMethod(string expression);
+	/// <summary>
+	/// Used to asynchronously fetch the result from Wolfram.
+	/// </summary>
+	/// <param name="expression">Expression to submit.</param>
+	/// <returns>The fetched result.</returns>
+	public delegate WAResult RetrieveResultMethod(string expression);
 
-    /// <summary>
-    /// Used to access Wolfram Alpha. 
-    /// Submits expressions, retrieves and parses responses.
-    /// </summary>
-    public sealed class WAClient
-    {
+	/// <summary>
+	/// Used to access Wolfram Alpha. 
+	/// Submits expressions, retrieves and parses responses.
+	/// </summary>
+	public sealed class WAClient
+	{
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
-        /// <summary>
-        /// The base WA API url.
-        /// </summary>
-        public const string BaseUrl =
-            "http://api.wolframalpha.com/v2/query?appid={0}&input={1}&format=image,plaintext";
+		/// <summary>
+		/// The base WA API url.
+		/// </summary>
+		public const string BaseUrl = "http://api.wolframalpha.com/v2/query?appid={0}&input={1}&format=image,plaintext";
 
-        /// <summary>
-        /// The application ID.
-        /// </summary>
-        private readonly string _appId;
+		/// <summary>
+		/// The application ID.
+		/// </summary>
+		private readonly string _appId;
 
-        /// <summary>
-        /// Occurs when a response is successfully retrieved using the API.
-        /// </summary>
-        public event SolutionReceivedEventHandler OnSolutionReceived;
+		/// <summary>
+		/// Occurs when a response is successfully retrieved using the API.
+		/// </summary>
+		public event SolutionReceivedEventHandler OnSolutionReceived;
 
-        /// <summary>
-        /// Occurs when a result is successfully retrieved using the API.
-        /// </summary>
-        public event ResultReceivedEventHandler OnResultReceived;
+		/// <summary>
+		/// Occurs when a result is successfully retrieved using the API.
+		/// </summary>
+		public event ResultReceivedEventHandler OnResultReceived;
 
-        private static readonly object SyncLock = new object();
+		private static readonly object SyncLock = new object();
 
-        /// <summary>
-        /// Gets the version of the currently used library.
-        /// </summary>
-        /// <value>The version.</value>
-        public static string Version
-        {
-            get
-            {
-                return (Assembly.GetExecutingAssembly().GetName().Version.ToString());
-            }
-        }
+		/// <summary>
+		/// Gets the version of the currently used library.
+		/// </summary>
+		/// <value>The version.</value>
+		public static string Version
+		{
+			get
+			{
+				return (Assembly.GetExecutingAssembly().GetName().Version.ToString());
+			}
+		}
 
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WAClient"/> class.
-        /// </summary>
-        /// <param name="appId">The application ID provided by Wolfram. You have to request one for each of your apps.</param>
-        public WAClient(string appId)
-        {
-            _appId = appId;
-        }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="WAClient"/> class.
+		/// </summary>
+		/// <param name="appId">The application ID provided by Wolfram. You have to request one for each of your apps.</param>
+		public WAClient(string appId)
+		{
+			_appId = appId;
+		}
 
         /// <summary>
         /// Solves the specified expression.
@@ -111,10 +130,8 @@
             var response = Submit(expression);
             var result = Parse(response);
             
-            if(result.Pods == null || result.Pods.Count <= 0)
-            {
+            if(result.Pods.IsNull() || result.Pods.Count <= 0)
                 return "No solution found. The response might have been malformed.";
-            }
 
             var solution = (from pod in result.Pods
                            where pod.Title.ToLower().Contains("solution") 
@@ -123,24 +140,18 @@
                            || pod.Title.ToLower().Contains("decimal form")
                            select pod).FirstOrDefault();
 
-            if(solution == null)
-            {
+            if(solution.IsNull())
                 return "No solution found.";
-            }
 
 
-            if (solution.SubPods == null || solution.SubPods.Count <= 0)
-            {
+            if(solution.SubPods.IsNull() || solution.SubPods.Count <= 0)
                 return "No solution found. The response might have been malformed.";
-            }
 
 			if(sUtilities.GetCompiler() != Compiler.Mono)
-				Contract.Assume(solution.SubPods[0] != null);
+				Contract.Assume(!solution.SubPods[0].IsNull());
 
-            if (string.IsNullOrEmpty(solution.SubPods[0].PlainText))
-            {
+            if(string.IsNullOrEmpty(solution.SubPods[0].PlainText))
                 return "No solution found. The pod order might have changed. Report to devs!";
-            }
 
             return solution.SubPods[0].PlainText;
         }
@@ -157,15 +168,11 @@
         /// <returns>The result</returns>
         public WAResult GetResult(string expression)
         {
-            if (string.IsNullOrEmpty(expression))
-            {
+            if(string.IsNullOrEmpty(expression))
                 throw new ArgumentNullException("expression", "The parameter passed to this method was null or empty.");
-            }
 
             var response = Submit(expression);
-
             var result = Parse(response);
-
             return result;
         }
 
@@ -188,20 +195,16 @@
             {
                 expression = expression.Replace("=", " = ");
                 var wacode = HttpUtility.UrlEncode(expression);
-
                 var url = new Uri(string.Format(BaseUrl, _appId, wacode));
-
                 string returned;
 
-                using (var client = new WebClient())
+                using(var client = new WebClient())
                 {
                     returned = client.DownloadString(url);
                 }
 
                 if(!string.IsNullOrEmpty(returned))
-                {
                     return returned;
-                }
 
                 return "Couldn't retrieve information!";
             }
@@ -227,24 +230,21 @@
 			if(sUtilities.GetCompiler() != Compiler.Mono)
 			{
 	            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(response));
-	            Contract.Ensures(Contract.Result<WAResult>() != null);
+	            Contract.Ensures(!Contract.Result<WAResult>().IsNull());
 			}
 
             try
             {
                 var serializer = new XmlSerializer(typeof (WAResult));
-
                 WAResult result;
 
-                using (var reader = new StringReader(response))
+                using(var reader = new StringReader(response))
                 {
                     result = serializer.Deserialize(reader) as WAResult;
                 }
 
-                if(result == null)
-                {
+                if(result.IsNull())
                     throw new WolframException("Could not deserialize the response. It might have been a malformed one.");
-                }
 
                 return result;
             }
@@ -261,24 +261,21 @@
         {
 			if(sUtilities.GetCompiler() != Compiler.Mono)
 			{
-	            Contract.Requires<ArgumentNullException>(ar != null);
-	            Contract.Requires<ArgumentNullException>(((AsyncResult)ar).AsyncDelegate != null);
+	            Contract.Requires<ArgumentNullException>(!ar.IsNull());
+	            Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
 			}
 
-            if (ar != null)
+            if(!ar.IsNull())
             {
                 var expr = ar.AsyncState as string;
+                var proc = (ExpressionProcessorMethod)(((AsyncResult) ar).AsyncDelegate);
 
-                var proc = (ExpressionProcessorMethod) (((AsyncResult) ar).AsyncDelegate);
-
-                if (proc != null)
+                if(!proc.IsNull())
                 {
                     var solution = proc.EndInvoke(ar);
 
-                    if(OnSolutionReceived != null)
-                    {
+                    if(!OnSolutionReceived.IsNull())
                         OnSolutionReceived(solution, expr);
-                    }
                 }
             }
         }
@@ -308,24 +305,21 @@
         {
 			if(sUtilities.GetCompiler() != Compiler.Mono)
 			{
-	            Contract.Requires<ArgumentNullException>(ar != null);
-	            Contract.Requires<ArgumentNullException>(((AsyncResult)ar).AsyncDelegate != null);
+	            Contract.Requires<ArgumentNullException>(!ar.IsNull());
+	            Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
 			}
 
-            if (ar != null)
+            if(!ar.IsNull())
             {
                 var expr = ar.AsyncState as string;
-
                 var proc = (RetrieveResultMethod)(((AsyncResult)ar).AsyncDelegate);
 
-                if (proc != null)
+                if(!proc.IsNull())
                 {
                     var result = proc.EndInvoke(ar);
 
-                    if(OnResultReceived != null)
-                    {
+                    if(!OnResultReceived.IsNull())
                         OnResultReceived(result, expr);
-                    }
                 }
             }
         }

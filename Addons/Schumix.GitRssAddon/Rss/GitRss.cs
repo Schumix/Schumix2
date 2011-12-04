@@ -21,6 +21,7 @@ using System;
 using System.Xml;
 using System.Net;
 using System.Threading;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -166,7 +167,7 @@ namespace Schumix.GitRssAddon
 				{
 					try
 					{
-						if(sChannelInfo.FSelect("git"))
+						if(sChannelInfo.FSelect(IFunctions.Git))
 						{
 							url = GetUrl();
 							if(url.IsNull())
