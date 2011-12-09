@@ -20,7 +20,6 @@
 
 using System;
 using System.Collections.Generic;
-using LuaInterface;
 using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
@@ -36,9 +35,11 @@ namespace Schumix.LuaEngine
 	public sealed class LuaFunctions : CommandInfo
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly List<string> _RegisteredCommand = new List<string>();
 		private readonly List<string> _RegisteredHandler = new List<string>();
-		private readonly Lua _lua;
+		private readonly LuaInterface.Lua _lua;
+		private readonly Mono.LuaInterface.Lua _monolua;
 
 		#region Properites
 
@@ -65,9 +66,19 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		/// <param name="vm">Lua VM</param>
 		/// <param name="conn">IRC connection</param>
-		public LuaFunctions(ref Lua vm)
+		public LuaFunctions(ref LuaInterface.Lua vm)
 		{
 			_lua = vm;
+		}
+
+		/// <summary>
+		/// Creates a new instance of <c>LuaFunctions</c>
+		/// </summary>
+		/// <param name="vm">Lua VM</param>
+		/// <param name="conn">IRC connection</param>
+		public LuaFunctions(ref Mono.LuaInterface.Lua vm)
+		{
+			_monolua = vm;
 		}
 
 		/// <summary>
@@ -78,14 +89,28 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterHook", "Registers a handler hook.")]
 		public void RegisterHandlerHook(string HandlerName, string LuaName)
 		{
-			var func = _lua.GetFunction(typeof(Action<IRCMessage>), LuaName);
+			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			{
+				var func = _lua.GetFunction(typeof(Action<IRCMessage>), LuaName);
 
-			if(func.IsNull())
-				return;
+				if(func.IsNull())
+					return;
 
-			var handler = func as Action<IRCMessage>;
-			_RegisteredHandler.Add(HandlerName.ToLower());
-			Network.PublicRegisterHandler(HandlerName.ToLower(), handler);
+				var handler = func as Action<IRCMessage>;
+				_RegisteredHandler.Add(HandlerName.ToLower());
+				Network.PublicRegisterHandler(HandlerName.ToLower(), handler);
+			}
+			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			{
+				var func = _monolua.GetFunction(typeof(Action<IRCMessage>), LuaName);
+
+				if(func.IsNull())
+					return;
+
+				var handler = func as Action<IRCMessage>;
+				_RegisteredHandler.Add(HandlerName.ToLower());
+				Network.PublicRegisterHandler(HandlerName.ToLower(), handler);
+			}
 		}
 
 		/// <summary>
@@ -96,14 +121,28 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterPublicCommandHook", "Registers a public command hook.")]
 		public void RegisterPublicCommandHook(string CommandName, string LuaName)
 		{
-			var func = _lua.GetFunction(typeof(Action<IRCMessage>), LuaName);
+			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			{
+				var func = _lua.GetFunction(typeof(Action<IRCMessage>), LuaName);
 
-			if(func.IsNull())
-				return;
+				if(func.IsNull())
+					return;
 
-			var handler = func as Action<IRCMessage>;
-			_RegisteredCommand.Add(CommandName.ToLower());
-			CommandManager.PublicCRegisterHandler(CommandName.ToLower(), handler);
+				var handler = func as Action<IRCMessage>;
+				_RegisteredCommand.Add(CommandName.ToLower());
+				CommandManager.PublicCRegisterHandler(CommandName.ToLower(), handler);
+			}
+			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			{
+				var func = _monolua.GetFunction(typeof(Action<IRCMessage>), LuaName);
+
+				if(func.IsNull())
+					return;
+
+				var handler = func as Action<IRCMessage>;
+				_RegisteredCommand.Add(CommandName.ToLower());
+				CommandManager.PublicCRegisterHandler(CommandName.ToLower(), handler);
+			}
 		}
 
 		/// <summary>
@@ -114,14 +153,28 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterHalfOperatorCommandHook", "Registers a halfoperator command hook.")]
 		public void RegisterHalfOperatorCommandHook(string CommandName, string LuaName)
 		{
-			var func = _lua.GetFunction(typeof(Action<IRCMessage>), LuaName);
+			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			{
+				var func = _lua.GetFunction(typeof(Action<IRCMessage>), LuaName);
 
-			if(func.IsNull())
-				return;
+				if(func.IsNull())
+					return;
 
-			var handler = func as Action<IRCMessage>;
-			_RegisteredCommand.Add(CommandName.ToLower());
-			CommandManager.HalfOperatorCRegisterHandler(CommandName.ToLower(), handler);
+				var handler = func as Action<IRCMessage>;
+				_RegisteredCommand.Add(CommandName.ToLower());
+				CommandManager.HalfOperatorCRegisterHandler(CommandName.ToLower(), handler);
+			}
+			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			{
+				var func = _monolua.GetFunction(typeof(Action<IRCMessage>), LuaName);
+
+				if(func.IsNull())
+					return;
+
+				var handler = func as Action<IRCMessage>;
+				_RegisteredCommand.Add(CommandName.ToLower());
+				CommandManager.HalfOperatorCRegisterHandler(CommandName.ToLower(), handler);
+			}
 		}
 
 		/// <summary>
@@ -132,14 +185,28 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterOperatorCommandHook", "Registers a operator command hook.")]
 		public void RegisterOperatorCommandHook(string CommandName, string LuaName)
 		{
-			var func = _lua.GetFunction(typeof(Action<IRCMessage>), LuaName);
+			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			{
+				var func = _lua.GetFunction(typeof(Action<IRCMessage>), LuaName);
 
-			if(func.IsNull())
-				return;
+				if(func.IsNull())
+					return;
 
-			var handler = func as Action<IRCMessage>;
-			_RegisteredCommand.Add(CommandName.ToLower());
-			CommandManager.OperatorCRegisterHandler(CommandName.ToLower(), handler);
+				var handler = func as Action<IRCMessage>;
+				_RegisteredCommand.Add(CommandName.ToLower());
+				CommandManager.OperatorCRegisterHandler(CommandName.ToLower(), handler);
+			}
+			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			{
+				var func = _monolua.GetFunction(typeof(Action<IRCMessage>), LuaName);
+
+				if(func.IsNull())
+					return;
+
+				var handler = func as Action<IRCMessage>;
+				_RegisteredCommand.Add(CommandName.ToLower());
+				CommandManager.OperatorCRegisterHandler(CommandName.ToLower(), handler);
+			}
 		}
 
 		/// <summary>
@@ -150,14 +217,28 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterAdminCommandHook", "Registers a admin command hook.")]
 		public void RegisterAdminCommandHook(string CommandName, string LuaName)
 		{
-			var func = _lua.GetFunction(typeof(Action<IRCMessage>), LuaName);
+			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			{
+				var func = _lua.GetFunction(typeof(Action<IRCMessage>), LuaName);
 
-			if(func.IsNull())
-				return;
+				if(func.IsNull())
+					return;
 
-			var handler = func as Action<IRCMessage>;
-			_RegisteredCommand.Add(CommandName.ToLower());
-			CommandManager.AdminCRegisterHandler(CommandName.ToLower(), handler);
+				var handler = func as Action<IRCMessage>;
+				_RegisteredCommand.Add(CommandName.ToLower());
+				CommandManager.AdminCRegisterHandler(CommandName.ToLower(), handler);
+			}
+			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			{
+				var func = _monolua.GetFunction(typeof(Action<IRCMessage>), LuaName);
+
+				if(func.IsNull())
+					return;
+
+				var handler = func as Action<IRCMessage>;
+				_RegisteredCommand.Add(CommandName.ToLower());
+				CommandManager.AdminCRegisterHandler(CommandName.ToLower(), handler);
+			}
 		}
 
 		/// <summary>
