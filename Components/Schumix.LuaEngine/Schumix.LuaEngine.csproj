@@ -77,6 +77,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Dependencies\LuaInterface.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.LuaInterface, Version=2.0.1.32612, Culture=neutral, PublicKeyToken=null">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Dependencies\Mono.LuaInterface.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LuaEngine.cs" />
@@ -88,6 +92,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Schumix.LuaEngine.pfx" />
+    <None Include="..\..\Dependencies\liblua5.1.so">
+      <Link>liblua5.1.so</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

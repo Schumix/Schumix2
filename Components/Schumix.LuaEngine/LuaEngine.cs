@@ -22,7 +22,6 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
-using LuaInterface;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -38,20 +37,30 @@ namespace Schumix.LuaEngine
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Dictionary<string, LuaFunctionDescriptor> _luaFunctions;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly FileSystemWatcher _watcher;
 		private readonly LuaFunctions _functions;
 		private readonly string _scriptPath;
-		private readonly Lua _lua;
+		private readonly LuaInterface.Lua _lua;
+		private readonly Mono.LuaInterface.Lua _monolua;
 
 		#region Properties
 
 		/// <summary>
 		/// Gets the Lua virtual machine.
 		/// </summary>
-		public Lua LuaVM
-		{
-			get { return _lua; }
-		}
+		//public Lua LuaVM
+		//{
+		//	get { return _lua; }
+		//}
+
+		/// <summary>
+		/// Gets the Lua virtual machine.
+		/// </summary>
+		//public Mono.LuaInterface.Lua MonoLuaVM
+		//{
+		//	get { return _monolua; }
+		//}
 
 		#endregion
 
@@ -60,14 +69,34 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		/// <param name="conn">IRC Connection</param>
 		/// <param name="scriptsPath">The directory where the Lua scripts are located.</param>
-		public LuaEngine(/*ref Connection conn, */string scriptsPath)
+		public LuaEngine(string scriptsPath)
 		{
 			Log.Notice("LuaEngine", sLConsole.LuaEngine("Text"));
-			_lua = new Lua();
+
+			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+				_lua = new LuaInterface.Lua();
+			else if(sUtilities.GetCompiler() == Compiler.Mono)
+				_monolua = new Mono.LuaInterface.Lua();
+
 			_luaFunctions = new Dictionary<string, LuaFunctionDescriptor>();
 			_scriptPath = scriptsPath;
-			_functions = new LuaFunctions(ref _lua);
-			LuaHelper.RegisterLuaFunctions(_lua, ref _luaFunctions, _functions);
+
+			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			{
+				_functions = new LuaFunctions(ref _lua);
+				LuaHelper.RegisterLuaFunctions(_lua, ref _luaFunctions, _functions);
+			}
+			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			{
+				_functions = new LuaFunctions(ref _monolua);
+				LuaHelper.RegisterLuaFunctions(_monolua, ref _luaFunctions, _functions);
+			}
+			else
+			{
+				_functions = new LuaFunctions(ref _monolua);
+				LuaHelper.RegisterLuaFunctions(_monolua, ref _luaFunctions, _functions);
+			}
+
 			LoadScripts();
 
 			_watcher = new FileSystemWatcher(_scriptPath)
@@ -115,7 +144,10 @@ namespace Schumix.LuaEngine
 
 				try
 				{
-					_lua.DoFile(file.FullName);
+					if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+						_lua.DoFile(file.FullName);
+					else if(sUtilities.GetCompiler() == Compiler.Mono)
+						_monolua.DoFile(file.FullName);
 				}
 				catch(Exception x)
 				{
@@ -129,7 +161,10 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		public void Free()
 		{
-			_lua.Dispose();
+			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+				_lua.Dispose();
+			else if(sUtilities.GetCompiler() == Compiler.Mono)
+				_monolua.Dispose();
 		}
 	}
 }
