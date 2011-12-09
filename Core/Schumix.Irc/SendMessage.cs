@@ -31,10 +31,10 @@ namespace Schumix.Irc
 		private DateTime _timeLastSent = DateTime.Now;
 		private SendMessage() {}
 
-        public TimeSpan IdleTime
-        {
-            get { return DateTime.Now - _timeLastSent; }
-        }
+		public TimeSpan IdleTime
+		{
+			get { return DateTime.Now - _timeLastSent; }
+		}
 
 		public void SendChatMessage(MessageType type, string channel, string message)
 		{
