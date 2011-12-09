@@ -362,7 +362,7 @@ namespace Schumix.Libraries
 		public static string GetCpuId()
 		{
 			return sUtilities.GetCpuId();
-        }
+		}
 
 		/// <summary>
 		///   The current unix time.
