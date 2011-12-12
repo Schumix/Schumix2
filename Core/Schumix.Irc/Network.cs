@@ -396,12 +396,23 @@ namespace Schumix.Irc
 					break;
 			}
 
+			double number;
+
 			if(_IRCHandler2.ContainsKey(opcode))
+			{
 				_IRCHandler2[opcode].Invoke(IMessage);
-			else if(_IRCHandler.ContainsKey((ReplyCode)Convert.ToInt32(opcode)))
+				return;
+			}
+			else if(double.TryParse(opcode, out number) && _IRCHandler.ContainsKey((ReplyCode)Convert.ToInt32(opcode)))
+			{
 				_IRCHandler[(ReplyCode)Convert.ToInt32(opcode)].Invoke(IMessage);
-			else if(_IRCHandler3.ContainsKey(Convert.ToInt32(opcode)))
+				return;
+			}
+			else if(double.TryParse(opcode, out number) && _IRCHandler3.ContainsKey(Convert.ToInt32(opcode)))
+			{
 				_IRCHandler3[Convert.ToInt32(opcode)].Invoke(IMessage);
+				return;
+			}
 			else
 			{
 				if(IrcCommand[0] == "PING")
