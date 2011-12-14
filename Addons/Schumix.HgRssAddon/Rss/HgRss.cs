@@ -239,7 +239,7 @@ namespace Schumix.HgRssAddon
 				if(!rev.Contains("hgchanges/basic/"))
 					return "no text";
 
-				return rev.Substring(rev.IndexOf("hgchanges/basic/")+1);
+				return rev.Substring(rev.IndexOf("hgchanges/basic/") + "hgchanges/basic/".Length);
 			}
 			else if(_website == "bitbucket")
 			{
@@ -252,7 +252,7 @@ namespace Schumix.HgRssAddon
 				if(!rev.Contains("changeset/"))
 					return "no text";
 
-				return rev.Substring(rev.IndexOf("changeset/")+1);
+				return rev.Substring(rev.IndexOf("changeset/") + "changeset/".Length);
 			}
 
 			return "no text";

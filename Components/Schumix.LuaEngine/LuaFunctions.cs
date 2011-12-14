@@ -81,6 +81,12 @@ namespace Schumix.LuaEngine
 			_monolua = vm;
 		}
 
+		public void Clean()
+		{
+			_RegisteredCommand.Clear();
+			_RegisteredHandler.Clear();
+		}
+
 		/// <summary>
 		/// Registers a function hook.
 		/// </summary>
