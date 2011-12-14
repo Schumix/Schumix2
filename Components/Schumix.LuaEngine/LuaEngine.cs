@@ -165,6 +165,8 @@ namespace Schumix.LuaEngine
 				_lua.Dispose();
 			else if(sUtilities.GetCompiler() == Compiler.Mono)
 				_monolua.Dispose();
+
+			_functions.Clean();
 		}
 	}
 }

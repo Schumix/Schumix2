@@ -35,6 +35,7 @@ namespace Schumix.Framework
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private static readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Guid _guid = Guid.NewGuid();
 		public static DatabaseManager DManager { get; private set; }
 		public static Timer timer { get; private set; }
@@ -71,9 +72,9 @@ namespace Schumix.Framework
 						Thread.Sleep(100);
 				}
 
-#if MONO
-				System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
-#endif
+				if(sUtilities.GetCompiler() == Compiler.Mono)
+					System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
+
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text"));
 				timer = new Timer();
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text2"));

@@ -173,11 +173,11 @@ namespace Schumix.HgRssAddon.Localization
 				case "bitbucket2":
 				{
 					if(Language == "huHU")
-						return "3{0} Infó:{1}";
+						return "3{0} Infó: {1}";
 					else if(Language == "enUS")
-						return "3{0} Info:{1}";
+						return "3{0} Info: {1}";
 					else
-						return "3{0} Info:{1}";
+						return "3{0} Info: {1}";
 				}
 				default:
 					return string.Empty;
