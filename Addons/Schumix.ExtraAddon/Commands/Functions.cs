@@ -143,7 +143,7 @@ namespace Schumix.ExtraAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message2", sIRCMessage.Channel), row["Wrote"].ToString());
 					}
 
-					SchumixBase.DManager.Delete("message", string.Format("Name = '{0}'", sIRCMessage.Nick.ToLower()));
+					SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower()));
 				}
 			}
 		}

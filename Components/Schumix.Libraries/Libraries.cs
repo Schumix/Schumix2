@@ -56,18 +56,21 @@ namespace Schumix.Libraries
 				string s = string.Empty;
 
 				for(int a = 1; a < x.Match(text).Length; a++)
-					s += " " + x.Match(text).Groups[a].ToString();
+				{
+					if(x.Match(text).Groups[a].ToString() != string.Empty)
+						s += " " + x.Match(text).Groups[a].ToString();
+				}
 
 				return s.Remove(0, 1);
 			}
 			else
-				return "Regex error!";
+				return "No Match!";
 		}
 
 		public static string Regex(this string text, string regex, string groups)
 		{
 			var x = new Regex(regex);
-			return x.IsMatch(text) ? x.Match(text).Groups[groups].ToString() : "Regex error!";
+			return x.IsMatch(text) ? x.Match(text).Groups[groups].ToString() : "No Match!";
 		}
 
 		/// <summary>
