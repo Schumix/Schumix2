@@ -170,18 +170,10 @@ namespace Schumix.CompilerAddon
 			if(command)
 			{
 				sIRCMessage.Args = sIRCMessage.Args.Remove(0, args.Length);
-				var thread = new Thread(() => ReturnCode = CompilerCommand(sIRCMessage, true));
-				thread.Start();
-				thread.Join(3000);
-				thread.Abort();
+				ReturnCode = CompilerCommand(sIRCMessage, true);
 			}
 			else
-			{
-				var thread = new Thread(() => ReturnCode = CompilerCommand(sIRCMessage, false));
-				thread.Start();
-				thread.Join(3000);
-				thread.Abort();
-			}
+				ReturnCode = CompilerCommand(sIRCMessage, false);
 
 			switch(ReturnCode)
 			{

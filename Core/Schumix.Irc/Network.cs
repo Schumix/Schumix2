@@ -92,7 +92,7 @@ namespace Schumix.Irc
 
 			// Start Ping thread
 			Log.Debug("Network", sLConsole.Network("Text4"));
-			var ping = new Thread(Ping);
+			var ping = new Thread(AutoPing);
 			ping.Start();
 		}
 
@@ -428,9 +428,9 @@ namespace Schumix.Irc
         /// <summary>
         ///     Pingeli az IRC szervert 30 másodpercenként.
         /// </summary>
-		private void Ping()
+		private void AutoPing()
 		{
-			Log.Notice("Ping", sLConsole.Network("Text14"));
+			Log.Notice("AutoPing", sLConsole.Network("Text14"));
 
 			while(true)
 			{
