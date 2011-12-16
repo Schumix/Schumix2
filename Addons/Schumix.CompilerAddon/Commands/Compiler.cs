@@ -138,22 +138,22 @@ namespace Schumix.CompilerAddon.Commands
 					return 1;
 				}
 
-				if(IsFor(data) || IsDo(data) || IsWhile(data))
-				{
-					bool b = false;
-					var thread = new Thread(() => { o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
-					thread.Start();
-					thread.Join(2);
-					thread.Abort();
+				int ReturnCode = 0;
+				var thread = new Thread(() => ReturnCode = StartCode(sIRCMessage, data, o));
+				thread.Start();
+				thread.Join(3000);
+				thread.Abort();
 
-					if(!b)
-					{
+				switch(ReturnCode)
+				{
+					case -1:
+						return 1;
+					case 0:
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
 						return 1;
-					}
+					default:
+						break;
 				}
-				else
-					o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
 
 				sSendMessage.SendChatMessage(sIRCMessage, string.Empty);
 
@@ -418,6 +418,28 @@ namespace Schumix.CompilerAddon.Commands
 			}
 
 			return false;
+		}
+
+		private int StartCode(IRCMessage sIRCMessage, string data, object o)
+		{
+			if(IsFor(data) || IsDo(data) || IsWhile(data))
+			{
+				bool b = false;
+				var thread = new Thread(() => { o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
+				thread.Start();
+				thread.Join(2);
+				thread.Abort();
+
+				if(!b)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
+					return -1;
+				}
+			}
+			else
+				o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+
+			return 1;
 		}
 
 		private string CleanText(string text)
