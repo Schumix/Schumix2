@@ -77,6 +77,7 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+				IsConnect();
 				var adapter = new SQLiteDataAdapter();
 				var command = Connection.CreateCommand();
 				command.CommandText = query;
@@ -140,6 +141,7 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+				IsConnect();
 				var command = Connection.CreateCommand();
 				command.CommandText = sql;
 				command.ExecuteNonQuery();
