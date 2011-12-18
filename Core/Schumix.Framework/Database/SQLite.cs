@@ -179,6 +179,48 @@ namespace Schumix.Framework.Database
 			}
 		}
 
+		private void IsConnect()
+		{
+			try
+			{
+				if(Connection.State != ConnectionState.Open)
+					Connection.Open();
+			}
+			catch(SQLiteException s)
+			{
+				if(s.Message.Contains("Fatal error encountered during command execution."))
+				{
+					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+					SchumixBase.ServerDisconnect(false);
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
+				if(s.Message.Contains("Timeout expired."))
+				{
+					Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+					Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+					SchumixBase.ServerDisconnect(false);
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
+				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+				return;
+			}
+		}
+
 		public bool Update(string sql)
 		{
 			try
