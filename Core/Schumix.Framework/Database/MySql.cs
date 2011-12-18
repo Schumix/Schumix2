@@ -73,6 +73,7 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+				IsConnect();
 				var adapter = new MySqlDataAdapter();
 				var command = Connection.CreateCommand();
 				command.CommandText = query;
@@ -131,9 +132,52 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+				IsConnect();
 				var command = Connection.CreateCommand();
 				command.CommandText = sql;
 				command.ExecuteNonQuery();
+			}
+			catch(MySqlException m)
+			{
+				if(m.Message.Contains("Fatal error encountered during command execution."))
+				{
+					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+					Log.Warning("MySql", sLConsole.MySql("Text4"));
+					SchumixBase.ServerDisconnect(false);
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
+				if(m.Message.Contains("Timeout expired."))
+				{
+					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+					Log.Warning("MySql", sLConsole.MySql("Text4"));
+					SchumixBase.ServerDisconnect(false);
+					SchumixBase.ExitStatus = true;
+
+					if(!INetwork.Writer.IsNull())
+						INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
+
+					Thread.Sleep(1000);
+					Environment.Exit(1);
+				}
+
+				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+				return;
+			}
+		}
+
+		private void IsConnect()
+		{
+			try
+			{
+				if(Connection.State != ConnectionState.Open)
+					Connection.Open();
 			}
 			catch(MySqlException m)
 			{
