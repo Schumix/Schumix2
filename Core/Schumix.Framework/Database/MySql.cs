@@ -89,35 +89,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				if(m.Message.Contains("Fatal error encountered during command execution."))
-				{
-					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-					Log.Warning("MySql", sLConsole.MySql("Text4"));
-					SchumixBase.ServerDisconnect(false);
-					SchumixBase.ExitStatus = true;
-
-					if(!INetwork.Writer.IsNull())
-						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
-
-					Thread.Sleep(1000);
-					Environment.Exit(1);
-				}
-
-				if(m.Message.Contains("Timeout expired."))
-				{
-					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-					Log.Warning("MySql", sLConsole.MySql("Text4"));
-					SchumixBase.ServerDisconnect(false);
-					SchumixBase.ExitStatus = true;
-
-					if(!INetwork.Writer.IsNull())
-						INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
-
-					Thread.Sleep(1000);
-					Environment.Exit(1);
-				}
-
-				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+				Crash(m);
 				return null;
 			}
 		}
@@ -139,36 +111,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				if(m.Message.Contains("Fatal error encountered during command execution."))
-				{
-					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-					Log.Warning("MySql", sLConsole.MySql("Text4"));
-					SchumixBase.ServerDisconnect(false);
-					SchumixBase.ExitStatus = true;
-
-					if(!INetwork.Writer.IsNull())
-						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
-
-					Thread.Sleep(1000);
-					Environment.Exit(1);
-				}
-
-				if(m.Message.Contains("Timeout expired."))
-				{
-					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-					Log.Warning("MySql", sLConsole.MySql("Text4"));
-					SchumixBase.ServerDisconnect(false);
-					SchumixBase.ExitStatus = true;
-
-					if(!INetwork.Writer.IsNull())
-						INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
-
-					Thread.Sleep(1000);
-					Environment.Exit(1);
-				}
-
-				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-				return;
+				Crash(m);
 			}
 		}
 
@@ -181,37 +124,41 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				if(m.Message.Contains("Fatal error encountered during command execution."))
-				{
-					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-					Log.Warning("MySql", sLConsole.MySql("Text4"));
-					SchumixBase.ServerDisconnect(false);
-					SchumixBase.ExitStatus = true;
-
-					if(!INetwork.Writer.IsNull())
-						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
-
-					Thread.Sleep(1000);
-					Environment.Exit(1);
-				}
-
-				if(m.Message.Contains("Timeout expired."))
-				{
-					Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-					Log.Warning("MySql", sLConsole.MySql("Text4"));
-					SchumixBase.ServerDisconnect(false);
-					SchumixBase.ExitStatus = true;
-
-					if(!INetwork.Writer.IsNull())
-						INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
-
-					Thread.Sleep(1000);
-					Environment.Exit(1);
-				}
-
-				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-				return;
+				Crash(m);
 			}
+		}
+
+		private void Crash(MySqlException m)
+		{
+			if(m.Message.Contains("Fatal error encountered during command execution."))
+			{
+				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+				Log.Warning("MySql", sLConsole.MySql("Text4"));
+				SchumixBase.ServerDisconnect(false);
+				SchumixBase.ExitStatus = true;
+
+				if(!INetwork.Writer.IsNull())
+					INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+				Thread.Sleep(1000);
+				Environment.Exit(1);
+			}
+
+			if(m.Message.Contains("Timeout expired."))
+			{
+				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+				Log.Warning("MySql", sLConsole.MySql("Text4"));
+				SchumixBase.ServerDisconnect(false);
+				SchumixBase.ExitStatus = true;
+
+				if(!INetwork.Writer.IsNull())
+					INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
+
+				Thread.Sleep(1000);
+				Environment.Exit(1);
+			}
+
+			Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 		}
 
 		public bool Update(string sql)
