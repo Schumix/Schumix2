@@ -30,9 +30,9 @@ using Schumix.Server.Config;
 
 namespace Schumix.Server
 {
-	public delegate void ServerPacketHandlerDelegate(SchumixPacket packet, NetworkStream stream, string hst, int bck);
+	delegate void ServerPacketHandlerDelegate(SchumixPacket packet, NetworkStream stream, string hst, int bck);
 
-	public class ServerPacketHandler
+	class ServerPacketHandler
 	{
 		private readonly Dictionary<string, NetworkStream> _HostList = new Dictionary<string, NetworkStream>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;

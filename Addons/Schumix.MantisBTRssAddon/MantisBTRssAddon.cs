@@ -32,7 +32,7 @@ using Schumix.MantisBTRssAddon.Localization;
 
 namespace Schumix.MantisBTRssAddon
 {
-	public class MantisBTRssAddon : RssCommand, ISchumixAddon
+	class MantisBTRssAddon : RssCommand, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;

@@ -33,7 +33,7 @@ using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon
 {
-	public class ExtraAddon : IrcHandler, ISchumixAddon
+	class ExtraAddon : IrcHandler, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;

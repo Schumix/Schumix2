@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.CompilerAddon.Localization
 {
-	public sealed class PLocalization
+	sealed class PLocalization
 	{
 		public string Locale { get; set; }
 		private PLocalization() {}

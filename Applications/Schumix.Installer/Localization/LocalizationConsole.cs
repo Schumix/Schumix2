@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.Installer.Localization
 {
-	public sealed class LocalizationConsole
+	sealed class LocalizationConsole
 	{
 		public string Locale { get; set; }
 		private LocalizationConsole() {}

@@ -24,7 +24,7 @@ using Schumix.Irc.Commands;
 
 namespace Schumix.RevisionAddon.Commands
 {
-	public partial class Revision : CommandInfo
+	partial class Revision : CommandInfo
 	{
 		protected void HandleXrev(IRCMessage sIRCMessage)
 		{

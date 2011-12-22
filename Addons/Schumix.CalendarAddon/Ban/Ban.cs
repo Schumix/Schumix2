@@ -25,7 +25,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.CalendarAddon
 {
-	public sealed class Ban
+	sealed class Ban
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;

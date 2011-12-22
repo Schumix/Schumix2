@@ -30,7 +30,7 @@ using Schumix.GameAddon.MaffiaGames;
 
 namespace Schumix.GameAddon
 {
-	public class GameAddon : GameCommand, ISchumixAddon
+	class GameAddon : GameCommand, ISchumixAddon
 	{
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;

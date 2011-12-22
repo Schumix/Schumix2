@@ -25,7 +25,7 @@ using Schumix.Irc.Commands;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class MaffiaGame : CommandInfo
+	sealed partial class MaffiaGame : CommandInfo
 	{
 		public void Start()
 		{

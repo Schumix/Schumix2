@@ -28,7 +28,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.CalendarAddon.Commands
 {
-	public partial class BanCommand : CommandInfo
+	partial class BanCommand : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;

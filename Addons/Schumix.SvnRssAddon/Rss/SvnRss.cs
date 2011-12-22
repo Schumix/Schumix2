@@ -31,7 +31,7 @@ using Schumix.SvnRssAddon.Localization;
 
 namespace Schumix.SvnRssAddon
 {
-	public sealed class SvnRss
+	sealed class SvnRss
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;

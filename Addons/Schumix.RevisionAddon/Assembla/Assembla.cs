@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.RevisionAddon
 {
-	public class Assembla
+	class Assembla
 	{
 		private Assembla() {}
 

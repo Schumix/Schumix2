@@ -22,7 +22,7 @@ using System.Net;
 
 namespace Schumix.Installer.Download
 {
-	public sealed class DownloadFile
+	sealed class DownloadFile
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 

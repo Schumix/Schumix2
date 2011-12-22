@@ -27,7 +27,7 @@ using Schumix.TesztAddon.Commands;
 
 namespace Schumix.TesztAddon
 {
-	public class TesztAddon : TesztCommand, ISchumixAddon
+	class TesztAddon : TesztCommand, ISchumixAddon
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 

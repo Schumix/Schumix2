@@ -32,7 +32,7 @@ using Schumix.GitRssAddon.Localization;
 
 namespace Schumix.GitRssAddon
 {
-	public class GitRssAddon : RssCommand, ISchumixAddon
+	class GitRssAddon : RssCommand, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;

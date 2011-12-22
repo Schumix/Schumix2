@@ -29,7 +29,7 @@ using Schumix.GameAddon.MaffiaGames;
 
 namespace Schumix.GameAddon.Commands
 {
-	public class GameCommand : CommandInfo
+	class GameCommand : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;

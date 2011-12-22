@@ -27,7 +27,7 @@ using Schumix.ExtraAddon;
 
 namespace Schumix.ExtraAddon.Commands
 {
-	public class NameList
+	class NameList
 	{
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();

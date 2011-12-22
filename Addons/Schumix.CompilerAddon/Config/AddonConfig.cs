@@ -28,7 +28,7 @@ using Schumix.CompilerAddon.Localization;
 
 namespace Schumix.CompilerAddon.Config
 {
-	public sealed class AddonConfig
+	sealed class AddonConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;

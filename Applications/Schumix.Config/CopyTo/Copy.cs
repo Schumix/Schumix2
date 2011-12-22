@@ -22,7 +22,7 @@ using System.IO;
 
 namespace Schumix.Config.CopyTo
 {
-	public sealed class Copy
+	sealed class Copy
 	{
 		/// <summary>
 		///     Több helyről átmásolja az új fájlokat.

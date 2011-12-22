@@ -33,7 +33,7 @@ namespace Schumix.Irc
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
-		private readonly List<string> ChannelFunction = new List<string>();
+		private readonly Dictionary<string, string> ChannelFunction = new Dictionary<string, string>();
 
 		public Dictionary<string, string> CList
 		{
@@ -68,19 +68,7 @@ namespace Schumix.Irc
 
 		public bool FSelect(string Name, string Channel)
 		{
-			foreach(var channels in ChannelFunction)
-			{
-				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Colon);
-
-				if(point[0] == Channel.ToLower())
-				{
-					if(point2[0] == Name.ToLower())
-						return point2[1] == SchumixBase.On;
-				}
-			}
-
-			return false;
+			return (ChannelFunction.ContainsKey(Channel.ToLower()) && ChannelFunction[Channel.ToLower()].Contains(Name.ToLower() + SchumixBase.Colon + SchumixBase.On));
 		}
 
 		public bool SearchFunction(string Name)
@@ -109,19 +97,7 @@ namespace Schumix.Irc
 
 		public bool FSelect(IChannelFunctions Name, string Channel)
 		{
-			foreach(var channels in ChannelFunction)
-			{
-				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Colon);
-
-				if(point[0] == Channel.ToLower())
-				{
-					if(point2[0] == Name.ToString().ToLower())
-						return point2[1] == SchumixBase.On;
-				}
-			}
-
-			return false;
+			return (ChannelFunction.ContainsKey(Channel.ToLower()) && ChannelFunction[Channel.ToLower()].Contains(Name.ToString().ToLower() + SchumixBase.Colon + SchumixBase.On));
 		}
 
 		public void FunctionsReload()
@@ -155,13 +131,7 @@ namespace Schumix.Irc
 
 					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", channel);
 					if(!db1.IsNull())
-					{
-						string functions = db1["Functions"].ToString();
-						string[] comma = functions.Split(SchumixBase.Comma);
-
-						for(int x = 1; x < comma.Length; x++)
-							ChannelFunction.Add(channel + SchumixBase.Point + comma[x].ToString().ToLower());
-					}
+						ChannelFunction.Add(channel, db1["Functions"].ToString());
 					else
 						Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text3"));
 				}
@@ -189,33 +159,34 @@ namespace Schumix.Irc
 
 		public string ChannelFunctions(string name, string status, string channel)
 		{
-			string function = string.Empty;
+			string functions = string.Empty;
 
-			foreach(var channels in ChannelFunction)
+			if(ChannelFunction.ContainsKey(channel.ToLower()))
 			{
-				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Colon);
-
-				if(point[0] == channel.ToLower())
+				foreach(var comma in ChannelFunction[channel.ToLower()].Split(SchumixBase.Comma))
 				{
-					if(point2[0] != name.ToLower())
-						function += SchumixBase.Comma + point[1];
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[0] != name.ToLower())
+						functions += SchumixBase.Comma + comma;
+				}
+
+				foreach(var comma in ChannelFunction[channel.ToLower()].Split(SchumixBase.Comma))
+				{
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[0] == name.ToLower())
+						functions += SchumixBase.Comma + name.ToLower() + SchumixBase.Colon + status.ToLower();
 				}
 			}
 
-			foreach(var channels in ChannelFunction)
-			{
-				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Colon);
-
-				if(point[0] == channel.ToLower())
-				{
-					if(point2[0] == name.ToLower())
-						function += SchumixBase.Comma + name + SchumixBase.Colon + status;
-				}
-			}
-
-			return function;
+			return functions;
 		}
 
 		public string FunctionsInfo()
@@ -246,17 +217,19 @@ namespace Schumix.Irc
 		{
 			string on = string.Empty, off = string.Empty;
 
-			foreach(var channels in ChannelFunction)
+			if(ChannelFunction.ContainsKey(channel.ToLower()))
 			{
-				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Colon);
-
-				if(point[0] == channel.ToLower())
+				foreach(var comma in ChannelFunction[channel.ToLower()].Split(SchumixBase.Comma))
 				{
-					if(point2[1] == SchumixBase.On)
-						on += point2[0] + SchumixBase.Space;
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[1] == SchumixBase.On)
+						on += point[0] + SchumixBase.Space;
 					else
-						off += point2[0] + SchumixBase.Space;
+						off += point[0] + SchumixBase.Space;
 				}
 			}
 

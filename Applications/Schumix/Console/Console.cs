@@ -32,7 +32,7 @@ namespace Schumix.Console
 	/// <summary>
 	///     Console class.
 	/// </summary>
-	public sealed class Console
+	sealed class Console
 	{
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.

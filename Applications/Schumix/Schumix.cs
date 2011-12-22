@@ -31,7 +31,7 @@ namespace Schumix
 	/// <summary>
 	///     Fő class. Innen indul a konzol vezérlés és az irc kapcsolat létrehozása.
 	/// </summary>
-	public sealed class SchumixBot : SchumixBase
+	sealed class SchumixBot : SchumixBase
 	{
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.

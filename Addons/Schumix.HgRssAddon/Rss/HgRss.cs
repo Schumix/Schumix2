@@ -31,7 +31,7 @@ using Schumix.HgRssAddon.Localization;
 
 namespace Schumix.HgRssAddon
 {
-	public sealed class HgRss
+	sealed class HgRss
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;

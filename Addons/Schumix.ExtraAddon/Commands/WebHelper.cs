@@ -30,7 +30,7 @@ namespace Schumix.ExtraAddon.Commands
 	/// <summary>
 	///   A class which provides useful methods for working with the world-wide web.
 	/// </summary>
-	public static class WebHelper
+	static class WebHelper
 	{
 		private static readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;

@@ -26,7 +26,7 @@ using Schumix.RevisionAddon.Commands;
 
 namespace Schumix.RevisionAddon
 {
-	public class RevisionAddon : Revision, ISchumixAddon
+	class RevisionAddon : Revision, ISchumixAddon
 	{
 		public void Setup()
 		{

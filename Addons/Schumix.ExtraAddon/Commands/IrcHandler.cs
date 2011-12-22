@@ -27,7 +27,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.ExtraAddon.Commands
 {
-	public class IrcHandler : CommandInfo
+	class IrcHandler : CommandInfo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;

@@ -32,7 +32,7 @@ using Schumix.HgRssAddon.Localization;
 
 namespace Schumix.HgRssAddon
 {
-	public class HgRssAddon : RssCommand, ISchumixAddon
+	class HgRssAddon : RssCommand, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;

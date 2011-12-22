@@ -22,7 +22,7 @@ using System.IO;
 
 namespace Schumix.Config.Clean
 {
-	public sealed class DirectoryClean
+	sealed class DirectoryClean
 	{
 		/// <summary>
 		///     Törli azon mappát melyet megadunk a paraméterben. Ez elsősorban egy verziószám.

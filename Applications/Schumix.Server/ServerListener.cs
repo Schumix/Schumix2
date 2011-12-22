@@ -29,8 +29,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Server
 {
-
-	public sealed class ServerListener : IDisposable
+	sealed class ServerListener : IDisposable
 	{
 		private readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
