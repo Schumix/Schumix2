@@ -18,7 +18,6 @@
  */
 
 using System;
-using System.Reflection;
 
 namespace Schumix.API
 {
