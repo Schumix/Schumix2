@@ -24,7 +24,7 @@ using ICSharpCode.SharpZipLib.Tar;
 
 namespace Schumix.Installer.UnZip
 {
-	public sealed class GZip
+	sealed class GZip
 	{
 		public GZip(string Version)
 		{

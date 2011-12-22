@@ -22,7 +22,7 @@ using System.IO;
 
 namespace Schumix.Config.Clean
 {
-	public sealed class FileClean
+	sealed class FileClean
 	{
 		/// <summary>
 		///     Törli a tömörített verzió fájlt.

@@ -30,7 +30,7 @@ namespace Schumix
 	///   A script manager for the IRC connections.
 	///   Loads plugins, manages events etc.
 	/// </summary>
-	public sealed class ScriptManager
+	sealed class ScriptManager
 	{
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.

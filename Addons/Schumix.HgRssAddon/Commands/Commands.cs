@@ -28,7 +28,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.HgRssAddon.Commands
 {
-	public partial class RssCommand : CommandInfo
+	partial class RssCommand : CommandInfo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;

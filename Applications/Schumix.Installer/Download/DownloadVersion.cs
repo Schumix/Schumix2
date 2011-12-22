@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.Installer.Download
 {
-	public sealed class DownloadVersion
+	sealed class DownloadVersion
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private string _url;

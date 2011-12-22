@@ -28,7 +28,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Server.Config
 {
-	public sealed class Config
+	sealed class Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
@@ -263,7 +263,7 @@ namespace Schumix.Server.Config
 		}
 	}
 
-	public sealed class ServerConfig
+	sealed class ServerConfig
 	{
 		public static string ConfigDirectory { get; private set; }
 		public static string ConfigFile { get; private set; }
@@ -275,7 +275,7 @@ namespace Schumix.Server.Config
 		}
 	}
 
-	public sealed class ServerConfigs
+	sealed class ServerConfigs
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static int ListenerPort { get; private set; }
@@ -289,7 +289,7 @@ namespace Schumix.Server.Config
 		}
 	}
 
-	public sealed class LocalizationConfig
+	sealed class LocalizationConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static string Locale { get; private set; }

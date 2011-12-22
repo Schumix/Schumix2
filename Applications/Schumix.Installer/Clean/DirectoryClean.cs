@@ -22,7 +22,7 @@ using System.IO;
 
 namespace Schumix.Installer.Clean
 {
-	public sealed class DirectoryClean
+	sealed class DirectoryClean
 	{
 		public DirectoryClean(string Version)
 		{

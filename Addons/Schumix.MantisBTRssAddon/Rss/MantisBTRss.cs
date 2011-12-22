@@ -30,7 +30,7 @@ using Schumix.MantisBTRssAddon.Localization;
 
 namespace Schumix.MantisBTRssAddon
 {
-	public sealed class MantisBTRss
+	sealed class MantisBTRss
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;

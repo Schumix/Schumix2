@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	public enum Rank
+	enum Rank
 	{
 		Killer,
 		Detective,

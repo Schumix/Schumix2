@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class MaffiaGame
+	sealed partial class MaffiaGame
 	{
 		public void See(string Name, string NickName)
 		{

@@ -28,7 +28,7 @@ using Schumix.GitRssAddon.Localization;
 
 namespace Schumix.GitRssAddon.Config
 {
-	public sealed class AddonConfig
+	sealed class AddonConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
@@ -117,7 +117,7 @@ namespace Schumix.GitRssAddon.Config
 		}
 	}
 
-	public sealed class RssConfig
+	sealed class RssConfig
 	{
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static int QueryTime { get; private set; }

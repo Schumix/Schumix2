@@ -22,7 +22,7 @@ using Schumix.Framework;
 
 namespace Schumix.CalendarAddon
 {
-	public sealed class Flood
+	sealed class Flood
 	{
 		private string _name;
 		private string _channel;

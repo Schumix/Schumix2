@@ -36,7 +36,7 @@ using Schumix.CompilerAddon.Localization;
 
 namespace Schumix.CompilerAddon
 {
-	public class CompilerAddon : SCompiler, ISchumixAddon
+	class CompilerAddon : SCompiler, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;

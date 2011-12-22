@@ -25,7 +25,7 @@ using Schumix.Installer;
 
 namespace Schumix.Installer.Compiler
 {
-	public sealed class Build
+	sealed class Build
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public bool HasError { get; private set; }

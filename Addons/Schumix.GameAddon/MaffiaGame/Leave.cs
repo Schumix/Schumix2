@@ -23,7 +23,7 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class MaffiaGame
+	sealed partial class MaffiaGame
 	{
 		public void Leave(string Name)
 		{

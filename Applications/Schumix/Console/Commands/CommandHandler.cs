@@ -33,7 +33,7 @@ namespace Schumix.Console.Commands
 	/// <summary>
 	///     CommandHandler class.
 	/// </summary>
-	public partial class CommandHandler : ConsoleLog
+	partial class CommandHandler : ConsoleLog
 	{
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.

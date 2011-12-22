@@ -30,7 +30,7 @@ using Schumix.CalendarAddon.Localization;
 
 namespace Schumix.CalendarAddon
 {
-	public sealed class Calendar
+	sealed class Calendar
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;

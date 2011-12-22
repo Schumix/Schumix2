@@ -29,7 +29,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.TesztAddon.Commands
 {
-	public class TesztCommand : CommandInfo
+	class TesztCommand : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;

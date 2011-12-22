@@ -31,7 +31,7 @@ using Schumix.GitRssAddon.Localization;
 
 namespace Schumix.GitRssAddon
 {
-	public sealed class GitRss
+	sealed class GitRss
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;

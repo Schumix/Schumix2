@@ -32,7 +32,7 @@ using Schumix.SvnRssAddon.Localization;
 
 namespace Schumix.SvnRssAddon
 {
-	public class SvnRssAddon : RssCommand, ISchumixAddon
+	class SvnRssAddon : RssCommand, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;

@@ -25,7 +25,7 @@ using Schumix.Framework.Config;
 
 namespace Schumix.ExtraAddon.Commands
 {
-	public partial class Functions
+	partial class Functions
 	{
 		public bool Help(IRCMessage sIRCMessage)
 		{

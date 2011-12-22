@@ -32,7 +32,7 @@ namespace Schumix.Installer
 	/// (once a type initializer fails to initialize in .NET, it can't be re-initialized again).
 	/// </remarks>
 	/// <typeparam name="T">Type of the singleton class.</typeparam>
-	public class Singleton<T> where T : class
+	class Singleton<T> where T : class
 	{
 		/// <summary>
 		/// The single instance of the target class.

@@ -31,7 +31,7 @@ namespace Schumix.Console.Commands
 	/// <summary>
 	///     ConsoleCommandManager class.
 	/// </summary>
-	public sealed class CCommandManager : CommandHandler
+	sealed class CCommandManager : CommandHandler
 	{
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.

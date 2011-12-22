@@ -32,7 +32,7 @@ using Schumix.ExtraAddon.Config;
 
 namespace Schumix.ExtraAddon.Commands
 {
-	public partial class Functions : CommandInfo
+	partial class Functions : CommandInfo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
@@ -978,7 +978,7 @@ namespace Schumix.ExtraAddon.Commands
 		}
 	}
 
-	public sealed class Notes : CommandInfo
+	sealed class Notes : CommandInfo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;

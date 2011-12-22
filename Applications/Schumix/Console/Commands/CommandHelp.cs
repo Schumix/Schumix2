@@ -27,7 +27,7 @@ namespace Schumix.Console.Commands
 	/// <summary>
 	///     CommandHandler class.
 	/// </summary>
-	public partial class CommandHandler
+	partial class CommandHandler
 	{
 		/// <summary>
 		///     Help parancs függvénye.

@@ -30,7 +30,7 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.ExtraAddon.Commands
 {
-	public partial class Functions
+	partial class Functions
 	{
 		public void HLMessage(IRCMessage sIRCMessage)
 		{

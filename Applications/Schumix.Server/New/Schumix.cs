@@ -23,7 +23,7 @@ using Schumix.Framework;
 
 namespace Schumix.Server.New
 {
-	public class Schumix
+	class Schumix
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private Schumix() {}

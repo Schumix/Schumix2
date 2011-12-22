@@ -22,7 +22,7 @@ using System.Collections.Generic;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed class Player
+	sealed class Player
 	{
 		public readonly List<string> Lynch = new List<string>();
 		public Rank Rank { get; private set; }

@@ -24,14 +24,14 @@ using System.Web;
 
 namespace Schumix.Installer
 {
-	public enum SCompiler
+	enum SCompiler
 	{
 		VisualStudio,
 		Mono,
 		None
 	}
 
-	public sealed class Utilities
+	sealed class Utilities
 	{
 		private Utilities() {}
 

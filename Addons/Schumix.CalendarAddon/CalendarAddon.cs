@@ -32,7 +32,7 @@ using Schumix.CalendarAddon.Localization;
 
 namespace Schumix.CalendarAddon
 {
-	public class CalendarAddon : ISchumixAddon
+	class CalendarAddon : ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;

@@ -22,7 +22,7 @@ using System.IO;
 
 namespace Schumix.Installer.CopyTo
 {
-	public sealed class Copy
+	sealed class Copy
 	{
 		public Copy(string Version)
 		{

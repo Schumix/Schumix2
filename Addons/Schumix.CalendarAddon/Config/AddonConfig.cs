@@ -28,7 +28,7 @@ using Schumix.CalendarAddon.Localization;
 
 namespace Schumix.CalendarAddon.Config
 {
-	public sealed class AddonConfig
+	sealed class AddonConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
@@ -123,7 +123,7 @@ namespace Schumix.CalendarAddon.Config
 		}
 	}
 
-	public sealed class CalendarConfig
+	sealed class CalendarConfig
 	{
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static int Seconds { get; private set; }
