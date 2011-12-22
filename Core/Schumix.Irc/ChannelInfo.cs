@@ -68,7 +68,21 @@ namespace Schumix.Irc
 
 		public bool FSelect(string Name, string Channel)
 		{
-			return (ChannelFunction.ContainsKey(Channel.ToLower()) && ChannelFunction[Channel.ToLower()].Contains(Name.ToLower() + SchumixBase.Colon + SchumixBase.On));
+			if(ChannelFunction.ContainsKey(Channel.ToLower()))
+			{
+				foreach(var comma in ChannelFunction[Channel.ToLower()].Split(SchumixBase.Comma))
+				{
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[0] != Name.ToLower())
+						return point[1] == SchumixBase.On;
+				}
+			}
+
+			return false;
 		}
 
 		public bool SearchFunction(string Name)
@@ -78,10 +92,18 @@ namespace Schumix.Irc
 
 		public bool SearchChannelFunction(string Name)
 		{
-			foreach(var name in Enum.GetNames(typeof(IChannelFunctions)))
+			foreach(var channel in ChannelFunction)
 			{
-				if(Name.ToLower() == name.ToString().ToLower())
-					return true;
+				foreach(var comma in channel.Value.Split(SchumixBase.Comma))
+				{
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[0] == Name.ToLower())
+						return true;
+				}
 			}
 
 			return false;
@@ -97,7 +119,21 @@ namespace Schumix.Irc
 
 		public bool FSelect(IChannelFunctions Name, string Channel)
 		{
-			return (ChannelFunction.ContainsKey(Channel.ToLower()) && ChannelFunction[Channel.ToLower()].Contains(Name.ToString().ToLower() + SchumixBase.Colon + SchumixBase.On));
+			if(ChannelFunction.ContainsKey(Channel.ToLower()))
+			{
+				foreach(var comma in ChannelFunction[Channel.ToLower()].Split(SchumixBase.Comma))
+				{
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[0] != Name.ToString().ToLower())
+						return point[1] == SchumixBase.On;
+				}
+			}
+
+			return false;
 		}
 
 		public void FunctionsReload()
