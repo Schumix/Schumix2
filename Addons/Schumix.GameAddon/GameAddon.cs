@@ -39,6 +39,7 @@ namespace Schumix.GameAddon
 
 		public void Setup()
 		{
+			CleanFunctions();
 			CommandManager.PublicCRegisterHandler("game", new Action<IRCMessage>(HandleGame));
 			Console.CancelKeyPress += (sender, e) => { Clean(); };
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => { Clean(); };
@@ -96,7 +97,7 @@ namespace Schumix.GameAddon
 						case "!start":
 						{
 							if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick || MaffiaList[channel].GetOwner() == string.Empty ||
-								IsAdmin(sIRCMessage.Nick))
+								IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 								MaffiaList[channel].Start();
 							else
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játékot {0} indította!", MaffiaList[channel].GetOwner());
@@ -201,7 +202,7 @@ namespace Schumix.GameAddon
 						case "!end":
 						{
 							if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick || MaffiaList[channel].GetOwner() == string.Empty ||
-								IsAdmin(sIRCMessage.Nick))
+								IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 							{
 								if(MaffiaList[channel].Started)
 								{
@@ -331,6 +332,30 @@ namespace Schumix.GameAddon
 			}
 
 			GameChannelFunction.Clear();
+		}
+
+		private void CleanFunctions()
+		{
+			sChannelInfo.ChannelFunctionsReload();
+
+			foreach(var function in sChannelInfo.CFunction)
+			{
+				foreach(var comma in function.Value.Split(SchumixBase.Comma))
+				{
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[0] == IChannelFunctions.Gamecommands.ToString().ToLower() && point[1] == SchumixBase.On)
+					{
+						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("commands", SchumixBase.On, function.Key)), string.Format("Channel = '{0}'", function.Key));
+						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, function.Key)), string.Format("Channel = '{0}'", function.Key));
+					}
+				}
+			}
+
+			sChannelInfo.ChannelFunctionsReload();
 		}
 
 		/// <summary>

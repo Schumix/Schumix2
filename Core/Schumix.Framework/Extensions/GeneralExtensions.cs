@@ -344,5 +344,47 @@ namespace Schumix.Framework.Extensions
 
 			Task.WaitAll(coll.ToArray());
 		}
+
+		public static bool CompareDataInBlock(this string[] split)
+		{
+			int i = 0;
+			string ss = string.Empty;
+
+			foreach(var s in split)
+			{
+				if(i == 0)
+					ss = s;
+				else
+				{
+					if(ss != s)
+						return false;
+				}
+
+				i++;
+			}
+
+			return true;
+		}
+
+		public static bool CompareDataInBlock(this List<string> list)
+		{
+			int i = 0;
+			string ss = string.Empty;
+
+			foreach(var s in list)
+			{
+				if(i == 0)
+					ss = s;
+				else
+				{
+					if(ss != s)
+						return false;
+				}
+
+				i++;
+			}
+
+			return true;
+		}
 	}
 }

@@ -525,17 +525,20 @@ namespace Schumix.GameAddon.MaffiaGames
 								list.Add(function.Value.RName);
 						}
 
-						if(list.Count == 2 && list[0] == list[1] && !enabledk)
+						if(list.Count == 2)
 						{
-							foreach(var kill in _killerlist)
-								sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
+							if(list.CompareDataInBlock() && !enabledk)
+							{
+								foreach(var kill in _killerlist)
+									sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
 
-							enabledk = true;
-							newkillghost = GetPlayerName(list[0]);
-							enabledkiller = true;
+								enabledk = true;
+								newkillghost = GetPlayerName(list[0]);
+								enabledkiller = true;
+							}
+							else if(!list.CompareDataInBlock())
+								enabledk = false;
 						}
-						else if(list.Count == 2 && list[0] != list[1])
-							enabledk = false;
 
 						list.Clear();
 					}
@@ -549,29 +552,20 @@ namespace Schumix.GameAddon.MaffiaGames
 								list.Add(function.Value.RName);
 						}
 
-						if(list.Count == 3 && list[0] == list[1] && list[0] == list[2] && list[1] == list[2] && !enabledk)
+						if(list.Count == 3)
 						{
-							foreach(var kill in _killerlist)
-								sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
+							if(list.CompareDataInBlock() && !enabledk)
+							{
+								foreach(var kill in _killerlist)
+									sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
 
-							enabledk = true;
-							newkillghost = GetPlayerName(list[0]);
-							enabledkiller = true;
+								enabledk = true;
+								newkillghost = GetPlayerName(list[0]);
+								enabledkiller = true;
+							}
+							else if(!list.CompareDataInBlock())
+								enabledk = false;
 						}
-						else if(list.Count == 3 && list[0] != list[1] && list[0] == list[2] && list[1] == list[2])
-							enabledk = false;
-						else if(list.Count == 3 && list[0] == list[1] && list[0] != list[2] && list[1] == list[2])
-							enabledk = false;
-						else if(list.Count == 3 && list[0] == list[1] && list[0] == list[2] && list[1] != list[2])
-							enabledk = false;
-						else if(list.Count == 3 && list[0] != list[1] && list[0] != list[2] && list[1] == list[2])
-							enabledk = false;
-						else if(list.Count == 3 && list[0] == list[1] && list[0] != list[2] && list[1] != list[2])
-							enabledk = false;
-						else if(list.Count == 3 && list[0] != list[1] && list[0] == list[2] && list[1] != list[2])
-							enabledk = false;
-						else if(list.Count == 3 && list[0] != list[1] && list[0] != list[2] && list[1] != list[2])
-							enabledk = false;
 
 						list.Clear();
 					}
@@ -632,7 +626,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 							if(function.Value.Rank == Rank.Doctor)
 							{
-								if(newkillghost.ToLower() != function.Value.RName)
+								if((newkillghost.ToLower() != function.Value.RName) && (newkillghost.ToLower() != string.Empty))
 									newghost = true;
 							}
 
