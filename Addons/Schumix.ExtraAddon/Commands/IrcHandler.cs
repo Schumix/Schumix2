@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Threading;
 using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
@@ -145,7 +146,10 @@ namespace Schumix.ExtraAddon.Commands
 					foreach(var m_channel in sChannelInfo.CList)
 					{
 						if(sIRCMessage.Channel.ToLower() == m_channel.Key)
+						{
+							Thread.Sleep(3000);
 							sSender.Join(m_channel.Key, m_channel.Value);
+						}
 					}
 				}
 			}

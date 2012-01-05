@@ -152,6 +152,7 @@ namespace Schumix.MantisBTRssAddon
 			catch(Exception e)
 			{
 				Log.Error("MantisBTRss", sLocalization.Exception("Error"), _name, e.Message);
+				Thread.Sleep(RssConfig.QueryTime*1000);
 			}
 
 			return null;

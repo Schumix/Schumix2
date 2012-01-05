@@ -108,6 +108,9 @@ namespace Schumix.GameAddon.MaffiaGames
 					namess += " (" + function.Key + ": " + sp + " szavazat)";
 			}
 
+			if(_lynch)
+				return;
+
 			sSendMessage.SendCMPrivmsg(_channel, "{0} szavazat kell a többséghez. Jelenlegi szavazatok:{1}", (_playerlist.Count/2)+1, namess);
 
 			if((_playerlist.Count/2)+1 <= _lynchmaxnumber)

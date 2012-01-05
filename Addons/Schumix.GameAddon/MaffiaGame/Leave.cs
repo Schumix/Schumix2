@@ -70,7 +70,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				}
 
 				_playerflist[Name.ToLower()].Lynch.Clear();
-				_playerflist.Remove(Name.ToLower());		
+				//_playerflist.Remove(Name.ToLower());		
 			}
 
 			sSender.Mode(_channel, "-v", Name);

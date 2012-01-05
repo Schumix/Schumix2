@@ -77,6 +77,57 @@ namespace Schumix.Framework
 			}
 		}
 
+		public string GetUrlEncoding(string url, string encoding)
+		{
+			using(var client = new WebClient())
+			{
+				double Num;
+				bool isNum = double.TryParse(encoding, out Num);
+
+				if(!isNum)
+					client.Encoding = Encoding.GetEncoding(encoding);
+				else
+					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
+
+				client.Headers.Add("user-agent", "Query :)");
+				return client.DownloadString(url);
+			}
+		}
+
+		public string GetUrlEncoding(string url, string args, string encoding)
+		{
+			using(var client = new WebClient())
+			{
+				double Num;
+				bool isNum = double.TryParse(encoding, out Num);
+
+				if(!isNum)
+					client.Encoding = Encoding.GetEncoding(encoding);
+				else
+					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
+
+				client.Headers.Add("user-agent", "Query :)");
+				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
+			}
+		}
+
+		public string GetUrlEncoding(string url, string args, string noencode, string encoding)
+		{
+			using(var client = new WebClient())
+			{
+				double Num;
+				bool isNum = double.TryParse(encoding, out Num);
+
+				if(!isNum)
+					client.Encoding = Encoding.GetEncoding(encoding);
+				else
+					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
+
+				client.Headers.Add("user-agent", "Query :)");
+				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
+			}
+		}
+
 		public void DownloadFile(string url, string filename)
 		{
 			using(var client = new WebClient())

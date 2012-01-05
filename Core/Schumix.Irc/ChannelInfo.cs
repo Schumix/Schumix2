@@ -30,14 +30,19 @@ namespace Schumix.Irc
 {
 	public sealed class ChannelInfo
 	{
+		private readonly Dictionary<string, string> ChannelFunction = new Dictionary<string, string>();
+		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
-		private readonly Dictionary<string, string> ChannelFunction = new Dictionary<string, string>();
 
 		public Dictionary<string, string> CList
 		{
 			get { return _ChannelList; }
+		}
+
+		public Dictionary<string, string> CFunction
+		{
+			get { return ChannelFunction; }
 		}
 
 		private ChannelInfo() {}
@@ -77,7 +82,7 @@ namespace Schumix.Irc
 
 					string[] point = comma.Split(SchumixBase.Colon);
 
-					if(point[0] != Name.ToLower())
+					if(point[0] == Name.ToLower())
 						return point[1] == SchumixBase.On;
 				}
 			}
@@ -128,7 +133,7 @@ namespace Schumix.Irc
 
 					string[] point = comma.Split(SchumixBase.Colon);
 
-					if(point[0] != Name.ToString().ToLower())
+					if(point[0] == Name.ToString().ToLower())
 						return point[1] == SchumixBase.On;
 				}
 			}
@@ -139,7 +144,6 @@ namespace Schumix.Irc
 		public void FunctionsReload()
 		{
 			IFunctionsClass.Functions.Clear();
-
 			var db = SchumixBase.DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix");
 			if(!db.IsNull())
 			{
@@ -157,14 +161,12 @@ namespace Schumix.Irc
 		public void ChannelFunctionsReload()
 		{
 			ChannelFunction.Clear();
-
 			var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
 				{
 					string channel = row["Channel"].ToString();
-
 					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", channel);
 					if(!db1.IsNull())
 						ChannelFunction.Add(channel, db1["Functions"].ToString());
