@@ -55,32 +55,44 @@ namespace Schumix.ExtraAddon
 			IsOnline = false;
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			Network.PublicRegisterHandler("JOIN",                       new Action<IRCMessage>(HandleJoin));
-			Network.PublicRegisterHandler(ReplyCode.RPL_NAMREPLY,       new Action<IRCMessage>(HandleNameList));
-			CommandManager.PublicCRegisterHandler("notes",              new Action<IRCMessage>(sNotes.HandleNotes));
-			CommandManager.PublicCRegisterHandler("message",            new Action<IRCMessage>(sFunctions.HandleMessage));
-			CommandManager.PublicCRegisterHandler("weather",            new Action<IRCMessage>(sFunctions.HandleWeather));
-			CommandManager.PublicCRegisterHandler("roll",               new Action<IRCMessage>(sFunctions.HandleRoll));
-			CommandManager.PublicCRegisterHandler("sha1",               new Action<IRCMessage>(sFunctions.HandleSha1));
-			CommandManager.PublicCRegisterHandler("md5",                new Action<IRCMessage>(sFunctions.HandleMd5));
-			CommandManager.PublicCRegisterHandler("prime",              new Action<IRCMessage>(sFunctions.HandlePrime));
-			CommandManager.PublicCRegisterHandler("wiki",               new Action<IRCMessage>(sFunctions.HandleWiki));
-			CommandManager.HalfOperatorCRegisterHandler("autofunction", new Action<IRCMessage>(sFunctions.HandleAutoFunction));
+			Network.PublicRegisterHandler("PRIVMSG",                    HandlePrivmsg);
+			Network.PublicRegisterHandler("NOTICE",                     HandleNotice);
+			Network.PublicRegisterHandler("JOIN",                       HandleJoin);
+			Network.PublicRegisterHandler("PART",                       HandleLeft);
+			Network.PublicRegisterHandler("KICK",                       HandleKick);
+			Network.PublicRegisterHandler("QUIT",                       HandleQuit);
+			Network.PublicRegisterHandler("NICK",                       HandleNewNick);
+			Network.PublicRegisterHandler(ReplyCode.RPL_NAMREPLY,       HandleNameList);
+			CommandManager.PublicCRegisterHandler("notes",              sNotes.HandleNotes);
+			CommandManager.PublicCRegisterHandler("message",            sFunctions.HandleMessage);
+			CommandManager.PublicCRegisterHandler("weather",            sFunctions.HandleWeather);
+			CommandManager.PublicCRegisterHandler("roll",               sFunctions.HandleRoll);
+			CommandManager.PublicCRegisterHandler("sha1",               sFunctions.HandleSha1);
+			CommandManager.PublicCRegisterHandler("md5",                sFunctions.HandleMd5);
+			CommandManager.PublicCRegisterHandler("prime",              sFunctions.HandlePrime);
+			CommandManager.PublicCRegisterHandler("wiki",               sFunctions.HandleWiki);
+			CommandManager.HalfOperatorCRegisterHandler("autofunction", sFunctions.HandleAutoFunction);
 		}
 
 		public void Destroy()
 		{
-			Network.PublicRemoveHandler("JOIN");
-			Network.PublicRemoveHandler(ReplyCode.RPL_NAMREPLY);
-			CommandManager.PublicCRemoveHandler("notes");
-			CommandManager.PublicCRemoveHandler("message");
-			CommandManager.PublicCRemoveHandler("weather");
-			CommandManager.PublicCRemoveHandler("roll");
-			CommandManager.PublicCRemoveHandler("sha1");
-			CommandManager.PublicCRemoveHandler("md5");
-			CommandManager.PublicCRemoveHandler("prime");
-			CommandManager.PublicCRemoveHandler("wiki");
-			CommandManager.HalfOperatorCRemoveHandler("autofunction");
+			Network.PublicRemoveHandler("PRIVMSG",                    HandlePrivmsg);
+			Network.PublicRemoveHandler("NOTICE",                     HandleNotice);
+			Network.PublicRemoveHandler("JOIN",                       HandleJoin);
+			Network.PublicRemoveHandler("PART",                       HandleLeft);
+			Network.PublicRemoveHandler("KICK",                       HandleKick);
+			Network.PublicRemoveHandler("QUIT",                       HandleQuit);
+			Network.PublicRemoveHandler("NICK",                       HandleNewNick);
+			Network.PublicRemoveHandler(ReplyCode.RPL_NAMREPLY,       HandleNameList);
+			CommandManager.PublicCRemoveHandler("notes",              sNotes.HandleNotes);
+			CommandManager.PublicCRemoveHandler("message",            sFunctions.HandleMessage);
+			CommandManager.PublicCRemoveHandler("weather",            sFunctions.HandleWeather);
+			CommandManager.PublicCRemoveHandler("roll",               sFunctions.HandleRoll);
+			CommandManager.PublicCRemoveHandler("sha1",               sFunctions.HandleSha1);
+			CommandManager.PublicCRemoveHandler("md5",                sFunctions.HandleMd5);
+			CommandManager.PublicCRemoveHandler("prime",              sFunctions.HandlePrime);
+			CommandManager.PublicCRemoveHandler("wiki",               sFunctions.HandleWiki);
+			CommandManager.HalfOperatorCRemoveHandler("autofunction", sFunctions.HandleAutoFunction);
 			sNameList.RemoveAll();
 		}
 
@@ -216,26 +228,6 @@ namespace Schumix.ExtraAddon
 					IsOnline = false;
 				}
 			}
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-			HandleLLeft(sIRCMessage);
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-			HandleKKick(sIRCMessage);
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-			HandleQQuit(sIRCMessage);
-		}
-
-		public void HandleNewNick(IRCMessage sIRCMessage)
-		{
-			HandleNNewNick(sIRCMessage);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

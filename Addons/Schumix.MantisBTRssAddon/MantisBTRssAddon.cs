@@ -45,7 +45,7 @@ namespace Schumix.MantisBTRssAddon
 		{
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			CommandManager.OperatorCRegisterHandler("mantisbt", new Action<IRCMessage>(HandleMantisBT));
+			CommandManager.OperatorCRegisterHandler("mantisbt", HandleMantisBT);
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link FROM mantisbt");
 			if(!db.IsNull())
@@ -74,7 +74,7 @@ namespace Schumix.MantisBTRssAddon
 
 		public void Destroy()
 		{
-			CommandManager.OperatorCRemoveHandler("mantisbt");
+			CommandManager.OperatorCRemoveHandler("mantisbt", HandleMantisBT);
 			_config = null;
 
 			foreach(var list in RssList)
@@ -93,36 +93,6 @@ namespace Schumix.MantisBTRssAddon
 			}
 
 			return false;
-		}
-
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleNotice(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleNewNick(IRCMessage sIRCMessage)
-		{
-
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

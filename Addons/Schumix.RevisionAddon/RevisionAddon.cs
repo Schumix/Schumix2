@@ -30,47 +30,17 @@ namespace Schumix.RevisionAddon
 	{
 		public void Setup()
 		{
-			CommandManager.PublicCRegisterHandler("xrev", new Action<IRCMessage>(HandleXrev));
+			CommandManager.PublicCRegisterHandler("xrev", HandleXrev);
 		}
 
 		public void Destroy()
 		{
-			CommandManager.PublicCRemoveHandler("xrev");
+			CommandManager.PublicCRemoveHandler("xrev", HandleXrev);
 		}
 
 		public bool Reload(string RName)
 		{
 			return false;
-		}
-
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleNotice(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleNewNick(IRCMessage sIRCMessage)
-		{
-
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

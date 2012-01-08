@@ -35,9 +35,9 @@ namespace Schumix.Irc
 {
 	public sealed class Network : MessageHandler
 	{
-		private static readonly Dictionary<ReplyCode, Action<IRCMessage>> _IRCHandler = new Dictionary<ReplyCode, Action<IRCMessage>>();
-		private static readonly Dictionary<string, Action<IRCMessage>> _IRCHandler2 = new Dictionary<string, Action<IRCMessage>>();
-		private static readonly Dictionary<int, Action<IRCMessage>> _IRCHandler3 = new Dictionary<int, Action<IRCMessage>>();
+		private static readonly Dictionary<ReplyCode, IRCDelegate> _IRCHandler = new Dictionary<ReplyCode, IRCDelegate>();
+		private static readonly Dictionary<string, IRCDelegate> _IRCHandler2 = new Dictionary<string, IRCDelegate>();
+		private static readonly Dictionary<int, IRCDelegate> _IRCHandler3 = new Dictionary<int, IRCDelegate>();
 
         /// <summary>
         ///     A kapcsolatot tároljra.
@@ -98,38 +98,44 @@ namespace Schumix.Irc
 
 		private void InitHandler()
 		{
-			RegisterHandler(ReplyCode.RPL_WELCOME,         new Action<IRCMessage>(HandleSuccessfulAuth));
-			RegisterHandler("PING",                        new Action<IRCMessage>(HandlePing));
-			RegisterHandler("PONG",                        new Action<IRCMessage>(HandlePong));
-			RegisterHandler("PRIVMSG",                     new Action<IRCMessage>(HandlePrivmsg));
-			RegisterHandler("NOTICE",                      new Action<IRCMessage>(HandleNotice));
-			RegisterHandler("PART",                        new Action<IRCMessage>(HandleLeft));
-			RegisterHandler("KICK",                        new Action<IRCMessage>(HandleKKick));
-			RegisterHandler("QUIT",                        new Action<IRCMessage>(HandleQQuit));
-			RegisterHandler("NICK",     		           new Action<IRCMessage>(HandleNewNick));
-			RegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,  new Action<IRCMessage>(HandleChannelBan));
-			RegisterHandler(ReplyCode.ERR_BADCHANNELKEY,   new Action<IRCMessage>(HandleNoChannelPassword));
-			RegisterHandler(ReplyCode.RPL_WHOISCHANNELS,   new Action<IRCMessage>(HandleMWhois));
-			RegisterHandler(ReplyCode.ERR_NOSUCHNICK,      new Action<IRCMessage>(HandleNoWhois));
-			RegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND,  new Action<IRCMessage>(HandleUnknownCommand));
-			RegisterHandler(ReplyCode.ERR_NICKNAMEINUSE,   new Action<IRCMessage>(HandleNickError));
-			RegisterHandler(439,                           new Action<IRCMessage>(HandleWaitingForConnection));
-			RegisterHandler(ReplyCode.ERR_NOTREGISTERED,   new Action<IRCMessage>(HandleNotRegistered));
-			RegisterHandler(ReplyCode.ERR_NONICKNAMEGIVEN, new Action<IRCMessage>(HandleNoNickName));
+			RegisterHandler(ReplyCode.RPL_WELCOME,         HandleSuccessfulAuth);
+			RegisterHandler("PING",                        HandlePing);
+			RegisterHandler("PONG",                        HandlePong);
+			RegisterHandler("PRIVMSG",                     HandlePrivmsg);
+			RegisterHandler("NOTICE",                      HandleNotice);
+			RegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,  HandleChannelBan);
+			RegisterHandler(ReplyCode.ERR_BADCHANNELKEY,   HandleNoChannelPassword);
+			RegisterHandler(ReplyCode.RPL_WHOISCHANNELS,   HandleMWhois);
+			RegisterHandler(ReplyCode.ERR_NOSUCHNICK,      HandleNoWhois);
+			RegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND,  HandleUnknownCommand);
+			RegisterHandler(ReplyCode.ERR_NICKNAMEINUSE,   HandleNickError);
+			RegisterHandler(439,                           HandleWaitingForConnection);
+			RegisterHandler(ReplyCode.ERR_NOTREGISTERED,   HandleNotRegistered);
+			RegisterHandler(ReplyCode.ERR_NONICKNAMEGIVEN, HandleNoNickName);
 			Log.Notice("Network", sLConsole.Network("Text5"));
 		}
 
-		private static void RegisterHandler(ReplyCode code, Action<IRCMessage> method)
+		private static void RegisterHandler(ReplyCode code, IRCDelegate method)
 		{
-			_IRCHandler.Add(code, method);
+			if(_IRCHandler.ContainsKey(code))
+				_IRCHandler[code] += method;
+			else
+				_IRCHandler.Add(code, method);
 		}
 
 		private static void RemoveHandler(ReplyCode code)
 		{
-			_IRCHandler.Remove(code);
+			if(_IRCHandler.ContainsKey(code))
+				_IRCHandler.Remove(code);
 		}
 
-		public static void PublicRegisterHandler(ReplyCode code, Action<IRCMessage> method)
+		private static void RemoveHandler(ReplyCode code, IRCDelegate method)
+		{
+			if(_IRCHandler.ContainsKey(code))
+				_IRCHandler[code] -= method;
+		}
+
+		public static void PublicRegisterHandler(ReplyCode code, IRCDelegate method)
 		{
 			RegisterHandler(code, method);
 		}
@@ -139,17 +145,32 @@ namespace Schumix.Irc
 			RemoveHandler(code);
 		}
 
-		private static void RegisterHandler(string code, Action<IRCMessage> method)
+		public static void PublicRemoveHandler(ReplyCode code, IRCDelegate method)
 		{
-			_IRCHandler2.Add(code, method);
+			RemoveHandler(code, method);
+		}
+
+		private static void RegisterHandler(string code, IRCDelegate method)
+		{
+			if(_IRCHandler2.ContainsKey(code))
+				_IRCHandler2[code] += method;
+			else
+				_IRCHandler2.Add(code, method);
 		}
 
 		private static void RemoveHandler(string code)
 		{
-			_IRCHandler2.Remove(code);
+			if(_IRCHandler2.ContainsKey(code))
+				_IRCHandler2.Remove(code);
 		}
 
-		public static void PublicRegisterHandler(string code, Action<IRCMessage> method)
+		private static void RemoveHandler(string code, IRCDelegate method)
+		{
+			if(_IRCHandler2.ContainsKey(code))
+				_IRCHandler2[code] -= method;
+		}
+
+		public static void PublicRegisterHandler(string code, IRCDelegate method)
 		{
 			RegisterHandler(code, method);
 		}
@@ -159,17 +180,32 @@ namespace Schumix.Irc
 			RemoveHandler(code);
 		}
 
-		private static void RegisterHandler(int code, Action<IRCMessage> method)
+		public static void PublicRemoveHandler(string code, IRCDelegate method)
 		{
-			_IRCHandler3.Add(code, method);
+			RemoveHandler(code, method);
+		}
+
+		private static void RegisterHandler(int code, IRCDelegate method)
+		{
+			if(_IRCHandler3.ContainsKey(code))
+				_IRCHandler3[code] += method;
+			else
+				_IRCHandler3.Add(code, method);
 		}
 
 		private static void RemoveHandler(int code)
 		{
-			_IRCHandler3.Remove(code);
+			if(_IRCHandler3.ContainsKey(code))
+				_IRCHandler3.Remove(code);
 		}
 
-		public static void PublicRegisterHandler(int code, Action<IRCMessage> method)
+		private static void RemoveHandler(int code, IRCDelegate method)
+		{
+			if(_IRCHandler3.ContainsKey(code))
+				_IRCHandler3[code] -= method;
+		}
+
+		public static void PublicRegisterHandler(int code, IRCDelegate method)
 		{
 			RegisterHandler(code, method);
 		}
@@ -177,6 +213,11 @@ namespace Schumix.Irc
 		public static void PublicRemoveHandler(int code)
 		{
 			RemoveHandler(code);
+		}
+
+		public static void PublicRemoveHandler(int code, IRCDelegate method)
+		{
+			RemoveHandler(code, method);
 		}
 
 		/// <summary>

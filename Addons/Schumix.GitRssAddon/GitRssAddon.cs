@@ -45,7 +45,7 @@ namespace Schumix.GitRssAddon
 		{
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			CommandManager.OperatorCRegisterHandler("git", new Action<IRCMessage>(HandleGit));
+			CommandManager.OperatorCRegisterHandler("git", HandleGit);
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Type, Link, Website FROM gitinfo");
 			if(!db.IsNull())
@@ -76,7 +76,7 @@ namespace Schumix.GitRssAddon
 
 		public void Destroy()
 		{
-			CommandManager.OperatorCRemoveHandler("git");
+			CommandManager.OperatorCRemoveHandler("git", HandleGit);
 			_config = null;
 
 			foreach(var list in RssList)
@@ -95,36 +95,6 @@ namespace Schumix.GitRssAddon
 			}
 
 			return false;
-		}
-
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleNotice(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleNewNick(IRCMessage sIRCMessage)
-		{
-
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

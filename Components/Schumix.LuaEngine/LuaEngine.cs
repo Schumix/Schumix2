@@ -120,20 +120,20 @@ namespace Schumix.LuaEngine
 		{
 			if(reload)
 			{
-				foreach(var name in _functions.RegisteredCommand.AsParallel())
+				foreach(var func in _functions.RegisteredCommand)
 				{
-					if(CommandManager.GetPublicCommandHandler().ContainsKey(name))
-						CommandManager.PublicCRemoveHandler(name);
-					else if(CommandManager.GetHalfOperatorCommandHandler().ContainsKey(name))
-						CommandManager.HalfOperatorCRemoveHandler(name);
-					else if(CommandManager.GetOperatorCommandHandler().ContainsKey(name))
-						CommandManager.OperatorCRemoveHandler(name);
-					else if(CommandManager.GetAdminCommandHandler().ContainsKey(name))
-						CommandManager.AdminCRemoveHandler(name);
+					if(CommandManager.GetPublicCommandHandler().ContainsKey(func.Key))
+						CommandManager.PublicCRemoveHandler(func.Key, func.Value);
+					else if(CommandManager.GetHalfOperatorCommandHandler().ContainsKey(func.Key))
+						CommandManager.HalfOperatorCRemoveHandler(func.Key, func.Value);
+					else if(CommandManager.GetOperatorCommandHandler().ContainsKey(func.Key))
+						CommandManager.OperatorCRemoveHandler(func.Key, func.Value);
+					else if(CommandManager.GetAdminCommandHandler().ContainsKey(func.Key))
+						CommandManager.AdminCRemoveHandler(func.Key, func.Value);
 				}
 
-				foreach(var name in _functions.RegisteredHandler.AsParallel())
-					Network.PublicRemoveHandler(name);
+				foreach(var func in _functions.RegisteredHandler)
+					Network.PublicRemoveHandler(func.Key, func.Value);
 			}
 
 			var di = new DirectoryInfo(_scriptPath);

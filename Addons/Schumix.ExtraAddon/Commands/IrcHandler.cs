@@ -95,7 +95,7 @@ namespace Schumix.ExtraAddon.Commands
 		///     Ha ez a funkció be van kapcsolva, akkor
 		///     miután a nick elhagyta a szobát elköszön tőle.
 		/// </summary>
-		protected void HandleLLeft(IRCMessage sIRCMessage)
+		protected void HandleLeft(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Nick == sNickInfo.NickStorage)
 				return;
@@ -116,12 +116,12 @@ namespace Schumix.ExtraAddon.Commands
 			}
 		}
 
-		protected void HandleQQuit(IRCMessage sIRCMessage)
+		protected void HandleQuit(IRCMessage sIRCMessage)
 		{
 			sNameList.Remove(string.Empty, sIRCMessage.Nick, true);
 		}
 
-		protected void HandleNNewNick(IRCMessage sIRCMessage)
+		protected void HandleNewNick(IRCMessage sIRCMessage)
 		{
 			if(!SchumixBase.NewNick)
 				sNameList.Change(sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
@@ -132,7 +132,7 @@ namespace Schumix.ExtraAddon.Commands
 		/// <summary>
 		///     Ha engedélyezett a ConsolLog, akkor kiírja a Console-ra ha kickelnek valakit.
 		/// </summary>
-		protected void HandleKKick(IRCMessage sIRCMessage)
+		protected void HandleKick(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Info.Length < 5)
 				return;

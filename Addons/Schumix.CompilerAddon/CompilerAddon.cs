@@ -52,6 +52,7 @@ namespace Schumix.CompilerAddon
 		{
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
+			Network.PublicRegisterHandler("PRIVMSG", HandlePrivmsg);
 			ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
 			EntryRegex = new Regex(SchumixBase.Space + CompilerConfig.MainClass + @"\s*?\{");
 			SchumixRegex = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)");
@@ -59,7 +60,7 @@ namespace Schumix.CompilerAddon
 
 		public void Destroy()
 		{
-
+			Network.PublicRemoveHandler("PRIVMSG", HandlePrivmsg);
 		}
 
 		public bool Reload(string RName)
@@ -74,7 +75,7 @@ namespace Schumix.CompilerAddon
 			return false;
 		}
 
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
+		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
@@ -115,31 +116,6 @@ namespace Schumix.CompilerAddon
 						Compiler(sIRCMessage, false, command);
 				}
 			}
-		}
-
-		public void HandleNotice(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleNewNick(IRCMessage sIRCMessage)
-		{
-
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)
