@@ -66,7 +66,7 @@ namespace Schumix.GameAddon
 			return false;
 		}
 
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
+		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 			if(sChannelInfo.FSelect(IFunctions.Gamecommands) || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
@@ -245,12 +245,7 @@ namespace Schumix.GameAddon
 			}
 		}
 
-		public void HandleNotice(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
+		private void HandleLeft(IRCMessage sIRCMessage)
 		{
 			foreach(var maffia in GameAddon.MaffiaList)
 			{
@@ -271,7 +266,7 @@ namespace Schumix.GameAddon
 			}
 		}
 
-		public void HandleKick(IRCMessage sIRCMessage)
+		private void HandleKick(IRCMessage sIRCMessage)
 		{
 			foreach(var maffia in GameAddon.MaffiaList)
 			{
@@ -292,7 +287,7 @@ namespace Schumix.GameAddon
 			}
 		}
 
-		public void HandleQuit(IRCMessage sIRCMessage)
+		private void HandleQuit(IRCMessage sIRCMessage)
 		{
 			foreach(var maffia in GameAddon.MaffiaList)
 			{
@@ -310,7 +305,7 @@ namespace Schumix.GameAddon
 			}
 		}
 
-		public void HandleNewNick(IRCMessage sIRCMessage)
+		private void HandleNewNick(IRCMessage sIRCMessage)
 		{
 			foreach(var maffia in GameAddon.MaffiaList)
 			{

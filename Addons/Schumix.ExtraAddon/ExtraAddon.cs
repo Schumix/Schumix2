@@ -108,7 +108,7 @@ namespace Schumix.ExtraAddon
 			return false;
 		}
 
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
+		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
@@ -173,7 +173,7 @@ namespace Schumix.ExtraAddon
 			}
 		}
 
-		public void HandleNotice(IRCMessage sIRCMessage)
+		private void HandleNotice(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Nick == "NickServ" && AutoMode)
 			{
