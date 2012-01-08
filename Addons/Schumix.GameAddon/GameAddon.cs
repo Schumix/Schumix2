@@ -40,14 +40,24 @@ namespace Schumix.GameAddon
 		public void Setup()
 		{
 			CleanFunctions();
-			CommandManager.PublicCRegisterHandler("game", new Action<IRCMessage>(HandleGame));
+			Network.PublicRegisterHandler("PRIVMSG",      HandlePrivmsg);
+			Network.PublicRegisterHandler("PART",         HandleLeft);
+			Network.PublicRegisterHandler("KICK",         HandleKick);
+			Network.PublicRegisterHandler("QUIT",         HandleQuit);
+			Network.PublicRegisterHandler("NICK",         HandleNewNick);
+			CommandManager.PublicCRegisterHandler("game", HandleGame);
 			Console.CancelKeyPress += (sender, e) => { Clean(); };
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => { Clean(); };
 		}
 
 		public void Destroy()
 		{
-			CommandManager.PublicCRemoveHandler("game");
+			Network.PublicRemoveHandler("PRIVMSG",      HandlePrivmsg);
+			Network.PublicRemoveHandler("PART",         HandleLeft);
+			Network.PublicRemoveHandler("KICK",         HandleKick);
+			Network.PublicRemoveHandler("QUIT",         HandleQuit);
+			Network.PublicRemoveHandler("NICK",         HandleNewNick);
+			CommandManager.PublicCRemoveHandler("game", HandleGame);
 			Clean();
 		}
 

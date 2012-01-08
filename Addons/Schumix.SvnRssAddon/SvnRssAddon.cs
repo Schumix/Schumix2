@@ -45,7 +45,7 @@ namespace Schumix.SvnRssAddon
 		{
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			CommandManager.OperatorCRegisterHandler("svn", new Action<IRCMessage>(HandleSvn));
+			CommandManager.OperatorCRegisterHandler("svn", HandleSvn);
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM svninfo");
 			if(!db.IsNull())
@@ -75,7 +75,7 @@ namespace Schumix.SvnRssAddon
 
 		public void Destroy()
 		{
-			CommandManager.OperatorCRemoveHandler("svn");
+			CommandManager.OperatorCRemoveHandler("svn", HandleSvn);
 			_config = null;
 
 			foreach(var list in RssList)
@@ -94,36 +94,6 @@ namespace Schumix.SvnRssAddon
 			}
 
 			return false;
-		}
-
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleNotice(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleNewNick(IRCMessage sIRCMessage)
-		{
-
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

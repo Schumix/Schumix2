@@ -117,9 +117,6 @@ namespace Schumix.Irc
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.HandleNotice(sIRCMessage);
-
 			if(sIRCMessage.Nick == "NickServ")
 			{
 				if(sIRCMessage.Args.Contains("Password incorrect."))
@@ -290,30 +287,6 @@ namespace Schumix.Irc
 
 			sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisPrivmsg, text[1]);
 			WhoisPrivmsg = sNickInfo.NickStorage;
-		}
-
-		protected void HandleLeft(IRCMessage sIRCMessage)
-		{
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.HandleLeft(sIRCMessage);
-		}
-
-		protected void HandleKKick(IRCMessage sIRCMessage)
-		{
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.HandleKick(sIRCMessage);
-		}
-
-		protected void HandleQQuit(IRCMessage sIRCMessage)
-		{
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.HandleQuit(sIRCMessage);
-		}
-
-		protected void HandleNewNick(IRCMessage sIRCMessage)
-		{
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.HandleNewNick(sIRCMessage);
 		}
 
 		/// <summary>

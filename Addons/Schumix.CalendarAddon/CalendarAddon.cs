@@ -51,15 +51,17 @@ namespace Schumix.CalendarAddon
 			_calendar = new Calendar();
 			_calendar.Start();
 
-			CommandManager.OperatorCRegisterHandler("ban",   new Action<IRCMessage>(sBanCommand.HandleBan));
-			CommandManager.OperatorCRegisterHandler("unban", new Action<IRCMessage>(sBanCommand.HandleUnban));
+			Network.PublicRegisterHandler("PRIVMSG",         HandlePrivmsg);
+			CommandManager.OperatorCRegisterHandler("ban",   sBanCommand.HandleBan);
+			CommandManager.OperatorCRegisterHandler("unban", sBanCommand.HandleUnban);
 		}
 
 		public void Destroy()
 		{
 			_calendar.Stop();
-			CommandManager.OperatorCRemoveHandler("ban");
-			CommandManager.OperatorCRemoveHandler("unban");
+			Network.PublicRemoveHandler("PRIVMSG",         HandlePrivmsg);
+			CommandManager.OperatorCRemoveHandler("ban",   sBanCommand.HandleBan);
+			CommandManager.OperatorCRemoveHandler("unban", sBanCommand.HandleUnban);
 		}
 
 		public bool Reload(string RName)
@@ -74,7 +76,7 @@ namespace Schumix.CalendarAddon
 			return false;
 		}
 
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
+		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 			Task.Factory.StartNew(() =>
 			{
@@ -103,31 +105,6 @@ namespace Schumix.CalendarAddon
 					FloodList.Add(new Flood(nick, channel));
 				}
 			});
-		}
-
-		public void HandleNotice(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleNewNick(IRCMessage sIRCMessage)
-		{
-
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

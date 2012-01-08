@@ -47,9 +47,6 @@ namespace Schumix.Irc
 			if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
 				sIRCMessage.Channel = sIRCMessage.Nick;
 
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.HandlePrivmsg(sIRCMessage);
-
 			sCtcpSender.CtcpReply(sIRCMessage);
 
 			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")

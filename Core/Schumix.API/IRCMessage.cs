@@ -45,4 +45,7 @@ namespace Schumix.API
 		public string[] Info { get; set; }
 		public MessageType MessageType { get; set; }
 	}
+
+	public delegate void IRCDelegate(IRCMessage sIRCMessage);
+	public delegate void CommandDelegate(IRCMessage sIRCMessage);
 }

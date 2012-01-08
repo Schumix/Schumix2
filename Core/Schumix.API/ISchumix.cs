@@ -35,12 +35,6 @@ namespace Schumix.API
 		/// </summary>
 		void Destroy();
 		bool Reload(string RName);
-		void HandlePrivmsg(IRCMessage sIRCMessage);
-		void HandleNotice(IRCMessage sIRCMessage);
-		void HandleLeft(IRCMessage sIRCMessage);
-		void HandleKick(IRCMessage sIRCMessage);
-		void HandleQuit(IRCMessage sIRCMessage);
-		void HandleNewNick(IRCMessage sIRCMessage);
 		bool HandleHelp(IRCMessage sIRCMessage);
 
 		/// <summary>
