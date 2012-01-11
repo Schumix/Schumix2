@@ -18,6 +18,7 @@
  */
 
 using System;
+//using System.Timers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
@@ -38,12 +39,13 @@ namespace Schumix.Irc
 		private static readonly Dictionary<ReplyCode, IRCDelegate> _IRCHandler = new Dictionary<ReplyCode, IRCDelegate>();
 		private static readonly Dictionary<string, IRCDelegate> _IRCHandler2 = new Dictionary<string, IRCDelegate>();
 		private static readonly Dictionary<int, IRCDelegate> _IRCHandler3 = new Dictionary<int, IRCDelegate>();
+		//private System.Timers.Timer _timeropcode = new System.Timers.Timer();
 
         /// <summary>
         ///     A kapcsolatot tároljra.
         /// </summary>
-		private TcpClient client;
 		private SecureTcpClient sclient;
+		private TcpClient client;
 
         /// <summary>
         ///     A bejövő információkat fogadja.
@@ -60,6 +62,7 @@ namespace Schumix.Irc
         /// </summary>
 		private readonly int _port;
 		private bool _enabled = false;
+		//private DateTime LastOpcode;
 
         /// <summary>
         ///     Internet kapcsolat függvénye.
@@ -322,6 +325,13 @@ namespace Schumix.Irc
 			reader.Dispose();
 		}
 
+		//private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
+		//{
+		//	Console.WriteLine((DateTime.Now - LastOpcode).Minutes);
+		//	if((DateTime.Now - LastOpcode).Minutes >= 1)
+		//		ReConnect();
+		//}
+
         /// <summary>
         ///     Ez a függvény kezeli azt IRC adatai és az opcedes-eket.
         /// </summary>
@@ -332,6 +342,10 @@ namespace Schumix.Irc
 		{
 			Log.Notice("Opcodes", sLConsole.Network("Text14"));
 			byte number = 0;
+			//_timeropcode.Interval = 60*1000;
+			//_timeropcode.Elapsed += HandleOpcodesTimer;
+			//_timeropcode.Enabled = true;
+			//_timeropcode.Start();
 			Log.Notice("Opcodes", sLConsole.Network("Text15"));
 
 			while(true)
@@ -360,6 +374,8 @@ namespace Schumix.Irc
 							continue;
 						}
 					}
+
+					//LastOpcode = DateTime.Now;
 
 					if(_enabled)
 					{
@@ -391,6 +407,10 @@ namespace Schumix.Irc
 					Thread.Sleep(1000);
 				}
 			}
+
+			//_timeropcode.Enabled = false;
+			//_timeropcode.Elapsed -= HandleOpcodesTimer;
+			//_timeropcode.Stop();
 
 			Thread.Sleep(1000);
 			DisConnect();
