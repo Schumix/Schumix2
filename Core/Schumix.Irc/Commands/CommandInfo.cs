@@ -58,6 +58,18 @@ namespace Schumix.Irc.Commands
 			return false;
 		}
 
+		protected bool IsAdmin(string Name, string Vhost)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			if(!db.IsNull())
+			{
+				string vhost = db["Vhost"].ToString();
+				return Vhost == vhost;
+			}
+
+			return false;
+		}
+
 		protected bool IsAdmin(string Name, string Vhost, AdminFlag Flag)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));

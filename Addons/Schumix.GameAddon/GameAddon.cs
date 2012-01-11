@@ -98,6 +98,9 @@ namespace Schumix.GameAddon
 					if(sIRCMessage.Channel.Substring(0, 1) != "#" && channel == sIRCMessage.Channel.ToLower())
 						return;
 
+					if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick)
+						MaffiaList[channel].NewOwnerTime();
+
 					sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
 					if((sIRCMessage.Info[3].Length > 0 && sIRCMessage.Info[3].Substring(0, 1) != "!") || sIRCMessage.Info[3].Length == 0)
 						return;
@@ -107,10 +110,98 @@ namespace Schumix.GameAddon
 						case "!start":
 						{
 							if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick || MaffiaList[channel].GetOwner() == string.Empty ||
-								IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
+								IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 								MaffiaList[channel].Start();
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játékot {0} indította!", MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: A játékot {1} indította!", sIRCMessage.Nick, MaffiaList[channel].GetOwner());
+							break;
+						}
+						case "!set":
+						{
+							if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick || MaffiaList[channel].GetOwner() == string.Empty ||
+								IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
+							{
+								if(MaffiaList[channel].Started)
+								{
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Sajnálom de a játék már fut!", sIRCMessage.Nick);
+									return;
+								}
+
+								if(sIRCMessage.Info.Length < 5)
+								{
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nincs megadva az állítandó paraméter!", sIRCMessage.Nick);
+									return;
+								}
+
+								if(sIRCMessage.Info[4].ToLower() == "info")
+								{
+									if(MaffiaList[channel].NoLynch)
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No lynch: on");
+									else
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No lynch: off");
+
+									if(MaffiaList[channel].NoVoice)
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs rang este: on");
+									else
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs rang este: off");
+									return;
+								}
+								else if(sIRCMessage.Info[4].ToLower() == "nolynch")
+								{
+									if(sIRCMessage.Info.Length < 6)
+									{
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nincs megadva hogy on vagy off legyen-e ez a beállítás!", sIRCMessage.Nick);
+										return;
+									}
+
+									string status = sIRCMessage.Info[5].ToLower();
+
+									if(status == SchumixBase.On || status == SchumixBase.Off)
+									{
+										if(status == SchumixBase.On)
+											MaffiaList[channel].NoLynch = true;
+										else if(status == SchumixBase.Off)
+											MaffiaList[channel].NoLynch = false;
+
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: A beállítás módosítva lett.", sIRCMessage.Nick);
+									}
+									else
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem on illetve off kifejezés lett megadva!", sIRCMessage.Nick);
+								}
+								else if(sIRCMessage.Info[4].ToLower() == "night")
+								{
+									if(sIRCMessage.Info.Length < 6)
+									{
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nincs megadva az állítandó paraméter!", sIRCMessage.Nick);
+										return;
+									}
+
+									if(sIRCMessage.Info[5].ToLower() == "novoice")
+									{
+										if(sIRCMessage.Info.Length < 7)
+										{
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nincs megadva hogy on vagy off legyen-e ez a beállítás!", sIRCMessage.Nick);
+											return;
+										}
+
+										string status = sIRCMessage.Info[6].ToLower();
+
+										if(status == SchumixBase.On || status == SchumixBase.Off)
+										{
+											if(status == SchumixBase.On)
+												MaffiaList[channel].NoVoice = true;
+											else if(status == SchumixBase.Off)
+												MaffiaList[channel].NoVoice = false;
+	
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: A beállítás módosítva lett.", sIRCMessage.Nick);
+										}
+										else
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem on illetve off kifejezés lett megadva!", sIRCMessage.Nick);
+									}
+								}
+							}
+							else
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Sajnálom, de csak {1}, a játék indítója állíthat a játék menetén!", sIRCMessage.Nick, MaffiaList[channel].GetOwner());
 							break;
 						}
 						case "!stats":
@@ -212,7 +303,7 @@ namespace Schumix.GameAddon
 						case "!end":
 						{
 							if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick || MaffiaList[channel].GetOwner() == string.Empty ||
-								IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
+								IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 							{
 								if(MaffiaList[channel].Started)
 								{
@@ -234,7 +325,7 @@ namespace Schumix.GameAddon
 								}
 							}
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Sajnálom, de csak {0}, a játék indítója vethet véget a játéknak!", MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Sajnálom, de csak {1}, a játék indítója vethet véget a játéknak!", sIRCMessage.Nick, MaffiaList[channel].GetOwner());
 							break;
 						}
 						default:
@@ -342,6 +433,7 @@ namespace Schumix.GameAddon
 		private void CleanFunctions()
 		{
 			sChannelInfo.ChannelFunctionsReload();
+			var list = new List<string>();
 
 			foreach(var function in sChannelInfo.CFunction)
 			{
@@ -353,14 +445,19 @@ namespace Schumix.GameAddon
 					string[] point = comma.Split(SchumixBase.Colon);
 
 					if(point[0] == IChannelFunctions.Gamecommands.ToString().ToLower() && point[1] == SchumixBase.On)
-					{
-						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("commands", SchumixBase.On, function.Key)), string.Format("Channel = '{0}'", function.Key));
-						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, function.Key)), string.Format("Channel = '{0}'", function.Key));
-					}
+						list.Add(function.Key);
 				}
 			}
 
-			sChannelInfo.ChannelFunctionsReload();
+			foreach(var channel in list)
+			{
+				SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("commands", SchumixBase.On, channel)), string.Format("Channel = '{0}'", channel));
+				sChannelInfo.ChannelFunctionsReload();
+				SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, channel)), string.Format("Channel = '{0}'", channel));
+				sChannelInfo.ChannelFunctionsReload();
+			}
+
+			list.Clear();
 		}
 
 		/// <summary>
