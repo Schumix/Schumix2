@@ -92,6 +92,13 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				_owner = string.Empty;
 
+				if(_timerowner.Enabled)
+				{
+					_timerowner.Enabled = false;
+					_timerowner.Elapsed -= HandleIsOwnerAfk;
+					_timerowner.Stop();
+				}
+
 				if(_playerlist.Count > 0)
 					sSendMessage.SendCMPrivmsg(_channel, "A játék indítója lelépett. A játékot mostantól bárki írányíthatja!");
 			}
