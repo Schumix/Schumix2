@@ -62,7 +62,6 @@ namespace Schumix.GameAddon.MaffiaGames
 		private Thread _thread;
 		private string _owner;
 		private string _channel;
-		private Rank _rank;
 		private string _killerchannel;
 		private bool _day;
 		private bool _stop;
@@ -92,10 +91,10 @@ namespace Schumix.GameAddon.MaffiaGames
 			NoLynch = false;
 			NoVoice = false;
 			_owner = Name;
-			_rank = Rank.None;
 			_channel = Channel.ToLower();
 			_killerchannel = string.Empty;
 			_playerlist.Add(1, Name);
+			NewOwnerTime();
 
 			_timerowner.Interval = 60*1000;
 			_timerowner.Elapsed += HandleIsOwnerAfk;
@@ -327,33 +326,27 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(Name.Replace(SchumixBase.Space.ToString(), string.Empty) == string.Empty)
 				return;
 
-			_rank = Rank.None;
-
 			if(Started)
 			{
 				if(_killerlist.ContainsKey(Name.ToLower()))
 				{
 					Name = _killerlist[Name.ToLower()];
 					_killerlist.Remove(Name.ToLower());
-					_rank = Rank.Killer;
 				}
 				else if(_detectivelist.ContainsKey(Name.ToLower()))
 				{
 					Name = _detectivelist[Name.ToLower()];
 					_detectivelist.Remove(Name.ToLower());
-					_rank = Rank.Detective;
 				}
 				else if(_doctorlist.ContainsKey(Name.ToLower()))
 				{
 					Name = _doctorlist[Name.ToLower()];
 					_doctorlist.Remove(Name.ToLower());
-					_rank = Rank.Doctor;
 				}
 				else if(_normallist.ContainsKey(Name.ToLower()))
 				{
 					Name = _normallist[Name.ToLower()];
 					_normallist.Remove(Name.ToLower());
-					_rank = Rank.Normal;
 				}
 			}
 
@@ -384,15 +377,17 @@ namespace Schumix.GameAddon.MaffiaGames
 			sSender.Mode(_channel, "-v", Name);
 		}
 
-		private void Corpse()
+		private void Corpse(string Name)
 		{
-			if(_rank == Rank.Killer)
+			var rank = GetRank(Name);
+
+			if(rank == Rank.Killer)
 				sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4gyilkos volt.");
-			else if(_rank == Rank.Detective)
+			else if(rank == Rank.Detective)
 				sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4nyomozó volt.");
-			else if(_rank == Rank.Doctor)
+			else if(rank == Rank.Doctor)
 				sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4orvos volt.");
-			else if(_rank == Rank.Normal)
+			else if(rank == Rank.Normal)
 				sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy egy ártatlan falusi volt.");
 		}
 
@@ -402,6 +397,11 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig nem volt. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective());
 			else
 				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective(), GetDoctor());
+		}
+
+		private Rank GetRank(string Name)
+		{
+			return _playerflist.ContainsKey(Name.ToLower()) ? _playerflist[Name.ToLower()].Rank : Rank.None;
 		}
 
 		private void AddRanks()
@@ -838,7 +838,7 @@ namespace Schumix.GameAddon.MaffiaGames
 							if(GetPlayerMaster(newkillghost))
 								sSendMessage.SendCMPrivmsg(_channel, "Megölték a főnököt! Szemetek!!!");
 
-							Corpse();
+							Corpse(newkillghost);
 							sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", newkillghost);
 						}
 						else
@@ -933,7 +933,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						if(newghost != string.Empty)
 							sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newghost);
 
-						Corpse();
+						Corpse(newghost);
 					}
 
 					sSendMessage.SendCMPrivmsg(_channel, "A falusiak halottak! A 4gyilkosok győztek.");

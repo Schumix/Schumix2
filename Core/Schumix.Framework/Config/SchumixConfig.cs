@@ -23,6 +23,7 @@ namespace Schumix.Framework.Config
 {
 	public static class Consts
 	{
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public const string SchumixDescription = "Schumix IRC bot";
 #if DEBUG
 		public const string SchumixConfiguration = "Debug";
@@ -38,5 +39,7 @@ namespace Schumix.Framework.Config
 		public const string SchumixProgrammedBy = "Csaba Jakosa (Megax)";
 		public const string SchumixDevelopers = "Csaba Jakosa (Megax), Twl, Jackneill, Alenah";
 		public const string SchumixWebsite = "http://www.github.com/megax/Schumix2";
+		public static string SchumixUserAgent = SchumixBase.Title + SchumixBase.Space + sUtilities.GetVersion() + " / .NET " + Environment.Version;
+		public const string SchumixReferer = "http://yeahunter.hu";
 	}
 }

@@ -76,14 +76,15 @@ namespace Schumix.GameAddon.MaffiaGames
 			sSender.Mode(_channel, "-v", Name);
 			RemovePlayer(Name);
 			sSendMessage.SendCMPrivmsg(_channel, "{0} eltűnt egy különös féreglyukban.", Name);
+			var rank = GetRank(Name);
 
-			if(_rank == Rank.Killer)
+			if(rank == Rank.Killer)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint gyilkos. Remélhetőleg halála izgalmasabb lesz.", Name);
-			else if(_rank == Rank.Detective)
+			else if(rank == Rank.Detective)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint nyomozó. Remélhetőleg halála izgalmasabb lesz.", Name);
-			else if(_rank == Rank.Doctor)
+			else if(rank == Rank.Doctor)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint orvos. Remélhetőleg halála izgalmasabb lesz.", Name);
-			else if(_rank == Rank.Normal)
+			else if(rank == Rank.Normal)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak unalmas szerepe volt a játékban, mint civil. Remélhetőleg halála izgalmasabb lesz.", Name);
 			else
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak nem volt szerepe még a játékban. Remélhetőleg halála izgalmasabb lesz.", Name);

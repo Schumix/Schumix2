@@ -144,7 +144,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					if(GetPlayerMaster(namess))
 						sSendMessage.SendCMPrivmsg(_channel, "Megölték a főnököt! Szemetek!!!");
 
-					Corpse();
+					Corpse(namess);
 					Thread.Sleep(400);
 					EndGame();
 
