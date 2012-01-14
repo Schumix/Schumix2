@@ -74,16 +74,16 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(Name.ToLower() == NickName.ToLower())
 				sSendMessage.SendCMPrivmsg(NickName, "Önmagadat akarod kikérdezni? Te tudod :P");
 
-			_rank = Rank.None;
+			var rank = GetRank(Name);
 
 			if(_killerlist.ContainsKey(Name.ToLower()))
-				_rank = Rank.Killer;
+				rank = Rank.Killer;
 			else if(_detectivelist.ContainsKey(Name.ToLower()))
-				_rank = Rank.Detective;
+				rank = Rank.Detective;
 			else if(_doctorlist.ContainsKey(Name.ToLower()))
-				_rank = Rank.Doctor;
+				rank = Rank.Doctor;
 			else if(_normallist.ContainsKey(Name.ToLower()))
-				_rank = Rank.Normal;
+				rank = Rank.Normal;
 
 			sSendMessage.SendCMPrivmsg(NickName, "A jelentést reggel kapod meg!");
 
@@ -92,7 +92,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				if(function.Key == NickName.ToLower())
 				{
 					function.Value.Detective = true;
-					function.Value.DRank = _rank;
+					function.Value.DRank = rank;
 				}
 			}
 		}

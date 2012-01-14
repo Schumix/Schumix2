@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.API;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -54,7 +55,8 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
-				client.Headers.Add("user-agent", "Query :)");
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
 				return client.DownloadString(url);
 			}
 		}
@@ -63,7 +65,8 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
-				client.Headers.Add("user-agent", "Query :)");
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
 			}
 		}
@@ -72,7 +75,8 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
-				client.Headers.Add("user-agent", "Query :)");
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
 			}
 		}
@@ -89,7 +93,8 @@ namespace Schumix.Framework
 				else
 					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
 
-				client.Headers.Add("user-agent", "Query :)");
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
 				return client.DownloadString(url);
 			}
 		}
@@ -106,7 +111,8 @@ namespace Schumix.Framework
 				else
 					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
 
-				client.Headers.Add("user-agent", "Query :)");
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
 			}
 		}
@@ -123,7 +129,8 @@ namespace Schumix.Framework
 				else
 					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
 
-				client.Headers.Add("user-agent", "Query :)");
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
 			}
 		}
@@ -132,7 +139,8 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
-				client.Headers.Add("user-agent", "Query :)");
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
 				client.DownloadFile(url, filename);
 			}
 		}

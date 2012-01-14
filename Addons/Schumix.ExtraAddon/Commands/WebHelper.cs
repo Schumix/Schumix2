@@ -23,6 +23,7 @@ using System.IO;
 using System.Net;
 using System.Text.RegularExpressions;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon.Commands
@@ -33,7 +34,6 @@ namespace Schumix.ExtraAddon.Commands
 	static class WebHelper
 	{
 		private static readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		///   Gets the title of the specified webpage.
@@ -51,8 +51,8 @@ namespace Schumix.ExtraAddon.Commands
 				var request = (HttpWebRequest)WebRequest.Create(url);
 				request.Timeout = 3500;
 				request.AllowAutoRedirect = true;
-				request.UserAgent = SchumixBase.Title + SchumixBase.Space + sUtilities.GetVersion() + " / .NET " + Environment.Version;
-				request.Referer = "http://www.wowemuf.org";
+				request.UserAgent = Consts.SchumixUserAgent;
+				request.Referer = Consts.SchumixReferer;
 
 				var response = request.GetResponse();
 				var stream = response.GetResponseStream();
