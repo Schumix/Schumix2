@@ -57,6 +57,7 @@ namespace Schumix.Framework
 			{
 				client.Headers.Add("referer", Consts.SchumixReferer);
 				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				client.Encoding = Encoding.UTF8;
 				return client.DownloadString(url);
 			}
 		}
@@ -67,6 +68,7 @@ namespace Schumix.Framework
 			{
 				client.Headers.Add("referer", Consts.SchumixReferer);
 				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				client.Encoding = Encoding.UTF8;
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
 			}
 		}
@@ -77,6 +79,7 @@ namespace Schumix.Framework
 			{
 				client.Headers.Add("referer", Consts.SchumixReferer);
 				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				client.Encoding = Encoding.UTF8;
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
 			}
 		}

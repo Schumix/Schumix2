@@ -19,6 +19,8 @@
 
 using System;
 using System.Xml;
+using System.Net;
+using System.Text;
 using System.Threading;
 using Schumix.API;
 using Schumix.Irc;
@@ -145,9 +147,15 @@ namespace Schumix.MantisBTRssAddon
 		{
 			try
 			{
-				var rss = new XmlDocument();
-				rss.Load(_url);
-				return rss;
+				using(var client = new WebClient())
+				{
+					client.Encoding = Encoding.UTF8;
+					string xml = client.DownloadString(_url);
+					var rss = new XmlDocument();
+					rss.LoadXml(xml);
+					xml = string.Empty;
+					return rss;
+				}
 			}
 			catch(Exception e)
 			{
