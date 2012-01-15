@@ -70,7 +70,7 @@ namespace Schumix.GitRssAddon.Commands
 					string list = string.Empty;
 
 					foreach(DataRow row in db.Rows)
-						list += SchumixBase.Space + row["Name"].ToString() + SchumixBase.Space + row["Type"].ToString() + ";";
+						list += SchumixBase.Space + string.Format("3{0}/7{1},", row["Name"].ToString(), row["Type"].ToString());
 
 					if(list == string.Empty)
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/list", sIRCMessage.Channel), SchumixBase.Space + sLConsole.Other("Nothing"));
