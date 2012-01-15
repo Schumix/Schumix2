@@ -21,6 +21,7 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -58,7 +59,7 @@ namespace Schumix.ExtraAddon.Commands
 				var stream = response.GetResponseStream();
 				string data;
 
-				using(var rdr = new StreamReader(stream))
+				using(var rdr = new StreamReader(stream, Encoding.UTF8))
 				{
 					data = rdr.ReadToEnd();
 				}
