@@ -39,6 +39,23 @@ Minute INTEGER DEFAULT 0
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for calendar
+-- ----------------------------
+DROP TABLE IF EXISTS "calendar";
+CREATE TABLE "calendar" (
+Id INTEGER  PRIMARY KEY AUTOINCREMENT,
+Name VARCHAR(50),
+Channel VARCHAR(20),
+Message TEXT,
+Loops VARCHAR(5) DEFAULT 'false',
+Year INTEGER DEFAULT 0,
+Month INTEGER DEFAULT 0,
+Day INTEGER DEFAULT 0,
+Hour INTEGER DEFAULT 0,
+Minute INTEGER DEFAULT 0
+);
+
+-- ----------------------------
 -- Table structure for "channel"
 -- ----------------------------
 DROP TABLE IF EXISTS "channel";
@@ -461,6 +478,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/channel/add', 'Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'mantisbt/channel/remove', 'Csatorna sikeresen törölve.\nNem létezik ilyen név!');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'wiki', '3Címe: {0}\n3Link: {0}\n3Leírás: {0}\n3Leírás: {0}...\nNincs találat!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('huHU', 'calendar', 'Helytelen dátum formátum!');
 
 -- enUS
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'schumix2/sys', '3Version: 10{0}\n3Platform: {0}\n3OSVersion: {0}\n3Programming language: c#\n3Memory allocation:5 {0} MB\n3Memory allocation:8 {0} MB\n3Memory allocation:3 {0} MB\n3Uptime: {0}');
@@ -588,6 +606,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/channel/add', 'Successfully added channel.\nNo such name!');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'mantisbt/channel/remove', 'Successfully deleted channel!\nNo such name!');
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'wiki', '3Title: {0}\n3Link: {0}\n3Description: {0}\n3Description: {0}...\nNo result!');
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ('enUS', 'calendar', 'Date format error!');
 
 -- ----------------------------
 -- Table structure for "localized_command_help"
@@ -735,6 +754,14 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'mantisbt/reload/all', '1', 'Minden rss újratöltése.\nHasználata: {0}mantisbt reload <rss neve>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'online', '9', 'A parancs segítségével megállapítható ki elérhető és ki nem.\nHasználata: {0}online <név>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'wiki', '9', 'A parancs segítségével kereshetünk a Wikipedia oldalán.\nHasználata: {0}wiki <keresendő szöveg>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'calendar', '9', 'Eseményeket, üzeneteket lehet feljegyezni vele megadott időpontra.\nParancsok: loop | nick | private\nHasználata:\nÓra és perc: {0}calendar <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar <éééé.hh.nn> <óó:pp> <üzenet>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'calendar/loop', '9', 'Naponként ismétli meg a megadott időben az üzenetet.\nParancsok: nick | private\nHasználata:\nÓra és perc: {0}calendar loop <óó:pp> <üzenet>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'calendar/loop/nick', '9', 'Megadott személynek jegyzi fel. \nHasználata:\nÓra és perc: {0}calendar loop nick <név> <óó:pp> <üzenet>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'calendar/loop/private', '9', 'Privátban küldi el az üzenetet.\nParancsok: nick\nHasználata:\nÓra és perc: {0}calendar loop private <óó:pp> <üzenet>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'calendar/loop/private/nick', '9', 'Megadott személynek jegyzi fel és privátban küldi el neki. \nHasználata:\nÓra és perc: {0}calendar loop private nick <név> <óó:pp> <üzenet>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'calendar/nick', '9', 'Megadott személynek jegyzi fel. \nHasználata:\nÓra és perc: {0}calendar nick <név> <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar nick <név> <éééé.hh.nn> <óó:pp> <üzenet>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'calendar/private', '9', 'Privátban küldi el az üzenetet.\nParancsok: nick\nHasználata:\nÓra és perc: {0}calendar private <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar private <éééé.hh.nn> <óó:pp> <üzenet>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'calendar/private/nick', '9', 'Megadott személynek jegyzi fel és privátban küldi el neki.\nHasználata:\nÓra és perc: {0}calendar private nick <név> <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar private nick <név> <éééé.hh.nn> <óó:pp> <üzenet>');
 
 -- enUS
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'xbot', '9', 'Users to use the command list.');
@@ -870,6 +897,14 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'mantisbt/reload/all', '1', 'All RSS reload.\nUse: {0}mantisbt reload <rss name>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'online', '9', 'If you look at who is available and who is not available. If not available, when it was last above.\nUse: {0}online <Name>');
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'wiki', '9', 'If you want something to look for a Wikipedia page.\nUse: {0}wiki <search text>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'calendar', '9','With it you can save messages,events. Commands: loop | nick | private\nUses:\nHour and min: {0}calendar <hh:mm> <message>\nDate, hour and min: {0}calendar <yyyy.mm.dd> <hh:mm> <message>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'calendar/loop', '9', 'Reapet the message daily.\nCommands: nick | private\nHour and min: {0}calendar loop <hh:mm> <message>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'calendar/loop/nick', '9', 'Save for person.\nUses:\nHour and min: {0}calendar loop nick <name> <hh:mm> <message>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'calendar/loop/private', '9', 'Sends the message in private.\nCommands: nick\nUses:\nHour and min: {0}calendar loop private <hh:mm> <message>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'calendar/loop/private/nick', '9', 'Save for person and send in private.\nUses:\nHour and min: {0}calendar loop private nick <name> <hh:mm> <message>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'calendar/nick', '9', 'Save for person. \nUses:\nHour and min: {0}calendar nick <name> <hh:mm> <message>\nDate, Hour and min: {0}calendar nick <name> <yyyy.mm.dd> <hh:mm> <message>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'calendar/private', '9', 'send the message in private.\nCommands: nick\nUses:\nHour and min: {0}calendar private <hh:mm> <message>\nDate, Hour and min: {0}calendar private <yyyy.mm.dd> <hh:mm> <message>');
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('enUS', 'calendar/private/nick', '9', 'Save for person and send it in private.\nUses:\nHour and min: {0}calendar private nick <name> <óó:pp> <message>\nDate, Hour and min: {0}calendar private nick <name> <yyyy.mm.dd> <hh:mm> <message>');
 
 -- ----------------------------
 -- Table structure for "localized_warning"
@@ -921,6 +956,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoCityName', 'Nem adott meg egy városnevet sem!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoMessageFunction', 'A funkció jelenleg nem üzemel!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NotaChannelHasBeenSet', 'Nem csatorna lett megadva!');
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'Calendar', 'Sikeresen feljegyzésre került az üzenet.');
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoName', 'The name is not specified!');
@@ -961,6 +997,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoCityName', 'No such city name!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoMessageFunction', 'This function is currently not operating!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NotaChannelHasBeenSet', 'Not a channel has been set!');
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'Calendar', 'Message succesfuly saved.');
 
 -- ----------------------------
 -- Table structure for "message"

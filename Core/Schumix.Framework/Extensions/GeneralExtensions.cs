@@ -386,5 +386,41 @@ namespace Schumix.Framework.Extensions
 
 			return true;
 		}
+
+		public static bool Contains(this string Text, string Name, char Parameter)
+		{
+			var s = Text.Split(Parameter);
+
+			foreach(var ss in s)
+			{
+				if(ss.ToLower() == Name.ToLower())
+					return true;
+			}
+
+			return false;
+		}
+
+		public static bool IsNumber(this string Text)
+		{
+			double number;
+			return double.TryParse(Text, out number);
+		}
+
+		public static double ToNumber(this string Text)
+		{
+			double number;
+			return double.TryParse(Text, out number) ? number : 0;
+		}
+
+		public static double ToNumber(this string Text, int Else)
+		{
+			double number;
+			return double.TryParse(Text, out number) ? number : Else;
+		}
+
+		public static int ToInt(this double Double)
+		{
+			return Convert.ToInt32(Double);
+		}
 	}
 }

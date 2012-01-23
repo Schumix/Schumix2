@@ -18,20 +18,20 @@
  */
 
 using System;
+using System.Data;
 using System.Collections.Generic;
-using Schumix.Irc;
+using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
-using Schumix.ExtraAddon;
 
-namespace Schumix.ExtraAddon.Commands
+namespace Schumix.Irc
 {
-	class NameList
+	public class ChannelNameList : CommandInfo
 	{
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private NameList() {}
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private ChannelNameList() {}
 
 		public void Add(string Channel, string Name)
 		{
@@ -52,7 +52,20 @@ namespace Schumix.ExtraAddon.Commands
 		public void Remove(string Channel)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
+			{
+				var db = SchumixBase.DManager.Query("SELECT Name FROM admins");
+				if(!db.IsNull())
+				{
+					foreach(DataRow row in db.Rows)
+					{
+						string name = row["Name"].ToString();
+						if(_names[Channel.ToLower()].Contains(name.ToLower(), SchumixBase.Comma))
+							SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", name.ToLower()));
+					}
+				}
+
 				_names.Remove(Channel.ToLower());
+			}
 		}
 
 		public void Remove(string Channel, string Name, bool Quit = false)
@@ -72,7 +85,17 @@ namespace Schumix.ExtraAddon.Commands
 							names += SchumixBase.Comma + name;
 					}
 
+					int i = 0;
 					_names.Add(Channel.ToLower(), names.Remove(0, 1, SchumixBase.Comma));
+
+					foreach(var Channels in _names)
+					{
+						if(Channels.Value.Contains(Name.ToLower(), SchumixBase.Comma))
+							i++;
+					}
+
+					if(i == 0)
+						RandomVhost(Name.ToLower());
 				}
 			}
 			else if(Quit)
@@ -107,12 +130,7 @@ namespace Schumix.ExtraAddon.Commands
 				}
 
 				channel.Clear();
-
-				if(IRCConfig.NickName.ToLower() == Name.ToLower())
-				{
-					ExtraAddon.IsOnline = true;
-					sSender.NickServInfo(Name);
-				}
+				RandomVhost(Name.ToLower());
 			}
 		}
 
@@ -150,12 +168,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 
 			channel.Clear();
-
-			if(IRCConfig.NickName.ToLower() == Name.ToLower() && !Identify)
-			{
-				ExtraAddon.IsOnline = true;
-				sSender.NickServInfo(Name);
-			}
+			RandomVhost(Name.ToLower());
 		}
 
 		public void RemoveAll()

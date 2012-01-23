@@ -115,6 +115,12 @@ namespace Schumix.Irc
 			RegisterHandler(439,                           HandleWaitingForConnection);
 			RegisterHandler(ReplyCode.ERR_NOTREGISTERED,   HandleNotRegistered);
 			RegisterHandler(ReplyCode.ERR_NONICKNAMEGIVEN, HandleNoNickName);
+			RegisterHandler("JOIN",                        HandleIrcJoin);
+			RegisterHandler("PART",                        HandleIrcLeft);
+			RegisterHandler("KICK",                        HandleIrcKick);
+			RegisterHandler("QUIT",                        HandleIrcQuit);
+			RegisterHandler("NICK",                        HandleNewNick);
+			RegisterHandler(ReplyCode.RPL_NAMREPLY,        HandleNameList);
 			Log.Notice("Network", sLConsole.Network("Text5"));
 		}
 
@@ -457,21 +463,19 @@ namespace Schumix.Irc
 					break;
 			}
 
-			double number;
-
 			if(_IRCHandler2.ContainsKey(opcode))
 			{
 				_IRCHandler2[opcode].Invoke(IMessage);
 				return;
 			}
-			else if(double.TryParse(opcode, out number) && _IRCHandler.ContainsKey((ReplyCode)Convert.ToInt32(opcode)))
+			else if(opcode.IsNumber() && _IRCHandler.ContainsKey((ReplyCode)opcode.ToNumber()))
 			{
-				_IRCHandler[(ReplyCode)Convert.ToInt32(opcode)].Invoke(IMessage);
+				_IRCHandler[(ReplyCode)opcode.ToNumber()].Invoke(IMessage);
 				return;
 			}
-			else if(double.TryParse(opcode, out number) && _IRCHandler3.ContainsKey(Convert.ToInt32(opcode)))
+			else if(opcode.IsNumber() && _IRCHandler3.ContainsKey(opcode.ToNumber().ToInt()))
 			{
-				_IRCHandler3[Convert.ToInt32(opcode)].Invoke(IMessage);
+				_IRCHandler3[opcode.ToNumber().ToInt()].Invoke(IMessage);
 				return;
 			}
 			else

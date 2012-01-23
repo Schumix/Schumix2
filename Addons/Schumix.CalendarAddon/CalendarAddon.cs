@@ -35,6 +35,7 @@ namespace Schumix.CalendarAddon
 	class CalendarAddon : ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly CalendarCommand sCalendarCommand = Singleton<CalendarCommand>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly BanCommand sBanCommand = Singleton<BanCommand>.Instance;
@@ -51,17 +52,19 @@ namespace Schumix.CalendarAddon
 			_calendar = new Calendar();
 			_calendar.Start();
 
-			Network.PublicRegisterHandler("PRIVMSG",         HandlePrivmsg);
-			CommandManager.OperatorCRegisterHandler("ban",   sBanCommand.HandleBan);
-			CommandManager.OperatorCRegisterHandler("unban", sBanCommand.HandleUnban);
+			Network.PublicRegisterHandler("PRIVMSG",          HandlePrivmsg);
+			CommandManager.OperatorCRegisterHandler("ban",    sBanCommand.HandleBan);
+			CommandManager.OperatorCRegisterHandler("unban",  sBanCommand.HandleUnban);
+			CommandManager.PublicCRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
 		}
 
 		public void Destroy()
 		{
 			_calendar.Stop();
-			Network.PublicRemoveHandler("PRIVMSG",         HandlePrivmsg);
-			CommandManager.OperatorCRemoveHandler("ban",   sBanCommand.HandleBan);
-			CommandManager.OperatorCRemoveHandler("unban", sBanCommand.HandleUnban);
+			Network.PublicRemoveHandler("PRIVMSG",          HandlePrivmsg);
+			CommandManager.OperatorCRemoveHandler("ban",    sBanCommand.HandleBan);
+			CommandManager.OperatorCRemoveHandler("unban",  sBanCommand.HandleUnban);
+			CommandManager.PublicCRemoveHandler("calendar", sCalendarCommand.HandleCalendar);
 		}
 
 		public bool Reload(string RName)

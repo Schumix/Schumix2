@@ -18,15 +18,72 @@
  */
 
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Collections.Generic;
 using Schumix.Framework;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Server.New
 {
+	class Settings
+	{
+		public string File { get; set; }
+		public string Dir { get; set; }
+		public string Encoding { get; set; }
+		public string Locale { get; set; }
+		public Process Process { get; set; }
+	}
+
 	class Schumix
 	{
+		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private Schumix() {}
+		public readonly Dictionary<string, Settings> _processlist = new Dictionary<string, Settings>();
+
+		private Schumix()
+		{
+			new Thread(Run).Start();
+		}
+
+		private void Run()
+		{
+			var l = new List<string>();
+
+			while(true)
+			{
+				try
+				{
+					foreach(var list in _processlist)
+					{
+						if(IsRunnig(list.Value.Process))
+							l.Add(list.Key);
+					}
+
+					foreach(var ll in l)
+					{
+						Log.Notice("Schumix", sLConsole.Schumix("Text"));
+						_processlist[ll].Process.Dispose();
+						Task.Factory.StartNew(() => Start(_processlist[ll].File, _processlist[ll].Dir, _processlist[ll].Encoding, _processlist[ll].Locale));
+						_processlist.Remove(ll);
+					}
+
+					l.Clear();
+				}
+				catch(Exception e)
+				{
+					Console.WriteLine(e);
+				}
+
+				Thread.Sleep(10*60*1000);
+			}
+		}
+
+		private bool IsRunnig(Process process)
+		{
+			return process.HasExited;
+		}
 
 		public void Start(string File, string Dir, string Encoding, string Locale)
 		{
@@ -47,7 +104,14 @@ namespace Schumix.Server.New
 			}
 
 			exe.Start();
-			exe.Dispose();
+			var settings      = new Settings();
+			settings.File     = File;
+			settings.Dir      = Dir;
+			settings.Encoding = Encoding;
+			settings.Locale   = Locale;
+			settings.Process  = exe;
+			_processlist.Add(sUtilities.GetRandomString(), settings);
+			//exe.Dispose();
 		}
 	}
 }

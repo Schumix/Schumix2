@@ -920,16 +920,13 @@ namespace Schumix.ExtraAddon.Commands
 				return;
 			}
 
-			double Num;
-			bool isNum = double.TryParse(sIRCMessage.Info[4], out Num);
-
-			if(!isNum)
+			if(!sIRCMessage.Info[4].IsNumber())
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 				return;
 			}
 
-			bool prim = sUtilities.IsPrime(Convert.ToInt32(Num));
+			bool prim = sUtilities.IsPrime(sIRCMessage.Info[4].ToNumber().ToInt());
 
 			if(!prim)
 				sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[4]);

@@ -48,6 +48,15 @@ namespace Schumix.CalendarAddon.Localization
 					else
 						return "[UpdateUnban] Failure details: {0}";
 				}
+				case "Error3":
+				{
+					if(Locale == "huHU")
+						return "[UpdateCalendar] Meghibásodás részletei: {0}";
+					else if(Locale == "enUS")
+						return "[UpdateCalendar] Failure details: {0}";
+					else
+						return "[UpdateCalendar] Failure details: {0}";
+				}
 				default:
 					return string.Empty;
 			}
