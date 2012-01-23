@@ -143,8 +143,13 @@ namespace Schumix.CalendarAddon.Commands
 				return;
 			}
 
+			// remove/loop megírása adminoknak
+
 			if(sIRCMessage.Info[4].ToLower() == "loop")
 			{
+				if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
+					return;
+
 				if(sIRCMessage.Info[5].ToLower() == "nick")
 				{
 					if(sIRCMessage.Info.Length < 7)
