@@ -37,6 +37,7 @@ namespace Schumix.Irc
 		{
 			Console.WriteLine();
 			Log.Success("MessageHandler", sLConsole.MessageHandler("Text"));
+			RandomAllVhost();
 
 			if(IRCConfig.UseNickServ)
 			{
@@ -287,6 +288,78 @@ namespace Schumix.Irc
 
 			sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisPrivmsg, text[1]);
 			WhoisPrivmsg = sNickInfo.NickStorage;
+		}
+
+		protected void HandleIrcJoin(IRCMessage sIRCMessage)
+		{
+			if(sIRCMessage.Nick == sNickInfo.NickStorage)
+				return;
+
+			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
+			sChannelNameList.Add(sIRCMessage.Channel, sIRCMessage.Nick);
+		}
+
+		protected void HandleIrcLeft(IRCMessage sIRCMessage)
+		{
+			if(sIRCMessage.Nick == sNickInfo.NickStorage)
+				return;
+
+			sChannelNameList.Remove(sIRCMessage.Channel, sIRCMessage.Nick);
+		}
+
+		protected void HandleIrcQuit(IRCMessage sIRCMessage)
+		{
+			sChannelNameList.Remove(string.Empty, sIRCMessage.Nick, true);
+		}
+
+		protected void HandleNewNick(IRCMessage sIRCMessage)
+		{
+			sChannelNameList.Change(sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
+		}
+
+		protected void HandleIrcKick(IRCMessage sIRCMessage)
+		{
+			if(sIRCMessage.Info.Length < 4)
+				return;
+
+			sChannelNameList.Remove(sIRCMessage.Channel, sIRCMessage.Info[3]);
+		}
+
+		protected void HandleNameList(IRCMessage sIRCMessage)
+		{
+			int i = 0;
+			var split = sIRCMessage.Args.Split(SchumixBase.Space);
+			string Channel = split[1];
+			sChannelNameList.Remove(Channel);
+
+			foreach(var name in sIRCMessage.Args.Split(SchumixBase.Space))
+			{
+				i++;
+
+				if(i < 3)
+					continue;
+
+				sChannelNameList.Add(Channel, Parse(name));
+			}
+		}
+
+		private string Parse(string Name)
+		{
+			if(Name.Length < 1)
+				return string.Empty;
+
+			switch(Name.Substring(0, 1))
+			{
+				case ":":
+				case "~":
+				case "&":
+				case "@":
+				case "%":
+				case "+":
+					return Name.Remove(0, 1);
+				default:
+					return Name;
+			}
 		}
 
 		/// <summary>

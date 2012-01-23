@@ -31,6 +31,7 @@ namespace Schumix.Irc.Commands
 	{
 		protected readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		protected readonly ChannelNameList sChannelNameList = Singleton<ChannelNameList>.Instance;
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		protected readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;

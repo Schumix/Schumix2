@@ -8,7 +8,6 @@
     <ProjectGuid>{E9EBE8DA-CEE7-45CF-B2F5-FD060268BD32}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.CalendarAddon</RootNamespace>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AssemblyName>CalendarAddon</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -50,12 +49,9 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System">
-    </Reference>
-    <Reference Include="System.Data">
-    </Reference>
-    <Reference Include="System.Xml">
-    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalendarAddon.cs" />
@@ -67,6 +63,7 @@
     <Compile Include="Ban\Ban.cs" />
     <Compile Include="Ban\Unban.cs" />
     <Compile Include="Localization\PLocalization.cs" />
+    <Compile Include="Calendar\CalendarFunctions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

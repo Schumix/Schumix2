@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -114,6 +115,23 @@ namespace Schumix.Irc.Commands
 			}
 			else
 				return -1;
+		}
+
+		protected void RandomVhost(string Name)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			if(!db.IsNull())
+				SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", sUtilities.SqlEscape(Name.ToLower())));
+		}
+
+		protected void RandomAllVhost()
+		{
+			var db = SchumixBase.DManager.Query("SELECT Name FROM admins");
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+					SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", row["Name"].ToString()));
+			}
 		}
 	}
 }

@@ -32,13 +32,15 @@ namespace Schumix.CalendarAddon
 {
 	sealed class Calendar
 	{
+		private readonly CalendarFunctions sCalendarFunctions = Singleton<CalendarFunctions>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly Ban sBan = Singleton<Ban>.Instance;
 		private readonly Unban sUnban = Singleton<Unban>.Instance;
+		private readonly Ban sBan = Singleton<Ban>.Instance;
 		private System.Timers.Timer _timerflood = new System.Timers.Timer();
 		private System.Timers.Timer _timerunban = new System.Timers.Timer();
+		private System.Timers.Timer _timercalendar = new System.Timers.Timer();
 		private int flood;
 
 		public Calendar()
@@ -59,6 +61,12 @@ namespace Schumix.CalendarAddon
 			_timerunban.Elapsed += HandleTimerUnbanElapsed;
 			_timerunban.Enabled = true;
 			_timerunban.Start();
+
+			// Calendar
+			_timercalendar.Interval = 60*1000;
+			_timercalendar.Elapsed += HandleTimerCalendarElapsed;
+			_timercalendar.Enabled = true;
+			_timercalendar.Start();
 		}
 
 		public void Stop()
@@ -72,6 +80,11 @@ namespace Schumix.CalendarAddon
 			_timerunban.Enabled = false;
 			_timerunban.Elapsed -= HandleTimerUnbanElapsed;
 			_timerunban.Stop();
+
+			// Calendar
+			_timerunban.Enabled = false;
+			_timerunban.Elapsed -= HandleTimerCalendarElapsed;
+			_timerunban.Stop();
 		}
 		
 		private void HandleTimerFloodElapsed(object sender, ElapsedEventArgs e)
@@ -82,6 +95,11 @@ namespace Schumix.CalendarAddon
 		private void HandleTimerUnbanElapsed(object sender, ElapsedEventArgs e)
 		{
 			UpdateUnban();
+		}
+
+		private void HandleTimerCalendarElapsed(object sender, ElapsedEventArgs e)
+		{
+			UpdateCalendar();
 		}
 
 		private void UpdateFlood()
@@ -105,6 +123,18 @@ namespace Schumix.CalendarAddon
 			catch(Exception e)
 			{
 				Log.Error("Calendar", sLocalization.Exception("Error2"), e.Message);
+			}
+		}
+
+		private void UpdateCalendar()
+		{
+			try
+			{
+				Task.Factory.StartNew(() => CalendarTimeRemove());
+			}
+			catch(Exception e)
+			{
+				Log.Error("Calendar", sLocalization.Exception("Error3"), e.Message);
 			}
 		}
 
@@ -201,6 +231,115 @@ namespace Schumix.CalendarAddon
 												{
 													if(time.Minute == minute)
 														sUnban.UnbanName(name, channel);
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		private void CalendarTimeRemove()
+		{
+			var time = DateTime.Now;
+			var db = SchumixBase.DManager.Query("SELECT Id, Name, Channel, Message, Loops, Year, Month, Day, Hour, Minute FROM calendar");
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					if(row["Loops"].ToString() != string.Empty && Convert.ToBoolean(row["Loops"].ToString()))
+					{
+						string name0 = row["Name"].ToString();
+						string channel0 = row["Channel"].ToString();
+						string message0 = row["Message"].ToString();
+						int day = Convert.ToInt32(row["Day"].ToString());
+
+						if(time.Day == day)
+						{
+							int hour = Convert.ToInt32(row["Hour"].ToString());
+
+							if(time.Hour > hour)
+								continue;
+							else if(time.Hour < hour)
+								continue;
+							else
+							{
+								if(time.Hour == hour)
+								{
+									int minute = Convert.ToInt32(row["Minute"].ToString());
+
+									if(time.Minute > minute)
+										continue;
+									else if(time.Minute < minute)
+										continue;
+									else
+									{
+										if(time.Minute == minute)
+											sCalendarFunctions.Write(name0, channel0, message0);
+									}
+								}
+							}
+						}
+
+						continue;
+					}
+
+					int id = Convert.ToInt32(row["Id"].ToString());
+					string name = row["Name"].ToString();
+					string channel = row["Channel"].ToString();
+					string message = row["Message"].ToString();
+					int year = Convert.ToInt32(row["Year"].ToString());
+
+					if(time.Year > year)
+						sCalendarFunctions.Remove(id);
+					else if(time.Year < year)
+						continue;
+					else if(time.Year == year)
+					{
+						int month = Convert.ToInt32(row["Month"].ToString());
+
+						if(time.Month > month)
+							sCalendarFunctions.Remove(id);
+						else if(time.Month < month)
+							continue;
+						else
+						{
+							int day = Convert.ToInt32(row["Day"].ToString());
+
+							if(time.Month == month)
+							{
+								if(time.Day > day)
+									sCalendarFunctions.Remove(id);
+								else if(time.Day < day)
+									continue;
+								else
+								{
+									if(time.Day == day)
+									{
+										int hour = Convert.ToInt32(row["Hour"].ToString());
+
+										if(time.Hour > hour)
+											sCalendarFunctions.Remove(id);
+										else if(time.Hour < hour)
+											continue;
+										else
+										{
+											if(time.Hour == hour)
+											{
+												int minute = Convert.ToInt32(row["Minute"].ToString());
+
+												if(time.Minute > minute)
+													sCalendarFunctions.Remove(id);
+												else if(time.Minute < minute)
+													continue;
+												else
+												{
+													if(time.Minute == minute)
+														sCalendarFunctions.Write(name, channel, message);
 												}
 											}
 										}

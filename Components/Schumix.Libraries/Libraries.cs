@@ -49,28 +49,42 @@ namespace Schumix.Libraries
 
 		public static string Regex(this string text, string regex)
 		{
-			var x = new Regex(regex);
-
-			if(x.IsMatch(text))
+			try
 			{
-				string s = string.Empty;
+				var x = new Regex(regex);
 
-				for(int a = 1; a < x.Match(text).Length; a++)
+				if(x.IsMatch(text))
 				{
-					if(x.Match(text).Groups[a].ToString() != string.Empty)
-						s += " " + x.Match(text).Groups[a].ToString();
-				}
+					string s = string.Empty;
 
-				return s.Remove(0, 1);
+					for(int a = 1; a < x.Match(text).Length; a++)
+					{
+						if(x.Match(text).Groups[a].ToString() != string.Empty)
+							s += " " + x.Match(text).Groups[a].ToString();
+					}
+
+					return s.Remove(0, 1, ' ');
+				}
+				else
+					return "No Match!";
 			}
-			else
-				return "No Match!";
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		public static string Regex(this string text, string regex, string groups)
 		{
-			var x = new Regex(regex);
-			return x.IsMatch(text) ? x.Match(text).Groups[groups].ToString() : "No Match!";
+			try
+			{
+				var x = new Regex(regex);
+				return x.IsMatch(text) ? x.Match(text).Groups[groups].ToString() : "No Match!";
+			}
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		/// <summary>

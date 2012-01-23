@@ -32,8 +32,8 @@ namespace Schumix.CalendarAddon.Commands
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly Ban sBan = Singleton<Ban>.Instance;
 		private readonly Unban sUnban = Singleton<Unban>.Instance;
+		private readonly Ban sBan = Singleton<Ban>.Instance;
 		private BanCommand() {}
 
 		public void HandleBan(IRCMessage sIRCMessage)
@@ -43,13 +43,13 @@ namespace Schumix.CalendarAddon.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoBanNameOrVhost", sIRCMessage.Channel));
 				return;
 			}
 
 			if(sIRCMessage.Info.Length < 6)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoBanNameOrVhost", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
 				return;
 			}
 
@@ -57,15 +57,15 @@ namespace Schumix.CalendarAddon.Commands
 			{
 				if(sIRCMessage.Info.Length < 7)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
 					return;
 				}
 
-				int hour = Convert.ToInt32(sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)));
+				int hour = sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
 				if(hour > 24)
 					return;
 
-				int minute = Convert.ToInt32(sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)+1));
+				int minute = sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
 				if(minute > 60)
 					return;
 
@@ -75,13 +75,13 @@ namespace Schumix.CalendarAddon.Commands
 			{
 				if(sIRCMessage.Info.Length < 7)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoBanNameOrVhost", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 8)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
 					return;
 				}
 
@@ -92,20 +92,20 @@ namespace Schumix.CalendarAddon.Commands
 					return;
 				}
 
-				int year = Convert.ToInt32(s[0]);
-				int month = Convert.ToInt32(s[1]);
+				int year = s[0].ToNumber().ToInt();
+				int month = s[1].ToNumber(13).ToInt();
 				if(month > 12)
 					return;
 
-				int day = Convert.ToInt32(s[2]);
+				int day = s[2].ToNumber(32).ToInt();
 				if(day > 31)
 					return;
 
-				int hour = Convert.ToInt32(sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)));
+				int hour = sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
 				if(hour > 24)
 					return;
 
-				int minute = Convert.ToInt32(sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)+1));
+				int minute = sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
 				if(minute > 60)
 					return;
 
@@ -125,6 +125,397 @@ namespace Schumix.CalendarAddon.Commands
 			}
 
 			sUnban.UnbanName(sIRCMessage.Info[4], sIRCMessage.Channel);
+		}
+	}
+
+	partial class CalendarCommand : CommandInfo
+	{
+		private readonly CalendarFunctions sCalendarFunctions = Singleton<CalendarFunctions>.Instance;
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private CalendarCommand() {}
+
+		public void HandleCalendar(IRCMessage sIRCMessage)
+		{
+			if(sIRCMessage.Info.Length < 5)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+				return;
+			}
+
+			if(sIRCMessage.Info[4].ToLower() == "loop")
+			{
+				if(sIRCMessage.Info[5].ToLower() == "nick")
+				{
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+						return;
+					}
+
+					if(sIRCMessage.Info[7].Contains(SchumixBase.Colon.ToString()))
+					{
+						if(sIRCMessage.Info.Length < 9)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+							return;
+						}
+
+						int hour = sIRCMessage.Info[7].Substring(0, sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+						if(hour > 24)
+							return;
+	
+						int minute = sIRCMessage.Info[7].Substring(sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+						if(minute > 60)
+							return;
+	
+						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[6].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(8, SchumixBase.Space), hour, minute, true));
+					}
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "private")
+				{
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+						return;
+					}
+	
+					if(sIRCMessage.Info[6].ToLower() == "nick")
+					{
+						if(sIRCMessage.Info.Length < 8)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+							return;
+						}
+	
+						if(sIRCMessage.Info.Length < 9)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+							return;
+						}
+	
+						if(sIRCMessage.Info[8].Contains(SchumixBase.Colon.ToString()))
+						{
+							if(sIRCMessage.Info.Length < 10)
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+								return;
+							}
+	
+							int hour = sIRCMessage.Info[8].Substring(0, sIRCMessage.Info[8].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+							if(hour > 24)
+								return;
+	
+							int minute = sIRCMessage.Info[8].Substring(sIRCMessage.Info[8].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+							if(minute > 60)
+								return;
+	
+							sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[7].ToLower(), sIRCMessage.Info[7].ToLower(), sIRCMessage.Info.SplitToString(9, SchumixBase.Space), hour, minute, true));
+						}
+					}
+					else
+					{
+						if(sIRCMessage.Info[6].Contains(SchumixBase.Colon.ToString()))
+						{
+							if(sIRCMessage.Info.Length < 8)
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+								return;
+							}
+	
+							int hour = sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+							if(hour > 24)
+								return;
+	
+							int minute = sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+							if(minute > 60)
+								return;
+	
+							sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Nick.ToLower(), sIRCMessage.Info.SplitToString(7, SchumixBase.Space), hour, minute, true));
+						}
+					}
+				}
+				else
+				{
+					if(sIRCMessage.Info[5].Contains(SchumixBase.Colon.ToString()))
+					{
+						if(sIRCMessage.Info.Length < 7)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+							return;
+						}
+	
+						int hour = sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+						if(hour > 24)
+							return;
+	
+						int minute = sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+						if(minute > 60)
+							return;
+	
+						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(6, SchumixBase.Space), hour, minute, true));
+					}
+				}
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "nick")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info.Length < 7)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info[6].Contains(SchumixBase.Colon.ToString()))
+				{
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+						return;
+					}
+
+					int hour = sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+					if(hour > 24)
+						return;
+
+					int minute = sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+					if(minute > 60)
+						return;
+
+					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[5].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(7, SchumixBase.Space), hour, minute));
+				}
+				else
+				{
+					if(sIRCMessage.Info.Length < 9)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+						return;
+					}
+
+					string[] s = sIRCMessage.Info[6].Split(SchumixBase.Point);
+					if(s.Length < 3)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("calendar", sIRCMessage.Channel));
+						return;
+					}
+
+					int year = s[0].ToNumber().ToInt();
+					int month = s[1].ToNumber(13).ToInt();
+					if(month > 12)
+						return;
+
+					int day = s[2].ToNumber(32).ToInt();
+					if(day > 31)
+						return;
+
+					int hour = sIRCMessage.Info[7].Substring(0, sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+					if(hour > 24)
+						return;
+
+					int minute = sIRCMessage.Info[7].Substring(sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+					if(minute > 60)
+						return;
+
+					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[5].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(8, SchumixBase.Space), year, month, day, hour, minute));
+				}
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "private")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "nick")
+				{
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+						return;
+					}
+
+					if(sIRCMessage.Info[7].Contains(SchumixBase.Colon.ToString()))
+					{
+						if(sIRCMessage.Info.Length < 9)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+							return;
+						}
+
+						int hour = sIRCMessage.Info[7].Substring(0, sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+						if(hour > 24)
+							return;
+
+						int minute = sIRCMessage.Info[7].Substring(sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+						if(minute > 60)
+							return;
+
+						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[6].ToLower(), sIRCMessage.Info.SplitToString(8, SchumixBase.Space), hour, minute));
+					}
+					else
+					{
+						if(sIRCMessage.Info.Length < 10)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+							return;
+						}
+
+						string[] s = sIRCMessage.Info[7].Split(SchumixBase.Point);
+						if(s.Length < 3)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("calendar", sIRCMessage.Channel));
+							return;
+						}
+
+						int year = s[0].ToNumber().ToInt();
+						int month = s[1].ToNumber(13).ToInt();
+						if(month > 12)
+							return;
+
+						int day = s[2].ToNumber(32).ToInt();
+						if(day > 31)
+							return;
+
+						int hour = sIRCMessage.Info[8].Substring(0, sIRCMessage.Info[8].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+						if(hour > 24)
+							return;
+
+						int minute = sIRCMessage.Info[8].Substring(sIRCMessage.Info[8].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+						if(minute > 60)
+							return;
+
+						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[6].ToLower(), sIRCMessage.Info.SplitToString(9, SchumixBase.Space), year, month, day, hour, minute));
+					}
+				}
+				else
+				{
+					if(sIRCMessage.Info[5].Contains(SchumixBase.Colon.ToString()))
+					{
+						if(sIRCMessage.Info.Length < 7)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+							return;
+						}
+
+						int hour = sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+						if(hour > 24)
+							return;
+
+						int minute = sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+						if(minute > 60)
+							return;
+
+						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Nick.ToLower(), sIRCMessage.Info.SplitToString(6, SchumixBase.Space), hour, minute));
+					}
+					else
+					{
+						if(sIRCMessage.Info.Length < 8)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+							return;
+						}
+
+						string[] s = sIRCMessage.Info[5].Split(SchumixBase.Point);
+						if(s.Length < 3)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("calendar", sIRCMessage.Channel));
+							return;
+						}
+
+						int year = s[0].ToNumber().ToInt();
+						int month = s[1].ToNumber(13).ToInt();
+						if(month > 12)
+							return;
+
+						int day = s[2].ToNumber(32).ToInt();
+						if(day > 31)
+							return;
+
+						int hour = sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+						if(hour > 24)
+							return;
+
+						int minute = sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+						if(minute > 60)
+							return;
+
+						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Nick.ToLower(), sIRCMessage.Info.SplitToString(7, SchumixBase.Space), year, month, day, hour, minute));
+					}
+				}
+			}
+			else
+			{
+				if(sIRCMessage.Info[4].Contains(SchumixBase.Colon.ToString()))
+				{
+					if(sIRCMessage.Info.Length < 6)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+						return;
+					}
+
+					int hour = sIRCMessage.Info[4].Substring(0, sIRCMessage.Info[4].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+					if(hour > 24)
+						return;
+
+					int minute = sIRCMessage.Info[4].Substring(sIRCMessage.Info[4].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+					if(minute > 60)
+						return;
+
+					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space), hour, minute));
+				}
+				else
+				{
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+						return;
+					}
+
+					string[] s = sIRCMessage.Info[4].Split(SchumixBase.Point);
+					if(s.Length < 3)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("calendar", sIRCMessage.Channel));
+						return;
+					}
+
+					int year = s[0].ToNumber().ToInt();
+					int month = s[1].ToNumber(13).ToInt();
+					if(month > 12)
+						return;
+
+					int day = s[2].ToNumber(32).ToInt();
+					if(day > 31)
+						return;
+
+					int hour = sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+					if(hour > 24)
+						return;
+
+					int minute = sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+					if(minute > 60)
+						return;
+
+					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(6, SchumixBase.Space), year, month, day, hour, minute));
+				}
+			}
 		}
 	}
 }

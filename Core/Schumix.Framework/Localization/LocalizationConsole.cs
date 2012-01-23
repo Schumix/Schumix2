@@ -2111,5 +2111,23 @@ namespace Schumix.Framework.Localization
 					return string.Empty;
 			}
 		}
+
+		public string Schumix(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Leállt az egyik Schumix ezért újra lesz indítva.";
+					else if(Locale == "enUS")
+						return "One of the summix has been shuted down, it will be restarted.";
+					else
+						return "One of the summix has been shuted down, it will be restarted.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
 	}
 }
