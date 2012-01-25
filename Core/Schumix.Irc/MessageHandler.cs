@@ -75,7 +75,6 @@ namespace Schumix.Irc
 			}
 
 			SchumixBase.UrlTitleEnabled = true;
-			Environment.Exit(0);
 		}
 
 		protected void HandleWaitingForConnection(IRCMessage sIRCMessage)
