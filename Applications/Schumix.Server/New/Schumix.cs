@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Localization;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Server.New
 {
@@ -57,15 +58,19 @@ namespace Schumix.Server.New
 				{
 					foreach(var list in _processlist)
 					{
-						if(IsRunnig(list.Value.Process))
+						if(list.Value.Process.IsNull() || IsRunnig(list.Value.Process))
 							l.Add(list.Key);
 					}
 
 					foreach(var ll in l)
 					{
 						Log.Notice("Schumix", sLConsole.Schumix("Text"));
-						_processlist[ll].Process.Dispose();
+
+						if(!_processlist[ll].Process.IsNull())
+							_processlist[ll].Process.Dispose();
+
 						Task.Factory.StartNew(() => Start(_processlist[ll].File, _processlist[ll].Dir, _processlist[ll].Encoding, _processlist[ll].Locale));
+						Thread.Sleep(10*1000);
 						_processlist.Remove(ll);
 					}
 
@@ -73,7 +78,7 @@ namespace Schumix.Server.New
 				}
 				catch(Exception e)
 				{
-					Console.WriteLine(e);
+					Log.Error("Schumix", sLConsole.Exception("Error"), e.Message);
 				}
 
 				Thread.Sleep(10*60*1000);
