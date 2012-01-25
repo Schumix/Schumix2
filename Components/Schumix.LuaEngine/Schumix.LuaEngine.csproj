@@ -10,7 +10,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Schumix.LuaEngine</RootNamespace>
     <AssemblyName>Schumix.LuaEngine</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -55,30 +54,20 @@
     <AssemblyOriginatorKeyFile>Schumix.LuaEngine.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System">
-    </Reference>
-    <Reference Include="System.Core">
-    </Reference>
-    <Reference Include="System.Xml.Linq">
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-    </Reference>
-    <Reference Include="Microsoft.CSharp">
-    </Reference>
-    <Reference Include="System.Data">
-    </Reference>
-    <Reference Include="System.Xml">
-    </Reference>
-    <Reference Include="lua51, Version=0.0.0.0, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="lua51">
       <HintPath>..\..\Dependencies\lua51.dll</HintPath>
     </Reference>
-    <Reference Include="LuaInterface, Version=2.0.4.24053, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="LuaInterface">
       <HintPath>..\..\Dependencies\LuaInterface.dll</HintPath>
     </Reference>
-    <Reference Include="Mono.LuaInterface, Version=2.0.1.32612, Culture=neutral, PublicKeyToken=null">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Mono.LuaInterface">
       <HintPath>..\..\Dependencies\Mono.LuaInterface.dll</HintPath>
     </Reference>
   </ItemGroup>
