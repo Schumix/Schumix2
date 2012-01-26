@@ -21,10 +21,12 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Globalization;
 using Schumix.Irc;
 using Schumix.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix
@@ -126,13 +128,16 @@ namespace Schumix
 				}
 			}
 
-			double Num;
-			bool isNum = double.TryParse(console_encoding, out Num);
-
-			if(!isNum)
-				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
+			if(sUtilities.GetCompiler() == Compiler.VisualStudio && console_encoding == "utf-8" &&
+			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
+				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 			else
-				System.Console.OutputEncoding = Encoding.GetEncoding(Convert.ToInt32(Num)); // Magyar karakterkódolás windows xp-n: 852
+			{
+				if(!console_encoding.IsNumber())
+					System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
+				else
+					System.Console.OutputEncoding = Encoding.GetEncoding(Convert.ToInt32(console_encoding));
+			}
 
 			sLConsole.Locale = localization;
 			System.Console.Title = SchumixBase.Title;
