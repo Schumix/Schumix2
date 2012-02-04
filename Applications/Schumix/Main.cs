@@ -128,10 +128,16 @@ namespace Schumix
 				}
 			}
 
-			if(!console_encoding.IsNumber())
-				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
+			if(sUtilities.GetCompiler() == Compiler.VisualStudio && console_encoding == "utf-8" &&
+			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
+				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 			else
-				System.Console.OutputEncoding = Encoding.GetEncoding(Convert.ToInt32(console_encoding));
+			{
+				if(!console_encoding.IsNumber())
+					System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
+				else
+					System.Console.OutputEncoding = Encoding.GetEncoding(Convert.ToInt32(console_encoding));
+			}
 
 			sLConsole.Locale = localization;
 			System.Console.Title = SchumixBase.Title;
@@ -152,10 +158,6 @@ namespace Schumix
 				sLConsole.Locale = LocalizationConfig.Locale;
 			else if(localization != "start")
 				sLConsole.Locale = localization;
-
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio && console_encoding == "utf-8" &&
-			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
-				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
 			new ServerConfig(serverenabled ? serverenabled : ServerConfig.Enabled, serverhost != "0.0.0.0" ? serverhost : ServerConfig.Host,
 				serverport != -1 ? serverport : ServerConfig.Port, serverpassword != "0" ? serverpassword : ServerConfig.Password);
