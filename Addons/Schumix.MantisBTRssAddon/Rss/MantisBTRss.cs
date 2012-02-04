@@ -139,7 +139,10 @@ namespace Schumix.MantisBTRssAddon
 			catch(Exception e)
 			{
 				Log.Error("MantisBTRss", sLocalization.Exception("Error2"), _name, e.Message);
-				Update();
+				Thread.Sleep(RssConfig.QueryTime*1000);
+
+				if(e.Message != "Thread was being aborted")
+					Update();
 			}
 		}
 

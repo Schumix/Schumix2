@@ -309,7 +309,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private void HandleIsOwnerAfk(object sender, ElapsedEventArgs e)
 		{
-			if((DateTime.Now - OwnerMsgTime).Minutes >= 10)
+			if((DateTime.Now - OwnerMsgTime).Minutes >= 10 && _owner != string.Empty)
 			{
 				_owner = string.Empty;
 				sSendMessage.SendCMPrivmsg(_channel, "A játék indítója több mint 10 perce nincs itt.");
