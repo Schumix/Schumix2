@@ -32,6 +32,8 @@ namespace Schumix.ExtraAddon.Commands
 {
 	partial class Functions
 	{
+		private readonly object Lock = new object();
+
 		public void HLMessage(IRCMessage sIRCMessage)
 		{
 			if(sChannelInfo.FSelect(IFunctions.Autohl) && sChannelInfo.FSelect(IChannelFunctions.Autohl, sIRCMessage.Channel))
@@ -132,18 +134,21 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void Message(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect(IFunctions.Message) && sChannelInfo.FSelect(IChannelFunctions.Message, sIRCMessage.Channel))
+			lock(Lock)
 			{
-				var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower());
-				if(!db.IsNull())
+				if(sChannelInfo.FSelect(IFunctions.Message) && sChannelInfo.FSelect(IChannelFunctions.Message, sIRCMessage.Channel))
 				{
-					foreach(DataRow row in db.Rows)
+					var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower());
+					if(!db.IsNull())
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "{0}: {1}", sIRCMessage.Nick, row["Message"].ToString());
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message2", sIRCMessage.Channel), row["Wrote"].ToString());
-					}
+						foreach(DataRow row in db.Rows)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, "{0}: {1}", sIRCMessage.Nick, row["Message"].ToString());
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message2", sIRCMessage.Channel), row["Wrote"].ToString());
+						}
 
-					SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower()));
+						SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower()));
+					}
 				}
 			}
 		}
