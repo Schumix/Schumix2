@@ -66,6 +66,7 @@ namespace Schumix
 		private static void Main(string[] args)
 		{
 			sRuntime.SetProcessName("Schumix");
+			string s = string.Empty;
 			string configdir = "Configs";
 			string configfile = "Schumix.xml";
 			string console_encoding = "utf-8";
@@ -82,6 +83,7 @@ namespace Schumix
 			for(int i = 0; i < args.Length; i++)
 			{
 				string arg = args[i];
+				s += SchumixBase.Space + arg;
 
 				if(arg == "-h" || arg == "--help")
 				{
@@ -128,16 +130,23 @@ namespace Schumix
 					serverpassword = arg.Substring(arg.IndexOf("=")+1);
 					continue;
 				}
-				else if(arg.Contains("--server-configs="))
-				{
-					serverconfig = arg.Substring(arg.IndexOf("=")+1);
-					continue;
-				}
 				else if(arg.Contains("--server-identify="))
 				{
 					serveridentify = arg.Substring(arg.IndexOf("=")+1);
 					continue;
 				}
+			}
+
+			s = s.Remove(0, 1, SchumixBase.Space);
+
+			if(s.Contains("--server-configs="))
+			{
+				serverconfig = s.Remove(0, s.IndexOf("--server-configs=") + "--server-configs=".Length);
+
+				if(serverconfig.Contains("; "))
+					serverconfig = serverconfig.Substring(0, serverconfig.IndexOf("; "));
+				else
+					serverconfig = serverconfig.Substring(0, serverconfig.Length);
 			}
 
 			if(!console_encoding.IsNumber())

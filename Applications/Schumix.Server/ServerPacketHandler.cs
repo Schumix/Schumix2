@@ -26,7 +26,6 @@ using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Client;
 using Schumix.Framework.Localization;
-using Schumix.Server.New;
 using Schumix.Server.Config;
 
 namespace Schumix.Server
