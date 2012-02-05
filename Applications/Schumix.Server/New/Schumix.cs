@@ -71,7 +71,7 @@ namespace Schumix.Server.New
 						if(!_processlist[ll].Process.IsNull())
 							_processlist[ll].Process.Dispose();
 
-						Task.Factory.StartNew(() => Start(_processlist[ll].File, _processlist[ll].Dir, _processlist[ll].Encoding, _processlist[ll].Locale, _processlist[ll].Configs));
+						Task.Factory.StartNew(() => Start(_processlist[ll].File, _processlist[ll].Dir, _processlist[ll].Encoding, _processlist[ll].Locale, _processlist[ll].Identify, _processlist[ll].Configs));
 						Thread.Sleep(10*1000);
 						_processlist.Remove(ll);
 					}
