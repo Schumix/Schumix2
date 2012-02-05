@@ -84,7 +84,7 @@ namespace Schumix.Framework.Client
 			packet.Write<string>(SchumixBase.GetGuid().ToString());
 			packet.Write<string>(sUtilities.Md5(_password));
 			packet.Write<string>(SchumixBase.ServerIdentify);
-			packet.Write<string>(string.Empty);
+			packet.Write<string>(configs);
 			SendPacketToSCS(packet);
 		}
 		

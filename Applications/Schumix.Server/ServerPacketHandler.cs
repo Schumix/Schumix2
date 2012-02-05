@@ -168,6 +168,8 @@ namespace Schumix.Server
 
 			if(Schumix.Server.New.Schumix._processlist.ContainsKey(identify))
 				sSchumix.Start(file, dir, ce, locale, sUtilities.GetRandomString(), Schumix.Server.New.Schumix._processlist[identify].Configs);
+
+			Schumix.Server.New.Schumix._processlist.Remove(identify);
 		}
 
 		private void NickNameHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
