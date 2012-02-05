@@ -240,7 +240,7 @@ namespace Schumix.Framework
 				throw new ArgumentNullException("value");
 
 			var x = new SHA1CryptoServiceProvider();
-			var data = Encoding.ASCII.GetBytes(value);
+			var data = Encoding.UTF8.GetBytes(value);
 			data = x.ComputeHash(data);
 //#if !MONO
 			//x.Dispose();
@@ -259,7 +259,7 @@ namespace Schumix.Framework
 				throw new ArgumentNullException("value");
 
 			var x = new MD5CryptoServiceProvider();
-			var data = Encoding.ASCII.GetBytes(value);
+			var data = Encoding.UTF8.GetBytes(value);
 			data = x.ComputeHash(data);
 //#if !MONO
 			//x.Dispose();
