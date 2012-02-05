@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Client;
 using Schumix.Framework.Localization;
+using Schumix.Server.New;
 using Schumix.Server.Config;
 
 namespace Schumix.Server
@@ -130,6 +131,12 @@ namespace Schumix.Server
 				var packet = new SchumixPacket();
 				packet.Write<int>((int)Opcode.SMSG_AUTH_APPROVED);
 				packet.Write<int>((int)1);
+				string identify = pck.Read<string>();
+				string configs = pck.Read<string>();
+
+				if(Schumix.Server.New.Schumix._processlist.ContainsKey(identify))
+					Schumix.Server.New.Schumix._processlist[identify].Configs = configs;
+
 				SendPacketBack(packet, stream, hst, bck);
 			}
 		}
@@ -148,6 +155,7 @@ namespace Schumix.Server
 			string ce = pck.Read<string>();
 			string locale = pck.Read<string>();
 			bool reconnect = pck.Read<bool>();
+			string identify = pck.Read<string>();
 			Log.Warning("CloseHandler", sLConsole.ServerPacketHandler("Text6"), guid);
 
 			if(hst != "127.0.0.1")
@@ -157,7 +165,9 @@ namespace Schumix.Server
 				return;
 
 			Log.Notice("CloseHandler", sLConsole.ServerPacketHandler("Text7"));
-			sSchumix.Start(file, dir, ce, locale);
+
+			if(Schumix.Server.New.Schumix._processlist.ContainsKey(identify))
+				sSchumix.Start(file, dir, ce, locale, sUtilities.GetRandomString(), Schumix.Server.New.Schumix._processlist[identify].Configs);
 		}
 
 		private void NickNameHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
