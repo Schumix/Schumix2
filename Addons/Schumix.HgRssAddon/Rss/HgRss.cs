@@ -143,21 +143,33 @@ namespace Schumix.HgRssAddon
 						{
 							url = GetUrl();
 							if(url.IsNull())
+							{
+								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
+							}
 
 							newrev = Revision(url);
 							if(newrev == "no text")
+							{
+								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
+							}
 
 							if(_oldrev != newrev)
 							{
 								title = Title(url);
 								if(title == "no text")
+								{
+									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
+								}
 
 								author = Author(url);
 								if(author == "no text")
+								{
+									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
+								}
 
 								Informations(newrev, title, author);
 								_oldrev = newrev;

@@ -105,21 +105,33 @@ namespace Schumix.MantisBTRssAddon
 						{
 							url = GetUrl();
 							if(url.IsNull())
+							{
+								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
+							}
 
 							newbug = BugCode(url);
 							if(newbug == "no text")
+							{
+								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
+							}
 
 							if(_oldbug != newbug)
 							{
 								title = Title(url);
 								if(title == "no text")
+								{
+									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
+								}
 
 								link = Link(url);
 								if(link == "no text")
+								{
+									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
+								}
 
 								Informations(newbug, title, link);
 								_oldbug = newbug;

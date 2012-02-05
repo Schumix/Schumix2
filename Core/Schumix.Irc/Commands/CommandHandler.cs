@@ -42,6 +42,7 @@ namespace Schumix.Irc.Commands
 		protected readonly Sender sSender = Singleton<Sender>.Instance;
 		protected string ChannelPrivmsg { get; set; }
 		protected string WhoisPrivmsg { get; set; }
+		protected string NewNickPrivmsg { get; set; }
 		protected string OnlinePrivmsg { get; set; }
 		protected bool IsOnline { get; set; }
 		protected CommandHandler() {}

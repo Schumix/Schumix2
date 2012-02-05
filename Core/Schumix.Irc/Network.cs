@@ -101,26 +101,27 @@ namespace Schumix.Irc
 
 		private void InitHandler()
 		{
-			RegisterHandler(ReplyCode.RPL_WELCOME,         HandleSuccessfulAuth);
-			RegisterHandler("PING",                        HandlePing);
-			RegisterHandler("PONG",                        HandlePong);
-			RegisterHandler("PRIVMSG",                     HandlePrivmsg);
-			RegisterHandler("NOTICE",                      HandleNotice);
-			RegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,  HandleChannelBan);
-			RegisterHandler(ReplyCode.ERR_BADCHANNELKEY,   HandleNoChannelPassword);
-			RegisterHandler(ReplyCode.RPL_WHOISCHANNELS,   HandleMWhois);
-			RegisterHandler(ReplyCode.ERR_NOSUCHNICK,      HandleNoWhois);
-			RegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND,  HandleUnknownCommand);
-			RegisterHandler(ReplyCode.ERR_NICKNAMEINUSE,   HandleNickError);
-			RegisterHandler(439,                           HandleWaitingForConnection);
-			RegisterHandler(ReplyCode.ERR_NOTREGISTERED,   HandleNotRegistered);
-			RegisterHandler(ReplyCode.ERR_NONICKNAMEGIVEN, HandleNoNickName);
-			RegisterHandler("JOIN",                        HandleIrcJoin);
-			RegisterHandler("PART",                        HandleIrcLeft);
-			RegisterHandler("KICK",                        HandleIrcKick);
-			RegisterHandler("QUIT",                        HandleIrcQuit);
-			RegisterHandler("NICK",                        HandleNewNick);
-			RegisterHandler(ReplyCode.RPL_NAMREPLY,        HandleNameList);
+			RegisterHandler(ReplyCode.RPL_WELCOME,          HandleSuccessfulAuth);
+			RegisterHandler("PING",                         HandlePing);
+			RegisterHandler("PONG",                         HandlePong);
+			RegisterHandler("PRIVMSG",                      HandlePrivmsg);
+			RegisterHandler("NOTICE",                       HandleNotice);
+			RegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,   HandleChannelBan);
+			RegisterHandler(ReplyCode.ERR_BADCHANNELKEY,    HandleNoChannelPassword);
+			RegisterHandler(ReplyCode.RPL_WHOISCHANNELS,    HandleMWhois);
+			RegisterHandler(ReplyCode.ERR_NOSUCHNICK,       HandleNoWhois);
+			RegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND,   HandleUnknownCommand);
+			RegisterHandler(ReplyCode.ERR_NICKNAMEINUSE,    HandleNickError);
+			RegisterHandler(439,                            HandleWaitingForConnection);
+			RegisterHandler(ReplyCode.ERR_NOTREGISTERED,    HandleNotRegistered);
+			RegisterHandler(ReplyCode.ERR_NONICKNAMEGIVEN,  HandleNoNickName);
+			RegisterHandler("JOIN",                         HandleIrcJoin);
+			RegisterHandler("PART",                         HandleIrcLeft);
+			RegisterHandler("KICK",                         HandleIrcKick);
+			RegisterHandler("QUIT",                         HandleIrcQuit);
+			RegisterHandler("NICK",                         HandleNewNick);
+			RegisterHandler(ReplyCode.RPL_NAMREPLY,         HandleNameList);
+			RegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandlerErrorNewNickName);
 			Log.Notice("Network", sLConsole.Network("Text5"));
 		}
 

@@ -10,7 +10,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WolframAPI</RootNamespace>
     <AssemblyName>WolframAPI</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
   </PropertyGroup>
@@ -164,14 +163,10 @@
   </Target>
   -->
   <ItemGroup>
-    <Reference Include="System.Web">
-    </Reference>
-    <Reference Include="System.Xml">
-    </Reference>
-    <Reference Include="System">
-    </Reference>
-    <Reference Include="System.Core">
-    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">

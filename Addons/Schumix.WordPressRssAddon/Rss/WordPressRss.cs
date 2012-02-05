@@ -27,30 +27,30 @@ using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.SvnRssAddon.Config;
-using Schumix.SvnRssAddon.Localization;
+using Schumix.WordPressRssAddon.Config;
+using Schumix.WordPressRssAddon.Localization;
 
-namespace Schumix.SvnRssAddon
+namespace Schumix.WordPressRssAddon
 {
-	sealed class SvnRss
+	sealed class WordPressRss
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private XmlNamespaceManager _ns;
 		private Thread _thread;
 		private readonly string _name;
 		private readonly string _url;
-		private readonly string _website;
-		private string _oldrev;
+		private string _oldguid;
+		private string _guid;
 		private string _title;
 		private string _author;
-		private string[] info;
 		private string _username;
 		private string _password;
 		public bool Started { get; private set; }
 
-		public SvnRss(string name, string url, string website)
+		public WordPressRss(string name, string url)
 		{
 			_name = name;
 
@@ -71,22 +71,42 @@ namespace Schumix.SvnRssAddon
 				_password = string.Empty;
 			}
 
-			_website = website;
 			Init();
+
+			if(_username != string.Empty && _password != string.Empty)
+			{
+				using(var client = new WebClient())
+				{
+					client.Credentials = new NetworkCredential(_username, _password);
+					client.Encoding = Encoding.UTF8;
+					string xml = client.DownloadString(_url);
+					var rss = new XmlDocument();
+					rss.LoadXml(xml);
+					xml = string.Empty;
+					_ns = new XmlNamespaceManager(rss.NameTable);
+					_ns.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
+				}
+			}
+			else
+			{
+				using(var client = new WebClient())
+				{
+					client.Encoding = Encoding.UTF8;
+					string xml = client.DownloadString(_url);
+					var rss = new XmlDocument();
+					rss.LoadXml(xml);
+					xml = string.Empty;
+					_ns = new XmlNamespaceManager(rss.NameTable);
+					_ns.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
+				}
+			}
 		}
 
 		private void Init()
 		{
-			if(_website == "assembla")
-			{
-				_title = "rss/channel/item/title";
-				_author = "rss/channel/item/author";
-			}
-			else
-			{
-				_title = string.Empty;
-				_author = string.Empty;
-			}
+			_guid = "rss/channel/item/guid";
+			_title = "rss/channel/item/title";
+			_author = "rss/channel/item/dc:creator";
 		}
 
 		public string Name
@@ -119,19 +139,19 @@ namespace Schumix.SvnRssAddon
 			try
 			{
 				XmlDocument url;
-				string newrev;
+				string newguid;
 				string title;
 				string author;
 
 				url = GetUrl();
 				if(!url.IsNull())
-					_oldrev = Revision(url);
+					_oldguid = Guid(url);
 
 				while(true)
 				{
 					try
 					{
-						if(sChannelInfo.FSelect(IFunctions.Svn))
+						if(sChannelInfo.FSelect(IFunctions.Wordpress))
 						{
 							url = GetUrl();
 							if(url.IsNull())
@@ -140,14 +160,14 @@ namespace Schumix.SvnRssAddon
 								continue;
 							}
 
-							newrev = Revision(url);
-							if(newrev == "no text")
+							newguid = Guid(url);
+							if(newguid == "no text")
 							{
 								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
 							}
 
-							if(_oldrev != newrev)
+							if(_oldguid != newguid)
 							{
 								title = Title(url);
 								if(title == "no text")
@@ -163,8 +183,8 @@ namespace Schumix.SvnRssAddon
 									continue;
 								}
 
-								Informations(newrev, title, author);
-								_oldrev = newrev;
+								Informations(newguid, title, author);
+								_oldguid = newguid;
 							}
 
 							url.RemoveAll();
@@ -176,14 +196,14 @@ namespace Schumix.SvnRssAddon
 					}
 					catch(Exception e)
 					{
-						Log.Error("SvnRss", sLocalization.Exception("Error"), _name, e.Message);
+						Log.Error("WordPressRss", sLocalization.Exception("Error"), _name, e.Message);
 						Thread.Sleep(RssConfig.QueryTime*1000);
 					}
 				}
 			}
 			catch(Exception e)
 			{
-				Log.Error("SvnRss", sLocalization.Exception("Error2"), _name, e.Message);
+				Log.Error("WordPressRss", sLocalization.Exception("Error2"), _name, e.Message);
 				Thread.Sleep(RssConfig.QueryTime*1000);
 
 				if(e.Message != "Thread was being aborted")
@@ -223,7 +243,7 @@ namespace Schumix.SvnRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("SvnRss", sLocalization.Exception("Error"), _name, e.Message);
+				Log.Error("WordPressRss", sLocalization.Exception("Error"), _name, e.Message);
 				Thread.Sleep(RssConfig.QueryTime*1000);
 			}
 
@@ -238,41 +258,19 @@ namespace Schumix.SvnRssAddon
 
 		private string Author(XmlDocument rss)
 		{
-			var author = rss.SelectSingleNode(_author);
+			var author = rss.SelectSingleNode(_author, _ns);
 			return author.IsNull() ? "no text" : author.InnerText;
 		}
 
-		private string Revision(XmlDocument rss)
+		private string Guid(XmlDocument rss)
 		{
-			if(_website == "assembla")
-			{
-				var title = rss.SelectSingleNode(_title);
-				if(title.IsNull())
-					return "no text";
-
-				string rev = title.InnerText;
-				info = rev.Split('[');
-
-				if(info.Length < 2)
-					return "no text";
-
-				if(info[0] != "Changeset ")
-					return "no text";
-
-				string i = info[1];
-
-				if(!i.Contains("]"))
-					return "no text";
-
-				return i.Substring(0, i.IndexOf("]"));
-			}
-
-			return "no text";
+			var guid = rss.SelectSingleNode(_guid);
+			return guid.IsNull() ? "no text" : guid.InnerText;
 		}
 
-		private void Informations(string rev, string title, string author)
+		private void Informations(string guid, string title, string author)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM svninfo WHERE Name = '{0}'", _name);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM wordpressinfo WHERE Name = '{0}'", _name);
 			if(!db.IsNull())
 			{
 				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
@@ -280,15 +278,8 @@ namespace Schumix.SvnRssAddon
 				foreach(var chan in channel)
 				{
 					string language = sLManager.GetChannelLocalization(chan);
-
-					if(_website == "assembla")
-					{
-						if(title.Contains(SchumixBase.Colon.ToString()))
-						{
-							sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla", language), _name, rev, author);
-							sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
-						}
-					}
+					sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress", language), _name, author, guid);
+					sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress2", language), _name, title);
 
 					Thread.Sleep(1000);
 				}

@@ -8,7 +8,6 @@
     <ProjectGuid>{8BFD953F-8C81-4E6C-9113-6DC842F6488A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.CompilerAddon</RootNamespace>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AssemblyName>CompilerAddon</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -57,10 +56,8 @@
     <Compile Include="Localization\PLocalization.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System">
-    </Reference>
-    <Reference Include="System.Xml">
-    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -71,6 +71,7 @@ namespace Schumix.Irc
 
 				WhoisPrivmsg = sNickInfo.NickStorage;
 				ChannelPrivmsg = sNickInfo.NickStorage;
+				NewNickPrivmsg = string.Empty;
 				sChannelInfo.JoinChannel();
 			}
 
@@ -224,11 +225,25 @@ namespace Schumix.Irc
 		/// </summary>
 		protected void HandleNickError(IRCMessage sIRCMessage)
 		{
-			Log.Error("MessageHandler", sLConsole.MessageHandler("Text6"), sNickInfo.NickStorage);
-			string nick = sNickInfo.ChangeNick();
-			Log.Notice("MessageHandler", sLConsole.MessageHandler("Text7"), nick);
-			NewNick = true;
-			sSender.Nick(nick);
+			if(NewNickPrivmsg == string.Empty)
+			{
+				Log.Error("MessageHandler", sLConsole.MessageHandler("Text6"), sNickInfo.NickStorage);
+				string nick = sNickInfo.ChangeNick();
+				Log.Notice("MessageHandler", sLConsole.MessageHandler("Text7"), nick);
+				NewNick = true;
+				sSender.Nick(nick);
+			}
+			else
+			{
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text14"));
+				NewNickPrivmsg = string.Empty;
+			}
+		}
+
+		protected void HandlerErrorNewNickName(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text15"));
+			NewNickPrivmsg = string.Empty;
 		}
 
 		/// <summary>
