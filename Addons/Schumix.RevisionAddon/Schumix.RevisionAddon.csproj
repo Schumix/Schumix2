@@ -8,7 +8,6 @@
     <ProjectGuid>{1079D7FE-800A-409C-AE4D-9EC577DCE8DF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.RevisionAddon</RootNamespace>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AssemblyName>RevisionAddon</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -50,8 +49,7 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System">
-    </Reference>
+    <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

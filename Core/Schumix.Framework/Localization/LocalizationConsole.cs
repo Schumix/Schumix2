@@ -1207,6 +1207,24 @@ namespace Schumix.Framework.Localization
 					else
 						return "Last seen time: {0}";
 				}
+				case "Text14":
+				{
+					if(Language == "huHU")
+						return "Foglalt ez a nick!";
+					else if(Language == "enUS")
+						return "Nickname is already in use!";
+					else
+						return "Nickname is already in use!";
+				}
+				case "Text15":
+				{
+					if(Language == "huHU")
+						return "Hibás a megadott nick!";
+					else if(Language == "enUS")
+						return "Erroneous Nickname!";
+					else
+						return "Erroneous Nickname!";
+				}
 				default:
 					return string.Empty;
 			}

@@ -41,7 +41,9 @@ namespace Schumix.API
 		Gamecommands,
 		Webtitle,
 		Randomkick,
-		Mantisbt
+		Mantisbt,
+		Wordpress,
+		Chatterbot
 	};
 
 	public enum IChannelFunctions
@@ -58,7 +60,8 @@ namespace Schumix.API
 		Compiler,
 		Gamecommands,
 		Webtitle,
-		Randomkick
+		Randomkick,
+		Chatterbot
 	};
 
 	public class IFunctionsClass

@@ -8,7 +8,6 @@
     <ProjectGuid>{9BDBD8CA-119B-4AA7-8B8E-9F0E5CFC2BE8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.ExtraAddon</RootNamespace>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <AssemblyName>ExtraAddon</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -67,12 +66,9 @@
     <Folder Include="Config\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="System">
-    </Reference>
-    <Reference Include="System.Xml">
-    </Reference>
-    <Reference Include="System.Data">
-    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
