@@ -146,11 +146,11 @@ namespace Schumix.GitRssAddon.Localization
 				case "github":
 				{
 					if(Language == "huHU")
-						return "3{0} 7{1} Revision: 10{2}";
+						return "3{0} 7{1} Revision: 10{2} beküldte: {3}";
 					else if(Language == "enUS")
-						return "3{0} 7{1} Revision: 10{2}";
+						return "3{0} 7{1} Revision: 10{2} by {3}";
 					else
-						return "3{0} 7{1} Revision: 10{2}";
+						return "3{0} 7{1} Revision: 10{2} by {3}";
 				}
 				case "github2":
 				{

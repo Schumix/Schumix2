@@ -112,7 +112,7 @@ namespace Schumix.GitRssAddon
 			{
 				_id = "ga:feed/ga:entry/ga:id";
 				_title = "ga:feed/ga:entry/ga:title";
-				_author = string.Empty;
+				_author = "ga:feed/ga:entry/ga:author/ga:name";
 			}
 			else if(_website == "gitweb")
 			{
@@ -191,16 +191,11 @@ namespace Schumix.GitRssAddon
 								if(title == "no text")
 									continue;
 
-								if(_website != "github")
-								{
-									author = Author(url);
-									if(author == "no text")
-										continue;
+								author = Author(url);
+								if(author == "no text")
+									continue;
 
-									Informations(newrev, title, author);
-								}
-								else
-									Informations(newrev, title, string.Empty);
+								Informations(newrev, title, author);
 
 								_oldrev = newrev;
 							}
@@ -325,7 +320,7 @@ namespace Schumix.GitRssAddon
 
 					if(_website == "github")
 					{
-						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, _type, rev.Substring(0, 10));
+						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, _type, rev.Substring(0, 10), (author == string.Empty ? "?" : author));
 						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github2", language), _name, title);
 					}
 					else if(_website == "gitweb")
