@@ -134,7 +134,7 @@ namespace Schumix.Framework
 			packet.Write<string>(SchumixConfig.ConfigDirectory);
 			packet.Write<string>("utf-8");
 			packet.Write<string>(LocalizationConfig.Locale);
-			packet.Write<bool>(Reconnect);
+			packet.Write<string>(Reconnect.ToString());
 			packet.Write<string>(SchumixBase.ServerIdentify);
 			ClientSocket.SendPacketToSCS(packet);
 		}
