@@ -78,7 +78,6 @@ namespace Schumix.Framework.Client
 			configs += AddonsConfig.Enabled + ";" + AddonsConfig.Ignore + ";" + AddonsConfig.Directory + ";";
 			configs += ScriptsConfig.Lua + ";" + ScriptsConfig.Directory + ";";
 			configs += LocalizationConfig.Locale + ";";
-			Log.Notice("ClientSocket", configs);
 
 			var packet = new SchumixPacket();
 			packet.Write<int>((int)Opcode.CMSG_REQUEST_AUTH);
