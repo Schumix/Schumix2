@@ -74,6 +74,8 @@ namespace Schumix
 			int serverport = -1;
 			string serverhost = "0.0.0.0";
 			string serverpassword = "0";
+			string serverconfig = string.Empty;
+			string serveridentify = string.Empty;
 			System.Console.BackgroundColor = ConsoleColor.Black;
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 
@@ -126,6 +128,16 @@ namespace Schumix
 					serverpassword = arg.Substring(arg.IndexOf("=")+1);
 					continue;
 				}
+				else if(arg.Contains("--server-configs="))
+				{
+					serverconfig = arg.Substring(arg.IndexOf("=")+1);
+					continue;
+				}
+				else if(arg.Contains("--server-identify="))
+				{
+					serveridentify = arg.Substring(arg.IndexOf("=")+1);
+					continue;
+				}
 			}
 
 			if(!console_encoding.IsNumber())
@@ -146,7 +158,13 @@ namespace Schumix
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 			System.Console.WriteLine();
 
-			new Config(configdir, configfile);
+			if(serverconfig != string.Empty && serverenabled)
+				new Config(serverconfig.Split(';'));
+			else
+				new Config(configdir, configfile);
+
+			if(serveridentify != string.Empty)
+				SchumixBase.ServerIdentify = serveridentify;
 
 			if(localization == "start")
 				sLConsole.Locale = LocalizationConfig.Locale;

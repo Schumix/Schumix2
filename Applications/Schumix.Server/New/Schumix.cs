@@ -34,6 +34,8 @@ namespace Schumix.Server.New
 		public string Dir { get; set; }
 		public string Encoding { get; set; }
 		public string Locale { get; set; }
+		public string Configs { get; set; }
+		public string Identify { get; set; }
 		public Process Process { get; set; }
 	}
 
@@ -41,7 +43,7 @@ namespace Schumix.Server.New
 	{
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public readonly Dictionary<string, Settings> _processlist = new Dictionary<string, Settings>();
+		public static readonly Dictionary<string, Settings> _processlist = new Dictionary<string, Settings>();
 
 		private Schumix()
 		{
@@ -69,7 +71,7 @@ namespace Schumix.Server.New
 						if(!_processlist[ll].Process.IsNull())
 							_processlist[ll].Process.Dispose();
 
-						Task.Factory.StartNew(() => Start(_processlist[ll].File, _processlist[ll].Dir, _processlist[ll].Encoding, _processlist[ll].Locale));
+						Task.Factory.StartNew(() => Start(_processlist[ll].File, _processlist[ll].Dir, _processlist[ll].Encoding, _processlist[ll].Locale, _processlist[ll].Configs));
 						Thread.Sleep(10*1000);
 						_processlist.Remove(ll);
 					}
@@ -90,7 +92,7 @@ namespace Schumix.Server.New
 			return process.HasExited;
 		}
 
-		public void Start(string File, string Dir, string Encoding, string Locale)
+		public void Start(string File, string Dir, string Encoding, string Locale, string Identify, string Configs = "")
 		{
 			var exe = new Process();
 			exe.StartInfo.UseShellExecute = false;
@@ -100,12 +102,20 @@ namespace Schumix.Server.New
 			if(sUtilities.GetCompiler() == Compiler.Mono)
 			{
 				exe.StartInfo.FileName = "mono";
-				exe.StartInfo.Arguments = string.Format("Schumix.exe --config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password);
+
+				if(Configs == string.Empty)
+					exe.StartInfo.Arguments = string.Format("Schumix.exe --config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7} --server-identify={8}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password, Identify);
+				else
+					exe.StartInfo.Arguments = string.Format("Schumix.exe --config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7} --server-configs={8} --server-identify={9}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password, Configs, Identify);
 			}
 			else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
 			{
 				exe.StartInfo.FileName = "Schumix.exe";
-				exe.StartInfo.Arguments = string.Format("--config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password);
+
+				if(Configs == string.Empty)
+					exe.StartInfo.Arguments = string.Format("--config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7} --server-identify={8}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password, Identify);
+				else
+					exe.StartInfo.Arguments = string.Format("--config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7} --server-configs={8} --server-identify={9}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password, Configs, Identify);
 			}
 
 			exe.Start();
@@ -114,8 +124,10 @@ namespace Schumix.Server.New
 			settings.Dir      = Dir;
 			settings.Encoding = Encoding;
 			settings.Locale   = Locale;
+			settings.Configs  = Configs;
+			settings.Identify = Identify;
 			settings.Process  = exe;
-			_processlist.Add(sUtilities.GetRandomString(), settings);
+			_processlist.Add(Identify, settings);
 			//exe.Dispose();
 		}
 	}

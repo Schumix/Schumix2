@@ -32,6 +32,7 @@ namespace Schumix.Server.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private const string _logfilename             = "Server.log";
 		private const int _loglevel                   = 2;
 		private const string _logdirectory            = "Logs";
@@ -113,7 +114,7 @@ namespace Schumix.Server.Config
 								string dir = !xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/Directory").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/Directory").InnerText : _schumix0directory;
 								string ce = !xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/ConsoleEncoding").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/ConsoleEncoding").InnerText : _schumix0consoleencoding;
 								string lo = !xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/Locale").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/Locale").InnerText : _schumix0locale;
-								sSchumix.Start(file, dir, ce, lo);
+								sSchumix.Start(file, dir, ce, lo, sUtilities.GetRandomString());
 								Thread.Sleep(10*1000);
 							}
 						});

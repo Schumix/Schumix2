@@ -40,6 +40,7 @@ namespace Schumix.Framework
 		public static DatabaseManager DManager { get; private set; }
 		public static Timer timer { get; private set; }
 		public const string Title = "Schumix2 IRC Bot and Framework";
+		public static string ServerIdentify = string.Empty;
 		public static bool UrlTitleEnabled = false;
 		public static bool ExitStatus = false;
 		public static bool ThreadStop = true;
@@ -134,6 +135,7 @@ namespace Schumix.Framework
 			packet.Write<string>("utf-8");
 			packet.Write<string>(LocalizationConfig.Locale);
 			packet.Write<bool>(Reconnect);
+			packet.Write<string>(SchumixBase.ServerIdentify);
 			ClientSocket.SendPacketToSCS(packet);
 		}
 

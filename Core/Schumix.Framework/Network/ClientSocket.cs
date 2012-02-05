@@ -66,10 +66,25 @@ namespace Schumix.Framework.Client
 			client_thread.Start(client);
 			Thread.Sleep(50);
 
+			string configs = SchumixConfig.ConfigDirectory + ";" + SchumixConfig.ConfigFile + ";";
+			configs += LogConfig.FileName + ";" + LogConfig.LogLevel + ";" + LogConfig.LogDirectory + ";" + LogConfig.IrcLogDirectory + ";" + LogConfig.IrcLog + ";";
+			configs += ServerConfig.Enabled + ";" + ServerConfig.Host + ";" + ServerConfig.Port + ";" + ServerConfig.Password + ";";
+			configs += IRCConfig.Server + ";" + IRCConfig.Port + ";" + IRCConfig.Ssl + ";" + IRCConfig.NickName + ";" + IRCConfig.NickName2 + ";" + IRCConfig.NickName3 + ";"
+				+ IRCConfig.UserName + ";" +IRCConfig.UserInfo + ";" + IRCConfig.MasterChannel + ";" + IRCConfig.IgnoreChannels + ";" + IRCConfig.IgnoreNames + ";"
+				+ IRCConfig.UseNickServ + ";" + IRCConfig.NickServPassword + ";" + IRCConfig.UseHostServ + ";" + IRCConfig.HostServEnabled + ";" + IRCConfig.MessageSending + ";"
+				+ IRCConfig.CommandPrefix + ";" + IRCConfig.MessageType + ";";
+			configs += MySqlConfig.Enabled + ";" + MySqlConfig.Host + ";" + MySqlConfig.User + ";" + MySqlConfig.Password + ";" + MySqlConfig.Database + ";" + MySqlConfig.Charset + ";";
+			configs += SQLiteConfig.Enabled + ";" + SQLiteConfig.FileName + ";";
+			configs += AddonsConfig.Enabled + ";" + AddonsConfig.Ignore + ";" + AddonsConfig.Directory + ";";
+			configs += ScriptsConfig.Lua + ";" + ScriptsConfig.Directory + ";";
+			configs += LocalizationConfig.Locale;
+
 			var packet = new SchumixPacket();
 			packet.Write<int>((int)Opcode.CMSG_REQUEST_AUTH);
 			packet.Write<string>(SchumixBase.GetGuid().ToString());
 			packet.Write<string>(sUtilities.Md5(_password));
+			packet.Write<string>(SchumixBase.ServerIdentify);
+			packet.Write<string>(string.Empty);
 			SendPacketToSCS(packet);
 		}
 		
