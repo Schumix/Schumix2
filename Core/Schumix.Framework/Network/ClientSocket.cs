@@ -77,7 +77,8 @@ namespace Schumix.Framework.Client
 			configs += SQLiteConfig.Enabled + ";" + SQLiteConfig.FileName + ";";
 			configs += AddonsConfig.Enabled + ";" + AddonsConfig.Ignore + ";" + AddonsConfig.Directory + ";";
 			configs += ScriptsConfig.Lua + ";" + ScriptsConfig.Directory + ";";
-			configs += LocalizationConfig.Locale;
+			configs += LocalizationConfig.Locale + ";";
+			Log.Notice("ClientSocket", configs);
 
 			var packet = new SchumixPacket();
 			packet.Write<int>((int)Opcode.CMSG_REQUEST_AUTH);
