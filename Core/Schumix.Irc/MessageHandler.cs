@@ -242,8 +242,20 @@ namespace Schumix.Irc
 
 		protected void HandlerErrorNewNickName(IRCMessage sIRCMessage)
 		{
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text15"));
-			NewNickPrivmsg = string.Empty;
+			if(NewNickPrivmsg != string.Empty)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text15"));
+				NewNickPrivmsg = string.Empty;
+			}
+		}
+
+		protected void HandleNicknameWhileBannedOrModeratedOnChannel(IRCMessage sIRCMessage)
+		{
+			if(NewNickPrivmsg != string.Empty)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text16"));
+				NewNickPrivmsg = string.Empty;
+			}
 		}
 
 		/// <summary>

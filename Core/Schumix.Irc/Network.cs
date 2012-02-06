@@ -122,6 +122,7 @@ namespace Schumix.Irc
 			RegisterHandler("NICK",                         HandleNewNick);
 			RegisterHandler(ReplyCode.RPL_NAMREPLY,         HandleNameList);
 			RegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandlerErrorNewNickName);
+			RegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
 			Log.Notice("Network", sLConsole.Network("Text5"));
 		}
 
