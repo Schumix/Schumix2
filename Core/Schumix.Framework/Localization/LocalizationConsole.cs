@@ -1225,6 +1225,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Erroneous Nickname!";
 				}
+				case "Text16":
+				{
+					if(Language == "huHU")
+						return "Nem lehet megváltoztatni a becenevet mert le van tiltva vagy moderált csatornán van fent!";
+					else if(Language == "enUS")
+						return "Cannot change nickname while banned or moderated on channel!";
+					else
+						return "Cannot change nickname while banned or moderated on channel!";
+				}
 				default:
 					return string.Empty;
 			}
