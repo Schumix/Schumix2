@@ -60,8 +60,38 @@ namespace Schumix.Server.New
 				{
 					foreach(var list in _processlist)
 					{
-						if(list.Value.Process.IsNull() || IsRunnig(list.Value.Process))
+						if(list.Value.Process.IsNull())
+						{
 							l.Add(list.Key);
+							continue;
+						}
+
+						bool run = false;
+
+						if(sUtilities.GetCompiler() == Compiler.Mono)
+						{
+							foreach(var p in Process.GetProcessesByName("mono"))
+							{
+								if(p.Id == list.Value.Process.Id)
+									run = true;
+							}
+						}
+						else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+						{
+							foreach(var p in Process.GetProcessesByName("Schumix"))
+							{
+								if(p.Id == list.Value.Process.Id)
+									run = true;
+							}
+						}
+
+						if(run)
+							continue;
+
+						l.Add(list.Key);
+
+						//if(list.Value.Process.IsNull() || IsRunnig(list.Value.Process))
+						//	l.Add(list.Key);
 					}
 
 					foreach(var ll in l)

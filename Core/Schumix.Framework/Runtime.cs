@@ -74,10 +74,10 @@ namespace Schumix.Framework
 			}
 		}
 
-		[DllImport ("libc")] // Linux
+		[DllImport("libc")] // Linux
 		private static extern int prctl(int option, byte[] arg2, IntPtr arg3, IntPtr arg4, IntPtr arg5);
 
-		[DllImport ("libc")] // BSD
+		[DllImport("libc")] // BSD
 		private static extern void setproctitle(byte[] fmt, byte[] str_arg);
 
 		//this is from http://abock.org/2006/02/09/changing-process-name-in-mono/

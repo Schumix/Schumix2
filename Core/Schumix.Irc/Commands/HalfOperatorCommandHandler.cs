@@ -401,13 +401,12 @@ namespace Schumix.Irc.Commands
 			}
 
 			ChannelPrivmsg = sIRCMessage.Channel;
+			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("join", sIRCMessage.Channel), sIRCMessage.Info[4]);
 
 			if(sIRCMessage.Info.Length == 5)
 				sSender.Join(sIRCMessage.Info[4]);
 			else if(sIRCMessage.Info.Length == 6)
 				sSender.Join(sIRCMessage.Info[4], sIRCMessage.Info[5]);
-
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("join", sIRCMessage.Channel), sIRCMessage.Info[4]);
 		}
 
 		protected void HandleLeave(IRCMessage sIRCMessage)

@@ -1234,6 +1234,24 @@ namespace Schumix.Framework.Localization
 					else
 						return "Cannot change nickname while banned or moderated on channel!";
 				}
+				case "Text17":
+				{
+					if(Language == "huHU")
+						return "Nem lehet csatlakozni a csatornára (+i): {0}";
+					else if(Language == "enUS")
+						return "Cannot join channel (+i): {0}";
+					else
+						return "Cannot join channel (+i): {0}";
+				}
+				case "Text17-1":
+				{
+					if(Language == "huHU")
+						return "Nem lehet csatlakozni a csatornára (+i)!";
+					else if(Language == "enUS")
+						return "Cannot join channel (+i)!";
+					else
+						return "Cannot join channel (+i)!";
+				}
 				default:
 					return string.Empty;
 			}
