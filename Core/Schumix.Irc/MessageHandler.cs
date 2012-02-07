@@ -284,6 +284,16 @@ namespace Schumix.Irc
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
+		protected void HandleCannotJoinChannel(IRCMessage sIRCMessage)
+		{
+			if(sIRCMessage.Info.Length < 4)
+				return;
+
+			SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text17-1")), string.Format("Channel = '{0}'", sIRCMessage.Info[3].ToLower()));
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text17"), sIRCMessage.Info[3]);
+			ChannelPrivmsg = sNickInfo.NickStorage;
+		}
+
 		/// <summary>
 		///     Kigyűjti éppen hol van fent a nick.
 		/// </summary>
