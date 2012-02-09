@@ -45,6 +45,7 @@ namespace Schumix.Console.Commands
 		///     LocalizationManager segítségével állítható be az irc szerver felé menő tárolt üzenetek nyelvezete.
 		/// </summary>
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly ChannelNameList sChannelNameList = Singleton<ChannelNameList>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Addonok kezelése.
@@ -576,6 +577,12 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
+				if(sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("ImAlreadyOnThisChannel"));
+					return;
+				}
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", channel);
 				if(!db.IsNull())
 				{
@@ -793,6 +800,18 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
+			if(sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("ImAlreadyOnThisChannel"));
+				return;
+			}
+
+			if(sChannelInfo.IsIgnore(Info[1].ToLower()))
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("ThisChannelBlockedByAdmin"));
+				return;
+			}
+
 			if(Info.Length == 2)
 				sSender.Join(Info[1]);
 			else if(Info.Length == 3)
@@ -815,6 +834,12 @@ namespace Schumix.Console.Commands
 			if(!IsChannel(Info[1]))
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+				return;
+			}
+
+			if(!sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("ImNotOnThisChannel"));
 				return;
 			}
 

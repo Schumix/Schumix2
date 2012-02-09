@@ -329,6 +329,9 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoFunctionName', 'Nincs megadva a funkció neve!');
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoChannelLanguage', 'Nincs megadva a csatorna nyelvezete!');
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NotaChannelHasBeenSet', 'Nem csatorna lett megadva!');
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'ImAlreadyOnThisChannel', 'Már fent vagyok ezen a csatornán!');
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'ThisChannelBlockedByAdmin', 'Admin által letiltott csatorna!');
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'ImNotOnThisChannel', 'Nem vagyok fent ezen a csatornán!');
 
 -- enUS
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoName', 'The name is not specified!');
@@ -340,6 +343,9 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoFunctionName', 'The function name is not specified!');
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoChannelLanguage', 'The channel language is not specified!');
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NotaChannelHasBeenSet', 'Not a channel has been set!');
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'ImAlreadyOnThisChannel', "I'm already on this channel!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'ThisChannelBlockedByAdmin', 'This channel blocked by admin!');
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'ImNotOnThisChannel', "I'm not on this channel!");
 
 -- ----------------------------
 -- Table structure for "localized_command"
@@ -993,6 +999,9 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NoMessageFunction', 'A funkció jelenleg nem üzemel!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'NotaChannelHasBeenSet', 'Nem csatorna lett megadva!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'Calendar', 'Sikeresen feljegyzésre került az üzenet.');
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'ImAlreadyOnThisChannel', 'Már fent vagyok ezen a csatornán!');
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'ThisChannelBlockedByAdmin', 'Admin által letiltott csatorna!');
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('huHU', 'ImNotOnThisChannel', 'Nem vagyok fent ezen a csatornán!');
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoName', 'The name is not specified!');
@@ -1034,6 +1043,9 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NoMessageFunction', 'This function is currently not operating!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'NotaChannelHasBeenSet', 'Not a channel has been set!');
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'Calendar', 'Message succesfuly saved.');
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'ImAlreadyOnThisChannel', "I'm already on this channel!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'ThisChannelBlockedByAdmin', 'This channel blocked by admin!');
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ('enUS', 'ImNotOnThisChannel', "I'm not on this channel!");
 
 -- ----------------------------
 -- Table structure for "message"
