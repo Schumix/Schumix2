@@ -22,6 +22,8 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Globalization;
+using Mono.Unix;
+using Mono.Unix.Native;
 using Schumix.Irc;
 using Schumix.Updater;
 using Schumix.Framework;
@@ -199,12 +201,18 @@ namespace Schumix
 				File.Delete("Installer.exe");
 
 			new SchumixBot();
-			System.Console.CancelKeyPress += (sender, e) =>
+
+			if(sUtilities.GetCompiler() == Compiler.Mono)
+				StartHandler();
+			else
 			{
-				SchumixBase.Quit();
-				sSender.Quit("Daemon killed.");
-				Thread.Sleep(5*1000);
-			};
+				System.Console.CancelKeyPress += (sender, e) =>
+				{
+					SchumixBase.Quit();
+					sSender.Quit("Daemon killed.");
+					Thread.Sleep(5*1000);
+				};
+			}
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
@@ -228,6 +236,23 @@ namespace Schumix
 			System.Console.WriteLine("\t--config-file=<file>\t\tSet up the config file's place");
 			System.Console.WriteLine("\t--console-encoding=Value\tSet up the program's character encoding");
 			System.Console.WriteLine("\t--console-localization=Value\tSet up the program's console language settings");
+		}
+
+		private static void StartHandler()
+		{
+			new Thread(TerminateHandler).Start();
+		}
+
+		private static void TerminateHandler()
+		{
+			Log.Notice("Main", "Initializing Handler for SIGINT");
+			var signal = new UnixSignal(Signum.SIGINT);
+			signal.WaitOne();
+
+			Log.Notice("Main", "Handler Terminated");
+			SchumixBase.Quit();
+			sSender.Quit("Daemon killed.");
+			Thread.Sleep(5*1000);
 		}
 	}
 }

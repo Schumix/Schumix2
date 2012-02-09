@@ -33,6 +33,11 @@ namespace Schumix.Irc
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private ChannelNameList() {}
 
+		public Dictionary<string, string> Names
+		{
+			get { return _names; }
+		}
+
 		public void Add(string Channel, string Name)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))

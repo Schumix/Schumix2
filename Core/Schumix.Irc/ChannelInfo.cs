@@ -339,6 +339,11 @@ namespace Schumix.Irc
 					enabled = true;
 			}
 
+			if(!enabled)
+			{
+				//adatbázisból szármzó rész
+			}
+
 			return enabled;
 		}
 	}

@@ -400,6 +400,18 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			if(sChannelNameList.Names.ContainsKey(sIRCMessage.Info[4].ToLower()))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ImAlreadyOnThisChannel", sIRCMessage.Channel));
+				return;
+			}
+
+			if(sChannelInfo.IsIgnore(sIRCMessage.Info[4].ToLower()))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ThisChannelBlockedByAdmin", sIRCMessage.Channel));
+				return;
+			}
+
 			ChannelPrivmsg = sIRCMessage.Channel;
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("join", sIRCMessage.Channel), sIRCMessage.Info[4]);
 
@@ -423,6 +435,12 @@ namespace Schumix.Irc.Commands
 			if(!IsChannel(sIRCMessage.Info[4]))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+				return;
+			}
+
+			if(!sChannelNameList.Names.ContainsKey(sIRCMessage.Info[4].ToLower()))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ImNotOnThisChannel", sIRCMessage.Channel));
 				return;
 			}
 
