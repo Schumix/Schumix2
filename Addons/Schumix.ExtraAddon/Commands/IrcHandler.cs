@@ -147,7 +147,7 @@ namespace Schumix.ExtraAddon.Commands
 					{
 						if(sIRCMessage.Channel.ToLower() == m_channel.Key)
 						{
-							Thread.Sleep(3000);
+							Thread.Sleep(5000);
 							sSender.Join(m_channel.Key, m_channel.Value);
 						}
 					}
