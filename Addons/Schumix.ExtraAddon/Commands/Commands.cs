@@ -95,7 +95,7 @@ namespace Schumix.ExtraAddon.Commands
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "update")
 				{
-					var db = SchumixBase.DManager.Query("SELECT Name FROM adminok");
+					var db = SchumixBase.DManager.Query("SELECT Name FROM admins");
 					if(!db.IsNull())
 					{
 						foreach(DataRow row in db.Rows)
