@@ -210,15 +210,22 @@ namespace Schumix.Libraries
 
 		public static string SplitToString(this string[] split, int min, char c)
 		{
-			string ss = string.Empty;
+			try
+			{
+				string ss = string.Empty;
 
-			for(int x = min; x < split.Length; x++)
-				ss += c + split[x];
+				for(int x = min; x < split.Length; x++)
+					ss += c + split[x];
 
-			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
-				ss = ss.Remove(0, c.ToString().Length);
+				if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
+					ss = ss.Remove(0, c.ToString().Length);
 
-			return ss;
+				return ss;
+			}
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		public static string SplitToString(this string[] split)
@@ -246,15 +253,22 @@ namespace Schumix.Libraries
 
 		public static string SplitToString(this string[] split, int min, string s)
 		{
-			string ss = string.Empty;
+			try
+			{
+				string ss = string.Empty;
 
-			for(int x = min; x < split.Length; x++)
-				ss += s + split[x];
+				for(int x = min; x < split.Length; x++)
+					ss += s + split[x];
 
-			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
-				ss = ss.Remove(0, s.Length);
+				if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
+					ss = ss.Remove(0, s.Length);
 
-			return ss;
+				return ss;
+			}
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		public static string SplitToString(this char[] split, char c)
@@ -272,15 +286,22 @@ namespace Schumix.Libraries
 
 		public static string SplitToString(this char[] split, int min, char c)
 		{
-			string ss = string.Empty;
+			try
+			{
+				string ss = string.Empty;
 
-			for(int x = min; x < split.Length; x++)
-				ss += c + split[x];
+				for(int x = min; x < split.Length; x++)
+					ss += c + split[x];
 
-			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
-				ss = ss.Remove(0, c.ToString().Length);
+				if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
+					ss = ss.Remove(0, c.ToString().Length);
 
-			return ss;
+				return ss;
+			}
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		public static string SplitToString(this char[] split)
@@ -308,15 +329,22 @@ namespace Schumix.Libraries
 
 		public static string SplitToString(this char[] split, int min, string s)
 		{
-			string ss = string.Empty;
+			try
+			{
+				string ss = string.Empty;
 
-			for(int x = min; x < split.Length; x++)
-				ss += s + split[x];
+				for(int x = min; x < split.Length; x++)
+					ss += s + split[x];
 
-			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
-				ss = ss.Remove(0, s.Length);
+				if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
+					ss = ss.Remove(0, s.Length);
 
-			return ss;
+				return ss;
+			}
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		public static string SReverse(this string value)
@@ -400,7 +428,14 @@ namespace Schumix.Libraries
 		/// <returns></returns>
 		public static int ToMilliSecondsInt(this DateTime time)
 		{
-			return (int)(time.Ticks/TicksPerSecond);
+			try
+			{
+				return (int)(time.Ticks/TicksPerSecond);
+			}
+			catch(Exception)
+			{
+				return 0;
+			}
 		}
 
 		/// <summary>
@@ -448,7 +483,14 @@ namespace Schumix.Libraries
 		/// <returns></returns>
 		public static DateTime GetDateTimeFromUnixTime(long unixTime)
 		{
-			return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTime);
+			try
+			{
+				return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTime);
+			}
+			catch(Exception)
+			{
+				return new DateTime(0);
+			}
 		}
 
 		/// <summary>
@@ -458,7 +500,14 @@ namespace Schumix.Libraries
 		/// <returns></returns>
 		public static DateTime GetUTCTimeSeconds(long seconds)
 		{
-			return UnixTimeStart.AddSeconds(seconds);
+			try
+			{
+				return UnixTimeStart.AddSeconds(seconds);
+			}
+			catch(Exception)
+			{
+				return new DateTime(0);
+			}
 		}
 
 		/// <summary>
@@ -468,7 +517,14 @@ namespace Schumix.Libraries
 		/// <returns></returns>
 		public static DateTime GetUTCTimeMillis(long millis)
 		{
-			return UnixTimeStart.AddMilliseconds(millis);
+			try
+			{
+				return UnixTimeStart.AddMilliseconds(millis);
+			}
+			catch(Exception)
+			{
+				return new DateTime(0);
+			}
 		}
 
 		/// <summary>
