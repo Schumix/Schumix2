@@ -865,7 +865,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(home)
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 				else
-					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[4]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info.SplitToString(4, SchumixBase.Space).Trim());
 
 				sSendMessage.SendChatMessage(sIRCMessage, text[2], day.Remove(0, 1, SchumixBase.Space));
 				sSendMessage.SendChatMessage(sIRCMessage, text[3], night.Remove(0, 1, SchumixBase.Space));
