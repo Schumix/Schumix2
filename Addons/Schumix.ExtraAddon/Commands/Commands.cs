@@ -822,7 +822,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(home)
 					source = sUtilities.GetUrl(string.Format("{0}{1}", url, WeatherConfig.City));
 				else
-					source = sUtilities.GetUrl(string.Format("{0}{1}", url, sIRCMessage.Info[4]));
+					source = sUtilities.GetUrl(url, sIRCMessage.Info.SplitToString(4, SchumixBase.Space).Trim());
 
 				string day = string.Empty;
 				string night = string.Empty;
