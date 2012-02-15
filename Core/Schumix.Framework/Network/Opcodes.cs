@@ -1,8 +1,8 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Twl
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Twl
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,19 +29,19 @@ namespace Schumix.Framework.Client
 	/// </summary>
 	public enum Opcode : int
 	{
-		SCMSG_PACKET_NULL = 0x0,
-		CMSG_REQUEST_AUTH = 0x01,
-		SMSG_AUTH_APPROVED = 0x02,
-		SMSG_AUTH_DENIED = 0x03,
-		CMSG_REQUEST_CONFIG = 0x04,
-		SMSG_CONFIG_RESPONSE = 0x05,
-		CMSG_CLOSE_CONNECTION = 0x06,
-		SMSG_CLOSE_CONNECTION = 0x07,
+		SCMSG_PACKET_NULL       = 0x0,
+		CMSG_REQUEST_AUTH       = 0x01,
+		SMSG_AUTH_APPROVED      = 0x02,
+		SMSG_AUTH_DENIED        = 0x03,
+		CMSG_REQUEST_CONFIG     = 0x04,
+		SMSG_CONFIG_RESPONSE    = 0x05,
+		CMSG_CLOSE_CONNECTION   = 0x06,
+		SMSG_CLOSE_CONNECTION   = 0x07,
 		CMSG_REQUEST_SCS_RANDOM = 0x08,
-		SMSG_SEND_SCS_RANDOM = 0x09,
-		CMSG_NICK_NAME = 0x10,
-		SMSG_IGNORE_NICK_NAME = 0x11,
-		SMSG_CLIENT_CONFIGS = 0x12
+		SMSG_SEND_SCS_RANDOM    = 0x09,
+		CMSG_NICK_NAME          = 0x10,
+		SMSG_IGNORE_NICK_NAME   = 0x11,
+		SMSG_CLIENT_CONFIGS     = 0x12
 	}
 }
 

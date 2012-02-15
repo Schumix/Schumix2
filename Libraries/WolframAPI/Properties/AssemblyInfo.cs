@@ -1,8 +1,8 @@
 ﻿/*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Twl
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Twl
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ using Schumix.Framework.Config;
 [assembly: AssemblyConfiguration(Consts.SchumixConfiguration)]
 [assembly: AssemblyCompany(Consts.SchumixCompany)]
 [assembly: AssemblyProduct("WolframAPI")]
-[assembly: AssemblyCopyright("Copyright (C) 2010-2011 Twl and Megax")]
+[assembly: AssemblyCopyright("Copyright (C) 2010-2012 Twl and Megax")]
 [assembly: AssemblyTrademark(Consts.SchumixTrademark)]
 
 [assembly: CLSCompliant(true)]
