@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Framework;
@@ -30,6 +31,7 @@ namespace Schumix.ExtraAddon.Commands
 	class NameList
 	{
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private NameList() {}
 
@@ -52,7 +54,20 @@ namespace Schumix.ExtraAddon.Commands
 		public void Remove(string Channel)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
+			{
+				var db = SchumixBase.DManager.Query("SELECT Name FROM notes_users");
+				if(!db.IsNull())
+				{
+					foreach(DataRow row in db.Rows)
+					{
+						string name = row["Name"].ToString();
+						if(_names[Channel.ToLower()].Contains(name.ToLower(), SchumixBase.Comma))
+							SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", name.ToLower()));
+					}
+				}
+
 				_names.Remove(Channel.ToLower());
+			}
 		}
 
 		public void Remove(string Channel, string Name, bool Quit = false)
@@ -72,7 +87,17 @@ namespace Schumix.ExtraAddon.Commands
 							names += SchumixBase.Comma + name;
 					}
 
+					int i = 0;
 					_names.Add(Channel.ToLower(), names.Remove(0, 1, SchumixBase.Comma));
+
+					foreach(var Channels in _names)
+					{
+						if(Channels.Value.Contains(Name.ToLower(), SchumixBase.Comma))
+							i++;
+					}
+
+					if(i == 0)
+						RandomVhost(Name.ToLower());
 				}
 			}
 			else if(Quit)
@@ -107,6 +132,7 @@ namespace Schumix.ExtraAddon.Commands
 				}
 
 				channel.Clear();
+				RandomVhost(Name.ToLower());
 
 				if(IRCConfig.NickName.ToLower() == Name.ToLower())
 				{
@@ -150,6 +176,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 
 			channel.Clear();
+			RandomVhost(Name.ToLower());
 
 			if(IRCConfig.NickName.ToLower() == Name.ToLower() && !Identify)
 			{
@@ -161,6 +188,23 @@ namespace Schumix.ExtraAddon.Commands
 		public void RemoveAll()
 		{
 			_names.Clear();
+		}
+
+		public void RandomVhost(string Name)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM notes_users WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			if(!db.IsNull())
+				SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", sUtilities.SqlEscape(Name.ToLower())));
+		}
+
+		public void RandomAllVhost()
+		{
+			var db = SchumixBase.DManager.Query("SELECT Name FROM notes_users");
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+					SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", row["Name"].ToString()));
+			}
 		}
 	}
 }
