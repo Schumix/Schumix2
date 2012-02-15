@@ -32,7 +32,7 @@ namespace Schumix.Framework.Config
 #endif
 		public const string SchumixCompany = "Megax Productions";
 		public const string SchumixProduct = "Schumix";
-		public const string SchumixCopyright = "Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>";
+		public const string SchumixCopyright = "Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>";
 		public const string SchumixTrademark = "GNU General Public License";
 		public const string SchumixVersion = "3.7.1";
 		public const string SchumixFileVersion = "3.7.1.0";
