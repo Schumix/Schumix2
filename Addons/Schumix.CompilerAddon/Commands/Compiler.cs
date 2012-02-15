@@ -155,13 +155,15 @@ namespace Schumix.CompilerAddon.Commands
 						break;
 				}
 
+				string _write = writer.ToString();
 				sSendMessage.SendChatMessage(sIRCMessage, string.Empty);
 
-				if(writer.ToString().Length == 0)
+				if(_write.Length == 0)
 					return 2;
 
-				var length = writer.ToString().Length;
-				var lines = CleanIrcText(writer.ToString()).Split(SchumixBase.NewLine);
+				_write = CommandBan(_write);
+				var length = _write.Length;
+				var lines = CleanIrcText(_write).Split(SchumixBase.NewLine);
 
 				if(length > 1000 && lines.Length == 1)
 				{
@@ -420,24 +422,108 @@ namespace Schumix.CompilerAddon.Commands
 			return false;
 		}
 
+		private string CommandBan(string data)
+		{
+			if((data.Length >= ".register".Length && data.ToLower().Substring(0, ".register".Length) == ".register"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".identify".Length && data.ToLower().Substring(0, ".identify".Length) == ".identify"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".set".Length && data.ToLower().Substring(0, ".set".Length) == ".set"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".sop".Length && data.ToLower().Substring(0, ".sop".Length) == ".sop"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".aop".Length && data.ToLower().Substring(0, ".aop".Length) == ".aop"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".hop".Length && data.ToLower().Substring(0, ".hop".Length) == ".hop"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".vop".Length && data.ToLower().Substring(0, ".vop".Length) == ".vop"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".access".Length && data.ToLower().Substring(0, ".access".Length) == ".access"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".levels".Length && data.ToLower().Substring(0, ".levels".Length) == ".levels"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".akick".Length && data.ToLower().Substring(0, ".akick".Length) == ".akick"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".drop".Length && data.ToLower().Substring(0, ".drop".Length) == ".drop"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".ban".Length && data.ToLower().Substring(0, ".ban".Length) == ".ban"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".unban".Length && data.ToLower().Substring(0, ".unban".Length) == ".unban"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".owner".Length && data.ToLower().Substring(0, ".owner".Length) == ".owner"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".deowner".Length && data.ToLower().Substring(0, ".deowner".Length) == ".deowner"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".protect".Length && data.ToLower().Substring(0, ".protect".Length) == ".protect"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".deprotect".Length && data.ToLower().Substring(0, ".deprotect".Length) == ".deprotect"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".op".Length && data.ToLower().Substring(0, ".op".Length) == ".op"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".deop".Length && data.ToLower().Substring(0, ".deop".Length) == ".deop"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".halfop".Length && data.ToLower().Substring(0, ".halfop".Length) == ".halfop"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".dehalfop".Length && data.ToLower().Substring(0, ".dehalfop".Length) == ".dehalfop"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".voice".Length && data.ToLower().Substring(0, ".voice".Length) == ".voice"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".devoice".Length && data.ToLower().Substring(0, ".devoice".Length) == ".devoice"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".getkey".Length && data.ToLower().Substring(0, ".getkey".Length) == ".getkey"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".invite".Length && data.ToLower().Substring(0, ".invite".Length) == ".invite"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".kick".Length && data.ToLower().Substring(0, ".kick".Length) == ".kick"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".logout".Length && data.ToLower().Substring(0, ".logout".Length) == ".logout"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".topic".Length && data.ToLower().Substring(0, ".topic".Length) == ".topic"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".info".Length && data.ToLower().Substring(0, ".info".Length) == ".info"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".why".Length && data.ToLower().Substring(0, ".why".Length) == ".why"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".clear".Length && data.ToLower().Substring(0, ".clear".Length) == ".clear"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".flags".Length && data.ToLower().Substring(0, ".flags".Length) == ".flags"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".appendtopic".Length && data.ToLower().Substring(0, ".appendtopic".Length) == ".appendtopic"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".checkban".Length && data.ToLower().Substring(0, ".checkban".Length) == ".checkban"))
+				data = SchumixBase.Space + data;
+			else if((data.Length >= ".sync".Length && data.ToLower().Substring(0, ".sync".Length) == ".sync"))
+				data = SchumixBase.Space + data;
+
+			return data;
+		}
+
 		private int StartCode(IRCMessage sIRCMessage, string data, object o)
 		{
-			if(IsFor(data) || IsDo(data) || IsWhile(data))
+			try
 			{
-				bool b = false;
-				var thread = new Thread(() => { o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
-				thread.Start();
-				thread.Join(2);
-				thread.Abort();
-
-				if(!b)
+				if(IsFor(data) || IsDo(data) || IsWhile(data))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
-					return -1;
+					bool b = false;
+					var thread = new Thread(() => { o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
+					thread.Start();
+					thread.Join(2);
+					thread.Abort();
+	
+					if(!b)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
+						return -1;
+					}
 				}
+				else
+					o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
 			}
-			else
-				o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+			catch(Exception e)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), e.Message);
+				return -1;
+			}
 
 			return 1;
 		}
