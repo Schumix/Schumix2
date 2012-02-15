@@ -1,6 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
+ * Copyright (C) 2010-2012 Twl
  * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
