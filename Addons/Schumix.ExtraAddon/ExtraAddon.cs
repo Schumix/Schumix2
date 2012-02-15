@@ -53,6 +53,7 @@ namespace Schumix.ExtraAddon
 		public void Setup()
 		{
 			IsOnline = false;
+			sNameList.RandomAllVhost();
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
 			Network.PublicRegisterHandler("PRIVMSG",                    HandlePrivmsg);
