@@ -119,7 +119,7 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
-				if(Connection.State != ConnectionState.Open)
+				if(!Connection.Ping())
 					Connection.Open();
 			}
 			catch(MySqlException m)
