@@ -7,3 +7,4 @@ Megírásra váró feladatok:
 - sznap parancs megírása normálisan.
 - szerver részbe a funkcióvezérlés és az egy szerveren lévő botok elrejtése egymás elől.
 - ha leállna a szerver először ne botok álljanak le (amiket a szerver indított).
+- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
