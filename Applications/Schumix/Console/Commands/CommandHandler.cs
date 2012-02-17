@@ -971,6 +971,13 @@ namespace Schumix.Console.Commands
 					}
 					else if(Info[3].ToLower() == "search")
 					{
+						var text = sLManager.GetConsoleCommandTexts("ignore/irc/command/search");
+						if(text.Length < 2)
+						{
+							Log.Error("Console", sLConsole.Translations("NoFound2"));
+							return;
+						}
+
 						if(Info.Length < 5)
 						{
 							Log.Error("Console", sLManager.GetConsoleWarningText("NoCommand"));
@@ -979,10 +986,9 @@ namespace Schumix.Console.Commands
 
 						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Info[4].ToLower()));
 						if(!db.IsNull())
-						{
-							Log.Notice("Console", sLManager.GetConsoleCommandText("ignore/irc/command/search"));
-							return;
-						}
+							Log.Notice("Console", text[0]);
+						else
+							Log.Error("Console", text[1]);
 					}
 				}
 			}
@@ -1055,6 +1061,13 @@ namespace Schumix.Console.Commands
 				}
 				else if(Info[2].ToLower() == "search")
 				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/command/search");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
 					if(Info.Length < 4)
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NoCommand"));
@@ -1063,10 +1076,9 @@ namespace Schumix.Console.Commands
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
 					if(!db.IsNull())
-					{
-						Log.Notice("Console", sLManager.GetConsoleCommandText("ignore/command/search"));
-						return;
-					}
+						Log.Notice("Console", text[0]);
+					else
+						Log.Error("Console", text[1]);
 				}
 			}
 			else if(Info[1].ToLower() == "channel")
@@ -1145,6 +1157,13 @@ namespace Schumix.Console.Commands
 				}
 				else if(Info[2].ToLower() == "search")
 				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/channel/search");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
 					if(Info.Length < 4)
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
@@ -1161,10 +1180,9 @@ namespace Schumix.Console.Commands
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
 					if(!db.IsNull())
-					{
-						Log.Notice("Console", sLManager.GetConsoleCommandText("ignore/channel/search"));
-						return;
-					}
+						Log.Notice("Console", text[0]);
+					else
+						Log.Error("Console", text[1]);
 				}
 			}
 			else if(Info[1].ToLower() == "nick")
@@ -1231,6 +1249,13 @@ namespace Schumix.Console.Commands
 				}
 				else if(Info[2].ToLower() == "search")
 				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/nick/search");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
 					if(Info.Length < 4)
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
@@ -1239,10 +1264,9 @@ namespace Schumix.Console.Commands
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
 					if(!db.IsNull())
-					{
-						Log.Notice("Console", sLManager.GetConsoleCommandText("ignore/nick/search"));
-						return;
-					}
+						Log.Notice("Console", text[0]);
+					else
+						Log.Error("Console", text[1]);
 				}
 			}
 		}
