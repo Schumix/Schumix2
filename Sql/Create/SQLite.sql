@@ -268,7 +268,7 @@ Channel TEXT
 -- ----------------------------
 CREATE TABLE `ignore_channels` (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
-Channel VARCHAR(20),
+Channel VARCHAR(20)
 );
 
 -- ----------------------------
@@ -276,7 +276,7 @@ Channel VARCHAR(20),
 -- ----------------------------
 CREATE TABLE `ignore_nicks` (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
-Nick VARCHAR(30),
+Nick VARCHAR(30)
 );
 
 -- ----------------------------
@@ -284,7 +284,7 @@ Nick VARCHAR(30),
 -- ----------------------------
 CREATE TABLE `ignore_commands` (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
-Command VARCHAR(30),
+Command VARCHAR(30)
 );
 
 -- ----------------------------
@@ -292,5 +292,5 @@ Command VARCHAR(30),
 -- ----------------------------
 CREATE TABLE `ignore_irc_commands` (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
-Command VARCHAR(30),
+Command VARCHAR(30)
 );
