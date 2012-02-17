@@ -37,6 +37,7 @@ namespace Schumix.ExtraAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
@@ -111,6 +112,9 @@ namespace Schumix.ExtraAddon
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
+			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
+				return;
+
 			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
 				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")

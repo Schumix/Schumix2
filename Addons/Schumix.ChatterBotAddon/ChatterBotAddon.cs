@@ -30,6 +30,7 @@ namespace Schumix.ChatterBotAddon
 	class ChatterBotAddon : ISchumixAddon
 	{
 		private readonly ChatterBotSession session = new ChatterBotFactory().Create(ChatterBotType.CLEVERBOT).CreateSession();
+		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 
@@ -50,6 +51,9 @@ namespace Schumix.ChatterBotAddon
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
+			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
+				return;
+
 			if(sChannelInfo.FSelect(IFunctions.Chatterbot) && sChannelInfo.FSelect(IChannelFunctions.Chatterbot, sIRCMessage.Channel))
 				Task.Factory.StartNew(() => sSendMessage.SendChatMessage(sIRCMessage, session.Think(sIRCMessage.Args)));
 		}
