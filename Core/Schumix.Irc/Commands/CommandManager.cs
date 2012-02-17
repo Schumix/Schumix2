@@ -88,6 +88,7 @@ namespace Schumix.Irc.Commands
 			OperatorCRegisterHandler("sznap",      HandleSznap);
 			OperatorCRegisterHandler("kick",       HandleKick);
 			OperatorCRegisterHandler("mode",       HandleMode);
+			OperatorCRegisterHandler("ignore",     HandleIgnore);
 
 			// Admin
 			AdminCRegisterHandler("plugin",        HandlePlugin);
