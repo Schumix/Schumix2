@@ -32,10 +32,11 @@ namespace Schumix.GameAddon
 {
 	class GameAddon : GameCommand, ISchumixAddon
 	{
-		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		public static readonly Dictionary<string, string> GameChannelFunction = new Dictionary<string, string>();
 		public static readonly Dictionary<string, MaffiaGame> MaffiaList = new Dictionary<string, MaffiaGame>();
+		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
+		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
+		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 
 		public void Setup()
 		{
@@ -68,6 +69,9 @@ namespace Schumix.GameAddon
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
+			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
+				return;
+
 			if(sChannelInfo.FSelect(IFunctions.Gamecommands) || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
 				if(!sChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
