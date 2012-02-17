@@ -99,7 +99,7 @@ namespace Schumix.Irc
 		/// </summary>
 		protected void HandleNotice(IRCMessage sIRCMessage)
 		{
-			if(sNickName.IsIgnore(sIRCMessage.Nick))
+			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
 			sIRCMessage.MessageType = MessageType.Notice;

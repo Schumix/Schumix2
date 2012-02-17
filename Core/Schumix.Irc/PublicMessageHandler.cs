@@ -32,7 +32,7 @@ namespace Schumix.Irc
 
 		protected void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
-			if(sNickName.IsIgnore(sIRCMessage.Nick))
+			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
 			if(ConsoleLog.CLog)

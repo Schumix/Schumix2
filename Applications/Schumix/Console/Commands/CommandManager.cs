@@ -87,6 +87,7 @@ namespace Schumix.Console.Commands
 			RegisterHandler("join",       HandleJoin);
 			RegisterHandler("leave",      HandleLeave);
 			RegisterHandler("reload",     HandleReload);
+			RegisterHandler("ignore",     HandleIgnore);
 			RegisterHandler("quit",       HandleQuit);
 
 			Log.Notice("CCommandManager", sLConsole.CCommandManager("Text2"));

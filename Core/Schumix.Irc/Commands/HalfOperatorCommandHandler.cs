@@ -406,7 +406,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			if(sChannelInfo.IsIgnore(sIRCMessage.Info[4].ToLower()))
+			if(sIgnoreChannel.IsIgnore(sIRCMessage.Info[4].ToLower()))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ThisChannelBlockedByAdmin", sIRCMessage.Channel));
 				return;

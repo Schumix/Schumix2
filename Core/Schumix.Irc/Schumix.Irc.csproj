@@ -73,7 +73,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\CommandInfo.cs" />
     <Compile Include="Commands\HalfOperatorCommandHandler.cs" />
-    <Compile Include="NickName.cs" />
     <Compile Include="ReplyCode.cs" />
     <Compile Include="Ctcp\CtcpSender.cs" />
     <Compile Include="Ctcp\CtcpUtil.cs" />
