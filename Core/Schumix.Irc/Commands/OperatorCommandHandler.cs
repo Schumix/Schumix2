@@ -721,6 +721,13 @@ namespace Schumix.Irc.Commands
 					}
 					else if(sIRCMessage.Info[6].ToLower() == "search")
 					{
+						var text = sLManager.GetCommandTexts("ignore/irc/command/search", sIRCMessage.Channel);
+						if(text.Length < 2)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							return;
+						}
+
 						if(sIRCMessage.Info.Length < 8)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel));
@@ -729,10 +736,9 @@ namespace Schumix.Irc.Commands
 
 						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
 						if(!db.IsNull())
-						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("ignore/irc/command/search", sIRCMessage.Channel));
-							return;
-						}
+							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						else
+							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 					}
 				}
 			}
@@ -805,6 +811,13 @@ namespace Schumix.Irc.Commands
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "search")
 				{
+					var text = sLManager.GetCommandTexts("ignore/command/search", sIRCMessage.Channel);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
 					if(sIRCMessage.Info.Length < 7)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel));
@@ -813,10 +826,9 @@ namespace Schumix.Irc.Commands
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
 					if(!db.IsNull())
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("ignore/command/search", sIRCMessage.Channel));
-						return;
-					}
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "channel")
@@ -895,6 +907,13 @@ namespace Schumix.Irc.Commands
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "search")
 				{
+					var text = sLManager.GetCommandTexts("ignore/channel/search", sIRCMessage.Channel);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
 					if(sIRCMessage.Info.Length < 7)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
@@ -911,10 +930,9 @@ namespace Schumix.Irc.Commands
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
 					if(!db.IsNull())
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("ignore/channel/search", sIRCMessage.Channel));
-						return;
-					}
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "nick")
@@ -981,6 +999,13 @@ namespace Schumix.Irc.Commands
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "search")
 				{
+					var text = sLManager.GetCommandTexts("ignore/nick/search", sIRCMessage.Channel);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
 					if(sIRCMessage.Info.Length < 7)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
@@ -989,10 +1014,9 @@ namespace Schumix.Irc.Commands
 
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
 					if(!db.IsNull())
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("ignore/nick/search", sIRCMessage.Channel));
-						return;
-					}
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 			}
 		}

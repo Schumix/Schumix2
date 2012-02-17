@@ -12,3 +12,4 @@ Megírásra váró feladatok:
 - Calendar kibővítése és finomhangolása.
 - backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
 - Ha a parancsot teszem kivételek közé akkor a rendszer feloldás esetén állítsa helyre azt a parancsot amelyiket törölte.
+- ignore-nél search parancsnál választ bövíteni hogy ha nincs találat. Mert arra nem válaszól.

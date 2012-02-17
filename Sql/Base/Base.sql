@@ -61,16 +61,16 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "help", "Ha a parancs mögé írod a megadott parancs nevét vagy a nevet és alparancsát információt ad a használatáról.\nParancsok: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/add", "Már szerepel az ignore listán!\nA parancs sikeresen hozzáadásra került.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/remove", "Nem szerepel az ignore listán!\nA parancs sikeresen el lett távolítva.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/search", "Szerepel az ignore listán!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/command/add", "Már szerepel az ignore listán!\nA parancs sikeresen hozzáadásra került.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/command/remove", "Nem szerepel az ignore listán!\nA név sikeresen el lett távolítva.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/command/search", "Szerepel az ignore listán!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/command/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/channel/add", "Már szerepel az ignore listán!\nA csatorna sikeresen hozzáadásra került.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/channel/remove", "Nem szerepel az ignore listán!\nA csatorna sikeresen el lett távolítva.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/channel/search", "Szerepel az ignore listán!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/channel/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/add", "Már szerepel az ignore listán!\nA név sikeresen hozzáadásra került.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/remove", "Nem szerepel az ignore listán!\nA név sikeresen el lett távolítva.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/search", "Szerepel az ignore listán!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
 
 -- enUS
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "consolelog", "Console logging on.\nConsole logging off.");
@@ -102,16 +102,16 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "help", "If you wrote behind the command the command or the name or co-command then gets information about usage.\nCommands: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/add", "Already exist on the ignore list!\nCommand succesfuly added.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/remove", "Not on the ignore list!\nCommand succesfuly removed.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/search", "Already exist on the ignore list!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/command/add", "Already exist on the ignore list!\nCommand succesfuly added.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/command/remove", "Not on the ignore list!\nSuccesfuly removed.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/command/search", "Already exist on the ignore list!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/command/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/channel/add", "Already exist on the ignore list!\nChannel succesfuly added.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/channel/remove", "Not on the ignore list!\nChannel succesfuly removed.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/channel/search", "Already exist on the ignore list!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/channel/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/add", "Already exist on the ignore list!\nSuccesfuly added.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/remove", "Not on the ignore list!\nSuccesfuly removed.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/search", "Already exist on the ignore list!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/search", "Already exist on the ignore list!\nNot on the ignore list!");
 
 -- huHU
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.\nAdmin parancsai: info | list | add | remove | rank | access | newpassword");
@@ -378,16 +378,16 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/add", "Már szerepel az ignore listán!\nA parancs sikeresen hozzáadásra került.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/remove", "Nem szerepel az ignore listán!\nA parancs sikeresen el lett távolítva.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/search", "Szerepel az ignore listán!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/command/add", "Már szerepel az ignore listán!\nA parancs sikeresen hozzáadásra került.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/command/remove", "Nem szerepel az ignore listán!\nA név sikeresen el lett távolítva.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/command/search", "Szerepel az ignore listán!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/command/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/channel/add", "Már szerepel az ignore listán!\nA csatorna sikeresen hozzáadásra került.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/channel/remove", "Nem szerepel az ignore listán!\nA csatorna sikeresen el lett távolítva.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/channel/search", "Szerepel az ignore listán!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/channel/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/add", "Már szerepel az ignore listán!\nA név sikeresen hozzáadásra került.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/remove", "Nem szerepel az ignore listán!\nA név sikeresen el lett távolítva.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/search", "Szerepel az ignore listán!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
 
 -- enUS
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/sys", "3Version: 10{0}\n3Platform: {0}\n3OSVersion: {0}\n3Programming language: c#\n3Memory allocation:5 {0} MB\n3Memory allocation:8 {0} MB\n3Memory allocation:3 {0} MB\n3Uptime: {0}");
@@ -526,16 +526,16 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/channel/remove", "Successfully deleted channel!\nNo such name!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/add", "Already exist on the ignore list!\nCommand succesfuly added.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/remove", "Not on the ignore list!\nCommand succesfuly removed.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/search", "Already exist on the ignore list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/command/add", "Already exist on the ignore list!\nCommand succesfuly added.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/command/remove", "Not on the ignore list!\nSuccesfuly removed.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/command/search", "Already exist on the ignore list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/command/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/channel/add", "Already exist on the ignore list!\nChannel succesfuly added.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/channel/remove", "Not on the ignore list!\nChannel succesfuly removed.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/channel/search", "Already exist on the ignore list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/channel/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/add", "Already exist on the ignore list!\nSuccesfuly added.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/remove", "Not on the ignore list!\nSuccesfuly removed.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/search", "Already exist on the ignore list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/search", "Already exist on the ignore list!\nNot on the ignore list!");
 
 -- huHU
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xbot", "9", "Felhasználók számára használható parancslista.");
