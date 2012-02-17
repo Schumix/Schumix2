@@ -297,3 +297,39 @@ CREATE TABLE `wordpressinfo` (
   `Channel` text NOT NULL,
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for ignore_channels
+-- ----------------------------
+CREATE TABLE `ignore_channels` (
+  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Channel` varchar(20) NOT NULL default '',
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for ignore_nicks
+-- ----------------------------
+CREATE TABLE `ignore_nicks` (
+  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Nick` varchar(30) NOT NULL default '',
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for ignore_commands
+-- ----------------------------
+CREATE TABLE `ignore_commands` (
+  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Command` varchar(30) NOT NULL default '',
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
+
+-- ----------------------------
+-- Table structure for ignore_irc_commands
+-- ----------------------------
+CREATE TABLE `ignore_irc_commands` (
+  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Command` varchar(30) NOT NULL default '',
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;

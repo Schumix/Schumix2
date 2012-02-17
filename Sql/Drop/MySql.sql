@@ -25,3 +25,7 @@ DROP TABLE `svninfo`;
 DROP TABLE `sznap`;
 DROP TABLE `uptime`;
 DROP TABLE `wordpressinfo`;
+DROP TABLE `ignore_channels`;
+DROP TABLE `ignore_nicks`;
+DROP TABLE `ignore_commands`;
+DROP TABLE `ignore_irc_commands`;

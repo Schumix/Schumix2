@@ -100,6 +100,9 @@ namespace Schumix.Irc.Commands
 
 		public static void PublicCRegisterHandler(string code, CommandDelegate method)
 		{
+			if(sIgnoreCommand.IsIgnore(code))
+			   return;
+
 			if(_PublicCommandHandler.ContainsKey(code.ToLower()))
 				_PublicCommandHandler[code.ToLower()] += method;
 			else
@@ -120,6 +123,9 @@ namespace Schumix.Irc.Commands
 
 		public static void HalfOperatorCRegisterHandler(string code, CommandDelegate method)
 		{
+			if(sIgnoreCommand.IsIgnore(code))
+			   return;
+
 			if(_HalfOperatorCommandHandler.ContainsKey(code.ToLower()))
 				_HalfOperatorCommandHandler[code.ToLower()] += method;
 			else
@@ -140,6 +146,9 @@ namespace Schumix.Irc.Commands
 
 		public static void OperatorCRegisterHandler(string code, CommandDelegate method)
 		{
+			if(sIgnoreCommand.IsIgnore(code))
+			   return;
+
 			if(_OperatorCommandHandler.ContainsKey(code.ToLower()))
 				_OperatorCommandHandler[code.ToLower()] += method;
 			else
@@ -160,6 +169,9 @@ namespace Schumix.Irc.Commands
 
 		public static void AdminCRegisterHandler(string code, CommandDelegate method)
 		{
+			if(sIgnoreCommand.IsIgnore(code))
+			   return;
+
 			if(_AdminCommandHandler.ContainsKey(code.ToLower()))
 				_AdminCommandHandler[code.ToLower()] += method;
 			else

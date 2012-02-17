@@ -18,8 +18,8 @@
  */
 
 using System;
+using System.Data;
 using System.Threading;
-using System.Collections.Generic;
 using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -29,50 +29,10 @@ namespace Schumix.Irc
 {
 	public sealed class SendMessage
 	{
-		private readonly List<string> _ingorecommandlist = new List<string>();
 		private readonly object WriteLock = new object();
 		private DateTime _timeLastSent = DateTime.Now;
 
-		private SendMessage()
-		{
-			_ingorecommandlist.Add(".register");
-			_ingorecommandlist.Add(".identify");
-			_ingorecommandlist.Add(".set");
-			_ingorecommandlist.Add(".sop");
-			_ingorecommandlist.Add(".aop");
-			_ingorecommandlist.Add(".hop");
-			_ingorecommandlist.Add(".vop");
-			_ingorecommandlist.Add(".access");
-			_ingorecommandlist.Add(".levels");
-			_ingorecommandlist.Add(".akick");
-			_ingorecommandlist.Add(".drop");
-			_ingorecommandlist.Add(".ban");
-			_ingorecommandlist.Add(".unban");
-			_ingorecommandlist.Add(".owner");
-			_ingorecommandlist.Add(".deowner");
-			_ingorecommandlist.Add(".protect");
-			_ingorecommandlist.Add(".deprotect");
-			_ingorecommandlist.Add(".op");
-			_ingorecommandlist.Add(".deop");
-			_ingorecommandlist.Add(".halfop");
-			_ingorecommandlist.Add(".dehalfop");
-			_ingorecommandlist.Add(".voice");
-			_ingorecommandlist.Add(".devoice");
-			_ingorecommandlist.Add(".getkey");
-			_ingorecommandlist.Add(".invite");
-			_ingorecommandlist.Add(".kick");
-			_ingorecommandlist.Add(".logout");
-			_ingorecommandlist.Add(".topic");
-			_ingorecommandlist.Add(".info");
-			_ingorecommandlist.Add(".why");
-			_ingorecommandlist.Add(".clear");
-			_ingorecommandlist.Add(".flags");
-			_ingorecommandlist.Add(".appendtopic");
-			_ingorecommandlist.Add(".checkban");
-			_ingorecommandlist.Add(".sync");
-			_ingorecommandlist.Add(".kb");
-			_ingorecommandlist.Add(".k");
-		}
+		private SendMessage() {}
 
 		public TimeSpan IdleTime
 		{
@@ -261,11 +221,15 @@ namespace Schumix.Irc
 
 		private string IgnoreCommand(string data)
 		{
-			// ignore_irc_command
-			foreach(var list in _ingorecommandlist)
+			var db = SchumixBase.DManager.Query("SELECT Command FROM ignore_irc_commands");
+			if(!db.IsNull())
 			{
-				if((data.Length >= list.Length && data.ToLower().Substring(0, list.Length) == list))
-					data = SchumixBase.Space + data;
+				foreach(DataRow row in db.Rows)
+				{
+					string command = row["Command"].ToString();
+					if((data.Length >= command.Length && data.ToLower().Substring(0, command.Length) == command))
+						data = SchumixBase.Space + data;
+				}
 			}
 
 			return data;

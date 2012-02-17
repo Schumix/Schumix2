@@ -33,6 +33,7 @@ namespace Schumix.Irc
 		private readonly Dictionary<string, string> ChannelFunction = new Dictionary<string, string>();
 		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 
 		public Dictionary<string, string> CList
@@ -283,9 +284,9 @@ namespace Schumix.Irc
 			{
 				sSender.Join(channel.Key, channel.Value);
 
-				if(IsIgnore(channel.Key))
+				if(sIgnoreChannel.IsIgnore(channel.Key))
 				{
-					error = IsIgnore(channel.Key);
+					error = true;
 					SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.ChannelInfo("Text10")), string.Format("Channel = '{0}'", channel.Key));
 				}
 				else
@@ -318,33 +319,6 @@ namespace Schumix.Irc
 				SchumixBase.timer.StartTimer();
 				SchumixBase.STime = false;
 			}
-		}
-
-		public bool IsIgnore(string channel)
-		{
-			bool enabled = false;
-			string[] ignore = IRCConfig.IgnoreChannels.Split(SchumixBase.Comma);
-
-			if(ignore.Length > 1)
-			{
-				foreach(var _ignore in ignore)
-				{
-					if(channel.ToLower() == _ignore.ToLower())
-						enabled = true;
-				}
-			}
-			else
-			{
-				if(channel.ToLower() == IRCConfig.IgnoreChannels.ToLower())
-					enabled = true;
-			}
-
-			if(!enabled)
-			{
-				//adatbázisból szármzó rész
-			}
-
-			return enabled;
 		}
 	}
 }

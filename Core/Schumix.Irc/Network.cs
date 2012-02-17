@@ -421,6 +421,8 @@ namespace Schumix.Irc
 			//_timeropcode.Elapsed -= HandleOpcodesTimer;
 			//_timeropcode.Stop();
 
+			sIgnoreNickName.RemoveConfig();
+			sIgnoreChannel.RemoveConfig();
 			Thread.Sleep(1000);
 			DisConnect();
 			Log.Warning("Opcodes", sLConsole.Network("Text17"));
