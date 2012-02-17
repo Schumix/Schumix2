@@ -556,101 +556,6 @@ namespace Schumix.Irc.Commands
 				SchumixBase.DManager.Update("channel", string.Format("Language = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6])), string.Format("Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower())));
 				sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.Info[6]);
 			}
-			/*else if(sIRCMessage.Info[4].ToLower() == "ignore")
-			{
-				if(sIRCMessage.Info.Length < 5)
-				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("channel", sIRCMessage.Channel));
-					return;
-				}
-
-				if(sIRCMessage.Info[5].ToLower() == "add")
-				{
-					/*var text = sLManager.GetCommandTexts("channel/ignore/add", sIRCMessage.Channel);
-					if(text.Length < 2)
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
-						return;
-					}*/
-
-					/*if(sIRCMessage.Info.Length < 7)
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
-						return;
-					}
-
-					string channel = sIRCMessage.Info[6].ToLower();
-
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
-					if(!db.IsNull())
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, /*text[0]*//* "Már szerepel az ignore listán");
-						return;
-					}
-	
-					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
-				}
-				else if(sIRCMessage.Info[4].ToLower() == "remove")
-				{
-					var text = sLManager.GetCommandTexts("channel/remove", sIRCMessage.Channel);
-					if(text.Length < 3)
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
-						return;
-					}
-	
-					if(sIRCMessage.Info.Length < 6)
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
-						return;
-					}
-	
-					string channel = sIRCMessage.Info[5].ToLower();
-	
-					if(!IsChannel(channel))
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
-						return;
-					}
-	
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
-					if(!db.IsNull())
-					{
-						int id = Convert.ToInt32(db["Id"].ToString());
-						if(id == 1)
-						{
-							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
-							return;
-						}
-					}
-	
-					db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
-					if(db.IsNull())
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
-						return;
-					}
-	
-					sSender.Part(channel);
-					SchumixBase.DManager.Delete("channel", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
-					sSendMessage.SendChatMessage(sIRCMessage, text[2], channel);
-					sChannelInfo.ChannelListReload();
-					sChannelInfo.ChannelFunctionsReload();
-				}
-				else if(sIRCMessage.Info[5].ToLower() == "list")
-				{
-				}
-
--- ----------------------------
--- Table structure for ignore_channel
--- ----------------------------
-DROP TABLE IF EXISTS `ignore_channel`;
-CREATE TABLE `ignore_channel` (
-  `Id` int(4) unsigned NOT NULL auto_increment,
-  `Channel` varchar(20) NOT NULL default '',
-  PRIMARY KEY  (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
-			}*/
 		}
 
 		protected void HandleSznap(IRCMessage sIRCMessage)
@@ -731,6 +636,308 @@ CREATE TABLE `ignore_channel` (
 
 			if(!name.Contains(sNickInfo.NickStorage.ToLower()))
 				sSender.Mode(sIRCMessage.Channel, rank, name);
+		}
+
+		protected void HandleIgnore(IRCMessage sIRCMessage)
+		{
+			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
+				return;
+
+			if(sIRCMessage.Info.Length < 5)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+				return;
+			}
+
+			if(sIRCMessage.Info[4].ToLower() == "irc")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "command")
+				{
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+						return;
+					}
+
+					if(sIRCMessage.Info[6].ToLower() == "add")
+					{
+						var text = sLManager.GetCommandTexts("ignore/irc/command/add", sIRCMessage.Channel);
+						/*if(text.Length < 2)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							return;
+						}*/
+
+						if(sIRCMessage.Info.Length < 8)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel));
+							return;
+						}
+
+						string command = sIRCMessage.Info[7].ToLower();
+
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(command));
+						if(!db.IsNull())
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, /*text[0]*/ "Már szerepel az ignore listán!");
+							return;
+						}
+
+						SchumixBase.DManager.Insert("`ignore_irc_commands`(Command)", sUtilities.SqlEscape(command));
+						sSendMessage.SendChatMessage(sIRCMessage, /*text[1]*/ "A parancs sikeresen hozzáadásra került.");
+					}
+					else if(sIRCMessage.Info[6].ToLower() == "remove")
+					{
+						var text = sLManager.GetCommandTexts("ignore/irc/command/remove", sIRCMessage.Channel);
+						/*if(text.Length < 2)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							return;
+						}*/
+
+						if(sIRCMessage.Info.Length < 8)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel));
+							return;
+						}
+
+						string command = sIRCMessage.Info[7].ToLower();
+
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(command));
+						if(db.IsNull())
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, /*text[0]*/ "Nem szerepel az ignore listán!");
+							return;
+						}
+
+						SchumixBase.DManager.Delete("ignore_irc_commands", string.Format("Command = '{0}'", sUtilities.SqlEscape(command)));
+						sSendMessage.SendChatMessage(sIRCMessage, /*text[1]*/ "A parancs sikeresen el lett távolítva.");
+					}
+					else if(sIRCMessage.Info[6].ToLower() == "search")
+					{
+
+					}
+				}
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "command")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "add")
+				{
+					var text = sLManager.GetCommandTexts("ignore/command/add", sIRCMessage.Channel);
+					/*if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}*/
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel));
+						return;
+					}
+
+					string command = sIRCMessage.Info[6].ToLower();
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", sUtilities.SqlEscape(command));
+					if(!db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, /*text[0]*/ "Már szerepel az ignore listán!");
+						return;
+					}
+
+					SchumixBase.DManager.Insert("`ignore_commands`(Command)", sUtilities.SqlEscape(command));
+					sSendMessage.SendChatMessage(sIRCMessage, /*text[1]*/ "A parancs sikeresen hozzáadásra került.");
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "remove")
+				{
+					var text = sLManager.GetCommandTexts("ignore/command/remove", sIRCMessage.Channel);
+					/*if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}*/
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel));
+						return;
+					}
+
+					string command = sIRCMessage.Info[6].ToLower();
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", sUtilities.SqlEscape(command));
+					if(db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, /*text[0]*/ "Nem szerepel az ignore listán!");
+						return;
+					}
+
+					SchumixBase.DManager.Delete("ignore_commands", string.Format("Command = '{0}'", sUtilities.SqlEscape(command)));
+					sSendMessage.SendChatMessage(sIRCMessage, /*text[1]*/ "A parancs sikeresen el lett távolítva.");
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "search")
+				{
+
+				}
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "channel")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "add")
+				{
+					var text = sLManager.GetCommandTexts("ignore/channel/add", sIRCMessage.Channel);
+					/*if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}*/
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+						return;
+					}
+
+					string channel = sIRCMessage.Info[6].ToLower();
+
+					if(!IsChannel(channel))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
+					if(!db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, /*text[0]*/ "Már szerepel az ignore listán!");
+						return;
+					}
+
+					SchumixBase.DManager.Insert("`ignore_channels`(Channel)", sUtilities.SqlEscape(channel));
+					sSendMessage.SendChatMessage(sIRCMessage, /*text[1]*/ "A csatorna sikeresen hozzáadásra került.");
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "remove")
+				{
+					var text = sLManager.GetCommandTexts("ignore/channel/remove", sIRCMessage.Channel);
+					/*if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}*/
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+						return;
+					}
+
+					string channel = sIRCMessage.Info[6].ToLower();
+
+					if(!IsChannel(channel))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
+					if(db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, /*text[0]*/ "Nem szerepel az ignore listán!");
+						return;
+					}
+
+					SchumixBase.DManager.Delete("ignore_channels", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, /*text[1]*/ "A csatorna sikeresen el lett távolítva.");
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "search")
+				{
+
+				}
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "nick")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "add")
+				{
+					var text = sLManager.GetCommandTexts("ignore/nick/add", sIRCMessage.Channel);
+					/*if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}*/
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						return;
+					}
+
+					string nick = sIRCMessage.Info[6].ToLower();
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(nick));
+					if(!db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, /*text[0]*/ "Már szerepel az ignore listán!");
+						return;
+					}
+
+					SchumixBase.DManager.Insert("`ignore_nicks`(Nick)", sUtilities.SqlEscape(nick));
+					sSendMessage.SendChatMessage(sIRCMessage, /*text[1]*/ "A név sikeresen hozzáadásra került.");
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "remove")
+				{
+					var text = sLManager.GetCommandTexts("ignore/nick/remove", sIRCMessage.Channel);
+					/*if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}*/
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						return;
+					}
+
+					string nick = sIRCMessage.Info[6].ToLower();
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(nick));
+					if(db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, /*text[0]*/ "Nem szerepel az ignore listán!");
+						return;
+					}
+
+					SchumixBase.DManager.Delete("ignore_nicks", string.Format("Nick = '{0}'", sUtilities.SqlEscape(nick)));
+					sSendMessage.SendChatMessage(sIRCMessage, /*text[1]*/ "A név sikeresen el lett távolítva.");
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "search")
+				{
+
+				}
+			}
 		}
 	}
 }

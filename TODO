@@ -7,4 +7,9 @@ Megírásra váró feladatok:
 - sznap parancs megírása normálisan.
 - szerver részbe a funkcióvezérlés és az egy szerveren lévő botok elrejtése egymás elől.
 - ha leállna a szerver először ne botok álljanak le (amiket a szerver indított).
+- reload parancs bövítése.
+- Serverben megoldani botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
+
+- Calendar kibővítése és finomhangolása.
 - backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
+- channel ignore parancs hozzáadása.

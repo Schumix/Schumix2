@@ -1,0 +1,27 @@
+/* MySql.sql */
+
+DROP TABLE `admins`;
+DROP TABLE `banned`;
+DROP TABLE `calendar`;
+DROP TABLE `channel`;
+DROP TABLE `gitinfo`;
+DROP TABLE `hginfo`;
+DROP TABLE `mantisbt`;
+DROP TABLE `hlmessage`;
+DROP TABLE `irc_commands`;
+DROP TABLE `kicklist`;
+DROP TABLE `localized_console_command`;
+DROP TABLE `localized_console_command_help`;
+DROP TABLE `localized_console_warning`;
+DROP TABLE `localized_command`;
+DROP TABLE `localized_command_help`;
+DROP TABLE `localized_warning`;
+DROP TABLE `message`;
+DROP TABLE `modelist`;
+DROP TABLE `notes`;
+DROP TABLE `notes_users`;
+DROP TABLE `schumix`;
+DROP TABLE `svninfo`;
+DROP TABLE `sznap`;
+DROP TABLE `uptime`;
+DROP TABLE `wordpressinfo`;
