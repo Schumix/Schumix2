@@ -682,8 +682,7 @@ namespace Schumix.Irc.Commands
 
 						string command = sIRCMessage.Info[7].ToLower();
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(command));
-						if(!db.IsNull())
+						if(sIgnoreIrcCommand.IsIgnore(command))
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 							return;
@@ -709,8 +708,7 @@ namespace Schumix.Irc.Commands
 
 						string command = sIRCMessage.Info[7].ToLower();
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(command));
-						if(db.IsNull())
+						if(!sIgnoreIrcCommand.IsIgnore(command))
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 							return;
@@ -767,8 +765,7 @@ namespace Schumix.Irc.Commands
 
 					string command = sIRCMessage.Info[6].ToLower();
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", sUtilities.SqlEscape(command));
-					if(!db.IsNull())
+					if(sIgnoreCommand.IsIgnore(command))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
@@ -798,8 +795,7 @@ namespace Schumix.Irc.Commands
 
 					string command = sIRCMessage.Info[6].ToLower();
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", sUtilities.SqlEscape(command));
-					if(db.IsNull())
+					if(!sIgnoreCommand.IsIgnore(command))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
@@ -862,8 +858,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
-					if(!db.IsNull())
+					if(sIgnoreChannel.IsIgnore(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
@@ -895,8 +890,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
-					if(db.IsNull())
+					if(!sIgnoreChannel.IsIgnore(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
@@ -960,8 +954,7 @@ namespace Schumix.Irc.Commands
 
 					string nick = sIRCMessage.Info[6].ToLower();
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(nick));
-					if(!db.IsNull())
+					if(sIgnoreNickName.IsIgnore(nick))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
@@ -987,8 +980,7 @@ namespace Schumix.Irc.Commands
 
 					string nick = sIRCMessage.Info[6].ToLower();
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(nick));
-					if(db.IsNull())
+					if(!sIgnoreNickName.IsIgnore(nick))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
