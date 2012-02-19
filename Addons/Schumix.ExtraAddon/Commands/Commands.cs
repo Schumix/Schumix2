@@ -29,6 +29,7 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.ExtraAddon.Config;
+using WolframAPI;
 
 namespace Schumix.ExtraAddon.Commands
 {
@@ -972,6 +973,19 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, text[4]);
+		}
+
+		public void HandleCalc(IRCMessage sIRCMessage)
+		{
+			if(sIRCMessage.Info.Length < 5)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+				return;
+			}
+
+			var client = new WAClient(WolframAlphaConfig.Key);
+			var solution = client.Solve(sIRCMessage.Info.SplitToString(4, SchumixBase.Space));
+			sSendMessage.SendChatMessage(sIRCMessage, "{0}", solution);
 		}
 	}
 

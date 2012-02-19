@@ -25,7 +25,6 @@ using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
-using WolframAPI;
 
 namespace Schumix.Irc.Commands
 {
@@ -126,19 +125,6 @@ namespace Schumix.Irc.Commands
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, text[3], DateTime.Now.Year, month, day, Nameday[month-1, day-1]);
 			}
-		}
-
-		protected void HandleCalc(IRCMessage sIRCMessage)
-		{
-			if(sIRCMessage.Info.Length < 5)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
-				return;
-			}
-
-			var client = new WAClient("557QYQ-UUUWTKX95V");
-			var solution = client.Solve(sIRCMessage.Info.SplitToString(4, SchumixBase.Space));
-			sSendMessage.SendChatMessage(sIRCMessage, "{0}", solution);
 		}
 
 		protected void HandleIrc(IRCMessage sIRCMessage)
