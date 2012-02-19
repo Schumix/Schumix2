@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Web;
 using System.Threading.Tasks;
 using Schumix.API;
 using Schumix.Irc;
@@ -55,7 +56,7 @@ namespace Schumix.ChatterBotAddon
 				return;
 
 			if(sChannelInfo.FSelect(IFunctions.Chatterbot) && sChannelInfo.FSelect(IChannelFunctions.Chatterbot, sIRCMessage.Channel))
-				Task.Factory.StartNew(() => sSendMessage.SendChatMessage(sIRCMessage, session.Think(sIRCMessage.Args)));
+				Task.Factory.StartNew(() => sSendMessage.SendChatMessage(sIRCMessage, HttpUtility.HtmlDecode(session.Think(sIRCMessage.Args))));
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)
