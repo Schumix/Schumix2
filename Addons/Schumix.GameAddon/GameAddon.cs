@@ -95,29 +95,52 @@ namespace Schumix.GameAddon
 				if(!sChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
+				if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
+					sIRCMessage.Channel = sIRCMessage.Nick;
+
 				string channel = sIRCMessage.Channel.ToLower();
 
 				if(MaffiaList.ContainsKey(channel) || sIRCMessage.Channel.Substring(0, 1) != "#")
 				{
 					if(sIRCMessage.Info.Length < 4)
 						return;
+
+					bool nick = false;
 	
 					if(sIRCMessage.Channel.Substring(0, 1) != "#")
 					{
 						foreach(var maffia in MaffiaList)
 						{
-							foreach(var player in maffia.Value.GetPlayerList())
+							if(maffia.Value.Started)
 							{
-								if(player.Value == sIRCMessage.Nick)
+								foreach(var player in maffia.Value.GetPlayerFList())
 								{
-									channel = maffia.Key;
-									break;
+									if(player.Key == sIRCMessage.Nick.ToLower())
+									{
+										nick = true;
+										channel = maffia.Key;
+										break;
+									}
+								}
+							}
+							else
+							{
+								foreach(var player in maffia.Value.GetPlayerList())
+								{
+									if(player.Value.ToLower() == sIRCMessage.Nick.ToLower())
+									{
+										nick = true;
+										channel = maffia.Key;
+										break;
+									}
 								}
 							}
 						}
 					}
+					else
+						nick = true;
 
-					if(sIRCMessage.Channel.Substring(0, 1) != "#" && channel == sIRCMessage.Channel.ToLower())
+					if(!nick)
 						return;
 
 					if(MaffiaList[channel].GetOwner() == sIRCMessage.Nick)

@@ -55,6 +55,9 @@ namespace Schumix.ChatterBotAddon
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
+			if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
+				sIRCMessage.Channel = sIRCMessage.Nick;
+
 			if(sChannelInfo.FSelect(IFunctions.Chatterbot) && sChannelInfo.FSelect(IChannelFunctions.Chatterbot, sIRCMessage.Channel))
 				Task.Factory.StartNew(() => sSendMessage.SendChatMessage(sIRCMessage, HttpUtility.HtmlDecode(session.Think(sIRCMessage.Args))));
 		}

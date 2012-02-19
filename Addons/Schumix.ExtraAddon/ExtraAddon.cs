@@ -136,6 +136,9 @@ namespace Schumix.ExtraAddon
 				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
+				if(sIRCMessage.Channel.Substring(0, 1) != "#")
+					return;
+
 				Task.Factory.StartNew(() =>
 				{
 					if(sFunctions.AutoKick("privmsg", sIRCMessage.Nick, sIRCMessage.Channel))
