@@ -243,6 +243,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "All Command Handler are registered.";
 				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Összes Command handler törlésre került.";
+					else if(Locale == "enUS")
+						return "All Command Handler were deleted.";
+					else
+						return "All Command Handler were deleted.";
+				}
 				default:
 					return string.Empty;
 			}

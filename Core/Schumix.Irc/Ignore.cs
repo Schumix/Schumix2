@@ -97,7 +97,7 @@ namespace Schumix.Irc
 			if(!db.IsNull())
 				return;
 
-			SchumixBase.DManager.Insert("`ignore_irc_commands`(Nick)", sUtilities.SqlEscape(Name.ToLower()));
+			SchumixBase.DManager.Insert("`ignore_irc_commands`(Command)", sUtilities.SqlEscape(Name.ToLower()));
 		}
 
 		public void Remove(string Name)
@@ -127,7 +127,7 @@ namespace Schumix.Irc
 			if(!db.IsNull())
 				return;
 
-			SchumixBase.DManager.Insert("`ignore_commands`(Nick)", sUtilities.SqlEscape(Name.ToLower()));
+			SchumixBase.DManager.Insert("`ignore_commands`(Command)", sUtilities.SqlEscape(Name.ToLower()));
 		}
 
 		public void Remove(string Name)

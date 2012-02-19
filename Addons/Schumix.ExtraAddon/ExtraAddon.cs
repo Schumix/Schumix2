@@ -65,16 +65,7 @@ namespace Schumix.ExtraAddon
 			Network.PublicRegisterHandler("QUIT",                       HandleQuit);
 			Network.PublicRegisterHandler("NICK",                       HandleNewNick);
 			Network.PublicRegisterHandler(ReplyCode.RPL_NAMREPLY,       HandleNameList);
-			CommandManager.PublicCRegisterHandler("notes",              sNotes.HandleNotes);
-			CommandManager.PublicCRegisterHandler("message",            sFunctions.HandleMessage);
-			CommandManager.PublicCRegisterHandler("weather",            sFunctions.HandleWeather);
-			CommandManager.PublicCRegisterHandler("roll",               sFunctions.HandleRoll);
-			CommandManager.PublicCRegisterHandler("sha1",               sFunctions.HandleSha1);
-			CommandManager.PublicCRegisterHandler("md5",                sFunctions.HandleMd5);
-			CommandManager.PublicCRegisterHandler("prime",              sFunctions.HandlePrime);
-			CommandManager.PublicCRegisterHandler("wiki",               sFunctions.HandleWiki);
-			CommandManager.PublicCRegisterHandler("calc",               sFunctions.HandleCalc);
-			CommandManager.HalfOperatorCRegisterHandler("autofunction", sFunctions.HandleAutoFunction);
+			InitIrcCommand();
 		}
 
 		public void Destroy()
@@ -87,6 +78,42 @@ namespace Schumix.ExtraAddon
 			Network.PublicRemoveHandler("QUIT",                       HandleQuit);
 			Network.PublicRemoveHandler("NICK",                       HandleNewNick);
 			Network.PublicRemoveHandler(ReplyCode.RPL_NAMREPLY,       HandleNameList);
+			RemoveIrcCommand();
+			sNameList.RemoveAll();
+		}
+
+		public bool Reload(string RName, string SName = "")
+		{
+			switch(RName.ToLower())
+			{
+				case "config":
+					_config = new AddonConfig(Name + ".xml");
+					return true;
+				case "command":
+					InitIrcCommand();
+					RemoveIrcCommand();
+					return true;
+			}
+
+			return false;
+		}
+
+		private void InitIrcCommand()
+		{
+			CommandManager.PublicCRegisterHandler("notes",              sNotes.HandleNotes);
+			CommandManager.PublicCRegisterHandler("message",            sFunctions.HandleMessage);
+			CommandManager.PublicCRegisterHandler("weather",            sFunctions.HandleWeather);
+			CommandManager.PublicCRegisterHandler("roll",               sFunctions.HandleRoll);
+			CommandManager.PublicCRegisterHandler("sha1",               sFunctions.HandleSha1);
+			CommandManager.PublicCRegisterHandler("md5",                sFunctions.HandleMd5);
+			CommandManager.PublicCRegisterHandler("prime",              sFunctions.HandlePrime);
+			CommandManager.PublicCRegisterHandler("wiki",               sFunctions.HandleWiki);
+			CommandManager.PublicCRegisterHandler("calc",               sFunctions.HandleCalc);
+			CommandManager.HalfOperatorCRegisterHandler("autofunction", sFunctions.HandleAutoFunction);
+		}
+
+		private void RemoveIrcCommand()
+		{
 			CommandManager.PublicCRemoveHandler("notes",              sNotes.HandleNotes);
 			CommandManager.PublicCRemoveHandler("message",            sFunctions.HandleMessage);
 			CommandManager.PublicCRemoveHandler("weather",            sFunctions.HandleWeather);
@@ -97,19 +124,6 @@ namespace Schumix.ExtraAddon
 			CommandManager.PublicCRemoveHandler("wiki",               sFunctions.HandleWiki);
 			CommandManager.PublicCRemoveHandler("calc",               sFunctions.HandleCalc);
 			CommandManager.HalfOperatorCRemoveHandler("autofunction", sFunctions.HandleAutoFunction);
-			sNameList.RemoveAll();
-		}
-
-		public bool Reload(string RName)
-		{
-			switch(RName.ToLower())
-			{
-				case "config":
-					_config = new AddonConfig(Name + ".xml");
-					return true;
-			}
-
-			return false;
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)

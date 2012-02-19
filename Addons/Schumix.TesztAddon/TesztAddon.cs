@@ -33,17 +33,35 @@ namespace Schumix.TesztAddon
 
 		public void Setup()
 		{
-			CommandManager.AdminCRegisterHandler("test", HandleTest);
+			InitIrcCommand();
 		}
 
 		public void Destroy()
 		{
-			CommandManager.AdminCRemoveHandler("test", HandleTest);
+			RemoveIrcCommand();
 		}
 
-		public bool Reload(string RName)
+		public bool Reload(string RName, string SName = "")
 		{
+			switch(RName.ToLower())
+			{
+				case "command":
+					InitIrcCommand();
+					RemoveIrcCommand();
+					return true;
+			}
+
 			return false;
+		}
+
+		private void InitIrcCommand()
+		{
+			CommandManager.AdminCRegisterHandler("test", HandleTest);
+		}
+
+		private void RemoveIrcCommand()
+		{
+			CommandManager.AdminCRemoveHandler("test",   HandleTest);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

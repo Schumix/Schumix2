@@ -59,7 +59,7 @@ namespace Schumix.Irc.Commands
 			InitHandler();
 		}
 
-		private void InitHandler()
+		private void InitHandler(bool Reload = false)
 		{
 			// Public
 			PublicCRegisterHandler("xbot",         HandleXbot);
@@ -94,7 +94,47 @@ namespace Schumix.Irc.Commands
 			AdminCRegisterHandler("reload",        HandleReload);
 			AdminCRegisterHandler("quit",          HandleQuit);
 
-			Log.Notice("CommandManager", sLConsole.CommandManager("Text2"));
+			if(!Reload)
+				Log.Notice("CommandManager", sLConsole.CommandManager("Text2"));
+		}
+
+		private void RemoveHandler(bool Reload = false)
+		{
+			// Public
+			PublicCRemoveHandler("xbot",         HandleXbot);
+			PublicCRemoveHandler("info",         HandleInfo);
+			PublicCRemoveHandler("help",         HandleHelp);
+			PublicCRemoveHandler("time",         HandleTime);
+			PublicCRemoveHandler("date",         HandleDate);
+			PublicCRemoveHandler("irc",          HandleIrc);
+			PublicCRemoveHandler("whois",        HandleWhois);
+			PublicCRemoveHandler("warning",      HandleWarning);
+			PublicCRemoveHandler("google",       HandleGoogle);
+			PublicCRemoveHandler("translate",    HandleTranslate);
+			PublicCRemoveHandler("online",       HandleOnline);
+
+			// Half Operator
+			HalfOperatorCRemoveHandler("admin",  HandleAdmin);
+			HalfOperatorCRemoveHandler("colors", HandleColors);
+			HalfOperatorCRemoveHandler("nick",   HandleNick);
+			HalfOperatorCRemoveHandler("join",   HandleJoin);
+			HalfOperatorCRemoveHandler("leave",  HandleLeave);
+
+			// Operator
+			OperatorCRemoveHandler("function",   HandleFunction);
+			OperatorCRemoveHandler("channel",    HandleChannel);
+			OperatorCRemoveHandler("sznap",      HandleSznap);
+			OperatorCRemoveHandler("kick",       HandleKick);
+			OperatorCRemoveHandler("mode",       HandleMode);
+			OperatorCRemoveHandler("ignore",     HandleIgnore);
+
+			// Admin
+			AdminCRemoveHandler("plugin",        HandlePlugin);
+			AdminCRemoveHandler("reload",        HandleReload);
+			AdminCRemoveHandler("quit",          HandleQuit);
+
+			if(!Reload)
+				Log.Notice("CommandManager", sLConsole.CommandManager("Text3"));
 		}
 
 		public static void PublicCRegisterHandler(string code, CommandDelegate method)
@@ -193,6 +233,9 @@ namespace Schumix.Irc.Commands
 		{
 			try
 			{
+				if(sIgnoreCommand.IsIgnore(handler))
+					return;
+
 				if(_PublicCommandHandler.ContainsKey(handler))
 					_PublicCommandHandler[handler].Invoke(sIRCMessage);
 				else if(_HalfOperatorCommandHandler.ContainsKey(handler))
