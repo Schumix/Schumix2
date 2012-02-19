@@ -771,6 +771,12 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
+					if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator) && CommandManager.GetAdminCommandHandler().ContainsKey(command))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoAdministrator", sIRCMessage.Channel));
+						return;
+					}
+
 					if(sIgnoreCommand.IsIgnore(command))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -954,6 +960,12 @@ namespace Schumix.Irc.Commands
 					}
 
 					string nick = sIRCMessage.Info[6].ToLower();
+
+					if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator) && IsAdmin(nick, AdminFlag.Administrator))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoAdministrator", sIRCMessage.Channel));
+						return;
+					}
 
 					if(sIgnoreNickName.IsIgnore(nick))
 					{
