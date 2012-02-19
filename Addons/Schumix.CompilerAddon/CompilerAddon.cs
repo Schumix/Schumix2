@@ -85,6 +85,9 @@ namespace Schumix.CompilerAddon
 				if(!CompilerConfig.CompilerEnabled)
 					return;
 
+				if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
+					sIRCMessage.Channel = sIRCMessage.Nick;
+
 				string command = IRCConfig.NickName + SchumixBase.Comma;
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
 

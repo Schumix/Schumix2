@@ -48,6 +48,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		private readonly List<string> _leftlist = new List<string>();
 		private readonly List<string> _joinlist = new List<string>();
 		public Dictionary<string, string> GetDetectiveList() { return _detectivelist; }
+		public Dictionary<string, Player> GetPlayerFList() { return _playerflist; }
 		public Dictionary<string, string> GetKillerList() { return _killerlist; }
 		public Dictionary<string, string> GetDoctorList() { return _doctorlist; }
 		public Dictionary<string, string> GetNormalList() { return _normallist; }

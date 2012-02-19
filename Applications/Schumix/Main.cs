@@ -236,12 +236,12 @@ namespace Schumix
 			System.Console.WriteLine("\t--config-file=<file>\t\tSet up the config file's place");
 			System.Console.WriteLine("\t--console-encoding=Value\tSet up the program's character encoding");
 			System.Console.WriteLine("\t--console-localization=Value\tSet up the program's console language settings");
-			System.Console.WriteLine("\t--server-enabled=Value\tPremition to join the server.");
-			System.Console.WriteLine("\t--server-host=<host>\tSet server host.");
-			System.Console.WriteLine("\t--server-port=<port>\tSet server port.");
+			System.Console.WriteLine("\t--server-enabled=Value\t\tPremition to join the server.");
+			System.Console.WriteLine("\t--server-host=<host>\t\tSet server host.");
+			System.Console.WriteLine("\t--server-port=<port>\t\tSet server port.");
 			System.Console.WriteLine("\t--server-password=<pass>\tSet password.");
-			System.Console.WriteLine("\t--server-identify=Value\tSet identify.");
-			System.Console.WriteLine("\t--server-configs=Value\tSend Schumix's parameters at all.");
+			System.Console.WriteLine("\t--server-identify=Value\t\tSet identify.");
+			System.Console.WriteLine("\t--server-configs=Value\t\tSend Schumix's parameters at all.");
 		}
 
 		private static void StartHandler()
