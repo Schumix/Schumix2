@@ -219,9 +219,6 @@ namespace Schumix.Framework
 						urls.Add(lurl);
 					}
 				}
-
-				foreach(var i in urls)
-					Console.WriteLine(i);
 			}
 			catch(Exception e)
 			{

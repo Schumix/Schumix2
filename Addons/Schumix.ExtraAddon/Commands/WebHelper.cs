@@ -49,25 +49,20 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			try
 			{
-				Console.WriteLine(url.ToString());
 				var request = (HttpWebRequest)WebRequest.Create(url);
 				request.Timeout = 3500;
 				request.AllowAutoRedirect = true;
 				request.UserAgent = Consts.SchumixUserAgent;
 				request.Referer = Consts.SchumixReferer;
-Console.WriteLine(request.ToString());
-				Console.WriteLine(request.Address);
+
 				var response = request.GetResponse();
 				var stream = response.GetResponseStream();
-				Console.WriteLine(response.ResponseUri.ToString());
 				string data;
 
 				using(var rdr = new StreamReader(stream, Encoding.UTF8))
 				{
 					data = rdr.ReadToEnd();
 				}
-
-				Console.WriteLine(data);
 
 				response.Close();
 				var getTitleRegex = new Regex(@"<title>(?<ttl>.*\s*.+\s*.*)\s*</title>", RegexOptions.IgnoreCase);
