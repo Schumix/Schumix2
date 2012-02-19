@@ -53,6 +53,7 @@
     <Reference Include="ChatterBotAPI">
       <HintPath>..\..\Dependencies\ChatterBotAPI.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatterBotAddon.cs" />
