@@ -55,7 +55,8 @@ namespace Schumix.ExtraAddon.Commands
 				request.AllowAutoRedirect = true;
 				request.UserAgent = Consts.SchumixUserAgent;
 				request.Referer = Consts.SchumixReferer;
-
+Console.WriteLine(request.ToString());
+				Console.WriteLine(request.Address);
 				var response = request.GetResponse();
 				var stream = response.GetResponseStream();
 				string data;
