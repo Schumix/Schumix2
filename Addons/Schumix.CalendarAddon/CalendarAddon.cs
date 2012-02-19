@@ -52,31 +52,45 @@ namespace Schumix.CalendarAddon
 			_calendar = new Calendar();
 			_calendar.Start();
 
-			Network.PublicRegisterHandler("PRIVMSG",          HandlePrivmsg);
-			CommandManager.OperatorCRegisterHandler("ban",    sBanCommand.HandleBan);
-			CommandManager.OperatorCRegisterHandler("unban",  sBanCommand.HandleUnban);
-			CommandManager.PublicCRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
+			Network.PublicRegisterHandler("PRIVMSG", HandlePrivmsg);
+			InitIrcCommand();
 		}
 
 		public void Destroy()
 		{
 			_calendar.Stop();
 			Network.PublicRemoveHandler("PRIVMSG",          HandlePrivmsg);
-			CommandManager.OperatorCRemoveHandler("ban",    sBanCommand.HandleBan);
-			CommandManager.OperatorCRemoveHandler("unban",  sBanCommand.HandleUnban);
-			CommandManager.PublicCRemoveHandler("calendar", sCalendarCommand.HandleCalendar);
+			RemoveIrcCommand();
 		}
 
-		public bool Reload(string RName)
+		public bool Reload(string RName, string SName = "")
 		{
 			switch(RName.ToLower())
 			{
 				case "config":
 					_config = new AddonConfig(Name + ".xml");
 					return true;
+				case "command":
+					InitIrcCommand();
+					RemoveIrcCommand();
+					return true;
 			}
 
 			return false;
+		}
+
+		private void InitIrcCommand()
+		{
+			CommandManager.OperatorCRegisterHandler("ban",    sBanCommand.HandleBan);
+			CommandManager.OperatorCRegisterHandler("unban",  sBanCommand.HandleUnban);
+			CommandManager.PublicCRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
+		}
+
+		private void RemoveIrcCommand()
+		{
+			CommandManager.OperatorCRemoveHandler("ban",     sBanCommand.HandleBan);
+			CommandManager.OperatorCRemoveHandler("unban",   sBanCommand.HandleUnban);
+			CommandManager.PublicCRemoveHandler("calendar",  sCalendarCommand.HandleCalendar);
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)

@@ -45,7 +45,7 @@ namespace Schumix.ChatterBotAddon
 			Network.PublicRemoveHandler("PRIVMSG",   HandlePrivmsg);
 		}
 
-		public bool Reload(string RName)
+		public bool Reload(string RName, string SName = "")
 		{
 			return false;
 		}

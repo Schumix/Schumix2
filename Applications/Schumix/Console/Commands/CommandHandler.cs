@@ -1015,6 +1015,12 @@ namespace Schumix.Console.Commands
 
 					string command = Info[3].ToLower();
 
+					if(command == "ignore")
+					{
+						// szöveges válasz ide hogy ez a parancs nem ignorálható
+						return;
+					}
+
 					if(sIgnoreCommand.IsIgnore(command))
 					{
 						Log.Error("Console", text[0]);
@@ -1052,7 +1058,6 @@ namespace Schumix.Console.Commands
 					}
 
 					sIgnoreCommand.Remove(command);
-					// reload commands
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "search")

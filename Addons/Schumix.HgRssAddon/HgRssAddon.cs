@@ -45,7 +45,7 @@ namespace Schumix.HgRssAddon
 		{
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			CommandManager.OperatorCRegisterHandler("hg", HandleHg);
+			InitIrcCommand();
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM hginfo");
 			if(!db.IsNull())
@@ -75,7 +75,7 @@ namespace Schumix.HgRssAddon
 
 		public void Destroy()
 		{
-			CommandManager.OperatorCRemoveHandler("hg", HandleHg);
+			RemoveIrcCommand();
 			_config = null;
 
 			foreach(var list in RssList)
@@ -84,16 +84,30 @@ namespace Schumix.HgRssAddon
 			RssList.Clear();
 		}
 
-		public bool Reload(string RName)
+		public bool Reload(string RName, string SName = "")
 		{
 			switch(RName.ToLower())
 			{
 				case "config":
 					_config = new AddonConfig(Name + ".xml");
 					return true;
+				case "command":
+					InitIrcCommand();
+					RemoveIrcCommand();
+					return true;
 			}
 
 			return false;
+		}
+
+		private void InitIrcCommand()
+		{
+			CommandManager.OperatorCRegisterHandler("hg", HandleHg);
+		}
+
+		private void RemoveIrcCommand()
+		{
+			CommandManager.OperatorCRemoveHandler("hg",   HandleHg);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

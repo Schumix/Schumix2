@@ -45,7 +45,7 @@ namespace Schumix.WordPressRssAddon
 		{
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			CommandManager.OperatorCRegisterHandler("wordpress", HandleWordPress);
+			InitIrcCommand();
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link FROM wordpressinfo");
 			if(!db.IsNull())
@@ -74,7 +74,7 @@ namespace Schumix.WordPressRssAddon
 
 		public void Destroy()
 		{
-			CommandManager.OperatorCRemoveHandler("wordpress", HandleWordPress);
+			RemoveIrcCommand();
 			_config = null;
 
 			foreach(var list in RssList)
@@ -83,16 +83,30 @@ namespace Schumix.WordPressRssAddon
 			RssList.Clear();
 		}
 
-		public bool Reload(string RName)
+		public bool Reload(string RName, string SName = "")
 		{
 			switch(RName.ToLower())
 			{
 				case "config":
 					_config = new AddonConfig(Name + ".xml");
 					return true;
+				case "command":
+					InitIrcCommand();
+					RemoveIrcCommand();
+					return true;
 			}
 
 			return false;
+		}
+
+		private void InitIrcCommand()
+		{
+			CommandManager.OperatorCRegisterHandler("wordpress", HandleWordPress);
+		}
+
+		private void RemoveIrcCommand()
+		{
+			CommandManager.OperatorCRemoveHandler("wordpress",   HandleWordPress);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

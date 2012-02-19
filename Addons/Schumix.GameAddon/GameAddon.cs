@@ -46,7 +46,7 @@ namespace Schumix.GameAddon
 			Network.PublicRegisterHandler("KICK",         HandleKick);
 			Network.PublicRegisterHandler("QUIT",         HandleQuit);
 			Network.PublicRegisterHandler("NICK",         HandleNewNick);
-			CommandManager.PublicCRegisterHandler("game", HandleGame);
+			InitIrcCommand();
 			Console.CancelKeyPress += (sender, e) => { Clean(); };
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => { Clean(); };
 		}
@@ -58,13 +58,31 @@ namespace Schumix.GameAddon
 			Network.PublicRemoveHandler("KICK",         HandleKick);
 			Network.PublicRemoveHandler("QUIT",         HandleQuit);
 			Network.PublicRemoveHandler("NICK",         HandleNewNick);
-			CommandManager.PublicCRemoveHandler("game", HandleGame);
+			RemoveIrcCommand();
 			Clean();
 		}
 
-		public bool Reload(string RName)
+		public bool Reload(string RName, string SName = "")
 		{
+			switch(RName.ToLower())
+			{
+				case "command":
+					InitIrcCommand();
+					RemoveIrcCommand();
+					return true;
+			}
+
 			return false;
+		}
+
+		private void InitIrcCommand()
+		{
+			CommandManager.PublicCRegisterHandler("game", HandleGame);
+		}
+
+		private void RemoveIrcCommand()
+		{
+			CommandManager.PublicCRemoveHandler("game",   HandleGame);
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)

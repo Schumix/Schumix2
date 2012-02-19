@@ -765,6 +765,12 @@ namespace Schumix.Irc.Commands
 
 					string command = sIRCMessage.Info[6].ToLower();
 
+					if(command == "ignore")
+					{
+						// szöveges válasz ide hogy ez a parancs nem ignorálható
+						return;
+					}
+
 					if(sIgnoreCommand.IsIgnore(command))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -772,10 +778,6 @@ namespace Schumix.Irc.Commands
 					}
 
 					sIgnoreCommand.Add(command);
-					CommandManager.PublicCRemoveHandler(command);
-					CommandManager.HalfOperatorCRemoveHandler(command);
-					CommandManager.OperatorCRemoveHandler(command);
-					CommandManager.AdminCRemoveHandler(command);
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "remove")
@@ -802,7 +804,6 @@ namespace Schumix.Irc.Commands
 					}
 
 					sIgnoreCommand.Remove(command);
-					// reload commands
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "search")

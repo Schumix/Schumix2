@@ -7,8 +7,8 @@ Megírásra váró feladatok:
 - sznap parancs megírása normálisan.
 - szerver részbe a funkcióvezérlés és az egy szerveren lévő botok elrejtése egymás elől.
 - ha leállna a szerver először ne botok álljanak le (amiket a szerver indított).
-- reload parancs bövítése.
+- reload parancs bövítése. Command újratöltés.
+- Reload parancsnál fixálni hogy ténylegesen újratöltödtek-e az addonok vagy ténylegesen volt-e olyan parancs mert ebből eredhetnek hibák.
 - Serverben megoldani botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
 - backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
-- Ha a parancsot teszem kivételek közé akkor a rendszer feloldás esetén állítsa helyre azt a parancsot amelyiket törölte.
-- Reload fv-hez addonokban egy plusz paraméter ami alapértelmezetten üres. Reload(string name, string valami = "") (ignore részhez kell)
+- ignore parancsnál válaszüzenet írni a feltételhez. Lényege hogy az ignore parancs nem ignoreálható.

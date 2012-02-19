@@ -47,6 +47,9 @@ namespace Schumix.Irc.Commands
 				if(command.Key == "xbot")
 					continue;
 
+				if(sIgnoreCommand.IsIgnore(command.Key))
+					continue;
+
 				commands += " | " + IRCConfig.CommandPrefix + command.Key;
 			}
 

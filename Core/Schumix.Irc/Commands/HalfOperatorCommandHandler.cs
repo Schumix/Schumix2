@@ -308,6 +308,9 @@ namespace Schumix.Irc.Commands
 						if(command.Key == "admin")
 							continue;
 
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
 					}
 
@@ -323,11 +326,19 @@ namespace Schumix.Irc.Commands
 						if(command.Key == "admin")
 							continue;
 
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
 					}
 
 					foreach(var command in CommandManager.GetOperatorCommandHandler())
+					{
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
+					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[3], commands.Remove(0, 3, " | "));
@@ -341,14 +352,27 @@ namespace Schumix.Irc.Commands
 						if(command.Key == "admin")
 							continue;
 
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
 					}
 
 					foreach(var command in CommandManager.GetOperatorCommandHandler())
+					{
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
+					}
 
 					foreach(var command in CommandManager.GetAdminCommandHandler())
+					{
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
+					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[4]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[5], commands.Remove(0, 3, " | "));
