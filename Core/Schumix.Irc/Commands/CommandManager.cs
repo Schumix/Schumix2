@@ -67,7 +67,6 @@ namespace Schumix.Irc.Commands
 			PublicCRegisterHandler("help",         HandleHelp);
 			PublicCRegisterHandler("time",         HandleTime);
 			PublicCRegisterHandler("date",         HandleDate);
-			PublicCRegisterHandler("calc",         HandleCalc);
 			PublicCRegisterHandler("irc",          HandleIrc);
 			PublicCRegisterHandler("whois",        HandleWhois);
 			PublicCRegisterHandler("warning",      HandleWarning);

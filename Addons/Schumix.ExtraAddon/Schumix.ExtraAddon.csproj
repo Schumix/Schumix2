@@ -84,6 +84,10 @@
       <Project>{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}</Project>
       <Name>Schumix.Irc</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libraries\WolframAPI\WolframAPI.csproj">
+      <Project>{988DBA54-C500-47AF-B31C-BE12EA83E4AA}</Project>
+      <Name>WolframAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

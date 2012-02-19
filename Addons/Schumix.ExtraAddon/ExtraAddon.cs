@@ -73,6 +73,7 @@ namespace Schumix.ExtraAddon
 			CommandManager.PublicCRegisterHandler("md5",                sFunctions.HandleMd5);
 			CommandManager.PublicCRegisterHandler("prime",              sFunctions.HandlePrime);
 			CommandManager.PublicCRegisterHandler("wiki",               sFunctions.HandleWiki);
+			CommandManager.PublicCRegisterHandler("calc",               sFunctions.HandleCalc);
 			CommandManager.HalfOperatorCRegisterHandler("autofunction", sFunctions.HandleAutoFunction);
 		}
 
@@ -94,6 +95,7 @@ namespace Schumix.ExtraAddon
 			CommandManager.PublicCRemoveHandler("md5",                sFunctions.HandleMd5);
 			CommandManager.PublicCRemoveHandler("prime",              sFunctions.HandlePrime);
 			CommandManager.PublicCRemoveHandler("wiki",               sFunctions.HandleWiki);
+			CommandManager.PublicCRemoveHandler("calc",               sFunctions.HandleCalc);
 			CommandManager.HalfOperatorCRemoveHandler("autofunction", sFunctions.HandleAutoFunction);
 			sNameList.RemoveAll();
 		}

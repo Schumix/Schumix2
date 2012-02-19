@@ -125,6 +125,24 @@ namespace Schumix.ExtraAddon.Localization
 			}
 		}
 
+		public string WolframAlphaConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "WolframAlpha beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the WolframAlpha settings.";
+					else
+						return "Loaded the WolframAlpha settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
 		public string WebHelper(string Name)
 		{
 			return WebHelper(Name, Locale);
