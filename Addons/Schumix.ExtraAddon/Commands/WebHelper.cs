@@ -59,6 +59,7 @@ Console.WriteLine(request.ToString());
 				Console.WriteLine(request.Address);
 				var response = request.GetResponse();
 				var stream = response.GetResponseStream();
+				Console.WriteLine(response.ResponseUri.ToString());
 				string data;
 
 				using(var rdr = new StreamReader(stream, Encoding.UTF8))
