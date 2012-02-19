@@ -49,6 +49,7 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			try
 			{
+				Console.WriteLine(url.ToString());
 				var request = (HttpWebRequest)WebRequest.Create(url);
 				request.Timeout = 3500;
 				request.AllowAutoRedirect = true;
@@ -63,6 +64,8 @@ namespace Schumix.ExtraAddon.Commands
 				{
 					data = rdr.ReadToEnd();
 				}
+
+				Console.WriteLine(data);
 
 				response.Close();
 				var getTitleRegex = new Regex(@"<title>(?<ttl>.*\s*.+\s*.*)\s*</title>", RegexOptions.IgnoreCase);

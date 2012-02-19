@@ -106,10 +106,10 @@ namespace Schumix.ExtraAddon.Commands
 				thread.Start();
 				thread.Join(4000);
 				thread.Abort();
-
+Console.WriteLine(webTitle);
 				if(string.IsNullOrEmpty(webTitle))
 					return;
-
+Console.WriteLine("átment");
 				var title = Regex.Replace(webTitle, @"\s+", SchumixBase.Space.ToString());
 
 				// check if it's youtube.
