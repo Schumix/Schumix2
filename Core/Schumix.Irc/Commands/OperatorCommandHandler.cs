@@ -765,7 +765,7 @@ namespace Schumix.Irc.Commands
 
 					string command = sIRCMessage.Info[6].ToLower();
 
-					if(command == "ignore")
+					if(command == "ignore" || command == "admin")
 					{
 						// szöveges válasz ide hogy ez a parancs nem ignorálható
 						return;
