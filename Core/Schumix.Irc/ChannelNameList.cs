@@ -63,8 +63,16 @@ namespace Schumix.Irc
 				{
 					foreach(DataRow row in db.Rows)
 					{
+						int i = 0;
 						string name = row["Name"].ToString();
-						if(_names[Channel.ToLower()].Contains(name.ToLower(), SchumixBase.Comma))
+
+						foreach(var channel in _names)
+						{
+							if(channel.Key != Channel.ToLower() && channel.Value.Contains(name.ToLower(), SchumixBase.Comma))
+								i++;
+						}
+
+						if(i == 0 && _names[Channel.ToLower()].Contains(name.ToLower(), SchumixBase.Comma))
 							SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", name.ToLower()));
 					}
 				}
