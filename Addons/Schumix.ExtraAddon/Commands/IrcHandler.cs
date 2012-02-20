@@ -83,7 +83,7 @@ namespace Schumix.ExtraAddon.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Nick);
 				else
 				{
-					if(IsAdmin(sIRCMessage.Nick))
+					if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, "{0} {1}", Koszones, sIRCMessage.Nick);
