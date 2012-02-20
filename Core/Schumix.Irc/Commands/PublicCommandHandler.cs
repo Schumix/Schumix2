@@ -173,8 +173,11 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			if(!IsAdmin(sIRCMessage.Nick) && sIRCMessage.Info[4].Contains("#"))
+			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host) && sIRCMessage.Info[4].Length > 0 && sIRCMessage.Info[4].Substring(0, 1) == "#")
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoOperator", sIRCMessage.Channel));
 				return;
+			}
 
 			if(sIRCMessage.Info.Length == 5)
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[4], sLManager.GetCommandText("warning", sIRCMessage.Channel), sIRCMessage.Nick, sIRCMessage.Channel);
