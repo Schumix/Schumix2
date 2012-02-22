@@ -38,9 +38,9 @@ namespace Schumix.RevisionAddon
 			CommandManager.PublicCRemoveHandler("xrev", HandleXrev);
 		}
 
-		public bool Reload(string RName, string SName = "")
+		public int Reload(string RName, string SName = "")
 		{
-			return false;
+			return -1;
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

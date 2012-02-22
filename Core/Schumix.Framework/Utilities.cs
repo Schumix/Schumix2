@@ -731,5 +731,53 @@ namespace Schumix.Framework
 
 			return Nameday[DateTime.Now.Month-1, DateTime.Now.Day-1];
 		}
+
+		public bool IsDay(int Year, int Month, int Day)
+		{
+			if(DateTime.IsLeapYear(Year))
+			{
+				switch(Month)
+				{
+					case 1:
+					case 3:
+					case 5:
+					case 7:
+					case 8:
+					case 10:
+					case 12:
+						return Day <= 31;
+					case 4:
+					case 6:
+					case 9:
+					case 11:
+						return Day <= 30;
+					case 2:
+						return Day <= 29;
+				}
+			}
+			else
+			{
+				switch(Month)
+				{
+					case 1:
+					case 3:
+					case 5:
+					case 7:
+					case 8:
+					case 10:
+					case 12:
+						return Day <= 31;
+					case 4:
+					case 6:
+					case 9:
+					case 11:
+						return Day <= 30;
+					case 2:
+						return Day <= 28;
+				}
+			}
+
+			return false;
+		}
 	}
 }

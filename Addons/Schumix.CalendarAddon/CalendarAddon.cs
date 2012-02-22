@@ -59,24 +59,32 @@ namespace Schumix.CalendarAddon
 		public void Destroy()
 		{
 			_calendar.Stop();
-			Network.PublicRemoveHandler("PRIVMSG",          HandlePrivmsg);
+			Network.PublicRemoveHandler("PRIVMSG",   HandlePrivmsg);
 			RemoveIrcCommand();
 		}
 
-		public bool Reload(string RName, string SName = "")
+		public int Reload(string RName, string SName = "")
 		{
-			switch(RName.ToLower())
+			try
 			{
-				case "config":
-					_config = new AddonConfig(Name + ".xml");
-					return true;
-				case "command":
-					InitIrcCommand();
-					RemoveIrcCommand();
-					return true;
+				switch(RName.ToLower())
+				{
+					case "config":
+						_config = new AddonConfig(Name + ".xml");
+						return 1;
+					case "command":
+						InitIrcCommand();
+						RemoveIrcCommand();
+						return 1;
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error("CalendarAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				return 0;
 			}
 
-			return false;
+			return -1;
 		}
 
 		private void InitIrcCommand()
@@ -88,9 +96,9 @@ namespace Schumix.CalendarAddon
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.OperatorCRemoveHandler("ban",     sBanCommand.HandleBan);
-			CommandManager.OperatorCRemoveHandler("unban",   sBanCommand.HandleUnban);
-			CommandManager.PublicCRemoveHandler("calendar",  sCalendarCommand.HandleCalendar);
+			CommandManager.OperatorCRemoveHandler("ban",      sBanCommand.HandleBan);
+			CommandManager.OperatorCRemoveHandler("unban",    sBanCommand.HandleUnban);
+			CommandManager.PublicCRemoveHandler("calendar",   sCalendarCommand.HandleCalendar);
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)

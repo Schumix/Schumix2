@@ -1,11 +1,9 @@
 Megírásra váró feladatok:
 - Google és translate parancsa javítása.
-- Calendar kibővítése és finomhangolása.
 - xrev parancs megírása.
 - irc parancs listájának bővítése.
 - sznap parancs megírása normálisan.
 - ha leállna a szerver először ne botok álljanak le (amiket a szerver indított).
-- Reload parancsnál fixálni hogy ténylegesen újratöltödtek-e az addonok vagy ténylegesen volt-e olyan parancs mert ebből eredhetnek hibák.
 - Serverben megoldani az egy szerveren lévő botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
 - backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
-- ignore parancsnál válaszüzenet írni a feltételhez. Lényege hogy az ignore és admin parancs nem ignorálható.
+- Névnap hozzáadása megkezdve. Már az adatbázisban szerepel a funkció. A forrásba már csak a kódrészeket kell megírni.

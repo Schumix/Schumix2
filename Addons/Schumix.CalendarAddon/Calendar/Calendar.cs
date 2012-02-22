@@ -251,7 +251,7 @@ namespace Schumix.CalendarAddon
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					if(row["Loops"].ToString() != string.Empty && Convert.ToBoolean(row["Loops"].ToString()))
+					if(Convert.ToBoolean(row["Loops"].ToString()))
 					{
 						string name0 = row["Name"].ToString();
 						string channel0 = row["Channel"].ToString();

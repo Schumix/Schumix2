@@ -35,10 +35,14 @@ namespace Schumix.CalendarAddon
 
 		public string Add(string name, string channel, string message, DateTime time, bool Loop = false)
 		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), time.Year, time.Month, time.Day, time.Hour, time.Minute);
+			if(!db.IsNull())
+				return sLManager.GetWarningText("Calendar1", channel);
+
 			if(Loop)
-				SchumixBase.DManager.Insert("`calendar`(Name, Channel, Message, Loops, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(message), true, 0, 0, 0, time.Hour, time.Minute);
+				SchumixBase.DManager.Insert("`calendar`(Name, Channel, Message, Loops, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), true, 0, 0, 0, time.Hour, time.Minute);
 			else
-				SchumixBase.DManager.Insert("`calendar`(Name, Channel, Message, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(message), time.Year, time.Month, time.Day, time.Hour, time.Minute);
+				SchumixBase.DManager.Insert("`calendar`(Name, Channel, Message, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), time.Year, time.Month, time.Day, time.Hour, time.Minute);
 
 			return sLManager.GetWarningText("Calendar", channel);
 		}
@@ -46,19 +50,35 @@ namespace Schumix.CalendarAddon
 		public string Add(string name, string channel, string message, int hour, int minute, bool Loop = false)
 		{
 			var time = DateTime.Now;
-			SchumixBase.DManager.Insert("`calendar`(Name, Channel, Message, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(message), time.Year, time.Month, time.Day, hour, minute);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), 0, 0, 0, hour, minute);
+			if(!db.IsNull())
+				return sLManager.GetWarningText("Calendar1", channel);
+
+			if(Loop)
+				SchumixBase.DManager.Insert("`calendar`(Name, Channel, Message, Loops, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), true, 0, 0, 0, hour, minute);
+			else
+				SchumixBase.DManager.Insert("`calendar`(Name, Channel, Message, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), time.Year, time.Month, time.Day, hour, minute);
+
 			return sLManager.GetWarningText("Calendar", channel);
 		}
 
 		public string Add(string name, string channel, string message, int year, int month, int day, int hour, int minute, bool Loop = false)
 		{
-			SchumixBase.DManager.Insert("`calendar`(Name, Channel, Message, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(message), year, month, day, hour, minute);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), year, month, day, hour, minute);
+			if(!db.IsNull())
+				return sLManager.GetWarningText("Calendar1", channel);
+
+			if(Loop)
+				SchumixBase.DManager.Insert("`calendar`(Name, Channel, Message, Loops, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), true, 0, 0, 0, hour, minute);
+			else
+				SchumixBase.DManager.Insert("`calendar`(Name, Channel, Message, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), year, month, day, hour, minute);
+
 			return sLManager.GetWarningText("Calendar", channel);
 		}
 
 		public void Write(string Name, string Channel, string Message)
 		{
-			sSendMessage.SendCMPrivmsg(Channel, string.Format("Feljegyzett üzenet {0} számára!", Name));
+			sSendMessage.SendCMPrivmsg(Channel, sLManager.GetWarningText("Calendar2", Channel), Name);
 			sSendMessage.SendCMPrivmsg(Channel, Message);
 			Thread.Sleep(400);
 		}
@@ -70,6 +90,16 @@ namespace Schumix.CalendarAddon
 				return;
 
 			SchumixBase.DManager.Delete("calendar", string.Format("Id = '{0}'", Id));
+		}
+
+		public string Remove(string Name, string Channel, int hour, int minute)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Hour = '{2}' AND Minute = '{3}'", sUtilities.SqlEscape(Name.ToLower()), sUtilities.SqlEscape(Channel.ToLower()), hour, minute);
+			if(db.IsNull())
+				return sLManager.GetWarningText("Calendar3", Channel);
+
+			SchumixBase.DManager.Delete("calendar", string.Format("Name = '{0}' AND Channel = '{1}' AND Hour = '{2}' AND Minute = '{3}'", sUtilities.SqlEscape(Name.ToLower()), sUtilities.SqlEscape(Channel.ToLower()), hour, minute));
+			return sLManager.GetWarningText("Calendar4", Channel);
 		}
 	}
 }

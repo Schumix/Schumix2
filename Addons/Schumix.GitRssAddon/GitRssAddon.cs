@@ -85,20 +85,28 @@ namespace Schumix.GitRssAddon
 			RssList.Clear();
 		}
 
-		public bool Reload(string RName, string SName = "")
+		public int Reload(string RName, string SName = "")
 		{
-			switch(RName.ToLower())
+			try
 			{
-				case "config":
-					_config = new AddonConfig(Name + ".xml");
-					return true;
-				case "command":
-					InitIrcCommand();
-					RemoveIrcCommand();
-					return true;
+				switch(RName.ToLower())
+				{
+					case "config":
+						_config = new AddonConfig(Name + ".xml");
+						return 1;
+					case "command":
+						InitIrcCommand();
+						RemoveIrcCommand();
+						return 1;
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error("GitRssAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				return 0;
 			}
 
-			return false;
+			return -1;
 		}
 
 		private void InitIrcCommand()

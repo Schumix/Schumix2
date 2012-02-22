@@ -145,6 +145,7 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, "{0}: {1}", sIRCMessage.Nick, row["Message"].ToString());
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message2", sIRCMessage.Channel), row["Wrote"].ToString());
+							Thread.Sleep(400);
 						}
 
 						SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower()));

@@ -34,7 +34,7 @@ namespace Schumix.API
 		/// Destroys the addon, releasing all resources.
 		/// </summary>
 		void Destroy();
-		bool Reload(string RName, string SName = "");
+		int Reload(string RName, string SName = "");
 		bool HandleHelp(IRCMessage sIRCMessage);
 
 		/// <summary>

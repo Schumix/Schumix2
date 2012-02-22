@@ -767,7 +767,7 @@ namespace Schumix.Irc.Commands
 
 					if(command == "ignore" || command == "admin")
 					{
-						// szöveges válasz ide hogy ez a parancs nem ignorálható
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoIgnoreCommand", sIRCMessage.Channel));
 						return;
 					}
 
