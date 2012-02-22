@@ -32,6 +32,7 @@ namespace Schumix.CalendarAddon.Commands
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Unban sUnban = Singleton<Unban>.Instance;
 		private readonly Ban sBan = Singleton<Ban>.Instance;
 		private BanCommand() {}
@@ -102,14 +103,14 @@ namespace Schumix.CalendarAddon.Commands
 				int month = s[1].ToNumber(13).ToInt();
 				if(month > 12)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel));
 					return;
 				}
 
 				int day = s[2].ToNumber(32).ToInt();
-				if(day > 31)
+				if(!sUtilities.IsDay(year, month, day))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel));
 					return;
 				}
 
@@ -151,6 +152,7 @@ namespace Schumix.CalendarAddon.Commands
 		private readonly CalendarFunctions sCalendarFunctions = Singleton<CalendarFunctions>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private CalendarCommand() {}
 
 		public void HandleCalendar(IRCMessage sIRCMessage)
@@ -505,14 +507,14 @@ namespace Schumix.CalendarAddon.Commands
 					int month = s[1].ToNumber(13).ToInt();
 					if(month > 12)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel));
 						return;
 					}
 
 					int day = s[2].ToNumber(32).ToInt();
-					if(day > 31)
+					if(!sUtilities.IsDay(year, month, day))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel));
 						return;
 					}
 
@@ -598,14 +600,14 @@ namespace Schumix.CalendarAddon.Commands
 						int month = s[1].ToNumber(13).ToInt();
 						if(month > 12)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel));
 							return;
 						}
 
 						int day = s[2].ToNumber(32).ToInt();
-						if(day > 31)
+						if(!sUtilities.IsDay(year, month, day))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel));
 							return;
 						}
 
@@ -671,14 +673,14 @@ namespace Schumix.CalendarAddon.Commands
 						int month = s[1].ToNumber(13).ToInt();
 						if(month > 12)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel));
 							return;
 						}
 
 						int day = s[2].ToNumber(32).ToInt();
-						if(day > 31)
+						if(!sUtilities.IsDay(year, month, day))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel));
 							return;
 						}
 
@@ -745,14 +747,14 @@ namespace Schumix.CalendarAddon.Commands
 					int month = s[1].ToNumber(13).ToInt();
 					if(month > 12)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel));
 						return;
 					}
 
 					int day = s[2].ToNumber(32).ToInt();
-					if(day > 31)
+					if(!sUtilities.IsDay(year, month, day))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel));
 						return;
 					}
 
