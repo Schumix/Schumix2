@@ -25,6 +25,7 @@ using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.GameAddon.Commands;
 using Schumix.GameAddon.MaffiaGames;
 
@@ -34,6 +35,7 @@ namespace Schumix.GameAddon
 	{
 		public static readonly Dictionary<string, string> GameChannelFunction = new Dictionary<string, string>();
 		public static readonly Dictionary<string, MaffiaGame> MaffiaList = new Dictionary<string, MaffiaGame>();
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
@@ -62,17 +64,25 @@ namespace Schumix.GameAddon
 			Clean();
 		}
 
-		public bool Reload(string RName, string SName = "")
+		public int Reload(string RName, string SName = "")
 		{
-			switch(RName.ToLower())
+			try
 			{
-				case "command":
-					InitIrcCommand();
-					RemoveIrcCommand();
-					return true;
+				switch(RName.ToLower())
+				{
+					case "command":
+						InitIrcCommand();
+						RemoveIrcCommand();
+						return 1;
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error("GameAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				return 0;
 			}
 
-			return false;
+			return -1;
 		}
 
 		private void InitIrcCommand()

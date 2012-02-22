@@ -856,7 +856,7 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleReload()
 		{
-			if(Info.Length < 2)
+			if(Info.Length < 3)
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
 				return;
@@ -869,26 +869,30 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			bool status = false;
+			int i = -1;
 
 			switch(Info[1].ToLower())
 			{
 				case "config":
 					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile);
-					status = true;
+					i = 1;
 					break;
 			}
 
 			foreach(var plugin in sAddonManager.GetPlugins())
 			{
-				if(plugin.Reload(Info[1]))
-					status = true;
+				if(plugin.Reload(Info[1].ToLower()) == 1)
+					i = 1;
+				else if(plugin.Reload(Info[1].ToLower()) == 0)
+					i = 0;
 			}
 
-			if(status)
-				Log.Notice("Console", text[0], Info[1]);
-			else
+			if(i == -1)
+				Log.Error("Console", text[0]);
+			else if(i == 0)
 				Log.Error("Console", text[1]);
+			else if(i == 1)
+				Log.Notice("Console", text[2], Info[1]);
 		}
 
 		protected void HandleIgnore()
@@ -1017,7 +1021,7 @@ namespace Schumix.Console.Commands
 
 					if(command == "ignore" || command == "admin")
 					{
-						// szöveges válasz ide hogy ez a parancs nem ignorálható
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoIgnoreCommand"));
 						return;
 					}
 

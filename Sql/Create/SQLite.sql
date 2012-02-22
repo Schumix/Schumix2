@@ -49,7 +49,7 @@ Minute INTEGER DEFAULT 0
 -- ----------------------------
 CREATE TABLE "channel" (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
-Functions VARCHAR(500)    DEFAULT ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off',
+Functions VARCHAR(500)    DEFAULT ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off',
 Channel VARCHAR(20),
 Password VARCHAR(30),
 Enabled VARCHAR(5),
