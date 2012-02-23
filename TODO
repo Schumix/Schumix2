@@ -8,3 +8,5 @@ Megírásra váró feladatok:
 - backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
 - Névnap hozzáadása megkezdve. Már az adatbázisban szerepel a funkció. A forrásba már csak a kódrészeket kell megírni.
 - ExtraAddonhoz hozzáadni azt a lehetőséget hogy a kód 10 percenként ellenőrzi a nevét és ha szabad visszaveszi.
+- plugin parancsnál az addonok állapotát ne ilyen hosszan írja ki.
+- Megoldás arra ha vki úgy aktiválja a vhost-ot hogy sehol sincs fent (csatorna). Ha ezútán se lép fel csatornára de mondjuk nevet cserél vagy lelép irc-ről akkor fen áll a lehetőség hogy a kódot támadás érheti. Ehhez valamilyen védelmi mehanizmust kéne kitalálni.
