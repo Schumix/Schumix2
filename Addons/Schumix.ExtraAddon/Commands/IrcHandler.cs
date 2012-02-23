@@ -98,7 +98,10 @@ namespace Schumix.ExtraAddon.Commands
 		protected void HandleLeft(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Nick == sNickInfo.NickStorage)
+			{
+				sNameList.Remove(sIRCMessage.Channel);
 				return;
+			}
 
 			sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Nick);
 
@@ -137,10 +140,10 @@ namespace Schumix.ExtraAddon.Commands
 			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Info[3]);
-
 			if(sIRCMessage.Info[3] == sNickInfo.NickStorage)
 			{
+				sNameList.Remove(sIRCMessage.Channel);
+
 				if(sChannelInfo.FSelect(IFunctions.Rejoin) && sChannelInfo.FSelect(IChannelFunctions.Rejoin, sIRCMessage.Channel))
 				{
 					foreach(var m_channel in sChannelInfo.CList)
@@ -155,6 +158,8 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			else
 			{
+				sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Info[3]);
+
 				if(sChannelInfo.FSelect(IFunctions.Commands) && sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel))
 				{
 					if(ConsoleLog.CLog)

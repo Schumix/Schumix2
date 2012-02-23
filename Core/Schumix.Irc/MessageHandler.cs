@@ -339,7 +339,10 @@ namespace Schumix.Irc
 		protected void HandleIrcLeft(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Nick == sNickInfo.NickStorage)
+			{
+				sChannelNameList.Remove(sIRCMessage.Channel);
 				return;
+			}
 
 			sChannelNameList.Remove(sIRCMessage.Channel, sIRCMessage.Nick);
 		}
@@ -359,7 +362,10 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 4)
 				return;
 
-			sChannelNameList.Remove(sIRCMessage.Channel, sIRCMessage.Info[3]);
+			if(sIRCMessage.Info[3].ToLower() == sNickInfo.NickStorage.ToLower())
+				sChannelNameList.Remove(sIRCMessage.Channel);
+			else
+				sChannelNameList.Remove(sIRCMessage.Channel, sIRCMessage.Info[3]);
 		}
 
 		protected void HandleNameList(IRCMessage sIRCMessage)
