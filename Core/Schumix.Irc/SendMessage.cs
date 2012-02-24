@@ -262,6 +262,8 @@ namespace Schumix.Irc
 	
 						foreach(var text in list)
 							INetwork.Writer.WriteLine(text);
+
+						list.Clear();
 					}
 					else
 						INetwork.Writer.WriteLine(message);
