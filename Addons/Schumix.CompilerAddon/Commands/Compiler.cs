@@ -260,6 +260,8 @@ namespace Schumix.CompilerAddon.Commands
 		{
 			if(results.Errors.HasErrors)
 			{
+				string errormessage = string.Empty;
+
 				foreach(CompilerError error in results.Errors)
 				{
 					string errortext = error.ErrorText;
@@ -281,8 +283,7 @@ namespace Schumix.CompilerAddon.Commands
 									break;
 							}
 
-							string s = "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), s);
+							errormessage += ". " + "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
 						}
 						else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
 						{
@@ -299,16 +300,16 @@ namespace Schumix.CompilerAddon.Commands
 									break;
 							}
 
-							string s = "*:\\***\\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), s);
+							errormessage += ". " + "*:\\***\\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
 						}
 
 						continue;
 					}
 
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), errortext);
+					errormessage += ". " + errortext;
 				}
 
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), errormessage.Remove(0, 2, ". "));
 				return null;
 			}
 			else

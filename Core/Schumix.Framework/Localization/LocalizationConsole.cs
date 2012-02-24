@@ -1801,6 +1801,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "No such function: {0}";
 				}
+				case "MessageLength":
+				{
+					if(Locale == "huHU")
+						return "Túl hosszú a szöveg!";
+					else if(Locale == "enUS")
+						return "Text is too long!";
+					else
+						return "Text is too long!";
+				}
 				default:
 					return string.Empty;
 			}
