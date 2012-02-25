@@ -1,8 +1,8 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Twl
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Twl
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ using System.Threading;
 using System.Data;
 using System.Data.SQLite;
 using System.Text.RegularExpressions;
+using Schumix.API;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -38,7 +39,8 @@ namespace Schumix.Framework.Database
 			if(!Initialize(file))
 			{
 				Log.Error("SQLite", sLConsole.SQLite("Text"));
-				Thread.Sleep(200);
+				SchumixBase.ServerDisconnect(false);
+				Thread.Sleep(1000);
 				Environment.Exit(1);
 			}
 			else
@@ -75,6 +77,7 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+				IsConnect();
 				var adapter = new SQLiteDataAdapter();
 				var command = Connection.CreateCommand();
 				command.CommandText = query;
@@ -90,7 +93,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(SQLiteException s)
 			{
-				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+				Crash(s);
 				return null;
 			}
 		}
@@ -108,9 +111,63 @@ namespace Schumix.Framework.Database
 
 		private void ExecuteNonQuery(string sql)
 		{
-			var command = Connection.CreateCommand();
-			command.CommandText = sql;
-			command.ExecuteNonQuery();
+			try
+			{
+				IsConnect();
+				var command = Connection.CreateCommand();
+				command.CommandText = sql;
+				command.ExecuteNonQuery();
+			}
+			catch(SQLiteException s)
+			{
+				Crash(s);
+			}
+		}
+
+		private void IsConnect()
+		{
+			try
+			{
+				if(Connection.State != ConnectionState.Open)
+					Connection.Open();
+			}
+			catch(SQLiteException s)
+			{
+				Crash(s);
+			}
+		}
+
+		private void Crash(SQLiteException s)
+		{
+			if(s.Message.Contains("Fatal error encountered during command execution."))
+			{
+				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+				SchumixBase.ServerDisconnect(false);
+				SchumixBase.ExitStatus = true;
+
+				if(!INetwork.Writer.IsNull())
+					INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+				Thread.Sleep(1000);
+				Environment.Exit(1);
+			}
+
+			if(s.Message.Contains("Timeout expired."))
+			{
+				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+				SchumixBase.ServerDisconnect(false);
+				SchumixBase.ExitStatus = true;
+
+				if(!INetwork.Writer.IsNull())
+					INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
+
+				Thread.Sleep(1000);
+				Environment.Exit(1);
+			}
+
+			Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 		}
 
 		public bool Update(string sql)

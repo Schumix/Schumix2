@@ -9,7 +9,6 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.Framework</RootNamespace>
     <AssemblyName>Schumix.Framework</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,25 +25,6 @@
     <Optimize>true</Optimize>
     <OutputPath>..\..\Run\Release</OutputPath>
     <DefineConstants>RELEASE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono-Debug|x86' ">
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\Run\Debug</OutputPath>
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;MONO</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono-Release|x86' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\Run\Release</OutputPath>
-    <DefineConstants>RELEASE;MONO</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x86</PlatformTarget>
@@ -68,45 +48,19 @@
     <WarningLevel>4</WarningLevel>
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono-Debug|x64' ">
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>..\..\Run\Debug_x64</OutputPath>
-    <DebugSymbols>true</DebugSymbols>
-    <DefineConstants>DEBUG;MONO</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Mono-Release|x64' ">
-    <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>..\..\Run\Release_x64</OutputPath>
-    <DefineConstants>RELEASE;MONO</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System">
-    </Reference>
-    <Reference Include="MySql.Data, Version=6.3.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
+    <Reference Include="MySql.Data">
       <HintPath>..\..\Dependencies\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data">
-    </Reference>
-    <Reference Include="System.Xml">
-    </Reference>
-    <Reference Include="System.Web">
-    </Reference>
-    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="System.Data.SQLite">
       <HintPath>..\..\Dependencies\System.Data.SQLite.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Management">
-    </Reference>
-    <Reference Include="System.Core">
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -130,6 +84,12 @@
     <Compile Include="Extensions\GeneralExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Network\ClientPacketHandler.cs" />
+    <Compile Include="Network\Opcodes.cs" />
+    <Compile Include="Network\SchumixPacket.cs" />
+    <Compile Include="Network\ClientSocket.cs" />
+    <Compile Include="Runtime.cs" />
+    <Compile Include="CrashDumper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

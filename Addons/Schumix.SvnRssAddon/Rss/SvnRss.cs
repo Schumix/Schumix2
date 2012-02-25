@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,10 @@
 
 using System;
 using System.Xml;
+using System.Net;
+using System.Text;
 using System.Threading;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -29,7 +32,7 @@ using Schumix.SvnRssAddon.Localization;
 
 namespace Schumix.SvnRssAddon
 {
-	public sealed class SvnRss
+	sealed class SvnRss
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
@@ -43,12 +46,31 @@ namespace Schumix.SvnRssAddon
 		private string _title;
 		private string _author;
 		private string[] info;
+		private string _username;
+		private string _password;
 		public bool Started { get; private set; }
 
 		public SvnRss(string name, string url, string website)
 		{
 			_name = name;
-			_url = url;
+
+			if(url.Contains(SchumixBase.Colon.ToString()) && url.Contains("@"))
+			{
+				_url = url.Substring(0, url.IndexOf("//")+2);
+				url = url.Remove(0, url.IndexOf("//")+2);
+				_username = url.Substring(0, url.IndexOf(SchumixBase.Colon));
+				url = url.Remove(0, url.IndexOf(SchumixBase.Colon)+1);
+				_password = url.Substring(0, url.IndexOf("@"));
+				url = url.Remove(0, url.IndexOf("@")+1);
+				_url += url;
+			}
+			else
+			{
+				_url = url;
+				_username = string.Empty;
+				_password = string.Empty;
+			}
+
 			_website = website;
 			Init();
 		}
@@ -109,30 +131,44 @@ namespace Schumix.SvnRssAddon
 				{
 					try
 					{
-						if(sChannelInfo.FSelect("svn"))
+						if(sChannelInfo.FSelect(IFunctions.Svn))
 						{
 							url = GetUrl();
 							if(url.IsNull())
+							{
+								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
+							}
 
 							newrev = Revision(url);
 							if(newrev == "no text")
+							{
+								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
+							}
 
 							if(_oldrev != newrev)
 							{
 								title = Title(url);
 								if(title == "no text")
+								{
+									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
+								}
 
 								author = Author(url);
 								if(author == "no text")
+								{
+									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
+								}
 
 								Informations(newrev, title, author);
 								_oldrev = newrev;
 							}
 
+							url.RemoveAll();
+							url = null;
 							Thread.Sleep(RssConfig.QueryTime*1000);
 						}
 						else 
@@ -141,13 +177,17 @@ namespace Schumix.SvnRssAddon
 					catch(Exception e)
 					{
 						Log.Error("SvnRss", sLocalization.Exception("Error"), _name, e.Message);
+						Thread.Sleep(RssConfig.QueryTime*1000);
 					}
 				}
 			}
 			catch(Exception e)
 			{
 				Log.Error("SvnRss", sLocalization.Exception("Error2"), _name, e.Message);
-				Update();
+				Thread.Sleep(RssConfig.QueryTime*1000);
+
+				if(e.Message != "Thread was being aborted")
+					Update();
 			}
 		}
 
@@ -155,13 +195,36 @@ namespace Schumix.SvnRssAddon
 		{
 			try
 			{
-				var rss = new XmlDocument();
-				rss.Load(_url);
-				return rss;
+				if(_username != string.Empty && _password != string.Empty)
+				{
+					using(var client = new WebClient())
+					{
+						client.Encoding = Encoding.UTF8;
+						client.Credentials = new NetworkCredential(_username, _password);
+						string xml = client.DownloadString(_url);
+						var rss = new XmlDocument();
+						rss.LoadXml(xml);
+						client.Dispose();
+						return rss;
+					}
+				}
+				else
+				{
+					using(var client = new WebClient())
+					{
+						client.Encoding = Encoding.UTF8;
+						string xml = client.DownloadString(_url);
+						var rss = new XmlDocument();
+						rss.LoadXml(xml);
+						xml = string.Empty;
+						return rss;
+					}
+				}
 			}
 			catch(Exception e)
 			{
 				Log.Error("SvnRss", sLocalization.Exception("Error"), _name, e.Message);
+				Thread.Sleep(RssConfig.QueryTime*1000);
 			}
 
 			return null;
@@ -198,7 +261,7 @@ namespace Schumix.SvnRssAddon
 
 				string i = info[1];
 
-				if(i.IndexOf("]") == -1)
+				if(!i.Contains("]"))
 					return "no text";
 
 				return i.Substring(0, i.IndexOf("]"));

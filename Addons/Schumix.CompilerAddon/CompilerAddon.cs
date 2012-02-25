@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -36,7 +36,7 @@ using Schumix.CompilerAddon.Localization;
 
 namespace Schumix.CompilerAddon
 {
-	public class CompilerAddon : Compiler, ISchumixAddon
+	class CompilerAddon : SCompiler, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
@@ -44,18 +44,15 @@ namespace Schumix.CompilerAddon
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
-#if MONO
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
-#else
-		private AddonConfig _config;
-#endif
 
 		public void Setup()
 		{
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
+			Network.PublicRegisterHandler("PRIVMSG", HandlePrivmsg);
 			ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
 			EntryRegex = new Regex(SchumixBase.Space + CompilerConfig.MainClass + @"\s*?\{");
 			SchumixRegex = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)");
@@ -63,30 +60,41 @@ namespace Schumix.CompilerAddon
 
 		public void Destroy()
 		{
-
+			Network.PublicRemoveHandler("PRIVMSG", HandlePrivmsg);
 		}
 
-		public bool Reload(string RName)
+		public int Reload(string RName, string SName = "")
 		{
-			switch(RName.ToLower())
+			try
 			{
-				case "config":
-					_config = new AddonConfig(Name + ".xml");
-					return true;
+				switch(RName.ToLower())
+				{
+					case "config":
+						_config = new AddonConfig(Name + ".xml");
+						return 1;
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error("CompilerAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				return 0;
 			}
 
-			return false;
+			return -1;
 		}
 
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
+		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("commands") || sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!sChannelInfo.FSelect("commands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				if(!CompilerConfig.CompilerEnabled)
 					return;
+
+				if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
+					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string command = IRCConfig.NickName + SchumixBase.Comma;
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
@@ -114,31 +122,11 @@ namespace Schumix.CompilerAddon
 				}
 				else
 				{
-					if((sChannelInfo.FSelect("compiler") && sChannelInfo.FSelect("compiler", sIRCMessage.Channel)) &&
+					if((sChannelInfo.FSelect(IFunctions.Compiler) && sChannelInfo.FSelect(IChannelFunctions.Compiler, sIRCMessage.Channel)) &&
 						(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage)))
 						Compiler(sIRCMessage, false, command);
 				}
 			}
-		}
-
-		public void HandleNotice(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)
@@ -169,18 +157,10 @@ namespace Schumix.CompilerAddon
 			if(command)
 			{
 				sIRCMessage.Args = sIRCMessage.Args.Remove(0, args.Length);
-				var thread = new Thread(() => ReturnCode = CompilerCommand(sIRCMessage, true));
-				thread.Start();
-				thread.Join(3000);
-				thread.Abort();
+				ReturnCode = CompilerCommand(sIRCMessage, true);
 			}
 			else
-			{
-				var thread = new Thread(() => ReturnCode = CompilerCommand(sIRCMessage, false));
-				thread.Start();
-				thread.Join(3000);
-				thread.Abort();
-			}
+				ReturnCode = CompilerCommand(sIRCMessage, false);
 
 			switch(ReturnCode)
 			{

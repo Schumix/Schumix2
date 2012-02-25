@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.CompilerAddon.Localization
 {
-	public sealed class PLocalization
+	sealed class PLocalization
 	{
 		public string Locale { get; set; }
 		private PLocalization() {}
@@ -101,24 +101,6 @@ namespace Schumix.CompilerAddon.Localization
 						return "Loaded the Compiler settings.";
 					else
 						return "Loaded the Compiler settings.";
-				}
-				default:
-					return string.Empty;
-			}
-		}
-
-		public string Exception(string Name)
-		{
-			switch(Name)
-			{
-				case "Error":
-				{
-					if(Locale == "huHU")
-						return "Meghibásodás részletei: {0}";
-					else if(Locale == "enUS")
-						return "Failure details: {0}";
-					else
-						return "Failure details: {0}";
 				}
 				default:
 					return string.Empty;

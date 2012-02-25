@@ -23,28 +23,23 @@ namespace Schumix.Framework.Config
 {
 	public static class Consts
 	{
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public const string SchumixDescription = "Schumix IRC bot";
 #if DEBUG
-#if MONO
-		public const string SchumixConfiguration = "Mono-Debug";
-#else
 		public const string SchumixConfiguration = "Debug";
-#endif
-#else
-#if MONO
-		public const string SchumixConfiguration = "Mono-Release";
 #else
 		public const string SchumixConfiguration = "Release";
 #endif
-#endif
 		public const string SchumixCompany = "Megax Productions";
 		public const string SchumixProduct = "Schumix";
-		public const string SchumixCopyright = "Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>";
+		public const string SchumixCopyright = "Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>";
 		public const string SchumixTrademark = "GNU General Public License";
-		public const string SchumixVersion = "3.4.9";
-		public const string SchumixFileVersion = "3.4.9.0";
+		public const string SchumixVersion = "3.7.3";
+		public const string SchumixFileVersion = "3.7.3.0";
 		public const string SchumixProgrammedBy = "Csaba Jakosa (Megax)";
 		public const string SchumixDevelopers = "Csaba Jakosa (Megax), Twl, Jackneill, Alenah";
 		public const string SchumixWebsite = "http://www.github.com/megax/Schumix2";
+		public static string SchumixUserAgent = SchumixBase.Title + SchumixBase.Space + sUtilities.GetVersion() + " / .NET " + Environment.Version;
+		public const string SchumixReferer = "http://yeahunter.hu";
 	}
 }

@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -139,12 +139,15 @@ namespace Schumix.Updater
 			config.StartInfo.UseShellExecute = false;
 			config.StartInfo.RedirectStandardOutput = true;
 			config.StartInfo.RedirectStandardError = true;
-#if MONO
-			config.StartInfo.FileName = "mono";
-			config.StartInfo.Arguments = "Config.exe " + version;
-#else
-			config.StartInfo.FileName = "Config.exe " + version;
-#endif
+
+			if(sUtilities.GetCompiler() == Schumix.Framework.Compiler.Mono)
+			{
+				config.StartInfo.FileName = "mono";
+				config.StartInfo.Arguments = "Config.exe " + version;
+			}
+			else if(sUtilities.GetCompiler() == Schumix.Framework.Compiler.VisualStudio)
+				config.StartInfo.FileName = "Config.exe " + version;
+
 			Log.Notice("Update", sLConsole.Update("Text15"));
 			config.Start();
 			Environment.Exit(0);

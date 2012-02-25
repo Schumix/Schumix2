@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,26 +29,26 @@ namespace Schumix.Irc.Commands
 {
 	public class CommandManager : CommandHandler
 	{
-		private static readonly Dictionary<string, Action<IRCMessage>> _PublicCommandHandler = new Dictionary<string, Action<IRCMessage>>();
-		private static readonly Dictionary<string, Action<IRCMessage>> _HalfOperatorCommandHandler = new Dictionary<string, Action<IRCMessage>>();
-		private static readonly Dictionary<string, Action<IRCMessage>> _OperatorCommandHandler = new Dictionary<string, Action<IRCMessage>>();
-		private static readonly Dictionary<string, Action<IRCMessage>> _AdminCommandHandler = new Dictionary<string, Action<IRCMessage>>();
-		public static Dictionary<string, Action<IRCMessage>> GetPublicCommandHandler()
+		private static readonly Dictionary<string, CommandDelegate> _PublicCommandHandler = new Dictionary<string, CommandDelegate>();
+		private static readonly Dictionary<string, CommandDelegate> _HalfOperatorCommandHandler = new Dictionary<string, CommandDelegate>();
+		private static readonly Dictionary<string, CommandDelegate> _OperatorCommandHandler = new Dictionary<string, CommandDelegate>();
+		private static readonly Dictionary<string, CommandDelegate> _AdminCommandHandler = new Dictionary<string, CommandDelegate>();
+		public static Dictionary<string, CommandDelegate> GetPublicCommandHandler()
 		{
 			return _PublicCommandHandler;
 		}
 
-		public static Dictionary<string, Action<IRCMessage>> GetHalfOperatorCommandHandler()
+		public static Dictionary<string, CommandDelegate> GetHalfOperatorCommandHandler()
 		{
 			return _HalfOperatorCommandHandler;
 		}
 
-		public static Dictionary<string, Action<IRCMessage>> GetOperatorCommandHandler()
+		public static Dictionary<string, CommandDelegate> GetOperatorCommandHandler()
 		{
 			return _OperatorCommandHandler;
 		}
 
-		public static Dictionary<string, Action<IRCMessage>> GetAdminCommandHandler()
+		public static Dictionary<string, CommandDelegate> GetAdminCommandHandler()
 		{
 			return _AdminCommandHandler;
 		}
@@ -59,88 +59,183 @@ namespace Schumix.Irc.Commands
 			InitHandler();
 		}
 
-		private void InitHandler()
+		private void InitHandler(bool Reload = false)
 		{
 			// Public
-			PublicCRegisterHandler("xbot",         new Action<IRCMessage>(HandleXbot));
-			PublicCRegisterHandler("info",         new Action<IRCMessage>(HandleInfo));
-			PublicCRegisterHandler("help",         new Action<IRCMessage>(HandleHelp));
-			PublicCRegisterHandler("time",         new Action<IRCMessage>(HandleTime));
-			PublicCRegisterHandler("date",         new Action<IRCMessage>(HandleDate));
-			PublicCRegisterHandler("calc",         new Action<IRCMessage>(HandleCalc));
-			PublicCRegisterHandler("irc",          new Action<IRCMessage>(HandleIrc));
-			PublicCRegisterHandler("whois",        new Action<IRCMessage>(HandleWhois));
-			PublicCRegisterHandler("warning",      new Action<IRCMessage>(HandleWarning));
-			PublicCRegisterHandler("google",       new Action<IRCMessage>(HandleGoogle));
-			PublicCRegisterHandler("translate",    new Action<IRCMessage>(HandleTranslate));
-			PublicCRegisterHandler("online",       new Action<IRCMessage>(HandleOnline));
+			PublicCRegisterHandler("xbot",         HandleXbot);
+			PublicCRegisterHandler("info",         HandleInfo);
+			PublicCRegisterHandler("help",         HandleHelp);
+			PublicCRegisterHandler("time",         HandleTime);
+			PublicCRegisterHandler("date",         HandleDate);
+			PublicCRegisterHandler("irc",          HandleIrc);
+			PublicCRegisterHandler("whois",        HandleWhois);
+			PublicCRegisterHandler("warning",      HandleWarning);
+			PublicCRegisterHandler("google",       HandleGoogle);
+			PublicCRegisterHandler("translate",    HandleTranslate);
+			PublicCRegisterHandler("online",       HandleOnline);
 
 			// Half Operator
-			HalfOperatorCRegisterHandler("admin",  new Action<IRCMessage>(HandleAdmin));
-			HalfOperatorCRegisterHandler("colors", new Action<IRCMessage>(HandleColors));
-			HalfOperatorCRegisterHandler("nick",   new Action<IRCMessage>(HandleNick));
-			HalfOperatorCRegisterHandler("join",   new Action<IRCMessage>(HandleJoin));
-			HalfOperatorCRegisterHandler("leave",  new Action<IRCMessage>(HandleLeave));
+			HalfOperatorCRegisterHandler("admin",  HandleAdmin);
+			HalfOperatorCRegisterHandler("colors", HandleColors);
+			HalfOperatorCRegisterHandler("nick",   HandleNick);
+			HalfOperatorCRegisterHandler("join",   HandleJoin);
+			HalfOperatorCRegisterHandler("leave",  HandleLeave);
 
 			// Operator
-			OperatorCRegisterHandler("function",   new Action<IRCMessage>(HandleFunction));
-			OperatorCRegisterHandler("channel",    new Action<IRCMessage>(HandleChannel));
-			OperatorCRegisterHandler("sznap",      new Action<IRCMessage>(HandleSznap));
-			OperatorCRegisterHandler("kick",       new Action<IRCMessage>(HandleKick));
-			OperatorCRegisterHandler("mode",       new Action<IRCMessage>(HandleMode));
+			OperatorCRegisterHandler("function",   HandleFunction);
+			OperatorCRegisterHandler("channel",    HandleChannel);
+			OperatorCRegisterHandler("sznap",      HandleSznap);
+			OperatorCRegisterHandler("kick",       HandleKick);
+			OperatorCRegisterHandler("mode",       HandleMode);
+			OperatorCRegisterHandler("ignore",     HandleIgnore);
 
 			// Admin
-			AdminCRegisterHandler("plugin",        new Action<IRCMessage>(HandlePlugin));
-			AdminCRegisterHandler("reload",        new Action<IRCMessage>(HandleReload));
-			AdminCRegisterHandler("quit",          new Action<IRCMessage>(HandleQuit));
+			AdminCRegisterHandler("plugin",        HandlePlugin);
+			AdminCRegisterHandler("reload",        HandleReload);
+			AdminCRegisterHandler("quit",          HandleQuit);
 
-			Log.Notice("CommandManager", sLConsole.CommandManager("Text2"));
+			if(!Reload)
+				Log.Notice("CommandManager", sLConsole.CommandManager("Text2"));
 		}
 
-		public static void PublicCRegisterHandler(string code, Action<IRCMessage> method)
+		private void RemoveHandler(bool Reload = false)
 		{
-			_PublicCommandHandler.Add(code, method);
+			// Public
+			PublicCRemoveHandler("xbot",         HandleXbot);
+			PublicCRemoveHandler("info",         HandleInfo);
+			PublicCRemoveHandler("help",         HandleHelp);
+			PublicCRemoveHandler("time",         HandleTime);
+			PublicCRemoveHandler("date",         HandleDate);
+			PublicCRemoveHandler("irc",          HandleIrc);
+			PublicCRemoveHandler("whois",        HandleWhois);
+			PublicCRemoveHandler("warning",      HandleWarning);
+			PublicCRemoveHandler("google",       HandleGoogle);
+			PublicCRemoveHandler("translate",    HandleTranslate);
+			PublicCRemoveHandler("online",       HandleOnline);
+
+			// Half Operator
+			HalfOperatorCRemoveHandler("admin",  HandleAdmin);
+			HalfOperatorCRemoveHandler("colors", HandleColors);
+			HalfOperatorCRemoveHandler("nick",   HandleNick);
+			HalfOperatorCRemoveHandler("join",   HandleJoin);
+			HalfOperatorCRemoveHandler("leave",  HandleLeave);
+
+			// Operator
+			OperatorCRemoveHandler("function",   HandleFunction);
+			OperatorCRemoveHandler("channel",    HandleChannel);
+			OperatorCRemoveHandler("sznap",      HandleSznap);
+			OperatorCRemoveHandler("kick",       HandleKick);
+			OperatorCRemoveHandler("mode",       HandleMode);
+			OperatorCRemoveHandler("ignore",     HandleIgnore);
+
+			// Admin
+			AdminCRemoveHandler("plugin",        HandlePlugin);
+			AdminCRemoveHandler("reload",        HandleReload);
+			AdminCRemoveHandler("quit",          HandleQuit);
+
+			if(!Reload)
+				Log.Notice("CommandManager", sLConsole.CommandManager("Text3"));
+		}
+
+		public static void PublicCRegisterHandler(string code, CommandDelegate method)
+		{
+			if(sIgnoreCommand.IsIgnore(code))
+			   return;
+
+			if(_PublicCommandHandler.ContainsKey(code.ToLower()))
+				_PublicCommandHandler[code.ToLower()] += method;
+			else
+				_PublicCommandHandler.Add(code.ToLower(), method);
 		}
 
 		public static void PublicCRemoveHandler(string code)
 		{
-			_PublicCommandHandler.Remove(code);
+			if(_PublicCommandHandler.ContainsKey(code.ToLower()))
+				_PublicCommandHandler.Remove(code.ToLower());
 		}
 
-		public static void HalfOperatorCRegisterHandler(string code, Action<IRCMessage> method)
+		public static void PublicCRemoveHandler(string code, CommandDelegate method)
 		{
-			_HalfOperatorCommandHandler.Add(code, method);
+			if(_PublicCommandHandler.ContainsKey(code.ToLower()))
+				_PublicCommandHandler[code.ToLower()] -= method;
+		}
+
+		public static void HalfOperatorCRegisterHandler(string code, CommandDelegate method)
+		{
+			if(sIgnoreCommand.IsIgnore(code))
+			   return;
+
+			if(_HalfOperatorCommandHandler.ContainsKey(code.ToLower()))
+				_HalfOperatorCommandHandler[code.ToLower()] += method;
+			else
+				_HalfOperatorCommandHandler.Add(code.ToLower(), method);
 		}
 
 		public static void HalfOperatorCRemoveHandler(string code)
 		{
-			_HalfOperatorCommandHandler.Remove(code);
+			if(_HalfOperatorCommandHandler.ContainsKey(code.ToLower()))
+				_HalfOperatorCommandHandler.Remove(code.ToLower());
 		}
 
-		public static void OperatorCRegisterHandler(string code, Action<IRCMessage> method)
+		public static void HalfOperatorCRemoveHandler(string code, CommandDelegate method)
 		{
-			_OperatorCommandHandler.Add(code, method);
+			if(_HalfOperatorCommandHandler.ContainsKey(code.ToLower()))
+				_HalfOperatorCommandHandler[code.ToLower()] -= method;
+		}
+
+		public static void OperatorCRegisterHandler(string code, CommandDelegate method)
+		{
+			if(sIgnoreCommand.IsIgnore(code))
+			   return;
+
+			if(_OperatorCommandHandler.ContainsKey(code.ToLower()))
+				_OperatorCommandHandler[code.ToLower()] += method;
+			else
+				_OperatorCommandHandler.Add(code.ToLower(), method);
 		}
 
 		public static void OperatorCRemoveHandler(string code)
 		{
-			_OperatorCommandHandler.Remove(code);
+			if(_OperatorCommandHandler.ContainsKey(code.ToLower()))
+				_OperatorCommandHandler.Remove(code.ToLower());
 		}
 
-		public static void AdminCRegisterHandler(string code, Action<IRCMessage> method)
+		public static void OperatorCRemoveHandler(string code, CommandDelegate method)
 		{
-			_AdminCommandHandler.Add(code, method);
+			if(_OperatorCommandHandler.ContainsKey(code.ToLower()))
+				_OperatorCommandHandler[code.ToLower()] -= method;
+		}
+
+		public static void AdminCRegisterHandler(string code, CommandDelegate method)
+		{
+			if(sIgnoreCommand.IsIgnore(code))
+			   return;
+
+			if(_AdminCommandHandler.ContainsKey(code.ToLower()))
+				_AdminCommandHandler[code.ToLower()] += method;
+			else
+				_AdminCommandHandler.Add(code.ToLower(), method);
 		}
 
 		public static void AdminCRemoveHandler(string code)
 		{
-			_AdminCommandHandler.Remove(code);
+			if(_AdminCommandHandler.ContainsKey(code.ToLower()))
+				_AdminCommandHandler.Remove(code.ToLower());
+		}
+
+		public static void AdminCRemoveHandler(string code, CommandDelegate method)
+		{
+			if(_AdminCommandHandler.ContainsKey(code.ToLower()))
+				_AdminCommandHandler[code.ToLower()] -= method;
 		}
 
 		protected void IncomingInfo(string handler, IRCMessage sIRCMessage)
 		{
 			try
 			{
+				if(sIgnoreCommand.IsIgnore(handler))
+					return;
+
 				if(_PublicCommandHandler.ContainsKey(handler))
 					_PublicCommandHandler[handler].Invoke(sIRCMessage);
 				else if(_HalfOperatorCommandHandler.ContainsKey(handler))

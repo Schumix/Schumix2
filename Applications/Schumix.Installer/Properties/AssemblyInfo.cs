@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,21 +28,13 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Schumix.Installer")]
 [assembly: AssemblyDescription("Schumix IRC bot")]
 #if DEBUG
-#if MONO
-[assembly: AssemblyConfiguration("Mono-Debug")]
-#else
 [assembly: AssemblyConfiguration("Debug")]
-#endif
-#else
-#if MONO
-[assembly: AssemblyConfiguration("Mono-Release")]
 #else
 [assembly: AssemblyConfiguration("Release")]
 #endif
-#endif
 [assembly: AssemblyCompany("Megax Productions")]
 [assembly: AssemblyProduct("Schumix")]
-[assembly: AssemblyCopyright("Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>")]
+[assembly: AssemblyCopyright("Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>")]
 [assembly: AssemblyTrademark("GNU General Public License")]
 
 [assembly: CLSCompliant(true)]

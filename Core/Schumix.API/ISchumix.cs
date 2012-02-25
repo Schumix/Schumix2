@@ -1,7 +1,7 @@
 ﻿/*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,12 +34,7 @@ namespace Schumix.API
 		/// Destroys the addon, releasing all resources.
 		/// </summary>
 		void Destroy();
-		bool Reload(string RName);
-		void HandlePrivmsg(IRCMessage sIRCMessage);
-		void HandleNotice(IRCMessage sIRCMessage);
-		void HandleLeft(IRCMessage sIRCMessage);
-		void HandleKick(IRCMessage sIRCMessage);
-		void HandleQuit(IRCMessage sIRCMessage);
+		int Reload(string RName, string SName = "");
 		bool HandleHelp(IRCMessage sIRCMessage);
 
 		/// <summary>

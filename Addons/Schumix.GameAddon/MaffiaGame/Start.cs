@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,10 +21,11 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using Schumix.Framework;
+using Schumix.Irc.Commands;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class MaffiaGame
+	sealed partial class MaffiaGame : CommandInfo
 	{
 		public void Start()
 		{
@@ -60,7 +61,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			_joinlist.Clear();
 
 			var rand = new Random();
-			int number = rand.Next(1, list.Count);
+			int number = 0;
 			int i = 0, x = 0;
 			bool killer = true;
 			bool doctor = true;
@@ -69,7 +70,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			for(;;)
 			{
-				number = rand.Next(1, list.Count);
+				number = rand.Next(1, list.Count+1);
 
 				if(killer)
 				{
@@ -78,36 +79,25 @@ namespace Schumix.GameAddon.MaffiaGames
 						string name = string.Empty;
 						list.TryGetValue(number, out name);
 						_killerlist.Add(name.ToLower(), name);
+
+						if(Adminflag(name.ToLower()) == 2)
+							_playerflist.Add(name.ToLower(), new Player(Rank.Killer, true));
+						else
+							_playerflist.Add(name.ToLower(), new Player(Rank.Killer));
+
 						list.Remove(number);
 
 						if(count < 8)
-						{
 							killer = false;
-							killer_ = name;
-						}
 						else if(count >= 8 && count < 15)
 						{
-							if(i == 0)
-								killer_ = name;
-							else
-								killer2_ = name;
-
 							i++;
-
 							if(i == 2)
 								killer = false;
 						}
 						else
 						{
-							if(i == 0)
-								killer_ = name;
-							else if(i == 1)
-								killer2_ = name;
-							else
-								killer3_ = name;
-
 							i++;
-
 							if(i == 3)
 								killer = false;
 						}
@@ -122,22 +112,19 @@ namespace Schumix.GameAddon.MaffiaGames
 						string name = string.Empty;
 						list.TryGetValue(number, out name);
 						_detectivelist.Add(name.ToLower(), name);
+
+						if(Adminflag(name.ToLower()) == 2)
+							_playerflist.Add(name.ToLower(), new Player(Rank.Detective, true));
+						else
+							_playerflist.Add(name.ToLower(), new Player(Rank.Detective));
+
 						list.Remove(number);
 
 						if(count < 15)
-						{
 							detective = false;
-							detective_ = name;
-						}
 						else
 						{
-							if(x == 0)
-								detective_ = name;
-							else
-								detective2_ = name;
-
 							x++;
-
 							if(x == 2)
 								detective = false;
 						}
@@ -152,9 +139,14 @@ namespace Schumix.GameAddon.MaffiaGames
 						string name = string.Empty;
 						list.TryGetValue(number, out name);
 						_doctorlist.Add(name.ToLower(), name);
+
+						if(Adminflag(name.ToLower()) == 2)
+							_playerflist.Add(name.ToLower(), new Player(Rank.Doctor, true));
+						else
+							_playerflist.Add(name.ToLower(), new Player(Rank.Doctor));
+
 						list.Remove(number);
 						doctor = false;
-						doctor_ = name;
 					}
 
 					continue;
@@ -162,7 +154,15 @@ namespace Schumix.GameAddon.MaffiaGames
 				else
 				{
 					foreach(var llist in list)
+					{
 						_normallist.Add(llist.Value.ToLower(), llist.Value);
+
+						if(Adminflag(llist.Value.ToLower()) == 2)
+							_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal, true));
+						else
+							_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal));
+					}
+
 					break;
 				}
 			}

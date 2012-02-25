@@ -1,7 +1,7 @@
 ﻿/*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,6 @@
 
 using System;
 using System.IO;
-using System.Xml;
 using System.Collections.Generic;
 using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
@@ -31,6 +30,7 @@ namespace Schumix.Framework
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly object WriteLock = new object();
+		private static string _FileName;
 
         /// <returns>
         ///     A visszatérési érték az aktuális dátum.
@@ -44,13 +44,22 @@ namespace Schumix.Framework
 		{
 			try
 			{
-				var file = new StreamWriter(string.Format("./{0}/{1}", LogConfig.LogDirectory, "Schumix.log"), true) { AutoFlush = true };
+				string filename = string.Format("./{0}/{1}", LogConfig.LogDirectory, _FileName);
+				var filesize = new FileInfo(filename);
+
+				if(filesize.Length >= 10000000)
+				{
+					File.Delete(filename);
+					sUtilities.CreateFile(filename);
+				}
+
+				var file = new StreamWriter(filename, true) { AutoFlush = true };
 				file.Write(log);
 				file.Close();
 			}
 			catch(Exception)
 			{
-				// semmi
+				LogToFile(log);
 			}
 		}
 
@@ -58,9 +67,22 @@ namespace Schumix.Framework
 		{
 			try
 			{
+				Init("Schumix.log");
+			}
+			catch(Exception)
+			{
+				Init();
+			}
+		}
+
+		public static void Init(string FileName)
+		{
+			try
+			{
+				_FileName = FileName;
 				var time = DateTime.Now;
 				sUtilities.CreateDirectory(LogConfig.LogDirectory);
-				string logfile = string.Format("./{0}/Schumix.log", LogConfig.LogDirectory);
+				string logfile = string.Format("./{0}/{1}", LogConfig.LogDirectory, FileName);
 				sUtilities.CreateFile(logfile);
 				var file = new StreamWriter(logfile, true) { AutoFlush = true };
 				file.Write(sLConsole.Log("Text"), time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
@@ -68,7 +90,7 @@ namespace Schumix.Framework
 			}
 			catch(Exception)
 			{
-				Init();
+				Init(FileName);
 			}
 		}
 

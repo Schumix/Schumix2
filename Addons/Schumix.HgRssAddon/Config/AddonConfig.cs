@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ using Schumix.HgRssAddon.Localization;
 
 namespace Schumix.HgRssAddon.Config
 {
-	public sealed class AddonConfig
+	sealed class AddonConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
@@ -117,7 +117,7 @@ namespace Schumix.HgRssAddon.Config
 		}
 	}
 
-	public sealed class RssConfig
+	sealed class RssConfig
 	{
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static int QueryTime { get; private set; }

@@ -1,8 +1,8 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Twl
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Twl
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,18 +24,25 @@ using System.Net;
 using System.Web;
 using System.Linq;
 using System.Reflection;
-#if !MONO
 using System.Management;
-#endif
 using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using Schumix.API;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
+	public enum Compiler
+	{
+		VisualStudio,
+		Mono,
+		None
+	}
+
 	public sealed class Utilities
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
@@ -48,6 +55,9 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				client.Encoding = Encoding.UTF8;
 				return client.DownloadString(url);
 			}
 		}
@@ -56,6 +66,9 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				client.Encoding = Encoding.UTF8;
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
 			}
 		}
@@ -64,6 +77,63 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				client.Encoding = Encoding.UTF8;
+				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
+			}
+		}
+
+		public string GetUrlEncoding(string url, string encoding)
+		{
+			using(var client = new WebClient())
+			{
+				double Num;
+				bool isNum = double.TryParse(encoding, out Num);
+
+				if(!isNum)
+					client.Encoding = Encoding.GetEncoding(encoding);
+				else
+					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
+
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				return client.DownloadString(url);
+			}
+		}
+
+		public string GetUrlEncoding(string url, string args, string encoding)
+		{
+			using(var client = new WebClient())
+			{
+				double Num;
+				bool isNum = double.TryParse(encoding, out Num);
+
+				if(!isNum)
+					client.Encoding = Encoding.GetEncoding(encoding);
+				else
+					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
+
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
+			}
+		}
+
+		public string GetUrlEncoding(string url, string args, string noencode, string encoding)
+		{
+			using(var client = new WebClient())
+			{
+				double Num;
+				bool isNum = double.TryParse(encoding, out Num);
+
+				if(!isNum)
+					client.Encoding = Encoding.GetEncoding(encoding);
+				else
+					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
+
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
 			}
 		}
@@ -72,6 +142,8 @@ namespace Schumix.Framework
 		{
 			using(var client = new WebClient())
 			{
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
 				client.DownloadFile(url, filename);
 			}
 		}
@@ -91,7 +163,15 @@ namespace Schumix.Framework
 
 			try
 			{
-				var urlFind = new Regex(@"(?<url>(http://)?(www\.)?\S+\.\S{2,6}([/]*\S+))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+				var urlFind = new Regex(@"(?<url>(http[s]?://)?(\S+\.(cat|biz|edu|com|net|org|info|co\.uk|co\.cc|ac|" +
+				"ad|ae|af|ag|ai|al|am|an|ao|aq|ar|as|at|au|aw|ax|az|ba|bb|bd|be|bf|bg|bh|bi|bj|bm|bn|bo|br|bs|bt|bw|by|" +
+				"bz|ca|cc|cd|cf|cg|ch|ci|ck|cl|cm|cn|co|cr|cu|cv|cx|cy|cz|de|dj|dk|dm|do|dz|ec|ee|eg|er|es|et|eu|fi|fj|" +
+				"fk|fm|fo|fr|ga|gd|ge|gf|gg|gh|gi|gl|gm|gn|gp|gq|gr|gs|gt|gu|gw|gy|hk|hm|hn|hr|ht|hu|id|ie|il|im|in|io|" +
+				"iq|ir|is|it|je|jm|jo|jp|ke|kg|kh|ki|km|kn|kp|kr|kw|ky|kz|la|lb|lc|li|lk|lr|ls|lt|lu|lv|ly|ma|mc|me|md|" +
+				"mg|mh|mk|ml|mm|mn|mo|mp|mq|mr|ms|mt|mu|mv|mw|mx|my|mz|na|nc|ne|nf|ng|ni|nl|no|np|nr|nu|nz|om|pa|pe|pf|" +
+				"pg|ph|pk|pl|pn|pr|ps|pt|pw|py|qa|re|ro|rs|ru|rw|sa|sb|sc|sd|se|sg|sh|si|sk|sl|sm|sn|sr|st|su|sv|sy|sz|" +
+				"tc|td|tf|tg|th|tj|tk|tl|tm|tn|to|tr|tt|tv|tw|tz|ua|ug|uk|us|uy|uz|va|vc|ve|vg|vi|vn|vu|wf|ws|ye|za|zm|" +
+				@"zw))(/\S+)?)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 				if(urlFind.IsMatch(text))
 				{
@@ -100,6 +180,38 @@ namespace Schumix.Framework
 					foreach(var url in from Match match in matches select match.Groups["url"].ToString())
 					{
 						var lurl = url;
+						if(!lurl.StartsWith("http://") && !url.StartsWith("https://"))
+							lurl = string.Format("http://{0}", url);
+
+						Log.Debug("Utilities", sLConsole.Utilities("Text"), url);
+						urls.Add(lurl);
+					}
+				}
+
+				urlFind = new Regex(@"(?<ip>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}(/\S+)?)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+				if(urlFind.IsMatch(text))
+				{
+					var matches = urlFind.Matches(text);
+
+					foreach(var url in from Match match in matches select match.Groups["ip"].ToString())
+					{
+						var lurl = url;
+						bool valid = false;
+
+						try
+						{
+							IPAddress ip;
+							valid = IPAddress.TryParse(lurl, out ip);
+						}
+						catch(ArgumentException ae)
+						{
+							Log.Error("Utilities", sLConsole.Exception("Error"), ae.Message);
+						}
+
+						if(!valid)
+							continue;
+
 						if(!lurl.StartsWith("http://") && !url.StartsWith("https://"))
 							lurl = string.Format("http://{0}", url);
 
@@ -119,7 +231,7 @@ namespace Schumix.Framework
 		public string GetRandomString()
 		{
 			string path = Path.GetRandomFileName();
-			return path.Replace(".", string.Empty);
+			return path.Replace(SchumixBase.Point.ToString(), string.Empty);
 		}
 
 		public string Sha1(string value)
@@ -128,11 +240,11 @@ namespace Schumix.Framework
 				throw new ArgumentNullException("value");
 
 			var x = new SHA1CryptoServiceProvider();
-			var data = Encoding.ASCII.GetBytes(value);
+			var data = Encoding.UTF8.GetBytes(value);
 			data = x.ComputeHash(data);
-#if !MONO
-			x.Dispose();
-#endif
+//#if !MONO
+			//x.Dispose();
+//#endif
 			var ret = string.Empty;
 
 			for(var i = 0; i < data.Length; i++)
@@ -147,11 +259,11 @@ namespace Schumix.Framework
 				throw new ArgumentNullException("value");
 
 			var x = new MD5CryptoServiceProvider();
-			var data = Encoding.ASCII.GetBytes(value);
+			var data = Encoding.UTF8.GetBytes(value);
 			data = x.ComputeHash(data);
-#if !MONO
-			x.Dispose();
-#endif
+//#if !MONO
+			//x.Dispose();
+//#endif
 			var ret = string.Empty;
 
 			for(var i = 0; i < data.Length; i++)
@@ -171,9 +283,9 @@ namespace Schumix.Framework
 			{
 				var md5 = new MD5CryptoServiceProvider();
 				retVal = md5.ComputeHash(file);
-#if !MONO
-				md5.Dispose();
-#endif
+//#if !MONO
+				//md5.Dispose();
+//#endif
 			}
 
 			var sb = new StringBuilder();
@@ -348,6 +460,34 @@ namespace Schumix.Framework
 			return Name;
 		}
 
+		public Compiler GetCompiler()
+		{
+			Compiler compiler = Compiler.None;
+			var pid = Environment.OSVersion.Platform;
+
+			switch(pid)
+			{
+				case PlatformID.Win32NT:
+				case PlatformID.Win32S:
+				case PlatformID.Win32Windows:
+				case PlatformID.WinCE:
+					compiler = Compiler.VisualStudio;
+					break;
+				case PlatformID.Unix:
+				case PlatformID.MacOSX:
+					compiler = Compiler.Mono;
+					break;
+				case PlatformID.Xbox:
+					compiler = Compiler.None;
+					break;
+				default:
+					compiler = Compiler.None;
+					break;
+			}
+
+			return compiler;
+		}
+
 		public string GetVersion()
 		{
 			return Schumix.Framework.Config.Consts.SchumixVersion;
@@ -355,7 +495,18 @@ namespace Schumix.Framework
 
 		public string GetFunctionUpdate()
 		{
-			return ",koszones:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off";
+			string functions = string.Empty;
+
+			foreach(var function in Enum.GetNames(typeof(IChannelFunctions)))
+			{
+				if(function == IChannelFunctions.Log.ToString() || function == IChannelFunctions.Rejoin.ToString() ||
+					function == IChannelFunctions.Commands.ToString())
+					functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + "on";
+				else
+					functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + "off";
+			}
+
+			return functions;
 		}
 
 		public string SqlEscape(string text)
@@ -378,34 +529,39 @@ namespace Schumix.Framework
 		/// </returns>
 		public string GetCpuId()
 		{
-#if !MONO
-			var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
-			return (from ManagementObject mo in mos.Get() select (Regex.Replace(Convert.ToString(mo["Name"]), @"\s+", " "))).FirstOrDefault();
-#else
-			var reader = new StreamReader("/proc/cpuinfo");
-			string content = reader.ReadToEnd();
-			reader.Close();
-			reader.Dispose();
-			var getBrandRegex = new Regex(@"model\sname\s:\s*(?<first>.+\sCPU)\s*(?<second>.+)", RegexOptions.IgnoreCase);
-
-			if(!getBrandRegex.IsMatch(content))
+			if(GetCompiler() == Compiler.VisualStudio)
 			{
-				// not intel
-				var amdRegex = new Regex(@"model\sname\s:\s*(?<cpu>.+)");
+				var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
+				return (from ManagementObject mo in mos.Get() select (Regex.Replace(Convert.ToString(mo["Name"]), @"\s+", SchumixBase.Space.ToString()))).FirstOrDefault();
+			}
+			else if(GetCompiler() == Compiler.Mono)
+			{
+				var reader = new StreamReader("/proc/cpuinfo");
+				string content = reader.ReadToEnd();
+				reader.Close();
+				reader.Dispose();
+				var getBrandRegex = new Regex(@"model\sname\s:\s*(?<first>.+\sCPU)\s*(?<second>.+)", RegexOptions.IgnoreCase);
 
-				if(!amdRegex.IsMatch(content))
-					return "Not found";
+				if(!getBrandRegex.IsMatch(content))
+				{
+					// not intel
+					var amdRegex = new Regex(@"model\sname\s:\s*(?<cpu>.+)");
 
-				var amatch = amdRegex.Match(content);
-				string amd = amatch.Groups["cpu"].ToString();
-				return amd;
+					if(!amdRegex.IsMatch(content))
+						return sLConsole.Other("Notfound");
+
+					var amatch = amdRegex.Match(content);
+					string amd = amatch.Groups["cpu"].ToString();
+					return amd;
+				}
+
+				var match = getBrandRegex.Match(content);
+				string cpu = (match.Groups["first"].ToString() + SchumixBase.Space + match.Groups["second"].ToString());
+				return cpu;
 			}
 
-			var match = getBrandRegex.Match(content);
-			string cpu = (match.Groups["first"].ToString() + SchumixBase.Space + match.Groups["second"].ToString());
-			return cpu;
-#endif
-        }
+			return sLConsole.Other("Notfound");
+		}
 
 		/// <summary>
 		///   The current unix time.
@@ -418,28 +574,6 @@ namespace Schumix.Framework
 				return (elapsed.TotalSeconds);
 			}
 		}
-
-#if MONO
-		/// <summary>
-		/// Converts DateTime to miliseconds.
-		/// </summary>
-		/// <param name="time"></param>
-		/// <returns></returns>
-		public int ToMilliSecondsInt(this DateTime time)
-		{
-			return (int)(time.Ticks/TicksPerSecond);
-		}
-
-		/// <summary>
-		/// Converts TimeSpan to miliseconds.
-		/// </summary>
-		/// <param name="time"></param>
-		/// <returns></returns>
-		public int ToMilliSecondsInt(this TimeSpan time)
-		{
-			return (int)(time.Ticks)/TicksPerSecond;
-		}
-#endif
 
 		/// <summary>
 		/// Converts ticks to miliseconds.
@@ -541,6 +675,109 @@ namespace Schumix.Framework
 		{
 			if(!File.Exists(Name))
 				File.Create(Name);
+		}
+
+		public string NameDay(string Language)
+		{
+			string[,] Nameday = null;
+
+			switch(Language)
+			{
+				case "huHU":
+				{
+					Nameday = new string[,] {
+						{ "ÚJÉV","Ábel","Genovéva","Titusz","Simon","Boldizsár","Attila","Gyöngyvér","Marcell","Melánia","Ágota","Ernő","Veronika","Bódog","Lóránt","Gusztáv","Antal","Piroska","Sára","Sebestyén","Ágnes","Vince","Zelma","Timót","Pál","Vanda","Angelika","Károly","Adél","Martina","Marcella" },
+						{ "Ignác","Karolina","Balázs","Ráhel","Ágota","Dóra","Tódor","Aranka","Abigél","Elvira","Bertold","Lívia","Ella, Linda","Bálint","Kolos","Julianna","Donát","Bernadett","Zsuzsanna","Álmos","Eleonóra","Gerzson","Alfréd","Mátyás","Géza","Edina","Ákos, Bátor","Elemér","","","" },
+						{ "Albin","Lujza","Kornélia","Kázmér","Adorján","Leonóra","Tamás","Zoltán","Franciska","Ildikó","Szilárd","Gergely","Krisztián, Ajtony","Matild","Kristóf","Henrietta","Gertrúd","Sándor","József","Klaudia","Benedek","Beáta","Emőke","Gábor","Irén","Emánuel","Hajnalka","Gedeon","Auguszta","Zalán","Árpád" },
+						{ "Hugó","Áron","Buda, Richárd","Izidor","Vince","Vilmos, Bíborka","Herman","Dénes","Erhard","Zsolt","Zsolt, Leó","Gyula","Ida","Tibor","Tas, Anasztázia","Csongor","Rudolf","Andrea","Emma","Konrád, Tivadar","Konrád","Csilla","Béla","György","Márk","Ervin","Zita","Valéria","Péter","Katalin, Kitti","" },
+						{ "Fülöp","Zsigmond","Tímea","Mónika","Györgyi","Ivett","Gizella","Mihály","Gergely","Ármin","Ferenc","Pongrác","Szervác","Bonifác","Zsófia","Botond, Mózes","Paszkál","Erik","Ivó, Milán","Bernát, Felícia","Konstantin","Júlia, Rita","Dezső","Eszter","Orbán","Fülöp","Hella","Emil, Csanád","Magdolna","Zsanett, Janka","Angéla" },
+						{ "Tünde","Anita, Kármen","Klotild","Bulcsú","Fatime","Norbert","Róbert","Medárd","Félix","Margit","Barnabás","Villő","Antal, Anett","Vazul","Jolán","Jusztin","Laura","Levente","Gyárfás","Rafael","Alajos","Paulina","Zoltán","Iván","Vilmos","János","László","Levente, Irén","Péter, Pál","Pál","" },
+						{ "Annamária","Ottó","Kornél","Ulrik","Sarolta, Emese","Csaba","Appolónia","Ellák","Lukrécia","Amália","Nóra, Lili","Izabella","Jenő","&Őrs","Henrik","Valter","Endre, Elek","Frigyes","Emília","Illés","Dániel","Magdolna","Lenke","Kinga, Kincső","Kristóf, Jakab","Anna, Anikó","Olga","Szabolcs","Márta","Judit","Oszkár" },
+						{ "Boglárka","Lehel","Hermina","Domonkos","Krisztina","Berta","Ibolya","László","Emőd","Lörinc","Zsuzsanna","Klára","Ipoly","Marcell","Mária","Ábrahám","Jácint","Ilona","Huba","István","Sámuel","Menyhért","Bence","Bertalan","Lajos","Izsó","Gáspár","Ágoston","Beatrix","Rózsa","Erika" },
+						{ "Egon","Rebeka","Hilda","Rozália","Viktor, Lőrinc","Zakariás","Regina","Mária","Ádám","Nikolett, Hunor","Teodóra","Mária","Kornél","Szeréna","Enikő","Edit","Zsófia","Diána","Vilhelmina","Friderika","Máté","Móric","Tekla","Gellért","Eufrozina","Jusztina","Adalbert","Vencel","Mihály","Jeromos","" },
+						{ "Malvin","Petra","Helga","Ferenc","Aurél","Renáta","Amália","Koppány","Dénes","Gedeon","Brigitta","Miksa","Kálmán","Helén","Teréz","Gál","Hedvig","Lukács","Nándor","Vendel","Orsolya","Előd","Gyöngyi","Salamon","Bianka","Dömötör","Szabina","Simon","Nárcisz","Alfonz","Farkas" },
+						{ "Marianna","Achilles","Győző","Károly","Imre","Lénárd","Rezső","Zsombor","Tivadar","Réka","Márton","Jónás, Renátó","Szilvia","Aliz","Albert, Lipót","Ödön","Hortenzia, Gergő","Jenő","Erzsébet","Jolán","Olivér","Cecília","Kelemen","Emma","Katalin","Virág","Virgil","Stefánia","Taksony","András, Andor","" },
+						{ "Elza","Melinda","Ferenc","Barbara, Borbála","Vilma","Miklós","Ambrus","Mária","Natália","Judit","Árpád","Gabriella","Luca","Szilárda","Valér","Etelka","Lázár","Auguszta","Viola","Teofil","Tamás","Zéno","Viktória","Ádám, Éva","KARÁCSONY","KARÁCSONY","János","Kamilla","Tamás","Dávid","Szilveszter" },
+					};
+					break;
+				}
+				case "enUS":
+				{
+					Nameday = null;
+					break;
+				}
+				default:
+				{
+					Nameday = new string[,] {
+						{ "ÚJÉV","Ábel","Genovéva","Titusz","Simon","Boldizsár","Attila","Gyöngyvér","Marcell","Melánia","Ágota","Ernő","Veronika","Bódog","Lóránt","Gusztáv","Antal","Piroska","Sára","Sebestyén","Ágnes","Vince","Zelma","Timót","Pál","Vanda","Angelika","Károly","Adél","Martina","Marcella" },
+						{ "Ignác","Karolina","Balázs","Ráhel","Ágota","Dóra","Tódor","Aranka","Abigél","Elvira","Bertold","Lívia","Ella, Linda","Bálint","Kolos","Julianna","Donát","Bernadett","Zsuzsanna","Álmos","Eleonóra","Gerzson","Alfréd","Mátyás","Géza","Edina","Ákos, Bátor","Elemér","","","" },
+						{ "Albin","Lujza","Kornélia","Kázmér","Adorján","Leonóra","Tamás","Zoltán","Franciska","Ildikó","Szilárd","Gergely","Krisztián, Ajtony","Matild","Kristóf","Henrietta","Gertrúd","Sándor","József","Klaudia","Benedek","Beáta","Emőke","Gábor","Irén","Emánuel","Hajnalka","Gedeon","Auguszta","Zalán","Árpád" },
+						{ "Hugó","Áron","Buda, Richárd","Izidor","Vince","Vilmos, Bíborka","Herman","Dénes","Erhard","Zsolt","Zsolt, Leó","Gyula","Ida","Tibor","Tas, Anasztázia","Csongor","Rudolf","Andrea","Emma","Konrád, Tivadar","Konrád","Csilla","Béla","György","Márk","Ervin","Zita","Valéria","Péter","Katalin, Kitti","" },
+						{ "Fülöp","Zsigmond","Tímea","Mónika","Györgyi","Ivett","Gizella","Mihály","Gergely","Ármin","Ferenc","Pongrác","Szervác","Bonifác","Zsófia","Botond, Mózes","Paszkál","Erik","Ivó, Milán","Bernát, Felícia","Konstantin","Júlia, Rita","Dezső","Eszter","Orbán","Fülöp","Hella","Emil, Csanád","Magdolna","Zsanett, Janka","Angéla" },
+						{ "Tünde","Anita, Kármen","Klotild","Bulcsú","Fatime","Norbert","Róbert","Medárd","Félix","Margit","Barnabás","Villő","Antal, Anett","Vazul","Jolán","Jusztin","Laura","Levente","Gyárfás","Rafael","Alajos","Paulina","Zoltán","Iván","Vilmos","János","László","Levente, Irén","Péter, Pál","Pál","" },
+						{ "Annamária","Ottó","Kornél","Ulrik","Sarolta, Emese","Csaba","Appolónia","Ellák","Lukrécia","Amália","Nóra, Lili","Izabella","Jenő","&Őrs","Henrik","Valter","Endre, Elek","Frigyes","Emília","Illés","Dániel","Magdolna","Lenke","Kinga, Kincső","Kristóf, Jakab","Anna, Anikó","Olga","Szabolcs","Márta","Judit","Oszkár" },
+						{ "Boglárka","Lehel","Hermina","Domonkos","Krisztina","Berta","Ibolya","László","Emőd","Lörinc","Zsuzsanna","Klára","Ipoly","Marcell","Mária","Ábrahám","Jácint","Ilona","Huba","István","Sámuel","Menyhért","Bence","Bertalan","Lajos","Izsó","Gáspár","Ágoston","Beatrix","Rózsa","Erika" },
+						{ "Egon","Rebeka","Hilda","Rozália","Viktor, Lőrinc","Zakariás","Regina","Mária","Ádám","Nikolett, Hunor","Teodóra","Mária","Kornél","Szeréna","Enikő","Edit","Zsófia","Diána","Vilhelmina","Friderika","Máté","Móric","Tekla","Gellért","Eufrozina","Jusztina","Adalbert","Vencel","Mihály","Jeromos","" },
+						{ "Malvin","Petra","Helga","Ferenc","Aurél","Renáta","Amália","Koppány","Dénes","Gedeon","Brigitta","Miksa","Kálmán","Helén","Teréz","Gál","Hedvig","Lukács","Nándor","Vendel","Orsolya","Előd","Gyöngyi","Salamon","Bianka","Dömötör","Szabina","Simon","Nárcisz","Alfonz","Farkas" },
+						{ "Marianna","Achilles","Győző","Károly","Imre","Lénárd","Rezső","Zsombor","Tivadar","Réka","Márton","Jónás, Renátó","Szilvia","Aliz","Albert, Lipót","Ödön","Hortenzia, Gergő","Jenő","Erzsébet","Jolán","Olivér","Cecília","Kelemen","Emma","Katalin","Virág","Virgil","Stefánia","Taksony","András, Andor","" },
+						{ "Elza","Melinda","Ferenc","Barbara, Borbála","Vilma","Miklós","Ambrus","Mária","Natália","Judit","Árpád","Gabriella","Luca","Szilárda","Valér","Etelka","Lázár","Auguszta","Viola","Teofil","Tamás","Zéno","Viktória","Ádám, Éva","KARÁCSONY","KARÁCSONY","János","Kamilla","Tamás","Dávid","Szilveszter" },
+					};
+					break;
+				}
+			}
+
+			if(Nameday.IsNull())
+				return string.Empty;
+
+			return Nameday[DateTime.Now.Month-1, DateTime.Now.Day-1];
+		}
+
+		public bool IsDay(int Year, int Month, int Day)
+		{
+			if(DateTime.IsLeapYear(Year))
+			{
+				switch(Month)
+				{
+					case 1:
+					case 3:
+					case 5:
+					case 7:
+					case 8:
+					case 10:
+					case 12:
+						return Day <= 31;
+					case 4:
+					case 6:
+					case 9:
+					case 11:
+						return Day <= 30;
+					case 2:
+						return Day <= 29;
+				}
+			}
+			else
+			{
+				switch(Month)
+				{
+					case 1:
+					case 3:
+					case 5:
+					case 7:
+					case 8:
+					case 10:
+					case 12:
+						return Day <= 31;
+					case 4:
+					case 6:
+					case 9:
+					case 11:
+						return Day <= 30;
+					case 2:
+						return Day <= 28;
+				}
+			}
+
+			return false;
 		}
 	}
 }

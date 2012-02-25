@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,38 +18,18 @@
  */
 
 using System;
-using System.Collections.Generic;
-using Schumix.Framework;
-using Schumix.Framework.Config;
+using System.IO;
 
-namespace Schumix.Irc
+namespace Schumix.API
 {
-	public sealed class NickName
+	/// <summary>
+	///     A Network class része. Ezzel elérhető bárhonnét eggyes része.
+	/// </summary>
+	public sealed class INetwork
 	{
-		private List<string> Names = new List<string>();
-
-		private NickName()
-		{
-			string[] ignore = IRCConfig.IgnoreNames.Split(SchumixBase.Comma);
-
-			if(ignore.Length > 1)
-			{
-				foreach(var name in ignore)
-					Names.Add(name.ToLower());
-			}
-			else
-				Names.Add(IRCConfig.IgnoreNames.ToLower());
-		}
-
-		public bool Ignore(string Name)
-		{
-			foreach(var name in Names)
-			{
-				if(Name.ToLower() == name)
-					return true;
-			}
-
-			return false;
-		}
+		/// <summary>
+		///     Üzenet küldés az irc szerver felé.
+		/// </summary>
+		public static StreamWriter Writer { get; set; }
 	}
 }

@@ -1,8 +1,8 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Twl
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Twl
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,6 +24,7 @@ using System.Threading;
 using System.Text.RegularExpressions;
 using MySql.Data;
 using MySql.Data.MySqlClient;
+using Schumix.API;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -39,7 +40,8 @@ namespace Schumix.Framework.Database
 			if(!Initialize(host, username, password, database, charset))
 			{
 				Log.Error("MySql", sLConsole.MySql("Text"));
-				Thread.Sleep(200);
+				SchumixBase.ServerDisconnect(false);
+				Thread.Sleep(1000);
 				Environment.Exit(1);
 			}
 			else
@@ -71,6 +73,7 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+				IsConnect();
 				var adapter = new MySqlDataAdapter();
 				var command = Connection.CreateCommand();
 				command.CommandText = query;
@@ -86,7 +89,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+				Crash(m);
 				return null;
 			}
 		}
@@ -99,9 +102,63 @@ namespace Schumix.Framework.Database
 
 		private void ExecuteNonQuery(string sql)
 		{
-			var command = Connection.CreateCommand();
-			command.CommandText = sql;
-			command.ExecuteNonQuery();
+			try
+			{
+				IsConnect();
+				var command = Connection.CreateCommand();
+				command.CommandText = sql;
+				command.ExecuteNonQuery();
+			}
+			catch(MySqlException m)
+			{
+				Crash(m);
+			}
+		}
+
+		private void IsConnect()
+		{
+			try
+			{
+				if(!Connection.Ping())
+					Connection.Open();
+			}
+			catch(MySqlException m)
+			{
+				Crash(m);
+			}
+		}
+
+		private void Crash(MySqlException m)
+		{
+			if(m.Message.Contains("Fatal error encountered during command execution."))
+			{
+				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+				Log.Warning("MySql", sLConsole.MySql("Text4"));
+				SchumixBase.ServerDisconnect(false);
+				SchumixBase.ExitStatus = true;
+
+				if(!INetwork.Writer.IsNull())
+					INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+				Thread.Sleep(1000);
+				Environment.Exit(1);
+			}
+
+			if(m.Message.Contains("Timeout expired."))
+			{
+				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+				Log.Warning("MySql", sLConsole.MySql("Text4"));
+				SchumixBase.ServerDisconnect(false);
+				SchumixBase.ExitStatus = true;
+
+				if(!INetwork.Writer.IsNull())
+					INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
+
+				Thread.Sleep(1000);
+				Environment.Exit(1);
+			}
+
+			Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 		}
 
 		public bool Update(string sql)

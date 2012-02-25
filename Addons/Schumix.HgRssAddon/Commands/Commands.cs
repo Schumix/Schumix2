@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +28,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.HgRssAddon.Commands
 {
-	public partial class RssCommand : CommandInfo
+	partial class RssCommand : CommandInfo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
@@ -71,7 +71,10 @@ namespace Schumix.HgRssAddon.Commands
 					foreach(DataRow row in db.Rows)
 						list += SchumixBase.Space + row["Name"].ToString();
 
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("hg/list", sIRCMessage.Channel), list);
+					if(list == string.Empty)
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("hg/list", sIRCMessage.Channel), SchumixBase.Space + sLConsole.Other("Nothing"));
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("hg/list", sIRCMessage.Channel), list);
 				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
@@ -166,7 +169,7 @@ namespace Schumix.HgRssAddon.Commands
 						return;
 					}
 
-					if(sIRCMessage.Info.Length < 7)
+					if(sIRCMessage.Info.Length < 6)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 						return;
@@ -174,7 +177,7 @@ namespace Schumix.HgRssAddon.Commands
 
 					foreach(var list in HgRssAddon.RssList)
 					{
-						if(sIRCMessage.Info[6].ToLower() == list.Name.ToLower())
+						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower())
 						{
 							list.Reload();
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], list.Name);
@@ -182,7 +185,7 @@ namespace Schumix.HgRssAddon.Commands
 						}
 					}
 
-					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[6]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[5]);
 				}
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "channel")

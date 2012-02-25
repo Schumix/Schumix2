@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,7 +23,7 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class MaffiaGame
+	sealed partial class MaffiaGame
 	{
 		public void Leave(string Name)
 		{
@@ -61,17 +61,30 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
+			if(_playerflist.ContainsKey(Name.ToLower()))
+			{
+				foreach(var function in _playerflist)
+				{
+					if(function.Value.Lynch.Contains(Name.ToLower()))
+						function.Value.Lynch.Remove(Name.ToLower());
+				}
+
+				_playerflist[Name.ToLower()].Lynch.Clear();
+				//_playerflist.Remove(Name.ToLower());		
+			}
+
 			sSender.Mode(_channel, "-v", Name);
 			RemovePlayer(Name);
 			sSendMessage.SendCMPrivmsg(_channel, "{0} eltűnt egy különös féreglyukban.", Name);
+			var rank = GetRank(Name);
 
-			if(_rank == "killer")
+			if(rank == Rank.Killer)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint gyilkos. Remélhetőleg halála izgalmasabb lesz.", Name);
-			else if(_rank == "detective")
+			else if(rank == Rank.Detective)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint nyomozó. Remélhetőleg halála izgalmasabb lesz.", Name);
-			else if(_rank == "doctor")
+			else if(rank == Rank.Doctor)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint orvos. Remélhetőleg halála izgalmasabb lesz.", Name);
-			else if(_rank == "normal")
+			else if(rank == Rank.Normal)
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak unalmas szerepe volt a játékban, mint civil. Remélhetőleg halála izgalmasabb lesz.", Name);
 			else
 				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak nem volt szerepe még a játékban. Remélhetőleg halála izgalmasabb lesz.", Name);
@@ -80,19 +93,24 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				_owner = string.Empty;
 
+				if(_timerowner.Enabled)
+				{
+					_timerowner.Enabled = false;
+					_timerowner.Elapsed -= HandleIsOwnerAfk;
+					_timerowner.Stop();
+				}
+
 				if(_playerlist.Count > 0)
-					sSendMessage.SendCMPrivmsg(_channel, "A játékot mostantól bárki írányíthatja!");
+					sSendMessage.SendCMPrivmsg(_channel, "A játék indítója lelépett. A játékot mostantól bárki írányíthatja!");
 			}
 
 			if(Started)
 			{
-				Lynch(Name, Name, "leave", "none");
-
 				_lynchmaxnumber = 0;
 
-				foreach(var list in _lynchlist)
+				foreach(var function in _playerflist)
 				{
-					var sp = list.Value.Split(SchumixBase.Comma).Length;
+					var sp = function.Value.Lynch.Count;
 					if(sp > _lynchmaxnumber && sp <= (_playerlist.Count/2)+1)
 						_lynchmaxnumber = sp;
 				}

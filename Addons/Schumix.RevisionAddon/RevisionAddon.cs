@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,46 +26,21 @@ using Schumix.RevisionAddon.Commands;
 
 namespace Schumix.RevisionAddon
 {
-	public class RevisionAddon : Revision, ISchumixAddon
+	class RevisionAddon : Revision, ISchumixAddon
 	{
 		public void Setup()
 		{
-			CommandManager.PublicCRegisterHandler("xrev", new Action<IRCMessage>(HandleXrev));
+			CommandManager.PublicCRegisterHandler("xrev", HandleXrev);
 		}
 
 		public void Destroy()
 		{
-			CommandManager.PublicCRemoveHandler("xrev");
+			CommandManager.PublicCRemoveHandler("xrev", HandleXrev);
 		}
 
-		public bool Reload(string RName)
+		public int Reload(string RName, string SName = "")
 		{
-			return false;
-		}
-
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleNotice(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-
+			return -1;
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

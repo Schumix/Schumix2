@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,7 +27,7 @@ namespace Schumix.Console.Commands
 	/// <summary>
 	///     CommandHandler class.
 	/// </summary>
-	public partial class CommandHandler
+	partial class CommandHandler
 	{
 		/// <summary>
 		///     Help parancs függvénye.

@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@
 
 using System;
 using System.Threading;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -30,7 +31,7 @@ namespace Schumix
 	/// <summary>
 	///     Fő class. Innen indul a konzol vezérlés és az irc kapcsolat létrehozása.
 	/// </summary>
-	public sealed class SchumixBot : SchumixBase
+	sealed class SchumixBot : SchumixBase
 	{
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.

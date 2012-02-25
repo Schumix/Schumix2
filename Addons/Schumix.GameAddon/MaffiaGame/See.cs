@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,19 @@ using System;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class MaffiaGame
+	sealed partial class MaffiaGame
 	{
 		public void See(string Name, string NickName)
 		{
 			if(!Running)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", NickName);
+				return;
+			}
+
+			if(!Started)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Még nem kezdődött el játék!", NickName);
 				return;
 			}
 
@@ -43,11 +49,13 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
-			if((detective_.ToLower() == NickName.ToLower() && _detective) ||
-				(detective2_.ToLower() == NickName.ToLower() && _detective2))
+			foreach(var function in _playerflist)
 			{
-				sSendMessage.SendCMPrivmsg(NickName, "Ma este már kikérdeztél valakit!");
-				return;
+				if(function.Key == NickName.ToLower() && function.Value.Detective)
+				{
+					sSendMessage.SendCMPrivmsg(NickName, "Ma este már kikérdeztél valakit!");
+					return;
+				}
 			}
 
 			if(_ghostlist.ContainsKey(Name.ToLower()))
@@ -66,30 +74,27 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(Name.ToLower() == NickName.ToLower())
 				sSendMessage.SendCMPrivmsg(NickName, "Önmagadat akarod kikérdezni? Te tudod :P");
 
-			_rank = string.Empty;
+			var rank = GetRank(Name);
 
 			if(_killerlist.ContainsKey(Name.ToLower()))
-				_rank = "killer";
+				rank = Rank.Killer;
 			else if(_detectivelist.ContainsKey(Name.ToLower()))
-				_rank = "detective";
+				rank = Rank.Detective;
 			else if(_doctorlist.ContainsKey(Name.ToLower()))
-				_rank = "doctor";
+				rank = Rank.Doctor;
 			else if(_normallist.ContainsKey(Name.ToLower()))
-				_rank = "normal";
+				rank = Rank.Normal;
 
-			if(_rank == "killer")
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy ő a gyilkos! Buktasd le mielőtt még túl késő lenne...");
-			else if(_rank == "normal")
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy ő egy hétköznapi falusi.");
-			else if(_rank == "doctor")
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy ő a falu orvosa.");
-			else if(_rank == "detective")
-				sSendMessage.SendCMPrivmsg(NickName, "Most már bebizonyosodott, hogy te vagy az :D");
+			sSendMessage.SendCMPrivmsg(NickName, "A jelentést reggel kapod meg!");
 
-			if(detective_.ToLower() == NickName.ToLower())
-				_detective = true;
-			else if(detective2_.ToLower() == NickName.ToLower())
-				_detective2 = true;
+			foreach(var function in _playerflist)
+			{
+				if(function.Key == NickName.ToLower())
+				{
+					function.Value.Detective = true;
+					function.Value.DRank = rank;
+				}
+			}
 		}
 	}
 }

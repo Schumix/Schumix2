@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,70 +18,201 @@
  */
 
 using System;
+using System.Data;
 using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.ExtraAddon;
 
 namespace Schumix.ExtraAddon.Commands
 {
-	public class NameList
+	class NameList
 	{
+		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly List<string> _names = new List<string>();
 		private NameList() {}
 
 		public void Add(string Channel, string Name)
 		{
-			//Console.WriteLine(Name.ToLower());
-			//_names.Add(Channel.ToLower() + SchumixBase.Colon + Name.ToLower());
+			if(_names.ContainsKey(Channel.ToLower()))
+			{
+				string channel = _names[Channel.ToLower()];
+
+				if(!channel.Contains(Name.ToLower(), SchumixBase.Comma))
+				{
+					_names.Remove(Channel.ToLower());
+					_names.Add(Channel.ToLower(), channel + SchumixBase.Comma + Name.ToLower());
+				}
+			}
+			else
+				_names.Add(Channel.ToLower(), Name.ToLower());
 		}
 
 		public void Remove(string Channel)
 		{
-			/*for(int i = 0; i < _names.Count; i++)
+			if(_names.ContainsKey(Channel.ToLower()))
 			{
-				if(_names.Contains(Channel.ToLower()))
-					_names.Remove(_names[i]);
-				Console.WriteLine(_names[i]);
-			}*/
+				var db = SchumixBase.DManager.Query("SELECT Name FROM notes_users");
+				if(!db.IsNull())
+				{
+					foreach(DataRow row in db.Rows)
+					{
+						int i = 0;
+						string name = row["Name"].ToString();
+
+						foreach(var channel in _names)
+						{
+							if(channel.Key != Channel.ToLower() && channel.Value.Contains(name.ToLower(), SchumixBase.Comma))
+								i++;
+						}
+
+						if(i == 0 && _names[Channel.ToLower()].Contains(name.ToLower(), SchumixBase.Comma))
+							SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", name.ToLower()));
+					}
+				}
+
+				_names.Remove(Channel.ToLower());
+			}
 		}
 
-		public void Remove(string Channel, string Name, bool NewNick)
+		public void Remove(string Channel, string Name, bool Quit = false)
 		{
-			/*Console.WriteLine(_names.Count);
-			int x = _names.Count;
-
-			for(int i = 0; i < x; i++)
+			if(_names.ContainsKey(Channel.ToLower()))
 			{
-				if(_names[i].Contains(Name.ToLower()) && !NewNick)
-					_names.Remove(_names[i]);
-				else if(_names[i].Contains(Channel.ToLower() + SchumixBase.Colon + Name.ToLower()) && NewNick)
-					_names.Remove(_names[i]);
+				if(_names[Channel.ToLower()].Contains(Name.ToLower(), SchumixBase.Comma))
+				{
+					string value = _names[Channel.ToLower()];
+					_names.Remove(Channel.ToLower());
+					string names = string.Empty;
+					var split = value.Split(SchumixBase.Comma);
 
-				Console.WriteLine(_names[i]);
-				Console.WriteLine(x);
+					foreach(var name in split)
+					{
+						if(name != Name.ToLower())
+							names += SchumixBase.Comma + name;
+					}
+
+					int i = 0;
+					_names.Add(Channel.ToLower(), names.Remove(0, 1, SchumixBase.Comma));
+
+					foreach(var Channels in _names)
+					{
+						if(Channels.Value.Contains(Name.ToLower(), SchumixBase.Comma))
+							i++;
+					}
+
+					if(i == 0)
+						RandomVhost(Name.ToLower());
+				}
+			}
+			else if(Quit)
+			{
+				var channel = new Dictionary<string, string>();
+
+				foreach(var chan in _names)
+				{
+					if(chan.Value.Contains(Name.ToLower(), SchumixBase.Comma))
+						channel.Add(chan.Key, chan.Value);
+				}
+
+				if(channel.Count.IsNull())
+				{
+					channel.Clear();
+					return;
+				}
+
+				foreach(var chan in channel)
+				{
+					_names.Remove(chan.Key);
+					string names = string.Empty;
+					var split = chan.Value.Split(SchumixBase.Comma);
+
+					foreach(var name in split)
+					{
+						if(name != Name.ToLower())
+							names += SchumixBase.Comma + name;
+					}
+
+					_names.Add(chan.Key, names.Remove(0, 1, SchumixBase.Comma));
+				}
+
+				channel.Clear();
+				RandomVhost(Name.ToLower());
+
+				if(IRCConfig.NickName.ToLower() == Name.ToLower())
+				{
+					ExtraAddon.IsOnline = true;
+					sSender.NickServInfo(Name);
+				}
+			}
+		}
+
+		public void Change(string Name, string NewName, bool Identify = false)
+		{
+			var channel = new Dictionary<string, string>();
+
+			foreach(var chan in _names)
+			{
+				if(chan.Value.Contains(Name.ToLower(), SchumixBase.Comma))
+					channel.Add(chan.Key, chan.Value);
 			}
 
-			Console.WriteLine(_names.Count);
+			if(channel.Count.IsNull())
+			{
+				channel.Clear();
+				return;
+			}
 
-			if(IRCConfig.NickName.ToLower() == Name.ToLower() && !_names.Contains(Name.ToLower()) && !NewNick)
+			foreach(var chan in channel)
+			{
+				_names.Remove(chan.Key);
+				string names = string.Empty;
+				var split = chan.Value.Split(SchumixBase.Comma);
+
+				foreach(var name in split)
+				{
+					if(name != Name.ToLower())
+						names += SchumixBase.Comma + name;
+					else
+						names += SchumixBase.Comma + NewName.ToLower();
+				}
+
+				_names.Add(chan.Key, names.Remove(0, 1, SchumixBase.Comma));
+			}
+
+			channel.Clear();
+			RandomVhost(Name.ToLower());
+
+			if(IRCConfig.NickName.ToLower() == Name.ToLower() && !Identify)
 			{
 				ExtraAddon.IsOnline = true;
 				sSender.NickServInfo(Name);
-			}*/
-		}
-
-		public void Remove(string Channel, string Name)
-		{
-			//if(_names.Contains(Channel.ToLower() + SchumixBase.Colon + Name.ToLower()))
-			//	_names.Remove(Channel.ToLower() + SchumixBase.Colon + Name.ToLower());
+			}
 		}
 
 		public void RemoveAll()
 		{
 			_names.Clear();
+		}
+
+		public void RandomVhost(string Name)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM notes_users WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			if(!db.IsNull())
+				SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", sUtilities.SqlEscape(Name.ToLower())));
+		}
+
+		public void RandomAllVhost()
+		{
+			var db = SchumixBase.DManager.Query("SELECT Name FROM notes_users");
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+					SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", row["Name"].ToString()));
+			}
 		}
 	}
 }

@@ -1,8 +1,8 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Twl
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Twl
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,8 +21,10 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon.Commands
@@ -30,10 +32,9 @@ namespace Schumix.ExtraAddon.Commands
 	/// <summary>
 	///   A class which provides useful methods for working with the world-wide web.
 	/// </summary>
-	public static class WebHelper
+	static class WebHelper
 	{
 		private static readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		///   Gets the title of the specified webpage.
@@ -51,14 +52,14 @@ namespace Schumix.ExtraAddon.Commands
 				var request = (HttpWebRequest)WebRequest.Create(url);
 				request.Timeout = 3500;
 				request.AllowAutoRedirect = true;
-				request.UserAgent = "Schumix2 IRC Bot " + sUtilities.GetVersion() + " / .NET " + Environment.Version;
-				request.Referer = "http://www.wowemuf.org";
+				request.UserAgent = Consts.SchumixUserAgent;
+				request.Referer = Consts.SchumixReferer;
 
 				var response = request.GetResponse();
 				var stream = response.GetResponseStream();
 				string data;
 
-				using(var rdr = new StreamReader(stream))
+				using(var rdr = new StreamReader(stream, Encoding.UTF8))
 				{
 					data = rdr.ReadToEnd();
 				}
@@ -67,7 +68,7 @@ namespace Schumix.ExtraAddon.Commands
 				var getTitleRegex = new Regex(@"<title>(?<ttl>.*\s*.+\s*.*)\s*</title>", RegexOptions.IgnoreCase);
 				var match = getTitleRegex.Match(data);
 
-				return (match.Success) ? (match.Groups["ttl"].ToString()) : sLocalization.WebHelper("Text");
+				return (match.Success) ? (match.Groups["ttl"].ToString()) : sLocalization.WebHelper("Text", Language);
 			}
 			catch(Exception e)
 			{

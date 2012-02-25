@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,19 @@ using System;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	public sealed partial class MaffiaGame
+	sealed partial class MaffiaGame
 	{
 		public void Rescue(string Name, string NickName)
 		{
 			if(!Running)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", NickName);
+				return;
+			}
+
+			if(!Started)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Még nem kezdődött el játék!", NickName);
 				return;
 			}
 
@@ -61,16 +67,18 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			sSendMessage.SendCMPrivmsg(NickName, "Elkönyveltem a kérésedet.");
 
+			string rescued = string.Empty;
+
 			if(_killerlist.ContainsKey(Name.ToLower()))
 				rescued = string.Empty;
 			else if(_detectivelist.ContainsKey(Name.ToLower()))
-				rescued = _detectivelist[Name.ToLower()];
+				rescued = Name.ToLower();
 			else if(_doctorlist.ContainsKey(Name.ToLower()))
-				rescued = _doctorlist[Name.ToLower()];
+				rescued = Name.ToLower();
 			else if(_normallist.ContainsKey(Name.ToLower()))
-				rescued = _normallist[Name.ToLower()];
+				rescued = Name.ToLower();
 
-			_doctor = true;
+			_playerflist[NickName.ToLower()].RName = rescued;
 		}
 	}
 }

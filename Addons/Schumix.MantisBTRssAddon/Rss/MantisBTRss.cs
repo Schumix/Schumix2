@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -19,7 +19,10 @@
 
 using System;
 using System.Xml;
+using System.Net;
+using System.Text;
 using System.Threading;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -29,7 +32,7 @@ using Schumix.MantisBTRssAddon.Localization;
 
 namespace Schumix.MantisBTRssAddon
 {
-	public sealed class MantisBTRss
+	sealed class MantisBTRss
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
@@ -98,25 +101,37 @@ namespace Schumix.MantisBTRssAddon
 				{
 					try
 					{
-						if(sChannelInfo.FSelect("mantisbt"))
+						if(sChannelInfo.FSelect(IFunctions.Mantisbt))
 						{
 							url = GetUrl();
 							if(url.IsNull())
+							{
+								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
+							}
 
 							newbug = BugCode(url);
 							if(newbug == "no text")
+							{
+								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
+							}
 
 							if(_oldbug != newbug)
 							{
 								title = Title(url);
 								if(title == "no text")
+								{
+									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
+								}
 
 								link = Link(url);
 								if(link == "no text")
+								{
+									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
+								}
 
 								Informations(newbug, title, link);
 								_oldbug = newbug;
@@ -136,7 +151,10 @@ namespace Schumix.MantisBTRssAddon
 			catch(Exception e)
 			{
 				Log.Error("MantisBTRss", sLocalization.Exception("Error2"), _name, e.Message);
-				Update();
+				Thread.Sleep(RssConfig.QueryTime*1000);
+
+				if(e.Message != "Thread was being aborted")
+					Update();
 			}
 		}
 
@@ -144,13 +162,20 @@ namespace Schumix.MantisBTRssAddon
 		{
 			try
 			{
-				var rss = new XmlDocument();
-				rss.Load(_url);
-				return rss;
+				using(var client = new WebClient())
+				{
+					client.Encoding = Encoding.UTF8;
+					string xml = client.DownloadString(_url);
+					var rss = new XmlDocument();
+					rss.LoadXml(xml);
+					xml = string.Empty;
+					return rss;
+				}
 			}
 			catch(Exception e)
 			{
 				Log.Error("MantisBTRss", sLocalization.Exception("Error"), _name, e.Message);
+				Thread.Sleep(RssConfig.QueryTime*1000);
 			}
 
 			return null;

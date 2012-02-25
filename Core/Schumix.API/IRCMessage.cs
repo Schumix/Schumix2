@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@ using System;
 namespace Schumix.API
 {
 	/// <summary>
-	///     Meghatározza, hogy PRIVMSG vagy NOTICE legyen az üzenetküldés módja.
+	///     Meghatározza az üzenet küldési típusokat.
 	/// </summary>
 	public enum MessageType
 	{
@@ -45,4 +45,7 @@ namespace Schumix.API
 		public string[] Info { get; set; }
 		public MessageType MessageType { get; set; }
 	}
+
+	public delegate void IRCDelegate(IRCMessage sIRCMessage);
+	public delegate void CommandDelegate(IRCMessage sIRCMessage);
 }
