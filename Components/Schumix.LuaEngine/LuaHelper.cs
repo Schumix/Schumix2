@@ -54,16 +54,14 @@ namespace Schumix.LuaEngine
 				{
 					if(attribute.GetType() == typeof(LuaFunctionAttribute))
 					{
-						var attr = (LuaFunctionAttribute) attribute;
+						var attr = (LuaFunctionAttribute)attribute;
 						var parameters = new List<string>();
 						var paramInfo = method.GetParameters();
 
 						if(!attr.FunctionParameters.IsNull() && paramInfo.Length != attr.FunctionParameters.Length)
 						{
 							Log.Error("LuaHelper", sLConsole.LuaHelper("Text"), method.Name, attr.FunctionName,
-								attr.FunctionParameters.Length,
-								paramInfo.Length);
-
+								attr.FunctionParameters.Length, paramInfo.Length);
 							break;
 						}
 
@@ -98,16 +96,14 @@ namespace Schumix.LuaEngine
 				{
 					if(attribute.GetType() == typeof(LuaFunctionAttribute))
 					{
-						var attr = (LuaFunctionAttribute) attribute;
+						var attr = (LuaFunctionAttribute)attribute;
 						var parameters = new List<string>();
 						var paramInfo = method.GetParameters();
 
 						if(!attr.FunctionParameters.IsNull() && paramInfo.Length != attr.FunctionParameters.Length)
 						{
 							Log.Error("LuaHelper", sLConsole.LuaHelper("Text"), method.Name, attr.FunctionName,
-								attr.FunctionParameters.Length,
-								paramInfo.Length);
-
+								attr.FunctionParameters.Length, paramInfo.Length);
 							break;
 						}
 

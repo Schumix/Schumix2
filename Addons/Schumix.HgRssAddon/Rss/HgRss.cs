@@ -144,6 +144,7 @@ namespace Schumix.HgRssAddon
 							url = GetUrl();
 							if(url.IsNull())
 							{
+								Clean(url);
 								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
 							}
@@ -151,6 +152,7 @@ namespace Schumix.HgRssAddon
 							newrev = Revision(url);
 							if(newrev == "no text")
 							{
+								Clean(url);
 								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
 							}
@@ -160,6 +162,7 @@ namespace Schumix.HgRssAddon
 								title = Title(url);
 								if(title == "no text")
 								{
+									Clean(url);
 									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
 								}
@@ -167,6 +170,7 @@ namespace Schumix.HgRssAddon
 								author = Author(url);
 								if(author == "no text")
 								{
+									Clean(url);
 									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
 								}
@@ -175,8 +179,7 @@ namespace Schumix.HgRssAddon
 								_oldrev = newrev;
 							}
 
-							url.RemoveAll();
-							url = null;
+							Clean(url);
 							Thread.Sleep(RssConfig.QueryTime*1000);
 						}
 						else 
@@ -197,6 +200,12 @@ namespace Schumix.HgRssAddon
 				if(e.Message != "Thread was being aborted")
 					Update();
 			}
+		}
+
+		private void Clean(XmlDocument xml)
+		{
+			xml.RemoveAll();
+			xml = null;
 		}
 
 		private XmlDocument GetUrl()

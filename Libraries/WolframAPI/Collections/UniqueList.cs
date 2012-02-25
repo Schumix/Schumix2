@@ -71,7 +71,6 @@ namespace WolframAPI.Collections
 				}
 
 				int index;
-
 				if((index = FindIndex(it => it.Equals(ind))) != -1)
 					this[index] = value;
 			}
@@ -90,7 +89,6 @@ namespace WolframAPI.Collections
 			set
 			{
 				int index;
-
 				if((index = FindIndex(it => it.Equals(ind))) != -1)
 					this[index] = value;
 			}

@@ -180,6 +180,7 @@ namespace Schumix.GitRssAddon
 							url = GetUrl();
 							if(url.IsNull())
 							{
+								Clean(url);
 								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
 							}
@@ -187,6 +188,7 @@ namespace Schumix.GitRssAddon
 							newrev = Revision(url);
 							if(newrev == "no text")
 							{
+								Clean(url);
 								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
 							}
@@ -196,6 +198,7 @@ namespace Schumix.GitRssAddon
 								title = Title(url);
 								if(title == "no text")
 								{
+									Clean(url);
 									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
 								}
@@ -203,17 +206,16 @@ namespace Schumix.GitRssAddon
 								author = Author(url);
 								if(author == "no text")
 								{
+									Clean(url);
 									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
 								}
 
 								Informations(newrev, title, author);
-
 								_oldrev = newrev;
 							}
 
-							url.RemoveAll();
-							url = null;
+							Clean(url);
 							Thread.Sleep(RssConfig.QueryTime*1000);
 						}
 						else 
@@ -234,6 +236,12 @@ namespace Schumix.GitRssAddon
 				if(e.Message != "Thread was being aborted")
 					Update();
 			}
+		}
+
+		private void Clean(XmlDocument xml)
+		{
+			xml.RemoveAll();
+			xml = null;
 		}
 
 		private XmlDocument GetUrl()
