@@ -27,6 +27,6 @@ namespace WolframAPI
 		/// <para>Should be used with XML serialization only.</para>
 		/// </summary>
 		/// <returns>The serialized instance.</returns>
-        string Serialize();
-    }
+		string Serialize();
+	}
 }

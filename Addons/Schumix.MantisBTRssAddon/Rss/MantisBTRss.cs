@@ -106,6 +106,7 @@ namespace Schumix.MantisBTRssAddon
 							url = GetUrl();
 							if(url.IsNull())
 							{
+								Clean(url);
 								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
 							}
@@ -113,6 +114,7 @@ namespace Schumix.MantisBTRssAddon
 							newbug = BugCode(url);
 							if(newbug == "no text")
 							{
+								Clean(url);
 								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
 							}
@@ -122,6 +124,7 @@ namespace Schumix.MantisBTRssAddon
 								title = Title(url);
 								if(title == "no text")
 								{
+									Clean(url);
 									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
 								}
@@ -129,6 +132,7 @@ namespace Schumix.MantisBTRssAddon
 								link = Link(url);
 								if(link == "no text")
 								{
+									Clean(url);
 									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
 								}
@@ -137,6 +141,7 @@ namespace Schumix.MantisBTRssAddon
 								_oldbug = newbug;
 							}
 
+							Clean(url);
 							Thread.Sleep(RssConfig.QueryTime*1000);
 						}
 						else 
@@ -156,6 +161,12 @@ namespace Schumix.MantisBTRssAddon
 				if(e.Message != "Thread was being aborted")
 					Update();
 			}
+		}
+
+		private void Clean(XmlDocument xml)
+		{
+			xml.RemoveAll();
+			xml = null;
 		}
 
 		private XmlDocument GetUrl()

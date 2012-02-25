@@ -10,3 +10,4 @@ Megírásra váró feladatok:
 - ExtraAddonhoz hozzáadni azt a lehetőséget hogy a kód 10 percenként ellenőrzi a nevét és ha szabad visszaveszi.
 - plugin parancsnál az addonok állapotát ne ilyen hosszan írja ki.
 - Megoldás arra ha vki úgy aktiválja a vhost-ot hogy sehol sincs fent (csatorna). Ha ezútán se lép fel csatornára de mondjuk nevet cserél vagy lelép irc-ről akkor fen áll a lehetőség hogy a kódot támadás érheti. Ehhez valamilyen védelmi mehanizmust kéne kitalálni.
+- Ha valaki floodolja botot saját parancsaival akkor bizonyos szám után tegye tiltó listára az adott nick-et. Majd oldja fel megadott idő múlva.

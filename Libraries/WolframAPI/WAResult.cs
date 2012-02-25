@@ -195,7 +195,6 @@ namespace WolframAPI
                 sd = GetType().FullName;
             
             return sd;
-            
         }
 
         /// <summary>
@@ -253,8 +252,7 @@ namespace WolframAPI
 			if(sUtilities.GetCompiler() != Compiler.Mono)
             	Contract.Ensures(Contract.Result<object>() != null);
 
-            return new WAResult(Success, Error, NumPods, DataTypes, TimedOut, Timing, ParseTiming, ParseTimedOut,
-                                Recalculate, Version, Pods);
+            return new WAResult(Success, Error, NumPods, DataTypes, TimedOut, Timing, ParseTiming, ParseTimedOut, Recalculate, Version, Pods);
         }
 
         #endregion
