@@ -22,6 +22,7 @@ using System.Text;
 using Schumix.API;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -43,7 +44,7 @@ namespace Schumix.Irc.Ctcp
 			_userInfoMessage = "Schumix CTCP";		
 			_fingerMessage = _userInfoMessage;
 			_versionMessage = string.Format("Schumix {0}\n{1} {2}\n{3} {4}", sUtilities.GetVersion(), sLConsole.CtcpSender("Text7"), sUtilities.GetOSName(), sLConsole.CtcpSender("Text8"), sUtilities.GetCpuId());
-			_sourceMessage = "https://github.com/megax/Schumix2";
+			_sourceMessage = Consts.SchumixWebsite;
 			_clientInfoMessage = sLConsole.CtcpSender("Text");
 		}
 
