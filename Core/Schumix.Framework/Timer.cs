@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ namespace Schumix.Framework
 					date = string.Format("{0}. {1}. {2}. {3}:{4}", DateTime.Now.Year, month, day, DateTime.Now.Hour, DateTime.Now.Minute);
 			}
 
-			SchumixBase.DManager.QueryFirstRow("INSERT INTO `uptime`(`Date`, `Uptime`, `Memory`) VALUES ('{0}', '{1}', '{2} MB')", date, Uptime(), memory);
+			SchumixBase.DManager.Insert("`uptime`(`Date`, `Uptime`, `Memory`)", date, Uptime(), memory + SchumixBase.Space + "MB");
 		}
 	}
 }

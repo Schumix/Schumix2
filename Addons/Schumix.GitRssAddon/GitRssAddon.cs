@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,24 +32,20 @@ using Schumix.GitRssAddon.Localization;
 
 namespace Schumix.GitRssAddon
 {
-	public class GitRssAddon : RssCommand, ISchumixAddon
+	class GitRssAddon : RssCommand, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static readonly List<GitRss> RssList = new List<GitRss>();
-#if MONO
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
-#else
-		private AddonConfig _config;
-#endif
 
 		public void Setup()
 		{
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			CommandManager.OperatorCRegisterHandler("git", new Action<IRCMessage>(HandleGit));
+			InitIrcCommand();
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Type, Link, Website FROM gitinfo");
 			if(!db.IsNull())
@@ -80,7 +76,7 @@ namespace Schumix.GitRssAddon
 
 		public void Destroy()
 		{
-			CommandManager.OperatorCRemoveHandler("git");
+			RemoveIrcCommand();
 			_config = null;
 
 			foreach(var list in RssList)
@@ -89,41 +85,38 @@ namespace Schumix.GitRssAddon
 			RssList.Clear();
 		}
 
-		public bool Reload(string RName)
+		public int Reload(string RName, string SName = "")
 		{
-			switch(RName.ToLower())
+			try
 			{
-				case "config":
-					_config = new AddonConfig(Name + ".xml");
-					return true;
+				switch(RName.ToLower())
+				{
+					case "config":
+						_config = new AddonConfig(Name + ".xml");
+						return 1;
+					case "command":
+						InitIrcCommand();
+						RemoveIrcCommand();
+						return 1;
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error("GitRssAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				return 0;
 			}
 
-			return false;
+			return -1;
 		}
 
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
+		private void InitIrcCommand()
 		{
-
+			CommandManager.OperatorCRegisterHandler("git", HandleGit);
 		}
 
-		public void HandleNotice(IRCMessage sIRCMessage)
+		private void RemoveIrcCommand()
 		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-
+			CommandManager.OperatorCRemoveHandler("git",   HandleGit);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

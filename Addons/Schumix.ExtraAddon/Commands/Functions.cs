@@ -1,8 +1,8 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Twl
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Twl
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,11 +30,13 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.ExtraAddon.Commands
 {
-	public partial class Functions
+	partial class Functions
 	{
+		private readonly object Lock = new object();
+
 		public void HLMessage(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("autohl") && sChannelInfo.FSelect("autohl", sIRCMessage.Channel))
+			if(sChannelInfo.FSelect(IFunctions.Autohl) && sChannelInfo.FSelect(IChannelFunctions.Autohl, sIRCMessage.Channel))
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name, Info, Enabled FROM hlmessage");
 				if(!db.IsNull())
@@ -47,7 +49,7 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							string status = row["Enabled"].ToString();
 
-							if(status != "on")
+							if(status != SchumixBase.On)
 								return;
 
 							sSendMessage.SendChatMessage(sIRCMessage, "{0}", row["Info"].ToString());
@@ -63,7 +65,7 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				string channel = _channel.Remove(0, 1, SchumixBase.Colon);
 
-				if(sChannelInfo.FSelect("autokick") && sChannelInfo.FSelect("autokick", channel))
+				if(sChannelInfo.FSelect(IFunctions.Autokick) && sChannelInfo.FSelect(IChannelFunctions.Autokick, channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
@@ -78,7 +80,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(status == "privmsg")
 			{
-				if(sChannelInfo.FSelect("autokick") && sChannelInfo.FSelect("autokick", _channel))
+				if(sChannelInfo.FSelect(IFunctions.Autokick) && sChannelInfo.FSelect(IChannelFunctions.Autokick, _channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
 					if(!db.IsNull())
@@ -132,18 +134,22 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void Message(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect("message") && sChannelInfo.FSelect("message", sIRCMessage.Channel))
+			lock(Lock)
 			{
-				var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower());
-				if(!db.IsNull())
+				if(sChannelInfo.FSelect(IFunctions.Message) && sChannelInfo.FSelect(IChannelFunctions.Message, sIRCMessage.Channel))
 				{
-					foreach(DataRow row in db.Rows)
+					var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower());
+					if(!db.IsNull())
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "{0}: {1}", sIRCMessage.Nick, row["Message"].ToString());
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message2", sIRCMessage.Channel), row["Wrote"].ToString());
-					}
+						foreach(DataRow row in db.Rows)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, "{0}: {1}", sIRCMessage.Nick, row["Message"].ToString());
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message2", sIRCMessage.Channel), row["Wrote"].ToString());
+							Thread.Sleep(400);
+						}
 
-					SchumixBase.DManager.Delete("message", string.Format("Name = '{0}'", sIRCMessage.Nick.ToLower()));
+						SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower()));
+					}
 				}
 			}
 		}

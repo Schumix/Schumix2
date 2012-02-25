@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ namespace Schumix.Irc
 
 		protected void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
-			if(sNickName.Ignore(sIRCMessage.Nick))
+			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
 			if(ConsoleLog.CLog)
@@ -47,14 +47,11 @@ namespace Schumix.Irc
 			if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
 				sIRCMessage.Channel = sIRCMessage.Nick;
 
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.HandlePrivmsg(sIRCMessage);
-
 			sCtcpSender.CtcpReply(sIRCMessage);
 
-			if(sChannelInfo.FSelect("commands") || sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!sChannelInfo.FSelect("commands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
 					return;
 
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
@@ -156,6 +153,7 @@ namespace Schumix.Irc
 					}
 					else
 					{
+						SchumixBase.NewNick = true;
 						string nick = sIRCMessage.Info[5];
 						sNickInfo.ChangeNick(nick);
 						sSender.Nick(nick);

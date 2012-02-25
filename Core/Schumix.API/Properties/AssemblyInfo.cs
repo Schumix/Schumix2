@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,21 +28,13 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Schumix.API")]
 [assembly: AssemblyDescription("Schumix IRC bot")]
 #if DEBUG
-#if MONO
-[assembly: AssemblyConfiguration("Mono-Debug")]
-#else
 [assembly: AssemblyConfiguration("Debug")]
-#endif
-#else
-#if MONO
-[assembly: AssemblyConfiguration("Mono-Release")]
 #else
 [assembly: AssemblyConfiguration("Release")]
 #endif
-#endif
 [assembly: AssemblyCompany("Megax Productions")]
 [assembly: AssemblyProduct("Schumix")]
-[assembly: AssemblyCopyright("Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>")]
+[assembly: AssemblyCopyright("Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>")]
 [assembly: AssemblyTrademark("GNU General Public License")]
 
 [assembly: CLSCompliant(true)]
@@ -62,5 +54,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.4.4")]
-[assembly: AssemblyFileVersion("3.4.4.0")]
+[assembly: AssemblyVersion("3.7.3")]
+[assembly: AssemblyFileVersion("3.7.3.0")]

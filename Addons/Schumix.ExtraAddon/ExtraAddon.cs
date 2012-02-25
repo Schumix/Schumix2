@@ -1,8 +1,8 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Twl
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Twl
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,10 +33,11 @@ using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon
 {
-	public class ExtraAddon : IrcHandler, ISchumixAddon
+	class ExtraAddon : IrcHandler, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
@@ -45,64 +46,105 @@ namespace Schumix.ExtraAddon
 		private readonly NameList sNameList = Singleton<NameList>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Notes sNotes = Singleton<Notes>.Instance;
-#if MONO
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
-#else
-		private AddonConfig _config;
-#endif
 		public static bool IsOnline { get; set; }
 
 		public void Setup()
 		{
 			IsOnline = false;
+			sNameList.RandomAllVhost();
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			Network.PublicRegisterHandler("JOIN",                       new Action<IRCMessage>(HandleJoin));
-			Network.PublicRegisterHandler(ReplyCode.RPL_NAMREPLY,       new Action<IRCMessage>(HandleNameList));
-			CommandManager.PublicCRegisterHandler("notes",              new Action<IRCMessage>(sNotes.HandleNotes));
-			CommandManager.PublicCRegisterHandler("message",            new Action<IRCMessage>(sFunctions.HandleMessage));
-			CommandManager.PublicCRegisterHandler("weather",            new Action<IRCMessage>(sFunctions.HandleWeather));
-			CommandManager.PublicCRegisterHandler("roll",               new Action<IRCMessage>(sFunctions.HandleRoll));
-			CommandManager.PublicCRegisterHandler("sha1",               new Action<IRCMessage>(sFunctions.HandleSha1));
-			CommandManager.PublicCRegisterHandler("md5",                new Action<IRCMessage>(sFunctions.HandleMd5));
-			CommandManager.PublicCRegisterHandler("prime",              new Action<IRCMessage>(sFunctions.HandlePrime));
-			CommandManager.HalfOperatorCRegisterHandler("autofunction", new Action<IRCMessage>(sFunctions.HandleAutoFunction));
+			Network.PublicRegisterHandler("PRIVMSG",                    HandlePrivmsg);
+			Network.PublicRegisterHandler("NOTICE",                     HandleNotice);
+			Network.PublicRegisterHandler("JOIN",                       HandleJoin);
+			Network.PublicRegisterHandler("PART",                       HandleLeft);
+			Network.PublicRegisterHandler("KICK",                       HandleKick);
+			Network.PublicRegisterHandler("QUIT",                       HandleQuit);
+			Network.PublicRegisterHandler("NICK",                       HandleNewNick);
+			Network.PublicRegisterHandler(ReplyCode.RPL_NAMREPLY,       HandleNameList);
+			InitIrcCommand();
 		}
 
 		public void Destroy()
 		{
-			Network.PublicRemoveHandler("JOIN");
-			Network.PublicRemoveHandler(ReplyCode.RPL_NAMREPLY);
-			CommandManager.PublicCRemoveHandler("notes");
-			CommandManager.PublicCRemoveHandler("message");
-			CommandManager.PublicCRemoveHandler("weather");
-			CommandManager.PublicCRemoveHandler("roll");
-			CommandManager.PublicCRemoveHandler("sha1");
-			CommandManager.PublicCRemoveHandler("md5");
-			CommandManager.PublicCRemoveHandler("prime");
-			CommandManager.HalfOperatorCRemoveHandler("autofunction");
+			Network.PublicRemoveHandler("PRIVMSG",                    HandlePrivmsg);
+			Network.PublicRemoveHandler("NOTICE",                     HandleNotice);
+			Network.PublicRemoveHandler("JOIN",                       HandleJoin);
+			Network.PublicRemoveHandler("PART",                       HandleLeft);
+			Network.PublicRemoveHandler("KICK",                       HandleKick);
+			Network.PublicRemoveHandler("QUIT",                       HandleQuit);
+			Network.PublicRemoveHandler("NICK",                       HandleNewNick);
+			Network.PublicRemoveHandler(ReplyCode.RPL_NAMREPLY,       HandleNameList);
+			RemoveIrcCommand();
 			sNameList.RemoveAll();
 		}
 
-		public bool Reload(string RName)
+		public int Reload(string RName, string SName = "")
 		{
-			switch(RName.ToLower())
+			try
 			{
-				case "config":
-					_config = new AddonConfig(Name + ".xml");
-					return true;
+				switch(RName.ToLower())
+				{
+					case "config":
+						_config = new AddonConfig(Name + ".xml");
+						return 1;
+					case "command":
+						InitIrcCommand();
+						RemoveIrcCommand();
+						return 1;
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error("ExtraAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				return 0;
 			}
 
-			return false;
+			return -1;
 		}
 
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
+		private void InitIrcCommand()
 		{
-			if(sChannelInfo.FSelect("commands") || sIRCMessage.Channel.Substring(0, 1) != "#")
+			CommandManager.PublicCRegisterHandler("notes",              sNotes.HandleNotes);
+			CommandManager.PublicCRegisterHandler("message",            sFunctions.HandleMessage);
+			CommandManager.PublicCRegisterHandler("weather",            sFunctions.HandleWeather);
+			CommandManager.PublicCRegisterHandler("roll",               sFunctions.HandleRoll);
+			CommandManager.PublicCRegisterHandler("sha1",               sFunctions.HandleSha1);
+			CommandManager.PublicCRegisterHandler("md5",                sFunctions.HandleMd5);
+			CommandManager.PublicCRegisterHandler("prime",              sFunctions.HandlePrime);
+			CommandManager.PublicCRegisterHandler("wiki",               sFunctions.HandleWiki);
+			CommandManager.PublicCRegisterHandler("calc",               sFunctions.HandleCalc);
+			CommandManager.HalfOperatorCRegisterHandler("autofunction", sFunctions.HandleAutoFunction);
+		}
+
+		private void RemoveIrcCommand()
+		{
+			CommandManager.PublicCRemoveHandler("notes",              sNotes.HandleNotes);
+			CommandManager.PublicCRemoveHandler("message",            sFunctions.HandleMessage);
+			CommandManager.PublicCRemoveHandler("weather",            sFunctions.HandleWeather);
+			CommandManager.PublicCRemoveHandler("roll",               sFunctions.HandleRoll);
+			CommandManager.PublicCRemoveHandler("sha1",               sFunctions.HandleSha1);
+			CommandManager.PublicCRemoveHandler("md5",                sFunctions.HandleMd5);
+			CommandManager.PublicCRemoveHandler("prime",              sFunctions.HandlePrime);
+			CommandManager.PublicCRemoveHandler("wiki",               sFunctions.HandleWiki);
+			CommandManager.PublicCRemoveHandler("calc",               sFunctions.HandleCalc);
+			CommandManager.HalfOperatorCRemoveHandler("autofunction", sFunctions.HandleAutoFunction);
+		}
+
+		private void HandlePrivmsg(IRCMessage sIRCMessage)
+		{
+			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
+				return;
+
+			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
-				if(!sChannelInfo.FSelect("commands", sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+					return;
+
+				if(sIRCMessage.Channel.Substring(0, 1) != "#")
 					return;
 
 				Task.Factory.StartNew(() =>
@@ -113,7 +155,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", sIRCMessage.Channel))
+					if(sChannelInfo.FSelect(IFunctions.Automode) && sChannelInfo.FSelect(IChannelFunctions.Automode, sIRCMessage.Channel))
 					{
 						AutoMode = true;
 						ModeChannel = sIRCMessage.Channel.ToLower();
@@ -123,7 +165,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect("randomkick") && sChannelInfo.FSelect("randomkick", sIRCMessage.Channel))
+					if(sChannelInfo.FSelect(IFunctions.Randomkick) && sChannelInfo.FSelect(IChannelFunctions.Randomkick, sIRCMessage.Channel))
 					{
 						if(sIRCMessage.Args.IsUpper() && sIRCMessage.Args.Length > 4)
 							sSender.Kick(sIRCMessage.Channel, sIRCMessage.Nick, sLManager.GetWarningText("CapsLockOff", sIRCMessage.Channel));
@@ -135,7 +177,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect("webtitle") && sChannelInfo.FSelect("webtitle", sIRCMessage.Channel))
+					if(sChannelInfo.FSelect(IFunctions.Webtitle) && sChannelInfo.FSelect(IChannelFunctions.Webtitle, sIRCMessage.Channel))
 					{
 						if(!SchumixBase.UrlTitleEnabled)
 							return;
@@ -163,7 +205,7 @@ namespace Schumix.ExtraAddon
 			}
 		}
 
-		public void HandleNotice(IRCMessage sIRCMessage)
+		private void HandleNotice(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Nick == "NickServ" && AutoMode)
 			{
@@ -201,7 +243,7 @@ namespace Schumix.ExtraAddon
 			{
 				if(sIRCMessage.Args.Contains("isn't registered.") || sIRCMessage.Args.Contains("   Last seen time:"))
 				{
-					//sNameList.Change(IRCConfig.NickName);
+					sNameList.Change(sNickInfo.NickStorage, IRCConfig.NickName, true);
 					sNickInfo.ChangeNick(IRCConfig.NickName);
 					sSender.Nick(IRCConfig.NickName);
 					Log.Notice("NickServ", sLConsole.NickServ("Text"));
@@ -218,21 +260,6 @@ namespace Schumix.ExtraAddon
 					IsOnline = false;
 				}
 			}
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-			HandleLLeft(sIRCMessage);
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-			HandleKKick(sIRCMessage);
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-			HandleQQuit(sIRCMessage);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

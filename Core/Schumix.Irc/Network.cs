@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  */
 
 using System;
+//using System.Timers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
@@ -35,20 +36,16 @@ namespace Schumix.Irc
 {
 	public sealed class Network : MessageHandler
 	{
-		private static readonly Dictionary<ReplyCode, Action<IRCMessage>> _IRCHandler = new Dictionary<ReplyCode, Action<IRCMessage>>();
-		private static readonly Dictionary<string, Action<IRCMessage>> _IRCHandler2 = new Dictionary<string, Action<IRCMessage>>();
-		private static readonly Dictionary<int, Action<IRCMessage>> _IRCHandler3 = new Dictionary<int, Action<IRCMessage>>();
-
-        ///<summary>
-        ///     A kimeneti adatokat külddi az IRC felé.
-        ///</summary>
-		public static StreamWriter writer { get; private set; }
+		private static readonly Dictionary<ReplyCode, IRCDelegate> _IRCHandler = new Dictionary<ReplyCode, IRCDelegate>();
+		private static readonly Dictionary<string, IRCDelegate> _IRCHandler2 = new Dictionary<string, IRCDelegate>();
+		private static readonly Dictionary<int, IRCDelegate> _IRCHandler3 = new Dictionary<int, IRCDelegate>();
+		//private System.Timers.Timer _timeropcode = new System.Timers.Timer();
 
         /// <summary>
         ///     A kapcsolatot tároljra.
         /// </summary>
-		private TcpClient client;
 		private SecureTcpClient sclient;
+		private TcpClient client;
 
         /// <summary>
         ///     A bejövő információkat fogadja.
@@ -64,6 +61,8 @@ namespace Schumix.Irc
         ///     IRC port száma.
         /// </summary>
 		private readonly int _port;
+		private bool _enabled = false;
+		//private DateTime LastOpcode;
 
         /// <summary>
         ///     Internet kapcsolat függvénye.
@@ -96,43 +95,59 @@ namespace Schumix.Irc
 
 			// Start Ping thread
 			Log.Debug("Network", sLConsole.Network("Text4"));
-			var ping = new Thread(Ping);
+			var ping = new Thread(AutoPing);
 			ping.Start();
 		}
 
 		private void InitHandler()
 		{
-			RegisterHandler(ReplyCode.RPL_WELCOME,         new Action<IRCMessage>(HandleSuccessfulAuth));
-			RegisterHandler("PING",                        new Action<IRCMessage>(HandlePing));
-			RegisterHandler("PONG",                        new Action<IRCMessage>(HandlePong));
-			RegisterHandler("PRIVMSG",                     new Action<IRCMessage>(HandlePrivmsg));
-			RegisterHandler("NOTICE",                      new Action<IRCMessage>(HandleNotice));
-			RegisterHandler("PART",                        new Action<IRCMessage>(HandleLeft));
-			RegisterHandler("KICK",                        new Action<IRCMessage>(HandleKKick));
-			RegisterHandler("QUIT",                        new Action<IRCMessage>(HandleQQuit));
-			RegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,  new Action<IRCMessage>(HandleChannelBan));
-			RegisterHandler(ReplyCode.ERR_BADCHANNELKEY,   new Action<IRCMessage>(HandleNoChannelPassword));
-			RegisterHandler(ReplyCode.RPL_WHOISCHANNELS,   new Action<IRCMessage>(HandleMWhois));
-			RegisterHandler(ReplyCode.ERR_NOSUCHNICK,      new Action<IRCMessage>(HandleNoWhois));
-			RegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND,  new Action<IRCMessage>(HandleUnknownCommand));
-			RegisterHandler(ReplyCode.ERR_NICKNAMEINUSE,   new Action<IRCMessage>(HandleNickError));
-			RegisterHandler(439,                           new Action<IRCMessage>(HandleWaitingForConnection));
-			RegisterHandler(ReplyCode.ERR_NOTREGISTERED,   new Action<IRCMessage>(HandleNotRegistered));
-			RegisterHandler(ReplyCode.ERR_NONICKNAMEGIVEN, new Action<IRCMessage>(HandleNoNickName));
+			RegisterHandler(ReplyCode.RPL_WELCOME,          HandleSuccessfulAuth);
+			RegisterHandler("PING",                         HandlePing);
+			RegisterHandler("PONG",                         HandlePong);
+			RegisterHandler("PRIVMSG",                      HandlePrivmsg);
+			RegisterHandler("NOTICE",                       HandleNotice);
+			RegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,   HandleChannelBan);
+			RegisterHandler(ReplyCode.ERR_BADCHANNELKEY,    HandleNoChannelPassword);
+			RegisterHandler(ReplyCode.RPL_WHOISCHANNELS,    HandleMWhois);
+			RegisterHandler(ReplyCode.ERR_NOSUCHNICK,       HandleNoWhois);
+			RegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND,   HandleUnknownCommand);
+			RegisterHandler(ReplyCode.ERR_NICKNAMEINUSE,    HandleNickError);
+			RegisterHandler(439,                            HandleWaitingForConnection);
+			RegisterHandler(ReplyCode.ERR_NOTREGISTERED,    HandleNotRegistered);
+			RegisterHandler(ReplyCode.ERR_NONICKNAMEGIVEN,  HandleNoNickName);
+			RegisterHandler("JOIN",                         HandleIrcJoin);
+			RegisterHandler("PART",                         HandleIrcLeft);
+			RegisterHandler("KICK",                         HandleIrcKick);
+			RegisterHandler("QUIT",                         HandleIrcQuit);
+			RegisterHandler("NICK",                         HandleNewNick);
+			RegisterHandler(ReplyCode.RPL_NAMREPLY,         HandleNameList);
+			RegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandlerErrorNewNickName);
+			RegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
+			RegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
 			Log.Notice("Network", sLConsole.Network("Text5"));
 		}
 
-		private static void RegisterHandler(ReplyCode code, Action<IRCMessage> method)
+		private static void RegisterHandler(ReplyCode code, IRCDelegate method)
 		{
-			_IRCHandler.Add(code, method);
+			if(_IRCHandler.ContainsKey(code))
+				_IRCHandler[code] += method;
+			else
+				_IRCHandler.Add(code, method);
 		}
 
 		private static void RemoveHandler(ReplyCode code)
 		{
-			_IRCHandler.Remove(code);
+			if(_IRCHandler.ContainsKey(code))
+				_IRCHandler.Remove(code);
 		}
 
-		public static void PublicRegisterHandler(ReplyCode code, Action<IRCMessage> method)
+		private static void RemoveHandler(ReplyCode code, IRCDelegate method)
+		{
+			if(_IRCHandler.ContainsKey(code))
+				_IRCHandler[code] -= method;
+		}
+
+		public static void PublicRegisterHandler(ReplyCode code, IRCDelegate method)
 		{
 			RegisterHandler(code, method);
 		}
@@ -142,17 +157,32 @@ namespace Schumix.Irc
 			RemoveHandler(code);
 		}
 
-		private static void RegisterHandler(string code, Action<IRCMessage> method)
+		public static void PublicRemoveHandler(ReplyCode code, IRCDelegate method)
 		{
-			_IRCHandler2.Add(code, method);
+			RemoveHandler(code, method);
+		}
+
+		private static void RegisterHandler(string code, IRCDelegate method)
+		{
+			if(_IRCHandler2.ContainsKey(code))
+				_IRCHandler2[code] += method;
+			else
+				_IRCHandler2.Add(code, method);
 		}
 
 		private static void RemoveHandler(string code)
 		{
-			_IRCHandler2.Remove(code);
+			if(_IRCHandler2.ContainsKey(code))
+				_IRCHandler2.Remove(code);
 		}
 
-		public static void PublicRegisterHandler(string code, Action<IRCMessage> method)
+		private static void RemoveHandler(string code, IRCDelegate method)
+		{
+			if(_IRCHandler2.ContainsKey(code))
+				_IRCHandler2[code] -= method;
+		}
+
+		public static void PublicRegisterHandler(string code, IRCDelegate method)
 		{
 			RegisterHandler(code, method);
 		}
@@ -162,17 +192,32 @@ namespace Schumix.Irc
 			RemoveHandler(code);
 		}
 
-		private static void RegisterHandler(int code, Action<IRCMessage> method)
+		public static void PublicRemoveHandler(string code, IRCDelegate method)
 		{
-			_IRCHandler3.Add(code, method);
+			RemoveHandler(code, method);
+		}
+
+		private static void RegisterHandler(int code, IRCDelegate method)
+		{
+			if(_IRCHandler3.ContainsKey(code))
+				_IRCHandler3[code] += method;
+			else
+				_IRCHandler3.Add(code, method);
 		}
 
 		private static void RemoveHandler(int code)
 		{
-			_IRCHandler3.Remove(code);
+			if(_IRCHandler3.ContainsKey(code))
+				_IRCHandler3.Remove(code);
 		}
 
-		public static void PublicRegisterHandler(int code, Action<IRCMessage> method)
+		private static void RemoveHandler(int code, IRCDelegate method)
+		{
+			if(_IRCHandler3.ContainsKey(code))
+				_IRCHandler3[code] -= method;
+		}
+
+		public static void PublicRegisterHandler(int code, IRCDelegate method)
 		{
 			RegisterHandler(code, method);
 		}
@@ -180,6 +225,11 @@ namespace Schumix.Irc
 		public static void PublicRemoveHandler(int code)
 		{
 			RemoveHandler(code);
+		}
+
+		public static void PublicRemoveHandler(int code, IRCDelegate method)
+		{
+			RemoveHandler(code, method);
 		}
 
 		/// <summary>
@@ -205,6 +255,9 @@ namespace Schumix.Irc
         /// </summary>
 		public void ReConnect()
 		{
+			if(SchumixBase.ExitStatus)
+				return;
+
 			Log.Notice("Network", sLConsole.Network("Text8"));
 			Connection(false);
 			NewNick = true;
@@ -249,24 +302,24 @@ namespace Schumix.Irc
 				}
 
 				reader = new StreamReader(client.GetStream());
-				writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
+				INetwork.Writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
 			}
 			else
 			{
 				reader = new StreamReader(sclient.GetStream());
-				writer = new StreamWriter(sclient.GetStream()) { AutoFlush = true };
+				INetwork.Writer = new StreamWriter(sclient.GetStream()) { AutoFlush = true };
 			}
 
 			if(b)
 			{
-				writer.WriteLine("NICK {0}", sNickInfo.NickStorage);
-				writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
+				INetwork.Writer.WriteLine("NICK {0}", sNickInfo.NickStorage);
+				INetwork.Writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
 			}
 			else
 				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
-
+			_enabled = true;
 			NewNick = false;
 			HostServStatus = false;
 			SchumixBase.UrlTitleEnabled = false;
@@ -277,9 +330,16 @@ namespace Schumix.Irc
 			if(!IRCConfig.Ssl)
 				client.Close();
 
-			writer.Dispose();
+			INetwork.Writer.Dispose();
 			reader.Dispose();
 		}
+
+		//private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
+		//{
+		//	Console.WriteLine((DateTime.Now - LastOpcode).Minutes);
+		//	if((DateTime.Now - LastOpcode).Minutes >= 1)
+		//		ReConnect();
+		//}
 
         /// <summary>
         ///     Ez a függvény kezeli azt IRC adatai és az opcedes-eket.
@@ -291,32 +351,52 @@ namespace Schumix.Irc
 		{
 			Log.Notice("Opcodes", sLConsole.Network("Text14"));
 			byte number = 0;
-			bool enabled = false;
+			//_timeropcode.Interval = 60*1000;
+			//_timeropcode.Elapsed += HandleOpcodesTimer;
+			//_timeropcode.Enabled = true;
+			//_timeropcode.Start();
 			Log.Notice("Opcodes", sLConsole.Network("Text15"));
 
 			while(true)
 			{
 				try
 				{
+					if(SchumixBase.ExitStatus)
+						break;
+
 					string IrcMessage;
 					if((IrcMessage = reader.ReadLine()).IsNull())
 					{
 						Log.Error("Opcodes", sLConsole.Network("Text16"));
-						DisConnect();
-						break;
+
+						if(sChannelInfo.FSelect("reconnect"))
+						{
+							if(number <= 6)
+							{
+								Thread.Sleep(10*1000);
+								number++;
+							}
+							else
+								Thread.Sleep(120*1000);
+
+							ReConnect();
+							continue;
+						}
 					}
 
-					if(enabled)
+					//LastOpcode = DateTime.Now;
+
+					if(_enabled)
 					{
 						number = 0;
-						enabled = false;
+						_enabled = false;
 					}
 
 					Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage));
 				}
 				catch(IOException)
 				{
-					if(sChannelInfo.FSelect("reconnect"))
+					if(sChannelInfo.FSelect(IFunctions.Reconnect))
 					{
 						if(number <= 6)
 						{
@@ -326,7 +406,6 @@ namespace Schumix.Irc
 						else
 							Thread.Sleep(120*1000);
 
-						enabled = true;
 						ReConnect();
 						continue;
 					}
@@ -338,7 +417,14 @@ namespace Schumix.Irc
 				}
 			}
 
-			SchumixBase.timer.SaveUptime();
+			//_timeropcode.Enabled = false;
+			//_timeropcode.Elapsed -= HandleOpcodesTimer;
+			//_timeropcode.Stop();
+
+			sIgnoreNickName.RemoveConfig();
+			sIgnoreChannel.RemoveConfig();
+			Thread.Sleep(1000);
+			DisConnect();
 			Log.Warning("Opcodes", sLConsole.Network("Text17"));
 			Thread.Sleep(1000);
 			Environment.Exit(1);
@@ -383,11 +469,20 @@ namespace Schumix.Irc
 			}
 
 			if(_IRCHandler2.ContainsKey(opcode))
+			{
 				_IRCHandler2[opcode].Invoke(IMessage);
-			else if(_IRCHandler.ContainsKey((ReplyCode)Convert.ToInt32(opcode)))
-				_IRCHandler[(ReplyCode)Convert.ToInt32(opcode)].Invoke(IMessage);
-			else if(_IRCHandler3.ContainsKey(Convert.ToInt32(opcode)))
-				_IRCHandler3[Convert.ToInt32(opcode)].Invoke(IMessage);
+				return;
+			}
+			else if(opcode.IsNumber() && _IRCHandler.ContainsKey((ReplyCode)opcode.ToNumber()))
+			{
+				_IRCHandler[(ReplyCode)opcode.ToNumber()].Invoke(IMessage);
+				return;
+			}
+			else if(opcode.IsNumber() && _IRCHandler3.ContainsKey(opcode.ToNumber().ToInt()))
+			{
+				_IRCHandler3[opcode.ToNumber().ToInt()].Invoke(IMessage);
+				return;
+			}
 			else
 			{
 				if(IrcCommand[0] == "PING")
@@ -403,9 +498,9 @@ namespace Schumix.Irc
         /// <summary>
         ///     Pingeli az IRC szervert 30 másodpercenként.
         /// </summary>
-		private void Ping()
+		private void AutoPing()
 		{
-			Log.Notice("Ping", sLConsole.Network("Text14"));
+			Log.Notice("AutoPing", sLConsole.Network("Text14"));
 
 			while(true)
 			{

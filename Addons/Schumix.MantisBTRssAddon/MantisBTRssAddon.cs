@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,24 +32,20 @@ using Schumix.MantisBTRssAddon.Localization;
 
 namespace Schumix.MantisBTRssAddon
 {
-	public class MantisBTRssAddon : RssCommand, ISchumixAddon
+	class MantisBTRssAddon : RssCommand, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static readonly List<MantisBTRss> RssList = new List<MantisBTRss>();
-#if MONO
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
-#else
-		private AddonConfig _config;
-#endif
 
 		public void Setup()
 		{
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			CommandManager.OperatorCRegisterHandler("mantisbt", new Action<IRCMessage>(HandleMantisBT));
+			InitIrcCommand();
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link FROM mantisbt");
 			if(!db.IsNull())
@@ -78,7 +74,7 @@ namespace Schumix.MantisBTRssAddon
 
 		public void Destroy()
 		{
-			CommandManager.OperatorCRemoveHandler("mantisbt");
+			RemoveIrcCommand();
 			_config = null;
 
 			foreach(var list in RssList)
@@ -87,41 +83,38 @@ namespace Schumix.MantisBTRssAddon
 			RssList.Clear();
 		}
 
-		public bool Reload(string RName)
+		public int Reload(string RName, string SName = "")
 		{
-			switch(RName.ToLower())
+			try
 			{
-				case "config":
-					_config = new AddonConfig(Name + ".xml");
-					return true;
+				switch(RName.ToLower())
+				{
+					case "config":
+						_config = new AddonConfig(Name + ".xml");
+						return 1;
+					case "command":
+						InitIrcCommand();
+						RemoveIrcCommand();
+						return 1;
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error("MantisBTRssAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				return 0;
 			}
 
-			return false;
+			return -1;
 		}
 
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
+		private void InitIrcCommand()
 		{
-
+			CommandManager.OperatorCRegisterHandler("mantisbt", HandleMantisBT);
 		}
 
-		public void HandleNotice(IRCMessage sIRCMessage)
+		private void RemoveIrcCommand()
 		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-
+			CommandManager.OperatorCRemoveHandler("mantisbt",   HandleMantisBT);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

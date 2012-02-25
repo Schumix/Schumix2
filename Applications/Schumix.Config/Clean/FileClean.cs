@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -22,8 +22,11 @@ using System.IO;
 
 namespace Schumix.Config.Clean
 {
-	public sealed class FileClean
+	sealed class FileClean
 	{
+		/// <summary>
+		///     Törli a tömörített verzió fájlt.
+		/// </summary>
 		public FileClean(string Version)
 		{
 			if(File.Exists(Version + ".tar"))

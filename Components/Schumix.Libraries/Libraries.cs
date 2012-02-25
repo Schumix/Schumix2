@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,9 +20,6 @@
 using System;
 using System.IO;
 using System.Linq;
-#if !MONO
-using System.Management;
-#endif
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -52,25 +49,42 @@ namespace Schumix.Libraries
 
 		public static string Regex(this string text, string regex)
 		{
-			var x = new Regex(regex);
-
-			if(x.IsMatch(text))
+			try
 			{
-				string s = string.Empty;
+				var x = new Regex(regex);
 
-				for(int a = 1; a < x.Match(text).Length; a++)
-					s += " " + x.Match(text).Groups[a].ToString();
+				if(x.IsMatch(text))
+				{
+					string s = string.Empty;
 
-				return s.Remove(0, 1);
+					for(int a = 1; a < x.Match(text).Length; a++)
+					{
+						if(x.Match(text).Groups[a].ToString() != string.Empty)
+							s += " " + x.Match(text).Groups[a].ToString();
+					}
+
+					return s.Remove(0, 1, ' ');
+				}
+				else
+					return "No Match!";
 			}
-			else
-				return "Regex error!";
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		public static string Regex(this string text, string regex, string groups)
 		{
-			var x = new Regex(regex);
-			return x.IsMatch(text) ? x.Match(text).Groups[groups].ToString() : "Regex error!";
+			try
+			{
+				var x = new Regex(regex);
+				return x.IsMatch(text) ? x.Match(text).Groups[groups].ToString() : "No Match!";
+			}
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		/// <summary>
@@ -196,15 +210,22 @@ namespace Schumix.Libraries
 
 		public static string SplitToString(this string[] split, int min, char c)
 		{
-			string ss = string.Empty;
+			try
+			{
+				string ss = string.Empty;
 
-			for(int x = min; x < split.Length; x++)
-				ss += c + split[x];
+				for(int x = min; x < split.Length; x++)
+					ss += c + split[x];
 
-			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
-				ss = ss.Remove(0, c.ToString().Length);
+				if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
+					ss = ss.Remove(0, c.ToString().Length);
 
-			return ss;
+				return ss;
+			}
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		public static string SplitToString(this string[] split)
@@ -232,15 +253,22 @@ namespace Schumix.Libraries
 
 		public static string SplitToString(this string[] split, int min, string s)
 		{
-			string ss = string.Empty;
+			try
+			{
+				string ss = string.Empty;
 
-			for(int x = min; x < split.Length; x++)
-				ss += s + split[x];
+				for(int x = min; x < split.Length; x++)
+					ss += s + split[x];
 
-			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
-				ss = ss.Remove(0, s.Length);
+				if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
+					ss = ss.Remove(0, s.Length);
 
-			return ss;
+				return ss;
+			}
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		public static string SplitToString(this char[] split, char c)
@@ -258,15 +286,22 @@ namespace Schumix.Libraries
 
 		public static string SplitToString(this char[] split, int min, char c)
 		{
-			string ss = string.Empty;
+			try
+			{
+				string ss = string.Empty;
 
-			for(int x = min; x < split.Length; x++)
-				ss += c + split[x];
+				for(int x = min; x < split.Length; x++)
+					ss += c + split[x];
 
-			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
-				ss = ss.Remove(0, c.ToString().Length);
+				if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
+					ss = ss.Remove(0, c.ToString().Length);
 
-			return ss;
+				return ss;
+			}
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		public static string SplitToString(this char[] split)
@@ -294,15 +329,22 @@ namespace Schumix.Libraries
 
 		public static string SplitToString(this char[] split, int min, string s)
 		{
-			string ss = string.Empty;
+			try
+			{
+				string ss = string.Empty;
 
-			for(int x = min; x < split.Length; x++)
-				ss += s + split[x];
+				for(int x = min; x < split.Length; x++)
+					ss += s + split[x];
 
-			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
-				ss = ss.Remove(0, s.Length);
+				if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
+					ss = ss.Remove(0, s.Length);
 
-			return ss;
+				return ss;
+			}
+			catch(Exception e)
+			{
+				return e.Message;
+			}
 		}
 
 		public static string SReverse(this string value)
@@ -365,7 +407,7 @@ namespace Schumix.Libraries
 		public static string GetCpuId()
 		{
 			return sUtilities.GetCpuId();
-        }
+		}
 
 		/// <summary>
 		///   The current unix time.
@@ -386,7 +428,14 @@ namespace Schumix.Libraries
 		/// <returns></returns>
 		public static int ToMilliSecondsInt(this DateTime time)
 		{
-			return (int)(time.Ticks/TicksPerSecond);
+			try
+			{
+				return (int)(time.Ticks/TicksPerSecond);
+			}
+			catch(Exception)
+			{
+				return 0;
+			}
 		}
 
 		/// <summary>
@@ -434,7 +483,14 @@ namespace Schumix.Libraries
 		/// <returns></returns>
 		public static DateTime GetDateTimeFromUnixTime(long unixTime)
 		{
-			return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTime);
+			try
+			{
+				return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTime);
+			}
+			catch(Exception)
+			{
+				return new DateTime(0);
+			}
 		}
 
 		/// <summary>
@@ -444,7 +500,14 @@ namespace Schumix.Libraries
 		/// <returns></returns>
 		public static DateTime GetUTCTimeSeconds(long seconds)
 		{
-			return UnixTimeStart.AddSeconds(seconds);
+			try
+			{
+				return UnixTimeStart.AddSeconds(seconds);
+			}
+			catch(Exception)
+			{
+				return new DateTime(0);
+			}
 		}
 
 		/// <summary>
@@ -454,7 +517,14 @@ namespace Schumix.Libraries
 		/// <returns></returns>
 		public static DateTime GetUTCTimeMillis(long millis)
 		{
-			return UnixTimeStart.AddMilliseconds(millis);
+			try
+			{
+				return UnixTimeStart.AddMilliseconds(millis);
+			}
+			catch(Exception)
+			{
+				return new DateTime(0);
+			}
 		}
 
 		/// <summary>
@@ -549,32 +619,7 @@ namespace Schumix.Libraries
 
 		public static string GetPlatform()
 		{
-			string Platform = string.Empty;
-			var pid = Environment.OSVersion.Platform;
-
-			switch(pid)
-			{
-				case PlatformID.Win32NT:
-				case PlatformID.Win32S:
-				case PlatformID.Win32Windows:
-				case PlatformID.WinCE:
-					Platform = "Windows";
-					break;
-				case PlatformID.Unix:
-					Platform = "Linux";
-					break;
-				case PlatformID.MacOSX:
-					Platform = "MacOSX";
-					break;
-				case PlatformID.Xbox:
-					Platform = "Xbox";
-					break;
-				default:
-					Platform = "Unknown";
-					break;
-			}
-
-			return Platform;
+			return GetPlatform();
 		}
 
 		/// <summary>
@@ -583,102 +628,55 @@ namespace Schumix.Libraries
 		/// <returns>A string containing the the operating system name.</returns>
 		public static string GetOSName()
 		{
-			var Info = Environment.OSVersion;
-			string Name = string.Empty;
-			
-			switch(Info.Platform)
+			return sUtilities.GetOSName();
+		}
+
+		public static bool IsDay(int Year, int Month, int Day)
+		{
+			if(DateTime.IsLeapYear(Year))
 			{
-				case PlatformID.Win32Windows:
+				switch(Month)
 				{
-					switch(Info.Version.Minor)
-					{
-						case 0:
-						{
-							Name = "Windows 95";
-							break;
-						}
-						case 10:
-						{
-							if(Info.Version.Revision.ToString() == "2222A")
-								Name = "Windows 98 Second Edition";
-							else
-								Name = "Windows 98";
-
-							break;
-						}
-						case 90:
-						{
-							Name = "Windows Me";
-							break;
-						}
-					}
-
-					break;
+					case 1:
+					case 3:
+					case 5:
+					case 7:
+					case 8:
+					case 10:
+					case 12:
+						return Day <= 31;
+					case 4:
+					case 6:
+					case 9:
+					case 11:
+						return Day <= 30;
+					case 2:
+						return Day <= 29;
 				}
-				case PlatformID.Win32NT:
+			}
+			else
+			{
+				switch(Month)
 				{
-					switch(Info.Version.Major)
-					{
-						case 3:
-						{
-							Name = "Windows NT 3.51";
-							break;
-						}
-						case 4:
-						{
-							Name = "Windows NT 4.0";
-							break;
-						}
-						case 5:
-						{
-							if(Info.Version.Minor == 0)
-								Name = "Windows 2000";
-							else if(Info.Version.Minor == 1)
-								Name = "Windows XP";
-							else if(Info.Version.Minor == 2)
-								Name = "Windows Server 2003";
-							break;
-						}
-						case 6:
-						{
-							if(Info.Version.Minor == 0)
-								Name = "Windows Vista";
-							else if(Info.Version.Minor == 1)
-								Name = "Windows 7";
-							break;
-						}
-					}
-
-					break;
-				}
-				case PlatformID.WinCE:
-				{
-					Name = "Windows CE";
-					break;
-				}
-				case PlatformID.Unix:
-				{
-					Name = "Linux " + Info.Version;
-					break;
-				}
-				case PlatformID.MacOSX:
-				{
-					Name = "MacOSX";
-					break;
-				}
-				case PlatformID.Xbox:
-				{
-					Name = "Xbox";
-					break;
-				}
-				default:
-				{
-					Name = "Unknown";
-					break;
+					case 1:
+					case 3:
+					case 5:
+					case 7:
+					case 8:
+					case 10:
+					case 12:
+						return Day <= 31;
+					case 4:
+					case 6:
+					case 9:
+					case 11:
+						return Day <= 30;
+					case 2:
+						return Day <= 28;
 				}
 			}
 
-			return Name;
+			return false;
 		}
 	}
 }

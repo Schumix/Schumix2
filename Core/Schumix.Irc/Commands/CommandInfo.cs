@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Data;
 using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -53,6 +54,18 @@ namespace Schumix.Irc.Commands
 			{
 				int flag = Convert.ToInt32(db["Flag"]);
 				return Flag == (AdminFlag)flag;
+			}
+
+			return false;
+		}
+
+		protected bool IsAdmin(string Name, string Vhost)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			if(!db.IsNull())
+			{
+				string vhost = db["Vhost"].ToString();
+				return Vhost == vhost;
 			}
 
 			return false;
@@ -102,6 +115,23 @@ namespace Schumix.Irc.Commands
 			}
 			else
 				return -1;
+		}
+
+		protected void RandomVhost(string Name)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			if(!db.IsNull())
+				SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", sUtilities.SqlEscape(Name.ToLower())));
+		}
+
+		protected void RandomAllVhost()
+		{
+			var db = SchumixBase.DManager.Query("SELECT Name FROM admins");
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+					SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", row["Name"].ToString()));
+			}
 		}
 	}
 }

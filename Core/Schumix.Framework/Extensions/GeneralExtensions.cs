@@ -1,8 +1,8 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Twl
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Twl
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -343,6 +343,84 @@ namespace Schumix.Framework.Extensions
 				throw new ArgumentNullException("coll");
 
 			Task.WaitAll(coll.ToArray());
+		}
+
+		public static bool CompareDataInBlock(this string[] split)
+		{
+			int i = 0;
+			string ss = string.Empty;
+
+			foreach(var s in split)
+			{
+				if(i == 0)
+					ss = s;
+				else
+				{
+					if(ss != s)
+						return false;
+				}
+
+				i++;
+			}
+
+			return true;
+		}
+
+		public static bool CompareDataInBlock(this List<string> list)
+		{
+			int i = 0;
+			string ss = string.Empty;
+
+			foreach(var s in list)
+			{
+				if(i == 0)
+					ss = s;
+				else
+				{
+					if(ss != s)
+						return false;
+				}
+
+				i++;
+			}
+
+			return true;
+		}
+
+		public static bool Contains(this string Text, string Name, char Parameter)
+		{
+			var s = Text.Split(Parameter);
+
+			foreach(var ss in s)
+			{
+				if(ss.ToLower() == Name.ToLower())
+					return true;
+			}
+
+			return false;
+		}
+
+		public static bool IsNumber(this string Text)
+		{
+			double number;
+			return double.TryParse(Text, out number);
+		}
+
+		public static double ToNumber(this string Text)
+		{
+			double number;
+			return double.TryParse(Text, out number) ? number : 0;
+		}
+
+		public static double ToNumber(this string Text, int Else)
+		{
+			double number;
+			return double.TryParse(Text, out number) ? number : Else;
+		}
+
+		public static int ToInt(this double Double)
+		{
+			return Convert.ToInt32(Double);
 		}
 	}
 }

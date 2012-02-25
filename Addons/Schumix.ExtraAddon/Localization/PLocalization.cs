@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.ExtraAddon.Localization
 {
-	public sealed class PLocalization
+	sealed class PLocalization
 	{
 		public string Locale { get; set; }
 		private PLocalization() {}
@@ -119,6 +119,24 @@ namespace Schumix.ExtraAddon.Localization
 						return "Loaded the Weather settings.";
 					else
 						return "Loaded the Weather settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string WolframAlphaConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "WolframAlpha beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the WolframAlpha settings.";
+					else
+						return "Loaded the WolframAlpha settings.";
 				}
 				default:
 					return string.Empty;

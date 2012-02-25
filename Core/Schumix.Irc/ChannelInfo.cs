@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 using System;
 using System.Data;
 using System.Collections.Generic;
+using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -29,13 +30,20 @@ namespace Schumix.Irc
 {
 	public sealed class ChannelInfo
 	{
-		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly List<string> ChannelFunction = new List<string>();
+		private readonly Dictionary<string, string> ChannelFunction = new Dictionary<string, string>();
 		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
+		private readonly Sender sSender = Singleton<Sender>.Instance;
+
 		public Dictionary<string, string> CList
 		{
 			get { return _ChannelList; }
+		}
+
+		public Dictionary<string, string> CFunction
+		{
+			get { return ChannelFunction; }
 		}
 
 		private ChannelInfo() {}
@@ -56,58 +64,113 @@ namespace Schumix.Irc
 				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text"));
 		}
 
-		public bool FSelect(string name)
+		public bool FSelect(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT FunctionStatus FROM schumix WHERE FunctionName = '{0}'", name);
-			if(!db.IsNull())
-			{
-				string status = db["FunctionStatus"].ToString();
-				return status == "on";
-			}
-			else
-			{
-				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text2"));
-				return false;
-			}
+			if(IFunctionsClass.Functions.ContainsKey(Name.ToLower()))
+				return IFunctionsClass.Functions[Name.ToLower()] == SchumixBase.On;
+
+			return false;
 		}
 
-		public bool FSelect(string name, string channel)
+		public bool FSelect(string Name, string Channel)
 		{
-			foreach(var channels in ChannelFunction)
+			if(ChannelFunction.ContainsKey(Channel.ToLower()))
 			{
-				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Colon);
-
-				if(point[0] == channel.ToLower())
+				foreach(var comma in ChannelFunction[Channel.ToLower()].Split(SchumixBase.Comma))
 				{
-					if(point2[0] == name.ToLower())
-						return point2[1] == "on";
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[0] == Name.ToLower())
+						return point[1] == SchumixBase.On;
 				}
 			}
 
 			return false;
 		}
 
-		public void ChannelFunctionReload()
+		public bool SearchFunction(string Name)
+		{
+			return IFunctionsClass.Functions.ContainsKey(Name.ToString().ToLower());
+		}
+
+		public bool SearchChannelFunction(string Name)
+		{
+			foreach(var channel in ChannelFunction)
+			{
+				foreach(var comma in channel.Value.Split(SchumixBase.Comma))
+				{
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[0] == Name.ToLower())
+						return true;
+				}
+			}
+
+			return false;
+		}
+
+		public bool FSelect(IFunctions Name)
+		{
+			if(IFunctionsClass.Functions.ContainsKey(Name.ToString().ToLower()))
+				return IFunctionsClass.Functions[Name.ToString().ToLower()] == SchumixBase.On;
+
+			return false;
+		}
+
+		public bool FSelect(IChannelFunctions Name, string Channel)
+		{
+			if(ChannelFunction.ContainsKey(Channel.ToLower()))
+			{
+				foreach(var comma in ChannelFunction[Channel.ToLower()].Split(SchumixBase.Comma))
+				{
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[0] == Name.ToString().ToLower())
+						return point[1] == SchumixBase.On;
+				}
+			}
+
+			return false;
+		}
+
+		public void FunctionsReload()
+		{
+			IFunctionsClass.Functions.Clear();
+			var db = SchumixBase.DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix");
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string name = row["FunctionName"].ToString();
+					string status = row["FunctionStatus"].ToString();
+					IFunctionsClass.Functions.Add(name.ToLower(), status.ToLower());
+				}
+			}
+			else
+				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text11"));
+		}
+
+		public void ChannelFunctionsReload()
 		{
 			ChannelFunction.Clear();
-
 			var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
 				{
 					string channel = row["Channel"].ToString();
-
 					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", channel);
 					if(!db1.IsNull())
-					{
-						string functions = db1["Functions"].ToString();
-						string[] comma = functions.Split(SchumixBase.Comma);
-
-						for(int x = 1; x < comma.Length; x++)
-							ChannelFunction.Add(channel + SchumixBase.Point + comma[x]);
-					}
+						ChannelFunction.Add(channel, db1["Functions"].ToString());
 					else
 						Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text3"));
 				}
@@ -135,33 +198,34 @@ namespace Schumix.Irc
 
 		public string ChannelFunctions(string name, string status, string channel)
 		{
-			string function = string.Empty;
+			string functions = string.Empty;
 
-			foreach(var channels in ChannelFunction)
+			if(ChannelFunction.ContainsKey(channel.ToLower()))
 			{
-				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Colon);
-
-				if(point[0] == channel.ToLower())
+				foreach(var comma in ChannelFunction[channel.ToLower()].Split(SchumixBase.Comma))
 				{
-					if(point2[0] != name.ToLower())
-						function += SchumixBase.Comma + point[1];
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[0] != name.ToLower())
+						functions += SchumixBase.Comma + comma;
+				}
+
+				foreach(var comma in ChannelFunction[channel.ToLower()].Split(SchumixBase.Comma))
+				{
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[0] == name.ToLower())
+						functions += SchumixBase.Comma + name.ToLower() + SchumixBase.Colon + status.ToLower();
 				}
 			}
 
-			foreach(var channels in ChannelFunction)
-			{
-				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Colon);
-
-				if(point[0] == channel.ToLower())
-				{
-					if(point2[0] == name.ToLower())
-						function += SchumixBase.Comma + name + SchumixBase.Colon + status;
-				}
-			}
-
-			return function;
+			return functions;
 		}
 
 		public string FunctionsInfo()
@@ -176,7 +240,7 @@ namespace Schumix.Irc
 					string name = row["FunctionName"].ToString();
 					string status = row["FunctionStatus"].ToString();
 
-					if(status == "on")
+					if(status == SchumixBase.On)
 						on += name + SchumixBase.Space;
 					else
 						off += name + SchumixBase.Space;
@@ -192,17 +256,19 @@ namespace Schumix.Irc
 		{
 			string on = string.Empty, off = string.Empty;
 
-			foreach(var channels in ChannelFunction)
+			if(ChannelFunction.ContainsKey(channel.ToLower()))
 			{
-				string[] point = channels.Split(SchumixBase.Point);
-				string[] point2 = point[1].Split(SchumixBase.Colon);
-
-				if(point[0] == channel.ToLower())
+				foreach(var comma in ChannelFunction[channel.ToLower()].Split(SchumixBase.Comma))
 				{
-					if(point2[1] == "on")
-						on += point2[0] + SchumixBase.Space;
+					if(comma == string.Empty)
+						continue;
+
+					string[] point = comma.Split(SchumixBase.Colon);
+
+					if(point[1] == SchumixBase.On)
+						on += point[0] + SchumixBase.Space;
 					else
-						off += point2[0] + SchumixBase.Space;
+						off += point[0] + SchumixBase.Space;
 				}
 			}
 
@@ -218,16 +284,16 @@ namespace Schumix.Irc
 			{
 				sSender.Join(channel.Key, channel.Value);
 
-				if(IsIgnore(channel.Key))
+				if(sIgnoreChannel.IsIgnore(channel.Key))
 				{
-					error = IsIgnore(channel.Key);
+					error = true;
 					SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.ChannelInfo("Text10")), string.Format("Channel = '{0}'", channel.Key));
 				}
 				else
 					SchumixBase.DManager.Update("channel", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}'", channel.Key));
 			}
 
-			ChannelFunctionReload();
+			ChannelFunctionsReload();
 			var db = SchumixBase.DManager.Query("SELECT Enabled FROM channel");
 			if(!db.IsNull())
 			{
@@ -253,28 +319,6 @@ namespace Schumix.Irc
 				SchumixBase.timer.StartTimer();
 				SchumixBase.STime = false;
 			}
-		}
-
-		public bool IsIgnore(string channel)
-		{
-			bool enabled = false;
-			string[] ignore = IRCConfig.IgnoreChannels.Split(SchumixBase.Comma);
-
-			if(ignore.Length > 1)
-			{
-				foreach(var _ignore in ignore)
-				{
-					if(channel.ToLower() == _ignore.ToLower())
-						enabled = true;
-				}
-			}
-			else
-			{
-				if(channel.ToLower() == IRCConfig.IgnoreChannels.ToLower())
-					enabled = true;
-			}
-
-			return enabled;
 		}
 	}
 }

@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -79,32 +79,36 @@ namespace Schumix.Irc.Commands
 			}
 
 			var text = sLManager.GetCommandTexts("reload", sIRCMessage.Channel);
-			if(text.Length < 2)
+			if(text.Length < 3)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 				return;
 			}
 
-			bool status = false;
+			int i = -1;
 
 			switch(sIRCMessage.Info[4].ToLower())
 			{
 				case "config":
 					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile);
-					status = true;
+					i = 1;
 					break;
 			}
 
 			foreach(var plugin in sAddonManager.GetPlugins())
 			{
-				if(plugin.Reload(sIRCMessage.Info[4]))
-					status = true;
+				if(plugin.Reload(sIRCMessage.Info[4].ToLower()) == 1)
+					i = 1;
+				else if(plugin.Reload(sIRCMessage.Info[4].ToLower()) == 0)
+					i = 0;
 			}
 
-			if(status)
-				sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.Info[4]);
-			else
+			if(i == -1)
+				sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+			else if(i == 0)
 				sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+			else if(i == 1)
+				sSendMessage.SendChatMessage(sIRCMessage, text[2], sIRCMessage.Info[4]);
 		}
 
 		protected void HandleQuit(IRCMessage sIRCMessage)
@@ -119,15 +123,9 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.Destroy();
-
-			SchumixBase.ExitStatus = true;
-			SchumixBase.timer.SaveUptime();
 			sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+			SchumixBase.Quit();
 			sSender.Quit(string.Format(text[1], sIRCMessage.Nick));
-			Thread.Sleep(1000);
-			Environment.Exit(1);
 		}
 	}
 }

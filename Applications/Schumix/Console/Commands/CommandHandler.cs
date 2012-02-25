@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -33,8 +33,9 @@ namespace Schumix.Console.Commands
 	/// <summary>
 	///     CommandHandler class.
 	/// </summary>
-	public partial class CommandHandler : ConsoleLog
+	partial class CommandHandler : ConsoleLog
 	{
+		private readonly IgnoreIrcCommand sIgnoreIrcCommand = Singleton<IgnoreIrcCommand>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
@@ -45,6 +46,10 @@ namespace Schumix.Console.Commands
 		///     LocalizationManager segítségével állítható be az irc szerver felé menő tárolt üzenetek nyelvezete.
 		/// </summary>
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly ChannelNameList sChannelNameList = Singleton<ChannelNameList>.Instance;
+		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
+		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
+		private readonly IgnoreCommand sIgnoreCommand = Singleton<IgnoreCommand>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Addonok kezelése.
@@ -114,12 +119,12 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(Info[1].ToLower() == "on")
+			if(Info[1].ToLower() == SchumixBase.On)
 			{
 				Log.Notice("Console", text[0]);
 				ChangeLog(true);
 			}
-			else if(Info[1].ToLower() == "off")
+			else if(Info[1].ToLower() == SchumixBase.Off)
 			{
 				Log.Notice("Console", text[1]);
 				ChangeLog(false);
@@ -237,7 +242,7 @@ namespace Schumix.Console.Commands
 
 				string pass = sUtilities.GetRandomString();
 				SchumixBase.DManager.Insert("`admins`(Name, Password)", name.ToLower(), sUtilities.Sha1(pass));
-				SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", name.ToLower(), "off");
+				SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", name.ToLower(), SchumixBase.Off);
 				Log.Notice("Console", text[1], name);
 				Log.Notice("Console", text[2], pass);
 			}
@@ -368,7 +373,7 @@ namespace Schumix.Console.Commands
 					Log.Notice("Console", text2[0], ChannelInfo[0]);
 					Log.Notice("Console", text2[1], ChannelInfo[1]);
 				}
-				else if(status == "on" || status == "off")
+				else if(status == SchumixBase.On || status == SchumixBase.Off)
 				{
 					if(Info.Length < 5)
 					{
@@ -382,25 +387,40 @@ namespace Schumix.Console.Commands
 
 						for(int i = 4; i < Info.Length; i++)
 						{
+							if(!sChannelInfo.SearchChannelFunction(Info[i]))
+							{
+								Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), Info[i]);
+								continue;
+							}
+
 							args += ", " + Info[i].ToLower();
 							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(Info[i].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
-							sChannelInfo.ChannelFunctionReload();
+							sChannelInfo.ChannelFunctionsReload();
 						}
 
-						if(status == "on")
+						if(args.Length == 0)
+							return;
+
+						if(status == SchumixBase.On)
 							Log.Notice("Console", text[0],  args.Remove(0, 2, ", "));
 						else
 							Log.Notice("Console", text[1],  args.Remove(0, 2, ", "));
 					}
 					else
 					{
-						if(status == "on")
-							Log.Notice("Console", text[0], status);
+						if(!sChannelInfo.SearchChannelFunction(Info[4]))
+						{
+							Log.Error("Console", sLConsole.Other("NoSuchFunctions"));
+							return;
+						}
+
+						if(status == SchumixBase.On)
+							Log.Notice("Console", text[0], Info[4].ToLower());
 						else
-							Log.Notice("Console", text[1], status);
+							Log.Notice("Console", text[1], Info[4].ToLower());
 
 						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(Info[4].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
-						sChannelInfo.ChannelFunctionReload();
+						sChannelInfo.ChannelFunctionsReload();
 					}
 				}
 			}
@@ -423,7 +443,7 @@ namespace Schumix.Console.Commands
 							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", channel));
 						}
 
-						sChannelInfo.ChannelFunctionReload();
+						sChannelInfo.ChannelFunctionsReload();
 						Log.Notice("Console", sLManager.GetConsoleCommandText("function/update/all"));
 					}
 					else
@@ -439,7 +459,7 @@ namespace Schumix.Console.Commands
 
 					Log.Notice("Console", sLManager.GetConsoleCommandText("function/update"), Info[2].ToLower());
 					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", Info[2].ToLower()));
-					sChannelInfo.ChannelFunctionReload();
+					sChannelInfo.ChannelFunctionsReload();
 				}
 			}
 			else if(Info[1].ToLower() == "info")
@@ -480,14 +500,49 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				if(Info[1].ToLower() == "on" || Info[1].ToLower() == "off")
+				if(Info[1].ToLower() == SchumixBase.On || Info[1].ToLower() == SchumixBase.Off)
 				{
-					if(Info[1].ToLower() == "on")
-						Log.Notice("Console", text[0], Info[2].ToLower());
-					else
-						Log.Notice("Console", text[1], Info[2].ToLower());
+					if(Info.Length >= 4)
+					{
+						string args = string.Empty;
 
-					SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", Info[2].ToLower()));
+						for(int i = 2; i < Info.Length; i++)
+						{
+							if(!sChannelInfo.SearchFunction(Info[i]))
+							{
+								Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), Info[i]);
+								continue;
+							}
+
+							args += ", " + Info[i].ToLower();
+							SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[i].ToLower())));
+							sChannelInfo.FunctionsReload();
+						}
+
+						if(args.Length == 0)
+							return;
+
+						if(Info[1].ToLower() == SchumixBase.On)
+							Log.Notice("Console", text[0],  args.Remove(0, 2, ", "));
+						else
+							Log.Notice("Console", text[1],  args.Remove(0, 2, ", "));
+					}
+					else
+					{
+						if(!sChannelInfo.SearchFunction(Info[2]))
+						{
+							Log.Error("Console", sLConsole.Other("NoSuchFunctions"));
+							return;
+						}
+
+						if(Info[1].ToLower() == SchumixBase.On)
+							Log.Notice("Console", text[0], Info[2].ToLower());
+						else
+							Log.Notice("Console", text[1], Info[2].ToLower());
+
+						SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", Info[2].ToLower()));
+						sChannelInfo.FunctionsReload();
+					}
 				}
 			}
 		}
@@ -526,6 +581,12 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
+				if(sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("ImAlreadyOnThisChannel"));
+					return;
+				}
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", channel);
 				if(!db.IsNull())
 				{
@@ -549,7 +610,7 @@ namespace Schumix.Console.Commands
 
 				Log.Notice("Console", text[1], channel);
 				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionReload();
+				sChannelInfo.ChannelFunctionsReload();
 			}
 			else if(Info[1].ToLower() == "remove")
 			{
@@ -597,12 +658,12 @@ namespace Schumix.Console.Commands
 				Log.Notice("Console", text[2], channel);
 
 				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionReload();
+				sChannelInfo.ChannelFunctionsReload();
 			}
 			else if(Info[1].ToLower() == "update")
 			{
 				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionReload();
+				sChannelInfo.ChannelFunctionsReload();
 				Log.Notice("Console", sLManager.GetConsoleCommandText("channel/update"));
 			}
 			else if(Info[1].ToLower() == "info")
@@ -719,6 +780,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
+			SchumixBase.NewNick = true;
 			string nick = Info[1];
 			sNickInfo.ChangeNick(nick);
 			sSender.Nick(nick);
@@ -739,6 +801,18 @@ namespace Schumix.Console.Commands
 			if(!IsChannel(Info[1]))
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+				return;
+			}
+
+			if(sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("ImAlreadyOnThisChannel"));
+				return;
+			}
+
+			if(sIgnoreChannel.IsIgnore(Info[1].ToLower()))
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("ThisChannelBlockedByAdmin"));
 				return;
 			}
 
@@ -767,6 +841,12 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
+			if(!sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("ImNotOnThisChannel"));
+				return;
+			}
+
 			sSender.Part(Info[1]);
 			Log.Notice("Console", sLManager.GetConsoleCommandText("leave"), Info[1]);
 		}
@@ -776,7 +856,7 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleReload()
 		{
-			if(Info.Length < 2)
+			if(Info.Length < 3)
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
 				return;
@@ -789,26 +869,407 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			bool status = false;
+			int i = -1;
 
 			switch(Info[1].ToLower())
 			{
 				case "config":
 					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile);
-					status = true;
+					i = 1;
 					break;
 			}
 
 			foreach(var plugin in sAddonManager.GetPlugins())
 			{
-				if(plugin.Reload(Info[1]))
-					status = true;
+				if(plugin.Reload(Info[1].ToLower()) == 1)
+					i = 1;
+				else if(plugin.Reload(Info[1].ToLower()) == 0)
+					i = 0;
 			}
 
-			if(status)
-				Log.Notice("Console", text[0], Info[1]);
-			else
+			if(i == -1)
+				Log.Error("Console", text[0]);
+			else if(i == 0)
 				Log.Error("Console", text[1]);
+			else if(i == 1)
+				Log.Notice("Console", text[2], Info[1]);
+		}
+
+		protected void HandleIgnore()
+		{
+			if(Info.Length < 2)
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoValue"));
+				return;
+			}
+
+			if(Info[1].ToLower() == "irc")
+			{
+				if(Info.Length < 3)
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("No1Value"));
+					return;
+				}
+
+				if(Info[2].ToLower() == "command")
+				{
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("No1Value"));
+						return;
+					}
+
+					if(Info[3].ToLower() == "add")
+					{
+						var text = sLManager.GetConsoleCommandTexts("ignore/irc/command/add");
+						if(text.Length < 2)
+						{
+							Log.Error("Console", sLConsole.Translations("NoFound2"));
+							return;
+						}
+
+						if(Info.Length < 5)
+						{
+							Log.Error("Console", sLManager.GetConsoleWarningText("NoCommand"));
+							return;
+						}
+
+						string command = Info[4].ToLower();
+
+						if(sIgnoreIrcCommand.IsIgnore(command))
+						{
+							Log.Error("Console", text[0]);
+							return;
+						}
+
+						sIgnoreIrcCommand.Add(command);
+						Log.Notice("Console", text[1]);
+					}
+					else if(Info[3].ToLower() == "remove")
+					{
+						var text = sLManager.GetConsoleCommandTexts("ignore/irc/command/remove");
+						if(text.Length < 2)
+						{
+							Log.Error("Console", sLConsole.Translations("NoFound2"));
+							return;
+						}
+
+						if(Info.Length < 5)
+						{
+							Log.Error("Console", sLManager.GetConsoleWarningText("NoCommand"));
+							return;
+						}
+
+						string command = Info[4].ToLower();
+
+						if(!sIgnoreIrcCommand.IsIgnore(command))
+						{
+							Log.Error("Console", text[0]);
+							return;
+						}
+
+						sIgnoreIrcCommand.Remove(command);
+						Log.Notice("Console", text[1]);
+					}
+					else if(Info[3].ToLower() == "search")
+					{
+						var text = sLManager.GetConsoleCommandTexts("ignore/irc/command/search");
+						if(text.Length < 2)
+						{
+							Log.Error("Console", sLConsole.Translations("NoFound2"));
+							return;
+						}
+
+						if(Info.Length < 5)
+						{
+							Log.Error("Console", sLManager.GetConsoleWarningText("NoCommand"));
+							return;
+						}
+
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Info[4].ToLower()));
+						if(!db.IsNull())
+							Log.Notice("Console", text[0]);
+						else
+							Log.Error("Console", text[1]);
+					}
+				}
+			}
+			else if(Info[1].ToLower() == "command")
+			{
+				if(Info.Length < 3)
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("No1Value"));
+					return;
+				}
+
+				if(Info[2].ToLower() == "add")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/command/add");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoCommand"));
+						return;
+					}
+
+					string command = Info[3].ToLower();
+
+					if(command == "ignore" || command == "admin")
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoIgnoreCommand"));
+						return;
+					}
+
+					if(sIgnoreCommand.IsIgnore(command))
+					{
+						Log.Error("Console", text[0]);
+						return;
+					}
+
+					sIgnoreCommand.Add(command);
+					CommandManager.PublicCRemoveHandler(command);
+					CommandManager.HalfOperatorCRemoveHandler(command);
+					CommandManager.OperatorCRemoveHandler(command);
+					CommandManager.AdminCRemoveHandler(command);
+					Log.Notice("Console", text[1]);
+				}
+				else if(Info[2].ToLower() == "remove")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/command/remove");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoCommand"));
+						return;
+					}
+
+					string command = Info[3].ToLower();
+
+					if(!sIgnoreCommand.IsIgnore(command))
+					{
+						Log.Error("Console", text[0]);
+						return;
+					}
+
+					sIgnoreCommand.Remove(command);
+					Log.Notice("Console", text[1]);
+				}
+				else if(Info[2].ToLower() == "search")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/command/search");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoCommand"));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					if(!db.IsNull())
+						Log.Notice("Console", text[0]);
+					else
+						Log.Error("Console", text[1]);
+				}
+			}
+			else if(Info[1].ToLower() == "channel")
+			{
+				if(Info.Length < 3)
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("No1Value"));
+					return;
+				}
+
+				if(Info[2].ToLower() == "add")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/channel/add");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+						return;
+					}
+
+					string channel = Info[3].ToLower();
+
+					if(!IsChannel(channel))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+						return;
+					}
+
+					if(sIgnoreChannel.IsIgnore(channel))
+					{
+						Log.Error("Console", text[0]);
+						return;
+					}
+
+					sIgnoreChannel.Add(channel);
+					Log.Notice("Console", text[1]);
+				}
+				else if(Info[2].ToLower() == "remove")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/channel/remove");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+						return;
+					}
+
+					string channel = Info[3].ToLower();
+
+					if(!IsChannel(channel))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+						return;
+					}
+
+					if(!sIgnoreChannel.IsIgnore(channel))
+					{
+						Log.Error("Console", text[0]);
+						return;
+					}
+
+					sIgnoreChannel.Remove(channel);
+					Log.Notice("Console", text[1]);
+				}
+				else if(Info[2].ToLower() == "search")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/channel/search");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+						return;
+					}
+
+					string channel = Info[3].ToLower();
+
+					if(!IsChannel(channel))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
+					if(!db.IsNull())
+						Log.Notice("Console", text[0]);
+					else
+						Log.Error("Console", text[1]);
+				}
+			}
+			else if(Info[1].ToLower() == "nick")
+			{
+				if(Info.Length < 3)
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("No1Value"));
+					return;
+				}
+
+				if(Info[2].ToLower() == "add")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/nick/add");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
+						return;
+					}
+
+					string nick = Info[3].ToLower();
+
+					if(sIgnoreNickName.IsIgnore(nick))
+					{
+						Log.Error("Console", text[0]);
+						return;
+					}
+
+					sIgnoreNickName.Add(nick);
+					Log.Notice("Console", text[1]);
+				}
+				else if(Info[2].ToLower() == "remove")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/nick/remove");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
+						return;
+					}
+
+					string nick = Info[3].ToLower();
+
+					if(!sIgnoreNickName.IsIgnore(nick))
+					{
+						Log.Error("Console", text[0]);
+						return;
+					}
+
+					sIgnoreNickName.Remove(nick);
+					Log.Notice("Console", text[1]);
+				}
+				else if(Info[2].ToLower() == "search")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/nick/search");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					if(!db.IsNull())
+						Log.Notice("Console", text[0]);
+					else
+						Log.Error("Console", text[1]);
+				}
+			}
 		}
 
 		/// <summary>
@@ -823,15 +1284,9 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.Destroy();
-
-			SchumixBase.ExitStatus = true;
-			SchumixBase.timer.SaveUptime();
 			Log.Notice("Console", text[0]);
+			SchumixBase.Quit();
 			sSender.Quit(text[1]);
-			Thread.Sleep(1000);
-			Environment.Exit(1);
 		}
 	}
 }

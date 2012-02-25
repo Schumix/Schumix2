@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +32,7 @@ namespace Schumix.Installer
 	/// (once a type initializer fails to initialize in .NET, it can't be re-initialized again).
 	/// </remarks>
 	/// <typeparam name="T">Type of the singleton class.</typeparam>
-	public class Singleton<T> where T : class
+	class Singleton<T> where T : class
 	{
 		/// <summary>
 		/// The single instance of the target class.

@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -308,6 +308,9 @@ namespace Schumix.Irc.Commands
 						if(command.Key == "admin")
 							continue;
 
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
 					}
 
@@ -323,11 +326,19 @@ namespace Schumix.Irc.Commands
 						if(command.Key == "admin")
 							continue;
 
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
 					}
 
 					foreach(var command in CommandManager.GetOperatorCommandHandler())
+					{
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
+					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[3], commands.Remove(0, 3, " | "));
@@ -341,14 +352,27 @@ namespace Schumix.Irc.Commands
 						if(command.Key == "admin")
 							continue;
 
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
 					}
 
 					foreach(var command in CommandManager.GetOperatorCommandHandler())
+					{
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
+					}
 
 					foreach(var command in CommandManager.GetAdminCommandHandler())
+					{
+						if(sIgnoreCommand.IsIgnore(command.Key))
+							continue;
+
 						commands += " | " + IRCConfig.CommandPrefix + command.Key;
+					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[4]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[5], commands.Remove(0, 3, " | "));
@@ -375,7 +399,9 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			SchumixBase.NewNick = true;
 			string nick = sIRCMessage.Info[4];
+			NewNickPrivmsg = sIRCMessage.Channel;
 			sNickInfo.ChangeNick(nick);
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("nick", sIRCMessage.Channel), nick);
 			sSender.Nick(nick);
@@ -398,14 +424,25 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			if(sChannelNameList.Names.ContainsKey(sIRCMessage.Info[4].ToLower()))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ImAlreadyOnThisChannel", sIRCMessage.Channel));
+				return;
+			}
+
+			if(sIgnoreChannel.IsIgnore(sIRCMessage.Info[4].ToLower()))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ThisChannelBlockedByAdmin", sIRCMessage.Channel));
+				return;
+			}
+
 			ChannelPrivmsg = sIRCMessage.Channel;
+			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("join", sIRCMessage.Channel), sIRCMessage.Info[4]);
 
 			if(sIRCMessage.Info.Length == 5)
 				sSender.Join(sIRCMessage.Info[4]);
 			else if(sIRCMessage.Info.Length == 6)
 				sSender.Join(sIRCMessage.Info[4], sIRCMessage.Info[5]);
-
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("join", sIRCMessage.Channel), sIRCMessage.Info[4]);
 		}
 
 		protected void HandleLeave(IRCMessage sIRCMessage)
@@ -422,6 +459,12 @@ namespace Schumix.Irc.Commands
 			if(!IsChannel(sIRCMessage.Info[4]))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+				return;
+			}
+
+			if(!sChannelNameList.Names.ContainsKey(sIRCMessage.Info[4].ToLower()))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ImNotOnThisChannel", sIRCMessage.Channel));
 				return;
 			}
 

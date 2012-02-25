@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Threading;
 using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
@@ -27,7 +28,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.ExtraAddon.Commands
 {
-	public class IrcHandler : CommandInfo
+	class IrcHandler : CommandInfo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
@@ -55,14 +56,14 @@ namespace Schumix.ExtraAddon.Commands
 			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
 			sNameList.Add(sIRCMessage.Channel, sIRCMessage.Nick);
 
-			if(sChannelInfo.FSelect("automode") && sChannelInfo.FSelect("automode", sIRCMessage.Channel))
+			if(sChannelInfo.FSelect(IFunctions.Automode) && sChannelInfo.FSelect(IChannelFunctions.Automode, sIRCMessage.Channel))
 			{
 				AutoMode = true;
 				ModeChannel = sIRCMessage.Channel;
 				sSender.NickServStatus(sIRCMessage.Nick);
 			}
 
-			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", sIRCMessage.Channel))
+			if(sChannelInfo.FSelect(IFunctions.Greeter) && sChannelInfo.FSelect(IChannelFunctions.Greeter, sIRCMessage.Channel))
 			{
 				var rand = new Random();
 				string Koszones = string.Empty;
@@ -82,7 +83,7 @@ namespace Schumix.ExtraAddon.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Nick);
 				else
 				{
-					if(IsAdmin(sIRCMessage.Nick))
+					if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, "{0} {1}", Koszones, sIRCMessage.Nick);
@@ -94,14 +95,17 @@ namespace Schumix.ExtraAddon.Commands
 		///     Ha ez a funkció be van kapcsolva, akkor
 		///     miután a nick elhagyta a szobát elköszön tőle.
 		/// </summary>
-		protected void HandleLLeft(IRCMessage sIRCMessage)
+		protected void HandleLeft(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Nick == sNickInfo.NickStorage)
+			{
+				sNameList.Remove(sIRCMessage.Channel);
 				return;
+			}
 
 			sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Nick);
 
-			if(sChannelInfo.FSelect("koszones") && sChannelInfo.FSelect("koszones", sIRCMessage.Channel))
+			if(sChannelInfo.FSelect(IFunctions.Greeter) && sChannelInfo.FSelect(IChannelFunctions.Greeter, sIRCMessage.Channel))
 			{
 				var rand = new Random();
 				string elkoszones = string.Empty;
@@ -115,38 +119,48 @@ namespace Schumix.ExtraAddon.Commands
 			}
 		}
 
-		protected void HandleQQuit(IRCMessage sIRCMessage)
+		protected void HandleQuit(IRCMessage sIRCMessage)
 		{
-			Console.WriteLine("asd2");
-			Console.WriteLine(sIRCMessage.Nick);
-			sNameList.Remove(string.Empty, sIRCMessage.Nick, false);
-			Console.WriteLine(sIRCMessage.Nick);
+			sNameList.Remove(string.Empty, sIRCMessage.Nick, true);
+		}
+
+		protected void HandleNewNick(IRCMessage sIRCMessage)
+		{
+			if(!SchumixBase.NewNick)
+				sNameList.Change(sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
+			else
+				SchumixBase.NewNick = false;
 		}
 
 		/// <summary>
 		///     Ha engedélyezett a ConsolLog, akkor kiírja a Console-ra ha kickelnek valakit.
 		/// </summary>
-		protected void HandleKKick(IRCMessage sIRCMessage)
+		protected void HandleKick(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Info[3]);
-
 			if(sIRCMessage.Info[3] == sNickInfo.NickStorage)
 			{
-				if(sChannelInfo.FSelect("rejoin") && sChannelInfo.FSelect("rejoin", sIRCMessage.Channel))
+				sNameList.Remove(sIRCMessage.Channel);
+
+				if(sChannelInfo.FSelect(IFunctions.Rejoin) && sChannelInfo.FSelect(IChannelFunctions.Rejoin, sIRCMessage.Channel))
 				{
 					foreach(var m_channel in sChannelInfo.CList)
 					{
-						if(sIRCMessage.Channel == m_channel.Key)
+						if(sIRCMessage.Channel.ToLower() == m_channel.Key)
+						{
+							Thread.Sleep(5000);
 							sSender.Join(m_channel.Key, m_channel.Value);
+						}
 					}
 				}
 			}
 			else
 			{
-				if(sChannelInfo.FSelect("commands") && sChannelInfo.FSelect("commands", sIRCMessage.Channel))
+				sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Info[3]);
+
+				if(sChannelInfo.FSelect(IFunctions.Commands) && sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel))
 				{
 					if(ConsoleLog.CLog)
 					{

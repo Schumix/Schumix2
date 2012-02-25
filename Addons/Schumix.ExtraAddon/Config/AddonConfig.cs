@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,13 +28,14 @@ using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon.Config
 {
-	public sealed class AddonConfig
+	sealed class AddonConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private const bool _enabled = false;
 		private const string _type = "aohv";
 		private const string _weatherhomecity = "Zalaegerszeg";
+		private const string _wolframalphaapikey = "557QYQ-UUUWTKX95V";
 
 		public AddonConfig(string configfile)
 		{
@@ -66,6 +67,9 @@ namespace Schumix.ExtraAddon.Config
 
 			string City = !xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").InnerText : _weatherhomecity;
 			new WeatherConfig(City);
+
+			string Key = !xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").InnerText : _wolframalphaapikey;
+			new WolframAlphaConfig(Key);
 
 			Log.Success("ExtraAddonConfig", sLocalization.Config("Text2"));
 			Console.WriteLine();
@@ -112,14 +116,27 @@ namespace Schumix.ExtraAddon.Config
 					// <Weather>
 					w.WriteStartElement("Weather");
 
-					// <Remove>
+					// <Home>
 					w.WriteStartElement("Home");
-					w.WriteElementString("City", (!xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").InnerText : _weatherhomecity));
+					w.WriteElementString("City",    (!xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").InnerText : _weatherhomecity));
 
-					// </Remove>
+					// </Home>
 					w.WriteEndElement();
 
 					// </Weather>
+					w.WriteEndElement();
+
+					// <WolframAlpha>
+					w.WriteStartElement("WolframAlpha");
+
+					// <Api>
+					w.WriteStartElement("Api");
+					w.WriteElementString("Key",     (!xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").InnerText : _wolframalphaapikey));
+
+					// </Api>
+					w.WriteEndElement();
+
+					// </WolframAlpha>
 					w.WriteEndElement();
 
 					// </ExtraAddon>
@@ -166,6 +183,18 @@ namespace Schumix.ExtraAddon.Config
 		{
 			City = city;
 			Log.Notice("WeatherConfig", sLocalization.WeatherConfig("Text"));
+		}
+	}
+
+	public sealed class WolframAlphaConfig
+	{
+		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		public static string Key { get; private set; }
+
+		public WolframAlphaConfig(string key)
+		{
+			Key = key;
+			Log.Notice("WorlframAlphaConfig", sLocalization.WolframAlphaConfig("Text"));
 		}
 	}
 }

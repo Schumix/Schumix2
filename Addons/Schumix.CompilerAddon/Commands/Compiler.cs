@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,11 +35,12 @@ using Schumix.CompilerAddon.Config;
 
 namespace Schumix.CompilerAddon.Commands
 {
-	public class Compiler : CommandInfo
+	class SCompiler : CommandInfo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 		private readonly Regex ForRegex = new Regex(@"for\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
@@ -137,30 +138,31 @@ namespace Schumix.CompilerAddon.Commands
 					return 1;
 				}
 
-				if(IsFor(data) || IsDo(data) || IsWhile(data))
-				{
-					bool b = false;
-					var thread = new Thread(() => { o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
-					thread.Start();
-					thread.Join(2);
-					thread.Abort();
+				int ReturnCode = 0;
+				var thread = new Thread(() => ReturnCode = StartCode(sIRCMessage, data, o));
+				thread.Start();
+				thread.Join(3000);
+				thread.Abort();
 
-					if(!b)
-					{
+				switch(ReturnCode)
+				{
+					case -1:
+						return 1;
+					case 0:
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
 						return 1;
-					}
+					default:
+						break;
 				}
-				else
-					o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
 
+				string _write = writer.ToString();
 				sSendMessage.SendChatMessage(sIRCMessage, string.Empty);
 
-				if(writer.ToString().Length == 0)
+				if(_write.Length == 0)
 					return 2;
 
-				var length = writer.ToString().Length;
-				var lines = CleanIrcText(writer.ToString()).Split(SchumixBase.NewLine);
+				var length = _write.Length;
+				var lines = CleanIrcText(_write).Split(SchumixBase.NewLine);
 
 				if(length > 1000 && lines.Length == 1)
 				{
@@ -186,7 +188,19 @@ namespace Schumix.CompilerAddon.Commands
 
 					return 1;
 				}
-				else if(lines.Length >= 2)
+				else if(lines.Length == 2)
+				{
+					foreach(var line in lines)
+					{
+						if(line == string.Empty)
+							continue;
+						else
+							sSendMessage.SendChatMessage(sIRCMessage, line);
+					}
+
+					return 1;
+				}
+				else if(lines.Length > 2)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, lines[0]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[4], lines.Length-1);
@@ -221,14 +235,20 @@ namespace Schumix.CompilerAddon.Commands
 		{
 			try
 			{
-#if MONO
+				if(sUtilities.GetCompiler() == Compiler.Mono)
+				{
 #pragma warning disable 618
-				var compiler = new CSharpCodeProvider().CreateCompiler();
+					var compiler = new CSharpCodeProvider().CreateCompiler();
 #pragma warning restore 618
-#else
-				var compiler = CodeDomProvider.CreateProvider("CSharp");
-#endif
-				return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
+					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
+				}
+				else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+				{
+					var compiler = CodeDomProvider.CreateProvider("CSharp");
+					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
+				}
+
+				return null;
 			}
 			catch(Exception)
 			{
@@ -240,51 +260,56 @@ namespace Schumix.CompilerAddon.Commands
 		{
 			if(results.Errors.HasErrors)
 			{
+				string errormessage = string.Empty;
+
 				foreach(CompilerError error in results.Errors)
 				{
 					string errortext = error.ErrorText;
 
 					if(errortext.Contains("Location of the symbol related to previous error"))
 					{
-#if MONO
-						for(;;)
+						if(sUtilities.GetCompiler() == Compiler.Mono)
 						{
-							if(errortext.Contains("/"))
+							for(;;)
 							{
-								if(errortext.Substring(0, 1) == "/")
-									errortext = errortext.Remove(0, 1);
+								if(errortext.Contains("/"))
+								{
+									if(errortext.Substring(0, 1) == "/")
+										errortext = errortext.Remove(0, 1);
+									else
+										errortext = errortext.Remove(0, errortext.IndexOf("/"));
+								}
 								else
-									errortext = errortext.Remove(0, errortext.IndexOf("/"));
+									break;
 							}
-							else
-								break;
+
+							errormessage += ". " + "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
+						}
+						else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+						{
+							for(;;)
+							{
+								if(errortext.Contains("\\"))
+								{
+									if(errortext.Substring(0, 1) == "\\")
+										errortext = errortext.Remove(0, 1);
+									else
+										errortext = errortext.Remove(0, errortext.IndexOf("\\"));
+								}
+								else
+									break;
+							}
+
+							errormessage += ". " + "*:\\***\\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
 						}
 
-						string s = "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), s);
-#else
-						for(;;)
-						{
-							if(errortext.Contains("\\"))
-							{
-								if(errortext.Substring(0, 1) == "\\")
-									errortext = errortext.Remove(0, 1);
-								else
-									errortext = errortext.Remove(0, errortext.IndexOf("\\"));
-							}
-							else
-								break;
-						}
-
-						string s = "*:\\***\\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), s);
-#endif
 						continue;
 					}
 
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), errortext);
+					errormessage += ". " + errortext;
 				}
 
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), errormessage.Remove(0, 2, ". "));
 				return null;
 			}
 			else
@@ -395,6 +420,36 @@ namespace Schumix.CompilerAddon.Commands
 			}
 
 			return false;
+		}
+
+		private int StartCode(IRCMessage sIRCMessage, string data, object o)
+		{
+			try
+			{
+				if(IsFor(data) || IsDo(data) || IsWhile(data))
+				{
+					bool b = false;
+					var thread = new Thread(() => { o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
+					thread.Start();
+					thread.Join(2);
+					thread.Abort();
+	
+					if(!b)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
+						return -1;
+					}
+				}
+				else
+					o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+			}
+			catch(Exception e)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), e.Message);
+				return -1;
+			}
+
+			return 1;
 		}
 
 		private string CleanText(string text)

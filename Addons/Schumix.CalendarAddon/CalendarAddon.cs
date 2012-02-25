@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,21 +32,18 @@ using Schumix.CalendarAddon.Localization;
 
 namespace Schumix.CalendarAddon
 {
-	public class CalendarAddon : ISchumixAddon
+	class CalendarAddon : ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly CalendarCommand sCalendarCommand = Singleton<CalendarCommand>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly BanCommand sBanCommand = Singleton<BanCommand>.Instance;
 		private Calendar _calendar;
 		public static readonly List<Flood> FloodList = new List<Flood>();
-#if MONO
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
-#else
-		private AddonConfig _config;
-#endif
 
 		public void Setup()
 		{
@@ -55,36 +52,62 @@ namespace Schumix.CalendarAddon
 			_calendar = new Calendar();
 			_calendar.Start();
 
-			CommandManager.OperatorCRegisterHandler("ban",   new Action<IRCMessage>(sBanCommand.HandleBan));
-			CommandManager.OperatorCRegisterHandler("unban", new Action<IRCMessage>(sBanCommand.HandleUnban));
+			Network.PublicRegisterHandler("PRIVMSG", HandlePrivmsg);
+			InitIrcCommand();
 		}
 
 		public void Destroy()
 		{
 			_calendar.Stop();
-			CommandManager.OperatorCRemoveHandler("ban");
-			CommandManager.OperatorCRemoveHandler("unban");
+			Network.PublicRemoveHandler("PRIVMSG",   HandlePrivmsg);
+			RemoveIrcCommand();
 		}
 
-		public bool Reload(string RName)
+		public int Reload(string RName, string SName = "")
 		{
-			switch(RName.ToLower())
+			try
 			{
-				case "config":
-					_config = new AddonConfig(Name + ".xml");
-					return true;
+				switch(RName.ToLower())
+				{
+					case "config":
+						_config = new AddonConfig(Name + ".xml");
+						return 1;
+					case "command":
+						InitIrcCommand();
+						RemoveIrcCommand();
+						return 1;
+				}
+			}
+			catch(Exception e)
+			{
+				Log.Error("CalendarAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				return 0;
 			}
 
-			return false;
+			return -1;
 		}
 
-		public void HandlePrivmsg(IRCMessage sIRCMessage)
+		private void InitIrcCommand()
+		{
+			CommandManager.OperatorCRegisterHandler("ban",    sBanCommand.HandleBan);
+			CommandManager.OperatorCRegisterHandler("unban",  sBanCommand.HandleUnban);
+			CommandManager.PublicCRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
+		}
+
+		private void RemoveIrcCommand()
+		{
+			CommandManager.OperatorCRemoveHandler("ban",      sBanCommand.HandleBan);
+			CommandManager.OperatorCRemoveHandler("unban",    sBanCommand.HandleUnban);
+			CommandManager.PublicCRemoveHandler("calendar",   sCalendarCommand.HandleCalendar);
+		}
+
+		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 			Task.Factory.StartNew(() =>
 			{
 				string channel = sIRCMessage.Channel.ToLower();
 
-				if(sChannelInfo.FSelect("antiflood") && sChannelInfo.FSelect("antiflood", channel))
+				if(sChannelInfo.FSelect(IFunctions.Antiflood) && sChannelInfo.FSelect(IChannelFunctions.Antiflood, channel))
 				{
 					string nick = sIRCMessage.Nick.ToLower();
 					int i = 0;
@@ -107,26 +130,6 @@ namespace Schumix.CalendarAddon
 					FloodList.Add(new Flood(nick, channel));
 				}
 			});
-		}
-
-		public void HandleNotice(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleLeft(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleKick(IRCMessage sIRCMessage)
-		{
-
-		}
-
-		public void HandleQuit(IRCMessage sIRCMessage)
-		{
-
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

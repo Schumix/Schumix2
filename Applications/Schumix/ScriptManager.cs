@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,7 +30,7 @@ namespace Schumix
 	///   A script manager for the IRC connections.
 	///   Loads plugins, manages events etc.
 	/// </summary>
-	public sealed class ScriptManager
+	sealed class ScriptManager
 	{
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
@@ -42,13 +42,9 @@ namespace Schumix
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-#if MONO
 #pragma warning disable 414
 		private readonly string _scriptsPath;
 #pragma warning restore 414
-#else
-		private readonly string _scriptsPath;
-#endif
 		private LuaEngine.LuaEngine _luaEngine;
 
 		/// <summary>

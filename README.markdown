@@ -15,11 +15,9 @@ Monon jelenleg minimum követelmény a `2.10` vagy újabb.
 
 ## Windows
 A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
-**Figyelem! `A mono` elõtaggal kezdõdõ konfiguráció monora van. Nem ajánlott használni.**
 
 ## Linux
 Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
-**Figyelem! Csak a mono elõtaggal kezdõdõ konfigurációt használjuk. A többit nem ajánlott.**
 
 ## Linux terminál
 Telepítsük a `mono-xbuild` csomagot vagy forrásból. Ezután inditsuk el a `build.sh`-t és lefordul a kód.
@@ -31,6 +29,13 @@ Navigáljunk a `Run` mappába és azon belül a konfigurációnak megfelelõ map
 a `Schumix.xml` nevû fájlt.
 
 # Konfig beállítása
+
+## Server
+
+* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy kapcsolodjon-e a szerverhez a program. Alapértelmezés: `false`
+* **Host:** Ide kell beírni a szerver nevét/címét ahova csatlakozni szeretnénk.
+* **Port:** A szerver portja. Alapértelmezés: `35220`
+* **Password:** A szerver azonosító jelszava.
 
 ## Irc
 
@@ -64,8 +69,9 @@ a `Schumix.xml` nevû fájlt.
 
 ## Log
 
+* **FileName:** Meghatározza hova mentődjenek el a log információk. Alapértelmezés: `Schumix.log`
 * **LogLevel:**
-Meghatározza hogy a konzolba milyen üzenetek kerülnek kiirásra. Alapértelmezés: `2`
+Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelmezés: `2`
 **Szintjei:** `0` (Normális üzenetek és a sikeresek)
 `1` (Figyelmeztetések)
 `2` (Hibák)
@@ -93,7 +99,7 @@ Meghatározza hogy a konzolba milyen üzenetek kerülnek kiirásra. Alapértelme
 
 * **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi az addonok betöltését. Alapértelmezés: `true`
 * **Ignore:** Azon addonok melyeket nem szeretnénk inditáskor betölteni. Vesszõvel elválasztva kell egymás útán írni öket. `(pl: TesztAddon,Teszt2Addon vagy szimplán TesztAddon)`
-        Alapértelmezés: `SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon`
+        Alapértelmezés: `MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon`
 * **Directory:** Az addonok mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Addons`
 
 ## Scripts

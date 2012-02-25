@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,6 +20,7 @@
 using System;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
 {
@@ -27,7 +28,56 @@ namespace Schumix.Irc
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly object WriteLock = new object();
-		private Sender() {}
+
+		private Sender()
+		{
+			// másik fáljból van csak hibát nem tudom orvosolni =/
+			try
+			{
+				string[] ignore = IRCConfig.IgnoreChannels.Split(SchumixBase.Comma);
+
+				if(ignore.Length > 1)
+				{
+					foreach(var name in ignore)
+						Add(name.ToLower());
+				}
+				else
+					Add(IRCConfig.IgnoreNames.ToLower());
+			}
+			catch
+			{
+			}
+		}
+
+		// másik fáljból van csak hibát nem tudom orvosolni =/
+		private bool IsIgnore(string Name)
+		{
+			try
+			{
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", Name.ToLower());
+				return !db.IsNull() ? true : false;
+			}
+			catch
+			{
+				return true;
+			}
+		}
+
+		// másik fáljból van csak hibát nem tudom orvosolni =/
+		private void Add(string Name)
+		{
+			try
+			{
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", Name.ToLower());
+				if(!db.IsNull())
+					return;
+	
+				SchumixBase.DManager.Insert("`ignore_channels`(Channel)", Name.ToLower());
+			}
+			catch
+			{
+			}
+		}
 
 		public void NameInfo(string nick, string user, string userinfo)
 		{
@@ -198,28 +248,6 @@ namespace Schumix.Irc
 			{
 				sSendMessage.WriteLine("WHOIS {0}", name);
 			}
-		}
-
-		private bool IsIgnore(string channel)
-		{
-			bool enabled = false;
-			string[] ignore = IRCConfig.IgnoreChannels.Split(SchumixBase.Comma);
-
-			if(ignore.Length > 1)
-			{
-				foreach(var _ignore in ignore)
-				{
-					if(channel.ToLower() == _ignore.ToLower())
-						enabled = true;
-				}
-			}
-			else
-			{
-				if(channel.ToLower() == IRCConfig.IgnoreChannels.ToLower())
-					enabled = true;
-			}
-
-			return enabled;
 		}
 	}
 }

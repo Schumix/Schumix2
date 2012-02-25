@@ -1,7 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.HgRssAddon.Localization
 {
-	public sealed class PLocalization
+	sealed class PLocalization
 	{
 		public string Locale { get; set; }
 		private PLocalization() {}
@@ -173,11 +173,11 @@ namespace Schumix.HgRssAddon.Localization
 				case "bitbucket2":
 				{
 					if(Language == "huHU")
-						return "3{0} Infó:{1}";
+						return "3{0} Infó: {1}";
 					else if(Language == "enUS")
-						return "3{0} Info:{1}";
+						return "3{0} Info: {1}";
 					else
-						return "3{0} Info:{1}";
+						return "3{0} Info: {1}";
 				}
 				default:
 					return string.Empty;
