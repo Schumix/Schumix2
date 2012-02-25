@@ -156,6 +156,7 @@ namespace Schumix.WordPressRssAddon
 							url = GetUrl();
 							if(url.IsNull())
 							{
+								Clean(url);
 								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
 							}
@@ -163,6 +164,7 @@ namespace Schumix.WordPressRssAddon
 							newguid = Guid(url);
 							if(newguid == "no text")
 							{
+								Clean(url);
 								Thread.Sleep(RssConfig.QueryTime*1000);
 								continue;
 							}
@@ -172,6 +174,7 @@ namespace Schumix.WordPressRssAddon
 								title = Title(url);
 								if(title == "no text")
 								{
+									Clean(url);
 									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
 								}
@@ -179,6 +182,7 @@ namespace Schumix.WordPressRssAddon
 								author = Author(url);
 								if(author == "no text")
 								{
+									Clean(url);
 									Thread.Sleep(RssConfig.QueryTime*1000);
 									continue;
 								}
@@ -187,8 +191,7 @@ namespace Schumix.WordPressRssAddon
 								_oldguid = newguid;
 							}
 
-							url.RemoveAll();
-							url = null;
+							Clean(url);
 							Thread.Sleep(RssConfig.QueryTime*1000);
 						}
 						else 
@@ -209,6 +212,12 @@ namespace Schumix.WordPressRssAddon
 				if(e.Message != "Thread was being aborted")
 					Update();
 			}
+		}
+
+		private void Clean(XmlDocument xml)
+		{
+			xml.RemoveAll();
+			xml = null;
 		}
 
 		private XmlDocument GetUrl()

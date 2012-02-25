@@ -62,6 +62,7 @@ namespace Schumix.Irc
         /// </summary>
 		private readonly int _port;
 		private bool _enabled = false;
+		private bool NetwokQuit = false;
 		//private DateTime LastOpcode;
 
         /// <summary>
@@ -237,6 +238,7 @@ namespace Schumix.Irc
         /// </summary>
 		public void Connect()
 		{
+			NetwokQuit = false;
 			Log.Notice("Network", sLConsole.Network("Text6"), _server);
 			Connection(true);
 		}
@@ -258,6 +260,7 @@ namespace Schumix.Irc
 			if(SchumixBase.ExitStatus)
 				return;
 
+			Close();
 			Log.Notice("Network", sLConsole.Network("Text8"));
 			Connection(false);
 			NewNick = true;
@@ -361,7 +364,7 @@ namespace Schumix.Irc
 			{
 				try
 				{
-					if(SchumixBase.ExitStatus)
+					if(SchumixBase.ExitStatus && NetwokQuit)
 						break;
 
 					string IrcMessage;
@@ -487,6 +490,8 @@ namespace Schumix.Irc
 			{
 				if(IrcCommand[0] == "PING")
 					sSender.Pong(IrcCommand[1].Remove(0, 1, SchumixBase.Colon));
+				else if(opcode == ":Closing")
+					NetwokQuit = true;
 				else
 				{
 					if(ConsoleLog.CLog)
