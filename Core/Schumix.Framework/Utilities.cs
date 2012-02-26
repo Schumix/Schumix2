@@ -172,7 +172,7 @@ namespace Schumix.Framework
 				+ "[a-z]{2,6})"													// first level domain- .com or .museum
 				+ "(:[0-9]{1,8})?"												// port number- :80
 				+ "(( )|(/ )|"													// a slash isn't required if there is no file name
-				+ "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+				+ "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)|(/?)+/?))", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 				if(urlFind.IsMatch(text))
 				{
