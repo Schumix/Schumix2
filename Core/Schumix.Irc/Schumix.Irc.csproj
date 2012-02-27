@@ -56,6 +56,7 @@
     <Reference Include="Org.Mentalis.Security">
       <HintPath>..\..\Dependencies\Org.Mentalis.Security.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AdminCommandHandler.cs" />
@@ -78,6 +79,7 @@
     <Compile Include="Ctcp\CtcpUtil.cs" />
     <Compile Include="ChannelNameList.cs" />
     <Compile Include="Ignore.cs" />
+    <Compile Include="Commands\GoogleWebSearch.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
