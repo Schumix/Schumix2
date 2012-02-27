@@ -201,9 +201,22 @@ namespace Schumix.Irc.Commands
 			}
 
 			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=", sIRCMessage.Info.SplitToString(4, SchumixBase.Space));
-			var Regex = new Regex(@".unescapedUrl.\:.(?<url>\S+).\,.url.\:.\S+.\,.visibleUrl.\:\S+.\,.cacheUrl.\:.\S+.\,.title.\:.\S*\s*\S*\s*\S*.\,.titleNoFormatting.\:.(?<title>\S*\s*\S*\s*\S*).\,.content");
+			//var Regex = new Regex(@".unescapedUrl.\:.(?<url>\S+).\,.url.\:.\S+.\,.visibleUrl.\:\S+.\,.cacheUrl.\:.\S+.\,.title.\:.\S*\s*\S*\s*\S*.\,.titleNoFormatting.\:.(?<title>\S*\s*\S*\s*\S*).\,.content");
+			var google = new GoogleWebResponseData();
+			google = JsonHelper.Deserialise<GoogleWebResponseData>(url);
 
-			if(!Regex.IsMatch(url))
+			if(google.ResultSet.Results.Length > 0)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, text[2], google.ResultSet.Results[0].TitleNoFormatting);
+				sSendMessage.SendChatMessage(sIRCMessage, text[3], google.ResultSet.Results[0].UnescapedUrl);
+			}
+			else
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+				sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+			}
+
+			/*if(!Regex.IsMatch(url))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 				sSendMessage.SendChatMessage(sIRCMessage, text[1]);
@@ -212,7 +225,7 @@ namespace Schumix.Irc.Commands
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, text[2], Regex.Match(url).Groups["title"].ToString());
 				sSendMessage.SendChatMessage(sIRCMessage, text[3], Regex.Match(url).Groups["url"].ToString());
-			}
+			}*/
 		}
 
 		protected void HandleTranslate(IRCMessage sIRCMessage)
