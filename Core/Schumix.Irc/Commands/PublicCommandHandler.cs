@@ -229,8 +229,8 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			string url = sUtilities.GetUrl("http://ajax.googleapis.com/ajax/services/language/translate?v=1.0&q=", sIRCMessage.Info.SplitToString(5, SchumixBase.Space), "&langpair=" + sIRCMessage.Info[4]);
-			var Regex = new Regex(@"\{.translatedText.\:.(?<text>.+).\},");
+			string url = sUtilities.GetUrl("http://www.google.com/translate_t?hl=en&ie=UTF8&text=", sIRCMessage.Info.SplitToString(5, SchumixBase.Space), "&langpair=" + sIRCMessage.Info[4]);
+			var Regex = new Regex("onmouseover=\"this.style.backgroundColor='#ebeff9'\" onmouseout=\"this.style.backgroundColor='#fff'\">(?<text>.+)</span></span></div></div>");
 
 			if(!Regex.IsMatch(url))
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("translate", sIRCMessage.Channel));
