@@ -51,7 +51,7 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				var request = (HttpWebRequest)WebRequest.Create(url);
 				request.Timeout = 3500;
-				//request.AllowAutoRedirect = true;
+				request.AllowAutoRedirect = false;
 				request.UserAgent = Consts.SchumixUserAgent;
 				request.Referer = Consts.SchumixReferer;
 
