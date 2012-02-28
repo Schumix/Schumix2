@@ -51,7 +51,7 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				var request = (HttpWebRequest)WebRequest.Create(url);
 				request.Timeout = 3500;
-				request.AllowAutoRedirect = true;
+				//request.AllowAutoRedirect = true;
 				request.UserAgent = Consts.SchumixUserAgent;
 				request.Referer = Consts.SchumixReferer;
 
@@ -67,7 +67,6 @@ namespace Schumix.ExtraAddon.Commands
 				response.Close();
 				var getTitleRegex = new Regex(@"<title>(?<ttl>.*\s*.+\s*.*)\s*</title>", RegexOptions.IgnoreCase);
 				var match = getTitleRegex.Match(data);
-
 				return (match.Success) ? (match.Groups["ttl"].ToString()) : sLocalization.WebHelper("Text", Language);
 			}
 			catch(Exception e)
