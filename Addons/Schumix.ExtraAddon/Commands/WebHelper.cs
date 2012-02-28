@@ -51,13 +51,16 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				var request = (HttpWebRequest)WebRequest.Create(url);
 				request.Timeout = 3500;
-				request.AllowAutoRedirect = false;
+				//request.AllowAutoRedirect = false;
 				request.UserAgent = Consts.SchumixUserAgent;
 				request.Referer = Consts.SchumixReferer;
 
 				var response = request.GetResponse();
 				var stream = response.GetResponseStream();
 				string data;
+
+				if(request.RequestUri != request.Address)
+					return string.Empty;
 
 				using(var rdr = new StreamReader(stream, Encoding.UTF8))
 				{
