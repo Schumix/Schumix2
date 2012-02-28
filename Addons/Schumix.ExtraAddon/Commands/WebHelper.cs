@@ -59,13 +59,13 @@ namespace Schumix.ExtraAddon.Commands
 				var stream = response.GetResponseStream();
 				string data;
 
-				if(request.RequestUri != request.Address)
-					return string.Empty;
-
 				using(var rdr = new StreamReader(stream, Encoding.UTF8))
 				{
 					data = rdr.ReadToEnd();
 				}
+
+				if(request.RequestUri != request.Address)
+					return string.Empty;
 
 				response.Close();
 				var getTitleRegex = new Regex(@"<title>(?<ttl>.*\s*.+\s*.*)\s*</title>", RegexOptions.IgnoreCase);
