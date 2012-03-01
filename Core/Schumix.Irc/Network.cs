@@ -325,6 +325,7 @@ namespace Schumix.Irc
 			_enabled = true;
 			NewNick = false;
 			HostServStatus = false;
+			NewNickPrivmsg = string.Empty;
 			SchumixBase.UrlTitleEnabled = false;
 		}
 
@@ -519,7 +520,8 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					Log.Error("Ping", sLConsole.Exception("Error"), e.Message);
+					if(!SchumixBase.ExitStatus && !NetwokQuit)
+						Log.Error("Ping", sLConsole.Exception("Error"), e.Message);
 				}
 
 				Thread.Sleep(30*1000);
