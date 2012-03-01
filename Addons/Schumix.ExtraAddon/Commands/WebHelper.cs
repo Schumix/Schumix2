@@ -49,7 +49,7 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			try
 			{
-				Console.WriteLine(((Uri)url).Authority);
+				Console.WriteLine(((Uri)url).Host);
 				var request = (HttpWebRequest)WebRequest.Create(url);
 				request.Timeout = 3500;
 				request.AllowAutoRedirect = true;
@@ -66,10 +66,10 @@ namespace Schumix.ExtraAddon.Commands
 					data = rdr.ReadToEnd();
 				}
 
-				Console.WriteLine(request.RequestUri.Authority);
-				Console.WriteLine(request.Address.Authority);
+				Console.WriteLine(request.RequestUri.Host);
+				Console.WriteLine(request.Address.Host);
 				Console.WriteLine(response2.StatusCode);
-				Console.WriteLine(response2.ResponseUri.Authority);
+				Console.WriteLine(response2.ResponseUri.Host);
 
 				//if(request.RequestUri != request.Address)
 				//	return string.Empty;
