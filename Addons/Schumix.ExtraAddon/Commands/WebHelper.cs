@@ -64,6 +64,9 @@ namespace Schumix.ExtraAddon.Commands
 					data = rdr.ReadToEnd();
 				}
 
+				Console.WriteLine(request.RequestUri);
+				Console.WriteLine(request.Address);
+
 				//if(request.RequestUri != request.Address)
 				//	return string.Empty;
 

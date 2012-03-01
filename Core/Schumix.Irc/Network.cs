@@ -520,7 +520,7 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					if(!SchumixBase.ExitStatus && !NetwokQuit)
+					if(!SchumixBase.ExitStatus)
 						Log.Error("Ping", sLConsole.Exception("Error"), e.Message);
 				}
 
