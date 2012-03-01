@@ -56,6 +56,7 @@ namespace Schumix.ExtraAddon.Commands
 				request.Referer = Consts.SchumixReferer;
 
 				var response = request.GetResponse();
+				var response2 = request.GetResponse() as HttpWebResponse;
 				var stream = response.GetResponseStream();
 				string data;
 
@@ -66,6 +67,8 @@ namespace Schumix.ExtraAddon.Commands
 
 				Console.WriteLine(request.RequestUri);
 				Console.WriteLine(request.Address);
+				Console.WriteLine(response2.StatusCode);
+				Console.WriteLine(response2.ResponseUri);
 
 				//if(request.RequestUri != request.Address)
 				//	return string.Empty;
