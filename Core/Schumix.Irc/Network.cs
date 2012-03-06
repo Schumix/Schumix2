@@ -88,6 +88,8 @@ namespace Schumix.Irc
 
 			Log.Debug("Network", sLConsole.Network("Text2"));
 			Connect();
+			sIgnoreNickName.AddConfig();
+			sIgnoreChannel.AddConfig();
 
 			// Start Opcodes thread
 			Log.Debug("Network", sLConsole.Network("Text3"));

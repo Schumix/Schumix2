@@ -37,9 +37,9 @@ namespace Schumix.ExtraAddon.Commands
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private Functions() {}
 

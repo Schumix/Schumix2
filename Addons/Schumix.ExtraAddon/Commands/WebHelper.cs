@@ -35,6 +35,7 @@ namespace Schumix.ExtraAddon.Commands
 	static class WebHelper
 	{
 		private static readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		///   Gets the title of the specified webpage.
@@ -49,33 +50,8 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			try
 			{
-				Console.WriteLine(((Uri)url).Host);
-				var request = (HttpWebRequest)WebRequest.Create(url);
-				request.Timeout = 3500;
-				request.AllowAutoRedirect = true;
-				request.UserAgent = Consts.SchumixUserAgent;
-				request.Referer = Consts.SchumixReferer;
-
-				var response = request.GetResponse();
-				var response2 = request.GetResponse() as HttpWebResponse;
-				var stream = response.GetResponseStream();
-				string data;
-
-				using(var rdr = new StreamReader(stream, Encoding.UTF8))
-				{
-					data = rdr.ReadToEnd();
-				}
-
-				Console.WriteLine(request.RequestUri.Host);
-				Console.WriteLine(request.Address.Host);
-				Console.WriteLine(response2.StatusCode);
-				Console.WriteLine(response2.ResponseUri.Host);
-
-				//if(request.RequestUri != request.Address)
-				//	return string.Empty;
-
-				response.Close();
 				var getTitleRegex = new Regex(@"<title>(?<ttl>.*\s*.+\s*.*)\s*</title>", RegexOptions.IgnoreCase);
+				string data = sUtilities.DownloadString(url, 3500, getTitleRegex);
 				var match = getTitleRegex.Match(data);
 				return (match.Success) ? (match.Groups["ttl"].ToString()) : sLocalization.WebHelper("Text", Language);
 			}

@@ -38,6 +38,8 @@ namespace Schumix.WordPressRssAddon
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private NetworkCredential _credential;
 		private XmlNamespaceManager _ns;
 		private Thread _thread;
 		private readonly string _name;
@@ -72,33 +74,21 @@ namespace Schumix.WordPressRssAddon
 			}
 
 			Init();
+			_credential = new NetworkCredential(_username, _password);
 
 			if(_username != string.Empty && _password != string.Empty)
 			{
-				using(var client = new WebClient())
-				{
-					client.Credentials = new NetworkCredential(_username, _password);
-					client.Encoding = Encoding.UTF8;
-					string xml = client.DownloadString(_url);
-					var rss = new XmlDocument();
-					rss.LoadXml(xml);
-					xml = string.Empty;
-					_ns = new XmlNamespaceManager(rss.NameTable);
-					_ns.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
-				}
+				var rss = new XmlDocument();
+				rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>", _credential)));
+				_ns = new XmlNamespaceManager(rss.NameTable);
+				_ns.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
 			}
 			else
 			{
-				using(var client = new WebClient())
-				{
-					client.Encoding = Encoding.UTF8;
-					string xml = client.DownloadString(_url);
-					var rss = new XmlDocument();
-					rss.LoadXml(xml);
-					xml = string.Empty;
-					_ns = new XmlNamespaceManager(rss.NameTable);
-					_ns.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
-				}
+				var rss = new XmlDocument();
+				rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>")));
+				_ns = new XmlNamespaceManager(rss.NameTable);
+				_ns.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
 			}
 		}
 
@@ -226,28 +216,15 @@ namespace Schumix.WordPressRssAddon
 			{
 				if(_username != string.Empty && _password != string.Empty)
 				{
-					using(var client = new WebClient())
-					{
-						client.Encoding = Encoding.UTF8;
-						client.Credentials = new NetworkCredential(_username, _password);
-						string xml = client.DownloadString(_url);
-						var rss = new XmlDocument();
-						rss.LoadXml(xml);
-						client.Dispose();
-						return rss;
-					}
+					var rss = new XmlDocument();
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>", _credential)));
+					return rss;
 				}
 				else
 				{
-					using(var client = new WebClient())
-					{
-						client.Encoding = Encoding.UTF8;
-						string xml = client.DownloadString(_url);
-						var rss = new XmlDocument();
-						rss.LoadXml(xml);
-						xml = string.Empty;
-						return rss;
-					}
+					var rss = new XmlDocument();
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>")));
+					return rss;
 				}
 			}
 			catch(Exception e)
@@ -257,6 +234,13 @@ namespace Schumix.WordPressRssAddon
 			}
 
 			return null;
+		}
+
+		private string DownloadToXml(string data)
+		{
+			data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);
+			data += "</channel></rss>";
+			return data;
 		}
 
 		private string Title(XmlDocument rss)
