@@ -38,19 +38,41 @@ namespace Schumix.MantisBTRssAddon
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private NetworkCredential _credential;
 		private Thread _thread;
 		private readonly string _name;
 		private readonly string _url;
 		private string _oldbug;
 		private string _title;
 		private string _link;
+		private string _username;
+		private string _password;
 		public bool Started { get; private set; }
 
 		public MantisBTRss(string name, string url)
 		{
 			_name = name;
-			_url = url;
+
+			if(url.Contains(SchumixBase.Colon.ToString()) && url.Contains("@"))
+			{
+				_url = url.Substring(0, url.IndexOf("//")+2);
+				url = url.Remove(0, url.IndexOf("//")+2);
+				_username = url.Substring(0, url.IndexOf(SchumixBase.Colon));
+				url = url.Remove(0, url.IndexOf(SchumixBase.Colon)+1);
+				_password = url.Substring(0, url.IndexOf("@"));
+				url = url.Remove(0, url.IndexOf("@")+1);
+				_url += url;
+			}
+			else
+			{
+				_url = url;
+				_username = string.Empty;
+				_password = string.Empty;
+			}
+
 			Init();
+			_credential = new NetworkCredential(_username, _password);
 		}
 
 		private void Init()
@@ -173,13 +195,16 @@ namespace Schumix.MantisBTRssAddon
 		{
 			try
 			{
-				using(var client = new WebClient())
+				if(_username != string.Empty && _password != string.Empty)
 				{
-					client.Encoding = Encoding.UTF8;
-					string xml = client.DownloadString(_url);
 					var rss = new XmlDocument();
-					rss.LoadXml(xml);
-					xml = string.Empty;
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>", _credential)));
+					return rss;
+				}
+				else
+				{
+					var rss = new XmlDocument();
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>")));
 					return rss;
 				}
 			}
@@ -190,6 +215,13 @@ namespace Schumix.MantisBTRssAddon
 			}
 
 			return null;
+		}
+
+		private string DownloadToXml(string data)
+		{
+			data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);
+			data += "</channel></rss>";
+			return data;
 		}
 
 		private string Title(XmlDocument rss)

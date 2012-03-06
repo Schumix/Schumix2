@@ -124,12 +124,26 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				Crash(m);
+				Crash(m, true);
 			}
 		}
 
-		private void Crash(MySqlException m)
+		private void Crash(MySqlException m, bool c = false)
 		{
+			if(c)
+			{
+				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+				Log.Warning("MySql", sLConsole.MySql("Text4"));
+				SchumixBase.ServerDisconnect(false);
+				SchumixBase.ExitStatus = true;
+
+				if(!INetwork.Writer.IsNull())
+					INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+				Thread.Sleep(1000);
+				Environment.Exit(1);
+			}
+
 			if(m.Message.Contains("Fatal error encountered during command execution."))
 			{
 				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);

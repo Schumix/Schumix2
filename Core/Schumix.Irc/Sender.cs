@@ -29,25 +29,7 @@ namespace Schumix.Irc
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly object WriteLock = new object();
 
-		private Sender()
-		{
-			// másik fáljból van csak hibát nem tudom orvosolni =/
-			try
-			{
-				string[] ignore = IRCConfig.IgnoreChannels.Split(SchumixBase.Comma);
-
-				if(ignore.Length > 1)
-				{
-					foreach(var name in ignore)
-						Add(name.ToLower());
-				}
-				else
-					Add(IRCConfig.IgnoreNames.ToLower());
-			}
-			catch
-			{
-			}
-		}
+		private Sender() {}
 
 		// másik fáljból van csak hibát nem tudom orvosolni =/
 		private bool IsIgnore(string Name)
@@ -60,22 +42,6 @@ namespace Schumix.Irc
 			catch
 			{
 				return true;
-			}
-		}
-
-		// másik fáljból van csak hibát nem tudom orvosolni =/
-		private void Add(string Name)
-		{
-			try
-			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", Name.ToLower());
-				if(!db.IsNull())
-					return;
-	
-				SchumixBase.DManager.Insert("`ignore_channels`(Channel)", Name.ToLower());
-			}
-			catch
-			{
 			}
 		}
 
