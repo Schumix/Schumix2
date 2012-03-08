@@ -20,18 +20,21 @@
 
 using System;
 using System.Data;
+using System.Timers;
 using System.Threading;
 using System.Text.RegularExpressions;
 using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.ExtraAddon.Commands
 {
 	partial class Functions
 	{
+		public System.Timers.Timer _timeronline = new System.Timers.Timer();
 		private readonly object Lock = new object();
 
 		public void HLMessage(IRCMessage sIRCMessage)
@@ -151,6 +154,15 @@ namespace Schumix.ExtraAddon.Commands
 						SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower()));
 					}
 				}
+			}
+		}
+
+		public void HandleIsOnline(object sender, ElapsedEventArgs e)
+		{
+			if(sNickInfo.NickStorage.ToLower() != IRCConfig.NickName.ToLower())
+			{
+				ExtraAddon.IsOnline = true;
+				sSender.NickServInfo(IRCConfig.NickName);
 			}
 		}
 	}
