@@ -324,6 +324,7 @@ namespace Schumix.Irc
 				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
+			Online = false;
 			_enabled = true;
 			NewNick = false;
 			HostServStatus = false;
