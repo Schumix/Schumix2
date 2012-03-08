@@ -111,7 +111,6 @@ namespace Schumix.Libraries
 					return (uint)((int)Value);
 				case TypeCode.Int64:
 					return (ulong)((long)Value);
-
 				case TypeCode.Byte:
 					return Value;
 				case TypeCode.UInt16:
@@ -120,14 +119,12 @@ namespace Schumix.Libraries
 					return Value;
 				case TypeCode.UInt64:
 					return Value;
-
 				case TypeCode.Single:
 					return (UInt32)((float)Value);
 				case TypeCode.Double:
 					return (ulong)((double)Value);
 				case TypeCode.Decimal:
 					return (ulong)((decimal)Value);
-
 				default:
 					return null;
 			}
@@ -152,7 +149,6 @@ namespace Schumix.Libraries
 					return Value;
 				case TypeCode.Int64:
 					return Value;
-
 				case TypeCode.Byte:
 					return Value;
 				case TypeCode.UInt16:
@@ -161,14 +157,12 @@ namespace Schumix.Libraries
 					return Value;
 				case TypeCode.UInt64:
 					return Value;
-
 				case TypeCode.Single:
 					return (Round ? (int)Math.Round((float)Value) : (int)((float)Value));
 				case TypeCode.Double:
 					return (Round ? (long)Math.Round((double)Value) : (long)((double)Value));
 				case TypeCode.Decimal:
 					return (Round ? Math.Round((decimal)Value) : (decimal)Value);
-
 				default:
 					return null;
 			}
@@ -187,7 +181,6 @@ namespace Schumix.Libraries
 					return (long)((int)Value);
 				case TypeCode.Int64:
 					return (long)Value;
-
 				case TypeCode.Byte:
 					return (long)((byte)Value);
 				case TypeCode.UInt16:
@@ -196,14 +189,12 @@ namespace Schumix.Libraries
 					return (long)((uint)Value);
 				case TypeCode.UInt64:
 					return (long)((ulong)Value);
-
 				case TypeCode.Single:
 					return (Round ? (long)Math.Round((float)Value) : (long)((float)Value));
 				case TypeCode.Double:
 					return (Round ? (long)Math.Round((double)Value) : (long)((double)Value));
 				case TypeCode.Decimal:
 					return (Round ? (long)Math.Round((decimal)Value) : (long)((decimal)Value));
-
 				default:
 					return 0;
 			}
@@ -278,7 +269,7 @@ namespace Schumix.Libraries
 			//Regex r = new Regex(@"\%(\d*\$)?([\'\#\-\+ ]*)(\d*)(?:\.(\d+))?([hl])?([dioxXucsfeEgGpn%])");
 			//"%[parameter][flags][width][.precision][length]type"
 			Match m = null;
-			string w = String.Empty;
+			string w = string.Empty;
 			int defaultParamIx = 0;
 			int paramIx;
 			object o = null;
@@ -421,7 +412,7 @@ namespace Schumix.Libraries
 				#endregion
 
 				// convert value parameters to a string depending on the formatSpecifier
-				w = String.Empty;
+				w = string.Empty;
 				switch (formatSpecifier)
 				{
 					#region % - character
@@ -488,7 +479,7 @@ namespace Schumix.Libraries
 					#endregion
 					#region s - string
 					case 's':   // string
-						//string t = "{0" + (fieldLength != int.MinValue ? "," + (flagLeft2Right ? "-" : String.Empty) + fieldLength.ToString() : String.Empty) + ":s}";
+						//string t = "{0" + (fieldLength != int.MinValue ? "," + (flagLeft2Right ? "-" : string.Empty) + fieldLength.ToString() : string.Empty) + ":s}";
 						w = o.ToString();
 						if(fieldPrecision >= 0)
 							w = w.Substring(0, fieldPrecision);
@@ -566,7 +557,7 @@ namespace Schumix.Libraries
 						break;
 					#endregion
 					default:
-						w = String.Empty;
+						w = string.Empty;
 						defaultParamIx++;
 						break;
 				}
@@ -588,17 +579,10 @@ namespace Schumix.Libraries
 
 		#region Private Methods
 		#region FormatOCT
-		private static string FormatOct(string NativeFormat, bool Alternate,
-											int FieldLength, int FieldPrecision,
-											bool Left2Right,
-											char Padding, object Value)
+		private static string FormatOct(string NativeFormat, bool Alternate, int FieldLength, int FieldPrecision, bool Left2Right, char Padding, object Value)
 		{
-			string w = String.Empty;
-			string lengthFormat = "{0" + (FieldLength != int.MinValue ?
-											"," + (Left2Right ?
-													"-" :
-													String.Empty) + FieldLength.ToString() :
-											String.Empty) + "}";
+			string w = string.Empty;
+			string lengthFormat = "{0" + (FieldLength != int.MinValue ? "," + (Left2Right ? "-" : string.Empty) + FieldLength.ToString() : string.Empty) + "}";
 
 			if(IsNumericType(Value))
 			{
@@ -608,12 +592,14 @@ namespace Schumix.Libraries
 				{
 					if(Alternate && w != "0")
 						w = "0" + w;
+
 					w = String.Format(lengthFormat, w);
 				}
 				else
 				{
 					if(FieldLength != int.MinValue)
 						w = w.PadLeft(FieldLength - (Alternate && w != "0" ? 1 : 0), Padding);
+
 					if(Alternate && w != "0")
 						w = "0" + w;
 				}
@@ -623,20 +609,11 @@ namespace Schumix.Libraries
 		}
 		#endregion
 		#region FormatHEX
-		private static string FormatHex(string NativeFormat, bool Alternate,
-											int FieldLength, int FieldPrecision,
-											bool Left2Right,
-											char Padding, object Value)
+		private static string FormatHex(string NativeFormat, bool Alternate, int FieldLength, int FieldPrecision, bool Left2Right, char Padding, object Value)
 		{
-			string w = String.Empty;
-			string lengthFormat = "{0" + (FieldLength != int.MinValue ?
-											"," + (Left2Right ?
-													"-" :
-													String.Empty) + FieldLength.ToString() :
-											String.Empty) + "}";
-			string numberFormat = "{0:" + NativeFormat + (FieldPrecision != int.MinValue ?
-											FieldPrecision.ToString() :
-											String.Empty) + "}";
+			string w = string.Empty;
+			string lengthFormat = "{0" + (FieldLength != int.MinValue ? "," + (Left2Right ? "-" : string.Empty) + FieldLength.ToString() : string.Empty) + "}";
+			string numberFormat = "{0:" + NativeFormat + (FieldPrecision != int.MinValue ? FieldPrecision.ToString() : string.Empty) + "}";
 
 			if(IsNumericType(Value))
 			{
@@ -646,12 +623,14 @@ namespace Schumix.Libraries
 				{
 					if(Alternate)
 						w = (NativeFormat == "x" ? "0x" : "0X") + w;
+
 					w = String.Format(lengthFormat, w);
 				}
 				else
 				{
 					if(FieldLength != int.MinValue)
 						w = w.PadLeft(FieldLength - (Alternate ? 2 : 0), Padding);
+
 					if(Alternate)
 						w = (NativeFormat == "x" ? "0x" : "0X") + w;
 				}
@@ -661,21 +640,12 @@ namespace Schumix.Libraries
 		}
 		#endregion
 		#region FormatNumber
-		private static string FormatNumber(string NativeFormat, bool Alternate,
-											int FieldLength, int FieldPrecision,
-											bool Left2Right,
-											bool PositiveSign, bool PositiveSpace,
-											char Padding, object Value)
+		private static string FormatNumber(string NativeFormat, bool Alternate, int FieldLength, int FieldPrecision,
+											bool Left2Right, bool PositiveSign, bool PositiveSpace, char Padding, object Value)
 		{
-			string w = String.Empty;
-			string lengthFormat = "{0" + (FieldLength != int.MinValue ?
-											"," + (Left2Right ?
-													"-" :
-													String.Empty) + FieldLength.ToString() :
-											String.Empty) + "}";
-			string numberFormat = "{0:" + NativeFormat + (FieldPrecision != int.MinValue ?
-											FieldPrecision.ToString() :
-											"0") + "}";
+			string w = string.Empty;
+			string lengthFormat = "{0" + (FieldLength != int.MinValue ? "," + (Left2Right ? "-" : string.Empty) + FieldLength.ToString() : string.Empty) + "}";
+			string numberFormat = "{0:" + NativeFormat + (FieldPrecision != int.MinValue ? FieldPrecision.ToString() : "0") + "}";
 
 			if(IsNumericType(Value))
 			{
@@ -684,8 +654,8 @@ namespace Schumix.Libraries
 				if(Left2Right || Padding == ' ')
 				{
 					if(IsPositive(Value, true))
-						w = (PositiveSign ?
-								"+" : (PositiveSpace ? " " : String.Empty)) + w;
+						w = (PositiveSign ? "+" : (PositiveSpace ? " " : string.Empty)) + w;
+
 					w = String.Format(lengthFormat, w);
 				}
 				else
@@ -695,10 +665,7 @@ namespace Schumix.Libraries
 					if(FieldLength != int.MinValue)
 						w = w.PadLeft(FieldLength - 1, Padding);
 					if(IsPositive(Value, true))
-						w = (PositiveSign ?
-								"+" : (PositiveSpace ?
-										" " : (FieldLength != int.MinValue ?
-												Padding.ToString() : String.Empty))) + w;
+						w = (PositiveSign ? "+" : (PositiveSpace ? " " : (FieldLength != int.MinValue ? Padding.ToString() : string.Empty))) + w;
 					else
 						w = "-" + w;
 				}
