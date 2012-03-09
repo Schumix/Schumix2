@@ -1754,61 +1754,75 @@ namespace Schumix.Framework.Localization
 
 		public string Other(string Name)
 		{
+			return Other(Name, Locale);
+		}
+
+		public string Other(string Name, string Language)
+		{
 			switch(Name)
 			{
 				case "Nothing":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Semmi";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Nothing";
 					else
 						return "Nothing";
 				}
 				case "Nobody":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Senki";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Nobody";
 					else
 						return "Nobody";
 				}
 				case "Notfound":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Nem található!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Not found!";
 					else
 						return "Not found!";
 				}
 				case "NoSuchFunctions":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Ilyen funkció nem létezik!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "No such function!";
 					else
 						return "No such function!";
 				}
 				case "NoSuchFunctions2":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Ilyen funkció nem létezik: {0}";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "No such function: {0}";
 					else
 						return "No such function: {0}";
 				}
 				case "MessageLength":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Túl hosszú a szöveg!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Text is too long!";
 					else
 						return "Text is too long!";
+				}
+				case "NoFoundHelpCommand":
+				{
+					if(Language == "huHU")
+						return "Ilyen help parancs nem létezik vagy nincs hozzá fordítás!";
+					else if(Language == "enUS")
+						return "No such help command or there is no translation for it!";
+					else
+						return "No such help command or there is no translation for it";
 				}
 				default:
 					return string.Empty;

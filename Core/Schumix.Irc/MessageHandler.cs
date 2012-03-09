@@ -336,10 +336,16 @@ namespace Schumix.Irc
 
 		protected void HandleIrcJoin(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Nick == sNickInfo.NickStorage)
-				return;
-
 			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
+
+			if(sIRCMessage.Nick == sNickInfo.NickStorage)
+			{
+				if(sChannelInfo.CList.ContainsKey(sIRCMessage.Channel.ToLower()))
+					SchumixBase.DManager.Update("channel", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
+
+				return;
+			}
+
 			sChannelNameList.Add(sIRCMessage.Channel, sIRCMessage.Nick);
 		}
 
