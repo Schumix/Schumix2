@@ -71,6 +71,9 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/add", "Már szerepel az ignore listán!\nA név sikeresen hozzáadásra került.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/remove", "Nem szerepel az ignore listán!\nA név sikeresen el lett távolítva.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "2[Betöltés]: Összes plugin betöltése 3sikeres.\n2[Betöltés]: Összes plugin betöltése 5sikertelen.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "2[Leválasztás]: Összes plugin leválasztása 3sikeres.\n2[Leválasztás]: Összes plugin leválasztása 5sikertelen.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: 3betöltve.");
 
 -- enUS
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "consolelog", "Console logging on.\nConsole logging off.");
@@ -112,6 +115,9 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/add", "Already exist on the ignore list!\nSuccesfuly added.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/remove", "Not on the ignore list!\nSuccesfuly removed.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/search", "Already exist on the ignore list!\nNot on the ignore list!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "[Load]: All plugins done.\n[Load]: All plugins failed.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "[Unload]: All plugins done.\n[Unload]: All plugins failed.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: loaded.");
 
 -- huHU
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.\nAdmin parancsai: info | list | add | remove | rank | access | newpassword");
@@ -161,6 +167,9 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/add", "Nick hozzáadása a kivételekhez.\nHasználata: ignore nick add <parancs>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/remove", "Nick eltávolítása a kivételek közül.\nHasználata: ignore nick remove <parancs>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/search", "Nick keresése a kivételekben.\nHasználata: ignore nick search <parancs>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "Kiírja milyen pluginok vannak betöltve.\nPlugin parancsok: load | unload");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "Betölt minden plugint.");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "Eltávolít minden plugint.");
 
 -- enUS
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin", "Print Operators or Administrators can use commands.\nAdmin commands: info | list | add | remove | rank | access | newpassword");
@@ -210,6 +219,9 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/add", "Add nick to the expection list.\Uses: ignore nick add <Command>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/remove", "Remove nick from the expection list.\Uses: ignore nick remove <Command>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/search", "Search nick in the expection list.\Uses: ignore nick search <Command>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "Shows what plugins are loaded.\nPlugin commands: load | unload");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "Loads all the plugin.");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "Remove all plugin.");
 
 -- huHU
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoName", "A név nincs megadva!");
@@ -290,7 +302,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/language", "Csatorna nyelvezete sikeresen meg lett változtatva erre: {0}\nIlyen csatorna nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "2[Betöltés]: Összes plugin betöltése 3sikeres.\n2[Betöltés]: Összes plugin betöltése 5sikertelen.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "2[Leválasztás]: Összes plugin leválasztása 3sikeres.\n2[Leválasztás]: Összes plugin leválasztása 5sikertelen.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: 3loaded.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: 3betöltve.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "quit", "Viszlát :(\n{0} leállított paranccsal.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/info", "3{0} Channel: 2{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/list", "2Lista:3{0}");
@@ -549,11 +561,11 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "google", "9", "Ha szükséged lenne valamire a google-ből nem kell hozzá weboldal csak ez a parancs.\nHasználata: {0}google <ide jön a keresett szöveg>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "translate", "9", "Ha rögtön kéne fordítani másik nyelvre vagy -ről valamit, akkor megteheted ezzel a parancsal.\nHasználata: {0}translate <kiindulási nyelv|cél nyelv> <szöveg>\nPéldául: {0}translate hu|en Szép szöveg.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "irc", "9", "Néhány parancs használata az IRC-n.\nHasználata: {0}irc <parancs neve>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calc", "9", "Több funkciós számológép.\nHasználata: {0}calc <szám>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calc", "9", "Több funkciós számológép.\nHasználata: {0}calc <műveleti számsor>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "warning", "9", "Figyelmeztető üzenet küldése, hogy keresik ezen a csatornán vagy egy tetszőleges üzenet küldése.\nHasználata: {0}warning <ide jön a személy> <ha nem csak felhívást küldenél, hanem saját üzenetet>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "sha1", "9", "Sha1 kódolássá átalakító parancs.\nHasználata: {0}sha1 <átalakítandó szöveg>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "md5", "9", "Md5 kódolássá átalakító parancs.\nHasználata: {0}md5 <átalakítandó szöveg>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "prime", "9", "Megállapítja hogy a szám prímszám-e. Csak egész számmal tud számolni!\nHasználata: {0}prime <szám>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "prime", "9", "Megállapítja hogy a szám prímszám-e. Törtszámmal nem 100%, hogy müködik!\nHasználata: {0}prime <szám>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "admin", "0", "Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.\nAdmin parancsai: info | list | add | remove | rank | access | newpassword");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "admin/add", "0", "Új admin hozzáadása.\nHasználata: {0}admin add <admin neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "admin/remove", "0", "Admin eltávolítása.\nHasználata: {0}admin remove <admin neve>");
@@ -724,11 +736,11 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "google", "9", "If you need something from Google without a website, you just type this command.\nUse: {0}google <Your text goes here>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "translate", "9", "If you want to translate immediately from one language to another, you just type this command.\nUse: {0}translate <base language|target language> <text>\ne.g.: {0}translate hu|en Szép szöveg.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "irc", "9", "Some commands use the IRC.\nUse: {0}irc <command name>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calc", "9", "Multi-function calculator.\nUse: {0}calc <number>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calc", "9", "Multi-function calculator.\nUse: {0}calc <operation sequence>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "warning", "9", "A warning message to look for that channel, or an arbitrary message.\nUse: {0}warning <name> <an arbitrary message>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "sha1", "9", "Sha1 encoding conversion scripts.\nUse: {0}sha1 <convert text>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "md5", "9", "Md5 encryption conversion scripts.\nUse: {0}md5 <convert text>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "prime", "9", "It states that the number is prime or not. Only whole numbers can count!\nUse: {0}prime <number>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "prime", "9", "It states that the number is prime or not. Not sure that working with fractions!\nUse: {0}prime <number>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "admin", "0", "Shows Operators or Administrators can use commands.\nAdmin commands: info | list | add | remove | rank | access | newpassword");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "admin/add", "0", "Add new admin.\nUse: {0}admin add <admin name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "admin/remove", "0", "Admin removed.\nUse: {0}admin remove <admin name>");
@@ -937,11 +949,12 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "Calendar2", "Feljegyzett üzenet {0} számára!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "Calendar3", "Nem szerepel a listán!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "Calendar4", "Sikeresen törlésre került.");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorYear", "Nagyobb az év száma mint a megengedett!");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorMonth", "Nagyobb az hónap száma mint a megengedett!");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorDay", "Nagyobb az nap száma mint a megengedett!");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorHour", "Nagyobb az óra száma mint a megengedett!");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorMinute", "Nagyobb az perc száma mint a megengedett!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorYear", "Hibás az év (száma, formátuma)!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorMonth", "Hibás a hónap (száma, formátuma)!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorDay", "Hibás a nap (száma, formátuma)!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorHour", "Hibás az óra (száma, formátuma)!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorMinute", "Hibás a perc (száma, formátuma)!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NameDay", "Mai napon {0} névnapja van.");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -991,11 +1004,12 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "Calendar2", "Note for {0}");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "Calendar3", "This isn't in the list!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "Calendar4", "Successfully deleted.");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorYear", "Greater 'year count' than the aloved");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorMonth", "Greater 'month count' than the aloved");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorDay", "Greater 'day count' than the aloved");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorHour", "Greater 'hour count' than the aloved");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorMinute", "Greater 'minute count' than the aloved");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorYear", "Wrong year (number, format)!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorMonth", "Wrong month (number, format)!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorDay", "Wrong day (number, format)!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorHour", "Wrong hour (number, format)!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorMinute", "Wrong minute (number, format)!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NameDay", "Today is {0}'s name day.");
 
 -- ----------------------------
 -- Records of schumix

@@ -21,6 +21,7 @@ using System;
 using System.Data;
 using System.Timers;
 using System.Threading.Tasks;
+using Schumix.API;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -35,12 +36,15 @@ namespace Schumix.CalendarAddon
 		private readonly CalendarFunctions sCalendarFunctions = Singleton<CalendarFunctions>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
+		private System.Timers.Timer _timercalendar = new System.Timers.Timer();
+		private System.Timers.Timer _timernameday = new System.Timers.Timer();
+		private System.Timers.Timer _timerflood = new System.Timers.Timer();
+		private System.Timers.Timer _timerunban = new System.Timers.Timer();
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Unban sUnban = Singleton<Unban>.Instance;
 		private readonly Ban sBan = Singleton<Ban>.Instance;
-		private System.Timers.Timer _timerflood = new System.Timers.Timer();
-		private System.Timers.Timer _timerunban = new System.Timers.Timer();
-		private System.Timers.Timer _timercalendar = new System.Timers.Timer();
 		private int flood;
 
 		public Calendar()
@@ -67,6 +71,12 @@ namespace Schumix.CalendarAddon
 			_timercalendar.Elapsed += HandleTimerCalendarElapsed;
 			_timercalendar.Enabled = true;
 			_timercalendar.Start();
+
+			// NameDay
+			_timernameday.Interval = 60*1000;
+			_timernameday.Elapsed += HandleTimerNameDayElapsed;
+			_timernameday.Enabled = true;
+			_timernameday.Start();
 		}
 
 		public void Stop()
@@ -85,6 +95,11 @@ namespace Schumix.CalendarAddon
 			_timerunban.Enabled = false;
 			_timerunban.Elapsed -= HandleTimerCalendarElapsed;
 			_timerunban.Stop();
+
+			// NameDay
+			_timernameday.Enabled = false;
+			_timernameday.Elapsed -= HandleTimerNameDayElapsed;
+			_timernameday.Stop();
 		}
 		
 		private void HandleTimerFloodElapsed(object sender, ElapsedEventArgs e)
@@ -100,6 +115,11 @@ namespace Schumix.CalendarAddon
 		private void HandleTimerCalendarElapsed(object sender, ElapsedEventArgs e)
 		{
 			UpdateCalendar();
+		}
+
+		private void HandleTimerNameDayElapsed(object sender, ElapsedEventArgs e)
+		{
+			UpdateNameDay();
 		}
 
 		private void UpdateFlood()
@@ -135,6 +155,18 @@ namespace Schumix.CalendarAddon
 			catch(Exception e)
 			{
 				Log.Error("Calendar", sLocalization.Exception("Error3"), e.Message);
+			}
+		}
+
+		private void UpdateNameDay()
+		{
+			try
+			{
+				Task.Factory.StartNew(() => NameDay());
+			}
+			catch(Exception e)
+			{
+				Log.Error("Calendar", sLocalization.Exception("Error4"), e.Message);
 			}
 		}
 
@@ -348,6 +380,20 @@ namespace Schumix.CalendarAddon
 							}
 						}
 					}
+				}
+			}
+		}
+
+		private void NameDay()
+		{
+			var time = DateTime.Now;
+
+			if(time.Hour == 10 && time.Minute == 0)
+			{
+				foreach(var channel in sChannelInfo.CList)
+				{
+					if(sChannelInfo.FSelect(IFunctions.NameDay) && sChannelInfo.FSelect(IChannelFunctions.NameDay, channel.Key))
+						sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("NameDay"), sUtilities.NameDay(channel.Key));
 				}
 			}
 		}
