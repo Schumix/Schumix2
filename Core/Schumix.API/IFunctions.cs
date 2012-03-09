@@ -43,7 +43,8 @@ namespace Schumix.API
 		Randomkick,
 		Mantisbt,
 		Wordpress,
-		Chatterbot
+		Chatterbot,
+		NameDay
 	};
 
 	public enum IChannelFunctions
@@ -61,7 +62,8 @@ namespace Schumix.API
 		Gamecommands,
 		Webtitle,
 		Randomkick,
-		Chatterbot
+		Chatterbot,
+		NameDay
 	};
 
 	public class IFunctionsClass

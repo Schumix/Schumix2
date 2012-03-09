@@ -1272,6 +1272,47 @@ namespace Schumix.Console.Commands
 			}
 		}
 
+		protected void HandlePlugin()
+		{
+			if(Info.Length >= 2 && Info[1].ToLower() == "load")
+			{
+				var text = sLManager.GetConsoleCommandTexts("plugin/load");
+				if(text.Length < 2)
+				{
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
+					return;
+				}
+
+				if(sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
+					Log.Notice("Console", text[0]);
+				else
+					Log.Error("Console", text[1]);
+			}
+			else if(Info.Length >= 2 && Info[1].ToLower() == "unload")
+			{
+				var text = sLManager.GetConsoleCommandTexts("plugin/unload");
+				if(text.Length < 2)
+				{
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
+					return;
+				}
+
+				if(sAddonManager.UnloadPlugins())
+					Log.Notice("Console", text[0]);
+				else
+					Log.Error("Console", text[1]);
+			}
+			else
+			{
+				string Plugins = string.Empty;
+
+				foreach(var plugin in sAddonManager.GetPlugins())
+					Plugins += ", " + plugin.Name;
+
+				Log.Notice("Console", sLManager.GetConsoleCommandText("plugin"), Plugins.Remove(0, 2, ", "));
+			}
+		}
+
 		/// <summary>
 		///     Quit parancs függvénye.
 		/// </summary>
