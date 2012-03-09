@@ -45,6 +45,9 @@ namespace Schumix.CalendarAddon
 			}
 			else
 			{
+				if(sUtilities.IsValueBiggerDateTimeNow(time.Year, time.Month, time.Day, time.Hour, time.Minute))
+					return sLManager.GetWarningText("GaveExpiredDateTime", channel);
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), time.Year, time.Month, time.Day, time.Hour, time.Minute);
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel);
@@ -69,6 +72,9 @@ namespace Schumix.CalendarAddon
 			}
 			else
 			{
+				if(sUtilities.IsValueBiggerDateTimeNow(time.Year, time.Month, time.Day, hour, minute))
+					return sLManager.GetWarningText("GaveExpiredDateTime", channel);
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), time.Year, time.Month, time.Day, hour, minute);
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel);
@@ -91,6 +97,9 @@ namespace Schumix.CalendarAddon
 			}
 			else
 			{
+				if(sUtilities.IsValueBiggerDateTimeNow(year, month, day, hour, minute))
+					return sLManager.GetWarningText("GaveExpiredDateTime", channel);
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), year, month, day, hour, minute);
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel);
