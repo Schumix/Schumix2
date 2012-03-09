@@ -88,6 +88,8 @@ namespace Schumix.Irc
 
 			Log.Debug("Network", sLConsole.Network("Text2"));
 			Connect();
+			sIgnoreNickName.AddConfig();
+			sIgnoreChannel.AddConfig();
 
 			// Start Opcodes thread
 			Log.Debug("Network", sLConsole.Network("Text3"));
@@ -322,9 +324,11 @@ namespace Schumix.Irc
 				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
+			Online = false;
 			_enabled = true;
 			NewNick = false;
 			HostServStatus = false;
+			NewNickPrivmsg = string.Empty;
 			SchumixBase.UrlTitleEnabled = false;
 		}
 
@@ -519,7 +523,8 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					Log.Error("Ping", sLConsole.Exception("Error"), e.Message);
+					if(!SchumixBase.ExitStatus)
+						Log.Error("Ping", sLConsole.Exception("Error"), e.Message);
 				}
 
 				Thread.Sleep(30*1000);

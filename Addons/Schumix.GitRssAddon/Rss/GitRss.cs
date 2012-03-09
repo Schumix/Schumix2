@@ -38,6 +38,8 @@ namespace Schumix.GitRssAddon
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private NetworkCredential _credential;
 		private XmlNamespaceManager _ns;
 		private Thread _thread;
 		private readonly string _name;
@@ -76,33 +78,21 @@ namespace Schumix.GitRssAddon
 
 			_website = website;
 			Init();
+			_credential = new NetworkCredential(_username, _password);
 
 			if(_username != string.Empty && _password != string.Empty)
 			{
-				using(var client = new WebClient())
-				{
-					client.Credentials = new NetworkCredential(_username, _password);
-					client.Encoding = Encoding.UTF8;
-					string xml = client.DownloadString(_url);
-					var rss = new XmlDocument();
-					rss.LoadXml(xml);
-					xml = string.Empty;
-					_ns = new XmlNamespaceManager(rss.NameTable);
-					_ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
-				}
+				var rss = new XmlDocument();
+				rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>", _credential)));
+				_ns = new XmlNamespaceManager(rss.NameTable);
+				_ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
 			}
 			else
 			{
-				using(var client = new WebClient())
-				{
-					client.Encoding = Encoding.UTF8;
-					string xml = client.DownloadString(_url);
-					var rss = new XmlDocument();
-					rss.LoadXml(xml);
-					xml = string.Empty;
-					_ns = new XmlNamespaceManager(rss.NameTable);
-					_ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
-				}
+				var rss = new XmlDocument();
+				rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>")));
+				_ns = new XmlNamespaceManager(rss.NameTable);
+				_ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
 			}
 		}
 
@@ -204,7 +194,7 @@ namespace Schumix.GitRssAddon
 								}
 
 								author = Author(url);
-								if(author == "no text")
+								if(author == "no text" && _website != "github")
 								{
 									Clean(url);
 									Thread.Sleep(RssConfig.QueryTime*1000);
@@ -250,28 +240,15 @@ namespace Schumix.GitRssAddon
 			{
 				if(_username != string.Empty && _password != string.Empty)
 				{
-					using(var client = new WebClient())
-					{
-						client.Credentials = new NetworkCredential(_username, _password);
-						client.Encoding = Encoding.UTF8;
-						string xml = client.DownloadString(_url);
-						var rss = new XmlDocument();
-						rss.LoadXml(xml);
-						xml = string.Empty;
-						return rss;
-					}
+					var rss = new XmlDocument();
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>", _credential)));
+					return rss;
 				}
 				else
 				{
-					using(var client = new WebClient())
-					{
-						client.Encoding = Encoding.UTF8;
-						string xml = client.DownloadString(_url);
-						var rss = new XmlDocument();
-						rss.LoadXml(xml);
-						xml = string.Empty;
-						return rss;
-					}
+					var rss = new XmlDocument();
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>")));
+					return rss;
 				}
 			}
 			catch(Exception e)
@@ -281,6 +258,13 @@ namespace Schumix.GitRssAddon
 			}
 
 			return null;
+		}
+
+		private string DownloadToXml(string data)
+		{
+			data = data.Substring(0, data.IndexOf("</entry>") + "</entry>".Length);
+			data += "</feed>";
+			return data;
 		}
 
 		private string Title(XmlDocument rss)
@@ -318,10 +302,10 @@ namespace Schumix.GitRssAddon
 
 				string rev = id.InnerText;
 
-				if(!rev.Contains("a=commitdiff;h="))
+				if(!rev.Contains("commitdiff/"))
 					return "no text";
 
-				return rev.Substring(rev.IndexOf("a=commitdiff;h=") + "a=commitdiff;h=".Length);
+				return rev.Substring(rev.IndexOf("commitdiff/") + "commitdiff/".Length);
 			}
 
 			return "no text";
@@ -340,7 +324,7 @@ namespace Schumix.GitRssAddon
 
 					if(_website == "github")
 					{
-						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, _type, rev.Substring(0, 10), (author == string.Empty ? "?" : author));
+						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author));
 						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github2", language), _name, title);
 					}
 					else if(_website == "gitweb")

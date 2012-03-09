@@ -38,6 +38,8 @@ namespace Schumix.HgRssAddon
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private NetworkCredential _credential;
 		private Thread _thread;
 		private readonly string _name;
 		private readonly string _url;
@@ -73,6 +75,7 @@ namespace Schumix.HgRssAddon
 
 			_website = website;
 			Init();
+			_credential = new NetworkCredential(_username, _password);
 		}
 
 		private void Init()
@@ -214,28 +217,25 @@ namespace Schumix.HgRssAddon
 			{
 				if(_username != string.Empty && _password != string.Empty)
 				{
-					using(var client = new WebClient())
-					{
-						client.Encoding = Encoding.UTF8;
-						client.Credentials = new NetworkCredential(_username, _password);
-						string xml = client.DownloadString(_url);
-						var rss = new XmlDocument();
-						rss.LoadXml(xml);
-						client.Dispose();
-						return rss;
-					}
+					var rss = new XmlDocument();
+
+					if(_website == "bitbucket")
+						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>", _credential)));
+					else
+						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>", _credential)));
+
+					return rss;
 				}
 				else
 				{
-					using(var client = new WebClient())
-					{
-						client.Encoding = Encoding.UTF8;
-						string xml = client.DownloadString(_url);
-						var rss = new XmlDocument();
-						rss.LoadXml(xml);
-						xml = string.Empty;
-						return rss;
-					}
+					var rss = new XmlDocument();
+
+					if(_website == "bitbucket")
+						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>")));
+					else
+						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>")));
+
+					return rss;
 				}
 			}
 			catch(Exception e)
@@ -245,6 +245,22 @@ namespace Schumix.HgRssAddon
 			}
 
 			return null;
+		}
+
+		private string DownloadToXml(string data)
+		{
+			if(_website == "bitbucket")
+			{
+				data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);
+				data += "</channel></rss>";
+			}
+			else
+			{
+				data = data.Substring(0, data.IndexOf("</entry>") + "</entry>".Length);
+				data += "</feed>";
+			}
+
+			return data;
 		}
 
 		private string Title(XmlDocument rss)

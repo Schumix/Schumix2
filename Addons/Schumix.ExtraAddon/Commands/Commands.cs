@@ -37,9 +37,10 @@ namespace Schumix.ExtraAddon.Commands
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private Functions() {}
 
@@ -999,6 +1000,15 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleNotes(IRCMessage sIRCMessage)
 		{
+			if(sIRCMessage.Info.Length >= 6 && sIRCMessage.Info[4].ToLower() == "user" && sIRCMessage.Info[5].ToLower() == "register")
+			{
+			}
+			else
+			{
+				if(!Warning(sIRCMessage))
+					return;
+			}
+
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
@@ -1007,9 +1017,6 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(sIRCMessage.Info[4].ToLower() == "info")
 			{
-				if(!Warning(sIRCMessage))
-					return;
-
 				if(!IsUser(sIRCMessage.Nick, sIRCMessage.Host))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoDataNoCommand", sIRCMessage.Channel));
@@ -1173,9 +1180,6 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "code")
 			{
-				if(!Warning(sIRCMessage))
-					return;
-
 				if(!IsUser(sIRCMessage.Nick, sIRCMessage.Host))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoDataNoCommand", sIRCMessage.Channel));
@@ -1230,9 +1234,6 @@ namespace Schumix.ExtraAddon.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
 				}
-
-				if(!Warning(sIRCMessage))
-					return;
 
 				if(!IsUser(sIRCMessage.Nick, sIRCMessage.Host))
 				{

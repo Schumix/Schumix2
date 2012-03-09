@@ -28,8 +28,15 @@ namespace Schumix.Irc
 	public sealed class IgnoreNickName
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private IgnoreNickName() {}
 
-		private IgnoreNickName()
+		public bool IsIgnore(string Name)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			return !db.IsNull() ? true : false;
+		}
+
+		public void AddConfig()
 		{
 			string[] ignore = IRCConfig.IgnoreNames.Split(SchumixBase.Comma);
 
@@ -42,14 +49,11 @@ namespace Schumix.Irc
 				Add(IRCConfig.IgnoreNames.ToLower());
 		}
 
-		public bool IsIgnore(string Name)
-		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
-			return !db.IsNull() ? true : false;
-		}
-
 		public void Add(string Name)
 		{
+			if(Name.Trim() == string.Empty)
+				return;
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
 			if(!db.IsNull())
 				return;
@@ -59,6 +63,9 @@ namespace Schumix.Irc
 
 		public void Remove(string Name)
 		{
+			if(Name.Trim() == string.Empty)
+				return;
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
 			if(db.IsNull())
 				return;
@@ -93,6 +100,9 @@ namespace Schumix.Irc
 
 		public void Add(string Name)
 		{
+			if(Name.Trim() == string.Empty)
+				return;
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
 			if(!db.IsNull())
 				return;
@@ -102,6 +112,9 @@ namespace Schumix.Irc
 
 		public void Remove(string Name)
 		{
+			if(Name.Trim() == string.Empty)
+				return;
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
 			if(db.IsNull())
 				return;
@@ -123,6 +136,9 @@ namespace Schumix.Irc
 
 		public void Add(string Name)
 		{
+			if(Name.Trim() == string.Empty)
+				return;
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
 			if(!db.IsNull())
 				return;
@@ -132,6 +148,9 @@ namespace Schumix.Irc
 
 		public void Remove(string Name)
 		{
+			if(Name.Trim() == string.Empty)
+				return;
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
 			if(db.IsNull())
 				return;
@@ -143,8 +162,15 @@ namespace Schumix.Irc
 	public sealed class IgnoreChannel
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private IgnoreChannel() {}
 
-		private IgnoreChannel()
+		public bool IsIgnore(string Name)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			return !db.IsNull() ? true : false;
+		}
+
+		public void AddConfig()
 		{
 			string[] ignore = IRCConfig.IgnoreChannels.Split(SchumixBase.Comma);
 
@@ -154,17 +180,14 @@ namespace Schumix.Irc
 					Add(name.ToLower());
 			}
 			else
-				Add(IRCConfig.IgnoreNames.ToLower());
-		}
-
-		public bool IsIgnore(string Name)
-		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
-			return !db.IsNull() ? true : false;
+				Add(IRCConfig.IgnoreChannels.ToLower());
 		}
 
 		public void Add(string Name)
 		{
+			if(Name.Trim() == string.Empty)
+				return;
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
 			if(!db.IsNull())
 				return;
@@ -174,6 +197,9 @@ namespace Schumix.Irc
 
 		public void Remove(string Name)
 		{
+			if(Name.Trim() == string.Empty)
+				return;
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
 			if(db.IsNull())
 				return;
@@ -191,7 +217,7 @@ namespace Schumix.Irc
 					Remove(name.ToLower());
 			}
 			else
-				Remove(IRCConfig.IgnoreNames.ToLower());
+				Remove(IRCConfig.IgnoreChannels.ToLower());
 		}
 	}
 }

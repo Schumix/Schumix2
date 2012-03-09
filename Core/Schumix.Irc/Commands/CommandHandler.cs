@@ -161,7 +161,10 @@ namespace Schumix.Irc.Commands
 					!CommandManager.GetHalfOperatorCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
 					!CommandManager.GetOperatorCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
 					!CommandManager.GetAdminCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoFoundHelpCommand2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
+				}
 
 				if(sIgnoreCommand.IsIgnore(sIRCMessage.Info[4].ToLower()))
 					return;
@@ -172,6 +175,9 @@ namespace Schumix.Irc.Commands
 				{
 					string commands = sIRCMessage.Info.SplitToString(4, "/");
 					int rank = sLManager.GetCommandHelpRank(commands, sIRCMessage.Channel);
+
+					if(rank == -1)
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoFoundHelpCommand", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 
 					if((adminflag == 2 && rank == 2) || (adminflag == 2 && rank == 1) || (adminflag == 2 && rank == 0) ||
 					(adminflag == 1 && rank == 1) || (adminflag == 1 && rank == 0) || (adminflag == 0 && rank == 0) ||

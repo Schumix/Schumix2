@@ -613,7 +613,7 @@ namespace Schumix.Libraries
 		{
 			lock(WriteLock)
 			{
-				printf(string.Format(text, args));
+				printf(Tools.sprintf(text, args));
 			}
 		}
 
