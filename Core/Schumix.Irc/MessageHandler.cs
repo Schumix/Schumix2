@@ -31,6 +31,7 @@ namespace Schumix.Irc
 	{
 		public static bool HostServStatus;
 		public static bool NewNick;
+		public static bool Online;
 		protected MessageHandler() {}
 
 		protected void HandleSuccessfulAuth(IRCMessage sIRCMessage)
@@ -173,7 +174,12 @@ namespace Schumix.Irc
 					HostServStatus = false;
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
-					sChannelInfo.JoinChannel();
+
+					if(!Online)
+					{
+						sChannelInfo.JoinChannel();
+						Online = true;
+					}
 				}
 			}
 
@@ -230,6 +236,7 @@ namespace Schumix.Irc
 				Log.Error("MessageHandler", sLConsole.MessageHandler("Text6"), sNickInfo.NickStorage);
 				string nick = sNickInfo.ChangeNick();
 				Log.Notice("MessageHandler", sLConsole.MessageHandler("Text7"), nick);
+				Online = false;
 				NewNick = true;
 				sSender.Nick(nick);
 			}
@@ -329,10 +336,16 @@ namespace Schumix.Irc
 
 		protected void HandleIrcJoin(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Nick == sNickInfo.NickStorage)
-				return;
-
 			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
+
+			if(sIRCMessage.Nick == sNickInfo.NickStorage)
+			{
+				if(sChannelInfo.CList.ContainsKey(sIRCMessage.Channel.ToLower()))
+					SchumixBase.DManager.Update("channel", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
+
+				return;
+			}
+
 			sChannelNameList.Add(sIRCMessage.Channel, sIRCMessage.Nick);
 		}
 

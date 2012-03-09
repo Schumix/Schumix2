@@ -34,6 +34,9 @@ namespace Schumix.CalendarAddon
 
 		public string BanName(string name, string channel, string reason, DateTime time)
 		{
+			if(sUtilities.IsValueBiggerDateTimeNow(time.Year, time.Month, time.Day, time.Hour, time.Minute))
+				return sLManager.GetWarningText("GaveExpiredDateTime", channel);
+	
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower());
 			if(!db.IsNull())
 				return sLManager.GetWarningText("BanList", channel);
@@ -47,6 +50,10 @@ namespace Schumix.CalendarAddon
 		public string BanName(string name, string channel, string reason, int hour, int minute)
 		{
 			var time = DateTime.Now;
+
+			if(sUtilities.IsValueBiggerDateTimeNow(time.Year, time.Month, time.Day, hour, minute))
+				return sLManager.GetWarningText("GaveExpiredDateTime", channel);
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower());
 			if(!db.IsNull())
 				return sLManager.GetWarningText("BanList", channel);
@@ -59,6 +66,9 @@ namespace Schumix.CalendarAddon
 
 		public string BanName(string name, string channel, string reason, int year, int month, int day, int hour, int minute)
 		{
+			if(sUtilities.IsValueBiggerDateTimeNow(year, month, day, hour, minute))
+				return sLManager.GetWarningText("GaveExpiredDateTime", channel);
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower());
 			if(!db.IsNull())
 				return sLManager.GetWarningText("BanList", channel);

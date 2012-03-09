@@ -133,12 +133,26 @@ namespace Schumix.Framework.Database
 			}
 			catch(SQLiteException s)
 			{
-				Crash(s);
+				Crash(s, true);
 			}
 		}
 
-		private void Crash(SQLiteException s)
+		private void Crash(SQLiteException s, bool c = false)
 		{
+			if(c)
+			{
+				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+				SchumixBase.ServerDisconnect(false);
+				SchumixBase.ExitStatus = true;
+
+				if(!INetwork.Writer.IsNull())
+					INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+
+				Thread.Sleep(1000);
+				Environment.Exit(1);
+			}
+
 			if(s.Message.Contains("Fatal error encountered during command execution."))
 			{
 				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);

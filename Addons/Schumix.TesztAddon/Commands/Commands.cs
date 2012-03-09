@@ -18,14 +18,18 @@
  */
 
 using System;
+using System.Net;
 using System.Xml;
+using System.Text;
 using System.Data;
 using Schumix.API;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+//using GitSharp;
 
 namespace Schumix.TesztAddon.Commands
 {
@@ -80,6 +84,50 @@ namespace Schumix.TesztAddon.Commands
 				sSendMessage.SendCMCtcpReply(sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "text")
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "durl")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+					return;
+				}
+
+				var request = (HttpWebRequest)WebRequest.Create(sIRCMessage.Info[5]);
+				request.AllowAutoRedirect = true;
+				request.UserAgent = Consts.SchumixUserAgent;
+				request.Referer = Consts.SchumixReferer;
+
+				var response = request.GetResponse();
+				var stream = response.GetResponseStream();
+				var sb = new StringBuilder();
+				byte[] buf = new byte[1024];
+				int length = 0;
+
+				while((length = stream.Read(buf, 0, buf.Length)) != 0)
+				{
+					if(sb.ToString().Contains("</title>"))
+						break;
+
+					sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				}
+
+				response.Close();
+				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sb.Length);
+			}
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "gcommit")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+					return;
+				}
+
+				/*var repo = new Repository("/home/megax/Asztal/Schumix2");
+				string msg = new Commit(repo, sIRCMessage.Info[5]).Message;
+				var msg2 = new Commit(repo, sIRCMessage.Info[5]).CommitDate;
+				sSendMessage.SendChatMessage(sIRCMessage, "asd: {0}", msg);
+				sSendMessage.SendChatMessage(sIRCMessage, "asd2: {0}", msg2);*/
+			}
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);
 		}

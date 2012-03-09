@@ -37,7 +37,7 @@ namespace Schumix.Framework
 
 		private Runtime()
 		{
-			_timer.Interval = 60*1000;
+			_timer.Interval = 5*1000;
 			_timer.Elapsed += HandleTimerMemory;
 			_timer.Enabled = true;
 			_timer.Start();
