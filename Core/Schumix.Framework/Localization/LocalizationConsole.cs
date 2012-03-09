@@ -1822,7 +1822,16 @@ namespace Schumix.Framework.Localization
 					else if(Language == "enUS")
 						return "No such help command or there is no translation for it!";
 					else
-						return "No such help command or there is no translation for it";
+						return "No such help command or there is no translation for it!";
+				}
+				case "NoFoundHelpCommand2":
+				{
+					if(Language == "huHU")
+						return "Ilyen help parancs nem létezik!";
+					else if(Language == "enUS")
+						return "No such help command!";
+					else
+						return "No such help command!";
 				}
 				default:
 					return string.Empty;
