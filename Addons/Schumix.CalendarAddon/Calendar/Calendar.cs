@@ -42,6 +42,7 @@ namespace Schumix.CalendarAddon
 		private System.Timers.Timer _timernameday = new System.Timers.Timer();
 		private System.Timers.Timer _timerflood = new System.Timers.Timer();
 		private System.Timers.Timer _timerunban = new System.Timers.Timer();
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Unban sUnban = Singleton<Unban>.Instance;
 		private readonly Ban sBan = Singleton<Ban>.Instance;

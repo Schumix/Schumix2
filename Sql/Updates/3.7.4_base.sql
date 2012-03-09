@@ -15,6 +15,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "[Leválasztás]: Összes plugin leválasztása sikeres.\n[Leválasztás]: Összes plugin leválasztása sikertelen.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: betöltve.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NameDay", "Mai napon {0} névnapja van.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "GaveExpiredDateTime", "Lejárt dátumot/órát adtál meg!");
 
 -- enUS
 UPDATE `localized_warning` SET Text = "Wrong year (number, format)!" WHERE Language = "enUS" AND Command = "ErrorYear";
@@ -32,3 +33,4 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "[Unload]: All plugins done.\n[Unload]: All plugins failed.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: loaded.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NameDay", "Today is {0}'s name day.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "GaveExpiredDateTime", "You have gave expired date/time!");

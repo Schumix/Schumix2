@@ -955,6 +955,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorHour", "Hibás az óra (száma, formátuma)!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorMinute", "Hibás a perc (száma, formátuma)!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NameDay", "Mai napon {0} névnapja van.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "GaveExpiredDateTime", "Lejárt dátumot/órát adtál meg!");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1010,6 +1011,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorHour", "Wrong hour (number, format)!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorMinute", "Wrong minute (number, format)!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NameDay", "Today is {0}'s name day.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "GaveExpiredDateTime", "You have gave expired date/time!");
 
 -- ----------------------------
 -- Records of schumix

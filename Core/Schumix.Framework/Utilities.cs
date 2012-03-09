@@ -1034,5 +1034,11 @@ namespace Schumix.Framework
 			response.Close();
 			return sb.ToString();
 		}
+
+		public bool IsValueBiggerDateTimeNow(int Year, int Month, int Day, int Hour, int Minute)
+		{
+			var time = DateTime.Now;
+			return (time.Year >= Year && time.Month >= Month && time.Day >= Day && time.Hour >= Hour && time.Minute >= Minute);
+		}
 	}
 }
