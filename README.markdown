@@ -148,8 +148,8 @@ Ha mind ezekkel megvagyunk már csak inditanuk kell és használni a kódot :)
 * A kódhoz ki és be kapcsolható funkciók tartoznak. Ezt csak is gizárólag admin vezérelheti.
   Funkciók használatáról leírás: `$help funkcio` (természetesen az az elõjel kell ami megadásra került a konfigban)
 * Ha már megemlítésre került. Az admin hozzáadása konzolból történik elõször. `admin add <admin neve>`
-  Majd amit kapunk jelszót privát üzenetben el kell küldeni a botnak a jelszót ezen módon: `$admin hozzaferes <jelszó>`
-  Ha másikat szeretnénk akkor: `$admin ujjelszo <régi> <új>`
+  Majd amit kapunk jelszót privát üzenetben el kell küldeni a botnak a jelszót ezen módon: `$admin access <jelszó>`
+  Ha másikat szeretnénk akkor: `$admin newpassword <régi> <új>`
 * És végül a konzol parancsok. Ha már megemlítettem ;) Szóval a lista a help parancsal kapható meg.
   Többit ki kell tapasztalni mert egyenlõre nincs hozzá help.
 * Bármi lemaradt volna tudok segítséget nyújtani az irc.rizon.net szerveren a `#schumix, #schumix2` vagy `#hun_bot` csatornán.
