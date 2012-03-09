@@ -91,7 +91,7 @@ namespace Schumix.Framework.Localization
 		public string GetCommandHelpText(string command)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_command_help WHERE Language = '{0}' AND Command = '{1}'", Locale, sUtilities.SqlEscape(command.ToLower()));
-			return !db.IsNull() ? db["Text"].ToString() : sLConsole.Translations("NoFound");
+			return !db.IsNull() ? db["Text"].ToString() : sLConsole.Other("NoFoundHelpCommand");
 		}
 
 		public string GetCommandHelpText(string command, string channel)
@@ -99,7 +99,7 @@ namespace Schumix.Framework.Localization
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
 			string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 			db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_command_help WHERE Language = '{0}' AND Command = '{1}'", locale, sUtilities.SqlEscape(command.ToLower()));
-			return !db.IsNull() ? db["Text"].ToString() : sLConsole.Translations("NoFound", locale);
+			return !db.IsNull() ? db["Text"].ToString() : sLConsole.Other("NoFoundHelpCommand", locale);
 		}
 
 		public string GetCommandHelpText(string command, string channel, int rank)
@@ -115,16 +115,16 @@ namespace Schumix.Framework.Localization
 				else if(Convert.ToInt32(db["Rank"].ToString()) == 9)
 					return db["Text"].ToString();
 				else
-					return sLConsole.Translations("NoFound", locale);
+					return sLConsole.Other("NoFoundHelpCommand", locale);
 			}
 			else
-				return sLConsole.Translations("NoFound", locale);
+				return sLConsole.Other("NoFoundHelpCommand", locale);
 		}
 
 		public string[] GetCommandHelpTexts(string command)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_command_help WHERE Language = '{0}' AND Command = '{1}'", Locale, sUtilities.SqlEscape(command.ToLower()));
-			return !db.IsNull() ? Split(db["Text"].ToString()) : new string[] { sLConsole.Translations("NoFound") };
+			return !db.IsNull() ? Split(db["Text"].ToString()) : new string[] { sLConsole.Other("NoFoundHelpCommand") };
 		}
 
 		public string[] GetCommandHelpTexts(string command, string channel)
@@ -132,7 +132,7 @@ namespace Schumix.Framework.Localization
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
 			string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 			db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_command_help WHERE Language = '{0}' AND Command = '{1}'", locale, sUtilities.SqlEscape(command.ToLower()));
-			return !db.IsNull() ? Split(db["Text"].ToString()) : new string[] { sLConsole.Translations("NoFound", locale) };
+			return !db.IsNull() ? Split(db["Text"].ToString()) : new string[] { sLConsole.Other("NoFoundHelpCommand", locale) };
 		}
 
 		public string[] GetCommandHelpTexts(string command, string channel, int rank)
@@ -148,10 +148,10 @@ namespace Schumix.Framework.Localization
 				else if(Convert.ToInt32(db["Rank"].ToString()) == 9)
 					return Split(db["Text"].ToString());
 				else
-					return new string[] { sLConsole.Translations("NoFound", locale) };
+					return new string[] { sLConsole.Other("NoFoundHelpCommand", locale) };
 			}
 			else
-				return new string[] { sLConsole.Translations("NoFound", locale) };
+				return new string[] { sLConsole.Other("NoFoundHelpCommand", locale) };
 		}
 
 		public bool IsAdminCommandHelp(string command)
@@ -234,13 +234,13 @@ namespace Schumix.Framework.Localization
 		public string GetConsoleCommandHelpText(string command)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_console_command_help WHERE Language = '{0}' AND Command = '{1}'", Locale, sUtilities.SqlEscape(command.ToLower()));
-			return !db.IsNull() ? db["Text"].ToString() : sLConsole.Translations("NoFound");
+			return !db.IsNull() ? db["Text"].ToString() : sLConsole.Other("NoFoundHelpCommand");
 		}
 
 		public string[] GetConsoleCommandHelpTexts(string command)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_console_command_help WHERE Language = '{0}' AND Command = '{1}'", Locale, sUtilities.SqlEscape(command.ToLower()));
-			return !db.IsNull() ? Split(db["Text"].ToString()) : new string[] { sLConsole.Translations("NoFound") };
+			return !db.IsNull() ? Split(db["Text"].ToString()) : new string[] { sLConsole.Other("NoFoundHelpCommand") };
 		}
 
 		public string GetChannelLocalization(string channel)

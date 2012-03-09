@@ -21,6 +21,7 @@ using System;
 using System.Threading;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.API;
 
 namespace Schumix.Irc.Commands
@@ -62,8 +63,12 @@ namespace Schumix.Irc.Commands
 			}
 			else
 			{
+				string Plugins = string.Empty;
+
 				foreach(var plugin in sAddonManager.GetPlugins())
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("plugin", sIRCMessage.Channel), plugin.Name.Replace("Plugin", string.Empty));
+					Plugins += ", " + plugin.Name;
+
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("plugin", sIRCMessage.Channel), Plugins.Remove(0, 2, ", "));
 			}
 		}
 
