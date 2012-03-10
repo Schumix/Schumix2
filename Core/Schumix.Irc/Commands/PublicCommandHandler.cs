@@ -224,6 +224,12 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			if(!sIRCMessage.Info[4].Contains("|"))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTranslateLanguage", sIRCMessage.Channel));
+				return;
+			}
+
 			if(sIRCMessage.Info.Length < 6)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTranslateText", sIRCMessage.Channel));
