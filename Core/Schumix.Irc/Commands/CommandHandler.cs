@@ -188,7 +188,10 @@ namespace Schumix.Irc.Commands
 				{
 					string commands = sIRCMessage.Info.SplitToString(4, "/");
 					if(sLManager.IsAdminCommandHelp(commands, sIRCMessage.Channel))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoAdministrator", sIRCMessage.Channel));
 						return;
+					}
 
 					HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel));
 				}
