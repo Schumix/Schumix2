@@ -36,7 +36,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "sys", "Verzió: {0}\nPlatform: {0}\nOSVerzió: {0}\nProgramnyelv: c#\nMemória használat: {0} MB\nFutó szálak: {0}\nMűködési idő: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "csatorna", "Új csatorna ahova mostantól lehet írni: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/info", "Jelenleg Fél Operátor vagy.\nJelenleg Operátor vagy.\nJelenleg Adminisztrátor vagy.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/list", "Adminok: {0}");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/list", "Adminok: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/add", "A név már szerepel az admin listán!\nAdmin hozzáadva: {0}\nJelenlegi jelszó: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/remove", "Ilyen név nem létezik!\nAdmin törölve: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/rank", "Rang sikeresen módosítva.\nHibás rang!");
@@ -71,16 +71,16 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/add", "Már szerepel az ignore listán!\nA név sikeresen hozzáadásra került.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/remove", "Nem szerepel az ignore listán!\nA név sikeresen el lett távolítva.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "2[Betöltés]: Összes plugin betöltése 3sikeres.\n2[Betöltés]: Összes plugin betöltése 5sikertelen.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "2[Leválasztás]: Összes plugin leválasztása 3sikeres.\n2[Leválasztás]: Összes plugin leválasztása 5sikertelen.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: 3betöltve.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "[Betöltés]: Összes plugin betöltése sikeres.\n[Betöltés]: Összes plugin betöltése sikertelen.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "[Leválasztás]: Összes plugin leválasztása sikeres.\n[Leválasztás]: Összes plugin leválasztása sikertelen.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: betöltve.");
 
 -- enUS
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "consolelog", "Console logging on.\nConsole logging off.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "sys", "Version: {0}\nPlatform: {0}\nOSVersion: {0}\nProgramming language: c#\nMemory allocation: {0} MB\nThread count: {0}\nUptime: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "csatorna", "The new channel to write to now: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/info", "You are half operator now.\nYou are operator now.\nYou are administrator now.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/list", "Admins: {0}");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/list", "Admins: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/add", "The name is already in the admin list!\nAdmin added to the list: {0}\nPassword: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/remove", "No such nick!\nAdmin was deleted: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/rank", "Successfully changed the rank!\nRank error!");
