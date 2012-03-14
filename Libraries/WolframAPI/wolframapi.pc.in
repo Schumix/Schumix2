@@ -1,6 +1,6 @@
 Name: WolframAPI
 Description: WolframAPI
-Version: 0.1
+Version: 3.x
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/WolframAPI.dll
