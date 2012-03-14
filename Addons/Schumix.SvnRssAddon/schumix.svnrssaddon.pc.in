@@ -1,6 +1,6 @@
 Name: Schumix.SvnRssAddon
 Description: Schumix.SvnRssAddon
-Version: 0.1
+Version: 3.x
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/SvnRssAddon.dll

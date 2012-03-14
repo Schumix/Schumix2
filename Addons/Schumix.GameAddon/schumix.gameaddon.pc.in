@@ -1,6 +1,6 @@
 Name: Schumix.GameAddon
 Description: Schumix.GameAddon
-Version: 0.1
+Version: 3.x
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/GameAddon.dll
