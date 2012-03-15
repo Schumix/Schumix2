@@ -1040,5 +1040,27 @@ namespace Schumix.Framework
 			var time = DateTime.Now;
 			return (time.Year >= Year && time.Month >= Month && time.Day >= Day && time.Hour >= Hour && time.Minute >= Minute);
 		}
+
+		public string GetUserName()
+		{
+			return Environment.UserName;
+		}
+
+		public string GetHomeDirectory(string data)
+		{
+			string text = data.ToLower();
+			return text.Contains("$home") ? data = "/home/" + GetUserName() + "/" + data.Substring(data.IndexOf("/")+1) : data;
+		}
+
+		public string DirectoryToHome(string dir, string file)
+		{
+			return (dir.Length > 0 && dir.Substring(0, 1) == "/") ? string.Format("{0}/{1}", dir, file) : string.Format("./{0}/{1}", dir, file);
+		}
+
+		public string GetDirectoryName(string data)
+		{
+			var split = data.Split('/');
+			return split.Length > 1 ? split[split.Length-1] : data;
+		}
 	}
 }

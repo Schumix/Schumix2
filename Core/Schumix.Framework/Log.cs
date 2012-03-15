@@ -44,7 +44,7 @@ namespace Schumix.Framework
 		{
 			try
 			{
-				string filename = string.Format("./{0}/{1}", LogConfig.LogDirectory, _FileName);
+				string filename = sUtilities.DirectoryToHome(LogConfig.LogDirectory, _FileName);
 				var filesize = new FileInfo(filename);
 
 				if(filesize.Length >= 10000000)
@@ -82,7 +82,7 @@ namespace Schumix.Framework
 				_FileName = FileName;
 				var time = DateTime.Now;
 				sUtilities.CreateDirectory(LogConfig.LogDirectory);
-				string logfile = string.Format("./{0}/{1}", LogConfig.LogDirectory, FileName);
+				string logfile = sUtilities.DirectoryToHome(LogConfig.LogDirectory, _FileName);
 				sUtilities.CreateFile(logfile);
 				var file = new StreamWriter(logfile, true) { AutoFlush = true };
 				file.Write(sLConsole.Log("Text"), time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);

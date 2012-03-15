@@ -431,8 +431,13 @@ namespace Schumix.Irc
 				try
 				{
 					sUtilities.CreateDirectory(LogConfig.IrcLogDirectory);
-					string logdir = string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, channel);
+					string logdir = string.Empty;
 					string logfile = string.Empty;
+
+					if(LogConfig.IrcLogDirectory.Length > 0 && LogConfig.IrcLogDirectory.Substring(0, 1) == "/")
+						logdir = string.Format("{0}/{1}", LogConfig.IrcLogDirectory, channel);
+					else
+						logdir = string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, channel);
 
 					if(DateTime.Now.Month < 10)
 					{
