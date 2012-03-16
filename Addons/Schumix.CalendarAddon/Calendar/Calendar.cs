@@ -394,7 +394,7 @@ namespace Schumix.CalendarAddon
 				foreach(var channel in sChannelInfo.CList)
 				{
 					if(sChannelInfo.FSelect(IFunctions.NameDay) && sChannelInfo.FSelect(IChannelFunctions.NameDay, channel.Key))
-						sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("NameDay"), sUtilities.NameDay(channel.Key));
+						sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("NameDay", channel.Key), sUtilities.NameDay(channel.Key));
 				}
 			}
 		}
