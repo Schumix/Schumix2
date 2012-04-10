@@ -34,7 +34,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		{
 			if(!Running)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", NickName);
 				return;
 			}
 

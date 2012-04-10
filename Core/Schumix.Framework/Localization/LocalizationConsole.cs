@@ -360,6 +360,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Program shutting down!";
 				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "Sql kapcsolat összeomlott.";
+					else if(Locale == "enUS")
+						return "Sql connection crash.";
+					else
+						return "Sql connection crash.";
+				}
 				default:
 					return string.Empty;
 			}
