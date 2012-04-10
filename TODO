@@ -9,3 +9,4 @@ Megírásra váró feladatok:
 - Ha valaki floodolja botot saját parancsaival akkor bizonyos szám után tegye tiltó listára az adott nick-et. Majd oldja fel megadott idő múlva.
 - Játék addon bővítése és a kód nyelvezetét átírni angolra is. Statisztikai rész létrehozása hozzá.
 - Ssh kapcsolódást fixálni kéne.
+- Maffiás játéknál ha bárki elveszi valakinek a voice jogát úgy hogy még játékban van akkor bot adja vissza neki. Így megoldodna az hogy bárki is kipróbálná zárni a játékból az illetőt pl bosszúból.
