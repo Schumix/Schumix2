@@ -389,7 +389,8 @@ namespace Schumix.CalendarAddon
 		{
 			var time = DateTime.Now;
 
-			if(time.Hour == 10 && time.Minute == 0)
+			if((time.Hour == 8 && time.Minute == 0) || (time.Hour == 12 && time.Minute == 0) ||
+			   (time.Hour == 16 && time.Minute == 0) || (time.Hour == 20 && time.Minute == 0))
 			{
 				foreach(var channel in sChannelInfo.CList)
 				{
