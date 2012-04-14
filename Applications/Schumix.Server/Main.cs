@@ -105,6 +105,7 @@ namespace Schumix.Server
 			System.Console.WriteLine();
 
 			new Server.Config.Config(configdir, configfile);
+			sUtilities.CreatePidFile(Server.Config.ServerConfig.ConfigFile);
 
 			if(localization == "start")
 				sLConsole.Locale = Server.Config.LocalizationConfig.Locale;
@@ -127,6 +128,7 @@ namespace Schumix.Server
 
 			System.Console.CancelKeyPress += (sender, e) =>
 			{
+				sUtilities.RemovePidFile();
 				var packet = new SchumixPacket();
 				packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
 				packet.Write<int>((int)0);
@@ -137,6 +139,7 @@ namespace Schumix.Server
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
+				sUtilities.RemovePidFile();
 				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
 				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
 				var packet = new SchumixPacket();

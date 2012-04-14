@@ -174,6 +174,8 @@ namespace Schumix
 			else
 				new Config(configdir, configfile);
 
+			sUtilities.CreatePidFile(SchumixConfig.ConfigFile);
+
 			if(serveridentify != string.Empty)
 				SchumixBase.ServerIdentify = serveridentify;
 

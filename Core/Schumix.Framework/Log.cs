@@ -42,56 +42,35 @@ namespace Schumix.Framework
 
 		private static void LogToFile(string log)
 		{
-			try
-			{
-				string filename = sUtilities.DirectoryToHome(LogConfig.LogDirectory, _FileName);
-				var filesize = new FileInfo(filename);
+			string filename = sUtilities.DirectoryToHome(LogConfig.LogDirectory, _FileName);
+			var filesize = new FileInfo(filename);
 
-				if(filesize.Length >= 10000000)
-				{
-					File.Delete(filename);
-					sUtilities.CreateFile(filename);
-				}
-
-				var file = new StreamWriter(filename, true) { AutoFlush = true };
-				file.Write(log);
-				file.Close();
-			}
-			catch(Exception)
+			if(filesize.Length >= 10000000)
 			{
-				LogToFile(log);
+				File.Delete(filename);
+				sUtilities.CreateFile(filename);
 			}
+
+			var file = new StreamWriter(filename, true) { AutoFlush = true };
+			file.Write(log);
+			file.Close();
 		}
 
 		public static void Init()
 		{
-			try
-			{
-				Init("Schumix.log");
-			}
-			catch(Exception)
-			{
-				Init();
-			}
+			Init("Schumix.log");
 		}
 
 		public static void Init(string FileName)
 		{
-			try
-			{
-				_FileName = FileName;
-				var time = DateTime.Now;
-				sUtilities.CreateDirectory(LogConfig.LogDirectory);
-				string logfile = sUtilities.DirectoryToHome(LogConfig.LogDirectory, _FileName);
-				sUtilities.CreateFile(logfile);
-				var file = new StreamWriter(logfile, true) { AutoFlush = true };
-				file.Write(sLConsole.Log("Text"), time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
-				file.Close();
-			}
-			catch(Exception)
-			{
-				Init(FileName);
-			}
+			_FileName = FileName;
+			var time = DateTime.Now;
+			sUtilities.CreateDirectory(LogConfig.LogDirectory);
+			string logfile = sUtilities.DirectoryToHome(LogConfig.LogDirectory, _FileName);
+			sUtilities.CreateFile(logfile);
+			var file = new StreamWriter(logfile, true) { AutoFlush = true };
+			file.Write(sLConsole.Log("Text"), time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
+			file.Close();
 		}
 
         /// <summary>

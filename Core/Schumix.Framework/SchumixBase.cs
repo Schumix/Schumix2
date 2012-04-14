@@ -35,7 +35,7 @@ namespace Schumix.Framework
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private static readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Guid _guid = Guid.NewGuid();
 		public static DatabaseManager DManager { get; private set; }
 		public static Timer timer { get; private set; }
@@ -53,6 +53,7 @@ namespace Schumix.Framework
 		public const char Comma = ',';
 		public const char Point = '.';
 		public const char Colon = ':';
+		public static string PidFile;
 
 		/// <summary>
 		/// Gets the GUID.
@@ -144,6 +145,7 @@ namespace Schumix.Framework
 			foreach(var plugin in sAddonManager.GetPlugins())
 				plugin.Destroy();
 
+			sUtilities.RemovePidFile();
 			SchumixBase.timer.SaveUptime();
 			SchumixBase.ServerDisconnect();
 			SchumixBase.ExitStatus = true;

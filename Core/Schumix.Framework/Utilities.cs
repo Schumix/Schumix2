@@ -25,6 +25,7 @@ using System.Web;
 using System.Linq;
 using System.Reflection;
 using System.Management;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Text;
@@ -663,7 +664,7 @@ namespace Schumix.Framework
 		public void CreateFile(string Name)
 		{
 			if(!File.Exists(Name))
-				File.Create(Name);
+				new FileStream(Name, FileMode.Append, FileAccess.Write, FileShare.Write).Close();
 		}
 
 		public string NameDay(string Language)
@@ -1061,6 +1062,33 @@ namespace Schumix.Framework
 		{
 			var split = data.Split('/');
 			return split.Length > 1 ? split[split.Length-1] : data;
+		}
+
+		public void CreatePidFile(string Name)
+		{
+			string pidfile = Name;
+
+			if(!pidfile.Contains(".pid"))
+			{
+				if(pidfile.Contains(".xml"))
+					pidfile = pidfile.Remove(pidfile.IndexOf(".xml")) + ".pid";
+				else
+					pidfile = pidfile + ".pid";
+			}
+
+			pidfile = DirectoryToHome(LogConfig.LogDirectory, pidfile);
+			SchumixBase.PidFile = pidfile;
+			RemovePidFile();
+			CreateFile(pidfile);
+			var file = new StreamWriter(pidfile, true) { AutoFlush = true };
+			file.WriteLine("{0}", Process.GetCurrentProcess().Id);
+			file.Close();
+		}
+
+		public void RemovePidFile()
+		{
+			if(File.Exists(SchumixBase.PidFile))
+				File.Delete(SchumixBase.PidFile);
 		}
 	}
 }

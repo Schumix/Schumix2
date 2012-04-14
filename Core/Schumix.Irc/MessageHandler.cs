@@ -428,47 +428,40 @@ namespace Schumix.Irc
 		{
 			if(sChannelInfo.FSelect(IFunctions.Log) && sChannelInfo.FSelect(IChannelFunctions.Log, channel))
 			{
-				try
+				sUtilities.CreateDirectory(LogConfig.IrcLogDirectory);
+				string logdir = string.Empty;
+				string logfile = string.Empty;
+
+				if(LogConfig.IrcLogDirectory.Length > 0 && LogConfig.IrcLogDirectory.Substring(0, 1) == "/")
+					logdir = string.Format("{0}/{1}", LogConfig.IrcLogDirectory, channel);
+				else
+					logdir = string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, channel);
+
+				if(DateTime.Now.Month < 10)
 				{
-					sUtilities.CreateDirectory(LogConfig.IrcLogDirectory);
-					string logdir = string.Empty;
-					string logfile = string.Empty;
-
-					if(LogConfig.IrcLogDirectory.Length > 0 && LogConfig.IrcLogDirectory.Substring(0, 1) == "/")
-						logdir = string.Format("{0}/{1}", LogConfig.IrcLogDirectory, channel);
+					if(DateTime.Now.Day < 10)
+						logfile = string.Format("{0}/{1}-0{2}-0{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 					else
-						logdir = string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, channel);
-
-					if(DateTime.Now.Month < 10)
-					{
-						if(DateTime.Now.Day < 10)
-							logfile = string.Format("{0}/{1}-0{2}-0{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-						else
-							logfile = string.Format("{0}/{1}-0{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-					}
-					else
-					{
-						if(DateTime.Now.Day < 10)
-							logfile = string.Format("{0}/{1}-{2}-0{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-						else
-							logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-					}
-
-					sUtilities.CreateDirectory(logdir);
-					sUtilities.CreateFile(logfile);
-					var file = new StreamWriter(logfile, true) { AutoFlush = true };
-
-					if(DateTime.Now.Minute < 10)
-						file.WriteLine("[{0}:0{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
-					else
-						file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
-
-					file.Close();
+						logfile = string.Format("{0}/{1}-0{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 				}
-				catch(Exception)
+				else
 				{
-					LogToFile(channel, user, args);
+					if(DateTime.Now.Day < 10)
+						logfile = string.Format("{0}/{1}-{2}-0{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+					else
+						logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
 				}
+
+				sUtilities.CreateDirectory(logdir);
+				sUtilities.CreateFile(logfile);
+				var file = new StreamWriter(logfile, true) { AutoFlush = true };
+
+				if(DateTime.Now.Minute < 10)
+					file.WriteLine("[{0}:0{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
+				else
+					file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
+
+				file.Close();
 			}
 		}
 	}
