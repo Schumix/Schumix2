@@ -29,7 +29,6 @@ namespace Schumix.Irc
 {
 	public partial class MessageHandler : CommandManager
 	{
-		public static bool HostServStatus;
 		public static bool NewNick;
 		public static bool Online;
 		protected MessageHandler() {}
@@ -42,20 +41,14 @@ namespace Schumix.Irc
 
 			if(IRCConfig.UseNickServ)
 			{
-				Log.Notice("NickServ", sLConsole.NickServ("Text"));
-
 				if(!NewNick)
-					sSender.NickServ(IRCConfig.NickServPassword);
+					sNickInfo.Identify(IRCConfig.NickServPassword);
 			}
 
 			if(IRCConfig.UseHostServ)
 			{
 				if(!NewNick)
-				{
-					HostServStatus = true;
-					sSender.HostServ("on");
-					Log.Notice("HostServ", sLConsole.HostServ("Text"));
-				}
+					sNickInfo.Vhost("on");
 				else
 				{
 					Log.Notice("HostServ", sLConsole.HostServ("Text2"));
@@ -66,9 +59,8 @@ namespace Schumix.Irc
 			}
 			else
 			{
-				Log.Notice("HostServ", sLConsole.HostServ("Text2"));
 				if(IRCConfig.HostServEnabled)
-					sSender.HostServ("off");
+					sNickInfo.Vhost("off");
 
 				WhoisPrivmsg = sNickInfo.NickStorage;
 				ChannelPrivmsg = sNickInfo.NickStorage;
@@ -123,11 +115,17 @@ namespace Schumix.Irc
 			if(sIRCMessage.Nick == "NickServ")
 			{
 				if(sIRCMessage.Args.Contains("Password incorrect."))
+				{
+					sNickInfo.ChangeIdentifyStatus(true);
 					Log.Error("NickServ", sLConsole.NickServ("Text2"));
+				}
 				else if(sIRCMessage.Args.Contains("You are already identified."))
 					Log.Warning("NickServ", sLConsole.NickServ("Text3"));
 				else if(sIRCMessage.Args.Contains("Password accepted - you are now recognized."))
+				{
+					sNickInfo.ChangeIdentifyStatus(true);
 					Log.Success("NickServ", sLConsole.NickServ("Text4"));
+				}
 
 				if(IsOnline)
 				{
@@ -169,14 +167,14 @@ namespace Schumix.Irc
 
 			if(sIRCMessage.Nick == "HostServ" && IRCConfig.UseHostServ)
 			{
-				if(sIRCMessage.Args.Contains("Your vhost of") && HostServStatus)
+				if(sIRCMessage.Args.Contains("Your vhost of") && !sNickInfo.IsVhost)
 				{
-					HostServStatus = false;
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
 
 					if(!Online)
 					{
+						sNickInfo.ChangeVhostStatus(true);
 						sChannelInfo.JoinChannel();
 						Online = true;
 					}

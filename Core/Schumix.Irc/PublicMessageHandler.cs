@@ -141,13 +141,12 @@ namespace Schumix.Irc
 						sSender.Nick(IRCConfig.NickName);
 						Log.Notice("NickServ", sLConsole.NickServ("Text"));
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick/identify", sIRCMessage.Channel));
-						sSender.NickServ(IRCConfig.NickServPassword);
+						sNickInfo.Identify(IRCConfig.NickServPassword);
 						NewNick = false;
 
 						if(IRCConfig.UseHostServ)
 						{
-							HostServStatus = true;
-							sSender.HostServ("on");
+							sNickInfo.Vhost("on");
 							Log.Notice("HostServ", sLConsole.HostServ("Text"));
 						}
 					}
