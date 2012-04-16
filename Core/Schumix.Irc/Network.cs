@@ -327,9 +327,10 @@ namespace Schumix.Irc
 			Online = false;
 			_enabled = true;
 			NewNick = false;
-			HostServStatus = false;
 			NewNickPrivmsg = string.Empty;
 			SchumixBase.UrlTitleEnabled = false;
+			sNickInfo.ChangeIdentifyStatus(false);
+			sNickInfo.ChangeVhostStatus(false);
 		}
 
 		private void Close()

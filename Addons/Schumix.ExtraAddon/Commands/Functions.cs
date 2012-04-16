@@ -164,6 +164,14 @@ namespace Schumix.ExtraAddon.Commands
 				ExtraAddon.IsOnline = true;
 				sSender.NickServInfo(IRCConfig.NickName);
 			}
+			else if(sNickInfo.NickStorage.ToLower() == IRCConfig.NickName.ToLower() && !sNickInfo.IsIdentify)
+			{
+				sNickInfo.Identify(IRCConfig.NickServPassword);
+				MessageHandler.NewNick = false;
+
+				if(IRCConfig.UseHostServ)
+					sNickInfo.Vhost("on");
+			}
 		}
 	}
 }

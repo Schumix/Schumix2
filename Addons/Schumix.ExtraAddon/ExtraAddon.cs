@@ -257,16 +257,11 @@ namespace Schumix.ExtraAddon
 					sNameList.Change(sNickInfo.NickStorage, IRCConfig.NickName, true);
 					sNickInfo.ChangeNick(IRCConfig.NickName);
 					sSender.Nick(IRCConfig.NickName);
-					Log.Notice("NickServ", sLConsole.NickServ("Text"));
-					sSender.NickServ(IRCConfig.NickServPassword);
+					sNickInfo.Identify(IRCConfig.NickServPassword);
 					MessageHandler.NewNick = false;
-		
+
 					if(IRCConfig.UseHostServ)
-					{
-						MessageHandler.HostServStatus = true;
-						sSender.HostServ("on");
-						Log.Notice("HostServ", sLConsole.HostServ("Text"));
-					}
+						sNickInfo.Vhost("on");
 
 					IsOnline = false;
 				}
