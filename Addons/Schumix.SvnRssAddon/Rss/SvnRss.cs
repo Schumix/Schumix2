@@ -231,6 +231,9 @@ namespace Schumix.SvnRssAddon
 
 		private string DownloadToXml(string data)
 		{
+			if(data == string.Empty)
+				return string.Empty;
+
 			data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);
 			data += "</channel></rss>";
 			return data;

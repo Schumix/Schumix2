@@ -48,8 +48,9 @@ namespace Schumix.Framework
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly DateTime UnixTimeStart = new DateTime(1970, 1, 1, 0, 0, 0);
-		private const int TicksPerSecond = 10000;
 		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
+		private readonly object WriteLock = new object();
+		private const int TicksPerSecond = 10000;
 		private Utilities() {}
 
 		public string GetUrl(string url)
@@ -770,270 +771,279 @@ namespace Schumix.Framework
 			return false;
 		}
 
-		public string DownloadString(string url, int maxlength)
-		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
-			{
-				if(sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
-			}
-
-			response.Close();
-			return sb.ToString();
-		}
-
 		public string DownloadString(Uri url, int maxlength)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url.ToString(), maxlength);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
-		public string DownloadString(string url, string Contains)
+		public string DownloadString(string url, int maxlength)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(sb.ToString().Contains(Contains))
-					break;
+				try
+				{
+					var request = (HttpWebRequest)WebRequest.Create(url);
+					request.AllowAutoRedirect = true;
+					request.UserAgent = Consts.SchumixUserAgent;
+					request.Referer = Consts.SchumixReferer;
 
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+					int length = 0;
+					byte[] buf = new byte[1024];
+					var sb = new StringBuilder();
+					var response = request.GetResponse();
+					var stream = response.GetResponseStream();
+
+					while((length = stream.Read(buf, 0, buf.Length)) != 0)
+					{
+						if(sb.Length >= maxlength)
+							break;
+
+						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+					}
+
+					response.Close();
+					return sb.ToString();
+				}
+				catch(Exception e)
+				{
+					Log.Error("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					return string.Empty;
+				}
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
 		public string DownloadString(Uri url, string Contains)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(sb.ToString().Contains(Contains))
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url.ToString(), 0, Contains, null);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
-		public string DownloadString(string url, string Contains, NetworkCredential credential)
+		public string DownloadString(string url, string Contains)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-			request.Credentials = credential;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(sb.ToString().Contains(Contains))
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url, 0, Contains, null);
 			}
+		}
 
-			response.Close();
-			return sb.ToString();
+		public string DownloadString(Uri url, int timeout, string Contains)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url.ToString(), timeout, Contains, null);
+			}
+		}
+
+		public string DownloadString(string url, int timeout, string Contains)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url, timeout, Contains, null);
+			}
+		}
+
+		public string DownloadString(Uri url, string Contains, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url.ToString(), 0, Contains, null, maxlength);
+			}
+		}
+
+		public string DownloadString(string url, string Contains, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url, 0, Contains, null, maxlength);
+			}
+		}
+
+		public string DownloadString(Uri url, int timeout, string Contains, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url.ToString(), timeout, Contains, null, maxlength);
+			}
+		}
+
+		public string DownloadString(string url, int timeout, string Contains, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url, timeout, Contains, null, maxlength);
+			}
 		}
 
 		public string DownloadString(Uri url, string Contains, NetworkCredential credential)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-			request.Credentials = credential;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(sb.ToString().Contains(Contains))
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url.ToString(), 0, Contains, credential);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
-		public string DownloadString(string url, Regex regex, int maxlength = 0)
+		public string DownloadString(string url, string Contains, NetworkCredential credential)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			if(maxlength == 0)
-				maxlength = 10000;
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url, 0, Contains, credential);
 			}
+		}
 
-			response.Close();
-			return sb.ToString();
+		public string DownloadString(Uri url, int timeout, string Contains, NetworkCredential credential)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url.ToString(), timeout, Contains, credential);
+			}
+		}
+
+		public string DownloadString(string url, int timeout, string Contains, NetworkCredential credential)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url, timeout, Contains, credential);
+			}
+		}
+
+		public string DownloadString(Uri url, string Contains, NetworkCredential credential, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url.ToString(), 0, Contains, credential, maxlength);
+			}
+		}
+
+		public string DownloadString(string url, string Contains, NetworkCredential credential, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url, 0, Contains, credential, maxlength);
+			}
+		}
+
+		public string DownloadString(Uri url, int timeout, string Contains, NetworkCredential credential, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url.ToString(), timeout, Contains, credential, maxlength);
+			}
+		}
+
+		public string DownloadString(string url, int timeout, string Contains, NetworkCredential credential, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				try
+				{
+					var request = (HttpWebRequest)WebRequest.Create(url);
+					if(timeout != 0)
+						request.Timeout = timeout;
+
+					request.AllowAutoRedirect = true;
+					request.UserAgent = Consts.SchumixUserAgent;
+					request.Referer = Consts.SchumixReferer;
+
+					if(!credential.IsNull())
+						request.Credentials = credential;
+
+					int length = 0;
+					byte[] buf = new byte[1024];
+					var sb = new StringBuilder();
+					var response = request.GetResponse();
+					var stream = response.GetResponseStream();
+
+					if(maxlength == 0)
+						maxlength = 10000;
+
+					while((length = stream.Read(buf, 0, buf.Length)) != 0)
+					{
+						if(sb.ToString().Contains(Contains) || sb.Length >= 10000)
+							break;
+
+						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+					}
+
+					response.Close();
+					return sb.ToString();
+				}
+				catch(Exception e)
+				{
+					Log.Error("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					return string.Empty;
+				}
+			}
 		}
 
 		public string DownloadString(Uri url, Regex regex, int maxlength = 0)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			if(maxlength == 0)
-				maxlength = 10000;
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url.ToString(), 0, regex, maxlength);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
-		public string DownloadString(string url, int timeout, Regex regex, int maxlength = 0)
+		public string DownloadString(string url, Regex regex, int maxlength = 0)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.Timeout = timeout;
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			if(maxlength == 0)
-				maxlength = 10000;
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url, 0, regex, maxlength);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
 		public string DownloadString(Uri url, int timeout, Regex regex, int maxlength = 0)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.Timeout = timeout;
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			if(maxlength == 0)
-				maxlength = 10000;
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url.ToString(), timeout, regex, maxlength);
 			}
+		}
 
-			response.Close();
-			return sb.ToString();
+		public string DownloadString(string url, int timeout, Regex regex, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				try
+				{
+					var request = (HttpWebRequest)WebRequest.Create(url);
+					if(timeout != 0)
+						request.Timeout = timeout;
+
+					request.AllowAutoRedirect = true;
+					request.UserAgent = Consts.SchumixUserAgent;
+					request.Referer = Consts.SchumixReferer;
+
+					int length = 0;
+					byte[] buf = new byte[1024];
+					var sb = new StringBuilder();
+					var response = request.GetResponse();
+					var stream = response.GetResponseStream();
+
+					if(maxlength == 0)
+						maxlength = 10000;
+
+					while((length = stream.Read(buf, 0, buf.Length)) != 0)
+					{
+						if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
+							break;
+
+						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+					}
+
+					response.Close();
+					return sb.ToString();
+				}
+				catch(Exception e)
+				{
+					Log.Error("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					return string.Empty;
+				}
+			}
 		}
 
 		public bool IsValueBiggerDateTimeNow(int Year, int Month, int Day, int Hour, int Minute)
