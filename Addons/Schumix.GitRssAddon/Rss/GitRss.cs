@@ -262,6 +262,9 @@ namespace Schumix.GitRssAddon
 
 		private string DownloadToXml(string data)
 		{
+			if(data == string.Empty)
+				return string.Empty;
+
 			data = data.Substring(0, data.IndexOf("</entry>") + "</entry>".Length);
 			data += "</feed>";
 			return data;

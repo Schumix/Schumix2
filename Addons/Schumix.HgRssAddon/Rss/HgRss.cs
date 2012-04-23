@@ -249,6 +249,9 @@ namespace Schumix.HgRssAddon
 
 		private string DownloadToXml(string data)
 		{
+			if(data == string.Empty)
+				return string.Empty;
+
 			if(_website == "bitbucket")
 			{
 				data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);
