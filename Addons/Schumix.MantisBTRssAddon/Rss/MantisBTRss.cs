@@ -63,6 +63,7 @@ namespace Schumix.MantisBTRssAddon
 				_password = url.Substring(0, url.IndexOf("@"));
 				url = url.Remove(0, url.IndexOf("@")+1);
 				_url += url;
+				_credential = new NetworkCredential(_username, _password);
 			}
 			else
 			{
@@ -72,7 +73,6 @@ namespace Schumix.MantisBTRssAddon
 			}
 
 			Init();
-			_credential = new NetworkCredential(_username, _password);
 		}
 
 		private void Init()

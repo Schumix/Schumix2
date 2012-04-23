@@ -815,38 +815,6 @@ namespace Schumix.Framework
 			}
 		}
 
-		public string DownloadString(Uri url, string Contains)
-		{
-			lock(WriteLock)
-			{
-				return DownloadString(url.ToString(), 0, Contains, null);
-			}
-		}
-
-		public string DownloadString(string url, string Contains)
-		{
-			lock(WriteLock)
-			{
-				return DownloadString(url, 0, Contains, null);
-			}
-		}
-
-		public string DownloadString(Uri url, int timeout, string Contains)
-		{
-			lock(WriteLock)
-			{
-				return DownloadString(url.ToString(), timeout, Contains, null);
-			}
-		}
-
-		public string DownloadString(string url, int timeout, string Contains)
-		{
-			lock(WriteLock)
-			{
-				return DownloadString(url, timeout, Contains, null);
-			}
-		}
-
 		public string DownloadString(Uri url, string Contains, int maxlength = 0)
 		{
 			lock(WriteLock)
@@ -876,38 +844,6 @@ namespace Schumix.Framework
 			lock(WriteLock)
 			{
 				return DownloadString(url, timeout, Contains, null, maxlength);
-			}
-		}
-
-		public string DownloadString(Uri url, string Contains, NetworkCredential credential)
-		{
-			lock(WriteLock)
-			{
-				return DownloadString(url.ToString(), 0, Contains, credential);
-			}
-		}
-
-		public string DownloadString(string url, string Contains, NetworkCredential credential)
-		{
-			lock(WriteLock)
-			{
-				return DownloadString(url, 0, Contains, credential);
-			}
-		}
-
-		public string DownloadString(Uri url, int timeout, string Contains, NetworkCredential credential)
-		{
-			lock(WriteLock)
-			{
-				return DownloadString(url.ToString(), timeout, Contains, credential);
-			}
-		}
-
-		public string DownloadString(string url, int timeout, string Contains, NetworkCredential credential)
-		{
-			lock(WriteLock)
-			{
-				return DownloadString(url, timeout, Contains, credential);
 			}
 		}
 
