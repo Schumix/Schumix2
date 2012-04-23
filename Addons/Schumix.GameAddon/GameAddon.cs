@@ -39,6 +39,8 @@ namespace Schumix.GameAddon
 		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		private readonly Sender sSender = Singleton<Sender>.Instance;
 
 		public void Setup()
 		{
@@ -48,6 +50,7 @@ namespace Schumix.GameAddon
 			Network.PublicRegisterHandler("KICK",    HandleKick);
 			Network.PublicRegisterHandler("QUIT",    HandleQuit);
 			Network.PublicRegisterHandler("NICK",    HandleNewNick);
+			Network.PublicRegisterHandler("MODE",    HandleMode);
 			InitIrcCommand();
 			Console.CancelKeyPress += (sender, e) => { Clean(); };
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => { Clean(); };
@@ -60,6 +63,7 @@ namespace Schumix.GameAddon
 			Network.PublicRemoveHandler("KICK",      HandleKick);
 			Network.PublicRemoveHandler("QUIT",      HandleQuit);
 			Network.PublicRemoveHandler("NICK",      HandleNewNick);
+			Network.PublicRemoveHandler("MODE",      HandleMode);
 			RemoveIrcCommand();
 			Clean();
 		}
@@ -464,6 +468,53 @@ namespace Schumix.GameAddon
 					{
 						maffia.Value.NewNick(player.Key, sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 						break;
+					}
+				}
+			}
+		}
+
+		private void HandleMode(IRCMessage sIRCMessage)
+		{
+			if(sIRCMessage.Info.Length < 5)
+				return;
+
+			if(!sIRCMessage.Info[3].Contains("v") && !sIRCMessage.Info[3].Contains("-"))
+				return;
+
+			if(sNickInfo.NickStorage.ToLower() == sIRCMessage.Nick.ToLower())
+				return;
+
+			sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, "-");
+
+			foreach(var maffia in GameAddon.MaffiaList)
+			{
+				if(!maffia.Value.Running)
+					continue;
+
+				foreach(var player in maffia.Value.GetPlayerList())
+				{
+					if(player.Value == sIRCMessage.Info[4] && sIRCMessage.Info[3].Substring(0, 1) == "v")
+					{
+						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[4]);
+						continue;
+					}
+
+					if(sIRCMessage.Info.Length >= 6 && player.Value == sIRCMessage.Info[5] && sIRCMessage.Info[3].Substring(1) == "v")
+					{
+						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[5]);
+						continue;
+					}
+
+					if(sIRCMessage.Info.Length >= 7 && player.Value == sIRCMessage.Info[6] && sIRCMessage.Info[3].Substring(2) == "v")
+					{
+						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[6]);
+						continue;
+					}
+
+					if(sIRCMessage.Info.Length >= 8 && player.Value == sIRCMessage.Info[7] && sIRCMessage.Info[3].Substring(3) == "v")
+					{
+						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[7]);
+						continue;
 					}
 				}
 			}

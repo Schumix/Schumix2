@@ -809,7 +809,7 @@ namespace Schumix.Framework
 				}
 				catch(Exception e)
 				{
-					Log.Error("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					Log.Debug("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
 					return string.Empty;
 				}
 			}
@@ -974,7 +974,7 @@ namespace Schumix.Framework
 				}
 				catch(Exception e)
 				{
-					Log.Error("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					Log.Debug("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
 					return string.Empty;
 				}
 			}
@@ -1040,7 +1040,7 @@ namespace Schumix.Framework
 				}
 				catch(Exception e)
 				{
-					Log.Error("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					Log.Debug("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
 					return string.Empty;
 				}
 			}
