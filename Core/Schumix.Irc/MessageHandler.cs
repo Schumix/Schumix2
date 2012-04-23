@@ -51,21 +51,29 @@ namespace Schumix.Irc
 					sNickInfo.Vhost("on");
 				else
 				{
-					Log.Notice("HostServ", sLConsole.HostServ("Text2"));
-					WhoisPrivmsg = sNickInfo.NickStorage;
-					ChannelPrivmsg = sNickInfo.NickStorage;
-					sChannelInfo.JoinChannel();
+					if(!Online)
+					{
+						Log.Notice("HostServ", sLConsole.HostServ("Text2"));
+						WhoisPrivmsg = sNickInfo.NickStorage;
+						ChannelPrivmsg = sNickInfo.NickStorage;
+						sChannelInfo.JoinChannel();
+						Online = true;
+					}
 				}
 			}
 			else
 			{
-				if(IRCConfig.HostServEnabled)
-					sNickInfo.Vhost("off");
+				if(!Online)
+				{
+					if(IRCConfig.HostServEnabled)
+						sNickInfo.Vhost("off");
 
-				WhoisPrivmsg = sNickInfo.NickStorage;
-				ChannelPrivmsg = sNickInfo.NickStorage;
-				NewNickPrivmsg = string.Empty;
-				sChannelInfo.JoinChannel();
+					WhoisPrivmsg = sNickInfo.NickStorage;
+					ChannelPrivmsg = sNickInfo.NickStorage;
+					NewNickPrivmsg = string.Empty;
+					sChannelInfo.JoinChannel();
+					Online = true;
+				}
 			}
 
 			SchumixBase.UrlTitleEnabled = true;

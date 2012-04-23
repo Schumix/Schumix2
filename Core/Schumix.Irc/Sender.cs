@@ -28,7 +28,6 @@ namespace Schumix.Irc
 	{
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly object WriteLock = new object();
-
 		private Sender() {}
 
 		// másik fáljból van csak hibát nem tudom orvosolni =/

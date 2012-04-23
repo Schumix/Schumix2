@@ -63,13 +63,23 @@ namespace Schumix.Framework
 
 		public static void Init(string FileName)
 		{
+			bool isfile = false;
 			_FileName = FileName;
 			var time = DateTime.Now;
 			sUtilities.CreateDirectory(LogConfig.LogDirectory);
 			string logfile = sUtilities.DirectoryToHome(LogConfig.LogDirectory, _FileName);
+
+			if(File.Exists(logfile))
+				isfile = true;
+
 			sUtilities.CreateFile(logfile);
 			var file = new StreamWriter(logfile, true) { AutoFlush = true };
-			file.Write(sLConsole.Log("Text"), time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
+
+			if(!isfile)
+				file.Write(sLConsole.Log("Text"), time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
+			else
+				file.Write(sLConsole.Log("Text2"), time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
+
 			file.Close();
 		}
 
