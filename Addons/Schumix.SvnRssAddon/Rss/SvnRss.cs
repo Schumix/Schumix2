@@ -65,6 +65,7 @@ namespace Schumix.SvnRssAddon
 				_password = url.Substring(0, url.IndexOf("@"));
 				url = url.Remove(0, url.IndexOf("@")+1);
 				_url += url;
+				_credential = new NetworkCredential(_username, _password);
 			}
 			else
 			{
@@ -75,7 +76,6 @@ namespace Schumix.SvnRssAddon
 
 			_website = website;
 			Init();
-			_credential = new NetworkCredential(_username, _password);
 		}
 
 		private void Init()
