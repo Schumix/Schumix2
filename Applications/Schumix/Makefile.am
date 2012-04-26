@@ -21,7 +21,6 @@ SCHUMIX_EXE_MDB_SOURCE=../../Run/Debug/Schumix.exe.mdb
 SCHUMIX_EXE_MDB=$(BUILD_DIR)/Schumix.exe.mdb
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
@@ -66,7 +65,6 @@ BUILD_DIR = ../../Run/Release
 SCHUMIX_EXE_MDB=
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
@@ -107,7 +105,6 @@ SCHUMIX_EXE_MDB_SOURCE=../../Run/Debug_x64/Schumix.exe.mdb
 SCHUMIX_EXE_MDB=$(BUILD_DIR)/Schumix.exe.mdb
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
@@ -148,7 +145,6 @@ BUILD_DIR = ../../Run/Release_x64
 SCHUMIX_EXE_MDB=
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
@@ -178,7 +174,6 @@ PROGRAMFILES = \
 	$(SCHUMIX_EXE_MDB) \
 	$(MONO_POSIX_DLL) \
 	$(SCHUMIX_IRC_DLL) \
-	$(ORG_MENTALIS_SECURITY_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(MYSQL_DATA_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
@@ -241,7 +236,6 @@ include $(top_srcdir)/Makefile.include
 
 MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL = $(BUILD_DIR)/Org.Mentalis.Security.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
@@ -259,7 +253,6 @@ MONO_LUAINTERFACE_DLL = $(BUILD_DIR)/Mono.LuaInterface.dll
 SCHUMIX = $(BUILD_DIR)/schumix
 
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
-$(eval $(call emit-deploy-target,ORG_MENTALIS_SECURITY_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,SQLITE3_DLL))

@@ -32,7 +32,6 @@ SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
 
@@ -64,7 +63,6 @@ SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
 SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_IRC_DLL_MDB=
 
 endif
@@ -97,7 +95,6 @@ SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.API.dll.mdb
 SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_IRC_DLL_MDB=
 
 endif
@@ -128,7 +125,6 @@ SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
 SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_IRC_DLL_MDB=
 
 endif
@@ -151,7 +147,6 @@ PROGRAMFILES = \
 	$(SCHUMIX_API_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL) \
-	$(ORG_MENTALIS_SECURITY_DLL) \
 	$(SCHUMIX_IRC_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
@@ -208,7 +203,6 @@ MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL = $(BUILD_DIR)/Org.Mentalis.Security.dll
 SCHUMIX_LUAENGINE_PC = $(BUILD_DIR)/schumix.luaengine.pc
 
 $(eval $(call emit-deploy-target,LIBLUA5_1_SO))
@@ -219,7 +213,6 @@ $(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
-$(eval $(call emit-deploy-target,ORG_MENTALIS_SECURITY_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_LUAENGINE_PC,schumix.luaengine.pc))
 
 

@@ -16,7 +16,6 @@ BUILD_DIR = ../../Run/Debug
 
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -42,7 +41,6 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release
 
 SCHUMIX_IRC_DLL_MDB=
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -67,7 +65,6 @@ BUILD_DIR = ../../Run/Debug_x64
 
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -92,7 +89,6 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release_x64
 
 SCHUMIX_IRC_DLL_MDB=
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -109,7 +105,6 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(SCHUMIX_IRC_DLL_MDB) \
-	$(ORG_MENTALIS_SECURITY_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SQLITE3_DLL) \
 	$(SCHUMIX_DB3) \
@@ -148,7 +143,8 @@ FILES = \
 	Ctcp/CtcpUtil.cs \
 	ChannelNameList.cs \
 	Ignore.cs \
-	Commands/GoogleWebSearch.cs 
+	Commands/GoogleWebSearch.cs \
+	ConnectionType.cs 
 
 DATA_FILES = 
 
@@ -171,7 +167,6 @@ CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 
 include $(top_srcdir)/Makefile.include
 
-ORG_MENTALIS_SECURITY_DLL = $(BUILD_DIR)/Org.Mentalis.Security.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
@@ -180,7 +175,6 @@ SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
 SCHUMIX_IRC_PC = $(BUILD_DIR)/schumix.irc.pc
 
-$(eval $(call emit-deploy-target,ORG_MENTALIS_SECURITY_DLL))
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))

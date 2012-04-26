@@ -24,8 +24,9 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Net.Security;
 using System.Collections.Generic;
-using Org.Mentalis.Security.Ssl;
+using System.Security.Authentication;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
@@ -44,7 +45,6 @@ namespace Schumix.Irc
         /// <summary>
         ///     A kapcsolatot tároljra.
         /// </summary>
-		private SecureTcpClient sclient;
 		private TcpClient client;
 
         /// <summary>
@@ -63,6 +63,7 @@ namespace Schumix.Irc
 		private readonly int _port;
 		private bool _enabled = false;
 		private bool NetwokQuit = false;
+		private ConnectionType CType;
 		//private DateTime LastOpcode;
 
         /// <summary>
@@ -85,8 +86,13 @@ namespace Schumix.Irc
 			InitHandler();
 
 			Task.Factory.StartNew(() => sChannelInfo.ChannelList());
-
 			Log.Debug("Network", sLConsole.Network("Text2"));
+
+			if(IRCConfig.Ssl)
+				CType = ConnectionType.Ssl;
+			else
+				CType = ConnectionType.Normal;
+
 			Connect();
 			sIgnoreNickName.AddConfig();
 			sIgnoreChannel.AddConfig();
@@ -273,22 +279,8 @@ namespace Schumix.Irc
 		{
 			try
 			{
-				if(IRCConfig.Ssl)
-				{
-					var options = new SecurityOptions(SecureProtocol.Tls1);
-					options.Certificate = null;
-					options.Entity = ConnectionEnd.Client;
-					options.VerificationType = CredentialVerification.None;
-					options.Flags = SecurityFlags.Default;
-					options.AllowedAlgorithms = SslAlgorithms.SECURE_CIPHERS;
-					sclient = new SecureTcpClient(options);		
-					sclient.Connect(_server, _port);
-				}
-				else
-				{
-					client = new TcpClient();
-					client.Connect(_server, _port);
-				}
+				client = new TcpClient();
+				client.Connect(_server, _port);
 			}
 			catch(Exception)
 			{
@@ -296,23 +288,34 @@ namespace Schumix.Irc
 				return;
 			}
 
-			if(!IRCConfig.Ssl)
+			if(client.Connected)
+				Log.Success("Network", sLConsole.Network("Text11"));
+			else
 			{
-				if(client.Connected)
-					Log.Success("Network", sLConsole.Network("Text11"));
-				else
+				Log.Error("Network", sLConsole.Network("Text12"));
+				return;
+			}
+
+			if(CType == ConnectionType.Ssl)
+			{
+				var networkStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback((s,ce,ca,p) => true), null);
+
+				try
 				{
-					Log.Error("Network", sLConsole.Network("Text12"));
-					return;
+					((SslStream)networkStream).AuthenticateAsClient(_server);
+				}
+				catch(AuthenticationException e)
+				{
+					Console.WriteLine("Certificate not accepted, exception: {0}", e.Message);
 				}
 
-				reader = new StreamReader(client.GetStream());
-				INetwork.Writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
+				reader = new StreamReader(networkStream);
+				INetwork.Writer = new StreamWriter(networkStream) { AutoFlush = true };
 			}
 			else
 			{
-				reader = new StreamReader(sclient.GetStream());
-				INetwork.Writer = new StreamWriter(sclient.GetStream()) { AutoFlush = true };
+				reader = new StreamReader(client.GetStream());
+				INetwork.Writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
 			}
 
 			if(b)
@@ -335,9 +338,7 @@ namespace Schumix.Irc
 
 		private void Close()
 		{
-			if(!IRCConfig.Ssl)
-				client.Close();
-
+			client.Close();
 			INetwork.Writer.Dispose();
 			reader.Dispose();
 		}

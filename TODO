@@ -8,7 +8,6 @@ Megírásra váró feladatok:
 - Megoldás arra ha vki úgy aktiválja a vhost-ot hogy sehol sincs fent (csatorna). Ha ezútán se lép fel csatornára de mondjuk nevet cserél vagy lelép irc-ről akkor fen áll a lehetőség hogy a kódot támadás érheti. Ehhez valamilyen védelmi mehanizmust kéne kitalálni.
 - Ha valaki floodolja botot saját parancsaival akkor bizonyos szám után tegye tiltó listára az adott nick-et. Majd oldja fel megadott idő múlva.
 - Játék addon bővítése és a kód nyelvezetét átírni angolra is. Statisztikai rész létrehozása hozzá.
-- Ssh kapcsolódást fixálni kéne.
 - Valamiért beáll a kód de pontos hiba ok nincs.
 16:40:48 D Utilities: Checking: http://paste2.org/p/----------
 21:47:0 D Utilities: Checking: 91.120.-------------
