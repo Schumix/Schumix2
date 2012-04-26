@@ -51,8 +51,9 @@ namespace Schumix.Framework
 				sUtilities.CreateFile(filename);
 			}
 
+			var time = DateTime.Now;
 			var file = new StreamWriter(filename, true) { AutoFlush = true };
-			file.Write(log);
+			file.Write("{0}. {1}. {2}. {3}", time.Year, time.Month, time.Day, log);
 			file.Close();
 		}
 

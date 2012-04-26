@@ -81,6 +81,7 @@
     <Compile Include="ChannelNameList.cs" />
     <Compile Include="Ignore.cs" />
     <Compile Include="Commands\GoogleWebSearch.cs" />
+    <Compile Include="ConnectionType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

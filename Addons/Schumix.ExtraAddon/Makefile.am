@@ -29,7 +29,6 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
 WOLFRAMAPI_DLL_SOURCE=../../Run/Libraries/Debug/WolframAPI.dll
@@ -61,7 +60,6 @@ MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_IRC_DLL_MDB=
 WOLFRAMAPI_DLL_SOURCE=../../Run/Libraries/Release/WolframAPI.dll
 WOLFRAMAPI_DLL_MDB=
@@ -93,7 +91,6 @@ MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_IRC_DLL_MDB=
 WOLFRAMAPI_DLL_SOURCE=../../Run/Libraries/Debug_x64/WolframAPI.dll
 WOLFRAMAPI_DLL_MDB=
@@ -123,7 +120,6 @@ MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL_SOURCE=../../Dependencies/Org.Mentalis.Security.dll
 SCHUMIX_IRC_DLL_MDB=
 WOLFRAMAPI_DLL_SOURCE=../../Run/Libraries/Release_x64/WolframAPI.dll
 WOLFRAMAPI_DLL_MDB=
@@ -144,7 +140,6 @@ PROGRAMFILES = \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL) \
-	$(ORG_MENTALIS_SECURITY_DLL) \
 	$(SCHUMIX_IRC_DLL_MDB) \
 	$(WOLFRAMAPI_DLL) \
 	$(WOLFRAMAPI_DLL_MDB)  
@@ -198,7 +193,6 @@ SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
-ORG_MENTALIS_SECURITY_DLL = $(BUILD_DIR)/Org.Mentalis.Security.dll
 WOLFRAMAPI_DLL = $(BUILD_DIR)/WolframAPI.dll
 SCHUMIX_EXTRAADDON_PC = $(BUILD_DIR)/schumix.extraaddon.pc
 
@@ -211,7 +205,6 @@ $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL))
-$(eval $(call emit-deploy-target,ORG_MENTALIS_SECURITY_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL_MDB))
 $(eval $(call emit-deploy-target,WOLFRAMAPI_DLL))
 $(eval $(call emit-deploy-target,WOLFRAMAPI_DLL_MDB))
