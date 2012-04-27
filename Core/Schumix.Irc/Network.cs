@@ -306,7 +306,7 @@ namespace Schumix.Irc
 				}
 				catch(AuthenticationException e)
 				{
-					Log.Error("Certificate not accepted, exception: {0}", e.Message);
+					Log.Error("Network", sLConsole.Network("Text19"), e.Message);
 				}
 
 				reader = new StreamReader(networkStream);
