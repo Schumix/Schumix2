@@ -1450,6 +1450,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Received unhandled opcode: {0}";
 				}
+				case "Text19":
+				{
+					if(Locale == "huHU")
+						return "A tanúsítvány nem lett elfogadva, kivétel: {0}";
+					else if(Locale == "enUS")
+						return "Certificate not accepted, exception: {0}";
+					else
+						return "Certificate not accepted, exception: {0}";
+				}
 				default:
 					return string.Empty;
 			}
