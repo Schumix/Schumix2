@@ -306,7 +306,7 @@ namespace Schumix.Irc
 				}
 				catch(AuthenticationException e)
 				{
-					Console.WriteLine("Certificate not accepted, exception: {0}", e.Message);
+					Log.Error("Certificate not accepted, exception: {0}", e.Message);
 				}
 
 				reader = new StreamReader(networkStream);

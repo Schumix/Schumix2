@@ -54,9 +54,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
-    <Reference Include="Org.Mentalis.Security">
-      <HintPath>..\..\Dependencies\Org.Mentalis.Security.dll</HintPath>
-    </Reference>
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
