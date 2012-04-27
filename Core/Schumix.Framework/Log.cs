@@ -37,7 +37,9 @@ namespace Schumix.Framework
         /// </returns>
 		private static string GetTime()
 		{
-			return string.Format("{0}:{1}:{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+			return string.Format("{0}:{1}:{2}", DateTime.Now.Hour < 10 ? "0" + DateTime.Now.Hour.ToString() : DateTime.Now.Hour.ToString(),
+								DateTime.Now.Minute < 10 ? "0" + DateTime.Now.Minute.ToString() : DateTime.Now.Minute.ToString(),
+								DateTime.Now.Second < 10 ? "0" + DateTime.Now.Second.ToString() : DateTime.Now.Second.ToString());
 		}
 
 		private static void LogToFile(string log)
@@ -53,7 +55,8 @@ namespace Schumix.Framework
 
 			var time = DateTime.Now;
 			var file = new StreamWriter(filename, true) { AutoFlush = true };
-			file.Write("{0}. {1}. {2}. {3}", time.Year, time.Month, time.Day, log);
+			file.Write("{0}. {1}. {2}. {3}", time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+						time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(), log);
 			file.Close();
 		}
 
@@ -77,9 +80,17 @@ namespace Schumix.Framework
 			var file = new StreamWriter(logfile, true) { AutoFlush = true };
 
 			if(!isfile)
-				file.Write(sLConsole.Log("Text"), time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
+				file.Write(sLConsole.Log("Text"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+						time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
+						time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
+						time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
+						time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
 			else
-				file.Write(sLConsole.Log("Text2"), time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
+				file.Write(sLConsole.Log("Text2"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+						time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
+						time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
+						time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
+						time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
 
 			file.Close();
 		}

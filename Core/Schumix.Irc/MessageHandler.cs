@@ -443,20 +443,9 @@ namespace Schumix.Irc
 				else
 					logdir = string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, channel);
 
-				if(DateTime.Now.Month < 10)
-				{
-					if(DateTime.Now.Day < 10)
-						logfile = string.Format("{0}/{1}-0{2}-0{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-					else
-						logfile = string.Format("{0}/{1}-0{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-				}
-				else
-				{
-					if(DateTime.Now.Day < 10)
-						logfile = string.Format("{0}/{1}-{2}-0{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-					else
-						logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-				}
+				logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year,
+								DateTime.Now.Month < 10 ? "0" + DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString(),
+								DateTime.Now.Day < 10 ? "0" + DateTime.Now.Day.ToString() : DateTime.Now.Day.ToString());
 
 				sUtilities.CreateDirectory(logdir);
 				sUtilities.CreateFile(logfile);

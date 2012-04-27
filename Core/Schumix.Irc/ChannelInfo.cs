@@ -35,6 +35,7 @@ namespace Schumix.Irc
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
+		private readonly object WriteLock = new object();
 
 		public Dictionary<string, string> CList
 		{
@@ -66,29 +67,35 @@ namespace Schumix.Irc
 
 		public bool FSelect(string Name)
 		{
-			if(IFunctionsClass.Functions.ContainsKey(Name.ToLower()))
-				return IFunctionsClass.Functions[Name.ToLower()] == SchumixBase.On;
+			lock(WriteLock)
+			{
+				if(IFunctionsClass.Functions.ContainsKey(Name.ToLower()))
+					return IFunctionsClass.Functions[Name.ToLower()] == SchumixBase.On;
 
-			return false;
+				return false;
+			}
 		}
 
 		public bool FSelect(string Name, string Channel)
 		{
-			if(ChannelFunction.ContainsKey(Channel.ToLower()))
+			lock(WriteLock)
 			{
-				foreach(var comma in ChannelFunction[Channel.ToLower()].Split(SchumixBase.Comma))
+				if(ChannelFunction.ContainsKey(Channel.ToLower()))
 				{
-					if(comma == string.Empty)
-						continue;
+					foreach(var comma in ChannelFunction[Channel.ToLower()].Split(SchumixBase.Comma))
+					{
+						if(comma == string.Empty)
+							continue;
 
-					string[] point = comma.Split(SchumixBase.Colon);
+						string[] point = comma.Split(SchumixBase.Colon);
 
-					if(point[0] == Name.ToLower())
-						return point[1] == SchumixBase.On;
+						if(point[0] == Name.ToLower())
+							return point[1] == SchumixBase.On;
+					}
 				}
-			}
 
-			return false;
+				return false;
+			}
 		}
 
 		public bool SearchFunction(string Name)
@@ -117,29 +124,35 @@ namespace Schumix.Irc
 
 		public bool FSelect(IFunctions Name)
 		{
-			if(IFunctionsClass.Functions.ContainsKey(Name.ToString().ToLower()))
-				return IFunctionsClass.Functions[Name.ToString().ToLower()] == SchumixBase.On;
+			lock(WriteLock)
+			{
+				if(IFunctionsClass.Functions.ContainsKey(Name.ToString().ToLower()))
+					return IFunctionsClass.Functions[Name.ToString().ToLower()] == SchumixBase.On;
 
-			return false;
+				return false;
+			}
 		}
 
 		public bool FSelect(IChannelFunctions Name, string Channel)
 		{
-			if(ChannelFunction.ContainsKey(Channel.ToLower()))
+			lock(WriteLock)
 			{
-				foreach(var comma in ChannelFunction[Channel.ToLower()].Split(SchumixBase.Comma))
+				if(ChannelFunction.ContainsKey(Channel.ToLower()))
 				{
-					if(comma == string.Empty)
-						continue;
+					foreach(var comma in ChannelFunction[Channel.ToLower()].Split(SchumixBase.Comma))
+					{
+						if(comma == string.Empty)
+							continue;
 
-					string[] point = comma.Split(SchumixBase.Colon);
+						string[] point = comma.Split(SchumixBase.Colon);
 
-					if(point[0] == Name.ToString().ToLower())
-						return point[1] == SchumixBase.On;
+						if(point[0] == Name.ToString().ToLower())
+							return point[1] == SchumixBase.On;
+					}
 				}
-			}
 
-			return false;
+				return false;
+			}
 		}
 
 		public void FunctionsReload()
