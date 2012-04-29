@@ -271,7 +271,6 @@ namespace Schumix.Irc
 			Close();
 			Log.Notice("Network", sLConsole.Network("Text8"));
 			Connection(false);
-			NewNick = true;
 			Log.Debug("Network", sLConsole.Network("Text9"), _server);
 		}
 
@@ -329,7 +328,6 @@ namespace Schumix.Irc
 			Log.Notice("Network", sLConsole.Network("Text13"));
 			Online = false;
 			_enabled = true;
-			NewNick = false;
 			NewNickPrivmsg = string.Empty;
 			SchumixBase.UrlTitleEnabled = false;
 			sNickInfo.ChangeIdentifyStatus(false);

@@ -29,7 +29,6 @@ namespace Schumix.Irc
 {
 	public partial class MessageHandler : CommandManager
 	{
-		public static bool NewNick;
 		public static bool Online;
 		protected MessageHandler() {}
 
@@ -41,13 +40,13 @@ namespace Schumix.Irc
 
 			if(IRCConfig.UseNickServ)
 			{
-				if(!NewNick)
+				if(sNickInfo.IsNickStorage())
 					sNickInfo.Identify(IRCConfig.NickServPassword);
 			}
 
 			if(IRCConfig.UseHostServ)
 			{
-				if(!NewNick)
+				if(sNickInfo.IsNickStorage())
 					sNickInfo.Vhost("on");
 				else
 				{
@@ -243,7 +242,6 @@ namespace Schumix.Irc
 				string nick = sNickInfo.ChangeNick();
 				Log.Notice("MessageHandler", sLConsole.MessageHandler("Text7"), nick);
 				Online = false;
-				NewNick = true;
 				sSender.Nick(nick);
 			}
 			else

@@ -23,6 +23,7 @@ using System.IO;
 using System.Net;
 using System.Web;
 using System.Linq;
+using System.Threading;
 using System.Reflection;
 using System.Management;
 using System.Diagnostics;
@@ -786,9 +787,19 @@ namespace Schumix.Framework
 				try
 				{
 					var request = (HttpWebRequest)WebRequest.Create(url);
+					new Thread(() =>
+					{
+						Thread.Sleep(13*1000);
+
+						if(!request.IsNull())
+							request.Abort();
+					});
+
 					request.AllowAutoRedirect = true;
 					request.UserAgent = Consts.SchumixUserAgent;
 					request.Referer = Consts.SchumixReferer;
+					request.Timeout = 10*1000;
+					request.ReadWriteTimeout = 10*1000;
 
 					int length = 0;
 					byte[] buf = new byte[1024];
@@ -878,8 +889,27 @@ namespace Schumix.Framework
 				try
 				{
 					var request = (HttpWebRequest)WebRequest.Create(url);
+					new Thread(() =>
+					{
+						if(timeout != 0)
+							Thread.Sleep(timeout+3);
+						else
+							Thread.Sleep(13*1000);
+
+						if(!request.IsNull())
+							request.Abort();
+					});
+
 					if(timeout != 0)
+					{
 						request.Timeout = timeout;
+						request.ReadWriteTimeout = timeout;
+					}
+					else
+					{
+						request.Timeout = 10*1000;
+						request.ReadWriteTimeout = 10*1000;
+					}
 
 					request.AllowAutoRedirect = true;
 					request.UserAgent = Consts.SchumixUserAgent;
@@ -947,8 +977,27 @@ namespace Schumix.Framework
 				try
 				{
 					var request = (HttpWebRequest)WebRequest.Create(url);
+					new Thread(() =>
+					{
+						if(timeout != 0)
+							Thread.Sleep(timeout+3);
+						else
+							Thread.Sleep(13*1000);
+
+						if(!request.IsNull())
+							request.Abort();
+					});
+
 					if(timeout != 0)
+					{
 						request.Timeout = timeout;
+						request.ReadWriteTimeout = timeout;
+					}
+					else
+					{
+						request.Timeout = 10*1000;
+						request.ReadWriteTimeout = 10*1000;
+					}
 
 					request.AllowAutoRedirect = true;
 					request.UserAgent = Consts.SchumixUserAgent;
