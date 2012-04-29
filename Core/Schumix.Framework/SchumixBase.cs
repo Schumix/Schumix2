@@ -36,6 +36,7 @@ namespace Schumix.Framework
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private static readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly object WriteLock = new object();
 		private static readonly Guid _guid = Guid.NewGuid();
 		public static DatabaseManager DManager { get; private set; }
 		public static Timer timer { get; private set; }
@@ -142,13 +143,19 @@ namespace Schumix.Framework
 
 		public static void Quit()
 		{
-			foreach(var plugin in sAddonManager.GetPlugins())
-				plugin.Destroy();
+			lock(WriteLock)
+			{
+				if(ExitStatus)
+					return;
 
-			sUtilities.RemovePidFile();
-			SchumixBase.timer.SaveUptime();
-			SchumixBase.ServerDisconnect();
-			SchumixBase.ExitStatus = true;
+				foreach(var plugin in sAddonManager.GetPlugins())
+					plugin.Destroy();
+
+				sUtilities.RemovePidFile();
+				SchumixBase.timer.SaveUptime();
+				SchumixBase.ServerDisconnect();
+				SchumixBase.ExitStatus = true;
+			}
 		}
 	}
 }

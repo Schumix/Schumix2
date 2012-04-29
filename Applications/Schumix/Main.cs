@@ -221,6 +221,10 @@ namespace Schumix
 				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
 				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
 				SchumixBase.Quit();
+
+				if(SchumixBase.ExitStatus)
+					return;
+
 				sSender.Quit("Crash.");
 				Thread.Sleep(5*1000);
 			};
