@@ -37,6 +37,11 @@ namespace Schumix.Irc
 			get { return _NickStorage; }
 		}
 
+		public bool IsNickStorage()
+		{
+			return _NickStorage.ToLower() == IRCConfig.NickName.ToLower();
+		}
+
 		public bool IsIdentify
 		{
 			get { return _Identify; }

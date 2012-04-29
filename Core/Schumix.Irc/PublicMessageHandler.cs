@@ -121,7 +121,6 @@ namespace Schumix.Irc
 					sSender.NickServGhost(IRCConfig.NickName, IRCConfig.NickServPassword);
 					sSender.Nick(IRCConfig.NickName);
 					sNickInfo.ChangeNick(IRCConfig.NickName);
-					NewNick = false;
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/ghost", sIRCMessage.Channel));
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "nick")
@@ -142,7 +141,6 @@ namespace Schumix.Irc
 						Log.Notice("NickServ", sLConsole.NickServ("Text"));
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick/identify", sIRCMessage.Channel));
 						sNickInfo.Identify(IRCConfig.NickServPassword);
-						NewNick = false;
 
 						if(IRCConfig.UseHostServ)
 						{

@@ -258,7 +258,6 @@ namespace Schumix.ExtraAddon
 					sNickInfo.ChangeNick(IRCConfig.NickName);
 					sSender.Nick(IRCConfig.NickName);
 					sNickInfo.Identify(IRCConfig.NickServPassword);
-					MessageHandler.NewNick = false;
 
 					if(IRCConfig.UseHostServ)
 						sNickInfo.Vhost("on");
