@@ -34,6 +34,7 @@ namespace Schumix.Server
 		private readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly TcpListener _listener;
+		public bool Exit = false;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Schumix.Server.ServerListener"/> class.
@@ -85,7 +86,10 @@ namespace Schumix.Server
 						Log.Warning("ClientHandler", sLConsole.ServerListener("Text5"));
 						break;
 					}
-					
+
+					if(Exit)
+						return;
+
 					var encoding = new UTF8Encoding();
 					var msg = encoding.GetString(message_buffer, 0, bytes_read);
 					var packet = new SchumixPacket(msg);

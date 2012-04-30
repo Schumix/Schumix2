@@ -336,9 +336,14 @@ namespace Schumix.Irc
 
 		private void Close()
 		{
-			client.Close();
-			INetwork.Writer.Dispose();
-			reader.Dispose();
+			if(!client.IsNull())
+				client.Close();
+
+			if(!INetwork.Writer.IsNull())
+				INetwork.Writer.Dispose();
+
+			if(!reader.IsNull())
+				reader.Dispose();
 		}
 
 		//private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
@@ -378,6 +383,11 @@ namespace Schumix.Irc
 
 						if(sChannelInfo.FSelect("reconnect"))
 						{
+							if(number == 0)
+							{
+								Thread.Sleep(1000);
+								number++;
+							}
 							if(number <= 6)
 							{
 								Thread.Sleep(10*1000);
@@ -428,12 +438,19 @@ namespace Schumix.Irc
 			//_timeropcode.Elapsed -= HandleOpcodesTimer;
 			//_timeropcode.Stop();
 
-			sIgnoreNickName.RemoveConfig();
-			sIgnoreChannel.RemoveConfig();
-			Thread.Sleep(1000);
-			DisConnect();
+			try
+			{
+				sIgnoreNickName.RemoveConfig();
+				sIgnoreChannel.RemoveConfig();
+				Thread.Sleep(1000);
+				DisConnect();
+			}
+			catch(Exception e)
+			{
+				Log.Error("Opcodes", sLConsole.Exception("Error"), e.Message);
+			}
+			
 			Log.Warning("Opcodes", sLConsole.Network("Text17"));
-			Thread.Sleep(1000);
 			Environment.Exit(1);
 		}
 

@@ -21,7 +21,9 @@ using System;
 using System.IO;
 using System.Text;
 using System.Net;
+using System.Threading;
 using System.Net.Sockets;
+using System.Diagnostics;
 using System.Globalization;
 using Schumix.Updater;
 using Schumix.Framework;
@@ -38,8 +40,10 @@ namespace Schumix.Server
 		private static readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
+		private static readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
+		public static ServerListener sListener { get; private set; }
 
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
@@ -129,17 +133,46 @@ namespace Schumix.Server
 			System.Console.CancelKeyPress += (sender, e) =>
 			{
 				sUtilities.RemovePidFile();
+				sListener.Exit = true;
+				System.Console.CursorVisible = true;
 				var packet = new SchumixPacket();
 				packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
 				packet.Write<int>((int)0);
 
 				foreach(var list in sServerPacketHandler.HostList)
 					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+
+				Thread.Sleep(5000);
+
+				foreach(var list in sSchumix._processlist)
+				{
+					if(list.Value.Process.IsNull())
+						continue;
+
+					if(sUtilities.GetCompiler() == Compiler.Mono)
+					{
+						foreach(var p in Process.GetProcessesByName("mono"))
+						{
+							if(p.Id == list.Value.Process.Id)
+								p.Kill();
+						}
+					}
+					else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+					{
+						foreach(var p in Process.GetProcessesByName("Schumix"))
+						{
+							if(p.Id == list.Value.Process.Id)
+								p.Kill();
+						}
+					}
+				}
 			};
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
 				sUtilities.RemovePidFile();
+				sListener.Exit = true;
+				System.Console.CursorVisible = true;
 				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
 				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
 				var packet = new SchumixPacket();
@@ -148,10 +181,35 @@ namespace Schumix.Server
 
 				foreach(var list in sServerPacketHandler.HostList)
 					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+
+				Thread.Sleep(5000);
+
+				foreach(var list in sSchumix._processlist)
+				{
+					if(list.Value.Process.IsNull())
+						continue;
+
+					if(sUtilities.GetCompiler() == Compiler.Mono)
+					{
+						foreach(var p in Process.GetProcessesByName("mono"))
+						{
+							if(p.Id == list.Value.Process.Id)
+								p.Kill();
+						}
+					}
+					else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+					{
+						foreach(var p in Process.GetProcessesByName("Schumix"))
+						{
+							if(p.Id == list.Value.Process.Id)
+								p.Kill();
+						}
+					}
+				}
 			};
 
-			var listener = new ServerListener(ServerConfigs.ListenerPort);
-			listener.Listen();
+			sListener = new ServerListener(ServerConfigs.ListenerPort);
+			sListener.Listen();
 		}
 
 		/// <summary>
