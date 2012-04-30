@@ -41,9 +41,9 @@ namespace Schumix.Server.New
 
 	class Schumix
 	{
-		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public static readonly Dictionary<string, Settings> _processlist = new Dictionary<string, Settings>();
+		public readonly Dictionary<string, Settings> _processlist = new Dictionary<string, Settings>();
 
 		private Schumix()
 		{
@@ -58,6 +58,9 @@ namespace Schumix.Server.New
 			{
 				try
 				{
+					if(MainClass.sListener.Exit)
+						return;
+
 					foreach(var list in _processlist)
 					{
 						if(list.Value.Process.IsNull())
@@ -98,8 +101,10 @@ namespace Schumix.Server.New
 					{
 						Log.Notice("Schumix", sLConsole.Schumix("Text"));
 
-						if(!_processlist[ll].Process.IsNull())
-							_processlist[ll].Process.Dispose();
+						_processlist[ll].Process.Kill();
+
+						//if(!_processlist[ll].Process.IsNull())
+						//	_processlist[ll].Process.Dispose();
 
 						Task.Factory.StartNew(() => Start(_processlist[ll].File, _processlist[ll].Dir, _processlist[ll].Encoding, _processlist[ll].Locale, _processlist[ll].Identify, _processlist[ll].Configs));
 						Thread.Sleep(10*1000);
