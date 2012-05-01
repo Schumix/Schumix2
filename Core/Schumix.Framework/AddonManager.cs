@@ -37,6 +37,7 @@ namespace Schumix.Framework
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly List<ISchumixAddon> _addons = new List<ISchumixAddon>();
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly object LoadLock = new object();
 
 		/// <summary>
@@ -74,7 +75,13 @@ namespace Schumix.Framework
 			{
 				string file = string.Empty;
 				string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);
-				var dir = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, directory));
+
+				DirectoryInfo dir;
+				if(directory.ToLower().Contains("$home"))
+					dir = new DirectoryInfo(sUtilities.GetHomeDirectory(directory));
+				else
+					dir = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, directory));
+
 				Log.Notice("AddonManager", sLConsole.AddonManager("Text"), dir.FullName);
 
 				foreach(var dll in dir.GetFiles("*.dll").AsParallel())
