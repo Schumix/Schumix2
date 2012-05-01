@@ -865,6 +865,12 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
+					if(channel == IRCConfig.MasterChannel.ToLower())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoIgnoreMasterChannel", sIRCMessage.Channel));
+						return;
+					}
+
 					if(sIgnoreChannel.IsIgnore(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -960,6 +966,12 @@ namespace Schumix.Irc.Commands
 					}
 
 					string nick = sIRCMessage.Info[6].ToLower();
+
+					if(nick == sIRCMessage.Nick.ToLower())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoIgnoreMyNick", sIRCMessage.Channel));
+						return;
+					}
 
 					if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator) && IsAdmin(nick, AdminFlag.Administrator))
 					{
