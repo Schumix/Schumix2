@@ -177,10 +177,18 @@ namespace Schumix.Irc
 			if(ignore.Length > 1)
 			{
 				foreach(var name in ignore)
+				{
+					if(name.ToLower() == IRCConfig.MasterChannel.ToLower())
+						continue;
+
 					Add(name.ToLower());
+				}
 			}
 			else
-				Add(IRCConfig.IgnoreChannels.ToLower());
+			{
+				if(IRCConfig.IgnoreChannels.ToLower() != IRCConfig.MasterChannel.ToLower())
+					Add(IRCConfig.IgnoreChannels.ToLower());
+			}
 		}
 
 		public void Add(string Name)

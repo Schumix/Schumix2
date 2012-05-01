@@ -238,6 +238,7 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ImNotOnThisChannel", "Nem vagyok fent ezen a csatornán!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoCommand", "Nincs megadva a parancs!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoIgnoreCommand", "Nem tehető kivételek közé a parancs!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoIgnoreMasterChannel", "Nem tiltható le a mester csatorna!");
 
 -- enUS
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -254,6 +255,7 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ImNotOnThisChannel", "I'm not on this channel!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoCommand", "The command is not specified!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoIgnoreCommand", "You can't put this command to the inceptions!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoIgnoreMasterChannel", "The master channel shouldn't be ignored!");
 
 -- huHU
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "schumix2/sys", "3Verzió: 10{0}\n3Platform: {0}\n3OSVerzió: {0}\n3Programnyelv: c#\n3Memória használat:5 {0} MB\n3Memória használat:8 {0} MB\n3Memória használat:3 {0} MB\n3Működési idő: {0}");
@@ -956,6 +958,8 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorMinute", "Hibás a perc (száma, formátuma)!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NameDay", "Mai napon {0} névnapja van.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "GaveExpiredDateTime", "Lejárt dátumot/órát adtál meg!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoIgnoreMasterChannel", "Nem tiltható le a mester csatorna!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoIgnoreMyNick", "Nem tiltható le a saját neved!");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1012,6 +1016,8 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorMinute", "Wrong minute (number, format)!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NameDay", "Today is {0}'s name day.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "GaveExpiredDateTime", "You have gave expired date/time!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoIgnoreMasterChannel", "The master channel shouldn't be ignored!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoIgnoreMyNick", "Your own name shouldn't be blocked!");
 
 -- ----------------------------
 -- Records of schumix

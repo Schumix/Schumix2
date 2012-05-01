@@ -1117,6 +1117,12 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
+					if(channel == IRCConfig.MasterChannel.ToLower())
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoIgnoreMasterChannel"));
+						return;
+					}
+
 					if(sIgnoreChannel.IsIgnore(channel))
 					{
 						Log.Error("Console", text[0]);
