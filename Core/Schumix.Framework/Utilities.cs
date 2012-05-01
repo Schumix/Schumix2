@@ -1044,13 +1044,31 @@ namespace Schumix.Framework
 
 		public string GetHomeDirectory(string data)
 		{
-			string text = data.ToLower();
-			return text.Contains("$home") ? data = "/home/" + GetUserName() + "/" + data.Substring(data.IndexOf("/")+1) : data;
+			if(GetCompiler() == Compiler.VisualStudio)
+			{
+				// megírni windowsra is
+				return data;
+			}
+			else if(GetCompiler() == Compiler.Mono)
+			{
+				string text = data.ToLower();
+				return text.Contains("$home") ? data = "/home/" + GetUserName() + "/" + data.Substring(data.IndexOf("/")+1) : data;
+			}
+			else
+				return data;
 		}
 
 		public string DirectoryToHome(string dir, string file)
 		{
-			return (dir.Length > 0 && dir.Substring(0, 1) == "/") ? string.Format("{0}/{1}", dir, file) : string.Format("./{0}/{1}", dir, file);
+			if(GetCompiler() == Compiler.VisualStudio)
+			{
+				// megírni windowsra is
+				return string.Format("{0}/{1}", dir, file);
+			}
+			else if(GetCompiler() == Compiler.Mono)
+				return (dir.Length > 0 && dir.Substring(0, 1) == "/") ? string.Format("{0}/{1}", dir, file) : string.Format("./{0}/{1}", dir, file);
+			else
+				return string.Format("{0}/{1}", dir, file);
 		}
 
 		public string GetDirectoryName(string data)
