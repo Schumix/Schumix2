@@ -91,6 +91,7 @@
     <Compile Include="Network\ClientSocket.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="CrashDumper.cs" />
+    <Compile Include="PlatformType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

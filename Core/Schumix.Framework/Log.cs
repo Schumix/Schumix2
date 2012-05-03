@@ -32,9 +32,9 @@ namespace Schumix.Framework
 		private static readonly object WriteLock = new object();
 		private static string _FileName;
 
-        /// <returns>
-        ///     A visszatérési érték az aktuális dátum.
-        /// </returns>
+		/// <returns>
+		///		A visszatérési érték az aktuális dátum.
+		/// </returns>
 		private static string GetTime()
 		{
 			return string.Format("{0}:{1}:{2}", DateTime.Now.Hour < 10 ? "0" + DateTime.Now.Hour.ToString() : DateTime.Now.Hour.ToString(),
@@ -95,23 +95,23 @@ namespace Schumix.Framework
 			file.Close();
 		}
 
-        /// <summary>
-        ///     Dátummal logolja a szöveget meghatározva honnan származik. 
-        ///     Lehet ez egyénileg meghatározott függvény vagy class névvel ellátva.
-        ///     Logol a Console-ra.
-        /// </summary>
-        /// <param name="source">
-        ///     Meghatározza honnan származik a log.
-        ///     <example>
-        ///         17:28 N <c>Config:</c> Config file betöltése...
-        ///     </example>
-        /// </param>
-        /// <param name="format">
-        ///     A szöveg amit kiírunk.
-        ///     <example>
-        ///         17:28 N Config: <c>Config file betöltése...</c>
-        ///     </example>
-        /// </param>
+		/// <summary>
+		///	 Dátummal logolja a szöveget meghatározva honnan származik. 
+		///	 Lehet ez egyénileg meghatározott függvény vagy class névvel ellátva.
+		///	 Logol a Console-ra.
+		/// </summary>
+		/// <param name="source">
+		///	 Meghatározza honnan származik a log.
+		///	 <example>
+		///		 17:28 N <c>Config:</c> Config file betöltése...
+		///	 </example>
+		/// </param>
+		/// <param name="format">
+		///	 A szöveg amit kiírunk.
+		///	 <example>
+		///		 17:28 N Config: <c>Config file betöltése...</c>
+		///	 </example>
+		/// </param>
 		public static void Notice(string source, string format)
 		{
 			lock(WriteLock)

@@ -116,7 +116,7 @@ namespace Schumix.Server
 			else if(localization != "start")
 				sLConsole.Locale = localization;
 
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio && console_encoding == "utf-8" &&
+			if(sUtilities.GetPlatformType() == PlatformType.Windows && console_encoding == "utf-8" &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
@@ -143,29 +143,7 @@ namespace Schumix.Server
 					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 
 				Thread.Sleep(5000);
-
-				foreach(var list in sSchumix._processlist)
-				{
-					if(list.Value.Process.IsNull())
-						continue;
-
-					if(sUtilities.GetCompiler() == Compiler.Mono)
-					{
-						foreach(var p in Process.GetProcessesByName("mono"))
-						{
-							if(p.Id == list.Value.Process.Id)
-								p.Kill();
-						}
-					}
-					else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
-					{
-						foreach(var p in Process.GetProcessesByName("Schumix"))
-						{
-							if(p.Id == list.Value.Process.Id)
-								p.Kill();
-						}
-					}
-				}
+				KillAllSchumixProccess();
 			};
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
@@ -183,29 +161,7 @@ namespace Schumix.Server
 					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 
 				Thread.Sleep(5000);
-
-				foreach(var list in sSchumix._processlist)
-				{
-					if(list.Value.Process.IsNull())
-						continue;
-
-					if(sUtilities.GetCompiler() == Compiler.Mono)
-					{
-						foreach(var p in Process.GetProcessesByName("mono"))
-						{
-							if(p.Id == list.Value.Process.Id)
-								p.Kill();
-						}
-					}
-					else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
-					{
-						foreach(var p in Process.GetProcessesByName("Schumix"))
-						{
-							if(p.Id == list.Value.Process.Id)
-								p.Kill();
-						}
-					}
-				}
+				KillAllSchumixProccess();
 			};
 
 			sListener = new ServerListener(ServerConfigs.ListenerPort);
@@ -224,6 +180,32 @@ namespace Schumix.Server
 			System.Console.WriteLine("\t--config-file=<file>\t\tSet up the config file's place");
 			System.Console.WriteLine("\t--console-encoding=Value\tSet up the program's character encoding");
 			System.Console.WriteLine("\t--console-localization=Value\tSet up the program's console language settings");
+		}
+
+		private static void KillAllSchumixProccess()
+		{
+			foreach(var list in sSchumix._processlist)
+			{
+				if(list.Value.Process.IsNull())
+					continue;
+
+				if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				{
+					foreach(var p in Process.GetProcessesByName("mono"))
+					{
+						if(p.Id == list.Value.Process.Id)
+							p.Kill();
+					}
+				}
+				else if(sUtilities.GetPlatformType() == PlatformType.Windows)
+				{
+					foreach(var p in Process.GetProcessesByName("Schumix"))
+					{
+						if(p.Id == list.Value.Process.Id)
+							p.Kill();
+					}
+				}
+			}
 		}
 	}
 }

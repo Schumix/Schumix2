@@ -133,7 +133,8 @@ FILES = \
 	Network/SchumixPacket.cs \
 	Network/ClientSocket.cs \
 	Runtime.cs \
-	CrashDumper.cs 
+	CrashDumper.cs \
+	PlatformType.cs 
 
 DATA_FILES = 
 

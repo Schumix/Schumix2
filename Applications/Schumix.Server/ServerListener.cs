@@ -25,6 +25,7 @@ using System.Net.Sockets;
 using System.Threading;
 using Schumix.Framework;
 using Schumix.Framework.Client;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Server
@@ -105,7 +106,10 @@ namespace Schumix.Server
 		
 		public void Dispose()
 		{
+			Exit = true;
 
+			if(!_listener.IsNull())
+				_listener.Stop();
 		}
 	}
 }
