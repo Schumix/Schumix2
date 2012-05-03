@@ -95,7 +95,7 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterHook", "Registers a handler hook.")]
 		public void RegisterHandlerHook(string HandlerName, string LuaName)
 		{
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				var func = _lua.GetFunction(typeof(IRCDelegate), LuaName);
 
@@ -106,7 +106,7 @@ namespace Schumix.LuaEngine
 				_RegisteredHandler.Add(HandlerName, handler);
 				Network.PublicRegisterHandler(HandlerName, handler);
 			}
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				var func = _monolua.GetFunction(typeof(IRCDelegate), LuaName);
 
@@ -127,7 +127,7 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterPublicCommandHook", "Registers a public command hook.")]
 		public void RegisterPublicCommandHook(string CommandName, string LuaName)
 		{
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
 
@@ -138,7 +138,7 @@ namespace Schumix.LuaEngine
 				_RegisteredCommand.Add(CommandName.ToLower(), handler);
 				CommandManager.PublicCRegisterHandler(CommandName, handler);
 			}
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
 
@@ -159,7 +159,7 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterHalfOperatorCommandHook", "Registers a halfoperator command hook.")]
 		public void RegisterHalfOperatorCommandHook(string CommandName, string LuaName)
 		{
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
 
@@ -170,7 +170,7 @@ namespace Schumix.LuaEngine
 				_RegisteredCommand.Add(CommandName.ToLower(), handler);
 				CommandManager.HalfOperatorCRegisterHandler(CommandName, handler);
 			}
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
 
@@ -191,7 +191,7 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterOperatorCommandHook", "Registers a operator command hook.")]
 		public void RegisterOperatorCommandHook(string CommandName, string LuaName)
 		{
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
 
@@ -202,7 +202,7 @@ namespace Schumix.LuaEngine
 				_RegisteredCommand.Add(CommandName.ToLower(), handler);
 				CommandManager.OperatorCRegisterHandler(CommandName, handler);
 			}
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
 
@@ -223,7 +223,7 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterAdminCommandHook", "Registers a admin command hook.")]
 		public void RegisterAdminCommandHook(string CommandName, string LuaName)
 		{
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
 
@@ -234,7 +234,7 @@ namespace Schumix.LuaEngine
 				_RegisteredCommand.Add(CommandName.ToLower(), handler);
 				CommandManager.AdminCRegisterHandler(CommandName, handler);
 			}
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
 

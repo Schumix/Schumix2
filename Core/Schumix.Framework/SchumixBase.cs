@@ -75,7 +75,7 @@ namespace Schumix.Framework
 						Thread.Sleep(100);
 				}
 
-				if(sUtilities.GetCompiler() == Compiler.Mono)
+				if(sUtilities.GetPlatformType() == PlatformType.Linux)
 					System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text"));

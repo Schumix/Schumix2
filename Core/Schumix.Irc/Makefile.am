@@ -160,8 +160,7 @@ REFERENCES =  \
 	System.Core \
 	System.Runtime.Serialization
 
-DLL_REFERENCES =  \
-	../../Dependencies/Org.Mentalis.Security.dll
+DLL_REFERENCES = 
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 

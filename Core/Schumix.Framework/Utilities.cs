@@ -38,13 +38,6 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
-	public enum Compiler
-	{
-		VisualStudio,
-		Mono,
-		None
-	}
-
 	public sealed class Utilities
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
@@ -320,7 +313,7 @@ namespace Schumix.Framework
 
 		public string GetPlatform()
 		{
-			string Platform = string.Empty;
+			string platform = string.Empty;
 			var pid = Environment.OSVersion.Platform;
 
 			switch(pid)
@@ -329,23 +322,23 @@ namespace Schumix.Framework
 				case PlatformID.Win32S:
 				case PlatformID.Win32Windows:
 				case PlatformID.WinCE:
-					Platform = "Windows";
+					platform = "Windows";
 					break;
 				case PlatformID.Unix:
-					Platform = "Linux";
+					platform = "Linux";
 					break;
 				case PlatformID.MacOSX:
-					Platform = "MacOSX";
+					platform = "MacOSX";
 					break;
 				case PlatformID.Xbox:
-					Platform = "Xbox";
+					platform = "Xbox";
 					break;
 				default:
-					Platform = "Unknown";
+					platform = "Unknown";
 					break;
 			}
 
-			return Platform;
+			return platform;
 		}
 
 		/// <summary>
@@ -452,9 +445,9 @@ namespace Schumix.Framework
 			return Name;
 		}
 
-		public Compiler GetCompiler()
+		public PlatformType GetPlatformType()
 		{
-			Compiler compiler = Compiler.None;
+			PlatformType platform = PlatformType.None;
 			var pid = Environment.OSVersion.Platform;
 
 			switch(pid)
@@ -463,21 +456,23 @@ namespace Schumix.Framework
 				case PlatformID.Win32S:
 				case PlatformID.Win32Windows:
 				case PlatformID.WinCE:
-					compiler = Compiler.VisualStudio;
+					platform = PlatformType.Windows;
 					break;
 				case PlatformID.Unix:
+					platform = PlatformType.Linux;
+					break;
 				case PlatformID.MacOSX:
-					compiler = Compiler.Mono;
+					platform = PlatformType.MacOSX;
 					break;
 				case PlatformID.Xbox:
-					compiler = Compiler.None;
+					platform = PlatformType.Xbox;
 					break;
 				default:
-					compiler = Compiler.None;
+					platform = PlatformType.None;
 					break;
 			}
 
-			return compiler;
+			return platform;
 		}
 
 		public string GetVersion()
@@ -521,12 +516,12 @@ namespace Schumix.Framework
 		/// </returns>
 		public string GetCpuId()
 		{
-			if(GetCompiler() == Compiler.VisualStudio)
+			if(GetPlatformType() == PlatformType.Windows)
 			{
 				var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
 				return (from ManagementObject mo in mos.Get() select (Regex.Replace(Convert.ToString(mo["Name"]), @"\s+", SchumixBase.Space.ToString()))).FirstOrDefault();
 			}
-			else if(GetCompiler() == Compiler.Mono)
+			else if(GetPlatformType() == PlatformType.Linux)
 			{
 				var reader = new StreamReader("/proc/cpuinfo");
 				string content = reader.ReadToEnd();
@@ -1044,12 +1039,12 @@ namespace Schumix.Framework
 
 		public string GetHomeDirectory(string data)
 		{
-			if(GetCompiler() == Compiler.VisualStudio)
+			if(GetPlatformType() == PlatformType.Windows)
 			{
 				// megírni windowsra is
 				return data;
 			}
-			else if(GetCompiler() == Compiler.Mono)
+			else if(GetPlatformType() == PlatformType.Linux)
 			{
 				string text = data.ToLower();
 				return text.Contains("$home") ? data = "/home/" + GetUserName() + "/" + data.Substring(data.IndexOf("/")+1) : data;
@@ -1060,12 +1055,12 @@ namespace Schumix.Framework
 
 		public string DirectoryToHome(string dir, string file)
 		{
-			if(GetCompiler() == Compiler.VisualStudio)
+			if(GetPlatformType() == PlatformType.Windows)
 			{
 				// megírni windowsra is
 				return string.Format("{0}/{1}", dir, file);
 			}
-			else if(GetCompiler() == Compiler.Mono)
+			else if(GetPlatformType() == PlatformType.Linux)
 				return (dir.Length > 0 && dir.Substring(0, 1) == "/") ? string.Format("{0}/{1}", dir, file) : string.Format("./{0}/{1}", dir, file);
 			else
 				return string.Format("{0}/{1}", dir, file);

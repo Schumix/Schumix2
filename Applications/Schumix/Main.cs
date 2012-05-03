@@ -184,7 +184,7 @@ namespace Schumix
 			else if(localization != "start")
 				sLConsole.Locale = localization;
 
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio && console_encoding == "utf-8" &&
+			if(sUtilities.GetPlatformType() == PlatformType.Windows && console_encoding == "utf-8" &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
@@ -204,7 +204,7 @@ namespace Schumix
 
 			new SchumixBot();
 
-			if(sUtilities.GetCompiler() == Compiler.Mono)
+			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 				StartHandler();
 			else
 			{
