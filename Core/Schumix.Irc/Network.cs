@@ -418,6 +418,7 @@ namespace Schumix.Irc
 					}
 
 					Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage));
+					Thread.Sleep(100);
 				}
 				catch(IOException)
 				{
