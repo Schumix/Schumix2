@@ -135,12 +135,12 @@ namespace Schumix.Irc
 		{
 			if(!_Vhost)
 			{
-				if(Status == "off")
+				if(Status == SchumixBase.Off)
 				{
 					_Vhost = true;
 					Log.Notice("HostServ", sLConsole.HostServ("Text2"));
 				}
-				else if(Status == "on")
+				else if(Status == SchumixBase.On)
 					Log.Notice("HostServ", sLConsole.HostServ("Text"));
 
 				sSender.HostServ(Status);

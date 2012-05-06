@@ -47,7 +47,7 @@ namespace Schumix.Irc
 			if(IRCConfig.UseHostServ)
 			{
 				if(sNickInfo.IsNickStorage())
-					sNickInfo.Vhost("on");
+					sNickInfo.Vhost(SchumixBase.On);
 				else
 				{
 					if(!Online)
@@ -65,7 +65,7 @@ namespace Schumix.Irc
 				if(!Online)
 				{
 					if(IRCConfig.HostServEnabled)
-						sNickInfo.Vhost("off");
+						sNickInfo.Vhost(SchumixBase.Off);
 
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;

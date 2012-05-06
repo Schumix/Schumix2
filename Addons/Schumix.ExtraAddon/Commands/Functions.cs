@@ -169,7 +169,7 @@ namespace Schumix.ExtraAddon.Commands
 				sNickInfo.Identify(IRCConfig.NickServPassword);
 
 				if(IRCConfig.UseHostServ)
-					sNickInfo.Vhost("on");
+					sNickInfo.Vhost(SchumixBase.On);
 			}
 		}
 	}

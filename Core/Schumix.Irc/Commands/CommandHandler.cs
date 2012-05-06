@@ -20,6 +20,7 @@
 using System;
 using Schumix.API;
 using Schumix.Irc.Ctcp;
+using Schumix.Irc.Flood;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -40,6 +41,7 @@ namespace Schumix.Irc.Commands
 		protected readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		protected readonly CtcpSender sCtcpSender = Singleton<CtcpSender>.Instance;
+		protected readonly AntiFlood sAntiFlood = Singleton<AntiFlood>.Instance;
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		protected readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		protected readonly Sender sSender = Singleton<Sender>.Instance;
