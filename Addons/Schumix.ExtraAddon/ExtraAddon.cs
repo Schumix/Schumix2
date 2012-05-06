@@ -260,7 +260,7 @@ namespace Schumix.ExtraAddon
 					sNickInfo.Identify(IRCConfig.NickServPassword);
 
 					if(IRCConfig.UseHostServ)
-						sNickInfo.Vhost("on");
+						sNickInfo.Vhost(SchumixBase.On);
 
 					IsOnline = false;
 				}

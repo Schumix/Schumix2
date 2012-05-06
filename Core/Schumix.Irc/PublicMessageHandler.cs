@@ -144,7 +144,7 @@ namespace Schumix.Irc
 
 						if(IRCConfig.UseHostServ)
 						{
-							sNickInfo.Vhost("on");
+							sNickInfo.Vhost(SchumixBase.On);
 							Log.Notice("HostServ", sLConsole.HostServ("Text"));
 						}
 					}

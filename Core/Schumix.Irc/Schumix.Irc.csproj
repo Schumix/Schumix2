@@ -79,6 +79,8 @@
     <Compile Include="Ignore.cs" />
     <Compile Include="Commands\GoogleWebSearch.cs" />
     <Compile Include="ConnectionType.cs" />
+    <Compile Include="Flood\AntiFlood.cs" />
+    <Compile Include="Flood\CommandFlood.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -90,5 +92,8 @@
       <Project>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</Project>
       <Name>Schumix.API</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Flood\" />
   </ItemGroup>
 </Project>

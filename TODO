@@ -6,7 +6,6 @@ Megírásra váró feladatok:
 - Serverben megoldani az egy szerveren lévő botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
 - backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
 - Megoldás arra ha vki úgy aktiválja a vhost-ot hogy sehol sincs fent (csatorna). Ha ezútán se lép fel csatornára de mondjuk nevet cserél vagy lelép irc-ről akkor fen áll a lehetőség hogy a kódot támadás érheti. Ehhez valamilyen védelmi mehanizmust kéne kitalálni.
-- Ha valaki floodolja botot saját parancsaival akkor bizonyos szám után tegye tiltó listára az adott nick-et. Majd oldja fel megadott idő múlva.
 - Játék addon bővítése és a kód nyelvezetét átírni angolra is. Statisztikai rész létrehozása hozzá.
 - Ha Server küldi el a konfigurációs adatokat rossz lesz a kódolás és pl ignore_channel-nél nem észleli a split a vesszőket.
 - Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!!

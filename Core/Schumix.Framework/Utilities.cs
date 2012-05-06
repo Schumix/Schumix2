@@ -1047,7 +1047,7 @@ namespace Schumix.Framework
 			else if(GetPlatformType() == PlatformType.Linux)
 			{
 				string text = data.ToLower();
-				return text.Contains("$home") ? data = "/home/" + GetUserName() + "/" + data.Substring(data.IndexOf("/")+1) : data;
+				return text.Contains("$home") ? "/home/" + GetUserName() + "/" + data.Substring(data.IndexOf("/")+1) : data;
 			}
 			else
 				return data;

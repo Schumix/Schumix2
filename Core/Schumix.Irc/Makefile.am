@@ -144,7 +144,9 @@ FILES = \
 	ChannelNameList.cs \
 	Ignore.cs \
 	Commands/GoogleWebSearch.cs \
-	ConnectionType.cs 
+	ConnectionType.cs \
+	Flood/AntiFlood.cs \
+	Flood/CommandFlood.cs 
 
 DATA_FILES = 
 

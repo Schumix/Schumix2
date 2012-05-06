@@ -33,6 +33,7 @@ namespace Schumix.Irc.Commands
 		private static readonly Dictionary<string, CommandDelegate> _HalfOperatorCommandHandler = new Dictionary<string, CommandDelegate>();
 		private static readonly Dictionary<string, CommandDelegate> _OperatorCommandHandler = new Dictionary<string, CommandDelegate>();
 		private static readonly Dictionary<string, CommandDelegate> _AdminCommandHandler = new Dictionary<string, CommandDelegate>();
+
 		public static Dictionary<string, CommandDelegate> GetPublicCommandHandler()
 		{
 			return _PublicCommandHandler;
@@ -57,6 +58,7 @@ namespace Schumix.Irc.Commands
 		{
 			Log.Notice("CommandManager", sLConsole.CommandManager("Text"));
 			InitHandler();
+			sAntiFlood.Start();
 		}
 
 		private void InitHandler(bool Reload = false)
@@ -236,14 +238,29 @@ namespace Schumix.Irc.Commands
 				if(sIgnoreCommand.IsIgnore(handler))
 					return;
 
+				if(sAntiFlood.Ignore(sIRCMessage))
+					return;
+
 				if(_PublicCommandHandler.ContainsKey(handler))
+				{
 					_PublicCommandHandler[handler].Invoke(sIRCMessage);
+					sAntiFlood.FloodCommand(sIRCMessage);
+				}
 				else if(_HalfOperatorCommandHandler.ContainsKey(handler))
+				{
 					_HalfOperatorCommandHandler[handler].Invoke(sIRCMessage);
+					sAntiFlood.FloodCommand(sIRCMessage);
+				}
 				else if(_OperatorCommandHandler.ContainsKey(handler))
+				{
 					_OperatorCommandHandler[handler].Invoke(sIRCMessage);
+					sAntiFlood.FloodCommand(sIRCMessage);
+				}
 				else if(_AdminCommandHandler.ContainsKey(handler))
+				{
 					_AdminCommandHandler[handler].Invoke(sIRCMessage);
+					sAntiFlood.FloodCommand(sIRCMessage);
+				}
 			}
 			catch(Exception e)
 			{
