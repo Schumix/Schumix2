@@ -142,7 +142,7 @@ namespace Schumix.Server
 				foreach(var list in sServerPacketHandler.HostList)
 					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 
-				Thread.Sleep(5000);
+				Thread.Sleep(2000);
 				KillAllSchumixProccess();
 			};
 
@@ -160,7 +160,7 @@ namespace Schumix.Server
 				foreach(var list in sServerPacketHandler.HostList)
 					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 
-				Thread.Sleep(5000);
+				Thread.Sleep(2000);
 				KillAllSchumixProccess();
 			};
 

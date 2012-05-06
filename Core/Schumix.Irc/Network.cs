@@ -18,7 +18,7 @@
  */
 
 using System;
-//using System.Timers;
+using System.Timers;
 using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
@@ -40,7 +40,7 @@ namespace Schumix.Irc
 		private static readonly Dictionary<ReplyCode, IRCDelegate> _IRCHandler = new Dictionary<ReplyCode, IRCDelegate>();
 		private static readonly Dictionary<string, IRCDelegate> _IRCHandler2 = new Dictionary<string, IRCDelegate>();
 		private static readonly Dictionary<int, IRCDelegate> _IRCHandler3 = new Dictionary<int, IRCDelegate>();
-		//private System.Timers.Timer _timeropcode = new System.Timers.Timer();
+		private System.Timers.Timer _timeropcode = new System.Timers.Timer();
 
         /// <summary>
         ///     A kapcsolatot tároljra.
@@ -62,9 +62,11 @@ namespace Schumix.Irc
         /// </summary>
 		private readonly int _port;
 		private bool _enabled = false;
-		private bool NetwokQuit = false;
+		private bool NetworkQuit = false;
+		private bool Connected = false;
+		private int ReconnectNumber = 0;
 		private ConnectionType CType;
-		//private DateTime LastOpcode;
+		private DateTime LastOpcode;
 
         /// <summary>
         ///     Internet kapcsolat függvénye.
@@ -246,7 +248,7 @@ namespace Schumix.Irc
         /// </summary>
 		public void Connect()
 		{
-			NetwokQuit = false;
+			NetworkQuit = false;
 			Log.Notice("Network", sLConsole.Network("Text6"), _server);
 			Connection(true);
 		}
@@ -317,6 +319,8 @@ namespace Schumix.Irc
 				INetwork.Writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
 			}
 
+			Connected = true;
+
 			if(b)
 			{
 				INetwork.Writer.WriteLine("NICK {0}", sNickInfo.NickStorage);
@@ -336,6 +340,8 @@ namespace Schumix.Irc
 
 		private void Close()
 		{
+			Connected = false;
+
 			if(!client.IsNull())
 				client.Close();
 
@@ -346,12 +352,17 @@ namespace Schumix.Irc
 				reader.Dispose();
 		}
 
-		//private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
-		//{
-		//	Console.WriteLine((DateTime.Now - LastOpcode).Minutes);
-		//	if((DateTime.Now - LastOpcode).Minutes >= 1)
-		//		ReConnect();
-		//}
+		private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
+		{
+			if(ReconnectNumber > 5)
+				_timeropcode.Interval = 300*1000;
+
+			if((DateTime.Now - LastOpcode).Minutes >= 1)
+			{
+				ReconnectNumber++;
+				ReConnect();
+			}
+		}
 
         /// <summary>
         ///     Ez a függvény kezeli azt IRC adatai és az opcedes-eket.
@@ -362,50 +373,47 @@ namespace Schumix.Irc
 		private void Opcodes()
 		{
 			Log.Notice("Opcodes", sLConsole.Network("Text14"));
-			byte number = 0;
-			//_timeropcode.Interval = 60*1000;
-			//_timeropcode.Elapsed += HandleOpcodesTimer;
-			//_timeropcode.Enabled = true;
-			//_timeropcode.Start();
+			_timeropcode.Interval = 60*1000;
+			_timeropcode.Elapsed += HandleOpcodesTimer;
+			_timeropcode.Enabled = true;
+			_timeropcode.Start();
 			Log.Notice("Opcodes", sLConsole.Network("Text15"));
 
 			while(true)
 			{
 				try
 				{
-					if(SchumixBase.ExitStatus && NetwokQuit)
+					if(SchumixBase.ExitStatus && NetworkQuit)
 						break;
+
+					if(!Connected)
+					{
+						Thread.Sleep(1000);
+						continue;
+					}
 
 					string IrcMessage;
 					if((IrcMessage = reader.ReadLine()).IsNull())
 					{
 						Log.Error("Opcodes", sLConsole.Network("Text16"));
 
-						if(sChannelInfo.FSelect("reconnect"))
+						if(sChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 						{
-							if(number == 0)
-							{
-								Thread.Sleep(1000);
-								number++;
-							}
-							if(number <= 6)
-							{
-								Thread.Sleep(10*1000);
-								number++;
-							}
-							else
-								Thread.Sleep(120*1000);
+							if(ReconnectNumber > 5)
+								_timeropcode.Interval = 300*1000;
 
+							ReconnectNumber++;
 							ReConnect();
 							continue;
 						}
 					}
 
-					//LastOpcode = DateTime.Now;
+					LastOpcode = DateTime.Now;
 
 					if(_enabled)
 					{
-						number = 0;
+						_timeropcode.Interval = 60*1000;
+						ReconnectNumber = 0;
 						_enabled = false;
 					}
 
@@ -415,14 +423,10 @@ namespace Schumix.Irc
 				{
 					if(sChannelInfo.FSelect(IFunctions.Reconnect))
 					{
-						if(number <= 6)
-						{
-							Thread.Sleep(10*1000);
-							number++;
-						}
-						else
-							Thread.Sleep(120*1000);
+						if(ReconnectNumber > 5)
+							_timeropcode.Interval = 300*1000;
 
+						ReconnectNumber++;
 						ReConnect();
 						continue;
 					}
@@ -434,15 +438,14 @@ namespace Schumix.Irc
 				}
 			}
 
-			//_timeropcode.Enabled = false;
-			//_timeropcode.Elapsed -= HandleOpcodesTimer;
-			//_timeropcode.Stop();
+			_timeropcode.Enabled = false;
+			_timeropcode.Elapsed -= HandleOpcodesTimer;
+			_timeropcode.Stop();
 
 			try
 			{
 				sIgnoreNickName.RemoveConfig();
 				sIgnoreChannel.RemoveConfig();
-				Thread.Sleep(1000);
 				DisConnect();
 			}
 			catch(Exception e)
@@ -512,7 +515,7 @@ namespace Schumix.Irc
 				if(IrcCommand[0] == "PING")
 					sSender.Pong(IrcCommand[1].Remove(0, 1, SchumixBase.Colon));
 				else if(opcode == ":Closing")
-					NetwokQuit = true;
+					NetworkQuit = true;
 				else
 				{
 					if(ConsoleLog.CLog)
@@ -540,7 +543,7 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					if(!SchumixBase.ExitStatus)
+					if(!SchumixBase.ExitStatus && Connected)
 						Log.Error("Ping", sLConsole.Exception("Error"), e.Message);
 				}
 
