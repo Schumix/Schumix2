@@ -26,23 +26,10 @@ namespace Schumix.Irc
 {
 	public sealed class Sender
 	{
+		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly object WriteLock = new object();
 		private Sender() {}
-
-		// másik fáljból van csak hibát nem tudom orvosolni =/
-		private bool IsIgnore(string Name)
-		{
-			try
-			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", Name.ToLower());
-				return !db.IsNull() ? true : false;
-			}
-			catch
-			{
-				return true;
-			}
-		}
 
 		public void NameInfo(string nick, string user, string userinfo)
 		{
@@ -73,7 +60,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(!IsIgnore(channel))
+				if(!sIgnoreChannel.IsIgnore(channel))
 					sSendMessage.WriteLine("JOIN {0}", channel);
 			}
 		}
@@ -82,7 +69,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(!IsIgnore(channel))
+				if(!sIgnoreChannel.IsIgnore(channel))
 					sSendMessage.WriteLine("JOIN {0} {1}", channel, pass);
 			}
 		}
