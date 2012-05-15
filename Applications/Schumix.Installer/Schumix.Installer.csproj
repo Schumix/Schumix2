@@ -11,7 +11,6 @@
     <AssemblyName>Installer</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
     <ReleaseVersion>3.x</ReleaseVersion>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -52,12 +51,9 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System">
-    </Reference>
-    <Reference Include="System.Net">
-    </Reference>
-    <Reference Include="System.Web">
-    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Web" />
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Dependencies\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
