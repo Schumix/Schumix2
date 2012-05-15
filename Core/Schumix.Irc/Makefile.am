@@ -146,13 +146,15 @@ FILES = \
 	Commands/GoogleWebSearch.cs \
 	ConnectionType.cs \
 	Flood/AntiFlood.cs \
-	Flood/CommandFlood.cs 
+	Flood/CommandFlood.cs \
+	IrcColors.cs 
 
 DATA_FILES = 
 
 RESOURCES = 
 
 EXTRAS = \
+	Flood \
 	schumix.irc.pc.in 
 
 REFERENCES =  \
