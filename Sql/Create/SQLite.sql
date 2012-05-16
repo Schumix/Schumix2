@@ -10,7 +10,7 @@ Id INTEGER  PRIMARY KEY AUTOINCREMENT,
 Name VARCHAR(20),
 Password VARCHAR(40),
 Vhost VARCHAR(50),
-Flag BIGINT
+Flag BIGINT DEFAULT 0
 );
 
 -- ----------------------------
@@ -239,8 +239,8 @@ CREATE TABLE "sznap" (
 guid INTEGER  PRIMARY KEY AUTOINCREMENT,
 nev TEXT,
 honap VARCHAR(30),
-honap1 TINYINT,
-nap TINYINT
+honap1 TINYINT DEFAULT 0,
+nap TINYINT DEFAULT 0
 );
 
 -- ----------------------------
