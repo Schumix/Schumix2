@@ -259,7 +259,7 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ImNotOnThisChannel", "I'm not on this channel!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoCommand", "The command is not specified!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoIgnoreCommand", "You can't put this command to the inceptions!");
-INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoIgnoreMasterChannel", "The master channel shouldn't be ignored!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoIgnoreMasterChannel", "The master channel shouldn't be ignored!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "FunctionAlreadyTurnedOn", "Function already turned on!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "FunctionAlreadyTurnedOff", "Function already turned off!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "FunctionAlreadyTurnedOn2", "{0}: Function already turned on!");
@@ -1030,8 +1030,8 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorMinute", "Wrong minute (number, format)!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NameDay", "Today is {0}'s name day.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "GaveExpiredDateTime", "You have gave expired date/time!");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoIgnoreMasterChannel", "The master channel shouldn't be ignored!");
-INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoIgnoreMyNick", "Your own name shouldn't be blocked!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoIgnoreMasterChannel", "The master channel shouldn't be ignored!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoIgnoreMyNick", "Your own name shouldn't be blocked!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "FunctionAlreadyTurnedOn", "Function already turned on!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "FunctionAlreadyTurnedOff", "Function already turned off!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "FunctionAlreadyTurnedOn2", "{0}: Function already turned on!");
