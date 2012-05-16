@@ -10,3 +10,4 @@ Megírásra váró feladatok:
 - Ha Server küldi el a konfigurációs adatokat rossz lesz a kódolás és pl ignore_channel-nél nem észleli a split a vesszőket.
 - Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!!
 - Rss-nél megoldani hogy a project elnevezésének színe cserélhető legyen.
+- Sqlite alatt nem mükődnek a warring üzenetek lekérdezései.
