@@ -67,8 +67,6 @@
     <Compile Include="Network.cs" />
     <Compile Include="NickInfo.cs" />
     <Compile Include="PublicMessageHandler.cs" />
-    <Compile Include="Sender.cs" />
-    <Compile Include="SendMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\CommandInfo.cs" />
     <Compile Include="Commands\HalfOperatorCommandHandler.cs" />
@@ -82,6 +80,14 @@
     <Compile Include="Flood\AntiFlood.cs" />
     <Compile Include="Flood\CommandFlood.cs" />
     <Compile Include="IrcColors.cs" />
+    <Compile Include="Commands\SchumixCommandAttribute.cs" />
+    <Compile Include="Commands\AdminFlag.cs" />
+    <Compile Include="Commands\CommandPermission.cs" />
+    <Compile Include="Commands\CommandMethod.cs" />
+    <Compile Include="IrcMethod.cs" />
+    <Compile Include="IrcCommandAttribute.cs" />
+    <Compile Include="Sender\Sender.cs" />
+    <Compile Include="Sender\SendMessage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -96,5 +102,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Flood\" />
+    <Folder Include="Sender\" />
   </ItemGroup>
 </Project>

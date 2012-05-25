@@ -111,12 +111,12 @@ namespace Schumix.GitRssAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.OperatorCRegisterHandler("git", HandleGit);
+			CommandManager.SchumixRegisterHandler("git", HandleGit, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.OperatorCRemoveHandler("git",   HandleGit);
+			CommandManager.SchumixRemoveHandler("git",   HandleGit);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

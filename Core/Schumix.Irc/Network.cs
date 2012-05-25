@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Linq;
 using System.Timers;
 using System.Threading;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Net.Security;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Security.Authentication;
 using Schumix.Framework;
@@ -37,10 +39,9 @@ namespace Schumix.Irc
 {
 	public sealed class Network : MessageHandler
 	{
-		private static readonly Dictionary<ReplyCode, IRCDelegate> _IRCHandler = new Dictionary<ReplyCode, IRCDelegate>();
-		private static readonly Dictionary<string, IRCDelegate> _IRCHandler2 = new Dictionary<string, IRCDelegate>();
-		private static readonly Dictionary<int, IRCDelegate> _IRCHandler3 = new Dictionary<int, IRCDelegate>();
+		private static readonly Dictionary<string, IrcMethod> IrcMethodMap = new Dictionary<string, IrcMethod>();
 		private System.Timers.Timer _timeropcode = new System.Timers.Timer();
+		private static readonly object IrcMapLock = new object();
 
         /// <summary>
         ///     A kapcsolatot tároljra.
@@ -112,135 +113,133 @@ namespace Schumix.Irc
 
 		private void InitHandler()
 		{
-			RegisterHandler(ReplyCode.RPL_WELCOME,          HandleSuccessfulAuth);
-			RegisterHandler("PING",                         HandlePing);
-			RegisterHandler("PONG",                         HandlePong);
-			RegisterHandler("PRIVMSG",                      HandlePrivmsg);
-			RegisterHandler("NOTICE",                       HandleNotice);
-			RegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,   HandleChannelBan);
-			RegisterHandler(ReplyCode.ERR_BADCHANNELKEY,    HandleNoChannelPassword);
-			RegisterHandler(ReplyCode.RPL_WHOISCHANNELS,    HandleMWhois);
-			RegisterHandler(ReplyCode.ERR_NOSUCHNICK,       HandleNoWhois);
-			RegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND,   HandleUnknownCommand);
-			RegisterHandler(ReplyCode.ERR_NICKNAMEINUSE,    HandleNickError);
-			RegisterHandler(439,                            HandleWaitingForConnection);
-			RegisterHandler(ReplyCode.ERR_NOTREGISTERED,    HandleNotRegistered);
-			RegisterHandler(ReplyCode.ERR_NONICKNAMEGIVEN,  HandleNoNickName);
-			RegisterHandler("JOIN",                         HandleIrcJoin);
-			RegisterHandler("PART",                         HandleIrcLeft);
-			RegisterHandler("KICK",                         HandleIrcKick);
-			RegisterHandler("QUIT",                         HandleIrcQuit);
-			RegisterHandler("NICK",                         HandleNewNick);
-			RegisterHandler(ReplyCode.RPL_NAMREPLY,         HandleNameList);
-			RegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandlerErrorNewNickName);
-			RegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
-			RegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
+			IrcRegisterHandler(ReplyCode.RPL_WELCOME,          HandleSuccessfulAuth);
+			IrcRegisterHandler("PING",                         HandlePing);
+			IrcRegisterHandler("PONG",                         HandlePong);
+			IrcRegisterHandler("PRIVMSG",                      HandlePrivmsg);
+			IrcRegisterHandler("NOTICE",                       HandleNotice);
+			IrcRegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,   HandleChannelBan);
+			IrcRegisterHandler(ReplyCode.ERR_BADCHANNELKEY,    HandleNoChannelPassword);
+			IrcRegisterHandler(ReplyCode.RPL_WHOISCHANNELS,    HandleMWhois);
+			IrcRegisterHandler(ReplyCode.ERR_NOSUCHNICK,       HandleNoWhois);
+			IrcRegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND,   HandleUnknownCommand);
+			IrcRegisterHandler(ReplyCode.ERR_NICKNAMEINUSE,    HandleNickError);
+			IrcRegisterHandler(439,                            HandleWaitingForConnection);
+			IrcRegisterHandler(ReplyCode.ERR_NOTREGISTERED,    HandleNotRegistered);
+			IrcRegisterHandler(ReplyCode.ERR_NONICKNAMEGIVEN,  HandleNoNickName);
+			IrcRegisterHandler("JOIN",                         HandleIrcJoin);
+			IrcRegisterHandler("PART",                         HandleIrcLeft);
+			IrcRegisterHandler("KICK",                         HandleIrcKick);
+			IrcRegisterHandler("QUIT",                         HandleIrcQuit);
+			IrcRegisterHandler("NICK",                         HandleNewNick);
+			IrcRegisterHandler(ReplyCode.RPL_NAMREPLY,         HandleNameList);
+			IrcRegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandlerErrorNewNickName);
+			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
+			IrcRegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
+
+			var asms = AddonManager.Assemblies.ToList();
+			Parallel.ForEach(asms, asm =>
+			{
+				var types = asm.GetTypes();
+				Parallel.ForEach(types, type =>
+				{
+					var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+					IrcProcessMethods(methods);
+				});
+			});
+
 			Log.Notice("Network", sLConsole.Network("Text5"));
 		}
 
-		private static void RegisterHandler(ReplyCode code, IRCDelegate method)
+		private void IrcProcessMethods(IEnumerable<MethodInfo> methods)
 		{
-			if(_IRCHandler.ContainsKey(code))
-				_IRCHandler[code] += method;
+			Parallel.ForEach(methods, method =>
+			{
+				foreach(var attribute in Attribute.GetCustomAttributes(method))
+				{
+					if(attribute.IsOfType(typeof(IrcCommandAttribute)))
+					{
+						var attr = (IrcCommandAttribute)attribute;
+						lock(IrcMapLock)
+						{
+							var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
+							IrcRegisterHandler(attr.Command, del);
+						}
+					}
+				}
+			});
+		}
+
+		public static void IrcRegisterHandler(string code, IRCDelegate method)
+		{
+			if(IrcMethodMap.ContainsKey(code))
+				IrcMethodMap[code].Method += method;
 			else
-				_IRCHandler.Add(code, method);
+				IrcMethodMap.Add(code, new IrcMethod(method));
 		}
 
-		private static void RemoveHandler(ReplyCode code)
+		public static void IrcRemoveHandler(string code)
 		{
-			if(_IRCHandler.ContainsKey(code))
-				_IRCHandler.Remove(code);
+			if(IrcMethodMap.ContainsKey(code))
+				IrcMethodMap.Remove(code);
 		}
 
-		private static void RemoveHandler(ReplyCode code, IRCDelegate method)
+		public static void IrcRemoveHandler(string code, IRCDelegate method)
 		{
-			if(_IRCHandler.ContainsKey(code))
-				_IRCHandler[code] -= method;
+			if(IrcMethodMap.ContainsKey(code))
+				IrcMethodMap[code].Method -= method;
 		}
 
-		public static void PublicRegisterHandler(ReplyCode code, IRCDelegate method)
+		public static void IrcRegisterHandler(ReplyCode code, IRCDelegate method)
 		{
-			RegisterHandler(code, method);
-		}
+			string scode = Convert.ToInt32(code).ToIrcOpcode();
 
-		public static void PublicRemoveHandler(ReplyCode code)
-		{
-			RemoveHandler(code);
-		}
-
-		public static void PublicRemoveHandler(ReplyCode code, IRCDelegate method)
-		{
-			RemoveHandler(code, method);
-		}
-
-		private static void RegisterHandler(string code, IRCDelegate method)
-		{
-			if(_IRCHandler2.ContainsKey(code))
-				_IRCHandler2[code] += method;
+			if(IrcMethodMap.ContainsKey(scode))
+				IrcMethodMap[scode].Method += method;
 			else
-				_IRCHandler2.Add(code, method);
+				IrcMethodMap.Add(scode, new IrcMethod(method));
 		}
 
-		private static void RemoveHandler(string code)
+		public static void IrcRemoveHandler(ReplyCode code)
 		{
-			if(_IRCHandler2.ContainsKey(code))
-				_IRCHandler2.Remove(code);
+			string scode = Convert.ToInt32(code).ToIrcOpcode();
+
+			if(IrcMethodMap.ContainsKey(scode))
+				IrcMethodMap.Remove(scode);
 		}
 
-		private static void RemoveHandler(string code, IRCDelegate method)
+		public static void IrcRemoveHandler(ReplyCode code, IRCDelegate method)
 		{
-			if(_IRCHandler2.ContainsKey(code))
-				_IRCHandler2[code] -= method;
+			string scode = Convert.ToInt32(code).ToIrcOpcode();
+
+			if(IrcMethodMap.ContainsKey(scode))
+				IrcMethodMap[scode].Method -= method;
 		}
 
-		public static void PublicRegisterHandler(string code, IRCDelegate method)
+		public static void IrcRegisterHandler(int code, IRCDelegate method)
 		{
-			RegisterHandler(code, method);
-		}
+			string scode = code.ToIrcOpcode();
 
-		public static void PublicRemoveHandler(string code)
-		{
-			RemoveHandler(code);
-		}
-
-		public static void PublicRemoveHandler(string code, IRCDelegate method)
-		{
-			RemoveHandler(code, method);
-		}
-
-		private static void RegisterHandler(int code, IRCDelegate method)
-		{
-			if(_IRCHandler3.ContainsKey(code))
-				_IRCHandler3[code] += method;
+			if(IrcMethodMap.ContainsKey(scode))
+				IrcMethodMap[scode].Method += method;
 			else
-				_IRCHandler3.Add(code, method);
+				IrcMethodMap.Add(scode, new IrcMethod(method));
 		}
 
-		private static void RemoveHandler(int code)
+		public static void IrcRemoveHandler(int code)
 		{
-			if(_IRCHandler3.ContainsKey(code))
-				_IRCHandler3.Remove(code);
+			string scode = code.ToIrcOpcode();
+
+			if(IrcMethodMap.ContainsKey(scode))
+				IrcMethodMap.Remove(scode);
 		}
 
-		private static void RemoveHandler(int code, IRCDelegate method)
+		public static void IrcRemoveHandler(int code, IRCDelegate method)
 		{
-			if(_IRCHandler3.ContainsKey(code))
-				_IRCHandler3[code] -= method;
-		}
+			string scode = code.ToIrcOpcode();
 
-		public static void PublicRegisterHandler(int code, IRCDelegate method)
-		{
-			RegisterHandler(code, method);
-		}
-
-		public static void PublicRemoveHandler(int code)
-		{
-			RemoveHandler(code);
-		}
-
-		public static void PublicRemoveHandler(int code, IRCDelegate method)
-		{
-			RemoveHandler(code, method);
+			if(IrcMethodMap.ContainsKey(scode))
+				IrcMethodMap[scode].Method -= method;
 		}
 
 		/// <summary>
@@ -496,19 +495,9 @@ namespace Schumix.Irc
 					break;
 			}
 
-			if(_IRCHandler2.ContainsKey(opcode))
+			if(IrcMethodMap.ContainsKey(opcode))
 			{
-				_IRCHandler2[opcode].Invoke(IMessage);
-				return;
-			}
-			else if(opcode.IsNumber() && _IRCHandler.ContainsKey((ReplyCode)opcode.ToNumber()))
-			{
-				_IRCHandler[(ReplyCode)opcode.ToNumber()].Invoke(IMessage);
-				return;
-			}
-			else if(opcode.IsNumber() && _IRCHandler3.ContainsKey(opcode.ToNumber().ToInt()))
-			{
-				_IRCHandler3[opcode.ToNumber().ToInt()].Invoke(IMessage);
+				IrcMethodMap[opcode].Method.Invoke(IMessage);
 				return;
 			}
 			else

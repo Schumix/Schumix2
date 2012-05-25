@@ -43,7 +43,7 @@ namespace Schumix.Framework
 		/// <summary>
 		/// List of found assemblies.
 		/// </summary>
-		public readonly List<Assembly> Assemblies = new List<Assembly>();
+		public static readonly List<Assembly> Assemblies = new List<Assembly>();
 		public List<ISchumixAddon> GetPlugins() { return _addons; }
 
 		private AddonManager() {}

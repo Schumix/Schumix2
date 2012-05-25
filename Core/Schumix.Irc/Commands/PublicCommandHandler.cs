@@ -42,8 +42,11 @@ namespace Schumix.Irc.Commands
 			sSendMessage.SendChatMessage(sIRCMessage, text[0], sUtilities.GetVersion());
 			string commands = string.Empty;
 
-			foreach(var command in CommandManager.GetPublicCommandHandler())
+			foreach(var command in CommandManager.CommandMethodMap)
 			{
+				if(command.Value.Permission != CommandPermission.Normal)
+					continue;
+
 				if(command.Key == "xbot")
 					continue;
 

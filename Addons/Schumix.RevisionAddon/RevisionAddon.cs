@@ -30,12 +30,12 @@ namespace Schumix.RevisionAddon
 	{
 		public void Setup()
 		{
-			CommandManager.PublicCRegisterHandler("xrev", HandleXrev);
+			CommandManager.SchumixRegisterHandler("xrev", HandleXrev);
 		}
 
 		public void Destroy()
 		{
-			CommandManager.PublicCRemoveHandler("xrev", HandleXrev);
+			CommandManager.SchumixRemoveHandler("xrev",   HandleXrev);
 		}
 
 		public int Reload(string RName, string SName = "")

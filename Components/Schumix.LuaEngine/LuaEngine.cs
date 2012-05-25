@@ -122,18 +122,12 @@ namespace Schumix.LuaEngine
 			{
 				foreach(var func in _functions.RegisteredCommand)
 				{
-					if(CommandManager.GetPublicCommandHandler().ContainsKey(func.Key))
-						CommandManager.PublicCRemoveHandler(func.Key, func.Value);
-					else if(CommandManager.GetHalfOperatorCommandHandler().ContainsKey(func.Key))
-						CommandManager.HalfOperatorCRemoveHandler(func.Key, func.Value);
-					else if(CommandManager.GetOperatorCommandHandler().ContainsKey(func.Key))
-						CommandManager.OperatorCRemoveHandler(func.Key, func.Value);
-					else if(CommandManager.GetAdminCommandHandler().ContainsKey(func.Key))
-						CommandManager.AdminCRemoveHandler(func.Key, func.Value);
+					if(CommandManager.CommandMethodMap.ContainsKey(func.Key))
+						CommandManager.SchumixRemoveHandler(func.Key, func.Value);
 				}
 
 				foreach(var func in _functions.RegisteredHandler)
-					Network.PublicRemoveHandler(func.Key, func.Value);
+					Network.IrcRemoveHandler(func.Key, func.Value);
 			}
 
 			var di = new DirectoryInfo(_scriptPath);

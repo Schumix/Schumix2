@@ -159,10 +159,7 @@ namespace Schumix.Irc.Commands
 			}
 			else
 			{
-				if(!CommandManager.GetPublicCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
-					!CommandManager.GetHalfOperatorCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
-					!CommandManager.GetOperatorCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
-					!CommandManager.GetAdminCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()))
+				if(!CommandManager.CommandMethodMap.ContainsKey(sIRCMessage.Info[4].ToLower()))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoFoundHelpCommand2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;

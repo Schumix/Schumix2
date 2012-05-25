@@ -37,12 +37,12 @@ namespace Schumix.ChatterBotAddon
 
 		public void Setup()
 		{
-			Network.PublicRegisterHandler("PRIVMSG", HandlePrivmsg);
+			Network.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
 		}
 
 		public void Destroy()
 		{
-			Network.PublicRemoveHandler("PRIVMSG",   HandlePrivmsg);
+			Network.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
 		}
 
 		public int Reload(string RName, string SName = "")

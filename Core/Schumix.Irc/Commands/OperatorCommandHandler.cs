@@ -873,7 +873,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator) && CommandManager.GetAdminCommandHandler().ContainsKey(command))
+					if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator) && CommandManager.CommandMethodMap.ContainsKey(command) && CommandManager.CommandMethodMap[command].Permission != CommandPermission.Administrator)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoAdministrator", sIRCMessage.Channel));
 						return;

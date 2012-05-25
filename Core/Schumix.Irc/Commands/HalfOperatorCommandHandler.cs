@@ -303,8 +303,11 @@ namespace Schumix.Irc.Commands
 				{
 					string commands = string.Empty;
 
-					foreach(var command in CommandManager.GetHalfOperatorCommandHandler())
+					foreach(var command in CommandManager.CommandMethodMap)
 					{
+						if(command.Value.Permission != CommandPermission.HalfOperator)
+							continue;
+
 						if(command.Key == "admin")
 							continue;
 
@@ -321,19 +324,15 @@ namespace Schumix.Irc.Commands
 				{
 					string commands = string.Empty;
 
-					foreach(var command in CommandManager.GetHalfOperatorCommandHandler())
+					foreach(var command in CommandManager.CommandMethodMap)
 					{
+						if(command.Value.Permission == CommandPermission.Normal || 
+						   command.Value.Permission == CommandPermission.Administrator)
+							continue;
+
 						if(command.Key == "admin")
 							continue;
 
-						if(sIgnoreCommand.IsIgnore(command.Key))
-							continue;
-
-						commands += " | " + IRCConfig.CommandPrefix + command.Key;
-					}
-
-					foreach(var command in CommandManager.GetOperatorCommandHandler())
-					{
 						if(sIgnoreCommand.IsIgnore(command.Key))
 							continue;
 
@@ -347,27 +346,14 @@ namespace Schumix.Irc.Commands
 				{
 					string commands = string.Empty;
 
-					foreach(var command in CommandManager.GetHalfOperatorCommandHandler())
+					foreach(var command in CommandManager.CommandMethodMap)
 					{
+						if(command.Value.Permission == CommandPermission.Normal)
+							continue;
+
 						if(command.Key == "admin")
 							continue;
 
-						if(sIgnoreCommand.IsIgnore(command.Key))
-							continue;
-
-						commands += " | " + IRCConfig.CommandPrefix + command.Key;
-					}
-
-					foreach(var command in CommandManager.GetOperatorCommandHandler())
-					{
-						if(sIgnoreCommand.IsIgnore(command.Key))
-							continue;
-
-						commands += " | " + IRCConfig.CommandPrefix + command.Key;
-					}
-
-					foreach(var command in CommandManager.GetAdminCommandHandler())
-					{
 						if(sIgnoreCommand.IsIgnore(command.Key))
 							continue;
 

@@ -26,13 +26,6 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Commands
 {	
-	public enum AdminFlag
-	{
-		HalfOperator  = 0,
-		Operator      = 1,
-		Administrator = 2
-	};
-
 	public class CommandInfo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
