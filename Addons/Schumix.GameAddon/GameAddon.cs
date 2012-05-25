@@ -45,12 +45,12 @@ namespace Schumix.GameAddon
 		public void Setup()
 		{
 			CleanFunctions();
-			Network.PublicRegisterHandler("PRIVMSG", HandlePrivmsg);
-			Network.PublicRegisterHandler("PART",    HandleLeft);
-			Network.PublicRegisterHandler("KICK",    HandleKick);
-			Network.PublicRegisterHandler("QUIT",    HandleQuit);
-			Network.PublicRegisterHandler("NICK",    HandleNewNick);
-			Network.PublicRegisterHandler("MODE",    HandleMode);
+			Network.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
+			Network.IrcRegisterHandler("PART",    HandleLeft);
+			Network.IrcRegisterHandler("KICK",    HandleKick);
+			Network.IrcRegisterHandler("QUIT",    HandleQuit);
+			Network.IrcRegisterHandler("NICK",    HandleNewNick);
+			Network.IrcRegisterHandler("MODE",    HandleMode);
 			InitIrcCommand();
 			Console.CancelKeyPress += (sender, e) => { Clean(); };
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => { Clean(); };
@@ -58,12 +58,12 @@ namespace Schumix.GameAddon
 
 		public void Destroy()
 		{
-			Network.PublicRemoveHandler("PRIVMSG",   HandlePrivmsg);
-			Network.PublicRemoveHandler("PART",      HandleLeft);
-			Network.PublicRemoveHandler("KICK",      HandleKick);
-			Network.PublicRemoveHandler("QUIT",      HandleQuit);
-			Network.PublicRemoveHandler("NICK",      HandleNewNick);
-			Network.PublicRemoveHandler("MODE",      HandleMode);
+			Network.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
+			Network.IrcRemoveHandler("PART",      HandleLeft);
+			Network.IrcRemoveHandler("KICK",      HandleKick);
+			Network.IrcRemoveHandler("QUIT",      HandleQuit);
+			Network.IrcRemoveHandler("NICK",      HandleNewNick);
+			Network.IrcRemoveHandler("MODE",      HandleMode);
 			RemoveIrcCommand();
 			Clean();
 		}
@@ -91,12 +91,12 @@ namespace Schumix.GameAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.PublicCRegisterHandler("game", HandleGame);
+			CommandManager.SchumixRegisterHandler("game", HandleGame);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.PublicCRemoveHandler("game",   HandleGame);
+			CommandManager.SchumixRemoveHandler("game",   HandleGame);
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)

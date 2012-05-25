@@ -1094,10 +1094,6 @@ namespace Schumix.Console.Commands
 					}
 
 					sIgnoreCommand.Add(command);
-					CommandManager.PublicCRemoveHandler(command);
-					CommandManager.HalfOperatorCRemoveHandler(command);
-					CommandManager.OperatorCRemoveHandler(command);
-					CommandManager.AdminCRemoveHandler(command);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "remove")

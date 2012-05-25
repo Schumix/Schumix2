@@ -109,12 +109,12 @@ namespace Schumix.WordPressRssAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.OperatorCRegisterHandler("wordpress", HandleWordPress);
+			CommandManager.SchumixRegisterHandler("wordpress", HandleWordPress, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.OperatorCRemoveHandler("wordpress",   HandleWordPress);
+			CommandManager.SchumixRemoveHandler("wordpress",   HandleWordPress);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

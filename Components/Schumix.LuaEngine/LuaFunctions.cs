@@ -104,7 +104,7 @@ namespace Schumix.LuaEngine
 
 				var handler = func as IRCDelegate;
 				_RegisteredHandler.Add(HandlerName, handler);
-				Network.PublicRegisterHandler(HandlerName, handler);
+				Network.IrcRegisterHandler(HandlerName, handler);
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
@@ -115,7 +115,7 @@ namespace Schumix.LuaEngine
 
 				var handler = func as IRCDelegate;
 				_RegisteredHandler.Add(HandlerName, handler);
-				Network.PublicRegisterHandler(HandlerName, handler);
+				Network.IrcRegisterHandler(HandlerName, handler);
 			}
 		}
 
@@ -124,8 +124,8 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		/// <param name="CommandName">Command to listen to.</param>
 		/// <param name="LuaName">Lua function to call.</param>
-		[LuaFunction("RegisterPublicCommandHook", "Registers a public command hook.")]
-		public void RegisterPublicCommandHook(string CommandName, string LuaName)
+		[LuaFunction("RegisterSchumixCommandHook", "Registers a schumix command hook.")]
+		public void RegisterSchumixCommandHook(string CommandName, string LuaName)
 		{
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
@@ -136,7 +136,7 @@ namespace Schumix.LuaEngine
 
 				var handler = func as CommandDelegate;
 				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.PublicCRegisterHandler(CommandName, handler);
+				CommandManager.SchumixRegisterHandler(CommandName, handler);
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
@@ -147,103 +147,7 @@ namespace Schumix.LuaEngine
 
 				var handler = func as CommandDelegate;
 				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.PublicCRegisterHandler(CommandName, handler);
-			}
-		}
-
-		/// <summary>
-		/// Registers a halfoperator command hook.
-		/// </summary>
-		/// <param name="CommandName">Command to listen to.</param>
-		/// <param name="LuaName">Lua function to call.</param>
-		[LuaFunction("RegisterHalfOperatorCommandHook", "Registers a halfoperator command hook.")]
-		public void RegisterHalfOperatorCommandHook(string CommandName, string LuaName)
-		{
-			if(sUtilities.GetPlatformType() == PlatformType.Windows)
-			{
-				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.HalfOperatorCRegisterHandler(CommandName, handler);
-			}
-			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
-			{
-				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.HalfOperatorCRegisterHandler(CommandName, handler);
-			}
-		}
-
-		/// <summary>
-		/// Registers a operator command hook.
-		/// </summary>
-		/// <param name="CommandName">Command to listen to.</param>
-		/// <param name="LuaName">Lua function to call.</param>
-		[LuaFunction("RegisterOperatorCommandHook", "Registers a operator command hook.")]
-		public void RegisterOperatorCommandHook(string CommandName, string LuaName)
-		{
-			if(sUtilities.GetPlatformType() == PlatformType.Windows)
-			{
-				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.OperatorCRegisterHandler(CommandName, handler);
-			}
-			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
-			{
-				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.OperatorCRegisterHandler(CommandName, handler);
-			}
-		}
-
-		/// <summary>
-		/// Registers a admin command hook.
-		/// </summary>
-		/// <param name="CommandName">Command to listen to.</param>
-		/// <param name="LuaName">Lua function to call.</param>
-		[LuaFunction("RegisterAdminCommandHook", "Registers a admin command hook.")]
-		public void RegisterAdminCommandHook(string CommandName, string LuaName)
-		{
-			if(sUtilities.GetPlatformType() == PlatformType.Windows)
-			{
-				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.AdminCRegisterHandler(CommandName, handler);
-			}
-			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
-			{
-				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.AdminCRegisterHandler(CommandName, handler);
+				CommandManager.SchumixRegisterHandler(CommandName, handler);
 			}
 		}
 

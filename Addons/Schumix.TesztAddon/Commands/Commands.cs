@@ -131,5 +131,17 @@ namespace Schumix.TesztAddon.Commands
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);
 		}
+
+		[SchumixCommand("test2", CommandPermission.Normal)]
+		public static void HandleTest2(IRCMessage sIRCMessage)
+		{
+			//Console.WriteLine(sIRCMessage.Args);
+		}
+
+		[IrcCommand(ReplyCode.RPL_WELCOME)]
+		public static void IrcHandleTest2(IRCMessage sIRCMessage)
+		{
+			//Console.WriteLine(sIRCMessage.Args);
+		}
 	}
 }
