@@ -58,7 +58,7 @@ namespace Schumix.Server.New
 			{
 				try
 				{
-					if(MainClass.sListener.Exit)
+					if(!MainClass.sListener.IsNull() && MainClass.sListener.Exit)
 						return;
 
 					foreach(var list in _processlist)

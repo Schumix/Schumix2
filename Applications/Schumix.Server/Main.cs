@@ -43,6 +43,8 @@ namespace Schumix.Server
 		private static readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
+		private static readonly Windows sWindows = Singleton<Windows>.Instance;
+		private static readonly Linux sLinux = Singleton<Linux>.Instance;
 		public static ServerListener sListener { get; private set; }
 
 		/// <summary>
@@ -130,21 +132,10 @@ namespace Schumix.Server
 			if(File.Exists("Installer.exe"))
 				File.Delete("Installer.exe");
 
-			System.Console.CancelKeyPress += (sender, e) =>
-			{
-				sUtilities.RemovePidFile();
-				sListener.Exit = true;
-				System.Console.CursorVisible = true;
-				var packet = new SchumixPacket();
-				packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
-				packet.Write<int>((int)0);
-
-				foreach(var list in sServerPacketHandler.HostList)
-					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
-
-				Thread.Sleep(2000);
-				KillAllSchumixProccess();
-			};
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
+				sWindows.Init();
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				sLinux.Init();
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
@@ -182,7 +173,7 @@ namespace Schumix.Server
 			System.Console.WriteLine("\t--console-localization=Value\tSet up the program's console language settings");
 		}
 
-		private static void KillAllSchumixProccess()
+		public static void KillAllSchumixProccess()
 		{
 			foreach(var list in sSchumix._processlist)
 			{
