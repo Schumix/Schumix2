@@ -43,6 +43,11 @@ namespace Schumix.Irc
 		private System.Timers.Timer _timeropcode = new System.Timers.Timer();
 		private static readonly object IrcMapLock = new object();
 
+		public static Dictionary<string, IrcMethod> GetIrcMethodMap()
+		{
+			return IrcMethodMap;
+		}
+
         /// <summary>
         ///     A kapcsolatot tároljra.
         /// </summary>
@@ -187,7 +192,12 @@ namespace Schumix.Irc
 		public static void IrcRemoveHandler(string code, IRCDelegate method)
 		{
 			if(IrcMethodMap.ContainsKey(code))
+			{
 				IrcMethodMap[code].Method -= method;
+
+				if(IrcMethodMap[code].Method.IsNull())
+					IrcMethodMap.Remove(code);
+			}
 		}
 
 		public static void IrcRegisterHandler(ReplyCode code, IRCDelegate method)
@@ -213,7 +223,12 @@ namespace Schumix.Irc
 			string scode = Convert.ToInt32(code).ToIrcOpcode();
 
 			if(IrcMethodMap.ContainsKey(scode))
+			{
 				IrcMethodMap[scode].Method -= method;
+
+				if(IrcMethodMap[scode].Method.IsNull())
+					IrcMethodMap.Remove(scode);
+			}
 		}
 
 		public static void IrcRegisterHandler(int code, IRCDelegate method)
@@ -239,7 +254,12 @@ namespace Schumix.Irc
 			string scode = code.ToIrcOpcode();
 
 			if(IrcMethodMap.ContainsKey(scode))
+			{
 				IrcMethodMap[scode].Method -= method;
+
+				if(IrcMethodMap[scode].Method.IsNull())
+					IrcMethodMap.Remove(scode);
+			}
 		}
 
 		/// <summary>

@@ -181,7 +181,12 @@ namespace Schumix.Irc.Commands
 		public static void SchumixRemoveHandler(string code, CommandDelegate method)
 		{
 			if(CommandMethodMap.ContainsKey(code.ToLower()))
+			{
 				CommandMethodMap[code.ToLower()].Method -= method;
+
+				if(CommandMethodMap[code.ToLower()].Method.IsNull())
+					CommandMethodMap.Remove(code.ToLower());
+			}
 		}
 
 		protected void IncomingInfo(string handler, IRCMessage sIRCMessage)

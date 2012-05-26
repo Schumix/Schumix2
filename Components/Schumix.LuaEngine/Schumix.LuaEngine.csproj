@@ -79,6 +79,7 @@
     <Compile Include="LuaFunctions.cs" />
     <Compile Include="LuaHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SchumixCommandMethod.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Schumix.LuaEngine.pfx" />

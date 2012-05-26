@@ -11,3 +11,4 @@ Megírásra váró feladatok:
 - Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!!
 - Rss-nél megoldani hogy a project elnevezésének színe cserélhető legyen.
 - Sqlite alatt nem mükődnek a warring üzenetek lekérdezései.
+- Lua részben megoldani hogy ne csak public parancsokat lehessen hozzáadni a kódhoz. Ezenkivül megoldani az újratöltési hibát.
