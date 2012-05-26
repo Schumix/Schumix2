@@ -34,29 +34,29 @@ namespace Schumix.LuaEngine
 	/// </summary>
 	public sealed class LuaFunctions : CommandInfo
 	{
-		private readonly Dictionary<string, CommandDelegate> _RegisteredCommand = new Dictionary<string, CommandDelegate>();
-		private readonly Dictionary<string, IRCDelegate> _RegisteredHandler = new Dictionary<string, IRCDelegate>();
+		private readonly Dictionary<string, CommandDelegate> _RegisteredSchumix = new Dictionary<string, CommandDelegate>();
+		private readonly Dictionary<string, IRCDelegate> _RegisteredIrc = new Dictionary<string, IRCDelegate>();
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly LuaInterface.Lua _lua;
 		private readonly Mono.LuaInterface.Lua _monolua;
+		private readonly LuaInterface.Lua _lua;
 
 		#region Properites
 
 		/// <summary>
 		/// Events registered by Lua on Handler.
 		/// </summary>
-		public Dictionary<string, IRCDelegate> RegisteredHandler
+		public Dictionary<string, IRCDelegate> RegisteredIrc
 		{
-			get { return _RegisteredHandler; }
+			get { return _RegisteredIrc; }
 		}
 
 		/// <summary>
 		/// Events registered by Lua on Command.
 		/// </summary>
-		public Dictionary<string, CommandDelegate> RegisteredCommand
+		public Dictionary<string, CommandDelegate> RegisteredSchumix
 		{
-			get { return _RegisteredCommand; }
+			get { return _RegisteredSchumix; }
 		}
 
 		#endregion
@@ -83,8 +83,8 @@ namespace Schumix.LuaEngine
 
 		public void Clean()
 		{
-			_RegisteredCommand.Clear();
-			_RegisteredHandler.Clear();
+			_RegisteredSchumix.Clear();
+			_RegisteredIrc.Clear();
 		}
 
 		/// <summary>
@@ -92,8 +92,8 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		/// <param name="HandlerName">Irc to listen to.</param>
 		/// <param name="LuaName">Lua function to call.</param>
-		[LuaFunction("RegisterHook", "Registers a handler hook.")]
-		public void RegisterHandlerHook(string HandlerName, string LuaName)
+		[LuaFunction("RegisterIrcHook", "Registers a irc hook.")]
+		public void RegisterIrcHook(string HandlerName, string LuaName)
 		{
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
@@ -103,7 +103,7 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as IRCDelegate;
-				_RegisteredHandler.Add(HandlerName, handler);
+				_RegisteredIrc.Add(HandlerName, handler);
 				Network.IrcRegisterHandler(HandlerName, handler);
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
@@ -114,7 +114,7 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as IRCDelegate;
-				_RegisteredHandler.Add(HandlerName, handler);
+				_RegisteredIrc.Add(HandlerName, handler);
 				Network.IrcRegisterHandler(HandlerName, handler);
 			}
 		}
@@ -124,8 +124,8 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		/// <param name="CommandName">Command to listen to.</param>
 		/// <param name="LuaName">Lua function to call.</param>
-		[LuaFunction("RegisterSchumixCommandHook", "Registers a schumix command hook.")]
-		public void RegisterSchumixCommandHook(string CommandName, string LuaName)
+		[LuaFunction("RegisterSchumixHook", "Registers a schumix command hook.")]
+		public void RegisterSchumixHook(string CommandName, string LuaName, CommandPermission permission = CommandPermission.Normal)
 		{
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
@@ -135,8 +135,8 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.SchumixRegisterHandler(CommandName, handler);
+				_RegisteredSchumix.Add(CommandName.ToLower(), handler);
+				CommandManager.SchumixRegisterHandler(CommandName, handler, permission);
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
@@ -146,8 +146,8 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.SchumixRegisterHandler(CommandName, handler);
+				_RegisteredSchumix.Add(CommandName.ToLower(), handler);
+				CommandManager.SchumixRegisterHandler(CommandName, handler, permission);
 			}
 		}
 
