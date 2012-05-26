@@ -139,20 +139,29 @@ namespace Schumix.Server
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
-				sUtilities.RemovePidFile();
-				sListener.Exit = true;
-				System.Console.CursorVisible = true;
-				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
-				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
-				var packet = new SchumixPacket();
-				packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
-				packet.Write<int>((int)0);
-
-				foreach(var list in sServerPacketHandler.HostList)
-					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
-
-				Thread.Sleep(2000);
-				KillAllSchumixProccess();
+				if(sListener.Exit)
+				{
+					Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
+					sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
+					return;
+				}
+				else
+				{
+					sUtilities.RemovePidFile();
+					sListener.Exit = true;
+					System.Console.CursorVisible = true;
+					Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
+					sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
+					var packet = new SchumixPacket();
+					packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
+					packet.Write<int>((int)0);
+	
+					foreach(var list in sServerPacketHandler.HostList)
+						sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+	
+					Thread.Sleep(2000);
+					KillAllSchumixProccess();
+				}
 			};
 
 			sListener = new ServerListener(ServerConfigs.ListenerPort);
