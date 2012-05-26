@@ -68,6 +68,9 @@
     <Compile Include="Console\Commands\CommandManager.cs" />
     <Compile Include="Console\Commands\CommandHelp.cs" />
     <Compile Include="ScriptManager.cs" />
+    <Compile Include="Windows\Windows.cs" />
+    <Compile Include="Linux\Linux.cs" />
+    <Compile Include="Windows\CtrlType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -95,5 +98,7 @@
   <ItemGroup>
     <Folder Include="Console\Commands\" />
     <Folder Include="Console\" />
+    <Folder Include="Windows\" />
+    <Folder Include="Linux\" />
   </ItemGroup>
 </Project>
