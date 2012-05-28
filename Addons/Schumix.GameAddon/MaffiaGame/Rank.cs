@@ -23,10 +23,10 @@ namespace Schumix.GameAddon.MaffiaGames
 {
 	enum Rank
 	{
-		Killer,
-		Detective,
-		Doctor,
-		Normal,
+		Killer      = 1,
+		Detective   = 2,
+		Doctor      = 3,
+		Normal      = 0,
 		None
 	}
 }
