@@ -54,28 +54,27 @@ a `Schumix.xml` nevû fájlt.
 * **IgnoreNames:** Letilthatóak vele a nem kívánatos személyek. Így csak az használhatja a botot aki megérdemli.
                    `pl: schumix,schumix2 vagy szimplán schumix`
 * **NickServ:**
-	**Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határozza meg hogy a nickhez tartozó jelszó el legyen-e küldve. true = igen, false = nem.
-                 Alapértelmezés: false
-	**Password:** Nickhez tartozó jelszó.
+	* **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határozza meg hogy a nickhez tartozó jelszó el legyen-e küldve. true = igen, false = nem.
+                   Alapértelmezés: false
+	* **Password:** Nickhez tartozó jelszó.
 * **HostServ:**
-    **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy ha van a nickhez vhost akkor bekapcsolodjon-e. Alapértelmezés: `false`
-                 Mert ha nincs akkor megjelenitödhet az ip ezért olyankor ajánlott false értékre tenni.
-    **Vhost:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy a nickhez tartotó vhost aktiválásra kerüljön-e. Alapértelmezés: `false`
+    * **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy ha van a nickhez vhost akkor bekapcsolodjon-e. Alapértelmezés: `false`
+                   Mert ha nincs akkor megjelenitödhet az ip ezért olyankor ajánlott false értékre tenni.
+    * **Vhost:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy a nickhez tartotó vhost aktiválásra kerüljön-e. Alapértelmezés: `false`
 * **Wait:**
-    **MessageSending:** Üzenet küldésének késleltetése. Legföbbként flood ellen van.
+    * **MessageSending:** Üzenet küldésének késleltetése. Legföbbként flood ellen van.
 * **Command:**
-    **Prefix:** A parancsok elõjele. Alapértelmezés: `$` (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: `$xbot`)
+    * **Prefix:** A parancsok elõjele. Alapértelmezés: `$` (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: `$xbot`)
 * **MessageType:** Értéke `Privmsg` vagy `Notice` lehet. Meghatározza hogy milyen formában küldje az üzeneteket a szerver felé. Alapértelmezés: `Privmsg`
 
 ## Log
 
 * **FileName:** Meghatározza hova mentődjenek el a log információk. Alapértelmezés: `Schumix.log`
-* **LogLevel:**
-Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelmezés: `2`
-**Szintjei:** `0` (Normális üzenetek és a sikeresek)
-`1` (Figyelmeztetések)
-`2` (Hibák)
-`3` (Hibakeresõ üzenetek)
+* **LogLevel:** Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelmezés: `2`
+    * **Szintjei:** `0` (Normális üzenetek és a sikeresek)
+                    `1` (Figyelmeztetések)
+                    `2` (Hibák)
+                    `3` (Hibakeresõ üzenetek)
 * **LogDirectory:** A log üzenetek mentése abba a mappába ami megvan adva. Alapértelmezés: `Logs`
 * **IrcLogDirectory:** Az irc csatornák és egyéb üzenetének mentése abba a mappába ami megvan adva. Alapértelmezés: `Csatornak`
 * **IrcLog:** Értéke `true` vagy `false` lehet. Meghatározza hogy a konzolba kiirásra kerülhetnek-e az irc-tõl jövõ üzenetek. Alapértelmezés: `false`
@@ -116,8 +115,8 @@ Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelm
 
 * **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi az automatikus frissítést. Alapértelmezés: `false`
 * **Versions:**
-    **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi a megadott verzióra való frissítést. Alapértelmezés: `false`
-    **Version:** Meghatározza melyik verzióra frissítse magát a kód. Alapértelmezés: `x.x.x`
+    * **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi a megadott verzióra való frissítést. Alapértelmezés: `false`
+    * **Version:** Meghatározza melyik verzióra frissítse magát a kód. Alapértelmezés: `x.x.x`
 * **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: `http://megax.uw.hu/Schumix2/`
 
 # Adatbázis beüzemelése
