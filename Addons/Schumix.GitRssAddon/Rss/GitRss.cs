@@ -68,6 +68,7 @@ namespace Schumix.GitRssAddon
 				_password = url.Substring(0, url.IndexOf("@"));
 				url = url.Remove(0, url.IndexOf("@")+1);
 				_url += url;
+				_credential = new NetworkCredential(_username, _password);
 			}
 			else
 			{
@@ -78,7 +79,6 @@ namespace Schumix.GitRssAddon
 
 			_website = website;
 			Init();
-			_credential = new NetworkCredential(_username, _password);
 
 			if(_username != string.Empty && _password != string.Empty)
 			{
@@ -262,6 +262,9 @@ namespace Schumix.GitRssAddon
 
 		private string DownloadToXml(string data)
 		{
+			if(data == string.Empty)
+				return string.Empty;
+
 			data = data.Substring(0, data.IndexOf("</entry>") + "</entry>".Length);
 			data += "</feed>";
 			return data;

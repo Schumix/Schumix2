@@ -20,6 +20,7 @@
 using System;
 using Schumix.API;
 using Schumix.Irc.Ctcp;
+using Schumix.Irc.Flood;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -40,6 +41,7 @@ namespace Schumix.Irc.Commands
 		protected readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		protected readonly CtcpSender sCtcpSender = Singleton<CtcpSender>.Instance;
+		protected readonly AntiFlood sAntiFlood = Singleton<AntiFlood>.Instance;
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		protected readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		protected readonly Sender sSender = Singleton<Sender>.Instance;
@@ -157,10 +159,7 @@ namespace Schumix.Irc.Commands
 			}
 			else
 			{
-				if(!CommandManager.GetPublicCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
-					!CommandManager.GetHalfOperatorCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
-					!CommandManager.GetOperatorCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
-					!CommandManager.GetAdminCommandHandler().ContainsKey(sIRCMessage.Info[4].ToLower()))
+				if(!CommandManager.CommandMethodMap.ContainsKey(sIRCMessage.Info[4].ToLower()))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoFoundHelpCommand2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
@@ -188,7 +187,10 @@ namespace Schumix.Irc.Commands
 				{
 					string commands = sIRCMessage.Info.SplitToString(4, "/");
 					if(sLManager.IsAdminCommandHelp(commands, sIRCMessage.Channel))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoAdministrator", sIRCMessage.Channel));
 						return;
+					}
 
 					HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel));
 				}

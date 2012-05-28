@@ -9,6 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.Framework</RootNamespace>
     <AssemblyName>Schumix.Framework</AssemblyName>
+    <ReleaseVersion>3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -56,10 +57,10 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
-    <Reference Include="MySql.Data">
+    <Reference Include="MySql.Data, Version=6.3.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
       <HintPath>..\..\Dependencies\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="System.Data.SQLite">
+    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139">
       <HintPath>..\..\Dependencies\System.Data.SQLite.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -90,6 +91,7 @@
     <Compile Include="Network\ClientSocket.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="CrashDumper.cs" />
+    <Compile Include="PlatformType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

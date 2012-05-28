@@ -41,9 +41,9 @@ namespace Schumix.Server.New
 
 	class Schumix
 	{
-		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public static readonly Dictionary<string, Settings> _processlist = new Dictionary<string, Settings>();
+		public readonly Dictionary<string, Settings> _processlist = new Dictionary<string, Settings>();
 
 		private Schumix()
 		{
@@ -58,6 +58,9 @@ namespace Schumix.Server.New
 			{
 				try
 				{
+					if(!MainClass.sListener.IsNull() && MainClass.sListener.Exit)
+						return;
+
 					foreach(var list in _processlist)
 					{
 						if(list.Value.Process.IsNull())
@@ -68,7 +71,7 @@ namespace Schumix.Server.New
 
 						bool run = false;
 
-						if(sUtilities.GetCompiler() == Compiler.Mono)
+						if(sUtilities.GetPlatformType() == PlatformType.Linux)
 						{
 							foreach(var p in Process.GetProcessesByName("mono"))
 							{
@@ -76,7 +79,7 @@ namespace Schumix.Server.New
 									run = true;
 							}
 						}
-						else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+						else if(sUtilities.GetPlatformType() == PlatformType.Windows)
 						{
 							foreach(var p in Process.GetProcessesByName("Schumix"))
 							{
@@ -98,8 +101,10 @@ namespace Schumix.Server.New
 					{
 						Log.Notice("Schumix", sLConsole.Schumix("Text"));
 
-						if(!_processlist[ll].Process.IsNull())
-							_processlist[ll].Process.Dispose();
+						_processlist[ll].Process.Kill();
+
+						//if(!_processlist[ll].Process.IsNull())
+						//	_processlist[ll].Process.Dispose();
 
 						Task.Factory.StartNew(() => Start(_processlist[ll].File, _processlist[ll].Dir, _processlist[ll].Encoding, _processlist[ll].Locale, _processlist[ll].Identify, _processlist[ll].Configs));
 						Thread.Sleep(10*1000);
@@ -129,7 +134,7 @@ namespace Schumix.Server.New
 			exe.StartInfo.RedirectStandardOutput = true;
 			exe.StartInfo.RedirectStandardError = true;
 
-			if(sUtilities.GetCompiler() == Compiler.Mono)
+			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				exe.StartInfo.FileName = "mono";
 
@@ -138,7 +143,7 @@ namespace Schumix.Server.New
 				else
 					exe.StartInfo.Arguments = string.Format("Schumix.exe --config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7} --server-configs={8} --server-identify={9}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password, Configs, Identify);
 			}
-			else if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				exe.StartInfo.FileName = "Schumix.exe";
 

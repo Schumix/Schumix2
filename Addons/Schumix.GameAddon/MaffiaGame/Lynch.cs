@@ -37,19 +37,19 @@ namespace Schumix.GameAddon.MaffiaGames
 
 				if(!Running)
 				{
-					sSendMessage.SendCMPrivmsg(Channel, "{0}: Nem megy játék!", Name);
+					sSendMessage.SendCMPrivmsg(Channel, "{0}: Nem megy játék!", NickName);
 					return;
 				}
 
 				if(!Started)
 				{
-					sSendMessage.SendCMPrivmsg(Channel, "{0}: Még nem kezdődött el játék!", Name);
+					sSendMessage.SendCMPrivmsg(Channel, "{0}: Még nem kezdődött el játék!", NickName);
 					return;
 				}
 
 				if(NoLynch)
 				{
-					sSendMessage.SendCMPrivmsg(Channel, "{0}: A lincselési lehetőség ki van kapcsolva!", Name);
+					sSendMessage.SendCMPrivmsg(Channel, "{0}: A lincselési lehetőség ki van kapcsolva!", NickName);
 					return;
 				}
 

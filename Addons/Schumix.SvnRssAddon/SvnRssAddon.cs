@@ -110,12 +110,12 @@ namespace Schumix.SvnRssAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.OperatorCRegisterHandler("svn", HandleSvn);
+			CommandManager.SchumixRegisterHandler("svn", HandleSvn, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.OperatorCRemoveHandler("svn",   HandleSvn);
+			CommandManager.SchumixRemoveHandler("svn",   HandleSvn);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

@@ -44,9 +44,9 @@ namespace WolframAPI
 	/// <summary>
 	/// Used to handle the result response which is used in the <see cref="WAClient.GetResult"/> method.
 	/// </summary>
-    /// <param name="result">The result received</param>
-    /// <param name="expression">The expression submitted</param>
-    public delegate void ResultReceivedEventHandler(WAResult result, string expression = "");
+	/// <param name="result">The result received</param>
+	/// <param name="expression">The expression submitted</param>
+	public delegate void ResultReceivedEventHandler(WAResult result, string expression = "");
 
 	/// <summary>
 	/// Used to asynchronously call the expression processor methods.
@@ -112,243 +112,243 @@ namespace WolframAPI
 			_appId = appId;
 		}
 
-        /// <summary>
-        /// Solves the specified expression.
-        /// </summary>
-        /// <param name="expression">The expression.</param>
-        /// <exception cref="WolframException">Throws in case of any error.</exception>
-        /// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
-        /// <returns>The solution of the given expression</returns>
-        public string Solve(string expression)
-        {
-			if(sUtilities.GetCompiler() != Compiler.Mono)
+		/// <summary>
+		/// Solves the specified expression.
+		/// </summary>
+		/// <param name="expression">The expression.</param>
+		/// <exception cref="WolframException">Throws in case of any error.</exception>
+		/// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
+		/// <returns>The solution of the given expression</returns>
+		public string Solve(string expression)
+		{
+			if(sUtilities.GetPlatformType() != PlatformType.Linux)
 			{
-	            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
-	            Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+				Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 			}
 
-            var response = Submit(expression);
-            var result = Parse(response);
-            
-            if(result.Pods.IsNull() || result.Pods.Count <= 0)
-                return "No solution found. The response might have been malformed.";
+			var response = Submit(expression);
+			var result = Parse(response);
+			
+			if(result.Pods.IsNull() || result.Pods.Count <= 0)
+				return "No solution found. The response might have been malformed.";
 
-            var solution = (from pod in result.Pods
-                           where pod.Title.ToLower().Contains("solution") 
-                           || pod.Title.ToLower().Contains("result")
-                           || pod.Title.ToLower().Contains("derivative")
-                           || pod.Title.ToLower().Contains("decimal form")
-                           select pod).FirstOrDefault();
+			var solution = (from pod in result.Pods
+						   where pod.Title.ToLower().Contains("solution") 
+						   || pod.Title.ToLower().Contains("result")
+						   || pod.Title.ToLower().Contains("derivative")
+						   || pod.Title.ToLower().Contains("decimal form")
+						   select pod).FirstOrDefault();
 
-            if(solution.IsNull())
-                return "No solution found.";
+			if(solution.IsNull())
+				return "No solution found.";
 
 
-            if(solution.SubPods.IsNull() || solution.SubPods.Count <= 0)
-                return "No solution found. The response might have been malformed.";
+			if(solution.SubPods.IsNull() || solution.SubPods.Count <= 0)
+				return "No solution found. The response might have been malformed.";
 
-			if(sUtilities.GetCompiler() != Compiler.Mono)
+			if(sUtilities.GetPlatformType() != PlatformType.Linux)
 				Contract.Assume(!solution.SubPods[0].IsNull());
 
-            if(string.IsNullOrEmpty(solution.SubPods[0].PlainText))
-                return "No solution found. The pod order might have changed. Report to devs!";
+			if(string.IsNullOrEmpty(solution.SubPods[0].PlainText))
+				return "No solution found. The pod order might have changed. Report to devs!";
 
-            return solution.SubPods[0].PlainText;
-        }
+			return solution.SubPods[0].PlainText;
+		}
 
-        /// <summary>
-        /// Gets the result of the specified expression.
-        /// <para>The expression is returned as <see cref="WAResult"/></para> 
-        /// so you can manually go through the pods of the response (to get ANY information you'd like)
-        /// <para>It is encouraged to use this method instead of <see cref="Solve"/></para>
-        /// </summary>
-        /// <param name="expression">The expression to solve.</param>
-        /// <exception cref="WolframException">Throws in case of any error.</exception>
-        /// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
-        /// <returns>The result</returns>
-        public WAResult GetResult(string expression)
-        {
-            if(string.IsNullOrEmpty(expression))
-                throw new ArgumentNullException("expression", "The parameter passed to this method was null or empty.");
+		/// <summary>
+		/// Gets the result of the specified expression.
+		/// <para>The expression is returned as <see cref="WAResult"/></para> 
+		/// so you can manually go through the pods of the response (to get ANY information you'd like)
+		/// <para>It is encouraged to use this method instead of <see cref="Solve"/></para>
+		/// </summary>
+		/// <param name="expression">The expression to solve.</param>
+		/// <exception cref="WolframException">Throws in case of any error.</exception>
+		/// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
+		/// <returns>The result</returns>
+		public WAResult GetResult(string expression)
+		{
+			if(string.IsNullOrEmpty(expression))
+				throw new ArgumentNullException("expression", "The parameter passed to this method was null or empty.");
 
-            var response = Submit(expression);
-            var result = Parse(response);
-            return result;
-        }
+			var response = Submit(expression);
+			var result = Parse(response);
+			return result;
+		}
 
-        /// <summary>
-        /// Submits the specified expression and returns the raw result.
-        /// </summary>
-        /// <param name="expression">The expression to post.</param>
-        /// <exception cref="WolframException">Throws in case of any error.</exception>
-        /// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
-        /// <returns>Raw response</returns>
-        public string Submit(string expression)
-        {
-			if(sUtilities.GetCompiler() != Compiler.Mono)
+		/// <summary>
+		/// Submits the specified expression and returns the raw result.
+		/// </summary>
+		/// <param name="expression">The expression to post.</param>
+		/// <exception cref="WolframException">Throws in case of any error.</exception>
+		/// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
+		/// <returns>Raw response</returns>
+		public string Submit(string expression)
+		{
+			if(sUtilities.GetPlatformType() != PlatformType.Linux)
 			{
-	            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
-	            Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+				Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 			}
 
-            try
-            {
-                expression = expression.Replace("=", " = ");
-                var wacode = HttpUtility.UrlEncode(expression);
-                var url = new Uri(string.Format(BaseUrl, _appId, wacode));
-                string returned;
-
-                using(var client = new WebClient())
-                {
-                    returned = client.DownloadString(url);
-                }
-
-                if(!string.IsNullOrEmpty(returned))
-                    return returned;
-
-                return "Couldn't retrieve information!";
-            }
-            catch(WebException x)
-            {
-                throw new WolframException("WebException thrown while getting the response.", x);
-            }
-            catch(Exception x)
-            {
-                throw new WolframException("Unhandled exception thrown while submitting the expression.", x);
-            }
-        }
-
-        /// <summary>
-        /// Parses the raw response.
-        /// </summary>
-        /// <param name="response">The response to parse</param>
-        /// <returns>The parsed response</returns>
-        /// <exception cref="WolframException">Throws in case of any error.</exception>
-        /// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
-        public static WAResult Parse(string response)
-        {
-			if(sUtilities.GetCompiler() != Compiler.Mono)
+			try
 			{
-	            Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(response));
-	            Contract.Ensures(!Contract.Result<WAResult>().IsNull());
+				expression = expression.Replace("=", " = ");
+				var wacode = HttpUtility.UrlEncode(expression);
+				var url = new Uri(string.Format(BaseUrl, _appId, wacode));
+				string returned;
+
+				using(var client = new WebClient())
+				{
+					returned = client.DownloadString(url);
+				}
+
+				if(!string.IsNullOrEmpty(returned))
+					return returned;
+
+				return "Couldn't retrieve information!";
+			}
+			catch(WebException x)
+			{
+				throw new WolframException("WebException thrown while getting the response.", x);
+			}
+			catch(Exception x)
+			{
+				throw new WolframException("Unhandled exception thrown while submitting the expression.", x);
+			}
+		}
+
+		/// <summary>
+		/// Parses the raw response.
+		/// </summary>
+		/// <param name="response">The response to parse</param>
+		/// <returns>The parsed response</returns>
+		/// <exception cref="WolframException">Throws in case of any error.</exception>
+		/// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
+		public static WAResult Parse(string response)
+		{
+			if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			{
+				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(response));
+				Contract.Ensures(!Contract.Result<WAResult>().IsNull());
 			}
 
-            try
-            {
-                var serializer = new XmlSerializer(typeof (WAResult));
-                WAResult result;
+			try
+			{
+				var serializer = new XmlSerializer(typeof (WAResult));
+				WAResult result;
 
-                using(var reader = new StringReader(response))
-                {
-                    result = serializer.Deserialize(reader) as WAResult;
-                }
+				using(var reader = new StringReader(response))
+				{
+					result = serializer.Deserialize(reader) as WAResult;
+				}
 
-                if(result.IsNull())
-                    throw new WolframException("Could not deserialize the response. It might have been a malformed one.");
+				if(result.IsNull())
+					throw new WolframException("Could not deserialize the response. It might have been a malformed one.");
 
-                return result;
-            }
-            catch(InvalidOperationException x)
-            {
-                throw new WolframException("Exception thrown while deserializing the response.", x);
-            }
-        }
+				return result;
+			}
+			catch(InvalidOperationException x)
+			{
+				throw new WolframException("Exception thrown while deserializing the response.", x);
+			}
+		}
 
-        #region Async stuff
+		#region Async stuff
 
 #if WITH_ASYNC
-        private void HandleSolutionReceived(IAsyncResult ar)
-        {
-			if(sUtilities.GetCompiler() != Compiler.Mono)
+		private void HandleSolutionReceived(IAsyncResult ar)
+		{
+			if(sUtilities.GetPlatformType() != PlatformType.Linux)
 			{
-	            Contract.Requires<ArgumentNullException>(!ar.IsNull());
-	            Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
+				Contract.Requires<ArgumentNullException>(!ar.IsNull());
+				Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
 			}
 
-            if(!ar.IsNull())
-            {
-                var expr = ar.AsyncState as string;
-                var proc = (ExpressionProcessorMethod)(((AsyncResult) ar).AsyncDelegate);
+			if(!ar.IsNull())
+			{
+				var expr = ar.AsyncState as string;
+				var proc = (ExpressionProcessorMethod)(((AsyncResult) ar).AsyncDelegate);
 
-                if(!proc.IsNull())
-                {
-                    var solution = proc.EndInvoke(ar);
+				if(!proc.IsNull())
+				{
+					var solution = proc.EndInvoke(ar);
 
-                    if(!OnSolutionReceived.IsNull())
-                        OnSolutionReceived(solution, expr);
-                }
-            }
-        }
+					if(!OnSolutionReceived.IsNull())
+						OnSolutionReceived(solution, expr);
+				}
+			}
+		}
 
-        /// <summary>
-        /// Solves the specified expression asynchronously.
-        /// <remarks>An event is raised on completion.</remarks>
-        /// </summary>
-        /// <param name="expression">The expression.</param>
-        /// <exception cref="WolframException">Throws in case of any error.</exception>
-        /// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
-        /// <returns>The solution of the given expression</returns>
-        public void SolveAsync(string expression)
-        {
-			if(sUtilities.GetCompiler() != Compiler.Mono)
+		/// <summary>
+		/// Solves the specified expression asynchronously.
+		/// <remarks>An event is raised on completion.</remarks>
+		/// </summary>
+		/// <param name="expression">The expression.</param>
+		/// <exception cref="WolframException">Throws in case of any error.</exception>
+		/// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
+		/// <returns>The solution of the given expression</returns>
+		public void SolveAsync(string expression)
+		{
+			if(sUtilities.GetPlatformType() != PlatformType.Linux)
 				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
 
-            var procedure = new ExpressionProcessorMethod(Solve);
+			var procedure = new ExpressionProcessorMethod(Solve);
 
-            lock(SyncLock)
-            {
-                procedure.BeginInvoke(expression, HandleSolutionReceived, expression);
-            }
-        }
-
-        private void HandleResultReceived(IAsyncResult ar)
-        {
-			if(sUtilities.GetCompiler() != Compiler.Mono)
+			lock(SyncLock)
 			{
-	            Contract.Requires<ArgumentNullException>(!ar.IsNull());
-	            Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
+				procedure.BeginInvoke(expression, HandleSolutionReceived, expression);
+			}
+		}
+
+		private void HandleResultReceived(IAsyncResult ar)
+		{
+			if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			{
+				Contract.Requires<ArgumentNullException>(!ar.IsNull());
+				Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
 			}
 
-            if(!ar.IsNull())
-            {
-                var expr = ar.AsyncState as string;
-                var proc = (RetrieveResultMethod)(((AsyncResult)ar).AsyncDelegate);
+			if(!ar.IsNull())
+			{
+				var expr = ar.AsyncState as string;
+				var proc = (RetrieveResultMethod)(((AsyncResult)ar).AsyncDelegate);
 
-                if(!proc.IsNull())
-                {
-                    var result = proc.EndInvoke(ar);
+				if(!proc.IsNull())
+				{
+					var result = proc.EndInvoke(ar);
 
-                    if(!OnResultReceived.IsNull())
-                        OnResultReceived(result, expr);
-                }
-            }
-        }
+					if(!OnResultReceived.IsNull())
+						OnResultReceived(result, expr);
+				}
+			}
+		}
 
-        /// <summary>
-        /// Gets the result of the specified expression asynchronously.
-        /// <para>The expression is returned as <see cref="WAResult"/></para> 
-        /// so you can manually go through the pods of the response (to get ANY information you'd like)
-        /// <para>It is encouraged to use this method instead of <see cref="Solve"/></para>
-        /// <remarks>An event is raised upon completion.</remarks>
-        /// </summary>
-        /// <param name="expression">The expression to solve.</param>
-        /// <exception cref="WolframException">Throws in case of any error.</exception>
-        /// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
-        /// <returns>The result</returns>
-        public void GetResultAsync(string expression)
-        {
-			if(sUtilities.GetCompiler() != Compiler.Mono)
+		/// <summary>
+		/// Gets the result of the specified expression asynchronously.
+		/// <para>The expression is returned as <see cref="WAResult"/></para> 
+		/// so you can manually go through the pods of the response (to get ANY information you'd like)
+		/// <para>It is encouraged to use this method instead of <see cref="Solve"/></para>
+		/// <remarks>An event is raised upon completion.</remarks>
+		/// </summary>
+		/// <param name="expression">The expression to solve.</param>
+		/// <exception cref="WolframException">Throws in case of any error.</exception>
+		/// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
+		/// <returns>The result</returns>
+		public void GetResultAsync(string expression)
+		{
+			if(sUtilities.GetPlatformType() != PlatformType.Linux)
 				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
 
-            var procedure = new RetrieveResultMethod(GetResult);
+			var procedure = new RetrieveResultMethod(GetResult);
 
-            lock(SyncLock)
-            {
-                procedure.BeginInvoke(expression, HandleResultReceived, expression);
-            }
-        }
+			lock(SyncLock)
+			{
+				procedure.BeginInvoke(expression, HandleResultReceived, expression);
+			}
+		}
 
 #endif
-        #endregion
-    }
+		#endregion
+	}
 }

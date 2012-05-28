@@ -1,0 +1,6 @@
+Name: Schumix.Framework
+Description: Schumix.Framework
+Version: 3.x
+
+Requires: 
+Libs: -r:@expanded_libdir@/@PACKAGE@/Schumix.Framework.dll

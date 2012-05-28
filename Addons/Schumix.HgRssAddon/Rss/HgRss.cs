@@ -65,6 +65,7 @@ namespace Schumix.HgRssAddon
 				_password = url.Substring(0, url.IndexOf("@"));
 				url = url.Remove(0, url.IndexOf("@")+1);
 				_url += url;
+				_credential = new NetworkCredential(_username, _password);
 			}
 			else
 			{
@@ -75,7 +76,6 @@ namespace Schumix.HgRssAddon
 
 			_website = website;
 			Init();
-			_credential = new NetworkCredential(_username, _password);
 		}
 
 		private void Init()
@@ -249,6 +249,9 @@ namespace Schumix.HgRssAddon
 
 		private string DownloadToXml(string data)
 		{
+			if(data == string.Empty)
+				return string.Empty;
+
 			if(_website == "bitbucket")
 			{
 				data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);

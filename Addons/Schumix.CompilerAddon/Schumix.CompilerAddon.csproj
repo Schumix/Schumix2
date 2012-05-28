@@ -9,6 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.CompilerAddon</RootNamespace>
     <AssemblyName>CompilerAddon</AssemblyName>
+    <ReleaseVersion>3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>

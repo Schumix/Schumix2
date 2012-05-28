@@ -1,0 +1,6 @@
+Name: Schumix.WordPressRssAddon
+Description: Schumix.WordPressRssAddon
+Version: 3.x
+
+Requires: 
+Libs: -r:@expanded_libdir@/@PACKAGE@/WordpressRssAddon.dll

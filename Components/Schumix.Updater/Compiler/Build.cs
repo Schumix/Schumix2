@@ -49,12 +49,12 @@ namespace Schumix.Updater.Compiler
 			build.StartInfo.RedirectStandardOutput = true;
 			build.StartInfo.RedirectStandardError = true;
 
-			if(sUtilities.GetCompiler() == Schumix.Framework.Compiler.Mono)
+			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				build.StartInfo.FileName = "mono";
 				build.StartInfo.Arguments = "xbuild.exe /p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + Version + "/Schumix.sln";
 			}
-			else if(sUtilities.GetCompiler() == Schumix.Framework.Compiler.VisualStudio)
+			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				build.StartInfo.FileName = "xbuild.exe";
 				build.StartInfo.Arguments = "/p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + Version + "/Schumix.sln";

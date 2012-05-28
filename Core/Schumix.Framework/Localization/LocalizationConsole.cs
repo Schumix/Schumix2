@@ -264,6 +264,15 @@ namespace Schumix.Framework.Localization
 				case "Text":
 				{
 					if(Locale == "huHU")
+						return "Indulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+					else if(Locale == "enUS")
+						return "Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+					else
+						return "Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
 						return "\nIndulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
 					else if(Locale == "enUS")
 						return "\nStarted time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
@@ -359,6 +368,15 @@ namespace Schumix.Framework.Localization
 						return "Program shutting down!";
 					else
 						return "Program shutting down!";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "Sql kapcsolat összeomlott.";
+					else if(Locale == "enUS")
+						return "Sql connection crash.";
+					else
+						return "Sql connection crash.";
 				}
 				default:
 					return string.Empty;
@@ -1432,6 +1450,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Received unhandled opcode: {0}";
 				}
+				case "Text19":
+				{
+					if(Locale == "huHU")
+						return "A tanúsítvány nem lett elfogadva, kivétel: {0}";
+					else if(Locale == "enUS")
+						return "Certificate not accepted, exception: {0}";
+					else
+						return "Certificate not accepted, exception: {0}";
+				}
 				default:
 					return string.Empty;
 			}
@@ -2210,6 +2237,24 @@ namespace Schumix.Framework.Localization
 						return "One of the summix has been shuted down, it will be restarted.";
 					else
 						return "One of the summix has been shuted down, it will be restarted.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string CommandInfo(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "CommandInfo sikeresen elindult.";
+					else if(Locale == "enUS")
+						return "Successfully started the CommandInfo.";
+					else
+						return "Successfully started the CommandInfo.";
 				}
 				default:
 					return string.Empty;

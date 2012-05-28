@@ -18,19 +18,45 @@
  */
 
 using System;
+using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
 	public sealed class NickInfo
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private string _NickStorage;
+		private bool _Identify;
+		private bool _Vhost;
+
 		public string NickStorage
 		{
 			get { return _NickStorage; }
 		}
 
-		private NickInfo() {}
+		public bool IsNickStorage()
+		{
+			return _NickStorage.ToLower() == IRCConfig.NickName.ToLower();
+		}
+
+		public bool IsIdentify
+		{
+			get { return _Identify; }
+		}
+
+		public bool IsVhost
+		{
+			get { return _Vhost; }
+		}
+
+		private NickInfo()
+		{
+			_Identify = false;
+			_Vhost = false;
+		}
 
 		public string ChangeNick()
 		{
@@ -94,6 +120,41 @@ namespace Schumix.Irc
 		public void ChangeNick(string newnick)
 		{
 			_NickStorage = newnick;
+		}
+
+		public void Identify(string Password)
+		{
+			if(!_Identify)
+			{
+				Log.Notice("NickServ", sLConsole.NickServ("Text"));
+				sSender.NickServ(Password);
+			}
+		}
+
+		public void Vhost(string Status)
+		{
+			if(!_Vhost)
+			{
+				if(Status == SchumixBase.Off)
+				{
+					_Vhost = true;
+					Log.Notice("HostServ", sLConsole.HostServ("Text2"));
+				}
+				else if(Status == SchumixBase.On)
+					Log.Notice("HostServ", sLConsole.HostServ("Text"));
+
+				sSender.HostServ(Status);
+			}
+		}
+
+		public void ChangeIdentifyStatus(bool Status)
+		{
+			_Identify = Status;
+		}
+
+		public void ChangeVhostStatus(bool Status)
+		{
+			_Vhost = Status;
 		}
 	}
 }

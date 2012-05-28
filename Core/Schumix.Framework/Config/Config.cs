@@ -30,6 +30,7 @@ namespace Schumix.Framework.Config
 	public sealed class Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private const string _logfilename           = "Schumix.log";
 		private const int _loglevel                 = 2;
 		private const string _logdirectory          = "Logs";
@@ -105,7 +106,7 @@ namespace Schumix.Framework.Config
 					string IrcLogDirectory = !xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").InnerText : _irclogdirectory;
 					bool IrcLog = !xmldoc.SelectSingleNode("Schumix/Log/IrcLog").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText) : _irclog;
 
-					new LogConfig(LogFileName, LogLevel, LogDirectory, IrcLogDirectory, IrcLog);
+					new LogConfig(LogFileName, LogLevel, sUtilities.GetHomeDirectory(LogDirectory), sUtilities.GetHomeDirectory(IrcLogDirectory), IrcLog);
 
 					Log.Init(LogFileName);
 					Log.Debug("Config", ">> {0}", configfile);
@@ -151,7 +152,7 @@ namespace Schumix.Framework.Config
 					Enabled = !xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").InnerText) : _sqliteenabled;
 					string FileName = !xmldoc.SelectSingleNode("Schumix/SQLite/FileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/SQLite/FileName").InnerText : _sqlitefilename;
 
-					new SQLiteConfig(Enabled, FileName);
+					new SQLiteConfig(Enabled, sUtilities.GetHomeDirectory(FileName));
 
 					Enabled = !xmldoc.SelectSingleNode("Schumix/Addons/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Addons/Enabled").InnerText) : _addonenabled;
 					string Ignore = !xmldoc.SelectSingleNode("Schumix/Addons/Ignore").IsNull() ? xmldoc.SelectSingleNode("Schumix/Addons/Ignore").InnerText : _addonignore;
@@ -162,7 +163,7 @@ namespace Schumix.Framework.Config
 					bool Lua = !xmldoc.SelectSingleNode("Schumix/Scripts/Lua").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Scripts/Lua").InnerText) : _scriptenabled;
 					Directory = !xmldoc.SelectSingleNode("Schumix/Scripts/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Directory").InnerText : _scriptdirectory;
 
-					new ScriptsConfig(Lua, Directory);
+					new ScriptsConfig(Lua, sUtilities.GetHomeDirectory(Directory));
 
 					string Locale = !xmldoc.SelectSingleNode("Schumix/Localization/Locale").IsNull() ? xmldoc.SelectSingleNode("Schumix/Localization/Locale").InnerText : _locale;
 
@@ -223,7 +224,9 @@ namespace Schumix.Framework.Config
 
 			try
 			{
-				if(File.Exists(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile)))
+				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+
+				if(File.Exists(filename))
 					return true;
 				else
 				{
@@ -231,11 +234,19 @@ namespace Schumix.Framework.Config
 					Log.Init(_logfilename);
 					Log.Error("Config", sLConsole.Config("Text5"));
 					Log.Debug("Config", sLConsole.Config("Text6"));
-					var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
+					var w = new XmlTextWriter(filename, null);
 					var xmldoc = new XmlDocument();
 
-					if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
-						xmldoc.Load(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
+					if(ConfigDirectory.Length > 0 && ConfigDirectory.Substring(0, 1) == "/")
+					{
+						if(File.Exists(string.Format("{0}/_{1}", ConfigDirectory, ConfigFile)))
+							xmldoc.Load(string.Format("{0}/_{1}", ConfigDirectory, ConfigFile));
+					}
+					else
+					{
+						if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
+							xmldoc.Load(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
+					}
 
 					try
 					{

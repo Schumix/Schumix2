@@ -22,23 +22,18 @@ using System.Data;
 using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Commands
 {	
-	public enum AdminFlag
-	{
-		HalfOperator  = 0,
-		Operator      = 1,
-		Administrator = 2
-	};
-
 	public class CommandInfo
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		protected CommandInfo()
 		{
-			//Log.Notice("CommandInfo", "CommandInfo elindult.");
+			Log.Debug("CommandInfo", sLConsole.CommandInfo("Text"));
 		}
 
 		protected bool IsAdmin(string Name)

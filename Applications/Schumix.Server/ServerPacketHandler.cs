@@ -133,8 +133,8 @@ namespace Schumix.Server
 				string identify = pck.Read<string>();
 				string configs = pck.Read<string>();
 
-				if(Schumix.Server.New.Schumix._processlist.ContainsKey(identify))
-					Schumix.Server.New.Schumix._processlist[identify].Configs = configs;
+				if(sSchumix._processlist.ContainsKey(identify))
+					sSchumix._processlist[identify].Configs = configs;
 
 				SendPacketBack(packet, stream, hst, bck);
 			}
@@ -165,10 +165,11 @@ namespace Schumix.Server
 
 			Log.Notice("CloseHandler", sLConsole.ServerPacketHandler("Text7"));
 
-			if(Schumix.Server.New.Schumix._processlist.ContainsKey(identify))
-				sSchumix.Start(file, dir, ce, locale, sUtilities.GetRandomString(), Schumix.Server.New.Schumix._processlist[identify].Configs);
+			if(sSchumix._processlist.ContainsKey(identify))
+				sSchumix.Start(file, dir, ce, locale, sUtilities.GetRandomString(), sSchumix._processlist[identify].Configs);
 
-			Schumix.Server.New.Schumix._processlist.Remove(identify);
+			//sSchumix._processlist[identify].Process.Kill();
+			sSchumix._processlist.Remove(identify);
 		}
 
 		private void NickNameHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)

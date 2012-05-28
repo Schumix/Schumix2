@@ -109,12 +109,12 @@ namespace Schumix.MantisBTRssAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.OperatorCRegisterHandler("mantisbt", HandleMantisBT);
+			CommandManager.SchumixRegisterHandler("mantisbt", HandleMantisBT, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.OperatorCRemoveHandler("mantisbt",   HandleMantisBT);
+			CommandManager.SchumixRemoveHandler("mantisbt",   HandleMantisBT);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

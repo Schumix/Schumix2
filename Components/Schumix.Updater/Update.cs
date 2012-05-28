@@ -140,12 +140,12 @@ namespace Schumix.Updater
 			config.StartInfo.RedirectStandardOutput = true;
 			config.StartInfo.RedirectStandardError = true;
 
-			if(sUtilities.GetCompiler() == Schumix.Framework.Compiler.Mono)
+			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				config.StartInfo.FileName = "mono";
 				config.StartInfo.Arguments = "Config.exe " + version;
 			}
-			else if(sUtilities.GetCompiler() == Schumix.Framework.Compiler.VisualStudio)
+			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
 				config.StartInfo.FileName = "Config.exe " + version;
 
 			Log.Notice("Update", sLConsole.Update("Text15"));

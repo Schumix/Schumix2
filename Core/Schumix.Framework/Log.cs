@@ -32,85 +32,86 @@ namespace Schumix.Framework
 		private static readonly object WriteLock = new object();
 		private static string _FileName;
 
-        /// <returns>
-        ///     A visszatérési érték az aktuális dátum.
-        /// </returns>
+		/// <returns>
+		///		A visszatérési érték az aktuális dátum.
+		/// </returns>
 		private static string GetTime()
 		{
-			return string.Format("{0}:{1}:{2}", DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+			return string.Format("{0}:{1}:{2}", DateTime.Now.Hour < 10 ? "0" + DateTime.Now.Hour.ToString() : DateTime.Now.Hour.ToString(),
+								DateTime.Now.Minute < 10 ? "0" + DateTime.Now.Minute.ToString() : DateTime.Now.Minute.ToString(),
+								DateTime.Now.Second < 10 ? "0" + DateTime.Now.Second.ToString() : DateTime.Now.Second.ToString());
 		}
 
 		private static void LogToFile(string log)
 		{
-			try
-			{
-				string filename = string.Format("./{0}/{1}", LogConfig.LogDirectory, _FileName);
-				var filesize = new FileInfo(filename);
+			string filename = sUtilities.DirectoryToHome(LogConfig.LogDirectory, _FileName);
+			var filesize = new FileInfo(filename);
 
-				if(filesize.Length >= 10000000)
-				{
-					File.Delete(filename);
-					sUtilities.CreateFile(filename);
-				}
-
-				var file = new StreamWriter(filename, true) { AutoFlush = true };
-				file.Write(log);
-				file.Close();
-			}
-			catch(Exception)
+			if(filesize.Length >= 10000000)
 			{
-				LogToFile(log);
+				File.Delete(filename);
+				sUtilities.CreateFile(filename);
 			}
+
+			var time = DateTime.Now;
+			var file = new StreamWriter(filename, true) { AutoFlush = true };
+			file.Write("{0}. {1}. {2}. {3}", time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+						time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(), log);
+			file.Close();
 		}
 
 		public static void Init()
 		{
-			try
-			{
-				Init("Schumix.log");
-			}
-			catch(Exception)
-			{
-				Init();
-			}
+			Init("Schumix.log");
 		}
 
 		public static void Init(string FileName)
 		{
-			try
-			{
-				_FileName = FileName;
-				var time = DateTime.Now;
-				sUtilities.CreateDirectory(LogConfig.LogDirectory);
-				string logfile = string.Format("./{0}/{1}", LogConfig.LogDirectory, FileName);
-				sUtilities.CreateFile(logfile);
-				var file = new StreamWriter(logfile, true) { AutoFlush = true };
-				file.Write(sLConsole.Log("Text"), time.Year, time.Month, time.Day, time.Hour, time.Minute, time.Second);
-				file.Close();
-			}
-			catch(Exception)
-			{
-				Init(FileName);
-			}
+			bool isfile = false;
+			_FileName = FileName;
+			var time = DateTime.Now;
+			sUtilities.CreateDirectory(LogConfig.LogDirectory);
+			string logfile = sUtilities.DirectoryToHome(LogConfig.LogDirectory, _FileName);
+
+			if(File.Exists(logfile))
+				isfile = true;
+
+			sUtilities.CreateFile(logfile);
+			var file = new StreamWriter(logfile, true) { AutoFlush = true };
+
+			if(!isfile)
+				file.Write(sLConsole.Log("Text"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+						time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
+						time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
+						time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
+						time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
+			else
+				file.Write(sLConsole.Log("Text2"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+						time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
+						time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
+						time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
+						time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
+
+			file.Close();
 		}
 
-        /// <summary>
-        ///     Dátummal logolja a szöveget meghatározva honnan származik. 
-        ///     Lehet ez egyénileg meghatározott függvény vagy class névvel ellátva.
-        ///     Logol a Console-ra.
-        /// </summary>
-        /// <param name="source">
-        ///     Meghatározza honnan származik a log.
-        ///     <example>
-        ///         17:28 N <c>Config:</c> Config file betöltése...
-        ///     </example>
-        /// </param>
-        /// <param name="format">
-        ///     A szöveg amit kiírunk.
-        ///     <example>
-        ///         17:28 N Config: <c>Config file betöltése...</c>
-        ///     </example>
-        /// </param>
+		/// <summary>
+		///	 Dátummal logolja a szöveget meghatározva honnan származik. 
+		///	 Lehet ez egyénileg meghatározott függvény vagy class névvel ellátva.
+		///	 Logol a Console-ra.
+		/// </summary>
+		/// <param name="source">
+		///	 Meghatározza honnan származik a log.
+		///	 <example>
+		///		 17:28 N <c>Config:</c> Config file betöltése...
+		///	 </example>
+		/// </param>
+		/// <param name="format">
+		///	 A szöveg amit kiírunk.
+		///	 <example>
+		///		 17:28 N Config: <c>Config file betöltése...</c>
+		///	 </example>
+		/// </param>
 		public static void Notice(string source, string format)
 		{
 			lock(WriteLock)

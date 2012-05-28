@@ -73,20 +73,20 @@ namespace Schumix.LuaEngine
 		{
 			Log.Notice("LuaEngine", sLConsole.LuaEngine("Text"));
 
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 				_lua = new LuaInterface.Lua();
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 				_monolua = new Mono.LuaInterface.Lua();
 
 			_luaFunctions = new Dictionary<string, LuaFunctionDescriptor>();
 			_scriptPath = scriptsPath;
 
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				_functions = new LuaFunctions(ref _lua);
 				LuaHelper.RegisterLuaFunctions(_lua, ref _luaFunctions, _functions);
 			}
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				_functions = new LuaFunctions(ref _monolua);
 				LuaHelper.RegisterLuaFunctions(_monolua, ref _luaFunctions, _functions);
@@ -120,20 +120,19 @@ namespace Schumix.LuaEngine
 		{
 			if(reload)
 			{
-				foreach(var func in _functions.RegisteredCommand)
+				foreach(var func in _functions.RegisteredSchumix)
 				{
-					if(CommandManager.GetPublicCommandHandler().ContainsKey(func.Key))
-						CommandManager.PublicCRemoveHandler(func.Key, func.Value);
-					else if(CommandManager.GetHalfOperatorCommandHandler().ContainsKey(func.Key))
-						CommandManager.HalfOperatorCRemoveHandler(func.Key, func.Value);
-					else if(CommandManager.GetOperatorCommandHandler().ContainsKey(func.Key))
-						CommandManager.OperatorCRemoveHandler(func.Key, func.Value);
-					else if(CommandManager.GetAdminCommandHandler().ContainsKey(func.Key))
-						CommandManager.AdminCRemoveHandler(func.Key, func.Value);
+					if(CommandManager.CommandMethodMap.ContainsKey(func.Key))
+						CommandManager.SchumixRemoveHandler(func.Key, func.Value.Method);
 				}
 
-				foreach(var func in _functions.RegisteredHandler)
-					Network.PublicRemoveHandler(func.Key, func.Value);
+				foreach(var func in _functions.RegisteredIrc)
+				{
+					if(Network.GetIrcMethodMap().ContainsKey(func.Key))
+						Network.IrcRemoveHandler(func.Key, func.Value);
+				}
+
+				_functions.Clean();
 			}
 
 			var di = new DirectoryInfo(_scriptPath);
@@ -144,9 +143,9 @@ namespace Schumix.LuaEngine
 
 				try
 				{
-					if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+					if(sUtilities.GetPlatformType() == PlatformType.Windows)
 						_lua.DoFile(file.FullName);
-					else if(sUtilities.GetCompiler() == Compiler.Mono)
+					else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 						_monolua.DoFile(file.FullName);
 				}
 				catch(Exception x)
@@ -161,9 +160,9 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		public void Free()
 		{
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 				_lua.Dispose();
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 				_monolua.Dispose();
 
 			_functions.Clean();

@@ -25,6 +25,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Client
@@ -112,6 +113,9 @@ namespace Schumix.Framework.Client
 					Log.Debug("ClientHandler", sLConsole.ClientSocket("Text4"));
 					bytes_read = stream.Read(message_buffer, 0, message_buffer.Length);
 
+					if(SchumixBase.ExitStatus)
+						return;
+
 					if(bytes_read == 0)
 					{
 						Log.Warning("ClientHandler", sLConsole.ClientSocket("Text5"));
@@ -133,7 +137,11 @@ namespace Schumix.Framework.Client
 
 		public void Dispose()
 		{
+			if(!client.IsNull())
+				client.Close();
 
+			if(!stream.IsNull())
+				stream.Dispose();
 		}
 
 		/// <summary>

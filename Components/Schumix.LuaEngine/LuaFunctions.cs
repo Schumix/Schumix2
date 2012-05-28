@@ -34,29 +34,29 @@ namespace Schumix.LuaEngine
 	/// </summary>
 	public sealed class LuaFunctions : CommandInfo
 	{
-		private readonly Dictionary<string, CommandDelegate> _RegisteredCommand = new Dictionary<string, CommandDelegate>();
-		private readonly Dictionary<string, IRCDelegate> _RegisteredHandler = new Dictionary<string, IRCDelegate>();
+		private readonly Dictionary<string, SchumixCommandMethod> _RegisteredSchumix = new Dictionary<string, SchumixCommandMethod>();
+		private readonly Dictionary<string, IRCDelegate> _RegisteredIrc = new Dictionary<string, IRCDelegate>();
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly LuaInterface.Lua _lua;
 		private readonly Mono.LuaInterface.Lua _monolua;
+		private readonly LuaInterface.Lua _lua;
 
 		#region Properites
 
 		/// <summary>
 		/// Events registered by Lua on Handler.
 		/// </summary>
-		public Dictionary<string, IRCDelegate> RegisteredHandler
+		public Dictionary<string, IRCDelegate> RegisteredIrc
 		{
-			get { return _RegisteredHandler; }
+			get { return _RegisteredIrc; }
 		}
 
 		/// <summary>
 		/// Events registered by Lua on Command.
 		/// </summary>
-		public Dictionary<string, CommandDelegate> RegisteredCommand
+		public Dictionary<string, SchumixCommandMethod> RegisteredSchumix
 		{
-			get { return _RegisteredCommand; }
+			get { return _RegisteredSchumix; }
 		}
 
 		#endregion
@@ -83,8 +83,8 @@ namespace Schumix.LuaEngine
 
 		public void Clean()
 		{
-			_RegisteredCommand.Clear();
-			_RegisteredHandler.Clear();
+			_RegisteredSchumix.Clear();
+			_RegisteredIrc.Clear();
 		}
 
 		/// <summary>
@@ -92,10 +92,10 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		/// <param name="HandlerName">Irc to listen to.</param>
 		/// <param name="LuaName">Lua function to call.</param>
-		[LuaFunction("RegisterHook", "Registers a handler hook.")]
-		public void RegisterHandlerHook(string HandlerName, string LuaName)
+		[LuaFunction("RegisterIrcHook", "Registers a irc hook.")]
+		public void RegisterIrcHook(string HandlerName, string LuaName)
 		{
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				var func = _lua.GetFunction(typeof(IRCDelegate), LuaName);
 
@@ -103,10 +103,14 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as IRCDelegate;
-				_RegisteredHandler.Add(HandlerName, handler);
-				Network.PublicRegisterHandler(HandlerName, handler);
+				if(_RegisteredIrc.ContainsKey(HandlerName))
+					_RegisteredIrc[HandlerName] += handler;
+				else
+					_RegisteredIrc.Add(HandlerName, handler);
+
+				Network.IrcRegisterHandler(HandlerName, handler);
 			}
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				var func = _monolua.GetFunction(typeof(IRCDelegate), LuaName);
 
@@ -114,8 +118,12 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as IRCDelegate;
-				_RegisteredHandler.Add(HandlerName, handler);
-				Network.PublicRegisterHandler(HandlerName, handler);
+				if(_RegisteredIrc.ContainsKey(HandlerName))
+					_RegisteredIrc[HandlerName] += handler;
+				else
+					_RegisteredIrc.Add(HandlerName, handler);
+
+				Network.IrcRegisterHandler(HandlerName, handler);
 			}
 		}
 
@@ -124,10 +132,10 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		/// <param name="CommandName">Command to listen to.</param>
 		/// <param name="LuaName">Lua function to call.</param>
-		[LuaFunction("RegisterPublicCommandHook", "Registers a public command hook.")]
-		public void RegisterPublicCommandHook(string CommandName, string LuaName)
+		[LuaFunction("RegisterSchumixHook", "Registers a schumix command hook.")]
+		public void RegisterSchumixHook(string CommandName, string LuaName, CommandPermission permission = CommandPermission.Normal)
 		{
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
 
@@ -135,10 +143,14 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.PublicCRegisterHandler(CommandName, handler);
+				if(_RegisteredSchumix.ContainsKey(CommandName.ToLower()))
+					_RegisteredSchumix[CommandName.ToLower()].Method += handler;
+				else
+					_RegisteredSchumix.Add(CommandName.ToLower(), new SchumixCommandMethod(handler, permission));
+
+				CommandManager.SchumixRegisterHandler(CommandName, handler, permission);
 			}
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
 
@@ -146,104 +158,12 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.PublicCRegisterHandler(CommandName, handler);
-			}
-		}
+				if(_RegisteredSchumix.ContainsKey(CommandName.ToLower()))
+					_RegisteredSchumix[CommandName.ToLower()].Method += handler;
+				else
+					_RegisteredSchumix.Add(CommandName.ToLower(), new SchumixCommandMethod(handler, permission));
 
-		/// <summary>
-		/// Registers a halfoperator command hook.
-		/// </summary>
-		/// <param name="CommandName">Command to listen to.</param>
-		/// <param name="LuaName">Lua function to call.</param>
-		[LuaFunction("RegisterHalfOperatorCommandHook", "Registers a halfoperator command hook.")]
-		public void RegisterHalfOperatorCommandHook(string CommandName, string LuaName)
-		{
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
-			{
-				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.HalfOperatorCRegisterHandler(CommandName, handler);
-			}
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
-			{
-				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.HalfOperatorCRegisterHandler(CommandName, handler);
-			}
-		}
-
-		/// <summary>
-		/// Registers a operator command hook.
-		/// </summary>
-		/// <param name="CommandName">Command to listen to.</param>
-		/// <param name="LuaName">Lua function to call.</param>
-		[LuaFunction("RegisterOperatorCommandHook", "Registers a operator command hook.")]
-		public void RegisterOperatorCommandHook(string CommandName, string LuaName)
-		{
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
-			{
-				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.OperatorCRegisterHandler(CommandName, handler);
-			}
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
-			{
-				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.OperatorCRegisterHandler(CommandName, handler);
-			}
-		}
-
-		/// <summary>
-		/// Registers a admin command hook.
-		/// </summary>
-		/// <param name="CommandName">Command to listen to.</param>
-		/// <param name="LuaName">Lua function to call.</param>
-		[LuaFunction("RegisterAdminCommandHook", "Registers a admin command hook.")]
-		public void RegisterAdminCommandHook(string CommandName, string LuaName)
-		{
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio)
-			{
-				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.AdminCRegisterHandler(CommandName, handler);
-			}
-			else if(sUtilities.GetCompiler() == Compiler.Mono)
-			{
-				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				_RegisteredCommand.Add(CommandName.ToLower(), handler);
-				CommandManager.AdminCRegisterHandler(CommandName, handler);
+				CommandManager.SchumixRegisterHandler(CommandName, handler, permission);
 			}
 		}
 
@@ -302,6 +222,30 @@ namespace Schumix.LuaEngine
 		public int BaseAdminflag(string Name, string Vhost)
 		{
 			return Adminflag(Name, Vhost);
+		}
+
+		[LuaFunction("GetCommandPermission", "Command Permission.")]
+		public CommandPermission GetCommandPermission(string permission)
+		{
+			CommandPermission p = CommandPermission.Normal;
+
+			switch(permission.ToLower())
+			{
+				case "normal":
+					p = CommandPermission.Normal;
+					break;
+				case "halfoperator":
+					p = CommandPermission.HalfOperator;
+					break;
+				case "operator":
+					p = CommandPermission.Operator;
+					break;
+				case "administrator":
+					p = CommandPermission.Administrator;
+					break;
+			}
+
+			return p;
 		}
 	}
 }
