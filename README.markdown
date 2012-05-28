@@ -49,22 +49,22 @@ a `Schumix.xml` nevû fájlt.
 * **UserInfo:** Információ a felhasználóról.
 * **MasterChannel:** Elsõdleges csatorna ahova csatlakozik minden esetben a bot. Ennek a neve itt változtatható meg. Az adatbázisból nem törölhetõ.
 * **IgnoreChannels:** Letilthatók a nem kívánatos csatornák vele. Ami itt szerepel oda nem megy fel a bot. Ezen rész letiltja a bot rendszerében szereplõket is.
-               Tehát ha abból nem akarunk valahova felmenni akkor is használhatjuk ezt törlés helyett. Vesszõvel elválasztva kell egymás útán írni öket.
-               `pl: #teszt,#teszt2 vagy szimplán #teszt`
+                      Tehát ha abból nem akarunk valahova felmenni akkor is használhatjuk ezt törlés helyett. Vesszõvel elválasztva kell egymás útán írni öket.
+                      `pl: #teszt,#teszt2 vagy szimplán #teszt`
 * **IgnoreNames:** Letilthatóak vele a nem kívánatos személyek. Így csak az használhatja a botot aki megérdemli.
-             `pl: schumix,schumix2 vagy szimplán schumix`
+                   `pl: schumix,schumix2 vagy szimplán schumix`
 * **NickServ:**
-	* **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határozza meg hogy a nickhez tartozó jelszó el legyen-e küldve. true = igen, false = nem.
-                  Alapértelmezés: false
+	**Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határozza meg hogy a nickhez tartozó jelszó el legyen-e küldve. true = igen, false = nem.
+                 Alapértelmezés: false
 	**Password:** Nickhez tartozó jelszó.
 * **HostServ:**
-         **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy ha van a nickhez vhost akkor bekapcsolodjon-e. Alapértelmezés: `false`
-                  Mert ha nincs akkor megjelenitödhet az ip ezért olyankor ajánlott false értékre tenni.
-         **Vhost:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy a nickhez tartotó vhost aktiválásra kerüljön-e. Alapértelmezés: `false`
+    **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy ha van a nickhez vhost akkor bekapcsolodjon-e. Alapértelmezés: `false`
+                 Mert ha nincs akkor megjelenitödhet az ip ezért olyankor ajánlott false értékre tenni.
+    **Vhost:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy a nickhez tartotó vhost aktiválásra kerüljön-e. Alapértelmezés: `false`
 * **Wait:**
-    	**MessageSending:** Üzenet küldésének késleltetése. Legföbbként flood ellen van.
+    **MessageSending:** Üzenet küldésének késleltetése. Legföbbként flood ellen van.
 * **Command:**
-        **Prefix:** A parancsok elõjele. Alapértelmezés: `$` (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: `$xbot`)
+    **Prefix:** A parancsok elõjele. Alapértelmezés: `$` (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: `$xbot`)
 * **MessageType:** Értéke `Privmsg` vagy `Notice` lehet. Meghatározza hogy milyen formában küldje az üzeneteket a szerver felé. Alapértelmezés: `Privmsg`
 
 ## Log
@@ -88,7 +88,7 @@ Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelm
 * **Password:** A szerver jelszava.
 * **Database:** Az adatbázis amiben megtalálhatók a bothoz tartozó táblák.
 * **Charset:** Az adatbázisba menõ adatok kódolását és olvasását határozza meg.
-         Alapértelmezés: `utf8`
+               Alapértelmezés: `utf8`
 
 ## SQLite
 
@@ -99,7 +99,7 @@ Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelm
 
 * **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi az addonok betöltését. Alapértelmezés: `true`
 * **Ignore:** Azon addonok melyeket nem szeretnénk inditáskor betölteni. Vesszõvel elválasztva kell egymás útán írni öket. `(pl: TesztAddon,Teszt2Addon vagy szimplán TesztAddon)`
-        Alapértelmezés: `MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon`
+              Alapértelmezés: `MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon`
 * **Directory:** Az addonok mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Addons`
 
 ## Scripts
@@ -110,14 +110,14 @@ Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelm
 ## Localization
 
 * **Locale:** Meghatározza hogy a kód milyen nyelven fusson. (csak az irc és konzol parancsokra vonatkozik)
-        Alapértelmezés: `enUS`
+              Alapértelmezés: `enUS`
 
 ## Update
 
 * **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi az automatikus frissítést. Alapértelmezés: `false`
 * **Versions:**
-        **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi a megadott verzióra való frissítést. Alapértelmezés: `false`
-        **Version:** Meghatározza melyik verzióra frissítse magát a kód. Alapértelmezés: `x.x.x`
+    **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi a megadott verzióra való frissítést. Alapértelmezés: `false`
+    **Version:** Meghatározza melyik verzióra frissítse magát a kód. Alapértelmezés: `x.x.x`
 * **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: `http://megax.uw.hu/Schumix2/`
 
 # Adatbázis beüzemelése
