@@ -146,7 +146,7 @@ Ha mind ezekkel megvagyunk már csak inditanuk kell és használni a kódot :)
 * A kódban továbbá elhelyezésre került egy bot parancs is. Ez a parancs az elsõdleges névbõl tevõdik össze. Példa rá: `schumix2, help`
   Fontos a parancs szerkezete `<elsõdleges nick>, parancs`
 * A kódhoz ki és be kapcsolható funkciók tartoznak. Ezt csak is gizárólag admin vezérelheti.
-  Funkciók használatáról leírás: `$help funkcio` (természetesen az az elõjel kell ami megadásra került a konfigban)
+  Funkciók használatáról leírás: `$help function` (természetesen az az elõjel kell ami megadásra került a konfigban)
 * Ha már megemlítésre került. Az admin hozzáadása konzolból történik elõször. `admin add <admin neve>`
   Majd amit kapunk jelszót privát üzenetben el kell küldeni a botnak a jelszót ezen módon: `$admin access <jelszó>`
   Ha másikat szeretnénk akkor: `$admin newpassword <régi> <új>`
