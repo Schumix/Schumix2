@@ -123,7 +123,7 @@ namespace Schumix.LuaEngine
 				foreach(var func in _functions.RegisteredSchumix)
 				{
 					if(CommandManager.CommandMethodMap.ContainsKey(func.Key))
-						CommandManager.SchumixRemoveHandler(func.Key, func.Value);
+						CommandManager.SchumixRemoveHandler(func.Key, func.Value.Method);
 				}
 
 				foreach(var func in _functions.RegisteredIrc)
@@ -131,6 +131,8 @@ namespace Schumix.LuaEngine
 					if(Network.GetIrcMethodMap().ContainsKey(func.Key))
 						Network.IrcRemoveHandler(func.Key, func.Value);
 				}
+
+				_functions.Clean();
 			}
 
 			var di = new DirectoryInfo(_scriptPath);

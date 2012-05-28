@@ -11,4 +11,4 @@ function LuaTest(IRCMessage)
 	end
 end
 
-RegisterSchumixHook("luatest", "LuaTest")
+RegisterSchumixHook("luatest", "LuaTest", GetCommandPermission("Normal"))

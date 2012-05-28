@@ -34,7 +34,7 @@ namespace Schumix.LuaEngine
 	/// </summary>
 	public sealed class LuaFunctions : CommandInfo
 	{
-		private readonly Dictionary<string, CommandDelegate> _RegisteredSchumix = new Dictionary<string, CommandDelegate>();
+		private readonly Dictionary<string, SchumixCommandMethod> _RegisteredSchumix = new Dictionary<string, SchumixCommandMethod>();
 		private readonly Dictionary<string, IRCDelegate> _RegisteredIrc = new Dictionary<string, IRCDelegate>();
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
@@ -54,7 +54,7 @@ namespace Schumix.LuaEngine
 		/// <summary>
 		/// Events registered by Lua on Command.
 		/// </summary>
-		public Dictionary<string, CommandDelegate> RegisteredSchumix
+		public Dictionary<string, SchumixCommandMethod> RegisteredSchumix
 		{
 			get { return _RegisteredSchumix; }
 		}
@@ -103,7 +103,11 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as IRCDelegate;
-				_RegisteredIrc.Add(HandlerName, handler);
+				if(_RegisteredIrc.ContainsKey(HandlerName))
+					_RegisteredIrc[HandlerName] += handler;
+				else
+					_RegisteredIrc.Add(HandlerName, handler);
+
 				Network.IrcRegisterHandler(HandlerName, handler);
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
@@ -114,7 +118,11 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as IRCDelegate;
-				_RegisteredIrc.Add(HandlerName, handler);
+				if(_RegisteredIrc.ContainsKey(HandlerName))
+					_RegisteredIrc[HandlerName] += handler;
+				else
+					_RegisteredIrc.Add(HandlerName, handler);
+
 				Network.IrcRegisterHandler(HandlerName, handler);
 			}
 		}
@@ -135,7 +143,11 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as CommandDelegate;
-				_RegisteredSchumix.Add(CommandName.ToLower(), handler);
+				if(_RegisteredSchumix.ContainsKey(CommandName.ToLower()))
+					_RegisteredSchumix[CommandName.ToLower()].Method += handler;
+				else
+					_RegisteredSchumix.Add(CommandName.ToLower(), new SchumixCommandMethod(handler, permission));
+
 				CommandManager.SchumixRegisterHandler(CommandName, handler, permission);
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
@@ -146,7 +158,11 @@ namespace Schumix.LuaEngine
 					return;
 
 				var handler = func as CommandDelegate;
-				_RegisteredSchumix.Add(CommandName.ToLower(), handler);
+				if(_RegisteredSchumix.ContainsKey(CommandName.ToLower()))
+					_RegisteredSchumix[CommandName.ToLower()].Method += handler;
+				else
+					_RegisteredSchumix.Add(CommandName.ToLower(), new SchumixCommandMethod(handler, permission));
+
 				CommandManager.SchumixRegisterHandler(CommandName, handler, permission);
 			}
 		}
@@ -206,6 +222,30 @@ namespace Schumix.LuaEngine
 		public int BaseAdminflag(string Name, string Vhost)
 		{
 			return Adminflag(Name, Vhost);
+		}
+
+		[LuaFunction("GetCommandPermission", "Command Permission.")]
+		public CommandPermission GetCommandPermission(string permission)
+		{
+			CommandPermission p = CommandPermission.Normal;
+
+			switch(permission.ToLower())
+			{
+				case "normal":
+					p = CommandPermission.Normal;
+					break;
+				case "halfoperator":
+					p = CommandPermission.HalfOperator;
+					break;
+				case "operator":
+					p = CommandPermission.Operator;
+					break;
+				case "administrator":
+					p = CommandPermission.Administrator;
+					break;
+			}
+
+			return p;
 		}
 	}
 }

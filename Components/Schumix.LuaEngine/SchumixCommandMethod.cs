@@ -18,19 +18,22 @@
  */
 
 using System;
+using Schumix.API;
 using Schumix.Irc.Commands;
 
 namespace Schumix.LuaEngine
 {
+	#pragma warning disable 3015
 	public class SchumixCommandMethod : Attribute
 	{
 		public CommandPermission Permission { get; private set; }
-		public string Command { get; private set; }
+		public CommandDelegate Method { get; set; }
 
-		public SchumixCommandMethod(string command, CommandPermission permission = CommandPermission.Normal)
+		public SchumixCommandMethod(CommandDelegate method, CommandPermission permission = CommandPermission.Normal)
 		{
-			Command = command.ToLower();
 			Permission = permission;
+			Method = method;
 		}
 	}
+	#pragma warning restore 3015
 }
