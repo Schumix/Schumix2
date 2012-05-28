@@ -31,8 +31,8 @@ namespace Schumix.LuaEngine
 
 		public SchumixCommandMethod(CommandDelegate method, CommandPermission permission = CommandPermission.Normal)
 		{
-			Permission = permission;
 			Method = method;
+			Permission = permission;
 		}
 	}
 	#pragma warning restore 3015
