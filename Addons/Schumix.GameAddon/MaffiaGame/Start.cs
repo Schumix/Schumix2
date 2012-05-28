@@ -162,7 +162,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				{
 					foreach(var llist in list)
 					{
-                        _normallist.Add(llist.Value.ToLower(), name);
+                        _normallist.Add(llist.Value.ToLower(), llist.Value);
 
 						if(Adminflag(llist.Value.ToLower()) == 2)
                             _playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal, true));
