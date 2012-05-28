@@ -71,7 +71,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		private bool _lynch;
 		private int _lynchmaxnumber;
 		private int _players;
-        private int _gameid;
+		private int _gameid;
 
 		public MaffiaGame(string Name, string Channel)
 		{
@@ -106,8 +106,8 @@ namespace Schumix.GameAddon.MaffiaGames
 			sSendMessage.SendCMPrivmsg(_channel, "{0} új játékot indított. Csatlakozni a '!join' paranccsal tudtok.", _owner);
 			sSendMessage.SendCMPrivmsg(_channel, "{0}: Írd be a '!start' parancsot, ha mindenki készen áll.", _owner);
 
-            var db = SchumixBase.DManager.QueryFirstRow("SELECT Game FROM maffiagame ORDER BY Game DESC");
-            _gameid = !db.IsNull() ? (Convert.ToInt32(db["Game"].ToString()) + 1) : 1;
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Game FROM maffiagame ORDER BY Game DESC");
+			_gameid = !db.IsNull() ? (Convert.ToInt32(db["Game"].ToString()) + 1) : 1;
 		}
 
 		public void NewNick(int Id, string OldName, string NewName)
@@ -379,8 +379,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(Started && !_ghostlist.ContainsKey(Name.ToLower()))
 				_ghostlist.Add(Name.ToLower(), Name);
 
-            SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Nev = '{0}' AND Game = '{1}'", Name, _gameid));
-
+			SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Nev = '{0}' AND Game = '{1}'", Name, _gameid));
 			sSender.Mode(_channel, "-v", Name);
 		}
 
@@ -403,7 +402,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(_players < 8)
 				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig nem volt. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective());
 			else
-                sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective(), GetDoctor());
+				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective(), GetDoctor());
 		}
 
 		private Rank GetRank(string Name)
@@ -535,8 +534,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!GameAddon.GameChannelFunction.ContainsKey(_channel))
 				return;
 
-            SchumixBase.DManager.Update("maffiagame", "Active = '0'", string.Format("Active = '1' AND Game = '{0}'", _gameid));
-
+			SchumixBase.DManager.Update("maffiagame", "Active = '0'", string.Format("Active = '1' AND Game = '{0}'", _gameid));
 			SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", GameAddon.GameChannelFunction[_channel]), string.Format("Channel = '{0}'", _channel));
 			sChannelInfo.ChannelFunctionsReload();
 			SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, _channel)), string.Format("Channel = '{0}'", _channel));
@@ -921,7 +919,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		}
 
 		private void EndGame(string newghost, bool ghosttext = false)
-        {
+		{
 			if(_killerlist.Count == 0 && Running)
 			{
 				RemoveRanks();

@@ -294,3 +294,15 @@ CREATE TABLE `ignore_irc_commands` (
 Id INTEGER  PRIMARY KEY AUTOINCREMENT,
 Command VARCHAR(30)
 );
+
+-- ----------------------------
+-- Table structure for maffiagame
+-- ----------------------------
+CREATE TABLE `maffiagame` (
+Id INTEGER  PRIMARY KEY AUTOINCREMENT,
+Game INTEGER DEFAULT 0,
+Name VARCHAR(25),
+Survivor INTEGER DEFAULT 0,
+Job INTEGER DEFAULT 0,
+Active INTEGER DEFAULT 0
+);
