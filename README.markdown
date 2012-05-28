@@ -99,7 +99,7 @@ Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelm
 
 * **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi az addonok betöltését. Alapértelmezés: `true`
 * **Ignore:** Azon addonok melyeket nem szeretnénk inditáskor betölteni. Vesszõvel elválasztva kell egymás útán írni öket. `(pl: TesztAddon,Teszt2Addon vagy szimplán TesztAddon)`
-        Alapértelmezés: `MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,TesztAddon`
+        Alapértelmezés: `MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon`
 * **Directory:** Az addonok mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Addons`
 
 ## Scripts
