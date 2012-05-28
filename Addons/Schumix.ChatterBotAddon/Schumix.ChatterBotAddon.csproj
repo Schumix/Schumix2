@@ -9,6 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.ChatterBotAddon</RootNamespace>
     <AssemblyName>ChatterBotAddon</AssemblyName>
+    <ReleaseVersion>3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,10 +51,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="ChatterBotAPI">
+    <Reference Include="System.Web" />
+    <Reference Include="ChatterBotAPI, Version=1.1.4406.30594, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Dependencies\ChatterBotAPI.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatterBotAddon.cs" />

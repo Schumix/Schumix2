@@ -22,8 +22,6 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Globalization;
-using Mono.Unix;
-using Mono.Unix.Native;
 using Schumix.Irc;
 using Schumix.Updater;
 using Schumix.Framework;
@@ -50,11 +48,13 @@ namespace Schumix
 		/// </summary>
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
+		private static readonly Windows sWindows = Singleton<Windows>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Üzenet küldés az irc szerver felé.
 		/// </summary>
 		private static readonly Sender sSender = Singleton<Sender>.Instance;
+		private static readonly Linux sLinux = Singleton<Linux>.Instance;
 
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
@@ -174,6 +174,8 @@ namespace Schumix
 			else
 				new Config(configdir, configfile);
 
+			sUtilities.CreatePidFile(SchumixConfig.ConfigFile);
+
 			if(serveridentify != string.Empty)
 				SchumixBase.ServerIdentify = serveridentify;
 
@@ -182,7 +184,7 @@ namespace Schumix
 			else if(localization != "start")
 				sLConsole.Locale = localization;
 
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio && console_encoding == "utf-8" &&
+			if(sUtilities.GetPlatformType() == PlatformType.Windows && console_encoding == "utf-8" &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
@@ -202,23 +204,20 @@ namespace Schumix
 
 			new SchumixBot();
 
-			if(sUtilities.GetCompiler() == Compiler.Mono)
-				StartHandler();
-			else
-			{
-				System.Console.CancelKeyPress += (sender, e) =>
-				{
-					SchumixBase.Quit();
-					sSender.Quit("Daemon killed.");
-					Thread.Sleep(5*1000);
-				};
-			}
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
+				sWindows.Init();
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				sLinux.Init();
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
 				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
 				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
 				SchumixBase.Quit();
+
+				if(SchumixBase.ExitStatus)
+					return;
+
 				sSender.Quit("Crash.");
 				Thread.Sleep(5*1000);
 			};
@@ -242,23 +241,6 @@ namespace Schumix
 			System.Console.WriteLine("\t--server-password=<pass>\tSet password.");
 			System.Console.WriteLine("\t--server-identify=Value\t\tSet identify.");
 			System.Console.WriteLine("\t--server-configs=Value\t\tSend Schumix's parameters at all.");
-		}
-
-		private static void StartHandler()
-		{
-			new Thread(TerminateHandler).Start();
-		}
-
-		private static void TerminateHandler()
-		{
-			Log.Notice("Main", "Initializing Handler for SIGINT");
-			var signal = new UnixSignal(Signum.SIGINT);
-			signal.WaitOne();
-
-			Log.Notice("Main", "Handler Terminated");
-			SchumixBase.Quit();
-			sSender.Quit("Daemon killed.");
-			Thread.Sleep(5*1000);
 		}
 	}
 }

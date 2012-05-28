@@ -393,6 +393,26 @@ namespace Schumix.Console.Commands
 								continue;
 							}
 
+							if(sChannelInfo.FSelect(Info[i], channel) && status == SchumixBase.On)
+							{
+								Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn2"), Info[i]);
+								continue;
+							}
+							else if(!sChannelInfo.FSelect(Info[i], channel) && status == SchumixBase.Off)
+							{
+								Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff2"), Info[i]);
+								continue;
+							}
+
+							if(sChannelInfo.SearchFunction(Info[i]))
+							{
+								if(!sChannelInfo.FSelect(Info[i]) && status == SchumixBase.On)
+								{
+									SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[i].ToLower())));
+									sChannelInfo.FunctionsReload();
+								}
+							}
+
 							args += ", " + Info[i].ToLower();
 							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(Info[i].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
 							sChannelInfo.ChannelFunctionsReload();
@@ -412,6 +432,26 @@ namespace Schumix.Console.Commands
 						{
 							Log.Error("Console", sLConsole.Other("NoSuchFunctions"));
 							return;
+						}
+
+						if(sChannelInfo.FSelect(Info[4], channel) && status == SchumixBase.On)
+						{
+							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn"));
+							return;
+						}
+						else if(!sChannelInfo.FSelect(Info[4], channel) && status == SchumixBase.Off)
+						{
+							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff"));
+							return;
+						}
+
+						if(sChannelInfo.SearchFunction(Info[4]))
+						{
+							if(!sChannelInfo.FSelect(Info[4]) && status == SchumixBase.On)
+							{
+								SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[4].ToLower())));
+								sChannelInfo.FunctionsReload();
+							}
 						}
 
 						if(status == SchumixBase.On)
@@ -514,6 +554,17 @@ namespace Schumix.Console.Commands
 								continue;
 							}
 
+							if(sChannelInfo.FSelect(Info[i]) && Info[1].ToLower() == SchumixBase.On)
+							{
+								Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn2"), Info[i]);
+								continue;
+							}
+							else if(!sChannelInfo.FSelect(Info[i]) && Info[1].ToLower() == SchumixBase.Off)
+							{
+								Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff2"), Info[i]);
+								continue;
+							}
+
 							args += ", " + Info[i].ToLower();
 							SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[i].ToLower())));
 							sChannelInfo.FunctionsReload();
@@ -532,6 +583,17 @@ namespace Schumix.Console.Commands
 						if(!sChannelInfo.SearchFunction(Info[2]))
 						{
 							Log.Error("Console", sLConsole.Other("NoSuchFunctions"));
+							return;
+						}
+
+						if(sChannelInfo.FSelect(Info[2]) && Info[1].ToLower() == SchumixBase.On)
+						{
+							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn"));
+							return;
+						}
+						else if(!sChannelInfo.FSelect(Info[2]) && Info[1].ToLower() == SchumixBase.Off)
+						{
+							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff"));
 							return;
 						}
 
@@ -1032,10 +1094,6 @@ namespace Schumix.Console.Commands
 					}
 
 					sIgnoreCommand.Add(command);
-					CommandManager.PublicCRemoveHandler(command);
-					CommandManager.HalfOperatorCRemoveHandler(command);
-					CommandManager.OperatorCRemoveHandler(command);
-					CommandManager.AdminCRemoveHandler(command);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "remove")
@@ -1114,6 +1172,12 @@ namespace Schumix.Console.Commands
 					if(!IsChannel(channel))
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+						return;
+					}
+
+					if(channel == IRCConfig.MasterChannel.ToLower())
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoIgnoreMasterChannel"));
 						return;
 					}
 

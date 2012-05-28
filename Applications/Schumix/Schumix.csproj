@@ -10,6 +10,7 @@
     <RootNamespace>Schumix</RootNamespace>
     <AssemblyName>Schumix</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
+    <ReleaseVersion>3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>
@@ -54,7 +55,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
-    <Reference Include="Mono.Posix">
+    <Reference Include="Mono.Posix, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
       <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -67,6 +68,9 @@
     <Compile Include="Console\Commands\CommandManager.cs" />
     <Compile Include="Console\Commands\CommandHelp.cs" />
     <Compile Include="ScriptManager.cs" />
+    <Compile Include="Windows\Windows.cs" />
+    <Compile Include="Linux\Linux.cs" />
+    <Compile Include="Windows\CtrlType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -94,5 +98,7 @@
   <ItemGroup>
     <Folder Include="Console\Commands\" />
     <Folder Include="Console\" />
+    <Folder Include="Windows\" />
+    <Folder Include="Linux\" />
   </ItemGroup>
 </Project>

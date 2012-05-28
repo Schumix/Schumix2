@@ -58,7 +58,7 @@ namespace Schumix.Framework
 
 		public void SetProcessName(string Name)
 		{
-			if(sUtilities.GetCompiler() != Compiler.Mono)
+			if(sUtilities.GetPlatformType() != PlatformType.Linux || sUtilities.GetPlatformType() != PlatformType.MacOSX)
 				return;
 
 			if(Environment.OSVersion.Platform == PlatformID.Unix)

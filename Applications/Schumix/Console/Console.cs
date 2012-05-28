@@ -19,7 +19,6 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -56,7 +55,7 @@ namespace Schumix.Console
 		{
 			Log.Notice("Console", sLConsole.Console("Text"));
 			Log.Debug("Console", sLConsole.Console("Text2"));
-			Task.Factory.StartNew(() => ConsoleRead());
+			new Thread(() => ConsoleRead()).Start();
 			CCManager = new CCommandManager(network);
 			CCManager.Channel = IRCConfig.MasterChannel;
 			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + CCManager.Channel;

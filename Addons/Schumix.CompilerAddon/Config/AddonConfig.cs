@@ -38,8 +38,8 @@ namespace Schumix.CompilerAddon.Config
 		private const string _compileroptions = "/optimize";
 		private const int _warninglevel = 4;
 		private const bool _treatwarningsaserrors = false;
-		private const string _referenced = "using System; using System.Threading; using System.Reflection; using System.Threading.Tasks; using System.Linq; using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using Schumix.Libraries;";
-		private const string _referencedassemblies = "System.dll,System.Core.dll,Schumix.Libraries.dll";
+		private const string _referenced = "using System; using System.Threading; using System.Reflection; using System.Threading.Tasks; using System.Linq; using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using System.Numerics; using Schumix.Libraries;";
+		private const string _referencedassemblies = "System.dll,System.Core.dll,System.Numerics.dll,Schumix.Libraries.dll";
 		private const string _mainclass = "Entry";
 		private const string _mainconstructor = "Schumix";
 

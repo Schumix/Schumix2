@@ -55,59 +55,49 @@ namespace Schumix.Irc.Commands
 		/// The internal Google class for this object. This will always be "GWebSearch".
 		/// </summary>
 		[DataMember(Name = "GsearchResultClass", Order = 0)]
-		public string GoogleResultClass
-		{ get; set; }
+		public string GoogleResultClass { get; set; }
 
 		/// <summary>
 		/// The unescaped Url of the search result.
 		/// </summary>
 		[DataMember(Name = "unescapedUrl", Order = 1)]
-		public string UnescapedUrl
-		{ get; set; }
+		public string UnescapedUrl { get; set; }
 
 		/// <summary>
 		/// The search result's Url.
 		/// </summary>
 		[DataMember(Name = "url", Order = 2)]
-		public string Url
-		{ get; set; }
+		public string Url { get; set; }
 
 		/// <summary>
 		/// The display Url of the search result.
 		/// </summary>
 		[DataMember(Name = "visibleUrl", Order = 3)]
-		public string VisibleUrl
-		{ get; set; }
+		public string VisibleUrl { get; set; }
 
 		/// <summary>
 		/// The Url of the cached version of this page.
 		/// </summary>
 		[DataMember(Name = "cacheUrl", Order = 4)]
-		public string CacheUrl
-		{ get; set; }
+		public string CacheUrl { get; set; }
 
 		/// <summary>
 		/// The formatted search result title.
 		/// </summary>
 		[DataMember(Name = "title", Order = 5)]
-		public string Title
-		{ get; set; }
+		public string Title { get; set; }
 
 		/// <summary>
 		/// The unformatted title of the search result.
 		/// </summary>
 		[DataMember(Name = "titleNoFormatting", Order = 6)]
-		public string TitleNoFormatting
-		{ get; set; }
+		public string TitleNoFormatting { get; set; }
 
 		/// <summary>
 		/// The Goolge snippet for this search result.
 		/// </summary>
 		[DataMember(Name = "content", Order = 7)]
-		public String Snippet
-		{ get; set; }
-
-
+		public String Snippet { get; set; }
 	}
 
 	/// <summary>
@@ -120,8 +110,7 @@ namespace Schumix.Irc.Commands
 		/// The list of search results.
 		/// </summary>
 		[DataMember(Name = "responseData")]
-		public GoogleWebResultSet ResultSet
-		{ get; set; }
+		public GoogleWebResultSet ResultSet { get; set; }
 	}
 
 	/// <summary>
@@ -134,7 +123,6 @@ namespace Schumix.Irc.Commands
 		/// The list of search results.
 		/// </summary>
 		[DataMember(Name = "results")]
-		public GoogleWebResult[] Results
-		{ get; set; }
+		public GoogleWebResult[] Results { get; set; }
 	}
 }

@@ -52,14 +52,14 @@ namespace Schumix.CalendarAddon
 			_calendar = new Calendar();
 			_calendar.Start();
 
-			Network.PublicRegisterHandler("PRIVMSG", HandlePrivmsg);
+			Network.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
 			InitIrcCommand();
 		}
 
 		public void Destroy()
 		{
 			_calendar.Stop();
-			Network.PublicRemoveHandler("PRIVMSG",   HandlePrivmsg);
+			Network.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
 			RemoveIrcCommand();
 		}
 
@@ -89,16 +89,16 @@ namespace Schumix.CalendarAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.OperatorCRegisterHandler("ban",    sBanCommand.HandleBan);
-			CommandManager.OperatorCRegisterHandler("unban",  sBanCommand.HandleUnban);
-			CommandManager.PublicCRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
+			CommandManager.SchumixRegisterHandler("ban",      sBanCommand.HandleBan, CommandPermission.Operator);
+			CommandManager.SchumixRegisterHandler("unban",    sBanCommand.HandleUnban, CommandPermission.Operator);
+			CommandManager.SchumixRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.OperatorCRemoveHandler("ban",      sBanCommand.HandleBan);
-			CommandManager.OperatorCRemoveHandler("unban",    sBanCommand.HandleUnban);
-			CommandManager.PublicCRemoveHandler("calendar",   sCalendarCommand.HandleCalendar);
+			CommandManager.SchumixRemoveHandler("ban",        sBanCommand.HandleBan);
+			CommandManager.SchumixRemoveHandler("unban",      sBanCommand.HandleUnban);
+			CommandManager.SchumixRemoveHandler("calendar",   sCalendarCommand.HandleCalendar);
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)

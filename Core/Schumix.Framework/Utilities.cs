@@ -23,8 +23,10 @@ using System.IO;
 using System.Net;
 using System.Web;
 using System.Linq;
+using System.Threading;
 using System.Reflection;
 using System.Management;
+using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Collections.Generic;
 using System.Text;
@@ -36,19 +38,13 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
-	public enum Compiler
-	{
-		VisualStudio,
-		Mono,
-		None
-	}
-
 	public sealed class Utilities
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly DateTime UnixTimeStart = new DateTime(1970, 1, 1, 0, 0, 0);
-		private const int TicksPerSecond = 10000;
 		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
+		private readonly object WriteLock = new object();
+		private const int TicksPerSecond = 10000;
 		private Utilities() {}
 
 		public string GetUrl(string url)
@@ -317,7 +313,7 @@ namespace Schumix.Framework
 
 		public string GetPlatform()
 		{
-			string Platform = string.Empty;
+			string platform = string.Empty;
 			var pid = Environment.OSVersion.Platform;
 
 			switch(pid)
@@ -326,23 +322,23 @@ namespace Schumix.Framework
 				case PlatformID.Win32S:
 				case PlatformID.Win32Windows:
 				case PlatformID.WinCE:
-					Platform = "Windows";
+					platform = "Windows";
 					break;
 				case PlatformID.Unix:
-					Platform = "Linux";
+					platform = "Linux";
 					break;
 				case PlatformID.MacOSX:
-					Platform = "MacOSX";
+					platform = "MacOSX";
 					break;
 				case PlatformID.Xbox:
-					Platform = "Xbox";
+					platform = "Xbox";
 					break;
 				default:
-					Platform = "Unknown";
+					platform = "Unknown";
 					break;
 			}
 
-			return Platform;
+			return platform;
 		}
 
 		/// <summary>
@@ -449,9 +445,9 @@ namespace Schumix.Framework
 			return Name;
 		}
 
-		public Compiler GetCompiler()
+		public PlatformType GetPlatformType()
 		{
-			Compiler compiler = Compiler.None;
+			PlatformType platform = PlatformType.None;
 			var pid = Environment.OSVersion.Platform;
 
 			switch(pid)
@@ -460,21 +456,23 @@ namespace Schumix.Framework
 				case PlatformID.Win32S:
 				case PlatformID.Win32Windows:
 				case PlatformID.WinCE:
-					compiler = Compiler.VisualStudio;
+					platform = PlatformType.Windows;
 					break;
 				case PlatformID.Unix:
+					platform = PlatformType.Linux;
+					break;
 				case PlatformID.MacOSX:
-					compiler = Compiler.Mono;
+					platform = PlatformType.MacOSX;
 					break;
 				case PlatformID.Xbox:
-					compiler = Compiler.None;
+					platform = PlatformType.Xbox;
 					break;
 				default:
-					compiler = Compiler.None;
+					platform = PlatformType.None;
 					break;
 			}
 
-			return compiler;
+			return platform;
 		}
 
 		public string GetVersion()
@@ -518,12 +516,12 @@ namespace Schumix.Framework
 		/// </returns>
 		public string GetCpuId()
 		{
-			if(GetCompiler() == Compiler.VisualStudio)
+			if(GetPlatformType() == PlatformType.Windows)
 			{
 				var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
 				return (from ManagementObject mo in mos.Get() select (Regex.Replace(Convert.ToString(mo["Name"]), @"\s+", SchumixBase.Space.ToString()))).FirstOrDefault();
 			}
-			else if(GetCompiler() == Compiler.Mono)
+			else if(GetPlatformType() == PlatformType.Linux)
 			{
 				var reader = new StreamReader("/proc/cpuinfo");
 				string content = reader.ReadToEnd();
@@ -663,7 +661,7 @@ namespace Schumix.Framework
 		public void CreateFile(string Name)
 		{
 			if(!File.Exists(Name))
-				File.Create(Name);
+				new FileStream(Name, FileMode.Append, FileAccess.Write, FileShare.Write).Close();
 		}
 
 		public string NameDay(string Language)
@@ -769,276 +767,336 @@ namespace Schumix.Framework
 			return false;
 		}
 
-		public string DownloadString(string url, int maxlength)
-		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
-			{
-				if(sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
-			}
-
-			response.Close();
-			return sb.ToString();
-		}
-
 		public string DownloadString(Uri url, int maxlength)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url.ToString(), maxlength);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
-		public string DownloadString(string url, string Contains)
+		public string DownloadString(string url, int maxlength)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(sb.ToString().Contains(Contains))
-					break;
+				try
+				{
+					var request = (HttpWebRequest)WebRequest.Create(url);
+					new Thread(() =>
+					{
+						Thread.Sleep(13*1000);
 
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+						if(!request.IsNull())
+							request.Abort();
+					});
+
+					request.AllowAutoRedirect = true;
+					request.UserAgent = Consts.SchumixUserAgent;
+					request.Referer = Consts.SchumixReferer;
+					request.Timeout = 10*1000;
+					request.ReadWriteTimeout = 10*1000;
+
+					int length = 0;
+					byte[] buf = new byte[1024];
+					var sb = new StringBuilder();
+					var response = request.GetResponse();
+					var stream = response.GetResponseStream();
+
+					while((length = stream.Read(buf, 0, buf.Length)) != 0)
+					{
+						if(sb.Length >= maxlength)
+							break;
+
+						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+					}
+
+					response.Close();
+					return sb.ToString();
+				}
+				catch(Exception e)
+				{
+					Log.Debug("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					return string.Empty;
+				}
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
-		public string DownloadString(Uri url, string Contains)
+		public string DownloadString(Uri url, string Contains, int maxlength = 0)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(sb.ToString().Contains(Contains))
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url.ToString(), 0, Contains, null, maxlength);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
-		public string DownloadString(string url, string Contains, NetworkCredential credential)
+		public string DownloadString(string url, string Contains, int maxlength = 0)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-			request.Credentials = credential;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(sb.ToString().Contains(Contains))
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url, 0, Contains, null, maxlength);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
-		public string DownloadString(Uri url, string Contains, NetworkCredential credential)
+		public string DownloadString(Uri url, int timeout, string Contains, int maxlength = 0)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-			request.Credentials = credential;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(sb.ToString().Contains(Contains))
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url.ToString(), timeout, Contains, null, maxlength);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
-		public string DownloadString(string url, Regex regex, int maxlength = 0)
+		public string DownloadString(string url, int timeout, string Contains, int maxlength = 0)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			if(maxlength == 0)
-				maxlength = 10000;
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url, timeout, Contains, null, maxlength);
 			}
+		}
 
-			response.Close();
-			return sb.ToString();
+		public string DownloadString(Uri url, string Contains, NetworkCredential credential, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url.ToString(), 0, Contains, credential, maxlength);
+			}
+		}
+
+		public string DownloadString(string url, string Contains, NetworkCredential credential, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url, 0, Contains, credential, maxlength);
+			}
+		}
+
+		public string DownloadString(Uri url, int timeout, string Contains, NetworkCredential credential, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				return DownloadString(url.ToString(), timeout, Contains, credential, maxlength);
+			}
+		}
+
+		public string DownloadString(string url, int timeout, string Contains, NetworkCredential credential, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				try
+				{
+					var request = (HttpWebRequest)WebRequest.Create(url);
+					new Thread(() =>
+					{
+						if(timeout != 0)
+							Thread.Sleep(timeout+3);
+						else
+							Thread.Sleep(13*1000);
+
+						if(!request.IsNull())
+							request.Abort();
+					});
+
+					if(timeout != 0)
+					{
+						request.Timeout = timeout;
+						request.ReadWriteTimeout = timeout;
+					}
+					else
+					{
+						request.Timeout = 10*1000;
+						request.ReadWriteTimeout = 10*1000;
+					}
+
+					request.AllowAutoRedirect = true;
+					request.UserAgent = Consts.SchumixUserAgent;
+					request.Referer = Consts.SchumixReferer;
+
+					if(!credential.IsNull())
+						request.Credentials = credential;
+
+					int length = 0;
+					byte[] buf = new byte[1024];
+					var sb = new StringBuilder();
+					var response = request.GetResponse();
+					var stream = response.GetResponseStream();
+
+					if(maxlength == 0)
+						maxlength = 10000;
+
+					while((length = stream.Read(buf, 0, buf.Length)) != 0)
+					{
+						if(sb.ToString().Contains(Contains) || sb.Length >= 10000)
+							break;
+
+						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+					}
+
+					response.Close();
+					return sb.ToString();
+				}
+				catch(Exception e)
+				{
+					Log.Debug("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					return string.Empty;
+				}
+			}
 		}
 
 		public string DownloadString(Uri url, Regex regex, int maxlength = 0)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			if(maxlength == 0)
-				maxlength = 10000;
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url.ToString(), 0, regex, maxlength);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
-		public string DownloadString(string url, int timeout, Regex regex, int maxlength = 0)
+		public string DownloadString(string url, Regex regex, int maxlength = 0)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.Timeout = timeout;
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			if(maxlength == 0)
-				maxlength = 10000;
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url, 0, regex, maxlength);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
 		public string DownloadString(Uri url, int timeout, Regex regex, int maxlength = 0)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.Timeout = timeout;
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			if(maxlength == 0)
-				maxlength = 10000;
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
-					break;
-
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return DownloadString(url.ToString(), timeout, regex, maxlength);
 			}
+		}
 
-			response.Close();
-			return sb.ToString();
+		public string DownloadString(string url, int timeout, Regex regex, int maxlength = 0)
+		{
+			lock(WriteLock)
+			{
+				try
+				{
+					var request = (HttpWebRequest)WebRequest.Create(url);
+					new Thread(() =>
+					{
+						if(timeout != 0)
+							Thread.Sleep(timeout+3);
+						else
+							Thread.Sleep(13*1000);
+
+						if(!request.IsNull())
+							request.Abort();
+					});
+
+					if(timeout != 0)
+					{
+						request.Timeout = timeout;
+						request.ReadWriteTimeout = timeout;
+					}
+					else
+					{
+						request.Timeout = 10*1000;
+						request.ReadWriteTimeout = 10*1000;
+					}
+
+					request.AllowAutoRedirect = true;
+					request.UserAgent = Consts.SchumixUserAgent;
+					request.Referer = Consts.SchumixReferer;
+
+					int length = 0;
+					byte[] buf = new byte[1024];
+					var sb = new StringBuilder();
+					var response = request.GetResponse();
+					var stream = response.GetResponseStream();
+
+					if(maxlength == 0)
+						maxlength = 10000;
+
+					while((length = stream.Read(buf, 0, buf.Length)) != 0)
+					{
+						if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
+							break;
+
+						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+					}
+
+					response.Close();
+					return sb.ToString();
+				}
+				catch(Exception e)
+				{
+					Log.Debug("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					return string.Empty;
+				}
+			}
 		}
 
 		public bool IsValueBiggerDateTimeNow(int Year, int Month, int Day, int Hour, int Minute)
 		{
 			var time = DateTime.Now;
 			return (time.Year >= Year && time.Month >= Month && time.Day >= Day && time.Hour >= Hour && time.Minute >= Minute);
+		}
+
+		public string GetUserName()
+		{
+			return Environment.UserName;
+		}
+
+		public string GetHomeDirectory(string data)
+		{
+			if(GetPlatformType() == PlatformType.Windows)
+			{
+				// megírni windowsra is
+				return data;
+			}
+			else if(GetPlatformType() == PlatformType.Linux)
+			{
+				string text = data.ToLower();
+				return text.Contains("$home") ? "/home/" + GetUserName() + "/" + data.Substring(data.IndexOf("/")+1) : data;
+			}
+			else
+				return data;
+		}
+
+		public string DirectoryToHome(string dir, string file)
+		{
+			if(GetPlatformType() == PlatformType.Windows)
+			{
+				// megírni windowsra is
+				return string.Format("{0}/{1}", dir, file);
+			}
+			else if(GetPlatformType() == PlatformType.Linux)
+				return (dir.Length > 0 && dir.Substring(0, 1) == "/") ? string.Format("{0}/{1}", dir, file) : string.Format("./{0}/{1}", dir, file);
+			else
+				return string.Format("{0}/{1}", dir, file);
+		}
+
+		public string GetDirectoryName(string data)
+		{
+			var split = data.Split('/');
+			return split.Length > 1 ? split[split.Length-1] : data;
+		}
+
+		public void CreatePidFile(string Name)
+		{
+			string pidfile = Name;
+
+			if(!pidfile.Contains(".pid"))
+			{
+				if(pidfile.Contains(".xml"))
+					pidfile = pidfile.Remove(pidfile.IndexOf(".xml")) + ".pid";
+				else
+					pidfile = pidfile + ".pid";
+			}
+
+			pidfile = DirectoryToHome(LogConfig.LogDirectory, pidfile);
+			SchumixBase.PidFile = pidfile;
+			RemovePidFile();
+			CreateFile(pidfile);
+			var file = new StreamWriter(pidfile, true) { AutoFlush = true };
+			file.WriteLine("{0}", Process.GetCurrentProcess().Id);
+			file.Close();
+		}
+
+		public void RemovePidFile()
+		{
+			if(File.Exists(SchumixBase.PidFile))
+				File.Delete(SchumixBase.PidFile);
 		}
 	}
 }

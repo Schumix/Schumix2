@@ -66,12 +66,12 @@ namespace Schumix.TesztAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.AdminCRegisterHandler("test", HandleTest);
+			CommandManager.SchumixRegisterHandler("test", HandleTest, CommandPermission.Administrator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.AdminCRemoveHandler("test",   HandleTest);
+			CommandManager.SchumixRemoveHandler("test",   HandleTest);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

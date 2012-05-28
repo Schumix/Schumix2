@@ -147,6 +147,9 @@ namespace Schumix.Framework.Client
 
 		private void CloseHandler(SchumixPacket pck, string hst)
 		{
+			if(SchumixBase.ExitStatus)
+				return;
+
 			Log.Warning("CloseHandler", sLConsole.ClientPacketHandler("Text3"));
 			Log.Warning("CloseHandler", sLConsole.ClientPacketHandler("Text4"));
 			SchumixBase.Quit();

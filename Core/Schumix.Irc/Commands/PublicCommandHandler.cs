@@ -42,8 +42,11 @@ namespace Schumix.Irc.Commands
 			sSendMessage.SendChatMessage(sIRCMessage, text[0], sUtilities.GetVersion());
 			string commands = string.Empty;
 
-			foreach(var command in CommandManager.GetPublicCommandHandler())
+			foreach(var command in CommandManager.CommandMethodMap)
 			{
+				if(command.Value.Permission != CommandPermission.Normal)
+					continue;
+
 				if(command.Key == "xbot")
 					continue;
 
@@ -219,6 +222,12 @@ namespace Schumix.Irc.Commands
 		protected void HandleTranslate(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Info.Length < 5)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTranslateLanguage", sIRCMessage.Channel));
+				return;
+			}
+
+			if(!sIRCMessage.Info[4].Contains("|"))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTranslateLanguage", sIRCMessage.Channel));
 				return;

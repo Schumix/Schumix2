@@ -29,8 +29,6 @@ namespace Schumix.Irc
 {
 	public partial class MessageHandler : CommandManager
 	{
-		public static bool HostServStatus;
-		public static bool NewNick;
 		public static bool Online;
 		protected MessageHandler() {}
 
@@ -42,38 +40,39 @@ namespace Schumix.Irc
 
 			if(IRCConfig.UseNickServ)
 			{
-				Log.Notice("NickServ", sLConsole.NickServ("Text"));
-
-				if(!NewNick)
-					sSender.NickServ(IRCConfig.NickServPassword);
+				if(sNickInfo.IsNickStorage())
+					sNickInfo.Identify(IRCConfig.NickServPassword);
 			}
 
 			if(IRCConfig.UseHostServ)
 			{
-				if(!NewNick)
-				{
-					HostServStatus = true;
-					sSender.HostServ("on");
-					Log.Notice("HostServ", sLConsole.HostServ("Text"));
-				}
+				if(sNickInfo.IsNickStorage())
+					sNickInfo.Vhost(SchumixBase.On);
 				else
 				{
-					Log.Notice("HostServ", sLConsole.HostServ("Text2"));
-					WhoisPrivmsg = sNickInfo.NickStorage;
-					ChannelPrivmsg = sNickInfo.NickStorage;
-					sChannelInfo.JoinChannel();
+					if(!Online)
+					{
+						Log.Notice("HostServ", sLConsole.HostServ("Text2"));
+						WhoisPrivmsg = sNickInfo.NickStorage;
+						ChannelPrivmsg = sNickInfo.NickStorage;
+						sChannelInfo.JoinChannel();
+						Online = true;
+					}
 				}
 			}
 			else
 			{
-				Log.Notice("HostServ", sLConsole.HostServ("Text2"));
-				if(IRCConfig.HostServEnabled)
-					sSender.HostServ("off");
+				if(!Online)
+				{
+					if(IRCConfig.HostServEnabled)
+						sNickInfo.Vhost(SchumixBase.Off);
 
-				WhoisPrivmsg = sNickInfo.NickStorage;
-				ChannelPrivmsg = sNickInfo.NickStorage;
-				NewNickPrivmsg = string.Empty;
-				sChannelInfo.JoinChannel();
+					WhoisPrivmsg = sNickInfo.NickStorage;
+					ChannelPrivmsg = sNickInfo.NickStorage;
+					NewNickPrivmsg = string.Empty;
+					sChannelInfo.JoinChannel();
+					Online = true;
+				}
 			}
 
 			SchumixBase.UrlTitleEnabled = true;
@@ -123,11 +122,17 @@ namespace Schumix.Irc
 			if(sIRCMessage.Nick == "NickServ")
 			{
 				if(sIRCMessage.Args.Contains("Password incorrect."))
+				{
+					sNickInfo.ChangeIdentifyStatus(true);
 					Log.Error("NickServ", sLConsole.NickServ("Text2"));
+				}
 				else if(sIRCMessage.Args.Contains("You are already identified."))
 					Log.Warning("NickServ", sLConsole.NickServ("Text3"));
 				else if(sIRCMessage.Args.Contains("Password accepted - you are now recognized."))
+				{
+					sNickInfo.ChangeIdentifyStatus(true);
 					Log.Success("NickServ", sLConsole.NickServ("Text4"));
+				}
 
 				if(IsOnline)
 				{
@@ -169,14 +174,14 @@ namespace Schumix.Irc
 
 			if(sIRCMessage.Nick == "HostServ" && IRCConfig.UseHostServ)
 			{
-				if(sIRCMessage.Args.Contains("Your vhost of") && HostServStatus)
+				if(sIRCMessage.Args.Contains("Your vhost of") && !sNickInfo.IsVhost)
 				{
-					HostServStatus = false;
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
 
 					if(!Online)
 					{
+						sNickInfo.ChangeVhostStatus(true);
 						sChannelInfo.JoinChannel();
 						Online = true;
 					}
@@ -237,7 +242,6 @@ namespace Schumix.Irc
 				string nick = sNickInfo.ChangeNick();
 				Log.Notice("MessageHandler", sLConsole.MessageHandler("Text7"), nick);
 				Online = false;
-				NewNick = true;
 				sSender.Nick(nick);
 			}
 			else
@@ -428,42 +432,29 @@ namespace Schumix.Irc
 		{
 			if(sChannelInfo.FSelect(IFunctions.Log) && sChannelInfo.FSelect(IChannelFunctions.Log, channel))
 			{
-				try
-				{
-					sUtilities.CreateDirectory(LogConfig.IrcLogDirectory);
-					string logdir = string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, channel);
-					string logfile = string.Empty;
+				sUtilities.CreateDirectory(LogConfig.IrcLogDirectory);
+				string logdir = string.Empty;
+				string logfile = string.Empty;
 
-					if(DateTime.Now.Month < 10)
-					{
-						if(DateTime.Now.Day < 10)
-							logfile = string.Format("{0}/{1}-0{2}-0{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-						else
-							logfile = string.Format("{0}/{1}-0{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-					}
-					else
-					{
-						if(DateTime.Now.Day < 10)
-							logfile = string.Format("{0}/{1}-{2}-0{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-						else
-							logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
-					}
+				if(LogConfig.IrcLogDirectory.Length > 0 && LogConfig.IrcLogDirectory.Substring(0, 1) == "/")
+					logdir = string.Format("{0}/{1}", LogConfig.IrcLogDirectory, channel);
+				else
+					logdir = string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, channel);
 
-					sUtilities.CreateDirectory(logdir);
-					sUtilities.CreateFile(logfile);
-					var file = new StreamWriter(logfile, true) { AutoFlush = true };
+				logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year,
+								DateTime.Now.Month < 10 ? "0" + DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString(),
+								DateTime.Now.Day < 10 ? "0" + DateTime.Now.Day.ToString() : DateTime.Now.Day.ToString());
 
-					if(DateTime.Now.Minute < 10)
-						file.WriteLine("[{0}:0{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
-					else
-						file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
+				sUtilities.CreateDirectory(logdir);
+				sUtilities.CreateFile(logfile);
+				var file = new StreamWriter(logfile, true) { AutoFlush = true };
 
-					file.Close();
-				}
-				catch(Exception)
-				{
-					LogToFile(channel, user, args);
-				}
+				if(DateTime.Now.Minute < 10)
+					file.WriteLine("[{0}:0{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
+				else
+					file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
+
+				file.Close();
 			}
 		}
 	}

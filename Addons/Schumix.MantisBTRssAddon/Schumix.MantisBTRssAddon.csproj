@@ -9,6 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.MantisBTRssAddon</RootNamespace>
     <AssemblyName>MantisBTRssAddon</AssemblyName>
+    <ReleaseVersion>3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>true</DebugSymbols>

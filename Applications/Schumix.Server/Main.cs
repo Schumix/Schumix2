@@ -21,7 +21,9 @@ using System;
 using System.IO;
 using System.Text;
 using System.Net;
+using System.Threading;
 using System.Net.Sockets;
+using System.Diagnostics;
 using System.Globalization;
 using Schumix.Updater;
 using Schumix.Framework;
@@ -38,8 +40,12 @@ namespace Schumix.Server
 		private static readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
+		private static readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
+		private static readonly Windows sWindows = Singleton<Windows>.Instance;
+		private static readonly Linux sLinux = Singleton<Linux>.Instance;
+		public static ServerListener sListener { get; private set; }
 
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
@@ -105,13 +111,14 @@ namespace Schumix.Server
 			System.Console.WriteLine();
 
 			new Server.Config.Config(configdir, configfile);
+			sUtilities.CreatePidFile(Server.Config.ServerConfig.ConfigFile);
 
 			if(localization == "start")
 				sLConsole.Locale = Server.Config.LocalizationConfig.Locale;
 			else if(localization != "start")
 				sLConsole.Locale = localization;
 
-			if(sUtilities.GetCompiler() == Compiler.VisualStudio && console_encoding == "utf-8" &&
+			if(sUtilities.GetPlatformType() == PlatformType.Windows && console_encoding == "utf-8" &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
@@ -125,30 +132,40 @@ namespace Schumix.Server
 			if(File.Exists("Installer.exe"))
 				File.Delete("Installer.exe");
 
-			System.Console.CancelKeyPress += (sender, e) =>
-			{
-				var packet = new SchumixPacket();
-				packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
-				packet.Write<int>((int)0);
-
-				foreach(var list in sServerPacketHandler.HostList)
-					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
-			};
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
+				sWindows.Init();
+			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				sLinux.Init();
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
-				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
-				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
-				var packet = new SchumixPacket();
-				packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
-				packet.Write<int>((int)0);
-
-				foreach(var list in sServerPacketHandler.HostList)
-					sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+				if(sListener.Exit)
+				{
+					Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
+					sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
+					return;
+				}
+				else
+				{
+					sUtilities.RemovePidFile();
+					sListener.Exit = true;
+					System.Console.CursorVisible = true;
+					Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
+					sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
+					var packet = new SchumixPacket();
+					packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
+					packet.Write<int>((int)0);
+	
+					foreach(var list in sServerPacketHandler.HostList)
+						sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+	
+					Thread.Sleep(2000);
+					KillAllSchumixProccess();
+				}
 			};
 
-			var listener = new ServerListener(ServerConfigs.ListenerPort);
-			listener.Listen();
+			sListener = new ServerListener(ServerConfigs.ListenerPort);
+			sListener.Listen();
 		}
 
 		/// <summary>
@@ -163,6 +180,32 @@ namespace Schumix.Server
 			System.Console.WriteLine("\t--config-file=<file>\t\tSet up the config file's place");
 			System.Console.WriteLine("\t--console-encoding=Value\tSet up the program's character encoding");
 			System.Console.WriteLine("\t--console-localization=Value\tSet up the program's console language settings");
+		}
+
+		public static void KillAllSchumixProccess()
+		{
+			foreach(var list in sSchumix._processlist)
+			{
+				if(list.Value.Process.IsNull())
+					continue;
+
+				if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				{
+					foreach(var p in Process.GetProcessesByName("mono"))
+					{
+						if(p.Id == list.Value.Process.Id)
+							p.Kill();
+					}
+				}
+				else if(sUtilities.GetPlatformType() == PlatformType.Windows)
+				{
+					foreach(var p in Process.GetProcessesByName("Schumix"))
+					{
+						if(p.Id == list.Value.Process.Id)
+							p.Kill();
+					}
+				}
+			}
 		}
 	}
 }

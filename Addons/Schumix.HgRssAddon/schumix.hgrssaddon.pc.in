@@ -1,0 +1,6 @@
+Name: Schumix.HgRssAddon
+Description: Schumix.HgRssAddon
+Version: 3.x
+
+Requires: 
+Libs: -r:@expanded_libdir@/@PACKAGE@/HgRssAddon.dll

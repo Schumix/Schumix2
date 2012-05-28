@@ -1,0 +1,6 @@
+Name: Schumix.API
+Description: Schumix.API
+Version: 3.x
+
+Requires: 
+Libs: -r:@expanded_libdir@/@PACKAGE@/Schumix.API.dll

@@ -110,12 +110,12 @@ namespace Schumix.HgRssAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.OperatorCRegisterHandler("hg", HandleHg);
+			CommandManager.SchumixRegisterHandler("hg", HandleHg, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.OperatorCRemoveHandler("hg",   HandleHg);
+			CommandManager.SchumixRemoveHandler("hg",   HandleHg);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

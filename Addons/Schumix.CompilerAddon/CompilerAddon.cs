@@ -52,7 +52,7 @@ namespace Schumix.CompilerAddon
 		{
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			Network.PublicRegisterHandler("PRIVMSG", HandlePrivmsg);
+			Network.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
 			ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
 			EntryRegex = new Regex(SchumixBase.Space + CompilerConfig.MainClass + @"\s*?\{");
 			SchumixRegex = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)");
@@ -60,7 +60,7 @@ namespace Schumix.CompilerAddon
 
 		public void Destroy()
 		{
-			Network.PublicRemoveHandler("PRIVMSG", HandlePrivmsg);
+			Network.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
 		}
 
 		public int Reload(string RName, string SName = "")

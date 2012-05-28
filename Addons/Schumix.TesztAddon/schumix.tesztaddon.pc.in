@@ -1,0 +1,6 @@
+Name: Schumix.TesztAddon
+Description: Schumix.TesztAddon
+Version: 3.x
+
+Requires: 
+Libs: -r:@expanded_libdir@/@PACKAGE@/TesztAddon.dll

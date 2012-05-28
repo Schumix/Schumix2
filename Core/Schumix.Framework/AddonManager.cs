@@ -37,12 +37,13 @@ namespace Schumix.Framework
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly List<ISchumixAddon> _addons = new List<ISchumixAddon>();
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly object LoadLock = new object();
 
 		/// <summary>
 		/// List of found assemblies.
 		/// </summary>
-		public readonly List<Assembly> Assemblies = new List<Assembly>();
+		public static readonly List<Assembly> Assemblies = new List<Assembly>();
 		public List<ISchumixAddon> GetPlugins() { return _addons; }
 
 		private AddonManager() {}
@@ -74,7 +75,13 @@ namespace Schumix.Framework
 			{
 				string file = string.Empty;
 				string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);
-				var dir = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, directory));
+
+				DirectoryInfo dir;
+				if(directory.ToLower().Contains("$home"))
+					dir = new DirectoryInfo(sUtilities.GetHomeDirectory(directory));
+				else
+					dir = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, directory));
+
 				Log.Notice("AddonManager", sLConsole.AddonManager("Text"), dir.FullName);
 
 				foreach(var dll in dir.GetFiles("*.dll").AsParallel())
@@ -171,7 +178,7 @@ namespace Schumix.Framework
 
 			AppDomain.CurrentDomain.AssemblyResolve += (sender, eargs) =>
 			{
-				Log.Debug("AddonManager", "AppDomain::AssemblyResolve, sender: {0}, name: {1}, asm: {2}", sender.GetHashCode(), eargs.Name, eargs.RequestingAssembly.FullName );
+				Log.Debug("AddonManager", "AppDomain::AssemblyResolve, sender: {0}, name: {1}, asm: {2}", sender.GetHashCode(), eargs.Name, eargs.RequestingAssembly.FullName);
 				return null;
 			};
 		}
