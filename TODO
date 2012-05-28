@@ -1,6 +1,5 @@
 Megírásra váró feladatok:
 - Súlyos hibák:
-	- Sqlite alatt nem mükődnek a warring üzenetek lekérdezései.
 	- Lua részben megoldani hogy ne csak public parancsokat lehessen hozzáadni a kódhoz. Ezenkivül megoldani az újratöltési hibát.
 	- Megoldás arra ha vki úgy aktiválja a vhost-ot hogy sehol sincs fent (csatorna). Ha ezútán se lép fel csatornára de mondjuk nevet cserél vagy lelép irc-ről akkor fen áll a lehetőség hogy a kódot támadás érheti. Ehhez valamilyen védelmi mehanizmust kéne kitalálni.
 
