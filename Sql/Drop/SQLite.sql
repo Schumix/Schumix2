@@ -29,3 +29,4 @@ DROP TABLE IF EXISTS `ignore_channels`;
 DROP TABLE IF EXISTS `ignore_nicks`;
 DROP TABLE IF EXISTS `ignore_commands`;
 DROP TABLE IF EXISTS `ignore_irc_commands`;
+DROP TABLE IF EXISTS `maffiagame`;
