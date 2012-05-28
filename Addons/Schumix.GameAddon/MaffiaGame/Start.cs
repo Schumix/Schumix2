@@ -162,15 +162,14 @@ namespace Schumix.GameAddon.MaffiaGames
 				{
 					foreach(var llist in list)
 					{
-                        string name = llist.Value;
-                        _normallist.Add(name.ToLower(), name);
+                        _normallist.Add(llist.Value.ToLower(), name);
 
 						if(Adminflag(llist.Value.ToLower()) == 2)
-                            _playerflist.Add(name.ToLower(), new Player(Rank.Normal, true));
+                            _playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal, true));
 						else
-                            _playerflist.Add(name.ToLower(), new Player(Rank.Normal));
+                            _playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal));
 
-                        SchumixBase.DManager.Insert("`maffiagame`(Game, Nev, Job)", _gameid, name, Convert.ToInt32(Rank.Normal));
+                        SchumixBase.DManager.Insert("`maffiagame`(Game, Nev, Job)", _gameid, llist.Value, Convert.ToInt32(Rank.Normal));
 					}
 
 					break;
