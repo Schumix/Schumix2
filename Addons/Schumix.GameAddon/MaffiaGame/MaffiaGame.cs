@@ -379,7 +379,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(Started && !_ghostlist.ContainsKey(Name.ToLower()))
 				_ghostlist.Add(Name.ToLower(), Name);
 
-			SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Nev = '{0}' AND Game = '{1}'", Name, _gameid));
+			SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Name = '{0}' AND Game = '{1}'", Name, _gameid));
 			sSender.Mode(_channel, "-v", Name);
 		}
 
@@ -403,6 +403,11 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig nem volt. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective());
 			else
 				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective(), GetDoctor());
+		}
+
+		public void EndGameText()
+		{
+			sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
 		}
 
 		private Rank GetRank(string Name)
@@ -904,7 +909,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				{
 					RemoveRanks();
 					sSendMessage.SendCMPrivmsg(_channel, "Meghibásodás történt a játékban! Oka: ", e.Message);
-					sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+					EndGameText();
 					EndText();
 					StopThread();
 				}
@@ -924,7 +929,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				RemoveRanks();
 				sSendMessage.SendCMPrivmsg(_channel, "A gyilkosok halottak! A 4falusiak győztek.");
-				sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+				EndGameText();
 				EndText();
 				StopThread();
 				return;
@@ -944,7 +949,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					}
 
 					sSendMessage.SendCMPrivmsg(_channel, "A falusiak halottak! A 4gyilkosok győztek.");
-					sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+					EndGameText();
 					EndText();
 					StopThread();
 					return;
@@ -953,7 +958,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				{
 					RemoveRanks();
 					sSendMessage.SendCMPrivmsg(_channel, "Elfogytak a játékosok!");
-					sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+					EndGameText();
 					EndText();
 					StopThread();
 					return;

@@ -51,7 +51,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				RemoveRanks();
 				sSendMessage.SendCMPrivmsg(_channel, "A többség megszavazta a játék leállítását!");
-				sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+				EndGameText();
 				StopThread();
 			}
 		}
