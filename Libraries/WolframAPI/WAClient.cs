@@ -30,7 +30,7 @@ namespace WolframAPI
 	using System.Web;
 	using System.Xml.Serialization;
 	using Exceptions;
-	using Schumix.Framework;
+	//using Schumix.Framework;
 	using Schumix.Framework.Extensions;
 
 	/// <summary>
@@ -67,7 +67,7 @@ namespace WolframAPI
 	/// </summary>
 	public sealed class WAClient
 	{
-		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		//private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		/// The base WA API url.
@@ -121,11 +121,11 @@ namespace WolframAPI
 		/// <returns>The solution of the given expression</returns>
 		public string Solve(string expression)
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-			{
-				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
-				Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
-			}
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//{
+			//	Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+			//	Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+			//}
 
 			var response = Submit(expression);
 			var result = Parse(response);
@@ -147,8 +147,8 @@ namespace WolframAPI
 			if(solution.SubPods.IsNull() || solution.SubPods.Count <= 0)
 				return "No solution found. The response might have been malformed.";
 
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-				Contract.Assume(!solution.SubPods[0].IsNull());
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//	Contract.Assume(!solution.SubPods[0].IsNull());
 
 			if(string.IsNullOrEmpty(solution.SubPods[0].PlainText))
 				return "No solution found. The pod order might have changed. Report to devs!";
@@ -185,11 +185,11 @@ namespace WolframAPI
 		/// <returns>Raw response</returns>
 		public string Submit(string expression)
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-			{
-				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
-				Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
-			}
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//{
+			//	Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+			//	Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+			//}
 
 			try
 			{
@@ -227,11 +227,11 @@ namespace WolframAPI
 		/// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
 		public static WAResult Parse(string response)
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-			{
-				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(response));
-				Contract.Ensures(!Contract.Result<WAResult>().IsNull());
-			}
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//{
+			//	Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(response));
+			//	Contract.Ensures(!Contract.Result<WAResult>().IsNull());
+			//}
 
 			try
 			{
@@ -259,11 +259,11 @@ namespace WolframAPI
 #if WITH_ASYNC
 		private void HandleSolutionReceived(IAsyncResult ar)
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-			{
-				Contract.Requires<ArgumentNullException>(!ar.IsNull());
-				Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
-			}
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//{
+			//	Contract.Requires<ArgumentNullException>(!ar.IsNull());
+			//	Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
+			//}
 
 			if(!ar.IsNull())
 			{
@@ -290,8 +290,8 @@ namespace WolframAPI
 		/// <returns>The solution of the given expression</returns>
 		public void SolveAsync(string expression)
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//	Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
 
 			var procedure = new ExpressionProcessorMethod(Solve);
 
@@ -303,11 +303,11 @@ namespace WolframAPI
 
 		private void HandleResultReceived(IAsyncResult ar)
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-			{
-				Contract.Requires<ArgumentNullException>(!ar.IsNull());
-				Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
-			}
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//{
+			//	Contract.Requires<ArgumentNullException>(!ar.IsNull());
+			//	Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
+			//}
 
 			if(!ar.IsNull())
 			{
@@ -337,8 +337,8 @@ namespace WolframAPI
 		/// <returns>The result</returns>
 		public void GetResultAsync(string expression)
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-				Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//	Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
 
 			var procedure = new RetrieveResultMethod(GetResult);
 

@@ -25,7 +25,7 @@ namespace WolframAPI
 	using System.IO;
 	using System.Xml.Serialization;
 	using Exceptions;
-	using Schumix.Framework;
+	//using Schumix.Framework;
 
 	///<summary>
 	/// Base class for XML-serialized types.
@@ -33,7 +33,7 @@ namespace WolframAPI
 	public abstract class XmlSerialized : ISerializableType
 	{
 		#region Implementation of ISerializableType
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		/// Serializes the current instance and returns the result as a <see cref="string"/>
@@ -42,8 +42,8 @@ namespace WolframAPI
 		/// <returns>The serialized instance.</returns>
 		public string Serialize()
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-				Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//	Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 
 			string data;
 
@@ -54,7 +54,6 @@ namespace WolframAPI
 					var serializer = new XmlSerializer(GetType());
 					var nss = new XmlSerializerNamespaces();
 					nss.Add(string.Empty, string.Empty);
-
 					serializer.Serialize(ms, this, nss);
 
 					using(var reader = new StreamReader(ms))
@@ -69,9 +68,7 @@ namespace WolframAPI
 			}
 
 			if(string.IsNullOrEmpty(data))
-			{
 				throw new WolframException(string.Format("Error while serializing instance! Type: {0}", GetType().FullName));
-			}
 
 			return data;
 		}

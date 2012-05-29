@@ -25,7 +25,8 @@ namespace WolframAPI
 	using System.Linq;
 	using System.Xml.Serialization;
 	using Collections;
-	using Schumix.Framework;
+	//using Schumix.Framework;
+	using Schumix.Framework.Extensions;
 
 	/// <summary>
 	///   The pod element in the response.
@@ -33,7 +34,7 @@ namespace WolframAPI
 	[Serializable, CLSCompliant(true)]
 	public sealed class WAPod : IEquatable<string>, IEquatable<WAPod>
 	{
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		///   Gets or sets the pod's title.
@@ -86,8 +87,8 @@ namespace WolframAPI
 		{
 			get
 			{
-				if(sUtilities.GetPlatformType() != PlatformType.Linux)
-					Contract.Requires(SubPods != null);
+				//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+				//	Contract.Requires(!SubPods.IsNull());
 
 				return (from sp in SubPods where sp.Title.ToLower().Equals(name) select sp).FirstOrDefault();
 			}
@@ -122,8 +123,12 @@ namespace WolframAPI
 		/// <param name = "other">An object to compare with this object.</param>
 		public bool Equals(WAPod other)
 		{
-			if (ReferenceEquals(null, other)) return false;
-			if (ReferenceEquals(this, other)) return true;
+			if(ReferenceEquals(null, other))
+				return false;
+
+			if(ReferenceEquals(this, other))
+				return true;
+
 			return Equals(other.Title, Title) && Equals(other.Scanner, Scanner) && Equals(other.Id, Id) &&
 				   other.Position == Position && other.Error.Equals(Error) && other.NumSubPods == NumSubPods &&
 				   Equals(other.SubPods, SubPods);
@@ -141,10 +146,16 @@ namespace WolframAPI
 		/// <filterpriority>2</filterpriority>
 		public override bool Equals(object obj)
 		{
-			if (ReferenceEquals(null, obj)) return false;
-			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != typeof (WAPod)) return false;
-			return Equals((WAPod) obj);
+			if(ReferenceEquals(null, obj))
+				return false;
+
+			if(ReferenceEquals(this, obj))
+				return true;
+
+			if(obj.GetType() != typeof(WAPod))
+				return false;
+
+			return Equals((WAPod)obj);
 		}
 
 		/// <summary>
@@ -158,13 +169,13 @@ namespace WolframAPI
 		{
 			unchecked
 			{
-				int result = (Title != null ? Title.GetHashCode() : 0);
-				result = (result*397) ^ (Scanner != null ? Scanner.GetHashCode() : 0);
-				result = (result*397) ^ (Id != null ? Id.GetHashCode() : 0);
+				int result = (!Title.IsNull() ? Title.GetHashCode() : 0);
+				result = (result*397) ^ (!Scanner.IsNull() ? Scanner.GetHashCode() : 0);
+				result = (result*397) ^ (!Id.IsNull() ? Id.GetHashCode() : 0);
 				result = (result*397) ^ Position;
 				result = (result*397) ^ Error.GetHashCode();
 				result = (result*397) ^ NumSubPods;
-				result = (result*397) ^ (SubPods != null ? SubPods.GetHashCode() : 0);
+				result = (result*397) ^ (!SubPods.IsNull() ? SubPods.GetHashCode() : 0);
 				return result;
 			}
 		}
