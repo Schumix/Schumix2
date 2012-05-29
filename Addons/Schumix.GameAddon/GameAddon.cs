@@ -368,12 +368,7 @@ namespace Schumix.GameAddon
 								{
 									MaffiaList[channel].RemoveRanks();
 									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
-
-									if(MaffiaList[channel].GetPlayers() < 8)
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig nem volt. Mindenki más hétköznapi civil volt.", MaffiaList[channel].GetKiller(), MaffiaList[channel].GetDetective());
-									else
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.", MaffiaList[channel].GetKiller(), MaffiaList[channel].GetDetective(), MaffiaList[channel].GetDoctor());
-
+									MaffiaList[channel].EndText();
 									MaffiaList[channel].StopThread();
 								}
 								else
