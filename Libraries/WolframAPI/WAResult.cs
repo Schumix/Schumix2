@@ -24,7 +24,8 @@ namespace WolframAPI
 	using System.Diagnostics.Contracts;
 	using System.Xml.Serialization;
 	using Collections;
-	using Schumix.Framework;
+	//using Schumix.Framework;
+	using Schumix.Framework.Extensions;
 
 	/// <summary>
 	/// The QueryResult (main) part of the response.
@@ -32,7 +33,7 @@ namespace WolframAPI
 	[Serializable, CLSCompliant(true), XmlRoot("queryresult")]
 	public sealed class WAResult : XmlSerialized, IEquatable<WAResult>, IEquatable<string>, ICloneable
 	{
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WAResult"/> class.
@@ -143,7 +144,10 @@ namespace WolframAPI
 			if(ReferenceEquals(this, other))
 				return true;
 
-			return other.Success.Equals(Success) && other.Error.Equals(Error) && other.NumPods == NumPods && Equals(other.DataTypes, DataTypes) && Equals(other.TimedOut, TimedOut) && other.Timing.Equals(Timing) && other.ParseTiming.Equals(ParseTiming) && other.ParseTimedOut.Equals(ParseTimedOut) && Equals(other.Recalculate, Recalculate) && Equals(other.Version, Version) && Equals(other.Pods, Pods);
+			return other.Success.Equals(Success) && other.Error.Equals(Error) && other.NumPods == NumPods &&
+					Equals(other.DataTypes, DataTypes) && Equals(other.TimedOut, TimedOut) && other.Timing.Equals(Timing) &&
+					other.ParseTiming.Equals(ParseTiming) && other.ParseTimedOut.Equals(ParseTimedOut) &&
+					Equals(other.Recalculate, Recalculate) && Equals(other.Version, Version) && Equals(other.Pods, Pods);
 		}
 
 		/// <summary>
@@ -186,8 +190,8 @@ namespace WolframAPI
 		/// <returns>The string representation</returns>
 		public override string ToString()
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-				Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//	Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 
 			var sd = Serialize();
 
@@ -212,7 +216,7 @@ namespace WolframAPI
 			if(ReferenceEquals(this, obj))
 				return true;
 
-			return obj.GetType() == typeof (WAResult) && Equals((WAResult) obj);
+			return obj.GetType() == typeof(WAResult) && Equals((WAResult) obj);
 		}
 
 		/// <summary>
@@ -228,14 +232,14 @@ namespace WolframAPI
 				var result = Success.GetHashCode();
 				result = (result*397) ^ Error.GetHashCode();
 				result = (result*397) ^ NumPods;
-				result = (result*397) ^ (DataTypes != null ? DataTypes.GetHashCode() : 0);
-				result = (result*397) ^ (TimedOut != null ? TimedOut.GetHashCode() : 0);
+				result = (result*397) ^ (!DataTypes.IsNull() ? DataTypes.GetHashCode() : 0);
+				result = (result*397) ^ (!TimedOut.IsNull() ? TimedOut.GetHashCode() : 0);
 				result = (result*397) ^ Timing.GetHashCode();
 				result = (result*397) ^ ParseTiming.GetHashCode();
 				result = (result*397) ^ ParseTimedOut.GetHashCode();
-				result = (result*397) ^ (Recalculate != null ? Recalculate.GetHashCode() : 0);
-				result = (result*397) ^ (Version != null ? Version.GetHashCode() : 0);
-				result = (result*397) ^ (Pods != null ? Pods.GetHashCode() : 0);
+				result = (result*397) ^ (!Recalculate.IsNull() ? Recalculate.GetHashCode() : 0);
+				result = (result*397) ^ (!Version.IsNull() ? Version.GetHashCode() : 0);
+				result = (result*397) ^ (!Pods.IsNull() ? Pods.GetHashCode() : 0);
 				return result;
 			}
 		}
@@ -249,8 +253,8 @@ namespace WolframAPI
 		/// <filterpriority>2</filterpriority>
 		public object Clone()
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-				Contract.Ensures(Contract.Result<object>() != null);
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//	Contract.Ensures(!Contract.Result<object>().IsNull());
 
 			return new WAResult(Success, Error, NumPods, DataTypes, TimedOut, Timing, ParseTiming, ParseTimedOut, Recalculate, Version, Pods);
 		}

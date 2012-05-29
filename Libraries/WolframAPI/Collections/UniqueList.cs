@@ -24,7 +24,7 @@ namespace WolframAPI.Collections
 	using System.Collections.Generic;
 	using System.Diagnostics.Contracts;
 	using System.Linq;
-	using Schumix.Framework;
+	//using Schumix.Framework;
 
 	/// <summary>
 	/// Provides a list type which supports only unique list of elements.
@@ -32,7 +32,7 @@ namespace WolframAPI.Collections
 	[Serializable]
 	public sealed class UniqueList<T> : List<T> where T : IEquatable<T>, IEquatable<string>
 	{
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		/// Adds the specified item.
@@ -40,8 +40,8 @@ namespace WolframAPI.Collections
 		/// <param name="item">The item.</param>
 		public new void Add(T item)
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux)
-				Contract.Requires(!Equals(item, null));
+			//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+			//	Contract.Requires(!Equals(item, null));
             
 			if(Contains(item) || FindIndex(it => it.Equals(item)) != -1)
 				throw new InvalidOperationException("The unique list already contains that element.");
@@ -57,18 +57,18 @@ namespace WolframAPI.Collections
 		{
 			get
 			{
-				if(sUtilities.GetPlatformType() != PlatformType.Linux)
-					Contract.Requires(!Equals(ind, null));
+				//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+				//	Contract.Requires(!Equals(ind, null));
 
 				return (from elem in this where elem.Equals(ind) select elem).FirstOrDefault();
 			}
 			set
 			{
-				if(sUtilities.GetPlatformType() != PlatformType.Linux)
-				{
-					Contract.Requires(!Equals(ind, null));
-					Contract.Requires(!Equals(value, null));
-				}
+				//if(sUtilities.GetPlatformType() != PlatformType.Linux)
+				//{
+				//	Contract.Requires(!Equals(ind, null));
+				//	Contract.Requires(!Equals(value, null));
+				//}
 
 				int index;
 				if((index = FindIndex(it => it.Equals(ind))) != -1)

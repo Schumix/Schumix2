@@ -22,6 +22,7 @@ namespace WolframAPI
 {
 	using System;
 	using System.Xml.Serialization;
+	using Schumix.Framework.Extensions;
 
 	/// <summary>
 	/// The subpod element in the response.
@@ -102,10 +103,10 @@ namespace WolframAPI
 			if(ReferenceEquals(this, obj))
 				return true;
 
-			if(obj.GetType() != typeof (WASubPod))
+			if(obj.GetType() != typeof(WASubPod))
 				return false;
 
-			return Equals((WASubPod) obj);
+			return Equals((WASubPod)obj);
 		}
 
 		/// <summary>
@@ -119,9 +120,9 @@ namespace WolframAPI
 		{
 			unchecked
 			{
-				int result = (Title != null ? Title.GetHashCode() : 0);
-				result = (result*397) ^ (PlainText != null ? PlainText.GetHashCode() : 0);
-				result = (result*397) ^ (Image != null ? Image.GetHashCode() : 0);
+				int result = (!Title.IsNull() ? Title.GetHashCode() : 0);
+				result = (result*397) ^ (!PlainText.IsNull() ? PlainText.GetHashCode() : 0);
+				result = (result*397) ^ (!Image.IsNull() ? Image.GetHashCode() : 0);
 				return result;
 			}
 		}
