@@ -367,7 +367,7 @@ namespace Schumix.GameAddon
 								if(MaffiaList[channel].Started)
 								{
 									MaffiaList[channel].RemoveRanks();
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
+									MaffiaList[channel].EndGameText();
 									MaffiaList[channel].EndText();
 									MaffiaList[channel].StopThread();
 								}
@@ -375,7 +375,7 @@ namespace Schumix.GameAddon
 								{
 									MaffiaList[channel].RemoveRanks();
 									MaffiaList[channel].StopThread();
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "A játék befejeződött.");
+									MaffiaList[channel].EndGameText();
 								}
 							}
 							else

@@ -85,7 +85,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Killer));
 
-						SchumixBase.DManager.Insert("`maffiagame`(Game, Nev, Job)", _gameid, name, Convert.ToInt32(Rank.Killer));
+						SchumixBase.DManager.Insert("`maffiagame`(Game, Name, Job)", _gameid, name, Convert.ToInt32(Rank.Killer));
 						list.Remove(number);
 
 						if(count < 8)
@@ -119,7 +119,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Detective));
 
-						SchumixBase.DManager.Insert("`maffiagame`(Game, Nev, Job)", _gameid, name, Convert.ToInt32(Rank.Detective));
+						SchumixBase.DManager.Insert("`maffiagame`(Game, Name, Job)", _gameid, name, Convert.ToInt32(Rank.Detective));
 						list.Remove(number);
 
 						if(count < 15)
@@ -147,7 +147,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Doctor));
 
-						SchumixBase.DManager.Insert("`maffiagame`(Game, Nev, Job)", _gameid, name, Convert.ToInt32(Rank.Doctor));
+						SchumixBase.DManager.Insert("`maffiagame`(Game, Name, Job)", _gameid, name, Convert.ToInt32(Rank.Doctor));
 						list.Remove(number);
 						doctor = false;
 					}
@@ -165,7 +165,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal));
 
-						SchumixBase.DManager.Insert("`maffiagame`(Game, Nev, Job)", _gameid, llist.Value, Convert.ToInt32(Rank.Normal));
+						SchumixBase.DManager.Insert("`maffiagame`(Game, Name, Job)", _gameid, llist.Value, Convert.ToInt32(Rank.Normal));
 					}
 
 					break;
