@@ -1043,17 +1043,23 @@ namespace Schumix.Framework
 			{
 				string text = data.ToLower();
 
-				if(data.Contains("/") && data.Substring(data.IndexOf("/")).Length > 1 && data.Substring(data.IndexOf("/")).Substring(0, 1) == "/")
-					return text.Contains("$home") ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\" + data.Substring(data.IndexOf("/")+1) : data;
-				else if(data.Contains(@"\") && data.Substring(data.IndexOf(@"\")).Length > 1 && data.Substring(data.IndexOf(@"\")).Substring(0, 1) == @"\")
-					return text.Contains("$home") ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\" + data.Substring(data.IndexOf(@"\")+1) : data;
+				if(text.Length >= "$home".Length && text.Substring(0, "$home".Length) == "$home")
+				{
+					if(data.Contains("/") && data.Substring(data.IndexOf("/")).Length > 1 && data.Substring(data.IndexOf("/")).Substring(0, 1) == "/")
+						return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\" + data.Substring(data.IndexOf("/")+1);
+					else if(data.Contains(@"\") && data.Substring(data.IndexOf(@"\")).Length > 1 && data.Substring(data.IndexOf(@"\")).Substring(0, 1) == @"\")
+						return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\" + data.Substring(data.IndexOf(@"\")+1);
+					else
+						return data;
+				}
 				else
 					return data;
 			}
 			else if(GetPlatformType() == PlatformType.Linux)
 			{
 				string text = data.ToLower();
-				return text.Contains("$home") ? "/home/" + GetUserName() + "/" + data.Substring(data.IndexOf("/")+1) : data;
+				return (text.Length >= "$home".Length && text.Substring(0, "$home".Length) == "$home") ?
+					"/home/" + GetUserName() + "/" + data.Substring(data.IndexOf("/")+1) : data;
 			}
 			else
 				return data;
@@ -1063,12 +1069,10 @@ namespace Schumix.Framework
 		{
 			if(GetPlatformType() == PlatformType.Windows)
 			{
-				if(dir.Length > 0 && dir.Substring(0, 1) == @"\")
+				if(dir.Length > 2 && dir.Substring(1, 2) == @":\")
 					return string.Format(@"{0}\{1}", dir, file);
-				else if(dir.Length > 2 && dir.Substring(1, 2) == @":\")
-					return string.Format(@"{0}\{1}", dir, file);
-				else if(dir.Length > 0 && dir.Substring(0, 1) == "/")
-					return string.Format("{0}/{1}", dir, file);
+				else if(dir.Length > 2 && dir.Substring(0, 2) == "//")
+					return string.Format("//{0}/{1}", dir, file);
 				else
 					return string.Format("./{0}/{1}", dir, file);
 			}
