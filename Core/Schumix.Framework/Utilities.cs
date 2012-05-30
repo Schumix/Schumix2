@@ -1041,8 +1041,14 @@ namespace Schumix.Framework
 		{
 			if(GetPlatformType() == PlatformType.Windows)
 			{
-				// megírni windowsra is
-				return data;
+				string text = data.ToLower();
+
+				if(data.Contains("/") && data.Substring(data.IndexOf("/")).Length > 1 && data.Substring(data.IndexOf("/")).Substring(0, 1) == "/")
+					return text.Contains("$home") ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\" + data.Substring(data.IndexOf("/")+1) : data;
+				else if(data.Contains(@"\") && data.Substring(data.IndexOf(@"\")).Length > 1 && data.Substring(data.IndexOf(@"\")).Substring(0, 1) == @"\")
+					return text.Contains("$home") ? Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\" + data.Substring(data.IndexOf(@"\")+1) : data;
+				else
+					return data;
 			}
 			else if(GetPlatformType() == PlatformType.Linux)
 			{
@@ -1057,8 +1063,14 @@ namespace Schumix.Framework
 		{
 			if(GetPlatformType() == PlatformType.Windows)
 			{
-				// megírni windowsra is
-				return string.Format("{0}/{1}", dir, file);
+				if(dir.Length > 0 && dir.Substring(0, 1) == @"\")
+					return string.Format(@"{0}\{1}", dir, file);
+				else if(dir.Length > 2 && dir.Substring(1, 2) == @":\")
+					return string.Format(@"{0}\{1}", dir, file);
+				else if(dir.Length > 0 && dir.Substring(0, 1) == "/")
+					return string.Format("{0}/{1}", dir, file);
+				else
+					return string.Format("./{0}/{1}", dir, file);
 			}
 			else if(GetPlatformType() == PlatformType.Linux)
 				return (dir.Length > 0 && dir.Substring(0, 1) == "/") ? string.Format("{0}/{1}", dir, file) : string.Format("./{0}/{1}", dir, file);
@@ -1068,8 +1080,18 @@ namespace Schumix.Framework
 
 		public string GetDirectoryName(string data)
 		{
-			var split = data.Split('/');
-			return split.Length > 1 ? split[split.Length-1] : data;
+			if(GetPlatformType() == PlatformType.Windows)
+			{
+				var split = data.Split('\\');
+				return split.Length > 1 ? split[split.Length-1] : data;
+			}
+			else if(GetPlatformType() == PlatformType.Linux)
+			{
+				var split = data.Split('/');
+				return split.Length > 1 ? split[split.Length-1] : data;
+			}
+			else
+				return data;
 		}
 
 		public void CreatePidFile(string Name)
