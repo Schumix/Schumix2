@@ -149,7 +149,7 @@ namespace Schumix.Framework
 					return;
 
 				foreach(var plugin in sAddonManager.GetPlugins())
-					plugin.Destroy();
+					plugin.Value.Destroy();
 
 				sUtilities.RemovePidFile();
 				SchumixBase.timer.SaveUptime();

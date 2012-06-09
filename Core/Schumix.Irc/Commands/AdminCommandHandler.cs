@@ -63,12 +63,26 @@ namespace Schumix.Irc.Commands
 			}
 			else
 			{
+				var text = sLManager.GetCommandTexts("plugin", sIRCMessage.Channel);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					return;
+				}
+
 				string Plugins = string.Empty;
+				string IgnorePlugins = string.Empty;
 
 				foreach(var plugin in sAddonManager.GetPlugins())
-					Plugins += ", " + plugin.Name;
+				{
+					if(!sIgnoreAddon.IsIgnore(plugin.Key))
+						Plugins += ", " + plugin.Value.Name;
+					else
+						IgnorePlugins += ", " + plugin.Value.Name;
+				}
 
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("plugin", sIRCMessage.Channel), Plugins.Remove(0, 2, ", "));
+				sSendMessage.SendChatMessage(sIRCMessage, text[0], Plugins.Remove(0, 2, ", "));
+				sSendMessage.SendChatMessage(sIRCMessage, text[1], IgnorePlugins.Remove(0, 2, ", "));
 			}
 		}
 
@@ -102,9 +116,9 @@ namespace Schumix.Irc.Commands
 
 			foreach(var plugin in sAddonManager.GetPlugins())
 			{
-				if(plugin.Reload(sIRCMessage.Info[4].ToLower()) == 1)
+				if(plugin.Value.Reload(sIRCMessage.Info[4].ToLower()) == 1)
 					i = 1;
-				else if(plugin.Reload(sIRCMessage.Info[4].ToLower()) == 0)
+				else if(plugin.Value.Reload(sIRCMessage.Info[4].ToLower()) == 0)
 					i = 0;
 			}
 

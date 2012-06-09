@@ -71,9 +71,12 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/add", "Már szerepel az ignore listán!\nA név sikeresen hozzáadásra került.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/remove", "Nem szerepel az ignore listán!\nA név sikeresen el lett távolítva.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/add", "Már szerepel az ignore listán!\nAz addon sikeresen hozzáadásra került.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/remove", "Nem szerepel az ignore listán!\nAz addon sikeresen el lett távolítva.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "[Betöltés]: Összes plugin betöltése sikeres.\n[Betöltés]: Összes plugin betöltése sikertelen.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "[Leválasztás]: Összes plugin leválasztása sikeres.\n[Leválasztás]: Összes plugin leválasztása sikertelen.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: betöltve.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: betöltve.\n{0}: letiltva.");
 
 -- enUS
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "consolelog", "Console logging on.\nConsole logging off.");
@@ -115,9 +118,12 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/add", "Already exist on the ignore list!\nSuccesfuly added.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/remove", "Not on the ignore list!\nSuccesfuly removed.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/search", "Already exist on the ignore list!\nNot on the ignore list!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/add", "Already exist on the ignore list!\nSuccesfuly added.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/remove", "Not on the ignore list!\nSuccesfuly removed.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "[Load]: All plugins done.\n[Load]: All plugins failed.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "[Unload]: All plugins done.\n[Unload]: All plugins failed.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: loaded.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: loaded.\n{0}: ignored.");
 
 -- huHU
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.\nAdmin parancsai: info | list | add | remove | rank | access | newpassword");
@@ -149,7 +155,7 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "connect", "Kapcsolodás az irc szerverhez.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "disconnect", "Kapcsolat bontása.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "reconnect", "Újrakapcsolodás az irc szerverhez.");
-INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore", "Lehetővé teszi egyes adatok kivételként való kezelését.\nIgnore parancsok: irc | command | channel");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore", "Lehetővé teszi egyes adatok kivételként való kezelését.\nIgnore parancsok: irc | command | channel | addon");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc", "Lehetővé teszi irc adatok kivételként való kezelését.\nIrc parancsok: command");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command", "Lehetővé teszi irc parancsok kivételként való kezelését.\nIrc parancsok: add | remove | search");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/add", "Parancs hozzáadása a kivételekhez.\nHasználata: ignore irc command add <parancs>");
@@ -167,6 +173,10 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/add", "Nick hozzáadása a kivételekhez.\nHasználata: ignore nick add <parancs>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/remove", "Nick eltávolítása a kivételek közül.\nHasználata: ignore nick remove <parancs>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/search", "Nick keresése a kivételekben.\nHasználata: ignore nick search <parancs>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon", "Lehetővé teszi addonok kivételként való kezelését.\nAddon parancsok: add | remove | search");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/add", "Addon hozzáadása a kivételekhez.\nHasználata: ignore addon add <parancs>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/remove", "Addon eltávolítása a kivételek közül.\nHasználata: ignore addon remove <parancs>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/search", "Addon keresése a kivételekben.\nHasználata: ignore addon search <parancs>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "Kiírja milyen pluginok vannak betöltve.\nPlugin parancsok: load | unload");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "Betölt minden plugint.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "Eltávolít minden plugint.");
@@ -201,7 +211,7 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "connect", "Connect to the IRC server.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "disconnect", "Disconnect.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "reconnect", "Trying to reconnect to the IRC server.");
-INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore", "With it you can treat the data like an expection.\nIgnore commands: irc | command | channel");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore", "With it you can treat the data like an expection.\nIgnore commands: irc | command | channel | addon");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc", "With it you can treat the irc datas like an expection..\nIrc commands: command");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command", "With it you can treat the irc command like an expection.\nIrc commands: add | remove | search");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/add", "Add command to expection list.\Uses: ignore irc command add <Command>");
@@ -219,6 +229,10 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/add", "Add nick to the expection list.\Uses: ignore nick add <Command>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/remove", "Remove nick from the expection list.\Uses: ignore nick remove <Command>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/search", "Search nick in the expection list.\Uses: ignore nick search <Command>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon", "With it you can treat the addons like an expection.\nAddon commands: add | remove | search");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/add", "Add addon to the expection list.\Uses: ignore addon add <Command>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/remove", "Remove addon from the expection list.\Uses: ignore addon remove <Command>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/search", "Search addon in the expection list.\Uses: ignore addon search <Command>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "Shows what plugins are loaded.\nPlugin commands: load | unload");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "Loads all the plugin.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "Remove all plugin.");
@@ -312,7 +326,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/language", "Csatorna nyelvezete sikeresen meg lett változtatva erre: {0}\nIlyen csatorna nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "2[Betöltés]: Összes plugin betöltése 3sikeres.\n2[Betöltés]: Összes plugin betöltése 5sikertelen.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "2[Leválasztás]: Összes plugin leválasztása 3sikeres.\n2[Leválasztás]: Összes plugin leválasztása 5sikertelen.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: 3betöltve.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: 3betöltve.\n{0}: 8letiltva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "quit", "Viszlát :(\n{0} leállított paranccsal.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/info", "3{0} Channel: 2{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/list", "2Lista:3{0}");
@@ -412,6 +426,9 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/add", "Már szerepel az ignore listán!\nA név sikeresen hozzáadásra került.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/remove", "Nem szerepel az ignore listán!\nA név sikeresen el lett távolítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/nick/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/add", "Már szerepel az ignore listán!\nAz addon sikeresen hozzáadásra került.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/remove", "Nem szerepel az ignore listán!\nAz addon sikeresen el lett távolítva.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
 
 -- enUS
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/sys", "3Version: 10{0}\n3Platform: {0}\n3OSVersion: {0}\n3Programming language: c#\n3Memory allocation:5 {0} MB\n3Memory allocation:8 {0} MB\n3Memory allocation:3 {0} MB\n3Uptime: {0}");
@@ -460,7 +477,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/language", "Successfully changed the channel language to: {0}\nNo such channel!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "2[Load]: All plugins 3done.\n2[Load]: All plugins 5failed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "2[Unload]: All plugins 3done.\n2[Unload]: All plugins 5failed.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: 3loaded.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: 3loaded.\n{0}: 8ignored.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "quit", "Bye :(\n{0} shutted down me with command.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/info", "3{0} Channel: 2{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/list", "2List:3{0}");
@@ -560,6 +577,9 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/add", "Already exist on the ignore list!\nSuccesfuly added.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/remove", "Not on the ignore list!\nSuccesfuly removed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/nick/search", "Already exist on the ignore list!\nNot on the ignore list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/add", "Already exist on the ignore list!\nSuccesfuly added.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/remove", "Not on the ignore list!\nSuccesfuly removed.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/search", "Already exist on the ignore list!\nNot on the ignore list!");
 
 -- huHU
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xbot", "9", "Felhasználók számára használható parancslista.");
@@ -717,7 +737,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/stop", "1", "Rss leállítása.\nHasználata: {0}wordpress stop <rss neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/reload", "1", "Megadott rss újratöltése.\nWordPress reload parancsai: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/reload/all", "1", "Minden rss újratöltése.\nHasználata: {0}wordpress reload <rss neve>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore", "1", "Lehetővé teszi egyes adatok kivételként való kezelését.\nIgnore parancsok: irc | command | channel");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore", "1", "Lehetővé teszi egyes adatok kivételként való kezelését.\nIgnore parancsok: irc | command | channel | addon");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/irc", "1", "Lehetővé teszi irc adatok kivételként való kezelését.\nIrc parancsok: command");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/irc/command", "1", "Lehetővé teszi irc parancsok kivételként való kezelését.\nIrc parancsok: add | remove | search");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/irc/command/add", "1", "Parancs hozzáadása a kivételekhez.\nHasználata: {0}ignore irc command add <parancs>");
@@ -735,6 +755,10 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/nick/add", "1", "Nick hozzáadása a kivételekhez.\nHasználata: {0}ignore nick add <parancs>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/nick/remove", "1", "Nick eltávolítása a kivételek közül.\nHasználata: {0}ignore nick remove <parancs>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/nick/search", "1", "Nick keresése a kivételekben.\nHasználata: {0}ignore nick search <parancs>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/addon", "1", "Lehetővé teszi addonok kivételként való kezelését.\nAddon parancsok: add | remove | search");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/addon/add", "1", "Addon hozzáadása a kivételekhez.\nHasználata: {0}ignore addon add <parancs>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/addon/remove", "1", "Addon eltávolítása a kivételek közül.\nHasználata: {0}ignore addon remove <parancs>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/addon/search", "1", "Addon keresése a kivételekben.\nHasználata: {0}ignore addon search <parancs>");
 
 -- enUS
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "xbot", "9", "Users to use the command list.");
@@ -892,7 +916,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/stop", "1", "Rss stop.\nUse: {0}wordpress stop <rss name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/reload", "1", "Specify rss reload.\nWordPress reload command: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/reload/all", "1", "All RSS reload.\nUse: {0}wordpress reload <rss name>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore", "1", "With it you can treat the data like an expection.\nIgnore commands: irc | command | channel");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore", "1", "With it you can treat the data like an expection.\nIgnore commands: irc | command | channel | addon");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/irc", "1", "With it you can treat the irc datas like an expection..\nIrc commands: command");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/irc/command", "1", "With it you can treat the irc command like an expection.\nIrc commands: add | remove | search");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/irc/command/add", "1", "Add command to expection list.\Uses: {0}ignore irc command add <Command>");
@@ -910,6 +934,10 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/nick/add", "1", "Add nick to the expection list.\Uses: {0}ignore nick add <Command>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/nick/remove", "1", "Remove nick from the expection list.\Uses: {0}ignore nick remove <Command>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/nick/search", "1", "Search nick in the expection list.\Uses: {0}ignore nick search <Command>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/addon", "1", "With it you can treat the addons like an expection.\nAddon commands: add | remove | search");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/addon/add", "1", "Add addon to the expection list.\Uses: {0}ignore addon add <Command>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/addon/remove", "1", "Remove addon from the expection list.\Uses: {0}ignore addon remove <Command>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/addon/search", "1", "Search addon in the expection list.\Uses: {0}ignore addon search <Command>");
 
 -- huHU
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoName", "A név nincs megadva!");

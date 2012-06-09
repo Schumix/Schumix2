@@ -79,7 +79,7 @@ namespace Schumix.Server.Config
 
 					new Framework.Config.LogConfig(LogFileName, LogLevel, LogDirectory, string.Empty, false);
 
-					Log.Init(LogFileName);
+					Log.Initialize(LogFileName);
 					Log.Debug("Config", ">> {0}", configfile);
 
 					Log.Notice("Config", sLConsole.Config("Text3"));
@@ -145,7 +145,7 @@ namespace Schumix.Server.Config
 				else
 				{
 					new Framework.Config.LogConfig(_logfilename, 3, _logdirectory, string.Empty, false);
-					Log.Init(_logfilename);
+					Log.Initialize(_logfilename);
 					Log.Error("Config", sLConsole.Config("Text5"));
 					Log.Debug("Config", sLConsole.Config("Text6"));
 					var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);

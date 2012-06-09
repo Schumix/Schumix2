@@ -60,12 +60,12 @@ namespace Schumix.Framework
 			file.Close();
 		}
 
-		public static void Init()
+		public static void Initialize()
 		{
-			Init("Schumix.log");
+			Initialize("Schumix.log");
 		}
 
-		public static void Init(string FileName)
+		public static void Initialize(string FileName)
 		{
 			bool isfile = false;
 			_FileName = FileName;

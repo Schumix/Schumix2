@@ -80,15 +80,21 @@ namespace Schumix.Irc.Commands
 			SchumixRegisterHandler("quit",         HandleQuit,     CommandPermission.Administrator);
 
 			var tasm = Assembly.GetExecutingAssembly();
-			var asms = AddonManager.Assemblies.ToList();
-			asms.Add(tasm);
-			asms.AddRange(from asm in AppDomain.CurrentDomain.GetAssemblies()
+			var asms = AddonManager.Assemblies.ToDictionary(v => v.Key, v => v.Value);
+			asms.Add("currentassembly", tasm);
+			int i = 0;
+
+			foreach(var a in from asm in AppDomain.CurrentDomain.GetAssemblies()
 							where asm.GetName().FullName.ToLower(CultureInfo.InvariantCulture).Contains("schumix")
-							select asm);
+							select asm)
+			{
+				i++;
+				asms.Add("currentassembly" + i.ToString(), a);
+			}
 
 			Parallel.ForEach(asms, asm =>
 			{
-				var types = asm.GetTypes();
+				var types = asm.Value.GetTypes();
 				Parallel.ForEach(types, type =>
 				{
 					var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);

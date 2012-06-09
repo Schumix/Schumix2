@@ -104,6 +104,7 @@ namespace Schumix.Irc
 			Connect();
 			sIgnoreNickName.AddConfig();
 			sIgnoreChannel.AddConfig();
+			sIgnoreAddon.AddConfig();
 
 			// Start Opcodes thread
 			Log.Debug("Network", sLConsole.Network("Text3"));
@@ -142,10 +143,10 @@ namespace Schumix.Irc
 			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
 			IrcRegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
 
-			var asms = AddonManager.Assemblies.ToList();
+			var asms = AddonManager.Assemblies.ToDictionary(v => v.Key, v => v.Value);
 			Parallel.ForEach(asms, asm =>
 			{
-				var types = asm.GetTypes();
+				var types = asm.Value.GetTypes();
 				Parallel.ForEach(types, type =>
 				{
 					var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
@@ -466,6 +467,7 @@ namespace Schumix.Irc
 			{
 				sIgnoreNickName.RemoveConfig();
 				sIgnoreChannel.RemoveConfig();
+				sIgnoreAddon.RemoveConfig();
 				DisConnect();
 			}
 			catch(Exception e)

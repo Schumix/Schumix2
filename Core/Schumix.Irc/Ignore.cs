@@ -18,10 +18,15 @@
  */
 
 using System;
+using System.Reflection;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Schumix.API;
+using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
@@ -226,6 +231,178 @@ namespace Schumix.Irc
 			}
 			else
 				Remove(IRCConfig.IgnoreChannels.ToLower());
+		}
+	}
+
+	public sealed class IgnoreAddon
+	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly object Lock = new object();
+		private IgnoreAddon() {}
+
+		public bool IsIgnore(string Name)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			return !db.IsNull() ? true : false;
+		}
+
+		public void AddConfig()
+		{
+			string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);
+
+			if(ignore.Length > 1)
+			{
+				foreach(var name in ignore)
+					Add(name.ToLower());
+			}
+			else
+				Add(AddonsConfig.Ignore.ToLower());
+		}
+
+		public void Add(string Name)
+		{
+			if(Name.Trim() == string.Empty)
+				return;
+
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			if(!db.IsNull())
+				return;
+
+			SchumixBase.DManager.Insert("`ignore_addons`(Addon)", sUtilities.SqlEscape(Name.ToLower()));
+		}
+
+		public void Remove(string Name)
+		{
+			if(Name.Trim() == string.Empty)
+				return;
+
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			if(db.IsNull())
+				return;
+
+			SchumixBase.DManager.Delete("ignore_addons", string.Format("Addon = '{0}'", sUtilities.SqlEscape(Name.ToLower())));
+		}
+
+		public void RemoveConfig()
+		{
+			string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);
+
+			if(ignore.Length > 1)
+			{
+				foreach(var name in ignore)
+					Remove(name.ToLower());
+			}
+			else
+				Remove(AddonsConfig.Ignore.ToLower());
+		}
+
+		public void LoadPlugin(string plugin)
+		{
+			if(AddonManager.IgnoreAssemblies.ContainsKey(plugin))
+			{
+				// {0} plugin betöltése megindult. (ez az üzenet kéne ide)
+				ISchumixAddon pl;
+				sAddonManager.GetPlugins().TryGetValue(plugin, out pl);
+
+				if(pl.IsNull())
+				{
+					// hibaüzenet
+					return;
+				}
+
+				pl.Setup();
+				AddonManager.Assemblies.Add(plugin, AddonManager.IgnoreAssemblies[plugin]);
+				var types = AddonManager.IgnoreAssemblies[plugin].GetTypes();
+
+				Parallel.ForEach(types, type =>
+				{
+					var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+					Parallel.ForEach(methods, method =>
+					{
+						foreach(var attribute in Attribute.GetCustomAttributes(method))
+						{
+							if(attribute.IsOfType(typeof(IrcCommandAttribute)))
+							{
+								var attr = (IrcCommandAttribute)attribute;
+								lock(Lock)
+								{
+									var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
+									Network.IrcRegisterHandler(attr.Command, del);
+								}
+							}
+
+							if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
+							{
+								var attr = (SchumixCommandAttribute)attribute;
+								lock(Lock)
+								{
+									var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
+									CommandManager.SchumixRegisterHandler(attr.Command, del, attr.Permission);
+								}
+							}
+						}
+					});
+				});
+
+				Log.Success("IgnoreAddon", sLConsole.AddonManager("Text2"), pl.Name, AddonManager.IgnoreAssemblies[plugin].GetName().Version.ToString(), pl.Author, pl.Website);
+				AddonManager.IgnoreAssemblies.Remove(plugin);
+			}
+		}
+
+		public void UnloadPlugin(string plugin)
+		{
+			if(!AddonManager.IgnoreAssemblies.ContainsKey(plugin))
+			{
+				// {0} plugin letiltása és leválasztása megintdult
+				ISchumixAddon pl;
+				sAddonManager.GetPlugins().TryGetValue(plugin, out pl);
+
+				if(pl.IsNull())
+				{
+					// hibaüzenet
+					return;
+				}
+
+				pl.Destroy();
+				AddonManager.IgnoreAssemblies.Add(plugin, AddonManager.Assemblies[plugin]);
+				var types = AddonManager.Assemblies[plugin].GetTypes();
+
+				Parallel.ForEach(types, type =>
+				{
+					var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+					Parallel.ForEach(methods, method =>
+					{
+						foreach(var attribute in Attribute.GetCustomAttributes(method))
+						{
+							if(attribute.IsOfType(typeof(IrcCommandAttribute)))
+							{
+								var attr = (IrcCommandAttribute)attribute;
+								lock(Lock)
+								{
+									var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
+									Network.IrcRemoveHandler(attr.Command, del);
+								}
+							}
+
+							if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
+							{
+								var attr = (SchumixCommandAttribute)attribute;
+								lock(Lock)
+								{
+									var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
+									CommandManager.SchumixRemoveHandler(attr.Command, del);
+								}
+							}
+						}
+					});
+				});
+
+				//Log.Success("IgnoreAddon", sLConsole.AddonManager("Text2"), pl.Name, AddonManager.IgnoreAssemblies[plugin].GetName().Version.ToString(), pl.Author, pl.Website);
+				// vmi hogy le lett választva
+				AddonManager.Assemblies.Remove(plugin);
+			}
 		}
 	}
 }
