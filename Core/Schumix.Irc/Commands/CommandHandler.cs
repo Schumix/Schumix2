@@ -34,6 +34,7 @@ namespace Schumix.Irc.Commands
 		protected static readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
 		protected static readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
 		protected static readonly IgnoreCommand sIgnoreCommand = Singleton<IgnoreCommand>.Instance;
+		protected static readonly IgnoreAddon sIgnoreAddon = Singleton<IgnoreAddon>.Instance;
 		protected readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		protected readonly ChannelNameList sChannelNameList = Singleton<ChannelNameList>.Instance;
@@ -70,7 +71,7 @@ namespace Schumix.Irc.Commands
 
 			foreach(var plugin in sAddonManager.GetPlugins())
 			{
-				if(plugin.HandleHelp(sIRCMessage))
+				if(plugin.Value.HandleHelp(sIRCMessage))
 					return;
 			}
 

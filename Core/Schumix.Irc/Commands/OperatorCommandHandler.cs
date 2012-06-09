@@ -1138,6 +1138,90 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 			}
+			else if(sIRCMessage.Info[4].ToLower() == "addon")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "add")
+				{
+					var text = sLManager.GetCommandTexts("ignore/addon/add", sIRCMessage.Channel);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						return;
+					}
+
+					string addon = sIRCMessage.Info[6].ToLower();
+
+					if(sIgnoreAddon.IsIgnore(addon))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						return;
+					}
+
+					sIgnoreAddon.Add(addon);
+					sIgnoreAddon.UnloadPlugin(addon);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "remove")
+				{
+					var text = sLManager.GetCommandTexts("ignore/addon/remove", sIRCMessage.Channel);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						return;
+					}
+
+					string addon = sIRCMessage.Info[6].ToLower();
+
+					if(!sIgnoreAddon.IsIgnore(addon))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						return;
+					}
+
+					sIgnoreAddon.Remove(addon);
+					sIgnoreAddon.LoadPlugin(addon);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "search")
+				{
+					var text = sLManager.GetCommandTexts("ignore/addon/search", sIRCMessage.Channel);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					if(!db.IsNull())
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+				}
+			}
 		}
 	}
 }

@@ -41,10 +41,10 @@ namespace Schumix.Framework.Extensions
 		/// <returns>The casted object.</returns>
 		public static T Cast<T>(this object ob)
 		{
-			Contract.Requires(ob != null);
-			Contract.Ensures(Contract.Result<T>() != null);
+			Contract.Requires(!ob.IsNull());
+			Contract.Ensures(!Contract.Result<T>().IsNull());
 			var value = (T)Cast(ob, typeof(T));
-			Contract.Assume(value != null);
+			Contract.Assume(!value.IsNull());
 			return value;
 		}
 
@@ -56,14 +56,14 @@ namespace Schumix.Framework.Extensions
 		/// <returns></returns>
 		public static object Cast(this object ob, Type targetType)
 		{
-			Contract.Requires(ob != null);
-			Contract.Requires(targetType != null);
-			Contract.Ensures(Contract.Result<object>() != null);
+			Contract.Requires(!ob.IsNull());
+			Contract.Requires(!targetType.IsNull());
+			Contract.Ensures(!Contract.Result<object>().IsNull());
 
 			if(targetType.IsEnum)
 			{
 				var str = ob as string;
-				return str != null ? Enum.Parse(targetType, str) : Enum.ToObject(targetType, ob);
+				return !str.IsNull() ? Enum.Parse(targetType, str) : Enum.ToObject(targetType, ob);
 			}
 
 			var currentType = ob.GetType();
@@ -72,7 +72,7 @@ namespace Schumix.Framework.Extensions
 				return ob.Equals(0.Cast(targetType)) ? false : true;
 
 			var end = Convert.ChangeType(ob, targetType, CultureInfo.InvariantCulture);
-			Contract.Assume(end != null);
+			Contract.Assume(!end.IsNull());
 			return end;
 		}
 
@@ -98,7 +98,7 @@ namespace Schumix.Framework.Extensions
 		/// </returns>
 		public static bool IsOfType(this object obj, Type type)
 		{
-			if(obj == null)
+			if(obj.IsNull())
 				return false;
 
 			return (obj.GetType() == type);
@@ -114,7 +114,7 @@ namespace Schumix.Framework.Extensions
 		/// </returns>
 		public static bool CanBeCastedTo<T>(this object obj)
 		{
-			if(obj == null)
+			if(obj.IsNull())
 				throw new ArgumentNullException("obj");
 
 			return (obj is T);
@@ -339,7 +339,7 @@ namespace Schumix.Framework.Extensions
 		/// <param name="coll">The collection.</param>
 		public static void WaitTasks(this IEnumerable<Task> coll)
 		{
-			if(coll == null)
+			if(coll.IsNull())
 				throw new ArgumentNullException("coll");
 
 			Task.WaitAll(coll.ToArray());

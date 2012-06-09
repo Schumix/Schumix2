@@ -150,7 +150,7 @@ namespace Schumix.LuaEngine
 				}
 				catch(Exception x)
 				{
-					Log.Error("LuaEngine", sLConsole.LuaEngine("Text3"), file.Name, x);
+					Log.Error("LuaEngine", sLConsole.LuaEngine("Text3"), file.Name, x.Message);
 				}
 			}
 		}

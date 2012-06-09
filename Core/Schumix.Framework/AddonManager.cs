@@ -36,15 +36,16 @@ namespace Schumix.Framework
 	public sealed class AddonManager
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly List<ISchumixAddon> _addons = new List<ISchumixAddon>();
+		private readonly Dictionary<string, ISchumixAddon> _addons = new Dictionary<string, ISchumixAddon>();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly object LoadLock = new object();
 
 		/// <summary>
 		/// List of found assemblies.
 		/// </summary>
-		public static readonly List<Assembly> Assemblies = new List<Assembly>();
-		public List<ISchumixAddon> GetPlugins() { return _addons; }
+		public static readonly Dictionary<string, Assembly> Assemblies = new Dictionary<string, Assembly>();
+		public static readonly Dictionary<string, Assembly> IgnoreAssemblies = new Dictionary<string, Assembly>();
+		public Dictionary<string, ISchumixAddon> GetPlugins() { return _addons; }
 
 		private AddonManager() {}
 
@@ -86,7 +87,7 @@ namespace Schumix.Framework
 
 				foreach(var dll in dir.GetFiles("*.dll").AsParallel())
 				{
-					if(!dll.Name.Contains("Addon"))
+					if(!dll.Name.ToLower().Contains("addon"))
 						continue;
 
 					bool enabled = true;
@@ -109,9 +110,6 @@ namespace Schumix.Framework
 							enabled = false;
 					}
 
-					if(!enabled)
-						continue;
-
 					var asm = Assembly.LoadFrom(dll.FullName);
 
 					if(asm.IsNull())
@@ -123,18 +121,30 @@ namespace Schumix.Framework
 					{
 						pl = (ISchumixAddon)Activator.CreateInstance(type);
 
-						if(pl.IsNull() || Assemblies.Contains(asm))
+						if(pl.IsNull() || Assemblies.ContainsValue(asm))
 							continue;
 
-						pl.Setup();
+						if(_addons.ContainsKey(pl.Name.ToLower()))
+						{
+							// üzenet ide
+							continue;
+						}
+
+						if(enabled)
+							pl.Setup();
 
 						lock(LoadLock)
 						{
-							_addons.Add(pl);
-							Assemblies.Add(asm);
+							_addons.Add(pl.Name.ToLower(), pl);
+
+							if(enabled)
+								Assemblies.Add(pl.Name.ToLower(), asm);
+							else
+								IgnoreAssemblies.Add(pl.Name.ToLower(), asm);
 						}
 
-						Log.Success("AddonManager", sLConsole.AddonManager("Text2"), pl.Name, asm.GetName().Version.ToString(), pl.Author, pl.Website);
+						if(enabled)
+							Log.Success("AddonManager", sLConsole.AddonManager("Text2"), pl.Name, asm.GetName().Version.ToString(), pl.Author, pl.Website);
 					}
 				}
 
@@ -158,7 +168,7 @@ namespace Schumix.Framework
 			lock(LoadLock)
 			{
 				foreach(var addon in _addons)
-					addon.Destroy();
+					addon.Value.Destroy();
 
 				_addons.Clear();
 				Assemblies.Clear();

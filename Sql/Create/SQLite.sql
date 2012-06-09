@@ -306,3 +306,11 @@ Survivor INTEGER DEFAULT 0,
 Job INTEGER DEFAULT 0,
 Active INTEGER DEFAULT 0
 );
+
+-- ----------------------------
+-- Table structure for ignore_addons
+-- ----------------------------
+CREATE TABLE `ignore_addons` (
+Id INTEGER  PRIMARY KEY AUTOINCREMENT,
+Addon VARCHAR(50)
+);

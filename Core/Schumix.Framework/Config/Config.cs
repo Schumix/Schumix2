@@ -108,7 +108,7 @@ namespace Schumix.Framework.Config
 
 					new LogConfig(LogFileName, LogLevel, sUtilities.GetHomeDirectory(LogDirectory), sUtilities.GetHomeDirectory(IrcLogDirectory), IrcLog);
 
-					Log.Init(LogFileName);
+					Log.Initialize(LogFileName);
 					Log.Debug("Config", ">> {0}", configfile);
 
 					Log.Notice("Config", sLConsole.Config("Text3"));
@@ -195,7 +195,7 @@ namespace Schumix.Framework.Config
 				new SchumixConfig(list[i++], list[i++]);
 				new LogConfig(list[i++], list[i++].ToNumber().ToInt(), list[i++], list[i++], Convert.ToBoolean(list[i++]));
 
-				Log.Init(list[2]);
+				Log.Initialize(list[2]);
 				Log.Debug("Config", ">> {0}", list[1]);
 
 				Log.Notice("Config", sLConsole.Config("Text3"));
@@ -231,7 +231,7 @@ namespace Schumix.Framework.Config
 				else
 				{
 					new LogConfig(_logfilename, 3, _logdirectory, _irclogdirectory, _irclog);
-					Log.Init(_logfilename);
+					Log.Initialize(_logfilename);
 					Log.Error("Config", sLConsole.Config("Text5"));
 					Log.Debug("Config", sLConsole.Config("Text6"));
 					var w = new XmlTextWriter(filename, null);

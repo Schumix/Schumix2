@@ -55,7 +55,7 @@ namespace Schumix
 			}
 			catch(Exception e)
 			{
-				Log.Error("SchumixBot", sLConsole.Exception("Error"), e.Message);
+				Log.Error("SchumixBot", sLConsole.Exception("Error"), e);
 				Thread.Sleep(100);
 			}
 		}

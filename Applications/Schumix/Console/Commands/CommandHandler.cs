@@ -50,6 +50,7 @@ namespace Schumix.Console.Commands
 		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
 		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
 		private readonly IgnoreCommand sIgnoreCommand = Singleton<IgnoreCommand>.Instance;
+		private readonly IgnoreAddon sIgnoreAddon = Singleton<IgnoreAddon>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Addonok kezelése.
@@ -943,9 +944,9 @@ namespace Schumix.Console.Commands
 
 			foreach(var plugin in sAddonManager.GetPlugins())
 			{
-				if(plugin.Reload(Info[1].ToLower()) == 1)
+				if(plugin.Value.Reload(Info[1].ToLower()) == 1)
 					i = 1;
-				else if(plugin.Reload(Info[1].ToLower()) == 0)
+				else if(plugin.Value.Reload(Info[1].ToLower()) == 0)
 					i = 0;
 			}
 
@@ -1334,6 +1335,90 @@ namespace Schumix.Console.Commands
 						Log.Error("Console", text[1]);
 				}
 			}
+			else if(Info[1].ToLower() == "addon")
+			{
+				if(Info.Length < 3)
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("No1Value"));
+					return;
+				}
+
+				if(Info[2].ToLower() == "add")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/addon/add");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
+						return;
+					}
+
+					string addon = Info[3].ToLower();
+
+					if(sIgnoreAddon.IsIgnore(addon))
+					{
+						Log.Error("Console", text[0]);
+						return;
+					}
+
+					sIgnoreAddon.Add(addon);
+					sIgnoreAddon.UnloadPlugin(addon);
+					Log.Notice("Console", text[1]);
+				}
+				else if(Info[2].ToLower() == "remove")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/addon/remove");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
+						return;
+					}
+
+					string addon = Info[3].ToLower();
+
+					if(!sIgnoreAddon.IsIgnore(addon))
+					{
+						Log.Error("Console", text[0]);
+						return;
+					}
+
+					sIgnoreAddon.Remove(addon);
+					sIgnoreAddon.LoadPlugin(addon);
+					Log.Notice("Console", text[1]);
+				}
+				else if(Info[2].ToLower() == "search")
+				{
+					var text = sLManager.GetConsoleCommandTexts("ignore/addon/search");
+					if(text.Length < 2)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					if(!db.IsNull())
+						Log.Notice("Console", text[0]);
+					else
+						Log.Error("Console", text[1]);
+				}
+			}
 		}
 
 		protected void HandlePlugin()
@@ -1368,12 +1453,26 @@ namespace Schumix.Console.Commands
 			}
 			else
 			{
+				var text = sLManager.GetConsoleCommandTexts("plugin");
+				if(text.Length < 2)
+				{
+					Log.Error("Console", sLConsole.Translations("NoFound2"));
+					return;
+				}
+
 				string Plugins = string.Empty;
+				string IgnorePlugins = string.Empty;
 
 				foreach(var plugin in sAddonManager.GetPlugins())
-					Plugins += ", " + plugin.Name;
+				{
+					if(!sIgnoreAddon.IsIgnore(plugin.Key))
+						Plugins += ", " + plugin.Value.Name;
+					else
+						IgnorePlugins += ", " + plugin.Value.Name;
+				}
 
-				Log.Notice("Console", sLManager.GetConsoleCommandText("plugin"), Plugins.Remove(0, 2, ", "));
+				Log.Notice("Console", text[0], Plugins.Remove(0, 2, ", "));
+				Log.Notice("Console", text[1], IgnorePlugins.Remove(0, 2, ", "));
 			}
 		}
 

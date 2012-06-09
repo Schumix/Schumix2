@@ -65,11 +65,11 @@
     <Reference Include="lua51, Version=0.0.0.0, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a">
       <HintPath>..\..\Dependencies\lua51.dll</HintPath>
     </Reference>
-    <Reference Include="LuaInterface, Version=2.0.4.24053, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a">
-      <HintPath>..\..\Dependencies\LuaInterface.dll</HintPath>
-    </Reference>
     <Reference Include="Mono.LuaInterface, Version=2.0.1.32612, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Dependencies\Mono.LuaInterface.dll</HintPath>
+    </Reference>
+    <Reference Include="LuaInterface">
+      <HintPath>..\..\Dependencies\LuaInterface.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
