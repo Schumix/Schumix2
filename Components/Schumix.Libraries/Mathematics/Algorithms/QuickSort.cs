@@ -93,7 +93,6 @@ namespace Schumix.Libraries.Mathematics.Algorithms
 				var temp2 = _input[n];
 				_input[n] = _input[pivot];
 				_input[pivot] = temp2;
-
 			}
 
 			return n;
