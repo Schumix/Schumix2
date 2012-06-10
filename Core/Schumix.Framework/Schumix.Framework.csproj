@@ -92,6 +92,9 @@
     <Compile Include="Runtime.cs" />
     <Compile Include="CrashDumper.cs" />
     <Compile Include="PlatformType.cs" />
+    <Compile Include="Mathematics\Algorithms\QuickSort.cs" />
+    <Compile Include="Mathematics\Types\AutoSortedArray.cs" />
+    <Compile Include="Mathematics\MathFunctions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -103,6 +106,9 @@
   <ItemGroup>
     <Folder Include="Extensions\" />
     <Folder Include="Localization\" />
+    <Folder Include="Mathematics\" />
+    <Folder Include="Mathematics\Algorithms\" />
+    <Folder Include="Mathematics\Types\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Dependencies\sqlite3.dll">
