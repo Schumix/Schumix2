@@ -302,13 +302,13 @@ namespace Schumix.Irc
 		{
 			if(AddonManager.IgnoreAssemblies.ContainsKey(plugin))
 			{
-				// {0} plugin betöltése megindult. (ez az üzenet kéne ide)
+				Log.Debug("IgnoreAddon", sLConsole.IgnoreAddon("Text"), plugin);
 				ISchumixAddon pl;
 				sAddonManager.GetPlugins().TryGetValue(plugin, out pl);
 
 				if(pl.IsNull())
 				{
-					// hibaüzenet
+					Log.Error("IgnoreAddon", sLConsole.IgnoreAddon("Text2"));
 					return;
 				}
 
@@ -346,7 +346,7 @@ namespace Schumix.Irc
 					});
 				});
 
-				Log.Success("IgnoreAddon", sLConsole.AddonManager("Text2"), pl.Name, AddonManager.IgnoreAssemblies[plugin].GetName().Version.ToString(), pl.Author, pl.Website);
+				Log.Success("IgnoreAddon", sLConsole.IgnoreAddon("Text3"), pl.Name, AddonManager.IgnoreAssemblies[plugin].GetName().Version.ToString(), pl.Author, pl.Website);
 				AddonManager.IgnoreAssemblies.Remove(plugin);
 			}
 		}
@@ -355,13 +355,13 @@ namespace Schumix.Irc
 		{
 			if(!AddonManager.IgnoreAssemblies.ContainsKey(plugin))
 			{
-				// {0} plugin letiltása és leválasztása megintdult
+				Log.Debug("IgnoreAddon", sLConsole.IgnoreAddon("Text4"), plugin);
 				ISchumixAddon pl;
 				sAddonManager.GetPlugins().TryGetValue(plugin, out pl);
 
 				if(pl.IsNull())
 				{
-					// hibaüzenet
+					Log.Error("IgnoreAddon", sLConsole.IgnoreAddon("Text2"));
 					return;
 				}
 
@@ -399,8 +399,7 @@ namespace Schumix.Irc
 					});
 				});
 
-				//Log.Success("IgnoreAddon", sLConsole.AddonManager("Text2"), pl.Name, AddonManager.IgnoreAssemblies[plugin].GetName().Version.ToString(), pl.Author, pl.Website);
-				// vmi hogy le lett választva
+				Log.Success("IgnoreAddon", sLConsole.IgnoreAddon("Text5"), plugin);
 				AddonManager.Assemblies.Remove(plugin);
 			}
 		}

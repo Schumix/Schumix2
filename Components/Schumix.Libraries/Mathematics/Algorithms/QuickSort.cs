@@ -85,7 +85,6 @@ namespace Schumix.Libraries.Mathematics.Algorithms
 
 				while((n > begPoint) && (_input[pivot].CompareTo(_input[n]) <= 0))
 					n--;
-
 			}
 
 			if(pivot != n)
