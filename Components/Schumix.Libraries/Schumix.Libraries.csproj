@@ -59,6 +59,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Crypto\Crypto.cs" />
     <Compile Include="Printf.cs" />
+    <Compile Include="Mathematics\MathFunctions.cs" />
+    <Compile Include="Mathematics\Algorithms\QuickSort.cs" />
+    <Compile Include="Mathematics\Types\AutoSortedArray.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
