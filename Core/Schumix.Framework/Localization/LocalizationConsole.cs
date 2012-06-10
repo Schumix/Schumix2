@@ -2260,5 +2260,59 @@ namespace Schumix.Framework.Localization
 					return string.Empty;
 			}
 		}
+
+		public string IgnoreAddon(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "{0} plugin betöltése megindult.";
+					else if(Locale == "enUS")
+						return "{0} plugin is now loading.";
+					else
+						return "{0} plugin is now loading.";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Nem tölthető be a plugin!";
+					else if(Locale == "enUS")
+						return "Plugin can not be loaded.";
+					else
+						return "Plugin can not be loaded.";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Betöltött plugin: {0} {1} készítette {2} ({3})";
+					else if(Locale == "enUS")
+						return "Loaded plugin: {0} {1} by {2} ({3})";
+					else
+						return "Loaded plugin: {0} {1} by {2} ({3})";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "{0} plugin letiltása és leválasztása megindult.";
+					else if(Locale == "enUS")
+						return "{0} plugin denying and removing is now started.";
+					else
+						return "{0} plugin denying and removing is now started.";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "{0} plugin sikeresen le lett választva.";
+					else if(Locale == "enUS")
+						return "{0} plugin successfully removed.";
+					else
+						return "{0} plugin successfully removed.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
 	}
 }
