@@ -52,14 +52,14 @@ namespace Schumix.Irc.Ctcp
 		{
 			string args = sIRCMessage.Args;
 
-			if(!args.Contains(""))
+			if(!args.Contains(((char)1).ToString()))
 				return;
 
 			if(IsChannel(sIRCMessage.Channel))
 				return;
 
-			args = args.Remove(0, 1, "");
-			args = args.Substring(0, args.IndexOf(""));
+			args = args.Remove(0, 1, (char)1);
+			args = args.Substring(0, args.IndexOf((char)1));
 			var command = args.Split(SchumixBase.NewLine);
 
 			switch(command[0])
@@ -102,7 +102,7 @@ namespace Schumix.Irc.Ctcp
 		{
 			get
 			{
-				return _fingerMessage + sLConsole.CtcpSender("Text5") + FormatIdleTime() + ".";
+				return _fingerMessage + sLConsole.CtcpSender("Text5") + FormatIdleTime() + SchumixBase.Point;
 			}
 			set
 			{
