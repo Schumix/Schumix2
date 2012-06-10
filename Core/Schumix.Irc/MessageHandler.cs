@@ -433,27 +433,17 @@ namespace Schumix.Irc
 			if(sChannelInfo.FSelect(IFunctions.Log) && sChannelInfo.FSelect(IChannelFunctions.Log, channel))
 			{
 				sUtilities.CreateDirectory(LogConfig.IrcLogDirectory);
-				string logdir = string.Empty;
-				string logfile = string.Empty;
-
-				if(LogConfig.IrcLogDirectory.Length > 0 && LogConfig.IrcLogDirectory.Substring(0, 1) == "/")
-					logdir = string.Format("{0}/{1}", LogConfig.IrcLogDirectory, channel);
-				else
-					logdir = string.Format("./{0}/{1}", LogConfig.IrcLogDirectory, channel);
-
-				logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year,
+				string logdir = sUtilities.DirectoryToHome(LogConfig.IrcLogDirectory, channel);
+				string logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year,
 								DateTime.Now.Month < 10 ? "0" + DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString(),
 								DateTime.Now.Day < 10 ? "0" + DateTime.Now.Day.ToString() : DateTime.Now.Day.ToString());
 
 				sUtilities.CreateDirectory(logdir);
 				sUtilities.CreateFile(logfile);
 				var file = new StreamWriter(logfile, true) { AutoFlush = true };
-
-				if(DateTime.Now.Minute < 10)
-					file.WriteLine("[{0}:0{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
-				else
-					file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour, DateTime.Now.Minute, user, args);
-
+				file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour < 10 ? "0" + DateTime.Now.Hour.ToString() :
+				               DateTime.Now.Hour.ToString(), DateTime.Now.Minute < 10 ? "0" + DateTime.Now.Minute.ToString() :
+				               DateTime.Now.Minute.ToString(), user, args);
 				file.Close();
 			}
 		}
