@@ -20,6 +20,7 @@
 using System;
 using System.Data;
 using System.Timers;
+using System.Threading;
 using System.Threading.Tasks;
 using Schumix.API;
 using Schumix.Irc;
@@ -395,7 +396,10 @@ namespace Schumix.CalendarAddon
 				foreach(var channel in sChannelInfo.CList)
 				{
 					if(sChannelInfo.FSelect(IFunctions.NameDay) && sChannelInfo.FSelect(IChannelFunctions.NameDay, channel.Key))
+					{
 						sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("NameDay", channel.Key), sUtilities.NameDay(channel.Key));
+						Thread.Sleep(400);
+					}
 				}
 			}
 		}

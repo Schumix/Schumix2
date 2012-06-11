@@ -173,6 +173,7 @@ namespace Schumix.Framework
 
 				_addons.Clear();
 				Assemblies.Clear();
+				IgnoreAssemblies.Clear();
 			}
 
 			Log.Notice("AddonManager", sLConsole.AddonManager("Text5"));

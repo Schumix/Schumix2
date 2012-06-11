@@ -155,7 +155,7 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "connect", "Kapcsolodás az irc szerverhez.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "disconnect", "Kapcsolat bontása.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "reconnect", "Újrakapcsolodás az irc szerverhez.");
-INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore", "Lehetővé teszi egyes adatok kivételként való kezelését.\nIgnore parancsok: irc | command | channel | addon");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore", "Lehetővé teszi egyes adatok kivételként való kezelését.\nIgnore parancsok: irc | command | channel | nick | addon");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc", "Lehetővé teszi irc adatok kivételként való kezelését.\nIrc parancsok: command");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command", "Lehetővé teszi irc parancsok kivételként való kezelését.\nIrc parancsok: add | remove | search");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/add", "Parancs hozzáadása a kivételekhez.\nHasználata: ignore irc command add <parancs>");
@@ -211,7 +211,7 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "connect", "Connect to the IRC server.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "disconnect", "Disconnect.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "reconnect", "Trying to reconnect to the IRC server.");
-INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore", "With it you can treat the data like an expection.\nIgnore commands: irc | command | channel | addon");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore", "With it you can treat the data like an expection.\nIgnore commands: irc | command | channel | nick | addon");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc", "With it you can treat the irc datas like an expection..\nIrc commands: command");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command", "With it you can treat the irc command like an expection.\nIrc commands: add | remove | search");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/add", "Add command to expection list.\Uses: ignore irc command add <Command>");
@@ -737,7 +737,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/stop", "1", "Rss leállítása.\nHasználata: {0}wordpress stop <rss neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/reload", "1", "Megadott rss újratöltése.\nWordPress reload parancsai: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/reload/all", "1", "Minden rss újratöltése.\nHasználata: {0}wordpress reload <rss neve>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore", "1", "Lehetővé teszi egyes adatok kivételként való kezelését.\nIgnore parancsok: irc | command | channel | addon");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore", "1", "Lehetővé teszi egyes adatok kivételként való kezelését.\nIgnore parancsok: irc | command | channel | nick | addon");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/irc", "1", "Lehetővé teszi irc adatok kivételként való kezelését.\nIrc parancsok: command");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/irc/command", "1", "Lehetővé teszi irc parancsok kivételként való kezelését.\nIrc parancsok: add | remove | search");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/irc/command/add", "1", "Parancs hozzáadása a kivételekhez.\nHasználata: {0}ignore irc command add <parancs>");
@@ -916,7 +916,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/stop", "1", "Rss stop.\nUse: {0}wordpress stop <rss name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/reload", "1", "Specify rss reload.\nWordPress reload command: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/reload/all", "1", "All RSS reload.\nUse: {0}wordpress reload <rss name>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore", "1", "With it you can treat the data like an expection.\nIgnore commands: irc | command | channel | addon");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore", "1", "With it you can treat the data like an expection.\nIgnore commands: irc | command | channel | nick | addon");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/irc", "1", "With it you can treat the irc datas like an expection..\nIrc commands: command");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/irc/command", "1", "With it you can treat the irc command like an expection.\nIrc commands: add | remove | search");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/irc/command/add", "1", "Add command to expection list.\Uses: {0}ignore irc command add <Command>");
