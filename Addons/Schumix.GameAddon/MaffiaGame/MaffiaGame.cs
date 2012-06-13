@@ -945,6 +945,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						if(newghost != string.Empty)
 							sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newghost);
 
+						SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Name = '{0}' AND Game = '{1}'", newghost, _gameid));
 						Corpse(newghost);
 					}
 
