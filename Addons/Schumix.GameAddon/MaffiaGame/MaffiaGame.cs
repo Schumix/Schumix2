@@ -184,6 +184,8 @@ namespace Schumix.GameAddon.MaffiaGames
 					_gameoverlist.Remove(OldName.ToLower());
 					_gameoverlist.Add(NewName.ToLower());
 				}
+
+				SchumixBase.DManager.Update("maffiagame", string.Format("Name = '{0}'", NewName), string.Format("Name = '{0}'", OldName));
 			}
 		}
 
