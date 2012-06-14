@@ -295,7 +295,7 @@ namespace Schumix.Irc
 
 			foreach(var channel in _ChannelList)
 			{
-				sSender.Join(channel.Key, channel.Value);
+				sSender.Join(channel.Key, channel.Value.Trim());
 
 				if(sIgnoreChannel.IsIgnore(channel.Key))
 				{

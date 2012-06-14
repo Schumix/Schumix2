@@ -47,16 +47,19 @@ a `Schumix.xml` nevû fájlt.
 * **NickName3:** Harmadlagos név.
 * **UserName:** Felhasználó név.
 * **UserInfo:** Információ a felhasználóról.
-* **MasterChannel:** Elsõdleges csatorna ahova csatlakozik minden esetben a bot. Ennek a neve itt változtatható meg. Az adatbázisból nem törölhetõ.
+* **MasterChannel:**
+    * **Name:** Elsõdleges csatorna ahova csatlakozik minden esetben a bot. Ennek a neve itt változtatható meg. Az adatbázisból nem törölhetõ.
+    * **Password:** Az elsődleges csatornához tartozó jelszó.
+                    Alapértelmezés: (semmi)[Ez azt jelenti hogy nem add meg jelszót az elsődleges csatornához.]
 * **IgnoreChannels:** Letilthatók a nem kívánatos csatornák vele. Ami itt szerepel oda nem megy fel a bot. Ezen rész letiltja a bot rendszerében szereplõket is.
                       Tehát ha abból nem akarunk valahova felmenni akkor is használhatjuk ezt törlés helyett. Vesszõvel elválasztva kell egymás útán írni öket.
                       `pl: #teszt,#teszt2 vagy szimplán #teszt`
 * **IgnoreNames:** Letilthatóak vele a nem kívánatos személyek. Így csak az használhatja a botot aki megérdemli.
                    `pl: schumix,schumix2 vagy szimplán schumix`
 * **NickServ:**
-	* **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határozza meg hogy a nickhez tartozó jelszó el legyen-e küldve. true = igen, false = nem.
+    * **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határozza meg hogy a nickhez tartozó jelszó el legyen-e küldve. true = igen, false = nem.
                    Alapértelmezés: false
-	* **Password:** Nickhez tartozó jelszó.
+    * **Password:** Nickhez tartozó jelszó.
 * **HostServ:**
     * **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy ha van a nickhez vhost akkor bekapcsolodjon-e. Alapértelmezés: `false`
                    Mert ha nincs akkor megjelenitödhet az ip ezért olyankor ajánlott false értékre tenni.

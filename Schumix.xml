@@ -15,7 +15,10 @@
         <NickName3>__Schumix2</NickName3>
         <UserName>Schumix2</UserName>
         <UserInfo>Schumix2 IRC Bot</UserInfo>
-        <MasterChannel>#schumix2</MasterChannel>
+        <MasterChannel>
+            <Name>#schumix2</Name>
+            <Password></Password>
+        </MasterChannel>
         <IgnoreChannels></IgnoreChannels>
         <IgnoreNames></IgnoreNames>
         <NickServ>

@@ -658,6 +658,187 @@ namespace Schumix.Irc.Commands
 				SchumixBase.DManager.Update("channel", string.Format("Language = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6])), string.Format("Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower())));
 				sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.Info[6]);
 			}
+			else if(sIRCMessage.Info[4].ToLower() == "password")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "add")
+				{
+					var text = sLManager.GetCommandTexts("channel/password/add", sIRCMessage.Channel);
+					if(text.Length < 3)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+						return;
+					}
+	
+					if(!IsChannel(sIRCMessage.Info[6]))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoPassword", sIRCMessage.Channel));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					if(db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						return;
+					}
+
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					if(!db.IsNull())
+					{
+						if(db["Password"].ToString().Trim() != string.Empty)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+							return;
+						}
+					}
+
+					SchumixBase.DManager.Update("channel", string.Format("Password = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7])), string.Format("Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower())));
+					sSendMessage.SendChatMessage(sIRCMessage, text[2], sIRCMessage.Info[6]);
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "remove")
+				{
+					var text = sLManager.GetCommandTexts("channel/password/remove", sIRCMessage.Channel);
+					if(text.Length < 3)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+						return;
+					}
+	
+					if(!IsChannel(sIRCMessage.Info[6]))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					if(db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						return;
+					}
+
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					if(!db.IsNull())
+					{
+						if(db["Password"].ToString().Trim() == string.Empty)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+							return;
+						}
+					}
+
+					SchumixBase.DManager.Update("channel", "Password = ''", string.Format("Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower())));
+					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "update")
+				{
+					var text = sLManager.GetCommandTexts("channel/password/update", sIRCMessage.Channel);
+					if(text.Length < 3)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+						return;
+					}
+	
+					if(!IsChannel(sIRCMessage.Info[6]))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoPassword", sIRCMessage.Channel));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					if(db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						return;
+					}
+
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					if(!db.IsNull())
+					{
+						if(db["Password"].ToString().Trim() == string.Empty)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+							return;
+						}
+					}
+
+					SchumixBase.DManager.Update("channel", string.Format("Password = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7])), string.Format("Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower())));
+					sSendMessage.SendChatMessage(sIRCMessage, text[2], sIRCMessage.Info[7]);
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "info")
+				{
+					var text = sLManager.GetCommandTexts("channel/password/info", sIRCMessage.Channel);
+					if(text.Length < 3)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+						return;
+					}
+	
+					if(!IsChannel(sIRCMessage.Info[6]))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					if(db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						return;
+					}
+
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					if(!db.IsNull())
+					{
+						if(db["Password"].ToString().Trim() == string.Empty)
+							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+						else
+							sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+					}
+				}
+			}
 		}
 
 		protected void HandleSznap(IRCMessage sIRCMessage)
