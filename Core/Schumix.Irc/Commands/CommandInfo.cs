@@ -91,7 +91,7 @@ namespace Schumix.Irc.Commands
 
 		protected bool IsChannel(string Name)
 		{
-			return (Name.Length >= 1 && Name.Substring(0, 1) == "#");
+			return (Name.Length >= 2 && Name.Trim().Length > 1 && Name.Substring(0, 1) == "#");
 		}
 
 		protected int Adminflag(string Name)

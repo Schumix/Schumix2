@@ -604,7 +604,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						{
 							if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
 							{
-								newkillghost = GetPlayerName(function.Value.RName);
+								newkillghost = GetPlayerName(function.Value.RName.Trim());
 								enabledkiller = true;
 							}
 						}
@@ -627,7 +627,7 @@ namespace Schumix.GameAddon.MaffiaGames
 									sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
 
 								enabledk = true;
-								newkillghost = GetPlayerName(list[0]);
+								newkillghost = GetPlayerName(list[0].Trim());
 								enabledkiller = true;
 							}
 							else if(!list.CompareDataInBlock())
@@ -654,7 +654,7 @@ namespace Schumix.GameAddon.MaffiaGames
 									sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
 
 								enabledk = true;
-								newkillghost = GetPlayerName(list[0]);
+								newkillghost = GetPlayerName(list[0].Trim());
 								enabledkiller = true;
 							}
 							else if(!list.CompareDataInBlock())
@@ -703,8 +703,23 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						foreach(var function in _playerflist)
 						{
+							if(function.Value.Rank == Rank.Doctor)
+							{
+								if((newkillghost.ToLower() != function.Value.RName) && (newkillghost.ToLower() != string.Empty))
+									newghost = true;
+							}
+
+							function.Value.RName = string.Empty;
+						}
+
+						foreach(var function in _playerflist)
+						{
 							if(function.Value.Rank == Rank.Detective)
 							{
+								if((function.Key == newkillghost.ToLower() && newghost) ||
+								   (function.Key == newkillghost.ToLower() && _players < 8))
+									continue;
+
 								if(function.Value.DRank == Rank.Killer)
 									sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő a gyilkos! Buktasd le mielőtt még túl késő lenne...");
 								else if(function.Value.DRank == Rank.Normal)
@@ -717,14 +732,6 @@ namespace Schumix.GameAddon.MaffiaGames
 								function.Value.Detective = false;
 								function.Value.DRank = Rank.None;
 							}
-
-							if(function.Value.Rank == Rank.Doctor)
-							{
-								if((newkillghost.ToLower() != function.Value.RName) && (newkillghost.ToLower() != string.Empty))
-									newghost = true;
-							}
-
-							function.Value.RName = string.Empty;
 						}
 
 						_day = true;

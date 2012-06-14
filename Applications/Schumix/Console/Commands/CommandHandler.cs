@@ -99,7 +99,7 @@ namespace Schumix.Console.Commands
 
 		private bool IsChannel(string Name)
 		{
-			return (Name.Length >= 1 && Name.Substring(0, 1) == "#");
+			return (Name.Length >= 2 && Name.Trim().Length > 1 && Name.Substring(0, 1) == "#");
 		}
 
 		/// <summary>
@@ -803,6 +803,187 @@ namespace Schumix.Console.Commands
 
 				SchumixBase.DManager.Update("channel", string.Format("Language = '{0}'", Info[3]), string.Format("Channel = '{0}'", Info[2].ToLower()));
 				Log.Notice("Console", text[0], Info[3]);
+			}
+			else if(Info[1].ToLower() == "password")
+			{
+				if(Info.Length < 3)
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("NoValue"));
+					return;
+				}
+
+				if(Info[2].ToLower() == "add")
+				{
+					var text = sLManager.GetConsoleCommandTexts("channel/password/add");
+					if(text.Length < 3)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+						return;
+					}
+	
+					if(!IsChannel(Info[3]))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+						return;
+					}
+
+					if(Info.Length < 5)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoPassword"));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					if(db.IsNull())
+					{
+						Log.Warning("Console", text[0]);
+						return;
+					}
+
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					if(!db.IsNull())
+					{
+						if(db["Password"].ToString().Trim() != string.Empty)
+						{
+							Log.Notice("Console", text[1]);
+							return;
+						}
+					}
+
+					SchumixBase.DManager.Update("channel", string.Format("Password = '{0}'", sUtilities.SqlEscape(Info[4])), string.Format("Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower())));
+					Log.Notice("Console", text[2], Info[3]);
+				}
+				else if(Info[2].ToLower() == "remove")
+				{
+					var text = sLManager.GetConsoleCommandTexts("channel/password/remove");
+					if(text.Length < 3)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+						return;
+					}
+	
+					if(!IsChannel(Info[3]))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					if(db.IsNull())
+					{
+						Log.Warning("Console", text[0]);
+						return;
+					}
+
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					if(!db.IsNull())
+					{
+						if(db["Password"].ToString().Trim() == string.Empty)
+						{
+							Log.Notice("Console", text[1]);
+							return;
+						}
+					}
+
+					SchumixBase.DManager.Update("channel", "Password = ''", string.Format("Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower())));
+					Log.Notice("Console", text[2]);
+				}
+				else if(Info[2].ToLower() == "update")
+				{
+					var text = sLManager.GetConsoleCommandTexts("channel/password/update");
+					if(text.Length < 3)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+						return;
+					}
+	
+					if(!IsChannel(Info[3]))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+						return;
+					}
+
+					if(Info.Length < 5)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoPassword"));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					if(db.IsNull())
+					{
+						Log.Warning("Console", text[0]);
+						return;
+					}
+
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					if(!db.IsNull())
+					{
+						if(db["Password"].ToString().Trim() == string.Empty)
+						{
+							Log.Notice("Console", text[1]);
+							return;
+						}
+					}
+
+					SchumixBase.DManager.Update("channel", string.Format("Password = '{0}'", sUtilities.SqlEscape(Info[4])), string.Format("Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower())));
+					Log.Notice("Console", text[2], Info[4]);
+				}
+				else if(Info[2].ToLower() == "info")
+				{
+					var text = sLManager.GetConsoleCommandTexts("channel/password/info");
+					if(text.Length < 3)
+					{
+						Log.Error("Console", sLConsole.Translations("NoFound2"));
+						return;
+					}
+
+					if(Info.Length < 4)
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+						return;
+					}
+	
+					if(!IsChannel(Info[3]))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					if(db.IsNull())
+					{
+						Log.Warning("Console", text[0]);
+						return;
+					}
+
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					if(!db.IsNull())
+					{
+						if(db["Password"].ToString().Trim() == string.Empty)
+							Log.Notice("Console", text[1]);
+						else
+							Log.Notice("Console", text[2]);
+					}
+				}
 			}
 		}
 

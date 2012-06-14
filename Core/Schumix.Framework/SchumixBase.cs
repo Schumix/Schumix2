@@ -98,6 +98,7 @@ namespace Schumix.Framework
 					Log.Error("SchumixBase", sLConsole.ChannelInfo("Text11"));
 
 				SchumixBase.DManager.Update("channel", string.Format("Channel = '{0}'", IRCConfig.MasterChannel), "Id = '1'");
+				SchumixBase.DManager.Update("channel", string.Format("Password = '{0}'", IRCConfig.MasterChannelPassword.Length > 0 ? IRCConfig.MasterChannelPassword : string.Empty), "Id = '1'");
 				Log.Notice("SchumixBase", sLConsole.SchumixBase("Text4"), IRCConfig.MasterChannel);
 
 				if(AddonsConfig.Enabled)
