@@ -32,11 +32,8 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		public void Leave(string Name, string NickName)
 		{
-			if(!Running)
-			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", NickName);
+			if(!IsRunning(_channel, NickName))
 				return;
-			}
 
 			if(NickName == string.Empty)
 			{
@@ -121,7 +118,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				if(_playerlist.Count == 0)
 				{
-					sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+					EndGameText();
 					StopThread();
 				}
 			}

@@ -25,11 +25,8 @@ namespace Schumix.GameAddon.MaffiaGames
 	{
 		public void GameOver(string Name)
 		{
-			if(!Running)
-			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+			if(!IsRunning(_channel, Name))
 				return;
-			}
 
 			if(!Started)
 			{
