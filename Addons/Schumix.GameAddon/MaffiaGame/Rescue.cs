@@ -28,11 +28,8 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!IsRunning(_channel, NickName))
 				return;
 
-			if(!Started)
-			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Még nem kezdődött el játék!", NickName);
+			if(!IsStarted(_channel, NickName))
 				return;
-			}
 
 			if(_day)
 			{

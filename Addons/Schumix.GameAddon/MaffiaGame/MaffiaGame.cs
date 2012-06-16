@@ -427,15 +427,11 @@ namespace Schumix.GameAddon.MaffiaGames
 				return true;
 		}
 
-		private bool IsStarted(string Channel, string Name = "")
+		private bool IsStarted(string Channel, string Name)
 		{
 			if(!Running)
 			{
-				//if(Name == string.Empty)
-				//	sSendMessage.SendCMPrivmsg(Channel, "Nem megy játék!");
-				//else
-				//	sSendMessage.SendCMPrivmsg(Channel, "{0}: Nem megy játék!", Name);
-
+				sSendMessage.SendCMPrivmsg(Channel, "{0}: Még nem kezdődött el játék!", Name);
 				return false;
 			}
 			else
