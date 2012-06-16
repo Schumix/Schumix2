@@ -33,11 +33,8 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			_joinlist.Add(Name.ToLower());
 
-			if(!Running)
-			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+			if(!IsRunning(_channel, Name))
 				return;
-			}
 
 			if(_joinstop)
 			{

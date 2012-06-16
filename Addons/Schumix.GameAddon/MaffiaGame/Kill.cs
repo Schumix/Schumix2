@@ -25,11 +25,8 @@ namespace Schumix.GameAddon.MaffiaGames
 	{
 		public void Kill(string Name, string Killer)
 		{
-			if(!Running)
-			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Killer);
+			if(!IsRunning(_channel, Killer))
 				return;
-			}
 
 			if(!Started)
 			{
