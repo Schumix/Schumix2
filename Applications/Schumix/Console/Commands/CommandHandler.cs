@@ -770,7 +770,7 @@ namespace Schumix.Console.Commands
 			else if(Info[1].ToLower() == "language")
 			{
 				var text = sLManager.GetConsoleCommandTexts("channel/language");
-				if(text.Length < 2)
+				if(text.Length < 3)
 				{
 					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
@@ -799,6 +799,16 @@ namespace Schumix.Console.Commands
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelLanguage"));
 					return;
+				}
+
+				db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[2].ToLower()));
+				if(!db.IsNull())
+				{
+					if(db["Language"].ToString().ToLower() == Info[3].ToLower())
+					{
+						Log.Warning("Console", text[2], Info[3]);
+						return;
+					}
 				}
 
 				SchumixBase.DManager.Update("channel", string.Format("Language = '{0}'", Info[3]), string.Format("Channel = '{0}'", Info[2].ToLower()));

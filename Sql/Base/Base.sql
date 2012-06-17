@@ -52,7 +52,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/remove", "A mester csatorna nem törölhető!\nIlyen csatorna nem létezik!\nCsatorna eltávolítva: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/update", "A csatorna információk frissítésre kerültek.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/info", "Aktív: {0}\nAktív: Nincs információ.\nInaktív: {0}\nInaktív: Nincs információ.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/language", "Csatorna nyelvezete sikeresen meg lett változtatva erre: {0}\nIlyen csatorna nem létezik!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/language", "Csatorna nyelvezete sikeresen meg lett változtatva erre: {0}\nIlyen csatorna nem létezik!\nA csatorna nyelvezete már: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/add", "Ilyen csatorna nem létezik!\nMár van megadva jelszó a csatornán!\nJelszó lett beállítva a csatornára, jelszó: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/remove", "Ilyen csatorna nem létezik!\nNincs a csatornához beállítva jelszó!\nJelszó el lett távolítva a csatornáról.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/update", "Ilyen csatorna nem létezik!\nNincs a csatornához beállítva jelszó!\nÚj jelszó lett beállítva a csatornára, jelszó: {0}");
@@ -103,7 +103,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/remove", "The master channel cannot delete!\nNo such channel!\nDeleted channel: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/update", "The channel informations are updated.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/info", "Active: {0}\nActive: Nothing information.\nInactive: {0}\nInactive: Nothing information.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/language", "Successfully changed the channel language to: {0}\nNo such channel!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/language", "Successfully changed the channel language to: {0}\nNo such channel!\nChannel current language: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/add", "There is no such a channel!\nPassword is already set on the channel!\n Password set on channel, password: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/remove", "There is no such a channel!\nThere is no password set on the channel!\n Password deleted from the channel.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/update", "There is no such a channel!\nThere is no password set on the channel!\nNew password set on the channel, password: {0}");
@@ -341,7 +341,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/remove", "A mester csatorna nem törölhető!\nIlyen csatorna nem létezik!\nCsatorna eltávolítva: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/update", "A csatorna információk frissítésre kerültek.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/info", "3Aktív: {0}\n3Aktív: Nincs információ.\n3Inaktív: {0}\n3Inaktív: Nincs információ.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/language", "Csatorna nyelvezete sikeresen meg lett változtatva erre: {0}\nIlyen csatorna nem létezik!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/language", "Csatorna nyelvezete sikeresen meg lett változtatva erre: {0}\nIlyen csatorna nem létezik!\nA csatorna nyelvezete már: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/add", "Ilyen csatorna nem létezik!\nMár van megadva jelszó a csatornán!\nJelszó lett beállítva a csatornára, jelszó: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/remove", "Ilyen csatorna nem létezik!\nNincs a csatornához beállítva jelszó!\nJelszó el lett távolítva a csatornáról.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/update", "Ilyen csatorna nem létezik!\nNincs a csatornához beállítva jelszó!\nÚj jelszó lett beállítva a csatornára, jelszó: {0}");
@@ -496,7 +496,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/remove", "The master channel cannot delete!\nNo such channel!\nDeleted channel: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/update", "The channel informations are updated.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/info", "3Active: {0}\n3Active: Nothing information.\n3Inactive: {0}\n3Inactive: Nothing information.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/language", "Successfully changed the channel language to: {0}\nNo such channel!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/language", "Successfully changed the channel language to: {0}\nNo such channel!\nChannel current language: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/add", "There is no such a channel!\nPassword is already set on the channel!\nPassword is set on the channel, password: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/remove", "There is no such a channel!\nThere is no password set on the channel!\npassword deleted from the channel.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/update", "There is no such a channel!\nThere is no password set on the channel!\nNew password set on the channel, password: {0}");
