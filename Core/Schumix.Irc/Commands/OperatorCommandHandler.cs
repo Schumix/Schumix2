@@ -624,7 +624,7 @@ namespace Schumix.Irc.Commands
 			else if(sIRCMessage.Info[4].ToLower() == "language")
 			{
 				var text = sLManager.GetCommandTexts("channel/language", sIRCMessage.Channel);
-				if(text.Length < 2)
+				if(text.Length < 3)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
@@ -653,6 +653,16 @@ namespace Schumix.Irc.Commands
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelLanguage", sIRCMessage.Channel));
 					return;
+				}
+
+				db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()));
+				if(!db.IsNull())
+				{
+					if(db["Language"].ToString().ToLower() == sIRCMessage.Info[6].ToLower())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[2], sIRCMessage.Info[6]);
+						return;
+					}
 				}
 
 				SchumixBase.DManager.Update("channel", string.Format("Language = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6])), string.Format("Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower())));
