@@ -27,13 +27,17 @@ namespace Schumix.Config.CopyTo
 		/// <summary>
 		///     Több helyről átmásolja az új fájlokat.
 		/// </summary>
-		public Copy(string Dir)
+		public Copy(string Dir, string Addons, string Configs)
 		{
-			if(Directory.Exists("Addons"))
-				Directory.Delete("Addons", true);
+			var dir = new DirectoryInfo(Dir + "/Run/Release/Addons");
 
-			Directory.Move(Dir + "/Run/Release/Addons", "Addons");
-			var dir = new DirectoryInfo(Dir + "/Run/Release/");
+			foreach(var file in diraddons.GetFiles())
+			{
+				File.Delete(file.Name);
+				File.Move(Dir + "/Run/Release/" + file.Name, Addons + "/" + file.Name);
+			}
+
+			dir = new DirectoryInfo(Dir + "/Run/Release/");
 
 			foreach(var file in dir.GetFiles())
 			{
@@ -44,13 +48,10 @@ namespace Schumix.Config.CopyTo
 				File.Move(Dir + "/Run/Release/" + file.Name, file.Name);
 			}
 
-			dir = new DirectoryInfo("Configs");
+			dir = new DirectoryInfo(Configs);
 
 			foreach(var fi in dir.GetFiles())
-			{
-				Console.WriteLine(fi.Name);
 				File.Move("Configs/" + fi.Name, "Configs/_" + fi.Name);
-			}
 		}
 	}
 }

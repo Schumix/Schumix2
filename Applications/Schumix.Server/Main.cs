@@ -124,7 +124,7 @@ namespace Schumix.Server
 
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
 
-			new Update();
+			new Update(Server.Config.ServerConfig.ConfigDirectory);
 
 			if(File.Exists("Config.exe"))
 				File.Delete("Config.exe");
