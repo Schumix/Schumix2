@@ -37,7 +37,7 @@ namespace Schumix.Updater
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
-		public Update()
+		public Update(string ConfigDirectory)
 		{
 			if(!UpdateConfig.Enabled)
 			{
@@ -186,12 +186,12 @@ namespace Schumix.Updater
 			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				config.StartInfo.FileName = "mono";
-				config.StartInfo.Arguments = "Config.exe " + dir;
+				config.StartInfo.Arguments = "Config.exe " + dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				config.StartInfo.FileName = "Config.exe";
-				config.StartInfo.Arguments = dir;
+				config.StartInfo.Arguments = dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
 			}
 
 			Log.Notice("Update", sLConsole.Update("Text15"));
