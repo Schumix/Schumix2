@@ -100,7 +100,7 @@ namespace Schumix.Framework.Database
 			return !table.Equals(null) && table.Rows.Count > 0 ? table.Rows[0] : null;
 		}
 
-		private void ExecuteNonQuery(string sql)
+		public void ExecuteNonQuery(string sql)
 		{
 			try
 			{

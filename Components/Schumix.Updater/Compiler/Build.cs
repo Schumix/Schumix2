@@ -21,28 +21,22 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
+using Microsoft.Build.Utilities;
 using Schumix.Framework;
 
 namespace Schumix.Updater.Compiler
 {
-	public sealed class Build
+	sealed class Build
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public bool HasError { get; private set; }
 
-		public Build(string Version)
+		public Build(string dir)
 		{
-			var t = new Thread(() => Compile(Version));
-			t.Start();
-			t.Join(30*1000);
-			t.Abort();
-			t = new Thread(() => Compile(Version));
-			t.Start();
-			t.Join(30*1000);
-			t.Abort();
+			Compile(dir);
 		}
 
-		private void Compile(string Version)
+		private void Compile(string dir)
 		{
 			var build = new Process();
 			build.StartInfo.UseShellExecute = false;
@@ -51,21 +45,29 @@ namespace Schumix.Updater.Compiler
 
 			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
+				File.Copy(dir + "/Dependencies/xbuild.exe", dir + "/xbuild.exe");
 				build.StartInfo.FileName = "mono";
-				build.StartInfo.Arguments = "xbuild.exe /p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + Version + "/Schumix.sln";
+				build.StartInfo.Arguments = dir + "/xbuild.exe /p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + dir + "/Schumix.sln";
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
-				build.StartInfo.FileName = "xbuild.exe";
-				build.StartInfo.Arguments = "/p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + Version + "/Schumix.sln";
+				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "\\MSBuild.exe", dir + "\\MSBuild.exe");
+				build.StartInfo.FileName = dir + "\\MSBuild.exe";
+				build.StartInfo.Arguments = "/p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + dir + "/Schumix.sln";
 			}
 
 			build.Start();
+			build.PriorityClass = ProcessPriorityClass.RealTime;
+
 			//var error = build.StandardError;
+			var output = build.StandardOutput;
 			HasError = false;
 
 			//while(!error.EndOfStream)
-				//HasError = true;
+			//	HasError = true;
+
+			while(!output.EndOfStream)
+				Log.Debug("Build", output.ReadLine());
 
 			build.WaitForExit();
 			build.Dispose();

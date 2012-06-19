@@ -70,10 +70,8 @@
     </Localization>
     <Update>
         <Enabled>false</Enabled>
-        <Versions>
-            <Enabled>false</Enabled>
-            <Version>x.x.x</Version>
-        </Versions>
-        <WebPage>http://megax.uw.hu/Schumix2/</WebPage>
+        <Version>stable</Version>
+		<Branch>master</Branch>
+        <WebPage>https://github.com/megax/Schumix2</WebPage>
     </Update>
 </Schumix>

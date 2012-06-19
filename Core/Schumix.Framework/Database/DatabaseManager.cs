@@ -177,5 +177,16 @@ namespace Schumix.Framework.Database
 				return SQLiteConfig.Enabled ? sdatabase.RemoveTable(Table) : mdatabase.RemoveTable(Table);
 			}
 		}
+
+		public void ExecuteNonQuery(string Sql)
+		{
+			lock(_lock)
+			{
+				if(SQLiteConfig.Enabled)
+					sdatabase.ExecuteNonQuery(Sql);
+				else
+					mdatabase.ExecuteNonQuery(Sql);
+			}
+		}
 	}
 }

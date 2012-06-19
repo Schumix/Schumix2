@@ -23,7 +23,9 @@ using System.Threading;
 using System.Diagnostics;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.Updater.Sql;
 using Schumix.Updater.UnZip;
 using Schumix.Updater.Compiler;
 using Schumix.Updater.Download;
@@ -43,71 +45,106 @@ namespace Schumix.Updater
 				return;
 			}
 
-			Log.Notice("Update", sLConsole.Update("Text2"));
-			string version = string.Empty;
+			if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
-			if(UpdateConfig.VersionsEnabled)
+			if(UpdateConfig.Version == "stable")
 			{
-				bool b = new DownloadVersion(UpdateConfig.WebPage).GetVersion(UpdateConfig.Version);
+				Log.Notice("Update", sLConsole.Update("Text2"));
+				string version = sUtilities.GetUrl(UpdateConfig.WebPage + "/tags");
+				version = version.Remove(0, version.IndexOf("<span class=\"alt-download-links\">"));
+				version = version.Remove(0, version.IndexOf("<a href=\"") + "<a href=\"".Length);
+				version = version.Substring(0, version.IndexOf("\" rel=\"nofollow\">"));
+				version = version.Substring(version.IndexOf("zipball/") + "zipball/".Length);
 
-				if(b)
+				var v1 = new Version(version.Remove(0, 1, "v"));
+				var v2 = new Version(Schumix.Framework.Config.Consts.SchumixVersion);
+
+				switch(v1.CompareTo(v2))
 				{
-					Log.Notice("Update", sLConsole.Update("Text4"), UpdateConfig.Version);
-					version = UpdateConfig.Version;
+					case 0:
+						Log.Warning("Update", sLConsole.Update("Text16"));
+						Log.Notice("Update", sLConsole.Update("Text17"));
+						return;
+					case 1:
+						Log.Success("Update", sLConsole.Update("Text18"), v1.ToString());
+						break;
+					case -1:
+						Log.Warning("Update", sLConsole.Update("Text19"));
+						Log.Notice("Update", sLConsole.Update("Text17"));
+						return;
 				}
-				else
+
+				Log.Notice("Update", sLConsole.Update("Text5"));
+
+				try
 				{
-					Log.Error("Update", sLConsole.Update("Text16"), UpdateConfig.Version);
-					return;
+					new DownloadFile(UpdateConfig.WebPage + "/zipball/" + version);
+					Log.Success("Update", sLConsole.Update("Text6"));
+				}
+				catch
+				{
+					Log.Error("Update", sLConsole.Update("Text7"));
+					Log.Warning("Update", sLConsole.Update("Text8"));
+					Thread.Sleep(5*1000);
+					Environment.Exit(1);
+				}
+			}
+			else if(UpdateConfig.Version == "current")
+			{
+				Log.Notice("Update", sLConsole.Update("Text3"));
+				string url = UpdateConfig.WebPage.Remove(0, "http://".Length, "http://");
+				url = url.Remove(0, "https://".Length, "https://");
+				string version = sUtilities.GetUrl("https://raw." + url + "/" + UpdateConfig.Branch +
+				                  "/Core/Schumix.Framework/Config/SchumixConfig.cs");
+				version = version.Remove(0, version.IndexOf("SchumixVersion = \"") + "SchumixVersion = \"".Length);
+				version = version.Substring(0, version.IndexOf("\";"));
+
+				var v1 = new Version(version);
+				var v2 = new Version(Schumix.Framework.Config.Consts.SchumixVersion);
+
+				switch(v1.CompareTo(v2))
+				{
+					case 0:
+						Log.Warning("Update", sLConsole.Update("Text16"));
+						Log.Notice("Update", sLConsole.Update("Text17"));
+						return;
+					case 1:
+						Log.Success("Update", sLConsole.Update("Text18"), v1.ToString());
+						break;
+					case -1:
+						Log.Warning("Update", sLConsole.Update("Text19"));
+						Log.Notice("Update", sLConsole.Update("Text17"));
+						return;
+				}
+
+				Log.Notice("Update", sLConsole.Update("Text5"));
+
+				try
+				{
+					new DownloadFile(UpdateConfig.WebPage + "/zipball/" + UpdateConfig.Branch);
+					Log.Success("Update", sLConsole.Update("Text6"));
+				}
+				catch
+				{
+					Log.Error("Update", sLConsole.Update("Text7"));
+					Log.Warning("Update", sLConsole.Update("Text8"));
+					Thread.Sleep(5*1000);
+					Environment.Exit(1);
 				}
 			}
 			else
 			{
-				version = new DownloadVersion(UpdateConfig.WebPage).GetVersion();
-
-				var split = version.Split(SchumixBase.Point);
-				var split2 = sUtilities.GetVersion().Split(SchumixBase.Point);
-
-				bool newversion = false;
-
-				for(int i = 0; i < split.Length; i++)
-				{
-					if(split[i] != split2[i])
-					{
-						newversion = true;
-						break;
-					}
-				}
-
-				if(!newversion)
-				{
-					Log.Warning("Update", sLConsole.Update("Text3"));
-					return;
-				}
-
-				Log.Notice("Update", sLConsole.Update("Text4"), version);
-			}
-
-			Log.Notice("Update", sLConsole.Update("Text5"));
-
-			try
-			{
-				new DownloadFile(UpdateConfig.WebPage + version, version);
-				Log.Success("Update", sLConsole.Update("Text6"));
-			}
-			catch
-			{
-				Log.Error("Update", sLConsole.Update("Text7"));
-				Log.Warning("Update", sLConsole.Update("Text8"));
-				Thread.Sleep(5*1000);
-				Environment.Exit(1);
+				Log.Warning("Update", sLConsole.Update("Text4"));
+				return;
 			}
 
 			Log.Notice("Update", sLConsole.Update("Text9"));
+			GZip gzip = null;
 
 			try
 			{
-				new GZip(version);
+				gzip = new GZip();
 				Log.Success("Update", sLConsole.Update("Text10"));
 			}
 			catch
@@ -118,8 +155,9 @@ namespace Schumix.Updater
 				Environment.Exit(1);
 			}
 
+			string dir = gzip.DirectoryName;
 			Log.Notice("Update", sLConsole.Update("Text12"));
-			var build = new Build(version);
+			var build = new Build(dir);
 
 			if(build.HasError)
 			{
@@ -130,11 +168,16 @@ namespace Schumix.Updater
 			}
 
 			Log.Success("Update", sLConsole.Update("Text14"));
+			Log.Notice("Update", sLConsole.Update("Text20"));
+			var sql = new SqlUpdate(dir + "/Sql/Updates");
+			sql.Connect();
+			sql.Update();
+			Log.Success("Update", sLConsole.Update("Text21"));
 
 			if(File.Exists("Config.exe"))
 				File.Delete("Config.exe");
 
-			File.Move(version + "/Run/Release/Config.exe", "Config.exe");
+			File.Move(dir + "/Run/Release/Config.exe", "Config.exe");
 			var config = new Process();
 			config.StartInfo.UseShellExecute = false;
 			config.StartInfo.RedirectStandardOutput = true;
@@ -143,13 +186,23 @@ namespace Schumix.Updater
 			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				config.StartInfo.FileName = "mono";
-				config.StartInfo.Arguments = "Config.exe " + version;
+				config.StartInfo.Arguments = "Config.exe " + dir;
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
-				config.StartInfo.FileName = "Config.exe " + version;
+			{
+				config.StartInfo.FileName = "Config.exe";
+				config.StartInfo.Arguments = dir;
+			}
 
 			Log.Notice("Update", sLConsole.Update("Text15"));
 			config.Start();
+
+			if(sUtilities.GetPlatformType() == PlatformType.Linux)
+			{
+				config.WaitForExit();
+				Log.Success("Update", sLConsole.Update("Text22"));
+			}
+
 			Environment.Exit(0);
 		}
 	}

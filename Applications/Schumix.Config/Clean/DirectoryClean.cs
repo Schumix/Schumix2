@@ -27,10 +27,10 @@ namespace Schumix.Config.Clean
 		/// <summary>
 		///     Törli azon mappát melyet megadunk a paraméterben. Ez elsősorban egy verziószám.
 		/// </summary>
-		public DirectoryClean(string Version)
+		public DirectoryClean(string dir)
 		{
-			if(Directory.Exists(Version))
-				Directory.Delete(Version, true);
+			if(Directory.Exists(dir))
+				Directory.Delete(dir, true);
 		}
 	}
 }
