@@ -33,25 +33,34 @@ namespace Schumix.Config.CopyTo
 
 			foreach(var file in dir.GetFiles())
 			{
-				File.Delete(file.Name);
-				File.Move(Dir + "/Run/Release/" + file.Name, Addons + "/" + file.Name);
+				if(File.Exists(Addons + "/" + file.Name))
+					File.Delete(Addons + "/" + file.Name);
+
+				File.Move(Dir + "/Run/Release/Addons/" + file.Name, Addons + "/" + file.Name);
 			}
 
-			dir = new DirectoryInfo(Dir + "/Run/Release/");
+			dir = new DirectoryInfo(Dir + "/Run/Release");
 
 			foreach(var file in dir.GetFiles())
 			{
 				if(file.Name.ToLower().Contains(".db3"))
 					continue;
 
-				File.Delete(file.Name);
+				if(File.Exists(file.Name))
+					File.Delete(file.Name);
+
 				File.Move(Dir + "/Run/Release/" + file.Name, file.Name);
 			}
 
 			dir = new DirectoryInfo(Configs);
 
 			foreach(var fi in dir.GetFiles())
-				File.Move("Configs/" + fi.Name, "Configs/_" + fi.Name);
+			{
+				if(fi.Name.Substring(0, 1) == "_")
+					continue;
+
+				File.Move("Configs/" + fi.Name, Configs + "/_" + fi.Name);
+			}
 		}
 	}
 }

@@ -31,9 +31,16 @@ namespace Schumix.Config
 		/// </summary>
 		public static void Main(string[] args)
 		{
-			new Copy(args[0], args[1], args[2]);
-			new FileClean();
-			new DirectoryClean(args[0]);
+			try
+			{
+				new Copy(args[0], args[1], args[2]);
+				new FileClean();
+				new DirectoryClean(args[0]);
+			}
+			catch(Exception e)
+			{
+				Console.WriteLine(e);
+			}
 		}
 	}
 }

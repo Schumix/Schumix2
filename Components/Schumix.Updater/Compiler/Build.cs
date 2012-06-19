@@ -57,7 +57,7 @@ namespace Schumix.Updater.Compiler
 			}
 
 			build.Start();
-			build.PriorityClass = ProcessPriorityClass.RealTime;
+			build.PriorityClass = ProcessPriorityClass.Normal;
 
 			//var error = build.StandardError;
 			var output = build.StandardOutput;
