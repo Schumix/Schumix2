@@ -196,12 +196,7 @@ namespace Schumix
 			if(!ServerConfig.Enabled)
 				new Update(SchumixConfig.ConfigDirectory);
 
-			if(File.Exists("Config.exe"))
-				File.Delete("Config.exe");
-
-			if(File.Exists("Installer.exe"))
-				File.Delete("Installer.exe");
-
+			sUtilities.CleanHomeDirectory();
 			new SchumixBot();
 
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
