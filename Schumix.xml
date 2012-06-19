@@ -71,7 +71,7 @@
     <Update>
         <Enabled>false</Enabled>
         <Version>stable</Version>
-		<Branch>master</Branch>
+        <Branch>master</Branch>
         <WebPage>https://github.com/megax/Schumix2</WebPage>
     </Update>
 </Schumix>
