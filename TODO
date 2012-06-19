@@ -3,7 +3,7 @@ Megírásra váró feladatok:
 	- Megoldás arra ha vki úgy aktiválja a vhost-ot hogy sehol sincs fent (csatorna). Ha ezútán se lép fel csatornára de mondjuk nevet cserél vagy lelép irc-ről akkor fen áll a lehetőség hogy a kódot támadás érheti. Ehhez valamilyen védelmi mehanizmust kéne kitalálni.
 
 - Szerver hibák:
-	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!!
+	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!! (Állítottam a prioritáson. Lehetséges ez megoldja a gondot de még tesztelni kell.)
 	- Ha Server küldi el a konfigurációs adatokat rossz lesz a kódolás és pl ignore_channel-nél nem észleli a split a vesszőket.
 	- Ha leállna a szerver először ne botok álljanak le (amiket a szerver indított).
 

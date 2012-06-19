@@ -154,6 +154,7 @@ namespace Schumix.Server.New
 			}
 
 			exe.Start();
+			exe.PriorityClass = ProcessPriorityClass.RealTime;
 			var settings      = new Settings();
 			settings.File     = File;
 			settings.Dir      = Dir;
