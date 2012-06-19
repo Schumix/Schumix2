@@ -117,9 +117,9 @@ a `Schumix.xml` nevû fájlt.
 ## Update
 
 * **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi az automatikus frissítést. Alapértelmezés: `false`
-* **Versions:**
-    * **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi a megadott verzióra való frissítést. Alapértelmezés: `false`
-    * **Version:** Meghatározza melyik verzióra frissítse magát a kód. Alapértelmezés: `x.x.x`
+* **Version:** Meghatározza melyik verzióra szeretnénk frissíteni. Current vagy stable lehet. A current az utolsó verzó ami a tárolóban van a stable pedig az utolsó stabil verzió.
+               Alapértelmezés: `stable`
+* **Branch:** Beállítható vele az ág (branch). Ez csak a current verziók esetében érdekes. Alapértelmezés: `master`
 * **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: `http://megax.uw.hu/Schumix2/`
 
 # Adatbázis beüzemelése

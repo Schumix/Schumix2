@@ -31,9 +31,8 @@ namespace Schumix.Config
 		/// </summary>
 		public static void Main(string[] args)
 		{
-			Thread.Sleep(2000);
 			new Copy(args[0]);
-			new FileClean(args[0]);
+			new FileClean();
 			new DirectoryClean(args[0]);
 		}
 	}

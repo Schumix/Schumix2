@@ -1480,29 +1480,29 @@ namespace Schumix.Framework.Localization
 				case "Text2":
 				{
 					if(Locale == "huHU")
-						return "Újabb stabil verzió keresése megindult.";
+						return "Új stabil verzió keresése megindult.";
 					else if(Locale == "enUS")
-						return "Searching for new stable version.";
+						return "Searching for new stable version is started.";
 					else
-						return "Searching for new stable version.";
+						return "Searching for new stable version is started.";
 				}
 				case "Text3":
 				{
 					if(Locale == "huHU")
-						return "Nincs frissebb verzió!";
+						return "A legutolsó verzió keresése megindult.";
 					else if(Locale == "enUS")
-						return "Nothing newer version!";
+						return "Searching for the last version is started.";
 					else
-						return "Nothing newer version!";
+						return "Searching for the last version is started.";
 				}
 				case "Text4":
 				{
 					if(Locale == "huHU")
-						return "Új verziót találtam. Verzió: {0}";
+						return "Ilyen verzió nem létezik ezért a frissítés leáll!";
 					else if(Locale == "enUS")
-						return "Found new version. Version: {0}";
+						return "No such version like this, update interrupted!";
 					else
-						return "Found new version. Version: {0}";
+						return "No such version like this, update interrupted!";
 				}
 				case "Text5":
 				{
@@ -1606,11 +1606,65 @@ namespace Schumix.Framework.Localization
 				case "Text16":
 				{
 					if(Locale == "huHU")
-						return "Nem létezik ezen verzió: {0}";
+						return "Jelenleg nincs újabb verzió!";
 					else if(Locale == "enUS")
-						return "No such version: {0}";
+						return "Currently no newer version!";
 					else
-						return "No such version: {0}";
+						return "Currently no newer version!";
+				}
+				case "Text17":
+				{
+					if(Locale == "huHU")
+						return "Folytatódik a program indulása.";
+					else if(Locale == "enUS")
+						return "The program starts is continuing.";
+					else
+						return "The program starts is continuing.";
+				}
+				case "Text18":
+				{
+					if(Locale == "huHU")
+						return "Újabb verziót találtam. Megindul a frissítés a {0} verzióra.";
+					else if(Locale == "enUS")
+						return "I found a newer version. The update to {0} version is starting.";
+					else
+						return "I found a newer version. The update to {0} version is starting.";
+				}
+				case "Text19":
+				{
+					if(Locale == "huHU")
+						return "Régebbi verziót találtam ezért leáll a frissítés!";
+					else if(Locale == "enUS")
+						return "Older version found, update interrupted!";
+					else
+						return "Older version found, update interrupted!";
+				}
+				case "Text20":
+				{
+					if(Locale == "huHU")
+						return "Megindult az sql fájlok frissítése. A beállított adatbázis fog frissülni.";
+					else if(Locale == "enUS")
+						return "Sql files update is started. The setted database will be updated.";
+					else
+						return "Sql files update is started. The setted database will be updated.";
+				}
+				case "Text21":
+				{
+					if(Locale == "huHU")
+						return "Az sql frissítés befejeződött.";
+					else if(Locale == "enUS")
+						return "Sql update finished.";
+					else
+						return "Sql update finished.";
+				}
+				case "Text22":
+				{
+					if(Locale == "huHU")
+						return "A frissítés befejeződött. Leáll a program!";
+					else if(Locale == "enUS")
+						return "The update is finished. The program shutting down!";
+					else
+						return "The update is finished. The program shutting down!";
 				}
 				default:
 					return string.Empty;

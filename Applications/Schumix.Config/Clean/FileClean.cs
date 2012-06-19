@@ -27,10 +27,10 @@ namespace Schumix.Config.Clean
 		/// <summary>
 		///     Törli a tömörített verzió fájlt.
 		/// </summary>
-		public FileClean(string Version)
+		public FileClean()
 		{
-			if(File.Exists(Version + ".tar"))
-				File.Delete(Version + ".tar");
+			if(File.Exists("schumix.zip"))
+				File.Delete("schumix.zip");
 		}
 	}
 }

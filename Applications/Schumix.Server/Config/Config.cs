@@ -39,10 +39,10 @@ namespace Schumix.Server.Config
 		private const int _listenerport               = 35220;
 		private const string _password                = "schumix";
 		private const string _locale                  = "enUS";
-		private const bool _updateenabled            = false;
-		private const bool _updateversionsenabled    = false;
-		private const string _updateversionsversion  = "x.x.x";
-		private const string _updatewebpage          = "http://megax.uw.hu/Schumix2/";
+		private const bool _updateenabled             = false;
+		private const string _updateversion           = "stable";
+		private const string _updatebranch            = "master";
+		private const string _updatewebpage           = "http://megax.uw.hu/Schumix2/";
 		private const bool _schumixsenabled           = false;
 		private const int _schumixsnumber             = 1;
 		private const string _schumix0file            = "Schumix.xml";
@@ -93,11 +93,11 @@ namespace Schumix.Server.Config
 					new LocalizationConfig(Locale);
 
 					bool Enabled = !xmldoc.SelectSingleNode("Server/Update/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Update/Enabled").InnerText) : _updateenabled;
-					bool VersionsEnabled = !xmldoc.SelectSingleNode("Server/Update/Versions/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Update/Versions/Enabled").InnerText) : _updateversionsenabled;
-					string Version = !xmldoc.SelectSingleNode("Server/Update/Versions/Version").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Versions/Version").InnerText : _updateversionsversion;
+					string Version = !xmldoc.SelectSingleNode("Server/Update/Version").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Version").InnerText : _updateversion;
+					string Branch = !xmldoc.SelectSingleNode("Server/Update/Branch").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Branch").InnerText : _updatebranch;
 					string WebPage = !xmldoc.SelectSingleNode("Server/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Server/Update/WebPage").InnerText : _updatewebpage;
 
-					new Framework.Config.UpdateConfig(Enabled, VersionsEnabled, Version, WebPage);
+					new Framework.Config.UpdateConfig(Enabled, Version.ToLower(), Branch, WebPage);
 
 					int number = !xmldoc.SelectSingleNode("Server/Schumixs/Number").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Schumixs/Number").InnerText) : _schumixsnumber;
 
@@ -197,15 +197,8 @@ namespace Schumix.Server.Config
 						// <Update>
 						w.WriteStartElement("Update");
 						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Server/Update/Enabled").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Enabled").InnerText : _updateenabled.ToString()));
-
-						// <Versions>
-						w.WriteStartElement("Versions");
-						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Server/Update/Versions/Enabled").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Versions/Enabled").InnerText : _updateversionsenabled.ToString()));
-						w.WriteElementString("Version",         (!xmldoc.SelectSingleNode("Server/Update/Versions/Version").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Versions/Version").InnerText : _updateversionsversion));
-
-						// </Versions>
-						w.WriteEndElement();
-
+						w.WriteElementString("Version",         (!xmldoc.SelectSingleNode("Server/Update/Version").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Version").InnerText : _updateversion));
+						w.WriteElementString("Branch",          (!xmldoc.SelectSingleNode("Server/Update/Branch").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Branch").InnerText : _updatebranch));
 						w.WriteElementString("WebPage",         (!xmldoc.SelectSingleNode("Server/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Server/Update/WebPage").InnerText : _updatewebpage));
 
 						// </Update>

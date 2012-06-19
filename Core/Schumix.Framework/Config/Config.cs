@@ -74,8 +74,8 @@ namespace Schumix.Framework.Config
 		private const string _scriptdirectory       = "Scripts";
 		private const string _locale                = "enUS";
 		private const bool _updateenabled           = false;
-		private const bool _updateversionsenabled   = false;
-		private const string _updateversionsversion = "x.x.x";
+		private const string _updateversion         = "stable";
+		private const string _updatebranch          = "master";
 		private const string _updatewebpage         = "http://megax.uw.hu/Schumix2/";
 		private bool error                          = false;
 
@@ -177,11 +177,11 @@ namespace Schumix.Framework.Config
 					new LocalizationConfig(Locale);
 
 					Enabled = !xmldoc.SelectSingleNode("Schumix/Update/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Update/Enabled").InnerText) : _updateenabled;
-					bool VersionsEnabled = !xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").InnerText) : _updateversionsenabled;
-					string Version = !xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").InnerText : _updateversionsversion;
+					string Version = !xmldoc.SelectSingleNode("Schumix/Update/Version").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Version").InnerText : _updateversion;
+					string Branch = !xmldoc.SelectSingleNode("Schumix/Update/Branch").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Branch").InnerText : _updatebranch;
 					string WebPage = !xmldoc.SelectSingleNode("Schumix/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/WebPage").InnerText : _updatewebpage;
 
-					new UpdateConfig(Enabled, VersionsEnabled, Version, WebPage);
+					new UpdateConfig(Enabled, Version.ToLower(), Branch, WebPage);
 
 					Log.Success("Config", sLConsole.Config("Text4"));
 					Console.WriteLine();
@@ -390,15 +390,8 @@ namespace Schumix.Framework.Config
 						// <Update>
 						w.WriteStartElement("Update");
 						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Schumix/Update/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Enabled").InnerText : _updateenabled.ToString()));
-
-						// <Versions>
-						w.WriteStartElement("Versions");
-						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Versions/Enabled").InnerText : _updateversionsenabled.ToString()));
-						w.WriteElementString("Version",         (!xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Versions/Version").InnerText : _updateversionsversion));
-
-						// </Versions>
-						w.WriteEndElement();
-
+						w.WriteElementString("Version",         (!xmldoc.SelectSingleNode("Schumix/Update/Version").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Version").InnerText : _updateversion));
+						w.WriteElementString("Branch",          (!xmldoc.SelectSingleNode("Schumix/Update/Branch").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Branch").InnerText : _updatebranch));
 						w.WriteElementString("WebPage",         (!xmldoc.SelectSingleNode("Schumix/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/WebPage").InnerText : _updatewebpage));
 
 						// </Update>
@@ -593,16 +586,16 @@ namespace Schumix.Framework.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static bool Enabled { get; private set; }
-		public static bool VersionsEnabled { get; private set; }
 		public static string Version { get; private set; }
+		public static string Branch { get; private set; }
 		public static string WebPage { get; private set; }
 
-		public UpdateConfig(bool enabled, bool versionsenabled, string version, string webpage)
+		public UpdateConfig(bool enabled, string version, string branch, string webpage)
 		{
-			Enabled         = enabled;
-			VersionsEnabled = versionsenabled;
-			Version         = version;
-			WebPage         = webpage;
+			Enabled = enabled;
+			Version = version;
+			Branch  = branch;
+			WebPage = webpage;
 			Log.Notice("UpdateConfig", sLConsole.UpdateConfig("Text"));
 		}
 	}

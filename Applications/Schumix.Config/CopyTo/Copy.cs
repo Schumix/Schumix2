@@ -27,18 +27,21 @@ namespace Schumix.Config.CopyTo
 		/// <summary>
 		///     Több helyről átmásolja az új fájlokat.
 		/// </summary>
-		public Copy(string Version)
+		public Copy(string Dir)
 		{
 			if(Directory.Exists("Addons"))
 				Directory.Delete("Addons", true);
 
-			Directory.Move(Version + "/Run/Release/Addons", "Addons");
-			var dir = new DirectoryInfo(Version + "/Run/Release/");
+			Directory.Move(Dir + "/Run/Release/Addons", "Addons");
+			var dir = new DirectoryInfo(Dir + "/Run/Release/");
 
 			foreach(var file in dir.GetFiles())
 			{
+				if(file.Name.ToLower().Contains(".db3"))
+					continue;
+
 				File.Delete(file.Name);
-				File.Move(Version + "/Run/Release/" + file.Name, file.Name);
+				File.Move(Dir + "/Run/Release/" + file.Name, file.Name);
 			}
 
 			dir = new DirectoryInfo("Configs");

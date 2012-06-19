@@ -18,17 +18,18 @@
  */
 
 using System;
+using System.IO;
 using Schumix.Framework;
 
 namespace Schumix.Updater.Download
 {
-	public sealed class DownloadFile
+	sealed class DownloadFile
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
-		public DownloadFile(string Url, string Version)
+		public DownloadFile(string Url)
 		{
-			sUtilities.DownloadFile(Url, Version + ".tar");
+			sUtilities.DownloadFile(Url, "schumix.zip");
 		}
 	}
 }
