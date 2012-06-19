@@ -31,7 +31,7 @@ namespace Schumix.Config.CopyTo
 		{
 			var dir = new DirectoryInfo(Dir + "/Run/Release/Addons");
 
-			foreach(var file in diraddons.GetFiles())
+			foreach(var file in dir.GetFiles())
 			{
 				File.Delete(file.Name);
 				File.Move(Dir + "/Run/Release/" + file.Name, Addons + "/" + file.Name);

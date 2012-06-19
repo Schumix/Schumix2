@@ -123,14 +123,8 @@ namespace Schumix.Server
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
-
 			new Update(Server.Config.ServerConfig.ConfigDirectory);
-
-			if(File.Exists("Config.exe"))
-				File.Delete("Config.exe");
-
-			if(File.Exists("Installer.exe"))
-				File.Delete("Installer.exe");
+			sUtilities.CleanHomeDirectory(true);
 
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 				sWindows.Init();
