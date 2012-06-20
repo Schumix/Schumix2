@@ -104,6 +104,11 @@ namespace Schumix.Installer
 			return platform;
 		}
 
+		public bool Is64bitOS()
+		{
+			return Environment.Is64BitOperatingSystem;
+		}
+
 		public string GetVersion()
 		{
 			return Schumix.Installer.Config.Consts.SchumixVersion;
