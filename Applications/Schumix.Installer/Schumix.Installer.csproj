@@ -80,11 +80,4 @@
     <Folder Include="Properties\" />
     <Folder Include="Config\" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\Dependencies\xbuild.exe">
-      <Link>xbuild.exe</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
-    </None>
-  </ItemGroup>
 </Project>

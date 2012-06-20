@@ -45,6 +45,7 @@ namespace Schumix.Installer.Compiler
 
 			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
+				File.Copy(dir + "/Dependencies/xbuild.exe", dir + "/xbuild.exe");
 				build.StartInfo.FileName = "mono";
 				build.StartInfo.Arguments = dir + "/xbuild.exe /p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + dir + "/Schumix.sln";
 			}
