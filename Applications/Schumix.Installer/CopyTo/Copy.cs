@@ -24,18 +24,32 @@ namespace Schumix.Installer.CopyTo
 {
 	sealed class Copy
 	{
-		public Copy(string Version)
-		{
-			if(Directory.Exists("Addons"))
-				Directory.Delete("Addons", true);
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
-			Directory.Move(Version + "/Run/Release/Addons", "Addons");
-			var dir = new DirectoryInfo(Version + "/Run/Release/");
+		/// <summary>
+		///     Több helyről átmásolja az új fájlokat.
+		/// </summary>
+		public Copy(string Dir)
+		{
+			sUtilities.CreateDirectory("Addons");
+			var dir = new DirectoryInfo(Dir + "/Run/Release/Addons");
 
 			foreach(var file in dir.GetFiles())
 			{
-				if(!File.Exists(file.Name))
-					File.Move(Version + "/Run/Release/" + file.Name, file.Name);
+				if(file.Name.ToLower().Contains(".db3"))
+					continue;
+
+				File.Move(Dir + "/Run/Release/Addons/" + file.Name, "Addons/" + file.Name);
+			}
+
+			dir = new DirectoryInfo(Dir + "/Run/Release");
+
+			foreach(var file in dir.GetFiles())
+			{
+				if(File.Exists(file.Name))
+					continue;
+
+				File.Move(Dir + "/Run/Release/" + file.Name, file.Name);
 			}
 		}
 	}

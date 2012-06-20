@@ -24,10 +24,13 @@ namespace Schumix.Installer.Clean
 {
 	sealed class FileClean
 	{
-		public FileClean(string Version)
+		/// <summary>
+		///     Törli a tömörített verzió fájlt.
+		/// </summary>
+		public FileClean()
 		{
-			if(File.Exists(Version + ".tar"))
-				File.Delete(Version + ".tar");
+			if(File.Exists("schumix.zip"))
+				File.Delete("schumix.zip");
 		}
 	}
 }

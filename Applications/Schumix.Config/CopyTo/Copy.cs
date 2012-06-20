@@ -33,6 +33,9 @@ namespace Schumix.Config.CopyTo
 
 			foreach(var file in dir.GetFiles())
 			{
+				if(file.Name.ToLower().Contains(".db3"))
+					continue;
+
 				if(File.Exists(Addons + "/" + file.Name))
 					File.Delete(Addons + "/" + file.Name);
 

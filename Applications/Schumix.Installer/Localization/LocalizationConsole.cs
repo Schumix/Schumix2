@@ -26,10 +26,46 @@ namespace Schumix.Installer.Localization
 		public string Locale { get; set; }
 		private LocalizationConsole() {}
 
-		public string Update(string Name)
+		public string Installer(string Name)
 		{
 			switch(Name)
 			{
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Installer elindult.";
+					else if(Locale == "enUS")
+						return "Installer started.";
+					else
+						return "Installer started.";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Fájlok átmásolása.";
+					else if(Locale == "enUS")
+						return "Copy files.";
+					else
+						return "Copy files.";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "Fölösleges adatok törlése.";
+					else if(Locale == "enUS")
+						return "Remove unneeded datas.";
+					else
+						return "Remove unneeded datas.";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "Új forrás letöltése.";
+					else if(Locale == "enUS")
+						return "Downloading new version.";
+					else
+						return "Downloading new version.";
+				}
 				case "Text6":
 				{
 					if(Locale == "huHU")
@@ -51,11 +87,11 @@ namespace Schumix.Installer.Localization
 				case "Text8":
 				{
 					if(Locale == "huHU")
-						return "A frissítés befejeződött!";
+						return "A telepítés befejeződött!";
 					else if(Locale == "enUS")
-						return "Updating successful.";
+						return "Installation successful!";
 					else
-						return "Updating successful.";
+						return "Installation successful!";
 				}
 				case "Text9":
 				{
@@ -110,6 +146,42 @@ namespace Schumix.Installer.Localization
 						return "Successfully finished the translation.";
 					else
 						return "Successfully finished the translation.";
+				}
+				case "Text15":
+				{
+					if(Locale == "huHU")
+						return "A telepítés befejeződött. Leáll a program!";
+					else if(Locale == "enUS")
+						return "The installation is finished. The program shutting down!";
+					else
+						return "The installation is finished. The program shutting down!";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string Log(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Indulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+					else if(Locale == "enUS")
+						return "Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+					else
+						return "Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "\nIndulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+					else if(Locale == "enUS")
+						return "\nStarted time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+					else
+						return "\nStarted time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
 				}
 				default:
 					return string.Empty;

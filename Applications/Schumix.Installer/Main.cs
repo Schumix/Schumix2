@@ -33,59 +33,81 @@ namespace Schumix.Installer
 	class MainClass
 	{
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
 		/// </summary>
 		public static void Main(string[] args)
 		{
-			Console.BackgroundColor = ConsoleColor.Black;
-			string url = "http://megax.uw.hu/Schumix2/";
-			string version = new DownloadVersion(url).GetNewVersion();
+			Console.Title = "Schumix2 Installer";
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.WriteLine("[Installer]");
+			Console.WriteLine("================================================================================"); // 80
+			Console.ForegroundColor = ConsoleColor.Gray;
+			//Console.WriteLine();
+			Log.Initialize("Installer.log");
+
+			if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
+
+			Log.Notice("Installer", sLConsole.Installer("Text2"));
+			string version = sUtilities.GetUrl("https://github.com/megax/Schumix2/tags");
+			version = version.Remove(0, version.IndexOf("<span class=\"alt-download-links\">"));
+			version = version.Remove(0, version.IndexOf("<a href=\"") + "<a href=\"".Length);
+			version = version.Substring(0, version.IndexOf("\" rel=\"nofollow\">"));
+			version = version.Substring(version.IndexOf("zipball/") + "zipball/".Length);
 
 			try
 			{
-				new DownloadFile(url + version + ".tar", version);
-				Console.WriteLine("[Installer] {0}", sLConsole.Update("Text6"));
+				new DownloadFile("https://github.com/megax/Schumix2/zipball/" + version);
+				Log.Success("Installer", sLConsole.Installer("Text6"));
 			}
 			catch
 			{
-				Console.WriteLine("[Installer] {0}", sLConsole.Update("Text7"));
-				Console.WriteLine("[Installer] {0}", sLConsole.Update("Text8"));
+				Log.Error("Installer", sLConsole.Installer("Text7"));
+				Log.Warning("Installer", sLConsole.Installer("Text8"));
 				Thread.Sleep(5*1000);
 				Environment.Exit(1);
 			}
 
-			Console.WriteLine("[Installer] {0}", sLConsole.Update("Text9"));
+			Log.Notice("Installer", sLConsole.Installer("Text9"));
+			GZip gzip = null;
 
 			try
 			{
-				new GZip(version);
-				Console.WriteLine("[Installer] {0}", sLConsole.Update("Text10"));
+				gzip = new GZip();
+				Log.Success("Installer", sLConsole.Installer("Text10"));
 			}
 			catch
 			{
-				Console.WriteLine("[Installer] {0}", sLConsole.Update("Text11"));
-				Console.WriteLine("[Installer] {0}", sLConsole.Update("Text8"));
+				Log.Error("Installer", sLConsole.Installer("Text11"));
+				Log.Warning("Installer", sLConsole.Installer("Text8"));
 				Thread.Sleep(5*1000);
 				Environment.Exit(1);
 			}
 
-			Console.WriteLine("[Installer] {0}", sLConsole.Update("Text12"));
-			var build = new Build(version);
+			string dir = gzip.DirectoryName;
+			Log.Notice("Installer", sLConsole.Installer("Text12"));
+			var build = new Build(dir);
 
 			if(build.HasError)
 			{
-				Console.WriteLine("[Installer] {0}", sLConsole.Update("Text13"));
-				Console.WriteLine("[Installer] {0}", sLConsole.Update("Text8"));
+				Log.Error("Installer", sLConsole.Installer("Text13"));
+				Log.Warning("Installer", sLConsole.Installer("Text8"));
 				Thread.Sleep(5*1000);
 				Environment.Exit(1);
 			}
 
-			Console.WriteLine("[Installer] {0}", sLConsole.Update("Text14"));
-			new Copy(version);
-			new FileClean(version);
-			new DirectoryClean(version);
+			Log.Success("Installer", sLConsole.Installer("Text14"));
+			Log.Notice("Installer", sLConsole.Installer("Text3"));
+			new Copy(dir);
+			Log.Notice("Installer", sLConsole.Installer("Text4"));
+			new FileClean();
+			new DirectoryClean(dir);
+
+			Log.Success("Installer", sLConsole.Installer("Text15"));
+			Environment.Exit(0);
 		}
 	}
 }
