@@ -57,12 +57,12 @@
     <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Dependencies\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="Compiler\Build.cs" />
     <Compile Include="Download\DownloadFile.cs" />
-    <Compile Include="Download\DownloadVersion.cs" />
     <Compile Include="UnZip\GZip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Localization\LocalizationConsole.cs" />
@@ -71,10 +71,14 @@
     <Compile Include="CopyTo\Copy.cs" />
     <Compile Include="Clean\DirectoryClean.cs" />
     <Compile Include="Clean\FileClean.cs" />
+    <Compile Include="PlatformType.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Config\InstallerConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Config\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Dependencies\xbuild.exe">

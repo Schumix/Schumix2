@@ -19,18 +19,14 @@
  */
 
 using System;
+using System.IO;
 using System.Net;
 using System.Web;
+using System.Text;
+using Schumix.Installer.Config;
 
 namespace Schumix.Installer
 {
-	enum SCompiler
-	{
-		VisualStudio,
-		Mono,
-		None
-	}
-
 	sealed class Utilities
 	{
 		private Utilities() {}
@@ -39,7 +35,9 @@ namespace Schumix.Installer
 		{
 			using(var client = new WebClient())
 			{
-				client.Headers.Add("user-agent", "Query :)");
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				client.Encoding = Encoding.UTF8;
 				return client.DownloadString(url);
 			}
 		}
@@ -48,7 +46,9 @@ namespace Schumix.Installer
 		{
 			using(var client = new WebClient())
 			{
-				client.Headers.Add("user-agent", "Query :)");
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				client.Encoding = Encoding.UTF8;
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
 			}
 		}
@@ -57,7 +57,9 @@ namespace Schumix.Installer
 		{
 			using(var client = new WebClient())
 			{
-				client.Headers.Add("user-agent", "Query :)");
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				client.Encoding = Encoding.UTF8;
 				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
 			}
 		}
@@ -66,14 +68,15 @@ namespace Schumix.Installer
 		{
 			using(var client = new WebClient())
 			{
-				client.Headers.Add("user-agent", "Query :)");
+				client.Headers.Add("referer", Consts.SchumixReferer);
+				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
 				client.DownloadFile(url, filename);
 			}
 		}
 
-		public SCompiler GetCompiler()
+		public PlatformType GetPlatformType()
 		{
-			SCompiler compiler = SCompiler.None;
+			PlatformType platform = PlatformType.None;
 			var pid = Environment.OSVersion.Platform;
 
 			switch(pid)
@@ -82,21 +85,40 @@ namespace Schumix.Installer
 				case PlatformID.Win32S:
 				case PlatformID.Win32Windows:
 				case PlatformID.WinCE:
-					compiler = SCompiler.VisualStudio;
+					platform = PlatformType.Windows;
 					break;
 				case PlatformID.Unix:
+					platform = PlatformType.Linux;
+					break;
 				case PlatformID.MacOSX:
-					compiler = SCompiler.Mono;
+					platform = PlatformType.MacOSX;
 					break;
 				case PlatformID.Xbox:
-					compiler = SCompiler.None;
+					platform = PlatformType.Xbox;
 					break;
 				default:
-					compiler = SCompiler.None;
+					platform = PlatformType.None;
 					break;
 			}
 
-			return compiler;
+			return platform;
+		}
+
+		public string GetVersion()
+		{
+			return Schumix.Installer.Config.Consts.SchumixVersion;
+		}
+
+		public void CreateDirectory(string Name)
+		{
+			if(!Directory.Exists(Name))
+				Directory.CreateDirectory(Name);
+		}
+
+		public void CreateFile(string Name)
+		{
+			if(!File.Exists(Name))
+				new FileStream(Name, FileMode.Append, FileAccess.Write, FileShare.Write).Close();
 		}
 	}
 }

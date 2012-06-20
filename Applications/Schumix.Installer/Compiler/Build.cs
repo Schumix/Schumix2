@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Diagnostics;
+using Microsoft.Build.Utilities;
 using Schumix.Installer;
 
 namespace Schumix.Installer.Compiler
@@ -30,42 +31,42 @@ namespace Schumix.Installer.Compiler
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public bool HasError { get; private set; }
 
-		public Build(string Version)
+		public Build(string dir)
 		{
-			var t = new Thread(() => Compile(Version));
-			t.Start();
-			t.Join(30*1000);
-			t.Abort();
-			t = new Thread(() => Compile(Version));
-			t.Start();
-			t.Join(30*1000);
-			t.Abort();
+			Compile(dir);
 		}
 
-		private void Compile(string Version)
+		private void Compile(string dir)
 		{
 			var build = new Process();
 			build.StartInfo.UseShellExecute = false;
 			build.StartInfo.RedirectStandardOutput = true;
 			build.StartInfo.RedirectStandardError = true;
 
-			if(sUtilities.GetCompiler() == Schumix.Installer.SCompiler.Mono)
+			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
-			build.StartInfo.FileName = "mono";
-			build.StartInfo.Arguments = "xbuild.exe /p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE,MONO\" /p:Configuration=\"Mono-Release\" /p:Platform=\"x86\" " + Version + "/Schumix.sln";
+				build.StartInfo.FileName = "mono";
+				build.StartInfo.Arguments = dir + "/xbuild.exe /p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + dir + "/Schumix.sln";
 			}
-			else if(sUtilities.GetCompiler() == Schumix.Installer.SCompiler.Mono)
+			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
-			build.StartInfo.FileName = "xbuild.exe";
-			build.StartInfo.Arguments = "/p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + Version + "/Schumix.sln";
+				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "\\MSBuild.exe", dir + "\\MSBuild.exe");
+				build.StartInfo.FileName = dir + "\\MSBuild.exe";
+				build.StartInfo.Arguments = "/p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + dir + "/Schumix.sln";
 			}
 
 			build.Start();
+			build.PriorityClass = ProcessPriorityClass.Normal;
+
 			//var error = build.StandardError;
+			var output = build.StandardOutput;
 			HasError = false;
 
 			//while(!error.EndOfStream)
-				//HasError = true;
+			//	HasError = true;
+
+			while(!output.EndOfStream)
+				Log.Debug("Build", output.ReadLine());
 
 			build.WaitForExit();
 			build.Dispose();

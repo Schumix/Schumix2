@@ -26,9 +26,9 @@ namespace Schumix.Installer.Download
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
-		public DownloadFile(string Url, string Version)
+		public DownloadFile(string Url)
 		{
-			sUtilities.DownloadFile(Url, Version + ".tar");
+			sUtilities.DownloadFile(Url, "schumix.zip");
 		}
 	}
 }

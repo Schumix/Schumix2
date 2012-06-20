@@ -20,27 +20,33 @@
 using System;
 using System.IO;
 using System.Reflection;
-using ICSharpCode.SharpZipLib.Tar;
+using ICSharpCode.SharpZipLib.Zip;
 
 namespace Schumix.Installer.UnZip
 {
 	sealed class GZip
 	{
-		public GZip(string Version)
+		public string DirectoryName { get; private set; }
+
+		public GZip()
 		{
-			Tar(Version + ".tar");
+			Zip("schumix.zip");
 		}
 
-		private void Tar(string FileName)
+		private void Zip(string FileName)
 		{
-			using(var s = new TarInputStream(File.OpenRead(FileName)))
+			using(var s = new ZipInputStream(File.OpenRead(FileName)))
 			{
-				TarEntry theEntry;
+				int i = 0;
+				ZipEntry theEntry;
 
 				while((theEntry = s.GetNextEntry()) != null)
 				{
 					string fileName      = Path.GetFileName(theEntry.Name);
 					string directoryName = Path.GetDirectoryName(theEntry.Name);
+
+					if(i == 0)
+						DirectoryName = directoryName;
 
 					// create directory
 					if(directoryName.Length > 0)
@@ -64,6 +70,8 @@ namespace Schumix.Installer.UnZip
 							}
 						}
 					}
+
+					i++;
 				}
 			}
 		}
