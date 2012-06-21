@@ -62,11 +62,8 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="lua51, Version=0.0.0.0, Culture=neutral, PublicKeyToken=1e1fb15b02227b8a">
-      <HintPath>..\..\Dependencies\lua51.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.LuaInterface, Version=2.0.1.32612, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Dependencies\Mono.LuaInterface.dll</HintPath>
+    <Reference Include="KopiLua">
+      <HintPath>..\..\Dependencies\KopiLua.dll</HintPath>
     </Reference>
     <Reference Include="LuaInterface">
       <HintPath>..\..\Dependencies\LuaInterface.dll</HintPath>
@@ -83,26 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Schumix.LuaEngine.pfx" />
-    <None Include="..\..\Dependencies\liblua5.1.so">
-      <Link>liblua5.1.so</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
-    </None>
-    <None Include="..\..\Dependencies\dwmapi.dll">
-      <Link>dwmapi.dll</Link>
-      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\Dependencies\msvcr100.dll">
-      <Link>msvcr100.dll</Link>
-      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\Dependencies\msvcr100d.dll">
-      <Link>msvcr100d.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

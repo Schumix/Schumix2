@@ -26,6 +26,7 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Localization;
+using LuaInterface;
 
 namespace Schumix.LuaEngine
 {
@@ -37,30 +38,20 @@ namespace Schumix.LuaEngine
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Dictionary<string, LuaFunctionDescriptor> _luaFunctions;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly FileSystemWatcher _watcher;
 		private readonly LuaFunctions _functions;
 		private readonly string _scriptPath;
-		private readonly LuaInterface.Lua _lua;
-		private readonly Mono.LuaInterface.Lua _monolua;
+		private readonly Lua _lua;
 
 		#region Properties
 
 		/// <summary>
 		/// Gets the Lua virtual machine.
 		/// </summary>
-		//public Lua LuaVM
-		//{
-		//	get { return _lua; }
-		//}
-
-		/// <summary>
-		/// Gets the Lua virtual machine.
-		/// </summary>
-		//public Mono.LuaInterface.Lua MonoLuaVM
-		//{
-		//	get { return _monolua; }
-		//}
+		public Lua LuaVM
+		{
+			get { return _lua; }
+		}
 
 		#endregion
 
@@ -72,31 +63,11 @@ namespace Schumix.LuaEngine
 		public LuaEngine(string scriptsPath)
 		{
 			Log.Notice("LuaEngine", sLConsole.LuaEngine("Text"));
-
-			if(sUtilities.GetPlatformType() == PlatformType.Windows)
-				_lua = new LuaInterface.Lua();
-			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
-				_monolua = new Mono.LuaInterface.Lua();
-
+			_lua = new Lua();
 			_luaFunctions = new Dictionary<string, LuaFunctionDescriptor>();
 			_scriptPath = scriptsPath;
-
-			if(sUtilities.GetPlatformType() == PlatformType.Windows)
-			{
-				_functions = new LuaFunctions(ref _lua);
-				LuaHelper.RegisterLuaFunctions(_lua, ref _luaFunctions, _functions);
-			}
-			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
-			{
-				_functions = new LuaFunctions(ref _monolua);
-				LuaHelper.RegisterLuaFunctions(_monolua, ref _luaFunctions, _functions);
-			}
-			else
-			{
-				_functions = new LuaFunctions(ref _monolua);
-				LuaHelper.RegisterLuaFunctions(_monolua, ref _luaFunctions, _functions);
-			}
-
+			_functions = new LuaFunctions(ref _lua);
+			LuaHelper.RegisterLuaFunctions(_lua, ref _luaFunctions, _functions);
 			LoadScripts();
 
 			_watcher = new FileSystemWatcher(_scriptPath)
@@ -143,10 +114,7 @@ namespace Schumix.LuaEngine
 
 				try
 				{
-					if(sUtilities.GetPlatformType() == PlatformType.Windows)
-						_lua.DoFile(file.FullName);
-					else if(sUtilities.GetPlatformType() == PlatformType.Linux)
-						_monolua.DoFile(file.FullName);
+					_lua.DoFile(file.FullName);
 				}
 				catch(Exception x)
 				{
@@ -160,11 +128,7 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		public void Free()
 		{
-			if(sUtilities.GetPlatformType() == PlatformType.Windows)
-				_lua.Dispose();
-			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
-				_monolua.Dispose();
-
+			_lua.Dispose();
 			_functions.Clean();
 		}
 	}

@@ -25,6 +25,7 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using LuaInterface;
 
 namespace Schumix.LuaEngine
 {
@@ -37,9 +38,7 @@ namespace Schumix.LuaEngine
 		private readonly Dictionary<string, SchumixCommandMethod> _RegisteredSchumix = new Dictionary<string, SchumixCommandMethod>();
 		private readonly Dictionary<string, IRCDelegate> _RegisteredIrc = new Dictionary<string, IRCDelegate>();
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Mono.LuaInterface.Lua _monolua;
-		private readonly LuaInterface.Lua _lua;
+		private readonly Lua _lua;
 
 		#region Properites
 
@@ -66,19 +65,9 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		/// <param name="vm">Lua VM</param>
 		/// <param name="conn">IRC connection</param>
-		public LuaFunctions(ref LuaInterface.Lua vm)
+		public LuaFunctions(ref Lua vm)
 		{
 			_lua = vm;
-		}
-
-		/// <summary>
-		/// Creates a new instance of <c>LuaFunctions</c>
-		/// </summary>
-		/// <param name="vm">Lua VM</param>
-		/// <param name="conn">IRC connection</param>
-		public LuaFunctions(ref Mono.LuaInterface.Lua vm)
-		{
-			_monolua = vm;
 		}
 
 		public void Clean()
@@ -95,36 +84,18 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterIrcHook", "Registers a irc hook.")]
 		public void RegisterIrcHook(string HandlerName, string LuaName)
 		{
-			if(sUtilities.GetPlatformType() == PlatformType.Windows)
-			{
-				var func = _lua.GetFunction(typeof(IRCDelegate), LuaName);
+			var func = _lua.GetFunction(typeof(IRCDelegate), LuaName);
 
-				if(func.IsNull())
-					return;
+			if(func.IsNull())
+				return;
 
-				var handler = func as IRCDelegate;
-				if(_RegisteredIrc.ContainsKey(HandlerName))
-					_RegisteredIrc[HandlerName] += handler;
-				else
-					_RegisteredIrc.Add(HandlerName, handler);
+			var handler = func as IRCDelegate;
+			if(_RegisteredIrc.ContainsKey(HandlerName))
+				_RegisteredIrc[HandlerName] += handler;
+			else
+				_RegisteredIrc.Add(HandlerName, handler);
 
-				Network.IrcRegisterHandler(HandlerName, handler);
-			}
-			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
-			{
-				var func = _monolua.GetFunction(typeof(IRCDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as IRCDelegate;
-				if(_RegisteredIrc.ContainsKey(HandlerName))
-					_RegisteredIrc[HandlerName] += handler;
-				else
-					_RegisteredIrc.Add(HandlerName, handler);
-
-				Network.IrcRegisterHandler(HandlerName, handler);
-			}
+			Network.IrcRegisterHandler(HandlerName, handler);
 		}
 
 		/// <summary>
@@ -135,36 +106,18 @@ namespace Schumix.LuaEngine
 		[LuaFunction("RegisterSchumixHook", "Registers a schumix command hook.")]
 		public void RegisterSchumixHook(string CommandName, string LuaName, CommandPermission permission = CommandPermission.Normal)
 		{
-			if(sUtilities.GetPlatformType() == PlatformType.Windows)
-			{
-				var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
+			var func = _lua.GetFunction(typeof(CommandDelegate), LuaName);
 
-				if(func.IsNull())
-					return;
+			if(func.IsNull())
+				return;
 
-				var handler = func as CommandDelegate;
-				if(_RegisteredSchumix.ContainsKey(CommandName.ToLower()))
-					_RegisteredSchumix[CommandName.ToLower()].Method += handler;
-				else
-					_RegisteredSchumix.Add(CommandName.ToLower(), new SchumixCommandMethod(handler, permission));
+			var handler = func as CommandDelegate;
+			if(_RegisteredSchumix.ContainsKey(CommandName.ToLower()))
+				_RegisteredSchumix[CommandName.ToLower()].Method += handler;
+			else
+				_RegisteredSchumix.Add(CommandName.ToLower(), new SchumixCommandMethod(handler, permission));
 
-				CommandManager.SchumixRegisterHandler(CommandName, handler, permission);
-			}
-			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
-			{
-				var func = _monolua.GetFunction(typeof(CommandDelegate), LuaName);
-
-				if(func.IsNull())
-					return;
-
-				var handler = func as CommandDelegate;
-				if(_RegisteredSchumix.ContainsKey(CommandName.ToLower()))
-					_RegisteredSchumix[CommandName.ToLower()].Method += handler;
-				else
-					_RegisteredSchumix.Add(CommandName.ToLower(), new SchumixCommandMethod(handler, permission));
-
-				CommandManager.SchumixRegisterHandler(CommandName, handler, permission);
-			}
+			CommandManager.SchumixRegisterHandler(CommandName, handler, permission);
 		}
 
 		/// <summary>
