@@ -62,10 +62,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="KopiLua">
+    <Reference Include="KopiLua, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Dependencies\KopiLua.dll</HintPath>
     </Reference>
-    <Reference Include="LuaInterface">
+    <Reference Include="LuaInterface, Version=2.0.4.0, Culture=neutral, PublicKeyToken=null">
       <HintPath>..\..\Dependencies\LuaInterface.dll</HintPath>
     </Reference>
   </ItemGroup>
