@@ -133,8 +133,6 @@ FILES = \
 	Network.cs \
 	NickInfo.cs \
 	PublicMessageHandler.cs \
-	Sender.cs \
-	SendMessage.cs \
 	Properties/AssemblyInfo.cs \
 	Commands/CommandInfo.cs \
 	Commands/HalfOperatorCommandHandler.cs \
@@ -147,7 +145,15 @@ FILES = \
 	ConnectionType.cs \
 	Flood/AntiFlood.cs \
 	Flood/CommandFlood.cs \
-	IrcColors.cs 
+	IrcColors.cs \
+	Commands/SchumixCommandAttribute.cs \
+	Commands/AdminFlag.cs \
+	Commands/CommandPermission.cs \
+	Commands/CommandMethod.cs \
+	IrcMethod.cs \
+	IrcCommandAttribute.cs \
+	Sender/Sender.cs \
+	Sender/SendMessage.cs 
 
 DATA_FILES = 
 
@@ -155,6 +161,7 @@ RESOURCES =
 
 EXTRAS = \
 	Flood \
+	Sender \
 	schumix.irc.pc.in 
 
 REFERENCES =  \

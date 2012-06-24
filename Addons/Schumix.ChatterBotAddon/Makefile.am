@@ -29,8 +29,6 @@ SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -56,8 +54,6 @@ MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_MDB=
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -85,8 +81,6 @@ MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_MDB=
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -112,8 +106,6 @@ MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_MDB=
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -130,9 +122,7 @@ PROGRAMFILES = \
 	$(MYSQL_DATA_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
-	$(SCHUMIX_IRC_DLL_MDB) \
-	$(SQLITE3_DLL) \
-	$(SCHUMIX_DB3)  
+	$(SCHUMIX_IRC_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_CHATTERBOTADDON_PC)  
@@ -171,8 +161,6 @@ SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
-SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
-SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 SCHUMIX_CHATTERBOTADDON_PC = $(BUILD_DIR)/schumix.chatterbotaddon.pc
 
 $(eval $(call emit-deploy-target,CHATTERBOTAPI_DLL))
@@ -184,8 +172,6 @@ $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL_MDB))
-$(eval $(call emit-deploy-target,SQLITE3_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_CHATTERBOTADDON_PC,schumix.chatterbotaddon.pc))
 
 

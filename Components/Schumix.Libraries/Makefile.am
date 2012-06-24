@@ -122,7 +122,10 @@ FILES = \
 	Libraries.cs \
 	Properties/AssemblyInfo.cs \
 	Crypto/Crypto.cs \
-	Printf.cs 
+	Printf.cs \
+	Mathematics/MathFunctions.cs \
+	Mathematics/Algorithms/QuickSort.cs \
+	Mathematics/Types/AutoSortedArray.cs 
 
 DATA_FILES = 
 

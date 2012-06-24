@@ -15,7 +15,6 @@ BUILD_DIR = ../../Run/Debug
 
 SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
 SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
-XBUILD_EXE_SOURCE=../../Dependencies/xbuild.exe
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
@@ -41,7 +40,6 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release
 
 SCHUMIX_UPDATER_DLL_MDB=
-XBUILD_EXE_SOURCE=../../Dependencies/xbuild.exe
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
@@ -66,7 +64,6 @@ BUILD_DIR = ../../Run/Debug_x64
 
 SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Updater.dll.mdb
 SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
-XBUILD_EXE_SOURCE=../../Dependencies/xbuild.exe
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
@@ -91,7 +88,6 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release_x64
 
 SCHUMIX_UPDATER_DLL_MDB=
-XBUILD_EXE_SOURCE=../../Dependencies/xbuild.exe
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
@@ -109,7 +105,6 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(SCHUMIX_UPDATER_DLL_MDB) \
-	$(XBUILD_EXE) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SQLITE3_DLL) \
@@ -132,9 +127,9 @@ FILES = \
 	Properties/AssemblyInfo.cs \
 	Update.cs \
 	Download/DownloadFile.cs \
-	Download/DownloadVersion.cs \
 	Compiler/Build.cs \
-	UnZip/GZip.cs 
+	UnZip/GZip.cs \
+	Sql/Sql.cs 
 
 DATA_FILES = 
 
@@ -145,11 +140,13 @@ EXTRAS = \
 	Compiler \
 	Download \
 	UnZip \
-	../../Dependencies/xbuild.exe \
+	Sql \
 	schumix.updater.pc.in 
 
 REFERENCES =  \
-	System
+	System \
+	Microsoft.Build.Utilities.v4.0 \
+	System.Core
 
 DLL_REFERENCES =  \
 	../../Dependencies/ICSharpCode.SharpZipLib.dll
@@ -158,7 +155,6 @@ CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 
 include $(top_srcdir)/Makefile.include
 
-XBUILD_EXE = $(BUILD_DIR)/xbuild.exe
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
@@ -168,7 +164,6 @@ SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
 SCHUMIX_UPDATER_PC = $(BUILD_DIR)/schumix.updater.pc
 
-$(eval $(call emit-deploy-target,XBUILD_EXE))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))

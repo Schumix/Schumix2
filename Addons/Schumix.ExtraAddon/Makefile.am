@@ -162,7 +162,8 @@ FILES = \
 	Config/AddonConfig.cs \
 	Commands/WebHelper.cs \
 	Localization/PLocalization.cs \
-	Commands/NameList.cs 
+	Commands/NameList.cs \
+	Commands/NotesCommand.cs 
 
 DATA_FILES = 
 

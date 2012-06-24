@@ -14,7 +14,6 @@ BUILD_DIR = ../../Run/Debug
 
 INSTALLER_EXE_MDB_SOURCE=../../Run/Debug/Installer.exe.mdb
 INSTALLER_EXE_MDB=$(BUILD_DIR)/Installer.exe.mdb
-XBUILD_EXE_SOURCE=../../Dependencies/xbuild.exe
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 
 endif
@@ -29,7 +28,6 @@ PROJECT_REFERENCES =
 BUILD_DIR = ../../Run/Release
 
 INSTALLER_EXE_MDB=
-XBUILD_EXE_SOURCE=../../Dependencies/xbuild.exe
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 
 endif
@@ -45,7 +43,6 @@ BUILD_DIR = ../../Run/Debug_x64
 
 INSTALLER_EXE_MDB_SOURCE=../../Run/Debug_x64/Installer.exe.mdb
 INSTALLER_EXE_MDB=$(BUILD_DIR)/Installer.exe.mdb
-XBUILD_EXE_SOURCE=../../Dependencies/xbuild.exe
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 
 endif
@@ -60,7 +57,6 @@ PROJECT_REFERENCES =
 BUILD_DIR = ../../Run/Release_x64
 
 INSTALLER_EXE_MDB=
-XBUILD_EXE_SOURCE=../../Dependencies/xbuild.exe
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 
 endif
@@ -70,7 +66,6 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(INSTALLER_EXE_MDB) \
-	$(XBUILD_EXE) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL)  
 
 BINARIES = \
@@ -85,7 +80,6 @@ FILES = \
 	Main.cs \
 	Compiler/Build.cs \
 	Download/DownloadFile.cs \
-	Download/DownloadVersion.cs \
 	UnZip/GZip.cs \
 	Properties/AssemblyInfo.cs \
 	Localization/LocalizationConsole.cs \
@@ -93,7 +87,10 @@ FILES = \
 	Singleton.cs \
 	CopyTo/Copy.cs \
 	Clean/DirectoryClean.cs \
-	Clean/FileClean.cs 
+	Clean/FileClean.cs \
+	PlatformType.cs \
+	Log.cs \
+	Config/InstallerConfig.cs 
 
 DATA_FILES = 
 
@@ -101,13 +98,14 @@ RESOURCES =
 
 EXTRAS = \
 	Properties \
-	../../Dependencies/xbuild.exe \
+	Config \
 	schumix.installer.in 
 
 REFERENCES =  \
 	System \
 	System.Net \
-	System.Web
+	System.Web \
+	Microsoft.Build.Utilities.v4.0
 
 DLL_REFERENCES =  \
 	../../Dependencies/ICSharpCode.SharpZipLib.dll
@@ -116,11 +114,9 @@ CLEANFILES = $(PROGRAMFILES) $(BINARIES)
 
 include $(top_srcdir)/Makefile.include
 
-XBUILD_EXE = $(BUILD_DIR)/xbuild.exe
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 SCHUMIX_INSTALLER = $(BUILD_DIR)/schumix.installer
 
-$(eval $(call emit-deploy-target,XBUILD_EXE))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_INSTALLER,schumix.installer,x))
 
