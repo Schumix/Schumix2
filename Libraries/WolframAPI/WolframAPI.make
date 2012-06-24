@@ -139,8 +139,8 @@ EXTRAS = \
 REFERENCES =  \
 	System.Web \
 	System.Xml \
-	System \
-	System.Core
+	System.Core \
+	System
 
 DLL_REFERENCES = 
 

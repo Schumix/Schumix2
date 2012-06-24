@@ -110,7 +110,6 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 FILES = \
 	Config/Config.cs \
 	Config/SchumixConfig.cs \
-	Log.cs \
 	Singleton.cs \
 	SchumixBase.cs \
 	ConsoleLog.cs \
@@ -134,7 +133,11 @@ FILES = \
 	Network/ClientSocket.cs \
 	Runtime.cs \
 	CrashDumper.cs \
-	PlatformType.cs 
+	PlatformType.cs \
+	Mathematics/Algorithms/QuickSort.cs \
+	Mathematics/Types/AutoSortedArray.cs \
+	Mathematics/MathFunctions.cs \
+	Log.cs 
 
 DATA_FILES = 
 
@@ -143,6 +146,9 @@ RESOURCES =
 EXTRAS = \
 	Extensions \
 	Localization \
+	Mathematics \
+	Mathematics/Algorithms \
+	Mathematics/Types \
 	../../Dependencies/sqlite3.dll \
 	../../Sql/Schumix.db3 \
 	schumix.framework.pc.in 
