@@ -138,15 +138,11 @@ namespace Schumix.Irc
 					{
 						sNickInfo.ChangeNick(IRCConfig.NickName);
 						sSender.Nick(IRCConfig.NickName);
-						Log.Notice("NickServ", sLConsole.NickServ("Text"));
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick/identify", sIRCMessage.Channel));
 						sNickInfo.Identify(IRCConfig.NickServPassword);
 
 						if(IRCConfig.UseHostServ)
-						{
 							sNickInfo.Vhost(SchumixBase.On);
-							Log.Notice("HostServ", sLConsole.HostServ("Text"));
-						}
 					}
 					else
 					{
