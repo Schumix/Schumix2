@@ -89,7 +89,6 @@ namespace Schumix.Irc
 		{
 			_server = server;
 			_port = port;
-			//Cts = new CancellationTokenSource();
 
 			Log.Notice("Network", sLConsole.Network("Text"));
 			sNickInfo.ChangeNick(IRCConfig.NickName);
