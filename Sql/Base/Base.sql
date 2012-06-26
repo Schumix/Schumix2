@@ -304,6 +304,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "schumix2/nick", "Név megváltoztatása erre: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "schumix2/nick/identify", "Azonosító jelszó küldése a kiszolgálónak.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "schumix2/clean", "Lefoglalt memória felszabadításra kerül.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "schumix2/csc", "C# fordító verzió: {0}\nA fő osztály neve: class {0} {1}\nA fő funkció neve: void {0}() {1}\nHasználhatod egyszerűen: '{ /* program */ }'. Ez a fő funkció törzse.\nMég használhatod: '{0}, /* program */'. Ez itt /* program */ a fő funkció törzse.\nHa segítségre van szükséged, lépj kapcsolatba Jackneill-el.\nProgramot írta: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "help", "Ha a parancs mögé írod a megadott parancs nevét vagy a nevet és alparancsát információt ad a használatáról.\nFő parancsom: {0}xbot");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "xbot", "3Verzió: 10{0}\n3Programot írta: {0}\n3Parancsok: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "info", "3Programot írta: {0}\n3Fejlesztők: {0}.\n3Weboldal: {0}\n3Elérhetőség: [MSN] megax@megaxx.info");
@@ -459,6 +460,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/nick", "Change nick to: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/nick/identify", "Send identifcation password to the server.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/clean", "Allocated memory will be freed.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/csc", "C# Compiler version: {0}\nThe main class's name: class {0} {1}\nThe main function's name: void {0}() {1}\nYou can use simply: '{ /* program */ }'. This is the man function's content.\nAlso you can use: '{0} /* program */'. Here is /* program */ is the main function's content.\nIf you need more help, please contact with Jackneill.\nProgrammed by: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "help", "If you wrote behind the command the command or the name or co-command then gets information about usage.\nMain command: {0}xbot");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "xbot", "3Version: 10{0}\n3Programmed by: {0}\n3Commands: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "info", "3Programmed by: {0}\n3Developers: {0}.\n3Website: {0}\n3Contact: [MSN] megax@megaxx.info");
@@ -665,6 +667,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "schumix2/nick", "0", "Bot nick nevének cseréje.\nParancsok: identify\nHasználata: {0} nick <név>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "schumix2/nick/identify", "0", "Aktiválja a fő nick jelszavát.\nHasználata: {0} nick identify");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "schumix2/clean", "2", "Felszabadítja a lefoglalt memóriát.\nHasználata: {0} clean");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "schumix2/csc", "9", "Ez a parancs segít megérteni a c# fordító használatát.");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "schumix2/c#compiler", "9", "Ez a parancs segít megérteni a c# fordító használatát.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn", "1", "Svn rss-ek kezelése.\nSvn parancsai: channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/channel", "1", "Rss csatornákra való kiírásának kezelése.\nChannel parancsai: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/channel/add", "1", "Új csatorna hozzáadása az rss-hez.\nHasználata: {0}svn channel add <rss neve> <csatorna neve>");
@@ -849,6 +853,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "schumix2/nick", "0", "Bot nick change.\nCommands: identify\nUse: {0} nick <name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "schumix2/nick/identify", "0", "Turn on the main nick password.\nNick: {0} nick identify");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "schumix2/clean", "2", "Frees allocated memory.\nUse: {0} clean");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "schumix2/csc", "9", "This commands helps to understand the usage of the c# compiler.");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "schumix2/c#compiler", "9", "This commands helps to understand the usage of the c# compiler.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn", "1", "Rss svn 's management.\nSvn commands: channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/channel", "1", "RSS feeds on their handling of the announcement.\nChannel commands: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/channel/add", "1", "New channel added to the rss.\nUse: {0}svn channel add <rss name> <channel name>");
@@ -1040,6 +1046,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "CommandsDisabled2", "A parancsok számodra letiltásra kerültek 1 percre mert túl sokszor használtad őket {0} másodpercen belül!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoRegisteredAdminAccess", "Továbbra se vagy fent egy csatornán se így megvonom az admin hozzáférésedet.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoRegisteredNotesUserAccess", "Továbbra se vagy fent egy csatornán se így megvonom a jegyzetekhez hozzáférésedet.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "CommandsEnabled", "A tiltás lejárt.");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1106,6 +1113,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "CommandsDisabled2", "Commands disabled for a {0} minute(s) for you because you used too many times!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoRegisteredAdminAccess", "You are not there any channels yet, so i remove your admin status.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoRegisteredNotesUserAccess", "You are not there any channels yet, so i remove your note edit status.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "CommandsEnabled", "The denying has been expired.");
 
 -- ----------------------------
 -- Records of schumix

@@ -25,6 +25,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Schumix.API;
 using Schumix.Irc;
+using Schumix.Irc.Flood;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -43,6 +44,7 @@ namespace Schumix.CompilerAddon
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly AntiFlood sAntiFlood = Singleton<AntiFlood>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 #pragma warning disable 414
 		private AddonConfig _config;
@@ -103,15 +105,27 @@ namespace Schumix.CompilerAddon
 					Compiler(sIRCMessage, true, command);
 				else if(sIRCMessage.Info[3].ToLower() == command.ToLower())
 				{
+					sAntiFlood.FloodCommand(sIRCMessage);
+
+					if(sAntiFlood.Ignore(sIRCMessage))
+						return;
+
+					var text = sLManager.GetCommandTexts("schumix2/csc", sIRCMessage.Channel);
+					if(text.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						return;
+					}
+
 					if(sIRCMessage.Info.Length >= 5 && (sIRCMessage.Info[4].ToLower() == "csc" || sIRCMessage.Info[4].ToLower() == "c#compiler"))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "C# Compiler version: {0}", Environment.Version);
-						sSendMessage.SendChatMessage(sIRCMessage, "The main class's name: class " + CompilerConfig.MainClass + " { /* program... */ }");
-						sSendMessage.SendChatMessage(sIRCMessage, "The main function's name: void " + CompilerConfig.MainConstructor + "() { /* program... */ }");
-						sSendMessage.SendChatMessage(sIRCMessage, "You can use simply: '{ /* program */ }'. This is the man function's content.");
-						sSendMessage.SendChatMessage(sIRCMessage, "Also you can use: '{0} /* program */'. Here is /* program */ is the main function's content.", command.ToLower());
-						sSendMessage.SendChatMessage(sIRCMessage, "If you need more help, please contact with Jackneill.");
-						sSendMessage.SendChatMessage(sIRCMessage, "Programmed by: {0}", Consts.SchumixProgrammedBy);
+						sSendMessage.SendChatMessage(sIRCMessage, text[0], Environment.Version);
+						sSendMessage.SendChatMessage(sIRCMessage, text[1], CompilerConfig.MainClass, "{ /* program... */ }");
+						sSendMessage.SendChatMessage(sIRCMessage, text[2], CompilerConfig.MainConstructor, "{ /* program... */ }");
+						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[4], command.ToLower());
+						sSendMessage.SendChatMessage(sIRCMessage, text[5]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[6], Consts.SchumixProgrammedBy);
 					}
 				}
 
@@ -152,6 +166,11 @@ namespace Schumix.CompilerAddon
 
 		private void Compiler(IRCMessage sIRCMessage, bool command, string args)
 		{
+			sAntiFlood.FloodCommand(sIRCMessage);
+
+			if(sAntiFlood.Ignore(sIRCMessage))
+				return;
+
 			int ReturnCode = 0;
 
 			if(command)
