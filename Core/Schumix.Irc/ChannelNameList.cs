@@ -22,6 +22,7 @@ using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using Schumix.Irc.Flood;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -35,6 +36,7 @@ namespace Schumix.Irc
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly AntiFlood sAntiFlood = Singleton<AntiFlood>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private ChannelNameList() {}
 
@@ -149,6 +151,7 @@ namespace Schumix.Irc
 
 				channel.Clear();
 				RandomVhost(Name.ToLower());
+				sAntiFlood.Remove(Name.ToLower());
 			}
 		}
 
@@ -187,6 +190,7 @@ namespace Schumix.Irc
 
 			channel.Clear();
 			RandomVhost(Name.ToLower());
+			sAntiFlood.Remove(Name.ToLower());
 		}
 
 		public bool IsChannelList(string Name)

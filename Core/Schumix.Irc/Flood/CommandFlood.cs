@@ -24,20 +24,10 @@ namespace Schumix.Irc.Flood
 {
 	sealed class CommandFlood
 	{
-		private string _name;
 		public DateTime BanTime;
 		public bool IsIgnore;
 		public bool Warring;
 		public int Message;
-
-		public CommandFlood(string name)
-		{
-			_name = name;
-		}
-
-		public string Name
-		{
-			get { return _name; }
-		}
+		public CommandFlood() {}
 	}
 }

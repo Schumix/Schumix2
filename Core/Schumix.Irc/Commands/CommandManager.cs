@@ -199,6 +199,8 @@ namespace Schumix.Irc.Commands
 		{
 			try
 			{
+				sAntiFlood.FloodCommand(sIRCMessage);
+
 				if(sIgnoreCommand.IsIgnore(handler))
 					return;
 
@@ -206,10 +208,7 @@ namespace Schumix.Irc.Commands
 					return;
 
 				if(CommandMethodMap.ContainsKey(handler))
-				{
 					CommandMethodMap[handler].Method.Invoke(sIRCMessage);
-					sAntiFlood.FloodCommand(sIRCMessage);
-				}
 			}
 			catch(Exception e)
 			{

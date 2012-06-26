@@ -71,6 +71,11 @@ namespace Schumix.Irc
 
 			if(sIRCMessage.Info[3].ToLower() == command.ToLower())
 			{
+				sAntiFlood.FloodCommand(sIRCMessage);
+
+				if(sAntiFlood.Ignore(sIRCMessage))
+					return;
+
 				if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "sys")
 				{
 					var text = sLManager.GetCommandTexts("schumix2/sys", sIRCMessage.Channel);

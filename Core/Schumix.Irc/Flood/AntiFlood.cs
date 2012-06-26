@@ -35,13 +35,12 @@ namespace Schumix.Irc.Flood
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private System.Timers.Timer _timerflood = new System.Timers.Timer();
-		private int flood;
 		private AntiFlood() {}
 
 		public void Start()
 		{
 			// Flood
-			_timerflood.Interval = 1000;
+			_timerflood.Interval = /*Config.Seconds*/4*1000;
 			_timerflood.Elapsed += HandleTimerFloodElapsed;
 			_timerflood.Enabled = true;
 			_timerflood.Start();
@@ -74,42 +73,40 @@ namespace Schumix.Irc.Flood
 
 		public void FloodCommand(IRCMessage sIRCMessage)
 		{
-			Task.Factory.StartNew(() =>
+			if(sChannelInfo.FSelect(IFunctions.Antiflood) && sChannelInfo.FSelect(IChannelFunctions.Antiflood, sIRCMessage.Channel.ToLower()))
 			{
-				if(sChannelInfo.FSelect(IFunctions.Antiflood) && sChannelInfo.FSelect(IChannelFunctions.Antiflood, sIRCMessage.Channel.ToLower()))
-				{
-					string nick = sIRCMessage.Nick.ToLower();
-					int i = 0;
+				string nick = sIRCMessage.Nick.ToLower();
 
-					foreach(var list in CommandFloodList)
-					{
-						if(nick == list.Value.Name)
-						{
-							list.Value.Message++;
-							i++;
-						}
-					}
+				if(nick == "py-ctcp")
+					return;
 
-					if(nick == "py-ctcp")
-						return;
-
-					if(i > 0)
-						return;
-
-					CommandFloodList.Add(nick, new CommandFlood(nick));
-				}
-			});
+				if(CommandFloodList.ContainsKey(nick) && !CommandFloodList[nick].IsIgnore)
+					CommandFloodList[nick].Message++;
+				else if(!CommandFloodList.ContainsKey(nick))
+					CommandFloodList.Add(nick, new CommandFlood());
+			}
 		}
 
 		public bool Ignore(IRCMessage sIRCMessage)
 		{
 			if(CommandFloodList.ContainsKey(sIRCMessage.Nick.ToLower()))
 			{
+				if(!CommandFloodList[sIRCMessage.Nick.ToLower()].IsIgnore &&
+				   CommandFloodList[sIRCMessage.Nick.ToLower()].Message >= /*Config.NumberOfMessages*/2)
+				{
+					CommandFloodList[sIRCMessage.Nick.ToLower()].IsIgnore = true;
+					CommandFloodList[sIRCMessage.Nick.ToLower()].Warring = true;
+					CommandFloodList[sIRCMessage.Nick.ToLower()].BanTime = DateTime.Now.AddMinutes(1);
+					CommandFloodList[sIRCMessage.Nick.ToLower()].Message = 0;
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick.ToLower(), sLManager.GetWarningText("CommandsDisabled2", sIRCMessage.Channel), /*Config.Seconds*/4);
+					return true;
+				}
+
 				if(CommandFloodList[sIRCMessage.Nick.ToLower()].IsIgnore)
 				{
 					if(CommandFloodList[sIRCMessage.Nick.ToLower()].Warring)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("CommandsDisabled", sIRCMessage.Channel), 3);
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("CommandsDisabled", sIRCMessage.Channel));
 						CommandFloodList[sIRCMessage.Nick.ToLower()].Warring = false;
 						return true;
 					}
@@ -123,36 +120,28 @@ namespace Schumix.Irc.Flood
 
 		private void Flood()
 		{
-			flood++;
-
-			if(flood == /*Config.Seconds*/3)
+			foreach(var list in CommandFloodList)
 			{
-				flood = 0;
-
-				foreach(var list in CommandFloodList)
+				if(list.Value.IsIgnore)
 				{
-					if(list.Value.IsIgnore)
+					if(DateTime.Now >= list.Value.BanTime)
 					{
-						if(DateTime.Now >= list.Value.BanTime)
-						{
-							list.Value.IsIgnore = false;
-							list.Value.Warring = false;
-						}
+						list.Value.IsIgnore = false;
+						list.Value.Warring = false;
+						sSendMessage.SendCMPrivmsg(list.Key, sLManager.GetWarningText("CommandsEnabled"));
+					}
 
-						continue;
-					}
-					if(list.Value.Message >= /*Config.NumberOfMessages*/2)
-					{
-						list.Value.IsIgnore = true;
-						list.Value.Warring = true;
-						list.Value.BanTime = DateTime.Now.AddMinutes(1);
-						list.Value.Message = 0;
-						sSendMessage.SendCMPrivmsg(list.Value.Name, sLManager.GetWarningText("CommandsDisabled2"));
-					}
-					else
-						list.Value.Message = 0;
+					continue;
 				}
+
+				list.Value.Message = 0;
 			}
+		}
+
+		public void Remove(string Name)
+		{
+			if(CommandFloodList.ContainsKey(Name.ToLower()))
+				CommandFloodList.Remove(Name.ToLower());
 		}
 	}
 }
