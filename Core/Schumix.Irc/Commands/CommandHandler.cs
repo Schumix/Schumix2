@@ -88,11 +88,11 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					if(IsAdmin(sIRCMessage.Nick, AdminFlag.HalfOperator))
+					if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
-					else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator))
+					else if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
-					else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Administrator))
+					else if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
