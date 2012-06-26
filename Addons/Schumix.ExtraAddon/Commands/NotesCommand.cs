@@ -35,6 +35,7 @@ namespace Schumix.ExtraAddon.Commands
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly NameList sNameList = Singleton<NameList>.Instance;
 		private Notes() {}
 
 		public void HandleNotes(IRCMessage sIRCMessage)
@@ -92,7 +93,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(sIRCMessage.Info[5].ToLower() == "access")
 				{
 					var text = sLManager.GetCommandTexts("notes/user/access", sIRCMessage.Channel);
-					if(text.Length < 2)
+					if(text.Length < 4)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 						return;
@@ -115,6 +116,13 @@ namespace Schumix.ExtraAddon.Commands
 						}
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+					}
+
+					if(!sNameList.IsChannelList(name))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
+						sNameList.NewThread(name);
 					}
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "newpassword")

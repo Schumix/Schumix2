@@ -248,28 +248,35 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(!INetwork.Writer.IsNull())
+				try
 				{
-					if(message.Length >= 1000 && message.Substring(0, "notice".Length).ToLower() != "notice" &&
-					   message.Substring(0, "privmsg".Length).ToLower() != "privmsg")
+					if(!INetwork.Writer.IsNull())
 					{
-						var list = NewLine(message);
-						if(list.Count > 3)
+						if(message.Length >= 1000 && message.Substring(0, "notice".Length).ToLower() != "notice" &&
+						   message.Substring(0, "privmsg".Length).ToLower() != "privmsg")
 						{
+							var list = NewLine(message);
+							if(list.Count > 3)
+							{
+								list.Clear();
+								return;
+							}
+
+							foreach(var text in list)
+								INetwork.Writer.WriteLine(text);
+
 							list.Clear();
-							return;
 						}
-	
-						foreach(var text in list)
-							INetwork.Writer.WriteLine(text);
-
-						list.Clear();
+						else
+							INetwork.Writer.WriteLine(message);
 					}
-					else
-						INetwork.Writer.WriteLine(message);
-				}
 
-				Thread.Sleep(IRCConfig.MessageSending);
+					Thread.Sleep(IRCConfig.MessageSending);
+				}
+				catch(Exception e)
+				{
+					Log.Debug("SendMessage", sLConsole.Exception("Error"), e.Message);
+				}
 			}
 		}
 

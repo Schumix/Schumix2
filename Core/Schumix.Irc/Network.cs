@@ -41,6 +41,7 @@ namespace Schumix.Irc
 	{
 		private static readonly Dictionary<string, IrcMethod> IrcMethodMap = new Dictionary<string, IrcMethod>();
 		private System.Timers.Timer _timeropcode = new System.Timers.Timer();
+		private CancellationTokenSource _cts = new CancellationTokenSource();
 		private static readonly object IrcMapLock = new object();
 
 		public static Dictionary<string, IrcMethod> GetIrcMethodMap()
@@ -88,6 +89,7 @@ namespace Schumix.Irc
 		{
 			_server = server;
 			_port = port;
+			//Cts = new CancellationTokenSource();
 
 			Log.Notice("Network", sLConsole.Network("Text"));
 			sNickInfo.ChangeNick(IRCConfig.NickName);
@@ -298,6 +300,8 @@ namespace Schumix.Irc
 
 		private void Connection(bool b)
 		{
+			_cts = new CancellationTokenSource();
+
 			try
 			{
 				client = new TcpClient();
@@ -361,6 +365,13 @@ namespace Schumix.Irc
 		private void Close()
 		{
 			Connected = false;
+			_cts.Cancel();
+
+			if(!SchumixBase.ExitStatus)
+			{
+				Console.WriteLine("várakozás");
+				Thread.Sleep(2000);
+			}
 
 			if(!client.IsNull())
 				client.Close();
@@ -437,7 +448,7 @@ namespace Schumix.Irc
 						_enabled = false;
 					}
 
-					Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage));
+					Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage), _cts.Token);
 					Thread.Sleep(100);
 				}
 				catch(IOException)

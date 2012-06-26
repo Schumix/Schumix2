@@ -1,0 +1,11 @@
+-- huHU
+UPDATE `localized_command` SET Text = "Hozzáférés engedélyezve.\nHozzáférés megtagadva!\nNem vagy fent egy csatornán se ahol én.\nÍgy csak 5 percre lesz aktiválva a vhost és ha addig se lépsz fel valahova ahol fent vagyok akkor elveszem az admin hozzáférés jogát biztonsági okból." WHERE Language = 'huHU' AND Command = 'admin/access';
+UPDATE `localized_command` SET Text = "Hozzáférés engedélyezve.\nHozzáférés megtagadva!\nNem vagy fent egy csatornán se ahol én.\nÍgy csak 5 percre lesz aktiválva a vhost és ha addig se lépsz fel valahova ahol fent vagyok akkor elveszem a jegyzetek hozzáférési jogát biztonsági okból." WHERE Language = 'huHU' AND Command = 'notes/user/access';
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoRegisteredAdminAccess", "Továbbra se vagy fent egy csatornán se így megvonom az admin hozzáférésedet.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoRegisteredNotesUserAccess", "Továbbra se vagy fent egy csatornán se így megvonom a jegyzetekhez hozzáférésedet.");
+
+-- enUS
+UPDATE `localized_command` SET Text = "Access granted.\nAccess denied!\nYou are not there any channels where i am.\nThe vhost will be activated for 5 minutes and if that time you won't join any channels where i am i will remove your admin status cause safety." WHERE Language = 'enUS' AND Command = 'admin/access';
+UPDATE `localized_command` SET Text = "Access granted.\nAccess denied!\nYou are not there any channels where i am.\nThe vhost will be activated for 5 minutes and if that time you won't join any channels where i am i will remove your note edit status cause safety." WHERE Language = 'enUS' AND Command = 'notes/user/access';
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoRegisteredAdminAccess", "You are not there any channels yet, so i remove your admin status.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoRegisteredNotesUserAccess", "You are not there any channels yet, so i remove your note edit status.");
