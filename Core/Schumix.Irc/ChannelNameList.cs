@@ -19,17 +19,22 @@
 
 using System;
 using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
 	public class ChannelNameList : CommandInfo
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
+		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private ChannelNameList() {}
 
@@ -182,6 +187,31 @@ namespace Schumix.Irc
 
 			channel.Clear();
 			RandomVhost(Name.ToLower());
+		}
+
+		public bool IsChannelList(string Name)
+		{
+			foreach(var chan in _names)
+			{
+				if(chan.Value.Contains(Name.ToLower(), SchumixBase.Comma))
+					return true;
+			}
+
+			return false;
+		}
+
+		public void NewThread(string Name)
+		{
+			Task.Factory.StartNew(() =>
+			{
+				Thread.Sleep(5*60*1000);
+
+				if(!IsChannelList(Name))
+				{
+					sSendMessage.SendCMPrivmsg(Name.ToLower(), sLManager.GetWarningText("NoRegisteredAdminAccess"));
+					RandomVhost(Name);
+				}
+			});
 		}
 
 		public void RemoveAll()

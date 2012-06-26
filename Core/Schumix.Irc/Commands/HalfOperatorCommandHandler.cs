@@ -44,7 +44,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				var text = sLManager.GetCommandTexts("admin/access", sIRCMessage.Channel);
-				if(text.Length < 2)
+				if(text.Length < 4)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;
@@ -61,6 +61,13 @@ namespace Schumix.Irc.Commands
 					}
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+				}
+
+				if(!sChannelNameList.IsChannelList(name))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
+					sChannelNameList.NewThread(name);
 				}
 
 				status = false;

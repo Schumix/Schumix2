@@ -316,7 +316,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "google", "2Title: Nincs Title.\n2Link: Nincs Link.\n2Title: {0}\n2Link: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "translate", "Nem található fordított szöveg!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "prime", "Nem csak számot tartalmaz!\n{0} nem prímszám.\n{0} primszám.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/access", "Hozzáférés engedélyezve.\nHozzáférés megtagadva!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/access", "Hozzáférés engedélyezve.\nHozzáférés megtagadva!\nNem vagy fent egy csatornán se ahol én.\nÍgy csak 5 percre lesz aktiválva a vhost és ha addig se lépsz fel valahova ahol fent vagyok akkor elveszem az admin hozzáférés jogát biztonsági okból.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/newpassword", "Jelszó sikeresen meg lett változtatva erre: {0}\nA mostani jelszó nem egyezik, modósítás megtagadva!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/info", "Jelenleg Fél Operátor vagy.\nJelenleg Operátor vagy.\nJelenleg Adminisztrátor vagy.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/list", "2Adminok: {0}");
@@ -403,7 +403,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "message/channel", "Az üzenet sikeresen feljegyzésre került.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "message", "Az üzenet sikeresen feljegyzésre került.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "notes/info", "3Jegyzetek kódjai: {0}");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "notes/user/access", "Hozzáférés engedélyezve.\nHozzáférés megtagadva!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "notes/user/access", "Hozzáférés engedélyezve.\nHozzáférés megtagadva!\nNem vagy fent egy csatornán se ahol én.\nÍgy csak 5 percre lesz aktiválva a vhost és ha addig se lépsz fel valahova ahol fent vagyok akkor elveszem a jegyzetek hozzáférési jogát biztonsági okból.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "notes/user/newpassword", "Jelszó sikeresen meg lett változtatva erre: {0}\nA mostani jelszó nem egyezik, módosítás megtagadva!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "notes/user/register", "Már szerepelsz a felhasználói listán!\nSikeresen hozzá vagy adva a felhasználói listához.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "notes/user/remove", "Nincs megadva a jelszó a törlés megerősítéséhez!\nNem szerepelsz a felhasználói listán!\nA jelszó nem egyezik meg az adatbázisban tároltal!\nTörlés meg lett szakítva!\nSikeresen törölve lett a felhasználód.");
@@ -471,7 +471,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "google", "2Title: Nothing Title.\n2Link: Nothing Link.\n2Title: {0}\n2Link: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "translate", "Nothing translated text.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "prime", "This is not a numeric text!\n{0} is not a prime number.\n{0} is a prime number.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/access", "Access granted.\nAccess denied.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/access", "Access granted.\nAccess denied!\nYou are not there any channels where i am.\nThe vhost will be activated for 5 minutes and if that time you won't join any channels where i am i will remove your admin status cause safety.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/newpassword", "Successfully changed to password to: {0}\nThe current password does not match, modification denied!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/info", "You are half operator now.\nYou are operator now.\nYou are administrator now.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/list", "2Admins: {0}");
@@ -558,7 +558,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "message/channel", "Successfully recorded the message.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "message", "Successfully recorded the message.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "notes/info", "3Recorded message (quotes) codes: {0}");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "notes/user/access", "Access granted.\nAccess denied!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "notes/user/access", "Access granted.\nAccess denied!\nYou are not there any channels where i am.\nThe vhost will be activated for 5 minutes and if that time you won't join any channels where i am i will remove your note edit status cause safety.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "notes/user/newpassword", "Successfully changed the password to: {0}\nThe password does not match! Modification is denied!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "notes/user/register", "You are already on the user list!\nSuccessfully added you to the user list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "notes/user/remove", "The password for confirmation is not specified!The password for delete confirmation is not specified!\nYou are not in user list!\nYour password does not match which is stored in database!\nThe password does not match which is stored in database!\nThe deleting is aborted!\nSuccessfully deleted your account.");
@@ -1038,6 +1038,8 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "FunctionAlreadyTurnedOff2", "{0}: A funkció már ki van kapcsolva!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "CommandsDisabled", "A parancsok letiltása számodra 1 percen belül lejár!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "CommandsDisabled2", "A parancsok számodra letiltásra kerültek 1 percre mert túl sokszor használtad őket {0} másodpercen belül!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoRegisteredAdminAccess", "Továbbra se vagy fent egy csatornán se így megvonom az admin hozzáférésedet.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoRegisteredNotesUserAccess", "Továbbra se vagy fent egy csatornán se így megvonom a jegyzetekhez hozzáférésedet.");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1102,6 +1104,8 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "FunctionAlreadyTurnedOff2", "{0}: Function already turned off!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "CommandsDisabled", "Commands disabled for a minute for you!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "CommandsDisabled2", "Commands disabled for a {0} minute(s) for you because you used too many times!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoRegisteredAdminAccess", "You are not there any channels yet, so i remove your admin status.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoRegisteredNotesUserAccess", "You are not there any channels yet, so i remove your note edit status.");
 
 -- ----------------------------
 -- Records of schumix

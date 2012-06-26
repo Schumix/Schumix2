@@ -19,18 +19,23 @@
 
 using System;
 using System.Data;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 using Schumix.ExtraAddon;
 
 namespace Schumix.ExtraAddon.Commands
 {
 	class NameList
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
+		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
@@ -193,6 +198,31 @@ namespace Schumix.ExtraAddon.Commands
 				ExtraAddon.IsOnline = true;
 				sSender.NickServInfo(Name);
 			}
+		}
+
+		public bool IsChannelList(string Name)
+		{
+			foreach(var chan in _names)
+			{
+				if(chan.Value.Contains(Name.ToLower(), SchumixBase.Comma))
+					return true;
+			}
+
+			return false;
+		}
+
+		public void NewThread(string Name)
+		{
+			Task.Factory.StartNew(() =>
+			{
+				Thread.Sleep(5*60*1000);
+
+				if(!IsChannelList(Name))
+				{
+					sSendMessage.SendCMPrivmsg(Name.ToLower(), sLManager.GetWarningText("NoRegisteredNotesUserAccess"));
+					RandomVhost(Name);
+				}
+			});
 		}
 
 		public void RemoveAll()
