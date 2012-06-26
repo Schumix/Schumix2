@@ -145,7 +145,7 @@ namespace Schumix.CompilerAddon
 
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
-			return false;
+			return Help(sIRCMessage);
 		}
 
 		private bool Enabled(IRCMessage sIRCMessage)
