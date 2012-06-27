@@ -101,8 +101,13 @@ namespace Schumix.Irc.Commands
 
 			int month = DateTime.Now.Month;
 			int day = DateTime.Now.Day;
+			Console.WriteLine(sLManager.GetChannelLocalization(sIRCMessage.Channel));
 			string nameday = sUtilities.NameDay(sLManager.GetChannelLocalization(sIRCMessage.Channel));
-
+			Console.WriteLine(nameday);
+			Console.WriteLine(text[0], DateTime.Now.Year, month, day, nameday);
+			Console.WriteLine(text[1], DateTime.Now.Year, month, day, nameday);
+			Console.WriteLine(text[2], DateTime.Now.Year, month, day, nameday);
+			Console.WriteLine(text[3], DateTime.Now.Year, month, day, nameday);
 			if(month < 10)
 			{
 				if(day < 10)

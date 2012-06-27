@@ -688,11 +688,11 @@ namespace Schumix.Framework
 					};
 					break;
 				}
-				case "enUS":
-				{
-					Nameday = null;
-					break;
-				}
+				//case "enUS":
+				//{
+				//	Nameday = null;
+				//	break;
+				//}
 				default:
 				{
 					Nameday = new string[,] {
