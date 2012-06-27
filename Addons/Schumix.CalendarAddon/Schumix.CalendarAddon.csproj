@@ -65,6 +65,7 @@
     <Compile Include="Ban\Unban.cs" />
     <Compile Include="Localization\PLocalization.cs" />
     <Compile Include="Calendar\CalendarFunctions.cs" />
+    <Compile Include="Flood\FloodChannelParameter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

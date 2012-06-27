@@ -35,12 +35,15 @@ namespace Schumix.CalendarAddon
 	class CalendarAddon : ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly CalendarCommand sCalendarCommand = Singleton<CalendarCommand>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly BanCommand sBanCommand = Singleton<BanCommand>.Instance;
+		private readonly Sender sSender = Singleton<Sender>.Instance;
+		private readonly Ban sBan = Singleton<Ban>.Instance;
 		private Calendar _calendar;
-		public static readonly List<Flood> FloodList = new List<Flood>();
+		public static readonly Dictionary<string, Flood> FloodList = new Dictionary<string, Flood>();
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
@@ -110,9 +113,46 @@ namespace Schumix.CalendarAddon
 				if(sChannelInfo.FSelect(IFunctions.Antiflood) && sChannelInfo.FSelect(IChannelFunctions.Antiflood, channel))
 				{
 					string nick = sIRCMessage.Nick.ToLower();
-					int i = 0;
 
-					foreach(var list in FloodList)
+					if(nick == "py-ctcp")
+						return;
+
+					if(FloodList.ContainsKey(nick) && FloodList[nick].Channel.ContainsKey(channel))
+					{
+						if(FloodList[nick].Channel[channel].Piece == CalendarConfig.NumberOfFlooding)
+						{
+							var time = DateTime.Now;
+							if(time.Minute < 30)
+								sBan.BanName(nick, channel, sLManager.GetWarningText("RecurrentFlooding", channel), DateTime.Now.Hour, DateTime.Now.Minute+30);
+							else if(time.Minute >= 30)
+								sBan.BanName(nick, channel, sLManager.GetWarningText("RecurrentFlooding", channel), DateTime.Now.Hour+1, DateTime.Now.Minute-30);
+
+							FloodList[nick].Channel[channel].Piece = 0;
+							return;
+						}
+						else
+						{
+							if(FloodList[nick].Channel[channel].Message >= CalendarConfig.NumberOfMessages)
+							{
+								sSender.Kick(channel, nick, sLManager.GetWarningText("StopFlooding", channel));
+								FloodList[nick].Channel[channel].Message = 0;
+								FloodList[nick].Channel[channel].Piece++;
+								return;
+							}
+						}
+					}
+
+					if(FloodList.ContainsKey(nick) && FloodList[nick].Channel.ContainsKey(channel))
+						FloodList[nick].Channel[channel].Message++;
+					else if(FloodList.ContainsKey(nick) && !FloodList[nick].Channel.ContainsKey(channel))
+						FloodList[nick].Channel.Add(channel, new FloodChannelParameter());
+					else if(!FloodList.ContainsKey(nick))
+					{
+						FloodList.Add(nick, new Flood());
+						FloodList[nick].Channel.Add(channel, new FloodChannelParameter());
+					}
+
+					/*foreach(var list in FloodList)
 					{
 						if(nick == list.Name && channel == list.Channel)
 						{
@@ -127,7 +167,7 @@ namespace Schumix.CalendarAddon
 					if(i > 0)
 						return;
 
-					FloodList.Add(new Flood(nick, channel));
+					FloodList.Add(new Flood(nick, channel));*/
 				}
 			});
 		}

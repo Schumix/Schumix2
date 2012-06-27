@@ -18,29 +18,15 @@
  */
 
 using System;
-using Schumix.Framework;
+using System.Collections.Generic;
 
 namespace Schumix.CalendarAddon
 {
 	sealed class Flood
 	{
-		private string _name;
-		private string _channel;
-		public int Piece;
-		public int Message;
+		private Dictionary<string, FloodChannelParameter> _channel = new Dictionary<string, FloodChannelParameter>();
 
-		public Flood(string name, string channel)
-		{
-			_name = name;
-			_channel = channel;
-		}
-
-		public string Name
-		{
-			get { return _name; }
-		}
-
-		public string Channel
+		public Dictionary<string, FloodChannelParameter> Channel
 		{
 			get { return _channel; }
 		}

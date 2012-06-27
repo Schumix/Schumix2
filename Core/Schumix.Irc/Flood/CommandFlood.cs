@@ -28,6 +28,5 @@ namespace Schumix.Irc.Flood
 		public bool IsIgnore;
 		public bool Warring;
 		public int Message;
-		public CommandFlood() {}
 	}
 }
