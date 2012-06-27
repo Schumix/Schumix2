@@ -106,8 +106,8 @@ namespace Schumix.Irc.Flood
 				{
 					if(CommandFloodList[sIRCMessage.Nick.ToLower()].Warring)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("CommandsDisabled", sIRCMessage.Channel));
 						CommandFloodList[sIRCMessage.Nick.ToLower()].Warring = false;
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("CommandsDisabled", sIRCMessage.Channel));
 						return true;
 					}
 					else
