@@ -194,36 +194,6 @@ namespace Schumix.Framework.Config
 			}
 		}
 
-		public Config(string[] list)
-		{
-			try
-			{
-				int i = 0;
-				new SchumixConfig(list[i++], list[i++]);
-				new LogConfig(list[i++], list[i++].ToNumber().ToInt(), list[i++], list[i++], Convert.ToBoolean(list[i++]));
-
-				Log.Initialize(list[2]);
-				Log.Debug("Config", ">> {0}", list[1]);
-
-				Log.Notice("Config", sLConsole.Config("Text3"));
-				new ServerConfig(Convert.ToBoolean(list[i++]), list[i++], list[i++].ToNumber().ToInt(), list[i++]);
-				new IRCConfig(list[i++], list[i++].ToNumber().ToInt(), Convert.ToBoolean(list[i++]), list[i++], list[i++], list[i++], list[i++], list[i++], list[i++], list[i++], list[i++], list[i++], Convert.ToBoolean(list[i++]), list[i++], Convert.ToBoolean(list[i++]), Convert.ToBoolean(list[i++]), list[i++].ToNumber().ToInt(), list[i++], list[i++]);
-				new MySqlConfig(Convert.ToBoolean(list[i++]), list[i++], list[i++], list[i++], list[i++], list[i++]);
-				new SQLiteConfig(Convert.ToBoolean(list[i++]), list[i++]);
-				new AddonsConfig(Convert.ToBoolean(list[i++]), list[i++], list[i++]);
-				new ScriptsConfig(Convert.ToBoolean(list[i++]), list[i++]);
-				new LocalizationConfig(list[i++]);
-
-				Log.Success("Config", sLConsole.Config("Text4"));
-				Console.WriteLine();
-			}
-			catch(Exception e)
-			{
-				new LogConfig(_logfilename, 3, _logdirectory, _irclogdirectory, _irclog);
-				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
-			}
-		}
-
 		private bool IsConfig(string ConfigDirectory, string ConfigFile)
 		{
 			if(!Directory.Exists(ConfigDirectory))

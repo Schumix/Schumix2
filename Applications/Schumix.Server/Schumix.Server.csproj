@@ -67,6 +67,7 @@
     <Compile Include="Linux\Linux.cs" />
     <Compile Include="Windows\Windows.cs" />
     <Compile Include="Windows\CtrlType.cs" />
+    <Compile Include="New\Settings.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -34,6 +34,7 @@ namespace Schumix.CalendarAddon
 {
 	class CalendarAddon : ISchumixAddon
 	{
+		public static readonly Dictionary<string, Flood> FloodList = new Dictionary<string, Flood>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly CalendarCommand sCalendarCommand = Singleton<CalendarCommand>.Instance;
@@ -43,7 +44,6 @@ namespace Schumix.CalendarAddon
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Ban sBan = Singleton<Ban>.Instance;
 		private Calendar _calendar;
-		public static readonly Dictionary<string, Flood> FloodList = new Dictionary<string, Flood>();
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
