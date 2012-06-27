@@ -3,7 +3,6 @@ Megírásra váró feladatok:
 
 - Szerver hibák:
 	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!! (Állítottam a prioritáson. Lehetséges ez megoldja a gondot de még tesztelni kell.)
-	- Ha Server küldi el a konfigurációs adatokat rossz lesz a kódolás és pl ignore_channel-nél nem észleli a split a vesszőket.
 	- Ha leállna a szerver először ne botok álljanak le (amiket a szerver indított).
 
 - Fejleszteni kívánt részek, új funkciók:

@@ -68,7 +68,6 @@ namespace Schumix
 		private static void Main(string[] args)
 		{
 			sRuntime.SetProcessName("Schumix");
-			string s = string.Empty;
 			string configdir = "Configs";
 			string configfile = "Schumix.xml";
 			string console_encoding = "utf-8";
@@ -77,7 +76,6 @@ namespace Schumix
 			int serverport = -1;
 			string serverhost = "0.0.0.0";
 			string serverpassword = "0";
-			string serverconfig = string.Empty;
 			string serveridentify = string.Empty;
 			System.Console.BackgroundColor = ConsoleColor.Black;
 			System.Console.ForegroundColor = ConsoleColor.Gray;
@@ -85,7 +83,6 @@ namespace Schumix
 			for(int i = 0; i < args.Length; i++)
 			{
 				string arg = args[i];
-				s += SchumixBase.Space + arg;
 
 				if(arg == "-h" || arg == "--help")
 				{
@@ -139,18 +136,6 @@ namespace Schumix
 				}
 			}
 
-			s = s.Remove(0, 1, SchumixBase.Space);
-
-			if(s.Contains("--server-configs="))
-			{
-				serverconfig = s.Remove(0, s.IndexOf("--server-configs=") + "--server-configs=".Length);
-
-				if(serverconfig.Contains("; "))
-					serverconfig = serverconfig.Substring(0, serverconfig.IndexOf("; "));
-				else
-					serverconfig = serverconfig.Substring(0, serverconfig.Length);
-			}
-
 			if(!console_encoding.IsNumber())
 				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
 			else
@@ -169,11 +154,7 @@ namespace Schumix
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 			System.Console.WriteLine();
 
-			if(serverconfig != string.Empty && serverenabled)
-				new Config(serverconfig.Split(';'));
-			else
-				new Config(configdir, configfile);
-
+			new Config(configdir, configfile);
 			sUtilities.CreatePidFile(SchumixConfig.ConfigFile);
 
 			if(serveridentify != string.Empty)

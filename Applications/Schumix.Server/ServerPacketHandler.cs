@@ -130,12 +130,7 @@ namespace Schumix.Server
 				var packet = new SchumixPacket();
 				packet.Write<int>((int)Opcode.SMSG_AUTH_APPROVED);
 				packet.Write<int>((int)1);
-				string identify = pck.Read<string>();
-				string configs = pck.Read<string>();
-
-				if(sSchumix._processlist.ContainsKey(identify))
-					sSchumix._processlist[identify].Configs = configs;
-
+				//string identify = pck.Read<string>();
 				SendPacketBack(packet, stream, hst, bck);
 			}
 		}
@@ -166,7 +161,7 @@ namespace Schumix.Server
 			Log.Notice("CloseHandler", sLConsole.ServerPacketHandler("Text7"));
 
 			if(sSchumix._processlist.ContainsKey(identify))
-				sSchumix.Start(file, dir, ce, locale, sUtilities.GetRandomString(), sSchumix._processlist[identify].Configs);
+				sSchumix.Start(file, dir, ce, locale, sUtilities.GetRandomString());
 
 			//sSchumix._processlist[identify].Process.Kill();
 			sSchumix._processlist.Remove(identify);
