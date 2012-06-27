@@ -44,10 +44,8 @@ namespace Schumix.CalendarAddon
 		private System.Timers.Timer _timerflood = new System.Timers.Timer();
 		private System.Timers.Timer _timerunban = new System.Timers.Timer();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Unban sUnban = Singleton<Unban>.Instance;
-		private readonly Ban sBan = Singleton<Ban>.Instance;
-		private int flood;
+		//private int flood;
 
 		public Calendar()
 		{
@@ -57,7 +55,7 @@ namespace Schumix.CalendarAddon
 		public void Start()
 		{
 			// Flood
-			_timerflood.Interval = 1000;
+			_timerflood.Interval = CalendarConfig.Seconds * 1000;
 			_timerflood.Elapsed += HandleTimerFloodElapsed;
 			_timerflood.Enabled = true;
 			_timerflood.Start();
@@ -174,21 +172,26 @@ namespace Schumix.CalendarAddon
 
 		private void Flood()
 		{
-			flood++;
-
-			if(flood == CalendarConfig.Seconds)
+			foreach(var list in CalendarAddon.FloodList)
 			{
-				flood = 0;
+				foreach(var list2 in list.Value.Channel)
+					list2.Value.Message = 0;
+			}
+			//flood++;
 
-				foreach(var list in CalendarAddon.FloodList)
+			//if(flood == CalendarConfig.Seconds)
+			//{
+			//	flood = 0;
+
+				/*foreach(var list in CalendarAddon.FloodList)
 				{
-					if(list.Piece == CalendarConfig.NumberOfFlooding)
+					if(list.Value.Piece == CalendarConfig.NumberOfFlooding)
 					{
 						var time = DateTime.Now;
 						if(time.Minute < 30)
-							sBan.BanName(list.Name, list.Channel, sLManager.GetWarningText("RecurrentFlooding", list.Channel), DateTime.Now.Hour, DateTime.Now.Minute+30);
+							sBan.BanName(list.Key, list.Channel, sLManager.GetWarningText("RecurrentFlooding", list.Channel), DateTime.Now.Hour, DateTime.Now.Minute+30);
 						else if(time.Minute >= 30)
-							sBan.BanName(list.Name, list.Channel, sLManager.GetWarningText("RecurrentFlooding", list.Channel), DateTime.Now.Hour+1, DateTime.Now.Minute-30);
+							sBan.BanName(list.Key, list.Channel, sLManager.GetWarningText("RecurrentFlooding", list.Channel), DateTime.Now.Hour+1, DateTime.Now.Minute-30);
 
 						list.Piece = 0;
 					}
@@ -203,8 +206,8 @@ namespace Schumix.CalendarAddon
 						else
 							list.Message = 0;
 					}
-				}
-			}
+				}*/
+			//}
 		}
 
 		private void Unban()
