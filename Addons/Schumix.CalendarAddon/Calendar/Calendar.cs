@@ -45,7 +45,6 @@ namespace Schumix.CalendarAddon
 		private System.Timers.Timer _timerunban = new System.Timers.Timer();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Unban sUnban = Singleton<Unban>.Instance;
-		//private int flood;
 
 		public Calendar()
 		{
@@ -177,37 +176,6 @@ namespace Schumix.CalendarAddon
 				foreach(var list2 in list.Value.Channel)
 					list2.Value.Message = 0;
 			}
-			//flood++;
-
-			//if(flood == CalendarConfig.Seconds)
-			//{
-			//	flood = 0;
-
-				/*foreach(var list in CalendarAddon.FloodList)
-				{
-					if(list.Value.Piece == CalendarConfig.NumberOfFlooding)
-					{
-						var time = DateTime.Now;
-						if(time.Minute < 30)
-							sBan.BanName(list.Key, list.Channel, sLManager.GetWarningText("RecurrentFlooding", list.Channel), DateTime.Now.Hour, DateTime.Now.Minute+30);
-						else if(time.Minute >= 30)
-							sBan.BanName(list.Key, list.Channel, sLManager.GetWarningText("RecurrentFlooding", list.Channel), DateTime.Now.Hour+1, DateTime.Now.Minute-30);
-
-						list.Piece = 0;
-					}
-					else
-					{
-						if(list.Message >= CalendarConfig.NumberOfMessages)
-						{
-							sSender.Kick(list.Channel, list.Name, sLManager.GetWarningText("StopFlooding", list.Channel));
-							list.Message = 0;
-							list.Piece++;
-						}
-						else
-							list.Message = 0;
-					}
-				}*/
-			//}
 		}
 
 		private void Unban()

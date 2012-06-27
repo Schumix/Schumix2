@@ -151,23 +151,6 @@ namespace Schumix.CalendarAddon
 						FloodList.Add(nick, new Flood());
 						FloodList[nick].Channel.Add(channel, new FloodChannelParameter());
 					}
-
-					/*foreach(var list in FloodList)
-					{
-						if(nick == list.Name && channel == list.Channel)
-						{
-							list.Message++;
-							i++;
-						}
-					}
-
-					if(nick == "py-ctcp")
-						return;
-
-					if(i > 0)
-						return;
-
-					FloodList.Add(new Flood(nick, channel));*/
 				}
 			});
 		}
