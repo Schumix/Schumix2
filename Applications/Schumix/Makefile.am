@@ -31,6 +31,8 @@ SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
+SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Debug/Schumix.Updater.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
@@ -67,6 +69,8 @@ SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
 SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_MDB=
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
+SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Release/Schumix.Updater.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_UPDATER_DLL_MDB=
@@ -103,6 +107,8 @@ SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.API.dll.mdb
 SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_MDB=
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
+SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Debug_x64/Schumix.Updater.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_UPDATER_DLL_MDB=
@@ -137,6 +143,8 @@ SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
 SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_MDB=
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
+SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Release_x64/Schumix.Updater.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_UPDATER_DLL_MDB=
@@ -161,6 +169,8 @@ PROGRAMFILES = \
 	$(SCHUMIX_API_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL_MDB) \
+	$(SQLITE3_DLL) \
+	$(SCHUMIX_DB3) \
 	$(SCHUMIX_UPDATER_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
 	$(SCHUMIX_UPDATER_DLL_MDB) \
@@ -220,6 +230,8 @@ SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
+SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
+SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 SCHUMIX_UPDATER_DLL = $(BUILD_DIR)/Schumix.Updater.dll
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 SCHUMIX_LUAENGINE_DLL = $(BUILD_DIR)/Schumix.LuaEngine.dll
@@ -230,6 +242,8 @@ SCHUMIX = $(BUILD_DIR)/schumix
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
+$(eval $(call emit-deploy-target,SQLITE3_DLL))
+$(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-target,KOPILUA_DLL))
 $(eval $(call emit-deploy-target,LUAINTERFACE_DLL))

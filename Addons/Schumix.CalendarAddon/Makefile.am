@@ -147,7 +147,8 @@ FILES = \
 	Ban/Ban.cs \
 	Ban/Unban.cs \
 	Localization/PLocalization.cs \
-	Calendar/CalendarFunctions.cs 
+	Calendar/CalendarFunctions.cs \
+	Flood/FloodChannelParameter.cs 
 
 DATA_FILES = 
 
