@@ -152,7 +152,8 @@ FILES = \
 	New/Schumix.cs \
 	Linux/Linux.cs \
 	Windows/Windows.cs \
-	Windows/CtrlType.cs 
+	Windows/CtrlType.cs \
+	New/Settings.cs 
 
 DATA_FILES = 
 
