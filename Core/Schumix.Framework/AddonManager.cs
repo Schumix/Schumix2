@@ -110,6 +110,9 @@ namespace Schumix.Framework
 							enabled = false;
 					}
 
+					if(enabled && IsIgnore(dll.Name.Substring(0, dll.Name.IndexOf(".dll"))))
+						enabled = false;
+
 					var asm = Assembly.LoadFrom(dll.FullName);
 
 					if(asm.IsNull())
@@ -193,6 +196,12 @@ namespace Schumix.Framework
 				Log.Debug("AddonManager", "AppDomain::AssemblyResolve, sender: {0}, name: {1}, asm: {2}", sender.GetHashCode(), eargs.Name, eargs.RequestingAssembly.FullName);
 				return null;
 			};
+		}
+
+		private bool IsIgnore(string Name)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			return !db.IsNull() ? true : false;
 		}
 	}
 }
