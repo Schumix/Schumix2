@@ -3,7 +3,7 @@
 -- ----------------------------
 -- Records of channel
 -- ----------------------------
-INSERT INTO `channel` VALUES ("1", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off", "#schumix2", "", "", "", "huHU");
+INSERT INTO `channel` VALUES ("1", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off", "#schumix2", "", "", "", "huHU");
 
 -- ----------------------------
 -- Records of gitinfo
