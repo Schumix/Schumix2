@@ -76,7 +76,7 @@ namespace Schumix.Console.Commands
 			RegisterHandler("help",       HandleHelp);
 			RegisterHandler("consolelog", HandleConsoleLog);
 			RegisterHandler("sys",        HandleSys);
-			RegisterHandler("csatorna",   HandleCsatorna);
+			RegisterHandler("csatorna",   HandleConsoleToChannel);
 			RegisterHandler("admin",      HandleAdmin);
 			RegisterHandler("function",   HandleFunction);
 			RegisterHandler("channel",    HandleChannel);

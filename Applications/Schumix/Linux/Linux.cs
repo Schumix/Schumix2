@@ -33,18 +33,35 @@ namespace Schumix
 
 		public void Init()
 		{
-			new Thread(TerminateHandler).Start();
+			new Thread(LinuxHandler).Start();
 		}
 	
-		private void TerminateHandler()
+		private void LinuxHandler()
 		{
-			Log.Notice("Linux", "Initializing Handler for SIGINT");
-			var signal = new UnixSignal(Signum.SIGINT);
-			signal.WaitOne();
+			Log.Notice("Linux", "Initializing Handler for SIGINT, SIGHUP, SIGSEGV");
+			var signals = new UnixSignal[]
+			{
+				new UnixSignal(Signum.SIGINT),
+				new UnixSignal(Signum.SIGHUP),
+				new UnixSignal(Signum.SIGSEGV)
+			};
 
-			Log.Notice("Linux", "Handler Terminated.");
-			SchumixBase.Quit();
-			sSender.Quit("Daemon killed.");
+			int which = UnixSignal.WaitAny(signals, -1);
+			Log.Debug("Linux", "Got a {0} signal!", signals[which].Signum);
+
+			if(signals[which].Signum == Signum.SIGSEGV)
+			{
+				Log.Notice("Linux", "Segmentation fault.");
+				SchumixBase.Quit();
+				sSender.Quit("Segmentation fault.");
+			}
+			else
+			{
+				Log.Notice("Linux", "Handler Terminated.");
+				SchumixBase.Quit();
+				sSender.Quit("Daemon killed.");
+			}
+
 			Thread.Sleep(5*1000);
 		}
 	}

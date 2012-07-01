@@ -91,47 +91,65 @@ namespace Schumix
 				}
 				else if(arg.Contains("--config-dir="))
 				{
-					configdir = arg.Substring(arg.IndexOf("=")+1);
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						configdir = arg.Substring(arg.IndexOf("=")+1);
+
 					continue;
 				}
 				else if(arg.Contains("--config-file="))
 				{
-					configfile = arg.Substring(arg.IndexOf("=")+1);
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						configfile = arg.Substring(arg.IndexOf("=")+1);
+
 					continue;
 				}
 				else if(arg.Contains("--console-encoding="))
 				{
-					console_encoding = arg.Substring(arg.IndexOf("=")+1);
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						console_encoding = arg.Substring(arg.IndexOf("=")+1);
+
 					continue;
 				}
 				else if(arg.Contains("--console-localization="))
 				{
-					localization = arg.Substring(arg.IndexOf("=")+1);
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						localization = arg.Substring(arg.IndexOf("=")+1);
+
 					continue;
 				}
 				else if(arg.Contains("--server-enabled="))
 				{
-					serverenabled = Convert.ToBoolean(arg.Substring(arg.IndexOf("=")+1));
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						serverenabled = Convert.ToBoolean(arg.Substring(arg.IndexOf("=")+1));
+
 					continue;
 				}
 				else if(arg.Contains("--server-host="))
 				{
-					serverhost = arg.Substring(arg.IndexOf("=")+1);
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						serverhost = arg.Substring(arg.IndexOf("=")+1);
+
 					continue;
 				}
 				else if(arg.Contains("--server-port="))
 				{
-					serverport = Convert.ToInt32(arg.Substring(arg.IndexOf("=")+1));
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						serverport = Convert.ToInt32(arg.Substring(arg.IndexOf("=")+1));
+
 					continue;
 				}
 				else if(arg.Contains("--server-password="))
 				{
-					serverpassword = arg.Substring(arg.IndexOf("=")+1);
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						serverpassword = arg.Substring(arg.IndexOf("=")+1);
+
 					continue;
 				}
 				else if(arg.Contains("--server-identify="))
 				{
-					serveridentify = arg.Substring(arg.IndexOf("=")+1);
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						serveridentify = arg.Substring(arg.IndexOf("=")+1);
+
 					continue;
 				}
 			}

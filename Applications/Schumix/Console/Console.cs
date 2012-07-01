@@ -100,7 +100,9 @@ namespace Schumix.Console
 			{
 				Log.Error("ConsoleRead", sLConsole.Exception("Error"), e.Message);
 				Thread.Sleep(1000);
-				ConsoleRead();
+
+				if(!SchumixBase.ExitStatus)
+					ConsoleRead();
 			}
 		}
 	}
