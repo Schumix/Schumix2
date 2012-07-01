@@ -72,22 +72,30 @@ namespace Schumix.Server
 				}
 				else if(arg.Contains("--config-dir="))
 				{
-					configdir = arg.Substring(arg.IndexOf("=")+1);
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						configdir = arg.Substring(arg.IndexOf("=")+1);
+
 					continue;
 				}
 				else if(arg.Contains("--config-file="))
 				{
-					configfile = arg.Substring(arg.IndexOf("=")+1);
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						configfile = arg.Substring(arg.IndexOf("=")+1);
+
 					continue;
 				}
 				else if(arg.Contains("--console-encoding="))
 				{
-					console_encoding = arg.Substring(arg.IndexOf("=")+1);
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						console_encoding = arg.Substring(arg.IndexOf("=")+1);
+
 					continue;
 				}
 				else if(arg.Contains("--console-localization="))
 				{
-					localization = arg.Substring(arg.IndexOf("=")+1);
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						localization = arg.Substring(arg.IndexOf("=")+1);
+
 					continue;
 				}
 			}

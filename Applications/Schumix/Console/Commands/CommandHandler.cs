@@ -157,7 +157,7 @@ namespace Schumix.Console.Commands
 		/// <summary>
 		///     Csatorna parancs függvénye.
 		/// </summary>
-		protected void HandleCsatorna()
+		protected void HandleConsoleToChannel()
 		{
 			if(Info.Length < 2)
 			{
