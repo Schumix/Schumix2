@@ -45,7 +45,7 @@ namespace Schumix.Updater.Compiler
 
 			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
-				File.Copy(dir + "/Dependencies/xbuild.exe", dir + "/xbuild.exe");
+				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "/xbuild.exe", dir + "/xbuild.exe");
 				build.StartInfo.FileName = "mono";
 
 				if(Environment.Is64BitOperatingSystem)
