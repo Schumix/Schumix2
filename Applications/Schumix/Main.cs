@@ -41,19 +41,35 @@ namespace Schumix
 		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
 		/// </summary>
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		/// <summary>
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     A hibákat lehet feljegyezni egy olyan fájlba melyből az infórmációk alapján feldolgozhatók a hibák. Főként Visual Studioval lehet használni.
+		/// </summary>
 		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		/// <summary>
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     Futással kapcsolatos információkat táról.
+		/// </summary>
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
+		/// <summary>
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     Csak windows alatt müködő függvények.
+		/// </summary>
 		private static readonly Windows sWindows = Singleton<Windows>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Üzenet küldés az irc szerver felé.
 		/// </summary>
 		private static readonly Sender sSender = Singleton<Sender>.Instance;
+		/// <summary>
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     Csak linux alatt müködő függvények.
+		/// </summary>
 		private static readonly Linux sLinux = Singleton<Linux>.Instance;
 
 		/// <summary>
