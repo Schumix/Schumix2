@@ -46,10 +46,30 @@ namespace Schumix.Console.Commands
 		///     LocalizationManager segítségével állítható be az irc szerver felé menő tárolt üzenetek nyelvezete.
 		/// </summary>
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		/// <summary>
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     Tárolja a csatornákon lévő neveket. Ezen adatok módosíthatóak, lekérdezhetőek.
+		/// </summary>
 		private readonly ChannelNameList sChannelNameList = Singleton<ChannelNameList>.Instance;
+		/// <summary>
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     A letiltott irc neket érjük el vele.
+		/// </summary>
 		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
+		/// <summary>
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     A letiltott irc csatornákat érjük el vele.
+		/// </summary>
 		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
+		/// <summary>
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     A letiltott ircn használható saját parancsokat érjük el vele.
+		/// </summary>
 		private readonly IgnoreCommand sIgnoreCommand = Singleton<IgnoreCommand>.Instance;
+		/// <summary>
+		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
+		///     A letiltott addonokat érjük el vele.
+		/// </summary>
 		private readonly IgnoreAddon sIgnoreAddon = Singleton<IgnoreAddon>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
@@ -97,6 +117,9 @@ namespace Schumix.Console.Commands
 			_network = network;
 		}
 
+		/// <summary>
+		///     Megállapítja hogy az adot szöveg csatorna-e.
+		/// </summary>
 		private bool IsChannel(string Name)
 		{
 			return (Name.Length >= 2 && Name.Trim().Length > 1 && Name.Substring(0, 1) == "#");
@@ -1149,6 +1172,9 @@ namespace Schumix.Console.Commands
 				Log.Notice("Console", text[2], Info[1]);
 		}
 
+		/// <summary>
+		///     Ignore parancs függvénye.
+		/// </summary>
 		protected void HandleIgnore()
 		{
 			if(Info.Length < 2)
@@ -1612,6 +1638,9 @@ namespace Schumix.Console.Commands
 			}
 		}
 
+		/// <summary>
+		///     Plugin parancs függvénye.
+		/// </summary>
 		protected void HandlePlugin()
 		{
 			if(Info.Length >= 2 && Info[1].ToLower() == "load")
