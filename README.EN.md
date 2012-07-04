@@ -25,11 +25,9 @@ Open the `Schumix.sln` file. Choose the configuration that fits for you and comp
 
 Install the `mono-xbuild` package or from source. After run the `build.sh` command and the code is compiled.
 
-# Kód üzembehelyezése
+# Code commissioning
 
-Navigáljunk a `Run` mappába és azon belül a konfigurációnak megfelelõ mappába. Inditusk el az exe-t. A program legenerálja
-önmagának a konfig fájlt. Ha bármi gond lenne vele hozzunk létre egy `Configs` nevû mappát és a fõ mappából másoljuk bele
-a `Schumix.xml` nevû fájlt.
+Navigate to the `Run` folder and in that proper folder for the configuration. Run the exe. The program is generates its config file. If there will be some problem then create a `Configs` named folder and from the root folder copy in that folder the `Schumix.xml` named file.
 
 # Konfig beállítása
 
