@@ -5,22 +5,25 @@
 This code is intended to relay its predecessor. It is lay new basis and got many newness.
 More faster and reliable than Schumix. The code is written in c#.
 
-# Platformok
+# Platformos
 
-A bot kompatibilis a windows és linux rendszerrel. Valószínüleg Mac OS X-en is fut de még nem került tesztelésre.
-Windows alatt ajálott a `.net 4.0` használata vagy újabb.
-Monon jelenleg minimum követelmény a `2.10` vagy újabb.
+The bot has compatibility with the windows and linux systems. It might be run on Mac OS X but it is not tested.
+Under Windows the `.NET Framework 4.0` or higher is recommended.
+Under Mono at least the `2.10` or higher is needed.
 
-# Fordítása
+# Compile
 
 ## Windows
-A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
+
+The compiling is simple. Open the `Schumix.sln` file. Choose the configuration that fits for you and compile it.
 
 ## Linux
-Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
 
-## Linux terminál
-Telepítsük a `mono-xbuild` csomagot vagy forrásból. Ezután inditsuk el a `build.sh`-t és lefordul a kód.
+Open the `Schumix.sln` file. Choose the configuration that fits for you and compile it.
+
+## Linux terminal
+
+Install the `mono-xbuild` package or from source. After run the `build.sh` command and the code is compiled.
 
 # Kód üzembehelyezése
 
