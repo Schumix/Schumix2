@@ -18,18 +18,25 @@
  */
 
 using System;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
 {
-	public sealed class SchumixConfig
+	public sealed class UpdateConfig
 	{
-		public static string ConfigDirectory { get; private set; }
-		public static string ConfigFile { get; private set; }
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		public static bool Enabled { get; private set; }
+		public static string Version { get; private set; }
+		public static string Branch { get; private set; }
+		public static string WebPage { get; private set; }
 
-		public SchumixConfig(string configdirectory, string configfile)
+		public UpdateConfig(bool enabled, string version, string branch, string webpage)
 		{
-			ConfigDirectory = configdirectory;
-			ConfigFile      = configfile;
+			Enabled = enabled;
+			Version = version;
+			Branch  = branch;
+			WebPage = webpage;
+			Log.Notice("UpdateConfig", sLConsole.UpdateConfig("Text"));
 		}
 	}
 }

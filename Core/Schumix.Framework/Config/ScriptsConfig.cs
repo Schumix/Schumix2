@@ -18,18 +18,21 @@
  */
 
 using System;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
 {
-	public sealed class SchumixConfig
+	public sealed class ScriptsConfig
 	{
-		public static string ConfigDirectory { get; private set; }
-		public static string ConfigFile { get; private set; }
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		public static bool Lua { get; private set; }
+		public static string Directory { get; private set; }
 
-		public SchumixConfig(string configdirectory, string configfile)
+		public ScriptsConfig(bool lua, string directory)
 		{
-			ConfigDirectory = configdirectory;
-			ConfigFile      = configfile;
+			Lua       = lua;
+			Directory = directory;
+			Log.Notice("ScriptsConfig", sLConsole.ScriptsConfig("Text"));
 		}
 	}
 }

@@ -18,18 +18,23 @@
  */
 
 using System;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
 {
-	public sealed class SchumixConfig
+	public sealed class AddonsConfig
 	{
-		public static string ConfigDirectory { get; private set; }
-		public static string ConfigFile { get; private set; }
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		public static bool Enabled { get; private set; }
+		public static string Ignore { get; private set; }
+		public static string Directory { get; private set; }
 
-		public SchumixConfig(string configdirectory, string configfile)
+		public AddonsConfig(bool enabled, string ignore, string directory)
 		{
-			ConfigDirectory = configdirectory;
-			ConfigFile      = configfile;
+			Enabled   = enabled;
+			Ignore    = ignore;
+			Directory = directory;
+			Log.Notice("AddonsConfig", sLConsole.AddonsConfig("Text"));
 		}
 	}
 }

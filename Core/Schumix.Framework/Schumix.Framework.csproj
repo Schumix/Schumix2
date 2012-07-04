@@ -66,7 +66,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
-    <Compile Include="Config\SchumixConfig.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="SchumixBase.cs" />
     <Compile Include="ConsoleLog.cs" />
@@ -95,6 +94,17 @@
     <Compile Include="Mathematics\Types\AutoSortedArray.cs" />
     <Compile Include="Mathematics\MathFunctions.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="Config\Consts.cs" />
+    <Compile Include="Config\SchumixConfig.cs" />
+    <Compile Include="Config\IRCConfig.cs" />
+    <Compile Include="Config\MySqlConfig.cs" />
+    <Compile Include="Config\SQLiteConfig.cs" />
+    <Compile Include="Config\LogConfig.cs" />
+    <Compile Include="Config\AddonsConfig.cs" />
+    <Compile Include="Config\ScriptsConfig.cs" />
+    <Compile Include="Config\LocalizationConfig.cs" />
+    <Compile Include="Config\UpdateConfig.cs" />
+    <Compile Include="Config\ServerConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

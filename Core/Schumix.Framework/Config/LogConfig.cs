@@ -21,15 +21,21 @@ using System;
 
 namespace Schumix.Framework.Config
 {
-	public sealed class SchumixConfig
+	public sealed class LogConfig
 	{
-		public static string ConfigDirectory { get; private set; }
-		public static string ConfigFile { get; private set; }
+		public static string FileName { get; private set; }
+		public static int LogLevel { get; private set; }
+		public static string LogDirectory { get; private set; }
+		public static string IrcLogDirectory { get; private set; }
+		public static bool IrcLog { get; private set; }
 
-		public SchumixConfig(string configdirectory, string configfile)
+		public LogConfig(string filename, int loglevel, string logdirectory, string irclogdirectory, bool irclog)
 		{
-			ConfigDirectory = configdirectory;
-			ConfigFile      = configfile;
+			FileName        = filename;
+			LogLevel        = loglevel;
+			LogDirectory    = logdirectory;
+			IrcLogDirectory = irclogdirectory;
+			IrcLog          = irclog;
 		}
 	}
 }
