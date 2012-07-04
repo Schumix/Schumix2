@@ -140,7 +140,6 @@ FILES = \
 	Ctcp/CtcpSender.cs \
 	Ctcp/CtcpUtil.cs \
 	ChannelNameList.cs \
-	Ignore.cs \
 	Commands/GoogleWebSearch.cs \
 	ConnectionType.cs \
 	Flood/AntiFlood.cs \
@@ -153,7 +152,12 @@ FILES = \
 	IrcMethod.cs \
 	IrcCommandAttribute.cs \
 	Sender/Sender.cs \
-	Sender/SendMessage.cs 
+	Sender/SendMessage.cs \
+	Ignore/IgnoreNickName.cs \
+	Ignore/IgnoreIrcCommand.cs \
+	Ignore/IgnoreCommand.cs \
+	Ignore/IgnoreChannel.cs \
+	Ignore/IgnoreAddon.cs 
 
 DATA_FILES = 
 

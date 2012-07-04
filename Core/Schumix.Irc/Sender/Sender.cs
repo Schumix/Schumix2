@@ -18,6 +18,7 @@
  */
 
 using System;
+using Schumix.Irc.Ignore;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;

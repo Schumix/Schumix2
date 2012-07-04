@@ -21,6 +21,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using Schumix.API;
+using Schumix.Irc.Ignore;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;

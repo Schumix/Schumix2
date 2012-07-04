@@ -74,7 +74,6 @@
     <Compile Include="Ctcp\CtcpSender.cs" />
     <Compile Include="Ctcp\CtcpUtil.cs" />
     <Compile Include="ChannelNameList.cs" />
-    <Compile Include="Ignore.cs" />
     <Compile Include="Commands\GoogleWebSearch.cs" />
     <Compile Include="ConnectionType.cs" />
     <Compile Include="Flood\AntiFlood.cs" />
@@ -88,6 +87,11 @@
     <Compile Include="IrcCommandAttribute.cs" />
     <Compile Include="Sender\Sender.cs" />
     <Compile Include="Sender\SendMessage.cs" />
+    <Compile Include="Ignore\IgnoreNickName.cs" />
+    <Compile Include="Ignore\IgnoreIrcCommand.cs" />
+    <Compile Include="Ignore\IgnoreCommand.cs" />
+    <Compile Include="Ignore\IgnoreChannel.cs" />
+    <Compile Include="Ignore\IgnoreAddon.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -103,5 +107,6 @@
   <ItemGroup>
     <Folder Include="Flood\" />
     <Folder Include="Sender\" />
+    <Folder Include="Ignore\" />
   </ItemGroup>
 </Project>
