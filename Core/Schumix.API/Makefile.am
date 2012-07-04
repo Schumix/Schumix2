@@ -74,12 +74,14 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 FILES = \
 	ISchumix.cs \
 	Properties/AssemblyInfo.cs \
-	IRCMessage.cs \
-	INetwork.cs \
-	IFunctions.cs \
-	MessageType.cs \
 	Delegate/CommandDelegate.cs \
-	Delegate/IRCDelegate.cs 
+	Delegate/IRCDelegate.cs \
+	Functions/IChannelFunctions.cs \
+	Functions/IFunctions.cs \
+	Functions/IFunctionsClass.cs \
+	Irc/INetwork.cs \
+	Irc/IRCMessage.cs \
+	Irc/MessageType.cs 
 
 DATA_FILES = 
 
