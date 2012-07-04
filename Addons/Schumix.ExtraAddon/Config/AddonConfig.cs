@@ -159,42 +159,4 @@ namespace Schumix.ExtraAddon.Config
 			}
 		}
 	}
-
-	public sealed class ModeConfig
-	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		public static bool RemoveEnabled { get; private set; }
-		public static string RemoveType { get; private set; }
-
-		public ModeConfig(bool removeenabled, string removetype)
-		{
-			RemoveEnabled = removeenabled;
-			RemoveType    = removetype;
-			Log.Notice("ModeConfig", sLocalization.ModeConfig("Text"));
-		}
-	}
-
-	public sealed class WeatherConfig
-	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		public static string City { get; private set; }
-
-		public WeatherConfig(string city)
-		{
-			City = city;
-			Log.Notice("WeatherConfig", sLocalization.WeatherConfig("Text"));
-		}
-	}
-
-	public sealed class WolframAlphaConfig
-	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		public static string Key { get; private set; }
-
-		public WolframAlphaConfig(string key)
-		{
-			Key = key;
-			Log.Notice("WorlframAlphaConfig", sLocalization.WolframAlphaConfig("Text"));
-		}
-	}
 }

@@ -61,6 +61,9 @@
     <Compile Include="Localization\PLocalization.cs" />
     <Compile Include="Commands\NameList.cs" />
     <Compile Include="Commands\NotesCommand.cs" />
+    <Compile Include="Config\ModeConfig.cs" />
+    <Compile Include="Config\WeatherConfig.cs" />
+    <Compile Include="Config\WolframAlphaConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

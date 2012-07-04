@@ -66,6 +66,7 @@
     <Compile Include="Localization\PLocalization.cs" />
     <Compile Include="Calendar\CalendarFunctions.cs" />
     <Compile Include="Flood\FloodChannelParameter.cs" />
+    <Compile Include="Config\CalendarConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

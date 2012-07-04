@@ -143,7 +143,8 @@ FILES = \
 	Config/AddonConfig.cs \
 	Localization/PLocalization.cs \
 	MantisBTRssAddon.cs \
-	Rss/MantisBTRss.cs 
+	Rss/MantisBTRss.cs \
+	Config/RssConfig.cs 
 
 DATA_FILES = 
 

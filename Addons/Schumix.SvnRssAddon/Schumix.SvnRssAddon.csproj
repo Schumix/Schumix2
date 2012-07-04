@@ -61,6 +61,7 @@
     <Compile Include="Rss\SvnRss.cs" />
     <Compile Include="Config\AddonConfig.cs" />
     <Compile Include="Localization\PLocalization.cs" />
+    <Compile Include="Config\RssConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

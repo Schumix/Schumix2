@@ -61,6 +61,7 @@
     <Compile Include="Localization\PLocalization.cs" />
     <Compile Include="Rss\WordPressRss.cs" />
     <Compile Include="WordPressRssAddon.cs" />
+    <Compile Include="Config\RssConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
