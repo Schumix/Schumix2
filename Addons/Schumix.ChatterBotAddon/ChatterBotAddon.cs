@@ -22,6 +22,7 @@ using System.Web;
 using System.Threading.Tasks;
 using Schumix.API;
 using Schumix.Irc;
+using Schumix.Irc.Ignore;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using ChatterBotAPI;

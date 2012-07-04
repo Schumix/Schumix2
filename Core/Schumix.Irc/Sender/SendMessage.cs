@@ -69,7 +69,10 @@ namespace Schumix.Irc
 							case MessageType.Amsg:
 								var clist = ChannelList();
 								foreach(var chan in clist)
+								{
 									WriteLine("PRIVMSG {0} :{1}", chan, IgnoreCommand(text));
+									Thread.Sleep(400);
+								}
 
 								clist.Clear();
 								break;
@@ -102,7 +105,10 @@ namespace Schumix.Irc
 						case MessageType.Amsg:
 							var clist = ChannelList();
 							foreach(var chan in clist)
+							{
 								WriteLine("PRIVMSG {0} :{1}", chan, IgnoreCommand(message));
+								Thread.Sleep(400);
+							}
 
 							clist.Clear();
 							break;

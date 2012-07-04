@@ -22,6 +22,7 @@ using System.Data;
 using System.Threading;
 using System.Diagnostics;
 using Schumix.Irc;
+using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;

@@ -21,6 +21,7 @@ using System;
 using Schumix.API;
 using Schumix.Irc.Ctcp;
 using Schumix.Irc.Flood;
+using Schumix.Irc.Ignore;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
