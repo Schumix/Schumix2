@@ -5,7 +5,7 @@
 This code is intended to relay its predecessor. It is lay new basis and got many newness.
 More faster and reliable than Schumix. The code is written in c#.
 
-# Platformos
+# Platforms
 
 The bot has compatibility with the windows and linux systems. It might be run on Mac OS X but it is not tested.
 Under Windows the `.NET Framework 4.0` or higher is recommended.
@@ -29,7 +29,7 @@ Install the `mono-xbuild` package or from source. After run the `build.sh` comma
 
 Navigate to the `Run` folder and in that proper folder for the configuration. Run the exe. The program is generates its config file. If there will be some problem then create a `Configs` named folder and from the root folder copy in that folder the `Schumix.xml` named file.
 
-# Konfig beállítása
+# Config settings
 
 ## Server
 
