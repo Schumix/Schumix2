@@ -68,6 +68,9 @@
     <Compile Include="Windows\Windows.cs" />
     <Compile Include="Windows\CtrlType.cs" />
     <Compile Include="New\Settings.cs" />
+    <Compile Include="Config\ServerConfig.cs" />
+    <Compile Include="Config\ServerConfigs.cs" />
+    <Compile Include="Config\LocalizationConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
