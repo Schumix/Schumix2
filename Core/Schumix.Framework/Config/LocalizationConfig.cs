@@ -18,18 +18,19 @@
  */
 
 using System;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
 {
-	public sealed class SchumixConfig
+	public sealed class LocalizationConfig
 	{
-		public static string ConfigDirectory { get; private set; }
-		public static string ConfigFile { get; private set; }
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		public static string Locale { get; private set; }
 
-		public SchumixConfig(string configdirectory, string configfile)
+		public LocalizationConfig(string locale)
 		{
-			ConfigDirectory = configdirectory;
-			ConfigFile      = configfile;
+			Locale = locale;
+			Log.Notice("LocalizationConfig", sLConsole.LocalizationConfig("Text"));
 		}
 	}
 }

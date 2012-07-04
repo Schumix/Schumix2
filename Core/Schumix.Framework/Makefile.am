@@ -109,7 +109,7 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 
 FILES = \
 	Config/Config.cs \
-	Config/SchumixConfig.cs \
+	Config/Consts.cs \
 	Singleton.cs \
 	SchumixBase.cs \
 	ConsoleLog.cs \
@@ -137,7 +137,17 @@ FILES = \
 	Mathematics/Algorithms/QuickSort.cs \
 	Mathematics/Types/AutoSortedArray.cs \
 	Mathematics/MathFunctions.cs \
-	Log.cs 
+	Log.cs \
+	Config/SchumixConfig.cs \
+	Config/IRCConfig.cs \
+	Config/MySqlConfig.cs \
+	Config/SQLiteConfig.cs \
+	Config/LogConfig.cs \
+	Config/AddonsConfig.cs \
+	Config/ScriptsConfig.cs \
+	Config/LocalizationConfig.cs \
+	Config/UpdateConfig.cs \
+	Config/ServerConfig.cs 
 
 DATA_FILES = 
 
