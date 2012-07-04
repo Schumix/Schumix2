@@ -143,7 +143,8 @@ FILES = \
 	Config/AddonConfig.cs \
 	HgRssAddon.cs \
 	Rss/HgRss.cs \
-	Localization/PLocalization.cs 
+	Localization/PLocalization.cs \
+	Config/RssConfig.cs 
 
 DATA_FILES = 
 

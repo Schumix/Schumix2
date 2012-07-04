@@ -122,20 +122,4 @@ namespace Schumix.CalendarAddon.Config
 			}
 		}
 	}
-
-	sealed class CalendarConfig
-	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		public static int Seconds { get; private set; }
-		public static int NumberOfMessages { get; private set; }
-		public static int NumberOfFlooding { get; private set; }
-
-		public CalendarConfig(int seconds, int numberofmessages, int numberofflooding)
-		{
-			Seconds          = seconds;
-			NumberOfMessages = numberofmessages;
-			NumberOfFlooding = numberofflooding;
-			Log.Notice("CalendarConfig", sLocalization.CalendarConfig("Text"));
-		}
-	}
 }

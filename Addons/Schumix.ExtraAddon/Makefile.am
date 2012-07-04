@@ -163,7 +163,10 @@ FILES = \
 	Commands/WebHelper.cs \
 	Localization/PLocalization.cs \
 	Commands/NameList.cs \
-	Commands/NotesCommand.cs 
+	Commands/NotesCommand.cs \
+	Config/ModeConfig.cs \
+	Config/WeatherConfig.cs \
+	Config/WolframAlphaConfig.cs 
 
 DATA_FILES = 
 

@@ -61,6 +61,7 @@
     <Compile Include="HgRssAddon.cs" />
     <Compile Include="Rss\HgRss.cs" />
     <Compile Include="Localization\PLocalization.cs" />
+    <Compile Include="Config\RssConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

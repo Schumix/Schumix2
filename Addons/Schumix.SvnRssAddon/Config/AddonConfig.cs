@@ -116,16 +116,4 @@ namespace Schumix.SvnRssAddon.Config
 			}
 		}
 	}
-
-	sealed class RssConfig
-	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		public static int QueryTime { get; private set; }
-
-		public RssConfig(int querytime)
-		{
-			QueryTime = querytime;
-			Log.Notice("SvnRssConfig", sLocalization.RssConfig("Text"));
-		}
-	}
 }

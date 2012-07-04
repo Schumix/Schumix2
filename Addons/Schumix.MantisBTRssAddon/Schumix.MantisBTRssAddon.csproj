@@ -61,6 +61,7 @@
     <Compile Include="Localization\PLocalization.cs" />
     <Compile Include="MantisBTRssAddon.cs" />
     <Compile Include="Rss\MantisBTRss.cs" />
+    <Compile Include="Config\RssConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

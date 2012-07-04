@@ -143,7 +143,8 @@ FILES = \
 	Config/AddonConfig.cs \
 	Localization/PLocalization.cs \
 	Rss/WordPressRss.cs \
-	WordPressRssAddon.cs 
+	WordPressRssAddon.cs \
+	Config/RssConfig.cs 
 
 DATA_FILES = 
 

@@ -143,7 +143,8 @@ FILES = \
 	Commands/Commands.cs \
 	Rss/SvnRss.cs \
 	Config/AddonConfig.cs \
-	Localization/PLocalization.cs 
+	Localization/PLocalization.cs \
+	Config/RssConfig.cs 
 
 DATA_FILES = 
 
