@@ -52,12 +52,14 @@
   <ItemGroup>
     <Compile Include="ISchumix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="IRCMessage.cs" />
-    <Compile Include="INetwork.cs" />
-    <Compile Include="IFunctions.cs" />
-    <Compile Include="MessageType.cs" />
     <Compile Include="Delegate\CommandDelegate.cs" />
     <Compile Include="Delegate\IRCDelegate.cs" />
+    <Compile Include="Functions\IChannelFunctions.cs" />
+    <Compile Include="Functions\IFunctions.cs" />
+    <Compile Include="Functions\IFunctionsClass.cs" />
+    <Compile Include="Irc\INetwork.cs" />
+    <Compile Include="Irc\IRCMessage.cs" />
+    <Compile Include="Irc\MessageType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -66,5 +68,7 @@
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Delegate\" />
+    <Folder Include="Functions\" />
+    <Folder Include="Irc\" />
   </ItemGroup>
 </Project>

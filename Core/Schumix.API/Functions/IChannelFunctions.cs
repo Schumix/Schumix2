@@ -18,35 +18,9 @@
  */
 
 using System;
-using System.Collections.Generic;
 
 namespace Schumix.API
 {
-	public enum IFunctions
-	{
-		Greeter,
-		Log,
-		Rejoin,
-		Commands,
-		Reconnect,
-		Autohl,
-		Autokick,
-		Automode,
-		Svn,
-		Hg,
-		Git,
-		Antiflood,
-		Message,
-		Compiler,
-		Gamecommands,
-		Webtitle,
-		Randomkick,
-		Mantisbt,
-		Wordpress,
-		Chatterbot,
-		NameDay
-	};
-
 	public enum IChannelFunctions
 	{
 		Greeter,
@@ -65,9 +39,4 @@ namespace Schumix.API
 		Chatterbot,
 		NameDay
 	};
-
-	public class IFunctionsClass
-	{
-		public static readonly Dictionary<string, string> Functions = new Dictionary<string, string>();
-	}
 }
