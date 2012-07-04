@@ -25,6 +25,7 @@ using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Irc.Commands.GoogleWebSearch;
 
 namespace Schumix.Irc.Commands
 {
