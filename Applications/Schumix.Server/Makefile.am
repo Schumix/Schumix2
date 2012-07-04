@@ -153,7 +153,10 @@ FILES = \
 	Linux/Linux.cs \
 	Windows/Windows.cs \
 	Windows/CtrlType.cs \
-	New/Settings.cs 
+	New/Settings.cs \
+	Config/ServerConfig.cs \
+	Config/ServerConfigs.cs \
+	Config/LocalizationConfig.cs 
 
 DATA_FILES = 
 

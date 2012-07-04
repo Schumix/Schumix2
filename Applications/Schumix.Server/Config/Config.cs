@@ -256,42 +256,4 @@ namespace Schumix.Server.Config
 			return true;
 		}
 	}
-
-	sealed class ServerConfig
-	{
-		public static string ConfigDirectory { get; private set; }
-		public static string ConfigFile { get; private set; }
-
-		public ServerConfig(string configdirectory, string configfile)
-		{
-			ConfigDirectory = configdirectory;
-			ConfigFile      = configfile;
-		}
-	}
-
-	sealed class ServerConfigs
-	{
-		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		public static int ListenerPort { get; private set; }
-		public static string Password { get; private set; }
-
-		public ServerConfigs(int listenerport, string password)
-		{
-			ListenerPort = listenerport;
-			Password     = password;
-			Log.Notice("ServerConfigs", sLConsole.ServerConfigs("Text"));
-		}
-	}
-
-	sealed class LocalizationConfig
-	{
-		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		public static string Locale { get; private set; }
-
-		public LocalizationConfig(string locale)
-		{
-			Locale = locale;
-			Log.Notice("LocalizationConfig", sLConsole.LocalizationConfig("Text"));
-		}
-	}
 }
