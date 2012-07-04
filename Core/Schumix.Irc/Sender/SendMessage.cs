@@ -22,6 +22,7 @@ using System.Data;
 using System.Threading;
 using System.Collections.Generic;
 using Schumix.API;
+using Schumix.API.Delegate;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -65,9 +66,13 @@ namespace Schumix.Irc
 							case MessageType.Notice:
 								WriteLine("NOTICE {0} :{1}", channel, text);
 								break;
-							/*case MessageType.AMSG:
-								WriteLine("AMSG :{0}", message); // egyenlőre nem megy
-								break;*/
+							case MessageType.Amsg:
+								var clist = ChannelList();
+								foreach(var chan in clist)
+									WriteLine("PRIVMSG {0} :{1}", chan, IgnoreCommand(text));
+
+								clist.Clear();
+								break;
 							case MessageType.Action:
 								WriteLine("PRIVMSG {0} :ACTION {1}", channel.ToLower(), text);
 								break;
@@ -94,9 +99,13 @@ namespace Schumix.Irc
 						case MessageType.Notice:
 							WriteLine("NOTICE {0} :{1}", channel, message);
 							break;
-						/*case MessageType.AMSG:
-							WriteLine("AMSG :{0}", message); // egyenlőre nem megy
-							break;*/
+						case MessageType.Amsg:
+							var clist = ChannelList();
+							foreach(var chan in clist)
+								WriteLine("PRIVMSG {0} :{1}", chan, IgnoreCommand(message));
+
+							clist.Clear();
+							break;
 						case MessageType.Action:
 							WriteLine("PRIVMSG {0} :ACTION {1}", channel.ToLower(), message);
 							break;
@@ -180,11 +189,11 @@ namespace Schumix.Irc
 			}
 		}
 
-		/*public void SendCMAmsg(string message)
+		public void SendCMAmsg(string message)
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.AMSG, string.Empty, message);
+				SendChatMessage(MessageType.Amsg, string.Empty, message);
 			}
 		}
 
@@ -194,7 +203,7 @@ namespace Schumix.Irc
 			{
 				SendCMAmsg(string.Format(message, args));
 			}
-		}*/
+		}
 
 		public void SendCMAction(string channel, string message)
 		{
@@ -321,6 +330,22 @@ namespace Schumix.Irc
 				else
 					Text = string.Empty;
 			}
+
+			return list;
+		}
+
+		private List<string> ChannelList()
+		{
+			var list = new List<string>();
+			var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
+
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+					list.Add(row["Channel"].ToString());
+			}
+			else
+				Log.Error("SendMessage", sLConsole.SendMessage("Text"));
 
 			return list;
 		}

@@ -76,7 +76,10 @@ FILES = \
 	Properties/AssemblyInfo.cs \
 	IRCMessage.cs \
 	INetwork.cs \
-	IFunctions.cs 
+	IFunctions.cs \
+	MessageType.cs \
+	Delegate/CommandDelegate.cs \
+	Delegate/IRCDelegate.cs 
 
 DATA_FILES = 
 
@@ -84,6 +87,7 @@ RESOURCES =
 
 EXTRAS = \
 	Properties \
+	Delegate \
 	schumix.api.pc.in 
 
 REFERENCES =  \

@@ -29,11 +29,12 @@ using System.Net.Security;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Security.Authentication;
+using Schumix.API;
+using Schumix.API.Delegate;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
 using Schumix.Framework.Extensions;
-using Schumix.API;
 
 namespace Schumix.Irc
 {

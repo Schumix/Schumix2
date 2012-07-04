@@ -19,6 +19,7 @@
 
 using System;
 using Schumix.API;
+using Schumix.API.Delegate;
 using Schumix.Irc.Commands;
 
 namespace Schumix.LuaEngine
