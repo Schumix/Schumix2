@@ -74,7 +74,6 @@
     <Compile Include="Ctcp\CtcpSender.cs" />
     <Compile Include="Ctcp\CtcpUtil.cs" />
     <Compile Include="ChannelNameList.cs" />
-    <Compile Include="Commands\GoogleWebSearch.cs" />
     <Compile Include="ConnectionType.cs" />
     <Compile Include="Flood\AntiFlood.cs" />
     <Compile Include="Flood\CommandFlood.cs" />
@@ -92,6 +91,10 @@
     <Compile Include="Ignore\IgnoreCommand.cs" />
     <Compile Include="Ignore\IgnoreChannel.cs" />
     <Compile Include="Ignore\IgnoreAddon.cs" />
+    <Compile Include="Commands\GoogleWebSearch\JsonHelper.cs" />
+    <Compile Include="Commands\GoogleWebSearch\GoogleWebResult.cs" />
+    <Compile Include="Commands\GoogleWebSearch\GoogleWebResponseData.cs" />
+    <Compile Include="Commands\GoogleWebSearch\GoogleWebResultSet.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -108,5 +111,6 @@
     <Folder Include="Flood\" />
     <Folder Include="Sender\" />
     <Folder Include="Ignore\" />
+    <Folder Include="Commands\GoogleWebSearch\" />
   </ItemGroup>
 </Project>
