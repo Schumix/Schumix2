@@ -153,34 +153,4 @@ namespace Schumix.CompilerAddon.Config
 			}
 		}
 	}
-
-	public sealed class CompilerConfig
-	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		public static bool CompilerEnabled { get; private set; }
-		public static bool MaxAllocatingE { get; private set; }
-		public static int MaxAllocatingM { get; private set; }
-		public static string CompilerOptions { get; private set; }
-		public static int WarningLevel { get; private set; }
-		public static bool TreatWarningsAsErrors { get; private set; }
-		public static string Referenced { get; private set; }
-		public static string[] ReferencedAssemblies { get; private set; }
-		public static string MainClass { get; private set; }
-		public static string MainConstructor { get; private set; }
-
-		public CompilerConfig(bool compilerenabled, bool maxallocatinge, int maxallocatingm, string compileroptions, int warninglevel, bool treatwarningsaserrors, string referenced, string referencedassemblies, string mainclass, string mainconstructor)
-		{
-			CompilerEnabled       = compilerenabled;
-			MaxAllocatingE        = maxallocatinge;
-			MaxAllocatingM        = maxallocatingm;
-			CompilerOptions       = compileroptions;
-			WarningLevel          = warninglevel;
-			TreatWarningsAsErrors = treatwarningsaserrors;
-			Referenced            = referenced;
-			ReferencedAssemblies  = referencedassemblies.Split(',');
-			MainClass             = mainclass;
-			MainConstructor       = mainconstructor;
-			Log.Notice("CompilerConfig", sLocalization.CompilerConfig("Text"));
-		}
-	}
 }

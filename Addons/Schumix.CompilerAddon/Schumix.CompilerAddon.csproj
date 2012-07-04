@@ -56,6 +56,7 @@
     <Compile Include="Config\AddonConfig.cs" />
     <Compile Include="Localization\PLocalization.cs" />
     <Compile Include="Commands\Help.cs" />
+    <Compile Include="Config\CompilerConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

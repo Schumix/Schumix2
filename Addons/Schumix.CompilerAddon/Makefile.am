@@ -143,7 +143,8 @@ FILES = \
 	CompilerAddon.cs \
 	Config/AddonConfig.cs \
 	Localization/PLocalization.cs \
-	Commands/Help.cs 
+	Commands/Help.cs \
+	Config/CompilerConfig.cs 
 
 DATA_FILES = 
 
