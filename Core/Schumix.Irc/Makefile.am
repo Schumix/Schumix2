@@ -166,6 +166,7 @@ RESOURCES =
 EXTRAS = \
 	Flood \
 	Sender \
+	Ignore \
 	schumix.irc.pc.in 
 
 REFERENCES =  \
