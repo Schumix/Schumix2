@@ -55,6 +55,9 @@
     <Compile Include="IRCMessage.cs" />
     <Compile Include="INetwork.cs" />
     <Compile Include="IFunctions.cs" />
+    <Compile Include="MessageType.cs" />
+    <Compile Include="Delegate\CommandDelegate.cs" />
+    <Compile Include="Delegate\IRCDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -62,5 +65,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Delegate\" />
   </ItemGroup>
 </Project>

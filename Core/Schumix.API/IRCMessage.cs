@@ -21,19 +21,6 @@ using System;
 
 namespace Schumix.API
 {
-	/// <summary>
-	///     Meghatározza az üzenet küldési típusokat.
-	/// </summary>
-	public enum MessageType
-	{
-		Privmsg,
-		Notice,
-		//Amsg,
-		Action,
-		CtcpRequest,
-		CtcpReply
-	};
-
 	public class IRCMessage
 	{
 		public string Hostmask { get; set; }
@@ -45,7 +32,4 @@ namespace Schumix.API
 		public string[] Info { get; set; }
 		public MessageType MessageType { get; set; }
 	}
-
-	public delegate void IRCDelegate(IRCMessage sIRCMessage);
-	public delegate void CommandDelegate(IRCMessage sIRCMessage);
 }

@@ -2368,5 +2368,23 @@ namespace Schumix.Framework.Localization
 					return string.Empty;
 			}
 		}
+
+		public string SendMessage(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "ChannelList: Hibás lekérdezés!";
+					else if(Locale == "enUS")
+						return "ChannelList: Failure request!";
+					else
+						return "ChannelList: Failure request!";
+				}
+				default:
+					return string.Empty;
+			}
+		}
 	}
 }
