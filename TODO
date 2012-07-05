@@ -3,6 +3,8 @@ Megírásra váró feladatok:
 
 - Közepes hibák:
 
+- Apróbb hibák:
+
 - Szerver hibák:
 	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!! (Állítottam a prioritáson. Lehetséges ez megoldja a gondot de még tesztelni kell.)
 	- Ha leállna a szerver először ne botok álljanak le (amiket a szerver indított).
