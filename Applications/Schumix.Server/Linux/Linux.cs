@@ -39,21 +39,16 @@ namespace Schumix.Server
 	
 		private void LinuxHandler()
 		{
-			Log.Notice("Linux", "Initializing Handler for SIGINT, SIGHUP, SIGSEGV");
+			Log.Notice("Linux", "Initializing Handler for SIGINT, SIGHUP");
 			var signals = new UnixSignal[]
 			{
 				new UnixSignal(Signum.SIGINT),
-				new UnixSignal(Signum.SIGHUP),
-				new UnixSignal(Signum.SIGSEGV)
+				new UnixSignal(Signum.SIGHUP)
 			};
 
 			int which = UnixSignal.WaitAny(signals, -1);
 			Log.Debug("Linux", "Got a {0} signal!", signals[which].Signum);
-
-			if(signals[which].Signum == Signum.SIGSEGV)
-				Log.Notice("Linux", "Segmentation fault.");
-			else
-				Log.Notice("Linux", "Handler Terminated.");
+			Log.Notice("Linux", "Handler Terminated.");
 
 			sUtilities.RemovePidFile();
 			MainClass.sListener.Exit = true;
