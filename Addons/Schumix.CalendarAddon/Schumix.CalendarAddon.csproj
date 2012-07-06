@@ -58,7 +58,6 @@
     <Compile Include="CalendarAddon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Flood\Flood.cs" />
-    <Compile Include="Commands\Commands.cs" />
     <Compile Include="Config\AddonConfig.cs" />
     <Compile Include="Calendar\Calendar.cs" />
     <Compile Include="Ban\Ban.cs" />
@@ -67,6 +66,8 @@
     <Compile Include="Calendar\CalendarFunctions.cs" />
     <Compile Include="Flood\FloodChannelParameter.cs" />
     <Compile Include="Config\CalendarConfig.cs" />
+    <Compile Include="Commands\CalendarCommand.cs" />
+    <Compile Include="Commands\BanCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
