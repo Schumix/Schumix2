@@ -19,3 +19,6 @@ Megírásra váró feladatok:
 	- Serverben megoldani az egy szerveren lévő botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
 	- Dokumentálni az egész kódot.
 	- whois parancsnál megoldani a visszajelzést ha valaki fent van irc-n de nincs fent egy csatornán se
+<Schumacher> greeter: A funkció már be van kapcsolva!
+<Schumacher> webtitle: A funkció már be van kapcsolva!
+	- Ezek ne legyenek így külön hanem egybe írja ki vesszővel elválasztva.

@@ -159,7 +159,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("NickServ identify {0}", pass);
+				sSendMessage.WriteLine("MSG NickServ identify {0}", pass);
 			}
 		}
 
@@ -167,7 +167,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("NickServ status {0}", status);
+				sSendMessage.WriteLine("MSG NickServ status {0}", status);
 			}
 		}
 
@@ -175,7 +175,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("NickServ info {0}", info);
+				sSendMessage.WriteLine("MSG NickServ info {0}", info);
 			}
 		}
 
@@ -183,7 +183,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("HostServ {0}", h);
+				sSendMessage.WriteLine("MSG HostServ {0}", h);
 			}
 		}
 
@@ -191,7 +191,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("NickServ ghost {0} {1}", ghost, pass);
+				sSendMessage.WriteLine("MSG NickServ ghost {0} {1}", ghost, pass);
 			}
 		}
 
