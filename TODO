@@ -2,6 +2,25 @@ Megírásra váró feladatok:
 - Súlyos hibák:
 
 - Közepes hibák:
+2012. 07. 14. 04:00:04 E Opcodes: Meghibásodás részletei: The object was used after being disposed.
+2012. 07. 14. 04:00:04 N Network: Kapcsolat bontásra került.
+2012. 07. 14. 04:01:04 N Network: Kapcsolat bontásra került.
+2012. 07. 14. 04:01:04 E Network: Végzetes hiba történt a kapcsolat létrehozásánál!
+2012. 07. 14. 04:01:05 S Network: A kapcsolat sikeresen létrejött!
+2012. 07. 14. 04:01:05 N MessageHandler: Várakozás a kapcsolat feldolgozására.
+2012. 07. 14. 04:01:08 N MessageHandler: Nem regisztrált!
+2012. 07. 14. 04:01:37 E Opcodes: Nem jön információ az irc szerver felöl!
+2012. 07. 14. 04:01:39 N Network: Kapcsolat bontásra került.
+2012. 07. 14. 04:01:39 S Network: A kapcsolat sikeresen létrejött!
+2012. 07. 14. 04:01:41 N Network: Kapcsolat bontásra került.
+2012. 07. 14. 04:01:41 S Network: A kapcsolat sikeresen létrejött!
+2012. 07. 14. 04:01:41 E Main: Nem kezelt kivétel keletkezett. (System.IO.IOException: The authentication or decryption has failed. ---> Mono.Security.Protocol.Tls.TlsException: The server stopped the handshake.
+  at Mono.Security.Protocol.Tls.SslClientStream.SafeReceiveRecord (System.IO.Stream s) [0x00000] in <filename unknown>:0 
+  at Mono.Security.Protocol.Tls.SslClientStream.OnNegotiateHandshakeCallback (IAsyncResult asyncResult) [0x00000] in <filename unknown>:0 
+  at Mono.Security.Protocol.Tls.SslStreamBase.AsyncHandshakeCallback (IAsyncResult asyncResult) [0x00000] in <filename unknown>:0 
+  --- End of inner exception stack trace ---
+  at Mono.Security.Protocol.Tls.SslStreamBase.AsyncHandshakeCallback (IAsyncResult asyncResult) [0x00000] in <filename unknown>:0 )
+	- Sokszori újrakapcsolódásnál ilyen ismeretlen hibát a dob a kód amin fixálni kéne hogy továbbra is próbálja az újrakapcsolódást.
 
 - Apróbb hibák:
 
