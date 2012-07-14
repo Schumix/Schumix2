@@ -71,7 +71,7 @@ namespace Schumix.Server.Config
 				else
 				{
 					var xmldoc = new XmlDocument();
-					xmldoc.Load(string.Format("./{0}/{1}", configdir, configfile));
+					xmldoc.Load(sUtilities.DirectoryToHome(configdir, configfile));
 
 					string LogFileName = !xmldoc.SelectSingleNode("Server/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/FileName").InnerText : _logfilename;
 					int LogLevel = !xmldoc.SelectSingleNode("Server/Log/LogLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Log/LogLevel").InnerText) : _loglevel;
@@ -140,7 +140,9 @@ namespace Schumix.Server.Config
 
 			try
 			{
-				if(File.Exists(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile)))
+				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+
+				if(File.Exists(filename))
 					return true;
 				else
 				{
@@ -151,8 +153,8 @@ namespace Schumix.Server.Config
 					var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
 					var xmldoc = new XmlDocument();
 
-					if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
-						xmldoc.Load(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
+					if(File.Exists(sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile)))
+						xmldoc.Load(sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile));
 
 					try
 					{
@@ -234,8 +236,8 @@ namespace Schumix.Server.Config
 						w.Flush();
 						w.Close();
 
-						if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
-							File.Delete(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
+						if(File.Exists(sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile)))
+							File.Delete(sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile));
 
 						Log.Success("Config", sLConsole.Config("Text7"));
 						return false;

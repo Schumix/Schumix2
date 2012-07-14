@@ -409,23 +409,26 @@ namespace Schumix.Console.Commands
 					if(Info.Length >= 6)
 					{
 						string args = string.Empty;
+						string onfunction = string.Empty;
+						string offfunction = string.Empty;
+						string nosuchfunction = string.Empty;
 
 						for(int i = 4; i < Info.Length; i++)
 						{
 							if(!sChannelInfo.SearchChannelFunction(Info[i]))
 							{
-								Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), Info[i]);
+								nosuchfunction += ", " + Info[i].ToLower();
 								continue;
 							}
 
 							if(sChannelInfo.FSelect(Info[i], channel) && status == SchumixBase.On)
 							{
-								Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn2"), Info[i]);
+								onfunction += ", " + Info[i].ToLower();
 								continue;
 							}
 							else if(!sChannelInfo.FSelect(Info[i], channel) && status == SchumixBase.Off)
 							{
-								Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff2"), Info[i]);
+								offfunction += ", " + Info[i].ToLower();
 								continue;
 							}
 
@@ -442,6 +445,15 @@ namespace Schumix.Console.Commands
 							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(Info[i].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
 							sChannelInfo.ChannelFunctionsReload();
 						}
+
+						if(onfunction != string.Empty)
+							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn2"), onfunction.Remove(0, 2, ", "));
+			
+						if(offfunction != string.Empty)
+							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff2"), offfunction.Remove(0, 2, ", "));
+
+						if(nosuchfunction != string.Empty)
+							Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), nosuchfunction.Remove(0, 2, ", "));
 
 						if(args.Length == 0)
 							return;
@@ -537,7 +549,7 @@ namespace Schumix.Console.Commands
 				}
 
 				string f = sChannelInfo.FunctionsInfo();
-				if(f == "Hibás lekérdezés!")
+				if(f == string.Empty)
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("FaultyQuery"));
 					return;
@@ -570,23 +582,26 @@ namespace Schumix.Console.Commands
 					if(Info.Length >= 4)
 					{
 						string args = string.Empty;
+						string onfunction = string.Empty;
+						string offfunction = string.Empty;
+						string nosuchfunction = string.Empty;
 
 						for(int i = 2; i < Info.Length; i++)
 						{
 							if(!sChannelInfo.SearchFunction(Info[i]))
 							{
-								Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), Info[i]);
+								nosuchfunction += ", " + Info[i].ToLower();
 								continue;
 							}
 
 							if(sChannelInfo.FSelect(Info[i]) && Info[1].ToLower() == SchumixBase.On)
 							{
-								Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn2"), Info[i]);
+								onfunction += ", " + Info[i].ToLower();
 								continue;
 							}
 							else if(!sChannelInfo.FSelect(Info[i]) && Info[1].ToLower() == SchumixBase.Off)
 							{
-								Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff2"), Info[i]);
+								offfunction += ", " + Info[i].ToLower();
 								continue;
 							}
 
@@ -594,6 +609,15 @@ namespace Schumix.Console.Commands
 							SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[i].ToLower())));
 							sChannelInfo.FunctionsReload();
 						}
+
+						if(onfunction != string.Empty)
+							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn2"), onfunction.Remove(0, 2, ", "));
+			
+						if(offfunction != string.Empty)
+							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff2"), offfunction.Remove(0, 2, ", "));
+
+						if(nosuchfunction != string.Empty)
+							Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), nosuchfunction.Remove(0, 2, ", "));
 
 						if(args.Length == 0)
 							return;

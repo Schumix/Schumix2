@@ -263,7 +263,7 @@ namespace Schumix.Irc
 				return on + "|" + off;
 			}
 			else
-				return "Hibás lekérdezés!";
+				return string.Empty;
 		}
 
 		public string ChannelFunctionsInfo(string channel)
