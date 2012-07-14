@@ -25,6 +25,7 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.SvnRssAddon.Config;
 using Schumix.SvnRssAddon.Commands;
@@ -37,6 +38,7 @@ namespace Schumix.SvnRssAddon
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static readonly List<SvnRss> RssList = new List<SvnRss>();
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
@@ -110,12 +112,12 @@ namespace Schumix.SvnRssAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.SchumixRegisterHandler("svn", HandleSvn, CommandPermission.Operator);
+			sIrcBase.SchumixRegisterHandler("svn", HandleSvn, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.SchumixRemoveHandler("svn",   HandleSvn);
+			sIrcBase.SchumixRemoveHandler("svn",   HandleSvn);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

@@ -61,6 +61,7 @@ namespace Schumix
 		///     Csak windows alatt müködő függvények.
 		/// </summary>
 		private static readonly Windows sWindows = Singleton<Windows>.Instance;
+		private static readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Üzenet küldés az irc szerver felé.
@@ -228,7 +229,9 @@ namespace Schumix
 				if(SchumixBase.ExitStatus)
 					return;
 
-				sSender.Quit("Crash.");
+				foreach(var nw in sIrcBase.Networks)
+					sSender.Quit(nw.Key, "Crash.");
+
 				Thread.Sleep(5*1000);
 			};
 		}

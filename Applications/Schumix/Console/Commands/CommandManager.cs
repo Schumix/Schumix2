@@ -34,14 +34,14 @@ namespace Schumix.Console.Commands
 	sealed class CCommandManager : CommandHandler
 	{
 		/// <summary>
+		///     Tárolja a parancsokat és a hozzá tartozó függvényeket.
+		/// </summary>
+		private static readonly Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
+		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
 		/// </summary>
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		/// <summary>
-		///     Tárolja a parancsokat és a hozzá tartozó függvényeket.
-		/// </summary>
-		private static readonly Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
 		/// <summary>
 		///     Kimenetként kiírja a parancsokat és a hozzá tartozó függvényeket.
 		/// </summary>
@@ -53,7 +53,7 @@ namespace Schumix.Console.Commands
 		/// <summary>
 		///     Indulási függvény.
 		/// </summary>
-		public CCommandManager(Network network) : base(network)
+		public CCommandManager(/*Network network*/) : base(/*network*/)
 		{
 			Log.Notice("CCommandManager", sLConsole.CCommandManager("Text"));
 			InitHandler();
@@ -66,6 +66,12 @@ namespace Schumix.Console.Commands
 		{
 			get { return _channel; }
 			set { _channel = value; }
+		}
+
+		public string ServerName
+		{
+			get { return _servername; }
+			set { _servername = value; }
 		}
 
 		/// <summary>

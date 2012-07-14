@@ -31,11 +31,11 @@ namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler : CommandInfo
 	{
-		protected static readonly IgnoreIrcCommand sIgnoreIrcCommand = Singleton<IgnoreIrcCommand>.Instance;
-		protected static readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
-		protected static readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
-		protected static readonly IgnoreCommand sIgnoreCommand = Singleton<IgnoreCommand>.Instance;
-		protected static readonly IgnoreAddon sIgnoreAddon = Singleton<IgnoreAddon>.Instance;
+		protected readonly IgnoreIrcCommand sIgnoreIrcCommand = Singleton<IgnoreIrcCommand>.Instance;
+		protected readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
+		protected readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
+		protected readonly IgnoreCommand sIgnoreCommand = Singleton<IgnoreCommand>.Instance;
+		protected readonly IgnoreAddon sIgnoreAddon = Singleton<IgnoreAddon>.Instance;
 		protected readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		protected readonly ChannelNameList sChannelNameList = Singleton<ChannelNameList>.Instance;
@@ -43,10 +43,11 @@ namespace Schumix.Irc.Commands
 		protected readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		protected readonly CtcpSender sCtcpSender = Singleton<CtcpSender>.Instance;
-		protected readonly AntiFlood sAntiFlood = Singleton<AntiFlood>.Instance;
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		protected readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		protected readonly Sender sSender = Singleton<Sender>.Instance;
+		public readonly AntiFlood sAntiFlood = new AntiFlood();
 		protected string ChannelPrivmsg { get; set; }
 		protected string WhoisPrivmsg { get; set; }
 		protected string NewNickPrivmsg { get; set; }
@@ -161,7 +162,7 @@ namespace Schumix.Irc.Commands
 			}
 			else
 			{
-				if(!CommandManager.CommandMethodMap.ContainsKey(sIRCMessage.Info[4].ToLower()))
+				if(!sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(sIRCMessage.Info[4].ToLower()))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoFoundHelpCommand2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
 					return;

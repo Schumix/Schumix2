@@ -44,6 +44,7 @@ namespace Schumix.CalendarAddon
 		private System.Timers.Timer _timerflood = new System.Timers.Timer();
 		private System.Timers.Timer _timerunban = new System.Timers.Timer();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Unban sUnban = Singleton<Unban>.Instance;
 
 		public Calendar()
@@ -180,62 +181,65 @@ namespace Schumix.CalendarAddon
 
 		private void Unban()
 		{
-			var time = DateTime.Now;
-			var db = SchumixBase.DManager.Query("SELECT Name, Channel, Reason, Year, Month, Day, Hour, Minute FROM banned");
-			if(!db.IsNull())
+			foreach(var nw in sIrcBase.Networks)
 			{
-				foreach(DataRow row in db.Rows)
+				var time = DateTime.Now;
+				var db = SchumixBase.DManager.Query("SELECT Name, Channel, Reason, Year, Month, Day, Hour, Minute FROM banned");
+				if(!db.IsNull())
 				{
-					string name = row["Name"].ToString();
-					string channel = row["Channel"].ToString();
-					int year = Convert.ToInt32(row["Year"].ToString());
-
-					if(time.Year > year)
-						sUnban.UnbanName(name, channel);
-					else if(time.Year < year)
-						continue;
-					else if(time.Year == year)
+					foreach(DataRow row in db.Rows)
 					{
-						int month = Convert.ToInt32(row["Month"].ToString());
+						string name = row["Name"].ToString();
+						string channel = row["Channel"].ToString();
+						int year = Convert.ToInt32(row["Year"].ToString());
 
-						if(time.Month > month)
-							sUnban.UnbanName(name, channel);
-						else if(time.Month < month)
+						if(time.Year > year)
+							sUnban.UnbanName(nw.Key, name, channel);
+						else if(time.Year < year)
 							continue;
-						else
+						else if(time.Year == year)
 						{
-							int day = Convert.ToInt32(row["Day"].ToString());
+							int month = Convert.ToInt32(row["Month"].ToString());
 
-							if(time.Month == month)
+							if(time.Month > month)
+								sUnban.UnbanName(nw.Key, name, channel);
+							else if(time.Month < month)
+								continue;
+							else
 							{
-								if(time.Day > day)
-									sUnban.UnbanName(name, channel);
-								else if(time.Day < day)
-									continue;
-								else
+								int day = Convert.ToInt32(row["Day"].ToString());
+
+								if(time.Month == month)
 								{
-									if(time.Day == day)
+									if(time.Day > day)
+										sUnban.UnbanName(nw.Key, name, channel);
+									else if(time.Day < day)
+										continue;
+									else
 									{
-										int hour = Convert.ToInt32(row["Hour"].ToString());
-
-										if(time.Hour > hour)
-											sUnban.UnbanName(name, channel);
-										else if(time.Hour < hour)
-											continue;
-										else
+										if(time.Day == day)
 										{
-											if(time.Hour == hour)
-											{
-												int minute = Convert.ToInt32(row["Minute"].ToString());
+											int hour = Convert.ToInt32(row["Hour"].ToString());
 
-												if(time.Minute > minute)
-													sUnban.UnbanName(name, channel);
-												else if(time.Minute < minute)
-													continue;
-												else
+											if(time.Hour > hour)
+												sUnban.UnbanName(nw.Key, name, channel);
+											else if(time.Hour < hour)
+												continue;
+											else
+											{
+												if(time.Hour == hour)
 												{
-													if(time.Minute == minute)
-														sUnban.UnbanName(name, channel);
+													int minute = Convert.ToInt32(row["Minute"].ToString());
+
+													if(time.Minute > minute)
+														sUnban.UnbanName(nw.Key, name, channel);
+													else if(time.Minute < minute)
+														continue;
+													else
+													{
+														if(time.Minute == minute)
+															sUnban.UnbanName(nw.Key, name, channel);
+													}
 												}
 											}
 										}
@@ -250,101 +254,104 @@ namespace Schumix.CalendarAddon
 
 		private void CalendarTimeRemove()
 		{
-			var time = DateTime.Now;
-			var db = SchumixBase.DManager.Query("SELECT Id, Name, Channel, Message, Loops, Year, Month, Day, Hour, Minute FROM calendar");
-			if(!db.IsNull())
+			foreach(var nw in sIrcBase.Networks)
 			{
-				foreach(DataRow row in db.Rows)
+				var time = DateTime.Now;
+				var db = SchumixBase.DManager.Query("SELECT Id, Name, Channel, Message, Loops, Year, Month, Day, Hour, Minute FROM calendar");
+				if(!db.IsNull())
 				{
-					if(Convert.ToBoolean(row["Loops"].ToString()))
+					foreach(DataRow row in db.Rows)
 					{
-						string name0 = row["Name"].ToString();
-						string channel0 = row["Channel"].ToString();
-						string message0 = row["Message"].ToString();
-						int day = Convert.ToInt32(row["Day"].ToString());
-
-						if(time.Day == day)
+						if(Convert.ToBoolean(row["Loops"].ToString()))
 						{
-							int hour = Convert.ToInt32(row["Hour"].ToString());
-
-							if(time.Hour > hour)
-								continue;
-							else if(time.Hour < hour)
-								continue;
-							else
-							{
-								if(time.Hour == hour)
-								{
-									int minute = Convert.ToInt32(row["Minute"].ToString());
-
-									if(time.Minute > minute)
-										continue;
-									else if(time.Minute < minute)
-										continue;
-									else
-									{
-										if(time.Minute == minute)
-											sCalendarFunctions.Write(name0, channel0, message0);
-									}
-								}
-							}
-						}
-
-						continue;
-					}
-
-					int id = Convert.ToInt32(row["Id"].ToString());
-					string name = row["Name"].ToString();
-					string channel = row["Channel"].ToString();
-					string message = row["Message"].ToString();
-					int year = Convert.ToInt32(row["Year"].ToString());
-
-					if(time.Year > year)
-						sCalendarFunctions.Remove(id);
-					else if(time.Year < year)
-						continue;
-					else if(time.Year == year)
-					{
-						int month = Convert.ToInt32(row["Month"].ToString());
-
-						if(time.Month > month)
-							sCalendarFunctions.Remove(id);
-						else if(time.Month < month)
-							continue;
-						else
-						{
+							string name0 = row["Name"].ToString();
+							string channel0 = row["Channel"].ToString();
+							string message0 = row["Message"].ToString();
 							int day = Convert.ToInt32(row["Day"].ToString());
 
-							if(time.Month == month)
+							if(time.Day == day)
 							{
-								if(time.Day > day)
-									sCalendarFunctions.Remove(id);
-								else if(time.Day < day)
+								int hour = Convert.ToInt32(row["Hour"].ToString());
+
+								if(time.Hour > hour)
+									continue;
+								else if(time.Hour < hour)
 									continue;
 								else
 								{
-									if(time.Day == day)
+									if(time.Hour == hour)
 									{
-										int hour = Convert.ToInt32(row["Hour"].ToString());
+										int minute = Convert.ToInt32(row["Minute"].ToString());
 
-										if(time.Hour > hour)
-											sCalendarFunctions.Remove(id);
-										else if(time.Hour < hour)
+										if(time.Minute > minute)
+											continue;
+										else if(time.Minute < minute)
 											continue;
 										else
 										{
-											if(time.Hour == hour)
-											{
-												int minute = Convert.ToInt32(row["Minute"].ToString());
+											if(time.Minute == minute)
+												sCalendarFunctions.Write(nw.Key, name0, channel0, message0);
+										}
+									}
+								}
+							}
 
-												if(time.Minute > minute)
-													sCalendarFunctions.Remove(id);
-												else if(time.Minute < minute)
-													continue;
-												else
+							continue;
+						}
+
+						int id = Convert.ToInt32(row["Id"].ToString());
+						string name = row["Name"].ToString();
+						string channel = row["Channel"].ToString();
+						string message = row["Message"].ToString();
+						int year = Convert.ToInt32(row["Year"].ToString());
+
+						if(time.Year > year)
+							sCalendarFunctions.Remove(id);
+						else if(time.Year < year)
+							continue;
+						else if(time.Year == year)
+						{
+							int month = Convert.ToInt32(row["Month"].ToString());
+
+							if(time.Month > month)
+								sCalendarFunctions.Remove(id);
+							else if(time.Month < month)
+								continue;
+							else
+							{
+								int day = Convert.ToInt32(row["Day"].ToString());
+
+								if(time.Month == month)
+								{
+									if(time.Day > day)
+										sCalendarFunctions.Remove(id);
+									else if(time.Day < day)
+										continue;
+									else
+									{
+										if(time.Day == day)
+										{
+											int hour = Convert.ToInt32(row["Hour"].ToString());
+
+											if(time.Hour > hour)
+												sCalendarFunctions.Remove(id);
+											else if(time.Hour < hour)
+												continue;
+											else
+											{
+												if(time.Hour == hour)
 												{
-													if(time.Minute == minute)
-														sCalendarFunctions.Write(name, channel, message);
+													int minute = Convert.ToInt32(row["Minute"].ToString());
+
+													if(time.Minute > minute)
+														sCalendarFunctions.Remove(id);
+													else if(time.Minute < minute)
+														continue;
+													else
+													{
+														if(time.Minute == minute)
+															sCalendarFunctions.Write(nw.Key, name, channel, message);
+													}
 												}
 											}
 										}
@@ -359,17 +366,20 @@ namespace Schumix.CalendarAddon
 
 		private void NameDay()
 		{
-			var time = DateTime.Now;
-
-			if((time.Hour == 8 && time.Minute == 0) || (time.Hour == 12 && time.Minute == 0) ||
-			   (time.Hour == 16 && time.Minute == 0) || (time.Hour == 20 && time.Minute == 0))
+			foreach(var nw in sIrcBase.Networks)
 			{
-				foreach(var channel in sChannelInfo.CList)
+				var time = DateTime.Now;
+
+				if((time.Hour == 8 && time.Minute == 0) || (time.Hour == 12 && time.Minute == 0) ||
+				   (time.Hour == 16 && time.Minute == 0) || (time.Hour == 20 && time.Minute == 0))
 				{
-					if(sChannelInfo.FSelect(IFunctions.NameDay) && sChannelInfo.FSelect(IChannelFunctions.NameDay, channel.Key))
+					foreach(var channel in sChannelInfo.CList)
 					{
-						sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("NameDay", channel.Key), sUtilities.NameDay(channel.Key));
-						Thread.Sleep(400);
+						if(sChannelInfo.FSelect(IFunctions.NameDay) && sChannelInfo.FSelect(IChannelFunctions.NameDay, channel.Key))
+						{
+							sSendMessage.SendCMPrivmsge(nw.Key, channel.Key, sLManager.GetWarningText("NameDay", channel.Key), sUtilities.NameDay(channel.Key));
+							Thread.Sleep(400);
+						}
 					}
 				}
 			}

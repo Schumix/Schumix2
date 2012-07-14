@@ -25,6 +25,7 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.MantisBTRssAddon.Config;
 using Schumix.MantisBTRssAddon.Commands;
@@ -37,6 +38,7 @@ namespace Schumix.MantisBTRssAddon
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static readonly List<MantisBTRss> RssList = new List<MantisBTRss>();
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
@@ -109,12 +111,12 @@ namespace Schumix.MantisBTRssAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.SchumixRegisterHandler("mantisbt", HandleMantisBT, CommandPermission.Operator);
+			sIrcBase.SchumixRegisterHandler("mantisbt", HandleMantisBT, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.SchumixRemoveHandler("mantisbt",   HandleMantisBT);
+			sIrcBase.SchumixRemoveHandler("mantisbt",   HandleMantisBT);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

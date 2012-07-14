@@ -327,13 +327,13 @@ namespace Schumix.GitRssAddon
 
 					if(_website == "github")
 					{
-						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author));
-						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github2", language), _name, title);
+						//sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author));
+						//sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github2", language), _name, title);
 					}
 					else if(_website == "gitweb")
 					{
-						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb", language), _name, _type, rev.Substring(0, 10), author);
-						sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb2", language), _name, title);
+						//sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb", language), _name, _type, rev.Substring(0, 10), author);
+						//sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb2", language), _name, title);
 					}
 
 					Thread.Sleep(1000);

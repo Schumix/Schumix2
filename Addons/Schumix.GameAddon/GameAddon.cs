@@ -41,17 +41,18 @@ namespace Schumix.GameAddon
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 
 		public void Setup()
 		{
 			CleanFunctions();
-			Network.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
-			Network.IrcRegisterHandler("PART",    HandleLeft);
-			Network.IrcRegisterHandler("KICK",    HandleKick);
-			Network.IrcRegisterHandler("QUIT",    HandleQuit);
-			Network.IrcRegisterHandler("NICK",    HandleNewNick);
-			Network.IrcRegisterHandler("MODE",    HandleMode);
+			sIrcBase.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
+			sIrcBase.IrcRegisterHandler("PART",    HandleLeft);
+			sIrcBase.IrcRegisterHandler("KICK",    HandleKick);
+			sIrcBase.IrcRegisterHandler("QUIT",    HandleQuit);
+			sIrcBase.IrcRegisterHandler("NICK",    HandleNewNick);
+			sIrcBase.IrcRegisterHandler("MODE",    HandleMode);
 			InitIrcCommand();
 			Console.CancelKeyPress += (sender, e) => { Clean(); };
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => { Clean(); };
@@ -59,12 +60,12 @@ namespace Schumix.GameAddon
 
 		public void Destroy()
 		{
-			Network.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
-			Network.IrcRemoveHandler("PART",      HandleLeft);
-			Network.IrcRemoveHandler("KICK",      HandleKick);
-			Network.IrcRemoveHandler("QUIT",      HandleQuit);
-			Network.IrcRemoveHandler("NICK",      HandleNewNick);
-			Network.IrcRemoveHandler("MODE",      HandleMode);
+			sIrcBase.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
+			sIrcBase.IrcRemoveHandler("PART",      HandleLeft);
+			sIrcBase.IrcRemoveHandler("KICK",      HandleKick);
+			sIrcBase.IrcRemoveHandler("QUIT",      HandleQuit);
+			sIrcBase.IrcRemoveHandler("NICK",      HandleNewNick);
+			sIrcBase.IrcRemoveHandler("MODE",      HandleMode);
 			RemoveIrcCommand();
 			Clean();
 		}
@@ -92,12 +93,12 @@ namespace Schumix.GameAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.SchumixRegisterHandler("game", HandleGame);
+			sIrcBase.SchumixRegisterHandler("game", HandleGame);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.SchumixRemoveHandler("game",   HandleGame);
+			sIrcBase.SchumixRemoveHandler("game",   HandleGame);
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
@@ -173,7 +174,7 @@ namespace Schumix.GameAddon
 								IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 								MaffiaList[channel].Start();
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: A játékot {1} indította!", sIRCMessage.Nick, MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: A játékot {1} indította!", sIRCMessage.Nick, MaffiaList[channel].GetOwner());
 							break;
 						}
 						case "!set":
@@ -183,34 +184,34 @@ namespace Schumix.GameAddon
 							{
 								if(MaffiaList[channel].Started)
 								{
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Sajnálom de a játék már fut!", sIRCMessage.Nick);
+									sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Sajnálom de a játék már fut!", sIRCMessage.Nick);
 									return;
 								}
 
 								if(sIRCMessage.Info.Length < 5)
 								{
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nincs megadva az állítandó paraméter!", sIRCMessage.Nick);
+									sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Nincs megadva az állítandó paraméter!", sIRCMessage.Nick);
 									return;
 								}
 
 								if(sIRCMessage.Info[4].ToLower() == "info")
 								{
 									if(MaffiaList[channel].NoLynch)
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No lynch: on");
+										sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "No lynch: on");
 									else
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "No lynch: off");
+										sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "No lynch: off");
 
 									if(MaffiaList[channel].NoVoice)
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs rang este: on");
+										sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "Nincs rang este: on");
 									else
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Nincs rang este: off");
+										sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "Nincs rang este: off");
 									return;
 								}
 								else if(sIRCMessage.Info[4].ToLower() == "nolynch")
 								{
 									if(sIRCMessage.Info.Length < 6)
 									{
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nincs megadva hogy on vagy off legyen-e ez a beállítás!", sIRCMessage.Nick);
+										sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Nincs megadva hogy on vagy off legyen-e ez a beállítás!", sIRCMessage.Nick);
 										return;
 									}
 
@@ -223,16 +224,16 @@ namespace Schumix.GameAddon
 										else if(status == SchumixBase.Off)
 											MaffiaList[channel].NoLynch = false;
 
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: A beállítás módosítva lett.", sIRCMessage.Nick);
+										sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: A beállítás módosítva lett.", sIRCMessage.Nick);
 									}
 									else
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem on illetve off kifejezés lett megadva!", sIRCMessage.Nick);
+										sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Nem on illetve off kifejezés lett megadva!", sIRCMessage.Nick);
 								}
 								else if(sIRCMessage.Info[4].ToLower() == "night")
 								{
 									if(sIRCMessage.Info.Length < 6)
 									{
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nincs megadva az állítandó paraméter!", sIRCMessage.Nick);
+										sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Nincs megadva az állítandó paraméter!", sIRCMessage.Nick);
 										return;
 									}
 
@@ -240,7 +241,7 @@ namespace Schumix.GameAddon
 									{
 										if(sIRCMessage.Info.Length < 7)
 										{
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nincs megadva hogy on vagy off legyen-e ez a beállítás!", sIRCMessage.Nick);
+											sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Nincs megadva hogy on vagy off legyen-e ez a beállítás!", sIRCMessage.Nick);
 											return;
 										}
 
@@ -253,15 +254,15 @@ namespace Schumix.GameAddon
 											else if(status == SchumixBase.Off)
 												MaffiaList[channel].NoVoice = false;
 	
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: A beállítás módosítva lett.", sIRCMessage.Nick);
+											sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: A beállítás módosítva lett.", sIRCMessage.Nick);
 										}
 										else
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem on illetve off kifejezés lett megadva!", sIRCMessage.Nick);
+											sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Nem on illetve off kifejezés lett megadva!", sIRCMessage.Nick);
 									}
 								}
 							}
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Sajnálom, de csak {1}, a játék indítója állíthat a játék menetén!", sIRCMessage.Nick, MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Sajnálom, de csak {1}, a játék indítója állíthat a játék menetén!", sIRCMessage.Nick, MaffiaList[channel].GetOwner());
 							break;
 						}
 						case "!stats":
@@ -279,7 +280,7 @@ namespace Schumix.GameAddon
 									{
 										if(player.Value == sIRCMessage.Nick)
 										{
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Te már játékban vagy itt: {1}", sIRCMessage.Nick, maffia.Key);
+											sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Te már játékban vagy itt: {1}", sIRCMessage.Nick, maffia.Key);
 											return;
 										}
 									}
@@ -303,19 +304,19 @@ namespace Schumix.GameAddon
 									!MaffiaList[channel].GetDetectiveList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
 									!MaffiaList[channel].GetNormalList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
 									!MaffiaList[channel].GetPlayerList().ContainsValue(sIRCMessage.Info[4]))
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Kit akarsz kiléptetni?", sIRCMessage.Nick);
+									sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Kit akarsz kiléptetni?", sIRCMessage.Nick);
 								else
 									MaffiaList[channel].Leave(sIRCMessage.Info[4], sIRCMessage.Nick);
 							}
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem te indítottad a játékot!", sIRCMessage.Nick);
+								sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Nem te indítottad a játékot!", sIRCMessage.Nick);
 							break;
 						}
 						case "!kill":
 						{
 							if(sIRCMessage.Info.Length < 5)
 							{
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz megölni?");
+								sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "Kit akarsz megölni?");
 								return;
 							}
 
@@ -326,7 +327,7 @@ namespace Schumix.GameAddon
 						{
 							if(sIRCMessage.Info.Length < 5)
 							{
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Kit akarsz lincselni?", sIRCMessage.Nick);
+								sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Kit akarsz lincselni?", sIRCMessage.Nick);
 								return;
 							}
 
@@ -337,7 +338,7 @@ namespace Schumix.GameAddon
 						{
 							if(sIRCMessage.Info.Length < 5)
 							{
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz megmenteni?");
+								sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "Kit akarsz megmenteni?");
 								return;
 							}
 
@@ -348,7 +349,7 @@ namespace Schumix.GameAddon
 						{
 							if(sIRCMessage.Info.Length < 5)
 							{
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz kikérdezni?");
+								sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "Kit akarsz kikérdezni?");
 								return;
 							}
 
@@ -380,11 +381,11 @@ namespace Schumix.GameAddon
 								}
 							}
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Sajnálom, de csak {1}, a játék indítója vethet véget a játéknak!", sIRCMessage.Nick, MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Sajnálom, de csak {1}, a játék indítója vethet véget a játéknak!", sIRCMessage.Nick, MaffiaList[channel].GetOwner());
 							break;
 						}
 						default:
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem létezik ilyen parancs!", sIRCMessage.Nick);
+							sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Channel, "{0}: Nem létezik ilyen parancs!", sIRCMessage.Nick);
 							break;
 					}
 				}
@@ -491,25 +492,25 @@ namespace Schumix.GameAddon
 				{
 					if(player.Value == sIRCMessage.Info[4] && sIRCMessage.Info[3].Substring(0, 1) == "v")
 					{
-						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[4]);
+						sSender.Modee(sIRCMessage.ServerName, maffia.Key, "+v", sIRCMessage.Info[4]);
 						continue;
 					}
 
 					if(sIRCMessage.Info.Length >= 6 && player.Value == sIRCMessage.Info[5] && sIRCMessage.Info[3].Substring(1) == "v")
 					{
-						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[5]);
+						sSender.Modee(sIRCMessage.ServerName, maffia.Key, "+v", sIRCMessage.Info[5]);
 						continue;
 					}
 
 					if(sIRCMessage.Info.Length >= 7 && player.Value == sIRCMessage.Info[6] && sIRCMessage.Info[3].Substring(2) == "v")
 					{
-						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[6]);
+						sSender.Modee(sIRCMessage.ServerName, maffia.Key, "+v", sIRCMessage.Info[6]);
 						continue;
 					}
 
 					if(sIRCMessage.Info.Length >= 8 && player.Value == sIRCMessage.Info[7] && sIRCMessage.Info[3].Substring(3) == "v")
 					{
-						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[7]);
+						sSender.Modee(sIRCMessage.ServerName, maffia.Key, "+v", sIRCMessage.Info[7]);
 						continue;
 					}
 				}

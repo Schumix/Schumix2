@@ -43,9 +43,9 @@ namespace Schumix.Irc
 		private static readonly Dictionary<string, IrcMethod> IrcMethodMap = new Dictionary<string, IrcMethod>();
 		private System.Timers.Timer _timeropcode = new System.Timers.Timer();
 		private CancellationTokenSource _cts = new CancellationTokenSource();
-		private static readonly object IrcMapLock = new object();
+		private readonly object IrcMapLock = new object();
 
-		public static Dictionary<string, IrcMethod> GetIrcMethodMap()
+		public Dictionary<string, IrcMethod> GetIrcMethodMap()
 		{
 			return IrcMethodMap;
 		}
@@ -86,15 +86,20 @@ namespace Schumix.Irc
 			Log.Notice("Network", sLConsole.Network("Text"));
 			sNickInfo.ChangeNick(IRCConfig.NickName);
 			InitHandler();
-
-			Task.Factory.StartNew(() => sChannelInfo.ChannelList(Name));
-			Log.Debug("Network", sLConsole.Network("Text2"));
-
 			CType = ConnectionType.Normal;
+		}
+
+		public void Initialize()
+		{
+			InitializeCommandMgr();
+			Task.Factory.StartNew(() => sChannelInfo.ChannelList(_servername));
 			sIgnoreNickName.AddConfig();
 			sIgnoreChannel.AddConfig();
 			sIgnoreAddon.AddConfig();
+		}
 
+		public void InitializeOpcodesAndPing()
+		{
 			// Start Opcodes thread
 			Log.Debug("Network", sLConsole.Network("Text3"));
 			var opcodes = new Thread(Opcodes);
@@ -104,6 +109,8 @@ namespace Schumix.Irc
 			Log.Debug("Network", sLConsole.Network("Text4"));
 			var ping = new Thread(AutoPing);
 			ping.Start();
+
+			Log.Debug("Network", sLConsole.Network("Text2"));
 		}
 
 		private void InitHandler()
@@ -165,7 +172,7 @@ namespace Schumix.Irc
 			});
 		}
 
-		public static void IrcRegisterHandler(string code, IRCDelegate method)
+		public void IrcRegisterHandler(string code, IRCDelegate method)
 		{
 			if(IrcMethodMap.ContainsKey(code))
 				IrcMethodMap[code].Method += method;
@@ -173,13 +180,13 @@ namespace Schumix.Irc
 				IrcMethodMap.Add(code, new IrcMethod(method));
 		}
 
-		public static void IrcRemoveHandler(string code)
+		public void IrcRemoveHandler(string code)
 		{
 			if(IrcMethodMap.ContainsKey(code))
 				IrcMethodMap.Remove(code);
 		}
 
-		public static void IrcRemoveHandler(string code, IRCDelegate method)
+		public void IrcRemoveHandler(string code, IRCDelegate method)
 		{
 			if(IrcMethodMap.ContainsKey(code))
 			{
@@ -190,7 +197,7 @@ namespace Schumix.Irc
 			}
 		}
 
-		public static void IrcRegisterHandler(ReplyCode code, IRCDelegate method)
+		public void IrcRegisterHandler(ReplyCode code, IRCDelegate method)
 		{
 			string scode = Convert.ToInt32(code).ToIrcOpcode();
 
@@ -200,7 +207,7 @@ namespace Schumix.Irc
 				IrcMethodMap.Add(scode, new IrcMethod(method));
 		}
 
-		public static void IrcRemoveHandler(ReplyCode code)
+		public void IrcRemoveHandler(ReplyCode code)
 		{
 			string scode = Convert.ToInt32(code).ToIrcOpcode();
 
@@ -208,7 +215,7 @@ namespace Schumix.Irc
 				IrcMethodMap.Remove(scode);
 		}
 
-		public static void IrcRemoveHandler(ReplyCode code, IRCDelegate method)
+		public void IrcRemoveHandler(ReplyCode code, IRCDelegate method)
 		{
 			string scode = Convert.ToInt32(code).ToIrcOpcode();
 
@@ -221,7 +228,7 @@ namespace Schumix.Irc
 			}
 		}
 
-		public static void IrcRegisterHandler(int code, IRCDelegate method)
+		public void IrcRegisterHandler(int code, IRCDelegate method)
 		{
 			string scode = code.ToIrcOpcode();
 
@@ -231,7 +238,7 @@ namespace Schumix.Irc
 				IrcMethodMap.Add(scode, new IrcMethod(method));
 		}
 
-		public static void IrcRemoveHandler(int code)
+		public void IrcRemoveHandler(int code)
 		{
 			string scode = code.ToIrcOpcode();
 
@@ -239,7 +246,7 @@ namespace Schumix.Irc
 				IrcMethodMap.Remove(scode);
 		}
 
-		public static void IrcRemoveHandler(int code, IRCDelegate method)
+		public void IrcRemoveHandler(int code, IRCDelegate method)
 		{
 			string scode = code.ToIrcOpcode();
 
@@ -343,7 +350,7 @@ namespace Schumix.Irc
 				INetwork.Writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
 			}
 			else
-				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
+				sSender.NameInfo(_servername, sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
 			Online = false;
@@ -457,7 +464,7 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					Log.Error("Opcodes", sLConsole.Exception("Error"), e.Message);
+					Log.Error("Opcodes", sLConsole.Exception("Error"), e);
 					Thread.Sleep(1000);
 				}
 			}
@@ -485,6 +492,7 @@ namespace Schumix.Irc
 		private void HandleIrcCommand(string message)
 		{
 			var IMessage = new IRCMessage();
+			IMessage.ServerName = _servername;
 			string[] IrcCommand = message.Split(SchumixBase.Space);
 			IrcCommand[0] = IrcCommand[0].Remove(0, 1, SchumixBase.Colon);
 			IMessage.Hostmask = IrcCommand[0];
@@ -528,7 +536,7 @@ namespace Schumix.Irc
 			else
 			{
 				if(IrcCommand[0] == "PING")
-					sSender.Pong(IrcCommand[1].Remove(0, 1, SchumixBase.Colon));
+					sSender.Pong(_servername, IrcCommand[1].Remove(0, 1, SchumixBase.Colon));
 				else if(opcode == ":Closing")
 					NetworkQuit = true;
 				else
@@ -550,7 +558,7 @@ namespace Schumix.Irc
 			{
 				try
 				{
-					sSender.Ping(_server);
+					sSender.Ping(_servername, _server);
 				}
 				catch(IOException)
 				{

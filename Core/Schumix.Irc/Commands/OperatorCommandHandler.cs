@@ -550,14 +550,14 @@ namespace Schumix.Irc.Commands
 				{
 					ChannelPrivmsg = sIRCMessage.Channel;
 					string pass = sIRCMessage.Info[6];
-					sSender.Join(channel, pass);
+					sSender.Joine(sIRCMessage.ServerName,channel, pass);
 					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", sUtilities.SqlEscape(channel), sUtilities.SqlEscape(pass), sLManager.Locale);
 					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
 				}
 				else
 				{
 					ChannelPrivmsg = sIRCMessage.Channel;
-					sSender.Join(channel);
+					sSender.Joine(sIRCMessage.ServerName, channel);
 					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", sUtilities.SqlEscape(channel), string.Empty, sLManager.Locale);
 					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
 				}
@@ -607,7 +607,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				sSender.Part(channel);
+				sSender.Part(sIRCMessage.ServerName, channel);
 				SchumixBase.DManager.Delete("channel", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
 				sSendMessage.SendChatMessage(sIRCMessage, text[2], channel);
 				sChannelInfo.ChannelListReload();
@@ -928,12 +928,12 @@ namespace Schumix.Irc.Commands
 			if(sIRCMessage.Info.Length == 5)
 			{
 				if(kick != sNickInfo.NickStorage.ToLower())
-					sSender.Kick(sIRCMessage.Channel, kick);
+					sSender.Kick(sIRCMessage.ServerName, sIRCMessage.Channel, kick);
 			}
 			else if(sIRCMessage.Info.Length >= 6)
 			{
 				if(kick != sNickInfo.NickStorage.ToLower())
-					sSender.Kick(sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+					sSender.Kick(sIRCMessage.ServerName, sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			}
 		}
 
@@ -950,7 +950,7 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length == 5)
 			{
-				sSender.Mode(sIRCMessage.Channel, sIRCMessage.Info[4].ToLower());
+				sSender.Modee(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Info[4].ToLower());
 				return;
 			}
 
@@ -964,7 +964,7 @@ namespace Schumix.Irc.Commands
 			string name = sIRCMessage.Info.SplitToString(5, SchumixBase.Space).ToLower();
 
 			if(!name.Contains(sNickInfo.NickStorage.ToLower()))
-				sSender.Mode(sIRCMessage.Channel, rank, name);
+				sSender.Modee(sIRCMessage.Channel, rank, name);
 		}
 
 		protected void HandleIgnore(IRCMessage sIRCMessage)
@@ -1100,7 +1100,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator) && CommandManager.CommandMethodMap.ContainsKey(command) && CommandManager.CommandMethodMap[command].Permission != CommandPermission.Administrator)
+					if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator) && sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(command) && sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[command].Permission != CommandPermission.Administrator)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoAdministrator", sIRCMessage.Channel));
 						return;
@@ -1397,7 +1397,7 @@ namespace Schumix.Irc.Commands
 					}
 
 					sIgnoreAddon.Add(addon);
-					sIgnoreAddon.UnloadPlugin(addon);
+					sIgnoreAddon.UnloadPlugin(addon, sIRCMessage.ServerName);
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "remove")
@@ -1424,7 +1424,7 @@ namespace Schumix.Irc.Commands
 					}
 
 					sIgnoreAddon.Remove(addon);
-					sIgnoreAddon.LoadPlugin(addon);
+					sIgnoreAddon.LoadPlugin(addon, sIRCMessage.ServerName);
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "search")

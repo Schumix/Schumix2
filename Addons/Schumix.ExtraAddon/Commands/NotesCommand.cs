@@ -122,7 +122,7 @@ namespace Schumix.ExtraAddon.Commands
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
-						sNameList.NewThread(name);
+						sNameList.NewThread(sIRCMessage.ServerName, name);
 					}
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "newpassword")

@@ -32,174 +32,174 @@ namespace Schumix.Irc
 		private readonly object WriteLock = new object();
 		private Sender() {}
 
-		public void NameInfo(string nick, string user, string userinfo)
+		public void NameInfo(string ServerName, string nick, string user, string userinfo)
 		{
 			lock(WriteLock)
 			{
-				Nick(nick);
-				User(user, userinfo);
+				Nick(ServerName, nick);
+				User(ServerName, user, userinfo);
 			}
 		}
 
-		public void Nick(string nick)
+		public void Nick(string ServerName, string nick)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("NICK {0}", nick);
+				sSendMessage.WriteLinee(ServerName, "NICK {0}", nick);
 			}
 		}
 
-		public void User(string user, string userinfo)
+		public void User(string ServerName, string user, string userinfo)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("USER {0} 8 * :{1}", user, userinfo);
+				sSendMessage.WriteLinee(ServerName, "USER {0} 8 * :{1}", user, userinfo);
 			}
 		}
 
-		public void Join(string channel)
+		public void Joine(string ServerName, string channel)
 		{
 			lock(WriteLock)
 			{
 				if(!sIgnoreChannel.IsIgnore(channel))
-					sSendMessage.WriteLine("JOIN {0}", channel);
+					sSendMessage.WriteLinee(ServerName, "JOIN {0}", channel);
 			}
 		}
 
-		public void Join(string channel, string pass)
+		public void Joine(string ServerName, string channel, string pass)
 		{
 			lock(WriteLock)
 			{
 				if(!sIgnoreChannel.IsIgnore(channel))
-					sSendMessage.WriteLine("JOIN {0} {1}", channel, pass);
+					sSendMessage.WriteLinee(ServerName, "JOIN {0} {1}", channel, pass);
 			}
 		}
 
-		public void Part(string channel)
+		public void Part(string ServerName, string channel)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("PART {0}", channel);
+				sSendMessage.WriteLinee(ServerName, "PART {0}", channel);
 			}
 		}
 
-		public void Kick(string channel, string name)
+		public void Kick(string ServerName, string channel, string name)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("KICK {0} {1}", channel, name);
+				sSendMessage.WriteLinee(ServerName, "KICK {0} {1}", channel, name);
 			}
 		}
 
-		public void Kick(string channel, string name, string args)
+		public void Kick(string ServerName, string channel, string name, string args)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("KICK {0} {1} :{2}", channel, name, args);
+				sSendMessage.WriteLinee(ServerName, "KICK {0} {1} :{2}", channel, name, args);
 			}
 		}
 
-		public void Ban(string channel, string name)
+		public void Ban(string ServerName, string channel, string name)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("MODE {0} +b {1}", channel, name);
+				sSendMessage.WriteLinee(ServerName, "MODE {0} +b {1}", channel, name);
 			}
 		}
 
-		public void Unban(string channel, string name)
+		public void Unban(string ServerName, string channel, string name)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("MODE {0} -b {1}", channel, name);
+				sSendMessage.WriteLinee(ServerName, "MODE {0} -b {1}", channel, name);
 			}
 		}
 
-		public void Mode(string channel, string status)
+		public void Modee(string ServerName, string channel, string status)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("MODE {0} {1}", channel, status);
+				sSendMessage.WriteLinee(ServerName, "MODE {0} {1}", channel, status);
 			}
 		}
 
-		public void Mode(string channel, string status, string name)
+		public void Modee(string ServerName, string channel, string status, string name)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("MODE {0} {1} {2}", channel, status, name);
+				sSendMessage.WriteLinee(ServerName, "MODE {0} {1} {2}", channel, status, name);
 			}
 		}
 
-		public void Quit(string args)
+		public void Quit(string ServerName, string args)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("QUIT :{0}", args);
+				sSendMessage.WriteLinee(ServerName, "QUIT :{0}", args);
 			}
 		}
 
-		public void Ping(string ping)
+		public void Ping(string ServerName, string ping)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("PING :{0}", ping);
+				sSendMessage.WriteLinee(ServerName, "PING :{0}", ping);
 			}
 		}
 
-		public void Pong(string pong)
+		public void Pong(string ServerName, string pong)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("PONG :{0}", pong);
+				sSendMessage.WriteLinee(ServerName, "PONG :{0}", pong);
 			}
 		}
 
-		public void NickServ(string pass)
+		public void NickServ(string ServerName, string pass)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsg("NickServ", "identify {0}", pass);
+				sSendMessage.SendCMPrivmsge(ServerName, "NickServ", "identify {0}", pass);
 			}
 		}
 
-		public void NickServStatus(string status)
+		public void NickServStatus(string ServerName, string status)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsg("NickServ", "status {0}", status);
+				sSendMessage.SendCMPrivmsge(ServerName, "NickServ", "status {0}", status);
 			}
 		}
 
-		public void NickServInfo(string info)
+		public void NickServInfo(string ServerName, string info)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsg("NickServ", "info {0}", info);
+				sSendMessage.SendCMPrivmsge(ServerName, "NickServ", "info {0}", info);
 			}
 		}
 
-		public void HostServ(string h)
+		public void HostServ(string ServerName, string Mode)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsg("HostServ", "{0}", h);
+				sSendMessage.SendCMPrivmsge(ServerName, "HostServ", "{0}", Mode);
 			}
 		}
 
-		public void NickServGhost(string ghost, string pass)
+		public void NickServGhost(string ServerName, string ghost, string pass)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsg("NickServ", "ghost {0} {1}", ghost, pass);
+				sSendMessage.SendCMPrivmsge(ServerName, "NickServ", "ghost {0} {1}", ghost, pass);
 			}
 		}
 
-		public void Whois(string name)
+		public void Whois(string ServerName, string name)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("WHOIS {0}", name);
+				sSendMessage.WriteLinee(ServerName, "WHOIS {0}", name);
 			}
 		}
 	}

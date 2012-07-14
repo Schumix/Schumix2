@@ -75,13 +75,13 @@ namespace Schumix.TesztAddon.Commands
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "vhost")
 				sSendMessage.SendChatMessage(sIRCMessage, sIRCMessage.Host);
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "amsg")
-				sSendMessage.SendCMAmsg("teszt");
+				sSendMessage.SendCMAmsge(sIRCMessage.ServerName, "teszt");
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "me")
-				sSendMessage.SendCMAction(sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+				sSendMessage.SendCMActione(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "ctcprequest")
-				sSendMessage.SendCMCtcpRequest(sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+				sSendMessage.SendCMCtcpRequeste(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "ctcpreply")
-				sSendMessage.SendCMCtcpReply(sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+				sSendMessage.SendCMCtcpReplye(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "text")
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "durl")

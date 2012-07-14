@@ -44,7 +44,7 @@ namespace Schumix.CompilerAddon
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly AntiFlood sAntiFlood = Singleton<AntiFlood>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 #pragma warning disable 414
 		private AddonConfig _config;
@@ -54,7 +54,7 @@ namespace Schumix.CompilerAddon
 		{
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			Network.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
+			sIrcBase.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
 			ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
 			EntryRegex = new Regex(SchumixBase.Space + CompilerConfig.MainClass + @"\s*?\{");
 			SchumixRegex = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)");
@@ -62,7 +62,7 @@ namespace Schumix.CompilerAddon
 
 		public void Destroy()
 		{
-			Network.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
+			sIrcBase.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
 		}
 
 		public int Reload(string RName, string SName = "")
@@ -105,9 +105,9 @@ namespace Schumix.CompilerAddon
 					Compiler(sIRCMessage, true, command);
 				else if(sIRCMessage.Info[3].ToLower() == command.ToLower())
 				{
-					sAntiFlood.FloodCommand(sIRCMessage);
+					sIrcBase.Networks[sIRCMessage.ServerName].sAntiFlood.FloodCommand(sIRCMessage);
 
-					if(sAntiFlood.Ignore(sIRCMessage))
+					if(sIrcBase.Networks[sIRCMessage.ServerName].sAntiFlood.Ignore(sIRCMessage))
 						return;
 
 					var text = sLManager.GetCommandTexts("schumix2/csc", sIRCMessage.Channel);
@@ -166,9 +166,9 @@ namespace Schumix.CompilerAddon
 
 		private void Compiler(IRCMessage sIRCMessage, bool command, string args)
 		{
-			sAntiFlood.FloodCommand(sIRCMessage);
+			sIrcBase.Networks[sIRCMessage.ServerName].sAntiFlood.FloodCommand(sIRCMessage);
 
-			if(sAntiFlood.Ignore(sIRCMessage))
+			if(sIrcBase.Networks[sIRCMessage.ServerName].sAntiFlood.Ignore(sIRCMessage))
 				return;
 
 			int ReturnCode = 0;

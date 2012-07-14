@@ -41,6 +41,7 @@ namespace Schumix.ExtraAddon.Commands
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private Functions() {}
 
@@ -449,7 +450,7 @@ namespace Schumix.ExtraAddon.Commands
 					{
 						string rank = db["Rank"].ToString();
 						if(rank.Substring(0, 1) == "+")
-							sSender.Mode(sIRCMessage.Channel.ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[6].ToLower());	
+							sSender.Modee(sIRCMessage.ServerName, sIRCMessage.Channel.ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[6].ToLower());	
 					}
 
 					SchumixBase.DManager.Delete("modelist", string.Format("Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower()));
@@ -633,7 +634,7 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							string rank = db["Rank"].ToString();
 							if(rank.Substring(0, 1) == "+")
-								sSender.Mode(sIRCMessage.Info[6].ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[8].ToLower());	
+								sSender.Modee(sIRCMessage.ServerName, sIRCMessage.Info[6].ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[8].ToLower());	
 						}
 
 						SchumixBase.DManager.Delete("modelist", string.Format("Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower())));

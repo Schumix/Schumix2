@@ -38,6 +38,8 @@ namespace Schumix.LuaEngine
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Dictionary<string, LuaFunctionDescriptor> _luaFunctions;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private readonly object Lock = new object();
 		private readonly FileSystemWatcher _watcher;
 		private readonly LuaFunctions _functions;
 		private readonly string _scriptPath;
@@ -89,36 +91,33 @@ namespace Schumix.LuaEngine
 		/// <param name="reload">Is it a reload or not.</param>
 		public void LoadScripts(bool reload = false)
 		{
-			if(reload)
+			lock(Lock)
 			{
-				foreach(var func in _functions.RegisteredSchumix)
+				if(reload)
 				{
-					if(CommandManager.CommandMethodMap.ContainsKey(func.Key))
-						CommandManager.SchumixRemoveHandler(func.Key, func.Value.Method);
+					foreach(var func in _functions.RegisteredSchumix)
+						sIrcBase.SchumixRemoveHandler(func.Key, func.Value.Method);
+
+					foreach(var func in _functions.RegisteredIrc)
+						sIrcBase.IrcRemoveHandler(func.Key, func.Value);
+
+					_functions.Clean();
 				}
 
-				foreach(var func in _functions.RegisteredIrc)
+				var di = new DirectoryInfo(_scriptPath);
+
+				foreach(var file in di.GetFiles("*.lua").AsParallel())
 				{
-					if(Network.GetIrcMethodMap().ContainsKey(func.Key))
-						Network.IrcRemoveHandler(func.Key, func.Value);
-				}
+					Log.Notice("LuaEngine", sLConsole.LuaEngine("Text2"), file.Name);
 
-				_functions.Clean();
-			}
-
-			var di = new DirectoryInfo(_scriptPath);
-
-			foreach(var file in di.GetFiles("*.lua").AsParallel())
-			{
-				Log.Notice("LuaEngine", sLConsole.LuaEngine("Text2"), file.Name);
-
-				try
-				{
-					_lua.DoFile(file.FullName);
-				}
-				catch(Exception x)
-				{
-					Log.Error("LuaEngine", sLConsole.LuaEngine("Text3"), file.Name, x.Message);
+					try
+					{
+						_lua.DoFile(file.FullName);
+					}
+					catch(Exception x)
+					{
+						Log.Error("LuaEngine", sLConsole.LuaEngine("Text3"), file.Name, x.Message);
+					}
 				}
 			}
 		}

@@ -30,7 +30,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
-	public abstract class SchumixBase
+	public/* abstract*/ class SchumixBase
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
@@ -61,7 +61,7 @@ namespace Schumix.Framework
 		/// </summary>
 		public static Guid GetGuid() { return _guid; }
 
-		protected SchumixBase()
+		public SchumixBase()
 		{
 			try
 			{

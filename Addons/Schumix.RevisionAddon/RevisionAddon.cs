@@ -21,6 +21,7 @@ using System;
 using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.RevisionAddon.Commands;
 
@@ -28,14 +29,16 @@ namespace Schumix.RevisionAddon
 {
 	class RevisionAddon : Revision, ISchumixAddon
 	{
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+
 		public void Setup()
 		{
-			CommandManager.SchumixRegisterHandler("xrev", HandleXrev);
+			sIrcBase.SchumixRegisterHandler("xrev", HandleXrev);
 		}
 
 		public void Destroy()
 		{
-			CommandManager.SchumixRemoveHandler("xrev",   HandleXrev);
+			sIrcBase.SchumixRemoveHandler("xrev",   HandleXrev);
 		}
 
 		public int Reload(string RName, string SName = "")

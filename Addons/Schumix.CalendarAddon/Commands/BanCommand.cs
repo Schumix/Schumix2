@@ -76,7 +76,7 @@ namespace Schumix.CalendarAddon.Commands
 					return;
 				}
 
-				sSendMessage.SendChatMessage(sIRCMessage, sBan.BanName(sIRCMessage.Info[4].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(6, SchumixBase.Space), hour, minute));
+				sSendMessage.SendChatMessage(sIRCMessage, sBan.BanName(sIRCMessage.ServerName, sIRCMessage.Info[4].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(6, SchumixBase.Space), hour, minute));
 			}
 			else
 			{
@@ -128,7 +128,7 @@ namespace Schumix.CalendarAddon.Commands
 					return;
 				}
 
-				sSendMessage.SendChatMessage(sIRCMessage, sBan.BanName(sIRCMessage.Info[4].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(7, SchumixBase.Space), year, month, day, hour, minute));
+				sSendMessage.SendChatMessage(sIRCMessage, sBan.BanName(sIRCMessage.ServerName, sIRCMessage.Info[4].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(7, SchumixBase.Space), year, month, day, hour, minute));
 			}
 		}
 
@@ -143,7 +143,7 @@ namespace Schumix.CalendarAddon.Commands
 				return;
 			}
 
-			sUnban.UnbanName(sIRCMessage.Info[4], sIRCMessage.Channel);
+			sUnban.UnbanName(sIRCMessage.ServerName, sIRCMessage.Info[4], sIRCMessage.Channel);
 		}
 	}
 }

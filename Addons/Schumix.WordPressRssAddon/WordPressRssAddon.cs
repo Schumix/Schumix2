@@ -25,6 +25,7 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.WordPressRssAddon.Config;
 using Schumix.WordPressRssAddon.Commands;
@@ -37,6 +38,7 @@ namespace Schumix.WordPressRssAddon
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static readonly List<WordPressRss> RssList = new List<WordPressRss>();
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
@@ -109,12 +111,12 @@ namespace Schumix.WordPressRssAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.SchumixRegisterHandler("wordpress", HandleWordPress, CommandPermission.Operator);
+			sIrcBase.SchumixRegisterHandler("wordpress", HandleWordPress, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.SchumixRemoveHandler("wordpress",   HandleWordPress);
+			sIrcBase.SchumixRemoveHandler("wordpress",   HandleWordPress);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

@@ -296,14 +296,14 @@ namespace Schumix.Irc
 			return on + "|" + off;
 		}
 
-		public void JoinChannel()
+		public void JoinChannel(string ServerName)
 		{
 			Log.Debug("ChannelInfo", sLConsole.ChannelInfo("Text5"));
 			bool error = false;
 
 			foreach(var channel in _ChannelList)
 			{
-				sSender.Join(channel.Key, channel.Value.Trim());
+				sSender.Joine(ServerName, channel.Key, channel.Value.Trim());
 
 				if(sIgnoreChannel.IsIgnore(channel.Key))
 				{

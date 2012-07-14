@@ -42,7 +42,7 @@ namespace Schumix.Irc
 			get { return DateTime.Now - _timeLastSent; }
 		}
 
-		public void SendChatMessage(MessageType type, string channel, string message)
+		public void SendChatMessage(MessageType type, string ServerName, string channel, string message)
 		{
 			lock(WriteLock)
 			{
@@ -51,7 +51,7 @@ namespace Schumix.Irc
 					var list = NewLine(message);
 					if(list.Count > 3)
 					{
-						SendChatMessage(type, channel, sLConsole.Other("MessageLength"));
+						SendChatMessage(type, ServerName, channel, sLConsole.Other("MessageLength"));
 						list.Clear();
 						return;
 					}
@@ -61,29 +61,29 @@ namespace Schumix.Irc
 						switch(type)
 						{
 							case MessageType.Privmsg:
-								WriteLine("PRIVMSG {0} :{1}", channel.ToLower(), IgnoreCommand(text));
+								WriteLinee(ServerName, "PRIVMSG {0} :{1}", channel.ToLower(), IgnoreCommand(text));
 								break;
 							case MessageType.Notice:
-								WriteLine("NOTICE {0} :{1}", channel, text);
+								WriteLinee(ServerName, "NOTICE {0} :{1}", channel, text);
 								break;
 							case MessageType.Amsg:
 								var clist = ChannelList();
 								foreach(var chan in clist)
 								{
-									WriteLine("PRIVMSG {0} :{1}", chan, IgnoreCommand(text));
+									WriteLinee(ServerName, "PRIVMSG {0} :{1}", chan, IgnoreCommand(text));
 									Thread.Sleep(400);
 								}
 
 								clist.Clear();
 								break;
 							case MessageType.Action:
-								WriteLine("PRIVMSG {0} :ACTION {1}", channel.ToLower(), text);
+								WriteLinee(ServerName, "PRIVMSG {0} :ACTION {1}", channel.ToLower(), text);
 								break;
 							case MessageType.CtcpRequest:
-								WriteLine("PRIVMSG {0} :{1}", channel.ToLower(), text);
+								WriteLinee(ServerName, "PRIVMSG {0} :{1}", channel.ToLower(), text);
 								break;
 							case MessageType.CtcpReply:
-								WriteLine("NOTICE {0} :{1}", channel, text);
+								WriteLinee(ServerName, "NOTICE {0} :{1}", channel, text);
 								break;
 						}
 
@@ -97,29 +97,29 @@ namespace Schumix.Irc
 					switch(type)
 					{
 						case MessageType.Privmsg:
-							WriteLine("PRIVMSG {0} :{1}", channel.ToLower(), IgnoreCommand(message));
+							WriteLinee(ServerName, "PRIVMSG {0} :{1}", channel.ToLower(), IgnoreCommand(message));
 							break;
 						case MessageType.Notice:
-							WriteLine("NOTICE {0} :{1}", channel, message);
+							WriteLinee(ServerName, "NOTICE {0} :{1}", channel, message);
 							break;
 						case MessageType.Amsg:
 							var clist = ChannelList();
 							foreach(var chan in clist)
 							{
-								WriteLine("PRIVMSG {0} :{1}", chan, IgnoreCommand(message));
+								WriteLinee(ServerName, "PRIVMSG {0} :{1}", chan, IgnoreCommand(message));
 								Thread.Sleep(400);
 							}
 
 							clist.Clear();
 							break;
 						case MessageType.Action:
-							WriteLine("PRIVMSG {0} :ACTION {1}", channel.ToLower(), message);
+							WriteLinee(ServerName, "PRIVMSG {0} :ACTION {1}", channel.ToLower(), message);
 							break;
 						case MessageType.CtcpRequest:
-							WriteLine("PRIVMSG {0} :{1}", channel.ToLower(), message);
+							WriteLinee(ServerName, "PRIVMSG {0} :{1}", channel.ToLower(), message);
 							break;
 						case MessageType.CtcpReply:
-							WriteLine("NOTICE {0} :{1}", channel, message);
+							WriteLinee(ServerName, "NOTICE {0} :{1}", channel, message);
 							break;
 					}
 				}
@@ -128,11 +128,11 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void SendChatMessage(MessageType type, string channel, string message, params object[] args)
+		public void SendChatMessagee(MessageType type, string ServerName, string channel, string message, params object[] args)
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(type, channel, string.Format(message, args));
+				SendChatMessage(type, ServerName, channel, string.Format(message, args));
 			}
 		}
 
@@ -143,13 +143,13 @@ namespace Schumix.Irc
 				switch(IRCConfig.MessageType.ToLower())
 				{
 					case "privmsg":
-						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Channel, message);
+						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.ServerName, sIRCMessage.Channel, message);
 						break;
 					case "notice":
-						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Nick, message);
+						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.ServerName, sIRCMessage.Nick, message);
 						break;
 					default:
-						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Channel, message);
+						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.ServerName, sIRCMessage.Channel, message);
 						break;
 				}
 			}
@@ -163,103 +163,103 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void SendCMPrivmsg(string channel, string message)
+		public void SendCMPrivmsge(string ServerName, string channel, string message)
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.Privmsg, channel, message);
+				SendChatMessage(MessageType.Privmsg, ServerName, channel, message);
 			}
 		}
 
-		public void SendCMPrivmsg(string channel, string message, params object[] args)
+		public void SendCMPrivmsge(string ServerName, string channel, string message, params object[] args)
 		{
 			lock(WriteLock)
 			{
-				SendCMPrivmsg(channel, string.Format(message, args));
+				SendCMPrivmsge(ServerName, channel, string.Format(message, args));
 			}
 		}
 
-		public void SendCMNotice(string channel, string message)
+		public void SendCMNoticee(string ServerName, string channel, string message)
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.Notice, channel, message);
+				SendChatMessage(MessageType.Notice, ServerName, channel, message);
 			}
 		}
 
-		public void SendCMNotice(string channel, string message, params object[] args)
+		public void SendCMNoticee(string ServerName, string channel, string message, params object[] args)
 		{
 			lock(WriteLock)
 			{
-				SendCMNotice(channel, string.Format(message, args));
+				SendCMNoticee(ServerName, channel, string.Format(message, args));
 			}
 		}
 
-		public void SendCMAmsg(string message)
+		public void SendCMAmsge(string ServerName, string message)
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.Amsg, string.Empty, message);
+				SendChatMessage(MessageType.Amsg, ServerName, string.Empty, message);
 			}
 		}
 
-		public void SendCMAmsg(string message, params object[] args)
+		public void SendCMAmsge(string ServerName, string message, params object[] args)
 		{
 			lock(WriteLock)
 			{
-				SendCMAmsg(string.Format(message, args));
+				SendCMAmsge(ServerName, string.Format(message, args));
 			}
 		}
 
-		public void SendCMAction(string channel, string message)
+		public void SendCMActione(string ServerName, string channel, string message)
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.Action, channel, message);
+				SendChatMessage(MessageType.Action, ServerName, channel, message);
 			}
 		}
 
-		public void SendCMAction(string channel, string message, params object[] args)
+		public void SendCMActione(string ServerName, string channel, string message, params object[] args)
 		{
 			lock(WriteLock)
 			{
-				SendCMAction(channel, string.Format(message, args));
+				SendCMActione(ServerName, channel, string.Format(message, args));
 			}
 		}
 
-		public void SendCMCtcpRequest(string channel, string message)
+		public void SendCMCtcpRequeste(string ServerName, string channel, string message)
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.CtcpRequest, channel, message);
+				SendChatMessage(MessageType.CtcpRequest, ServerName, channel, message);
 			}
 		}
 
-		public void SendCMCtcpRequest(string channel, string message, params object[] args)
+		public void SendCMCtcpRequeste(string ServerName, string channel, string message, params object[] args)
 		{
 			lock(WriteLock)
 			{
-				SendCMCtcpRequest(channel, string.Format(message, args));
+				SendCMCtcpRequeste(ServerName, channel, string.Format(message, args));
 			}
 		}
 
-		public void SendCMCtcpReply(string channel, string message)
+		public void SendCMCtcpReplye(string ServerName, string channel, string message)
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.CtcpReply, channel, message);
+				SendChatMessage(MessageType.CtcpReply, ServerName, channel, message);
 			}
 		}
 
-		public void SendCMCtcpReply(string channel, string message, params object[] args)
+		public void SendCMCtcpReplye(string ServerName, string channel, string message, params object[] args)
 		{
 			lock(WriteLock)
 			{
-				SendCMCtcpReply(channel, string.Format(message, args));
+				SendCMCtcpReplye(ServerName, channel, string.Format(message, args));
 			}
 		}
 
-		public void WriteLine(string message)
+		public void WriteLinee(string ServerName, string message)
 		{
 			lock(WriteLock)
 			{
@@ -295,11 +295,11 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void WriteLine(string message, params object[] args)
+		public void WriteLinee(string ServerName, string message, params object[] args)
 		{
 			lock(WriteLock)
 			{
-				WriteLine(string.Format(message, args));
+				WriteLinee(ServerName, string.Format(message, args));
 			}
 		}
 

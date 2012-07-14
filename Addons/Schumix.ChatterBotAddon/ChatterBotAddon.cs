@@ -35,15 +35,16 @@ namespace Schumix.ChatterBotAddon
 		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 
 		public void Setup()
 		{
-			Network.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
+			sIrcBase.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
 		}
 
 		public void Destroy()
 		{
-			Network.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
+			sIrcBase.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
 		}
 
 		public int Reload(string RName, string SName = "")

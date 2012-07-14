@@ -32,6 +32,7 @@ namespace Schumix.TesztAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 
 		public void Setup()
 		{
@@ -66,12 +67,12 @@ namespace Schumix.TesztAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.SchumixRegisterHandler("test", HandleTest, CommandPermission.Administrator);
+			sIrcBase.SchumixRegisterHandler("test", HandleTest, CommandPermission.Administrator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.SchumixRemoveHandler("test",   HandleTest);
+			sIrcBase.SchumixRemoveHandler("test",   HandleTest);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

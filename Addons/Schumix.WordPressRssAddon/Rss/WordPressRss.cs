@@ -274,8 +274,8 @@ namespace Schumix.WordPressRssAddon
 				foreach(var chan in channel)
 				{
 					string language = sLManager.GetChannelLocalization(chan);
-					sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress", language), _name, author, guid);
-					sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress2", language), _name, title);
+					//sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress", language), _name, author, guid);
+					//sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress2", language), _name, title);
 
 					Thread.Sleep(1000);
 				}

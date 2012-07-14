@@ -33,6 +33,7 @@ Megírásra váró feladatok:
 	- irc parancs listájának bővítése.
 	- sznap parancs megírása normálisan.
 	- Rss-nél megoldani hogy a project elnevezésének színe cserélhető legyen.
+	- Rss-be add, remove, és change parancsot létrehozni mellyel magát az rss címet tudjuk hozzáadni.
 	- Játék addon bővítése és a kód nyelvezetét átírni angolra is.
 	- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
 	- Serverben megoldani az egy szerveren lévő botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
@@ -41,3 +42,9 @@ Megírásra váró feladatok:
 	- channel tábla átnevezése channels-re
 	- Clean elhelyezése a configban. Ezzel a lehetőséggel lehetne majd kipucolni pl a többszerveres módban a fölösleges adatokat amelyek másik szerverekhez tartoznak. Plusz még egyébb dolgokat pucolna. Ezt a clean-t még meglehetne csinálni kapcsolónak is az exe indításánál. (pucolhatná a config mappából is a fölösleges _ jelel ellátott fájlokat is.)
 	- Többszerveres mód.
+	- Lognál olyan lehetőség hogy az adot indítási dátum lesz a fájl neve és ez mind abba a mappába kerül ami a log fájlnak lenne a neve.
+	- Többszerveres módnál az irc logolást leválasztani a normál logról(normális módnál maradhatna a Schumix.log-ban).
+	- GameAddon átalakítása és visszatöltése többszerveres módban.
+	- NameList átfejlesztése mindakét helyen.
+	- NickInfo singletonból osztályos legyen(new).
+	- Legvégén az "e" betük leszedése a függvények végéről a sender és a sendcheatmessage fv-ken.

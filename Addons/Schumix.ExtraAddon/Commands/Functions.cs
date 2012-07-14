@@ -159,17 +159,20 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleIsOnline(object sender, ElapsedEventArgs e)
 		{
-			if(sNickInfo.NickStorage.ToLower() != IRCConfig.NickName.ToLower())
+			foreach(var nw in sIrcBase.Networks)
 			{
-				ExtraAddon.IsOnline = true;
-				sSender.NickServInfo(IRCConfig.NickName);
-			}
-			else if(sNickInfo.NickStorage.ToLower() == IRCConfig.NickName.ToLower() && !sNickInfo.IsIdentify && MessageHandler.Online)
-			{
-				sNickInfo.Identify(IRCConfig.NickServPassword);
+				if(sNickInfo.NickStorage.ToLower() != IRCConfig.NickName.ToLower())
+				{
+					ExtraAddon.IsOnline = true;
+					sSender.NickServInfo(nw.Key, IRCConfig.NickName);
+				}
+				else if(sNickInfo.NickStorage.ToLower() == IRCConfig.NickName.ToLower() && !sNickInfo.IsIdentify && nw.Value.Online)
+				{
+					sNickInfo.Identify(nw.Key, IRCConfig.NickServPassword);
 
-				if(IRCConfig.UseHostServ)
-					sNickInfo.Vhost(SchumixBase.On);
+					if(IRCConfig.UseHostServ)
+						sNickInfo.Vhost(nw.Key, SchumixBase.On);
+				}
 			}
 		}
 	}

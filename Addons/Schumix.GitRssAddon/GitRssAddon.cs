@@ -25,6 +25,7 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.GitRssAddon.Config;
 using Schumix.GitRssAddon.Commands;
@@ -37,6 +38,7 @@ namespace Schumix.GitRssAddon
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		public static readonly List<GitRss> RssList = new List<GitRss>();
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
@@ -111,12 +113,12 @@ namespace Schumix.GitRssAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.SchumixRegisterHandler("git", HandleGit, CommandPermission.Operator);
+			sIrcBase.SchumixRegisterHandler("git", HandleGit, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.SchumixRemoveHandler("git",   HandleGit);
+			sIrcBase.SchumixRemoveHandler("git",   HandleGit);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

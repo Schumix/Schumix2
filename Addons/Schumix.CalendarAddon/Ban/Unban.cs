@@ -32,13 +32,13 @@ namespace Schumix.CalendarAddon
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private Unban() {}
 
-		public string UnbanName(string name, string channel)
+		public string UnbanName(string ServerName, string name, string channel)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower());
 			if(db.IsNull())
 				return sLManager.GetWarningText("UnbanList", channel);
 
-			sSender.Unban(channel, name);
+			sSender.Unban(ServerName, channel, name);
 			SchumixBase.DManager.Delete("banned", string.Format("Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower()));
 			return sLManager.GetWarningText("UnbanList1", channel);
 		}

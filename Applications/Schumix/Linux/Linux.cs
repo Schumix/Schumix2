@@ -28,6 +28,7 @@ namespace Schumix
 {
 	class Linux
 	{
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private Linux() {}
 
@@ -49,7 +50,9 @@ namespace Schumix
 			Log.Debug("Linux", "Got a {0} signal!", signals[which].Signum);
 			Log.Notice("Linux", "Handler Terminated.");
 			SchumixBase.Quit();
-			sSender.Quit("Daemon killed.");
+
+			foreach(var nw in sIrcBase.Networks)
+				sSender.Quit(nw.Key, "Daemon killed.");
 			Thread.Sleep(5*1000);
 		}
 	}

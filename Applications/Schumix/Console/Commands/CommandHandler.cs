@@ -109,13 +109,14 @@ namespace Schumix.Console.Commands
 		///     Csatorna nevét tárolja.
 		/// </summary>
 		protected string _channel;
+		protected string _servername;
 
 		/// <summary>
 		///     Indulási függvény.
 		/// </summary>
-		protected CommandHandler(Network network) : base(LogConfig.IrcLog)
+		protected CommandHandler(/*Network network*/) : base(LogConfig.IrcLog)
 		{
-			_network = network;
+			//_network = network;
 		}
 
 		/// <summary>
@@ -708,13 +709,13 @@ namespace Schumix.Console.Commands
 				if(Info.Length == 4)
 				{
 					string pass = Info[3];
-					sSender.Join(channel, pass);
+					sSender.Joine(_servername, channel, pass);
 					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", channel, pass, sLManager.Locale);
 					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", channel));
 				}
 				else
 				{
-					sSender.Join(channel);
+					sSender.Joine(_servername, channel);
 					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", channel, string.Empty, sLManager.Locale);
 					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", channel));
 				}
@@ -764,7 +765,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				sSender.Part(channel);
+				sSender.Part(_servername, channel);
 				SchumixBase.DManager.Delete("channel", string.Format("Channel = '{0}'", channel));
 				Log.Notice("Console", text[2], channel);
 
@@ -1058,7 +1059,7 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleDisConnect()
 		{
-			sSender.Quit("Console: Disconnect.");
+			sSender.Quit(_servername, "Console: Disconnect.");
 			_network.DisConnect();
 		}
 
@@ -1067,7 +1068,7 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleReConnect()
 		{
-			sSender.Quit("Console: Reconnect.");
+			sSender.Quit(_servername, "Console: Reconnect.");
 			_network.ReConnect();
 		}
 
@@ -1085,7 +1086,7 @@ namespace Schumix.Console.Commands
 			SchumixBase.NewNick = true;
 			string nick = Info[1];
 			sNickInfo.ChangeNick(nick);
-			sSender.Nick(nick);
+			sSender.Nick(_servername, nick);
 			Log.Notice("Console", sLManager.GetConsoleCommandText("nick"), nick);
 		}
 
@@ -1119,9 +1120,9 @@ namespace Schumix.Console.Commands
 			}
 
 			if(Info.Length == 2)
-				sSender.Join(Info[1]);
+				sSender.Joine(_servername, Info[1]);
 			else if(Info.Length == 3)
-				sSender.Join(Info[1], Info[2]);
+				sSender.Joine(_servername, Info[1], Info[2]);
 
 			Log.Notice("Console", sLManager.GetConsoleCommandText("join"), Info[1]);
 		}
@@ -1149,7 +1150,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			sSender.Part(Info[1]);
+			sSender.Part(_servername, Info[1]);
 			Log.Notice("Console", sLManager.GetConsoleCommandText("leave"), Info[1]);
 		}
 
@@ -1609,7 +1610,7 @@ namespace Schumix.Console.Commands
 					}
 
 					sIgnoreAddon.Add(addon);
-					sIgnoreAddon.UnloadPlugin(addon);
+					sIgnoreAddon.UnloadPlugin(_servername, addon);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "remove")
@@ -1636,7 +1637,7 @@ namespace Schumix.Console.Commands
 					}
 
 					sIgnoreAddon.Remove(addon);
-					sIgnoreAddon.LoadPlugin(addon);
+					sIgnoreAddon.LoadPlugin(_servername, addon);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "search")
@@ -1735,7 +1736,7 @@ namespace Schumix.Console.Commands
 
 			Log.Notice("Console", text[0]);
 			SchumixBase.Quit();
-			sSender.Quit(text[1]);
+			sSender.Quit(_servername, text[1]);
 		}
 	}
 }

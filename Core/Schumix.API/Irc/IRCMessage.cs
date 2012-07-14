@@ -30,6 +30,7 @@ namespace Schumix.API
 		public string User { get; set; }
 		public string Host { get; set; }
 		public string[] Info { get; set; }
+		public string ServerName { get; set; }
 		public MessageType MessageType { get; set; }
 	}
 }

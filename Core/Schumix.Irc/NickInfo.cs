@@ -122,16 +122,16 @@ namespace Schumix.Irc
 			_NickStorage = newnick;
 		}
 
-		public void Identify(string Password)
+		public void Identify(string ServerName, string Password)
 		{
 			if(!_Identify)
 			{
 				Log.Notice("NickServ", sLConsole.NickServ("Text"));
-				sSender.NickServ(Password);
+				sSender.NickServ(ServerName, Password);
 			}
 		}
 
-		public void Vhost(string Status)
+		public void Vhost(string ServerName, string Status)
 		{
 			if(!_Vhost)
 			{
@@ -143,7 +143,7 @@ namespace Schumix.Irc
 				else if(Status == SchumixBase.On)
 					Log.Notice("HostServ", sLConsole.HostServ("Text"));
 
-				sSender.HostServ(Status);
+				sSender.HostServ(ServerName, Status);
 			}
 		}
 

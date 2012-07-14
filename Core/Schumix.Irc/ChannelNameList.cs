@@ -36,8 +36,8 @@ namespace Schumix.Irc
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly AntiFlood sAntiFlood = Singleton<AntiFlood>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private ChannelNameList() {}
 
 		public Dictionary<string, string> Names
@@ -45,7 +45,7 @@ namespace Schumix.Irc
 			get { return _names; }
 		}
 
-		public void Add(string Channel, string Name)
+		public void Add(string ServerName, string Channel, string Name)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
@@ -61,7 +61,7 @@ namespace Schumix.Irc
 				_names.Add(Channel.ToLower(), Name.ToLower());
 		}
 
-		public void Remove(string Channel)
+		public void Remove(string ServerName, string Channel)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
@@ -88,7 +88,7 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void Remove(string Channel, string Name, bool Quit = false)
+		public void Remove(string ServerName, string Channel, string Name, bool Quit = false)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
@@ -151,11 +151,11 @@ namespace Schumix.Irc
 
 				channel.Clear();
 				RandomVhost(Name.ToLower());
-				sAntiFlood.Remove(Name.ToLower());
+				sIrcBase.Networks[ServerName].sAntiFlood.Remove(Name.ToLower());
 			}
 		}
 
-		public void Change(string Name, string NewName, bool Identify = false)
+		public void Change(string ServerName, string Name, string NewName, bool Identify = false)
 		{
 			var channel = new Dictionary<string, string>();
 
@@ -190,7 +190,7 @@ namespace Schumix.Irc
 
 			channel.Clear();
 			RandomVhost(Name.ToLower());
-			sAntiFlood.Remove(Name.ToLower());
+			sIrcBase.Networks[ServerName].sAntiFlood.Remove(Name.ToLower());
 		}
 
 		public bool IsChannelList(string Name)
@@ -204,7 +204,7 @@ namespace Schumix.Irc
 			return false;
 		}
 
-		public void NewThread(string Name)
+		public void NewThread(string ServerName, string Name)
 		{
 			Task.Factory.StartNew(() =>
 			{
@@ -212,7 +212,7 @@ namespace Schumix.Irc
 
 				if(!IsChannelList(Name))
 				{
-					sSendMessage.SendCMPrivmsg(Name.ToLower(), sLManager.GetWarningText("NoRegisteredAdminAccess"));
+					sSendMessage.SendCMPrivmsge(ServerName, Name.ToLower(), sLManager.GetWarningText("NoRegisteredAdminAccess"));
 					RandomVhost(Name);
 				}
 			});

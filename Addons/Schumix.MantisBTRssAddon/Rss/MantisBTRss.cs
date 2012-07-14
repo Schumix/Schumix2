@@ -261,8 +261,8 @@ namespace Schumix.MantisBTRssAddon
 
 					if(title.Contains(SchumixBase.Colon.ToString()))
 					{
-						sSendMessage.SendCMPrivmsg(chan, sLocalization.MantisBTRss("Text", language), _name, bugcode, link);
-						sSendMessage.SendCMPrivmsg(chan, sLocalization.MantisBTRss("Text2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+						//sSendMessage.SendCMPrivmsg(chan, sLocalization.MantisBTRss("Text", language), _name, bugcode, link);
+						//sSendMessage.SendCMPrivmsg(chan, sLocalization.MantisBTRss("Text2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
 					}
 
 					Thread.Sleep(1000);

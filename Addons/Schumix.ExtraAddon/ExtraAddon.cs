@@ -45,6 +45,7 @@ namespace Schumix.ExtraAddon
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		private readonly NameList sNameList = Singleton<NameList>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Notes sNotes = Singleton<Notes>.Instance;
 #pragma warning disable 414
@@ -64,14 +65,14 @@ namespace Schumix.ExtraAddon
 			sNameList.RandomAllVhost();
 			sLocalization.Locale = sLConsole.Locale;
 			_config = new AddonConfig(Name + ".xml");
-			Network.IrcRegisterHandler("PRIVMSG",              HandlePrivmsg);
-			Network.IrcRegisterHandler("NOTICE",               HandleNotice);
-			Network.IrcRegisterHandler("JOIN",                 HandleJoin);
-			Network.IrcRegisterHandler("PART",                 HandleLeft);
-			Network.IrcRegisterHandler("KICK",                 HandleKick);
-			Network.IrcRegisterHandler("QUIT",                 HandleQuit);
-			Network.IrcRegisterHandler("NICK",                 HandleNewNick);
-			Network.IrcRegisterHandler(ReplyCode.RPL_NAMREPLY, HandleNameList);
+			sIrcBase.IrcRegisterHandler("PRIVMSG",              HandlePrivmsg);
+			sIrcBase.IrcRegisterHandler("NOTICE",               HandleNotice);
+			sIrcBase.IrcRegisterHandler("JOIN",                 HandleJoin);
+			sIrcBase.IrcRegisterHandler("PART",                 HandleLeft);
+			sIrcBase.IrcRegisterHandler("KICK",                 HandleKick);
+			sIrcBase.IrcRegisterHandler("QUIT",                 HandleQuit);
+			sIrcBase.IrcRegisterHandler("NICK",                 HandleNewNick);
+			sIrcBase.IrcRegisterHandler(ReplyCode.RPL_NAMREPLY, HandleNameList);
 			InitIrcCommand();
 		}
 
@@ -82,14 +83,14 @@ namespace Schumix.ExtraAddon
 			sFunctions._timeronline.Elapsed -= sFunctions.HandleIsOnline;
 			sFunctions._timeronline.Stop();
 
-			Network.IrcRemoveHandler("PRIVMSG",                HandlePrivmsg);
-			Network.IrcRemoveHandler("NOTICE",                 HandleNotice);
-			Network.IrcRemoveHandler("JOIN",                   HandleJoin);
-			Network.IrcRemoveHandler("PART",                   HandleLeft);
-			Network.IrcRemoveHandler("KICK",                   HandleKick);
-			Network.IrcRemoveHandler("QUIT",                   HandleQuit);
-			Network.IrcRemoveHandler("NICK",                   HandleNewNick);
-			Network.IrcRemoveHandler(ReplyCode.RPL_NAMREPLY,   HandleNameList);
+			sIrcBase.IrcRemoveHandler("PRIVMSG",                HandlePrivmsg);
+			sIrcBase.IrcRemoveHandler("NOTICE",                 HandleNotice);
+			sIrcBase.IrcRemoveHandler("JOIN",                   HandleJoin);
+			sIrcBase.IrcRemoveHandler("PART",                   HandleLeft);
+			sIrcBase.IrcRemoveHandler("KICK",                   HandleKick);
+			sIrcBase.IrcRemoveHandler("QUIT",                   HandleQuit);
+			sIrcBase.IrcRemoveHandler("NICK",                   HandleNewNick);
+			sIrcBase.IrcRemoveHandler(ReplyCode.RPL_NAMREPLY,   HandleNameList);
 			RemoveIrcCommand();
 			sNameList.RemoveAll();
 		}
@@ -120,30 +121,30 @@ namespace Schumix.ExtraAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.SchumixRegisterHandler("notes",        sNotes.HandleNotes);
-			CommandManager.SchumixRegisterHandler("message",      sFunctions.HandleMessage);
-			CommandManager.SchumixRegisterHandler("weather",      sFunctions.HandleWeather);
-			CommandManager.SchumixRegisterHandler("roll",         sFunctions.HandleRoll);
-			CommandManager.SchumixRegisterHandler("sha1",         sFunctions.HandleSha1);
-			CommandManager.SchumixRegisterHandler("md5",          sFunctions.HandleMd5);
-			CommandManager.SchumixRegisterHandler("prime",        sFunctions.HandlePrime);
-			CommandManager.SchumixRegisterHandler("wiki",         sFunctions.HandleWiki);
-			CommandManager.SchumixRegisterHandler("calc",         sFunctions.HandleCalc);
-			CommandManager.SchumixRegisterHandler("autofunction", sFunctions.HandleAutoFunction, CommandPermission.HalfOperator);
+			sIrcBase.SchumixRegisterHandler("notes",        sNotes.HandleNotes);
+			sIrcBase.SchumixRegisterHandler("message",      sFunctions.HandleMessage);
+			sIrcBase.SchumixRegisterHandler("weather",      sFunctions.HandleWeather);
+			sIrcBase.SchumixRegisterHandler("roll",         sFunctions.HandleRoll);
+			sIrcBase.SchumixRegisterHandler("sha1",         sFunctions.HandleSha1);
+			sIrcBase.SchumixRegisterHandler("md5",          sFunctions.HandleMd5);
+			sIrcBase.SchumixRegisterHandler("prime",        sFunctions.HandlePrime);
+			sIrcBase.SchumixRegisterHandler("wiki",         sFunctions.HandleWiki);
+			sIrcBase.SchumixRegisterHandler("calc",         sFunctions.HandleCalc);
+			sIrcBase.SchumixRegisterHandler("autofunction", sFunctions.HandleAutoFunction, CommandPermission.HalfOperator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.SchumixRemoveHandler("notes",          sNotes.HandleNotes);
-			CommandManager.SchumixRemoveHandler("message",        sFunctions.HandleMessage);
-			CommandManager.SchumixRemoveHandler("weather",        sFunctions.HandleWeather);
-			CommandManager.SchumixRemoveHandler("roll",           sFunctions.HandleRoll);
-			CommandManager.SchumixRemoveHandler("sha1",           sFunctions.HandleSha1);
-			CommandManager.SchumixRemoveHandler("md5",            sFunctions.HandleMd5);
-			CommandManager.SchumixRemoveHandler("prime",          sFunctions.HandlePrime);
-			CommandManager.SchumixRemoveHandler("wiki",           sFunctions.HandleWiki);
-			CommandManager.SchumixRemoveHandler("calc",           sFunctions.HandleCalc);
-			CommandManager.SchumixRemoveHandler("autofunction",   sFunctions.HandleAutoFunction);
+			sIrcBase.SchumixRemoveHandler("notes",          sNotes.HandleNotes);
+			sIrcBase.SchumixRemoveHandler("message",        sFunctions.HandleMessage);
+			sIrcBase.SchumixRemoveHandler("weather",        sFunctions.HandleWeather);
+			sIrcBase.SchumixRemoveHandler("roll",           sFunctions.HandleRoll);
+			sIrcBase.SchumixRemoveHandler("sha1",           sFunctions.HandleSha1);
+			sIrcBase.SchumixRemoveHandler("md5",            sFunctions.HandleMd5);
+			sIrcBase.SchumixRemoveHandler("prime",          sFunctions.HandlePrime);
+			sIrcBase.SchumixRemoveHandler("wiki",           sFunctions.HandleWiki);
+			sIrcBase.SchumixRemoveHandler("calc",           sFunctions.HandleCalc);
+			sIrcBase.SchumixRemoveHandler("autofunction",   sFunctions.HandleAutoFunction);
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
@@ -171,7 +172,7 @@ namespace Schumix.ExtraAddon
 					{
 						AutoMode = true;
 						ModeChannel = sIRCMessage.Channel.ToLower();
-						sSender.NickServStatus(sIRCMessage.Nick);
+						sSender.NickServStatus(sIRCMessage.ServerName, sIRCMessage.Nick);
 					}
 				});
 
@@ -230,20 +231,20 @@ namespace Schumix.ExtraAddon
 					if(!db.IsNull())
 					{
 						string rank = db["Rank"].ToString();
-						sSender.Mode(ModeChannel, rank, sIRCMessage.Info[4]);
+						sSender.Modee(sIRCMessage.ServerName, ModeChannel, rank, sIRCMessage.Info[4]);
 					}
 					else
 					{
 						if(ModeConfig.RemoveEnabled)
 						{
 							if(ModeConfig.RemoveType.Length == 1)
-								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, sIRCMessage.Info[4]);
+								sSender.Modee(sIRCMessage.ServerName, ModeChannel, "-" + ModeConfig.RemoveType, sIRCMessage.Info[4]);
 							else if(ModeConfig.RemoveType.Length == 2)
-								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0}", sIRCMessage.Info[4]));
+								sSender.Modee(sIRCMessage.ServerName, ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0}", sIRCMessage.Info[4]));
 							else if(ModeConfig.RemoveType.Length == 3)
-								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0}", sIRCMessage.Info[4]));
+								sSender.Modee(sIRCMessage.ServerName, ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0}", sIRCMessage.Info[4]));
 							else if(ModeConfig.RemoveType.Length == 4)
-								sSender.Mode(ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0} {0}", sIRCMessage.Info[4]));
+								sSender.Modee(sIRCMessage.ServerName, ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0} {0}", sIRCMessage.Info[4]));
 						}
 					}
 				}
@@ -255,13 +256,13 @@ namespace Schumix.ExtraAddon
 			{
 				if(sIRCMessage.Args.Contains("isn't registered.") || sIRCMessage.Args.Contains("   Last seen time:"))
 				{
-					sNameList.Change(sNickInfo.NickStorage, IRCConfig.NickName, true);
+					sNameList.Change(sIRCMessage.ServerName, sNickInfo.NickStorage, IRCConfig.NickName, true);
 					sNickInfo.ChangeNick(IRCConfig.NickName);
-					sSender.Nick(IRCConfig.NickName);
-					sNickInfo.Identify(IRCConfig.NickServPassword);
+					sSender.Nick(sIRCMessage.ServerName, IRCConfig.NickName);
+					sNickInfo.Identify(sIRCMessage.ServerName, IRCConfig.NickServPassword);
 
 					if(IRCConfig.UseHostServ)
-						sNickInfo.Vhost(SchumixBase.On);
+						sNickInfo.Vhost(sIRCMessage.ServerName, SchumixBase.On);
 
 					IsOnline = false;
 				}

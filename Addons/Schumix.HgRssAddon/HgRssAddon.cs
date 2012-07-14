@@ -25,6 +25,7 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.HgRssAddon.Config;
 using Schumix.HgRssAddon.Commands;
@@ -36,6 +37,7 @@ namespace Schumix.HgRssAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		public static readonly List<HgRss> RssList = new List<HgRss>();
 #pragma warning disable 414
 		private AddonConfig _config;
@@ -110,12 +112,12 @@ namespace Schumix.HgRssAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.SchumixRegisterHandler("hg", HandleHg, CommandPermission.Operator);
+			sIrcBase.SchumixRegisterHandler("hg", HandleHg, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.SchumixRemoveHandler("hg",   HandleHg);
+			sIrcBase.SchumixRemoveHandler("hg",   HandleHg);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

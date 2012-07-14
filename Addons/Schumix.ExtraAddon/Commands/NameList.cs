@@ -41,7 +41,7 @@ namespace Schumix.ExtraAddon.Commands
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private NameList() {}
 
-		public void Add(string Channel, string Name)
+		public void Add(string ServerName, string Channel, string Name)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
@@ -57,7 +57,7 @@ namespace Schumix.ExtraAddon.Commands
 				_names.Add(Channel.ToLower(), Name.ToLower());
 		}
 
-		public void Remove(string Channel)
+		public void Remove(string ServerName, string Channel)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
@@ -84,7 +84,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 		}
 
-		public void Remove(string Channel, string Name, bool Quit = false)
+		public void Remove(string ServerName, string Channel, string Name, bool Quit = false)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
@@ -151,12 +151,12 @@ namespace Schumix.ExtraAddon.Commands
 				if(IRCConfig.NickName.ToLower() == Name.ToLower())
 				{
 					ExtraAddon.IsOnline = true;
-					sSender.NickServInfo(Name);
+					sSender.NickServInfo(ServerName, Name);
 				}
 			}
 		}
 
-		public void Change(string Name, string NewName, bool Identify = false)
+		public void Change(string ServerName, string Name, string NewName, bool Identify = false)
 		{
 			var channel = new Dictionary<string, string>();
 
@@ -196,7 +196,7 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				sNickInfo.ChangeIdentifyStatus(false);
 				ExtraAddon.IsOnline = true;
-				sSender.NickServInfo(Name);
+				sSender.NickServInfo(ServerName, Name);
 			}
 		}
 
@@ -211,7 +211,7 @@ namespace Schumix.ExtraAddon.Commands
 			return false;
 		}
 
-		public void NewThread(string Name)
+		public void NewThread(string ServerName, string Name)
 		{
 			Task.Factory.StartNew(() =>
 			{
@@ -219,7 +219,7 @@ namespace Schumix.ExtraAddon.Commands
 
 				if(!IsChannelList(Name))
 				{
-					sSendMessage.SendCMPrivmsg(Name.ToLower(), sLManager.GetWarningText("NoRegisteredNotesUserAccess"));
+					sSendMessage.SendCMPrivmsge(ServerName, Name.ToLower(), sLManager.GetWarningText("NoRegisteredNotesUserAccess"));
 					RandomVhost(Name);
 				}
 			});

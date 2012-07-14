@@ -35,10 +35,11 @@ namespace Schumix.Irc.Commands
 {
 	public class CommandManager : CommandHandler
 	{
-		public static readonly Dictionary<string, CommandMethod> CommandMethodMap = new Dictionary<string, CommandMethod>();
-		private static readonly object MapLock = new object();
+		public readonly Dictionary<string, CommandMethod> CommandMethodMap = new Dictionary<string, CommandMethod>();
+		private readonly object MapLock = new object();
+		protected CommandManager() {}
 
-		protected CommandManager()
+		public void InitializeCommandMgr()
 		{
 			Log.Notice("CommandManager", sLConsole.CommandManager("Text"));
 			CreateMappings();
@@ -168,7 +169,7 @@ namespace Schumix.Irc.Commands
 			});
 		}
 
-		public static void SchumixRegisterHandler(string code, CommandDelegate method, CommandPermission permission = CommandPermission.Normal)
+		public void SchumixRegisterHandler(string code, CommandDelegate method, CommandPermission permission = CommandPermission.Normal)
 		{
 			if(sIgnoreCommand.IsIgnore(code))
 			   return;
@@ -179,13 +180,13 @@ namespace Schumix.Irc.Commands
 				CommandMethodMap.Add(code.ToLower(), new CommandMethod(method, permission));
 		}
 
-		public static void SchumixRemoveHandler(string code)
+		public void SchumixRemoveHandler(string code)
 		{
 			if(CommandMethodMap.ContainsKey(code.ToLower()))
 				CommandMethodMap.Remove(code.ToLower());
 		}
 
-		public static void SchumixRemoveHandler(string code, CommandDelegate method)
+		public void SchumixRemoveHandler(string code, CommandDelegate method)
 		{
 			if(CommandMethodMap.ContainsKey(code.ToLower()))
 			{

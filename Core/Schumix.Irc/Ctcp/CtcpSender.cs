@@ -65,29 +65,29 @@ namespace Schumix.Irc.Ctcp
 			switch(command[0])
 			{
 				case CtcpUtil.Finger:
-					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, _fingerMessage + sLConsole.CtcpSender("Text5") + FormatIdleTime());
+					sSendMessage.SendCMCtcpReplye(sIRCMessage.ServerName, sIRCMessage.Nick, _fingerMessage + sLConsole.CtcpSender("Text5") + FormatIdleTime());
 					break;
 				case CtcpUtil.Time:
-					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, FormatDateTime());
+					sSendMessage.SendCMCtcpReplye(sIRCMessage.ServerName, sIRCMessage.Nick, FormatDateTime());
 					break;
 				case CtcpUtil.UserInfo:
-					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, _userInfoMessage);
+					sSendMessage.SendCMCtcpReplye(sIRCMessage.ServerName, sIRCMessage.Nick, _userInfoMessage);
 					break;
 				case CtcpUtil.Version:
 					foreach(var version in _versionMessage.Split(SchumixBase.NewLine))
-						sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, version);
+						sSendMessage.SendCMCtcpReplye(sIRCMessage.ServerName, sIRCMessage.Nick, version);
 					break;
 				case CtcpUtil.Source:
-					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, _sourceMessage);
+					sSendMessage.SendCMCtcpReplye(sIRCMessage.ServerName, sIRCMessage.Nick, _sourceMessage);
 					break;
 				case CtcpUtil.ClientInfo:
-					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, _clientInfoMessage);
+					sSendMessage.SendCMCtcpReplye(sIRCMessage.ServerName, sIRCMessage.Nick, _clientInfoMessage);
 					break;
 				case CtcpUtil.Ping:
-					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, args);
+					sSendMessage.SendCMCtcpReplye(sIRCMessage.ServerName, sIRCMessage.Nick, args);
 					break;
 				default:
-					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, sLConsole.CtcpSender("Text6"), command[0]);
+					sSendMessage.SendCMCtcpReplye(sIRCMessage.ServerName, sIRCMessage.Nick, sLConsole.CtcpSender("Text6"), command[0]);
 					break;
 			}
 		}

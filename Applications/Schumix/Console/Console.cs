@@ -51,12 +51,12 @@ namespace Schumix.Console
 		/// <summary>
 		///     Indulási függvény.
 		/// </summary>
-		public Console(Network network)
+		public Console(/*Network network*/)
 		{
 			Log.Notice("Console", sLConsole.Console("Text"));
 			Log.Debug("Console", sLConsole.Console("Text2"));
 			new Thread(() => ConsoleRead()).Start();
-			CCManager = new CCommandManager(network);
+			CCManager = new CCommandManager(/*network*/);
 			CCManager.Channel = IRCConfig.MasterChannel;
 			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + CCManager.Channel;
 		}
@@ -92,7 +92,7 @@ namespace Schumix.Console
 					if(message.IsNull() || CCManager.CIncomingInfo(message))
 						continue;
 
-					sSendMessage.SendCMPrivmsg(CCManager.Channel, message);
+					sSendMessage.SendCMPrivmsge(CCManager.ServerName, CCManager.Channel, message);
 					Thread.Sleep(1000);
 				}
 			}

@@ -110,10 +110,10 @@ namespace Schumix.CalendarAddon
 			return sLManager.GetWarningText("Calendar", channel);
 		}
 
-		public void Write(string Name, string Channel, string Message)
+		public void Write(string ServerName, string Name, string Channel, string Message)
 		{
-			sSendMessage.SendCMPrivmsg(Channel, sLManager.GetWarningText("Calendar2", Channel), Name);
-			sSendMessage.SendCMPrivmsg(Channel, Message);
+			sSendMessage.SendCMPrivmsge(ServerName, Channel, sLManager.GetWarningText("Calendar2", Channel), Name);
+			sSendMessage.SendCMPrivmsge(ServerName, Channel, Message);
 			Thread.Sleep(400);
 		}
 

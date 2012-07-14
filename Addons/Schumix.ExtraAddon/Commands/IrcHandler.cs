@@ -54,13 +54,13 @@ namespace Schumix.ExtraAddon.Commands
 				return;
 
 			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
-			sNameList.Add(sIRCMessage.Channel, sIRCMessage.Nick);
+			sNameList.Add(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Nick);
 
 			if(sChannelInfo.FSelect(IFunctions.Automode) && sChannelInfo.FSelect(IChannelFunctions.Automode, sIRCMessage.Channel))
 			{
 				AutoMode = true;
 				ModeChannel = sIRCMessage.Channel;
-				sSender.NickServStatus(sIRCMessage.Nick);
+				sSender.NickServStatus(sIRCMessage.ServerName, sIRCMessage.Nick);
 			}
 
 			if(sChannelInfo.FSelect(IFunctions.Greeter) && sChannelInfo.FSelect(IChannelFunctions.Greeter, sIRCMessage.Channel))
@@ -99,7 +99,7 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			if(sIRCMessage.Nick == sNickInfo.NickStorage)
 			{
-				sNameList.Remove(sIRCMessage.Channel);
+				sNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
 				return;
 			}
 
@@ -121,13 +121,13 @@ namespace Schumix.ExtraAddon.Commands
 
 		protected void HandleQuit(IRCMessage sIRCMessage)
 		{
-			sNameList.Remove(string.Empty, sIRCMessage.Nick, true);
+			sNameList.Remove(sIRCMessage.ServerName, string.Empty, sIRCMessage.Nick, true);
 		}
 
 		protected void HandleNewNick(IRCMessage sIRCMessage)
 		{
 			if(!SchumixBase.NewNick)
-				sNameList.Change(sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
+				sNameList.Change(sIRCMessage.ServerName, sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 			else
 				SchumixBase.NewNick = false;
 		}
@@ -142,7 +142,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(sIRCMessage.Info[3] == sNickInfo.NickStorage)
 			{
-				sNameList.Remove(sIRCMessage.Channel);
+				sNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
 
 				if(sChannelInfo.FSelect(IFunctions.Rejoin) && sChannelInfo.FSelect(IChannelFunctions.Rejoin, sIRCMessage.Channel))
 				{
@@ -151,7 +151,7 @@ namespace Schumix.ExtraAddon.Commands
 						if(sIRCMessage.Channel.ToLower() == m_channel.Key)
 						{
 							Thread.Sleep(5000);
-							sSender.Join(m_channel.Key, m_channel.Value);
+							sSender.Joine(m_channel.Key, m_channel.Value);
 						}
 					}
 				}
@@ -176,7 +176,7 @@ namespace Schumix.ExtraAddon.Commands
 			int i = 0;
 			var split = sIRCMessage.Args.Split(SchumixBase.Space);
 			string Channel = split[1];
-			sNameList.Remove(Channel);
+			sNameList.Remove(sIRCMessage.ServerName, Channel);
 
 			foreach(var name in sIRCMessage.Args.Split(SchumixBase.Space))
 			{
@@ -185,7 +185,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(i < 3)
 					continue;
 
-				sNameList.Add(Channel, Parse(name));
+				sNameList.Add(sIRCMessage.ServerName, Channel, Parse(name));
 			}
 		}
 

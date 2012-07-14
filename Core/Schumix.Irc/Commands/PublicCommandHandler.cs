@@ -43,7 +43,7 @@ namespace Schumix.Irc.Commands
 			sSendMessage.SendChatMessage(sIRCMessage, text[0], sUtilities.GetVersion());
 			string commands = string.Empty;
 
-			foreach(var command in CommandManager.CommandMethodMap)
+			foreach(var command in sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap)
 			{
 				if(command.Value.Permission != CommandPermission.Normal)
 					continue;
@@ -166,7 +166,7 @@ namespace Schumix.Irc.Commands
 			}
 
 			WhoisPrivmsg = sIRCMessage.Channel;
-			sSender.Whois(sIRCMessage.Info[4]);
+			sSender.Whois(sIRCMessage.ServerName, sIRCMessage.Info[4]);
 		}
 
 		protected void HandleWarning(IRCMessage sIRCMessage)
@@ -184,9 +184,9 @@ namespace Schumix.Irc.Commands
 			}
 
 			if(sIRCMessage.Info.Length == 5)
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[4], sLManager.GetCommandText("warning", sIRCMessage.Channel), sIRCMessage.Nick, sIRCMessage.Channel);
+				sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, sIRCMessage.Info[4], sLManager.GetCommandText("warning", sIRCMessage.Channel), sIRCMessage.Nick, sIRCMessage.Channel);
 			else if(sIRCMessage.Info.Length >= 6)
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[4], "{0}", sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+				sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, sIRCMessage.Info[4], "{0}", sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 		}
 
 		protected void HandleGoogle(IRCMessage sIRCMessage)
@@ -259,7 +259,7 @@ namespace Schumix.Irc.Commands
 
 			IsOnline = true;
 			OnlinePrivmsg = sIRCMessage.Channel;
-			sSender.NickServInfo(sIRCMessage.Info[4]);
+			sSender.NickServInfo(sIRCMessage.ServerName, sIRCMessage.Info[4]);
 		}
 	}
 }

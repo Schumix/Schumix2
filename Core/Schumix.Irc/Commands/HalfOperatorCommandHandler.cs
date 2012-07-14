@@ -67,7 +67,7 @@ namespace Schumix.Irc.Commands
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
-					sChannelNameList.NewThread(name);
+					sChannelNameList.NewThread(sIRCMessage.ServerName, name);
 				}
 
 				status = false;
@@ -310,7 +310,7 @@ namespace Schumix.Irc.Commands
 				{
 					string commands = string.Empty;
 
-					foreach(var command in CommandManager.CommandMethodMap)
+					foreach(var command in sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap)
 					{
 						if(command.Value.Permission != CommandPermission.HalfOperator)
 							continue;
@@ -331,7 +331,7 @@ namespace Schumix.Irc.Commands
 				{
 					string commands = string.Empty;
 
-					foreach(var command in CommandManager.CommandMethodMap)
+					foreach(var command in sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap)
 					{
 						if(command.Value.Permission == CommandPermission.Normal || 
 						   command.Value.Permission == CommandPermission.Administrator)
@@ -353,7 +353,7 @@ namespace Schumix.Irc.Commands
 				{
 					string commands = string.Empty;
 
-					foreach(var command in CommandManager.CommandMethodMap)
+					foreach(var command in sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap)
 					{
 						if(command.Value.Permission == CommandPermission.Normal)
 							continue;
@@ -397,7 +397,7 @@ namespace Schumix.Irc.Commands
 			NewNickPrivmsg = sIRCMessage.Channel;
 			sNickInfo.ChangeNick(nick);
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("nick", sIRCMessage.Channel), nick);
-			sSender.Nick(nick);
+			sSender.Nick(sIRCMessage.ServerName, nick);
 		}
 
 		protected void HandleJoin(IRCMessage sIRCMessage)
@@ -433,9 +433,9 @@ namespace Schumix.Irc.Commands
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("join", sIRCMessage.Channel), sIRCMessage.Info[4]);
 
 			if(sIRCMessage.Info.Length == 5)
-				sSender.Join(sIRCMessage.Info[4]);
+				sSender.Joine(sIRCMessage.ServerName, sIRCMessage.Info[4]);
 			else if(sIRCMessage.Info.Length == 6)
-				sSender.Join(sIRCMessage.Info[4], sIRCMessage.Info[5]);
+				sSender.Joine(sIRCMessage.ServerName, sIRCMessage.Info[4], sIRCMessage.Info[5]);
 		}
 
 		protected void HandleLeave(IRCMessage sIRCMessage)
@@ -461,7 +461,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			sSender.Part(sIRCMessage.Info[4]);
+			sSender.Part(sIRCMessage.ServerName, sIRCMessage.Info[4]);
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("leave", sIRCMessage.Channel), sIRCMessage.Info[4]);
 		}
 	}

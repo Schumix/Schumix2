@@ -294,8 +294,8 @@ namespace Schumix.SvnRssAddon
 					{
 						if(title.Contains(SchumixBase.Colon.ToString()))
 						{
-							sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla", language), _name, rev, author);
-							sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+							//sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla", language), _name, rev, author);
+							//sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
 						}
 					}
 

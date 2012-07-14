@@ -41,6 +41,7 @@ namespace Schumix.CalendarAddon
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly BanCommand sBanCommand = Singleton<BanCommand>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Ban sBan = Singleton<Ban>.Instance;
 		private Calendar _calendar;
@@ -55,14 +56,14 @@ namespace Schumix.CalendarAddon
 			_calendar = new Calendar();
 			_calendar.Start();
 
-			Network.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
+			sIrcBase.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
 			InitIrcCommand();
 		}
 
 		public void Destroy()
 		{
 			_calendar.Stop();
-			Network.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
+			sIrcBase.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
 			RemoveIrcCommand();
 		}
 
@@ -92,16 +93,16 @@ namespace Schumix.CalendarAddon
 
 		private void InitIrcCommand()
 		{
-			CommandManager.SchumixRegisterHandler("ban",      sBanCommand.HandleBan, CommandPermission.Operator);
-			CommandManager.SchumixRegisterHandler("unban",    sBanCommand.HandleUnban, CommandPermission.Operator);
-			CommandManager.SchumixRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
+			sIrcBase.SchumixRegisterHandler("ban",      sBanCommand.HandleBan, CommandPermission.Operator);
+			sIrcBase.SchumixRegisterHandler("unban",    sBanCommand.HandleUnban, CommandPermission.Operator);
+			sIrcBase.SchumixRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			CommandManager.SchumixRemoveHandler("ban",        sBanCommand.HandleBan);
-			CommandManager.SchumixRemoveHandler("unban",      sBanCommand.HandleUnban);
-			CommandManager.SchumixRemoveHandler("calendar",   sCalendarCommand.HandleCalendar);
+			sIrcBase.SchumixRemoveHandler("ban",        sBanCommand.HandleBan);
+			sIrcBase.SchumixRemoveHandler("unban",      sBanCommand.HandleUnban);
+			sIrcBase.SchumixRemoveHandler("calendar",   sCalendarCommand.HandleCalendar);
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
@@ -123,9 +124,9 @@ namespace Schumix.CalendarAddon
 						{
 							var time = DateTime.Now;
 							if(time.Minute < 30)
-								sBan.BanName(nick, channel, sLManager.GetWarningText("RecurrentFlooding", channel), DateTime.Now.Hour, DateTime.Now.Minute+30);
+								sBan.BanName(sIRCMessage.ServerName, nick, channel, sLManager.GetWarningText("RecurrentFlooding", channel), DateTime.Now.Hour, DateTime.Now.Minute+30);
 							else if(time.Minute >= 30)
-								sBan.BanName(nick, channel, sLManager.GetWarningText("RecurrentFlooding", channel), DateTime.Now.Hour+1, DateTime.Now.Minute-30);
+								sBan.BanName(sIRCMessage.ServerName, nick, channel, sLManager.GetWarningText("RecurrentFlooding", channel), DateTime.Now.Hour+1, DateTime.Now.Minute-30);
 
 							FloodList[nick].Channel[channel].Piece = 0;
 							return;
@@ -134,7 +135,7 @@ namespace Schumix.CalendarAddon
 						{
 							if(FloodList[nick].Channel[channel].Message >= CalendarConfig.NumberOfMessages)
 							{
-								sSender.Kick(channel, nick, sLManager.GetWarningText("StopFlooding", channel));
+								sSender.Kick(sIRCMessage.ServerName, channel, nick, sLManager.GetWarningText("StopFlooding", channel));
 								FloodList[nick].Channel[channel].Message = 0;
 								FloodList[nick].Channel[channel].Piece++;
 								return;
