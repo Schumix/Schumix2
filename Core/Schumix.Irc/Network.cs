@@ -69,6 +69,7 @@ namespace Schumix.Irc
         ///     IRC port száma.
         /// </summary>
 		private readonly int _port;
+		private string _servername;
 		private bool _enabled = false;
 		private bool NetworkQuit = false;
 		private bool Connected = false;
@@ -76,34 +77,20 @@ namespace Schumix.Irc
 		private ConnectionType CType;
 		private DateTime LastOpcode;
 
-        /// <summary>
-        ///     Internet kapcsolat függvénye.
-        ///     Itt indul el a kapcsolat az IRC szerverrel.
-        /// </summary>
-        /// <param name="server">
-        ///     <see cref="Network._server"/>
-        /// </param>
-        /// <param name="port">
-        ///     <see cref="Network._port"/>
-        /// </param>
-		public Network(string server, int port)
+		public Network(string Name, string Server, int Port)
 		{
-			_server = server;
-			_port = port;
+			_servername = Name;
+			_server = Server;
+			_port = Port;
 
 			Log.Notice("Network", sLConsole.Network("Text"));
 			sNickInfo.ChangeNick(IRCConfig.NickName);
 			InitHandler();
 
-			Task.Factory.StartNew(() => sChannelInfo.ChannelList());
+			Task.Factory.StartNew(() => sChannelInfo.ChannelList(Name));
 			Log.Debug("Network", sLConsole.Network("Text2"));
 
-			if(IRCConfig.Ssl)
-				CType = ConnectionType.Ssl;
-			else
-				CType = ConnectionType.Normal;
-
-			Connect();
+			CType = ConnectionType.Normal;
 			sIgnoreNickName.AddConfig();
 			sIgnoreChannel.AddConfig();
 			sIgnoreAddon.AddConfig();
@@ -296,6 +283,11 @@ namespace Schumix.Irc
 			Log.Notice("Network", sLConsole.Network("Text8"));
 			Connection(false);
 			Log.Debug("Network", sLConsole.Network("Text9"), _server);
+		}
+
+		public void SetConnectionType(ConnectionType ctype)
+		{
+			CType = ctype;
 		}
 
 		private void Connection(bool b)

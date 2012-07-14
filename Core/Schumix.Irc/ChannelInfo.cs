@@ -50,20 +50,27 @@ namespace Schumix.Irc
 
 		private ChannelInfo() {}
 
-		public void ChannelList()
+		public void ChannelList(string Name)
 		{
-			var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channel");
-			if(!db.IsNull())
+			if(Name == "default")
 			{
-				foreach(DataRow row in db.Rows)
+				var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channel");
+				if(!db.IsNull())
 				{
-					string channel = row["Channel"].ToString();
-					string password = row["Password"].ToString();
-					_ChannelList.Add(channel, password);
+					foreach(DataRow row in db.Rows)
+					{
+						string channel = row["Channel"].ToString();
+						string password = row["Password"].ToString();
+						_ChannelList.Add(channel, password);
+					}
 				}
+				else
+					Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text"));
 			}
 			else
-				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text"));
+			{
+				// több szerveres mód lesz itt
+			}
 		}
 
 		public bool FSelect(string Name)

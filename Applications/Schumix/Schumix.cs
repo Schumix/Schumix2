@@ -48,7 +48,7 @@ namespace Schumix
 			{
 				Log.Notice("SchumixBot", sLConsole.SchumixBot("Text"));
 				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text2"));
-				var network = new Network(IRCConfig.Server, IRCConfig.Port);
+				var network = new Network("default", IRCConfig.Server, IRCConfig.Port);
 				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text3"));
 				new ScriptManager(ScriptsConfig.Directory);
 				new Console.Console(network);

@@ -95,6 +95,7 @@
     <Compile Include="Commands\GoogleWebSearch\GoogleWebResult.cs" />
     <Compile Include="Commands\GoogleWebSearch\GoogleWebResponseData.cs" />
     <Compile Include="Commands\GoogleWebSearch\GoogleWebResultSet.cs" />
+    <Compile Include="IrcBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

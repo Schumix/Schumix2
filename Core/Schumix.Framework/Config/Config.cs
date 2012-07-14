@@ -213,9 +213,10 @@ namespace Schumix.Framework.Config
 					Log.Debug("Config", sLConsole.Config("Text6"));
 					var w = new XmlTextWriter(filename, null);
 					var xmldoc = new XmlDocument();
+					string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
 
-					if(File.Exists(sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile)))
-						xmldoc.Load(sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile));
+					if(File.Exists(filename2))
+						xmldoc.Load(filename2);
 
 					try
 					{
@@ -365,8 +366,8 @@ namespace Schumix.Framework.Config
 						w.Flush();
 						w.Close();
 
-						if(File.Exists(sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile)))
-							File.Delete(sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile));
+						if(File.Exists(filename2))
+							File.Delete(filename2);
 
 						Log.Success("Config", sLConsole.Config("Text7"));
 						return false;

@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.Irc
 {
-	enum ConnectionType
+	public enum ConnectionType
 	{
 		Normal,
 		Ssl

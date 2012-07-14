@@ -32,6 +32,7 @@ namespace Schumix.CompilerAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private const bool _compilerenabled = true;
 		private const bool _enabled = true;
 		private const int _memory = 50;
@@ -66,7 +67,7 @@ namespace Schumix.CompilerAddon.Config
 		private void Init(string configfile)
 		{
 			var xmldoc = new XmlDocument();
-			xmldoc.Load(string.Format("./{0}/{1}", SchumixConfig.ConfigDirectory, configfile));
+			xmldoc.Load(sUtilities.DirectoryToHome(SchumixConfig.ConfigDirectory, configfile));
 
 			Log.Notice("CompilerAddonConfig", sLocalization.Config("Text"));
 
@@ -88,17 +89,20 @@ namespace Schumix.CompilerAddon.Config
 
 		private bool IsConfig(string ConfigDirectory, string ConfigFile)
 		{
-			if(File.Exists(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile)))
+			string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+
+			if(File.Exists(filename))
 				return true;
 			else
 			{
 				Log.Error("CompilerAddonConfig", sLocalization.Config("Text3"));
 				Log.Debug("CompilerAddonConfig", sLocalization.Config("Text4"));
-				var w = new XmlTextWriter(string.Format("./{0}/{1}", ConfigDirectory, ConfigFile), null);
+				var w = new XmlTextWriter(filename, null);
 				var xmldoc = new XmlDocument();
+				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
 
-				if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
-					xmldoc.Load(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
+				if(File.Exists(filename2))
+					xmldoc.Load(filename2);
 
 				try
 				{
@@ -139,8 +143,8 @@ namespace Schumix.CompilerAddon.Config
 					w.Flush();
 					w.Close();
 
-					if(File.Exists(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile)))
-						File.Delete(string.Format("./{0}/_{1}", ConfigDirectory, ConfigFile));
+					if(File.Exists(filename2))
+						File.Delete(filename2);
 
 					Log.Success("CompilerAddonConfig", sLocalization.Config("Text5"));
 					return false;
