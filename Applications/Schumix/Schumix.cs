@@ -19,6 +19,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Schumix.API;
 using Schumix.Irc;
 using Schumix.Framework;
@@ -52,8 +53,18 @@ namespace Schumix
 				//var network = new Network("default", IRCConfig.Server, IRCConfig.Port);
 				// ide jön majd az összes szerver elindítása
 				sIrcBase.NewServer("default", IRCConfig.Server, IRCConfig.Port);
+				sIrcBase.NewServer("default2", "irc.yeahunter.hu", IRCConfig.Port);
 				new SchumixBase();
-				sIrcBase.Connect("default");
+
+				Task.Factory.StartNew(() =>
+				{
+					sIrcBase.Connect("default");
+					while(!sIrcBase.Networks["default"].Online)
+					{
+						Thread.Sleep(1000);
+					}
+					sIrcBase.Connect("default2");
+				});
 				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text3"));
 				new ScriptManager(ScriptsConfig.Directory);
 				// megoldani hogy a szervereket lehessen kezelni network esetén, pl: console írás váltása, connect, disconnect, ignorenél az addon stb
@@ -62,7 +73,7 @@ namespace Schumix
 			}
 			catch(Exception e)
 			{
-				Log.Error("SchumixBot", sLConsole.Exception("Error"), e);
+				Log.Error("SchumixBot", sLConsole.Exception("Error"), e.Message);
 				Thread.Sleep(100);
 			}
 		}

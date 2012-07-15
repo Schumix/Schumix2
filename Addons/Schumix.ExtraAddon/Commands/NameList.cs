@@ -37,7 +37,7 @@ namespace Schumix.ExtraAddon.Commands
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private NameList() {}
 
@@ -194,7 +194,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(IRCConfig.NickName.ToLower() == Name.ToLower() && !Identify)
 			{
-				sNickInfo.ChangeIdentifyStatus(false);
+				sIrcBase.Networks[ServerName].sNickInfo.ChangeIdentifyStatus(false);
 				ExtraAddon.IsOnline = true;
 				sSender.NickServInfo(ServerName, Name);
 			}

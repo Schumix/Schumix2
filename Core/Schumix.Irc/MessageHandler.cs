@@ -34,6 +34,7 @@ namespace Schumix.Irc
 
 		protected void HandleSuccessfulAuth(IRCMessage sIRCMessage)
 		{
+			Console.WriteLine(sIRCMessage.ServerName);
 			Console.WriteLine();
 			Log.Success("MessageHandler", sLConsole.MessageHandler("Text"));
 			RandomAllVhost();

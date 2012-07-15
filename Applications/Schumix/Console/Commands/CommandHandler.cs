@@ -87,11 +87,7 @@ namespace Schumix.Console.Commands
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     A nick név változtatását illetve jelenlegi kiírását teszi lehetővé.
-		/// </summary>
-		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Üzenet küldés az irc szerver felé.
@@ -1085,7 +1081,7 @@ namespace Schumix.Console.Commands
 
 			SchumixBase.NewNick = true;
 			string nick = Info[1];
-			sNickInfo.ChangeNick(nick);
+			sIrcBase.Networks[_servername].sNickInfo.ChangeNick(nick);
 			sSender.Nick(_servername, nick);
 			Log.Notice("Console", sLManager.GetConsoleCommandText("nick"), nick);
 		}

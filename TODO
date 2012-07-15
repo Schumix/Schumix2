@@ -48,3 +48,4 @@ Megírásra váró feladatok:
 	- NameList átfejlesztése mindakét helyen.
 	- NickInfo singletonból osztályos legyen(new).
 	- Legvégén az "e" betük leszedése a függvények végéről a sender és a sendcheatmessage fv-ken.
+	- Többszerveres módban úgyan arra a szerverre ssl módban nem tud felmenni a bot.

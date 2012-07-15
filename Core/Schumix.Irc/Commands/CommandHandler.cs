@@ -44,10 +44,10 @@ namespace Schumix.Irc.Commands
 		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		protected readonly CtcpSender sCtcpSender = Singleton<CtcpSender>.Instance;
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		protected readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		protected readonly Sender sSender = Singleton<Sender>.Instance;
 		public readonly AntiFlood sAntiFlood = new AntiFlood();
+		public readonly NickInfoo sNickInfo = new NickInfoo();
 		protected string ChannelPrivmsg { get; set; }
 		protected string WhoisPrivmsg { get; set; }
 		protected string NewNickPrivmsg { get; set; }

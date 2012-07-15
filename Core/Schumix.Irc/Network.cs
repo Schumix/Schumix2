@@ -40,7 +40,7 @@ namespace Schumix.Irc
 {
 	public sealed class Network : MessageHandler
 	{
-		private static readonly Dictionary<string, IrcMethod> IrcMethodMap = new Dictionary<string, IrcMethod>();
+		private readonly Dictionary<string, IrcMethod> IrcMethodMap = new Dictionary<string, IrcMethod>();
 		private System.Timers.Timer _timeropcode = new System.Timers.Timer();
 		private CancellationTokenSource _cts = new CancellationTokenSource();
 		private readonly object IrcMapLock = new object();
@@ -332,6 +332,10 @@ namespace Schumix.Irc
 				{
 					Log.Error("Network", sLConsole.Network("Text19"), e.Message);
 				}
+				catch(Exception e)
+				{
+					Console.WriteLine(e);
+				}
 
 				reader = new StreamReader(networkStream);
 				INetwork.WriterList.Add(_servername, new StreamWriter(networkStream) { AutoFlush = true });
@@ -367,10 +371,7 @@ namespace Schumix.Irc
 			_cts.Cancel();
 
 			if(!SchumixBase.ExitStatus)
-			{
-				Console.WriteLine("várakozás");
 				Thread.Sleep(2000);
-			}
 
 			if(!client.IsNull())
 				client.Close();

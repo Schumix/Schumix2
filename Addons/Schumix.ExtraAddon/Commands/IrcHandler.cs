@@ -35,8 +35,8 @@ namespace Schumix.ExtraAddon.Commands
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
-		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		private readonly NameList sNameList = Singleton<NameList>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
 		protected bool AutoMode = false;
 		protected string ModeChannel;
@@ -47,7 +47,7 @@ namespace Schumix.ExtraAddon.Commands
 		/// </summary>
 		protected void HandleJoin(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Nick == sNickInfo.NickStorage)
+			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.NickStorage)
 				return;
 
 			if(sFunctions.AutoKick("join", sIRCMessage.Nick, sIRCMessage.Channel))
@@ -97,7 +97,7 @@ namespace Schumix.ExtraAddon.Commands
 		/// </summary>
 		protected void HandleLeft(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Nick == sNickInfo.NickStorage)
+			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.NickStorage)
 			{
 				sNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
 				return;
@@ -140,7 +140,7 @@ namespace Schumix.ExtraAddon.Commands
 			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			if(sIRCMessage.Info[3] == sNickInfo.NickStorage)
+			if(sIRCMessage.Info[3] == sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.NickStorage)
 			{
 				sNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
 

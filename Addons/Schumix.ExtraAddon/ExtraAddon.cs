@@ -43,7 +43,6 @@ namespace Schumix.ExtraAddon
 		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private readonly Functions sFunctions = Singleton<Functions>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly NickInfo sNickInfo = Singleton<NickInfo>.Instance;
 		private readonly NameList sNameList = Singleton<NameList>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Sender sSender = Singleton<Sender>.Instance;
@@ -256,13 +255,14 @@ namespace Schumix.ExtraAddon
 			{
 				if(sIRCMessage.Args.Contains("isn't registered.") || sIRCMessage.Args.Contains("   Last seen time:"))
 				{
-					sNameList.Change(sIRCMessage.ServerName, sNickInfo.NickStorage, IRCConfig.NickName, true);
-					sNickInfo.ChangeNick(IRCConfig.NickName);
+					var nickinfo = sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo;
+					sNameList.Change(sIRCMessage.ServerName, nickinfo.NickStorage, IRCConfig.NickName, true);
+					nickinfo.ChangeNick(IRCConfig.NickName);
 					sSender.Nick(sIRCMessage.ServerName, IRCConfig.NickName);
-					sNickInfo.Identify(sIRCMessage.ServerName, IRCConfig.NickServPassword);
+					nickinfo.Identify(sIRCMessage.ServerName, IRCConfig.NickServPassword);
 
 					if(IRCConfig.UseHostServ)
-						sNickInfo.Vhost(sIRCMessage.ServerName, SchumixBase.On);
+						nickinfo.Vhost(sIRCMessage.ServerName, SchumixBase.On);
 
 					IsOnline = false;
 				}
