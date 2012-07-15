@@ -334,20 +334,20 @@ namespace Schumix.Irc
 				}
 
 				reader = new StreamReader(networkStream);
-				INetwork.Writer = new StreamWriter(networkStream) { AutoFlush = true };
+				INetwork.WriterList.Add(_servername, new StreamWriter(networkStream) { AutoFlush = true });
 			}
 			else
 			{
 				reader = new StreamReader(client.GetStream());
-				INetwork.Writer = new StreamWriter(client.GetStream()) { AutoFlush = true };
+				INetwork.WriterList.Add(_servername, new StreamWriter(client.GetStream()) { AutoFlush = true });
 			}
 
 			Connected = true;
 
 			if(b)
 			{
-				INetwork.Writer.WriteLine("NICK {0}", sNickInfo.NickStorage);
-				INetwork.Writer.WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
+				INetwork.WriterList[_servername].WriteLine("NICK {0}", sNickInfo.NickStorage);
+				INetwork.WriterList[_servername].WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
 			}
 			else
 				sSender.NameInfo(_servername, sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
@@ -375,8 +375,8 @@ namespace Schumix.Irc
 			if(!client.IsNull())
 				client.Close();
 
-			if(!INetwork.Writer.IsNull())
-				INetwork.Writer.Dispose();
+			if(!INetwork.WriterList[_servername].IsNull())
+				INetwork.WriterList[_servername].Dispose();
 
 			if(!reader.IsNull())
 				reader.Dispose();

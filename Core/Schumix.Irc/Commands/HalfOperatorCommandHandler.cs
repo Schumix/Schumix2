@@ -177,9 +177,9 @@ namespace Schumix.Irc.Commands
 				SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", sUtilities.SqlEscape(name.ToLower()), "off");
 
 				sSendMessage.SendChatMessage(sIRCMessage, text[1], name);
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[2], pass);
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[3], IRCConfig.CommandPrefix);
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[4], IRCConfig.CommandPrefix);
+				sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, name, text[2], pass);
+				sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, name, text[3], IRCConfig.CommandPrefix);
+				sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, name, text[4], IRCConfig.CommandPrefix);
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "remove")
 			{

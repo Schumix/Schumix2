@@ -42,7 +42,7 @@ namespace Schumix.Irc
 			get { return DateTime.Now - _timeLastSent; }
 		}
 
-		public void SendChatMessage(MessageType type, string ServerName, string channel, string message)
+		public void SendChatMessagee(MessageType type, string ServerName, string channel, string message)
 		{
 			lock(WriteLock)
 			{
@@ -51,7 +51,7 @@ namespace Schumix.Irc
 					var list = NewLine(message);
 					if(list.Count > 3)
 					{
-						SendChatMessage(type, ServerName, channel, sLConsole.Other("MessageLength"));
+						SendChatMessagee(type, ServerName, channel, sLConsole.Other("MessageLength"));
 						list.Clear();
 						return;
 					}
@@ -132,7 +132,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(type, ServerName, channel, string.Format(message, args));
+				SendChatMessagee(type, ServerName, channel, string.Format(message, args));
 			}
 		}
 
@@ -143,13 +143,13 @@ namespace Schumix.Irc
 				switch(IRCConfig.MessageType.ToLower())
 				{
 					case "privmsg":
-						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.ServerName, sIRCMessage.Channel, message);
+						SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, sIRCMessage.Channel, message);
 						break;
 					case "notice":
-						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.ServerName, sIRCMessage.Nick, message);
+						SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, sIRCMessage.Nick, message);
 						break;
 					default:
-						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.ServerName, sIRCMessage.Channel, message);
+						SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, sIRCMessage.Channel, message);
 						break;
 				}
 			}
@@ -167,7 +167,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.Privmsg, ServerName, channel, message);
+				SendChatMessagee(MessageType.Privmsg, ServerName, channel, message);
 			}
 		}
 
@@ -183,7 +183,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.Notice, ServerName, channel, message);
+				SendChatMessagee(MessageType.Notice, ServerName, channel, message);
 			}
 		}
 
@@ -199,7 +199,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.Amsg, ServerName, string.Empty, message);
+				SendChatMessagee(MessageType.Amsg, ServerName, string.Empty, message);
 			}
 		}
 
@@ -215,7 +215,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.Action, ServerName, channel, message);
+				SendChatMessagee(MessageType.Action, ServerName, channel, message);
 			}
 		}
 
@@ -231,7 +231,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.CtcpRequest, ServerName, channel, message);
+				SendChatMessagee(MessageType.CtcpRequest, ServerName, channel, message);
 			}
 		}
 
@@ -247,7 +247,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				SendChatMessage(MessageType.CtcpReply, ServerName, channel, message);
+				SendChatMessagee(MessageType.CtcpReply, ServerName, channel, message);
 			}
 		}
 
@@ -265,7 +265,7 @@ namespace Schumix.Irc
 			{
 				try
 				{
-					if(!INetwork.Writer.IsNull())
+					if(!INetwork.WriterList[ServerName].IsNull())
 					{
 						if(message.Length >= 1000 && message.Substring(0, "notice".Length).ToLower() != "notice" &&
 						   message.Substring(0, "privmsg".Length).ToLower() != "privmsg")
@@ -278,12 +278,12 @@ namespace Schumix.Irc
 							}
 
 							foreach(var text in list)
-								INetwork.Writer.WriteLine(text);
+								INetwork.WriterList[ServerName].WriteLine(text);
 
 							list.Clear();
 						}
 						else
-							INetwork.Writer.WriteLine(message);
+							INetwork.WriterList[ServerName].WriteLine(message);
 					}
 
 					Thread.Sleep(IRCConfig.MessageSending);

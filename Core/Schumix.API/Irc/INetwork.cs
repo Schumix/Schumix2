@@ -19,6 +19,7 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Schumix.API
 {
@@ -30,6 +31,6 @@ namespace Schumix.API
 		/// <summary>
 		///     Üzenet küldés az irc szerver felé.
 		/// </summary>
-		public static StreamWriter Writer { get; set; }
+		public static Dictionary<string, StreamWriter> WriterList = new Dictionary<string, StreamWriter>();
 	}
 }

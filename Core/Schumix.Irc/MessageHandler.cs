@@ -278,7 +278,7 @@ namespace Schumix.Irc
 				return;
 
 			SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text8-1")), string.Format("Channel = '{0}'", sIRCMessage.Info[3].ToLower()));
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text8"), sIRCMessage.Info[3]);
+			sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, ChannelPrivmsg, sLConsole.MessageHandler("Text8"), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -291,7 +291,7 @@ namespace Schumix.Irc
 				return;
 
 			SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text9-1")), string.Format("Channel = '{0}'", sIRCMessage.Info[3].ToLower()));
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text9"), sIRCMessage.Info[3]);
+			sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, ChannelPrivmsg, sLConsole.MessageHandler("Text9"), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -301,7 +301,7 @@ namespace Schumix.Irc
 				return;
 
 			SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text17-1")), string.Format("Channel = '{0}'", sIRCMessage.Info[3].ToLower()));
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text17"), sIRCMessage.Info[3]);
+			sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, ChannelPrivmsg, sLConsole.MessageHandler("Text17"), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -321,7 +321,7 @@ namespace Schumix.Irc
 			}
 
 			string text2 = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisPrivmsg, text[0], text2.Remove(0, 1, SchumixBase.Colon));
+			sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, WhoisPrivmsg, text[0], text2.Remove(0, 1, SchumixBase.Colon));
 			WhoisPrivmsg = sNickInfo.NickStorage;
 		}
 

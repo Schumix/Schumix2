@@ -129,8 +129,11 @@ namespace Schumix.Framework.Database
 					SchumixBase.ServerDisconnect(false);
 					SchumixBase.ExitStatus = true;
 	
-					if(!INetwork.Writer.IsNull())
-						INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+					foreach(var nw in INetwork.WriterList)
+					{
+						if(!nw.Value.IsNull())
+							nw.Value.WriteLine("QUIT :Sql connection crash.");
+					}
 	
 					Thread.Sleep(1000);
 					Environment.Exit(1);
@@ -152,8 +155,11 @@ namespace Schumix.Framework.Database
 				SchumixBase.ServerDisconnect(false);
 				SchumixBase.ExitStatus = true;
 
-				if(!INetwork.Writer.IsNull())
-					INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+				foreach(var nw in INetwork.WriterList)
+				{
+					if(!nw.Value.IsNull())
+						nw.Value.WriteLine("QUIT :Sql connection crash.");
+				}
 
 				Thread.Sleep(1000);
 				Environment.Exit(1);
@@ -166,8 +172,11 @@ namespace Schumix.Framework.Database
 				SchumixBase.ServerDisconnect(false);
 				SchumixBase.ExitStatus = true;
 
-				if(!INetwork.Writer.IsNull())
-					INetwork.Writer.WriteLine("QUIT :Sql connection crash.");
+				foreach(var nw in INetwork.WriterList)
+				{
+					if(!nw.Value.IsNull())
+						nw.Value.WriteLine("QUIT :Sql connection crash.");
+				}
 
 				Thread.Sleep(1000);
 				Environment.Exit(1);
@@ -180,8 +189,11 @@ namespace Schumix.Framework.Database
 				SchumixBase.ServerDisconnect(false);
 				SchumixBase.ExitStatus = true;
 
-				if(!INetwork.Writer.IsNull())
-					INetwork.Writer.WriteLine("QUIT :Sql connection timeout.");
+				foreach(var nw in INetwork.WriterList)
+				{
+					if(!nw.Value.IsNull())
+						nw.Value.WriteLine("QUIT :Sql connection timeout.");
+				}
 
 				Thread.Sleep(1000);
 				Environment.Exit(1);

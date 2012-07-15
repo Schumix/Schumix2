@@ -51,8 +51,11 @@ namespace Schumix.Framework
 				Log.Warning("Runtime", sLConsole.Runtime("Text4"));
 				SchumixBase.Quit();
 
-				if(!INetwork.Writer.IsNull())
-					INetwork.Writer.WriteLine("QUIT :Memory over-consumption.");
+				foreach(var nw in INetwork.WriterList)
+				{
+					if(!nw.Value.IsNull())
+						nw.Value.WriteLine("QUIT :Memory over-consumption.");
+				}
 			}
 		}
 

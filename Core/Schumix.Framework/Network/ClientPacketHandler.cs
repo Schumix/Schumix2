@@ -154,8 +154,11 @@ namespace Schumix.Framework.Client
 			Log.Warning("CloseHandler", sLConsole.ClientPacketHandler("Text4"));
 			SchumixBase.Quit();
 
-			if(!INetwork.Writer.IsNull())
-				INetwork.Writer.WriteLine("QUIT :Server killed.");
+			foreach(var nw in INetwork.WriterList)
+			{
+				if(!nw.Value.IsNull())
+					nw.Value.WriteLine("QUIT :Server killed.");
+			}
 		}
 	}
 }
