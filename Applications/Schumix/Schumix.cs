@@ -60,9 +60,8 @@ namespace Schumix
 				{
 					sIrcBase.Connect("default");
 					while(!sIrcBase.Networks["default"].Online)
-					{
 						Thread.Sleep(1000);
-					}
+
 					sIrcBase.Connect("default2");
 				});
 				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text3"));

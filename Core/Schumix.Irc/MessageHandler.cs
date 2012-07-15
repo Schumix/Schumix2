@@ -30,7 +30,11 @@ namespace Schumix.Irc
 	public partial class MessageHandler : CommandManager
 	{
 		public bool Online;
-		protected MessageHandler() {}
+
+		protected MessageHandler(string ServerName) : base(ServerName)
+		{
+
+		}
 
 		protected void HandleSuccessfulAuth(IRCMessage sIRCMessage)
 		{
@@ -42,13 +46,13 @@ namespace Schumix.Irc
 			if(IRCConfig.UseNickServ)
 			{
 				if(sNickInfo.IsNickStorage())
-					sNickInfo.Identify(sIRCMessage.ServerName, IRCConfig.NickServPassword);
+					sNickInfo.Identify(IRCConfig.NickServPassword);
 			}
 
 			if(IRCConfig.UseHostServ)
 			{
 				if(sNickInfo.IsNickStorage())
-					sNickInfo.Vhost(sIRCMessage.ServerName, SchumixBase.On);
+					sNickInfo.Vhost(SchumixBase.On);
 				else
 				{
 					if(!Online)
@@ -66,7 +70,7 @@ namespace Schumix.Irc
 				if(!Online)
 				{
 					if(IRCConfig.HostServEnabled)
-						sNickInfo.Vhost(sIRCMessage.ServerName, SchumixBase.Off);
+						sNickInfo.Vhost(SchumixBase.Off);
 
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
@@ -205,7 +209,7 @@ namespace Schumix.Irc
 		/// </summary>
 		protected void HandlePing(IRCMessage sIRCMessage)
 		{
-			sSender.Pong(sIRCMessage.ServerName, sIRCMessage.Args);
+			sSender.Pong(sIRCMessage.Args);
 		}
 
 		/// <summary>
@@ -213,7 +217,7 @@ namespace Schumix.Irc
 		/// </summary>
 		protected void HandlePong(IRCMessage sIRCMessage)
 		{
-			sSender.Pong(sIRCMessage.ServerName, sIRCMessage.Args);
+			sSender.Pong(sIRCMessage.Args);
 		}
 
 		/// <summary>
@@ -243,11 +247,11 @@ namespace Schumix.Irc
 				string nick = sNickInfo.ChangeNick();
 				Log.Notice("MessageHandler", sLConsole.MessageHandler("Text7"), nick);
 				Online = false;
-				sSender.Nick(sIRCMessage.ServerName, nick);
+				sSender.Nick(nick);
 			}
 			else
 			{
-				sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, NewNickPrivmsg, sLConsole.MessageHandler("Text14"));
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text14"));
 				NewNickPrivmsg = string.Empty;
 			}
 		}
@@ -256,7 +260,7 @@ namespace Schumix.Irc
 		{
 			if(NewNickPrivmsg != string.Empty)
 			{
-				sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, NewNickPrivmsg, sLConsole.MessageHandler("Text15"));
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text15"));
 				NewNickPrivmsg = string.Empty;
 			}
 		}
@@ -265,7 +269,7 @@ namespace Schumix.Irc
 		{
 			if(NewNickPrivmsg != string.Empty)
 			{
-				sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, NewNickPrivmsg, sLConsole.MessageHandler("Text16"));
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text16"));
 				NewNickPrivmsg = string.Empty;
 			}
 		}
@@ -279,7 +283,7 @@ namespace Schumix.Irc
 				return;
 
 			SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text8-1")), string.Format("Channel = '{0}'", sIRCMessage.Info[3].ToLower()));
-			sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, ChannelPrivmsg, sLConsole.MessageHandler("Text8"), sIRCMessage.Info[3]);
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text8"), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -292,7 +296,7 @@ namespace Schumix.Irc
 				return;
 
 			SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text9-1")), string.Format("Channel = '{0}'", sIRCMessage.Info[3].ToLower()));
-			sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, ChannelPrivmsg, sLConsole.MessageHandler("Text9"), sIRCMessage.Info[3]);
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text9"), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -302,7 +306,7 @@ namespace Schumix.Irc
 				return;
 
 			SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text17-1")), string.Format("Channel = '{0}'", sIRCMessage.Info[3].ToLower()));
-			sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, ChannelPrivmsg, sLConsole.MessageHandler("Text17"), sIRCMessage.Info[3]);
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text17"), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -322,7 +326,7 @@ namespace Schumix.Irc
 			}
 
 			string text2 = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
-			sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, WhoisPrivmsg, text[0], text2.Remove(0, 1, SchumixBase.Colon));
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisPrivmsg, text[0], text2.Remove(0, 1, SchumixBase.Colon));
 			WhoisPrivmsg = sNickInfo.NickStorage;
 		}
 
@@ -335,7 +339,7 @@ namespace Schumix.Irc
 				return;
 			}
 
-			sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, WhoisPrivmsg, text[1]);
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisPrivmsg, text[1]);
 			WhoisPrivmsg = sNickInfo.NickStorage;
 		}
 

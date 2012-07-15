@@ -31,7 +31,6 @@ namespace Schumix.TesztAddon
 	class TesztAddon : TesztCommand, ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 
 		public void Setup()
@@ -77,6 +76,8 @@ namespace Schumix.TesztAddon
 
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
 			// Adminisztrátor parancsok
 			if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 			{

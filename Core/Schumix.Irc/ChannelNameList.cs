@@ -31,14 +31,20 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
-	public class ChannelNameList : CommandInfo
+	public sealed class ChannelNameListe : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private ChannelNameList() {}
+		private readonly SendMessagee sSendMessage;
+		private readonly AntiFloodo sAntiFlood;
+
+		public ChannelNameListe(string ServerName)
+		{
+			sAntiFlood = sIrcBase.Networks[ServerName].sAntiFlood;
+			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;
+		}
 
 		public Dictionary<string, string> Names
 		{
@@ -151,7 +157,7 @@ namespace Schumix.Irc
 
 				channel.Clear();
 				RandomVhost(Name.ToLower());
-				sIrcBase.Networks[ServerName].sAntiFlood.Remove(Name.ToLower());
+				sAntiFlood.Remove(Name.ToLower());
 			}
 		}
 
@@ -190,7 +196,7 @@ namespace Schumix.Irc
 
 			channel.Clear();
 			RandomVhost(Name.ToLower());
-			sIrcBase.Networks[ServerName].sAntiFlood.Remove(Name.ToLower());
+			sAntiFlood.Remove(Name.ToLower());
 		}
 
 		public bool IsChannelList(string Name)
@@ -212,7 +218,7 @@ namespace Schumix.Irc
 
 				if(!IsChannelList(Name))
 				{
-					sSendMessage.SendCMPrivmsge(ServerName, Name.ToLower(), sLManager.GetWarningText("NoRegisteredAdminAccess"));
+					sSendMessage.SendCMPrivmsg(Name.ToLower(), sLManager.GetWarningText("NoRegisteredAdminAccess"));
 					RandomVhost(Name);
 				}
 			});

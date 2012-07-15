@@ -27,7 +27,8 @@ namespace Schumix.Irc
 	public sealed class NickInfoo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private readonly Sendere sSender;
 		private string _NickStorage;
 		private bool _Identify;
 		private bool _Vhost;
@@ -52,10 +53,11 @@ namespace Schumix.Irc
 			get { return _Vhost; }
 		}
 
-		public NickInfoo()
+		public NickInfoo(string ServerName)
 		{
 			_Identify = false;
 			_Vhost = false;
+			sSender = sIrcBase.Networks[ServerName].sSender;
 		}
 
 		public string ChangeNick()
@@ -122,16 +124,16 @@ namespace Schumix.Irc
 			_NickStorage = newnick;
 		}
 
-		public void Identify(string ServerName, string Password)
+		public void Identify(string Password)
 		{
 			if(!_Identify)
 			{
 				Log.Notice("NickServ", sLConsole.NickServ("Text"));
-				sSender.NickServ(ServerName, Password);
+				sSender.NickServ(Password);
 			}
 		}
 
-		public void Vhost(string ServerName, string Status)
+		public void Vhost(string Status)
 		{
 			if(!_Vhost)
 			{
@@ -143,7 +145,7 @@ namespace Schumix.Irc
 				else if(Status == SchumixBase.On)
 					Log.Notice("HostServ", sLConsole.HostServ("Text"));
 
-				sSender.HostServ(ServerName, Status);
+				sSender.HostServ(Status);
 			}
 		}
 

@@ -38,22 +38,38 @@ namespace Schumix.Irc.Commands
 		protected readonly IgnoreAddon sIgnoreAddon = Singleton<IgnoreAddon>.Instance;
 		protected readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		protected readonly ChannelNameList sChannelNameList = Singleton<ChannelNameList>.Instance;
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
-		protected readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		protected readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		protected readonly CtcpSender sCtcpSender = Singleton<CtcpSender>.Instance;
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		protected readonly Sender sSender = Singleton<Sender>.Instance;
-		public readonly AntiFlood sAntiFlood = new AntiFlood();
-		public readonly NickInfoo sNickInfo = new NickInfoo();
+		public ChannelNameListe sChannelNameList { get; private set; }
+		public SendMessagee sSendMessage { get; private set; }
+		public ChannelInfoo sChannelInfo { get; private set; }
+		public CtcpSender sCtcpSender { get; private set; }
+		public AntiFloodo sAntiFlood { get; private set; }
+		public NickInfoo sNickInfo { get; private set; }
+		public Sendere sSender { get; private set; }
 		protected string ChannelPrivmsg { get; set; }
 		protected string WhoisPrivmsg { get; set; }
 		protected string NewNickPrivmsg { get; set; }
 		protected string OnlinePrivmsg { get; set; }
 		protected bool IsOnline { get; set; }
-		protected CommandHandler() {}
+		private string _servername;
+
+		protected CommandHandler(string ServerName)
+		{
+			_servername = ServerName;
+		}
+
+		public void InitializeCommandHandler()
+		{
+			sSendMessage = new SendMessagee(_servername);
+			sSender = new Sendere(_servername);
+			sNickInfo = new NickInfoo(_servername);
+			sChannelInfo = new ChannelInfoo(_servername);
+			sAntiFlood = new AntiFloodo(_servername);
+			sCtcpSender = new CtcpSender(_servername);
+			sChannelNameList = new ChannelNameListe(_servername);
+		}
 
 		protected void HandleHelp(IRCMessage sIRCMessage)
 		{

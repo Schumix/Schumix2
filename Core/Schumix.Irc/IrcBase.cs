@@ -56,7 +56,7 @@ namespace Schumix.Irc
 				if(_networks.ContainsKey(Name.ToLower()))
 				{
 					_networks[Name.ToLower()].Initialize();
-					_networks[Name.ToLower()].Connect();
+					_networks[Name.ToLower()].Connect(true);
 					_networks[Name.ToLower()].InitializeOpcodesAndPing();
 				}
 			}

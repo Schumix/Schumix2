@@ -38,7 +38,6 @@ namespace Schumix.LuaEngine
 	{
 		private readonly Dictionary<string, SchumixCommandMethod> _RegisteredSchumix = new Dictionary<string, SchumixCommandMethod>();
 		private readonly Dictionary<string, IRCDelegate> _RegisteredIrc = new Dictionary<string, IRCDelegate>();
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Lua _lua;
 
@@ -129,7 +128,7 @@ namespace Schumix.LuaEngine
 		[LuaFunction("WriteLine", "Sends a message to the IRC server.")]
 		public void WriteLine(string ServerName, string message)
 		{
-			sSendMessage.WriteLinee(ServerName, message);
+			sIrcBase.Networks[ServerName].sSendMessage.WriteLine(message);
 		}
 
 		/// <summary>
@@ -140,7 +139,7 @@ namespace Schumix.LuaEngine
 		[LuaFunction("SendMsg", "Sends a message to the IRC server.")]
 		public void SendMessage(string ServerName, string channel, string message)
 		{
-			sSendMessage.SendCMPrivmsge(ServerName, channel, message);
+			sIrcBase.Networks[ServerName].sSendMessage.SendCMPrivmsg(channel, message);
 		}
 
 		[LuaFunction("IsAdmin", "Is Admin.")]

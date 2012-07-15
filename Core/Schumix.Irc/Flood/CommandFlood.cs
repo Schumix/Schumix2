@@ -24,7 +24,6 @@ namespace Schumix.Irc.Flood
 {
 	sealed class CommandFlood
 	{
-		public string ServerName;
 		public DateTime BanTime;
 		public bool IsIgnore;
 		public bool Warring;

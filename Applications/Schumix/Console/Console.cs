@@ -38,11 +38,7 @@ namespace Schumix.Console
 		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
 		/// </summary>
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     Üzenet küldés az irc szerver felé.
-		/// </summary>
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		/// <summary>
 		///     ConsoleCommandManager class elérését tárolja.
 		/// </summary>
@@ -92,7 +88,7 @@ namespace Schumix.Console
 					if(message.IsNull() || CCManager.CIncomingInfo(message))
 						continue;
 
-					sSendMessage.SendCMPrivmsge(CCManager.ServerName, CCManager.Channel, message);
+					sIrcBase.Networks[CCManager.ServerName].sSendMessage.SendCMPrivmsg(CCManager.Channel, message);
 					Thread.Sleep(1000);
 				}
 			}

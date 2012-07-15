@@ -30,7 +30,6 @@ namespace Schumix
 		[DllImport("Kernel32")]
 		private static extern bool SetConsoleCtrlHandler(EventHandler handler, bool add);
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private delegate bool EventHandler(CtrlType sig);
 		private EventHandler _handler;
 		private Windows() {}
@@ -52,7 +51,7 @@ namespace Schumix
 					SchumixBase.Quit();
 
 					foreach(var nw in sIrcBase.Networks)
-						sSender.Quit(nw.Key, "Daemon killed.");
+						sIrcBase.Networks[nw.Key].sSender.Quit("Daemon killed.");
 					break;
 				case CtrlType.CTRL_LOGOFF_EVENT:
 				case CtrlType.CTRL_SHUTDOWN_EVENT:
@@ -60,7 +59,7 @@ namespace Schumix
 					SchumixBase.Quit();
 
 					foreach(var nw in sIrcBase.Networks)
-						sSender.Quit(nw.Key, "User is logging off.");
+						sIrcBase.Networks[nw.Key].sSender.Quit("User is logging off.");
 					break;
 				default:
 					break;

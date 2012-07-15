@@ -550,14 +550,14 @@ namespace Schumix.Irc.Commands
 				{
 					ChannelPrivmsg = sIRCMessage.Channel;
 					string pass = sIRCMessage.Info[6];
-					sSender.Joine(sIRCMessage.ServerName,channel, pass);
+					sSender.Join(channel, pass);
 					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", sUtilities.SqlEscape(channel), sUtilities.SqlEscape(pass), sLManager.Locale);
 					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
 				}
 				else
 				{
 					ChannelPrivmsg = sIRCMessage.Channel;
-					sSender.Joine(sIRCMessage.ServerName, channel);
+					sSender.Join(channel);
 					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", sUtilities.SqlEscape(channel), string.Empty, sLManager.Locale);
 					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
 				}
@@ -607,7 +607,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				sSender.Part(sIRCMessage.ServerName, channel);
+				sSender.Part(channel);
 				SchumixBase.DManager.Delete("channel", string.Format("Channel = '{0}'", sUtilities.SqlEscape(channel)));
 				sSendMessage.SendChatMessage(sIRCMessage, text[2], channel);
 				sChannelInfo.ChannelListReload();
@@ -928,12 +928,12 @@ namespace Schumix.Irc.Commands
 			if(sIRCMessage.Info.Length == 5)
 			{
 				if(kick != sNickInfo.NickStorage.ToLower())
-					sSender.Kick(sIRCMessage.ServerName, sIRCMessage.Channel, kick);
+					sSender.Kicke(sIRCMessage.Channel, kick);
 			}
 			else if(sIRCMessage.Info.Length >= 6)
 			{
 				if(kick != sNickInfo.NickStorage.ToLower())
-					sSender.Kick(sIRCMessage.ServerName, sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+					sSender.Kicke(sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			}
 		}
 
@@ -950,7 +950,7 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length == 5)
 			{
-				sSender.Modee(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Info[4].ToLower());
+				sSender.Mode(sIRCMessage.Channel, sIRCMessage.Info[4].ToLower());
 				return;
 			}
 
@@ -964,7 +964,7 @@ namespace Schumix.Irc.Commands
 			string name = sIRCMessage.Info.SplitToString(5, SchumixBase.Space).ToLower();
 
 			if(!name.Contains(sNickInfo.NickStorage.ToLower()))
-				sSender.Modee(sIRCMessage.Channel, rank, name);
+				sSender.Mode(sIRCMessage.Channel, rank, name);
 		}
 
 		protected void HandleIgnore(IRCMessage sIRCMessage)

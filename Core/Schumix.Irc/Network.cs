@@ -77,20 +77,20 @@ namespace Schumix.Irc
 		private ConnectionType CType;
 		private DateTime LastOpcode;
 
-		public Network(string Name, string Server, int Port)
+		public Network(string Name, string Server, int Port) : base(Name)
 		{
 			_servername = Name;
 			_server = Server;
 			_port = Port;
 
 			Log.Notice("Network", sLConsole.Network("Text"));
-			sNickInfo.ChangeNick(IRCConfig.NickName);
 			InitHandler();
 			CType = ConnectionType.Normal;
 		}
 
 		public void Initialize()
 		{
+			InitializeCommandHandler();
 			InitializeCommandMgr();
 			Task.Factory.StartNew(() => sChannelInfo.ChannelList(_servername));
 			sIgnoreNickName.AddConfig();
@@ -262,11 +262,11 @@ namespace Schumix.Irc
 		/// <summary>
         ///     Kapcsolódás az IRC kiszolgálóhoz.
         /// </summary>
-		public void Connect()
+		public void Connect(bool nick = false)
 		{
 			NetworkQuit = false;
 			Log.Notice("Network", sLConsole.Network("Text6"), _server);
-			Connection(true);
+			Connection(true, nick);
 		}
 
         /// <summary>
@@ -297,9 +297,12 @@ namespace Schumix.Irc
 			CType = ctype;
 		}
 
-		private void Connection(bool b)
+		private void Connection(bool b, bool nick = false)
 		{
 			_cts = new CancellationTokenSource();
+
+			if(nick)
+				sNickInfo.ChangeNick(IRCConfig.NickName);
 
 			try
 			{
@@ -348,13 +351,14 @@ namespace Schumix.Irc
 
 			Connected = true;
 
+			// lehet ide már nem kell plusz if
 			if(b)
 			{
 				INetwork.WriterList[_servername].WriteLine("NICK {0}", sNickInfo.NickStorage);
 				INetwork.WriterList[_servername].WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
 			}
 			else
-				sSender.NameInfo(_servername, sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
+				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
 			Online = false;
@@ -537,7 +541,7 @@ namespace Schumix.Irc
 			else
 			{
 				if(IrcCommand[0] == "PING")
-					sSender.Pong(_servername, IrcCommand[1].Remove(0, 1, SchumixBase.Colon));
+					sSender.Pong(IrcCommand[1].Remove(0, 1, SchumixBase.Colon));
 				else if(opcode == ":Closing")
 					NetworkQuit = true;
 				else
@@ -559,7 +563,7 @@ namespace Schumix.Irc
 			{
 				try
 				{
-					sSender.Ping(_servername, _server);
+					sSender.Ping(_server);
 				}
 				catch(IOException)
 				{

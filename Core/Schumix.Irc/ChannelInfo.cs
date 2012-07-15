@@ -29,14 +29,15 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
-	public sealed class ChannelInfo
+	public sealed class ChannelInfoo
 	{
 		private readonly Dictionary<string, string> ChannelFunction = new Dictionary<string, string>();
 		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly object WriteLock = new object();
+		private readonly Sendere sSender;
 
 		public Dictionary<string, string> CList
 		{
@@ -48,12 +49,15 @@ namespace Schumix.Irc
 			get { return ChannelFunction; }
 		}
 
-		private ChannelInfo() {}
+		public ChannelInfoo(string ServerName)
+		{
+			sSender = sIrcBase.Networks[ServerName].sSender;
+		}
 
 		public void ChannelList(string Name)
 		{
-			if(Name == "default")
-			{
+			//if(Name == "default")
+			//{
 				var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channel");
 				if(!db.IsNull())
 				{
@@ -66,11 +70,11 @@ namespace Schumix.Irc
 				}
 				else
 					Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text"));
-			}
-			else
-			{
+			//}
+			//else
+			//{
 				// több szerveres mód lesz itt
-			}
+			//}
 		}
 
 		public bool FSelect(string Name)
@@ -303,7 +307,7 @@ namespace Schumix.Irc
 
 			foreach(var channel in _ChannelList)
 			{
-				sSender.Joine(ServerName, channel.Key, channel.Value.Trim());
+				sSender.Join(channel.Key, channel.Value.Trim());
 
 				if(sIgnoreChannel.IsIgnore(channel.Key))
 				{

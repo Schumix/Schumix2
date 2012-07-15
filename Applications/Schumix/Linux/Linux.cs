@@ -29,7 +29,6 @@ namespace Schumix
 	class Linux
 	{
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private Linux() {}
 
 		public void Init()
@@ -52,7 +51,8 @@ namespace Schumix
 			SchumixBase.Quit();
 
 			foreach(var nw in sIrcBase.Networks)
-				sSender.Quit(nw.Key, "Daemon killed.");
+				sIrcBase.Networks[nw.Key].sSender.Quit("Daemon killed.");
+
 			Thread.Sleep(5*1000);
 		}
 	}

@@ -177,9 +177,9 @@ namespace Schumix.Irc.Commands
 				SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", sUtilities.SqlEscape(name.ToLower()), "off");
 
 				sSendMessage.SendChatMessage(sIRCMessage, text[1], name);
-				sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, name, text[2], pass);
-				sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, name, text[3], IRCConfig.CommandPrefix);
-				sSendMessage.SendChatMessagee(sIRCMessage.MessageType, sIRCMessage.ServerName, name, text[4], IRCConfig.CommandPrefix);
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[2], pass);
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[3], IRCConfig.CommandPrefix);
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[4], IRCConfig.CommandPrefix);
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "remove")
 			{
@@ -397,7 +397,7 @@ namespace Schumix.Irc.Commands
 			NewNickPrivmsg = sIRCMessage.Channel;
 			sNickInfo.ChangeNick(nick);
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("nick", sIRCMessage.Channel), nick);
-			sSender.Nick(sIRCMessage.ServerName, nick);
+			sSender.Nick(nick);
 		}
 
 		protected void HandleJoin(IRCMessage sIRCMessage)
@@ -433,9 +433,9 @@ namespace Schumix.Irc.Commands
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("join", sIRCMessage.Channel), sIRCMessage.Info[4]);
 
 			if(sIRCMessage.Info.Length == 5)
-				sSender.Joine(sIRCMessage.ServerName, sIRCMessage.Info[4]);
+				sSender.Join(sIRCMessage.Info[4]);
 			else if(sIRCMessage.Info.Length == 6)
-				sSender.Joine(sIRCMessage.ServerName, sIRCMessage.Info[4], sIRCMessage.Info[5]);
+				sSender.Join(sIRCMessage.Info[4], sIRCMessage.Info[5]);
 		}
 
 		protected void HandleLeave(IRCMessage sIRCMessage)
@@ -461,7 +461,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			sSender.Part(sIRCMessage.ServerName, sIRCMessage.Info[4]);
+			sSender.Part(sIRCMessage.Info[4]);
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("leave", sIRCMessage.Channel), sIRCMessage.Info[4]);
 		}
 	}

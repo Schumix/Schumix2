@@ -49,11 +49,6 @@ namespace Schumix.Console.Commands
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     Tárolja a csatornákon lévő neveket. Ezen adatok módosíthatóak, lekérdezhetőek.
-		/// </summary>
-		private readonly ChannelNameList sChannelNameList = Singleton<ChannelNameList>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     A letiltott irc neket érjük el vele.
 		/// </summary>
 		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
@@ -79,20 +74,10 @@ namespace Schumix.Console.Commands
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     Az egyes csatornákról tárolt információkat lehet kezelni illetve csatornák számát módosítani.
-		/// </summary>
-		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     Üzenet küldés az irc szerver felé.
-		/// </summary>
-		private readonly Sender sSender = Singleton<Sender>.Instance;
 		/// <summary>
 		///     Network elérését tárólja.
 		/// </summary>
@@ -388,7 +373,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					string[] ChannelInfo = sChannelInfo.ChannelFunctionsInfo(channel).Split('|');
+					string[] ChannelInfo = sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsInfo(channel).Split('|');
 					if(ChannelInfo.Length < 2)
 						return;
 
@@ -412,35 +397,35 @@ namespace Schumix.Console.Commands
 
 						for(int i = 4; i < Info.Length; i++)
 						{
-							if(!sChannelInfo.SearchChannelFunction(Info[i]))
+							if(!sIrcBase.Networks[_servername].sChannelInfo.SearchChannelFunction(Info[i]))
 							{
 								nosuchfunction += ", " + Info[i].ToLower();
 								continue;
 							}
 
-							if(sChannelInfo.FSelect(Info[i], channel) && status == SchumixBase.On)
+							if(sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[i], channel) && status == SchumixBase.On)
 							{
 								onfunction += ", " + Info[i].ToLower();
 								continue;
 							}
-							else if(!sChannelInfo.FSelect(Info[i], channel) && status == SchumixBase.Off)
+							else if(!sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[i], channel) && status == SchumixBase.Off)
 							{
 								offfunction += ", " + Info[i].ToLower();
 								continue;
 							}
 
-							if(sChannelInfo.SearchFunction(Info[i]))
+							if(sIrcBase.Networks[_servername].sChannelInfo.SearchFunction(Info[i]))
 							{
-								if(!sChannelInfo.FSelect(Info[i]) && status == SchumixBase.On)
+								if(!sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[i]) && status == SchumixBase.On)
 								{
 									SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[i].ToLower())));
-									sChannelInfo.FunctionsReload();
+									sIrcBase.Networks[_servername].sChannelInfo.FunctionsReload();
 								}
 							}
 
 							args += ", " + Info[i].ToLower();
-							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(Info[i].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
-							sChannelInfo.ChannelFunctionsReload();
+							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctions(Info[i].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
+							sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 						}
 
 						if(onfunction != string.Empty)
@@ -462,29 +447,29 @@ namespace Schumix.Console.Commands
 					}
 					else
 					{
-						if(!sChannelInfo.SearchChannelFunction(Info[4]))
+						if(!sIrcBase.Networks[_servername].sChannelInfo.SearchChannelFunction(Info[4]))
 						{
 							Log.Error("Console", sLConsole.Other("NoSuchFunctions"));
 							return;
 						}
 
-						if(sChannelInfo.FSelect(Info[4], channel) && status == SchumixBase.On)
+						if(sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[4], channel) && status == SchumixBase.On)
 						{
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn"));
 							return;
 						}
-						else if(!sChannelInfo.FSelect(Info[4], channel) && status == SchumixBase.Off)
+						else if(!sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[4], channel) && status == SchumixBase.Off)
 						{
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff"));
 							return;
 						}
 
-						if(sChannelInfo.SearchFunction(Info[4]))
+						if(sIrcBase.Networks[_servername].sChannelInfo.SearchFunction(Info[4]))
 						{
-							if(!sChannelInfo.FSelect(Info[4]) && status == SchumixBase.On)
+							if(!sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[4]) && status == SchumixBase.On)
 							{
 								SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[4].ToLower())));
-								sChannelInfo.FunctionsReload();
+								sIrcBase.Networks[_servername].sChannelInfo.FunctionsReload();
 							}
 						}
 
@@ -493,8 +478,8 @@ namespace Schumix.Console.Commands
 						else
 							Log.Notice("Console", text[1], Info[4].ToLower());
 
-						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions(Info[4].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
-						sChannelInfo.ChannelFunctionsReload();
+						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctions(Info[4].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
+						sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 					}
 				}
 			}
@@ -517,7 +502,7 @@ namespace Schumix.Console.Commands
 							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", channel));
 						}
 
-						sChannelInfo.ChannelFunctionsReload();
+						sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 						Log.Notice("Console", sLManager.GetConsoleCommandText("function/update/all"));
 					}
 					else
@@ -533,7 +518,7 @@ namespace Schumix.Console.Commands
 
 					Log.Notice("Console", sLManager.GetConsoleCommandText("function/update"), Info[2].ToLower());
 					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", Info[2].ToLower()));
-					sChannelInfo.ChannelFunctionsReload();
+					sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 				}
 			}
 			else if(Info[1].ToLower() == "info")
@@ -545,7 +530,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				string f = sChannelInfo.FunctionsInfo();
+				string f = sIrcBase.Networks[_servername].sChannelInfo.FunctionsInfo();
 				if(f == string.Empty)
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("FaultyQuery"));
@@ -585,18 +570,18 @@ namespace Schumix.Console.Commands
 
 						for(int i = 2; i < Info.Length; i++)
 						{
-							if(!sChannelInfo.SearchFunction(Info[i]))
+							if(!sIrcBase.Networks[_servername].sChannelInfo.SearchFunction(Info[i]))
 							{
 								nosuchfunction += ", " + Info[i].ToLower();
 								continue;
 							}
 
-							if(sChannelInfo.FSelect(Info[i]) && Info[1].ToLower() == SchumixBase.On)
+							if(sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[i]) && Info[1].ToLower() == SchumixBase.On)
 							{
 								onfunction += ", " + Info[i].ToLower();
 								continue;
 							}
-							else if(!sChannelInfo.FSelect(Info[i]) && Info[1].ToLower() == SchumixBase.Off)
+							else if(!sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[i]) && Info[1].ToLower() == SchumixBase.Off)
 							{
 								offfunction += ", " + Info[i].ToLower();
 								continue;
@@ -604,7 +589,7 @@ namespace Schumix.Console.Commands
 
 							args += ", " + Info[i].ToLower();
 							SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[i].ToLower())));
-							sChannelInfo.FunctionsReload();
+							sIrcBase.Networks[_servername].sChannelInfo.FunctionsReload();
 						}
 
 						if(onfunction != string.Empty)
@@ -626,18 +611,18 @@ namespace Schumix.Console.Commands
 					}
 					else
 					{
-						if(!sChannelInfo.SearchFunction(Info[2]))
+						if(!sIrcBase.Networks[_servername].sChannelInfo.SearchFunction(Info[2]))
 						{
 							Log.Error("Console", sLConsole.Other("NoSuchFunctions"));
 							return;
 						}
 
-						if(sChannelInfo.FSelect(Info[2]) && Info[1].ToLower() == SchumixBase.On)
+						if(sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[2]) && Info[1].ToLower() == SchumixBase.On)
 						{
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn"));
 							return;
 						}
-						else if(!sChannelInfo.FSelect(Info[2]) && Info[1].ToLower() == SchumixBase.Off)
+						else if(!sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[2]) && Info[1].ToLower() == SchumixBase.Off)
 						{
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff"));
 							return;
@@ -649,7 +634,7 @@ namespace Schumix.Console.Commands
 							Log.Notice("Console", text[1], Info[2].ToLower());
 
 						SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", Info[2].ToLower()));
-						sChannelInfo.FunctionsReload();
+						sIrcBase.Networks[_servername].sChannelInfo.FunctionsReload();
 					}
 				}
 			}
@@ -689,7 +674,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				if(sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+				if(sIrcBase.Networks[_servername].sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("ImAlreadyOnThisChannel"));
 					return;
@@ -705,20 +690,20 @@ namespace Schumix.Console.Commands
 				if(Info.Length == 4)
 				{
 					string pass = Info[3];
-					sSender.Joine(_servername, channel, pass);
+					sIrcBase.Networks[_servername].sSender.Join(channel, pass);
 					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", channel, pass, sLManager.Locale);
 					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", channel));
 				}
 				else
 				{
-					sSender.Joine(_servername, channel);
+					sIrcBase.Networks[_servername].sSender.Join(channel);
 					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", channel, string.Empty, sLManager.Locale);
 					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", channel));
 				}
 
 				Log.Notice("Console", text[1], channel);
-				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionsReload();
+				sIrcBase.Networks[_servername].sChannelInfo.ChannelListReload();
+				sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 			}
 			else if(Info[1].ToLower() == "remove")
 			{
@@ -761,17 +746,17 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				sSender.Part(_servername, channel);
+				sIrcBase.Networks[_servername].sSender.Part(channel);
 				SchumixBase.DManager.Delete("channel", string.Format("Channel = '{0}'", channel));
 				Log.Notice("Console", text[2], channel);
 
-				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionsReload();
+				sIrcBase.Networks[_servername].sChannelInfo.ChannelListReload();
+				sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 			}
 			else if(Info[1].ToLower() == "update")
 			{
-				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionsReload();
+				sIrcBase.Networks[_servername].sChannelInfo.ChannelListReload();
+				sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 				Log.Notice("Console", sLManager.GetConsoleCommandText("channel/update"));
 			}
 			else if(Info[1].ToLower() == "info")
@@ -1055,7 +1040,7 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleDisConnect()
 		{
-			sSender.Quit(_servername, "Console: Disconnect.");
+			sIrcBase.Networks[_servername].sSender.Quit("Console: Disconnect.");
 			_network.DisConnect();
 		}
 
@@ -1064,7 +1049,7 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleReConnect()
 		{
-			sSender.Quit(_servername, "Console: Reconnect.");
+			sIrcBase.Networks[_servername].sSender.Quit("Console: Reconnect.");
 			_network.ReConnect();
 		}
 
@@ -1082,7 +1067,7 @@ namespace Schumix.Console.Commands
 			SchumixBase.NewNick = true;
 			string nick = Info[1];
 			sIrcBase.Networks[_servername].sNickInfo.ChangeNick(nick);
-			sSender.Nick(_servername, nick);
+			sIrcBase.Networks[_servername].sSender.Nick(nick);
 			Log.Notice("Console", sLManager.GetConsoleCommandText("nick"), nick);
 		}
 
@@ -1103,7 +1088,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+			if(sIrcBase.Networks[_servername].sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("ImAlreadyOnThisChannel"));
 				return;
@@ -1116,9 +1101,9 @@ namespace Schumix.Console.Commands
 			}
 
 			if(Info.Length == 2)
-				sSender.Joine(_servername, Info[1]);
+				sIrcBase.Networks[_servername].sSender.Join(Info[1]);
 			else if(Info.Length == 3)
-				sSender.Joine(_servername, Info[1], Info[2]);
+				sIrcBase.Networks[_servername].sSender.Join(Info[1], Info[2]);
 
 			Log.Notice("Console", sLManager.GetConsoleCommandText("join"), Info[1]);
 		}
@@ -1140,13 +1125,13 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(!sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+			if(!sIrcBase.Networks[_servername].sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("ImNotOnThisChannel"));
 				return;
 			}
 
-			sSender.Part(_servername, Info[1]);
+			sIrcBase.Networks[_servername].sSender.Part(Info[1]);
 			Log.Notice("Console", sLManager.GetConsoleCommandText("leave"), Info[1]);
 		}
 
@@ -1732,7 +1717,7 @@ namespace Schumix.Console.Commands
 
 			Log.Notice("Console", text[0]);
 			SchumixBase.Quit();
-			sSender.Quit(_servername, text[1]);
+			sIrcBase.Networks[_servername].sSender.Quit(text[1]);
 		}
 	}
 }

@@ -64,11 +64,6 @@ namespace Schumix
 		private static readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     Üzenet küldés az irc szerver felé.
-		/// </summary>
-		private static readonly Sender sSender = Singleton<Sender>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Csak linux alatt müködő függvények.
 		/// </summary>
 		private static readonly Linux sLinux = Singleton<Linux>.Instance;
@@ -230,7 +225,7 @@ namespace Schumix
 					return;
 
 				foreach(var nw in sIrcBase.Networks)
-					sSender.Quit(nw.Key, "Crash.");
+					sIrcBase.Networks[nw.Key].sSender.Quit("Crash.");
 
 				Thread.Sleep(5*1000);
 			};

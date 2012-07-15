@@ -36,12 +36,14 @@ namespace Schumix.TesztAddon.Commands
 	class TesztCommand : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 
 		protected void HandleTest(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
+
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 
 			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "adat")
 			{
@@ -75,13 +77,13 @@ namespace Schumix.TesztAddon.Commands
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "vhost")
 				sSendMessage.SendChatMessage(sIRCMessage, sIRCMessage.Host);
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "amsg")
-				sSendMessage.SendCMAmsge(sIRCMessage.ServerName, "teszt");
+				sSendMessage.SendCMAmsg("teszt");
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "me")
-				sSendMessage.SendCMActione(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+				sSendMessage.SendCMAction(sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "ctcprequest")
-				sSendMessage.SendCMCtcpRequeste(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+				sSendMessage.SendCMCtcpRequest(sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "ctcpreply")
-				sSendMessage.SendCMCtcpReplye(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+				sSendMessage.SendCMCtcpReply(sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "text")
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "durl")

@@ -27,15 +27,21 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Flood
 {
-	public sealed class AntiFlood
+	public sealed class AntiFloodo
 	{
 		private readonly Dictionary<string, CommandFlood> CommandFloodList = new Dictionary<string, CommandFlood>();
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
-		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
 		private System.Timers.Timer _timerflood = new System.Timers.Timer();
-		public AntiFlood() {}
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private readonly SendMessagee sSendMessage;
+		private readonly ChannelInfoo sChannelInfo;
+
+		public AntiFloodo(string ServerName)
+		{
+			sChannelInfo = sIrcBase.Networks[ServerName].sChannelInfo;
+			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;
+		}
 
 		public void Start()
 		{
@@ -83,7 +89,7 @@ namespace Schumix.Irc.Flood
 				if(CommandFloodList.ContainsKey(nick) && !CommandFloodList[nick].IsIgnore)
 					CommandFloodList[nick].Message++;
 				else if(!CommandFloodList.ContainsKey(nick))
-					CommandFloodList.Add(nick, new CommandFlood() { ServerName = sIRCMessage.ServerName });
+					CommandFloodList.Add(nick, new CommandFlood());
 			}
 		}
 
@@ -98,7 +104,7 @@ namespace Schumix.Irc.Flood
 					CommandFloodList[sIRCMessage.Nick.ToLower()].Warring = true;
 					CommandFloodList[sIRCMessage.Nick.ToLower()].BanTime = DateTime.Now.AddMinutes(1);
 					CommandFloodList[sIRCMessage.Nick.ToLower()].Message = 0;
-					sSendMessage.SendCMPrivmsge(sIRCMessage.ServerName, sIRCMessage.Nick.ToLower(), sLManager.GetWarningText("CommandsDisabled2", sIRCMessage.Channel), /*Config.Seconds*/4);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick.ToLower(), sLManager.GetWarningText("CommandsDisabled2", sIRCMessage.Channel), /*Config.Seconds*/4);
 					return true;
 				}
 
@@ -128,7 +134,7 @@ namespace Schumix.Irc.Flood
 					{
 						list.Value.IsIgnore = false;
 						list.Value.Warring = false;
-						sSendMessage.SendCMPrivmsge(list.Value.ServerName, list.Key, sLManager.GetWarningText("CommandsEnabled"));
+						sSendMessage.SendCMPrivmsg(list.Key, sLManager.GetWarningText("CommandsEnabled"));
 					}
 
 					continue;

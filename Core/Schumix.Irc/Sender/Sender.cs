@@ -25,181 +25,186 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
 {
-	public sealed class Sender
+	public sealed class Sendere
 	{
 		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly object WriteLock = new object();
-		private Sender() {}
+		private readonly SendMessagee sSendMessage;
 
-		public void NameInfo(string ServerName, string nick, string user, string userinfo)
+		public Sendere(string ServerName)
+		{
+			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;
+		}
+
+		public void NameInfo(string nick, string user, string userinfo)
 		{
 			lock(WriteLock)
 			{
-				Nick(ServerName, nick);
-				User(ServerName, user, userinfo);
+				Nick(nick);
+				User(user, userinfo);
 			}
 		}
 
-		public void Nick(string ServerName, string nick)
+		public void Nick(string nick)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "NICK {0}", nick);
+				sSendMessage.WriteLine("NICK {0}", nick);
 			}
 		}
 
-		public void User(string ServerName, string user, string userinfo)
+		public void User(string user, string userinfo)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "USER {0} 8 * :{1}", user, userinfo);
+				sSendMessage.WriteLine("USER {0} 8 * :{1}", user, userinfo);
 			}
 		}
 
-		public void Joine(string ServerName, string channel)
+		public void Join(string channel)
 		{
 			lock(WriteLock)
 			{
 				if(!sIgnoreChannel.IsIgnore(channel))
-					sSendMessage.WriteLinee(ServerName, "JOIN {0}", channel);
+					sSendMessage.WriteLine("JOIN {0}", channel);
 			}
 		}
 
-		public void Joine(string ServerName, string channel, string pass)
+		public void Join(string channel, string pass)
 		{
 			lock(WriteLock)
 			{
 				if(!sIgnoreChannel.IsIgnore(channel))
-					sSendMessage.WriteLinee(ServerName, "JOIN {0} {1}", channel, pass);
+					sSendMessage.WriteLine("JOIN {0} {1}", channel, pass);
 			}
 		}
 
-		public void Part(string ServerName, string channel)
+		public void Part(string channel)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "PART {0}", channel);
+				sSendMessage.WriteLine("PART {0}", channel);
 			}
 		}
 
-		public void Kick(string ServerName, string channel, string name)
+		public void Kicke(string channel, string name)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "KICK {0} {1}", channel, name);
+				sSendMessage.WriteLine("KICK {0} {1}", channel, name);
 			}
 		}
 
-		public void Kick(string ServerName, string channel, string name, string args)
+		public void Kicke(string channel, string name, string args)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "KICK {0} {1} :{2}", channel, name, args);
+				sSendMessage.WriteLine("KICK {0} {1} :{2}", channel, name, args);
 			}
 		}
 
-		public void Ban(string ServerName, string channel, string name)
+		public void Ban(string channel, string name)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "MODE {0} +b {1}", channel, name);
+				sSendMessage.WriteLine("MODE {0} +b {1}", channel, name);
 			}
 		}
 
-		public void Unban(string ServerName, string channel, string name)
+		public void Unban(string channel, string name)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "MODE {0} -b {1}", channel, name);
+				sSendMessage.WriteLine("MODE {0} -b {1}", channel, name);
 			}
 		}
 
-		public void Modee(string ServerName, string channel, string status)
+		public void Mode(string channel, string status)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "MODE {0} {1}", channel, status);
+				sSendMessage.WriteLine("MODE {0} {1}", channel, status);
 			}
 		}
 
-		public void Modee(string ServerName, string channel, string status, string name)
+		public void Mode(string channel, string status, string name)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "MODE {0} {1} {2}", channel, status, name);
+				sSendMessage.WriteLine("MODE {0} {1} {2}", channel, status, name);
 			}
 		}
 
-		public void Quit(string ServerName, string args)
+		public void Quit(string args)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "QUIT :{0}", args);
+				sSendMessage.WriteLine("QUIT :{0}", args);
 			}
 		}
 
-		public void Ping(string ServerName, string ping)
+		public void Ping(string ping)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "PING :{0}", ping);
+				sSendMessage.WriteLine("PING :{0}", ping);
 			}
 		}
 
-		public void Pong(string ServerName, string pong)
+		public void Pong(string pong)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "PONG :{0}", pong);
+				sSendMessage.WriteLine("PONG :{0}", pong);
 			}
 		}
 
-		public void NickServ(string ServerName, string pass)
+		public void NickServ(string pass)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsge(ServerName, "NickServ", "identify {0}", pass);
+				sSendMessage.SendCMPrivmsg("NickServ", "identify {0}", pass);
 			}
 		}
 
-		public void NickServStatus(string ServerName, string status)
+		public void NickServStatus(string status)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsge(ServerName, "NickServ", "status {0}", status);
+				sSendMessage.SendCMPrivmsg("NickServ", "status {0}", status);
 			}
 		}
 
-		public void NickServInfo(string ServerName, string info)
+		public void NickServInfo(string info)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsge(ServerName, "NickServ", "info {0}", info);
+				sSendMessage.SendCMPrivmsg("NickServ", "info {0}", info);
 			}
 		}
 
-		public void HostServ(string ServerName, string Mode)
+		public void HostServ(string Mode)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsge(ServerName, "HostServ", "{0}", Mode);
+				sSendMessage.SendCMPrivmsg("HostServ", "{0}", Mode);
 			}
 		}
 
-		public void NickServGhost(string ServerName, string ghost, string pass)
+		public void NickServGhost(string ghost, string pass)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsge(ServerName, "NickServ", "ghost {0} {1}", ghost, pass);
+				sSendMessage.SendCMPrivmsg("NickServ", "ghost {0} {1}", ghost, pass);
 			}
 		}
 
-		public void Whois(string ServerName, string name)
+		public void Whois(string name)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLinee(ServerName, "WHOIS {0}", name);
+				sSendMessage.WriteLine("WHOIS {0}", name);
 			}
 		}
 	}

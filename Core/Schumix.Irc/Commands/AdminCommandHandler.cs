@@ -144,7 +144,7 @@ namespace Schumix.Irc.Commands
 
 			sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 			SchumixBase.Quit();
-			sSender.Quit(sIRCMessage.ServerName, string.Format(text[1], sIRCMessage.Nick));
+			sSender.Quit(string.Format(text[1], sIRCMessage.Nick));
 		}
 	}
 }
