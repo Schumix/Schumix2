@@ -480,11 +480,11 @@ namespace Schumix.Framework.Localization
 				case "Text4":
 				{
 					if(Locale == "huHU")
-						return "Mester csatorna frissitve lett erre: {0}";
+						return "{0} mester csatorna frissitve lett erre: {1}";
 					else if(Locale == "enUS")
-						return "The master channel is updated to: {0}";
+						return "{0} master channel is updated to: {1}";
 					else
-						return "The master channel is updated to: {0}";
+						return "{0} master channel is updated to: {1}";
 				}
 				case "Text5":
 				{
@@ -608,6 +608,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Unload plugins.";
 				}
+				case "Text6":
+				{
+					if(Locale == "huHU")
+						return "Ez az addonnév már szerepel a rendszerben ezért nem kerül betöltésre!";
+					else if(Locale == "enUS")
+						return "This addon name already exists in the system so not loaded!";
+					else
+						return "This addon name already exists in the system so not loaded!";
+				}
 				default:
 					return string.Empty;
 			}
@@ -715,6 +724,15 @@ namespace Schumix.Framework.Localization
 						return "There is no load of Schumix!";
 					else
 						return "There is no load of Schumix!";
+				}
+				case "Text12":
+				{
+					if(Locale == "huHU")
+						return "A {0} szerver név már használva van így nem kerül betöltésre!";
+					else if(Locale == "enUS")
+						return "The {0} server is already in use so not loaded!";
+					else
+						return "The {0} server is already in use so not loaded!";
 				}
 				default:
 					return string.Empty;

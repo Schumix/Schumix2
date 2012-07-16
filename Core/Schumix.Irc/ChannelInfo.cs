@@ -57,7 +57,7 @@ namespace Schumix.Irc
 			sIgnoreChannel = sIrcBase.Networks[ServerName].sIgnoreChannel;
 		}
 
-		public void ChannelList(string Name)
+		public void ChannelList()
 		{
 			var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channels WHERE ServerName = '{0}'", _servername);
 			if(!db.IsNull())
@@ -296,7 +296,7 @@ namespace Schumix.Irc
 			return on + "|" + off;
 		}
 
-		public void JoinChannel(string ServerName)
+		public void JoinChannel()
 		{
 			Log.Debug("ChannelInfo", sLConsole.ChannelInfo("Text5"));
 			bool error = false;
@@ -332,8 +332,8 @@ namespace Schumix.Irc
 			else
 				Log.Warning("ChannelInfo", sLConsole.ChannelInfo("Text8"));
 
-			if(IRCConfig.IgnoreChannels.Length > 0)
-				Log.Notice("ChannelInfo", sLConsole.ChannelInfo("Text9"), IRCConfig.IgnoreChannels);
+			if(IRCConfig.List[_servername].IgnoreChannels.Length > 0)
+				Log.Notice("ChannelInfo", sLConsole.ChannelInfo("Text9"), IRCConfig.List[_servername].IgnoreChannels);
 
 			if(SchumixBase.STime)
 			{

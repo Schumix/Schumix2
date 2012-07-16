@@ -145,7 +145,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				switch(IRCConfig.MessageType.ToLower())
+				switch(IRCConfig.List[sIRCMessage.ServerName].MessageType.ToLower())
 				{
 					case "privmsg":
 						SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Channel, message);
@@ -291,7 +291,7 @@ namespace Schumix.Irc
 							INetwork.WriterList[_servername].WriteLine(message);
 					}
 
-					Thread.Sleep(IRCConfig.MessageSending);
+					Thread.Sleep(IRCConfig.List[_servername].MessageSending);
 				}
 				catch(Exception e)
 				{

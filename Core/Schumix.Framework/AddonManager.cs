@@ -128,8 +128,7 @@ namespace Schumix.Framework
 
 						if(_addons.ContainsKey(pl.Name.ToLower()))
 						{
-							// üzenet ide
-							// Log.Error("AddonManager", "Ez az addonnév már szerepel a rendszerben ezért nem kerül betöltésre!");
+							Log.Error("AddonManager", sLConsole.AddonManager("Text6"));
 							continue;
 						}
 

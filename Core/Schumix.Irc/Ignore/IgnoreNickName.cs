@@ -28,7 +28,12 @@ namespace Schumix.Irc.Ignore
 	public sealed class IgnoreNickNamee
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public IgnoreNickNamee() {}
+		private string _servername;
+
+		public IgnoreNickNamee(string ServerName)
+		{
+			_servername = ServerName;
+		}
 
 		public bool IsIgnore(string Name)
 		{
@@ -38,7 +43,7 @@ namespace Schumix.Irc.Ignore
 
 		public void AddConfig()
 		{
-			string[] ignore = IRCConfig.IgnoreNames.Split(SchumixBase.Comma);
+			string[] ignore = IRCConfig.List[_servername].IgnoreNames.Split(SchumixBase.Comma);
 
 			if(ignore.Length > 1)
 			{
@@ -46,7 +51,7 @@ namespace Schumix.Irc.Ignore
 					Add(name.ToLower());
 			}
 			else
-				Add(IRCConfig.IgnoreNames.ToLower());
+				Add(IRCConfig.List[_servername].IgnoreNames.ToLower());
 		}
 
 		public void Add(string Name)
@@ -75,7 +80,7 @@ namespace Schumix.Irc.Ignore
 
 		public void RemoveConfig()
 		{
-			string[] ignore = IRCConfig.IgnoreNames.Split(SchumixBase.Comma);
+			string[] ignore = IRCConfig.List[_servername].IgnoreNames.Split(SchumixBase.Comma);
 
 			if(ignore.Length > 1)
 			{
@@ -83,7 +88,7 @@ namespace Schumix.Irc.Ignore
 					Remove(name.ToLower());
 			}
 			else
-				Remove(IRCConfig.IgnoreNames.ToLower());
+				Remove(IRCConfig.List[_servername].IgnoreNames.ToLower());
 		}
 	}
 }

@@ -39,6 +39,8 @@ a `Schumix.xml` nevû fájlt.
 
 ## Irc
 
+Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (<Irc> ... </Irc>) le kell másolni még egyszer és ott külön be kell állítani az adatokat.
+* **ServerName:** A szerver neve. Ezzel lehet beállítani hogy többszerveres módban hogy mi legyen az egyes szervereket megkülönböztető név. FIGYELEM: Nem egyezhet meg a többi szerver nevével (kis és nagybetüt nem különbőzteti meg)!
 * **Server:** Ide kell beírni a szerver nevét ahova csatlakozni szeretnénk.
 * **Port:** A szerver portja. Alapértelmezés: `6667`
 * **Ssl:** Értéke `true` vagy `false` lehet. Ezzel aktiválható a kapcsolódás olyan irc szerverre ahol ssl protokol van használva. Alapértelmezés: `false`

@@ -36,11 +36,11 @@ namespace Schumix.Irc.Commands
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		public readonly IgnoreIrcCommande sIgnoreIrcCommand = new IgnoreIrcCommande();
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public readonly IgnoreNickNamee sIgnoreNickName = new IgnoreNickNamee();
-		public readonly IgnoreChannele sIgnoreChannel = new IgnoreChannele();
 		public readonly IgnoreCommande sIgnoreCommand = new IgnoreCommande();
 		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		public ChannelNameListe sChannelNameList { get; private set; }
+		public IgnoreNickNamee sIgnoreNickName { get; private set; }
+		public IgnoreChannele sIgnoreChannel { get; private set; }
 		public IgnoreAddone sIgnoreAddon { get; private set; }
 		public SendMessagee sSendMessage { get; private set; }
 		public ChannelInfoo sChannelInfo { get; private set; }
@@ -63,12 +63,14 @@ namespace Schumix.Irc.Commands
 		public void InitializeCommandHandler()
 		{
 			sSendMessage = new SendMessagee(_servername);
+			sIgnoreChannel = new IgnoreChannele(_servername);
 			sSender = new Sendere(_servername);
 			sNickInfo = new NickInfoo(_servername);
+			sIgnoreAddon = new IgnoreAddone(_servername);
+			sIgnoreNickName = new IgnoreNickNamee(_servername);
 			sChannelInfo = new ChannelInfoo(_servername);
 			sAntiFlood = new AntiFloodo(_servername);
 			sCtcpSender = new CtcpSender(_servername);
-			sIgnoreAddon = new IgnoreAddone(_servername);
 			sChannelNameList = new ChannelNameListe(_servername);
 		}
 
@@ -84,7 +86,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				sSendMessage.SendChatMessage(sIRCMessage, text[0]);
-				sSendMessage.SendChatMessage(sIRCMessage, text[1], IRCConfig.CommandPrefix);
+				sSendMessage.SendChatMessage(sIRCMessage, text[1], IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
 				return;
 			}
 
@@ -94,7 +96,7 @@ namespace Schumix.Irc.Commands
 					return;
 			}
 
-			string command = IRCConfig.NickName + SchumixBase.Comma;
+			string command = IRCConfig.List[sIRCMessage.ServerName].NickName + SchumixBase.Comma;
 
 			if(sIRCMessage.Info[4].ToLower() == command.ToLower())
 			{
@@ -222,7 +224,7 @@ namespace Schumix.Irc.Commands
 			foreach(var t in text)
 			{
 				if(t.Contains("{0}"))
-					sSendMessage.SendChatMessage(sIRCMessage, t, IRCConfig.CommandPrefix);
+					sSendMessage.SendChatMessage(sIRCMessage, t, IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, t);
 			}

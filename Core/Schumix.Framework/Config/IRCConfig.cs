@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
@@ -25,47 +26,11 @@ namespace Schumix.Framework.Config
 	public sealed class IRCConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		public static string Server { get; private set; }
-		public static int Port { get; private set; }
-		public static bool Ssl { get; private set; }
-		public static string NickName { get; private set; }
-		public static string NickName2 { get; private set; }
-		public static string NickName3 { get; private set; }
-		public static string UserName { get; private set; }
-		public static string UserInfo { get; private set; }
-		public static string MasterChannel { get; private set; }
-		public static string MasterChannelPassword { get; private set; }
-		public static string IgnoreChannels { get; private set; }
-		public static string IgnoreNames { get; private set; }
-		public static bool UseNickServ { get; private set; }
-		public static string NickServPassword { get; private set; }
-		public static bool UseHostServ { get; private set; }
-		public static bool HostServEnabled { get; private set; }
-		public static int MessageSending { get; private set; }
-		public static string CommandPrefix { get; private set; }
-		public static string MessageType { get; private set; }
+		public static Dictionary<string, IRCConfigBase> List { get; private set; }
 
-		public IRCConfig(string server, int port, bool ssl, string nickname, string nickname2, string nickname3, string username, string userinfo, string masterchannel, string masterchannelpassword, string ignorechannels, string ignorenames, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, int messagesending, string commandprefix, string messagetype)
+		public IRCConfig(Dictionary<string, IRCConfigBase> list)
 		{
-			Server                = server;
-			Port                  = port;
-			Ssl                   = ssl;
-			NickName              = nickname;
-			NickName2             = nickname2;
-			NickName3             = nickname3;
-			UserName              = username;
-			UserInfo              = userinfo;
-			MasterChannel         = masterchannel.ToLower();
-			MasterChannelPassword = masterchannelpassword;
-			IgnoreChannels        = ignorechannels;
-			IgnoreNames           = ignorenames;
-			UseNickServ           = usenickserv;
-			NickServPassword      = nickservpassword;
-			UseHostServ           = usehostserv;
-			HostServEnabled       = hostservenabled;
-			MessageSending        = messagesending;
-			CommandPrefix         = commandprefix;
-			MessageType           = messagetype;
+			List = list;
 			Log.Notice("IRCConfig", sLConsole.IRCConfig("Text"));
 		}
 	}

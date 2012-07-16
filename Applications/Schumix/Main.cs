@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Diagnostics;
 using System.Globalization;
 using Schumix.Irc;
 using Schumix.Updater;
@@ -215,12 +216,21 @@ namespace Schumix
 				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
 
 				if(!SchumixBot.sSchumixBase.IsNull())
-					SchumixBase.Quit();
-				else
 				{
-					Environment.Exit(1);
-					return;
+					bool e = false;
+					foreach(var nw in sIrcBase.Networks)
+					{
+						if(!sIrcBase.Networks[nw.Key].IsNull() && sIrcBase.Networks[nw.Key].Online)
+							e = true;
+					}
+
+					if(e)
+						SchumixBase.Quit();
+					else
+						Process.GetCurrentProcess().Kill();
 				}
+				else
+					Process.GetCurrentProcess().Kill();
 
 				if(SchumixBase.ExitStatus)
 					return;
@@ -255,7 +265,6 @@ namespace Schumix
 			System.Console.WriteLine("\t--server-port=<port>\t\tSet server port.");
 			System.Console.WriteLine("\t--server-password=<pass>\tSet password.");
 			System.Console.WriteLine("\t--server-identify=Value\t\tSet identify.");
-			System.Console.WriteLine("\t--server-configs=Value\t\tSend Schumix's parameters at all.");
 		}
 	}
 }

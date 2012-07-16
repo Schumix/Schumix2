@@ -36,16 +36,16 @@ namespace Schumix.Irc
 
 		private IrcBase() {}
 
-		public void NewServer(string Name, int Id, string Host, int Port)
+		public void NewServer(string ServerName, int ServerId, string Host, int Port)
 		{
 			lock(Lock)
 			{
-				var nw = new Network(Name.ToLower(), Id, Host, Port);
+				var nw = new Network(ServerName.ToLower(), ServerId, Host, Port);
 
-				if(IRCConfig.Ssl)
+				if(IRCConfig.List[ServerName].Ssl)
 					nw.SetConnectionType(ConnectionType.Ssl);
 
-				_networks.Add(Name, nw);
+				_networks.Add(ServerName, nw);
 			}
 		}
 

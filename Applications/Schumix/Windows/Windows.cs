@@ -19,6 +19,7 @@
 
 using System;
 using System.Threading;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Schumix.Irc;
 using Schumix.Framework;
@@ -51,12 +52,21 @@ namespace Schumix
 					Log.Notice("Windows", "Daemon killed.");
 
 					if(!SchumixBot.sSchumixBase.IsNull())
-						SchumixBase.Quit();
-					else
 					{
-						Environment.Exit(1);
-						return true;
+						bool e = false;
+						foreach(var nw in sIrcBase.Networks)
+						{
+							if(!sIrcBase.Networks[nw.Key].IsNull() && sIrcBase.Networks[nw.Key].Online)
+								e = true;
+						}
+
+						if(e)
+							SchumixBase.Quit();
+						else
+							Process.GetCurrentProcess().Kill();
 					}
+					else
+						Process.GetCurrentProcess().Kill();
 
 					foreach(var nw in sIrcBase.Networks)
 						sIrcBase.Networks[nw.Key].sSender.Quit("Daemon killed.");
@@ -64,7 +74,22 @@ namespace Schumix
 				case CtrlType.CTRL_LOGOFF_EVENT:
 				case CtrlType.CTRL_SHUTDOWN_EVENT:
 					Log.Notice("Windows", "User is logging off.");
-					SchumixBase.Quit();
+					if(!SchumixBot.sSchumixBase.IsNull())
+					{
+						bool e = false;
+						foreach(var nw in sIrcBase.Networks)
+						{
+							if(!sIrcBase.Networks[nw.Key].IsNull() && sIrcBase.Networks[nw.Key].Online)
+								e = true;
+						}
+
+						if(e)
+							SchumixBase.Quit();
+						else
+							Process.GetCurrentProcess().Kill();
+					}
+					else
+						Process.GetCurrentProcess().Kill();
 
 					foreach(var nw in sIrcBase.Networks)
 						sIrcBase.Networks[nw.Key].sSender.Quit("User is logging off.");

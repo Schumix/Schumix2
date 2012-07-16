@@ -49,27 +49,46 @@ namespace Schumix
 		{
 			try
 			{
+				bool e = false;
+				string eserver = string.Empty;
 				Log.Notice("SchumixBot", sLConsole.SchumixBot("Text"));
 				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text2"));
-				//var network = new Network("default", IRCConfig.Server, IRCConfig.Port);
-				// ide jön majd az összes szerver elindítása
-				sIrcBase.NewServer("default", 1, IRCConfig.Server, IRCConfig.Port);
-				sIrcBase.NewServer("default2", 2, "irc.yeahunter.hu", IRCConfig.Port);
+
+				foreach(var sn in IRCConfig.List)
+				{
+					if(!e)
+					{
+						eserver = sn.Key;
+						e = true;
+					}
+
+					sIrcBase.NewServer(sn.Key, sn.Value.ServerId, sn.Value.Server, sn.Value.Port);
+				}
+
 				sSchumixBase = new SchumixBase();
 
 				Task.Factory.StartNew(() =>
 				{
-					sIrcBase.Connect("default");
-					while(!sIrcBase.Networks["default"].Online)
-						Thread.Sleep(1000);
+					if(IRCConfig.List.Count == 1)
+					{
+						sIrcBase.Connect(eserver);
+						return;
+					}
 
-					sIrcBase.Connect("default2");
+					foreach(var sn in IRCConfig.List)
+					{
+						sIrcBase.Connect(sn.Key);
+
+						while(!sIrcBase.Networks[sn.Key].Online)
+							Thread.Sleep(1000);
+					}
 				});
+
 				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text3"));
 				new ScriptManager(ScriptsConfig.Directory);
 				// megoldani hogy a szervereket lehessen kezelni network esetén, pl: console írás váltása, connect, disconnect, ignorenél az addon stb
 				// kéne egy parancs amellyel a szerverek között lehet majd váltani
-				new Console.Console();
+				new Console.Console(eserver);
 			}
 			catch(Exception e)
 			{

@@ -28,7 +28,12 @@ namespace Schumix.Irc.Ignore
 	public sealed class IgnoreChannele
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public IgnoreChannele() {}
+		private string _servername;
+
+		public IgnoreChannele(string ServerName)
+		{
+			_servername = ServerName;
+		}
 
 		public bool IsIgnore(string Name)
 		{
@@ -38,13 +43,13 @@ namespace Schumix.Irc.Ignore
 
 		public void AddConfig()
 		{
-			string[] ignore = IRCConfig.IgnoreChannels.Split(SchumixBase.Comma);
+			string[] ignore = IRCConfig.List[_servername].IgnoreChannels.Split(SchumixBase.Comma);
 
 			if(ignore.Length > 1)
 			{
 				foreach(var name in ignore)
 				{
-					if(name.ToLower() == IRCConfig.MasterChannel.ToLower())
+					if(name.ToLower() == IRCConfig.List[_servername].MasterChannel.ToLower())
 						continue;
 
 					Add(name.ToLower());
@@ -52,8 +57,8 @@ namespace Schumix.Irc.Ignore
 			}
 			else
 			{
-				if(IRCConfig.IgnoreChannels.ToLower() != IRCConfig.MasterChannel.ToLower())
-					Add(IRCConfig.IgnoreChannels.ToLower());
+				if(IRCConfig.List[_servername].IgnoreChannels.ToLower() != IRCConfig.List[_servername].MasterChannel.ToLower())
+					Add(IRCConfig.List[_servername].IgnoreChannels.ToLower());
 			}
 		}
 
@@ -83,7 +88,7 @@ namespace Schumix.Irc.Ignore
 
 		public void RemoveConfig()
 		{
-			string[] ignore = IRCConfig.IgnoreChannels.Split(SchumixBase.Comma);
+			string[] ignore = IRCConfig.List[_servername].IgnoreChannels.Split(SchumixBase.Comma);
 
 			if(ignore.Length > 1)
 			{
@@ -91,7 +96,7 @@ namespace Schumix.Irc.Ignore
 					Remove(name.ToLower());
 			}
 			else
-				Remove(IRCConfig.IgnoreChannels.ToLower());
+				Remove(IRCConfig.List[_servername].IgnoreChannels.ToLower());
 		}
 	}
 }

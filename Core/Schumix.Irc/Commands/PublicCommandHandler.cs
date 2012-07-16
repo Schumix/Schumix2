@@ -54,7 +54,7 @@ namespace Schumix.Irc.Commands
 				if(sIgnoreCommand.IsIgnore(command.Key))
 					continue;
 
-				commands += " | " + IRCConfig.CommandPrefix + command.Key;
+				commands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key;
 			}
 
 			sSendMessage.SendChatMessage(sIRCMessage, text[1], Consts.SchumixProgrammedBy);

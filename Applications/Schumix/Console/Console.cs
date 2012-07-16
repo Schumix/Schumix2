@@ -47,13 +47,14 @@ namespace Schumix.Console
 		/// <summary>
 		///     Indulási függvény.
 		/// </summary>
-		public Console(/*Network network*/)
+		public Console(string ServerName)
 		{
 			Log.Notice("Console", sLConsole.Console("Text"));
 			Log.Debug("Console", sLConsole.Console("Text2"));
 			new Thread(() => ConsoleRead()).Start();
 			CCManager = new CCommandManager();
-			CCManager.Channel = IRCConfig.MasterChannel;
+			CCManager.ServerName = ServerName;
+			CCManager.Channel = IRCConfig.List[ServerName].MasterChannel;
 			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + CCManager.Channel;
 		}
 

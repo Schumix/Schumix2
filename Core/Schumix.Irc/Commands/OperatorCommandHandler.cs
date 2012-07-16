@@ -589,13 +589,13 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channels WHERE Channel = '{0}' And ServerName = '{1}' And ServerId = '{2}'", sUtilities.SqlEscape(channel), sIRCMessage.ServerName, sIRCMessage.ServerId);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(channel), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					int id = Convert.ToInt32(db["Id"].ToString());
-					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channels WHERE ServerName = '{0}' And ServerId = '{1}' ORDER BY Id ASC", sIRCMessage.ServerName, sIRCMessage.ServerId);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channels WHERE ServerName = '{0}'' ORDER BY Id ASC", sIRCMessage.ServerName);
 
-					if(!db.IsNull())
+					if(!db1.IsNull())
 					{
 						if(id == Convert.ToInt32(db1["Id"].ToString()))
 						{
@@ -1199,7 +1199,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					if(channel == IRCConfig.MasterChannel.ToLower())
+					if(channel == IRCConfig.List[sIRCMessage.ServerName].MasterChannel.ToLower())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoIgnoreMasterChannel", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;

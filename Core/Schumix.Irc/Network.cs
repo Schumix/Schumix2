@@ -78,10 +78,10 @@ namespace Schumix.Irc
 		private ConnectionType CType;
 		private DateTime LastOpcode;
 
-		public Network(string Name, int Id, string Server, int Port) : base(Name)
+		public Network(string ServerName, int ServerId, string Server, int Port) : base(ServerName)
 		{
-			_servername = Name;
-			_serverid = Id;
+			_servername = ServerName;
+			_serverid = ServerId;
 			_server = Server;
 			_port = Port;
 
@@ -94,7 +94,7 @@ namespace Schumix.Irc
 		{
 			InitializeCommandHandler();
 			InitializeCommandMgr();
-			Task.Factory.StartNew(() => sChannelInfo.ChannelList(_servername));
+			Task.Factory.StartNew(() => sChannelInfo.ChannelList());
 			sIgnoreNickName.AddConfig();
 			sIgnoreChannel.AddConfig();
 			sIgnoreAddon.AddConfig();
@@ -304,7 +304,7 @@ namespace Schumix.Irc
 			_cts = new CancellationTokenSource();
 
 			if(nick)
-				sNickInfo.ChangeNick(IRCConfig.NickName);
+				sNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
 
 			try
 			{
@@ -357,10 +357,10 @@ namespace Schumix.Irc
 			if(b)
 			{
 				INetwork.WriterList[_servername].WriteLine("NICK {0}", sNickInfo.NickStorage);
-				INetwork.WriterList[_servername].WriteLine("USER {0} 8 * :{1}", IRCConfig.UserName, IRCConfig.UserInfo);
+				INetwork.WriterList[_servername].WriteLine("USER {0} 8 * :{1}", IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
 			}
 			else
-				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.UserName, IRCConfig.UserInfo);
+				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
 			Online = false;
@@ -523,7 +523,7 @@ namespace Schumix.Irc
 			IMessage.Args = IrcCommand.SplitToString(3, SchumixBase.Space);
 			IMessage.Args = IMessage.Args.Remove(0, 1, SchumixBase.Colon);
 
-			switch(IRCConfig.MessageType.ToLower())
+			switch(IRCConfig.List[_servername].MessageType.ToLower())
 			{
 				case "privmsg":
 					IMessage.MessageType = MessageType.Privmsg;

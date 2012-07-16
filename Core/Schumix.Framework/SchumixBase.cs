@@ -99,9 +99,32 @@ namespace Schumix.Framework
 				else
 					Log.Error("SchumixBase", sLConsole.ChannelInfo("Text11"));
 
-				SchumixBase.DManager.Update("channel", string.Format("Channel = '{0}'", IRCConfig.MasterChannel), "Id = '1'");
-				SchumixBase.DManager.Update("channel", string.Format("Password = '{0}'", IRCConfig.MasterChannelPassword.Length > 0 ? IRCConfig.MasterChannelPassword : string.Empty), "Id = '1'");
-				Log.Notice("SchumixBase", sLConsole.SchumixBase("Text4"), IRCConfig.MasterChannel);
+				foreach(var sn in IRCConfig.List)
+				{
+					SchumixBase.DManager.Update("channels", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
+
+					var db1 = SchumixBase.DManager.Query("SELECT Id, ServerName FROM channels WHERE ServerId = '{0}'", sn.Value.ServerId);
+					if(!db1.IsNull())
+					{
+						foreach(DataRow row in db1.Rows)
+						{
+							int id = Convert.ToInt32(row["Id"].ToString());
+							var db2 = SchumixBase.DManager.QueryFirstRow("SELECT Id, ServerName, Channel FROM channels WHERE ServerName = '{0}' ORDER BY Id ASC", row["ServerName"].ToString());
+
+							if(!db2.IsNull())
+							{
+								if(id == Convert.ToInt32(db2["Id"].ToString()))
+								{
+									string channel = db2["Channel"].ToString();
+									string servername = db2["ServerName"].ToString();
+									SchumixBase.DManager.Update("channels", string.Format("Channel = '{0}'", IRCConfig.List[servername].MasterChannel), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, servername));
+									SchumixBase.DManager.Update("channels", string.Format("Password = '{0}'", IRCConfig.List[servername].MasterChannelPassword.Length > 0 ? IRCConfig.List[servername].MasterChannelPassword : string.Empty), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, servername));
+									Log.Notice("SchumixBase", sLConsole.SchumixBase("Text4"), servername, IRCConfig.List[servername].MasterChannel);
+								}
+							}
+						}
+					}
+				}
 
 				if(AddonsConfig.Enabled)
 				{
@@ -114,7 +137,7 @@ namespace Schumix.Framework
 			}
 			catch(Exception e)
 			{
-				Log.Error("SchumixBase", sLConsole.Exception("Error"), e.Message);
+				Log.Error("SchumixBase", sLConsole.Exception("Error"), e);
 				Thread.Sleep(100);
 			}
 		}

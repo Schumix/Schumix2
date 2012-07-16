@@ -49,15 +49,15 @@ Megírásra váró feladatok:
 	- NickInfo singletonból osztályos legyen(new).
 	- Legvégén az "e" betük leszedése a függvények végéről a sender és a sendcheatmessage fv-ken.
 	- Többszerveres módban úgyan arra a szerverre ssl módban nem tud felmenni a bot.
-	- Új szerver esetén ha még nincs egyáltalán annyi sorszámú db-ben generálja le az alap csatornát schumix táblába ami kell stb.
+	-!!!!!! Új szerver esetén ha még nincs egyáltalán annyi sorszámú db-ben generálja le az alap csatornát schumix táblába ami kell stb.
 	- Channels mappába való logolásnál létrehozni egy olyan mappát ahova a csatornákat logolja szerver szerint.
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channels WHERE Channel = '{0}' And ServerName = '{1}' And ServerId = '{2}'", sUtilities.SqlEscape(channel), sIRCMessage.ServerName, sIRCMessage.ServerId);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(channel), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					int id = Convert.ToInt32(db["Id"].ToString());
-					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channels WHERE And ServerName = '{1}' And ServerId = '{2}' ORDER BY Id ASC", sIRCMessage.ServerName, sIRCMessage.ServerId);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channels WHERE ServerName = '{0}' ORDER BY Id ASC", sIRCMessage.ServerName);
 
-					if(!db.IsNull())
+					if(!db1.IsNull())
 					{
 						if(id == Convert.ToInt32(db1["Id"].ToString()))
 						{
@@ -68,7 +68,6 @@ Megírásra váró feladatok:
 				}
 	- Master csatorna átalakítása a kódban mert új alapokon müködik. Az lényeg hogy a legkisebb számut keresi az oszlopban a megadot ServerId segítségével.
 	- Console részen elvégezni a channels oszlop újításait.
-	- addonok sokszorozása szerverenként.
-	- addonmanagerben van egy sor ami nincs angolosítva.
+	- addonok sokszorozása szerverenként. (ez esetben az ignoreaddonba átalakítás kell hogy ne mindegyikhez adja hozzá magát)
 	- Network-be kéne egy kiírás majd elejére hogy ez melyik szerver.
 	- Memória fogyasztás színezését eltolni.

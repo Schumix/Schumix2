@@ -19,6 +19,7 @@
 
 using System;
 using System.Threading;
+using System.Diagnostics;
 using Mono.Unix;
 using Mono.Unix.Native;
 using Schumix.Irc;
@@ -51,12 +52,21 @@ namespace Schumix
 			Log.Notice("Linux", "Handler Terminated.");
 
 			if(!SchumixBot.sSchumixBase.IsNull())
-				SchumixBase.Quit();
-			else
 			{
-				Environment.Exit(1);
-				return;
+				bool e = false;
+				foreach(var nw in sIrcBase.Networks)
+				{
+					if(!sIrcBase.Networks[nw.Key].IsNull() && sIrcBase.Networks[nw.Key].Online)
+						e = true;
+				}
+
+				if(e)
+					SchumixBase.Quit();
+				else
+					Process.GetCurrentProcess().Kill();
 			}
+			else
+				Process.GetCurrentProcess().Kill();
 
 			foreach(var nw in sIrcBase.Networks)
 				sIrcBase.Networks[nw.Key].sSender.Quit("Daemon killed.");

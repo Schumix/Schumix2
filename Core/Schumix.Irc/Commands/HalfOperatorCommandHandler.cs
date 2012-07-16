@@ -178,8 +178,8 @@ namespace Schumix.Irc.Commands
 
 				sSendMessage.SendChatMessage(sIRCMessage, text[1], name);
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[2], pass);
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[3], IRCConfig.CommandPrefix);
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[4], IRCConfig.CommandPrefix);
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[3], IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[4], IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "remove")
 			{
@@ -321,7 +321,7 @@ namespace Schumix.Irc.Commands
 						if(sIgnoreCommand.IsIgnore(command.Key))
 							continue;
 
-						commands += " | " + IRCConfig.CommandPrefix + command.Key;
+						commands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key;
 					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -343,7 +343,7 @@ namespace Schumix.Irc.Commands
 						if(sIgnoreCommand.IsIgnore(command.Key))
 							continue;
 
-						commands += " | " + IRCConfig.CommandPrefix + command.Key;
+						commands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key;
 					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
@@ -364,7 +364,7 @@ namespace Schumix.Irc.Commands
 						if(sIgnoreCommand.IsIgnore(command.Key))
 							continue;
 
-						commands += " | " + IRCConfig.CommandPrefix + command.Key;
+						commands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key;
 					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[4]);
