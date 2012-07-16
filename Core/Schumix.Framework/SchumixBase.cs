@@ -30,7 +30,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
-	public/* abstract*/ class SchumixBase
+	public class SchumixBase
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
@@ -41,9 +41,9 @@ namespace Schumix.Framework
 		public static DatabaseManager DManager { get; private set; }
 		public static Timer timer { get; private set; }
 		public const string Title = "Schumix2 IRC Bot and Framework";
+		public static bool ExitStatus { get; private set; }
 		public static string ServerIdentify = string.Empty;
 		public static bool UrlTitleEnabled = false;
-		public static bool ExitStatus = false;
 		public static bool ThreadStop = true;
 		public static bool NewNick = false;
 		public static bool STime = true;
@@ -65,6 +65,8 @@ namespace Schumix.Framework
 		{
 			try
 			{
+				ExitStatus = false;
+
 				if(ServerConfig.Enabled)
 				{
 					var listener = new ClientSocket(ServerConfig.Host, ServerConfig.Port, ServerConfig.Password);
@@ -142,7 +144,7 @@ namespace Schumix.Framework
 			ClientSocket.SendPacketToSCS(packet);
 		}
 
-		public static void Quit()
+		public static void Quit(bool Reconnect = true)
 		{
 			lock(WriteLock)
 			{
@@ -154,7 +156,7 @@ namespace Schumix.Framework
 
 				sUtilities.RemovePidFile();
 				SchumixBase.timer.SaveUptime();
-				SchumixBase.ServerDisconnect();
+				SchumixBase.ServerDisconnect(Reconnect);
 				SchumixBase.ExitStatus = true;
 			}
 		}

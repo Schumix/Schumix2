@@ -143,8 +143,7 @@ namespace Schumix.Framework.Database
 			{
 				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
-				SchumixBase.ServerDisconnect(false);
-				SchumixBase.ExitStatus = true;
+				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
 				{
@@ -160,8 +159,7 @@ namespace Schumix.Framework.Database
 			{
 				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
-				SchumixBase.ServerDisconnect(false);
-				SchumixBase.ExitStatus = true;
+				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
 				{
@@ -177,8 +175,7 @@ namespace Schumix.Framework.Database
 			{
 				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
-				SchumixBase.ServerDisconnect(false);
-				SchumixBase.ExitStatus = true;
+				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
 				{

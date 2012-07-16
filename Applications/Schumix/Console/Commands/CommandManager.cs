@@ -53,7 +53,7 @@ namespace Schumix.Console.Commands
 		/// <summary>
 		///     Indulási függvény.
 		/// </summary>
-		public CCommandManager(/*Network network*/) : base(/*network*/)
+		public CCommandManager() : base()
 		{
 			Log.Notice("CCommandManager", sLConsole.CCommandManager("Text"));
 			InitHandler();

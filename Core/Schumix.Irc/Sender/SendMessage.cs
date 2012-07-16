@@ -348,7 +348,7 @@ namespace Schumix.Irc
 		private List<string> ChannelList()
 		{
 			var list = new List<string>();
-			var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
+			var db = SchumixBase.DManager.Query("SELECT Channel FROM channels WHERE ServerName = '{0}'", _servername);
 
 			if(!db.IsNull())
 			{

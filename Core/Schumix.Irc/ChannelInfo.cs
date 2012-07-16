@@ -34,10 +34,11 @@ namespace Schumix.Irc
 		private readonly Dictionary<string, string> ChannelFunction = new Dictionary<string, string>();
 		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly object WriteLock = new object();
+		private readonly IgnoreChannele sIgnoreChannel;
 		private readonly Sendere sSender;
+		private string _servername;
 
 		public Dictionary<string, string> CList
 		{
@@ -51,30 +52,25 @@ namespace Schumix.Irc
 
 		public ChannelInfoo(string ServerName)
 		{
+			_servername = ServerName;
 			sSender = sIrcBase.Networks[ServerName].sSender;
+			sIgnoreChannel = sIrcBase.Networks[ServerName].sIgnoreChannel;
 		}
 
 		public void ChannelList(string Name)
 		{
-			//if(Name == "default")
-			//{
-				var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channel");
-				if(!db.IsNull())
+			var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channels WHERE ServerName = '{0}'", _servername);
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
 				{
-					foreach(DataRow row in db.Rows)
-					{
-						string channel = row["Channel"].ToString();
-						string password = row["Password"].ToString();
-						_ChannelList.Add(channel, password);
-					}
+					string channel = row["Channel"].ToString();
+					string password = row["Password"].ToString();
+					_ChannelList.Add(channel, password);
 				}
-				else
-					Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text"));
-			//}
-			//else
-			//{
-				// több szerveres mód lesz itt
-			//}
+			}
+			else
+				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text"));
 		}
 
 		public bool FSelect(string Name)
@@ -187,13 +183,13 @@ namespace Schumix.Irc
 		public void ChannelFunctionsReload()
 		{
 			ChannelFunction.Clear();
-			var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
+			var db = SchumixBase.DManager.Query("SELECT Channel FROM channels WHERE ServerName = '{0}'", _servername);
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
 				{
 					string channel = row["Channel"].ToString();
-					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channel WHERE Channel = '{0}'", channel);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Functions FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel, _servername);
 					if(!db1.IsNull())
 						ChannelFunction.Add(channel, db1["Functions"].ToString());
 					else
@@ -207,7 +203,7 @@ namespace Schumix.Irc
 		public void ChannelListReload()
 		{
 			_ChannelList.Clear();
-			var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channel");
+			var db = SchumixBase.DManager.Query("SELECT Channel, Password FROM channels WHERE ServerName = '{0}'", _servername);
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
@@ -312,14 +308,14 @@ namespace Schumix.Irc
 				if(sIgnoreChannel.IsIgnore(channel.Key))
 				{
 					error = true;
-					SchumixBase.DManager.Update("channel", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.ChannelInfo("Text10")), string.Format("Channel = '{0}'", channel.Key));
+					SchumixBase.DManager.Update("channels", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.ChannelInfo("Text10")), string.Format("Channel = '{0}' And ServerName = '{1}'", channel.Key, _servername));
 				}
 				else
-					SchumixBase.DManager.Update("channel", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}'", channel.Key));
+					SchumixBase.DManager.Update("channels", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", channel.Key, _servername));
 			}
 
 			ChannelFunctionsReload();
-			var db = SchumixBase.DManager.Query("SELECT Enabled FROM channel");
+			var db = SchumixBase.DManager.Query("SELECT Enabled FROM channels WHERE ServerName = '{0}'", _servername);
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)

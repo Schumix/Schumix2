@@ -32,7 +32,7 @@ namespace Schumix
 	/// <summary>
 	///     Fő class. Innen indul a konzol vezérlés és az irc kapcsolat létrehozása.
 	/// </summary>
-	sealed class SchumixBot// : SchumixBase
+	sealed class SchumixBot
 	{
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
@@ -40,6 +40,7 @@ namespace Schumix
 		/// </summary>
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		public static SchumixBase sSchumixBase { get; private set; }
 
 		/// <summary>
 		///     Indulási függvény.
@@ -52,9 +53,9 @@ namespace Schumix
 				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text2"));
 				//var network = new Network("default", IRCConfig.Server, IRCConfig.Port);
 				// ide jön majd az összes szerver elindítása
-				sIrcBase.NewServer("default", IRCConfig.Server, IRCConfig.Port);
-				sIrcBase.NewServer("default2", "irc.yeahunter.hu", IRCConfig.Port);
-				new SchumixBase();
+				sIrcBase.NewServer("default", 1, IRCConfig.Server, IRCConfig.Port);
+				sIrcBase.NewServer("default2", 2, "irc.yeahunter.hu", IRCConfig.Port);
+				sSchumixBase = new SchumixBase();
 
 				Task.Factory.StartNew(() =>
 				{
@@ -68,7 +69,7 @@ namespace Schumix
 				new ScriptManager(ScriptsConfig.Directory);
 				// megoldani hogy a szervereket lehessen kezelni network esetén, pl: console írás váltása, connect, disconnect, ignorenél az addon stb
 				// kéne egy parancs amellyel a szerverek között lehet majd váltani
-				new Console.Console(/*network*/);
+				new Console.Console();
 			}
 			catch(Exception e)
 			{

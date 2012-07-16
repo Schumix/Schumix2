@@ -25,10 +25,10 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Ignore
 {
-	public sealed class IgnoreChannel
+	public sealed class IgnoreChannele
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private IgnoreChannel() {}
+		public IgnoreChannele() {}
 
 		public bool IsIgnore(string Name)
 		{

@@ -78,10 +78,10 @@ namespace Schumix.Irc
 
 				if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "sys")
 				{
-					var text = sLManager.GetCommandTexts("schumix2/sys", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("schumix2/sys", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 8)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
@@ -98,14 +98,14 @@ namespace Schumix.Irc
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[6], memory);
 
-					sSendMessage.SendChatMessage(sIRCMessage, text[7], SchumixBase.timer.Uptime(sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, text[7], SchumixBase.timer.Uptime(sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "help")
 				{
-					var text = sLManager.GetCommandTexts("schumix2/help", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("schumix2/help", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 4)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
@@ -126,7 +126,7 @@ namespace Schumix.Irc
 					sSender.NickServGhost(IRCConfig.NickName, IRCConfig.NickServPassword);
 					sSender.Nick(IRCConfig.NickName);
 					sNickInfo.ChangeNick(IRCConfig.NickName);
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/ghost", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/ghost", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "nick")
 				{
@@ -135,7 +135,7 @@ namespace Schumix.Irc
 
 					if(sIRCMessage.Info.Length < 6)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
@@ -143,7 +143,7 @@ namespace Schumix.Irc
 					{
 						sNickInfo.ChangeNick(IRCConfig.NickName);
 						sSender.Nick(IRCConfig.NickName);
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick/identify", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick/identify", sIRCMessage.Channel, sIRCMessage.ServerName));
 						sNickInfo.Identify(IRCConfig.NickServPassword);
 
 						if(IRCConfig.UseHostServ)
@@ -155,7 +155,7 @@ namespace Schumix.Irc
 						string nick = sIRCMessage.Info[5];
 						sNickInfo.ChangeNick(nick);
 						sSender.Nick(nick);
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick", sIRCMessage.Channel), nick);
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick", sIRCMessage.Channel, sIRCMessage.ServerName), nick);
 					}
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "clean")
@@ -165,7 +165,7 @@ namespace Schumix.Irc
 
 					GC.Collect();
 					GC.WaitForPendingFinalizers();
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/clean", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/clean", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 			}
 		}

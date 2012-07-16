@@ -46,7 +46,6 @@ namespace Schumix.Framework
 		public static readonly Dictionary<string, Assembly> Assemblies = new Dictionary<string, Assembly>();
 		public static readonly Dictionary<string, Assembly> IgnoreAssemblies = new Dictionary<string, Assembly>();
 		public Dictionary<string, ISchumixAddon> GetPlugins() { return _addons; }
-
 		private AddonManager() {}
 
 		/// <summary>

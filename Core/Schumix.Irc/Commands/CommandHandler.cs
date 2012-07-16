@@ -31,17 +31,17 @@ namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler : CommandInfo
 	{
-		protected readonly IgnoreIrcCommand sIgnoreIrcCommand = Singleton<IgnoreIrcCommand>.Instance;
-		protected readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
-		protected readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
-		protected readonly IgnoreCommand sIgnoreCommand = Singleton<IgnoreCommand>.Instance;
-		protected readonly IgnoreAddon sIgnoreAddon = Singleton<IgnoreAddon>.Instance;
 		protected readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
+		public readonly IgnoreIrcCommande sIgnoreIrcCommand = new IgnoreIrcCommande();
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		public readonly IgnoreNickNamee sIgnoreNickName = new IgnoreNickNamee();
+		public readonly IgnoreChannele sIgnoreChannel = new IgnoreChannele();
+		public readonly IgnoreCommande sIgnoreCommand = new IgnoreCommande();
 		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		public ChannelNameListe sChannelNameList { get; private set; }
+		public IgnoreAddone sIgnoreAddon { get; private set; }
 		public SendMessagee sSendMessage { get; private set; }
 		public ChannelInfoo sChannelInfo { get; private set; }
 		public CtcpSender sCtcpSender { get; private set; }
@@ -68,6 +68,7 @@ namespace Schumix.Irc.Commands
 			sChannelInfo = new ChannelInfoo(_servername);
 			sAntiFlood = new AntiFloodo(_servername);
 			sCtcpSender = new CtcpSender(_servername);
+			sIgnoreAddon = new IgnoreAddone(_servername);
 			sChannelNameList = new ChannelNameListe(_servername);
 		}
 
@@ -75,10 +76,10 @@ namespace Schumix.Irc.Commands
 		{
 			if(sIRCMessage.Info.Length == 4)
 			{
-				var text = sLManager.GetCommandTexts("help", sIRCMessage.Channel);
+				var text = sLManager.GetCommandTexts("help", sIRCMessage.Channel, sIRCMessage.ServerName);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
 				}
 
@@ -99,10 +100,10 @@ namespace Schumix.Irc.Commands
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
-					var text = sLManager.GetCommandHelpTexts("schumix2", sIRCMessage.Channel);
+					var text = sLManager.GetCommandHelpTexts("schumix2", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 4)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
@@ -120,14 +121,14 @@ namespace Schumix.Irc.Commands
 
 				if(sIRCMessage.Info[5].ToLower() == "sys")
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandHelpText("schumix2/sys", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandHelpText("schumix2/sys", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "ghost" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				{
-					var text = sLManager.GetCommandHelpTexts("schumix2/ghost", sIRCMessage.Channel);
+					var text = sLManager.GetCommandHelpTexts("schumix2/ghost", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
@@ -138,10 +139,10 @@ namespace Schumix.Irc.Commands
 				{
 					if(sIRCMessage.Info.Length < 7)
 					{
-						var text = sLManager.GetCommandHelpTexts("schumix2/nick", sIRCMessage.Channel);
+						var text = sLManager.GetCommandHelpTexts("schumix2/nick", sIRCMessage.Channel, sIRCMessage.ServerName);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 							return;
 						}
 
@@ -152,10 +153,10 @@ namespace Schumix.Irc.Commands
 
 					if(sIRCMessage.Info[6].ToLower() == "identify")
 					{
-						var text = sLManager.GetCommandHelpTexts("schumix2/nick/identify", sIRCMessage.Channel);
+						var text = sLManager.GetCommandHelpTexts("schumix2/nick/identify", sIRCMessage.Channel, sIRCMessage.ServerName);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 							return;
 						}
 
@@ -165,10 +166,10 @@ namespace Schumix.Irc.Commands
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "clean" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				{
-					var text = sLManager.GetCommandHelpTexts("schumix2/clean", sIRCMessage.Channel);
+					var text = sLManager.GetCommandHelpTexts("schumix2/clean", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
@@ -180,7 +181,7 @@ namespace Schumix.Irc.Commands
 			{
 				if(!sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(sIRCMessage.Info[4].ToLower()))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoFoundHelpCommand2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoFoundHelpCommand2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
 				}
 
@@ -192,26 +193,26 @@ namespace Schumix.Irc.Commands
 				if(adminflag != -1)
 				{
 					string commands = sIRCMessage.Info.SplitToString(4, "/");
-					int rank = sLManager.GetCommandHelpRank(commands, sIRCMessage.Channel);
+					int rank = sLManager.GetCommandHelpRank(commands, sIRCMessage.Channel, sIRCMessage.ServerName);
 
 					if(rank == -1)
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoFoundHelpCommand", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoFoundHelpCommand", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 
 					if((adminflag == 2 && rank == 2) || (adminflag == 2 && rank == 1) || (adminflag == 2 && rank == 0) ||
 					(adminflag == 1 && rank == 1) || (adminflag == 1 && rank == 0) || (adminflag == 0 && rank == 0) ||
 					(adminflag == 2 && rank == 9) || (adminflag == 1 && rank == 9) || (adminflag == 0 && rank == 9))
-						HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, rank));
+						HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName, rank));
 				}
 				else
 				{
 					string commands = sIRCMessage.Info.SplitToString(4, "/");
-					if(sLManager.IsAdminCommandHelp(commands, sIRCMessage.Channel))
+					if(sLManager.IsAdminCommandHelp(commands, sIRCMessage.Channel, sIRCMessage.ServerName))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoAdministrator", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoAdministrator", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel));
+					HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 			}
 		}

@@ -27,14 +27,15 @@ namespace Schumix.Irc
 {
 	public sealed class Sendere
 	{
-		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly object WriteLock = new object();
+		private readonly IgnoreChannele sIgnoreChannel;
 		private readonly SendMessagee sSendMessage;
 
 		public Sendere(string ServerName)
 		{
 			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;
+			sIgnoreChannel = sIrcBase.Networks[ServerName].sIgnoreChannel;
 		}
 
 		public void NameInfo(string nick, string user, string userinfo)

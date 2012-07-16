@@ -42,11 +42,11 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
-		public string GetWarningText(string command, string channel)
+		public string GetWarningText(string command, string channel, string servername)
 		{
 			lock(WriteLock)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel.ToLower(), servername);
 				string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 				db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_warning WHERE Language = '{0}' AND Command = '{1}'", locale, command);
 				return !db.IsNull() ? db["Text"].ToString() : sLConsole.Translations("NoFound", locale);
@@ -62,11 +62,11 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
-		public string[] GetWarningTexts(string command, string channel)
+		public string[] GetWarningTexts(string command, string channel, string servername)
 		{
 			lock(WriteLock)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel.ToLower(), servername);
 				string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 				db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_warning WHERE Language = '{0}' AND Command = '{1}'", locale, command);
 				return !db.IsNull() ? Split(db["Text"].ToString()) : new string[] { sLConsole.Translations("NoFound", locale) };
@@ -82,11 +82,11 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
-		public string GetCommandText(string command, string channel)
+		public string GetCommandText(string command, string channel, string servername)
 		{
 			lock(WriteLock)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel.ToLower(), servername);
 				string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 				db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_command WHERE Language = '{0}' AND Command = '{1}'", locale, command.ToLower());
 				return !db.IsNull() ? db["Text"].ToString() : sLConsole.Translations("NoFound", locale);
@@ -102,11 +102,11 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
-		public string[] GetCommandTexts(string command, string channel)
+		public string[] GetCommandTexts(string command, string channel, string servername)
 		{
 			lock(WriteLock)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel.ToLower(), servername);
 				string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 				db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_command WHERE Language = '{0}' AND Command = '{1}'", locale, command.ToLower());
 				return !db.IsNull() ? Split(db["Text"].ToString()) : new string[] { sLConsole.Translations("NoFound", locale) };
@@ -122,22 +122,22 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
-		public string GetCommandHelpText(string command, string channel)
+		public string GetCommandHelpText(string command, string channel, string servername)
 		{
 			lock(WriteLock)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel.ToLower(), servername);
 				string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 				db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_command_help WHERE Language = '{0}' AND Command = '{1}'", locale, sUtilities.SqlEscape(command.ToLower()));
 				return !db.IsNull() ? db["Text"].ToString() : sLConsole.Other("NoFoundHelpCommand", locale);
 			}
 		}
 
-		public string GetCommandHelpText(string command, string channel, int rank)
+		public string GetCommandHelpText(string command, string channel, string servername, int rank)
 		{
 			lock(WriteLock)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel.ToLower(), servername);
 				string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 
 				db = SchumixBase.DManager.QueryFirstRow("SELECT Text, Rank FROM localized_command_help WHERE Language = '{0}' AND Command = '{1}''", locale, sUtilities.SqlEscape(command.ToLower()));
@@ -164,22 +164,22 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
-		public string[] GetCommandHelpTexts(string command, string channel)
+		public string[] GetCommandHelpTexts(string command, string channel, string servername)
 		{
 			lock(WriteLock)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel.ToLower(), servername);
 				string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 				db = SchumixBase.DManager.QueryFirstRow("SELECT Text FROM localized_command_help WHERE Language = '{0}' AND Command = '{1}'", locale, sUtilities.SqlEscape(command.ToLower()));
 				return !db.IsNull() ? Split(db["Text"].ToString()) : new string[] { sLConsole.Other("NoFoundHelpCommand", locale) };
 			}
 		}
 
-		public string[] GetCommandHelpTexts(string command, string channel, int rank)
+		public string[] GetCommandHelpTexts(string command, string channel, string servername, int rank)
 		{
 			lock(WriteLock)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel.ToLower(), servername);
 				string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 
 				db = SchumixBase.DManager.QueryFirstRow("SELECT Text, Rank FROM localized_command_help WHERE Language = '{0}' AND Command = '{1}'", locale, sUtilities.SqlEscape(command.ToLower()));
@@ -218,11 +218,11 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
-		public bool IsAdminCommandHelp(string command, string channel)
+		public bool IsAdminCommandHelp(string command, string channel, string servername)
 		{
 			lock(WriteLock)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel.ToLower(), servername);
 				string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 
 				db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM localized_command_help WHERE Language = '{0}' AND Command = '{1}'", locale, sUtilities.SqlEscape(command.ToLower()));
@@ -251,11 +251,11 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
-		public int GetCommandHelpRank(string command, string channel)
+		public int GetCommandHelpRank(string command, string channel, string servername)
 		{
 			lock(WriteLock)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel.ToLower(), servername);
 				string locale = !db.IsNull() ? db["Language"].ToString() : Locale;
 				db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM localized_command_help WHERE Language = '{0}' AND Command = '{1}'", locale, sUtilities.SqlEscape(command.ToLower()));
 				return !db.IsNull() ? Convert.ToInt32(db["Rank"].ToString()) : -1;
@@ -316,11 +316,11 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
-		public string GetChannelLocalization(string channel)
+		public string GetChannelLocalization(string channel, string servername)
 		{
 			lock(WriteLock)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", channel.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel.ToLower(), servername);
 				return !db.IsNull() ? db["Language"].ToString() : Locale;
 			}
 		}

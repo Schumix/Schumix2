@@ -126,8 +126,7 @@ namespace Schumix.Framework.Database
 				{
 					Log.Error("MySql", sLConsole.MySql("Text5"));
 					Log.Warning("MySql", sLConsole.MySql("Text4"));
-					SchumixBase.ServerDisconnect(false);
-					SchumixBase.ExitStatus = true;
+					SchumixBase.Quit(false);
 	
 					foreach(var nw in INetwork.WriterList)
 					{
@@ -152,8 +151,7 @@ namespace Schumix.Framework.Database
 			{
 				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 				Log.Warning("MySql", sLConsole.MySql("Text4"));
-				SchumixBase.ServerDisconnect(false);
-				SchumixBase.ExitStatus = true;
+				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
 				{
@@ -169,8 +167,7 @@ namespace Schumix.Framework.Database
 			{
 				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 				Log.Warning("MySql", sLConsole.MySql("Text4"));
-				SchumixBase.ServerDisconnect(false);
-				SchumixBase.ExitStatus = true;
+				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
 				{
@@ -186,8 +183,7 @@ namespace Schumix.Framework.Database
 			{
 				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 				Log.Warning("MySql", sLConsole.MySql("Text4"));
-				SchumixBase.ServerDisconnect(false);
-				SchumixBase.ExitStatus = true;
+				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
 				{

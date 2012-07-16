@@ -22,6 +22,7 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 
 namespace Schumix
 {
@@ -39,7 +40,7 @@ namespace Schumix
 			_handler += new EventHandler(Handler);
 			SetConsoleCtrlHandler(_handler, true);
 		}
-	
+
 		private bool Handler(CtrlType sig)
 		{
 			switch(sig)
@@ -48,7 +49,14 @@ namespace Schumix
 				case CtrlType.CTRL_BREAK_EVENT:
 				case CtrlType.CTRL_CLOSE_EVENT:
 					Log.Notice("Windows", "Daemon killed.");
-					SchumixBase.Quit();
+
+					if(!SchumixBot.sSchumixBase.IsNull())
+						SchumixBase.Quit();
+					else
+					{
+						Environment.Exit(1);
+						return true;
+					}
 
 					foreach(var nw in sIrcBase.Networks)
 						sIrcBase.Networks[nw.Key].sSender.Quit("Daemon killed.");

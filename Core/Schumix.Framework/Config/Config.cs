@@ -145,6 +145,13 @@ namespace Schumix.Framework.Config
 					else if(MasterChannel.Length < 2 && MasterChannel.Trim().Length <= 1)
 						MasterChannel = _masterchannel;
 
+					var xnList = xmldoc.SelectNodes("Schumix/Irc");
+					foreach(XmlNode xn in xnList)
+					{
+						string firstName = xn["Server"].InnerText;
+						Console.WriteLine("Name: {0}", firstName);
+					}
+
 					new IRCConfig(Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType);
 
 					bool Enabled = !xmldoc.SelectSingleNode("Schumix/MySql/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText) : _mysqlenabled;

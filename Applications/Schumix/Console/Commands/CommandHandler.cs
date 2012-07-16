@@ -36,7 +36,6 @@ namespace Schumix.Console.Commands
 	/// </summary>
 	partial class CommandHandler : ConsoleLog
 	{
-		private readonly IgnoreIrcCommand sIgnoreIrcCommand = Singleton<IgnoreIrcCommand>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
@@ -47,26 +46,6 @@ namespace Schumix.Console.Commands
 		///     LocalizationManager segítségével állítható be az irc szerver felé menő tárolt üzenetek nyelvezete.
 		/// </summary>
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     A letiltott irc neket érjük el vele.
-		/// </summary>
-		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     A letiltott irc csatornákat érjük el vele.
-		/// </summary>
-		private readonly IgnoreChannel sIgnoreChannel = Singleton<IgnoreChannel>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     A letiltott ircn használható saját parancsokat érjük el vele.
-		/// </summary>
-		private readonly IgnoreCommand sIgnoreCommand = Singleton<IgnoreCommand>.Instance;
-		/// <summary>
-		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
-		///     A letiltott addonokat érjük el vele.
-		/// </summary>
-		private readonly IgnoreAddon sIgnoreAddon = Singleton<IgnoreAddon>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Addonok kezelése.
@@ -95,9 +74,9 @@ namespace Schumix.Console.Commands
 		/// <summary>
 		///     Indulási függvény.
 		/// </summary>
-		protected CommandHandler(/*Network network*/) : base(LogConfig.IrcLog)
+		protected CommandHandler() : base(LogConfig.IrcLog)
 		{
-			//_network = network;
+
 		}
 
 		/// <summary>
@@ -1094,7 +1073,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(sIgnoreChannel.IsIgnore(Info[1].ToLower()))
+			if(sIrcBase.Networks[_servername].sIgnoreChannel.IsIgnore(Info[1].ToLower()))
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("ThisChannelBlockedByAdmin"));
 				return;
@@ -1223,13 +1202,13 @@ namespace Schumix.Console.Commands
 
 						string command = Info[4].ToLower();
 
-						if(sIgnoreIrcCommand.IsIgnore(command))
+						if(sIrcBase.Networks[_servername].sIgnoreIrcCommand.IsIgnore(command))
 						{
 							Log.Error("Console", text[0]);
 							return;
 						}
 
-						sIgnoreIrcCommand.Add(command);
+						sIrcBase.Networks[_servername].sIgnoreIrcCommand.Add(command);
 						Log.Notice("Console", text[1]);
 					}
 					else if(Info[3].ToLower() == "remove")
@@ -1249,13 +1228,13 @@ namespace Schumix.Console.Commands
 
 						string command = Info[4].ToLower();
 
-						if(!sIgnoreIrcCommand.IsIgnore(command))
+						if(!sIrcBase.Networks[_servername].sIgnoreIrcCommand.IsIgnore(command))
 						{
 							Log.Error("Console", text[0]);
 							return;
 						}
 
-						sIgnoreIrcCommand.Remove(command);
+						sIrcBase.Networks[_servername].sIgnoreIrcCommand.Remove(command);
 						Log.Notice("Console", text[1]);
 					}
 					else if(Info[3].ToLower() == "search")
@@ -1312,13 +1291,13 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					if(sIgnoreCommand.IsIgnore(command))
+					if(sIrcBase.Networks[_servername].sIgnoreCommand.IsIgnore(command))
 					{
 						Log.Error("Console", text[0]);
 						return;
 					}
 
-					sIgnoreCommand.Add(command);
+					sIrcBase.Networks[_servername].sIgnoreCommand.Add(command);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "remove")
@@ -1338,13 +1317,13 @@ namespace Schumix.Console.Commands
 
 					string command = Info[3].ToLower();
 
-					if(!sIgnoreCommand.IsIgnore(command))
+					if(!sIrcBase.Networks[_servername].sIgnoreCommand.IsIgnore(command))
 					{
 						Log.Error("Console", text[0]);
 						return;
 					}
 
-					sIgnoreCommand.Remove(command);
+					sIrcBase.Networks[_servername].sIgnoreCommand.Remove(command);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "search")
@@ -1406,13 +1385,13 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					if(sIgnoreChannel.IsIgnore(channel))
+					if(sIrcBase.Networks[_servername].sIgnoreChannel.IsIgnore(channel))
 					{
 						Log.Error("Console", text[0]);
 						return;
 					}
 
-					sIgnoreChannel.Add(channel);
+					sIrcBase.Networks[_servername].sIgnoreChannel.Add(channel);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "remove")
@@ -1438,13 +1417,13 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					if(!sIgnoreChannel.IsIgnore(channel))
+					if(!sIrcBase.Networks[_servername].sIgnoreChannel.IsIgnore(channel))
 					{
 						Log.Error("Console", text[0]);
 						return;
 					}
 
-					sIgnoreChannel.Remove(channel);
+					sIrcBase.Networks[_servername].sIgnoreChannel.Remove(channel);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "search")
@@ -1502,13 +1481,13 @@ namespace Schumix.Console.Commands
 
 					string nick = Info[3].ToLower();
 
-					if(sIgnoreNickName.IsIgnore(nick))
+					if(sIrcBase.Networks[_servername].sIgnoreNickName.IsIgnore(nick))
 					{
 						Log.Error("Console", text[0]);
 						return;
 					}
 
-					sIgnoreNickName.Add(nick);
+					sIrcBase.Networks[_servername].sIgnoreNickName.Add(nick);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "remove")
@@ -1528,13 +1507,13 @@ namespace Schumix.Console.Commands
 
 					string nick = Info[3].ToLower();
 
-					if(!sIgnoreNickName.IsIgnore(nick))
+					if(!sIrcBase.Networks[_servername].sIgnoreNickName.IsIgnore(nick))
 					{
 						Log.Error("Console", text[0]);
 						return;
 					}
 
-					sIgnoreNickName.Remove(nick);
+					sIrcBase.Networks[_servername].sIgnoreNickName.Remove(nick);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "search")
@@ -1584,14 +1563,14 @@ namespace Schumix.Console.Commands
 
 					string addon = Info[3].ToLower();
 
-					if(sIgnoreAddon.IsIgnore(addon))
+					if(sIrcBase.Networks[_servername].sIgnoreAddon.IsIgnore(addon))
 					{
 						Log.Error("Console", text[0]);
 						return;
 					}
 
-					sIgnoreAddon.Add(addon);
-					sIgnoreAddon.UnloadPlugin(_servername, addon);
+					sIrcBase.Networks[_servername].sIgnoreAddon.Add(addon);
+					sIrcBase.Networks[_servername].sIgnoreAddon.UnloadPlugin(addon);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "remove")
@@ -1611,14 +1590,14 @@ namespace Schumix.Console.Commands
 
 					string addon = Info[3].ToLower();
 
-					if(!sIgnoreAddon.IsIgnore(addon))
+					if(!sIrcBase.Networks[_servername].sIgnoreAddon.IsIgnore(addon))
 					{
 						Log.Error("Console", text[0]);
 						return;
 					}
 
-					sIgnoreAddon.Remove(addon);
-					sIgnoreAddon.LoadPlugin(_servername, addon);
+					sIrcBase.Networks[_servername].sIgnoreAddon.Remove(addon);
+					sIrcBase.Networks[_servername].sIgnoreAddon.LoadPlugin(addon);
 					Log.Notice("Console", text[1]);
 				}
 				else if(Info[2].ToLower() == "search")
@@ -1692,7 +1671,7 @@ namespace Schumix.Console.Commands
 
 				foreach(var plugin in sAddonManager.GetPlugins())
 				{
-					if(!sIgnoreAddon.IsIgnore(plugin.Key))
+					if(!sIrcBase.Networks[_servername].sIgnoreAddon.IsIgnore(plugin.Key))
 						Plugins += ", " + plugin.Value.Name;
 					else
 						IgnorePlugins += ", " + plugin.Value.Name;

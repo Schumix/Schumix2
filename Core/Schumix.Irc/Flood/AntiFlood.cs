@@ -104,7 +104,7 @@ namespace Schumix.Irc.Flood
 					CommandFloodList[sIRCMessage.Nick.ToLower()].Warring = true;
 					CommandFloodList[sIRCMessage.Nick.ToLower()].BanTime = DateTime.Now.AddMinutes(1);
 					CommandFloodList[sIRCMessage.Nick.ToLower()].Message = 0;
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick.ToLower(), sLManager.GetWarningText("CommandsDisabled2", sIRCMessage.Channel), /*Config.Seconds*/4);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick.ToLower(), sLManager.GetWarningText("CommandsDisabled2", sIRCMessage.Channel, sIRCMessage.ServerName), /*Config.Seconds*/4);
 					return true;
 				}
 
@@ -113,7 +113,7 @@ namespace Schumix.Irc.Flood
 					if(CommandFloodList[sIRCMessage.Nick.ToLower()].Warring)
 					{
 						CommandFloodList[sIRCMessage.Nick.ToLower()].Warring = false;
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("CommandsDisabled", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("CommandsDisabled", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return true;
 					}
 					else

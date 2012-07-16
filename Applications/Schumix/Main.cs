@@ -204,12 +204,6 @@ namespace Schumix
 
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
 
-			if(!ServerConfig.Enabled)
-				new Update(SchumixConfig.ConfigDirectory);
-
-			sUtilities.CleanHomeDirectory();
-			new SchumixBot();
-
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 				sWindows.Init();
 			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
@@ -219,7 +213,14 @@ namespace Schumix
 			{
 				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
 				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
-				SchumixBase.Quit();
+
+				if(!SchumixBot.sSchumixBase.IsNull())
+					SchumixBase.Quit();
+				else
+				{
+					Environment.Exit(1);
+					return;
+				}
 
 				if(SchumixBase.ExitStatus)
 					return;
@@ -229,6 +230,12 @@ namespace Schumix
 
 				Thread.Sleep(5*1000);
 			};
+
+			if(!ServerConfig.Enabled)
+				new Update(SchumixConfig.ConfigDirectory);
+
+			sUtilities.CleanHomeDirectory();
+			new SchumixBot();
 		}
 
 		/// <summary>

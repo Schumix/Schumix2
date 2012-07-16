@@ -52,7 +52,7 @@ namespace Schumix.Console
 			Log.Notice("Console", sLConsole.Console("Text"));
 			Log.Debug("Console", sLConsole.Console("Text2"));
 			new Thread(() => ConsoleRead()).Start();
-			CCManager = new CCommandManager(/*network*/);
+			CCManager = new CCommandManager();
 			CCManager.Channel = IRCConfig.MasterChannel;
 			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + CCManager.Channel;
 		}

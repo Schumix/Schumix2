@@ -31,14 +31,19 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Ignore
 {
-	public sealed class IgnoreAddon
+	public sealed class IgnoreAddone
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly object Lock = new object();
-		private IgnoreAddon() {}
+		private string _servername;
+
+		public IgnoreAddone(string ServerName)
+		{
+			_servername = ServerName;
+		}
 
 		public bool IsIgnore(string Name)
 		{
@@ -96,7 +101,7 @@ namespace Schumix.Irc.Ignore
 				Remove(AddonsConfig.Ignore.ToLower());
 		}
 
-		public void LoadPlugin(string plugin, string servername)
+		public void LoadPlugin(string plugin)
 		{
 			if(AddonManager.IgnoreAssemblies.ContainsKey(plugin))
 			{
@@ -127,7 +132,7 @@ namespace Schumix.Irc.Ignore
 								lock(Lock)
 								{
 									var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
-									sIrcBase.Networks[servername].IrcRegisterHandler(attr.Command, del);
+									sIrcBase.Networks[_servername].IrcRegisterHandler(attr.Command, del);
 								}
 							}
 
@@ -137,7 +142,7 @@ namespace Schumix.Irc.Ignore
 								lock(Lock)
 								{
 									var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
-									sIrcBase.Networks[servername].SchumixRegisterHandler(attr.Command, del, attr.Permission);
+									sIrcBase.Networks[_servername].SchumixRegisterHandler(attr.Command, del, attr.Permission);
 								}
 							}
 						}
@@ -149,7 +154,7 @@ namespace Schumix.Irc.Ignore
 			}
 		}
 
-		public void UnloadPlugin(string plugin, string servername)
+		public void UnloadPlugin(string plugin)
 		{
 			if(!AddonManager.IgnoreAssemblies.ContainsKey(plugin))
 			{
@@ -180,7 +185,7 @@ namespace Schumix.Irc.Ignore
 								lock(Lock)
 								{
 									var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
-									sIrcBase.Networks[servername].IrcRemoveHandler(attr.Command, del);
+									sIrcBase.Networks[_servername].IrcRemoveHandler(attr.Command, del);
 								}
 							}
 
@@ -190,7 +195,7 @@ namespace Schumix.Irc.Ignore
 								lock(Lock)
 								{
 									var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
-									sIrcBase.Networks[servername].SchumixRemoveHandler(attr.Command, del);
+									sIrcBase.Networks[_servername].SchumixRemoveHandler(attr.Command, del);
 								}
 							}
 						}

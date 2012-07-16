@@ -70,6 +70,7 @@ namespace Schumix.Irc
         /// </summary>
 		private readonly int _port;
 		private string _servername;
+		private int _serverid;
 		private bool _enabled = false;
 		private bool NetworkQuit = false;
 		private bool Connected = false;
@@ -77,9 +78,10 @@ namespace Schumix.Irc
 		private ConnectionType CType;
 		private DateTime LastOpcode;
 
-		public Network(string Name, string Server, int Port) : base(Name)
+		public Network(string Name, int Id, string Server, int Port) : base(Name)
 		{
 			_servername = Name;
+			_serverid = Id;
 			_server = Server;
 			_port = Port;
 
@@ -497,6 +499,7 @@ namespace Schumix.Irc
 		private void HandleIrcCommand(string message)
 		{
 			var IMessage = new IRCMessage();
+			IMessage.ServerId = _serverid;
 			IMessage.ServerName = _servername;
 			string[] IrcCommand = message.Split(SchumixBase.Space);
 			IrcCommand[0] = IrcCommand[0].Remove(0, 1, SchumixBase.Colon);

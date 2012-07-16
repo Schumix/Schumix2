@@ -24,10 +24,10 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Ignore
 {
-	public sealed class IgnoreCommand
+	public sealed class IgnoreCommande
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private IgnoreCommand() {}
+		public IgnoreCommande() {}
 
 		public bool IsIgnore(string Name)
 		{
