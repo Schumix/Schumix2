@@ -40,7 +40,7 @@ namespace Schumix.Irc.Ctcp
 		private string _sourceMessage;
 		private string _fingerMessage;
 
-		public CtcpSender(string ServerName)
+		public CtcpSender(string ServerName) : base(ServerName)
 		{
 			_userInfoMessage = "Schumix CTCP";		
 			_fingerMessage = _userInfoMessage;

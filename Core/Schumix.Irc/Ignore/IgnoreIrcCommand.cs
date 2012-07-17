@@ -19,6 +19,7 @@
 
 using System;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -27,11 +28,16 @@ namespace Schumix.Irc.Ignore
 	public sealed class IgnoreIrcCommande
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public IgnoreIrcCommande() {}
+		private string _servername;
+
+		public IgnoreIrcCommande(string ServerName)
+		{
+			_servername = ServerName;
+		}
 
 		public bool IsIgnore(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			return !db.IsNull() ? true : false;
 		}
 
@@ -40,11 +46,11 @@ namespace Schumix.Irc.Ignore
 			if(Name.Trim() == string.Empty)
 				return;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(!db.IsNull())
 				return;
 
-			SchumixBase.DManager.Insert("`ignore_irc_commands`(Command)", sUtilities.SqlEscape(Name.ToLower()));
+			SchumixBase.DManager.Insert("`ignore_irc_commands`(ServerId, ServerName, Command)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(Name.ToLower()));
 		}
 
 		public void Remove(string Name)
@@ -52,11 +58,11 @@ namespace Schumix.Irc.Ignore
 			if(Name.Trim() == string.Empty)
 				return;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(db.IsNull())
 				return;
 
-			SchumixBase.DManager.Delete("ignore_irc_commands", string.Format("Command = '{0}'", sUtilities.SqlEscape(Name.ToLower())));
+			SchumixBase.DManager.Delete("ignore_irc_commands", string.Format("Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 		}
 	}
 }

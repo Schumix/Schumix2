@@ -60,6 +60,7 @@
     <Compile Include="Irc\INetwork.cs" />
     <Compile Include="Irc\IRCMessage.cs" />
     <Compile Include="Irc\MessageType.cs" />
+    <Compile Include="Functions\IFunctionsClassBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

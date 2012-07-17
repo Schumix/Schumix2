@@ -30,21 +30,23 @@ namespace Schumix.Irc.Commands
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		public string servername;
 
-		protected CommandInfo()
+		protected CommandInfo(string ServerName)
 		{
+			servername = ServerName;
 			Log.Debug("CommandInfo", sLConsole.CommandInfo("Text"));
 		}
 
-		protected bool IsAdmin(string Name)
+		public bool IsAdmin(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
 			return !db.IsNull();
 		}
 
-		protected bool IsAdmin(string Name, AdminFlag Flag)
+		public bool IsAdmin(string Name, AdminFlag Flag)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
 			if(!db.IsNull())
 			{
 				int flag = Convert.ToInt32(db["Flag"]);
@@ -54,9 +56,9 @@ namespace Schumix.Irc.Commands
 			return false;
 		}
 
-		protected bool IsAdmin(string Name, string Vhost)
+		public bool IsAdmin(string Name, string Vhost)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
 			if(!db.IsNull())
 			{
 				string vhost = db["Vhost"].ToString();
@@ -66,9 +68,9 @@ namespace Schumix.Irc.Commands
 			return false;
 		}
 
-		protected bool IsAdmin(string Name, string Vhost, AdminFlag Flag)
+		public bool IsAdmin(string Name, string Vhost, AdminFlag Flag)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
 			if(!db.IsNull())
 			{
 				string vhost = db["Vhost"].ToString();
@@ -89,20 +91,20 @@ namespace Schumix.Irc.Commands
 			return false;
 		}
 
-		protected bool IsChannel(string Name)
+		public bool IsChannel(string Name)
 		{
 			return (Name.Length >= 2 && Name.Trim().Length > 1 && Name.Substring(0, 1) == "#");
 		}
 
-		protected int Adminflag(string Name)
+		public int Adminflag(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
 			return !db.IsNull() ? Convert.ToInt32(db["Flag"]) : -1;
 		}
 
-		protected int Adminflag(string Name, string Vhost)
+		public int Adminflag(string Name, string Vhost)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
 			if(!db.IsNull())
 			{
 				string vhost = db["Vhost"].ToString();
@@ -112,20 +114,20 @@ namespace Schumix.Irc.Commands
 				return -1;
 		}
 
-		protected void RandomVhost(string Name)
+		public void RandomVhost(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM admins WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
 			if(!db.IsNull())
-				SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", sUtilities.SqlEscape(Name.ToLower())));
+				SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername));
 		}
 
-		protected void RandomAllVhost()
+		public void RandomAllVhost()
 		{
-			var db = SchumixBase.DManager.Query("SELECT Name FROM admins");
+			var db = SchumixBase.DManager.Query("SELECT Name FROM admins WHERE ServerName = '{0}'", servername);
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
-					SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", row["Name"].ToString()));
+					SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}' And ServerName = '{1}'", row["Name"].ToString(), servername));
 			}
 		}
 	}

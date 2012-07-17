@@ -310,7 +310,7 @@ namespace Schumix.Irc
 
 		private string IgnoreCommand(string data)
 		{
-			var db = SchumixBase.DManager.Query("SELECT Command FROM ignore_irc_commands");
+			var db = SchumixBase.DManager.Query("SELECT Command FROM ignore_irc_commands WHERE ServerName = '{0}'", _servername);
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)

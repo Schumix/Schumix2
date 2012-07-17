@@ -20,10 +20,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Schumix.API
+namespace Schumix.API.Functions
 {
 	public class IFunctionsClass
 	{
-		public static readonly Dictionary<string, string> Functions = new Dictionary<string, string>();
+		public static readonly Dictionary<string, IFunctionsClassBase> ServerList = new Dictionary<string, IFunctionsClassBase>();
 	}
 }

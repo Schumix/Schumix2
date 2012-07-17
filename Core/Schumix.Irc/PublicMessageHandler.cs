@@ -20,6 +20,7 @@
 using System;
 using System.Diagnostics;
 using Schumix.API;
+using Schumix.API.Functions;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -89,9 +90,9 @@ namespace Schumix.Irc
 					sSendMessage.SendChatMessage(sIRCMessage, text[2], Environment.OSVersion.ToString());
 					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 
-					if(memory >= 60)
+					if(memory >= 60 * sIrcBase.Networks.Count)
 						sSendMessage.SendChatMessage(sIRCMessage, text[4], memory);
-					else if(memory >= 30)
+					else if(memory >= 30 * sIrcBase.Networks.Count)
 						sSendMessage.SendChatMessage(sIRCMessage, text[5], memory);
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[6], memory);

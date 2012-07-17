@@ -28,13 +28,15 @@ using Schumix.TesztAddon.Commands;
 
 namespace Schumix.TesztAddon
 {
-	class TesztAddon : TesztCommand, ISchumixAddon
+	class TesztAddon : ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private TestCommand sTestCommand;
 
 		public void Setup()
 		{
+			sTestCommand = new TestCommand("rizon");
 			InitIrcCommand();
 		}
 
@@ -66,12 +68,12 @@ namespace Schumix.TesztAddon
 
 		private void InitIrcCommand()
 		{
-			sIrcBase.SchumixRegisterHandler("test", HandleTest, CommandPermission.Administrator);
+			sIrcBase.SchumixRegisterHandler("test", sTestCommand.HandleTest, CommandPermission.Administrator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			sIrcBase.SchumixRemoveHandler("test",   HandleTest);
+			sIrcBase.SchumixRemoveHandler("test",   sTestCommand.HandleTest);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)
@@ -79,7 +81,7 @@ namespace Schumix.TesztAddon
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 
 			// Adminisztrátor parancsok
-			if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
+			if(sTestCommand.IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 			{
 				if(sIRCMessage.Info[4].ToLower() == "test")
 				{

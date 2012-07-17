@@ -34,13 +34,13 @@ namespace Schumix.Irc.Commands
 		protected readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
-		public readonly IgnoreIrcCommande sIgnoreIrcCommand = new IgnoreIrcCommande();
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public readonly IgnoreCommande sIgnoreCommand = new IgnoreCommande();
 		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		public IgnoreIrcCommande sIgnoreIrcCommand { get; private set; }
 		public ChannelNameListe sChannelNameList { get; private set; }
 		public IgnoreNickNamee sIgnoreNickName { get; private set; }
 		public IgnoreChannele sIgnoreChannel { get; private set; }
+		public IgnoreCommande sIgnoreCommand { get; private set; }
 		public IgnoreAddone sIgnoreAddon { get; private set; }
 		public SendMessagee sSendMessage { get; private set; }
 		public ChannelInfoo sChannelInfo { get; private set; }
@@ -55,9 +55,14 @@ namespace Schumix.Irc.Commands
 		protected bool IsOnline { get; set; }
 		private string _servername;
 
-		protected CommandHandler(string ServerName)
+		protected CommandHandler(string ServerName) : base(ServerName)
 		{
 			_servername = ServerName;
+		}
+
+		public void InitializeIgnoreCommand()
+		{
+			sIgnoreCommand = new IgnoreCommande(_servername);
 		}
 
 		public void InitializeCommandHandler()
@@ -67,7 +72,9 @@ namespace Schumix.Irc.Commands
 			sSender = new Sendere(_servername);
 			sNickInfo = new NickInfoo(_servername);
 			sIgnoreAddon = new IgnoreAddone(_servername);
+			sIgnoreCommand = new IgnoreCommande(_servername);
 			sIgnoreNickName = new IgnoreNickNamee(_servername);
+			sIgnoreIrcCommand = new IgnoreIrcCommande(_servername);
 			sChannelInfo = new ChannelInfoo(_servername);
 			sAntiFlood = new AntiFloodo(_servername);
 			sCtcpSender = new CtcpSender(_servername);

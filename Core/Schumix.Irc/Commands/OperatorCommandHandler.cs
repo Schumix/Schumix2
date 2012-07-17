@@ -130,7 +130,7 @@ namespace Schumix.Irc.Commands
 								}
 
 								args += ", " + sIRCMessage.Info[i].ToLower();
-								SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", sIRCMessage.Info[5].ToLower()), string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[i].ToLower())));
+								SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", sIRCMessage.Info[5].ToLower()), string.Format("FunctionName = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[i].ToLower()), sIRCMessage.ServerName));
 								sChannelInfo.FunctionsReload();
 							}
 
@@ -175,7 +175,7 @@ namespace Schumix.Irc.Commands
 							else
 								sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[6].ToLower());
 
-							SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", sIRCMessage.Info[5].ToLower()), string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower())));
+							SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", sIRCMessage.Info[5].ToLower()), string.Format("FunctionName = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
 							sChannelInfo.FunctionsReload();
 						}
 					}
@@ -272,7 +272,7 @@ namespace Schumix.Irc.Commands
 							{
 								if(!sChannelInfo.FSelect(sIRCMessage.Info[i]) && status == SchumixBase.On)
 								{
-									SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[i].ToLower())));
+									SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[i].ToLower()), sIRCMessage.ServerName));
 									sChannelInfo.FunctionsReload();
 								}
 							}
@@ -322,7 +322,7 @@ namespace Schumix.Irc.Commands
 						{
 							if(!sChannelInfo.FSelect(sIRCMessage.Info[7]) && status == SchumixBase.On)
 							{
-								SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower())));
+								SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName));
 								sChannelInfo.FunctionsReload();
 							}
 						}
@@ -432,7 +432,7 @@ namespace Schumix.Irc.Commands
 							{
 								if(!sChannelInfo.FSelect(sIRCMessage.Info[i]) && status == SchumixBase.On)
 								{
-									SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[i].ToLower())));
+									SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[i].ToLower()), sIRCMessage.ServerName));
 									sChannelInfo.FunctionsReload();
 								}
 							}
@@ -482,7 +482,7 @@ namespace Schumix.Irc.Commands
 						{
 							if(!sChannelInfo.FSelect(sIRCMessage.Info[5]) && status == SchumixBase.On)
 							{
-								SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower())));
+								SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.ServerName));
 								sChannelInfo.FunctionsReload();
 							}
 						}
@@ -1056,7 +1056,7 @@ namespace Schumix.Irc.Commands
 							return;
 						}
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName);
 						if(!db.IsNull())
 							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						else
@@ -1151,7 +1151,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					else
@@ -1259,7 +1259,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(channel), sIRCMessage.ServerName);
 					if(!db.IsNull())
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					else
@@ -1353,7 +1353,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					else
@@ -1437,7 +1437,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					else

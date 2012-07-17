@@ -39,9 +39,11 @@ namespace Schumix.Irc
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly SendMessagee sSendMessage;
 		private readonly AntiFloodo sAntiFlood;
+		private string _servername;
 
-		public ChannelNameListe(string ServerName)
+		public ChannelNameListe(string ServerName) : base(ServerName)
 		{
+			_servername = ServerName;
 			sAntiFlood = sIrcBase.Networks[ServerName].sAntiFlood;
 			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;
 		}
@@ -71,7 +73,7 @@ namespace Schumix.Irc
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
-				var db = SchumixBase.DManager.Query("SELECT Name FROM admins");
+				var db = SchumixBase.DManager.Query("SELECT Name FROM admins WHERE ServerName = '{0}'", _servername);
 				if(!db.IsNull())
 				{
 					foreach(DataRow row in db.Rows)
@@ -86,7 +88,7 @@ namespace Schumix.Irc
 						}
 
 						if(i == 0 && _names[Channel.ToLower()].Contains(name.ToLower(), SchumixBase.Comma))
-							SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", name.ToLower()));
+							SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
 					}
 				}
 

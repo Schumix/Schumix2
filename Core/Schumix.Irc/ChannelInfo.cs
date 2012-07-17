@@ -21,6 +21,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using Schumix.API;
+using Schumix.API.Functions;
 using Schumix.Irc.Ignore;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -77,8 +78,8 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(IFunctionsClass.Functions.ContainsKey(Name.ToLower()))
-					return IFunctionsClass.Functions[Name.ToLower()] == SchumixBase.On;
+				if(IFunctionsClass.ServerList[_servername].Functions.ContainsKey(Name.ToLower()))
+					return IFunctionsClass.ServerList[_servername].Functions[Name.ToLower()] == SchumixBase.On;
 
 				return false;
 			}
@@ -108,7 +109,7 @@ namespace Schumix.Irc
 
 		public bool SearchFunction(string Name)
 		{
-			return IFunctionsClass.Functions.ContainsKey(Name.ToString().ToLower());
+			return IFunctionsClass.ServerList[_servername].Functions.ContainsKey(Name.ToString().ToLower());
 		}
 
 		public bool SearchChannelFunction(string Name)
@@ -134,8 +135,8 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(IFunctionsClass.Functions.ContainsKey(Name.ToString().ToLower()))
-					return IFunctionsClass.Functions[Name.ToString().ToLower()] == SchumixBase.On;
+				if(IFunctionsClass.ServerList[_servername].Functions.ContainsKey(Name.ToString().ToLower()))
+					return IFunctionsClass.ServerList[_servername].Functions[Name.ToString().ToLower()] == SchumixBase.On;
 
 				return false;
 			}
@@ -165,15 +166,15 @@ namespace Schumix.Irc
 
 		public void FunctionsReload()
 		{
-			IFunctionsClass.Functions.Clear();
-			var db = SchumixBase.DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix");
+			IFunctionsClass.ServerList[_servername].Functions.Clear();
+			var db = SchumixBase.DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix WHERE ServerName = '{0}'", _servername);
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
 				{
 					string name = row["FunctionName"].ToString();
 					string status = row["FunctionStatus"].ToString();
-					IFunctionsClass.Functions.Add(name.ToLower(), status.ToLower());
+					IFunctionsClass.ServerList[_servername].Functions.Add(name.ToLower(), status.ToLower());
 				}
 			}
 			else
@@ -251,7 +252,7 @@ namespace Schumix.Irc
 
 		public string FunctionsInfo()
 		{
-			var db = SchumixBase.DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix");
+			var db = SchumixBase.DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix WHERE ServerName = '{0}'", _servername);
 			if(!db.IsNull())
 			{
 				string on = string.Empty, off = string.Empty;

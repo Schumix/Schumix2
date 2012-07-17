@@ -47,7 +47,7 @@ namespace Schumix.Irc.Ignore
 
 		public bool IsIgnore(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			return !db.IsNull() ? true : false;
 		}
 
@@ -69,11 +69,11 @@ namespace Schumix.Irc.Ignore
 			if(Name.Trim() == string.Empty)
 				return;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(!db.IsNull())
 				return;
 
-			SchumixBase.DManager.Insert("`ignore_addons`(Addon)", sUtilities.SqlEscape(Name.ToLower()));
+			SchumixBase.DManager.Insert("`ignore_addons`(ServerId, ServerName, Addon)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(Name.ToLower()));
 		}
 
 		public void Remove(string Name)
@@ -81,11 +81,11 @@ namespace Schumix.Irc.Ignore
 			if(Name.Trim() == string.Empty)
 				return;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(db.IsNull())
 				return;
 
-			SchumixBase.DManager.Delete("ignore_addons", string.Format("Addon = '{0}'", sUtilities.SqlEscape(Name.ToLower())));
+			SchumixBase.DManager.Delete("ignore_addons", string.Format("Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 		}
 
 		public void RemoveConfig()

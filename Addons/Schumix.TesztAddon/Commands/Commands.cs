@@ -33,12 +33,16 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.TesztAddon.Commands
 {
-	class TesztCommand : CommandInfo
+	class TestCommand : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 
-		protected void HandleTest(IRCMessage sIRCMessage)
+		public TestCommand(string ServerName) : base(ServerName)
+		{
+		}
+
+		public void HandleTest(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
@@ -47,11 +51,11 @@ namespace Schumix.TesztAddon.Commands
 
 			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "adat")
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, "Teszt probálkozás");
+				sSendMessage.SendChatMessage(sIRCMessage, "Teszt próbálkozás");
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "db")
 			{
-				var db = SchumixBase.DManager.Query("SELECT Name FROM admins");
+				var db = SchumixBase.DManager.Query("SELECT Name FROM admins WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					foreach(DataRow row in db.Rows)

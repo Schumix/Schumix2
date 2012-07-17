@@ -66,7 +66,7 @@ namespace Schumix.LuaEngine
 		/// </summary>
 		/// <param name="vm">Lua VM</param>
 		/// <param name="conn">IRC connection</param>
-		public LuaFunctions(ref Lua vm)
+		public LuaFunctions(ref Lua vm) : base(string.Empty)
 		{
 			_lua = vm;
 		}
@@ -143,38 +143,44 @@ namespace Schumix.LuaEngine
 		}
 
 		[LuaFunction("IsAdmin", "Is Admin.")]
-		public bool BaseIsAdmin(string Name)
+		public bool BaseIsAdmin(string ServerName, string Name)
 		{
+			servername = ServerName;
 			return IsAdmin(Name);
 		}
 
 		[LuaFunction("IsAdmin2", "Is Admin.")]
-		public bool BaseIsAdmin(string Name, int Flag)
+		public bool BaseIsAdmin(string ServerName, string Name, int Flag)
 		{
+			servername = ServerName;
 			return IsAdmin(Name, (AdminFlag)Flag);
 		}
 
 		[LuaFunction("IsAdmin3", "Is Admin.")]
-		public bool BaseIsAdmin(string Name, string Vhost, int Flag)
+		public bool BaseIsAdmin(string ServerName, string Name, string Vhost, int Flag)
 		{
+			servername = ServerName;
 			return IsAdmin(Name, Vhost, (AdminFlag)Flag);
 		}
 
 		[LuaFunction("IsChannel", "Is Channel.")]
-		public bool BaseIsChannel(string Name)
+		public bool BaseIsChannel(string ServerName, string Name)
 		{
+			servername = ServerName;
 			return IsChannel(Name);
 		}
 
 		[LuaFunction("Adminflag", "Admin rank.")]
-		public int BaseAdminflag(string Name)
+		public int BaseAdminflag(string ServerName, string Name)
 		{
+			servername = ServerName;
 			return Adminflag(Name);
 		}
 
 		[LuaFunction("Adminflag2", "Admin rank.")]
-		public int BaseAdminflag(string Name, string Vhost)
+		public int BaseAdminflag(string ServerName, string Name, string Vhost)
 		{
+			servername = ServerName;
 			return Adminflag(Name, Vhost);
 		}
 

@@ -31,6 +31,7 @@ using System.Collections.Generic;
 using System.Security.Authentication;
 using Schumix.API;
 using Schumix.API.Delegate;
+using Schumix.API.Functions;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;

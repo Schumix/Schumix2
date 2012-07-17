@@ -1123,21 +1123,21 @@ INSERT INTO `schumix` VALUES ("2", "log", "on");
 INSERT INTO `schumix` VALUES ("3", "rejoin", "on");
 INSERT INTO `schumix` VALUES ("4", "commands", "on");
 INSERT INTO `schumix` VALUES ("5", "reconnect", "on");
-INSERT INTO `schumix` VALUES ("6", "autohl", "off");
-INSERT INTO `schumix` VALUES ("7", "autokick", "off");
-INSERT INTO `schumix` VALUES ("8", "automode", "off");
+INSERT INTO `schumix` VALUES ("6", "autohl", "on");
+INSERT INTO `schumix` VALUES ("7", "autokick", "on");
+INSERT INTO `schumix` VALUES ("8", "automode", "on");
 INSERT INTO `schumix` VALUES ("9", "svn", "off");
 INSERT INTO `schumix` VALUES ("10", "hg", "off");
 INSERT INTO `schumix` VALUES ("11", "git", "off");
-INSERT INTO `schumix` VALUES ("12", "antiflood", "off");
-INSERT INTO `schumix` VALUES ("13", "message", "off");
+INSERT INTO `schumix` VALUES ("12", "antiflood", "on");
+INSERT INTO `schumix` VALUES ("13", "message", "on");
 INSERT INTO `schumix` VALUES ("14", "compiler", "on");
 INSERT INTO `schumix` VALUES ("15", "gamecommands", "on");
 INSERT INTO `schumix` VALUES ("16", "webtitle", "on");
-INSERT INTO `schumix` VALUES ("17", "randomkick", "off");
+INSERT INTO `schumix` VALUES ("17", "randomkick", "on");
 INSERT INTO `schumix` VALUES ("18", "mantisbt", "off");
 INSERT INTO `schumix` VALUES ("19", "wordpress", "off");
-INSERT INTO `schumix` VALUES ("20", "chatterbot", "off");
+INSERT INTO `schumix` VALUES ("20", "chatterbot", "on");
 INSERT INTO `schumix` VALUES ("21", "nameday", "on");
 
 -- ----------------------------

@@ -32,6 +32,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.API;
+using Schumix.API.Functions;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -488,9 +489,9 @@ namespace Schumix.Framework
 			{
 				if(function == IChannelFunctions.Log.ToString() || function == IChannelFunctions.Rejoin.ToString() ||
 					function == IChannelFunctions.Commands.ToString())
-					functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + "on";
+					functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + SchumixBase.On;
 				else
-					functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + "off";
+					functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + SchumixBase.Off;
 			}
 
 			return functions;

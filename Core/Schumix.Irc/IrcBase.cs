@@ -46,18 +46,19 @@ namespace Schumix.Irc
 					nw.SetConnectionType(ConnectionType.Ssl);
 
 				_networks.Add(ServerName, nw);
+				_networks[ServerName.ToLower()].InitializeIgnoreCommand();
 			}
 		}
 
-		public void Connect(string Name)
+		public void Connect(string ServerName)
 		{
 			lock(Lock)
 			{
-				if(_networks.ContainsKey(Name.ToLower()))
+				if(_networks.ContainsKey(ServerName.ToLower()))
 				{
-					_networks[Name.ToLower()].Initialize();
-					_networks[Name.ToLower()].Connect(true);
-					_networks[Name.ToLower()].InitializeOpcodesAndPing();
+					_networks[ServerName.ToLower()].Initialize();
+					_networks[ServerName.ToLower()].Connect(true);
+					_networks[ServerName.ToLower()].InitializeOpcodesAndPing();
 				}
 			}
 		}
