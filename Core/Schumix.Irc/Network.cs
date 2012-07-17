@@ -268,7 +268,7 @@ namespace Schumix.Irc
 		{
 			NetworkQuit = false;
 			Log.Notice("Network", sLConsole.Network("Text6"), _server);
-			Connection(true, nick);
+			Connection(nick);
 		}
 
         /// <summary>
@@ -299,7 +299,7 @@ namespace Schumix.Irc
 			CType = ctype;
 		}
 
-		private void Connection(bool b, bool nick = false)
+		private void Connection(bool nick = false)
 		{
 			_cts = new CancellationTokenSource();
 
@@ -331,7 +331,7 @@ namespace Schumix.Irc
 
 				try
 				{
-					((SslStream)networkStream).AuthenticateAsClient(_server);
+					networkStream.AuthenticateAsClient(_server);
 				}
 				catch(AuthenticationException e)
 				{
@@ -339,28 +339,28 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					Console.WriteLine(e);
+					Log.Error("Network", sLConsole.Exception("Error"), e.Message);
 				}
 
 				reader = new StreamReader(networkStream);
-				INetwork.WriterList.Add(_servername, new StreamWriter(networkStream) { AutoFlush = true });
+
+				if(INetwork.WriterList.ContainsKey(_servername))
+					INetwork.WriterList[_servername] = new StreamWriter(networkStream) { AutoFlush = true };
+				else
+					INetwork.WriterList.Add(_servername, new StreamWriter(networkStream) { AutoFlush = true });
 			}
 			else
 			{
 				reader = new StreamReader(client.GetStream());
-				INetwork.WriterList.Add(_servername, new StreamWriter(client.GetStream()) { AutoFlush = true });
+
+				if(INetwork.WriterList.ContainsKey(_servername))
+					INetwork.WriterList[_servername] = new StreamWriter(client.GetStream()) { AutoFlush = true };
+				else
+					INetwork.WriterList.Add(_servername, new StreamWriter(client.GetStream()) { AutoFlush = true });
 			}
 
 			Connected = true;
-
-			// lehet ide már nem kell plusz if
-			if(b)
-			{
-				INetwork.WriterList[_servername].WriteLine("NICK {0}", sNickInfo.NickStorage);
-				INetwork.WriterList[_servername].WriteLine("USER {0} 8 * :{1}", IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
-			}
-			else
-				sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
+			sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
 			Online = false;
@@ -391,13 +391,16 @@ namespace Schumix.Irc
 
 		private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
 		{
-			if(ReconnectNumber > 5)
-				_timeropcode.Interval = 300*1000;
-
-			if((DateTime.Now - LastOpcode).Minutes >= 1)
+			if(sChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 			{
-				ReconnectNumber++;
-				ReConnect();
+				if(ReconnectNumber > 5)
+					_timeropcode.Interval = 300*1000;
+
+				if((DateTime.Now - LastOpcode).Minutes >= 1)
+				{
+					ReconnectNumber++;
+					ReConnect();
+				}
 			}
 		}
 
@@ -438,9 +441,13 @@ namespace Schumix.Irc
 						{
 							if(ReconnectNumber > 5)
 								_timeropcode.Interval = 300*1000;
+			
+							if(Connected)
+							{
+								ReconnectNumber++;
+								ReConnect();
+							}
 
-							ReconnectNumber++;
-							ReConnect();
 							continue;
 						}
 					}
@@ -464,8 +471,12 @@ namespace Schumix.Irc
 						if(ReconnectNumber > 5)
 							_timeropcode.Interval = 300*1000;
 
-						ReconnectNumber++;
-						ReConnect();
+						if(Connected)
+						{
+							ReconnectNumber++;
+							ReConnect();
+						}
+
 						continue;
 					}
 				}

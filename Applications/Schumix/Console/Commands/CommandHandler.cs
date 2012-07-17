@@ -58,10 +58,6 @@ namespace Schumix.Console.Commands
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		/// <summary>
-		///     Network elérését tárólja.
-		/// </summary>
-		private readonly Network _network;
-		/// <summary>
 		///     A szétdarabolt információkat tárolja.
 		/// </summary>
 		protected string[] Info;
@@ -150,9 +146,29 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			_channel = Info[1];
+			_channel = Info[1].ToLower();
+			// átírni cchannel ra (help részt is)
 			Log.Notice("Console", sLManager.GetConsoleCommandText("csatorna"), Info[1]);
-			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + Info[1];
+			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + _servername + SchumixBase.Colon + Info[1];
+		}
+
+		protected void HandleOldServerToNewServer()
+		{
+			if(Info.Length < 2)
+			{
+				Log.Error("Console", /*sLManager.GetConsoleWarningText("NoChannelName")*/ "Nincs megadva a szerver neve!");
+				return;
+			}
+
+			if(!sIrcBase.Networks.ContainsKey(Info[1].ToLower()))
+			{
+				Log.Error("Console", /*sLManager.GetConsoleWarningText("NoChannelName")*/ "Ilyen szerver név nem létezik!");
+				return;
+			}
+
+			_servername = Info[1].ToLower();
+			Log.Notice("Console", /*sLManager.GetConsoleCommandText("csatorna")*/"Új szerver amit mostantól lehet állítani a parancsokkal: {0}", Info[1]);
+			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + Info[1] + SchumixBase.Colon + _channel;
 		}
 
 		/// <summary>
@@ -327,7 +343,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				var db0 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[2].ToLower()));
+				var db0 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[2].ToLower(), _servername);
 				if(db0.IsNull())
 				{
 					Log.Error("Console", text[2]);
@@ -397,13 +413,13 @@ namespace Schumix.Console.Commands
 							{
 								if(!sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[i]) && status == SchumixBase.On)
 								{
-									SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[i].ToLower())));
+									SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", Info[i].ToLower()));
 									sIrcBase.Networks[_servername].sChannelInfo.FunctionsReload();
 								}
 							}
 
 							args += ", " + Info[i].ToLower();
-							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctions(Info[i].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
+							SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctions(Info[i].ToLower(), status, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
 							sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 						}
 
@@ -447,7 +463,7 @@ namespace Schumix.Console.Commands
 						{
 							if(!sIrcBase.Networks[_servername].sChannelInfo.FSelect(Info[4]) && status == SchumixBase.On)
 							{
-								SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[4].ToLower())));
+								SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = '{0}'", Info[4].ToLower()));
 								sIrcBase.Networks[_servername].sChannelInfo.FunctionsReload();
 							}
 						}
@@ -457,7 +473,7 @@ namespace Schumix.Console.Commands
 						else
 							Log.Notice("Console", text[1], Info[4].ToLower());
 
-						SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctions(Info[4].ToLower(), status, channel)), string.Format("Channel = '{0}'", channel));
+						SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctions(Info[4].ToLower(), status, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
 						sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 					}
 				}
@@ -472,13 +488,13 @@ namespace Schumix.Console.Commands
 
 				if(Info[2].ToLower() == "all")
 				{
-					var db = SchumixBase.DManager.Query("SELECT Channel FROM channel");
+					var db = SchumixBase.DManager.Query("SELECT Channel FROM channels WHERE ServerName = '{0}'", _servername);
 					if(!db.IsNull())
 					{
 						foreach(DataRow row in db.Rows)
 						{
 							string channel = row["Channel"].ToString();
-							SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", channel));
+							SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
 						}
 
 						sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
@@ -496,7 +512,7 @@ namespace Schumix.Console.Commands
 					}
 
 					Log.Notice("Console", sLManager.GetConsoleCommandText("function/update"), Info[2].ToLower());
-					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}'", Info[2].ToLower()));
+					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}' And ServerName = '{1}'", Info[2].ToLower(), _servername));
 					sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 				}
 			}
@@ -567,7 +583,7 @@ namespace Schumix.Console.Commands
 							}
 
 							args += ", " + Info[i].ToLower();
-							SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", sUtilities.SqlEscape(Info[i].ToLower())));
+							SchumixBase.DManager.Update("schumix", string.Format("FunctionStatus = '{0}'", Info[1].ToLower()), string.Format("FunctionName = '{0}'", Info[i].ToLower()));
 							sIrcBase.Networks[_servername].sChannelInfo.FunctionsReload();
 						}
 
@@ -659,7 +675,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", channel);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel, _servername);
 				if(!db.IsNull())
 				{
 					Log.Warning("Console", text[0]);
@@ -670,14 +686,14 @@ namespace Schumix.Console.Commands
 				{
 					string pass = Info[3];
 					sIrcBase.Networks[_servername].sSender.Join(channel, pass);
-					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", channel, pass, sLManager.Locale);
-					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", channel));
+					SchumixBase.DManager.Insert("`channels`(ServerId, ServerName, Channel, Password, Language)", IRCConfig.List[_servername].ServerId, _servername, channel, pass, sLManager.Locale);
+					SchumixBase.DManager.Update("channels", "Enabled = 'true'", string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
 				}
 				else
 				{
 					sIrcBase.Networks[_servername].sSender.Join(channel);
-					SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", channel, string.Empty, sLManager.Locale);
-					SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", channel));
+					SchumixBase.DManager.Insert("`channels`(ServerId, ServerName, Channel, Password, Language)", IRCConfig.List[_servername].ServerId, _servername, channel, string.Empty, sLManager.Locale);
+					SchumixBase.DManager.Update("channels", "Enabled = 'true'", string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
 				}
 
 				Log.Notice("Console", text[1], channel);
@@ -707,18 +723,13 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channel WHERE Channel = '{0}'", channel);
-				if(!db.IsNull())
+				if(channel == IRCConfig.List[_servername].MasterChannel.ToLower())
 				{
-					int id = Convert.ToInt32(db["Id"].ToString());
-					if(id == 1)
-					{
-						Log.Warning("Console", text[0]);
-						return;
-					}
+					Log.Warning("Console", text[0]);
+					return;
 				}
 
-				db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", channel);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel, _servername);
 				if(db.IsNull())
 				{
 					Log.Warning("Console", text[1]);
@@ -726,7 +737,7 @@ namespace Schumix.Console.Commands
 				}
 
 				sIrcBase.Networks[_servername].sSender.Part(channel);
-				SchumixBase.DManager.Delete("channel", string.Format("Channel = '{0}'", channel));
+				SchumixBase.DManager.Delete("channels", string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
 				Log.Notice("Console", text[2], channel);
 
 				sIrcBase.Networks[_servername].sChannelInfo.ChannelListReload();
@@ -747,7 +758,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channel");
+				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channels WHERE ServerName = '{0}'", _servername);
 				if(!db.IsNull())
 				{
 					string ActiveChannels = string.Empty, InActiveChannels = string.Empty;
@@ -797,7 +808,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", Info[2].ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[2].ToLower(), _servername);
 				if(db.IsNull())
 				{
 					Log.Warning("Console", text[1]);
@@ -810,7 +821,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[2].ToLower()));
+				db = SchumixBase.DManager.QueryFirstRow("SELECT Language FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[2].ToLower(), _servername);
 				if(!db.IsNull())
 				{
 					if(db["Language"].ToString().ToLower() == Info[3].ToLower())
@@ -820,7 +831,7 @@ namespace Schumix.Console.Commands
 					}
 				}
 
-				SchumixBase.DManager.Update("channel", string.Format("Language = '{0}'", Info[3]), string.Format("Channel = '{0}'", Info[2].ToLower()));
+				SchumixBase.DManager.Update("channels", string.Format("Language = '{0}'", Info[3]), string.Format("Channel = '{0}' And ServerName = '{1}'", Info[2].ToLower(), _servername));
 				Log.Notice("Console", text[0], Info[3]);
 			}
 			else if(Info[1].ToLower() == "password")
@@ -858,14 +869,14 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(db.IsNull())
 					{
 						Log.Warning("Console", text[0]);
 						return;
 					}
 
-					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(!db.IsNull())
 					{
 						if(db["Password"].ToString().Trim() != string.Empty)
@@ -875,7 +886,7 @@ namespace Schumix.Console.Commands
 						}
 					}
 
-					SchumixBase.DManager.Update("channel", string.Format("Password = '{0}'", sUtilities.SqlEscape(Info[4])), string.Format("Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower())));
+					SchumixBase.DManager.Update("channels", string.Format("Password = '{0}'", Info[4]), string.Format("Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername));
 					Log.Notice("Console", text[2], Info[3]);
 				}
 				else if(Info[2].ToLower() == "remove")
@@ -899,14 +910,14 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(db.IsNull())
 					{
 						Log.Warning("Console", text[0]);
 						return;
 					}
 
-					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(!db.IsNull())
 					{
 						if(db["Password"].ToString().Trim() == string.Empty)
@@ -916,7 +927,7 @@ namespace Schumix.Console.Commands
 						}
 					}
 
-					SchumixBase.DManager.Update("channel", "Password = ''", string.Format("Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower())));
+					SchumixBase.DManager.Update("channels", "Password = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername));
 					Log.Notice("Console", text[2]);
 				}
 				else if(Info[2].ToLower() == "update")
@@ -946,14 +957,14 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(db.IsNull())
 					{
 						Log.Warning("Console", text[0]);
 						return;
 					}
 
-					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(!db.IsNull())
 					{
 						if(db["Password"].ToString().Trim() == string.Empty)
@@ -963,7 +974,7 @@ namespace Schumix.Console.Commands
 						}
 					}
 
-					SchumixBase.DManager.Update("channel", string.Format("Password = '{0}'", sUtilities.SqlEscape(Info[4])), string.Format("Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower())));
+					SchumixBase.DManager.Update("channels", string.Format("Password = '{0}'", Info[4]), string.Format("Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername));
 					Log.Notice("Console", text[2], Info[4]);
 				}
 				else if(Info[2].ToLower() == "info")
@@ -987,14 +998,14 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(db.IsNull())
 					{
 						Log.Warning("Console", text[0]);
 						return;
 					}
 
-					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channel WHERE Channel = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(!db.IsNull())
 					{
 						if(db["Password"].ToString().Trim() == string.Empty)
@@ -1011,7 +1022,7 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleConnect()
 		{
-			_network.Connect();
+			sIrcBase.Networks[_servername].Connect();
 		}
 
 		/// <summary>
@@ -1020,7 +1031,7 @@ namespace Schumix.Console.Commands
 		protected void HandleDisConnect()
 		{
 			sIrcBase.Networks[_servername].sSender.Quit("Console: Disconnect.");
-			_network.DisConnect();
+			sIrcBase.Networks[_servername].DisConnect();
 		}
 
 		/// <summary>
@@ -1029,7 +1040,7 @@ namespace Schumix.Console.Commands
 		protected void HandleReConnect()
 		{
 			sIrcBase.Networks[_servername].sSender.Quit("Console: Reconnect.");
-			_network.ReConnect();
+			sIrcBase.Networks[_servername].ReConnect();
 		}
 
 		/// <summary>
@@ -1252,7 +1263,7 @@ namespace Schumix.Console.Commands
 							return;
 						}
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Info[4].ToLower()));
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}'", Info[4].ToLower());
 						if(!db.IsNull())
 							Log.Notice("Console", text[0]);
 						else
@@ -1341,7 +1352,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}'", Info[3].ToLower());
 					if(!db.IsNull())
 						Log.Notice("Console", text[0]);
 					else
@@ -1449,7 +1460,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", sUtilities.SqlEscape(channel));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}'", channel);
 					if(!db.IsNull())
 						Log.Notice("Console", text[0]);
 					else
@@ -1531,7 +1542,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}'", Info[3].ToLower());
 					if(!db.IsNull())
 						Log.Notice("Console", text[0]);
 					else
@@ -1615,7 +1626,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(Info[3].ToLower()));
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", Info[3].ToLower());
 					if(!db.IsNull())
 						Log.Notice("Console", text[0]);
 					else

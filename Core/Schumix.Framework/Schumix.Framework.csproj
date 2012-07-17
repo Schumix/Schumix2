@@ -106,6 +106,7 @@
     <Compile Include="Config\UpdateConfig.cs" />
     <Compile Include="Config\ServerConfig.cs" />
     <Compile Include="Config\IRCConfigBase.cs" />
+    <Compile Include="IrcLog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

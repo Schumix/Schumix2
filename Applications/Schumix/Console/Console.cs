@@ -55,7 +55,7 @@ namespace Schumix.Console
 			CCManager = new CCommandManager();
 			CCManager.ServerName = ServerName;
 			CCManager.Channel = IRCConfig.List[ServerName].MasterChannel;
-			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + CCManager.Channel;
+			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + CCManager.ServerName + SchumixBase.Colon + CCManager.Channel;
 		}
 
 		/// <summary>
