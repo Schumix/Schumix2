@@ -64,5 +64,14 @@ namespace Schumix.Irc.Ignore
 
 			SchumixBase.DManager.Delete("ignore_commands", string.Format("Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 		}
+
+		public bool Contains(string Name)
+		{
+			if(Name.Trim() == string.Empty)
+				return false;
+
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
+			return !db.IsNull();
+		}
 	}
 }

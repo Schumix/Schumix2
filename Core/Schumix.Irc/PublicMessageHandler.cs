@@ -20,6 +20,7 @@
 using System;
 using System.Diagnostics;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.API.Functions;
 using Schumix.Framework;
 using Schumix.Framework.Config;

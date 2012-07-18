@@ -86,8 +86,6 @@ namespace Schumix
 
 				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text3"));
 				new ScriptManager(ScriptsConfig.Directory);
-				// megoldani hogy a szervereket lehessen kezelni network esetén, pl: console írás váltása, connect, disconnect, ignorenél az addon stb
-				// kéne egy parancs amellyel a szerverek között lehet majd váltani
 				new Console.Console(eserver);
 			}
 			catch(Exception e)

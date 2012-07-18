@@ -21,7 +21,7 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
-namespace Schumix.API
+namespace Schumix.API.Irc
 {
 	/// <summary>
 	///     A Network class része. Ezzel elérhető bárhonnét eggyes része.

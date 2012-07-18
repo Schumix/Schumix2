@@ -88,6 +88,15 @@ namespace Schumix.Irc.Ignore
 			SchumixBase.DManager.Delete("ignore_addons", string.Format("Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 		}
 
+		public bool Contains(string Name)
+		{
+			if(Name.Trim() == string.Empty)
+				return false;
+
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
+			return !db.IsNull();
+		}
+
 		public void RemoveConfig()
 		{
 			string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);

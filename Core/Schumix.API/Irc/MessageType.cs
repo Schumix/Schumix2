@@ -19,7 +19,7 @@
 
 using System;
 
-namespace Schumix.API
+namespace Schumix.API.Irc
 {
 	/// <summary>
 	///     Meghatározza az üzenet küldési típusokat.

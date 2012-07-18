@@ -22,6 +22,7 @@ using System.Timers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.API.Functions;
 using Schumix.Framework;
 using Schumix.Framework.Localization;

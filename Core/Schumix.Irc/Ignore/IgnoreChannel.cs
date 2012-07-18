@@ -86,6 +86,15 @@ namespace Schumix.Irc.Ignore
 			SchumixBase.DManager.Delete("ignore_channels", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 		}
 
+		public bool Contains(string Name)
+		{
+			if(Name.Trim() == string.Empty)
+				return false;
+
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
+			return !db.IsNull();
+		}
+
 		public void RemoveConfig()
 		{
 			string[] ignore = IRCConfig.List[_servername].IgnoreChannels.Split(SchumixBase.Comma);

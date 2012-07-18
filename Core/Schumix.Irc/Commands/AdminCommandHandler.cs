@@ -19,10 +19,11 @@
 
 using System;
 using System.Threading;
+using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
-using Schumix.API;
 
 namespace Schumix.Irc.Commands
 {

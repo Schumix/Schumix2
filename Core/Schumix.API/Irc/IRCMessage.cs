@@ -19,7 +19,7 @@
 
 using System;
 
-namespace Schumix.API
+namespace Schumix.API.Irc
 {
 	public class IRCMessage
 	{

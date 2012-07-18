@@ -20,6 +20,7 @@
 using System;
 using System.Data;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -1056,8 +1057,7 @@ namespace Schumix.Irc.Commands
 							return;
 						}
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName);
-						if(!db.IsNull())
+						if(sIgnoreIrcCommand.Contains(sIRCMessage.Info[7].ToLower()))
 							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
@@ -1151,8 +1151,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
-					if(!db.IsNull())
+					if(sIgnoreCommand.Contains(sIRCMessage.Info[6].ToLower()))
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
@@ -1259,8 +1258,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(channel), sIRCMessage.ServerName);
-					if(!db.IsNull())
+					if(sIgnoreChannel.Contains(channel))
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
@@ -1353,8 +1351,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
-					if(!db.IsNull())
+					if(sIgnoreNickName.Contains(sIRCMessage.Info[6].ToLower()))
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
@@ -1437,8 +1434,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
-					if(!db.IsNull())
+					if(sIgnoreAddon.Contains(sIRCMessage.Info[6].ToLower()))
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);

@@ -18,6 +18,7 @@
  */
 
 using System;
+using Schumix.API.Irc;
 
 namespace Schumix.API
 {

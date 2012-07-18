@@ -19,6 +19,7 @@
 
 using System;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Irc.Ctcp;
 using Schumix.Irc.Flood;
 using Schumix.Irc.Ignore;

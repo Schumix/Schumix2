@@ -23,6 +23,7 @@ using System.Xml;
 using System.Text;
 using System.Data;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;

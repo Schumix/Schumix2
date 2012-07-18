@@ -22,6 +22,7 @@ using System.Data;
 using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;

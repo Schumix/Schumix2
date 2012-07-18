@@ -1263,8 +1263,7 @@ namespace Schumix.Console.Commands
 							return;
 						}
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}' And ServerName = '{1}'", Info[4].ToLower(), _servername);
-						if(!db.IsNull())
+						if(sIrcBase.Networks[_servername].sIgnoreIrcCommand.Contains(Info[4].ToLower()))
 							Log.Notice("Console", text[0]);
 						else
 							Log.Error("Console", text[1]);
@@ -1352,8 +1351,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_commands WHERE Command = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
-					if(!db.IsNull())
+					if(sIrcBase.Networks[_servername].sIgnoreCommand.Contains(Info[3].ToLower()))
 						Log.Notice("Console", text[0]);
 					else
 						Log.Error("Console", text[1]);
@@ -1460,8 +1458,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}' And ServerName = '{1}'", channel, _servername);
-					if(!db.IsNull())
+					if(sIrcBase.Networks[_servername].sIgnoreChannel.Contains(channel))
 						Log.Notice("Console", text[0]);
 					else
 						Log.Error("Console", text[1]);
@@ -1542,8 +1539,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
-					if(!db.IsNull())
+					if(sIrcBase.Networks[_servername].sIgnoreNickName.Contains(Info[3].ToLower()))
 						Log.Notice("Console", text[0]);
 					else
 						Log.Error("Console", text[1]);
@@ -1626,8 +1622,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
-					if(!db.IsNull())
+					if(sIrcBase.Networks[_servername].sIgnoreAddon.Contains(Info[3].ToLower()))
 						Log.Notice("Console", text[0]);
 					else
 						Log.Error("Console", text[1]);

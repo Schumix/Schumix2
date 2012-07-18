@@ -22,6 +22,7 @@ using System.Data;
 using System.Threading;
 using System.Collections.Generic;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.API.Delegate;
 using Schumix.Framework;
 using Schumix.Framework.Config;

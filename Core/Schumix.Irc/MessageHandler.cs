@@ -20,6 +20,7 @@
 using System;
 using System.IO;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.API.Functions;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -30,11 +31,13 @@ namespace Schumix.Irc
 {
 	public partial class MessageHandler : CommandManager
 	{
+		private string _servername;
 		private int PLength;
 		public bool Online;
 
 		protected MessageHandler(string ServerName) : base(ServerName)
 		{
+			_servername = ServerName;
 			PLength = IRCConfig.List[ServerName].CommandPrefix.Length;
 		}
 
@@ -438,8 +441,9 @@ namespace Schumix.Irc
 		{
 			if(sChannelInfo.FSelect(IFunctions.Log) && sChannelInfo.FSelect(IChannelFunctions.Log, channel))
 			{
-				sUtilities.CreateDirectory(LogConfig.IrcLogDirectory);
-				string logdir = sUtilities.DirectoryToHome(LogConfig.IrcLogDirectory, channel);
+				string dir = LogConfig.IrcLogDirectory + "/" + _servername;
+				sUtilities.CreateDirectory(dir);
+				string logdir = sUtilities.DirectoryToHome(dir, channel);
 				string logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year,
 								DateTime.Now.Month < 10 ? "0" + DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString(),
 								DateTime.Now.Day < 10 ? "0" + DateTime.Now.Day.ToString() : DateTime.Now.Day.ToString());

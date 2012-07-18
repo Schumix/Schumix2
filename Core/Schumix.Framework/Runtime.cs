@@ -24,6 +24,8 @@ using System.Threading;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Schumix.API;
+using Schumix.API.Irc;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -45,7 +47,7 @@ namespace Schumix.Framework
 
 		private void HandleTimerMemory(object sender, ElapsedEventArgs e)
 		{
-			if(Process.GetCurrentProcess().WorkingSet64/1024/1024 >= 100)
+			if(Process.GetCurrentProcess().WorkingSet64/1024/1024 >= 100/* majd mehetne az a szám configba*/ * IRCConfig.List.Count)
 			{
 				Log.Warning("Runtime", sLConsole.Runtime("Text3"));
 				Log.Warning("Runtime", sLConsole.Runtime("Text4"));

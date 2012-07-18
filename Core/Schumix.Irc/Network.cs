@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Security.Authentication;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.API.Delegate;
 using Schumix.API.Functions;
 using Schumix.Framework;
