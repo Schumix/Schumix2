@@ -44,6 +44,3 @@ Megírásra váró feladatok:
 					}
 				}
 	- addonok sokszorozása szerverenként. (ez esetben az ignoreaddonba átalakítás kell hogy ne mindegyikhez adja hozzá magát)
-	- Network-be kéne egy kiírás majd elejére hogy ez melyik szerver.
-	- sLManager.GetConsoleCommandText("csatorna") angol nevet adni neki "cchannel" pl mint fv neve.
-	- cserver hez megírni adatbázisba az angol szöveget meg magyart is oda áthelyezni.

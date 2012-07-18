@@ -1477,6 +1477,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Certificate not accepted, exception: {0}";
 				}
+				case "Text20":
+				{
+					if(Locale == "huHU")
+						return "A szerver neve: {0}";
+					else if(Locale == "enUS")
+						return "Server's name: {0}";
+					else
+						return "Server's name: {0}";
+				}
 				default:
 					return string.Empty;
 			}

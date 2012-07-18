@@ -88,6 +88,7 @@ namespace Schumix.Irc
 			_port = Port;
 
 			Log.Notice("Network", sLConsole.Network("Text"));
+			Log.Notice("Network", sLConsole.Network("Text20"), ServerName);
 			InitHandler();
 			CType = ConnectionType.Normal;
 		}

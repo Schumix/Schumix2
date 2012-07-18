@@ -146,9 +146,14 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
+			if(_channel == Info[1].ToLower())
+			{
+				Log.Warning("Console", sLManager.GetConsoleWarningText("ChannelAlreadyBeenUsed"));
+				return;
+			}
+
 			_channel = Info[1].ToLower();
-			// átírni cchannel ra (help részt is)
-			Log.Notice("Console", sLManager.GetConsoleCommandText("csatorna"), Info[1]);
+			Log.Notice("Console", sLManager.GetConsoleCommandText("cchannel"), Info[1]);
 			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + _servername + SchumixBase.Colon + Info[1];
 		}
 
@@ -156,18 +161,24 @@ namespace Schumix.Console.Commands
 		{
 			if(Info.Length < 2)
 			{
-				Log.Error("Console", /*sLManager.GetConsoleWarningText("NoChannelName")*/ "Nincs megadva a szerver neve!");
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoServerName"));
 				return;
 			}
 
 			if(!sIrcBase.Networks.ContainsKey(Info[1].ToLower()))
 			{
-				Log.Error("Console", /*sLManager.GetConsoleWarningText("NoChannelName")*/ "Ilyen szerver név nem létezik!");
+				Log.Error("Console", sLManager.GetConsoleWarningText("ThereIsNoSuchAServerName"));
+				return;
+			}
+
+			if(_servername == Info[1].ToLower())
+			{
+				Log.Warning("Console", sLManager.GetConsoleWarningText("ServerAlreadyBeenUsed"));
 				return;
 			}
 
 			_servername = Info[1].ToLower();
-			Log.Notice("Console", /*sLManager.GetConsoleCommandText("csatorna")*/"Új szerver amit mostantól lehet állítani a parancsokkal: {0}", Info[1]);
+			Log.Notice("Console", sLManager.GetConsoleCommandText("cserver"), Info[1]);
 			System.Console.Title = SchumixBase.Title + " || Console Writing Channel: " + Info[1] + SchumixBase.Colon + _channel;
 		}
 

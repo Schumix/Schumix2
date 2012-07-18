@@ -3,7 +3,7 @@
 -- ----------------------------
 -- Records of channel
 -- ----------------------------
-INSERT INTO `channel` VALUES ("1", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off", "#schumix2", "", "", "", "huHU");
+INSERT INTO `channel` VALUES ("1", "1", "default", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off", "#schumix2", "", "", "", "huHU");
 
 -- ----------------------------
 -- Records of gitinfo
@@ -34,7 +34,7 @@ INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ("enUS", "owne
 -- huHU
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "consolelog", "Console logolás bekapcsolva.\nConsole logolás kikapcsolva.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "sys", "Verzió: {0}\nPlatform: {0}\nOSVerzió: {0}\nProgramnyelv: c#\nMemória használat: {0} MB\nFutó szálak: {0}\nMűködési idő: {0}");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "csatorna", "Új csatorna ahova mostantól lehet írni: {0}");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "cchannel", "Új csatorna ahova mostantól lehet írni: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/info", "Jelenleg Fél Operátor vagy.\nJelenleg Operátor vagy.\nJelenleg Adminisztrátor vagy.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/list", "Adminok: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/add", "A név már szerepel az admin listán!\nAdmin hozzáadva: {0}\nJelenlegi jelszó: {0}");
@@ -81,11 +81,12 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "[Betöltés]: Összes plugin betöltése sikeres.\n[Betöltés]: Összes plugin betöltése sikertelen.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "[Leválasztás]: Összes plugin leválasztása sikeres.\n[Leválasztás]: Összes plugin leválasztása sikertelen.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: betöltve.\n{0}: letiltva.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "cserver", "Új szerver amit mostantól lehet állítani a parancsokkal: {0}");
 
 -- enUS
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "consolelog", "Console logging on.\nConsole logging off.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "sys", "Version: {0}\nPlatform: {0}\nOSVersion: {0}\nProgramming language: c#\nMemory allocation: {0} MB\nThread count: {0}\nUptime: {0}");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "csatorna", "The new channel to write to now: {0}");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "cchannel", "The new channel to write to now: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/info", "You are half operator now.\nYou are operator now.\nYou are administrator now.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/list", "Admins: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/add", "The name is already in the admin list!\nAdmin added to the list: {0}\nPassword: {0}");
@@ -132,6 +133,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "[Load]: All plugins done.\n[Load]: All plugins failed.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "[Unload]: All plugins done.\n[Unload]: All plugins failed.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: loaded.\n{0}: ignored.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "cserver", "New server for the commands: {0}");
 
 -- huHU
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.\nAdmin parancsai: info | list | add | remove | rank | access | newpassword");
@@ -164,7 +166,7 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "reload", "Újraindítja a megadott programrészt.\nHasználata: reload <név>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "consolelog", "Az irc adatok konzolra írását engedélyezi vagy tiltja. Alapértelmezésben ki van kapcsolva.\nHasználata: consolelog <on vagy off>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "sys", "Kiírja a botról a rendszer információkat.");
-INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "csatorna", "A bot csatornára írását állíthatjuk vele.\nHasználata: csatorna <csatorna neve>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "cchannel", "A bot csatornára írását állíthatjuk vele.\nHasználata: cchannel <csatorna neve>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "connect", "Kapcsolodás az irc szerverhez.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "disconnect", "Kapcsolat bontása.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "reconnect", "Újrakapcsolodás az irc szerverhez.");
@@ -193,6 +195,7 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "Kiírja milyen pluginok vannak betöltve.\nPlugin parancsok: load | unload");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "Betölt minden plugint.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "Eltávolít minden plugint.");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "cserver", "A szerverek között válthatunk vele.\nHasználata: cserver <szerver neve>");
 
 -- enUS
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin", "Print Operators or Administrators can use commands.\nAdmin commands: info | list | add | remove | rank | access | newpassword");
@@ -225,7 +228,7 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "reload", "Reloads the specified program section.\nUse: reload <name>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "consolelog", "Enables or disables display of the IRC logs to the console. The default is off.\nUse: consolelog <on or off>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "sys", "Show the system information of the bot.");
-INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "csatorna", "You can select which channel to send the robot.\nUse: csatorna <channel name>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "cchannel", "You can select which channel to send the robot.\nUse: cchannel <channel name>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "connect", "Connect to the IRC server.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "disconnect", "Disconnect.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "reconnect", "Trying to reconnect to the IRC server.");
@@ -254,6 +257,7 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "Shows what plugins are loaded.\nPlugin commands: load | unload");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "Loads all the plugin.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "Remove all plugin.");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "cserver", "Switch between servers.\nUse: cserver <server's name>");
 
 -- huHU
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoName", "A név nincs megadva!");
@@ -275,6 +279,10 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "FunctionAlreadyTurnedOff", "A funkció már ki van kapcsolva!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "FunctionAlreadyTurnedOn2", "{0}: A funkció már be van kapcsolva!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "FunctionAlreadyTurnedOff2", "{0}: A funkció már ki van kapcsolva!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoServerName", "Nincs megadva a szerver neve!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThereIsNoSuchAServerName", "Ilyen szerver név nem létezik!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ChannelAlreadyBeenUsed", "Jelenleg is ez a csatorna van beállítva!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ServerAlreadyBeenUsed", "Jelenleg is ez a szerver van beállítva!");
 
 -- enUS
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -296,6 +304,10 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "FunctionAlreadyTurnedOff", "Function already turned off!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "FunctionAlreadyTurnedOn2", "{0}: Function already turned on!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "FunctionAlreadyTurnedOff2", "{0}: Function already turned off!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoServerName", "There is no server name!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ThereIsNoSuchAServerName", "There is no such a server name!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ChannelAlreadyBeenUsed", "Channel already been used!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ServerAlreadyBeenUsed", "Server already been used!");
 
 -- huHU
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "schumix2/sys", "3Verzió: 10{0}\n3Platform: {0}\n3OSVerzió: {0}\n3Programnyelv: c#\n3Memória használat:5 {0} MB\n3Memória használat:8 {0} MB\n3Memória használat:3 {0} MB\n3Működési idő: {0}");
@@ -1118,27 +1130,27 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 -- ----------------------------
 -- Records of schumix
 -- ----------------------------
-INSERT INTO `schumix` VALUES ("1", "greeter", "on");
-INSERT INTO `schumix` VALUES ("2", "log", "on");
-INSERT INTO `schumix` VALUES ("3", "rejoin", "on");
-INSERT INTO `schumix` VALUES ("4", "commands", "on");
-INSERT INTO `schumix` VALUES ("5", "reconnect", "on");
-INSERT INTO `schumix` VALUES ("6", "autohl", "on");
-INSERT INTO `schumix` VALUES ("7", "autokick", "on");
-INSERT INTO `schumix` VALUES ("8", "automode", "on");
-INSERT INTO `schumix` VALUES ("9", "svn", "off");
-INSERT INTO `schumix` VALUES ("10", "hg", "off");
-INSERT INTO `schumix` VALUES ("11", "git", "off");
-INSERT INTO `schumix` VALUES ("12", "antiflood", "on");
-INSERT INTO `schumix` VALUES ("13", "message", "on");
-INSERT INTO `schumix` VALUES ("14", "compiler", "on");
-INSERT INTO `schumix` VALUES ("15", "gamecommands", "on");
-INSERT INTO `schumix` VALUES ("16", "webtitle", "on");
-INSERT INTO `schumix` VALUES ("17", "randomkick", "on");
-INSERT INTO `schumix` VALUES ("18", "mantisbt", "off");
-INSERT INTO `schumix` VALUES ("19", "wordpress", "off");
-INSERT INTO `schumix` VALUES ("20", "chatterbot", "on");
-INSERT INTO `schumix` VALUES ("21", "nameday", "on");
+INSERT INTO `schumix` VALUES ("1", "1", "default", "greeter", "on");
+INSERT INTO `schumix` VALUES ("2", "1", "default", "log", "on");
+INSERT INTO `schumix` VALUES ("3", "1", "default", "rejoin", "on");
+INSERT INTO `schumix` VALUES ("4", "1", "default", "commands", "on");
+INSERT INTO `schumix` VALUES ("5", "1", "default", "reconnect", "on");
+INSERT INTO `schumix` VALUES ("6", "1", "default", "autohl", "on");
+INSERT INTO `schumix` VALUES ("7", "1", "default", "autokick", "on");
+INSERT INTO `schumix` VALUES ("8", "1", "default", "automode", "on");
+INSERT INTO `schumix` VALUES ("9", "1", "default", "svn", "off");
+INSERT INTO `schumix` VALUES ("10", "1", "default", "hg", "off");
+INSERT INTO `schumix` VALUES ("11", "1", "default", "git", "off");
+INSERT INTO `schumix` VALUES ("12", "1", "default", "antiflood", "on");
+INSERT INTO `schumix` VALUES ("13", "1", "default", "message", "on");
+INSERT INTO `schumix` VALUES ("14", "1", "default", "compiler", "on");
+INSERT INTO `schumix` VALUES ("15", "1", "default", "gamecommands", "on");
+INSERT INTO `schumix` VALUES ("16", "1", "default", "webtitle", "on");
+INSERT INTO `schumix` VALUES ("17", "1", "default", "randomkick", "on");
+INSERT INTO `schumix` VALUES ("18", "1", "default", "mantisbt", "off");
+INSERT INTO `schumix` VALUES ("19", "1", "default", "wordpress", "off");
+INSERT INTO `schumix` VALUES ("20", "1", "default", "chatterbot", "on");
+INSERT INTO `schumix` VALUES ("21", "1", "default", "nameday", "on");
 
 -- ----------------------------
 -- Records of svninfo

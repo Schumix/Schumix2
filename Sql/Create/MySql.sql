@@ -7,6 +7,8 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 CREATE TABLE `admins` (
   `Id` int(3) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) NOT NULL default '',
   `Password` varchar(40) NOT NULL default '',
   `Vhost` varchar(50) NOT NULL default '',
@@ -52,6 +54,8 @@ CREATE TABLE `calendar` (
 -- ----------------------------
 CREATE TABLE `channel` (
   `Id` int(3) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Functions` varchar(500) NOT NULL default ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off',
   `Channel` varchar(20) NOT NULL default '',
   `Password` varchar(30) NOT NULL default '',
@@ -102,6 +106,8 @@ CREATE TABLE `mantisbt` (
 -- ----------------------------
 CREATE TABLE `hlmessage` (
   `Id` int(3) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) collate utf8_hungarian_ci NOT NULL default '',
   `Info` text collate utf8_hungarian_ci NOT NULL,
   `Enabled` varchar(3) collate utf8_hungarian_ci NOT NULL default '',
@@ -247,6 +253,8 @@ CREATE TABLE `notes_users` (
 -- ----------------------------
 CREATE TABLE `schumix` (
   `Id` int(3) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `FunctionName` varchar(20) NOT NULL default '',
   `FunctionStatus` varchar(3) NOT NULL default '',
   PRIMARY KEY  (`Id`)
@@ -303,6 +311,8 @@ CREATE TABLE `wordpressinfo` (
 -- ----------------------------
 CREATE TABLE `ignore_channels` (
   `Id` int(4) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Channel` varchar(20) NOT NULL default '',
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -312,6 +322,8 @@ CREATE TABLE `ignore_channels` (
 -- ----------------------------
 CREATE TABLE `ignore_nicks` (
   `Id` int(4) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Nick` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -321,6 +333,8 @@ CREATE TABLE `ignore_nicks` (
 -- ----------------------------
 CREATE TABLE `ignore_commands` (
   `Id` int(4) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Command` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -330,6 +344,8 @@ CREATE TABLE `ignore_commands` (
 -- ----------------------------
 CREATE TABLE `ignore_irc_commands` (
   `Id` int(4) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Command` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
@@ -352,6 +368,8 @@ CREATE TABLE `maffiagame` (
 -- ----------------------------
 CREATE TABLE `ignore_addons` (
   `Id` int(4) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Addon` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
