@@ -74,7 +74,7 @@ namespace Schumix.Irc.Commands
 				string Plugins = string.Empty;
 				string IgnorePlugins = string.Empty;
 
-				foreach(var plugin in sAddonManager.GetPlugins())
+				foreach(var plugin in sAddonManager.Addons[sIRCMessage.ServerName].Addons)
 				{
 					if(!sIgnoreAddon.IsIgnore(plugin.Key))
 						Plugins += ", " + plugin.Value.Name;
@@ -82,8 +82,11 @@ namespace Schumix.Irc.Commands
 						IgnorePlugins += ", " + plugin.Value.Name;
 				}
 
-				sSendMessage.SendChatMessage(sIRCMessage, text[0], Plugins.Remove(0, 2, ", "));
-				sSendMessage.SendChatMessage(sIRCMessage, text[1], IgnorePlugins.Remove(0, 2, ", "));
+				if(Plugins != string.Empty)
+					sSendMessage.SendChatMessage(sIRCMessage, text[0], Plugins.Remove(0, 2, ", "));
+
+				if(IgnorePlugins != string.Empty)
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], IgnorePlugins.Remove(0, 2, ", "));
 			}
 		}
 
@@ -115,7 +118,7 @@ namespace Schumix.Irc.Commands
 					break;
 			}
 
-			foreach(var plugin in sAddonManager.GetPlugins())
+			foreach(var plugin in sAddonManager.Addons[sIRCMessage.ServerName].Addons)
 			{
 				if(plugin.Value.Reload(sIRCMessage.Info[4].ToLower()) == 1)
 					i = 1;

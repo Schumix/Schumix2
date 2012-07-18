@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.API;
 using Schumix.API.Functions;
+using Schumix.Framework.Addon;
 using Schumix.Framework.Client;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
@@ -190,8 +191,11 @@ namespace Schumix.Framework
 				if(ExitStatus)
 					return;
 
-				foreach(var plugin in sAddonManager.GetPlugins())
-					plugin.Value.Destroy();
+				foreach(var sn in IRCConfig.List)
+				{
+					foreach(var plugin in sAddonManager.Addons[sn.Key].Addons)
+						plugin.Value.Destroy();
+				}
 
 				sUtilities.RemovePidFile();
 				SchumixBase.timer.SaveUptime();

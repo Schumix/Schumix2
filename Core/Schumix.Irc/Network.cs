@@ -34,6 +34,7 @@ using Schumix.API.Irc;
 using Schumix.API.Delegate;
 using Schumix.API.Functions;
 using Schumix.Framework;
+using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
 using Schumix.Framework.Extensions;
@@ -89,12 +90,12 @@ namespace Schumix.Irc
 
 			Log.Notice("Network", sLConsole.Network("Text"));
 			Log.Notice("Network", sLConsole.Network("Text20"), ServerName);
-			InitHandler();
 			CType = ConnectionType.Normal;
 		}
 
 		public void Initialize()
 		{
+			InitHandler();
 			InitializeCommandHandler();
 			InitializeCommandMgr();
 			Task.Factory.StartNew(() => sChannelInfo.ChannelList());
@@ -144,7 +145,7 @@ namespace Schumix.Irc
 			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
 			IrcRegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
 
-			var asms = AddonManager.Assemblies.ToDictionary(v => v.Key, v => v.Value);
+			var asms = sAddonManager.Addons[_servername].Assemblies.ToDictionary(v => v.Key, v => v.Value);
 			Parallel.ForEach(asms, asm =>
 			{
 				var types = asm.Value.GetTypes();

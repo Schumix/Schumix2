@@ -25,6 +25,7 @@ using Schumix.Irc;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -1164,7 +1165,7 @@ namespace Schumix.Console.Commands
 					break;
 			}
 
-			foreach(var plugin in sAddonManager.GetPlugins())
+			foreach(var plugin in sAddonManager.Addons[_servername].Addons)
 			{
 				if(plugin.Value.Reload(Info[1].ToLower()) == 1)
 					i = 1;
@@ -1686,7 +1687,7 @@ namespace Schumix.Console.Commands
 				string Plugins = string.Empty;
 				string IgnorePlugins = string.Empty;
 
-				foreach(var plugin in sAddonManager.GetPlugins())
+				foreach(var plugin in sAddonManager.Addons[_servername].Addons)
 				{
 					if(!sIrcBase.Networks[_servername].sIgnoreAddon.IsIgnore(plugin.Key))
 						Plugins += ", " + plugin.Value.Name;
@@ -1694,8 +1695,11 @@ namespace Schumix.Console.Commands
 						IgnorePlugins += ", " + plugin.Value.Name;
 				}
 
-				Log.Notice("Console", text[0], Plugins.Remove(0, 2, ", "));
-				Log.Notice("Console", text[1], IgnorePlugins.Remove(0, 2, ", "));
+				if(Plugins != string.Empty)
+					Log.Notice("Console", text[0], Plugins.Remove(0, 2, ", "));
+
+				if(IgnorePlugins != string.Empty)
+					Log.Notice("Console", text[1], IgnorePlugins.Remove(0, 2, ", "));
 			}
 		}
 

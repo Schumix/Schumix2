@@ -25,6 +25,7 @@ using Schumix.API;
 using Schumix.API.Delegate;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -112,11 +113,11 @@ namespace Schumix.Irc.Ignore
 
 		public void LoadPlugin(string plugin)
 		{
-			if(AddonManager.IgnoreAssemblies.ContainsKey(plugin))
+			if(sAddonManager.Addons[_servername].IgnoreAssemblies.ContainsKey(plugin))
 			{
 				Log.Debug("IgnoreAddon", sLConsole.IgnoreAddon("Text"), plugin);
 				ISchumixAddon pl;
-				sAddonManager.GetPlugins().TryGetValue(plugin, out pl);
+				sAddonManager.Addons[_servername].Addons.TryGetValue(plugin, out pl);
 
 				if(pl.IsNull())
 				{
@@ -124,9 +125,9 @@ namespace Schumix.Irc.Ignore
 					return;
 				}
 
-				pl.Setup();
-				AddonManager.Assemblies.Add(plugin, AddonManager.IgnoreAssemblies[plugin]);
-				var types = AddonManager.IgnoreAssemblies[plugin].GetTypes();
+				pl.Setup(_servername);
+				sAddonManager.Addons[_servername].Assemblies.Add(plugin, sAddonManager.Addons[_servername].IgnoreAssemblies[plugin]);
+				var types = sAddonManager.Addons[_servername].IgnoreAssemblies[plugin].GetTypes();
 
 				Parallel.ForEach(types, type =>
 				{
@@ -158,18 +159,18 @@ namespace Schumix.Irc.Ignore
 					});
 				});
 
-				Log.Success("IgnoreAddon", sLConsole.IgnoreAddon("Text3"), pl.Name, AddonManager.IgnoreAssemblies[plugin].GetName().Version.ToString(), pl.Author, pl.Website);
-				AddonManager.IgnoreAssemblies.Remove(plugin);
+				Log.Success("IgnoreAddon", sLConsole.IgnoreAddon("Text3"), pl.Name, sAddonManager.Addons[_servername].IgnoreAssemblies[plugin].GetName().Version.ToString(), pl.Author, pl.Website);
+				sAddonManager.Addons[_servername].IgnoreAssemblies.Remove(plugin);
 			}
 		}
 
 		public void UnloadPlugin(string plugin)
 		{
-			if(!AddonManager.IgnoreAssemblies.ContainsKey(plugin))
+			if(!sAddonManager.Addons[_servername].IgnoreAssemblies.ContainsKey(plugin))
 			{
 				Log.Debug("IgnoreAddon", sLConsole.IgnoreAddon("Text4"), plugin);
 				ISchumixAddon pl;
-				sAddonManager.GetPlugins().TryGetValue(plugin, out pl);
+				sAddonManager.Addons[_servername].Addons.TryGetValue(plugin, out pl);
 
 				if(pl.IsNull())
 				{
@@ -178,8 +179,8 @@ namespace Schumix.Irc.Ignore
 				}
 
 				pl.Destroy();
-				AddonManager.IgnoreAssemblies.Add(plugin, AddonManager.Assemblies[plugin]);
-				var types = AddonManager.Assemblies[plugin].GetTypes();
+				sAddonManager.Addons[_servername].IgnoreAssemblies.Add(plugin, sAddonManager.Addons[_servername].Assemblies[plugin]);
+				var types = sAddonManager.Addons[_servername].Assemblies[plugin].GetTypes();
 
 				Parallel.ForEach(types, type =>
 				{
@@ -212,7 +213,7 @@ namespace Schumix.Irc.Ignore
 				});
 
 				Log.Success("IgnoreAddon", sLConsole.IgnoreAddon("Text5"), plugin);
-				AddonManager.Assemblies.Remove(plugin);
+				sAddonManager.Addons[_servername].Assemblies.Remove(plugin);
 			}
 		}
 	}

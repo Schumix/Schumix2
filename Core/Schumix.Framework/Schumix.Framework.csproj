@@ -75,7 +75,6 @@
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Database\MySql.cs" />
     <Compile Include="Exceptions\SchumixException.cs" />
-    <Compile Include="AddonManager.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Localization\LocalizationManager.cs" />
@@ -106,6 +105,8 @@
     <Compile Include="Config\UpdateConfig.cs" />
     <Compile Include="Config\ServerConfig.cs" />
     <Compile Include="Config\IRCConfigBase.cs" />
+    <Compile Include="Addon\AddonManager.cs" />
+    <Compile Include="Addon\AddonBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -120,6 +121,7 @@
     <Folder Include="Mathematics\" />
     <Folder Include="Mathematics\Algorithms\" />
     <Folder Include="Mathematics\Types\" />
+    <Folder Include="Addon\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Dependencies\sqlite3.dll">

@@ -34,10 +34,12 @@ namespace Schumix.TesztAddon
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private TestCommand sTestCommand;
+		private string _servername;
 
-		public void Setup()
+		public void Setup(string ServerName)
 		{
-			sTestCommand = new TestCommand("rizon");
+			_servername = ServerName;
+			sTestCommand = new TestCommand(ServerName);
 			InitIrcCommand();
 		}
 
@@ -69,12 +71,12 @@ namespace Schumix.TesztAddon
 
 		private void InitIrcCommand()
 		{
-			sIrcBase.SchumixRegisterHandler("test", sTestCommand.HandleTest, CommandPermission.Administrator);
+			sIrcBase.Networks[_servername].SchumixRegisterHandler("test", sTestCommand.HandleTest, CommandPermission.Administrator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			sIrcBase.SchumixRemoveHandler("test",   sTestCommand.HandleTest);
+			sIrcBase.Networks[_servername].SchumixRemoveHandler("test",   sTestCommand.HandleTest);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

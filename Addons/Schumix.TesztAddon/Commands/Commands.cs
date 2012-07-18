@@ -41,6 +41,7 @@ namespace Schumix.TesztAddon.Commands
 
 		public TestCommand(string ServerName) : base(ServerName)
 		{
+
 		}
 
 		public void HandleTest(IRCMessage sIRCMessage)

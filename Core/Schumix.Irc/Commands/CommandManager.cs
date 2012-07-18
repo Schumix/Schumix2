@@ -29,6 +29,7 @@ using Schumix.API;
 using Schumix.API.Irc;
 using Schumix.API.Delegate;
 using Schumix.Framework;
+using Schumix.Framework.Addon;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -38,10 +39,11 @@ namespace Schumix.Irc.Commands
 	{
 		public readonly Dictionary<string, CommandMethod> CommandMethodMap = new Dictionary<string, CommandMethod>();
 		private readonly object MapLock = new object();
+		private string _servername;
 
 		protected CommandManager(string ServerName) : base(ServerName)
 		{
-
+			_servername = ServerName;
 		}
 
 		public void InitializeCommandMgr()
@@ -87,7 +89,7 @@ namespace Schumix.Irc.Commands
 			SchumixRegisterHandler("quit",         HandleQuit,     CommandPermission.Administrator);
 
 			var tasm = Assembly.GetExecutingAssembly();
-			var asms = AddonManager.Assemblies.ToDictionary(v => v.Key, v => v.Value);
+			var asms = sAddonManager.Addons[_servername].Assemblies.ToDictionary(v => v.Key, v => v.Value);
 			asms.Add("currentassembly", tasm);
 			int i = 0;
 

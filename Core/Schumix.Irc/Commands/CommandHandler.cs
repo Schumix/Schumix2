@@ -24,6 +24,7 @@ using Schumix.Irc.Ctcp;
 using Schumix.Irc.Flood;
 using Schumix.Irc.Ignore;
 using Schumix.Framework;
+using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -98,7 +99,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			foreach(var plugin in sAddonManager.GetPlugins())
+			foreach(var plugin in sAddonManager.Addons[sIRCMessage.ServerName].Addons)
 			{
 				if(plugin.Value.HandleHelp(sIRCMessage))
 					return;
