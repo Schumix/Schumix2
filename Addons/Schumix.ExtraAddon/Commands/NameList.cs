@@ -35,13 +35,18 @@ namespace Schumix.ExtraAddon.Commands
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private NameList() {}
+		private Functions sFunctions;
+		private string _servername;
 
-		public void Add(string ServerName, string Channel, string Name)
+		public NameList(string ServerName, Functions fs)
+		{
+			_servername = ServerName;
+			sFunctions = fs;
+		}
+
+		public void Add(string Channel, string Name)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
@@ -57,11 +62,11 @@ namespace Schumix.ExtraAddon.Commands
 				_names.Add(Channel.ToLower(), Name.ToLower());
 		}
 
-		public void Remove(string ServerName, string Channel)
+		public void Remove(string Channel)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
-				var db = SchumixBase.DManager.Query("SELECT Name FROM notes_users");
+				var db = SchumixBase.DManager.Query("SELECT Name FROM notes_users WHERE ServerName = '{0}'", _servername);
 				if(!db.IsNull())
 				{
 					foreach(DataRow row in db.Rows)
@@ -76,7 +81,7 @@ namespace Schumix.ExtraAddon.Commands
 						}
 
 						if(i == 0 && _names[Channel.ToLower()].Contains(name.ToLower(), SchumixBase.Comma))
-							SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", name.ToLower()));
+							SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
 					}
 				}
 
@@ -84,8 +89,10 @@ namespace Schumix.ExtraAddon.Commands
 			}
 		}
 
-		public void Remove(string ServerName, string Channel, string Name, bool Quit = false)
+		public void Remove(string Channel, string Name, bool Quit = false)
 		{
+			var sSender = sIrcBase.Networks[_servername].sSender;
+
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
 				if(_names[Channel.ToLower()].Contains(Name.ToLower(), SchumixBase.Comma))
@@ -148,16 +155,17 @@ namespace Schumix.ExtraAddon.Commands
 				channel.Clear();
 				RandomVhost(Name.ToLower());
 
-				if(IRCConfig.NickName.ToLower() == Name.ToLower())
+				if(IRCConfig.List[_servername].NickName.ToLower() == Name.ToLower())
 				{
-					ExtraAddon.IsOnline = true;
-					sSender.NickServInfo(ServerName, Name);
+					sFunctions.IsOnline = true;
+					sSender.NickServInfo(Name);
 				}
 			}
 		}
 
-		public void Change(string ServerName, string Name, string NewName, bool Identify = false)
+		public void Change(string Name, string NewName, bool Identify = false)
 		{
+			var sSender = sIrcBase.Networks[_servername].sSender;
 			var channel = new Dictionary<string, string>();
 
 			foreach(var chan in _names)
@@ -192,11 +200,11 @@ namespace Schumix.ExtraAddon.Commands
 			channel.Clear();
 			RandomVhost(Name.ToLower());
 
-			if(IRCConfig.NickName.ToLower() == Name.ToLower() && !Identify)
+			if(IRCConfig.List[_servername].NickName.ToLower() == Name.ToLower() && !Identify)
 			{
-				sIrcBase.Networks[ServerName].sNickInfo.ChangeIdentifyStatus(false);
-				ExtraAddon.IsOnline = true;
-				sSender.NickServInfo(ServerName, Name);
+				sIrcBase.Networks[_servername].sNickInfo.ChangeIdentifyStatus(false);
+				sFunctions.IsOnline = true;
+				sSender.NickServInfo(Name);
 			}
 		}
 
@@ -211,15 +219,16 @@ namespace Schumix.ExtraAddon.Commands
 			return false;
 		}
 
-		public void NewThread(string ServerName, string Name)
+		public void NewThread(string Name)
 		{
 			Task.Factory.StartNew(() =>
 			{
+				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 				Thread.Sleep(5*60*1000);
 
 				if(!IsChannelList(Name))
 				{
-					sSendMessage.SendCMPrivmsge(ServerName, Name.ToLower(), sLManager.GetWarningText("NoRegisteredNotesUserAccess"));
+					sSendMessage.SendCMPrivmsg(Name.ToLower(), sLManager.GetWarningText("NoRegisteredNotesUserAccess"), _servername);
 					RandomVhost(Name);
 				}
 			});
@@ -232,18 +241,18 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void RandomVhost(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM notes_users WHERE Name = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(!db.IsNull())
-				SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", sUtilities.SqlEscape(Name.ToLower())));
+				SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 		}
 
 		public void RandomAllVhost()
 		{
-			var db = SchumixBase.DManager.Query("SELECT Name FROM notes_users");
+			var db = SchumixBase.DManager.Query("SELECT Name FROM notes_users WHERE ServerName = '{0}'", _servername);
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
-					SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}'", row["Name"].ToString()));
+					SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}' And ServerName = '{1}'", row["Name"].ToString(), _servername));
 			}
 		}
 	}

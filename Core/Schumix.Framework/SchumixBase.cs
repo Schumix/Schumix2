@@ -191,12 +191,7 @@ namespace Schumix.Framework
 				if(ExitStatus)
 					return;
 
-				foreach(var sn in IRCConfig.List)
-				{
-					foreach(var plugin in sAddonManager.Addons[sn.Key].Addons)
-						plugin.Value.Destroy();
-				}
-
+				sAddonManager.UnloadPlugins();
 				sUtilities.RemovePidFile();
 				SchumixBase.timer.SaveUptime();
 				SchumixBase.ServerDisconnect(Reconnect);

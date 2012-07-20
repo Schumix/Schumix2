@@ -21,6 +21,8 @@ using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.API;
+using Schumix.API.Irc;
+using Schumix.API.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -37,33 +39,41 @@ namespace Schumix.CalendarAddon
 		public static readonly Dictionary<string, Flood> FloodList = new Dictionary<string, Flood>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly CalendarCommand sCalendarCommand = Singleton<CalendarCommand>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		private readonly BanCommand sBanCommand = Singleton<BanCommand>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private readonly Ban sBan = Singleton<Ban>.Instance;
+		private CalendarCommand sCalendarCommand;
+		private BanCommand sBanCommand;
 		private Calendar _calendar;
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
+		private string _servername;
+		private Ban sBan;
 
-		public void Setup()
+		public void Setup(string ServerName)
 		{
+			_servername = ServerName;
 			sLocalization.Locale = sLConsole.Locale;
-			_config = new AddonConfig(Name + ".xml");
-			_calendar = new Calendar();
+			sCalendarCommand = new CalendarCommand(ServerName);
+			sBanCommand = new BanCommand(ServerName);
+			sBan = new Ban(ServerName);
+
+			if(IRCConfig.List[ServerName].ServerId == 1)
+				_config = new AddonConfig(Name + ".xml");
+
+			_calendar = new Calendar(ServerName);
 			_calendar.Start();
 
-			sIrcBase.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
+			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
 			InitIrcCommand();
+			SchumixBase.DManager.Update("banned", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
+			SchumixBase.DManager.Update("calendar", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 		}
 
 		public void Destroy()
 		{
 			_calendar.Stop();
-			sIrcBase.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
+			sIrcBase.Networks[_servername].IrcRemoveHandler("PRIVMSG",  HandlePrivmsg);
 			RemoveIrcCommand();
 		}
 
@@ -74,7 +84,8 @@ namespace Schumix.CalendarAddon
 				switch(RName.ToLower())
 				{
 					case "config":
-						_config = new AddonConfig(Name + ".xml");
+						if(IRCConfig.List[_servername].ServerId == 1)
+							_config = new AddonConfig(Name + ".xml");
 						return 1;
 					case "command":
 						InitIrcCommand();
@@ -93,22 +104,24 @@ namespace Schumix.CalendarAddon
 
 		private void InitIrcCommand()
 		{
-			sIrcBase.SchumixRegisterHandler("ban",      sBanCommand.HandleBan, CommandPermission.Operator);
-			sIrcBase.SchumixRegisterHandler("unban",    sBanCommand.HandleUnban, CommandPermission.Operator);
-			sIrcBase.SchumixRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
+			sIrcBase.Networks[_servername].SchumixRegisterHandler("ban",      sBanCommand.HandleBan, CommandPermission.Operator);
+			sIrcBase.Networks[_servername].SchumixRegisterHandler("unban",    sBanCommand.HandleUnban, CommandPermission.Operator);
+			sIrcBase.Networks[_servername].SchumixRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			sIrcBase.SchumixRemoveHandler("ban",        sBanCommand.HandleBan);
-			sIrcBase.SchumixRemoveHandler("unban",      sBanCommand.HandleUnban);
-			sIrcBase.SchumixRemoveHandler("calendar",   sCalendarCommand.HandleCalendar);
+			sIrcBase.Networks[_servername].SchumixRemoveHandler("ban",        sBanCommand.HandleBan);
+			sIrcBase.Networks[_servername].SchumixRemoveHandler("unban",      sBanCommand.HandleUnban);
+			sIrcBase.Networks[_servername].SchumixRemoveHandler("calendar",   sCalendarCommand.HandleCalendar);
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 			Task.Factory.StartNew(() =>
 			{
+				var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+				var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
 				string channel = sIRCMessage.Channel.ToLower();
 
 				if(sChannelInfo.FSelect(IFunctions.Antiflood) && sChannelInfo.FSelect(IChannelFunctions.Antiflood, channel))
@@ -124,9 +137,9 @@ namespace Schumix.CalendarAddon
 						{
 							var time = DateTime.Now;
 							if(time.Minute < 30)
-								sBan.BanName(sIRCMessage.ServerName, nick, channel, sLManager.GetWarningText("RecurrentFlooding", channel), DateTime.Now.Hour, DateTime.Now.Minute+30);
+								sBan.BanName(nick, channel, sLManager.GetWarningText("RecurrentFlooding", channel, sIRCMessage.ServerName), DateTime.Now.Hour, DateTime.Now.Minute+30);
 							else if(time.Minute >= 30)
-								sBan.BanName(sIRCMessage.ServerName, nick, channel, sLManager.GetWarningText("RecurrentFlooding", channel), DateTime.Now.Hour+1, DateTime.Now.Minute-30);
+								sBan.BanName(nick, channel, sLManager.GetWarningText("RecurrentFlooding", channel, sIRCMessage.ServerName), DateTime.Now.Hour+1, DateTime.Now.Minute-30);
 
 							FloodList[nick].Channel[channel].Piece = 0;
 							return;
@@ -135,7 +148,7 @@ namespace Schumix.CalendarAddon
 						{
 							if(FloodList[nick].Channel[channel].Message >= CalendarConfig.NumberOfMessages)
 							{
-								sSender.Kick(sIRCMessage.ServerName, channel, nick, sLManager.GetWarningText("StopFlooding", channel));
+								sSender.Kick(channel, nick, sLManager.GetWarningText("StopFlooding", channel, sIRCMessage.ServerName));
 								FloodList[nick].Channel[channel].Message = 0;
 								FloodList[nick].Channel[channel].Piece++;
 								return;

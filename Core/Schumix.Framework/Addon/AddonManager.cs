@@ -38,7 +38,9 @@ namespace Schumix.Framework.Addon
 		public readonly Dictionary<string, AddonBase> Addons = new Dictionary<string, AddonBase>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		public bool IsLoadingAddons() { return _loading; }
 		private readonly object LoadLock = new object();
+		private bool _loading;
 		private AddonManager() {}
 
 		/// <summary>
@@ -102,9 +104,6 @@ namespace Schumix.Framework.Addon
 							enabled = false;
 					}
 
-					if(enabled && IsIgnore(dll.Name.Substring(0, dll.Name.IndexOf(".dll"))))
-						enabled = false;
-
 					var asm = Assembly.LoadFrom(dll.FullName);
 
 					if(asm.IsNull())
@@ -118,11 +117,15 @@ namespace Schumix.Framework.Addon
 						if(!Addons.ContainsKey(sn.Key))
 							Addons.Add(sn.Key, new AddonBase());
 
+						if(enabled && IsIgnore(dll.Name.Substring(0, dll.Name.IndexOf(".dll")), sn.Key))
+							enabled = false;
+
 						foreach(var type in asm.GetTypesWithInterface(typeof(ISchumixAddon)))
 						{
 							pl = (ISchumixAddon)Activator.CreateInstance(type);
 	
-							if(pl.IsNull() || Addons[sn.Key].Assemblies.ContainsValue(asm))
+							if(pl.IsNull() || Addons[sn.Key].Assemblies.ContainsValue(asm) ||
+							   Addons[sn.Key].IgnoreAssemblies.ContainsValue(asm))
 								continue;
 	
 							if(Addons[sn.Key].Addons.ContainsKey(pl.Name.ToLower()))
@@ -155,10 +158,12 @@ namespace Schumix.Framework.Addon
 				if(AddonsConfig.Ignore.Length > 1)
 					Log.Notice("AddonManager", sLConsole.AddonManager("Text3"), AddonsConfig.Ignore);
 
+				_loading = true;
 				return true;
 			}
 			catch(Exception e)
 			{
+				_loading = false;
 				Log.Error("AddonManager", sLConsole.AddonManager("Text4"), e.Message);
 				return false;
 			}
@@ -167,18 +172,41 @@ namespace Schumix.Framework.Addon
 		/// <summary>
 		/// Unloads all addons.
 		/// </summary>
-		public bool UnloadPlugins()
+		public bool UnloadPlugins(string ServerName = "")
 		{
 			lock(LoadLock)
 			{
-				foreach(var ad in Addons)
+				if(ServerName == string.Empty)
 				{
-					foreach(var addon in ad.Value.Addons)
-						addon.Value.Destroy();
-	
-					ad.Value.Addons.Clear();
-					ad.Value.Assemblies.Clear();
-					ad.Value.IgnoreAssemblies.Clear();
+					foreach(var ad in Addons)
+					{
+						foreach(var addon in ad.Value.Addons)
+						{
+							if(!ad.Value.IgnoreAssemblies.ContainsKey(addon.Key))
+								addon.Value.Destroy();
+						}
+
+						ad.Value.Addons.Clear();
+						ad.Value.Assemblies.Clear();
+						ad.Value.IgnoreAssemblies.Clear();
+					}
+
+					Addons.Clear();
+					_loading = false;
+				}
+				else
+				{
+					foreach(var addon in Addons[ServerName].Addons)
+					{
+						if(!Addons[ServerName].IgnoreAssemblies.ContainsKey(addon.Key))
+							addon.Value.Destroy();
+					}
+
+					Addons[ServerName].Addons.Clear();
+					Addons[ServerName].Assemblies.Clear();
+					Addons[ServerName].IgnoreAssemblies.Clear();
+					Addons.Remove(ServerName);
+					_loading = false;
 				}
 			}
 
@@ -201,9 +229,9 @@ namespace Schumix.Framework.Addon
 			};
 		}
 
-		private bool IsIgnore(string Name)
+		private bool IsIgnore(string Name, string ServerName)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}'", sUtilities.SqlEscape(Name.ToLower()));
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), ServerName);
 			return !db.IsNull() ? true : false;
 		}
 	}

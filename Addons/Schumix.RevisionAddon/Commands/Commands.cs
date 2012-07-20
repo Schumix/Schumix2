@@ -19,14 +19,19 @@
 
 using System;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 
 namespace Schumix.RevisionAddon.Commands
 {
-	partial class Revision : CommandInfo
+	class Revision : CommandInfo
 	{
-		protected void HandleXrev(IRCMessage sIRCMessage)
+		public Revision(string ServerName) : base(ServerName)
+		{
+		}
+
+		public void HandleXrev(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Info.Length < 5)
 			{

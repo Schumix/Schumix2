@@ -26,6 +26,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Microsoft.CSharp;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -39,16 +40,22 @@ namespace Schumix.CompilerAddon.Commands
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 		private readonly Regex ForRegex = new Regex(@"for\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex DoRegex = new Regex(@"do\s*\{?\s*(?<content>.+)\s*\}?\s*while\s*\((?<while>.+)\s*\)");
 		private readonly Regex SystemNetRegex = new Regex(@"using\s+System.Net");
-		protected Regex ClassRegex { get; set; }
-		protected Regex EntryRegex { get; set; }
-		protected Regex SchumixRegex { get; set; }
+		public Regex ClassRegex { get; set; }
+		public Regex EntryRegex { get; set; }
+		public Regex SchumixRegex { get; set; }
+		private string _servername;
+
+		public SCompiler(string ServerName) : base(ServerName)
+		{
+			_servername = ServerName;
+		}
 
 		private bool IsClass(string data)
 		{
@@ -80,19 +87,20 @@ namespace Schumix.CompilerAddon.Commands
 			return DoRegex.IsMatch(data);
 		}
 
-		protected string MessageText(int Code, string Channel)
+		public string MessageText(int Code, string Channel)
 		{
-			return sLManager.GetCommandTexts("compiler", Channel).Length > Code ? sLManager.GetCommandTexts("compiler", Channel)[Code] : sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(Channel));
+			return sLManager.GetCommandTexts("compiler", Channel, _servername).Length > Code ? sLManager.GetCommandTexts("compiler", Channel, _servername)[Code] : sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(Channel, _servername));
 		}
 
-		protected int CompilerCommand(IRCMessage sIRCMessage, bool command)
+		public int CompilerCommand(IRCMessage sIRCMessage, bool command)
 		{
 			try
 			{
-				var text = sLManager.GetCommandTexts("compiler", sIRCMessage.Channel);
+				var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+				var text = sLManager.GetCommandTexts("compiler", sIRCMessage.Channel, sIRCMessage.ServerName);
 				if(text.Length < 5)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return 1;
 				}
 
@@ -149,7 +157,7 @@ namespace Schumix.CompilerAddon.Commands
 					case -1:
 						return 1;
 					case 0:
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return 1;
 					default:
 						break;
@@ -260,6 +268,7 @@ namespace Schumix.CompilerAddon.Commands
 		{
 			if(results.Errors.HasErrors)
 			{
+				var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 				string errormessage = string.Empty;
 
 				foreach(CompilerError error in results.Errors)
@@ -309,7 +318,7 @@ namespace Schumix.CompilerAddon.Commands
 					errormessage += ". " + errortext;
 				}
 
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), errormessage.Remove(0, 2, ". "));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), errormessage.Remove(0, 2, ". "));
 				return null;
 			}
 			else
@@ -424,6 +433,8 @@ namespace Schumix.CompilerAddon.Commands
 
 		private int StartCode(IRCMessage sIRCMessage, string data, object o)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
 			try
 			{
 				if(IsFor(data) || IsDo(data) || IsWhile(data))
@@ -436,7 +447,7 @@ namespace Schumix.CompilerAddon.Commands
 	
 					if(!b)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return -1;
 					}
 				}
@@ -445,7 +456,7 @@ namespace Schumix.CompilerAddon.Commands
 			}
 			catch(Exception e)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel), e.Message);
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), e.Message);
 				return -1;
 			}
 
@@ -575,7 +586,8 @@ namespace Schumix.CompilerAddon.Commands
 
 		private void Warning(IRCMessage sIRCMessage)
 		{
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/warning", sIRCMessage.Channel));
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/warning", sIRCMessage.Channel, sIRCMessage.ServerName));
 		}
 	}
 }

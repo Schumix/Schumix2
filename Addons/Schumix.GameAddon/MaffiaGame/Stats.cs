@@ -29,6 +29,8 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!IsRunning(_channel))
 				return;
 
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+
 			if(!Started)
 			{
 				string names = string.Empty;

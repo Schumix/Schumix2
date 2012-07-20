@@ -20,7 +20,9 @@ CREATE TABLE `admins` (
 -- Table structure for banned
 -- ----------------------------
 CREATE TABLE `banned` (
-  `Id` int(5) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(50) collate utf8_hungarian_ci NOT NULL default '',
   `Channel` varchar(20) collate utf8_hungarian_ci NOT NULL default '',
   `Reason` text collate utf8_hungarian_ci NOT NULL,
@@ -36,7 +38,9 @@ CREATE TABLE `banned` (
 -- Table structure for calendar
 -- ----------------------------
 CREATE TABLE `calendar` (
-  `Id` int(5) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(50) collate utf8_hungarian_ci NOT NULL default '',
   `Channel` varchar(20) collate utf8_hungarian_ci NOT NULL default '',
   `Message` text collate utf8_hungarian_ci NOT NULL,
@@ -50,10 +54,10 @@ CREATE TABLE `calendar` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 -- ----------------------------
--- Table structure for channel
+-- Table structure for channels
 -- ----------------------------
-CREATE TABLE `channel` (
-  `Id` int(3) unsigned NOT NULL auto_increment,
+CREATE TABLE `channels` (
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `ServerId` INT(10) NOT NULL DEFAULT '1',
   `ServerName` varchar(40) NOT NULL default '',
   `Functions` varchar(500) NOT NULL default ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off',
@@ -70,6 +74,8 @@ CREATE TABLE `channel` (
 -- ----------------------------
 CREATE TABLE `gitinfo` (
   `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) NOT NULL default '',
   `Type` varchar(20) NOT NULL default '',
   `Link` varchar(255) NOT NULL default '',
@@ -83,6 +89,8 @@ CREATE TABLE `gitinfo` (
 -- ----------------------------
 CREATE TABLE `hginfo` (
   `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) NOT NULL default '',
   `Link` varchar(255) NOT NULL default '',
   `Website` varchar(30) NOT NULL default '',
@@ -95,6 +103,8 @@ CREATE TABLE `hginfo` (
 -- ----------------------------
 CREATE TABLE `mantisbt` (
   `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) NOT NULL default '',
   `Link` varchar(255) NOT NULL default '',
   `Channel` text NOT NULL,
@@ -105,7 +115,7 @@ CREATE TABLE `mantisbt` (
 -- Table structure for hlmessage
 -- ----------------------------
 CREATE TABLE `hlmessage` (
-  `Id` int(3) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `ServerId` INT(10) NOT NULL DEFAULT '1',
   `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) collate utf8_hungarian_ci NOT NULL default '',
@@ -118,7 +128,7 @@ CREATE TABLE `hlmessage` (
 -- Table structure for irc_commands
 -- ----------------------------
 CREATE TABLE `irc_commands` (
-  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `Language` varchar(4) collate utf8_hungarian_ci NOT NULL default 'enUS',
   `Command` varchar(30) collate utf8_hungarian_ci NOT NULL default '',
   `Text` text collate utf8_hungarian_ci NOT NULL,
@@ -129,7 +139,9 @@ CREATE TABLE `irc_commands` (
 -- Table structure for kicklist
 -- ----------------------------
 CREATE TABLE `kicklist` (
-  `Id` int(3) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) collate utf8_hungarian_ci NOT NULL default '',
   `Channel` varchar(20) collate utf8_hungarian_ci NOT NULL default '',
   `Reason` text collate utf8_hungarian_ci NOT NULL,
@@ -140,7 +152,7 @@ CREATE TABLE `kicklist` (
 -- Table structure for localized_console_command
 -- ----------------------------
 CREATE TABLE `localized_console_command` (
-  `Id` int(8) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `Language` varchar(4) collate utf8_hungarian_ci NOT NULL default 'enUS',
   `Command` text collate utf8_hungarian_ci NOT NULL,
   `Text` text collate utf8_hungarian_ci NOT NULL,
@@ -151,7 +163,7 @@ CREATE TABLE `localized_console_command` (
 -- Table structure for localized_console_command_help
 -- ----------------------------
 CREATE TABLE `localized_console_command_help` (
-  `Id` int(8) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `Language` varchar(4) collate utf8_hungarian_ci NOT NULL default 'enUS',
   `Command` text collate utf8_hungarian_ci NOT NULL,
   `Text` text collate utf8_hungarian_ci NOT NULL,
@@ -162,7 +174,7 @@ CREATE TABLE `localized_console_command_help` (
 -- Table structure for localized_console_warning
 -- ----------------------------
 CREATE TABLE `localized_console_warning` (
-  `Id` int(8) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `Language` varchar(4) collate utf8_hungarian_ci NOT NULL default 'enUS',
   `Command` text collate utf8_hungarian_ci NOT NULL,
   `Text` text collate utf8_hungarian_ci NOT NULL,
@@ -184,7 +196,7 @@ CREATE TABLE `localized_command` (
 -- Table structure for localized_command_help
 -- ----------------------------
 CREATE TABLE `localized_command_help` (
-  `Id` int(8) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `Language` varchar(4) collate utf8_hungarian_ci NOT NULL default 'enUS',
   `Command` text collate utf8_hungarian_ci NOT NULL,
   `Rank` int(1) NOT NULL default '0',
@@ -196,7 +208,7 @@ CREATE TABLE `localized_command_help` (
 -- Table structure for localized_warning
 -- ----------------------------
 CREATE TABLE `localized_warning` (
-  `Id` int(8) unsigned NOT NULL AUTO_INCREMENT,
+  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Language` varchar(4) COLLATE utf8_hungarian_ci NOT NULL DEFAULT 'enUS',
   `Command` text COLLATE utf8_hungarian_ci NOT NULL,
   `Text` text COLLATE utf8_hungarian_ci NOT NULL,
@@ -208,6 +220,8 @@ CREATE TABLE `localized_warning` (
 -- ----------------------------
 CREATE TABLE `message` (
   `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) collate utf8_hungarian_ci NOT NULL default '',
   `Channel` varchar(20) collate utf8_hungarian_ci NOT NULL default '',
   `Message` text collate utf8_hungarian_ci NOT NULL,
@@ -219,7 +233,9 @@ CREATE TABLE `message` (
 -- Table structure for modelist
 -- ----------------------------
 CREATE TABLE `modelist` (
-  `Id` int(3) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) NOT NULL default '',
   `Channel` varchar(20) NOT NULL default '',
   `Rank` varchar(10) NOT NULL default '',
@@ -231,6 +247,8 @@ CREATE TABLE `modelist` (
 -- ----------------------------
 CREATE TABLE `notes` (
   `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Code` text collate utf8_hungarian_ci NOT NULL,
   `Name` varchar(20) collate utf8_hungarian_ci NOT NULL default '',
   `Note` text collate utf8_hungarian_ci NOT NULL,
@@ -242,6 +260,8 @@ CREATE TABLE `notes` (
 -- ----------------------------
 CREATE TABLE `notes_users` (
   `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) NOT NULL default '',
   `Password` varchar(40) NOT NULL default '',
   `Vhost` varchar(50) NOT NULL default '',
@@ -252,7 +272,7 @@ CREATE TABLE `notes_users` (
 -- Table structure for schumix
 -- ----------------------------
 CREATE TABLE `schumix` (
-  `Id` int(3) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `ServerId` INT(10) NOT NULL DEFAULT '1',
   `ServerName` varchar(40) NOT NULL default '',
   `FunctionName` varchar(20) NOT NULL default '',
@@ -265,6 +285,8 @@ CREATE TABLE `schumix` (
 -- ----------------------------
 CREATE TABLE `svninfo` (
   `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) NOT NULL default '',
   `Link` varchar(255) NOT NULL default '',
   `Website` varchar(30) NOT NULL default '',
@@ -300,6 +322,8 @@ CREATE TABLE `uptime` (
 -- ----------------------------
 CREATE TABLE `wordpressinfo` (
   `Id` int(10) unsigned NOT NULL auto_increment,
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) NOT NULL default '',
   `Link` varchar(255) NOT NULL default '',
   `Channel` text NOT NULL,
@@ -310,7 +334,7 @@ CREATE TABLE `wordpressinfo` (
 -- Table structure for ignore_channels
 -- ----------------------------
 CREATE TABLE `ignore_channels` (
-  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `ServerId` INT(10) NOT NULL DEFAULT '1',
   `ServerName` varchar(40) NOT NULL default '',
   `Channel` varchar(20) NOT NULL default '',
@@ -321,7 +345,7 @@ CREATE TABLE `ignore_channels` (
 -- Table structure for ignore_nicks
 -- ----------------------------
 CREATE TABLE `ignore_nicks` (
-  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `ServerId` INT(10) NOT NULL DEFAULT '1',
   `ServerName` varchar(40) NOT NULL default '',
   `Nick` varchar(30) NOT NULL default '',
@@ -332,7 +356,7 @@ CREATE TABLE `ignore_nicks` (
 -- Table structure for ignore_commands
 -- ----------------------------
 CREATE TABLE `ignore_commands` (
-  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `ServerId` INT(10) NOT NULL DEFAULT '1',
   `ServerName` varchar(40) NOT NULL default '',
   `Command` varchar(30) NOT NULL default '',
@@ -343,7 +367,7 @@ CREATE TABLE `ignore_commands` (
 -- Table structure for ignore_irc_commands
 -- ----------------------------
 CREATE TABLE `ignore_irc_commands` (
-  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `ServerId` INT(10) NOT NULL DEFAULT '1',
   `ServerName` varchar(40) NOT NULL default '',
   `Command` varchar(30) NOT NULL default '',
@@ -354,7 +378,9 @@ CREATE TABLE `ignore_irc_commands` (
 -- Table structure for maffiagame
 -- ----------------------------
 CREATE TABLE `maffiagame` (
-  `Id` int(4) unsigned NOT NULL AUTO_INCREMENT COMMENT 'key',
+  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT 'key',
+  `ServerId` INT(10) NOT NULL DEFAULT '1',
+  `ServerName` varchar(40) NOT NULL default '',
   `Game` int(5) NOT NULL COMMENT 'th',
   `Name` varchar(25) NOT NULL COMMENT 'Player name',
   `Survivor` int(3) NOT NULL DEFAULT '1' COMMENT 'The player has survived?',
@@ -367,7 +393,7 @@ CREATE TABLE `maffiagame` (
 -- Table structure for ignore_addons
 -- ----------------------------
 CREATE TABLE `ignore_addons` (
-  `Id` int(4) unsigned NOT NULL auto_increment,
+  `Id` int(10) unsigned NOT NULL auto_increment,
   `ServerId` INT(10) NOT NULL DEFAULT '1',
   `ServerName` varchar(40) NOT NULL default '',
   `Addon` varchar(50) NOT NULL default '',

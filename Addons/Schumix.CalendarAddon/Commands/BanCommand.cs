@@ -19,6 +19,7 @@
 
 using System;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.CalendarAddon;
@@ -28,29 +29,36 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.CalendarAddon.Commands
 {
-	partial class BanCommand : CommandInfo
+	class BanCommand : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Unban sUnban = Singleton<Unban>.Instance;
-		private readonly Ban sBan = Singleton<Ban>.Instance;
-		private BanCommand() {}
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private Unban sUnban;
+		private Ban sBan;
+
+		public BanCommand(string ServerName) : base(ServerName)
+		{
+			sBan = new Ban(ServerName);
+			sUnban = new Unban(ServerName);
+		}
 
 		public void HandleBan(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoBanNameOrVhost", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoBanNameOrVhost", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
 			if(sIRCMessage.Info.Length < 6)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
@@ -58,44 +66,44 @@ namespace Schumix.CalendarAddon.Commands
 			{
 				if(sIRCMessage.Info.Length < 7)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				int hour = sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
 				if(hour > 24 || hour < 0)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				int minute = sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
 				if(minute > 60 || minute < 0)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
-				sSendMessage.SendChatMessage(sIRCMessage, sBan.BanName(sIRCMessage.ServerName, sIRCMessage.Info[4].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(6, SchumixBase.Space), hour, minute));
+				sSendMessage.SendChatMessage(sIRCMessage, sBan.BanName(sIRCMessage.Info[4].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(6, SchumixBase.Space), hour, minute));
 			}
 			else
 			{
 				if(sIRCMessage.Info.Length < 7)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTime", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 8)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				string[] s = sIRCMessage.Info[5].Split(SchumixBase.Point);
 				if(s.Length < 3)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("ban", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("ban", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
@@ -103,32 +111,32 @@ namespace Schumix.CalendarAddon.Commands
 				int month = s[1].ToNumber(13).ToInt();
 				if(month > 12 || month <= 0)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				int day = s[2].ToNumber(32).ToInt();
 				if(!sUtilities.IsDay(year, month, day))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				int hour = sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
 				if(hour > 24 || hour < 0)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				int minute = sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
 				if(minute > 60 || minute < 0)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
-				sSendMessage.SendChatMessage(sIRCMessage, sBan.BanName(sIRCMessage.ServerName, sIRCMessage.Info[4].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(7, SchumixBase.Space), year, month, day, hour, minute));
+				sSendMessage.SendChatMessage(sIRCMessage, sBan.BanName(sIRCMessage.Info[4].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(7, SchumixBase.Space), year, month, day, hour, minute));
 			}
 		}
 
@@ -137,13 +145,15 @@ namespace Schumix.CalendarAddon.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoUnbanNameOrVhost", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoUnbanNameOrVhost", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
-			sUnban.UnbanName(sIRCMessage.ServerName, sIRCMessage.Info[4], sIRCMessage.Channel);
+			sUnban.UnbanName(sIRCMessage.Info[4], sIRCMessage.Channel);
 		}
 	}
 }

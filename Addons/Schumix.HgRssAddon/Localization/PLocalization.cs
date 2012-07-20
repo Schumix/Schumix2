@@ -191,20 +191,20 @@ namespace Schumix.HgRssAddon.Localization
 				case "Text":
 				{
 					if(Locale == "huHU")
-						return "{0} rss került betöltésre.";
+						return "{0}: {1} rss került betöltésre.";
 					else if(Locale == "enUS")
-						return "{0} rss loaded.";
+						return "{0}: {1} rss loaded.";
 					else
-						return "{0} rss loaded.";
+						return "{0}: {1} rss loaded.";
 				}
 				case "Text2":
 				{
 					if(Locale == "huHU")
-						return "Üres az adatbázis!";
+						return "{0}: Üres az adatbázis!";
 					else if(Locale == "enUS")
-						return "Empty database!";
+						return "{0}: Empty database!";
 					else
-						return "Empty database!";
+						return "{0}: Empty database!";
 				}
 				default:
 					return string.Empty;

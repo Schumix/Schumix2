@@ -21,6 +21,8 @@ using System;
 using System.Web;
 using System.Threading.Tasks;
 using Schumix.API;
+using Schumix.API.Irc;
+using Schumix.API.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Ignore;
 using Schumix.Framework;
@@ -32,19 +34,18 @@ namespace Schumix.ChatterBotAddon
 	class ChatterBotAddon : ISchumixAddon
 	{
 		private readonly ChatterBotSession session = new ChatterBotFactory().Create(ChatterBotType.CLEVERBOT).CreateSession();
-		private readonly IgnoreNickName sIgnoreNickName = Singleton<IgnoreNickName>.Instance;
-		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private string _servername;
 
-		public void Setup()
+		public void Setup(string ServerName)
 		{
-			sIrcBase.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
+			_servername = ServerName;
+			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
 		}
 
 		public void Destroy()
 		{
-			sIrcBase.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
+			sIrcBase.Networks[_servername].IrcRemoveHandler("PRIVMSG",  HandlePrivmsg);
 		}
 
 		public int Reload(string RName, string SName = "")
@@ -54,6 +55,10 @@ namespace Schumix.ChatterBotAddon
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
+			var sIgnoreNickName = sIrcBase.Networks[sIRCMessage.ServerName].sIgnoreNickName;
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 

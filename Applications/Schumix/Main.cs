@@ -235,10 +235,7 @@ namespace Schumix
 				if(SchumixBase.ExitStatus)
 					return;
 
-				foreach(var nw in sIrcBase.Networks)
-					sIrcBase.Networks[nw.Key].sSender.Quit("Crash.");
-
-				Thread.Sleep(5*1000);
+				sIrcBase.Shutdown("Crash.");
 			};
 
 			if(!ServerConfig.Enabled)

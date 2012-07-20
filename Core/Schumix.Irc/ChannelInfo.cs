@@ -30,15 +30,15 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
-	public sealed class ChannelInfoo
+	public sealed class ChannelInfo
 	{
 		private readonly Dictionary<string, string> ChannelFunction = new Dictionary<string, string>();
 		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly object WriteLock = new object();
-		private readonly IgnoreChannele sIgnoreChannel;
-		private readonly Sendere sSender;
+		private readonly IgnoreChannel sIgnoreChannel;
+		private readonly Sender sSender;
 		private string _servername;
 
 		public Dictionary<string, string> CList
@@ -51,7 +51,7 @@ namespace Schumix.Irc
 			get { return ChannelFunction; }
 		}
 
-		public ChannelInfoo(string ServerName)
+		public ChannelInfo(string ServerName)
 		{
 			_servername = ServerName;
 			sSender = sIrcBase.Networks[ServerName].sSender;

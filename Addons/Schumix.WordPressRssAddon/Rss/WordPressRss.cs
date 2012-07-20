@@ -23,6 +23,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using Schumix.API;
+using Schumix.API.Functions;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -36,9 +37,8 @@ namespace Schumix.WordPressRssAddon
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private NetworkCredential _credential;
 		private XmlNamespaceManager _ns;
 		private Thread _thread;
@@ -50,10 +50,12 @@ namespace Schumix.WordPressRssAddon
 		private string _author;
 		private string _username;
 		private string _password;
+		private string _servername;
 		public bool Started { get; private set; }
 
-		public WordPressRss(string name, string url)
+		public WordPressRss(string ServerName, string name, string url)
 		{
+			_servername = ServerName;
 			_name = name;
 
 			if(url.Contains(SchumixBase.Colon.ToString()) && url.Contains("@"))
@@ -141,7 +143,7 @@ namespace Schumix.WordPressRssAddon
 				{
 					try
 					{
-						if(sChannelInfo.FSelect(IFunctions.Wordpress))
+						if(sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Wordpress))
 						{
 							url = GetUrl();
 							if(url.IsNull())
@@ -266,17 +268,16 @@ namespace Schumix.WordPressRssAddon
 
 		private void Informations(string guid, string title, string author)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM wordpressinfo WHERE Name = '{0}'", _name);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM wordpressinfo WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
 			if(!db.IsNull())
 			{
 				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 
 				foreach(var chan in channel)
 				{
-					string language = sLManager.GetChannelLocalization(chan);
-					//sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress", language), _name, author, guid);
-					//sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress2", language), _name, title);
-
+					string language = sLManager.GetChannelLocalization(chan, _servername);
+					sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress", language), _name, author, guid);
+					sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress2", language), _name, title);
 					Thread.Sleep(1000);
 				}
 			}

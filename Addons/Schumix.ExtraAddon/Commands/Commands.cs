@@ -22,6 +22,7 @@ using System.Xml;
 using System.Web;
 using System.Data;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -37,24 +38,31 @@ namespace Schumix.ExtraAddon.Commands
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private Functions() {}
+		private string _servername;
+		public bool IsOnline { get; set; }
+
+		public Functions(string ServerName) : base(ServerName)
+		{
+			_servername = ServerName;
+		}
 
 		public void HandleAutoFunction(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				return;
 
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
+
 			if(sIRCMessage.Info.Length < 5)
 			{
-				var text = sLManager.GetCommandTexts("autofunction", sIRCMessage.Channel);
+				var text = sLManager.GetCommandTexts("autofunction", sIRCMessage.Channel, sIRCMessage.ServerName);
 				if(text.Length < 2)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
 				}
 
@@ -72,13 +80,13 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(sIRCMessage.Info[5].ToLower() == "info")
 				{
-					var db = SchumixBase.DManager.Query("SELECT Name, Enabled FROM hlmessage");
+					var db = SchumixBase.DManager.Query("SELECT Name, Enabled FROM hlmessage WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						string names = string.Empty;
@@ -90,42 +98,42 @@ namespace Schumix.ExtraAddon.Commands
 							names += ", " + name + SchumixBase.Colon + status;
 						}
 
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage/info", sIRCMessage.Channel), names.Remove(0, 2, ", "));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage/info", sIRCMessage.Channel, sIRCMessage.ServerName), names.Remove(0, 2, ", "));
 					}
 					else
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "update")
 				{
-					var db = SchumixBase.DManager.Query("SELECT Name FROM admins");
+					var db = SchumixBase.DManager.Query("SELECT Name FROM admins WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						foreach(DataRow row in db.Rows)
 						{
 							string name = row["Name"].ToString();
 
-							var db1 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM hlmessage WHERE Name = '{0}'", name);
+							var db1 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM hlmessage WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
 							if(db1.IsNull())
-								SchumixBase.DManager.Insert("`hlmessage`(Name, Enabled)", name, SchumixBase.Off);
+								SchumixBase.DManager.Insert("`hlmessage`(ServerId, ServerName, Name, Enabled)", sIRCMessage.ServerId, sIRCMessage.ServerName, name, SchumixBase.Off);
 						}
 
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage/update", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage/update", sIRCMessage.Channel, sIRCMessage.ServerName));
 					}
 					else
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "function")
 				{
-					var text = sLManager.GetCommandTexts("autofunction/hlmessage/function", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("autofunction/hlmessage/function", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoFunctionStatus", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoFunctionStatus", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
@@ -133,7 +141,7 @@ namespace Schumix.ExtraAddon.Commands
 					if(status == SchumixBase.On || status == SchumixBase.Off)
 					{
 						string name = sIRCMessage.Nick.ToLower();
-						SchumixBase.DManager.Update("hlmessage", string.Format("Enabled = '{0}'", status), string.Format("Name = '{0}'", name));
+						SchumixBase.DManager.Update("hlmessage", string.Format("Enabled = '{0}'", status), string.Format("Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName));
 	
 						if(status == SchumixBase.On)
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], name);
@@ -144,12 +152,12 @@ namespace Schumix.ExtraAddon.Commands
 				else
 				{
 					string name = sIRCMessage.Nick.ToLower();
-					SchumixBase.DManager.Update("hlmessage", string.Format("Info = '{0}', Enabled = 'on'", sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space))), string.Format("Name = '{0}'", name));
-					SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", "FunctionName = 'autohl'");
-					SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("autohl", SchumixBase.On, sIRCMessage.Channel)), string.Format("Channel = '{0}'", sIRCMessage.Channel.ToLower()));
+					SchumixBase.DManager.Update("hlmessage", string.Format("Info = '{0}', Enabled = 'on'", sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space))), string.Format("Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName));
+					SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = 'autohl' And ServerName = '{0}'", sIRCMessage.ServerName));
+					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("autohl", SchumixBase.On, sIRCMessage.Channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					sChannelInfo.FunctionsReload();
 					sChannelInfo.ChannelFunctionsReload();
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 			}
 
@@ -160,69 +168,69 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(sIRCMessage.Info[5].ToLower() == "add")
 				{
-					var text = sLManager.GetCommandTexts("autofunction/kick/add", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("autofunction/kick/add", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
 					}
 
-					SchumixBase.DManager.Insert("`kicklist`(Name, Channel, Reason)", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(7, SchumixBase.Space)));
+					SchumixBase.DManager.Insert("`kicklist`(ServerId, ServerName, Name, Channel, Reason)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(7, SchumixBase.Space)));
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[6]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "remove")
 				{
-					var text = sLManager.GetCommandTexts("autofunction/kick/remove", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("autofunction/kick/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
 					}
 
-					SchumixBase.DManager.Delete("kicklist", string.Format("Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower()));
+					SchumixBase.DManager.Delete("kicklist", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[6]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "list")
 				{
-					var db = SchumixBase.DManager.Query("SELECT Name FROM kicklist WHERE Channel = '{0}'", sIRCMessage.Channel.ToLower());
+					var db = SchumixBase.DManager.Query("SELECT Name FROM kicklist WHERE Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						string names = string.Empty;
@@ -234,106 +242,106 @@ namespace Schumix.ExtraAddon.Commands
 						}
 
 						if(names == string.Empty)
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/kick/list", sIRCMessage.Channel), sLConsole.Other("Nobody"));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/kick/list", sIRCMessage.Channel, sIRCMessage.ServerName), sLConsole.Other("Nobody"));
 						else
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/kick/list", sIRCMessage.Channel), names.Remove(0, 2, ", "));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/kick/list", sIRCMessage.Channel, sIRCMessage.ServerName), names.Remove(0, 2, ", "));
 					}
 					else
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "channel")
 				{
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
 					if(sIRCMessage.Info[7].ToLower() == "add")
 					{
-						var text = sLManager.GetCommandTexts("autofunction/kick/channel/add", sIRCMessage.Channel);
+						var text = sLManager.GetCommandTexts("autofunction/kick/channel/add", sIRCMessage.Channel, sIRCMessage.ServerName);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 							return;
 						}
 
 						if(sIRCMessage.Info.Length < 9)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
 						if(sIRCMessage.Info.Length < 10)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 	
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 						if(!db.IsNull())
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 							return;
 						}
 
-						SchumixBase.DManager.Insert("`kicklist`(Name, Channel, Reason)", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(9, SchumixBase.Space)));
+						SchumixBase.DManager.Insert("`kicklist`(ServerId, ServerName, Name, Channel, Reason)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(9, SchumixBase.Space)));
 						sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[8]);
 					}
 					else if(sIRCMessage.Info[7].ToLower() == "remove")
 					{
-						var text = sLManager.GetCommandTexts("autofunction/kick/channel/remove", sIRCMessage.Channel);
+						var text = sLManager.GetCommandTexts("autofunction/kick/channel/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 							return;
 						}
 
 						if(sIRCMessage.Info.Length < 9)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 						if(db.IsNull())
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 							return;
 						}
 
-						SchumixBase.DManager.Delete("kicklist", string.Format("Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower())));
+						SchumixBase.DManager.Delete("kicklist", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
 						sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[8]);
 					}
 					else if(sIRCMessage.Info[7].ToLower() == "list")
 					{
-						var text = sLManager.GetCommandTexts("autofunction/kick/channel/list", sIRCMessage.Channel);
+						var text = sLManager.GetCommandTexts("autofunction/kick/channel/list", sIRCMessage.Channel, sIRCMessage.ServerName);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 							return;
 						}
 
 						if(!IsChannel(sIRCMessage.Info[6].ToLower()))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						var db0 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						var db0 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM kicklist WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 						if(db0.IsNull())
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 							return;
 						}
 
-						var db = SchumixBase.DManager.Query("SELECT Name FROM kicklist WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						var db = SchumixBase.DManager.Query("SELECT Name FROM kicklist WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 						if(!db.IsNull())
 						{
 							string names = string.Empty;
@@ -350,7 +358,7 @@ namespace Schumix.ExtraAddon.Commands
 								sSendMessage.SendChatMessage(sIRCMessage, text[0], names.Remove(0, 2, ", "));
 						}
 						else
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 					}
 				}
 			}
@@ -358,88 +366,88 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 		
 				if(sIRCMessage.Info[5].ToLower() == "add")
 				{
-					var text = sLManager.GetCommandTexts("autofunction/mode/add", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("autofunction/mode/add", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoRank", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoRank", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
 					}
 
-					SchumixBase.DManager.Insert("`modelist`(Name, Channel, Rank)", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
+					SchumixBase.DManager.Insert("`modelist`(ServerId, ServerName, Name, Channel, Rank)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()));
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[6]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "change")
 				{
-					var text = sLManager.GetCommandTexts("autofunction/mode/change", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("autofunction/mode/change", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoRank", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoRank", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
 					}
 
-					SchumixBase.DManager.Update("modelist", string.Format("Rank = {0}", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower())), string.Format("Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower()));
+					SchumixBase.DManager.Update("modelist", string.Format("Rank = {0}", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower())), string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[6], sIRCMessage.Info[7].ToLower());
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "remove")
 				{
-					var text = sLManager.GetCommandTexts("autofunction/mode/remove", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("autofunction/mode/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -449,22 +457,22 @@ namespace Schumix.ExtraAddon.Commands
 					{
 						string rank = db["Rank"].ToString();
 						if(rank.Substring(0, 1) == "+")
-							sSender.Modee(sIRCMessage.ServerName, sIRCMessage.Channel.ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[6].ToLower());	
+							sSender.Mode(sIRCMessage.Channel.ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[6].ToLower());	
 					}
 
-					SchumixBase.DManager.Delete("modelist", string.Format("Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower()));
+					SchumixBase.DManager.Delete("modelist", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[6]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "list")
 				{
-					var text = sLManager.GetCommandTexts("autofunction/mode/list", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("autofunction/mode/list", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 5)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
-					var db = SchumixBase.DManager.Query("SELECT Name, Rank FROM modelist WHERE Channel = '{0}'", sIRCMessage.Channel.ToLower());
+					var db = SchumixBase.DManager.Query("SELECT Name, Rank FROM modelist WHERE Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						string voices = string.Empty;
@@ -530,100 +538,100 @@ namespace Schumix.ExtraAddon.Commands
 							sSendMessage.SendChatMessage(sIRCMessage, text[4], owners.Remove(0, 2, ", "));
 					}
 					else
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "channel")
 				{
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 		
 					if(sIRCMessage.Info[7].ToLower() == "add")
 					{
-						var text = sLManager.GetCommandTexts("autofunction/mode/channel/add", sIRCMessage.Channel);
+						var text = sLManager.GetCommandTexts("autofunction/mode/channel/add", sIRCMessage.Channel, sIRCMessage.ServerName);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 							return;
 						}
 
 						if(sIRCMessage.Info.Length < 9)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
 						if(sIRCMessage.Info.Length < 10)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoRank", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoRank", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 						if(!db.IsNull())
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 							return;
 						}
 
-						SchumixBase.DManager.Insert("`modelist`(Name, Channel, Rank)", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[9]));
+						SchumixBase.DManager.Insert("`modelist`(ServerId, ServerName, Name, Channel, Rank)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[9]));
 						sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[8]);
 					}
 					else if(sIRCMessage.Info[7].ToLower() == "change")
 					{
-						var text = sLManager.GetCommandTexts("autofunction/mode/channel/change", sIRCMessage.Channel);
+						var text = sLManager.GetCommandTexts("autofunction/mode/channel/change", sIRCMessage.Channel, sIRCMessage.ServerName);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 							return;
 						}
 
 						if(sIRCMessage.Info.Length < 9)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
 						if(sIRCMessage.Info.Length < 10)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoRank", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoRank", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 						if(db.IsNull())
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 							return;
 						}
 
-						SchumixBase.DManager.Update("modelist", string.Format("Rank = {0}", sUtilities.SqlEscape(sIRCMessage.Info[9].ToLower())), string.Format("Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower())));
+						SchumixBase.DManager.Update("modelist", string.Format("Rank = {0}", sUtilities.SqlEscape(sIRCMessage.Info[9].ToLower())), string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
 						sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[8], sIRCMessage.Info[9].ToLower());
 					}
 					else if(sIRCMessage.Info[7].ToLower() == "remove")
 					{
-						var text = sLManager.GetCommandTexts("autofunction/mode/channel/remove", sIRCMessage.Channel);
+						var text = sLManager.GetCommandTexts("autofunction/mode/channel/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
 						if(text.Length < 2)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 							return;
 						}
 
 						if(sIRCMessage.Info.Length < 9)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 		
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 						if(db.IsNull())
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -633,35 +641,35 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							string rank = db["Rank"].ToString();
 							if(rank.Substring(0, 1) == "+")
-								sSender.Modee(sIRCMessage.ServerName, sIRCMessage.Info[6].ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[8].ToLower());	
+								sSender.Mode(sIRCMessage.Info[6].ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[8].ToLower());	
 						}
 
-						SchumixBase.DManager.Delete("modelist", string.Format("Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower())));
+						SchumixBase.DManager.Delete("modelist", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
 						sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[8]);
 					}
 					else if(sIRCMessage.Info[7].ToLower() == "list")
 					{
-						var text = sLManager.GetCommandTexts("autofunction/mode/channel/list", sIRCMessage.Channel);
+						var text = sLManager.GetCommandTexts("autofunction/mode/channel/list", sIRCMessage.Channel, sIRCMessage.ServerName);
 						if(text.Length < 6)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 							return;
 						}
 
 						if(!IsChannel(sIRCMessage.Info[6].ToLower()))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						var db0 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						var db0 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM modelist WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 						if(db0.IsNull())
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[5]);
 							return;
 						}
 
-						var db = SchumixBase.DManager.Query("SELECT Name, Rank FROM modelist WHERE Channel = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+						var db = SchumixBase.DManager.Query("SELECT Name, Rank FROM modelist WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 						if(!db.IsNull())
 						{
 							string voices = string.Empty;
@@ -727,7 +735,7 @@ namespace Schumix.ExtraAddon.Commands
 								sSendMessage.SendChatMessage(sIRCMessage, text[4], owners.Remove(0, 2, ", "));
 						}
 						else
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 					}
 				}
 			}
@@ -735,15 +743,18 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleMessage(IRCMessage sIRCMessage)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
 			if(!sChannelInfo.FSelect("message") || !sChannelInfo.FSelect("message", sIRCMessage.Channel))
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessageFunction", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessageFunction", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
@@ -751,50 +762,51 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 7)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 8)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
-				SchumixBase.DManager.Insert("`message`(Name, Channel, Message, Wrote)", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(7, SchumixBase.Space)), sIRCMessage.Nick);
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message/channel", sIRCMessage.Channel));
+				SchumixBase.DManager.Insert("`message`(ServerId, ServerName, Name, Channel, Message, Wrote)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(7, SchumixBase.Space)), sIRCMessage.Nick);
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message/channel", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
 			else
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
-				SchumixBase.DManager.Insert("`message`(Name, Channel, Message, Wrote)", sUtilities.SqlEscape(sIRCMessage.Info[4].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)), sIRCMessage.Nick);
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message", sIRCMessage.Channel));
+				SchumixBase.DManager.Insert("`message`(ServerId, ServerName, Name, Channel, Message, Wrote)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[4].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)), sIRCMessage.Nick);
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
 		}
 
 		public void HandleWeather(IRCMessage sIRCMessage)
 		{
-			var text = sLManager.GetCommandTexts("weather", sIRCMessage.Channel);
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			var text = sLManager.GetCommandTexts("weather", sIRCMessage.Channel, sIRCMessage.ServerName);
 			if(text.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 				return;
 			}
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCityName", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCityName", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
@@ -802,7 +814,7 @@ namespace Schumix.ExtraAddon.Commands
 			string url = string.Empty;
 			string source = string.Empty;
 
-			switch(sLManager.GetChannelLocalization(sIRCMessage.Channel))
+			switch(sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName))
 			{
 				case "huHU":
 					url = "http://hungarian.wunderground.com/cgi-bin/findweather/hdfForecast?query=";
@@ -882,14 +894,17 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			var rand = new Random();
 			int number = rand.Next(0, 100);
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("roll", sIRCMessage.Channel), number);
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("roll", sIRCMessage.Channel, sIRCMessage.ServerName), number);
 		}
 
 		public void HandleSha1(IRCMessage sIRCMessage)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
@@ -898,9 +913,11 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleMd5(IRCMessage sIRCMessage)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
@@ -909,16 +926,17 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandlePrime(IRCMessage sIRCMessage)
 		{
-			var text = sLManager.GetCommandTexts("prime", sIRCMessage.Channel);
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			var text = sLManager.GetCommandTexts("prime", sIRCMessage.Channel, sIRCMessage.ServerName);
 			if(text.Length < 3)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 				return;
 			}
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoNumber", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoNumber", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
@@ -938,20 +956,21 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleWiki(IRCMessage sIRCMessage)
 		{
-			var text = sLManager.GetCommandTexts("wiki", sIRCMessage.Channel);
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			var text = sLManager.GetCommandTexts("wiki", sIRCMessage.Channel, sIRCMessage.ServerName);
 			if(text.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 				return;
 			}
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoGoogleText", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoGoogleText", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
-			string url = sUtilities.GetUrl("http://" + sLManager.GetChannelLocalization(sIRCMessage.Channel).Substring(0, 2).ToLower()
+			string url = sUtilities.GetUrl("http://" + sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName).Substring(0, 2).ToLower()
 				+ ".wikipedia.org/w/api.php?action=opensearch&format=xml&search=", sIRCMessage.Info.SplitToString(4, SchumixBase.Space));
 
 			if(url.Contains("<Text xml:space=\"preserve\">"))
@@ -978,9 +997,11 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleCalc(IRCMessage sIRCMessage)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 

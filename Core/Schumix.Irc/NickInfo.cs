@@ -24,11 +24,11 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
-	public sealed class NickInfoo
+	public sealed class NickInfo
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private readonly Sendere sSender;
+		private readonly Sender sSender;
 		private string _NickStorage;
 		private string _servername;
 		private bool _Identify;
@@ -54,7 +54,7 @@ namespace Schumix.Irc
 			get { return _Vhost; }
 		}
 
-		public NickInfoo(string ServerName)
+		public NickInfo(string ServerName)
 		{
 			_servername = ServerName;
 			_Identify = false;

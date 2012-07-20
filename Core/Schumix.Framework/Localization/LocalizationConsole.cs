@@ -584,11 +584,11 @@ namespace Schumix.Framework.Localization
 				case "Text3":
 				{
 					if(Locale == "huHU")
-						return "Tiltott pluginok: {0}";
+						return "Tiltott pluginok (konfig): {0}";
 					else if(Locale == "enUS")
-						return "Ignoring plugins: {0}";
+						return "Ignoring plugins (config): {0}";
 					else
-						return "Ignoring plugins: {0}";
+						return "Ignoring plugins (config): {0}";
 				}
 				case "Text4":
 				{
@@ -1449,15 +1449,6 @@ namespace Schumix.Framework.Localization
 						return "Do not going data from irc server!";
 					else
 						return "Do not going data form irc server!";
-				}
-				case "Text17":
-				{
-					if(Locale == "huHU")
-						return "A program leáll!";
-					else if(Locale == "enUS")
-						return "Program shutting down!";
-					else
-						return "Program shutting down!";
 				}
 				case "Text18":
 				{
@@ -2408,6 +2399,24 @@ namespace Schumix.Framework.Localization
 						return "ChannelList: Failure request!";
 					else
 						return "ChannelList: Failure request!";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string IrcBase(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "A program leáll!";
+					else if(Locale == "enUS")
+						return "Program shutting down!";
+					else
+						return "Program shutting down!";
 				}
 				default:
 					return string.Empty;

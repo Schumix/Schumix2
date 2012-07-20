@@ -19,6 +19,7 @@
 
 using System;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 
@@ -28,7 +29,8 @@ namespace Schumix.CompilerAddon.Commands
 	{
 		public bool Help(IRCMessage sIRCMessage)
 		{
-			string command = IRCConfig.NickName + SchumixBase.Comma;
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			string command = IRCConfig.List[sIRCMessage.ServerName].NickName + SchumixBase.Comma;
 
 			if(sIRCMessage.Info[4].ToLower() == command.ToLower())
 			{
@@ -37,7 +39,7 @@ namespace Schumix.CompilerAddon.Commands
 
 				if(sIRCMessage.Info[5].ToLower() == "csc" || sIRCMessage.Info[5].ToLower() == "c#compiler")
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandHelpText("schumix2/csc", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandHelpText("schumix2/csc", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return true;
 				}
 			}

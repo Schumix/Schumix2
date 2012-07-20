@@ -29,18 +29,24 @@ namespace Schumix.CalendarAddon
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private Unban() {}
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private string _servername;
 
-		public string UnbanName(string ServerName, string name, string channel)
+		public Unban(string ServerName)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower());
-			if(db.IsNull())
-				return sLManager.GetWarningText("UnbanList", channel);
+			_servername = ServerName;
+		}
 
-			sSender.Unban(ServerName, channel, name);
-			SchumixBase.DManager.Delete("banned", string.Format("Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower()));
-			return sLManager.GetWarningText("UnbanList1", channel);
+		public string UnbanName(string name, string channel)
+		{
+			var sSender = sIrcBase.Networks[_servername].sSender;
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
+			if(db.IsNull())
+				return sLManager.GetWarningText("UnbanList", channel, _servername);
+
+			sSender.Unban(channel, name);
+			SchumixBase.DManager.Delete("banned", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername));
+			return sLManager.GetWarningText("UnbanList1", channel, _servername);
 		}
 	}
 }

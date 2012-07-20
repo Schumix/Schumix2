@@ -25,6 +25,9 @@ namespace Schumix.GameAddon.MaffiaGames
 	{
 		public void Join(string Name)
 		{
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+			var sSender = sIrcBase.Networks[_servername].sSender;
+
 			if(_joinlist.Contains(Name.ToLower()))
 			{
 				sSendMessage.SendCMPrivmsg(_channel, "{0}: Már játékban vagy!", Name);

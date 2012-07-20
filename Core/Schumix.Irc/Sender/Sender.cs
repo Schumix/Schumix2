@@ -25,14 +25,14 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
 {
-	public sealed class Sendere
+	public sealed class Sender
 	{
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly object WriteLock = new object();
-		private readonly IgnoreChannele sIgnoreChannel;
-		private readonly SendMessagee sSendMessage;
+		private readonly IgnoreChannel sIgnoreChannel;
+		private readonly SendMessage sSendMessage;
 
-		public Sendere(string ServerName)
+		public Sender(string ServerName)
 		{
 			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;
 			sIgnoreChannel = sIrcBase.Networks[ServerName].sIgnoreChannel;
@@ -89,7 +89,7 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void Kicke(string channel, string name)
+		public void Kick(string channel, string name)
 		{
 			lock(WriteLock)
 			{
@@ -97,7 +97,7 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void Kicke(string channel, string name, string args)
+		public void Kick(string channel, string name, string args)
 		{
 			lock(WriteLock)
 			{

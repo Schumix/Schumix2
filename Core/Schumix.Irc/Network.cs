@@ -53,6 +53,8 @@ namespace Schumix.Irc
 			return IrcMethodMap;
 		}
 
+		public bool Shutdown { get; private set; }
+
         /// <summary>
         ///     A kapcsolatot tároljra.
         /// </summary>
@@ -87,6 +89,7 @@ namespace Schumix.Irc
 			_serverid = ServerId;
 			_server = Server;
 			_port = Port;
+			Shutdown = false;
 
 			Log.Notice("Network", sLConsole.Network("Text"));
 			Log.Notice("Network", sLConsole.Network("Text20"), ServerName);
@@ -156,6 +159,7 @@ namespace Schumix.Irc
 				});
 			});
 
+			Console.WriteLine();
 			Log.Notice("Network", sLConsole.Network("Text5"));
 		}
 
@@ -506,9 +510,8 @@ namespace Schumix.Irc
 			{
 				Log.Error("Opcodes", sLConsole.Exception("Error"), e.Message);
 			}
-			
-			Log.Warning("Opcodes", sLConsole.Network("Text17"));
-			Environment.Exit(1);
+
+			Shutdown = true;
 		}
 
 		private void HandleIrcCommand(string message)

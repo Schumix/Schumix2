@@ -25,6 +25,8 @@ namespace Schumix.GameAddon.MaffiaGames
 	{
 		public void GameOver(string Name)
 		{
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+
 			if(!IsRunning(_channel, Name))
 				return;
 

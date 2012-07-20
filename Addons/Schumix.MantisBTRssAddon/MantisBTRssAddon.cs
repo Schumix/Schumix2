@@ -21,57 +21,65 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using Schumix.API;
+using Schumix.API.Irc;
+using Schumix.Irc;
+using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.Irc;
-using Schumix.Irc.Commands;
 using Schumix.MantisBTRssAddon.Config;
 using Schumix.MantisBTRssAddon.Commands;
 using Schumix.MantisBTRssAddon.Localization;
 
 namespace Schumix.MantisBTRssAddon
 {
-	class MantisBTRssAddon : RssCommand, ISchumixAddon
+	class MantisBTRssAddon : ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		public static readonly List<MantisBTRss> RssList = new List<MantisBTRss>();
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private RssCommand sRssCommand;
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
+		private string _servername;
 
-		public void Setup()
+		public void Setup(string ServerName)
 		{
+			_servername = ServerName;
+			sRssCommand = new RssCommand(ServerName);
 			sLocalization.Locale = sLConsole.Locale;
-			_config = new AddonConfig(Name + ".xml");
-			InitIrcCommand();
 
-			var db = SchumixBase.DManager.Query("SELECT Name, Link FROM mantisbt");
+			if(IRCConfig.List[ServerName].ServerId == 1)
+				_config = new AddonConfig(Name + ".xml");
+
+			InitIrcCommand();
+			SchumixBase.DManager.Update("mantisbt", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
+
+			var db = SchumixBase.DManager.Query("SELECT Name, Link FROM mantisbt WHERE ServerName = '{0}'", ServerName);
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
 				{
 					string name = row["Name"].ToString();
 					string link = row["Link"].ToString();
-					var rss = new MantisBTRss(name, link);
-					RssList.Add(rss);
+					var rss = new MantisBTRss(ServerName, name, link);
+					sRssCommand.RssList.Add(rss);
 				}
 
 				int x = 0;
 
-				foreach(var list in RssList)
+				foreach(var list in sRssCommand.RssList)
 				{
 					list.Start();
 					x++;
 				}
 
-				Log.Notice("MantisBTRssAddon", sLocalization.MantisBTRssAddon("Text"), x);
+				Log.Notice("MantisBTRssAddon", sLocalization.MantisBTRssAddon("Text"), ServerName, x);
 			}
 			else
-				Log.Warning("MantisBTRssAddon", sLocalization.MantisBTRssAddon("Text2"));
+				Log.Warning("MantisBTRssAddon", sLocalization.MantisBTRssAddon("Text2"), ServerName);
 		}
 
 		public void Destroy()
@@ -79,10 +87,10 @@ namespace Schumix.MantisBTRssAddon
 			RemoveIrcCommand();
 			_config = null;
 
-			foreach(var list in RssList)
+			foreach(var list in sRssCommand.RssList)
 				list.Stop();
 
-			RssList.Clear();
+			sRssCommand.RssList.Clear();
 		}
 
 		public int Reload(string RName, string SName = "")
@@ -92,7 +100,8 @@ namespace Schumix.MantisBTRssAddon
 				switch(RName.ToLower())
 				{
 					case "config":
-						_config = new AddonConfig(Name + ".xml");
+						if(IRCConfig.List[_servername].ServerId == 1)
+							_config = new AddonConfig(Name + ".xml");
 						return 1;
 					case "command":
 						InitIrcCommand();
@@ -111,12 +120,12 @@ namespace Schumix.MantisBTRssAddon
 
 		private void InitIrcCommand()
 		{
-			sIrcBase.SchumixRegisterHandler("mantisbt", HandleMantisBT, CommandPermission.Operator);
+			sIrcBase.Networks[_servername].SchumixRegisterHandler("mantisbt", sRssCommand.HandleMantisBT, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			sIrcBase.SchumixRemoveHandler("mantisbt",   HandleMantisBT);
+			sIrcBase.Networks[_servername].SchumixRemoveHandler("mantisbt",   sRssCommand.HandleMantisBT);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

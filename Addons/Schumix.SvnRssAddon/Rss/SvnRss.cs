@@ -23,6 +23,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using Schumix.API;
+using Schumix.API.Functions;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -36,9 +37,8 @@ namespace Schumix.SvnRssAddon
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private NetworkCredential _credential;
 		private Thread _thread;
 		private readonly string _name;
@@ -50,10 +50,12 @@ namespace Schumix.SvnRssAddon
 		private string[] info;
 		private string _username;
 		private string _password;
+		private string _servername;
 		public bool Started { get; private set; }
 
-		public SvnRss(string name, string url, string website)
+		public SvnRss(string ServerName, string name, string url, string website)
 		{
+			_servername = ServerName;
 			_name = name;
 
 			if(url.Contains(SchumixBase.Colon.ToString()) && url.Contains("@"))
@@ -134,7 +136,7 @@ namespace Schumix.SvnRssAddon
 				{
 					try
 					{
-						if(sChannelInfo.FSelect(IFunctions.Svn))
+						if(sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Svn))
 						{
 							url = GetUrl();
 							if(url.IsNull())
@@ -281,21 +283,21 @@ namespace Schumix.SvnRssAddon
 
 		private void Informations(string rev, string title, string author)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM svninfo WHERE Name = '{0}'", _name);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM svninfo WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
 			if(!db.IsNull())
 			{
 				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 
 				foreach(var chan in channel)
 				{
-					string language = sLManager.GetChannelLocalization(chan);
+					string language = sLManager.GetChannelLocalization(chan, _servername);
 
 					if(_website == "assembla")
 					{
 						if(title.Contains(SchumixBase.Colon.ToString()))
 						{
-							//sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla", language), _name, rev, author);
-							//sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla", language), _name, rev, author);
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
 						}
 					}
 

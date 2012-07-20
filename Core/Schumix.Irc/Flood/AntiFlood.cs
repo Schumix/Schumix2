@@ -29,17 +29,17 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Flood
 {
-	public sealed class AntiFloodo
+	public sealed class AntiFlood
 	{
 		private readonly Dictionary<string, CommandFlood> CommandFloodList = new Dictionary<string, CommandFlood>();
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private System.Timers.Timer _timerflood = new System.Timers.Timer();
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private readonly SendMessagee sSendMessage;
-		private readonly ChannelInfoo sChannelInfo;
+		private readonly SendMessage sSendMessage;
+		private readonly ChannelInfo sChannelInfo;
 
-		public AntiFloodo(string ServerName)
+		public AntiFlood(string ServerName)
 		{
 			sChannelInfo = sIrcBase.Networks[ServerName].sChannelInfo;
 			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;

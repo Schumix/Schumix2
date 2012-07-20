@@ -20,6 +20,7 @@
 
 using System;
 using System.Threading;
+using System.Diagnostics;
 using System.Net.Sockets;
 using Schumix.API;
 using Schumix.API.Irc;
@@ -160,6 +161,9 @@ namespace Schumix.Framework.Client
 				if(!nw.Value.IsNull())
 					nw.Value.WriteLine("QUIT :Server killed.");
 			}
+
+			Thread.Sleep(1000);
+			Process.GetCurrentProcess().Kill();
 		}
 	}
 }

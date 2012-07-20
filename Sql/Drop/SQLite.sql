@@ -3,7 +3,7 @@
 DROP TABLE IF EXISTS `admins`;
 DROP TABLE IF EXISTS `banned`;
 DROP TABLE IF EXISTS `calendar`;
-DROP TABLE IF EXISTS `channel`;
+DROP TABLE IF EXISTS `channels`;
 DROP TABLE IF EXISTS `gitinfo`;
 DROP TABLE IF EXISTS `hginfo`;
 DROP TABLE IF EXISTS `mantisbt`;

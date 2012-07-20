@@ -18,9 +18,14 @@
  */
 
 using System;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Reflection;
+using System.Collections.Generic;
 using Schumix.API;
 using Schumix.API.Irc;
+using Schumix.API.Delegate;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -29,6 +34,8 @@ namespace Schumix.Irc.Commands
 {
 	public partial class CommandHandler
 	{
+		private readonly object Lock = new object();
+
 		protected void HandlePlugin(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
@@ -37,35 +44,127 @@ namespace Schumix.Irc.Commands
 			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "load")
 			{
 				var text = sLManager.GetCommandTexts("plugin/load", sIRCMessage.Channel, sIRCMessage.ServerName);
-				if(text.Length < 2)
+				if(text.Length < 3)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
 				}
 
+				if(sAddonManager.IsLoadingAddons())
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+					return;
+				}
+
 				if(sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
+				{
+					foreach(var nw in sIrcBase.Networks)
+					{
+						var asms = sAddonManager.Addons[nw.Key].Assemblies.ToDictionary(v => v.Key, v => v.Value);
+						Parallel.ForEach(asms, asm =>
+						{
+							var types = asm.Value.GetTypes();
+							Parallel.ForEach(types, type =>
+							{
+								var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+								Parallel.ForEach(methods, method =>
+								{
+									foreach(var attribute in Attribute.GetCustomAttributes(method))
+									{
+										if(attribute.IsOfType(typeof(IrcCommandAttribute)))
+										{
+											var attr = (IrcCommandAttribute)attribute;
+											lock(Lock)
+											{
+												var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
+												sIrcBase.Networks[nw.Key].IrcRegisterHandler(attr.Command, del);
+											}
+										}
+
+										if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
+										{
+											var attr = (SchumixCommandAttribute)attribute;
+											lock(Lock)
+											{
+												var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
+												sIrcBase.Networks[nw.Key].SchumixRegisterHandler(attr.Command, del, attr.Permission);
+											}
+										}
+									}
+								});
+							});
+						});
+					}
+
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "unload")
 			{
 				var text = sLManager.GetCommandTexts("plugin/unload", sIRCMessage.Channel, sIRCMessage.ServerName);
-				if(text.Length < 2)
+				if(text.Length < 3)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
 				}
 
+				if(!sAddonManager.IsLoadingAddons())
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+					return;
+				}
+
 				if(sAddonManager.UnloadPlugins())
+				{
+					foreach(var nw in sIrcBase.Networks)
+					{
+						var asms = sAddonManager.Addons[nw.Key].Assemblies.ToDictionary(v => v.Key, v => v.Value);
+						Parallel.ForEach(asms, asm =>
+						{
+							var types = asm.Value.GetTypes();
+							Parallel.ForEach(types, type =>
+							{
+								var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+								Parallel.ForEach(methods, method =>
+								{
+									foreach(var attribute in Attribute.GetCustomAttributes(method))
+									{
+										if(attribute.IsOfType(typeof(IrcCommandAttribute)))
+										{
+											var attr = (IrcCommandAttribute)attribute;
+											lock(Lock)
+											{
+												var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
+												sIrcBase.Networks[nw.Key].IrcRemoveHandler(attr.Command, del);
+											}
+										}
+
+										if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
+										{
+											var attr = (SchumixCommandAttribute)attribute;
+											lock(Lock)
+											{
+												var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
+												sIrcBase.Networks[nw.Key].SchumixRemoveHandler(attr.Command, del);
+											}
+										}
+									}
+								});
+							});
+						});
+					}
+
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 			}
 			else
 			{
 				var text = sLManager.GetCommandTexts("plugin", sIRCMessage.Channel, sIRCMessage.ServerName);
-				if(text.Length < 2)
+				if(text.Length < 3)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
@@ -87,6 +186,9 @@ namespace Schumix.Irc.Commands
 
 				if(IgnorePlugins != string.Empty)
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], IgnorePlugins.Remove(0, 2, ", "));
+
+				if(Plugins == string.Empty && IgnorePlugins == string.Empty)
+					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 			}
 		}
 
@@ -148,7 +250,7 @@ namespace Schumix.Irc.Commands
 
 			sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 			SchumixBase.Quit();
-			sSender.Quit(string.Format(text[1], sIRCMessage.Nick));
+			sIrcBase.Shutdown(string.Format(text[1], sIRCMessage.Nick));
 		}
 	}
 }

@@ -19,6 +19,7 @@
 
 using System;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework.Config;
@@ -32,14 +33,16 @@ namespace Schumix.ExtraAddon.Commands
 			// Fél Operátor parancsok segítségei
 			if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 			{
+				var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
 				if(sIRCMessage.Info[4].ToLower() == "autofunction")
 				{
 					if(sIRCMessage.Info.Length < 6)
 					{
-						var text = sLManager.GetCommandHelpTexts("autofunction", sIRCMessage.Channel);
+						var text = sLManager.GetCommandHelpTexts("autofunction", sIRCMessage.Channel, sIRCMessage.ServerName);
 						if(text.Length < 4)
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 							return true;
 						}
 

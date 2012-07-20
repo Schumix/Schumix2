@@ -18,22 +18,29 @@
  */
 
 using System;
+using System.Threading;
+using System.Diagnostics;
 using System.Collections.Generic;
 using Schumix.API.Delegate;
 using Schumix.Irc.Commands;
+using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
 	public class IrcBase
 	{
 		private readonly Dictionary<string, Network> _networks = new Dictionary<string, Network>();
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly object Lock = new object();
 		public Dictionary<string, Network> Networks
 		{
 			get { return _networks; }
 		}
 
+		private bool shutdown = false;
 		private IrcBase() {}
 
 		public void NewServer(string ServerName, int ServerId, string Host, int Port)
@@ -169,6 +176,40 @@ namespace Schumix.Irc
 				foreach(var nw in _networks)
 					nw.Value.SchumixRemoveHandler(code, method);
 			}
+		}
+
+		public void Shutdown(string Message)
+		{
+			if(shutdown)
+				return;
+
+			shutdown = true;
+
+			foreach(var nw in Networks)
+				nw.Value.sSender.Quit(Message);
+
+			int i = 0;
+
+			while(true)
+			{
+				if(i >= 30)
+					break;
+
+				var list = new List<bool>();
+
+				foreach(var nw in Networks)
+					list.Add(nw.Value.Shutdown);
+
+				if(list.CompareDataInBlock())
+					break;
+				else
+					Thread.Sleep(100);
+
+				i++;
+			}
+
+			Log.Warning("IrcBase", sLConsole.IrcBase("Text"));
+			Process.GetCurrentProcess().Kill();
 		}
 	}
 }

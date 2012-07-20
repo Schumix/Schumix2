@@ -21,16 +21,19 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using Schumix.Framework;
-using Schumix.Irc.Commands;
+using Schumix.Framework.Config;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	sealed partial class MaffiaGame : CommandInfo
+	sealed partial class MaffiaGame
 	{
 		public void Start()
 		{
 			if(!IsRunning(_channel))
 				return;
+
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+			var sSender = sIrcBase.Networks[_servername].sSender;
 
 			if(Started || _start)
 			{
@@ -82,7 +85,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Killer));
 
-						SchumixBase.DManager.Insert("`maffiagame`(Game, Name, Job)", _gameid, name, Convert.ToInt32(Rank.Killer));
+						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, name, Convert.ToInt32(Rank.Killer));
 						list.Remove(number);
 
 						if(count < 8)
@@ -116,7 +119,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Detective));
 
-						SchumixBase.DManager.Insert("`maffiagame`(Game, Name, Job)", _gameid, name, Convert.ToInt32(Rank.Detective));
+						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, name, Convert.ToInt32(Rank.Detective));
 						list.Remove(number);
 
 						if(count < 15)
@@ -144,7 +147,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Doctor));
 
-						SchumixBase.DManager.Insert("`maffiagame`(Game, Name, Job)", _gameid, name, Convert.ToInt32(Rank.Doctor));
+						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, name, Convert.ToInt32(Rank.Doctor));
 						list.Remove(number);
 						doctor = false;
 					}
@@ -162,7 +165,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal));
 
-						SchumixBase.DManager.Insert("`maffiagame`(Game, Name, Job)", _gameid, llist.Value, Convert.ToInt32(Rank.Normal));
+						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, llist.Value, Convert.ToInt32(Rank.Normal));
 					}
 
 					break;
@@ -207,8 +210,8 @@ namespace Schumix.GameAddon.MaffiaGames
 				_killerchannel = "#" + sUtilities.GetRandomString();
 				sSender.Join(_killerchannel);
 				sSender.Mode(_killerchannel, "+s");
-				SchumixBase.DManager.Insert("`channel`(Channel, Password, Language)", sUtilities.SqlEscape(_killerchannel), string.Empty, sLManager.Locale);
-				SchumixBase.DManager.Update("channel", "Enabled = 'true'", string.Format("Channel = '{0}'", sUtilities.SqlEscape(_killerchannel)));
+				SchumixBase.DManager.Insert("`channels`(ServerId, ServerName, Channel, Password, Language)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(_killerchannel), string.Empty, sLManager.Locale);
+				SchumixBase.DManager.Update("channels", "Enabled = 'true'", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(_killerchannel), _servername));
 			}
 
 			StartThread();

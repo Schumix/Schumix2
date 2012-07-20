@@ -20,6 +20,7 @@
 using System;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -29,54 +30,64 @@ namespace Schumix.CalendarAddon
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
-		private Ban() {}
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private string _servername;
 
-		public string BanName(string ServerName, string name, string channel, string reason, DateTime time)
+		public Ban(string ServerName)
 		{
-			if(sUtilities.IsValueBiggerDateTimeNow(time.Year, time.Month, time.Day, time.Hour, time.Minute))
-				return sLManager.GetWarningText("GaveExpiredDateTime", channel);
-	
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower());
-			if(!db.IsNull())
-				return sLManager.GetWarningText("BanList", channel);
-
-			sSender.Ban(ServerName, channel, name);
-			sSender.Kick(ServerName, channel, name, reason);
-			SchumixBase.DManager.Insert("`banned`(Name, Channel, Reason, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), time.Year, time.Month, time.Day, time.Hour, time.Minute);
-			return sLManager.GetWarningText("BanList1", channel);
+			_servername = ServerName;
 		}
 
-		public string BanName(string ServerName, string name, string channel, string reason, int hour, int minute)
+		public string BanName(string name, string channel, string reason, DateTime time)
+		{
+			var sSender = sIrcBase.Networks[_servername].sSender;
+
+			if(sUtilities.IsValueBiggerDateTimeNow(time.Year, time.Month, time.Day, time.Hour, time.Minute))
+				return sLManager.GetWarningText("GaveExpiredDateTime", channel, _servername);
+	
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
+			if(!db.IsNull())
+				return sLManager.GetWarningText("BanList", channel, _servername);
+
+			sSender.Ban(channel, name);
+			sSender.Kick(channel, name, reason);
+			SchumixBase.DManager.Insert("`banned`(ServerId, ServerName, Name, Channel, Reason, Year, Month, Day, Hour, Minute)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), time.Year, time.Month, time.Day, time.Hour, time.Minute);
+			return sLManager.GetWarningText("BanList1", channel, _servername);
+		}
+
+		public string BanName(string name, string channel, string reason, int hour, int minute)
 		{
 			var time = DateTime.Now;
+			var sSender = sIrcBase.Networks[_servername].sSender;
 
 			if(sUtilities.IsValueBiggerDateTimeNow(time.Year, time.Month, time.Day, hour, minute))
-				return sLManager.GetWarningText("GaveExpiredDateTime", channel);
+				return sLManager.GetWarningText("GaveExpiredDateTime", channel, _servername);
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
 			if(!db.IsNull())
-				return sLManager.GetWarningText("BanList", channel);
+				return sLManager.GetWarningText("BanList", channel, _servername);
 
-			sSender.Ban(ServerName, channel, name);
-			sSender.Kick(ServerName, channel, name, reason);
-			SchumixBase.DManager.Insert("`banned`(Name, Channel, Reason, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), time.Year, time.Month, time.Day, hour, minute);
-			return sLManager.GetWarningText("BanList1", channel);
+			sSender.Ban(channel, name);
+			sSender.Kick(channel, name, reason);
+			SchumixBase.DManager.Insert("`banned`(ServerId, ServerName, Name, Channel, Reason, Year, Month, Day, Hour, Minute)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), time.Year, time.Month, time.Day, hour, minute);
+			return sLManager.GetWarningText("BanList1", channel, _servername);
 		}
 
-		public string BanName(string ServerName, string name, string channel, string reason, int year, int month, int day, int hour, int minute)
+		public string BanName(string name, string channel, string reason, int year, int month, int day, int hour, int minute)
 		{
+			var sSender = sIrcBase.Networks[_servername].sSender;
+
 			if(sUtilities.IsValueBiggerDateTimeNow(year, month, day, hour, minute))
-				return sLManager.GetWarningText("GaveExpiredDateTime", channel);
+				return sLManager.GetWarningText("GaveExpiredDateTime", channel, _servername);
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
 			if(!db.IsNull())
-				return sLManager.GetWarningText("BanList", channel);
+				return sLManager.GetWarningText("BanList", channel, _servername);
 
-			sSender.Ban(ServerName, channel, name);
-			sSender.Kick(ServerName, channel, name, reason);
-			SchumixBase.DManager.Insert("`banned`(Name, Channel, Reason, Year, Month, Day, Hour, Minute)", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), year, month, day, hour, minute);
-			return sLManager.GetWarningText("BanList1", channel);
+			sSender.Ban(channel, name);
+			sSender.Kick(channel, name, reason);
+			SchumixBase.DManager.Insert("`banned`(ServerId, ServerName, Name, Channel, Reason, Year, Month, Day, Hour, Minute)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), sUtilities.SqlEscape(reason), year, month, day, hour, minute);
+			return sLManager.GetWarningText("BanList1", channel, _servername);
 		}
 	}
 }

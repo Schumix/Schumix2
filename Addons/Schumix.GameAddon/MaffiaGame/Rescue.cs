@@ -31,6 +31,8 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!IsStarted(_channel, NickName))
 				return;
 
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+
 			if(_day)
 			{
 				sSendMessage.SendCMPrivmsg(NickName, "Csak este menthetsz életet!");

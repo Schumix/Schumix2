@@ -20,6 +20,7 @@
 using System;
 using System.Data;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -33,13 +34,21 @@ namespace Schumix.ExtraAddon.Commands
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly NameList sNameList = Singleton<NameList>.Instance;
-		private Notes() {}
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private NameList sNameList;
+		private string _servername;
+
+		public Notes(string ServerName, NameList nl) : base(ServerName)
+		{
+			_servername = ServerName;
+			sNameList = nl;
+		}
 
 		public void HandleNotes(IRCMessage sIRCMessage)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
 			if(sIRCMessage.Info.Length >= 6 && sIRCMessage.Info[4].ToLower() == "user" && sIRCMessage.Info[5].ToLower() == "register")
 			{
 			}
@@ -51,7 +60,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
@@ -59,11 +68,11 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				if(!IsUser(sIRCMessage.Nick, sIRCMessage.Host))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoDataNoCommand", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoDataNoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
-				var db = SchumixBase.DManager.Query("SELECT Code FROM notes WHERE Name = '{0}'", sIRCMessage.Nick.ToLower());
+				var db = SchumixBase.DManager.Query("SELECT Code FROM notes WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					string codes = string.Empty;
@@ -75,43 +84,43 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					if(codes == string.Empty)
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/info", sIRCMessage.Channel), sLConsole.Other("Nothing"));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/info", sIRCMessage.Channel, sIRCMessage.ServerName), sLConsole.Other("Nothing"));
 					else
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/info", sIRCMessage.Channel), codes.Remove(0, 2, ", "));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/info", sIRCMessage.Channel, sIRCMessage.ServerName), codes.Remove(0, 2, ", "));
 				}
 				else
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "user")
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(sIRCMessage.Info[5].ToLower() == "access")
 				{
-					var text = sLManager.GetCommandTexts("notes/user/access", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("notes/user/access", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 4)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoPassword", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoPassword", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
 					string name = sIRCMessage.Nick;
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", name.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[6]))
 						{
-							SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sIRCMessage.Host), string.Format("Name = '{0}'", name.ToLower()));
+							SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sIRCMessage.Host), string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName));
 							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						}
 						else
@@ -122,37 +131,37 @@ namespace Schumix.ExtraAddon.Commands
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
-						sNameList.NewThread(sIRCMessage.ServerName, name);
+						sNameList.NewThread(name);
 					}
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "newpassword")
 				{
-					var text = sLManager.GetCommandTexts("notes/user/newpassword", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("notes/user/newpassword", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoOldPassword", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoOldPassword", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 8)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoNewPassword", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoNewPassword", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
 					string name = sIRCMessage.Nick;
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", name.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
 					if(!db.IsNull())
 					{
 						if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[6]))
 						{
-							SchumixBase.DManager.Update("notes_users", string.Format("Password = '{0}'", sUtilities.Sha1(sIRCMessage.Info[7])), string.Format("Name = '{0}'", name.ToLower()));
+							SchumixBase.DManager.Update("notes_users", string.Format("Password = '{0}'", sUtilities.Sha1(sIRCMessage.Info[7])), string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName));
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.Info[7]);
 						}
 						else
@@ -161,21 +170,21 @@ namespace Schumix.ExtraAddon.Commands
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "register")
 				{
-					var text = sLManager.GetCommandTexts("notes/user/register", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("notes/user/register", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoPassword", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoPassword", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
 					string name = sIRCMessage.Nick;
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes_users WHERE Name = '{0}'", name.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -183,15 +192,15 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					string pass = sIRCMessage.Info[6];
-					SchumixBase.DManager.Insert("`notes_users`(Name, Password, Vhost)", name.ToLower(), sUtilities.Sha1(pass), sIRCMessage.Host);
+					SchumixBase.DManager.Insert("`notes_users`(ServerId, ServerName, Name, Password, Vhost)", sIRCMessage.ServerId, sIRCMessage.ServerName, name.ToLower(), sUtilities.Sha1(pass), sIRCMessage.Host);
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "remove")
 				{
-					var text = sLManager.GetCommandTexts("notes/user/remove", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("notes/user/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 5)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
@@ -202,14 +211,14 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					string name = sIRCMessage.Nick;
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes_users WHERE Name = '{0}'", name.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName);
 					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 						return;
 					}
 
-					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}'", name.ToLower());
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						if(db["Password"].ToString() != sUtilities.Sha1(sIRCMessage.Info[6]))
@@ -220,8 +229,8 @@ namespace Schumix.ExtraAddon.Commands
 						}
 					}
 
-					SchumixBase.DManager.Delete("notes_users", string.Format("Name = '{0}'", name.ToLower()));
-					SchumixBase.DManager.Delete("notes", string.Format("Name = '{0}'", name.ToLower()));
+					SchumixBase.DManager.Delete("notes_users", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName));
+					SchumixBase.DManager.Delete("notes", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, text[4]);
 				}
 			}
@@ -229,62 +238,62 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				if(!IsUser(sIRCMessage.Nick, sIRCMessage.Host))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoDataNoCommand", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoDataNoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCode", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCode", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(sIRCMessage.Info[5].ToLower() == "remove")
 				{
-					var text = sLManager.GetCommandTexts("notes/code/remove", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("notes/code/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCode", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCode", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}' AND Name = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Nick.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
 					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
 					}
 
-					SchumixBase.DManager.Delete("notes", string.Format("Code = '{0}' AND Name = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Nick.ToLower()));
+					SchumixBase.DManager.Delete("notes", string.Format("Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 				else
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Note FROM notes WHERE Code = '{0}' AND Name = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.Nick.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Note FROM notes WHERE Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/code", sIRCMessage.Channel), db["Note"].ToString());
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/code", sIRCMessage.Channel, sIRCMessage.ServerName), db["Note"].ToString());
 					else
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 			}
 			else
 			{
-				var text = sLManager.GetCommandTexts("notes", sIRCMessage.Channel);
+				var text = sLManager.GetCommandTexts("notes", sIRCMessage.Channel, sIRCMessage.ServerName);
 				if(text.Length < 3)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
 				}
 
 				if(!IsUser(sIRCMessage.Nick, sIRCMessage.Host))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoDataNoCommand", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoDataNoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
@@ -295,27 +304,27 @@ namespace Schumix.ExtraAddon.Commands
 				}
 
 				string code = sIRCMessage.Info[4];
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}' AND Name = '{1}'", sUtilities.SqlEscape(code.ToLower()), sIRCMessage.Nick.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM notes WHERE Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(code.ToLower()), sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 					return;
 				}
 
-				SchumixBase.DManager.Insert("`notes`(Code, Name, Note)", sUtilities.SqlEscape(code.ToLower()), sIRCMessage.Nick.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)));
+				SchumixBase.DManager.Insert("`notes`(ServerId, ServerName, Code, Name, Note)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(code.ToLower()), sIRCMessage.Nick.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)));
 				sSendMessage.SendChatMessage(sIRCMessage, text[2], code);
 			}
 		}
 
 		private bool IsUser(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM notes_users WHERE Name = '{0}'", Name.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", Name.ToLower(), _servername);
 			return !db.IsNull();
 		}
 
 		private bool IsUser(string Name, string Vhost)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost FROM notes_users WHERE Name = '{0}'", Name.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", Name.ToLower(), _servername);
 			if(!db.IsNull())
 			{
 				string vhost = db["Vhost"].ToString();
@@ -333,17 +342,18 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			if(!IsUser(sIRCMessage.Nick))
 			{
-				var text = sLManager.GetCommandTexts("notes/warning", sIRCMessage.Channel);
+				var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+				var text = sLManager.GetCommandTexts("notes/warning", sIRCMessage.Channel, sIRCMessage.ServerName);
 				if(text.Length < 4)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return false;
 				}
 
 				sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 				sSendMessage.SendChatMessage(sIRCMessage, text[1]);
-				sSendMessage.SendChatMessage(sIRCMessage, text[2], IRCConfig.CommandPrefix);
-				sSendMessage.SendChatMessage(sIRCMessage, text[3], IRCConfig.CommandPrefix);
+				sSendMessage.SendChatMessage(sIRCMessage, text[2], IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
+				sSendMessage.SendChatMessage(sIRCMessage, text[3], IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
 				return false;
 			}
 

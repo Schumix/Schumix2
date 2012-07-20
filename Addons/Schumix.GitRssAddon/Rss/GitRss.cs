@@ -23,6 +23,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using Schumix.API;
+using Schumix.API.Functions;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -36,9 +37,8 @@ namespace Schumix.GitRssAddon
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private NetworkCredential _credential;
 		private XmlNamespaceManager _ns;
 		private Thread _thread;
@@ -52,10 +52,12 @@ namespace Schumix.GitRssAddon
 		private string _author;
 		private string _username;
 		private string _password;
+		private string _servername;
 		public bool Started { get; private set; }
 
-		public GitRss(string name, string type, string url, string website)
+		public GitRss(string ServerName, string name, string type, string url, string website)
 		{
+			_servername = ServerName;
 			_name = name;
 			_type = type;
 
@@ -165,7 +167,7 @@ namespace Schumix.GitRssAddon
 				{
 					try
 					{
-						if(sChannelInfo.FSelect(IFunctions.Git))
+						if(sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Git))
 						{
 							url = GetUrl();
 							if(url.IsNull())
@@ -316,24 +318,24 @@ namespace Schumix.GitRssAddon
 
 		private void Informations(string rev, string title, string author)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}'", _name, _type);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", _name, _type, _servername);
 			if(!db.IsNull())
 			{
 				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 
 				foreach(var chan in channel)
 				{
-					string language = sLManager.GetChannelLocalization(chan);
+					string language = sLManager.GetChannelLocalization(chan, _servername);
 
 					if(_website == "github")
 					{
-						//sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author));
-						//sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github2", language), _name, title);
+						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author));
+						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github2", language), _name, title);
 					}
 					else if(_website == "gitweb")
 					{
-						//sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb", language), _name, _type, rev.Substring(0, 10), author);
-						//sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb2", language), _name, title);
+						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb", language), _name, _type, rev.Substring(0, 10), author);
+						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb2", language), _name, title);
 					}
 
 					Thread.Sleep(1000);

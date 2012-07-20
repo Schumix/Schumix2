@@ -38,18 +38,18 @@ namespace Schumix.Irc.Commands
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		public IgnoreIrcCommande sIgnoreIrcCommand { get; private set; }
-		public ChannelNameListe sChannelNameList { get; private set; }
-		public IgnoreNickNamee sIgnoreNickName { get; private set; }
-		public IgnoreChannele sIgnoreChannel { get; private set; }
-		public IgnoreCommande sIgnoreCommand { get; private set; }
-		public IgnoreAddone sIgnoreAddon { get; private set; }
-		public SendMessagee sSendMessage { get; private set; }
-		public ChannelInfoo sChannelInfo { get; private set; }
+		public IgnoreIrcCommand sIgnoreIrcCommand { get; private set; }
+		public ChannelNameList sChannelNameList { get; private set; }
+		public IgnoreNickName sIgnoreNickName { get; private set; }
+		public IgnoreChannel sIgnoreChannel { get; private set; }
+		public IgnoreCommand sIgnoreCommand { get; private set; }
+		public IgnoreAddon sIgnoreAddon { get; private set; }
+		public SendMessage sSendMessage { get; private set; }
+		public ChannelInfo sChannelInfo { get; private set; }
 		public CtcpSender sCtcpSender { get; private set; }
-		public AntiFloodo sAntiFlood { get; private set; }
-		public NickInfoo sNickInfo { get; private set; }
-		public Sendere sSender { get; private set; }
+		public AntiFlood sAntiFlood { get; private set; }
+		public NickInfo sNickInfo { get; private set; }
+		public Sender sSender { get; private set; }
 		protected string ChannelPrivmsg { get; set; }
 		protected string WhoisPrivmsg { get; set; }
 		protected string NewNickPrivmsg { get; set; }
@@ -64,23 +64,23 @@ namespace Schumix.Irc.Commands
 
 		public void InitializeIgnoreCommand()
 		{
-			sIgnoreCommand = new IgnoreCommande(_servername);
+			sIgnoreCommand = new IgnoreCommand(_servername);
 		}
 
 		public void InitializeCommandHandler()
 		{
-			sSendMessage = new SendMessagee(_servername);
-			sIgnoreChannel = new IgnoreChannele(_servername);
-			sSender = new Sendere(_servername);
-			sNickInfo = new NickInfoo(_servername);
-			sIgnoreAddon = new IgnoreAddone(_servername);
-			sIgnoreCommand = new IgnoreCommande(_servername);
-			sIgnoreNickName = new IgnoreNickNamee(_servername);
-			sIgnoreIrcCommand = new IgnoreIrcCommande(_servername);
-			sChannelInfo = new ChannelInfoo(_servername);
-			sAntiFlood = new AntiFloodo(_servername);
+			sSendMessage = new SendMessage(_servername);
+			sIgnoreChannel = new IgnoreChannel(_servername);
+			sSender = new Sender(_servername);
+			sNickInfo = new NickInfo(_servername);
+			sIgnoreAddon = new IgnoreAddon(_servername);
+			sIgnoreCommand = new IgnoreCommand(_servername);
+			sIgnoreNickName = new IgnoreNickName(_servername);
+			sIgnoreIrcCommand = new IgnoreIrcCommand(_servername);
+			sChannelInfo = new ChannelInfo(_servername);
+			sAntiFlood = new AntiFlood(_servername);
 			sCtcpSender = new CtcpSender(_servername);
-			sChannelNameList = new ChannelNameListe(_servername);
+			sChannelNameList = new ChannelNameList(_servername);
 		}
 
 		protected void HandleHelp(IRCMessage sIRCMessage)

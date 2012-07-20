@@ -68,10 +68,7 @@ namespace Schumix
 			else
 				Process.GetCurrentProcess().Kill();
 
-			foreach(var nw in sIrcBase.Networks)
-				sIrcBase.Networks[nw.Key].sSender.Quit("Daemon killed.");
-
-			Thread.Sleep(5*1000);
+			sIrcBase.Shutdown("Daemon killed.");
 		}
 	}
 }

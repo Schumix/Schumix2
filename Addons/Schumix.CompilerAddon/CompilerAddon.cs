@@ -24,6 +24,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using Schumix.API;
+using Schumix.API.Irc;
+using Schumix.API.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Flood;
 using Schumix.Irc.Commands;
@@ -37,32 +39,37 @@ using Schumix.CompilerAddon.Localization;
 
 namespace Schumix.CompilerAddon
 {
-	class CompilerAddon : SCompiler, ISchumixAddon
+	class CompilerAddon : ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
+		private SCompiler sSCompiler;
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
+		private string _servername;
 
-		public void Setup()
+		public void Setup(string ServerName)
 		{
+			_servername = ServerName;
+			sSCompiler = new SCompiler(ServerName);
 			sLocalization.Locale = sLConsole.Locale;
-			_config = new AddonConfig(Name + ".xml");
-			sIrcBase.IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
-			ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
-			EntryRegex = new Regex(SchumixBase.Space + CompilerConfig.MainClass + @"\s*?\{");
-			SchumixRegex = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)");
+
+			if(IRCConfig.List[ServerName].ServerId == 1)
+				_config = new AddonConfig(Name + ".xml");
+
+			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
+			sSCompiler.ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
+			sSCompiler.EntryRegex = new Regex(SchumixBase.Space + CompilerConfig.MainClass + @"\s*?\{");
+			sSCompiler.SchumixRegex = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)");
 		}
 
 		public void Destroy()
 		{
-			sIrcBase.IrcRemoveHandler("PRIVMSG",   HandlePrivmsg);
+			sIrcBase.Networks[_servername].IrcRemoveHandler("PRIVMSG",  HandlePrivmsg);
 		}
 
 		public int Reload(string RName, string SName = "")
@@ -72,7 +79,8 @@ namespace Schumix.CompilerAddon
 				switch(RName.ToLower())
 				{
 					case "config":
-						_config = new AddonConfig(Name + ".xml");
+						if(IRCConfig.List[_servername].ServerId == 1)
+							_config = new AddonConfig(Name + ".xml");
 						return 1;
 				}
 			}
@@ -87,6 +95,9 @@ namespace Schumix.CompilerAddon
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+
 			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")
 			{
 				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
@@ -98,7 +109,7 @@ namespace Schumix.CompilerAddon
 				if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
-				string command = IRCConfig.NickName + SchumixBase.Comma;
+				string command = IRCConfig.List[sIRCMessage.ServerName].NickName + SchumixBase.Comma;
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
 
 				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage) && (sIRCMessage.Args.Contains(";") || sIRCMessage.Args.Contains("}")))
@@ -110,10 +121,10 @@ namespace Schumix.CompilerAddon
 					if(sIrcBase.Networks[sIRCMessage.ServerName].sAntiFlood.Ignore(sIRCMessage))
 						return;
 
-					var text = sLManager.GetCommandTexts("schumix2/csc", sIRCMessage.Channel);
+					var text = sLManager.GetCommandTexts("schumix2/csc", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
@@ -145,18 +156,20 @@ namespace Schumix.CompilerAddon
 
 		public bool HandleHelp(IRCMessage sIRCMessage)
 		{
-			return Help(sIRCMessage);
+			return sSCompiler.Help(sIRCMessage);
 		}
 
 		private bool Enabled(IRCMessage sIRCMessage)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
 			if(CompilerConfig.MaxAllocatingE)
 			{
 				var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
 
 				if(memory > CompilerConfig.MaxAllocatingM)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/memory", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/memory", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return false;
 				}
 			}
@@ -166,6 +179,7 @@ namespace Schumix.CompilerAddon
 
 		private void Compiler(IRCMessage sIRCMessage, bool command, string args)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 			sIrcBase.Networks[sIRCMessage.ServerName].sAntiFlood.FloodCommand(sIRCMessage);
 
 			if(sIrcBase.Networks[sIRCMessage.ServerName].sAntiFlood.Ignore(sIRCMessage))
@@ -176,10 +190,10 @@ namespace Schumix.CompilerAddon
 			if(command)
 			{
 				sIRCMessage.Args = sIRCMessage.Args.Remove(0, args.Length);
-				ReturnCode = CompilerCommand(sIRCMessage, true);
+				ReturnCode = sSCompiler.CompilerCommand(sIRCMessage, true);
 			}
 			else
-				ReturnCode = CompilerCommand(sIRCMessage, false);
+				ReturnCode = sSCompiler.CompilerCommand(sIRCMessage, false);
 
 			switch(ReturnCode)
 			{
@@ -187,10 +201,10 @@ namespace Schumix.CompilerAddon
 					sSendMessage.SendChatMessage(sIRCMessage, ":'(");
 					break;
 				case 0:
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel, sIRCMessage.ServerName));
 					break;
 				case 2:
-					sSendMessage.SendChatMessage(sIRCMessage, MessageText(3, sIRCMessage.Channel));
+					sSendMessage.SendChatMessage(sIRCMessage, sSCompiler.MessageText(3, sIRCMessage.Channel));
 					break;
 				default:
 					break;

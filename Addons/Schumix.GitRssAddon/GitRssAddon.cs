@@ -21,6 +21,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using Schumix.API;
+using Schumix.API.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -33,23 +34,30 @@ using Schumix.GitRssAddon.Localization;
 
 namespace Schumix.GitRssAddon
 {
-	class GitRssAddon : RssCommand, ISchumixAddon
+	class GitRssAddon : ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		public static readonly List<GitRss> RssList = new List<GitRss>();
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private RssCommand sRssCommand;
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
+		private string _servername;
 
-		public void Setup()
+		public void Setup(string ServerName)
 		{
+			_servername = ServerName;
+			sRssCommand = new RssCommand(ServerName);
 			sLocalization.Locale = sLConsole.Locale;
-			_config = new AddonConfig(Name + ".xml");
-			InitIrcCommand();
 
-			var db = SchumixBase.DManager.Query("SELECT Name, Type, Link, Website FROM gitinfo");
+			if(IRCConfig.List[ServerName].ServerId == 1)
+				_config = new AddonConfig(Name + ".xml");
+
+			InitIrcCommand();
+			SchumixBase.DManager.Update("gitinfo", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
+
+			var db = SchumixBase.DManager.Query("SELECT Name, Type, Link, Website FROM gitinfo WHERE ServerName = '{0}'", ServerName);
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
@@ -58,22 +66,22 @@ namespace Schumix.GitRssAddon
 					string type = row["Type"].ToString();
 					string link = row["Link"].ToString();
 					string website = row["Website"].ToString();
-					var rss = new GitRss(name, type, link, website);
-					RssList.Add(rss);
+					var rss = new GitRss(ServerName, name, type, link, website);
+					sRssCommand.RssList.Add(rss);
 				}
 
 				int x = 0;
 
-				foreach(var list in RssList)
+				foreach(var list in sRssCommand.RssList)
 				{
 					list.Start();
 					x++;
 				}
 
-				Log.Notice("GitRssAddon", sLocalization.GitRssAddon("Text"), x);
+				Log.Notice("GitRssAddon", sLocalization.GitRssAddon("Text"), ServerName, x);
 			}
 			else
-				Log.Warning("GitRssAddon", sLocalization.GitRssAddon("Text2"));
+				Log.Warning("GitRssAddon", sLocalization.GitRssAddon("Text2"), ServerName);
 		}
 
 		public void Destroy()
@@ -81,10 +89,10 @@ namespace Schumix.GitRssAddon
 			RemoveIrcCommand();
 			_config = null;
 
-			foreach(var list in RssList)
+			foreach(var list in sRssCommand.RssList)
 				list.Stop();
 
-			RssList.Clear();
+			sRssCommand.RssList.Clear();
 		}
 
 		public int Reload(string RName, string SName = "")
@@ -94,7 +102,8 @@ namespace Schumix.GitRssAddon
 				switch(RName.ToLower())
 				{
 					case "config":
-						_config = new AddonConfig(Name + ".xml");
+						if(IRCConfig.List[_servername].ServerId == 1)
+							_config = new AddonConfig(Name + ".xml");
 						return 1;
 					case "command":
 						InitIrcCommand();
@@ -113,12 +122,12 @@ namespace Schumix.GitRssAddon
 
 		private void InitIrcCommand()
 		{
-			sIrcBase.SchumixRegisterHandler("git", HandleGit, CommandPermission.Operator);
+			sIrcBase.Networks[_servername].SchumixRegisterHandler("git", sRssCommand.HandleGit, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			sIrcBase.SchumixRemoveHandler("git",   HandleGit);
+			sIrcBase.Networks[_servername].SchumixRemoveHandler("git",   sRssCommand.HandleGit);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

@@ -3,19 +3,19 @@
 -- ----------------------------
 -- Records of channel
 -- ----------------------------
-INSERT INTO `channel` VALUES ("1", "1", "default", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off", "#schumix2", "", "", "", "huHU");
+INSERT INTO `channels` VALUES ("1", "1", "default", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off", "#schumix2", "", "", "", "huHU");
 
 -- ----------------------------
 -- Records of gitinfo
 -- ----------------------------
--- INSERT INTO `gitinfo` VALUES ("1", "Schumix2", "master", "https://github.com/megax/Schumix2/commits/master.atom", "github", "#hun_bot,#schumix"); Példa a használatra
-INSERT INTO `gitinfo` VALUES ("1", "Schumix2", "master", "https://github.com/megax/Schumix2/commits/master.atom", "github", "#schumix");
+-- INSERT INTO `gitinfo` VALUES ("1", "1", "default", "Schumix2", "master", "https://github.com/megax/Schumix2/commits/master.atom", "github", "#hun_bot,#schumix"); Példa a használatra
+INSERT INTO `gitinfo` VALUES ("1", "1", "default", "Schumix2", "master", "https://github.com/megax/Schumix2/commits/master.atom", "github", "#schumix");
 
 -- ----------------------------
 -- Records of hginfo
 -- ----------------------------
--- INSERT INTO `hginfo` VALUES ("1", "TrinityDB", "http://code.google.com/feeds/p/trinitydb/hgchanges/basic", "google", "#hun_bot,#schumix"); Példa a használatra
--- INSERT INTO `hginfo` VALUES ("2", "NeoCore", "http://bitbucket.org/skyne/neocore/rss?token=2b6ceaf25f0a4c993ddc905327806e9c", "bitbucket", "#hun_bot,#schumix"); Példa a használatra
+-- INSERT INTO `hginfo` VALUES ("1", "1", "default", "TrinityDB", "http://code.google.com/feeds/p/trinitydb/hgchanges/basic", "google", "#hun_bot,#schumix"); Példa a használatra
+-- INSERT INTO `hginfo` VALUES ("2", "1", "default", "NeoCore", "http://bitbucket.org/skyne/neocore/rss?token=2b6ceaf25f0a4c993ddc905327806e9c", "bitbucket", "#hun_bot,#schumix"); Példa a használatra
 
 -- huHU
 INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ("huHU", "mode", "Mode használata: /mode <csatorna> <rang> <név>");
@@ -78,9 +78,9 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/add", "Már szerepel az ignore listán!\nAz addon sikeresen hozzáadásra került.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/remove", "Nem szerepel az ignore listán!\nAz addon sikeresen el lett távolítva.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "[Betöltés]: Összes plugin betöltése sikeres.\n[Betöltés]: Összes plugin betöltése sikertelen.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "[Leválasztás]: Összes plugin leválasztása sikeres.\n[Leválasztás]: Összes plugin leválasztása sikertelen.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: betöltve.\n{0}: letiltva.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "[Betöltés]: Összes plugin betöltése sikeres.\n[Betöltés]: Összes plugin betöltése sikertelen.\nA pluginok már be vannak töltve!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "[Leválasztás]: Összes plugin leválasztása sikeres.\n[Leválasztás]: Összes plugin leválasztása sikertelen.\nA pluginok már le vannak választva!");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: betöltve.\n{0}: letiltva.\nNincsen betöltve plugin!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "cserver", "Új szerver amit mostantól lehet állítani a parancsokkal: {0}");
 
 -- enUS
@@ -130,9 +130,9 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/add", "Already exist on the ignore list!\nSuccesfuly added.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/remove", "Not on the ignore list!\nSuccesfuly removed.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/search", "Already exist on the ignore list!\nNot on the ignore list!");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "[Load]: All plugins done.\n[Load]: All plugins failed.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "[Unload]: All plugins done.\n[Unload]: All plugins failed.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: loaded.\n{0}: ignored.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "[Load]: All plugins done.\n[Load]: All plugins failed.\nPlugins are already loaded.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "[Unload]: All plugins done.\n[Unload]: All plugins failed.\nPlugins are already cutted.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: loaded.\n{0}: ignored.\nNo plugin loeaded.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "cserver", "New server for the commands: {0}");
 
 -- huHU
@@ -359,9 +359,9 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/remove", "Ilyen csatorna nem létezik!\nNincs a csatornához beállítva jelszó!\nJelszó el lett távolítva a csatornáról.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/update", "Ilyen csatorna nem létezik!\nNincs a csatornához beállítva jelszó!\nÚj jelszó lett beállítva a csatornára, jelszó: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/info", "Ilyen csatorna nem létezik!\nA csatornán nincs jelszó.\nA csatornán van jelszó.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "2[Betöltés]: Összes plugin betöltése 3sikeres.\n2[Betöltés]: Összes plugin betöltése 5sikertelen.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "2[Leválasztás]: Összes plugin leválasztása 3sikeres.\n2[Leválasztás]: Összes plugin leválasztása 5sikertelen.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: 3betöltve.\n{0}: 8letiltva.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "2[Betöltés]: Összes plugin betöltése 3sikeres.\n2[Betöltés]: Összes plugin betöltése 5sikertelen.\nA pluginok már be vannak töltve!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "2[Leválasztás]: Összes plugin leválasztása 3sikeres.\n2[Leválasztás]: Összes plugin leválasztása 5sikertelen.\nA pluginok már le vannak választva!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: 3betöltve.\n{0}: 8letiltva.\nNincsen betöltve plugin!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "quit", "Viszlát :(\n{0} leállított paranccsal.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/info", "3{0} Channel: 2{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/list", "2Lista:3{0}");
@@ -515,9 +515,9 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/remove", "There is no such a channel!\nThere is no password set on the channel!\npassword deleted from the channel.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/update", "There is no such a channel!\nThere is no password set on the channel!\nNew password set on the channel, password: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/info", "There is no such a channel!\nThere is no password set on the channel.\nThere is a password on the channel.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "2[Load]: All plugins 3done.\n2[Load]: All plugins 5failed.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "2[Unload]: All plugins 3done.\n2[Unload]: All plugins 5failed.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: 3loaded.\n{0}: 8ignored.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "2[Load]: All plugins 3done.\n2[Load]: All plugins 5failed.\nPlugins are already loaded.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "2[Unload]: All plugins 3done.\n2[Unload]: All plugins 5failed.\nPlugins are already cutted.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: 3loaded.\n{0}: 8ignored.\nNo plugin loeaded.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "quit", "Bye :(\n{0} shutted down me with command.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/info", "3{0} Channel: 2{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/list", "2List:3{0}");
@@ -1155,6 +1155,6 @@ INSERT INTO `schumix` VALUES ("21", "1", "default", "nameday", "on");
 -- ----------------------------
 -- Records of svninfo
 -- ----------------------------
--- INSERT INTO `svninfo` VALUES (1, "Sandshroud", "http://www.assembla.com/spaces/Sandshroud/stream.rss", "assembla", "#hun_bot,#schumix"); Példa a használatra
+-- INSERT INTO `svninfo` VALUES (1, "1", "default", "Sandshroud", "http://www.assembla.com/spaces/Sandshroud/stream.rss", "assembla", "#hun_bot,#schumix"); Példa a használatra
 
--- INSERT INTO `wordpressinfo` VALUES ("1", "Yeahunter.hu", "http://yeahunter.hu/feed/", "#hun_bot,#schumix2"); -- Példa a használatra
+-- INSERT INTO `wordpressinfo` VALUES ("1", "1", "default", "Yeahunter.hu", "http://yeahunter.hu/feed/", "#hun_bot,#schumix2"); -- Példa a használatra

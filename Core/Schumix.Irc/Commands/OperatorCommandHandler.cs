@@ -924,12 +924,12 @@ namespace Schumix.Irc.Commands
 			if(sIRCMessage.Info.Length == 5)
 			{
 				if(kick != sNickInfo.NickStorage.ToLower())
-					sSender.Kicke(sIRCMessage.Channel, kick);
+					sSender.Kick(sIRCMessage.Channel, kick);
 			}
 			else if(sIRCMessage.Info.Length >= 6)
 			{
 				if(kick != sNickInfo.NickStorage.ToLower())
-					sSender.Kicke(sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+					sSender.Kick(sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			}
 		}
 

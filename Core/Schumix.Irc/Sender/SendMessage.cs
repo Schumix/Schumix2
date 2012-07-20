@@ -31,14 +31,14 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
-	public sealed class SendMessagee
+	public sealed class SendMessage
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly object WriteLock = new object();
 		private DateTime _timeLastSent = DateTime.Now;
 		private string _servername;
 
-		public SendMessagee(string ServerName)
+		public SendMessage(string ServerName)
 		{
 			_servername = ServerName;
 		}

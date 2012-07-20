@@ -19,8 +19,8 @@
 
 using System;
 using System.Reflection;
-using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 using Schumix.API;
 using Schumix.API.Delegate;
 using Schumix.Irc.Commands;
@@ -32,7 +32,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Ignore
 {
-	public sealed class IgnoreAddone
+	public sealed class IgnoreAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
@@ -41,7 +41,7 @@ namespace Schumix.Irc.Ignore
 		private readonly object Lock = new object();
 		private string _servername;
 
-		public IgnoreAddone(string ServerName)
+		public IgnoreAddon(string ServerName)
 		{
 			_servername = ServerName;
 		}

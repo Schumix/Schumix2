@@ -366,7 +366,7 @@ namespace Schumix.Framework.Extensions
 			return true;
 		}
 
-		public static bool CompareDataInBlock(this List<string> list)
+		public static bool CompareDataInBlock<T>(this List<T> list)
 		{
 			int i = 0;
 			string ss = string.Empty;
@@ -374,10 +374,10 @@ namespace Schumix.Framework.Extensions
 			foreach(var s in list)
 			{
 				if(i == 0)
-					ss = s;
+					ss = s.ToString();
 				else
 				{
-					if(ss != s)
+					if(ss != s.ToString())
 						return false;
 				}
 

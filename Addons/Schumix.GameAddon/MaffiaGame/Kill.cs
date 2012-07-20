@@ -25,6 +25,8 @@ namespace Schumix.GameAddon.MaffiaGames
 	{
 		public void Kill(string Name, string Killer)
 		{
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+
 			if(!IsRunning(_channel, Killer))
 				return;
 

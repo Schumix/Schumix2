@@ -24,6 +24,8 @@ using System.Timers;
 using System.Threading;
 using System.Text.RegularExpressions;
 using Schumix.API;
+using Schumix.API.Irc;
+using Schumix.API.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -39,9 +41,12 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HLMessage(IRCMessage sIRCMessage)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+
 			if(sChannelInfo.FSelect(IFunctions.Autohl) && sChannelInfo.FSelect(IChannelFunctions.Autohl, sIRCMessage.Channel))
 			{
-				var db = SchumixBase.DManager.Query("SELECT Name, Info, Enabled FROM hlmessage");
+				var db = SchumixBase.DManager.Query("SELECT Name, Info, Enabled FROM hlmessage WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					foreach(DataRow row in db.Rows)
@@ -64,13 +69,16 @@ namespace Schumix.ExtraAddon.Commands
 
 		public bool AutoKick(string status, string nick, string _channel)
 		{
+			var sChannelInfo = sIrcBase.Networks[_servername].sChannelInfo;
+			var sSender = sIrcBase.Networks[_servername].sSender;
+
 			if(status == "join")
 			{
 				string channel = _channel.Remove(0, 1, SchumixBase.Colon);
 
 				if(sChannelInfo.FSelect(IFunctions.Autokick) && sChannelInfo.FSelect(IChannelFunctions.Autokick, channel))
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", nick.ToLower(), _servername);
 					if(!db.IsNull())
 					{
 						sSender.Kick(channel, nick, db["Reason"].ToString());
@@ -85,7 +93,7 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				if(sChannelInfo.FSelect(IFunctions.Autokick) && sChannelInfo.FSelect(IChannelFunctions.Autokick, _channel))
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}'", nick.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", nick.ToLower(), _servername);
 					if(!db.IsNull())
 					{
 						sSender.Kick(_channel, nick, db["Reason"].ToString());
@@ -103,9 +111,10 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			try
 			{
+				var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 				var url = new Uri(msg);
 				string webTitle = string.Empty;
-				var thread = new Thread(() => webTitle = WebHelper.GetWebTitle(url, sLManager.GetChannelLocalization(sIRCMessage.Channel)));
+				var thread = new Thread(() => webTitle = WebHelper.GetWebTitle(url, sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 				thread.Start();
 				thread.Join(4000);
 				thread.Abort();
@@ -139,19 +148,22 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			lock(Lock)
 			{
+				var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+				var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
 				if(sChannelInfo.FSelect(IFunctions.Message) && sChannelInfo.FSelect(IChannelFunctions.Message, sIRCMessage.Channel))
 				{
-					var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower());
+					var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						foreach(DataRow row in db.Rows)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, "{0}: {1}", sIRCMessage.Nick, row["Message"].ToString());
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message2", sIRCMessage.Channel), row["Wrote"].ToString());
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message2", sIRCMessage.Channel, sIRCMessage.ServerName), row["Wrote"].ToString());
 							Thread.Sleep(400);
 						}
 
-						SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower()));
+						SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					}
 				}
 			}
@@ -159,21 +171,21 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleIsOnline(object sender, ElapsedEventArgs e)
 		{
-			foreach(var nw in sIrcBase.Networks)
-			{
-				if(nw.Value.sNickInfo.NickStorage.ToLower() != IRCConfig.NickName.ToLower())
-				{
-					ExtraAddon.IsOnline = true;
-					sSender.NickServInfo(nw.Key, IRCConfig.NickName);
-				}
-				else if(nw.Value.sNickInfo.NickStorage.ToLower() == IRCConfig.NickName.ToLower() && !nw.Value.sNickInfo.IsIdentify
-				        && IRCConfig.UseNickServ && nw.Value.Online)
-				{
-					nw.Value.sNickInfo.Identify(nw.Key, IRCConfig.NickServPassword);
+			var sNickInfo = sIrcBase.Networks[_servername].sNickInfo;
+			var sSender = sIrcBase.Networks[_servername].sSender;
 
-					if(IRCConfig.UseHostServ)
-						nw.Value.sNickInfo.Vhost(nw.Key, SchumixBase.On);
-				}
+			if(sNickInfo.NickStorage.ToLower() != IRCConfig.List[_servername].NickName.ToLower())
+			{
+				IsOnline = true;
+				sSender.NickServInfo(IRCConfig.List[_servername].NickName);
+			}
+			else if(sNickInfo.NickStorage.ToLower() == IRCConfig.List[_servername].NickName.ToLower() && !sNickInfo.IsIdentify
+					&& IRCConfig.List[_servername].UseNickServ && sIrcBase.Networks[_servername].Online)
+			{
+				sNickInfo.Identify(IRCConfig.List[_servername].NickServPassword);
+
+				if(IRCConfig.List[_servername].UseHostServ)
+					sNickInfo.Vhost(SchumixBase.On);
 			}
 		}
 	}

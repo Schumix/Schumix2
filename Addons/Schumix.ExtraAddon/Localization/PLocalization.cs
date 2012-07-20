@@ -174,5 +174,23 @@ namespace Schumix.ExtraAddon.Localization
 					return string.Empty;
 			}
 		}
+
+		public string ExtraAddon(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Érvénytelen weboldal cím: {0}";
+					else if(Locale == "enUS")
+						return "Invalid webpage address: {0}";
+					else
+						return "Invalid webpage address: {0}";
+				}
+				default:
+					return string.Empty;
+			}
+		}
 	}
 }

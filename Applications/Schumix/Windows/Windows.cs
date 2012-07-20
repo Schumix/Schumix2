@@ -68,8 +68,7 @@ namespace Schumix
 					else
 						Process.GetCurrentProcess().Kill();
 
-					foreach(var nw in sIrcBase.Networks)
-						sIrcBase.Networks[nw.Key].sSender.Quit("Daemon killed.");
+					sIrcBase.Shutdown("Daemon killed.");
 					break;
 				case CtrlType.CTRL_LOGOFF_EVENT:
 				case CtrlType.CTRL_SHUTDOWN_EVENT:
@@ -91,14 +90,12 @@ namespace Schumix
 					else
 						Process.GetCurrentProcess().Kill();
 
-					foreach(var nw in sIrcBase.Networks)
-						sIrcBase.Networks[nw.Key].sSender.Quit("User is logging off.");
+					sIrcBase.Shutdown("User is logging off.");
 					break;
 				default:
 					break;
 			}
 
-			Thread.Sleep(5*1000);
 			return true;
 		}
 	}

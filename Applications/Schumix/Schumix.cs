@@ -90,7 +90,7 @@ namespace Schumix
 			}
 			catch(Exception e)
 			{
-				Log.Error("SchumixBot", sLConsole.Exception("Error"), e);
+				Log.Error("SchumixBot", sLConsole.Exception("Error"), e.Message);
 				Thread.Sleep(100);
 			}
 		}

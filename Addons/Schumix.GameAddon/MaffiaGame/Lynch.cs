@@ -32,6 +32,8 @@ namespace Schumix.GameAddon.MaffiaGames
 		{
 			lock(Lock)
 			{
+				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+
 				if(_lynch)
 					return;
 

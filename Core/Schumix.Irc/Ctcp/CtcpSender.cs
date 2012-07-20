@@ -34,7 +34,7 @@ namespace Schumix.Irc.Ctcp
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private readonly SendMessagee sSendMessage;
+		private readonly SendMessage sSendMessage;
 		private string _clientInfoMessage;
 		private string _userInfoMessage;
 		private string _versionMessage;

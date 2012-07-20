@@ -22,20 +22,19 @@ using System.Timers;
 using System.Threading;
 using System.Collections.Generic;
 using Schumix.Irc;
+using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.GameAddon;
+using Schumix.GameAddon.Commands;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
-	sealed partial class MaffiaGame
+	sealed partial class MaffiaGame : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly ChannelInfo sChannelInfo = Singleton<ChannelInfo>.Instance;
-		private readonly SendMessage sSendMessage = Singleton<SendMessage>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Sender sSender = Singleton<Sender>.Instance;
 		private readonly Dictionary<string, string> _detectivelist = new Dictionary<string, string>();
 		private readonly Dictionary<string, Player> _playerflist = new Dictionary<string, Player>();
 		private readonly Dictionary<string, string> _killerlist = new Dictionary<string, string>();
@@ -45,6 +44,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		private readonly Dictionary<int, string> _playerlist = new Dictionary<int, string>();
 		private System.Timers.Timer _timerowner = new System.Timers.Timer();
 		private readonly List<string> _gameoverlist = new List<string>();
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly List<string> _leftlist = new List<string>();
 		private readonly List<string> _joinlist = new List<string>();
 		public Dictionary<string, string> GetDetectiveList() { return _detectivelist; }
@@ -59,6 +59,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		public bool Started { get; set; }
 		public bool NoLynch { get; set; }
 		public bool NoVoice { get; set; }
+		private GameCommand sGameCommand;
 		private DateTime OwnerMsgTime;
 		private Thread _thread;
 		private string _owner;
@@ -70,11 +71,14 @@ namespace Schumix.GameAddon.MaffiaGames
 		private bool _start;
 		private bool _lynch;
 		private int _lynchmaxnumber;
+		private string _servername;
 		private int _players;
 		private int _gameid;
 
-		public MaffiaGame(string Name, string Channel)
+		public MaffiaGame(string ServerName, string Name, string Channel, GameCommand gc) : base(ServerName)
 		{
+			_servername = ServerName;
+			sGameCommand = gc;
 			NewGame(Name, Channel);
 		}
 
@@ -103,10 +107,11 @@ namespace Schumix.GameAddon.MaffiaGames
 			_timerowner.Enabled = true;
 			_timerowner.Start();
 
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 			sSendMessage.SendCMPrivmsg(_channel, "{0} új játékot indított. Csatlakozni a '!join' paranccsal tudtok.", _owner);
 			sSendMessage.SendCMPrivmsg(_channel, "{0}: Írd be a '!start' parancsot, ha mindenki készen áll.", _owner);
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Game FROM maffiagame ORDER BY Game DESC");
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Game FROM maffiagame WHERE ServerName = '{0}' ORDER BY Game DESC", _servername);
 			_gameid = !db.IsNull() ? (Convert.ToInt32(db["Game"].ToString()) + 1) : 1;
 		}
 
@@ -185,7 +190,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					_gameoverlist.Add(NewName.ToLower());
 				}
 
-				SchumixBase.DManager.Update("maffiagame", string.Format("Name = '{0}'", NewName), string.Format("Name = '{0}'", OldName));
+				SchumixBase.DManager.Update("maffiagame", string.Format("Name = '{0}'", NewName), string.Format("Name = '{0}' And ServerName = '{1}'", OldName, _servername));
 			}
 		}
 
@@ -319,6 +324,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			if((DateTime.Now - OwnerMsgTime).Minutes >= 10 && _owner != string.Empty)
 			{
 				_owner = string.Empty;
+				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 				sSendMessage.SendCMPrivmsg(_channel, "A játék indítója több mint 10 perce nincs itt.");
 				sSendMessage.SendCMPrivmsg(_channel, "A játékot mostantól bárki írányíthatja!");
 
@@ -381,12 +387,14 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(Started && !_ghostlist.ContainsKey(Name.ToLower()))
 				_ghostlist.Add(Name.ToLower(), Name);
 
-			SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Name = '{0}' AND Game = '{1}'", Name, _gameid));
+			SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Name = '{0}' AND Game = '{1}' And ServerName = '{2}'", Name, _gameid, _servername));
+			var sSender = sIrcBase.Networks[_servername].sSender;
 			sSender.Mode(_channel, "-v", Name);
 		}
 
 		private void Corpse(string Name)
 		{
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 			var rank = GetRank(Name);
 
 			if(rank == Rank.Killer)
@@ -401,6 +409,8 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		public void EndText()
 		{
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+
 			if(_players < 8)
 				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig nem volt. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective());
 			else
@@ -409,6 +419,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		public void EndGameText()
 		{
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 			sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
 		}
 
@@ -416,6 +427,8 @@ namespace Schumix.GameAddon.MaffiaGames
 		{
 			if(!Running)
 			{
+				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+
 				if(Name == string.Empty)
 					sSendMessage.SendCMPrivmsg(_channel, "Nem megy játék!");
 				else
@@ -431,6 +444,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		{
 			if(!Running)
 			{
+				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 				sSendMessage.SendCMPrivmsg(Channel, "{0}: Még nem kezdődött el játék!", Name);
 				return false;
 			}
@@ -445,6 +459,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private void AddRanks()
 		{
+			var sSender = sIrcBase.Networks[_servername].sSender;
 			int i = 0;
 			string namesss = string.Empty;
 			var list = new List<string>();
@@ -486,6 +501,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!night)
 				Running = false;
 
+			var sSender = sIrcBase.Networks[_servername].sSender;
 			int i = 0;
 			string namesss = string.Empty;
 			var list = new List<string>();
@@ -562,15 +578,17 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		public void StopThread()
 		{
+			var sChannelInfo = sIrcBase.Networks[_servername].sChannelInfo;
+			var sSender = sIrcBase.Networks[_servername].sSender;
 			Running = false;
 
-			if(!GameAddon.GameChannelFunction.ContainsKey(_channel))
+			if(!sGameCommand.GameChannelFunction.ContainsKey(_channel))
 				return;
 
-			SchumixBase.DManager.Update("maffiagame", "Active = '0'", string.Format("Active = '1' AND Game = '{0}'", _gameid));
-			SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", GameAddon.GameChannelFunction[_channel]), string.Format("Channel = '{0}'", _channel));
+			SchumixBase.DManager.Update("maffiagame", "Active = '0'", string.Format("Active = '1' AND Game = '{0}' And ServerName = '{1}'", _gameid, _servername));
+			SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sGameCommand.GameChannelFunction[_channel]), string.Format("Channel = '{0}' And ServerName = '{1}'", _channel, _servername));
 			sChannelInfo.ChannelFunctionsReload();
-			SchumixBase.DManager.Update("channel", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, _channel)), string.Format("Channel = '{0}'", _channel));
+			SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, _channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", _channel, _servername));
 			sChannelInfo.ChannelFunctionsReload();
 
 			if(Started)
@@ -579,7 +597,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(_players >= 15)
 			{
 				sSender.Part(_killerchannel);
-				SchumixBase.DManager.Delete("channel", string.Format("Channel = '{0}'", sUtilities.SqlEscape(_killerchannel)));
+				SchumixBase.DManager.Delete("channels", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(_killerchannel), _servername));
 				sChannelInfo.ChannelListReload();
 				sChannelInfo.ChannelFunctionsReload();
 			}
@@ -593,11 +611,13 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			Clean();
 			Started = false;
-			GameAddon.GameChannelFunction.Remove(_channel);
+			sGameCommand.GameChannelFunction.Remove(_channel);
 		}
 
 		private void Game()
 		{
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+
 			try
 			{
 				bool newghost = false;
@@ -960,6 +980,8 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private void EndGame(string newghost, bool ghosttext = false)
 		{
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+
 			if(_killerlist.Count == 0 && Running)
 			{
 				RemoveRanks();
@@ -980,7 +1002,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						if(newghost != string.Empty)
 							sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newghost);
 
-						SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Name = '{0}' AND Game = '{1}'", newghost, _gameid));
+						SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Name = '{0}' AND Game = '{1}' And ServerName = '{2}'", newghost, _gameid, _servername));
 						Corpse(newghost);
 					}
 

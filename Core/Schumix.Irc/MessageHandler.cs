@@ -158,7 +158,7 @@ namespace Schumix.Irc
 							break;
 					}
 
-					if(sIRCMessage.Args.Contains("   Is online from:"))
+					if(sIRCMessage.Args.Contains("Is online from:") || sIRCMessage.Args.Contains("is currently online."))
 					{
 						sIRCMessage.Channel = OnlinePrivmsg;
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text11", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
@@ -170,10 +170,10 @@ namespace Schumix.Irc
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text12", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						IsOnline = false;
 					}
-					else if(sIRCMessage.Args.Contains("   Last seen time:"))
+					else if(sIRCMessage.Args.Contains("Last seen time:") || sIRCMessage.Args.Contains("Last seen:"))
 					{
 						sIRCMessage.Channel = OnlinePrivmsg;
-						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text13", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), sIRCMessage.Args.Remove(0, "   Last seen time: ".Length, "   Last seen time: "));
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text13", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), sIRCMessage.Args.Contains("Last seen time:") ? sIRCMessage.Args.Remove(0, "Last seen time: ".Length, "Last seen time: ") : sIRCMessage.Args.Remove(0, "Last seen: ".Length, "Last seen: "));
 						IsOnline = false;
 					}
 

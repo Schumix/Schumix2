@@ -31,17 +31,17 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
-	public sealed class ChannelNameListe : CommandInfo
+	public sealed class ChannelNameList : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private readonly SendMessagee sSendMessage;
-		private readonly AntiFloodo sAntiFlood;
+		private readonly SendMessage sSendMessage;
+		private readonly AntiFlood sAntiFlood;
 		private string _servername;
 
-		public ChannelNameListe(string ServerName) : base(ServerName)
+		public ChannelNameList(string ServerName) : base(ServerName)
 		{
 			_servername = ServerName;
 			sAntiFlood = sIrcBase.Networks[ServerName].sAntiFlood;

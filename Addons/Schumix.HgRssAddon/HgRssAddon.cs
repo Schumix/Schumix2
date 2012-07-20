@@ -21,35 +21,43 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using Schumix.API;
+using Schumix.API.Irc;
+using Schumix.Irc;
+using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.Irc;
-using Schumix.Irc.Commands;
 using Schumix.HgRssAddon.Config;
 using Schumix.HgRssAddon.Commands;
 using Schumix.HgRssAddon.Localization;
 
 namespace Schumix.HgRssAddon
 {
-	class HgRssAddon : RssCommand, ISchumixAddon
+	class HgRssAddon : ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		public static readonly List<HgRss> RssList = new List<HgRss>();
+		private RssCommand sRssCommand;
 #pragma warning disable 414
 		private AddonConfig _config;
 #pragma warning restore 414
+		private string _servername;
 
-		public void Setup()
+		public void Setup(string ServerName)
 		{
+			_servername = ServerName;
+			sRssCommand = new RssCommand(ServerName);
 			sLocalization.Locale = sLConsole.Locale;
-			_config = new AddonConfig(Name + ".xml");
-			InitIrcCommand();
 
-			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM hginfo");
+			if(IRCConfig.List[ServerName].ServerId == 1)
+				_config = new AddonConfig(Name + ".xml");
+
+			InitIrcCommand();
+			SchumixBase.DManager.Update("hginfo", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
+
+			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM hginfo WHERE ServerName = '{0}'", ServerName);
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
@@ -57,22 +65,22 @@ namespace Schumix.HgRssAddon
 					string name = row["Name"].ToString();
 					string link = row["Link"].ToString();
 					string website = row["Website"].ToString();
-					var rss = new HgRss(name, link, website);
-					RssList.Add(rss);
+					var rss = new HgRss(ServerName, name, link, website);
+					sRssCommand.RssList.Add(rss);
 				}
 
 				int x = 0;
 
-				foreach(var list in RssList)
+				foreach(var list in sRssCommand.RssList)
 				{
 					list.Start();
 					x++;
 				}
 
-				Log.Notice("HgRssAddon", sLocalization.HgRssAddon("Text"), x);
+				Log.Notice("HgRssAddon", sLocalization.HgRssAddon("Text"), ServerName, x);
 			}
 			else
-				Log.Warning("HgRssAddon", sLocalization.HgRssAddon("Text2"));
+				Log.Warning("HgRssAddon", sLocalization.HgRssAddon("Text2"), ServerName);
 		}
 
 		public void Destroy()
@@ -80,10 +88,10 @@ namespace Schumix.HgRssAddon
 			RemoveIrcCommand();
 			_config = null;
 
-			foreach(var list in RssList)
+			foreach(var list in sRssCommand.RssList)
 				list.Stop();
 
-			RssList.Clear();
+			sRssCommand.RssList.Clear();
 		}
 
 		public int Reload(string RName, string SName = "")
@@ -93,7 +101,8 @@ namespace Schumix.HgRssAddon
 				switch(RName.ToLower())
 				{
 					case "config":
-						_config = new AddonConfig(Name + ".xml");
+						if(IRCConfig.List[_servername].ServerId == 1)
+							_config = new AddonConfig(Name + ".xml");
 						return 1;
 					case "command":
 						InitIrcCommand();
@@ -112,12 +121,12 @@ namespace Schumix.HgRssAddon
 
 		private void InitIrcCommand()
 		{
-			sIrcBase.SchumixRegisterHandler("hg", HandleHg, CommandPermission.Operator);
+			sIrcBase.Networks[_servername].SchumixRegisterHandler("hg", sRssCommand.HandleHg, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
 		{
-			sIrcBase.SchumixRemoveHandler("hg",   HandleHg);
+			sIrcBase.Networks[_servername].SchumixRemoveHandler("hg",   sRssCommand.HandleHg);
 		}
 
 		public bool HandleHelp(IRCMessage sIRCMessage)

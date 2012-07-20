@@ -19,26 +19,31 @@
 
 using System;
 using Schumix.API;
-using Schumix.Framework;
-using Schumix.Framework.Config;
+using Schumix.API.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
+using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.RevisionAddon.Commands;
 
 namespace Schumix.RevisionAddon
 {
-	class RevisionAddon : Revision, ISchumixAddon
+	class RevisionAddon : ISchumixAddon
 	{
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private Revision sRevision;
+		private string _servername;
 
-		public void Setup()
+		public void Setup(string ServerName)
 		{
-			sIrcBase.SchumixRegisterHandler("xrev", HandleXrev);
+			_servername = ServerName;
+			sRevision = new Revision(ServerName);
+			sIrcBase.Networks[ServerName].SchumixRegisterHandler("xrev", sRevision.HandleXrev);
 		}
 
 		public void Destroy()
 		{
-			sIrcBase.SchumixRemoveHandler("xrev",   HandleXrev);
+			sIrcBase.Networks[_servername].SchumixRemoveHandler("xrev",   sRevision.HandleXrev);
 		}
 
 		public int Reload(string RName, string SName = "")
