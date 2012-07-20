@@ -88,6 +88,7 @@ namespace Schumix.Framework
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text2"));
 				DManager = new DatabaseManager();
 				Log.Notice("SchumixBase", sLConsole.SchumixBase("Text3"));
+				sLManager.Locale = LocalizationConfig.Locale;
 
 				foreach(var sn in IRCConfig.List)
 				{
@@ -149,8 +150,6 @@ namespace Schumix.Framework
 					sAddonManager.Initialize();
 					sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory);
 				}
-
-				sLManager.Locale = LocalizationConfig.Locale;
 			}
 			catch(Exception e)
 			{
