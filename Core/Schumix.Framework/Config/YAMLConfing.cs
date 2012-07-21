@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Schumix.Framework.Config
 {
-    class YAMLConfing
+    public sealed class YAMLConfing
     {
     }
 }
