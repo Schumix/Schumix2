@@ -7,5 +7,11 @@ namespace Schumix.Framework.Config
 {
     public sealed class YAMLConfing
     {
+        public YAMLConfing()
+        {
+
+        }
+
+        ~YAMLConfing() { }
     }
 }

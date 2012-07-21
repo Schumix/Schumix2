@@ -7,6 +7,11 @@ namespace Schumix.Framework.Config
 {
     public sealed class XMLConfig
     {
+        public XMLConfig()
+        {
 
+        }
+
+        ~XMLConfig() { }
     }
 }

@@ -99,6 +99,12 @@ namespace Schumix.Framework.Config
 				}
 				else
 				{
+                    if (configfile.EndsWith(".yml"))
+                        new YAMLConfing();
+                    else if (configfile.EndsWith(".xml"))
+                        new XMLConfig();
+                    else new XMLConfig();
+
 					var xmldoc = new XmlDocument();
 					xmldoc.Load(sUtilities.DirectoryToHome(configdir, configfile));
 
