@@ -27,58 +27,10 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
 {
-	public sealed class Config
+	public sealed class Config : DefaultConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private const string _logfilename           = "Schumix.log";
-		private const int _loglevel                 = 2;
-		private const string _logdirectory          = "Logs";
-		private const string _irclogdirectory       = "Channels";
-		private const bool _irclog                  = false;
-		private const bool _serverenabled           = false;
-		private const string _serverhost            = "127.0.0.1";
-		private const int _serverport               = 35220;
-		private const string _serverpassword        = "schumix";
-		private const string _servername            = "Default";
-		private const string _server                = "localhost";
-		private const int _port                     = 6667;
-		private const bool _ssl                     = false;
-		private const string _nickname              = "Schumix2";
-		private const string _nickname2             = "_Schumix2";
-		private const string _nickname3             = "__Schumix2";
-		private const string _username              = "Schumix2";
-		private const string _userinfo              = "Schumix2 IRC Bot";
-		private const string _masterchannel         = "#schumix2";
-		private const string _masterchannelpassword = " ";
-		private const string _ignorechannels        = " ";
-		private const string _ignorenames           = " ";
-		private const bool _usenickserv             = false;
-		private const string _nickservpassword      = "password";
-		private const bool _usehostserv             = false;
-		private const bool _hostservstatus          = false;
-		private const int _messagesending           = 400;
-		private const string _commandprefix         = "$";
-		private const string _messagetype           = "Privmsg";
-		private const bool _mysqlenabled            = false;
-		private const string _mysqlhost             = "localhost";
-		private const string _mysqluser             = "root";
-		private const string _mysqlpassword         = "password";
-		private const string _mysqldatabase         = "database";
-		private const string _mysqlcharset          = "utf8";
-		private const bool _sqliteenabled           = false;
-		private const string _sqlitefilename        = "Schumix.db3";
-		private const bool _addonenabled            = true;
-		private const string _addonignore           = "MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon";
-		private const string _addondirectory        = "Addons";
-		private const bool _scriptenabled           = false;
-		private const string _scriptdirectory       = "Scripts";
-		private const string _locale                = "enUS";
-		private const bool _updateenabled           = false;
-		private const string _updateversion         = "stable";
-		private const string _updatebranch          = "master";
-		private const string _updatewebpage         = "http://megax.uw.hu/Schumix2/";
-		private bool error                          = false;
 
 		public Config(string configdir, string configfile)
 		{

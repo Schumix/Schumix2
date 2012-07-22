@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Schumix.Framework.Config
 {
-    public sealed class XMLConfig
+    public sealed class XMLConfig : DefaultConfig
     {
         public XMLConfig()
         {
