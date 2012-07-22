@@ -97,16 +97,18 @@ namespace Schumix.Framework.Config
                 case 0:
                     if (YamlConf.CreateConfig(ConfigDirectory, ConfigFile))
                         return true;
-                    else return false;
+                    break;
                 case 1:
                     if (XmlConf.CreateConfig(ConfigDirectory, ConfigFile))
                         return true;
-                    else return false;
+                    break;
                 default:
-                    if (XmlConf.CreateConfig(ConfigDirectory, ConfigFile))
+                    if (YamlConf.CreateConfig(ConfigDirectory, ConfigFile))
                         return true;
-                    else return false;
+                    break;
             }
+
+            return false;
 		}
 	}
 }
