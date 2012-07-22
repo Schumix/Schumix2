@@ -79,8 +79,8 @@ namespace Schumix.Framework.Config
             return false;
         }
 
-		private bool IsConfigXml(string ConfigDirectory, string ConfigFile)
-		{
+        private bool IsConfigXml(string ConfigDirectory, string ConfigFile)
+        {
             CheckAndCreate(ConfigDirectory);
 
 			try
