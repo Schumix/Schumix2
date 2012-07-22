@@ -6,7 +6,7 @@ Schumix:
         Port: 35220
         Password: schumix
     Irc:
-        -
+        #-
         ServerName: Default
         Server: localhost
         Port: 6667

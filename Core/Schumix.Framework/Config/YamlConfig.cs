@@ -26,8 +26,8 @@ using YamlDotNet.Core;
 using YamlDotNet;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Converters;
-/*using System.Yaml;
-using System.Yaml.Serialization;*/
+using System.Yaml;
+using System.Yaml.Serialization;
 using System.Collections;
 using System.IO;
 using System.Text;
@@ -47,29 +47,12 @@ namespace Schumix.Framework.Config
 		{
 			// TODO
 
-            var strdoc = string.Empty;
-
-            // Setup the input
-            var input = new StringReader(strdoc);
-
             var yaml = new YamlStream();
-            yaml.Load(input);
-            
-            var mapping =
-                (YamlMappingNode)yaml.Documents[0].RootNode;
+            yaml.Load(File.OpenText(sUtilities.DirectoryToHome(configdir, configfile)));
 
-            //foreach (var entry in mapping.Children)
-            //{
-                
-            //}
-
-            var items = (YamlSequenceNode)mapping.Children[new YamlScalarNode("Irc")];
-            foreach (YamlMappingNode item in items)
-            {
-                string ServerName = item.Children[new YamlScalarNode("ServerName")].ToString();
-				Console.WriteLine(ServerName);
-
-            }
+            var schumixmap = ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("Schumix")]).Children;
+			var ircmap = ((YamlMappingNode)schumixmap[new YamlScalarNode("Irc")]).Children;
+			Console.WriteLine(ircmap[new YamlScalarNode("ServerName")]);
 		}
 
 		~YamlConfig()
