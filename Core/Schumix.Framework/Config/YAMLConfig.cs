@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using YamlDotNet.Core;
 
 namespace Schumix.Framework.Config
 {
