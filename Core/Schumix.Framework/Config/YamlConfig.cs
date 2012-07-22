@@ -64,6 +64,7 @@ namespace Schumix.Framework.Config
             //}
 
             var items = (YamlSequenceNode)mapping.Children[new YamlScalarNode("Irc")];
+
             foreach (YamlMappingNode item in items)
             {
                 string ServerName = item.Children[new YamlScalarNode("ServerName")].ToString();
