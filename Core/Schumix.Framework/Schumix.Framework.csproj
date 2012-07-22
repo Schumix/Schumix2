@@ -66,8 +66,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
+    <Compile Include="Config\DefaultConfig.cs" />
     <Compile Include="Config\XMLConfig.cs" />
-    <Compile Include="Config\YAMLConfing.cs" />
+    <Compile Include="Config\YAMLConfig.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="SchumixBase.cs" />
     <Compile Include="ConsoleLog.cs" />
