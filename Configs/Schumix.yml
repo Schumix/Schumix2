@@ -1,9 +1,10 @@
---- Schumix config file (yaml)
+# Schumix config file (yaml)
 Server:
     Enabled: false
     Host: 127.0.0.1
     Port: 35220
     Password: schumix
+---
 Irc:
     ServerName: Default
     Server: localhost
@@ -30,6 +31,15 @@ Irc:
     Command:
         Prefix: $
     MessageType: Privmsg
+...
+# If you want to connect to more servers at a time:
+# Note that '---' and '...' are important at the begining and ending!
+# ---
+# Irc:
+# ServerName: Default2
+# Server: anotherhost
+# etc...
+# ...
 Log:
     FileName: Schumix.log
     LogLevel: 2
