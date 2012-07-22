@@ -123,7 +123,7 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 * **Version:** Meghatározza melyik verzióra szeretnénk frissíteni. Current vagy stable lehet. A current az utolsó verzó ami a tárolóban van a stable pedig az utolsó stabil verzió.
                Alapértelmezés: `stable`
 * **Branch:** Beállítható vele az ág (branch). Ez csak a current verziók esetében érdekes. Alapértelmezés: `master`
-* **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: `http://megax.uw.hu/Schumix2/`
+* **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: `https://github.com/megax/Schumix2`
 
 # Adatbázis beüzemelése
 
