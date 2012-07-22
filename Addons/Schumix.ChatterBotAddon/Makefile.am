@@ -11,20 +11,20 @@ ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.API.dll \
-	../../Run/Debug/Schumix.Irc.dll \
-	../../Run/Debug/Schumix.Framework.dll
+	../../Run/Debug/Schumix.Framework.dll \
+	../../Run/Debug/Schumix.Irc.dll
 BUILD_DIR = ../../Run/Debug/Addons
 
 CHATTERBOTADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/ChatterBotAddon.dll.mdb
 CHATTERBOTADDON_DLL_MDB=$(BUILD_DIR)/ChatterBotAddon.dll.mdb
 CHATTERBOTAPI_DLL_SOURCE=../../Dependencies/ChatterBotAPI.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
-MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
+MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 
 endif
 
@@ -36,19 +36,19 @@ ASSEMBLY_MDB =
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.API.dll \
-	../../Run/Release/Schumix.Irc.dll \
-	../../Run/Release/Schumix.Framework.dll
+	../../Run/Release/Schumix.Framework.dll \
+	../../Run/Release/Schumix.Irc.dll
 BUILD_DIR = ../../Run/Release/Addons
 
 CHATTERBOTADDON_DLL_MDB=
 CHATTERBOTAPI_DLL_SOURCE=../../Dependencies/ChatterBotAPI.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
-MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
+MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 
 endif
 
@@ -60,20 +60,20 @@ ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Debug_x64/Schumix.API.dll \
-	../../Run/Debug_x64/Schumix.Irc.dll \
-	../../Run/Debug_x64/Schumix.Framework.dll
+	../../Run/Debug_x64/Schumix.Framework.dll \
+	../../Run/Debug_x64/Schumix.Irc.dll
 BUILD_DIR = ../../Run/Debug_x64/Addons
 
 CHATTERBOTADDON_DLL_MDB_SOURCE=../../Run/Debug_x64/Addons/ChatterBotAddon.dll.mdb
 CHATTERBOTADDON_DLL_MDB=$(BUILD_DIR)/ChatterBotAddon.dll.mdb
 CHATTERBOTAPI_DLL_SOURCE=../../Dependencies/ChatterBotAPI.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
-MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
+MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
 
 endif
 
@@ -85,19 +85,19 @@ ASSEMBLY_MDB =
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Release_x64/Schumix.API.dll \
-	../../Run/Release_x64/Schumix.Irc.dll \
-	../../Run/Release_x64/Schumix.Framework.dll
+	../../Run/Release_x64/Schumix.Framework.dll \
+	../../Run/Release_x64/Schumix.Irc.dll
 BUILD_DIR = ../../Run/Release_x64/Addons
 
 CHATTERBOTADDON_DLL_MDB=
 CHATTERBOTAPI_DLL_SOURCE=../../Dependencies/ChatterBotAPI.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
-MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
+MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
 
 endif
 
@@ -108,12 +108,12 @@ PROGRAMFILES = \
 	$(CHATTERBOTADDON_DLL_MDB) \
 	$(CHATTERBOTAPI_DLL) \
 	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_IRC_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
+	$(SQLITE3_DLL) \
+	$(SCHUMIX_DB3) \
 	$(MYSQL_DATA_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
-	$(SQLITE3_DLL) \
-	$(SCHUMIX_DB3)  
+	$(SCHUMIX_IRC_DLL)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_CHATTERBOTADDON_PC)  
@@ -148,22 +148,22 @@ include $(top_srcdir)/Makefile.include
 
 CHATTERBOTAPI_DLL = $(BUILD_DIR)/ChatterBotAPI.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
-SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
-MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
-SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
+MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
+SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
+SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
 SCHUMIX_CHATTERBOTADDON_PC = $(BUILD_DIR)/schumix.chatterbotaddon.pc
 
 $(eval $(call emit-deploy-target,CHATTERBOTAPI_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_API_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL))
-$(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
-$(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
+$(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
+$(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
+$(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_CHATTERBOTADDON_PC,schumix.chatterbotaddon.pc))
 
 
