@@ -174,7 +174,7 @@ namespace Schumix.Framework.Config
 
         ~XMLConfig() { }
 
-        public static bool CreateConfig(string ConfigDirectory, string ConfigFile)
+        public bool CreateConfig(string ConfigDirectory, string ConfigFile)
         {
             try
             {
@@ -426,6 +426,12 @@ namespace Schumix.Framework.Config
                     }
                 }
             }
+            catch (DirectoryNotFoundException)
+            {
+                CreateConfig(ConfigDirectory, ConfigFile);
+            }
+
+            return true;
         }
     }
 }

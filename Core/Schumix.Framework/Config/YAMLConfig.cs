@@ -37,7 +37,7 @@ namespace Schumix.Framework.Config
 
         ~YAMLConfig() { }
 
-        public static bool CreateConfig(string configdir, string configfile)
+        public bool CreateConfig(string configdir, string configfile)
         {
             // TODO
             return false;

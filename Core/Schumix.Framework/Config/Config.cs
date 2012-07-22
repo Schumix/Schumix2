@@ -30,6 +30,8 @@ namespace Schumix.Framework.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+        private readonly XMLConfig XmlConf;
+        private readonly YAMLConfig YamlConf;
 
 		public Config(string configdir, string configfile)
 		{
@@ -53,13 +55,13 @@ namespace Schumix.Framework.Config
                     switch (ConfigType(configfile))
                     {
                         case 0:
-                            new YAMLConfig(configdir, configfile);
+                            YamlConf = new YAMLConfig(configdir, configfile);
                             break;
                         case 1:
-                            new XMLConfig(configdir, configfile);
+                            XmlConf = new XMLConfig(configdir, configfile);
                             break;
                         default:
-                            new YAMLConfig(configdir, configfile);
+                            YamlConf = new YAMLConfig(configdir, configfile);
                             break;
                     }
 				}
@@ -93,15 +95,15 @@ namespace Schumix.Framework.Config
             switch (ConfigType(ConfigFile))
             {
                 case 0:
-                    if (YAMLConfig.CreateConfig(ConfigDirectory, ConfigFile))
+                    if (YamlConf.CreateConfig(ConfigDirectory, ConfigFile))
                         return true;
                     else return false;
                 case 1:
-                    if (XMLConfig.CreateConfig(ConfigDirectory, ConfigFile))
+                    if (XmlConf.CreateConfig(ConfigDirectory, ConfigFile))
                         return true;
                     else return false;
                 default:
-                    if (YAMLConfig.CreateConfig(ConfigDirectory, ConfigFile))
+                    if (XmlConf.CreateConfig(ConfigDirectory, ConfigFile))
                         return true;
                     else return false;
             }
