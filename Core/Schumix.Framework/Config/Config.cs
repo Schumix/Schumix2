@@ -21,7 +21,6 @@ using System;
 using System.IO;
 using System.Xml;
 using System.Threading;
-using System.Collections.Generic;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -65,10 +64,24 @@ namespace Schumix.Framework.Config
 			}
 		}
 
-		private bool IsConfig(string ConfigDirectory, string ConfigFile)
+        private void CheckAndCreate(string ConfigDirectory)
+        {
+            if (!Directory.Exists(ConfigDirectory))
+                Directory.CreateDirectory(ConfigDirectory);
+        }
+
+        private bool IsConfig(string ConfigDirectory, string ConfigFile)
+        {
+            // TODO
+
+            CheckAndCreate(ConfigDirectory);
+
+            return false;
+        }
+
+		private bool IsConfigXml(string ConfigDirectory, string ConfigFile)
 		{
-			if(!Directory.Exists(ConfigDirectory))
-				Directory.CreateDirectory(ConfigDirectory);
+            CheckAndCreate(ConfigDirectory);
 
 			try
 			{
