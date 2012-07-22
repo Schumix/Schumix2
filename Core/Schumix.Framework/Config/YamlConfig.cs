@@ -26,8 +26,8 @@ using YamlDotNet.Core;
 using YamlDotNet;
 using YamlDotNet.RepresentationModel;
 using YamlDotNet.Converters;
-using System.Yaml;
-using System.Yaml.Serialization;
+/*using System.Yaml;
+using System.Yaml.Serialization;*/
 using System.Collections;
 using System.IO;
 using System.Text;
@@ -67,6 +67,7 @@ namespace Schumix.Framework.Config
             foreach (YamlMappingNode item in items)
             {
                 string ServerName = item.Children[new YamlScalarNode("ServerName")].ToString();
+				Console.WriteLine(ServerName);
 
             }
 		}
@@ -78,7 +79,8 @@ namespace Schumix.Framework.Config
 		public bool CreateConfig(string configdir, string configfile)
 		{
 			// TODO
-			return false;
+			return true;
+			//return false;
 		}
 	}
 }

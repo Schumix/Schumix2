@@ -82,7 +82,7 @@ namespace Schumix
 		{
 			sRuntime.SetProcessName("Schumix");
 			string configdir = "Configs";
-			string configfile = "Schumix.xml";
+			string configfile = "Schumix.yml";
 			string console_encoding = "utf-8";
 			string localization = "start";
 			bool serverenabled = false;

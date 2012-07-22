@@ -66,6 +66,12 @@
     <Reference Include="YamlDotNet.Core">
       <HintPath>..\..\Dependencies\YamlDotNet.Core.dll</HintPath>
     </Reference>
+    <Reference Include="YamlDotNet.Converters">
+      <HintPath>..\..\Dependencies\YamlDotNet.Converters.dll</HintPath>
+    </Reference>
+    <Reference Include="YamlDotNet.RepresentationModel">
+      <HintPath>..\..\Dependencies\YamlDotNet.RepresentationModel.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
