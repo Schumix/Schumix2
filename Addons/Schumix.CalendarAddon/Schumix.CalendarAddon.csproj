@@ -84,13 +84,13 @@
       <Project>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</Project>
       <Name>Schumix.API</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">
-      <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
-      <Name>Schumix.Framework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Core\Schumix.Irc\Schumix.Irc.csproj">
       <Project>{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}</Project>
       <Name>Schumix.Irc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">
+      <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
+      <Name>Schumix.Framework</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

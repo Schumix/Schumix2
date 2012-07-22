@@ -23,14 +23,8 @@ SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Debug/Schumix.Updater.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
-SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
-SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
 
 endif
 
@@ -53,11 +47,8 @@ SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
-SCHUMIX_API_DLL_MDB=
-SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Release/Schumix.Updater.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
-SCHUMIX_UPDATER_DLL_MDB=
 
 endif
 
@@ -81,12 +72,8 @@ SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Debug_x64/Schumix.Updater.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
-SCHUMIX_UPDATER_DLL_MDB=
 
 endif
 
@@ -109,11 +96,8 @@ SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
-SCHUMIX_API_DLL_MDB=
-SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Release_x64/Schumix.Updater.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
-SCHUMIX_UPDATER_DLL_MDB=
 
 endif
 
@@ -129,11 +113,8 @@ PROGRAMFILES = \
 	$(MYSQL_DATA_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB) \
-	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_UPDATER_DLL) \
-	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
-	$(SCHUMIX_UPDATER_DLL_MDB)  
+	$(ICSHARPCODE_SHARPZIPLIB_DLL)  
 
 BINARIES = \
 	$(SCHUMIX_SERVER)  
