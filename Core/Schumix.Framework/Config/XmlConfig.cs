@@ -50,9 +50,9 @@ namespace Schumix.Framework.Config
 			new LogConfig(LogFileName, LogLevel, sUtilities.GetHomeDirectory(LogDirectory), sUtilities.GetHomeDirectory(IrcLogDirectory), IrcLog);
 
 			Log.Initialize(LogFileName);
-			Log.Debug("Config", ">> {0}", configfile);
+			Log.Debug("XmlConfig", ">> {0}", configfile);
 
-			Log.Notice("Config", sLConsole.Config("Text3"));
+			Log.Notice("XmlConfig", sLConsole.Config("Text3"));
 			bool ServerEnabled = !xmldoc.SelectSingleNode("Schumix/Server/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Server/Enabled").InnerText) : d_serverenabled;
 			string ServerHost = !xmldoc.SelectSingleNode("Schumix/Server/Host").IsNull() ? xmldoc.SelectSingleNode("Schumix/Server/Host").InnerText : d_serverhost;
 			int ServerPort = !xmldoc.SelectSingleNode("Schumix/Server/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Server/Port").InnerText) : d_serverport;
@@ -125,7 +125,7 @@ namespace Schumix.Framework.Config
 						MasterChannel = d_masterchannel;
 
 					if(IrcList.ContainsKey(ServerName.ToLower()))
-						Log.Error("Config", sLConsole.Config("Text12"), ServerName);
+						Log.Error("XmlConfig", sLConsole.Config("Text12"), ServerName);
 					else
 					{
 						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
@@ -171,7 +171,7 @@ namespace Schumix.Framework.Config
 
 				new UpdateConfig(Enabled, Version.ToLower(), Branch, WebPage);
 
-				Log.Success("Config", sLConsole.Config("Text4"));
+				Log.Success("XmlConfig", sLConsole.Config("Text4"));
 				Console.WriteLine();
 			}
 		}
@@ -192,8 +192,8 @@ namespace Schumix.Framework.Config
 				{
 					new LogConfig(d_logfilename, 3, d_logdirectory, d_irclogdirectory, d_irclog);
 					Log.Initialize(d_logfilename);
-					Log.Error("Config", sLConsole.Config("Text5"));
-					Log.Debug("Config", sLConsole.Config("Text6"));
+					Log.Error("XmlConfig", sLConsole.Config("Text5"));
+					Log.Debug("XmlConfig", sLConsole.Config("Text6"));
 					var w = new XmlTextWriter(filename, null);
 					var xmldoc = new XmlDocument();
 					string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
@@ -421,12 +421,12 @@ namespace Schumix.Framework.Config
 						if(File.Exists(filename2))
 							File.Delete(filename2);
 
-						Log.Success("Config", sLConsole.Config("Text7"));
+						Log.Success("XmlConfig", sLConsole.Config("Text7"));
 						return false;
 					}
 					catch(Exception e)
 					{
-						Log.Error("Config", sLConsole.Config("Text8"), e.Message);
+						Log.Error("XmlConfig", sLConsole.Config("Text8"), e.Message);
 						error = true;
 						return false;
 					}

@@ -183,7 +183,6 @@ namespace Schumix
 			System.Console.WriteLine(sLConsole.MainText("StartText2-4"), Consts.SchumixDevelopers);
 			System.Console.WriteLine("================================================================================"); // 80
 			System.Console.ForegroundColor = ConsoleColor.Gray;
-			System.Console.WriteLine();
 
 			new Config(configdir, configfile);
 			sUtilities.CreatePidFile(SchumixConfig.ConfigFile);
@@ -203,6 +202,7 @@ namespace Schumix
 			new ServerConfig(serverenabled ? serverenabled : ServerConfig.Enabled, serverhost != "0.0.0.0" ? serverhost : ServerConfig.Host,
 				serverport != -1 ? serverport : ServerConfig.Port, serverpassword != "0" ? serverpassword : ServerConfig.Password);
 
+			System.Console.WriteLine();
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
 
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
