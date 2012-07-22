@@ -50,11 +50,18 @@ namespace Schumix.Framework.Config
 				}
 				else
 				{
-                    if (configfile.EndsWith(".yml"))
-                        new YAMLConfig(configdir, configfile);
-                    else if (configfile.EndsWith(".xml"))
-                        new XMLConfig(configdir, configfile);
-                    else new YAMLConfig(configdir, configfile);
+                    switch (ConfigType(configfile))
+                    {
+                        case 0:
+                            new YAMLConfig(configdir, configfile);
+                            break;
+                        case 1:
+                            new XMLConfig(configdir, configfile);
+                            break;
+                        default:
+                            new YAMLConfig(configdir, configfile);
+                            break;
+                    }
 				}
 			}
 			catch(Exception e)
@@ -64,6 +71,15 @@ namespace Schumix.Framework.Config
 			}
 		}
 
+        private int ConfigType(string ConfigFile)
+        {
+            if (ConfigFile.EndsWith(".yml"))
+                return 0;
+            else if (ConfigFile.EndsWith(".xml"))
+                return 1;
+            else return 0;
+        }
+
         private void CheckAndCreate(string ConfigDirectory)
         {
             if (!Directory.Exists(ConfigDirectory))
@@ -72,16 +88,9 @@ namespace Schumix.Framework.Config
 
         private bool IsConfig(string ConfigDirectory, string ConfigFile)
         {
-            // TODO
-
             CheckAndCreate(ConfigDirectory);
 
-            return false;
-        }
 
-        private bool IsConfigXml(string ConfigDirectory, string ConfigFile)
-        {
-            CheckAndCreate(ConfigDirectory);
 
 			try
 			{
