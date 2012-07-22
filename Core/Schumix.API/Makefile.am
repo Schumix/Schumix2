@@ -81,7 +81,8 @@ FILES = \
 	Functions/IFunctionsClass.cs \
 	Irc/INetwork.cs \
 	Irc/IRCMessage.cs \
-	Irc/MessageType.cs 
+	Irc/MessageType.cs \
+	Functions/IFunctionsClassBase.cs 
 
 DATA_FILES = 
 
@@ -90,6 +91,8 @@ RESOURCES =
 EXTRAS = \
 	Properties \
 	Delegate \
+	Functions \
+	Irc \
 	schumix.api.pc.in 
 
 REFERENCES =  \

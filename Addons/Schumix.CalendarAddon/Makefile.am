@@ -11,25 +11,19 @@ ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.API.dll \
-	../../Run/Debug/Schumix.Framework.dll \
-	../../Run/Debug/Schumix.Irc.dll
+	../../Run/Debug/Schumix.Irc.dll \
+	../../Run/Debug/Schumix.Framework.dll
 BUILD_DIR = ../../Run/Debug/Addons
 
 CALENDARADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/CalendarAddon.dll.mdb
 CALENDARADDON_DLL_MDB=$(BUILD_DIR)/CalendarAddon.dll.mdb
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
-SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
+SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -41,21 +35,18 @@ ASSEMBLY_MDB =
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.API.dll \
-	../../Run/Release/Schumix.Framework.dll \
-	../../Run/Release/Schumix.Irc.dll
+	../../Run/Release/Schumix.Irc.dll \
+	../../Run/Release/Schumix.Framework.dll
 BUILD_DIR = ../../Run/Release/Addons
 
 CALENDARADDON_DLL_MDB=
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
-SCHUMIX_API_DLL_MDB=
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB=
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
+SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -67,23 +58,19 @@ ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Debug_x64/Schumix.API.dll \
-	../../Run/Debug_x64/Schumix.Framework.dll \
-	../../Run/Debug_x64/Schumix.Irc.dll
+	../../Run/Debug_x64/Schumix.Irc.dll \
+	../../Run/Debug_x64/Schumix.Framework.dll
 BUILD_DIR = ../../Run/Debug_x64/Addons
 
 CALENDARADDON_DLL_MDB_SOURCE=../../Run/Debug_x64/Addons/CalendarAddon.dll.mdb
 CALENDARADDON_DLL_MDB=$(BUILD_DIR)/CalendarAddon.dll.mdb
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB=
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
+SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -95,21 +82,18 @@ ASSEMBLY_MDB =
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Release_x64/Schumix.API.dll \
-	../../Run/Release_x64/Schumix.Framework.dll \
-	../../Run/Release_x64/Schumix.Irc.dll
+	../../Run/Release_x64/Schumix.Irc.dll \
+	../../Run/Release_x64/Schumix.Framework.dll
 BUILD_DIR = ../../Run/Release_x64/Addons
 
 CALENDARADDON_DLL_MDB=
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
-SCHUMIX_API_DLL_MDB=
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB=
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
+SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -119,15 +103,12 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 PROGRAMFILES = \
 	$(CALENDARADDON_DLL_MDB) \
 	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB) \
+	$(SCHUMIX_IRC_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
-	$(SQLITE3_DLL) \
-	$(SCHUMIX_DB3) \
 	$(MYSQL_DATA_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
-	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
-	$(SCHUMIX_IRC_DLL) \
-	$(SCHUMIX_IRC_DLL_MDB)  
+	$(SQLITE3_DLL) \
+	$(SCHUMIX_DB3)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_CALENDARADDON_PC)  
@@ -141,7 +122,6 @@ FILES = \
 	CalendarAddon.cs \
 	Properties/AssemblyInfo.cs \
 	Flood/Flood.cs \
-	Commands/Commands.cs \
 	Config/AddonConfig.cs \
 	Calendar/Calendar.cs \
 	Ban/Ban.cs \
@@ -149,7 +129,9 @@ FILES = \
 	Localization/PLocalization.cs \
 	Calendar/CalendarFunctions.cs \
 	Flood/FloodChannelParameter.cs \
-	Config/CalendarConfig.cs 
+	Config/CalendarConfig.cs \
+	Commands/CalendarCommand.cs \
+	Commands/BanCommand.cs 
 
 DATA_FILES = 
 
@@ -177,24 +159,21 @@ CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 include $(top_srcdir)/Makefile.include
 
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
+SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
-SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
-SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
-SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
+SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
+SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 SCHUMIX_CALENDARADDON_PC = $(BUILD_DIR)/schumix.calendaraddon.pc
 
 $(eval $(call emit-deploy-target,SCHUMIX_API_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_API_DLL_MDB))
+$(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL))
-$(eval $(call emit-deploy-target,SQLITE3_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL_MDB))
-$(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL_MDB))
+$(eval $(call emit-deploy-target,SQLITE3_DLL))
+$(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_CALENDARADDON_PC,schumix.calendaraddon.pc))
 
 
