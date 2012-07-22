@@ -26,22 +26,28 @@ using YamlDotNet.Core;
 
 namespace Schumix.Framework.Config
 {
-    public sealed class YAMLConfig : DefaultConfig
-    {
-        private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-        private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+	public sealed class YamlConfig : DefaultConfig
+	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
-        public YAMLConfig(string configdir, string configfile)
-        {
-            // TODO
-        }
+		public YamlConfig()
+		{
+		}
 
-        ~YAMLConfig() { }
+		public YamlConfig(string configdir, string configfile)
+		{
+			// TODO
+		}
 
-        public bool CreateConfig(string configdir, string configfile)
-        {
-            // TODO
-            return false;
-        }
-    }
+		~YamlConfig()
+		{
+		}
+
+		public bool CreateConfig(string configdir, string configfile)
+		{
+			// TODO
+			return false;
+		}
+	}
 }

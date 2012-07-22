@@ -5,16 +5,16 @@
  * Copyright (C) 2012 Jackneill
  * 
  * Schumix is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
+ * it under the terms of the GNU General protected License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  * 
  * Schumix is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * GNU General protected License for more details.
  * 
- * You should have received a copy of the GNU General Public License
+ * You should have received a copy of the GNU General protected License
  * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
  */
 
@@ -22,55 +22,55 @@ using System;
 
 namespace Schumix.Framework.Config
 {
-    public class DefaultConfig
-    {
-        public const string _logfilename = "Schumix.log";
-        public const int _loglevel = 2;
-        public const string _logdirectory = "Logs";
-        public const string _irclogdirectory = "Channels";
-        public const bool _irclog = false;
-        public const bool _serverenabled = false;
-        public const string _serverhost = "127.0.0.1";
-        public const int _serverport = 35220;
-        public const string _serverpassword = "schumix";
-        public const string _servername = "Default";
-        public const string _server = "localhost";
-        public const int _port = 6667;
-        public const bool _ssl = false;
-        public const string _nickname = "Schumix2";
-        public const string _nickname2 = "_Schumix2";
-        public const string _nickname3 = "__Schumix2";
-        public const string _username = "Schumix2";
-        public const string _userinfo = "Schumix2 IRC Bot";
-        public const string _masterchannel = "#schumix2";
-        public const string _masterchannelpassword = " ";
-        public const string _ignorechannels = " ";
-        public const string _ignorenames = " ";
-        public const bool _usenickserv = false;
-        public const string _nickservpassword = "password";
-        public const bool _usehostserv = false;
-        public const bool _hostservstatus = false;
-        public const int _messagesending = 400;
-        public const string _commandprefix = "$";
-        public const string _messagetype = "Privmsg";
-        public const bool _mysqlenabled = false;
-        public const string _mysqlhost = "localhost";
-        public const string _mysqluser = "root";
-        public const string _mysqlpassword = "password";
-        public const string _mysqldatabase = "database";
-        public const string _mysqlcharset = "utf8";
-        public const bool _sqliteenabled = false;
-        public const string _sqlitefilename = "Schumix.db3";
-        public const bool _addonenabled = true;
-        public const string _addonignore = "MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon";
-        public const string _addondirectory = "Addons";
-        public const bool _scriptenabled = false;
-        public const string _scriptdirectory = "Scripts";
-        public const string _locale = "enUS";
-        public const bool _updateenabled = false;
-        public const string _updateversion = "stable";
-        public const string _updatebranch = "master";
-        public const string _updatewebpage = "http://megax.uw.hu/Schumix2/";
-        public bool error = false;
-    }
+	public class DefaultConfig
+	{
+		protected const string d_logfilename           = "Schumix.log";
+		protected const int d_loglevel                 = 2;
+		protected const string d_logdirectory          = "Logs";
+		protected const string d_irclogdirectory       = "Channels";
+		protected const bool d_irclog                  = false;
+		protected const bool d_serverenabled           = false;
+		protected const string d_serverhost            = "127.0.0.1";
+		protected const int d_serverport               = 35220;
+		protected const string d_serverpassword        = "schumix";
+		protected const string d_servername            = "Default";
+		protected const string d_server                = "localhost";
+		protected const int d_port                     = 6667;
+		protected const bool d_ssl                     = false;
+		protected const string d_nickname              = "Schumix2";
+		protected const string d_nickname2             = "d_Schumix2";
+		protected const string d_nickname3             = "d_d_Schumix2";
+		protected const string d_username              = "Schumix2";
+		protected const string d_userinfo              = "Schumix2 IRC Bot";
+		protected const string d_masterchannel         = "#schumix2";
+		protected const string d_masterchannelpassword = " ";
+		protected const string d_ignorechannels        = " ";
+		protected const string d_ignorenames           = " ";
+		protected const bool d_usenickserv             = false;
+		protected const string d_nickservpassword      = "password";
+		protected const bool d_usehostserv             = false;
+		protected const bool d_hostservstatus          = false;
+		protected const int d_messagesending           = 400;
+		protected const string d_commandprefix         = "$";
+		protected const string d_messagetype           = "Privmsg";
+		protected const bool d_mysqlenabled            = false;
+		protected const string d_mysqlhost             = "localhost";
+		protected const string d_mysqluser             = "root";
+		protected const string d_mysqlpassword         = "password";
+		protected const string d_mysqldatabase         = "database";
+		protected const string d_mysqlcharset          = "utf8";
+		protected const bool d_sqliteenabled           = false;
+		protected const string d_sqlitefilename        = "Schumix.db3";
+		protected const bool d_addonenabled            = true;
+		protected const string d_addonignore           = "MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon";
+		protected const string d_addondirectory        = "Addons";
+		protected const bool d_scriptenabled           = false;
+		protected const string d_scriptdirectory       = "Scripts";
+		protected const string d_locale                = "enUS";
+		protected const bool d_updateenabled           = false;
+		protected const string d_updateversion         = "stable";
+		protected const string d_updatebranch          = "master";
+		protected const string d_updatewebpage         = "https://github.com/megax/Schumix2";
+		protected bool error                          = false;
+	}
 }

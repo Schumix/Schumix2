@@ -29,9 +29,6 @@ namespace Schumix.Framework.Config
 	public sealed class Config : DefaultConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-        private readonly XMLConfig XmlConf;
-        private readonly YAMLConfig YamlConf;
 
 		public Config(string configdir, string configfile)
 		{
@@ -52,55 +49,56 @@ namespace Schumix.Framework.Config
 				}
 				else
 				{
-                    switch (ConfigType(configfile))
-                    {
-                        case 0:
-                            YamlConf = new YAMLConfig(configdir, configfile);
-                            break;
-                        case 1:
-                            XmlConf = new XMLConfig(configdir, configfile);
-                            break;
-                        default:
-                            YamlConf = new YAMLConfig(configdir, configfile);
-                            break;
-                    }
+					switch(ConfigType(configfile))
+					{
+						case 0:
+							new YamlConfig(configdir, configfile);
+							break;
+						case 1:
+							new XmlConfig(configdir, configfile);
+							break;
+						default:
+							new YamlConfig(configdir, configfile);
+							break;
+					}
 				}
 			}
 			catch(Exception e)
 			{
-				new LogConfig(_logfilename, 3, _logdirectory, _irclogdirectory, _irclog);
+				new LogConfig(d_logfilename, 3, d_logdirectory, d_irclogdirectory, d_irclog);
 				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 
-        private int ConfigType(string ConfigFile)
-        {
-            if (ConfigFile.EndsWith(".yml"))
-                return 0;
-            else if (ConfigFile.EndsWith(".xml"))
-                return 1;
-            else return 0;
-        }
+		private int ConfigType(string ConfigFile)
+		{
+			if(ConfigFile.EndsWith(".yml"))
+				return 0;
+			else if(ConfigFile.EndsWith(".xml"))
+				return 1;
 
-        private void CheckAndCreate(string ConfigDirectory)
-        {
-            if (!Directory.Exists(ConfigDirectory))
-                Directory.CreateDirectory(ConfigDirectory);
-        }
+			return 0;
+		}
 
-        private bool IsConfig(string ConfigDirectory, string ConfigFile)
-        {
-            CheckAndCreate(ConfigDirectory);
+		private void CheckAndCreate(string ConfigDirectory)
+		{
+			if(!Directory.Exists(ConfigDirectory))
+				Directory.CreateDirectory(ConfigDirectory);
+		}
 
-            switch (ConfigType(ConfigFile))
-            {
-                case 0:
-                    return YamlConf.CreateConfig(ConfigDirectory, ConfigFile);
-                case 1:
-                    return XmlConf.CreateConfig(ConfigDirectory, ConfigFile);
-                default:
-                    return YamlConf.CreateConfig(ConfigDirectory, ConfigFile);
-            }
+		private bool IsConfig(string ConfigDirectory, string ConfigFile)
+		{
+			CheckAndCreate(ConfigDirectory);
+
+			switch(ConfigType(ConfigFile))
+			{
+				case 0:
+					return new YamlConfig().CreateConfig(ConfigDirectory, ConfigFile);
+				case 1:
+					return new XmlConfig().CreateConfig(ConfigDirectory, ConfigFile);
+				default:
+					return new YamlConfig().CreateConfig(ConfigDirectory, ConfigFile);
+			}
 		}
 	}
 }
