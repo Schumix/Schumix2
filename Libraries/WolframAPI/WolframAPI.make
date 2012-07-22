@@ -20,10 +20,6 @@ SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 
 endif
 
@@ -44,8 +40,6 @@ SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
-SCHUMIX_API_DLL_MDB=
-SCHUMIX_FRAMEWORK_DLL_MDB=
 
 endif
 
@@ -67,9 +61,6 @@ SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=
 
 endif
 
@@ -90,8 +81,6 @@ SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
-SCHUMIX_API_DLL_MDB=
-SCHUMIX_FRAMEWORK_DLL_MDB=
 
 endif
 
@@ -105,9 +94,7 @@ PROGRAMFILES = \
 	$(SCHUMIX_DB3) \
 	$(MYSQL_DATA_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
-	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB) \
-	$(SCHUMIX_FRAMEWORK_DLL_MDB)  
+	$(SCHUMIX_API_DLL)  
 
 LINUX_PKGCONFIG = \
 	$(WOLFRAMAPI_PC)  
@@ -162,8 +149,6 @@ $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_API_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_API_DLL_MDB))
-$(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,WOLFRAMAPI_PC,wolframapi.pc))
 
 

@@ -19,18 +19,12 @@ BUILD_DIR = ../../Run/Debug/Addons
 EXTRAADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/ExtraAddon.dll.mdb
 EXTRAADDON_DLL_MDB=$(BUILD_DIR)/ExtraAddon.dll.mdb
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
-SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
 WOLFRAMAPI_DLL_SOURCE=../../Run/Libraries/Debug/WolframAPI.dll
 WOLFRAMAPI_DLL_MDB_SOURCE=../../Run/Libraries/Debug/WolframAPI.dll.mdb
 WOLFRAMAPI_DLL_MDB=$(BUILD_DIR)/WolframAPI.dll.mdb
@@ -52,15 +46,12 @@ BUILD_DIR = ../../Run/Release/Addons
 
 EXTRAADDON_DLL_MDB=
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
-SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB=
 WOLFRAMAPI_DLL_SOURCE=../../Run/Libraries/Release/WolframAPI.dll
 WOLFRAMAPI_DLL_MDB=
 
@@ -82,16 +73,12 @@ BUILD_DIR = ../../Run/Debug_x64/Addons
 EXTRAADDON_DLL_MDB_SOURCE=../../Run/Debug_x64/Addons/ExtraAddon.dll.mdb
 EXTRAADDON_DLL_MDB=$(BUILD_DIR)/ExtraAddon.dll.mdb
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB=
 WOLFRAMAPI_DLL_SOURCE=../../Run/Libraries/Debug_x64/WolframAPI.dll
 WOLFRAMAPI_DLL_MDB=
 
@@ -112,15 +99,12 @@ BUILD_DIR = ../../Run/Release_x64/Addons
 
 EXTRAADDON_DLL_MDB=
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
-SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB=
 WOLFRAMAPI_DLL_SOURCE=../../Run/Libraries/Release_x64/WolframAPI.dll
 WOLFRAMAPI_DLL_MDB=
 
@@ -132,15 +116,12 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 PROGRAMFILES = \
 	$(EXTRAADDON_DLL_MDB) \
 	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SQLITE3_DLL) \
 	$(SCHUMIX_DB3) \
 	$(MYSQL_DATA_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
-	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL) \
-	$(SCHUMIX_IRC_DLL_MDB) \
 	$(WOLFRAMAPI_DLL) \
 	$(WOLFRAMAPI_DLL_MDB)  
 
@@ -201,15 +182,12 @@ WOLFRAMAPI_DLL = $(BUILD_DIR)/WolframAPI.dll
 SCHUMIX_EXTRAADDON_PC = $(BUILD_DIR)/schumix.extraaddon.pc
 
 $(eval $(call emit-deploy-target,SCHUMIX_API_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_API_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL_MDB))
 $(eval $(call emit-deploy-target,WOLFRAMAPI_DLL))
 $(eval $(call emit-deploy-target,WOLFRAMAPI_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_EXTRAADDON_PC,schumix.extraaddon.pc))
