@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -66,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
+    <Compile Include="Config\XMLConfig.cs" />
+    <Compile Include="Config\YAMLConfing.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="SchumixBase.cs" />
     <Compile Include="ConsoleLog.cs" />
@@ -115,14 +117,7 @@
       <Name>Schumix.API</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="Localization\" />
-    <Folder Include="Mathematics\" />
-    <Folder Include="Mathematics\Algorithms\" />
-    <Folder Include="Mathematics\Types\" />
-    <Folder Include="Addon\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="..\..\Dependencies\sqlite3.dll">
       <Link>sqlite3.dll</Link>

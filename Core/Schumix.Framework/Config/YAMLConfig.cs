@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Schumix.Framework.Config
 {
-    public sealed class YAMLConfing
+    public sealed class YAMLConfig
     {
-        public YAMLConfing()
+        public YAMLConfig()
         {
 
         }
 
-        ~YAMLConfing() { }
+        ~YAMLConfig() { }
     }
 }
