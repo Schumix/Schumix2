@@ -24,10 +24,13 @@ using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using YamlDotNet.Core;
 using YamlDotNet;
-//using YamlDotNet.RepresentationModel;
+using YamlDotNet.RepresentationModel;
 using YamlDotNet.Converters;
-//using System.Yaml;
-//using System.Yaml.Serialization;
+using System.Yaml;
+using System.Yaml.Serialization;
+using System.Collections;
+using System.IO;
+using System.Text;
 
 namespace Schumix.Framework.Config
 {
@@ -44,7 +47,28 @@ namespace Schumix.Framework.Config
 		{
 			// TODO
 
+            var strdoc = string.Empty;
+
+            // Setup the input
+            var input = new StringReader(strdoc);
+
+            var yaml = new YamlStream();
+            yaml.Load(input);
             
+            var mapping =
+                (YamlMappingNode)yaml.Documents[0].RootNode;
+
+            //foreach (var entry in mapping.Children)
+            //{
+                
+            //}
+
+            var items = (YamlSequenceNode)mapping.Children[new YamlScalarNode("Irc")];
+            foreach (YamlMappingNode item in items)
+            {
+                string ServerName = item.Children[new YamlScalarNode("ServerName")].ToString();
+
+            }
 		}
 
 		~YamlConfig()
