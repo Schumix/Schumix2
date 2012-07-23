@@ -82,9 +82,9 @@ namespace Schumix.Config.CopyTo
 					continue;
 
 				if (File.Exists(Addons + "/" + file.Name))
-					/*await*/ File.Delete(Addons + "/" + file.Name);
+					await File.Delete(Addons + "/" + file.Name);
 
-				/*await*/ File.Move(Dir + "/Run/Release/Addons/" + file.Name, Addons + "/" + file.Name);
+				await File.Move(Dir + "/Run/Release/Addons/" + file.Name, Addons + "/" + file.Name);
 			}
 
 			dir = new DirectoryInfo(Dir + "/Run/Release");
@@ -95,9 +95,9 @@ namespace Schumix.Config.CopyTo
 					continue;
 
 				if (File.Exists(file.Name))
-					/*await*/ File.Delete(file.Name);
+					await File.Delete(file.Name);
 
-				/*await*/ File.Move(Dir + "/Run/Release/" + file.Name, file.Name);
+				await File.Move(Dir + "/Run/Release/" + file.Name, file.Name);
 			}
 
 			dir = new DirectoryInfo(Configs);
@@ -107,7 +107,7 @@ namespace Schumix.Config.CopyTo
 				if (fi.Name.Substring(0, 1) == "_")
 					continue;
 
-				/*await*/ File.Move("Configs/" + fi.Name, Configs + "/_" + fi.Name);
+				await File.Move("Configs/" + fi.Name, Configs + "/_" + fi.Name);
 			}
 		}
 	}
