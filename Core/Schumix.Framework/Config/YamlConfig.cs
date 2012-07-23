@@ -67,12 +67,12 @@ namespace Schumix.Framework.Config
 
 			MySqlMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("MySql"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("MySql")]).Children : (Dictionary<YamlNode, YamlNode>)null);
 			SQLiteMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("SQLite"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("SQLite")]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			AddonsMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Addons"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Addons")]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			AddonsMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Addon"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Addon")]).Children : (Dictionary<YamlNode, YamlNode>)null);
 			ScriptsMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Scripts"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Scripts")]).Children : (Dictionary<YamlNode, YamlNode>)null);
 			LocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Localization"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Localization")]).Children : (Dictionary<YamlNode, YamlNode>)null);
 			UpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Update"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Update")]).Children : (Dictionary<YamlNode, YamlNode>)null);
 
-			Log.Success("XmlConfig", sLConsole.Config("Text4"));
+			Log.Success("YamlConfig", sLConsole.Config("Text4"));
 			Console.WriteLine();
 		}
 
@@ -80,11 +80,69 @@ namespace Schumix.Framework.Config
 		{
 		}
 
-		public bool CreateConfig(string configdir, string configfile)
+		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			// TODO
+			try
+			{
+				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+
+				if(File.Exists(filename))
+					return true;
+				else
+				{
+					new LogConfig(d_logfilename, 3, d_logdirectory, d_irclogdirectory, d_irclog);
+					Log.Initialize(d_logfilename);
+					Log.Error("YamlConfig", sLConsole.Config("Text5"));
+					Log.Debug("YamlConfig", sLConsole.Config("Text6"));
+					//var w = new XmlTextWriter(filename, null);
+					//var xmldoc = new XmlDocument();
+					string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
+
+					//if(File.Exists(filename2))
+					//	xmldoc.Load(filename2);
+
+					try
+					{
+						string data = "# Schumix config file (yaml)\n";
+						var node = new System.Yaml.YamlMapping(
+							"Schumix",
+							new System.Yaml.YamlMapping(
+								"key1", "value1",
+								"key2", "value2",
+								"key3",
+								new System.Yaml.YamlMapping(
+									"value3key1", "value3value1"
+								),
+								"key4", "value4"
+							)
+						);
+
+						data += node.ToYaml();
+						sUtilities.CreateFile(filename);
+						var file = new StreamWriter(filename, true) { AutoFlush = true };
+						file.Write(data);
+						file.Close();
+
+						if(File.Exists(filename2))
+							File.Delete(filename2);
+
+						Log.Success("YamlConfig", sLConsole.Config("Text7"));
+						return false;
+					}
+					catch(Exception e)
+					{
+						Log.Error("YamlConfig", sLConsole.Config("Text8"), e.Message);
+						error = true;
+						return false;
+					}
+				}
+			}
+			catch(DirectoryNotFoundException)
+			{
+				CreateConfig(ConfigDirectory, ConfigFile);
+			}
+
 			return true;
-			//return false;
 		}
 
 		private void LogMap(IDictionary<YamlNode, YamlNode> nodes)
