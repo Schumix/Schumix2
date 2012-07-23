@@ -50,91 +50,27 @@ namespace Schumix.Framework.Config
 			Log.Notice("YamlConfig", sLConsole.Config("Text3"));
 			ServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Server"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Server")]).Children : (Dictionary<YamlNode, YamlNode>)null);
 
-			// IrcMap
+			if((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Irc"))))
+			{
+				var list = new Dictionary<YamlNode, YamlNode>();
+
+				foreach(var irc in schumixmap)
+				{
+					if(irc.Key.ToString().Contains("Irc"))
+						list.Add(irc.Key, irc.Value);
+				}
+
+				IrcMap(list);
+			}
+			else
+				IrcMap((Dictionary<YamlNode, YamlNode>)null);
+
 			MySqlMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("MySql"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("MySql")]).Children : (Dictionary<YamlNode, YamlNode>)null);
 			SQLiteMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("SQLite"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("SQLite")]).Children : (Dictionary<YamlNode, YamlNode>)null);
 			AddonsMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Addons"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Addons")]).Children : (Dictionary<YamlNode, YamlNode>)null);
 			ScriptsMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Scripts"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Scripts")]).Children : (Dictionary<YamlNode, YamlNode>)null);
 			LocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Localization"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Localization")]).Children : (Dictionary<YamlNode, YamlNode>)null);
 			UpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Update"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Update")]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			/*
-
-			int ServerId = 1;
-			var xmlirclist = xmldoc.SelectNodes("Schumix/Irc");
-			var IrcList = new Dictionary<string, IRCConfigBase>();
-
-			if(xmlirclist.Count == 0)
-			{
-				string ServerName = !xmldoc.SelectSingleNode("Schumix/Irc/ServerName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/ServerName").InnerText : d_servername;
-				string Server = !xmldoc.SelectSingleNode("Schumix/Irc/Server").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText : d_server;
-				int Port = !xmldoc.SelectSingleNode("Schumix/Irc/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText) : d_port;
-				bool Ssl = !xmldoc.SelectSingleNode("Schumix/Irc/Ssl").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/Ssl").InnerText) : d_ssl;
-				string NickName = !xmldoc.SelectSingleNode("Schumix/Irc/NickName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName").InnerText : d_nickname;
-				string NickName2 = !xmldoc.SelectSingleNode("Schumix/Irc/NickName2").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName2").InnerText : d_nickname2;
-				string NickName3 = !xmldoc.SelectSingleNode("Schumix/Irc/NickName3").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName3").InnerText : d_nickname3;
-				string UserName = !xmldoc.SelectSingleNode("Schumix/Irc/UserName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText : d_username;
-				string UserInfo = !xmldoc.SelectSingleNode("Schumix/Irc/UserInfo").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/UserInfo").InnerText : d_userinfo;
-				string MasterChannel = !xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel/Name").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel/Name").InnerText : d_masterchannel;
-				string MasterChannelPassword = !xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel/Password").InnerText : d_masterchannelpassword;
-				string IgnoreChannels = !xmldoc.SelectSingleNode("Schumix/Irc/IgnoreChannels").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/IgnoreChannels").InnerText : d_ignorechannels;
-				string IgnoreNames = !xmldoc.SelectSingleNode("Schumix/Irc/IgnoreNames").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/IgnoreNames").InnerText : d_ignorenames;
-				bool UseNickServ = !xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Enabled").InnerText) : d_usenickserv;
-				string NickServPassword = !xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Password").InnerText : d_nickservpassword;
-				bool UseHostServ = !xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Enabled").InnerText) : d_usehostserv;
-				bool HostServStatus = !xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText) : d_hostservstatus;
-				int MessageSending = !xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").InnerText) : d_messagesending;
-				string CommandPrefix = !xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").InnerText : d_commandprefix;
-				string MessageType = !xmldoc.SelectSingleNode("Schumix/Irc/MessageType").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/MessageType").InnerText : d_messagetype;
-
-				if(MasterChannel.Length >= 2 && MasterChannel.Trim().Length > 1 && MasterChannel.Substring(0, 1) != "#")
-					MasterChannel = "#" + MasterChannel;
-				else if(MasterChannel.Length < 2 && MasterChannel.Trim().Length <= 1)
-					MasterChannel = d_masterchannel;
-
-				IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
-			}
-			else
-			{
-				foreach (XmlNode xn in xmlirclist)
-				{
-					string ServerName = !xn["ServerName"].IsNull() ? xn["ServerName"].InnerText : d_servername;
-					string Server = !xn["Server"].IsNull() ? xn["Server"].InnerText : d_server;
-					int Port = !xn["Port"].IsNull() ? Convert.ToInt32(xn["Port"].InnerText) : d_port;
-					bool Ssl = !xn["Ssl"].IsNull() ? Convert.ToBoolean(xn["Ssl"].InnerText) : d_ssl;
-					string NickName = !xn["NickName"].IsNull() ? xn["NickName"].InnerText : d_nickname;
-					string NickName2 = !xn["NickName2"].IsNull() ? xn["NickName2"].InnerText : d_nickname2;
-					string NickName3 = !xn["NickName3"].IsNull() ? xn["NickName3"].InnerText : d_nickname3;
-					string UserName = !xn["UserName"].IsNull() ? xn["UserName"].InnerText : d_username;
-					string UserInfo = !xn["UserInfo"].IsNull() ? xn["UserInfo"].InnerText : d_userinfo;
-					string MasterChannel = !xn.SelectSingleNode("MasterChannel/Name").IsNull() ? xn.SelectSingleNode("MasterChannel/Name").InnerText : d_masterchannel;
-					string MasterChannelPassword = !xn.SelectSingleNode("MasterChannel/Password").IsNull() ? xn.SelectSingleNode("MasterChannel/Password").InnerText : d_masterchannelpassword;
-					string IgnoreChannels = !xn["IgnoreChannels"].IsNull() ? xn["IgnoreChannels"].InnerText : d_ignorechannels;
-					string IgnoreNames = !xn["IgnoreNames"].IsNull() ? xn["IgnoreNames"].InnerText : d_ignorenames;
-					bool UseNickServ = !xn.SelectSingleNode("NickServ/Enabled").IsNull() ? Convert.ToBoolean(xn.SelectSingleNode("NickServ/Enabled").InnerText) : d_usenickserv;
-					string NickServPassword = !xn.SelectSingleNode("NickServ/Password").IsNull() ? xn.SelectSingleNode("NickServ/Password").InnerText : d_nickservpassword;
-					bool UseHostServ = !xn.SelectSingleNode("HostServ/Enabled").IsNull() ? Convert.ToBoolean(xn.SelectSingleNode("HostServ/Enabled").InnerText) : d_usehostserv;
-					bool HostServStatus = !xn.SelectSingleNode("HostServ/Vhost").IsNull() ? Convert.ToBoolean(xn.SelectSingleNode("HostServ/Vhost").InnerText) : d_hostservstatus;
-					int MessageSending = !xn.SelectSingleNode("Wait/MessageSending").IsNull() ? Convert.ToInt32(xn.SelectSingleNode("Wait/MessageSending").InnerText) : d_messagesending;
-					string CommandPrefix = !xn.SelectSingleNode("Command/Prefix").IsNull() ? xn.SelectSingleNode("Command/Prefix").InnerText : d_commandprefix;
-					string MessageType = !xn["MessageType"].IsNull() ? xn["MessageType"].InnerText : d_messagetype;
-
-					if(MasterChannel.Length >= 2 && MasterChannel.Trim().Length > 1 && MasterChannel.Substring(0, 1) != "#")
-						MasterChannel = "#" + MasterChannel;
-					else if(MasterChannel.Length < 2 && MasterChannel.Trim().Length <= 1)
-						MasterChannel = d_masterchannel;
-
-					if(IrcList.ContainsKey(ServerName.ToLower()))
-						Log.Error("XmlConfig", sLConsole.Config("Text12"), ServerName);
-					else
-					{
-						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
-						ServerId++;
-					}
-				}
-
-				new IRCConfig(IrcList);
-			}
-*/
 
 			Log.Success("XmlConfig", sLConsole.Config("Text4"));
 			Console.WriteLine();
@@ -174,7 +110,116 @@ namespace Schumix.Framework.Config
 
 		private void IrcMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
+			int ServerId = 1;
+			var IrcList = new Dictionary<string, IRCConfigBase>();
 
+			if(nodes.IsNull())
+			{
+				string ServerName            = d_servername;
+				string Server                = d_server;
+				int Port                     = d_port;
+				bool Ssl                     = d_ssl;
+				string NickName              = d_nickname;
+				string NickName2             = d_nickname2;
+				string NickName3             = d_nickname3;
+				string UserName              = d_username;
+				string UserInfo              = d_userinfo;
+				string MasterChannel         = d_masterchannel;
+				string MasterChannelPassword = d_masterchannelpassword;
+				string IgnoreChannels        = d_ignorechannels;
+				string IgnoreNames           = d_ignorenames;
+				bool UseNickServ             = d_usenickserv;
+				string NickServPassword      = d_nickservpassword;
+				bool UseHostServ             = d_usehostserv;
+				bool HostServStatus          = d_hostservstatus;
+				int MessageSending           = d_messagesending;
+				string CommandPrefix         = d_commandprefix;
+				string MessageType           = d_messagetype;
+
+				IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
+			}
+			else
+			{
+				foreach(var irc in nodes)
+				{
+					var node = ((YamlMappingNode)irc.Value).Children;
+					string ServerName = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("ServerName"))) ? node[new YamlScalarNode("ServerName")].ToString() : d_servername;
+					string Server = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Server"))) ? node[new YamlScalarNode("Server")].ToString() : d_server;
+					int Port = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Port"))) ? Convert.ToInt32(node[new YamlScalarNode("Port")].ToString()) : d_port;
+					bool Ssl = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Ssl"))) ? Convert.ToBoolean(node[new YamlScalarNode("Ssl")].ToString()) : d_ssl;
+					string NickName = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName"))) ? node[new YamlScalarNode("NickName")].ToString() : d_nickname;
+					string NickName2 = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName2"))) ? node[new YamlScalarNode("NickName2")].ToString() : d_nickname2;
+					string NickName3 = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName3"))) ? node[new YamlScalarNode("NickName3")].ToString() : d_nickname3;
+					string UserName = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("UserName"))) ? node[new YamlScalarNode("UserName")].ToString() : d_username;
+					string UserInfo = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("UserInfo"))) ? node[new YamlScalarNode("UserInfo")].ToString() : d_userinfo;
+
+					string MasterChannel = d_masterchannel;
+					string MasterChannelPassword = d_masterchannelpassword;
+
+					if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("MasterChannel")))
+					{
+						var node2 = ((YamlMappingNode)node[new YamlScalarNode("MasterChannel")]).Children;
+						MasterChannel = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Name"))) ? node2[new YamlScalarNode("Name")].ToString() : d_masterchannel;
+						MasterChannelPassword = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Password"))) ? node2[new YamlScalarNode("Password")].ToString() : d_masterchannelpassword;
+					}
+
+					string IgnoreChannels = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("IgnoreChannels"))) ? node[new YamlScalarNode("IgnoreChannels")].ToString() : d_ignorechannels;
+					string IgnoreNames = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("IgnoreNames"))) ? node[new YamlScalarNode("IgnoreNames")].ToString() : d_ignorenames;
+
+					bool UseNickServ = d_usenickserv;
+					string NickServPassword = d_nickservpassword;
+
+					if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickServ")))
+					{
+						var node2 = ((YamlMappingNode)node[new YamlScalarNode("NickServ")]).Children;
+						UseNickServ = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(node2[new YamlScalarNode("Enabled")].ToString()) : d_usenickserv;
+						NickServPassword = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Password"))) ? node2[new YamlScalarNode("Password")].ToString() : d_nickservpassword;
+					}
+
+					bool UseHostServ = d_usehostserv;
+					bool HostServStatus = d_hostservstatus;
+
+					if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("HostServ")))
+					{
+						var node2 = ((YamlMappingNode)node[new YamlScalarNode("HostServ")]).Children;
+						UseHostServ = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(node2[new YamlScalarNode("Enabled")].ToString()) : d_usehostserv;
+						HostServStatus = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Vhost"))) ? Convert.ToBoolean(node2[new YamlScalarNode("Vhost")].ToString()) : d_hostservstatus;
+					}
+
+					int MessageSending = d_messagesending;
+
+					if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("Wait")))
+					{
+						var node2 = ((YamlMappingNode)node[new YamlScalarNode("Wait")]).Children;
+						MessageSending = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("MessageSending"))) ? Convert.ToInt32(node2[new YamlScalarNode("MessageSending")].ToString()) : d_messagesending;
+					}
+
+					string CommandPrefix = d_commandprefix;
+
+					if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("Command")))
+					{
+						var node2 = ((YamlMappingNode)node[new YamlScalarNode("Command")]).Children;
+						CommandPrefix = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Prefix"))) ? node2[new YamlScalarNode("Prefix")].ToString() : d_commandprefix;
+					}
+
+					string MessageType = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("MessageType"))) ? node[new YamlScalarNode("MessageType")].ToString() : d_messagetype;
+
+					if(MasterChannel.Length >= 2 && MasterChannel.Trim().Length > 1 && MasterChannel.Substring(0, 1) != "#")
+						MasterChannel = "#" + MasterChannel;
+					else if(MasterChannel.Length < 2 && MasterChannel.Trim().Length <= 1)
+						MasterChannel = d_masterchannel;
+
+					if(IrcList.ContainsKey(ServerName.ToLower()))
+						Log.Error("YmlConfig", sLConsole.Config("Text12"), ServerName);
+					else
+					{
+						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
+						ServerId++;
+					}
+				}
+			}
+
+			new IRCConfig(IrcList);
 		}
 
 		private void MySqlMap(IDictionary<YamlNode, YamlNode> nodes)
