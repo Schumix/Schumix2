@@ -107,7 +107,18 @@ namespace Schumix.Framework.Config
 						var nodes = new YamlMappingNode();
 						var nodes2 = new YamlMappingNode();
 						nodes2.Add("Server",       CreateServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Server"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Server")]).Children : (Dictionary<YamlNode, YamlNode>)null));
-								//"Irc", CreateIrcMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Irc"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Irc")]).Children : (Dictionary<YamlNode, YamlNode>)null),
+
+						if((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Irc"))))
+						{
+							foreach(var irc in schumixmap)
+							{
+								if(irc.Key.ToString().Contains("Irc"))
+									nodes2.Add(irc.Key, CreateIrcMap(((YamlMappingNode)irc.Value).Children));
+							}
+						}
+						else
+							nodes2.Add("Irc",      CreateIrcMap((Dictionary<YamlNode, YamlNode>)null));
+
 						nodes2.Add("Log",          CreateLogMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Log"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Log")]).Children : (Dictionary<YamlNode, YamlNode>)null));
 						nodes2.Add("MySql",        CreateMySqlMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("MySql"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("MySql")]).Children : (Dictionary<YamlNode, YamlNode>)null));
 						nodes2.Add("SQLite",       CreateSQLiteMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("SQLite"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("SQLite")]).Children : (Dictionary<YamlNode, YamlNode>)null));
@@ -117,28 +128,13 @@ namespace Schumix.Framework.Config
 						nodes2.Add("Update",       CreateUpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Update"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Update")]).Children : (Dictionary<YamlNode, YamlNode>)null));
 						nodes.Add("Schumix", nodes2);
 
-			/*if((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Irc"))))
-			{
-				var list = new Dictionary<YamlNode, YamlNode>();
-
-				foreach(var irc in schumixmap)
-				{
-					if(irc.Key.ToString().Contains("Irc"))
-						list.Add(irc.Key, irc.Value);
-				}
-
-				IrcMap(list);
-			}
-			else
-				IrcMap((Dictionary<YamlNode, YamlNode>)null);
-*/
 						sUtilities.CreateFile(filename);
 						var file = new StreamWriter(filename, true) { AutoFlush = true };
 						file.Write(ToString(nodes.Children));
 						file.Close();
 
-						//if(File.Exists(filename2))
-						//	File.Delete(filename2);
+						if(File.Exists(filename2))
+							File.Delete(filename2);
 
 						Log.Success("YamlConfig", sLConsole.Config("Text7"));
 						return false;
@@ -369,7 +365,130 @@ namespace Schumix.Framework.Config
 			return map;
 		}
 
-		// Irc
+		private YamlMappingNode CreateIrcMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			var map = new YamlMappingNode();
+
+			if(nodes.IsNull())
+			{
+				map.Add("ServerName",      d_servername);
+				map.Add("Server",          d_server);
+				map.Add("Port",            d_port.ToString());
+				map.Add("Ssl",             d_ssl.ToString());
+				map.Add("NickName",        d_nickname);
+				map.Add("NickName2",       d_nickname2);
+				map.Add("NickName3",       d_nickname3);
+				map.Add("UserName",        d_username);
+				map.Add("UserInfo",        d_userinfo);
+				var map2 = new YamlMappingNode();
+				map2.Add("Name",           "\"" + d_masterchannel + "\"");
+				map2.Add("Password",       d_masterchannelpassword);
+				map.Add("MasterChannel",   map2);
+				map.Add("IgnoreChannels",  d_ignorechannels);
+				map.Add("IgnoreNames",     d_ignorenames);
+				map2 = new YamlMappingNode();
+				map2.Add("Enabled",        d_usenickserv.ToString());
+				map2.Add("Password",       d_nickservpassword);
+				map.Add("NickServ",        map2);
+				map2 = new YamlMappingNode();
+				map2.Add("Enabled",        d_usehostserv.ToString());
+				map2.Add("Vhost",          d_hostservstatus.ToString());
+				map.Add("HostServ",        map2);
+				map2 = new YamlMappingNode();
+				map2.Add("MessageSending", d_messagesending.ToString());
+				map.Add("Wait",            map2);
+				map2 = new YamlMappingNode();
+				map2.Add("Prefix",         "\"" + d_commandprefix + "\"");
+				map.Add("Command",         map2);
+				map.Add("MessageType",     d_messagetype);
+			}
+			else
+			{
+				var node = nodes;
+				map.Add("ServerName", (!node.IsNull() && node.ContainsKey(new YamlScalarNode("ServerName"))) ? node[new YamlScalarNode("ServerName")].ToString() : d_servername);
+				map.Add("Server",     (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Server"))) ? node[new YamlScalarNode("Server")].ToString() : d_server);
+				map.Add("Port",       (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Port"))) ? node[new YamlScalarNode("Port")].ToString() : d_port.ToString());
+				map.Add("Ssl",        (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Ssl"))) ? node[new YamlScalarNode("Ssl")].ToString() : d_ssl.ToString());
+				map.Add("NickName",   (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName"))) ? node[new YamlScalarNode("NickName")].ToString() : d_nickname);
+				map.Add("NickName2",  (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName2"))) ? node[new YamlScalarNode("NickName2")].ToString() : d_nickname2);
+				map.Add("NickName3",  (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName3"))) ? node[new YamlScalarNode("NickName3")].ToString() : d_nickname3);
+				map.Add("UserName",   (!node.IsNull() && node.ContainsKey(new YamlScalarNode("UserName"))) ? node[new YamlScalarNode("UserName")].ToString() : d_username);
+				map.Add("UserInfo",   (!node.IsNull() && node.ContainsKey(new YamlScalarNode("UserInfo"))) ? node[new YamlScalarNode("UserInfo")].ToString() : d_userinfo);
+
+				var map2 = new YamlMappingNode();
+
+				if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("MasterChannel")))
+				{
+					var node2 = ((YamlMappingNode)node[new YamlScalarNode("MasterChannel")]).Children;
+					map2.Add("Name",     "\"" + ((!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Name"))) ? node2[new YamlScalarNode("Name")].ToString() : d_masterchannel) + "\"");
+					map2.Add("Password", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Password"))) ? node2[new YamlScalarNode("Password")].ToString() : d_masterchannelpassword);
+				}
+				else
+				{
+					map2.Add("Name",     "\"" + d_masterchannel + "\"");
+					map2.Add("Password", d_masterchannelpassword);
+				}
+
+				map.Add("MasterChannel",  map2);
+				map.Add("IgnoreChannels", (!node.IsNull() && node.ContainsKey(new YamlScalarNode("IgnoreChannels"))) ? node[new YamlScalarNode("IgnoreChannels")].ToString() : d_ignorechannels);
+				map.Add("IgnoreNames",    (!node.IsNull() && node.ContainsKey(new YamlScalarNode("IgnoreNames"))) ? node[new YamlScalarNode("IgnoreNames")].ToString() : d_ignorenames);
+				map2 = new YamlMappingNode();
+
+				if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickServ")))
+				{
+					var node2 = ((YamlMappingNode)node[new YamlScalarNode("NickServ")]).Children;
+					map2.Add("Enabled",  (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? node2[new YamlScalarNode("Enabled")].ToString() : d_usenickserv.ToString());
+					map2.Add("Password", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Password"))) ? node2[new YamlScalarNode("Password")].ToString() : d_nickservpassword);
+				}
+				else
+				{
+					map2.Add("Enabled",  d_usenickserv.ToString());
+					map2.Add("Password", d_nickservpassword);
+				}
+
+				map.Add("NickServ", map2);
+				map2 = new YamlMappingNode();
+
+				if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("HostServ")))
+				{
+					var node2 = ((YamlMappingNode)node[new YamlScalarNode("HostServ")]).Children;
+					map2.Add("Enabled", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? node2[new YamlScalarNode("Enabled")].ToString() : d_usehostserv.ToString());
+					map2.Add("Vhost",   (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Vhost"))) ? node2[new YamlScalarNode("Vhost")].ToString() : d_hostservstatus.ToString());
+				}
+				else
+				{
+					map2.Add("Enabled", d_usehostserv.ToString());
+					map2.Add("Vhost",   d_hostservstatus.ToString());
+				}
+
+				map.Add("HostServ", map2);
+				map2 = new YamlMappingNode();
+
+				if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("Wait")))
+				{
+					var node2 = ((YamlMappingNode)node[new YamlScalarNode("Wait")]).Children;
+					map2.Add("MessageSending", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("MessageSending"))) ? node2[new YamlScalarNode("MessageSending")].ToString() : d_messagesending.ToString());
+				}
+				else
+					map2.Add("MessageSending", d_messagesending.ToString());
+
+				map.Add("Wait", map2);
+				map2 = new YamlMappingNode();
+
+				if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("Command")))
+				{
+					var node2 = ((YamlMappingNode)node[new YamlScalarNode("Command")]).Children;
+					map2.Add("Prefix", "\"" + ((!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Prefix"))) ? node2[new YamlScalarNode("Prefix")].ToString() : d_commandprefix) + "\"");
+				}
+				else
+					map2.Add("Prefix", "\"" + d_commandprefix + "\"");
+
+				map.Add("Command",     map2);
+				map.Add("MessageType", (!node.IsNull() && node.ContainsKey(new YamlScalarNode("MessageType"))) ? node[new YamlScalarNode("MessageType")].ToString() : d_messagetype);
+			}
+
+			return map;
+		}
 
 		private YamlMappingNode CreateMySqlMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
@@ -484,6 +603,24 @@ namespace Schumix.Framework.Config
 					text.Append("    " + st + SchumixBase.NewLine.ToString());
 				else
 					text.Append(st + SchumixBase.NewLine.ToString());
+			}
+
+			split = text.ToString().Split(SchumixBase.NewLine);
+			text.Remove(0, text.Length);
+			bool e = false;
+
+			foreach(var st in split)
+			{
+				if(st.ToString().Contains("MasterChannel"))
+					e = true;
+
+				if(e)
+					text.Append("    " + st + SchumixBase.NewLine.ToString());
+				else
+					text.Append(st + SchumixBase.NewLine.ToString());
+
+				if(st.ToString().Contains("Prefix"))
+					e = false;
 			}
 
 			return "# Schumix config file (yaml)\n" + text.ToString();
