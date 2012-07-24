@@ -1107,6 +1107,8 @@ namespace Schumix.Framework
 			{
 				if(pidfile.Contains(".xml"))
 					pidfile = pidfile.Remove(pidfile.IndexOf(".xml")) + ".pid";
+				else if(pidfile.Contains(".yml"))
+					pidfile = pidfile.Remove(pidfile.IndexOf(".yml")) + ".pid";
 				else
 					pidfile = pidfile + ".pid";
 			}
@@ -1160,6 +1162,12 @@ namespace Schumix.Framework
 
 			if(File.Exists(AddonsConfig.Directory + "/Schumix.Framework.dll"))
 				File.Delete(AddonsConfig.Directory + "/Schumix.Framework.dll");
+
+			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.Core.dll"))
+				File.Delete(AddonsConfig.Directory + "/YamlDotNet.Core.dll");
+
+			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll"))
+				File.Delete(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll");	
 		}
 	}
 }
