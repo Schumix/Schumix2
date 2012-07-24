@@ -1167,10 +1167,7 @@ namespace Schumix.Framework
 				File.Delete(AddonsConfig.Directory + "/YamlDotNet.Core.dll");
 
 			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll"))
-				File.Delete(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/YamlSerializer.dll"))
-				File.Delete(AddonsConfig.Directory + "/YamlSerializer.dll");		
+				File.Delete(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll");	
 		}
 	}
 }

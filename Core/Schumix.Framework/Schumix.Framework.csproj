@@ -69,9 +69,6 @@
     <Reference Include="YamlDotNet.RepresentationModel">
       <HintPath>..\..\Dependencies\YamlDotNet.RepresentationModel.dll</HintPath>
     </Reference>
-    <Reference Include="YamlSerializer">
-      <HintPath>..\..\Dependencies\YamlSerializer.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
