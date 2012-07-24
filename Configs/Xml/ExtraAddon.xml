@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<ExtraAddon>
+    <Mode>
+        <Remove>
+            <Enabled>False</Enabled>
+            <Type>aohv</Type>
+        </Remove>
+    </Mode>
+    <Weather>
+        <Home>
+            <City>Zalaegerszeg</City>
+        </Home>
+    </Weather>
+    <WolframAlpha>
+        <Api>
+            <Key>557QYQ-UUUWTKX95V</Key>
+        </Api>
+    </WolframAlpha>
+</ExtraAddon>

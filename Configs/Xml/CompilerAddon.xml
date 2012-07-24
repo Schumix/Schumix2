@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<CompilerAddon>
+    <Compiler>
+        <Enabled>true</Enabled>
+        <MaxAllocating>
+            <Enabled>true</Enabled>
+            <Memory>50</Memory>
+        </MaxAllocating>
+        <CompilerOptions>/unsafe /optimize</CompilerOptions>
+        <WarningLevel>4</WarningLevel>
+        <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+        <Referenced>using System; using System.Threading; using System.Reflection; using System.Threading.Tasks; using System.Linq; using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using System.Numerics; using Schumix.Libraries;</Referenced>
+        <ReferencedAssemblies>System.dll,System.Core.dll,System.Numerics.dll,Schumix.Libraries.dll</ReferencedAssemblies>
+        <MainClass>Entry</MainClass>
+        <MainConstructor>Schumix</MainConstructor>
+    </Compiler>
+</CompilerAddon>

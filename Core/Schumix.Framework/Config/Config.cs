@@ -70,7 +70,7 @@ namespace Schumix.Framework.Config
 			catch(Exception e)
 			{
 				new LogConfig(d_logfilename, 3, d_logdirectory, d_irclogdirectory, d_irclog);
-				Log.Error("Config", sLConsole.Exception("Error"), e);
+				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 
