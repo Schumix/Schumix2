@@ -417,13 +417,11 @@ namespace Schumix.Framework.Config
 							File.Delete(filename2);
 
 						Log.Success("XmlConfig", sLConsole.Config("Text7"));
-						return false;
 					}
 					catch(Exception e)
 					{
 						Log.Error("XmlConfig", sLConsole.Config("Text8"), e.Message);
 						error = true;
-						return false;
 					}
 				}
 			}
@@ -432,7 +430,7 @@ namespace Schumix.Framework.Config
 				CreateConfig(ConfigDirectory, ConfigFile);
 			}
 
-			return true;
+			return false;
 		}
 	}
 }

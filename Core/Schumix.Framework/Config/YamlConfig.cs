@@ -137,13 +137,11 @@ namespace Schumix.Framework.Config
 							File.Delete(filename2);
 
 						Log.Success("YamlConfig", sLConsole.Config("Text7"));
-						return false;
 					}
 					catch(Exception e)
 					{
 						Log.Error("YamlConfig", sLConsole.Config("Text8"), e.Message);
 						error = true;
-						return false;
 					}
 				}
 			}
@@ -152,7 +150,7 @@ namespace Schumix.Framework.Config
 				CreateConfig(ConfigDirectory, ConfigFile);
 			}
 
-			return true;
+			return false;
 		}
 
 		private void LogMap(IDictionary<YamlNode, YamlNode> nodes)

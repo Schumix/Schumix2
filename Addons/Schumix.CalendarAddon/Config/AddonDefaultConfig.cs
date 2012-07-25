@@ -19,10 +19,12 @@
 
 using System;
 
-namespace Schumix.GitRssAddon.Config
+namespace Schumix.CalendarAddon.Config
 {
 	class AddonDefaultConfig
 	{
-		protected const int d_querytime = 60;
+		protected const int _seconds = 10;
+		protected const int _numberofmessages = 5;
+		protected const int _numberofflooding = 3;
 	}
 }

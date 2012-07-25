@@ -1,0 +1,6 @@
+# CalendarAddon config file (yaml)
+CalendarAddon:
+    Flooding:
+        Seconds: 10
+        NumberOfMessages: 5
+        NumberOfFlooding: 3
