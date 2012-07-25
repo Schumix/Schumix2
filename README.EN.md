@@ -27,7 +27,7 @@ Install the `mono-xbuild` package or from source. After run the `build.sh` comma
 
 # Code commissioning
 
-Navigate to the `Run` folder and in that proper folder for the configuration. Run the exe. The program is generates its config file. If there will be some problem then create a `Configs` named folder and from the root folder copy in that folder the `Schumix.xml` named file.
+Navigate to the `Run` folder and in that proper folder for the configuration. Run the exe. The program is generates its config file. If there will be some problem then create a `Configs` named folder and from the root folder copy in that folder the `Schumix.yml` named file.
 
 # Config settings
 

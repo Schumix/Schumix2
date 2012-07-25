@@ -26,7 +26,7 @@ Telepítsük a `mono-xbuild` csomagot vagy forrásból. Ezután inditsuk el a `b
 
 Navigáljunk a `Run` mappába és azon belül a konfigurációnak megfelelõ mappába. Inditusk el az exe-t. A program legenerálja
 önmagának a konfig fájlt. Ha bármi gond lenne vele hozzunk létre egy `Configs` nevû mappát és a fõ mappából másoljuk bele
-a `Schumix.xml` nevû fájlt.
+a `Schumix.yml` nevû fájlt.
 
 # Konfig beállítása
 
