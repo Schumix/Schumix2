@@ -64,6 +64,9 @@
     <Compile Include="Config\ModeConfig.cs" />
     <Compile Include="Config\WeatherConfig.cs" />
     <Compile Include="Config\WolframAlphaConfig.cs" />
+    <Compile Include="Config\AddonDefaultConfig.cs" />
+    <Compile Include="Config\AddonXmlConfig.cs" />
+    <Compile Include="Config\AddonYamlConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
@@ -75,6 +78,12 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
+    <Reference Include="YamlDotNet.Core">
+      <HintPath>..\..\Dependencies\YamlDotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YamlDotNet.RepresentationModel">
+      <HintPath>..\..\Dependencies\YamlDotNet.RepresentationModel.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Schumix.API\Schumix.API.csproj">
