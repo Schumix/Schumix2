@@ -76,7 +76,7 @@ namespace Schumix.ExtraAddon
 			sLocalization.Locale = sLConsole.Locale;
 
 			if(IRCConfig.List[_servername].ServerId == 1)
-				_config = new AddonConfig(Name + ".xml");
+				_config = new AddonConfig(Name, ".yml");
 
 			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG",              HandlePrivmsg);
 			sIrcBase.Networks[ServerName].IrcRegisterHandler("NOTICE",               HandleNotice);
@@ -116,7 +116,7 @@ namespace Schumix.ExtraAddon
 				{
 					case "config":
 						if(IRCConfig.List[_servername].ServerId == 1)
-							_config = new AddonConfig(Name + ".xml");
+							_config = new AddonConfig(Name, ".yml");
 						return 1;
 					case "command":
 						InitIrcCommand();

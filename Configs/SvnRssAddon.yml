@@ -1,0 +1,4 @@
+# SvnRssAddon config file (yaml)
+SvnRssAddon:
+    Rss:
+        QueryTime: 60

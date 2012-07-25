@@ -19,7 +19,6 @@
 
 using System;
 using System.IO;
-using System.Xml;
 using System.Threading;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -29,12 +28,14 @@ namespace Schumix.Framework.Config
 	public sealed class Config : DefaultConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private string _configfile;
 
 		public Config(string configdir, string configfile)
 		{
 			try
 			{
-				new SchumixConfig(configdir, configfile);
+				_configfile = configfile;
 
 				if(!IsConfig(configdir, configfile))
 				{
@@ -49,29 +50,58 @@ namespace Schumix.Framework.Config
 				}
 				else
 				{
-					switch(ConfigType(configfile))
+					switch(ConfigType(configdir, _configfile))
 					{
 						case 0:
-							new YamlConfig(configdir, configfile);
+							new YamlConfig(configdir, _configfile);
 							break;
 						case 1:
-							new XmlConfig(configdir, configfile);
+							new XmlConfig(configdir, _configfile);
 							break;
 						default:
-							new YamlConfig(configdir, configfile);
+							new YamlConfig(configdir, _configfile);
 							break;
 					}
+
+					new SchumixConfig(configdir, _configfile);
 				}
 			}
 			catch(Exception e)
 			{
 				new LogConfig(d_logfilename, 3, d_logdirectory, d_irclogdirectory, d_irclog);
-				Log.Error("Config", sLConsole.Exception("Error"), e);
+				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 
-		private int ConfigType(string ConfigFile)
+		private int ConfigType(string ConfigDirectory, string ConfigFile)
 		{
+			if(ConfigFile == "Schumix.yml")
+			{
+				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "Schumix.xml");
+
+				if(File.Exists(filename))
+					return 0;
+				else if(File.Exists(filename2))
+				{
+					_configfile = "Schumix.xml";
+					return 1;
+				}
+			}
+			else if(ConfigFile == "Schumix.xml")
+			{
+				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "Schumix.yml");
+
+				if(File.Exists(filename))
+					return 1;
+				else if(File.Exists(filename2))
+				{
+					_configfile = "Schumix.yml";
+					return 0;
+				}
+			}
+
 			if(ConfigFile.EndsWith(".yml"))
 				return 0;
 			else if(ConfigFile.EndsWith(".xml"))
@@ -90,14 +120,14 @@ namespace Schumix.Framework.Config
 		{
 			CheckAndCreate(ConfigDirectory);
 
-			switch(ConfigType(ConfigFile))
+			switch(ConfigType(ConfigDirectory, ConfigFile))
 			{
 				case 0:
-					return new YamlConfig().CreateConfig(ConfigDirectory, ConfigFile);
+					return new YamlConfig().CreateConfig(ConfigDirectory, _configfile);
 				case 1:
-					return new XmlConfig().CreateConfig(ConfigDirectory, ConfigFile);
+					return new XmlConfig().CreateConfig(ConfigDirectory, _configfile);
 				default:
-					return new YamlConfig().CreateConfig(ConfigDirectory, ConfigFile);
+					return new YamlConfig().CreateConfig(ConfigDirectory, _configfile);
 			}
 		}
 	}

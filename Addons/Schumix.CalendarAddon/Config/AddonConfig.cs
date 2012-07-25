@@ -19,7 +19,6 @@
 
 using System;
 using System.IO;
-using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -31,22 +30,23 @@ namespace Schumix.CalendarAddon.Config
 	sealed class AddonConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private const int _seconds = 10;
-		private const int _numberofmessages = 5;
-		private const int _numberofflooding = 3;
+		private string _configfiledefaultname;
+		private string _configfile;
 
-		public AddonConfig(string configfile)
+		public AddonConfig(string FileName, string Data)
 		{
 			try
 			{
-				Log.Debug("CalendarAddonConfig", ">> {0}", configfile);
+				_configfile = FileName + Data;
+				_configfiledefaultname = FileName;
 
-				if(!IsConfig(SchumixConfig.ConfigDirectory, configfile))
-					Init(configfile);
+				Log.Debug("CalendarAddonConfig", ">> {0}", _configfile);
+
+				if(!IsConfig(SchumixConfig.ConfigDirectory, _configfile))
+					Init(SchumixConfig.ConfigDirectory, _configfile);
 				else
-					Init(configfile);
+					Init(SchumixConfig.ConfigDirectory, _configfile);
 			}
 			catch(Exception e)
 			{
@@ -54,75 +54,77 @@ namespace Schumix.CalendarAddon.Config
 			}
 		}
 
-		private void Init(string configfile)
+		private void Init(string configdir, string configfile)
 		{
-			var xmldoc = new XmlDocument();
-			xmldoc.Load(sUtilities.DirectoryToHome(SchumixConfig.ConfigDirectory, configfile));
+			switch(ConfigType(configdir, configfile))
+			{
+				case 0:
+					new AddonYamlConfig(configdir, configfile);
+					break;
+				case 1:
+					new AddonXmlConfig(configdir, configfile);
+					break;
+				default:
+					new AddonYamlConfig(configdir, configfile);
+					break;
+			}
+		}
 
-			Log.Notice("CalendarAddonConfig", sLocalization.Config("Text"));
+		private int ConfigType(string ConfigDirectory, string ConfigFile)
+		{
+			if(ConfigFile == _configfiledefaultname + ".yml")
+			{
+				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, _configfiledefaultname + ".xml");
 
-			int Seconds = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").InnerText) : _seconds;
-			int NumberOfMessages = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").InnerText) : _numberofmessages;
-			int NumberOfFlooding = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").InnerText) : _numberofflooding;
-			new CalendarConfig(Seconds, NumberOfMessages, NumberOfFlooding);
+				if(File.Exists(filename))
+					return 0;
+				else if(File.Exists(filename2))
+				{
+					_configfile = _configfiledefaultname + ".xml";
+					return 1;
+				}
+			}
+			else if(ConfigFile == _configfiledefaultname + ".xml")
+			{
+				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, _configfiledefaultname + ".yml");
 
-			Log.Success("CalendarAddonConfig", sLocalization.Config("Text2"));
-			Console.WriteLine();
+				if(File.Exists(filename))
+					return 1;
+				else if(File.Exists(filename2))
+				{
+					_configfile = _configfiledefaultname + ".yml";
+					return 0;
+				}
+			}
+
+			if(ConfigFile.EndsWith(".yml"))
+				return 0;
+			else if(ConfigFile.EndsWith(".xml"))
+				return 1;
+
+			return 0;
+		}
+
+		private void CheckAndCreate(string ConfigDirectory)
+		{
+			if(!Directory.Exists(ConfigDirectory))
+				Directory.CreateDirectory(ConfigDirectory);
 		}
 
 		private bool IsConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+			CheckAndCreate(ConfigDirectory);
 
-			if(File.Exists(filename))
-				return true;
-			else
+			switch(ConfigType(ConfigDirectory, ConfigFile))
 			{
-				Log.Error("CalendarAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("CalendarAddonConfig", sLocalization.Config("Text4"));
-				var w = new XmlTextWriter(filename, null);
-				var xmldoc = new XmlDocument();
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
-
-				if(File.Exists(filename2))
-					xmldoc.Load(filename2);
-
-				try
-				{
-					w.Formatting = Formatting.Indented;
-					w.Indentation = 4;
-					w.Namespaces = false;
-					w.WriteStartDocument();
-
-					// <CalendarAddon>
-					w.WriteStartElement("CalendarAddon");
-
-					// <Flooding>
-					w.WriteStartElement("Flooding");
-					w.WriteElementString("Seconds",          (!xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").IsNull() ? xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").InnerText : _seconds.ToString()));
-					w.WriteElementString("NumberOfMessages", (!xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").IsNull() ? xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").InnerText : _numberofmessages.ToString()));
-					w.WriteElementString("NumberOfFlooding", (!xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").IsNull() ? xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").InnerText : _numberofflooding.ToString()));
-
-					// </Flooding>
-					w.WriteEndElement();
-
-					// </CalendarAddon>
-					w.WriteEndElement();
-
-					w.Flush();
-					w.Close();
-
-					if(File.Exists(filename2))
-						File.Delete(filename2);
-
-					Log.Success("CalendarAddonConfig", sLocalization.Config("Text5"));
-					return false;
-				}
-				catch(Exception e)
-				{
-					Log.Error("CalendarAddonConfig", sLocalization.Config("Text6"), e.Message);
-					return false;
-				}
+				case 0:
+					return new AddonYamlConfig().CreateConfig(ConfigDirectory, _configfile);
+				case 1:
+					return new AddonXmlConfig().CreateConfig(ConfigDirectory, _configfile);
+				default:
+					return new AddonYamlConfig().CreateConfig(ConfigDirectory, _configfile);
 			}
 		}
 	}

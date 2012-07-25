@@ -136,7 +136,7 @@ namespace Schumix.SvnRssAddon
 				{
 					try
 					{
-						if(sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Svn))
+						if(!sIrcBase.Networks[_servername].sChannelInfo.IsNull() && sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Svn))
 						{
 							url = GetUrl();
 							if(url.IsNull())

@@ -1,0 +1,4 @@
+# HgRssAddon config file (yaml)
+HgRssAddon:
+    Rss:
+        QueryTime: 60

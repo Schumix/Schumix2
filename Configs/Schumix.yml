@@ -6,7 +6,6 @@ Schumix:
         Port: 35220
         Password: schumix
     Irc:
-        #-
         ServerName: Default
         Server: localhost
         Port: 6667
@@ -17,7 +16,7 @@ Schumix:
         UserName: Schumix2
         UserInfo: Schumix2 IRC Bot
         MasterChannel:
-            Name: '#schumix2'
+            Name: "#schumix2"
             Password:
         IgnoreChannels:
         IgnoreNames:
@@ -30,14 +29,8 @@ Schumix:
         Wait:
             MessageSending: 400
         Command:
-            Prefix: $
+            Prefix: "$"
         MessageType: Privmsg
-    # If you want to connect to more servers at a time:
-    # Note that '-' is important!
-    #   -
-    #   ServerName: Default2
-    #   Server: Anotherhost
-    #   etc...
     Log:
         FileName: Schumix.log
         LogLevel: 2
@@ -56,8 +49,7 @@ Schumix:
         FileName: schumix.db3
     Addon:
         Enabled: true
-        Ignore: >
-            MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon
+        Ignore: MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon
         Directory: Addons
     Scripts:
         Lua: false

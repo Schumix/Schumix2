@@ -12,6 +12,7 @@ Megírásra váró feladatok:
 	- xrev parancs megírása.
 	- irc parancs listájának bővítése.
 	- sznap parancs megírása normálisan.
+	- Server-be megcsinálni a yaml konfigot.
 	- Rss-nél megoldani hogy a project elnevezésének színe cserélhető legyen.
 	- Rss-be add, remove, és change parancsot létrehozni mellyel magát az rss címet tudjuk hozzáadni.
 	- Játék addon bővítése és a kód nyelvezetét átírni angolra is.

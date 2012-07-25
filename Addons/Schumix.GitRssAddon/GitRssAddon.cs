@@ -52,7 +52,7 @@ namespace Schumix.GitRssAddon
 			sLocalization.Locale = sLConsole.Locale;
 
 			if(IRCConfig.List[ServerName].ServerId == 1)
-				_config = new AddonConfig(Name + ".xml");
+				_config = new AddonConfig(Name, ".yml");
 
 			InitIrcCommand();
 			SchumixBase.DManager.Update("gitinfo", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
@@ -103,7 +103,7 @@ namespace Schumix.GitRssAddon
 				{
 					case "config":
 						if(IRCConfig.List[_servername].ServerId == 1)
-							_config = new AddonConfig(Name + ".xml");
+							_config = new AddonConfig(Name, ".yml");
 						return 1;
 					case "command":
 						InitIrcCommand();
