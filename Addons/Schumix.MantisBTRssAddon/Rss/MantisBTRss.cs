@@ -125,7 +125,7 @@ namespace Schumix.MantisBTRssAddon
 				{
 					try
 					{
-						if(sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Mantisbt))
+						if(!sIrcBase.Networks[_servername].sChannelInfo.IsNull() && sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Mantisbt))
 						{
 							url = GetUrl();
 							if(url.IsNull())

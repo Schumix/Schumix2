@@ -143,7 +143,7 @@ namespace Schumix.WordPressRssAddon
 				{
 					try
 					{
-						if(sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Wordpress))
+						if(!sIrcBase.Networks[_servername].sChannelInfo.IsNull() && sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Wordpress))
 						{
 							url = GetUrl();
 							if(url.IsNull())

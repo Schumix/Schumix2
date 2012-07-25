@@ -167,7 +167,7 @@ namespace Schumix.GitRssAddon
 				{
 					try
 					{
-						if(sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Git))
+						if(!sIrcBase.Networks[_servername].sChannelInfo.IsNull() && sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Git))
 						{
 							url = GetUrl();
 							if(url.IsNull())

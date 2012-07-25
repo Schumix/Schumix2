@@ -550,7 +550,7 @@ namespace Schumix.Framework.Config
 
 			foreach(var child in nodes)
 			{
-				if(((YamlMappingNode)child.Value).Children.Count > 1)
+				if(((YamlMappingNode)child.Value).Children.Count > 0)
 					text.Append(child.Key).Append(":\n").Append(child.Value).Append(SchumixBase.NewLine);
 				else
 					text.Append(child.Key).Append(": ").Append(child.Value).Append(SchumixBase.NewLine);

@@ -19,7 +19,6 @@
 
 using System;
 using System.IO;
-using System.Xml;
 using System.Threading;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
