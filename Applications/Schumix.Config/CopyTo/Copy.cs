@@ -107,7 +107,7 @@ namespace Schumix.Config.CopyTo
 				if (fi.Name.Substring(0, 1) == "_")
 					continue;
 
-				await File.Move("Configs/" + fi.Name, Configs + "/_" + fi.Name);
+				File.Move("Configs/" + fi.Name, Configs + "/_" + fi.Name);
 			}
 		}
 	}
