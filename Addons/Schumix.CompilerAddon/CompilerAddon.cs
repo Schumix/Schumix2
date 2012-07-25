@@ -59,7 +59,7 @@ namespace Schumix.CompilerAddon
 			sLocalization.Locale = sLConsole.Locale;
 
 			if(IRCConfig.List[ServerName].ServerId == 1)
-				_config = new AddonConfig(Name + ".xml");
+				_config = new AddonConfig(Name, ".yml");
 
 			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
 			sSCompiler.ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
@@ -80,7 +80,7 @@ namespace Schumix.CompilerAddon
 				{
 					case "config":
 						if(IRCConfig.List[_servername].ServerId == 1)
-							_config = new AddonConfig(Name + ".xml");
+							_config = new AddonConfig(Name, ".yml");
 						return 1;
 				}
 			}
