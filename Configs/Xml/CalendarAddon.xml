@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<CalendarAddon>
+    <Flooding>
+        <Seconds>10</Seconds>
+        <NumberOfMessages>5</NumberOfMessages>
+        <NumberOfFlooding>3</NumberOfFlooding>
+    </Flooding>
+</CalendarAddon>

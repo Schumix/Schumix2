@@ -19,7 +19,6 @@
 
 using System;
 using System.IO;
-using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -31,23 +30,23 @@ namespace Schumix.ExtraAddon.Config
 	sealed class AddonConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private const bool _enabled = false;
-		private const string _type = "aohv";
-		private const string _weatherhomecity = "Zalaegerszeg";
-		private const string _wolframalphaapikey = "557QYQ-UUUWTKX95V";
+		private string _configfiledefaultname;
+		private string _configfile;
 
-		public AddonConfig(string configfile)
+		public AddonConfig(string FileName, string Data)
 		{
 			try
 			{
-				Log.Debug("ExtraAddonConfig", ">> {0}", configfile);
+				_configfile = FileName + Data;
+				_configfiledefaultname = FileName;
 
-				if(!IsConfig(SchumixConfig.ConfigDirectory, configfile))
-					Init(configfile);
+				Log.Debug("ExtraAddonConfig", ">> {0}", _configfile);
+
+				if(!IsConfig(SchumixConfig.ConfigDirectory, _configfile))
+					Init(SchumixConfig.ConfigDirectory, _configfile);
 				else
-					Init(configfile);
+					Init(SchumixConfig.ConfigDirectory, _configfile);
 			}
 			catch(Exception e)
 			{
@@ -55,111 +54,77 @@ namespace Schumix.ExtraAddon.Config
 			}
 		}
 
-		private void Init(string configfile)
+		private void Init(string configdir, string configfile)
 		{
-			var xmldoc = new XmlDocument();
-			xmldoc.Load(sUtilities.DirectoryToHome(SchumixConfig.ConfigDirectory, configfile));
+			switch(ConfigType(configdir, configfile))
+			{
+				case 0:
+					new AddonYamlConfig(configdir, configfile);
+					break;
+				case 1:
+					new AddonXmlConfig(configdir, configfile);
+					break;
+				default:
+					new AddonYamlConfig(configdir, configfile);
+					break;
+			}
+		}
 
-			Log.Notice("ExtraAddonConfig", sLocalization.Config("Text"));
+		private int ConfigType(string ConfigDirectory, string ConfigFile)
+		{
+			if(ConfigFile == _configfiledefaultname + ".yml")
+			{
+				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, _configfiledefaultname + ".xml");
 
-			bool Enabled = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText) : _enabled;
-			string Type = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText : _type;
-			new ModeConfig(Enabled, Type);
+				if(File.Exists(filename))
+					return 0;
+				else if(File.Exists(filename2))
+				{
+					_configfile = _configfiledefaultname + ".xml";
+					return 1;
+				}
+			}
+			else if(ConfigFile == _configfiledefaultname + ".xml")
+			{
+				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, _configfiledefaultname + ".yml");
 
-			string City = !xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").InnerText : _weatherhomecity;
-			new WeatherConfig(City);
+				if(File.Exists(filename))
+					return 1;
+				else if(File.Exists(filename2))
+				{
+					_configfile = _configfiledefaultname + ".yml";
+					return 0;
+				}
+			}
 
-			string Key = !xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").InnerText : _wolframalphaapikey;
-			new WolframAlphaConfig(Key);
+			if(ConfigFile.EndsWith(".yml"))
+				return 0;
+			else if(ConfigFile.EndsWith(".xml"))
+				return 1;
 
-			Log.Success("ExtraAddonConfig", sLocalization.Config("Text2"));
-			Console.WriteLine();
+			return 0;
+		}
+
+		private void CheckAndCreate(string ConfigDirectory)
+		{
+			if(!Directory.Exists(ConfigDirectory))
+				Directory.CreateDirectory(ConfigDirectory);
 		}
 
 		private bool IsConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+			CheckAndCreate(ConfigDirectory);
 
-			if(File.Exists(filename))
-				return true;
-			else
+			switch(ConfigType(ConfigDirectory, ConfigFile))
 			{
-				Log.Error("ExtraAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("ExtraAddonConfig", sLocalization.Config("Text4"));
-				var w = new XmlTextWriter(filename, null);
-				var xmldoc = new XmlDocument();
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
-
-				if(File.Exists(filename2))
-					xmldoc.Load(filename2);
-
-				try
-				{
-					w.Formatting = Formatting.Indented;
-					w.Indentation = 4;
-					w.Namespaces = false;
-					w.WriteStartDocument();
-
-					// <ExtraAddon>
-					w.WriteStartElement("ExtraAddon");
-
-					// <Mode>
-					w.WriteStartElement("Mode");
-
-					// <Remove>
-					w.WriteStartElement("Remove");
-					w.WriteElementString("Enabled", (!xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText : _enabled.ToString()));
-					w.WriteElementString("Type",    (!xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText : _type));
-
-					// </Remove>
-					w.WriteEndElement();
-
-					// </Mode>
-					w.WriteEndElement();
-
-					// <Weather>
-					w.WriteStartElement("Weather");
-
-					// <Home>
-					w.WriteStartElement("Home");
-					w.WriteElementString("City",    (!xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").InnerText : _weatherhomecity));
-
-					// </Home>
-					w.WriteEndElement();
-
-					// </Weather>
-					w.WriteEndElement();
-
-					// <WolframAlpha>
-					w.WriteStartElement("WolframAlpha");
-
-					// <Api>
-					w.WriteStartElement("Api");
-					w.WriteElementString("Key",     (!xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").InnerText : _wolframalphaapikey));
-
-					// </Api>
-					w.WriteEndElement();
-
-					// </WolframAlpha>
-					w.WriteEndElement();
-
-					// </ExtraAddon>
-					w.WriteEndElement();
-
-					w.Flush();
-					w.Close();
-
-					if(File.Exists(filename2))
-						File.Delete(filename2);
-
-					Log.Success("ExtraAddonConfig", sLocalization.Config("Text5"));
-					return false;
-				}
-				catch(Exception e)
-				{
-					Log.Error("ExtraAddonConfig", sLocalization.Config("Text6"), e.Message);
-					return false;
-				}
+				case 0:
+					return new AddonYamlConfig().CreateConfig(ConfigDirectory, _configfile);
+				case 1:
+					return new AddonXmlConfig().CreateConfig(ConfigDirectory, _configfile);
+				default:
+					return new AddonYamlConfig().CreateConfig(ConfigDirectory, _configfile);
 			}
 		}
 	}

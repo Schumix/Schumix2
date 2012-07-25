@@ -58,6 +58,9 @@ namespace Schumix.ExtraAddon.Commands
 			if(sFunctions.AutoKick("join", sIRCMessage.Nick, sIRCMessage.Channel))
 				return;
 
+			if(sIrcBase.Networks[sIRCMessage.ServerName].sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
+				return;
+
 			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 			var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
@@ -110,6 +113,9 @@ namespace Schumix.ExtraAddon.Commands
 				sNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
 				return;
 			}
+
+			if(sIrcBase.Networks[sIRCMessage.ServerName].sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
+				return;
 
 			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;

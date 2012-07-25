@@ -1,0 +1,13 @@
+# ExtraAddon config file (yaml)
+ExtraAddon:
+    Mode:
+        Remove:
+            Enabled: False
+            Type: aohv
+    Weather:
+        Home:
+            City: Zalaegerszeg
+    WolframAlpha:
+        Api:
+            Key: 557QYQ-UUUWTKX95V
+

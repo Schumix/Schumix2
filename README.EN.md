@@ -40,6 +40,9 @@ Navigate to the `Run` folder and in that proper folder for the configuration. Ru
 
 ## Irc
 
+Yaml konfignál:
+Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (Irc: ...) le kell másolni még egyszer és ott külön be kell állítani az adatokat valamint Irc<szám> ként kell megadni. Pl: Irc2: .... (ide pedig minde úgy jön utána ahogy volt csak az Irc-nél kell átírni az újat).
+Xml konfignál:
 Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (<Irc> ... </Irc>) le kell másolni még egyszer és ott külön be kell állítani az adatokat.
 * **ServerName:** A szerver neve. Ezzel lehet beállítani hogy többszerveres módban hogy mi legyen az egyes szervereket megkülönböztető név. FIGYELEM: Nem egyezhet meg a többi szerver nevével (kis és nagybetüt nem különbőzteti meg)!
 * **Server:** Ide kell beírni a szerver nevét ahova csatlakozni szeretnénk.
@@ -51,7 +54,7 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 * **UserName:** Felhasználó név.
 * **UserInfo:** Információ a felhasználóról.
 * **MasterChannel:**
-    * **Name:** Elsõdleges csatorna ahova csatlakozik minden esetben a bot. Ennek a neve itt változtatható meg. Az adatbázisból nem törölhetõ.
+    * **Name:** Elsõdleges csatorna ahova csatlakozik minden esetben a bot. Ennek a neve itt változtatható meg. Az adatbázisból nem törölhetõ. Yaml konfig esetén "" jelek közé kell rakni a csatornát. Pl: Name: "#schumix2"
     * **Password:** Az elsődleges csatornához tartozó jelszó.
                     Alapértelmezés: (semmi)[Ez azt jelenti hogy nem add meg jelszót az elsődleges csatornához.]
 * **IgnoreChannels:** Letilthatók a nem kívánatos csatornák vele. Ami itt szerepel oda nem megy fel a bot. Ezen rész letiltja a bot rendszerében szereplõket is.
@@ -70,7 +73,7 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 * **Wait:**
     * **MessageSending:** Üzenet küldésének késleltetése. Legföbbként flood ellen van.
 * **Command:**
-    * **Prefix:** A parancsok elõjele. Alapértelmezés: `$` (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: `$xbot`)
+    * **Prefix:** A parancsok elõjele. Yaml konfig esetén "" jelek közé kell rakni a parancsot. Pl: Prefix: "$". Alapértelmezés: `$` (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: `$xbot`)
 * **MessageType:** Értéke `Privmsg` vagy `Notice` lehet. Meghatározza hogy milyen formában küldje az üzeneteket a szerver felé. Alapértelmezés: `Privmsg`
 
 ## Log
@@ -123,7 +126,7 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 * **Version:** Meghatározza melyik verzióra szeretnénk frissíteni. Current vagy stable lehet. A current az utolsó verzó ami a tárolóban van a stable pedig az utolsó stabil verzió.
                Alapértelmezés: `stable`
 * **Branch:** Beállítható vele az ág (branch). Ez csak a current verziók esetében érdekes. Alapértelmezés: `master`
-* **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: `http://megax.uw.hu/Schumix2/`
+* **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: `https://github.com/megax/Schumix2`
 
 # Adatbázis beüzemelése
 
@@ -158,4 +161,5 @@ Ha mind ezekkel megvagyunk már csak inditanuk kell és használni a kódot :)
 * És végül a konzol parancsok. Ha már megemlítettem ;) Szóval a lista a help parancsal kapható meg.
   Többit ki kell tapasztalni mert egyenlõre nincs hozzá help.
 * Bármi lemaradt volna tudok segítséget nyújtani az irc.rizon.net szerveren a `#schumix, #schumix2` vagy `#hun_bot` csatornán.
+* Yaml konfignál minden olyan adatot amely különleges karaktert tartalmaz (pl: #) azt idézőjelek közé kell helyezni "" mert a program máskülönben megpróbálná értelmezni és az hibát okozna.
 * Remélem meg fog tetszeni a bot :)

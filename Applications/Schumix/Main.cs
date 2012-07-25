@@ -82,7 +82,7 @@ namespace Schumix
 		{
 			sRuntime.SetProcessName("Schumix");
 			string configdir = "Configs";
-			string configfile = "Schumix.xml";
+			string configfile = "Schumix.yml";
 			string console_encoding = "utf-8";
 			string localization = "start";
 			bool serverenabled = false;
@@ -203,6 +203,7 @@ namespace Schumix
 			new ServerConfig(serverenabled ? serverenabled : ServerConfig.Enabled, serverhost != "0.0.0.0" ? serverhost : ServerConfig.Host,
 				serverport != -1 ? serverport : ServerConfig.Port, serverpassword != "0" ? serverpassword : ServerConfig.Password);
 
+			System.Console.WriteLine();
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
 
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)

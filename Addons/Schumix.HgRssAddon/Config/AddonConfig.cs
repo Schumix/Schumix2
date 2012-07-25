@@ -19,7 +19,6 @@
 
 using System;
 using System.IO;
-using System.Xml;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -31,20 +30,23 @@ namespace Schumix.HgRssAddon.Config
 	sealed class AddonConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private const int _querytime = 60;
+		private string _configfiledefaultname;
+		private string _configfile;
 
-		public AddonConfig(string configfile)
+		public AddonConfig(string FileName, string Data)
 		{
 			try
 			{
-				Log.Debug("HgRssAddonConfig", ">> {0}", configfile);
+				_configfile = FileName + Data;
+				_configfiledefaultname = FileName;
 
-				if(!IsConfig(SchumixConfig.ConfigDirectory, configfile))
-					Init(configfile);
+				Log.Debug("HgRssAddonConfig", ">> {0}", _configfile);
+
+				if(!IsConfig(SchumixConfig.ConfigDirectory, _configfile))
+					Init(SchumixConfig.ConfigDirectory, _configfile);
 				else
-					Init(configfile);
+					Init(SchumixConfig.ConfigDirectory, _configfile);
 			}
 			catch(Exception e)
 			{
@@ -52,71 +54,77 @@ namespace Schumix.HgRssAddon.Config
 			}
 		}
 
-		private void Init(string configfile)
+		private void Init(string configdir, string configfile)
 		{
-			var xmldoc = new XmlDocument();
-			xmldoc.Load(sUtilities.DirectoryToHome(SchumixConfig.ConfigDirectory, configfile));
+			switch(ConfigType(configdir, configfile))
+			{
+				case 0:
+					new AddonYamlConfig(configdir, configfile);
+					break;
+				case 1:
+					new AddonXmlConfig(configdir, configfile);
+					break;
+				default:
+					new AddonYamlConfig(configdir, configfile);
+					break;
+			}
+		}
 
-			Log.Notice("HgRssAddonConfig", sLocalization.Config("Text"));
+		private int ConfigType(string ConfigDirectory, string ConfigFile)
+		{
+			if(ConfigFile == _configfiledefaultname + ".yml")
+			{
+				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, _configfiledefaultname + ".xml");
 
-			int QueryTime = !xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").InnerText) : _querytime;
-			new RssConfig(QueryTime);
+				if(File.Exists(filename))
+					return 0;
+				else if(File.Exists(filename2))
+				{
+					_configfile = _configfiledefaultname + ".xml";
+					return 1;
+				}
+			}
+			else if(ConfigFile == _configfiledefaultname + ".xml")
+			{
+				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, _configfiledefaultname + ".yml");
 
-			Log.Success("HgRssAddonConfig", sLocalization.Config("Text2"));
-			Console.WriteLine();
+				if(File.Exists(filename))
+					return 1;
+				else if(File.Exists(filename2))
+				{
+					_configfile = _configfiledefaultname + ".yml";
+					return 0;
+				}
+			}
+
+			if(ConfigFile.EndsWith(".yml"))
+				return 0;
+			else if(ConfigFile.EndsWith(".xml"))
+				return 1;
+
+			return 0;
+		}
+
+		private void CheckAndCreate(string ConfigDirectory)
+		{
+			if(!Directory.Exists(ConfigDirectory))
+				Directory.CreateDirectory(ConfigDirectory);
 		}
 
 		private bool IsConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+			CheckAndCreate(ConfigDirectory);
 
-			if(File.Exists(filename))
-				return true;
-			else
+			switch(ConfigType(ConfigDirectory, ConfigFile))
 			{
-				Log.Error("HgRssAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("HgRssAddonConfig", sLocalization.Config("Text4"));
-				var w = new XmlTextWriter(filename, null);
-				var xmldoc = new XmlDocument();
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
-
-				if(File.Exists(filename2))
-					xmldoc.Load(filename2);
-
-				try
-				{
-					w.Formatting = Formatting.Indented;
-					w.Indentation = 4;
-					w.Namespaces = false;
-					w.WriteStartDocument();
-
-					// <HgRssAddon>
-					w.WriteStartElement("HgRssAddon");
-
-					// <Rss>
-					w.WriteStartElement("Rss");
-					w.WriteElementString("QueryTime", (!xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").IsNull() ? xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").InnerText : _querytime.ToString()));
-
-					// </Rss>
-					w.WriteEndElement();
-
-					// </HgRssAddon>
-					w.WriteEndElement();
-
-					w.Flush();
-					w.Close();
-
-					if(File.Exists(filename2))
-						File.Delete(filename2);
-
-					Log.Success("HgRssAddonConfig", sLocalization.Config("Text5"));
-					return false;
-				}
-				catch(Exception e)
-				{
-					Log.Error("HgRssAddonConfig", sLocalization.Config("Text6"), e.Message);
-					return false;
-				}
+				case 0:
+					return new AddonYamlConfig().CreateConfig(ConfigDirectory, _configfile);
+				case 1:
+					return new AddonXmlConfig().CreateConfig(ConfigDirectory, _configfile);
+				default:
+					return new AddonYamlConfig().CreateConfig(ConfigDirectory, _configfile);
 			}
 		}
 	}

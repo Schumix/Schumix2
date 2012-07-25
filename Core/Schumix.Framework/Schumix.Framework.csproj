@@ -63,9 +63,16 @@
     <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139">
       <HintPath>..\..\Dependencies\System.Data.SQLite.dll</HintPath>
     </Reference>
+    <Reference Include="YamlDotNet.Core">
+      <HintPath>..\..\Dependencies\YamlDotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YamlDotNet.RepresentationModel">
+      <HintPath>..\..\Dependencies\YamlDotNet.RepresentationModel.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
+    <Compile Include="Config\DefaultConfig.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="SchumixBase.cs" />
     <Compile Include="ConsoleLog.cs" />
@@ -107,6 +114,8 @@
     <Compile Include="Config\IRCConfigBase.cs" />
     <Compile Include="Addon\AddonManager.cs" />
     <Compile Include="Addon\AddonBase.cs" />
+    <Compile Include="Config\XmlConfig.cs" />
+    <Compile Include="Config\YamlConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -115,14 +124,7 @@
       <Name>Schumix.API</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-    <Folder Include="Localization\" />
-    <Folder Include="Mathematics\" />
-    <Folder Include="Mathematics\Algorithms\" />
-    <Folder Include="Mathematics\Types\" />
-    <Folder Include="Addon\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="..\..\Dependencies\sqlite3.dll">
       <Link>sqlite3.dll</Link>

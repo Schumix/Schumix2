@@ -1,0 +1,4 @@
+# MantisBTRssAddon config file (yaml)
+MantisBTRssAddon:
+    Rss:
+        QueryTime: 60
