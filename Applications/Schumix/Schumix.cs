@@ -75,12 +75,16 @@ namespace Schumix
 						return;
 					}
 
+					int i = 0;
 					foreach(var sn in IRCConfig.List)
 					{
 						sIrcBase.Connect(sn.Key);
 
-						while(!sIrcBase.Networks[sn.Key].Online)
+						while(!sIrcBase.Networks[sn.Key].Online || i >= 30)
+						{
+							i++;
 							Thread.Sleep(1000);
+						}
 					}
 				});
 

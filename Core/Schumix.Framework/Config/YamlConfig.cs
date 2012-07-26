@@ -128,13 +128,14 @@ namespace Schumix.Framework.Config
 						nodes2.Add("Update",       CreateUpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Update"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Update")]).Children : (Dictionary<YamlNode, YamlNode>)null));
 						nodes.Add("Schumix", nodes2);
 
-						sUtilities.CreateFile(filename);
+						Console.WriteLine(ToString(nodes.Children));
+						/*sUtilities.CreateFile(filename);
 						var file = new StreamWriter(filename, true) { AutoFlush = true };
 						file.Write(ToString(nodes.Children));
 						file.Close();
 
 						if(File.Exists(filename2))
-							File.Delete(filename2);
+							File.Delete(filename2);*/
 
 						Log.Success("YamlConfig", sLConsole.Config("Text7"));
 					}

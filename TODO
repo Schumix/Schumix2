@@ -2,6 +2,7 @@ Megírásra váró feladatok:
 - Súlyos hibák:
 
 - Közepes hibák:
+	- Az ignore addon add és remove parancs nem jelzi ha egyáltalán nem is létezik olyan addon.
 
 - Apróbb hibák:
 
