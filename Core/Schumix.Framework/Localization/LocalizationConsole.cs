@@ -504,6 +504,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Initiating connection.";
 				}
+				case "Text7":
+				{
+					if(Locale == "huHU")
+						return "A megadott mester csatorna már létezik egyszer az adatbázisban így az alapértelmezett fog lenni a neve!";
+					else if(Locale == "enUS")
+						return "The master channel already exist on the database, named by default!";
+					else
+						return "The master channel already exist on the database, named by default!";
+				}
 				default:
 					return string.Empty;
 			}

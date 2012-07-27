@@ -27,4 +27,3 @@ Megírásra váró feladatok:
 	- if(Process.GetCurrentProcess().WorkingSet64/1024/1024 >= 100/* majd mehetne az a szám configba*/
 	- Lognál olyan lehetőség hogy az adot indítási dátum lesz a fájl neve és ez mind abba a mappába kerül ami a log fájlnak lenne a neve.
 	- Többszerveres módnál az irc logolást leválasztani a normál logról(normális módnál maradhatna a Schumix.log-ban [Túlságosan sok mindent kéne megváltoztatni ezért jó ötleteken dolgozom hozzá.]).
-	- Ha a mester csatorna létezik már egy másik csatornaként és arra szeretne váltani az illető konfig alapján akkor hibaüzenet jelenjen meg.
