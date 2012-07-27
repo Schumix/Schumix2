@@ -82,7 +82,7 @@ namespace Schumix.CompilerAddon.Config
 
 					sUtilities.CreateFile(filename);
 					var file = new StreamWriter(filename, true) { AutoFlush = true };
-					file.Write(ToString(nodes.Children));
+					file.Write(nodes.Children.ToString("CompilerAddon"));
 					file.Close();
 
 					if(File.Exists(filename2))
@@ -150,88 +150,6 @@ namespace Schumix.CompilerAddon.Config
 			map.Add("MainClass",             (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("MainClass"))) ? nodes[new YamlScalarNode("MainClass")].ToString() : d_mainclass);
 			map.Add("MainConstructor",       (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("MainConstructor"))) ? nodes[new YamlScalarNode("MainConstructor")].ToString() : d_mainconstructor);
 			return map;
-		}
-
-		private string ToString(IDictionary<YamlNode, YamlNode> nodes)
-		{
-			var text = new StringBuilder();
-
-			foreach(var child in nodes)
-			{
-				if(((YamlMappingNode)child.Value).Children.Count > 0)
-					text.Append(child.Key).Append(":\n").Append(child.Value).Append(SchumixBase.NewLine);
-				else
-					text.Append(child.Key).Append(": ").Append(child.Value).Append(SchumixBase.NewLine);
-			}
-
-			text.Replace("{ { ", "    ");
-			text.Replace("{ ", "    ");
-			text.Replace(" }", SchumixBase.NewLine.ToString());
-			text.Replace("\n\n\n", SchumixBase.NewLine.ToString());
-			text.Replace("\n\n", SchumixBase.NewLine.ToString());
-			text.Replace(", ", ": ");
-
-			var split = text.ToString().Split(SchumixBase.NewLine);
-			text.Remove(0, text.Length);
-
-			foreach(var st in split)
-				text.Append(st.Remove(0, 2, ": ") + SchumixBase.NewLine.ToString());
-
-			split = text.ToString().Split(SchumixBase.NewLine);
-			text.Remove(0, text.Length);
-
-			foreach(var st in split)
-			{
-				if(st.Contains(": "))
-				{
-					string a = st.Remove(0, st.IndexOf(": ") + 2);
-					if(a.Contains(": "))
-						text.Append(st.Substring(0, st.IndexOf(": ") + 2) + SchumixBase.NewLine.ToString() + st.Substring(st.IndexOf(": ") + 2) + SchumixBase.NewLine.ToString());
-					else
-						text.Append(st.Remove(0, 2, ": ") + SchumixBase.NewLine.ToString());
-				}
-				else
-					text.Append(st + SchumixBase.NewLine.ToString());
-			}
-
-			split = text.ToString().Split(SchumixBase.NewLine);
-			text.Remove(0, text.Length);
-
-			foreach(var stt in split)
-			{
-				string st = stt;
-
-				if(st.Trim() == string.Empty)
-					continue;
-
-				if(st.EndsWith(": "))
-					st = st.Replace(": ", SchumixBase.Colon.ToString());
-
-				if(!st.EndsWith(SchumixBase.Colon.ToString()))
-					text.Append("    " + st + SchumixBase.NewLine.ToString());
-				else
-					text.Append(st + SchumixBase.NewLine.ToString());
-			}
-
-			split = text.ToString().Split(SchumixBase.NewLine);
-			text.Remove(0, text.Length);
-			bool e = false;
-
-			foreach(var st in split)
-			{
-				if(st.ToString().Contains("MaxAllocating"))
-					e = true;
-
-				if(e)
-					text.Append("    " + st + SchumixBase.NewLine.ToString());
-				else
-					text.Append(st + SchumixBase.NewLine.ToString());
-
-				if(st.ToString().Contains("Memory"))
-					e = false;
-			}
-
-			return "# CompilerAddon config file (yaml)\n" + text.ToString();
 		}
 	}
 }

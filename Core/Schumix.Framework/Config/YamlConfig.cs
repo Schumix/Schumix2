@@ -130,7 +130,7 @@ namespace Schumix.Framework.Config
 
 						sUtilities.CreateFile(filename);
 						var file = new StreamWriter(filename, true) { AutoFlush = true };
-						file.Write(ToString(nodes.Children));
+						file.Write(nodes.Children.ToString("Schumix"));
 						file.Close();
 
 						if(File.Exists(filename2))
@@ -540,88 +540,6 @@ namespace Schumix.Framework.Config
 			map.Add("Branch",  (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Branch"))) ? nodes[new YamlScalarNode("Branch")].ToString() : d_updatebranch);
 			map.Add("WebPage", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("WebPage"))) ? nodes[new YamlScalarNode("WebPage")].ToString() : d_updatewebpage);
 			return map;
-		}
-
-		private string ToString(IDictionary<YamlNode, YamlNode> nodes)
-		{
-			var text = new StringBuilder();
-
-			foreach(var child in nodes)
-			{
-				if(((YamlMappingNode)child.Value).Children.Count > 0)
-					text.Append(child.Key).Append(":\n").Append(child.Value).Append(SchumixBase.NewLine);
-				else
-					text.Append(child.Key).Append(": ").Append(child.Value).Append(SchumixBase.NewLine);
-			}
-
-			text.Replace("{ { ", "    ");
-			text.Replace("{ ", "    ");
-			text.Replace(" }", SchumixBase.NewLine.ToString());
-			text.Replace("\n\n\n", SchumixBase.NewLine.ToString());
-			text.Replace("\n\n", SchumixBase.NewLine.ToString());
-			text.Replace(", ", ": ");
-
-			var split = text.ToString().Split(SchumixBase.NewLine);
-			text.Remove(0, text.Length);
-
-			foreach(var st in split)
-				text.Append(st.Remove(0, 2, ": ") + SchumixBase.NewLine.ToString());
-
-			split = text.ToString().Split(SchumixBase.NewLine);
-			text.Remove(0, text.Length);
-
-			foreach(var st in split)
-			{
-				if(st.Contains(": "))
-				{
-					string a = st.Remove(0, st.IndexOf(": ") + 2);
-					if(a.Contains(": "))
-						text.Append(st.Substring(0, st.IndexOf(": ") + 2) + SchumixBase.NewLine.ToString() + st.Substring(st.IndexOf(": ") + 2) + SchumixBase.NewLine.ToString());
-					else
-						text.Append(st.Remove(0, 2, ": ") + SchumixBase.NewLine.ToString());
-				}
-				else
-					text.Append(st + SchumixBase.NewLine.ToString());
-			}
-
-			split = text.ToString().Split(SchumixBase.NewLine);
-			text.Remove(0, text.Length);
-
-			foreach(var stt in split)
-			{
-				string st = stt;
-
-				if(st.Trim() == string.Empty)
-					continue;
-
-				if(st.EndsWith(": "))
-					st = st.Replace(": ", SchumixBase.Colon.ToString());
-
-				if(!st.EndsWith(SchumixBase.Colon.ToString()))
-					text.Append("    " + st + SchumixBase.NewLine.ToString());
-				else
-					text.Append(st + SchumixBase.NewLine.ToString());
-			}
-
-			split = text.ToString().Split(SchumixBase.NewLine);
-			text.Remove(0, text.Length);
-			bool e = false;
-
-			foreach(var st in split)
-			{
-				if(st.ToString().Contains("MasterChannel"))
-					e = true;
-
-				if(e)
-					text.Append("    " + st + SchumixBase.NewLine.ToString());
-				else
-					text.Append(st + SchumixBase.NewLine.ToString());
-
-				if(st.ToString().Contains("Prefix"))
-					e = false;
-			}
-
-			return "# Schumix config file (yaml)\n" + text.ToString();
 		}
 	}
 }

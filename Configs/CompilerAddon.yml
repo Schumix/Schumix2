@@ -12,4 +12,3 @@ CompilerAddon:
         ReferencedAssemblies: System.dll,System.Core.dll,System.Numerics.dll,Schumix.Libraries.dll
         MainClass: Entry
         MainConstructor: Schumix
-

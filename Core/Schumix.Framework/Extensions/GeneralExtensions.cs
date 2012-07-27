@@ -25,6 +25,7 @@ using System.Globalization;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
+using YamlDotNet.RepresentationModel;
 
 namespace Schumix.Framework.Extensions
 {
@@ -431,6 +432,21 @@ namespace Schumix.Framework.Extensions
 				return "0" + number.ToString();
 			else
 				return number.ToString();
+		}
+
+		public static string ToString(this IDictionary<YamlNode, YamlNode> Nodes, string FileName = "")
+		{
+			var text = new StringBuilder();
+
+			foreach(var child in Nodes)
+			{
+				if(((YamlMappingNode)child.Value).GetType() == typeof(YamlMappingNode))
+					text.Append(child.Key).Append(":\n").Append(child.Value);
+				else
+					text.Append("    ").Append(child.Key).Append(": ").Append(child.Value);
+			}
+
+			return FileName == string.Empty ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();
 		}
 	}
 }
