@@ -3,6 +3,7 @@ Megírásra váró feladatok:
 
 - Közepes hibák:
 	- Az ignore addon add és remove parancs nem jelzi ha egyáltalán nem is létezik olyan addon.
+		Ilyen addon nem létezik! There is no such an addon!
 
 - Apróbb hibák:
 

@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -28,6 +29,7 @@ namespace Schumix.Irc.Ignore
 	public sealed class IgnoreNickName
 	{
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly List<string> _ignorelist = new List<string>();
 		private string _servername;
 
 		public IgnoreNickName(string ServerName)
@@ -63,6 +65,7 @@ namespace Schumix.Irc.Ignore
 			if(!db.IsNull())
 				return;
 
+			_ignorelist.Add(Name.ToLower());
 			SchumixBase.DManager.Insert("`ignore_nicks`(ServerId, ServerName, Nick)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(Name.ToLower()));
 		}
 
@@ -75,6 +78,7 @@ namespace Schumix.Irc.Ignore
 			if(db.IsNull())
 				return;
 
+			_ignorelist.Remove(Name.ToLower());
 			SchumixBase.DManager.Delete("ignore_nicks", string.Format("Nick = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 		}
 
@@ -83,8 +87,7 @@ namespace Schumix.Irc.Ignore
 			if(Name.Trim() == string.Empty)
 				return false;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
-			return !db.IsNull();
+			return _ignorelist.Contains(Name.ToLower());
 		}
 
 		public void RemoveConfig()
@@ -98,6 +101,11 @@ namespace Schumix.Irc.Ignore
 			}
 			else
 				Remove(IRCConfig.List[_servername].IgnoreNames.ToLower());
+		}
+
+		public void Clean()
+		{
+			_ignorelist.Clear();
 		}
 	}
 }
