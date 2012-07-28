@@ -1085,6 +1085,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Identify password accepted!";
 				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "A nick nincs regisztrálva!";
+					else if(Locale == "enUS")
+						return "Your nick isn't registered!";
+					else
+						return "Your nick isn't registered!";
+				}
 				default:
 					return string.Empty;
 			}
@@ -1111,6 +1120,15 @@ namespace Schumix.Framework.Localization
 						return "Vhost is OFF.";
 					else
 						return "Vhost is OFF.";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "A nick nincs beregisztrálva így a vhost nem került bekapcsolásra!";
+					else if(Locale == "enUS")
+						return "Nick isnt registered, so the vhost still off!";
+					else
+						return "Nick isnt registered, so the vhost still off!";
 				}
 				default:
 					return string.Empty;
