@@ -80,8 +80,11 @@ namespace Schumix
 					{
 						sIrcBase.Connect(sn.Key);
 
-						while(!sIrcBase.Networks[sn.Key].Online || i >= 30)
+						while(!sIrcBase.Networks[sn.Key].Online)
 						{
+							if(i >= 30)
+								break;
+
 							i++;
 							Thread.Sleep(1000);
 						}

@@ -21,6 +21,7 @@ using System;
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Collections.Generic;
 using Schumix.API;
 using Schumix.API.Functions;
@@ -214,9 +215,10 @@ namespace Schumix.Framework
 				if(ExitStatus)
 					return;
 
+				var memory = Process.GetCurrentProcess().WorkingSet64;
 				sAddonManager.UnloadPlugins();
 				sUtilities.RemovePidFile();
-				SchumixBase.timer.SaveUptime();
+				SchumixBase.timer.SaveUptime(memory);
 				SchumixBase.ServerDisconnect(Reconnect);
 				SchumixBase.ExitStatus = true;
 			}
