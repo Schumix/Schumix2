@@ -51,6 +51,11 @@ namespace Schumix.Framework.Addon
 			SetupAppDomainDebugHandlers();
 		}
 
+		public bool IsAddon(string ServerName, string AddonName)
+		{
+			return Addons[ServerName].Addons.ContainsKey(AddonName);
+		}
+
 		/// <summary>
 		/// Loads plugins from the specified directory.
 		/// </summary>

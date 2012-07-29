@@ -1,34 +1,33 @@
 /* SQLite.sql */
 
-DROP TABLE IF EXISTS
-`admins`,
-`banned`,
-`calendar`,
-`channels`,
-`gitinfo`,
-`hginfo`,
-`mantisbt`,
-`hlmessage`,
-`irc_commands`,
-`kicklist`,
-`localized_console_command`,
-`localized_console_command_help`,
-`localized_console_warning`,
-`localized_command`,
-`localized_command_help`,
-`localized_warning`,
-`message`,
-`modelist`,
-`notes`,
-`notes_users`,
-`schumix`,
-`svninfo`,
-`sznap`,
-`uptime`,
-`wordpressinfo`,
-`ignore_channels`,
-`ignore_nicks`,
-`ignore_commands`,
-`ignore_irc_commands`,
-`maffiagame`,
-`ignore_addons`;
+DROP TABLE IF EXISTS `admins`;
+DROP TABLE IF EXISTS `banned`;
+DROP TABLE IF EXISTS `calendar`;
+DROP TABLE IF EXISTS `channels`;
+DROP TABLE IF EXISTS `gitinfo`;
+DROP TABLE IF EXISTS `hginfo`;
+DROP TABLE IF EXISTS `mantisbt`;
+DROP TABLE IF EXISTS `hlmessage`;
+DROP TABLE IF EXISTS `irc_commands`;
+DROP TABLE IF EXISTS `kicklist`;
+DROP TABLE IF EXISTS `localized_console_command`;
+DROP TABLE IF EXISTS `localized_console_command_help`;
+DROP TABLE IF EXISTS `localized_console_warning`;
+DROP TABLE IF EXISTS `localized_command`;
+DROP TABLE IF EXISTS `localized_command_help`;
+DROP TABLE IF EXISTS `localized_warning`;
+DROP TABLE IF EXISTS `message`;
+DROP TABLE IF EXISTS `modelist`;
+DROP TABLE IF EXISTS `notes`;
+DROP TABLE IF EXISTS `notes_users`;
+DROP TABLE IF EXISTS `schumix`;
+DROP TABLE IF EXISTS `svninfo`;
+DROP TABLE IF EXISTS `sznap`;
+DROP TABLE IF EXISTS `uptime`;
+DROP TABLE IF EXISTS `wordpressinfo`;
+DROP TABLE IF EXISTS `ignore_channels`;
+DROP TABLE IF EXISTS `ignore_nicks`;
+DROP TABLE IF EXISTS `ignore_commands`;
+DROP TABLE IF EXISTS `ignore_irc_commands`;
+DROP TABLE IF EXISTS `maffiagame`;
+DROP TABLE IF EXISTS `ignore_addons`;

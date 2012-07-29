@@ -1382,6 +1382,12 @@ namespace Schumix.Irc.Commands
 
 					string addon = sIRCMessage.Info[6].ToLower();
 
+					if(!sAddonManager.IsAddon(sIRCMessage.ServerName, addon))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ThereIsNoSuchAnAddon", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
 					if(sIgnoreAddon.IsIgnore(addon))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -1409,6 +1415,12 @@ namespace Schumix.Irc.Commands
 
 					string addon = sIRCMessage.Info[6].ToLower();
 
+					if(!sAddonManager.IsAddon(sIRCMessage.ServerName, addon))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ThereIsNoSuchAnAddon", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
 					if(!sIgnoreAddon.IsIgnore(addon))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -1434,7 +1446,15 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					if(sIgnoreAddon.Contains(sIRCMessage.Info[6].ToLower()))
+					string addon = sIRCMessage.Info[6].ToLower();
+
+					if(!sAddonManager.IsAddon(sIRCMessage.ServerName, addon))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ThereIsNoSuchAnAddon", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(sIgnoreAddon.Contains(addon))
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
