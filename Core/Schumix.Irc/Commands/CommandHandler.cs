@@ -101,7 +101,8 @@ namespace Schumix.Irc.Commands
 
 			foreach(var plugin in sAddonManager.Addons[sIRCMessage.ServerName].Addons)
 			{
-				if(plugin.Value.HandleHelp(sIRCMessage))
+				if(!sAddonManager.Addons[sIRCMessage.ServerName].IgnoreAssemblies.ContainsKey(plugin.Key) &&
+				   plugin.Value.HandleHelp(sIRCMessage))
 					return;
 			}
 
