@@ -86,7 +86,7 @@ namespace Schumix.Irc.Ignore
 					if(sIrcBase.Networks[_servername].Online)
 					{
 						sIrcBase.Networks[_servername].sChannelNameList.Remove(_servername, Name.ToLower());
-						sIrcBase.Networks[_servername].sSender.Part(Name.ToLower());
+						sIrcBase.Networks[_servername].sSender.Part(Name.ToLower(), sLConsole.IgnoreChannel("Text2", sLManager.GetChannelLocalization(Name, _servername)));
 					}
 				}
 			}

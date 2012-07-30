@@ -2443,26 +2443,54 @@ namespace Schumix.Framework.Localization
 
 		public string IgnoreChannel(string Name)
 		{
+			return IgnoreChannel(Name, Locale);
+		}
+
+		public string IgnoreChannel(string Name, string Language)
+		{
 			switch(Name)
 			{
 				case "Text":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Konfig által letiltva!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Disabled by Config!";
 					else
 						return "Disabled by Config!";
 				}
-				/*case "Text2":
+				case "Text2":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "A csatorna tiltásra került!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Channel is banned!";
 					else
 						return "Channel is banned!";
-				}*/
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string Sender(string Name)
+		{
+			return Sender(Name, Locale);
+		}
+
+		public string Sender(string Name, string Language)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Language == "huHU")
+						return "Távozom";
+					else if(Language == "enUS")
+						return "Leaving";
+					else
+						return "Leaving";
+				}
 				default:
 					return string.Empty;
 			}
