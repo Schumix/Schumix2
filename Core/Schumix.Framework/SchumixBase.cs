@@ -21,6 +21,7 @@ using System;
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using System.Collections.Generic;
 using Schumix.API;
 using Schumix.API.Functions;
@@ -107,18 +108,42 @@ namespace Schumix.Framework
 					{
 						foreach(DataRow row in db1.Rows)
 						{
+							bool ignore = false;
 							int id = Convert.ToInt32(row["Id"].ToString());
+							var db3 = SchumixBase.DManager.Query("SELECT Id, Channel FROM channels WHERE ServerName = '{0}' And Channel = '{1}' ORDER BY Id ASC", row["ServerName"].ToString(), IRCConfig.List[row["ServerName"].ToString()].MasterChannel);
+							if(!db3.IsNull())
+							{
+								int id2 = 0;
+								var db4 = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channels WHERE ServerName = '{0}' ORDER BY Id ASC", row["ServerName"].ToString());
+
+								if(!db4.IsNull())
+									id2 = Convert.ToInt32(db4["Id"].ToString());
+
+								foreach(DataRow row2 in db3.Rows)
+								{
+									if(id2 != Convert.ToInt32(row2["Id"].ToString()) && row2["Channel"].ToString() == IRCConfig.List[row["ServerName"].ToString()].MasterChannel)
+									{
+										ignore = true;
+										break;
+									}
+								}
+							}
+								
 							var db2 = SchumixBase.DManager.QueryFirstRow("SELECT Id, ServerName, Channel FROM channels WHERE ServerName = '{0}' ORDER BY Id ASC", row["ServerName"].ToString());
 
 							if(!db2.IsNull())
 							{
-								if(id == Convert.ToInt32(db2["Id"].ToString()))
+								if(id == Convert.ToInt32(db2["Id"].ToString()) && !ignore)
 								{
 									string channel = db2["Channel"].ToString();
 									string servername = db2["ServerName"].ToString();
 									SchumixBase.DManager.Update("channels", string.Format("Channel = '{0}'", IRCConfig.List[servername].MasterChannel), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, servername));
 									SchumixBase.DManager.Update("channels", string.Format("Password = '{0}'", IRCConfig.List[servername].MasterChannelPassword.Length > 0 ? IRCConfig.List[servername].MasterChannelPassword : string.Empty), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, servername));
 									Log.Notice("SchumixBase", sLConsole.SchumixBase("Text4"), servername, IRCConfig.List[servername].MasterChannel);
+								}
+								else if(id == Convert.ToInt32(db2["Id"].ToString()) && ignore)
+								{
+									Log.Warning("SchumixBase", sLConsole.SchumixBase("Text7"));
 								}
 							}
 						}
@@ -190,9 +215,10 @@ namespace Schumix.Framework
 				if(ExitStatus)
 					return;
 
+				var memory = Process.GetCurrentProcess().WorkingSet64;
 				sAddonManager.UnloadPlugins();
 				sUtilities.RemovePidFile();
-				SchumixBase.timer.SaveUptime();
+				SchumixBase.timer.SaveUptime(memory);
 				SchumixBase.ServerDisconnect(Reconnect);
 				SchumixBase.ExitStatus = true;
 			}

@@ -72,14 +72,19 @@ namespace Schumix.Framework
 
 		public void SaveUptime()
 		{
-			string date = string.Empty;
+			SaveUptime(Process.GetCurrentProcess().WorkingSet64);
+		}
+
+		public void SaveUptime(long Memory)
+		{
 			var time = DateTime.Now;
-			var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
-			date = string.Format("{0}. {1}. {2}. {3}:{4}", time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+			Memory = Memory/1024/1024;
+			string date = string.Format("{0}. {1}. {2}. {3}:{4}", time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
 				time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(), time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
 				time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString());
 
-			SchumixBase.DManager.Insert("`uptime`(`Date`, `Uptime`, `Memory`)", date, Uptime(), memory + SchumixBase.Space + "MB");
+			string memory = string.Format("{0} MB", Memory);
+			SchumixBase.DManager.Insert("`uptime`(`Date`, `Uptime`, `Memory`)", date, Uptime(), memory);
 		}
 	}
 }

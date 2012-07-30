@@ -38,8 +38,8 @@ namespace Schumix.Framework.Config
 		protected const int d_port                     = 6667;
 		protected const bool d_ssl                     = false;
 		protected const string d_nickname              = "Schumix2";
-		protected const string d_nickname2             = "d_Schumix2";
-		protected const string d_nickname3             = "d_d_Schumix2";
+		protected const string d_nickname2             = "_Schumix2";
+		protected const string d_nickname3             = "__Schumix2";
 		protected const string d_username              = "Schumix2";
 		protected const string d_userinfo              = "Schumix2 IRC Bot";
 		protected const string d_masterchannel         = "#schumix2";

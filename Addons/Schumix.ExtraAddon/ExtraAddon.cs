@@ -247,7 +247,7 @@ namespace Schumix.ExtraAddon
 
 				if(sIRCMessage.Info[5] == "3")
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}'", sIRCMessage.Info[4].ToLower(), sIrcHandler.ModeChannel);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Rank FROM modelist WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sIRCMessage.Info[4].ToLower(), sIrcHandler.ModeChannel, sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						string rank = db["Rank"].ToString();

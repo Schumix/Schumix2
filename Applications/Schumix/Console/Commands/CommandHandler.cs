@@ -1587,6 +1587,12 @@ namespace Schumix.Console.Commands
 
 					string addon = Info[3].ToLower();
 
+					if(!sAddonManager.IsAddon(_servername, addon))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("ThereIsNoSuchAnAddon"));
+						return;
+					}
+
 					if(sIrcBase.Networks[_servername].sIgnoreAddon.IsIgnore(addon))
 					{
 						Log.Error("Console", text[0]);
@@ -1614,6 +1620,12 @@ namespace Schumix.Console.Commands
 
 					string addon = Info[3].ToLower();
 
+					if(!sAddonManager.IsAddon(_servername, addon))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("ThereIsNoSuchAnAddon"));
+						return;
+					}
+
 					if(!sIrcBase.Networks[_servername].sIgnoreAddon.IsIgnore(addon))
 					{
 						Log.Error("Console", text[0]);
@@ -1639,7 +1651,15 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					if(sIrcBase.Networks[_servername].sIgnoreAddon.Contains(Info[3].ToLower()))
+					string addon = Info[3].ToLower();
+
+					if(!sAddonManager.IsAddon(_servername, addon))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("ThereIsNoSuchAnAddon"));
+						return;
+					}
+
+					if(sIrcBase.Networks[_servername].sIgnoreAddon.Contains(addon))
 						Log.Notice("Console", text[0]);
 					else
 						Log.Error("Console", text[1]);

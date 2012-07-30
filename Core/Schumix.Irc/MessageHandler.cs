@@ -143,6 +143,19 @@ namespace Schumix.Irc
 					Log.Success("NickServ", sLConsole.NickServ("Text4"));
 				}
 
+				if(sIRCMessage.Args.Contains("Your nick isn't registered."))
+				{
+					Log.Warning("NickServ", sLConsole.NickServ("Text5"));
+					WhoisPrivmsg = sNickInfo.NickStorage;
+					ChannelPrivmsg = sNickInfo.NickStorage;
+
+					if(!Online)
+					{
+						sChannelInfo.JoinChannel();
+						Online = true;
+					}
+				}
+
 				if(IsOnline)
 				{
 					switch(IRCConfig.List[sIRCMessage.ServerName].MessageType.ToLower())
@@ -179,6 +192,12 @@ namespace Schumix.Irc
 
 					sIRCMessage.MessageType = MessageType.Notice;
 				}
+			}
+
+			if(sIRCMessage.Nick == "HostServ")
+			{
+				if(sIRCMessage.Args.Contains("You need to register before a vhost can be assigned to you."))
+					Log.Warning("HostServ", sLConsole.HostServ("Text3"));
 			}
 
 			if(sIRCMessage.Nick == "HostServ" && IRCConfig.List[sIRCMessage.ServerName].UseHostServ)

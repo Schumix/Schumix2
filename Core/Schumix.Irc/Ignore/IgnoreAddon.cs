@@ -38,6 +38,7 @@ namespace Schumix.Irc.Ignore
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private readonly List<string> _ignorelist = new List<string>();
 		private readonly object Lock = new object();
 		private string _servername;
 
@@ -74,6 +75,7 @@ namespace Schumix.Irc.Ignore
 			if(!db.IsNull())
 				return;
 
+			_ignorelist.Add(Name.ToLower());
 			SchumixBase.DManager.Insert("`ignore_addons`(ServerId, ServerName, Addon)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(Name.ToLower()));
 		}
 
@@ -86,6 +88,7 @@ namespace Schumix.Irc.Ignore
 			if(db.IsNull())
 				return;
 
+			_ignorelist.Remove(Name.ToLower());
 			SchumixBase.DManager.Delete("ignore_addons", string.Format("Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 		}
 
@@ -94,8 +97,7 @@ namespace Schumix.Irc.Ignore
 			if(Name.Trim() == string.Empty)
 				return false;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
-			return !db.IsNull();
+			return _ignorelist.Contains(Name.ToLower());
 		}
 
 		public void RemoveConfig()
@@ -215,6 +217,11 @@ namespace Schumix.Irc.Ignore
 				Log.Success("IgnoreAddon", sLConsole.IgnoreAddon("Text5"), plugin);
 				sAddonManager.Addons[_servername].Assemblies.Remove(plugin);
 			}
+		}
+
+		public void Clean()
+		{
+			_ignorelist.Clear();
 		}
 	}
 }

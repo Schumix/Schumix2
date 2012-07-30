@@ -17,6 +17,8 @@ BUILD_DIR = ../../Run/Debug/Addons
 
 HGRSSADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/HgRssAddon.dll.mdb
 HGRSSADDON_DLL_MDB=$(BUILD_DIR)/HgRssAddon.dll.mdb
+YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
@@ -40,6 +42,8 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release/Addons
 
 HGRSSADDON_DLL_MDB=
+YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
@@ -64,6 +68,8 @@ BUILD_DIR = ../../Run/Debug_x64/Addons
 
 HGRSSADDON_DLL_MDB_SOURCE=../../Run/Debug_x64/Addons/HgRssAddon.dll.mdb
 HGRSSADDON_DLL_MDB=$(BUILD_DIR)/HgRssAddon.dll.mdb
+YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
@@ -87,6 +93,8 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release_x64/Addons
 
 HGRSSADDON_DLL_MDB=
+YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
@@ -102,6 +110,8 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(HGRSSADDON_DLL_MDB) \
+	$(YAMLDOTNET_CORE_DLL) \
+	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
 	$(SCHUMIX_API_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SQLITE3_DLL) \
@@ -121,10 +131,13 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 FILES = \
 	Properties/AssemblyInfo.cs \
 	Commands/Commands.cs \
-	Config/AddonConfig.cs \
 	HgRssAddon.cs \
 	Rss/HgRss.cs \
 	Localization/PLocalization.cs \
+	Config/AddonConfig.cs \
+	Config/AddonDefaultConfig.cs \
+	Config/AddonXmlConfig.cs \
+	Config/AddonYamlConfig.cs \
 	Config/RssConfig.cs 
 
 DATA_FILES = 
@@ -143,12 +156,16 @@ REFERENCES =  \
 	System.Xml \
 	System.Data
 
-DLL_REFERENCES = 
+DLL_REFERENCES =  \
+	../../Dependencies/YamlDotNet.Core.dll \
+	../../Dependencies/YamlDotNet.RepresentationModel.dll
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 include $(top_srcdir)/Makefile.include
 
+YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
@@ -158,6 +175,8 @@ SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
 SCHUMIX_HGRSSADDON_PC = $(BUILD_DIR)/schumix.hgrssaddon.pc
 
+$(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
+$(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_API_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,SQLITE3_DLL))

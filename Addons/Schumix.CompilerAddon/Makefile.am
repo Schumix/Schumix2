@@ -17,6 +17,8 @@ BUILD_DIR = ../../Run/Debug/Addons
 
 COMPILERADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/CompilerAddon.dll.mdb
 COMPILERADDON_DLL_MDB=$(BUILD_DIR)/CompilerAddon.dll.mdb
+YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
@@ -40,6 +42,8 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release/Addons
 
 COMPILERADDON_DLL_MDB=
+YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
@@ -64,6 +68,8 @@ BUILD_DIR = ../../Run/Debug_x64/Addons
 
 COMPILERADDON_DLL_MDB_SOURCE=../../Run/Debug_x64/Addons/CompilerAddon.dll.mdb
 COMPILERADDON_DLL_MDB=$(BUILD_DIR)/CompilerAddon.dll.mdb
+YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
@@ -87,6 +93,8 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release_x64/Addons
 
 COMPILERADDON_DLL_MDB=
+YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
@@ -102,6 +110,8 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(COMPILERADDON_DLL_MDB) \
+	$(YAMLDOTNET_CORE_DLL) \
+	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
 	$(SCHUMIX_API_DLL) \
 	$(SCHUMIX_IRC_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
@@ -125,7 +135,10 @@ FILES = \
 	Config/AddonConfig.cs \
 	Localization/PLocalization.cs \
 	Commands/Help.cs \
-	Config/CompilerConfig.cs 
+	Config/CompilerConfig.cs \
+	Config/AddonDefaultConfig.cs \
+	Config/AddonXmlConfig.cs \
+	Config/AddonYamlConfig.cs 
 
 DATA_FILES = 
 
@@ -141,12 +154,16 @@ REFERENCES =  \
 	System \
 	System.Xml
 
-DLL_REFERENCES = 
+DLL_REFERENCES =  \
+	../../Dependencies/YamlDotNet.Core.dll \
+	../../Dependencies/YamlDotNet.RepresentationModel.dll
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 include $(top_srcdir)/Makefile.include
 
+YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
@@ -156,6 +173,8 @@ SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 SCHUMIX_COMPILERADDON_PC = $(BUILD_DIR)/schumix.compileraddon.pc
 
+$(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
+$(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_API_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL))

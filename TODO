@@ -23,7 +23,7 @@ Megírásra váró feladatok:
 	- A csatorna logokba minden extra dolog kerüljön bele. Pl: join, left stb
 	- reload config frissítése és beállítása.
 	- Clean elhelyezése a configban. Ezzel a lehetőséggel lehetne majd kipucolni pl a többszerveres módban a fölösleges adatokat amelyek másik szerverekhez tartoznak. Plusz még egyéb dolgokat pucolna. Ezt a clean-t még meglehetne csinálni kapcsolónak is az exe indításánál. (pucolhatná a config mappából is a fölösleges _ jelel ellátott fájlokat is.)
-	- if(Process.GetCurrentProcess().WorkingSet64/1024/1024 >= 100/* majd mehetne az a szám configba*/
+	- if(Process.GetCurrentProcess().WorkingSet64/1024/1024 >= 100/* majd mehetne ez a szám configba*/
+	- Magban lévő antiflood beállításait áthelyezni konfigba úgyan úgy mint a calendaraddon-nál van.
 	- Lognál olyan lehetőség hogy az adot indítási dátum lesz a fájl neve és ez mind abba a mappába kerül ami a log fájlnak lenne a neve.
 	- Többszerveres módnál az irc logolást leválasztani a normál logról(normális módnál maradhatna a Schumix.log-ban [Túlságosan sok mindent kéne megváltoztatni ezért jó ötleteken dolgozom hozzá.]).
-	- Ha a mester csatorna létezik már egy másik csatornaként és arra szeretne váltani az illető konfig alapján akkor hibaüzenet jelenjen meg.
