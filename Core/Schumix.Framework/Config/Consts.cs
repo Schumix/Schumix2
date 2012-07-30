@@ -32,13 +32,13 @@ namespace Schumix.Framework.Config
 #endif
 		public const string SchumixCompany = "Megax Productions";
 		public const string SchumixProduct = "Schumix";
-		public const string SchumixCopyright = "Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>";
+		public const string SchumixCopyright = "Copyright (C) 2010-2012 Megax <http://megax.yeahunter.hu/>";
 		public const string SchumixTrademark = "GNU General Public License";
 		public const string SchumixVersion = "3.8.8";
 		public const string SchumixFileVersion = "3.8.8.0";
 		public const string SchumixProgrammedBy = "Csaba Jakosa (Megax)";
 		public const string SchumixDevelopers = "Csaba Jakosa (Megax), Twl, Jackneill, Invisible";
-		public const string SchumixWebsite = "http://github.com/megax/Schumix2";
+		public const string SchumixWebsite = "https://github.com/megax/Schumix2";
 		public static string SchumixUserAgent = SchumixBase.Title + SchumixBase.Space + sUtilities.GetVersion() + " / .NET " + Environment.Version;
 		public const string SchumixReferer = "http://yeahunter.hu";
 	}
