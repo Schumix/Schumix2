@@ -2454,7 +2454,7 @@ namespace Schumix.Framework.Localization
 					else
 						return "Disabled by Config!";
 				}
-				case "Text2":
+				/*case "Text2":
 				{
 					if(Locale == "huHU")
 						return "A csatorna tiltásra került!";
@@ -2462,7 +2462,7 @@ namespace Schumix.Framework.Localization
 						return "Channel is banned!";
 					else
 						return "Channel is banned!";
-				}
+				}*/
 				default:
 					return string.Empty;
 			}
