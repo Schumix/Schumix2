@@ -1166,6 +1166,14 @@ namespace Schumix.Console.Commands
 			{
 				case "config":
 					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile);
+					sIrcBase.Networks[_servername].sIgnoreAddon.RemoveConfig();
+					sIrcBase.Networks[_servername].sIgnoreAddon.AddConfig();
+					sIrcBase.Networks[_servername].sIgnoreChannel.RemoveConfig();
+					sIrcBase.Networks[_servername].sIgnoreChannel.AddConfig();
+					sIrcBase.Networks[_servername].sIgnoreNickName.RemoveConfig();
+					sIrcBase.Networks[_servername].sIgnoreNickName.AddConfig();
+					sIrcBase.Networks[_servername].ReloadMessageHandlerConfig();
+					sLConsole.Locale = LocalizationConfig.Locale;
 					i = 1;
 					break;
 			}

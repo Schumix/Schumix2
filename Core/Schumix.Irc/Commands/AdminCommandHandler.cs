@@ -216,15 +216,25 @@ namespace Schumix.Irc.Commands
 			{
 				case "config":
 					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile);
+					sIgnoreAddon.RemoveConfig();
+					sIgnoreAddon.AddConfig();
+					sIgnoreChannel.RemoveConfig();
+					sIgnoreChannel.AddConfig();
+					sIgnoreNickName.RemoveConfig();
+					sIgnoreNickName.AddConfig();
+					sIrcBase.Networks[sIRCMessage.ServerName].ReloadMessageHandlerConfig();
+					sLConsole.Locale = LocalizationConfig.Locale;
 					i = 1;
 					break;
 			}
 
 			foreach(var plugin in sAddonManager.Addons[sIRCMessage.ServerName].Addons)
 			{
-				if(plugin.Value.Reload(sIRCMessage.Info[4].ToLower()) == 1)
+				if(!sAddonManager.Addons[sIRCMessage.ServerName].IgnoreAssemblies.ContainsKey(plugin.Key) &&
+				   plugin.Value.Reload(sIRCMessage.Info[4].ToLower()) == 1)
 					i = 1;
-				else if(plugin.Value.Reload(sIRCMessage.Info[4].ToLower()) == 0)
+				else if(!sAddonManager.Addons[sIRCMessage.ServerName].IgnoreAssemblies.ContainsKey(plugin.Key) &&
+				   plugin.Value.Reload(sIRCMessage.Info[4].ToLower()) == 0)
 					i = 0;
 			}
 

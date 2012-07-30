@@ -1022,15 +1022,6 @@ namespace Schumix.Framework.Localization
 					else
 						return "Banned channels: {0}";
 				}
-				case "Text10":
-				{
-					if(Locale == "huHU")
-						return "Konfig által letiltva!";
-					else if(Locale == "enUS")
-						return "Disabled by Config!";
-					else
-						return "Disabled by Config!";
-				}
 				case "Text11":
 				{
 					if(Locale == "huHU")
@@ -2444,6 +2435,33 @@ namespace Schumix.Framework.Localization
 						return "Program shutting down!";
 					else
 						return "Program shutting down!";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string IgnoreChannel(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Konfig által letiltva!";
+					else if(Locale == "enUS")
+						return "Disabled by Config!";
+					else
+						return "Disabled by Config!";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "A csatorna tiltásra került!";
+					else if(Locale == "enUS")
+						return "Channel is banned!";
+					else
+						return "Channel is banned!";
 				}
 				default:
 					return string.Empty;

@@ -41,6 +41,11 @@ namespace Schumix.Irc
 			PLength = IRCConfig.List[ServerName].CommandPrefix.Length;
 		}
 
+		public void ReloadMessageHandlerConfig()
+		{
+			PLength = IRCConfig.List[_servername].CommandPrefix.Length;
+		}
+
 		protected void HandleSuccessfulAuth(IRCMessage sIRCMessage)
 		{
 			Console.WriteLine();

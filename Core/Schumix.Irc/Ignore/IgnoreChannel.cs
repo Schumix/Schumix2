@@ -28,7 +28,10 @@ namespace Schumix.Irc.Ignore
 {
 	public sealed class IgnoreChannel
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly List<string> _ignorelist = new List<string>();
 		private string _servername;
 
@@ -73,6 +76,21 @@ namespace Schumix.Irc.Ignore
 			if(!db.IsNull())
 				return;
 
+			db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
+			if(!db.IsNull())
+			{
+				if(db["Enabled"].ToString() == string.Empty || Convert.ToBoolean(db["Enabled"].ToString()))
+				{
+					SchumixBase.DManager.Update("channels", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.IgnoreChannel("Text")), string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
+
+					if(sIrcBase.Networks[_servername].Online)
+					{
+						sIrcBase.Networks[_servername].sChannelNameList.Remove(_servername, Name.ToLower());
+						sIrcBase.Networks[_servername].sSender.Part(Name.ToLower());
+					}
+				}
+			}
+
 			_ignorelist.Add(Name.ToLower());
 			SchumixBase.DManager.Insert("`ignore_channels`(ServerId, ServerName, Channel)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(Name.ToLower()));
 		}
@@ -88,6 +106,18 @@ namespace Schumix.Irc.Ignore
 
 			_ignorelist.Remove(Name.ToLower());
 			SchumixBase.DManager.Delete("ignore_channels", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
+
+			db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled, Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
+			if(!db.IsNull())
+			{
+				if(db["Enabled"].ToString() == string.Empty || !Convert.ToBoolean(db["Enabled"].ToString()))
+				{
+					SchumixBase.DManager.Update("channels", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
+
+					if(sIrcBase.Networks[_servername].Online)
+						sIrcBase.Networks[_servername].sSender.Join(Name.ToLower(), db["Password"].ToString().Trim());
+				}
+			}
 		}
 
 		public bool Contains(string Name)
