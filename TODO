@@ -1,6 +1,6 @@
 Megírásra váró feladatok:
 - Súlyos hibák:
-
+	- Megöli a compiler addon a botot. A pontos parancs: <Megaxxx> { bool f = false; object o = new object(); for(int i = 0; i < 10; i++) { Monitor.Enter(o, ref f); Console.Write("asd"); Monitor.Exit(o); } }
 - Közepes hibák:
 
 - Apróbb hibák:
