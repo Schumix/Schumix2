@@ -147,7 +147,8 @@ FILES = \
 	New/Settings.cs \
 	Config/ServerConfig.cs \
 	Config/ServerConfigs.cs \
-	Config/LocalizationConfig.cs 
+	Config/LocalizationConfig.cs \
+	ServerPacketHandlerDelegate.cs 
 
 DATA_FILES = 
 

@@ -33,7 +33,7 @@ namespace Schumix.Framework.Client
 	/// <summary>
 	/// Listener used inside the Alaris bot to get and handle ACS responses.
 	/// </summary>
-	public sealed class ClientSocket : IDisposable
+	sealed class ClientSocket : IDisposable
 	{
 		private readonly ClientPacketHandler sClientPacketHandler = Singleton<ClientPacketHandler>.Instance;
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
