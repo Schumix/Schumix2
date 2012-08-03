@@ -266,7 +266,7 @@ namespace Schumix
 			if(SchumixBase.ExitStatus)
 				return;
 
-			sIrcBase.Shutdown("Crash.");
+			sIrcBase.Shutdown(Message);
 		}
 	}
 }
