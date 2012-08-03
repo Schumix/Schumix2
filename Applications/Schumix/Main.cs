@@ -215,7 +215,7 @@ namespace Schumix
 			{
 				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
 				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
-				Shutdown("Crash.");
+				Shutdown("Crash.", true);
 			};
 
 			if(!ServerConfig.Enabled)
@@ -244,7 +244,7 @@ namespace Schumix
 			System.Console.WriteLine("\t--server-identify=Value\t\tSet identify.");
 		}
 
-		public static void Shutdown(string Message)
+		public static void Shutdown(string Message, bool Crash = false)
 		{
 			if(!SchumixBot.sSchumixBase.IsNull())
 			{
@@ -263,7 +263,7 @@ namespace Schumix
 			else
 				Process.GetCurrentProcess().Kill();
 
-			if(SchumixBase.ExitStatus)
+			if(Crash && SchumixBase.ExitStatus)
 				return;
 
 			sIrcBase.Shutdown(Message);

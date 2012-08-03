@@ -197,7 +197,6 @@ namespace Schumix.Framework.Addon
 					}
 
 					Addons.Clear();
-					_loading = false;
 				}
 				else
 				{
@@ -211,8 +210,9 @@ namespace Schumix.Framework.Addon
 					Addons[ServerName].Assemblies.Clear();
 					Addons[ServerName].IgnoreAssemblies.Clear();
 					Addons.Remove(ServerName);
-					_loading = false;
 				}
+
+				_loading = false;
 			}
 
 			Log.Notice("AddonManager", sLConsole.AddonManager("Text5"));
