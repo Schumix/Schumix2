@@ -40,7 +40,7 @@ namespace Schumix.Server
 		private static readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
-		private static readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
+		//private static readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private static readonly Windows sWindows = Singleton<Windows>.Instance;
@@ -145,25 +145,10 @@ namespace Schumix.Server
 				{
 					Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
 					sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
-					return;
+					Process.GetCurrentProcess().Kill();
 				}
 				else
-				{
-					sUtilities.RemovePidFile();
-					sListener.Exit = true;
-					System.Console.CursorVisible = true;
-					Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
-					sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
-					var packet = new SchumixPacket();
-					packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
-					packet.Write<int>((int)0);
-	
-					foreach(var list in sServerPacketHandler.HostList)
-						sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
-	
-					Thread.Sleep(2000);
-					KillAllSchumixProccess();
-				}
+					Shutdown(eventArgs.ExceptionObject as Exception);
 			};
 
 			sListener = new ServerListener(ServerConfigs.ListenerPort);
@@ -184,36 +169,27 @@ namespace Schumix.Server
 			System.Console.WriteLine("\t--console-localization=Value\tSet up the program's console language settings");
 		}
 
-		public static void KillAllSchumixProccess()
+		public static void Shutdown(Exception eventArgs = null)
 		{
-			foreach(var list in sSchumix._processlist)
-			{
-				if(list.Value.Process.IsNull())
-					continue;
+			sUtilities.RemovePidFile();
+			sListener.Exit = true;
+			System.Console.CursorVisible = true;
 
-				if(sUtilities.GetPlatformType() == PlatformType.Linux)
-				{
-					foreach(var p in Process.GetProcessesByName("mono"))
-					{
-						if(p.Id == list.Value.Process.Id)
-						{
-							if(!list.Value.Process.IsNull())
-								p.Kill();
-						}
-					}
-				}
-				else if(sUtilities.GetPlatformType() == PlatformType.Windows)
-				{
-					foreach(var p in Process.GetProcessesByName("Schumix"))
-					{
-						if(p.Id == list.Value.Process.Id)
-						{
-							if(!list.Value.Process.IsNull())
-								p.Kill();
-						}
-					}
-				}
+			if(!eventArgs.IsNull())
+			{
+				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs);
+				sCrashDumper.CreateCrashDump(eventArgs);
 			}
+
+			var packet = new SchumixPacket();
+			packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
+			packet.Write<int>((int)0);
+
+			foreach(var list in sServerPacketHandler.HostList)
+				sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+
+			Thread.Sleep(2000);
+			Process.GetCurrentProcess().Kill();
 		}
 	}
 }
