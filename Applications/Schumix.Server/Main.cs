@@ -196,7 +196,10 @@ namespace Schumix.Server
 					foreach(var p in Process.GetProcessesByName("mono"))
 					{
 						if(p.Id == list.Value.Process.Id)
-							p.Kill();
+						{
+							if(!list.Value.Process.IsNull())
+								p.Kill();
+						}
 					}
 				}
 				else if(sUtilities.GetPlatformType() == PlatformType.Windows)
@@ -204,7 +207,10 @@ namespace Schumix.Server
 					foreach(var p in Process.GetProcessesByName("Schumix"))
 					{
 						if(p.Id == list.Value.Process.Id)
-							p.Kill();
+						{
+							if(!list.Value.Process.IsNull())
+								p.Kill();
+						}
 					}
 				}
 			}
