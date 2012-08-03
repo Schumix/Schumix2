@@ -58,6 +58,9 @@ namespace Schumix.Framework
 					if(!nw.Value.IsNull())
 						nw.Value.WriteLine("QUIT :Memory over-consumption.");
 				}
+
+				Thread.Sleep(1000);
+				Process.GetCurrentProcess().Kill();
 			}
 		}
 
