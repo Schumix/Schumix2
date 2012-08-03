@@ -40,7 +40,6 @@ namespace Schumix.Server
 		private static readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
-		//private static readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private static readonly Windows sWindows = Singleton<Windows>.Instance;
