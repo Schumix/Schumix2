@@ -30,7 +30,6 @@ namespace Schumix
 {
 	class Linux
 	{
-		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private Linux() {}
 
 		public void Init()
@@ -50,25 +49,7 @@ namespace Schumix
 			int which = UnixSignal.WaitAny(signals, -1);
 			Log.Debug("Linux", "Got a {0} signal!", signals[which].Signum);
 			Log.Notice("Linux", "Handler Terminated.");
-
-			if(!SchumixBot.sSchumixBase.IsNull())
-			{
-				bool e = false;
-				foreach(var nw in sIrcBase.Networks)
-				{
-					if(!sIrcBase.Networks[nw.Key].IsNull() && sIrcBase.Networks[nw.Key].Online)
-						e = true;
-				}
-
-				if(e)
-					SchumixBase.Quit();
-				else
-					Process.GetCurrentProcess().Kill();
-			}
-			else
-				Process.GetCurrentProcess().Kill();
-
-			sIrcBase.Shutdown("Daemon killed.");
+			MainClass.Shutdown("Daemon killed.");
 		}
 	}
 }
