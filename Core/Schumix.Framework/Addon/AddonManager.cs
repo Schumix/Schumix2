@@ -77,7 +77,7 @@ namespace Schumix.Framework.Addon
 				string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);
 
 				DirectoryInfo dir;
-				if(directory.ToLower().Contains("$home") || (sUtilities.GetPlatformType() == PlatformType.Windows && directory.ToLower().Contains("$localappdata")))
+				if(sUtilities.IsSpecialDirectory(directory))
 					dir = new DirectoryInfo(sUtilities.GetSpecialDirectory(directory));
 				else
 					dir = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, directory));

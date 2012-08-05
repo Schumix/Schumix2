@@ -55,6 +55,30 @@ namespace Schumix.Server.Config
 		{
 			try
 			{
+				configdir = sUtilities.GetSpecialDirectory(configfile);
+				string cdir = sUtilities.GetDirectoryName(configdir);
+
+				if(sUtilities.GetPlatformType() == PlatformType.Windows)
+				{
+					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
+					{
+						configfile = configdir.Substring(configdir.IndexOf(cdir));
+						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
+					}
+					else
+						configdir = sUtilities.GetSpecialDirectory(configdir);
+				}
+				else if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				{
+					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
+					{
+						configfile = configdir.Substring(configdir.IndexOf(cdir));
+						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
+					}
+					else
+						configdir = sUtilities.GetSpecialDirectory(configdir);
+				}
+
 				new ServerConfig(configdir, configfile);
 
 				if(!IsConfig(configdir, configfile))

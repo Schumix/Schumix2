@@ -1075,6 +1075,18 @@ namespace Schumix.Framework
 				return data;
 		}
 
+		public bool IsSpecialDirectory(string dir)
+		{
+			dir = dir.ToLower();
+
+			if(dir.Contains("$home"))
+				return true;
+			else if(GetPlatformType() == PlatformType.Windows && dir.Contains("$localappdata"))
+				return true;
+			else
+				return false;
+		}
+
 		public string DirectoryToSpecial(string dir, string file)
 		{
 			if(GetPlatformType() == PlatformType.Windows)
