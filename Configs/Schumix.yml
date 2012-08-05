@@ -45,7 +45,7 @@ Schumix:
         Database: database
         Charset: utf8
     SQLite:
-        Enabled: False
+        Enabled: True
         FileName: Schumix.db3
     Addon:
         Enabled: True
