@@ -467,7 +467,7 @@ namespace Schumix.Irc
 			{
 				string dir = LogConfig.IrcLogDirectory + "/" + _servername;
 				sUtilities.CreateDirectory(dir);
-				string logdir = sUtilities.DirectoryToHome(dir, channel);
+				string logdir = sUtilities.DirectoryToSpecial(dir, channel);
 				string logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year,
 								DateTime.Now.Month < 10 ? "0" + DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString(),
 								DateTime.Now.Day < 10 ? "0" + DateTime.Now.Day.ToString() : DateTime.Now.Day.ToString());

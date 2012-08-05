@@ -743,6 +743,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "The {0} server is already in use so not loaded!";
 				}
+				case "Text13":
+				{
+					if(Locale == "huHU")
+						return "Meghibásodás az yml írása során. Részletek: {0}";
+					else if(Locale == "enUS")
+						return "Failure was handled during the yml writing. Details: {0}";
+					else
+						return "Failure was handled during the yml writing. Details: {0}";
+				}
 				default:
 					return string.Empty;
 			}

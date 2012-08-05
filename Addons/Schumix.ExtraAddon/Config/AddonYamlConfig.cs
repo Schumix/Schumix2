@@ -42,7 +42,7 @@ namespace Schumix.ExtraAddon.Config
 		public AddonYamlConfig(string configdir, string configfile)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToHome(configdir, configfile)));
+			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
 			Log.Notice("ExtraAddonConfig", sLocalization.Config("Text"));
 
@@ -59,7 +59,7 @@ namespace Schumix.ExtraAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -68,7 +68,7 @@ namespace Schumix.ExtraAddon.Config
 				Log.Error("ExtraAddonConfig", sLocalization.Config("Text3"));
 				Log.Debug("ExtraAddonConfig", sLocalization.Config("Text4"));
 				var yaml = new YamlStream();
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 					yaml.Load(File.OpenText(filename2));

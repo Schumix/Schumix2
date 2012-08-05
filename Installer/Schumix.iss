@@ -18,7 +18,7 @@ InfoBeforeFile=..\README.EN.md
 OutputDir=.\
 OutputBaseFilename=Setup
 SetupIconFile=..\Applications\Schumix\icon.ico
-Compression=lzma
+Compression=lzma2/ultra64
 SolidCompression=yes
 
 [Languages]
@@ -50,15 +50,61 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
+[Dirs]
+Name: "{localappdata}\Schumix\Logs"
+Name: "{localappdata}\Schumix\Channels"
+
 [Files]
+Source: "..\Run\Release\ICSharpCode.SharpZipLib.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\KopiLua.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\LuaInterface.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Mono.Posix.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\MySql.Data.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Schumix.API.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Schumix.db3"; DestDir: "{localappdata}\Schumix\"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Run\Release\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
-; NOTE: Don't use "Flags: ignoreversion" on any shared system files
+Source: "..\Run\Release\Schumix.Framework.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Schumix.Irc.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Schumix.Libraries.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Schumix.LuaEngine.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Schumix.Updater.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Server.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\sqlite3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\System.Data.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\YamlDotNet.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\YamlDotNet.RepresentationModel.dll"; DestDir: "{app}"; Flags: ignoreversion
+;Addons
+Source: "..\Run\Release\Addons\CalendarAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\ChatterBotAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\ChatterBotAPI.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\CompilerAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\ExtraAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\GameAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\GitRssAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\HgRssAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\MantisBTRssAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\RevisionAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\SvnRssAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\TesztAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\WolframAPI.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\WordpressRssAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\YamlDotNet.Core.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\YamlDotNet.RepresentationModel.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+;Configs
+Source: "..\Configs\CalendarAddon.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
+Source: "..\Configs\CompilerAddon.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
+Source: "..\Configs\ExtraAddon.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
+Source: "..\Configs\GitRssAddon.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
+Source: "..\Configs\HgRssAddon.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
+Source: "..\Configs\MantisBTRssAddon.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
+Source: "..\Configs\SvnRssAddon.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
+Source: "..\Configs\WordPressRssAddon.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
+Source: "Schumix.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--config-file=$localappdata\Schumix\Configs\Schumix.yml"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--config-file=$localappdata\Schumix\Configs\Schumix.yml"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "Schumix2 IRC Bot and Framework"; Flags: nowait postinstall skipifsilent

@@ -71,7 +71,7 @@ namespace Schumix.Server.Config
 				else
 				{
 					var xmldoc = new XmlDocument();
-					xmldoc.Load(sUtilities.DirectoryToHome(configdir, configfile));
+					xmldoc.Load(sUtilities.DirectoryToSpecial(configdir, configfile));
 
 					string LogFileName = !xmldoc.SelectSingleNode("Server/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/FileName").InnerText : _logfilename;
 					int LogLevel = !xmldoc.SelectSingleNode("Server/Log/LogLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Log/LogLevel").InnerText) : _loglevel;
@@ -140,7 +140,7 @@ namespace Schumix.Server.Config
 
 			try
 			{
-				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
 
 				if(File.Exists(filename))
 					return true;
@@ -152,7 +152,7 @@ namespace Schumix.Server.Config
 					Log.Debug("Config", sLConsole.Config("Text6"));
 					var w = new XmlTextWriter(filename, null);
 					var xmldoc = new XmlDocument();
-					string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
+					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 					if(File.Exists(filename2))
 						xmldoc.Load(filename2);

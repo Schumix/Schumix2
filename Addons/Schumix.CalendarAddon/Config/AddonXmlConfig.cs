@@ -40,7 +40,7 @@ namespace Schumix.CalendarAddon.Config
 		public AddonXmlConfig(string configdir, string configfile)
 		{
 			var xmldoc = new XmlDocument();
-			xmldoc.Load(sUtilities.DirectoryToHome(SchumixConfig.ConfigDirectory, configfile));
+			xmldoc.Load(sUtilities.DirectoryToSpecial(SchumixConfig.ConfigDirectory, configfile));
 
 			Log.Notice("CalendarAddonConfig", sLocalization.Config("Text"));
 
@@ -59,7 +59,7 @@ namespace Schumix.CalendarAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -69,7 +69,7 @@ namespace Schumix.CalendarAddon.Config
 				Log.Debug("CalendarAddonConfig", sLocalization.Config("Text4"));
 				var w = new XmlTextWriter(filename, null);
 				var xmldoc = new XmlDocument();
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 					xmldoc.Load(filename2);

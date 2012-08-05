@@ -42,7 +42,7 @@ namespace Schumix.WordPressRssAddon.Config
 		public AddonYamlConfig(string configdir, string configfile)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToHome(configdir, configfile)));
+			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
 			Log.Notice("WordPressRssAddonConfig", sLocalization.Config("Text"));
 
@@ -58,7 +58,7 @@ namespace Schumix.WordPressRssAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -67,7 +67,7 @@ namespace Schumix.WordPressRssAddon.Config
 				Log.Error("WordPressRssAddonConfig", sLocalization.Config("Text3"));
 				Log.Debug("WordPressRssAddonConfig", sLocalization.Config("Text4"));
 				var yaml = new YamlStream();
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 					yaml.Load(File.OpenText(filename2));

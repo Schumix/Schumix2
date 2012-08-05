@@ -41,7 +41,7 @@ namespace Schumix.Framework.Config
 		public YamlConfig(string configdir, string configfile)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToHome(configdir, configfile)));
+			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
 			var schumixmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("Schumix"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("Schumix")]).Children : (Dictionary<YamlNode, YamlNode>)null;
 			LogMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Log"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Log")]).Children : (Dictionary<YamlNode, YamlNode>)null);
@@ -85,7 +85,7 @@ namespace Schumix.Framework.Config
 		{
 			try
 			{
-				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
 
 				if(File.Exists(filename))
 					return true;
@@ -96,7 +96,7 @@ namespace Schumix.Framework.Config
 					Log.Error("YamlConfig", sLConsole.Config("Text5"));
 					Log.Debug("YamlConfig", sLConsole.Config("Text6"));
 					var yaml = new YamlStream();
-					string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
+					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 					if(File.Exists(filename2))
 						yaml.Load(File.OpenText(filename2));
@@ -140,7 +140,7 @@ namespace Schumix.Framework.Config
 					}
 					catch(Exception e)
 					{
-						Log.Error("YamlConfig", sLConsole.Config("Text8"), e.Message);
+						Log.Error("YamlConfig", sLConsole.Config("Text13"), e.Message);
 						error = true;
 					}
 				}
@@ -161,7 +161,7 @@ namespace Schumix.Framework.Config
 			string IrcLogDirectory = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("IrcLogDirectory"))) ? nodes[new YamlScalarNode("IrcLogDirectory")].ToString() : d_irclogdirectory;
 			bool IrcLog = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("IrcLog"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("IrcLog")].ToString()) : d_irclog;
 
-			new LogConfig(LogFileName, LogLevel, sUtilities.GetHomeDirectory(LogDirectory), sUtilities.GetHomeDirectory(IrcLogDirectory), IrcLog);
+			new LogConfig(LogFileName, LogLevel, sUtilities.GetSpecialDirectory(LogDirectory), sUtilities.GetSpecialDirectory(IrcLogDirectory), IrcLog);
 		}
 
 		private void ServerMap(IDictionary<YamlNode, YamlNode> nodes)
@@ -305,7 +305,7 @@ namespace Schumix.Framework.Config
 			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("Enabled")].ToString()) : d_sqliteenabled;
 			string FileName = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("FileName"))) ? nodes[new YamlScalarNode("FileName")].ToString() : d_sqlitefilename;
 
-			new SQLiteConfig(Enabled, sUtilities.GetHomeDirectory(FileName));
+			new SQLiteConfig(Enabled, sUtilities.GetSpecialDirectory(FileName));
 		}
 
 		private void AddonsMap(IDictionary<YamlNode, YamlNode> nodes)
@@ -322,7 +322,7 @@ namespace Schumix.Framework.Config
 			bool Lua = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Lua"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("Lua")].ToString()) : d_scriptenabled;
 			string Directory = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Directory"))) ? nodes[new YamlScalarNode("Directory")].ToString() : d_scriptdirectory;
 
-			new ScriptsConfig(Lua, sUtilities.GetHomeDirectory(Directory));
+			new ScriptsConfig(Lua, sUtilities.GetSpecialDirectory(Directory));
 		}
 
 		private void LocalizationMap(IDictionary<YamlNode, YamlNode> nodes)
