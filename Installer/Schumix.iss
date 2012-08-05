@@ -1,7 +1,7 @@
 #define MyAppName "Schumix"
 #define MyAppVersion "3.x"
 #define MyAppPublisher "Megax Productions"
-#define MyAppURL "https://www.github.com/megax/Schumix2"
+#define MyAppURL "https://github.com/megax/Schumix2"
 #define MyAppExeName "Schumix.exe"
 
 [Setup]
