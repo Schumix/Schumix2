@@ -65,50 +65,5 @@ namespace Schumix.Config.CopyTo
 				File.Move("Configs/" + fi.Name, Configs + "/_" + fi.Name);
 			}
 		}
-
-		/// <summary>
-		/// Több helyről átmásolja az új fájlokat async módon.
-		/// </summary>
-		/// <param name="Dir"></param>
-		/// <param name="Addons"></param>
-		/// <param name="Configs"></param>
-		public async void CopyAsync(string Dir, string Addons, string Configs)
-		{
-			var dir = new DirectoryInfo(Dir + "/Run/Release/Addons");
-
-			foreach (var file in dir.GetFiles())
-			{
-				if (file.Name.ToLower().Contains(".db3"))
-					continue;
-
-				if (File.Exists(Addons + "/" + file.Name))
-					await File.Delete(Addons + "/" + file.Name);
-
-				await File.Move(Dir + "/Run/Release/Addons/" + file.Name, Addons + "/" + file.Name);
-			}
-
-			dir = new DirectoryInfo(Dir + "/Run/Release");
-
-			foreach (var file in dir.GetFiles())
-			{
-				if (file.Name.ToLower().Contains(".db3"))
-					continue;
-
-				if (File.Exists(file.Name))
-					await File.Delete(file.Name);
-
-				await File.Move(Dir + "/Run/Release/" + file.Name, file.Name);
-			}
-
-			dir = new DirectoryInfo(Configs);
-
-			foreach (var fi in dir.GetFiles())
-			{
-				if (fi.Name.Substring(0, 1) == "_")
-					continue;
-
-				File.Move("Configs/" + fi.Name, Configs + "/_" + fi.Name);
-			}
-		}
 	}
 }
