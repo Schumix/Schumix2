@@ -54,7 +54,7 @@
         <Charset>utf8</Charset>
     </MySql>
     <SQLite>
-        <Enabled>false</Enabled>
+        <Enabled>true</Enabled>
         <FileName>Schumix.db3</FileName>
     </SQLite>
     <Addons>

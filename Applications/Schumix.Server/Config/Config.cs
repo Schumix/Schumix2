@@ -55,6 +55,30 @@ namespace Schumix.Server.Config
 		{
 			try
 			{
+				configdir = sUtilities.GetSpecialDirectory(configfile);
+				string cdir = sUtilities.GetDirectoryName(configdir);
+
+				if(sUtilities.GetPlatformType() == PlatformType.Windows)
+				{
+					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
+					{
+						configfile = configdir.Substring(configdir.IndexOf(cdir));
+						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
+					}
+					else
+						configdir = sUtilities.GetSpecialDirectory(configdir);
+				}
+				else if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				{
+					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
+					{
+						configfile = configdir.Substring(configdir.IndexOf(cdir));
+						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
+					}
+					else
+						configdir = sUtilities.GetSpecialDirectory(configdir);
+				}
+
 				new ServerConfig(configdir, configfile);
 
 				if(!IsConfig(configdir, configfile))
@@ -71,7 +95,7 @@ namespace Schumix.Server.Config
 				else
 				{
 					var xmldoc = new XmlDocument();
-					xmldoc.Load(sUtilities.DirectoryToHome(configdir, configfile));
+					xmldoc.Load(sUtilities.DirectoryToSpecial(configdir, configfile));
 
 					string LogFileName = !xmldoc.SelectSingleNode("Server/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/FileName").InnerText : _logfilename;
 					int LogLevel = !xmldoc.SelectSingleNode("Server/Log/LogLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Log/LogLevel").InnerText) : _loglevel;
@@ -140,7 +164,7 @@ namespace Schumix.Server.Config
 
 			try
 			{
-				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
 
 				if(File.Exists(filename))
 					return true;
@@ -152,7 +176,7 @@ namespace Schumix.Server.Config
 					Log.Debug("Config", sLConsole.Config("Text6"));
 					var w = new XmlTextWriter(filename, null);
 					var xmldoc = new XmlDocument();
-					string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
+					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 					if(File.Exists(filename2))
 						xmldoc.Load(filename2);

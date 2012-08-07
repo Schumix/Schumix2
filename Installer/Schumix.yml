@@ -34,8 +34,8 @@ Schumix:
     Log:
         FileName: Schumix.log
         LogLevel: 2
-        LogDirectory: Logs
-        IrcLogDirectory: Channels
+        LogDirectory: $localappdata\Schumix\Logs
+        IrcLogDirectory: $localappdata\Schumix\Channels
         IrcLog: False
     MySql:
         Enabled: False
@@ -46,14 +46,14 @@ Schumix:
         Charset: utf8
     SQLite:
         Enabled: True
-        FileName: Schumix.db3
+        FileName: $localappdata\Schumix\Schumix.db3
     Addon:
         Enabled: True
         Ignore: MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon
-        Directory: Addons
+        Directory: $localappdata\Schumix\Addons
     Scripts:
         Lua: False
-        Directory: Scripts
+        Directory: $localappdata\Schumix\Scripts
     Localization:
         Locale: enUS
     Update:

@@ -35,6 +35,30 @@ namespace Schumix.Framework.Config
 		{
 			try
 			{
+				configdir = sUtilities.GetSpecialDirectory(configfile);
+				string cdir = sUtilities.GetDirectoryName(configdir);
+
+				if(sUtilities.GetPlatformType() == PlatformType.Windows)
+				{
+					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
+					{
+						configfile = configdir.Substring(configdir.IndexOf(cdir));
+						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
+					}
+					else
+						configdir = sUtilities.GetSpecialDirectory(configdir);
+				}
+				else if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				{
+					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
+					{
+						configfile = configdir.Substring(configdir.IndexOf(cdir));
+						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
+					}
+					else
+						configdir = sUtilities.GetSpecialDirectory(configdir);
+				}
+
 				_configfile = configfile;
 
 				if(!IsConfig(configdir, configfile))
@@ -77,27 +101,27 @@ namespace Schumix.Framework.Config
 		{
 			if(ConfigFile == "Schumix.yml")
 			{
-				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "Schumix.xml");
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "Schumix.xml");
 
 				if(File.Exists(filename))
 					return 0;
 				else if(File.Exists(filename2))
 				{
-					_configfile = "Schumix.xml";
+					_configfile = filename2;
 					return 1;
 				}
 			}
 			else if(ConfigFile == "Schumix.xml")
 			{
-				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "Schumix.yml");
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "Schumix.yml");
 
 				if(File.Exists(filename))
 					return 1;
 				else if(File.Exists(filename2))
 				{
-					_configfile = "Schumix.yml";
+					_configfile = filename2;
 					return 0;
 				}
 			}

@@ -29,8 +29,6 @@ namespace Schumix.Server
 	{
 		[DllImport("Kernel32")]
 		private static extern bool SetConsoleCtrlHandler(EventHandler handler, bool add);
-		private readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private delegate bool EventHandler(CtrlType sig);
 		private EventHandler _handler;
 		private Windows() {}
@@ -53,28 +51,12 @@ namespace Schumix.Server
 				case CtrlType.CTRL_BREAK_EVENT:
 				case CtrlType.CTRL_CLOSE_EVENT:
 					Log.Notice("Windows", "Daemon killed.");
-					sUtilities.RemovePidFile();
-					MainClass.sListener.Exit = true;
-					System.Console.CursorVisible = true;
-
-					foreach(var list in sServerPacketHandler.HostList)
-						sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
-
-					Thread.Sleep(2000);
-					MainClass.KillAllSchumixProccess();
+					MainClass.Shutdown();
 					break;
 				case CtrlType.CTRL_LOGOFF_EVENT:
 				case CtrlType.CTRL_SHUTDOWN_EVENT:
 					Log.Notice("Windows", "User is logging off.");
-					sUtilities.RemovePidFile();
-					MainClass.sListener.Exit = true;
-					System.Console.CursorVisible = true;
-
-					foreach(var list in sServerPacketHandler.HostList)
-						sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
-
-					Thread.Sleep(2000);
-					MainClass.KillAllSchumixProccess();
+					MainClass.Shutdown();
 					break;
 				default:
 					break;

@@ -307,10 +307,7 @@ namespace Schumix.Irc
 				sSender.Join(channel.Key, channel.Value.Trim());
 
 				if(sIgnoreChannel.IsIgnore(channel.Key))
-				{
 					error = true;
-					SchumixBase.DManager.Update("channels", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.ChannelInfo("Text10")), string.Format("Channel = '{0}' And ServerName = '{1}'", channel.Key, _servername));
-				}
 				else
 					SchumixBase.DManager.Update("channels", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", channel.Key, _servername));
 			}

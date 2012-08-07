@@ -51,7 +51,9 @@ namespace Schumix.Console
 		{
 			Log.Notice("Console", sLConsole.Console("Text"));
 			Log.Debug("Console", sLConsole.Console("Text2"));
-			new Thread(() => ConsoleRead()).Start();
+			var thread = new Thread(() => ConsoleRead());
+			thread.Name = "Schumix Console Thread";
+			thread.Start();
 			CCManager = new CCommandManager();
 			CCManager.ServerName = ServerName;
 			CCManager.Channel = IRCConfig.List[ServerName].MasterChannel;

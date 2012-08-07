@@ -44,7 +44,7 @@ namespace Schumix.Framework
 
 		private static void LogToFile(string log)
 		{
-			string filename = sUtilities.DirectoryToHome(LogConfig.LogDirectory, _FileName);
+			string filename = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
 			var filesize = new FileInfo(filename);
 
 			if(filesize.Length >= 10000000)
@@ -71,7 +71,7 @@ namespace Schumix.Framework
 			_FileName = FileName;
 			var time = DateTime.Now;
 			sUtilities.CreateDirectory(LogConfig.LogDirectory);
-			string logfile = sUtilities.DirectoryToHome(LogConfig.LogDirectory, _FileName);
+			string logfile = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
 
 			if(File.Exists(logfile))
 				isfile = true;

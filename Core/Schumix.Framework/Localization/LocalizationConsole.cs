@@ -743,6 +743,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "The {0} server is already in use so not loaded!";
 				}
+				case "Text13":
+				{
+					if(Locale == "huHU")
+						return "Meghibásodás az yml írása során. Részletek: {0}";
+					else if(Locale == "enUS")
+						return "Failure was handled during the yml writing. Details: {0}";
+					else
+						return "Failure was handled during the yml writing. Details: {0}";
+				}
 				default:
 					return string.Empty;
 			}
@@ -1021,15 +1030,6 @@ namespace Schumix.Framework.Localization
 						return "Banned channels: {0}";
 					else
 						return "Banned channels: {0}";
-				}
-				case "Text10":
-				{
-					if(Locale == "huHU")
-						return "Konfig által letiltva!";
-					else if(Locale == "enUS")
-						return "Disabled by Config!";
-					else
-						return "Disabled by Config!";
 				}
 				case "Text11":
 				{
@@ -2444,6 +2444,61 @@ namespace Schumix.Framework.Localization
 						return "Program shutting down!";
 					else
 						return "Program shutting down!";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string IgnoreChannel(string Name)
+		{
+			return IgnoreChannel(Name, Locale);
+		}
+
+		public string IgnoreChannel(string Name, string Language)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Language == "huHU")
+						return "Konfig által letiltva!";
+					else if(Language == "enUS")
+						return "Disabled by Config!";
+					else
+						return "Disabled by Config!";
+				}
+				case "Text2":
+				{
+					if(Language == "huHU")
+						return "A csatorna tiltásra került!";
+					else if(Language == "enUS")
+						return "Channel is banned!";
+					else
+						return "Channel is banned!";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string Sender(string Name)
+		{
+			return Sender(Name, Locale);
+		}
+
+		public string Sender(string Name, string Language)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Language == "huHU")
+						return "Távozom";
+					else if(Language == "enUS")
+						return "Leaving";
+					else
+						return "Leaving";
 				}
 				default:
 					return string.Empty;

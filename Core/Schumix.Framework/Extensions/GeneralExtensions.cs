@@ -34,6 +34,8 @@ namespace Schumix.Framework.Extensions
 	/// </summary>
 	public static class GeneralExtensions
 	{
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
 		/// <summary>
 		/// Casts the object to the specified type.
 		/// </summary>
@@ -444,6 +446,21 @@ namespace Schumix.Framework.Extensions
 					text.Append(child.Key).Append(":\n").Append(child.Value);
 				else
 					text.Append("    ").Append(child.Key).Append(": ").Append(child.Value);
+			}
+
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
+			{
+				text = text.Replace("\r", string.Empty);
+				var split = text.ToString().Split('\n');
+				text.Remove(0, text.Length);
+
+				foreach(var line in split)
+				{
+					if(line.Trim() == string.Empty)
+						continue;
+
+					text.Append("    ").AppendLine(line);
+				}
 			}
 
 			return FileName == string.Empty ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();

@@ -31,7 +31,6 @@ namespace Schumix
 	{
 		[DllImport("Kernel32")]
 		private static extern bool SetConsoleCtrlHandler(EventHandler handler, bool add);
-		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private delegate bool EventHandler(CtrlType sig);
 		private EventHandler _handler;
 		private Windows() {}
@@ -50,47 +49,12 @@ namespace Schumix
 				case CtrlType.CTRL_BREAK_EVENT:
 				case CtrlType.CTRL_CLOSE_EVENT:
 					Log.Notice("Windows", "Daemon killed.");
-
-					if(!SchumixBot.sSchumixBase.IsNull())
-					{
-						bool e = false;
-						foreach(var nw in sIrcBase.Networks)
-						{
-							if(!sIrcBase.Networks[nw.Key].IsNull() && sIrcBase.Networks[nw.Key].Online)
-								e = true;
-						}
-
-						if(e)
-							SchumixBase.Quit();
-						else
-							Process.GetCurrentProcess().Kill();
-					}
-					else
-						Process.GetCurrentProcess().Kill();
-
-					sIrcBase.Shutdown("Daemon killed.");
+					MainClass.Shutdown("Daemon killed.");
 					break;
 				case CtrlType.CTRL_LOGOFF_EVENT:
 				case CtrlType.CTRL_SHUTDOWN_EVENT:
 					Log.Notice("Windows", "User is logging off.");
-					if(!SchumixBot.sSchumixBase.IsNull())
-					{
-						bool e = false;
-						foreach(var nw in sIrcBase.Networks)
-						{
-							if(!sIrcBase.Networks[nw.Key].IsNull() && sIrcBase.Networks[nw.Key].Online)
-								e = true;
-						}
-
-						if(e)
-							SchumixBase.Quit();
-						else
-							Process.GetCurrentProcess().Kill();
-					}
-					else
-						Process.GetCurrentProcess().Kill();
-
-					sIrcBase.Shutdown("User is logging off.");
+					MainClass.Shutdown("User is logging off.");
 					break;
 				default:
 					break;

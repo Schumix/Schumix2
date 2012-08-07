@@ -215,28 +215,7 @@ namespace Schumix
 			{
 				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
 				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
-
-				if(!SchumixBot.sSchumixBase.IsNull())
-				{
-					bool e = false;
-					foreach(var nw in sIrcBase.Networks)
-					{
-						if(!sIrcBase.Networks[nw.Key].IsNull() && sIrcBase.Networks[nw.Key].Online)
-							e = true;
-					}
-
-					if(e)
-						SchumixBase.Quit();
-					else
-						Process.GetCurrentProcess().Kill();
-				}
-				else
-					Process.GetCurrentProcess().Kill();
-
-				if(SchumixBase.ExitStatus)
-					return;
-
-				sIrcBase.Shutdown("Crash.");
+				Shutdown("Crash.", true);
 			};
 
 			if(!ServerConfig.Enabled)
@@ -263,6 +242,31 @@ namespace Schumix
 			System.Console.WriteLine("\t--server-port=<port>\t\tSet server port.");
 			System.Console.WriteLine("\t--server-password=<pass>\tSet password.");
 			System.Console.WriteLine("\t--server-identify=Value\t\tSet identify.");
+		}
+
+		public static void Shutdown(string Message, bool Crash = false)
+		{
+			if(!SchumixBot.sSchumixBase.IsNull())
+			{
+				bool e = false;
+				foreach(var nw in sIrcBase.Networks)
+				{
+					if(!sIrcBase.Networks[nw.Key].IsNull() && sIrcBase.Networks[nw.Key].Online)
+						e = true;
+				}
+
+				if(e)
+					SchumixBase.Quit();
+				else
+					Process.GetCurrentProcess().Kill();
+			}
+			else
+				Process.GetCurrentProcess().Kill();
+
+			if(Crash && SchumixBase.ExitStatus)
+				return;
+
+			sIrcBase.Shutdown(Message);
 		}
 	}
 }

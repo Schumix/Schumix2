@@ -74,8 +74,8 @@ namespace Schumix.HgRssAddon.Config
 		{
 			if(ConfigFile == _configfiledefaultname + ".yml")
 			{
-				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, _configfiledefaultname + ".xml");
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, _configfiledefaultname + ".xml");
 
 				if(File.Exists(filename))
 					return 0;
@@ -87,8 +87,8 @@ namespace Schumix.HgRssAddon.Config
 			}
 			else if(ConfigFile == _configfiledefaultname + ".xml")
 			{
-				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, _configfiledefaultname + ".yml");
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, _configfiledefaultname + ".yml");
 
 				if(File.Exists(filename))
 					return 1;

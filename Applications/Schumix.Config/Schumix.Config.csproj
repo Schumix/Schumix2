@@ -61,6 +61,7 @@
     <Compile Include="Clean\FileClean.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup />
   <ItemGroup>
     <Folder Include="CopyTo\" />
   </ItemGroup>

@@ -77,8 +77,8 @@ namespace Schumix.Framework.Addon
 				string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);
 
 				DirectoryInfo dir;
-				if(directory.ToLower().Contains("$home"))
-					dir = new DirectoryInfo(sUtilities.GetHomeDirectory(directory));
+				if(sUtilities.IsSpecialDirectory(directory))
+					dir = new DirectoryInfo(sUtilities.GetSpecialDirectory(directory));
 				else
 					dir = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, directory));
 
@@ -197,7 +197,6 @@ namespace Schumix.Framework.Addon
 					}
 
 					Addons.Clear();
-					_loading = false;
 				}
 				else
 				{
@@ -211,8 +210,9 @@ namespace Schumix.Framework.Addon
 					Addons[ServerName].Assemblies.Clear();
 					Addons[ServerName].IgnoreAssemblies.Clear();
 					Addons.Remove(ServerName);
-					_loading = false;
 				}
+
+				_loading = false;
 			}
 
 			Log.Notice("AddonManager", sLConsole.AddonManager("Text5"));

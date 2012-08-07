@@ -112,11 +112,13 @@ namespace Schumix.Irc
 			// Start Opcodes thread
 			Log.Debug("Network", sLConsole.Network("Text3"));
 			var opcodes = new Thread(Opcodes);
+			opcodes.Name = _servername + " Opcodes Thread";
 			opcodes.Start();
 
 			// Start Ping thread
 			Log.Debug("Network", sLConsole.Network("Text4"));
 			var ping = new Thread(AutoPing);
+			ping.Name = _servername + " Ping Thread";
 			ping.Start();
 
 			Log.Debug("Network", sLConsole.Network("Text2"));
