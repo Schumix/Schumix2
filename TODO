@@ -9,7 +9,7 @@ Megírásra váró feladatok:
 	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!! (Állítottam a prioritáson. Lehetséges ez megoldja a gondot de még tesztelni kell.)
 
 - Fejleszteni kívánt részek, új funkciók:
-	- xrev parancs megírása.
+	- xrev parancs megírása. githubhoz ez tökéletes lehet: https://api.github.com/repos/megax/Schumix2/git/commits/defb0266a7c8a98934ec8038524436d8a3a9b820 (így kéne megadni: $xrev github megax schumix2 sha1kód)
 	- irc parancs listájának bővítése.
 	- sznap parancs megírása normálisan.
 	- Server-be megcsinálni a yaml konfigot.
