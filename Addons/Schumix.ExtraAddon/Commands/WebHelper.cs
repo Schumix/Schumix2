@@ -57,7 +57,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(match.Success)
 				{
 					string ttl = match.Groups["ttl"].ToString();
-					return ttl.Length > 300 ? ttl.Substring(0, 300) + "..." : ttl;
+					return ttl.Length > 140 ? ttl.Substring(0, 140) + "..." : ttl;
 				}
 
 				return string.Empty;
