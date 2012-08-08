@@ -53,7 +53,14 @@ namespace Schumix.ExtraAddon.Commands
 				var getTitleRegex = new Regex(@"<title>(?<ttl>.*\s*.+\s*.*)\s*</title>", RegexOptions.IgnoreCase);
 				string data = sUtilities.DownloadString(url, 3500, getTitleRegex);
 				var match = getTitleRegex.Match(data);
-				return (match.Success) ? (match.Groups["ttl"].ToString()) : /*sLocalization.WebHelper("Text", Language)*/string.Empty;
+
+				if(match.Success)
+				{
+					string ttl = match.Groups["ttl"].ToString();
+					return ttl.Length > 300 ? ttl.Substring(0, 300) + "..." : ttl;
+				}
+
+				return string.Empty;
 			}
 			catch(Exception e)
 			{
