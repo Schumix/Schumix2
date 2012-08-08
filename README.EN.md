@@ -33,10 +33,10 @@ Navigate to the `Run` folder and in that proper folder for the configuration. Ru
 
 ## Server
 
-* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy kapcsolodjon-e a szerverhez a program. Alapértelmezés: `false`
-* **Host:** Ide kell beírni a szerver nevét/címét ahova csatlakozni szeretnénk.
-* **Port:** A szerver portja. Alapértelmezés: `35220`
-* **Password:** A szerver azonosító jelszava.
+* **Enabled:** Its value `true` or `false`. Defines if the program connects to the server. Default: `false`
+* **Host:** Server's address.
+* **Port:** Server's port. Default: `35220`
+* **Password:** Server's identify password.
 
 ## Irc
 
