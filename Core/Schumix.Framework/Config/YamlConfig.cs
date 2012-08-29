@@ -143,7 +143,7 @@ namespace Schumix.Framework.Config
 					catch(Exception e)
 					{
 						Log.Error("YamlConfig", sLConsole.Config("Text13"), e.Message);
-						error = true;
+						errors = true;
 					}
 				}
 			}

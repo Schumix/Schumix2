@@ -102,9 +102,9 @@ Source: "..\Configs\WordPressRssAddon.yml"; DestDir: "{localappdata}\Schumix\Con
 Source: "Schumix.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
 
 [Icons]
-Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--config-file=$localappdata\Schumix\Configs\Schumix.yml"
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--config-dir=$localappdata\Schumix\Configs\ --config-file=Schumix.yml"
 Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
-Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--config-file=$localappdata\Schumix\Configs\Schumix.yml"; Tasks: desktopicon
+Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--config-dir=$localappdata\Schumix\Configs\ --config-file=Schumix.yml"; Tasks: desktopicon
 
 [Run]
 Filename: "{app}\{#MyAppExeName}"; Description: "Schumix2 IRC Bot and Framework"; Flags: nowait postinstall skipifsilent

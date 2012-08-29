@@ -432,7 +432,7 @@ namespace Schumix.Framework.Config
 					catch(Exception e)
 					{
 						Log.Error("XmlConfig", sLConsole.Config("Text8"), e.Message);
-						error = true;
+						errors = true;
 					}
 				}
 			}
