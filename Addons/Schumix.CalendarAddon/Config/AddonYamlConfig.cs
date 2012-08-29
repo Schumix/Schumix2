@@ -46,8 +46,8 @@ namespace Schumix.CalendarAddon.Config
 
 			Log.Notice("CalendarAddonConfig", sLocalization.Config("Text"));
 
-			var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("CalendarAddon"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("CalendarAddon")]).Children : (Dictionary<YamlNode, YamlNode>)null;
-			FloodingMap((!calendarmap.IsNull() && calendarmap.ContainsKey(new YamlScalarNode("Flooding"))) ? ((YamlMappingNode)calendarmap[new YamlScalarNode("Flooding")]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CalendarAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CalendarAddon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
+			FloodingMap((!calendarmap.IsNull() && calendarmap.ContainsKey("Flooding")) ? ((YamlMappingNode)calendarmap["Flooding".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
 
 			Log.Success("CalendarAddonConfig", sLocalization.Config("Text2"));
 		}
@@ -74,10 +74,10 @@ namespace Schumix.CalendarAddon.Config
 
 				try
 				{
-					var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("CalendarAddon"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("CalendarAddon")]).Children : (Dictionary<YamlNode, YamlNode>)null;
+					var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CalendarAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CalendarAddon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Flooding", CreateFloodingMap((!calendarmap.IsNull() && calendarmap.ContainsKey(new YamlScalarNode("Flooding"))) ? ((YamlMappingNode)calendarmap[new YamlScalarNode("Flooding")]).Children : (Dictionary<YamlNode, YamlNode>)null));
+					nodes2.Add("Flooding", CreateFloodingMap((!calendarmap.IsNull() && calendarmap.ContainsKey("Flooding")) ? ((YamlMappingNode)calendarmap["Flooding".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
 					nodes.Add("CalendarAddon", nodes2);
 
 					sUtilities.CreateFile(filename);
@@ -101,18 +101,18 @@ namespace Schumix.CalendarAddon.Config
 
 		private void FloodingMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			int Seconds = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Seconds"))) ? Convert.ToInt32(nodes[new YamlScalarNode("Seconds")].ToString()) : _seconds;
-			int NumberOfMessages = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("NumberOfMessages"))) ? Convert.ToInt32(nodes[new YamlScalarNode("NumberOfMessages")].ToString()) : _numberofmessages;
-			int NumberOfFlooding = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("NumberOfFlooding"))) ? Convert.ToInt32(nodes[new YamlScalarNode("NumberOfFlooding")].ToString()) : _numberofflooding;
+			int Seconds = (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? Convert.ToInt32(nodes["Seconds".ToYamlNode()].ToString()) : _seconds;
+			int NumberOfMessages = (!nodes.IsNull() && nodes.ContainsKey("NumberOfMessages")) ? Convert.ToInt32(nodes["NumberOfMessages".ToYamlNode()].ToString()) : _numberofmessages;
+			int NumberOfFlooding = (!nodes.IsNull() && nodes.ContainsKey("NumberOfFlooding")) ? Convert.ToInt32(nodes["NumberOfFlooding".ToYamlNode()].ToString()) : _numberofflooding;
 			new CalendarConfig(Seconds, NumberOfMessages, NumberOfFlooding);
 		}
 
 		private YamlMappingNode CreateFloodingMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Seconds",          (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Seconds"))) ? nodes[new YamlScalarNode("Seconds")].ToString() : _seconds.ToString());
-			map.Add("NumberOfMessages", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("NumberOfMessages"))) ? nodes[new YamlScalarNode("NumberOfMessages")].ToString() : _numberofmessages.ToString());
-			map.Add("NumberOfFlooding", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("NumberOfFlooding"))) ? nodes[new YamlScalarNode("NumberOfFlooding")].ToString() : _numberofflooding.ToString());
+			map.Add("Seconds",          (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? nodes["Seconds".ToYamlNode()].ToString() : _seconds.ToString());
+			map.Add("NumberOfMessages", (!nodes.IsNull() && nodes.ContainsKey("NumberOfMessages")) ? nodes["NumberOfMessages".ToYamlNode()].ToString() : _numberofmessages.ToString());
+			map.Add("NumberOfFlooding", (!nodes.IsNull() && nodes.ContainsKey("NumberOfFlooding")) ? nodes["NumberOfFlooding".ToYamlNode()].ToString() : _numberofflooding.ToString());
 			return map;
 		}
 	}

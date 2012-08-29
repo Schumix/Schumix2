@@ -54,6 +54,8 @@ Schumix:
     Scripts:
         Lua: False
         Directory: $localappdata\Schumix\Scripts
+    Crash:
+        Directory: $localappdata\Schumix\Dumps
     Localization:
         Locale: enUS
     Update:

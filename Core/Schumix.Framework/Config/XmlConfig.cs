@@ -156,6 +156,10 @@ namespace Schumix.Framework.Config
 
 			new ScriptsConfig(Lua, sUtilities.GetSpecialDirectory(Directory));
 
+			Directory = !xmldoc.SelectSingleNode("Schumix/Crash/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Crash/Directory").InnerText : d_crashdirectory;
+
+			new CrashConfig(sUtilities.GetSpecialDirectory(Directory));
+
 			string Locale = !xmldoc.SelectSingleNode("Schumix/Localization/Locale").IsNull() ? xmldoc.SelectSingleNode("Schumix/Localization/Locale").InnerText : d_locale;
 
 			new LocalizationConfig(Locale);
@@ -388,6 +392,13 @@ namespace Schumix.Framework.Config
 						w.WriteElementString("Directory",       (!xmldoc.SelectSingleNode("Schumix/Scripts/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Directory").InnerText : d_scriptdirectory));
 
 						// </Scripts>
+						w.WriteEndElement();
+
+						// <Crash>
+						w.WriteStartElement("Crash");
+						w.WriteElementString("Directory",       (!xmldoc.SelectSingleNode("Schumix/Crash/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Crash/Directory").InnerText : d_crashdirectory));
+
+						// </Crash>
 						w.WriteEndElement();
 
 						// <Localization>

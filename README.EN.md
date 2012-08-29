@@ -115,6 +115,10 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 * **Lua:** Értéke `true` vagy `false` lehet. Engedélyezi a lua fájlok betöltését. Alapértelmezés: `true`
 * **Directory:** A script-ek mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Scripts`
 
+## Crash
+
+* **Directory:** Meghatározza az összeomláskor keletkező mappa nevét. Alapértelmezés: `Dumps`
+
 ## Localization
 
 * **Locale:** Meghatározza hogy a kód milyen nyelven fusson. (csak az irc és konzol parancsokra vonatkozik)

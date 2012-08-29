@@ -21,6 +21,7 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
@@ -39,12 +40,12 @@ namespace Schumix.Framework
 		/// </summary>
 		public void CreateCrashDump(object Object)
 		{
-			sUtilities.CreateDirectory("Dumps");
+			sUtilities.CreateDirectory(CrashConfig.Directory);
 			Log.Debug("CrashDumper", sLConsole.CrashDumper("Text"));
 
 			try
 			{
-				using(var fs = File.Open(Path.Combine(Environment.CurrentDirectory, "Dumps",
+				using(var fs = File.Open(Path.Combine(Environment.CurrentDirectory, CrashConfig.Directory,
 					string.Format("{0}.acd", DateTime.Now.ToString("yyyy_MM_dd_HH_mm"))), FileMode.Create))
 				{
 					var formatter = new BinaryFormatter();
