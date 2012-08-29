@@ -71,7 +71,7 @@ namespace Schumix.Framework.Config
 			{
 				new LogConfig(d_logfilename, 3, d_logdirectory, d_irclogdirectory, d_irclog);
 				Log.Initialize(d_logfilename);
-				Log.Error("Config", sLConsole.Exception("Error"), e);
+				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 
