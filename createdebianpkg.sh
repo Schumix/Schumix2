@@ -15,6 +15,8 @@ mkdir package/usr/bin
 mv package/Debian/schumix package/usr/bin/
 mv package/Debian/schumix-server package/usr/bin/
 mv package/Debian/share package/usr/
+mkdir package/usr/share/doc
+mkdir package/usr/share/doc/schumix
 cp LICENSE package/usr/share/doc/schumix
 mkdir package/usr/lib
 mkdir package/usr/lib/pkgconfig
