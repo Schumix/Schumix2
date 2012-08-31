@@ -9,12 +9,13 @@ make
 
 rm -rf package
 mkdir package
-cp -rf debian package/
+cp -rf Debian package/
 mkdir package/usr
 mkdir package/usr/bin
-mv package/debian/schumix package/usr/bin/
-mv package/debian/schumix-server package/usr/bin/
-mv package/debian/share package/usr/
+mv package/Debian/schumix package/usr/bin/
+mv package/Debian/schumix-server package/usr/bin/
+mv package/Debian/share package/usr/
+cp LICENSE package/usr/share/doc/schumix
 mkdir package/usr/lib
 mkdir package/usr/lib/pkgconfig
 cd Run/Release/Addons
@@ -37,10 +38,10 @@ rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.
 cp -rf ./ ../../package/usr/lib/schumix
 cd ../../
 cd package
-#control
-cd debian
+#control file
+cd Debian
 revision="$(echo $(cat ../../Core/Schumix.Framework/Config/Consts.cs) | grep -o 'SchumixVersion = ".*"; public const string SchumixFileVersion' | awk '{print substr($3, 2, length($3)-3)}')"
-echo $revision
+echo "Version: $revision"
 echo "Package: schumix" >> control
 echo "Version: $revision" >> control
 echo "Architecture: all" >> control
@@ -51,8 +52,10 @@ echo "Priority: optional" >> control
 echo "Description: Schumix2 IRC Bot and Framework" >> control
 
 cd ..
-find . -exec md5sum '{}' \; > debian/md5sums
-mv debian DEBIAN
+cd usr
+find . -exec md5sum '{}' \; > ../Debian/md5sums
+cd ..
+mv Debian DEBIAN
 cd ..
 dpkg-deb --build package
 echo "mv package.deb schumix.deb"
