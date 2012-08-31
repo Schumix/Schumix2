@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+
+if [ -x /sbin/ldconfig ]; then /sbin/ldconfig ; fi

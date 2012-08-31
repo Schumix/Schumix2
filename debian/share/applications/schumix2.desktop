@@ -1,0 +1,14 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=3.x
+Encoding=UTF-8
+Name=Schumix2 IRC Bot
+GenericName=Schumix2 IRC Bot and Framework
+Comment=.NET applications
+Exec=schumix %F
+TryExec=schumix
+Icon=schumix2
+StartupNotify=true
+Terminal=true
+Type=Application
+MimeType=application/x-ms-dos-executable;
