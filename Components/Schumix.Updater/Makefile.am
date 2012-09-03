@@ -21,9 +21,9 @@ SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
+SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
 
 endif
 
@@ -44,9 +44,9 @@ SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
+SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
 
 endif
 
@@ -68,9 +68,9 @@ SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
+SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
 
 endif
 
@@ -91,9 +91,9 @@ SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
+SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
 
 endif
 
@@ -108,9 +108,9 @@ PROGRAMFILES = \
 	$(SCHUMIX_DB3) \
 	$(MYSQL_DATA_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
-	$(SCHUMIX_API_DLL) \
 	$(YAMLDOTNET_CORE_DLL) \
-	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL)  
+	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
+	$(SCHUMIX_API_DLL)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_UPDATER_PC)  
@@ -158,9 +158,9 @@ SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
-SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
+SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
 SCHUMIX_UPDATER_PC = $(BUILD_DIR)/schumix.updater.pc
 
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
