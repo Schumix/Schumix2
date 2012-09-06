@@ -131,7 +131,7 @@ namespace Schumix.ExtraAddon.Commands
 				{
 					var match = youtubeRegex.Match(title);
 					var song = match.Groups["song"].ToString();
-					sSendMessage.SendChatMessage(sIRCMessage, "1,0You0,4Tube: {0}", song.Substring(1));
+					sSendMessage.SendChatMessage(sIRCMessage, "1,0You0,4Tube: {0}", song);
 					return;
 				}
 
