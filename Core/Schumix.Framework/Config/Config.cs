@@ -86,7 +86,7 @@ namespace Schumix.Framework.Config
 					return 0;
 				else if(File.Exists(filename2))
 				{
-					_configfile = filename2;
+					_configfile = "Schumix.xml";
 					return 1;
 				}
 			}
@@ -99,7 +99,7 @@ namespace Schumix.Framework.Config
 					return 1;
 				else if(File.Exists(filename2))
 				{
-					_configfile = filename2;
+					_configfile = "Schumix.yml";
 					return 0;
 				}
 			}
