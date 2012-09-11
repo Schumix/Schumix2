@@ -59,11 +59,12 @@ namespace Schumix
 		public ScriptManager(string scriptPath)
 		{
 			_scriptsPath = scriptPath;
+			sUtilities.CreateDirectory(scriptPath);
 
 			if(ScriptsConfig.Lua)
 			{
-				sUtilities.CreateDirectory(scriptPath);
-				_luaEngine = new LuaEngine.LuaEngine(scriptPath);
+				sUtilities.CreateDirectory(Path.Combine(scriptPath, "Lua"));
+				_luaEngine = new LuaEngine.LuaEngine(Path.Combine(scriptPath, "Lua"));
 			}
 			else
 				Log.Warning("ScriptManager", sLConsole.ScriptManager("Text"));
