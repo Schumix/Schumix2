@@ -54,6 +54,8 @@ Schumix:
     Scripts:
         Lua: False
         Directory: Scripts
+    Crash:
+        Directory: Dumps
     Localization:
         Locale: enUS
     Update:

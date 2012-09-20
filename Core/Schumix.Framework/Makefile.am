@@ -156,7 +156,8 @@ FILES = \
 	Addon/AddonBase.cs \
 	Config/XmlConfig.cs \
 	Config/YamlConfig.cs \
-	Network/ClientPacketHandlerDelegate.cs 
+	Network/ClientPacketHandlerDelegate.cs \
+	Config/CrashConfig.cs 
 
 DATA_FILES = 
 

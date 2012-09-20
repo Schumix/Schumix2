@@ -35,35 +35,12 @@ namespace Schumix.Framework.Config
 		{
 			try
 			{
-				configdir = sUtilities.GetSpecialDirectory(configfile);
-				string cdir = sUtilities.GetDirectoryName(configdir);
-
-				if(sUtilities.GetPlatformType() == PlatformType.Windows)
-				{
-					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
-					{
-						configfile = configdir.Substring(configdir.IndexOf(cdir));
-						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
-					}
-					else
-						configdir = sUtilities.GetSpecialDirectory(configdir);
-				}
-				else if(sUtilities.GetPlatformType() == PlatformType.Linux)
-				{
-					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
-					{
-						configfile = configdir.Substring(configdir.IndexOf(cdir));
-						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
-					}
-					else
-						configdir = sUtilities.GetSpecialDirectory(configdir);
-				}
-
+				configdir = sUtilities.GetSpecialDirectory(configdir);
 				_configfile = configfile;
 
 				if(!IsConfig(configdir, configfile))
 				{
-					if(!error)
+					if(!errors)
 					{
 						Log.Notice("Config", sLConsole.Config("Text"));
 						Log.Notice("Config", sLConsole.Config("Text2"));
@@ -93,6 +70,7 @@ namespace Schumix.Framework.Config
 			catch(Exception e)
 			{
 				new LogConfig(d_logfilename, 3, d_logdirectory, d_irclogdirectory, d_irclog);
+				Log.Initialize(d_logfilename);
 				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
@@ -108,7 +86,7 @@ namespace Schumix.Framework.Config
 					return 0;
 				else if(File.Exists(filename2))
 				{
-					_configfile = filename2;
+					_configfile = "Schumix.xml";
 					return 1;
 				}
 			}
@@ -121,7 +99,7 @@ namespace Schumix.Framework.Config
 					return 1;
 				else if(File.Exists(filename2))
 				{
-					_configfile = filename2;
+					_configfile = "Schumix.yml";
 					return 0;
 				}
 			}

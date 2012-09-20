@@ -43,15 +43,15 @@ namespace Schumix.Framework.Config
 			var yaml = new YamlStream();
 			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
-			var schumixmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("Schumix"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("Schumix")]).Children : (Dictionary<YamlNode, YamlNode>)null;
-			LogMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Log"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Log")]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			var schumixmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Schumix")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Schumix".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
+			LogMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Log")) ? ((YamlMappingNode)schumixmap["Log".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
 			Log.Initialize(LogConfig.FileName);
 			Log.Debug("YamlConfig", ">> {0}", configfile);
 
 			Log.Notice("YamlConfig", sLConsole.Config("Text3"));
-			ServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Server"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Server")]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			ServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Server")) ? ((YamlMappingNode)schumixmap["Server".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
 
-			if((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Irc"))))
+			if((!schumixmap.IsNull() && schumixmap.ContainsKey("Irc")))
 			{
 				var list = new Dictionary<YamlNode, YamlNode>();
 
@@ -66,12 +66,13 @@ namespace Schumix.Framework.Config
 			else
 				IrcMap((Dictionary<YamlNode, YamlNode>)null);
 
-			MySqlMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("MySql"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("MySql")]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			SQLiteMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("SQLite"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("SQLite")]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			AddonsMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Addon"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Addon")]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			ScriptsMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Scripts"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Scripts")]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			LocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Localization"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Localization")]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			UpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Update"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Update")]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			MySqlMap((!schumixmap.IsNull() && schumixmap.ContainsKey("MySql")) ? ((YamlMappingNode)schumixmap["MySql".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			SQLiteMap((!schumixmap.IsNull() && schumixmap.ContainsKey("SQLite")) ? ((YamlMappingNode)schumixmap["SQLite".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			AddonsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Addon")) ? ((YamlMappingNode)schumixmap["Addon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			ScriptsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Scripts")) ? ((YamlMappingNode)schumixmap["Scripts".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			CrashMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Crash")) ? ((YamlMappingNode)schumixmap["Crash".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			LocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Localization")) ? ((YamlMappingNode)schumixmap["Localization".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			UpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
 
 			Log.Success("YamlConfig", sLConsole.Config("Text4"));
 			Console.WriteLine();
@@ -103,12 +104,12 @@ namespace Schumix.Framework.Config
 
 					try
 					{
-						var schumixmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("Schumix"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("Schumix")]).Children : (Dictionary<YamlNode, YamlNode>)null;
+						var schumixmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Schumix")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Schumix".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
 						var nodes = new YamlMappingNode();
 						var nodes2 = new YamlMappingNode();
-						nodes2.Add("Server",       CreateServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Server"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Server")]).Children : (Dictionary<YamlNode, YamlNode>)null));
+						nodes2.Add("Server",       CreateServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Server")) ? ((YamlMappingNode)schumixmap["Server".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
 
-						if((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Irc"))))
+						if((!schumixmap.IsNull() && schumixmap.ContainsKey("Irc")))
 						{
 							foreach(var irc in schumixmap)
 							{
@@ -119,13 +120,14 @@ namespace Schumix.Framework.Config
 						else
 							nodes2.Add("Irc",      CreateIrcMap((Dictionary<YamlNode, YamlNode>)null));
 
-						nodes2.Add("Log",          CreateLogMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Log"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Log")]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("MySql",        CreateMySqlMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("MySql"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("MySql")]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("SQLite",       CreateSQLiteMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("SQLite"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("SQLite")]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("Addon",        CreateAddonsMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Addon"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Addon")]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("Scripts",      CreateScriptsMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Scripts"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Scripts")]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("Localization", CreateLocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Localization"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Localization")]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("Update",       CreateUpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey(new YamlScalarNode("Update"))) ? ((YamlMappingNode)schumixmap[new YamlScalarNode("Update")]).Children : (Dictionary<YamlNode, YamlNode>)null));
+						nodes2.Add("Log",          CreateLogMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Log")) ? ((YamlMappingNode)schumixmap["Log".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+						nodes2.Add("MySql",        CreateMySqlMap((!schumixmap.IsNull() && schumixmap.ContainsKey("MySql")) ? ((YamlMappingNode)schumixmap["MySql".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+						nodes2.Add("SQLite",       CreateSQLiteMap((!schumixmap.IsNull() && schumixmap.ContainsKey("SQLite")) ? ((YamlMappingNode)schumixmap["SQLite".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+						nodes2.Add("Addon",        CreateAddonsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Addon")) ? ((YamlMappingNode)schumixmap["Addon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+						nodes2.Add("Scripts",      CreateScriptsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Scripts")) ? ((YamlMappingNode)schumixmap["Scripts".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+						nodes2.Add("Crash",        CreateCrashMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Crash")) ? ((YamlMappingNode)schumixmap["Crash".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+						nodes2.Add("Localization", CreateLocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Localization")) ? ((YamlMappingNode)schumixmap["Localization".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+						nodes2.Add("Update",       CreateUpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
 						nodes.Add("Schumix", nodes2);
 
 						sUtilities.CreateFile(filename);
@@ -141,7 +143,7 @@ namespace Schumix.Framework.Config
 					catch(Exception e)
 					{
 						Log.Error("YamlConfig", sLConsole.Config("Text13"), e.Message);
-						error = true;
+						errors = true;
 					}
 				}
 			}
@@ -155,21 +157,21 @@ namespace Schumix.Framework.Config
 
 		private void LogMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			string LogFileName = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("FileName"))) ? nodes[new YamlScalarNode("FileName")].ToString() : d_logfilename;
-			int LogLevel = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("LogLevel"))) ? Convert.ToInt32(nodes[new YamlScalarNode("LogLevel")].ToString()) : d_loglevel;
-			string LogDirectory = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("LogDirectory"))) ? nodes[new YamlScalarNode("LogDirectory")].ToString() : d_logdirectory;
-			string IrcLogDirectory = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("IrcLogDirectory"))) ? nodes[new YamlScalarNode("IrcLogDirectory")].ToString() : d_irclogdirectory;
-			bool IrcLog = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("IrcLog"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("IrcLog")].ToString()) : d_irclog;
+			string LogFileName = (!nodes.IsNull() && nodes.ContainsKey("FileName")) ? nodes["FileName".ToYamlNode()].ToString() : d_logfilename;
+			int LogLevel = (!nodes.IsNull() && nodes.ContainsKey("LogLevel")) ? Convert.ToInt32(nodes["LogLevel".ToYamlNode()].ToString()) : d_loglevel;
+			string LogDirectory = (!nodes.IsNull() && nodes.ContainsKey("LogDirectory")) ? nodes["LogDirectory".ToYamlNode()].ToString() : d_logdirectory;
+			string IrcLogDirectory = (!nodes.IsNull() && nodes.ContainsKey("IrcLogDirectory")) ? nodes["IrcLogDirectory".ToYamlNode()].ToString() : d_irclogdirectory;
+			bool IrcLog = (!nodes.IsNull() && nodes.ContainsKey("IrcLog")) ? Convert.ToBoolean(nodes["IrcLog".ToYamlNode()].ToString()) : d_irclog;
 
 			new LogConfig(LogFileName, LogLevel, sUtilities.GetSpecialDirectory(LogDirectory), sUtilities.GetSpecialDirectory(IrcLogDirectory), IrcLog);
 		}
 
 		private void ServerMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool ServerEnabled = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("Enabled")].ToString()) : d_serverenabled;
-			string ServerHost = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Host"))) ? nodes[new YamlScalarNode("Host")].ToString() : d_serverhost;
-			int ServerPort = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Port"))) ? Convert.ToInt32(nodes[new YamlScalarNode("Port")].ToString()) : d_serverport;
-			string ServerPassword = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Password"))) ? nodes[new YamlScalarNode("Password")].ToString() : d_serverpassword;
+			bool ServerEnabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? Convert.ToBoolean(nodes["Enabled".ToYamlNode()].ToString()) : d_serverenabled;
+			string ServerHost = (!nodes.IsNull() && nodes.ContainsKey("Host")) ? nodes["Host".ToYamlNode()].ToString() : d_serverhost;
+			int ServerPort = (!nodes.IsNull() && nodes.ContainsKey("Port")) ? Convert.ToInt32(nodes["Port".ToYamlNode()].ToString()) : d_serverport;
+			string ServerPassword = (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_serverpassword;
 
 			new ServerConfig(ServerEnabled, ServerHost, ServerPort, ServerPassword);
 		}
@@ -209,66 +211,66 @@ namespace Schumix.Framework.Config
 				foreach(var irc in nodes)
 				{
 					var node = ((YamlMappingNode)irc.Value).Children;
-					string ServerName = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("ServerName"))) ? node[new YamlScalarNode("ServerName")].ToString() : d_servername;
-					string Server = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Server"))) ? node[new YamlScalarNode("Server")].ToString() : d_server;
-					int Port = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Port"))) ? Convert.ToInt32(node[new YamlScalarNode("Port")].ToString()) : d_port;
-					bool Ssl = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Ssl"))) ? Convert.ToBoolean(node[new YamlScalarNode("Ssl")].ToString()) : d_ssl;
-					string NickName = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName"))) ? node[new YamlScalarNode("NickName")].ToString() : d_nickname;
-					string NickName2 = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName2"))) ? node[new YamlScalarNode("NickName2")].ToString() : d_nickname2;
-					string NickName3 = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName3"))) ? node[new YamlScalarNode("NickName3")].ToString() : d_nickname3;
-					string UserName = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("UserName"))) ? node[new YamlScalarNode("UserName")].ToString() : d_username;
-					string UserInfo = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("UserInfo"))) ? node[new YamlScalarNode("UserInfo")].ToString() : d_userinfo;
+					string ServerName = (!node.IsNull() && node.ContainsKey("ServerName")) ? node["ServerName".ToYamlNode()].ToString() : d_servername;
+					string Server = (!node.IsNull() && node.ContainsKey("Server")) ? node["Server".ToYamlNode()].ToString() : d_server;
+					int Port = (!node.IsNull() && node.ContainsKey("Port")) ? Convert.ToInt32(node["Port".ToYamlNode()].ToString()) : d_port;
+					bool Ssl = (!node.IsNull() && node.ContainsKey("Ssl")) ? Convert.ToBoolean(node["Ssl".ToYamlNode()].ToString()) : d_ssl;
+					string NickName = (!node.IsNull() && node.ContainsKey("NickName")) ? node["NickName".ToYamlNode()].ToString() : d_nickname;
+					string NickName2 = (!node.IsNull() && node.ContainsKey("NickName2")) ? node["NickName2".ToYamlNode()].ToString() : d_nickname2;
+					string NickName3 = (!node.IsNull() && node.ContainsKey("NickName3")) ? node["NickName3".ToYamlNode()].ToString() : d_nickname3;
+					string UserName = (!node.IsNull() && node.ContainsKey("UserName")) ? node["UserName".ToYamlNode()].ToString() : d_username;
+					string UserInfo = (!node.IsNull() && node.ContainsKey("UserInfo")) ? node["UserInfo".ToYamlNode()].ToString() : d_userinfo;
 
 					string MasterChannel = d_masterchannel;
 					string MasterChannelPassword = d_masterchannelpassword;
 
-					if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("MasterChannel")))
+					if(!node.IsNull() && node.ContainsKey("MasterChannel"))
 					{
-						var node2 = ((YamlMappingNode)node[new YamlScalarNode("MasterChannel")]).Children;
-						MasterChannel = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Name"))) ? node2[new YamlScalarNode("Name")].ToString() : d_masterchannel;
-						MasterChannelPassword = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Password"))) ? node2[new YamlScalarNode("Password")].ToString() : d_masterchannelpassword;
+						var node2 = ((YamlMappingNode)node["MasterChannel".ToYamlNode()]).Children;
+						MasterChannel = (!node2.IsNull() && node2.ContainsKey("Name")) ? node2["Name".ToYamlNode()].ToString() : d_masterchannel;
+						MasterChannelPassword = (!node2.IsNull() && node2.ContainsKey("Password")) ? node2["Password".ToYamlNode()].ToString() : d_masterchannelpassword;
 					}
 
-					string IgnoreChannels = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("IgnoreChannels"))) ? node[new YamlScalarNode("IgnoreChannels")].ToString() : d_ignorechannels;
-					string IgnoreNames = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("IgnoreNames"))) ? node[new YamlScalarNode("IgnoreNames")].ToString() : d_ignorenames;
+					string IgnoreChannels = (!node.IsNull() && node.ContainsKey("IgnoreChannels")) ? node["IgnoreChannels".ToYamlNode()].ToString() : d_ignorechannels;
+					string IgnoreNames = (!node.IsNull() && node.ContainsKey("IgnoreNames")) ? node["IgnoreNames".ToYamlNode()].ToString() : d_ignorenames;
 
 					bool UseNickServ = d_usenickserv;
 					string NickServPassword = d_nickservpassword;
 
-					if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickServ")))
+					if(!node.IsNull() && node.ContainsKey("NickServ"))
 					{
-						var node2 = ((YamlMappingNode)node[new YamlScalarNode("NickServ")]).Children;
-						UseNickServ = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(node2[new YamlScalarNode("Enabled")].ToString()) : d_usenickserv;
-						NickServPassword = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Password"))) ? node2[new YamlScalarNode("Password")].ToString() : d_nickservpassword;
+						var node2 = ((YamlMappingNode)node["NickServ".ToYamlNode()]).Children;
+						UseNickServ = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? Convert.ToBoolean(node2["Enabled".ToYamlNode()].ToString()) : d_usenickserv;
+						NickServPassword = (!node2.IsNull() && node2.ContainsKey("Password")) ? node2["Password".ToYamlNode()].ToString() : d_nickservpassword;
 					}
 
 					bool UseHostServ = d_usehostserv;
 					bool HostServStatus = d_hostservstatus;
 
-					if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("HostServ")))
+					if(!node.IsNull() && node.ContainsKey("HostServ"))
 					{
-						var node2 = ((YamlMappingNode)node[new YamlScalarNode("HostServ")]).Children;
-						UseHostServ = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(node2[new YamlScalarNode("Enabled")].ToString()) : d_usehostserv;
-						HostServStatus = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Vhost"))) ? Convert.ToBoolean(node2[new YamlScalarNode("Vhost")].ToString()) : d_hostservstatus;
+						var node2 = ((YamlMappingNode)node["HostServ".ToYamlNode()]).Children;
+						UseHostServ = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? Convert.ToBoolean(node2["Enabled".ToYamlNode()].ToString()) : d_usehostserv;
+						HostServStatus = (!node2.IsNull() && node2.ContainsKey("Vhost")) ? Convert.ToBoolean(node2["Vhost".ToYamlNode()].ToString()) : d_hostservstatus;
 					}
 
 					int MessageSending = d_messagesending;
 
-					if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("Wait")))
+					if(!node.IsNull() && node.ContainsKey("Wait"))
 					{
-						var node2 = ((YamlMappingNode)node[new YamlScalarNode("Wait")]).Children;
-						MessageSending = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("MessageSending"))) ? Convert.ToInt32(node2[new YamlScalarNode("MessageSending")].ToString()) : d_messagesending;
+						var node2 = ((YamlMappingNode)node["Wait".ToYamlNode()]).Children;
+						MessageSending = (!node2.IsNull() && node2.ContainsKey("MessageSending")) ? Convert.ToInt32(node2["MessageSending".ToYamlNode()].ToString()) : d_messagesending;
 					}
 
 					string CommandPrefix = d_commandprefix;
 
-					if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("Command")))
+					if(!node.IsNull() && node.ContainsKey("Command"))
 					{
-						var node2 = ((YamlMappingNode)node[new YamlScalarNode("Command")]).Children;
-						CommandPrefix = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Prefix"))) ? node2[new YamlScalarNode("Prefix")].ToString() : d_commandprefix;
+						var node2 = ((YamlMappingNode)node["Command".ToYamlNode()]).Children;
+						CommandPrefix = (!node2.IsNull() && node2.ContainsKey("Prefix")) ? node2["Prefix".ToYamlNode()].ToString() : d_commandprefix;
 					}
 
-					string MessageType = (!node.IsNull() && node.ContainsKey(new YamlScalarNode("MessageType"))) ? node[new YamlScalarNode("MessageType")].ToString() : d_messagetype;
+					string MessageType = (!node.IsNull() && node.ContainsKey("MessageType")) ? node["MessageType".ToYamlNode()].ToString() : d_messagetype;
 
 					if(MasterChannel.Length >= 2 && MasterChannel.Trim().Length > 1 && MasterChannel.Substring(0, 1) != "#")
 						MasterChannel = "#" + MasterChannel;
@@ -290,54 +292,61 @@ namespace Schumix.Framework.Config
 
 		private void MySqlMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("Enabled")].ToString()) : d_mysqlenabled;
-			string Host = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Host"))) ? nodes[new YamlScalarNode("Host")].ToString() : d_mysqlhost;
-			string User = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("User"))) ? nodes[new YamlScalarNode("User")].ToString() : d_mysqluser;
-			string Password = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Password"))) ? nodes[new YamlScalarNode("Password")].ToString() : d_mysqlpassword;
-			string Database = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Database"))) ? nodes[new YamlScalarNode("Database")].ToString() : d_mysqldatabase;
-			string Charset = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Charset"))) ? nodes[new YamlScalarNode("Charset")].ToString() : d_mysqlcharset;
+			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? Convert.ToBoolean(nodes["Enabled".ToYamlNode()].ToString()) : d_mysqlenabled;
+			string Host = (!nodes.IsNull() && nodes.ContainsKey("Host")) ? nodes["Host".ToYamlNode()].ToString() : d_mysqlhost;
+			string User = (!nodes.IsNull() && nodes.ContainsKey("User")) ? nodes["User".ToYamlNode()].ToString() : d_mysqluser;
+			string Password = (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_mysqlpassword;
+			string Database = (!nodes.IsNull() && nodes.ContainsKey("Database")) ? nodes["Database".ToYamlNode()].ToString() : d_mysqldatabase;
+			string Charset = (!nodes.IsNull() && nodes.ContainsKey("Charset")) ? nodes["Charset".ToYamlNode()].ToString() : d_mysqlcharset;
 
 			new MySqlConfig(Enabled, Host, User, Password, Database, Charset);
 		}
 
 		private void SQLiteMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("Enabled")].ToString()) : d_sqliteenabled;
-			string FileName = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("FileName"))) ? nodes[new YamlScalarNode("FileName")].ToString() : d_sqlitefilename;
+			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? Convert.ToBoolean(nodes["Enabled".ToYamlNode()].ToString()) : d_sqliteenabled;
+			string FileName = (!nodes.IsNull() && nodes.ContainsKey("FileName")) ? nodes["FileName".ToYamlNode()].ToString() : d_sqlitefilename;
 
 			new SQLiteConfig(Enabled, sUtilities.GetSpecialDirectory(FileName));
 		}
 
 		private void AddonsMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("Enabled")].ToString()) : d_addonenabled;
-			string Ignore = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Ignore"))) ? nodes[new YamlScalarNode("Ignore")].ToString() : d_addonignore;
-			string Directory = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Directory"))) ? nodes[new YamlScalarNode("Directory")].ToString() : d_addondirectory;
+			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? Convert.ToBoolean(nodes["Enabled".ToYamlNode()].ToString()) : d_addonenabled;
+			string Ignore = (!nodes.IsNull() && nodes.ContainsKey("Ignore")) ? nodes["Ignore".ToYamlNode()].ToString() : d_addonignore;
+			string Directory = (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_addondirectory;
 
 			new AddonsConfig(Enabled, Ignore, Directory);
 		}
 
 		private void ScriptsMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Lua = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Lua"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("Lua")].ToString()) : d_scriptenabled;
-			string Directory = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Directory"))) ? nodes[new YamlScalarNode("Directory")].ToString() : d_scriptdirectory;
+			bool Lua = (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? Convert.ToBoolean(nodes["Lua".ToYamlNode()].ToString()) : d_scriptenabled;
+			string Directory = (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_scriptdirectory;
 
 			new ScriptsConfig(Lua, sUtilities.GetSpecialDirectory(Directory));
 		}
 
+		private void CrashMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			string Directory = (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_crashdirectory;
+
+			new CrashConfig(sUtilities.GetSpecialDirectory(Directory));
+		}
+
 		private void LocalizationMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			string Locale = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Locale"))) ? nodes[new YamlScalarNode("Locale")].ToString() : d_locale;
+			string Locale = (!nodes.IsNull() && nodes.ContainsKey("Locale")) ? nodes["Locale".ToYamlNode()].ToString() : d_locale;
 
 			new LocalizationConfig(Locale);
 		}
 
 		private void UpdateMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("Enabled")].ToString()) : d_updateenabled;
-			string Version = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Version"))) ? nodes[new YamlScalarNode("Version")].ToString() : d_updateversion;
-			string Branch = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Branch"))) ? nodes[new YamlScalarNode("Branch")].ToString() : d_updatebranch;
-			string WebPage = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("WebPage"))) ? nodes[new YamlScalarNode("WebPage")].ToString() : d_updatewebpage;
+			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? Convert.ToBoolean(nodes["Enabled".ToYamlNode()].ToString()) : d_updateenabled;
+			string Version = (!nodes.IsNull() && nodes.ContainsKey("Version")) ? nodes["Version".ToYamlNode()].ToString() : d_updateversion;
+			string Branch = (!nodes.IsNull() && nodes.ContainsKey("Branch")) ? nodes["Branch".ToYamlNode()].ToString() : d_updatebranch;
+			string WebPage = (!nodes.IsNull() && nodes.ContainsKey("WebPage")) ? nodes["WebPage".ToYamlNode()].ToString() : d_updatewebpage;
 
 			new UpdateConfig(Enabled, Version.ToLower(), Branch, WebPage);
 		}
@@ -345,21 +354,21 @@ namespace Schumix.Framework.Config
 		private YamlMappingNode CreateServerMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Enabled",  (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? nodes[new YamlScalarNode("Enabled")].ToString() : d_serverenabled.ToString());
-			map.Add("Host",     (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Host"))) ? nodes[new YamlScalarNode("Host")].ToString() : d_serverhost);
-			map.Add("Port",     (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Port"))) ? nodes[new YamlScalarNode("Port")].ToString() : d_serverport.ToString());
-			map.Add("Password", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Password"))) ? nodes[new YamlScalarNode("Password")].ToString() : d_serverpassword);
+			map.Add("Enabled",  (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString() : d_serverenabled.ToString());
+			map.Add("Host",     (!nodes.IsNull() && nodes.ContainsKey("Host")) ? nodes["Host".ToYamlNode()].ToString() : d_serverhost);
+			map.Add("Port",     (!nodes.IsNull() && nodes.ContainsKey("Port")) ? nodes["Port".ToYamlNode()].ToString() : d_serverport.ToString());
+			map.Add("Password", (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_serverpassword);
 			return map;
 		}
 
 		private YamlMappingNode CreateLogMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("FileName",        (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("FileName"))) ? nodes[new YamlScalarNode("FileName")].ToString() : d_logfilename);
-			map.Add("LogLevel",        (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("LogLevel"))) ? nodes[new YamlScalarNode("LogLevel")].ToString() : d_loglevel.ToString());
-			map.Add("LogDirectory",    (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("LogDirectory"))) ? nodes[new YamlScalarNode("LogDirectory")].ToString() : d_logdirectory);
-			map.Add("IrcLogDirectory", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("IrcLogDirectory"))) ? nodes[new YamlScalarNode("IrcLogDirectory")].ToString() : d_irclogdirectory);
-			map.Add("IrcLog",          (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("IrcLog"))) ? nodes[new YamlScalarNode("IrcLog")].ToString() : d_irclog.ToString());
+			map.Add("FileName",        (!nodes.IsNull() && nodes.ContainsKey("FileName")) ? nodes["FileName".ToYamlNode()].ToString() : d_logfilename);
+			map.Add("LogLevel",        (!nodes.IsNull() && nodes.ContainsKey("LogLevel")) ? nodes["LogLevel".ToYamlNode()].ToString() : d_loglevel.ToString());
+			map.Add("LogDirectory",    (!nodes.IsNull() && nodes.ContainsKey("LogDirectory")) ? nodes["LogDirectory".ToYamlNode()].ToString() : d_logdirectory);
+			map.Add("IrcLogDirectory", (!nodes.IsNull() && nodes.ContainsKey("IrcLogDirectory")) ? nodes["IrcLogDirectory".ToYamlNode()].ToString() : d_irclogdirectory);
+			map.Add("IrcLog",          (!nodes.IsNull() && nodes.ContainsKey("IrcLog")) ? nodes["IrcLog".ToYamlNode()].ToString() : d_irclog.ToString());
 			return map;
 		}
 
@@ -403,23 +412,23 @@ namespace Schumix.Framework.Config
 			else
 			{
 				var node = nodes;
-				map.Add("ServerName", (!node.IsNull() && node.ContainsKey(new YamlScalarNode("ServerName"))) ? node[new YamlScalarNode("ServerName")].ToString() : d_servername);
-				map.Add("Server",     (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Server"))) ? node[new YamlScalarNode("Server")].ToString() : d_server);
-				map.Add("Port",       (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Port"))) ? node[new YamlScalarNode("Port")].ToString() : d_port.ToString());
-				map.Add("Ssl",        (!node.IsNull() && node.ContainsKey(new YamlScalarNode("Ssl"))) ? node[new YamlScalarNode("Ssl")].ToString() : d_ssl.ToString());
-				map.Add("NickName",   (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName"))) ? node[new YamlScalarNode("NickName")].ToString() : d_nickname);
-				map.Add("NickName2",  (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName2"))) ? node[new YamlScalarNode("NickName2")].ToString() : d_nickname2);
-				map.Add("NickName3",  (!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickName3"))) ? node[new YamlScalarNode("NickName3")].ToString() : d_nickname3);
-				map.Add("UserName",   (!node.IsNull() && node.ContainsKey(new YamlScalarNode("UserName"))) ? node[new YamlScalarNode("UserName")].ToString() : d_username);
-				map.Add("UserInfo",   (!node.IsNull() && node.ContainsKey(new YamlScalarNode("UserInfo"))) ? node[new YamlScalarNode("UserInfo")].ToString() : d_userinfo);
+				map.Add("ServerName", (!node.IsNull() && node.ContainsKey("ServerName")) ? node["ServerName".ToYamlNode()].ToString() : d_servername);
+				map.Add("Server",     (!node.IsNull() && node.ContainsKey("Server")) ? node["Server".ToYamlNode()].ToString() : d_server);
+				map.Add("Port",       (!node.IsNull() && node.ContainsKey("Port")) ? node["Port".ToYamlNode()].ToString() : d_port.ToString());
+				map.Add("Ssl",        (!node.IsNull() && node.ContainsKey("Ssl")) ? node["Ssl".ToYamlNode()].ToString() : d_ssl.ToString());
+				map.Add("NickName",   (!node.IsNull() && node.ContainsKey("NickName")) ? node["NickName".ToYamlNode()].ToString() : d_nickname);
+				map.Add("NickName2",  (!node.IsNull() && node.ContainsKey("NickName2")) ? node["NickName2".ToYamlNode()].ToString() : d_nickname2);
+				map.Add("NickName3",  (!node.IsNull() && node.ContainsKey("NickName3")) ? node["NickName3".ToYamlNode()].ToString() : d_nickname3);
+				map.Add("UserName",   (!node.IsNull() && node.ContainsKey("UserName")) ? node["UserName".ToYamlNode()].ToString() : d_username);
+				map.Add("UserInfo",   (!node.IsNull() && node.ContainsKey("UserInfo")) ? node["UserInfo".ToYamlNode()].ToString() : d_userinfo);
 
 				var map2 = new YamlMappingNode();
 
-				if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("MasterChannel")))
+				if(!node.IsNull() && node.ContainsKey("MasterChannel"))
 				{
-					var node2 = ((YamlMappingNode)node[new YamlScalarNode("MasterChannel")]).Children;
-					map2.Add("Name",     "\"" + ((!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Name"))) ? node2[new YamlScalarNode("Name")].ToString() : d_masterchannel) + "\"");
-					map2.Add("Password", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Password"))) ? node2[new YamlScalarNode("Password")].ToString() : d_masterchannelpassword);
+					var node2 = ((YamlMappingNode)node["MasterChannel".ToYamlNode()]).Children;
+					map2.Add("Name",     "\"" + ((!node2.IsNull() && node2.ContainsKey("Name")) ? node2["Name".ToYamlNode()].ToString() : d_masterchannel) + "\"");
+					map2.Add("Password", (!node2.IsNull() && node2.ContainsKey("Password")) ? node2["Password".ToYamlNode()].ToString() : d_masterchannelpassword);
 				}
 				else
 				{
@@ -428,15 +437,15 @@ namespace Schumix.Framework.Config
 				}
 
 				map.Add("MasterChannel",  map2);
-				map.Add("IgnoreChannels", (!node.IsNull() && node.ContainsKey(new YamlScalarNode("IgnoreChannels"))) ? node[new YamlScalarNode("IgnoreChannels")].ToString() : d_ignorechannels);
-				map.Add("IgnoreNames",    (!node.IsNull() && node.ContainsKey(new YamlScalarNode("IgnoreNames"))) ? node[new YamlScalarNode("IgnoreNames")].ToString() : d_ignorenames);
+				map.Add("IgnoreChannels", (!node.IsNull() && node.ContainsKey("IgnoreChannels")) ? node["IgnoreChannels".ToYamlNode()].ToString() : d_ignorechannels);
+				map.Add("IgnoreNames",    (!node.IsNull() && node.ContainsKey("IgnoreNames")) ? node["IgnoreNames".ToYamlNode()].ToString() : d_ignorenames);
 				map2 = new YamlMappingNode();
 
-				if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("NickServ")))
+				if(!node.IsNull() && node.ContainsKey("NickServ"))
 				{
-					var node2 = ((YamlMappingNode)node[new YamlScalarNode("NickServ")]).Children;
-					map2.Add("Enabled",  (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? node2[new YamlScalarNode("Enabled")].ToString() : d_usenickserv.ToString());
-					map2.Add("Password", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Password"))) ? node2[new YamlScalarNode("Password")].ToString() : d_nickservpassword);
+					var node2 = ((YamlMappingNode)node["NickServ".ToYamlNode()]).Children;
+					map2.Add("Enabled",  (!node2.IsNull() && node2.ContainsKey("Enabled")) ? node2["Enabled".ToYamlNode()].ToString() : d_usenickserv.ToString());
+					map2.Add("Password", (!node2.IsNull() && node2.ContainsKey("Password")) ? node2["Password".ToYamlNode()].ToString() : d_nickservpassword);
 				}
 				else
 				{
@@ -447,11 +456,11 @@ namespace Schumix.Framework.Config
 				map.Add("NickServ", map2);
 				map2 = new YamlMappingNode();
 
-				if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("HostServ")))
+				if(!node.IsNull() && node.ContainsKey("HostServ"))
 				{
-					var node2 = ((YamlMappingNode)node[new YamlScalarNode("HostServ")]).Children;
-					map2.Add("Enabled", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? node2[new YamlScalarNode("Enabled")].ToString() : d_usehostserv.ToString());
-					map2.Add("Vhost",   (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Vhost"))) ? node2[new YamlScalarNode("Vhost")].ToString() : d_hostservstatus.ToString());
+					var node2 = ((YamlMappingNode)node["HostServ".ToYamlNode()]).Children;
+					map2.Add("Enabled", (!node2.IsNull() && node2.ContainsKey("Enabled")) ? node2["Enabled".ToYamlNode()].ToString() : d_usehostserv.ToString());
+					map2.Add("Vhost",   (!node2.IsNull() && node2.ContainsKey("Vhost")) ? node2["Vhost".ToYamlNode()].ToString() : d_hostservstatus.ToString());
 				}
 				else
 				{
@@ -462,10 +471,10 @@ namespace Schumix.Framework.Config
 				map.Add("HostServ", map2);
 				map2 = new YamlMappingNode();
 
-				if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("Wait")))
+				if(!node.IsNull() && node.ContainsKey("Wait"))
 				{
-					var node2 = ((YamlMappingNode)node[new YamlScalarNode("Wait")]).Children;
-					map2.Add("MessageSending", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("MessageSending"))) ? node2[new YamlScalarNode("MessageSending")].ToString() : d_messagesending.ToString());
+					var node2 = ((YamlMappingNode)node["Wait".ToYamlNode()]).Children;
+					map2.Add("MessageSending", (!node2.IsNull() && node2.ContainsKey("MessageSending")) ? node2["MessageSending".ToYamlNode()].ToString() : d_messagesending.ToString());
 				}
 				else
 					map2.Add("MessageSending", d_messagesending.ToString());
@@ -473,16 +482,16 @@ namespace Schumix.Framework.Config
 				map.Add("Wait", map2);
 				map2 = new YamlMappingNode();
 
-				if(!node.IsNull() && node.ContainsKey(new YamlScalarNode("Command")))
+				if(!node.IsNull() && node.ContainsKey("Command"))
 				{
-					var node2 = ((YamlMappingNode)node[new YamlScalarNode("Command")]).Children;
-					map2.Add("Prefix", "\"" + ((!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Prefix"))) ? node2[new YamlScalarNode("Prefix")].ToString() : d_commandprefix) + "\"");
+					var node2 = ((YamlMappingNode)node["Command".ToYamlNode()]).Children;
+					map2.Add("Prefix", "\"" + ((!node2.IsNull() && node2.ContainsKey("Prefix")) ? node2["Prefix".ToYamlNode()].ToString() : d_commandprefix) + "\"");
 				}
 				else
 					map2.Add("Prefix", "\"" + d_commandprefix + "\"");
 
 				map.Add("Command",     map2);
-				map.Add("MessageType", (!node.IsNull() && node.ContainsKey(new YamlScalarNode("MessageType"))) ? node[new YamlScalarNode("MessageType")].ToString() : d_messagetype);
+				map.Add("MessageType", (!node.IsNull() && node.ContainsKey("MessageType")) ? node["MessageType".ToYamlNode()].ToString() : d_messagetype);
 			}
 
 			return map;
@@ -491,54 +500,61 @@ namespace Schumix.Framework.Config
 		private YamlMappingNode CreateMySqlMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Enabled",  (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? nodes[new YamlScalarNode("Enabled")].ToString() : d_mysqlenabled.ToString());
-			map.Add("Host",     (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Host"))) ? nodes[new YamlScalarNode("Host")].ToString() : d_mysqlhost);
-			map.Add("User",     (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("User"))) ? nodes[new YamlScalarNode("User")].ToString() : d_mysqluser);
-			map.Add("Password", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Password"))) ? nodes[new YamlScalarNode("Password")].ToString() : d_mysqlpassword);
-			map.Add("Database", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Database"))) ? nodes[new YamlScalarNode("Database")].ToString() : d_mysqldatabase);
-			map.Add("Charset",  (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Charset"))) ? nodes[new YamlScalarNode("Charset")].ToString() : d_mysqlcharset);
+			map.Add("Enabled",  (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString() : d_mysqlenabled.ToString());
+			map.Add("Host",     (!nodes.IsNull() && nodes.ContainsKey("Host")) ? nodes["Host".ToYamlNode()].ToString() : d_mysqlhost);
+			map.Add("User",     (!nodes.IsNull() && nodes.ContainsKey("User")) ? nodes["User".ToYamlNode()].ToString() : d_mysqluser);
+			map.Add("Password", (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_mysqlpassword);
+			map.Add("Database", (!nodes.IsNull() && nodes.ContainsKey("Database")) ? nodes["Database".ToYamlNode()].ToString() : d_mysqldatabase);
+			map.Add("Charset",  (!nodes.IsNull() && nodes.ContainsKey("Charset")) ? nodes["Charset".ToYamlNode()].ToString() : d_mysqlcharset);
 			return map;
 		}
 
 		private YamlMappingNode CreateSQLiteMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Enabled",  (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? nodes[new YamlScalarNode("Enabled")].ToString() : d_sqliteenabled.ToString());
-			map.Add("FileName", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("FileName"))) ? nodes[new YamlScalarNode("FileName")].ToString() : d_sqlitefilename);
+			map.Add("Enabled",  (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString() : d_sqliteenabled.ToString());
+			map.Add("FileName", (!nodes.IsNull() && nodes.ContainsKey("FileName")) ? nodes["FileName".ToYamlNode()].ToString() : d_sqlitefilename);
 			return map;
 		}
 
 		private YamlMappingNode CreateAddonsMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Enabled",   (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? nodes[new YamlScalarNode("Enabled")].ToString() : d_addonenabled.ToString());
-			map.Add("Ignore",    (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Ignore"))) ? nodes[new YamlScalarNode("Ignore")].ToString() : d_addonignore);
-			map.Add("Directory", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Directory"))) ? nodes[new YamlScalarNode("Directory")].ToString() : d_addondirectory);
+			map.Add("Enabled",   (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString() : d_addonenabled.ToString());
+			map.Add("Ignore",    (!nodes.IsNull() && nodes.ContainsKey("Ignore")) ? nodes["Ignore".ToYamlNode()].ToString() : d_addonignore);
+			map.Add("Directory", (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_addondirectory);
 			return map;
 		}
 
 		private YamlMappingNode CreateScriptsMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Lua",       (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Lua"))) ? nodes[new YamlScalarNode("Lua")].ToString() : d_scriptenabled.ToString());
-			map.Add("Directory", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Directory"))) ? nodes[new YamlScalarNode("Directory")].ToString() : d_scriptdirectory);
+			map.Add("Lua",       (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? nodes["Lua".ToYamlNode()].ToString() : d_scriptenabled.ToString());
+			map.Add("Directory", (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_scriptdirectory);
+			return map;
+		}
+
+		private YamlMappingNode CreateCrashMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			var map = new YamlMappingNode();
+			map.Add("Directory", (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_crashdirectory);
 			return map;
 		}
 
 		private YamlMappingNode CreateLocalizationMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Locale", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Locale"))) ? nodes[new YamlScalarNode("Locale")].ToString() : d_locale);
+			map.Add("Locale", (!nodes.IsNull() && nodes.ContainsKey("Locale")) ? nodes["Locale".ToYamlNode()].ToString() : d_locale);
 			return map;
 		}
 
 		private YamlMappingNode CreateUpdateMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Enabled", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? nodes[new YamlScalarNode("Enabled")].ToString() : d_updateenabled.ToString());
-			map.Add("Version", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Version"))) ? nodes[new YamlScalarNode("Version")].ToString() : d_updateversion);
-			map.Add("Branch",  (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Branch"))) ? nodes[new YamlScalarNode("Branch")].ToString() : d_updatebranch);
-			map.Add("WebPage", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("WebPage"))) ? nodes[new YamlScalarNode("WebPage")].ToString() : d_updatewebpage);
+			map.Add("Enabled", (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString() : d_updateenabled.ToString());
+			map.Add("Version", (!nodes.IsNull() && nodes.ContainsKey("Version")) ? nodes["Version".ToYamlNode()].ToString() : d_updateversion);
+			map.Add("Branch",  (!nodes.IsNull() && nodes.ContainsKey("Branch")) ? nodes["Branch".ToYamlNode()].ToString() : d_updatebranch);
+			map.Add("WebPage", (!nodes.IsNull() && nodes.ContainsKey("WebPage")) ? nodes["WebPage".ToYamlNode()].ToString() : d_updatewebpage);
 			return map;
 		}
 	}

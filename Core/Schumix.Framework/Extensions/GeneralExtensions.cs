@@ -465,5 +465,15 @@ namespace Schumix.Framework.Extensions
 
 			return FileName == string.Empty ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();
 		}
+
+		public static bool ContainsKey(this IDictionary<YamlNode, YamlNode> Nodes, string Key)
+		{
+			return Nodes.ContainsKey(new YamlScalarNode(Key));
+		}
+
+		public static YamlScalarNode ToYamlNode(this string Text)
+		{
+			return new YamlScalarNode(Text);
+		}
 	}
 }

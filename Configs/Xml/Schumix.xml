@@ -66,6 +66,9 @@
         <Lua>false</Lua>
         <Directory>Scripts</Directory>
     </Scripts>
+    <Crash>
+        <Directory>Dumps</Directory>
+    </Crash>
     <Localization>
         <Locale>enUS</Locale>
     </Localization>

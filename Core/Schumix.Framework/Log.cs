@@ -25,7 +25,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework
 {
-	public sealed class Log
+	public sealed class Log : DefaultConfig
 	{
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
@@ -62,7 +62,7 @@ namespace Schumix.Framework
 
 		public static void Initialize()
 		{
-			Initialize("Schumix.log");
+			Initialize(d_logfilename);
 		}
 
 		public static void Initialize(string FileName)

@@ -46,8 +46,8 @@ namespace Schumix.CompilerAddon.Config
 
 			Log.Notice("CompilerAddonConfig", sLocalization.Config("Text"));
 
-			var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("CompilerAddon"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("CompilerAddon")]).Children : (Dictionary<YamlNode, YamlNode>)null;
-			CompilerMap((!compilermap.IsNull() && compilermap.ContainsKey(new YamlScalarNode("Flooding"))) ? ((YamlMappingNode)compilermap[new YamlScalarNode("Flooding")]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
+			CompilerMap((!compilermap.IsNull() && compilermap.ContainsKey("Flooding")) ? ((YamlMappingNode)compilermap["Flooding".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
 
 			Log.Success("CompilerAddonConfig", sLocalization.Config("Text2"));
 		}
@@ -74,10 +74,10 @@ namespace Schumix.CompilerAddon.Config
 
 				try
 				{
-					var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("CompilerAddon"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("CompilerAddon")]).Children : (Dictionary<YamlNode, YamlNode>)null;
+					var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Compiler", CreateCompilerMap((!compilermap.IsNull() && compilermap.ContainsKey(new YamlScalarNode("Compiler"))) ? ((YamlMappingNode)compilermap[new YamlScalarNode("Compiler")]).Children : (Dictionary<YamlNode, YamlNode>)null));
+					nodes2.Add("Compiler", CreateCompilerMap((!compilermap.IsNull() && compilermap.ContainsKey("Compiler")) ? ((YamlMappingNode)compilermap["Compiler".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
 					nodes.Add("CompilerAddon", nodes2);
 
 					sUtilities.CreateFile(filename);
@@ -101,39 +101,39 @@ namespace Schumix.CompilerAddon.Config
 
 		private void CompilerMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool CompilerEnabled = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("Enabled")].ToString()) : d_compilerenabled;
+			bool CompilerEnabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? Convert.ToBoolean(nodes["Enabled".ToYamlNode()].ToString()) : d_compilerenabled;
 			bool Enabled = d_enabled;
 			int Memory = d_memory;
 
-			if(!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("MaxAllocating")))
+			if(!nodes.IsNull() && nodes.ContainsKey("MaxAllocating"))
 			{
-				var node2 = ((YamlMappingNode)nodes[new YamlScalarNode("MaxAllocating")]).Children;
-				Enabled = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(node2[new YamlScalarNode("Enabled")].ToString()) : d_enabled;
-				Memory = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Memory"))) ? Convert.ToInt32(node2[new YamlScalarNode("Memory")].ToString()) : d_memory;
+				var node2 = ((YamlMappingNode)nodes["MaxAllocating".ToYamlNode()]).Children;
+				Enabled = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? Convert.ToBoolean(node2["Enabled".ToYamlNode()].ToString()) : d_enabled;
+				Memory = (!node2.IsNull() && node2.ContainsKey("Memory")) ? Convert.ToInt32(node2["Memory".ToYamlNode()].ToString()) : d_memory;
 			}
 
-			string CompilerOptions = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("CompilerOptions"))) ? nodes[new YamlScalarNode("CompilerOptions")].ToString() : d_compileroptions;
-			int WarningLevel = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("WarningLevel"))) ? Convert.ToInt32(nodes[new YamlScalarNode("WarningLevel")].ToString()) : d_warninglevel;
-			bool TreatWarningsAsErrors = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("TreatWarningsAsErrors"))) ? Convert.ToBoolean(nodes[new YamlScalarNode("TreatWarningsAsErrors")].ToString()) : d_treatwarningsaserrors;
-			string Referenced = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Referenced"))) ? nodes[new YamlScalarNode("Referenced")].ToString() : d_referenced;
-			string ReferencedAssemblies = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("ReferencedAssemblies"))) ? nodes[new YamlScalarNode("ReferencedAssemblies")].ToString() : d_referencedassemblies;
-			string MainClass = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("MainClass"))) ? nodes[new YamlScalarNode("MainClass")].ToString() : d_mainclass;
-			string MainConstructor = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("MainConstructor"))) ? nodes[new YamlScalarNode("MainConstructor")].ToString() : d_mainconstructor;
+			string CompilerOptions = (!nodes.IsNull() && nodes.ContainsKey("CompilerOptions")) ? nodes["CompilerOptions".ToYamlNode()].ToString() : d_compileroptions;
+			int WarningLevel = (!nodes.IsNull() && nodes.ContainsKey("WarningLevel")) ? Convert.ToInt32(nodes["WarningLevel".ToYamlNode()].ToString()) : d_warninglevel;
+			bool TreatWarningsAsErrors = (!nodes.IsNull() && nodes.ContainsKey("TreatWarningsAsErrors")) ? Convert.ToBoolean(nodes["TreatWarningsAsErrors".ToYamlNode()].ToString()) : d_treatwarningsaserrors;
+			string Referenced = (!nodes.IsNull() && nodes.ContainsKey("Referenced")) ? nodes["Referenced".ToYamlNode()].ToString() : d_referenced;
+			string ReferencedAssemblies = (!nodes.IsNull() && nodes.ContainsKey("ReferencedAssemblies")) ? nodes["ReferencedAssemblies".ToYamlNode()].ToString() : d_referencedassemblies;
+			string MainClass = (!nodes.IsNull() && nodes.ContainsKey("MainClass")) ? nodes["MainClass".ToYamlNode()].ToString() : d_mainclass;
+			string MainConstructor = (!nodes.IsNull() && nodes.ContainsKey("MainConstructor")) ? nodes["MainConstructor".ToYamlNode()].ToString() : d_mainconstructor;
 			new CompilerConfig(CompilerEnabled, Enabled, Memory, CompilerOptions, WarningLevel, TreatWarningsAsErrors, Referenced, ReferencedAssemblies, MainClass, MainConstructor);
 		}
 
 		private YamlMappingNode CreateCompilerMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Enabled",               (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Enabled"))) ? nodes[new YamlScalarNode("Enabled")].ToString() : d_compilerenabled.ToString());
+			map.Add("Enabled",               (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString() : d_compilerenabled.ToString());
 
 			var map2 = new YamlMappingNode();
 
-			if(!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("MaxAllocating")))
+			if(!nodes.IsNull() && nodes.ContainsKey("MaxAllocating"))
 			{
-				var node2 = ((YamlMappingNode)nodes[new YamlScalarNode("MaxAllocating")]).Children;
-				map2.Add("Enabled", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? node2[new YamlScalarNode("Enabled")].ToString() : d_enabled.ToString());
-				map2.Add("Memory",  (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Memory"))) ? node2[new YamlScalarNode("Memory")].ToString() : d_memory.ToString());
+				var node2 = ((YamlMappingNode)nodes["MaxAllocating".ToYamlNode()]).Children;
+				map2.Add("Enabled", (!node2.IsNull() && node2.ContainsKey("Enabled")) ? node2["Enabled".ToYamlNode()].ToString() : d_enabled.ToString());
+				map2.Add("Memory",  (!node2.IsNull() && node2.ContainsKey("Memory")) ? node2["Memory".ToYamlNode()].ToString() : d_memory.ToString());
 			}
 			else
 			{
@@ -142,13 +142,13 @@ namespace Schumix.CompilerAddon.Config
 			}
 
 			map.Add("MaxAllocating",         map2);
-			map.Add("CompilerOptions",       (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("CompilerOptions"))) ? nodes[new YamlScalarNode("CompilerOptions")].ToString() : d_compileroptions);
-			map.Add("WarningLevel",          (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("WarningLevel"))) ? nodes[new YamlScalarNode("WarningLevel")].ToString() : d_warninglevel.ToString());
-			map.Add("TreatWarningsAsErrors", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("TreatWarningsAsErrors"))) ? nodes[new YamlScalarNode("TreatWarningsAsErrors")].ToString() : d_treatwarningsaserrors.ToString());
-			map.Add("Referenced",            (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Referenced"))) ? nodes[new YamlScalarNode("Referenced")].ToString() : d_referenced);
-			map.Add("ReferencedAssemblies",  (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("ReferencedAssemblies"))) ? nodes[new YamlScalarNode("ReferencedAssemblies")].ToString() : d_referencedassemblies);
-			map.Add("MainClass",             (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("MainClass"))) ? nodes[new YamlScalarNode("MainClass")].ToString() : d_mainclass);
-			map.Add("MainConstructor",       (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("MainConstructor"))) ? nodes[new YamlScalarNode("MainConstructor")].ToString() : d_mainconstructor);
+			map.Add("CompilerOptions",       (!nodes.IsNull() && nodes.ContainsKey("CompilerOptions")) ? nodes["CompilerOptions".ToYamlNode()].ToString() : d_compileroptions);
+			map.Add("WarningLevel",          (!nodes.IsNull() && nodes.ContainsKey("WarningLevel")) ? nodes["WarningLevel".ToYamlNode()].ToString() : d_warninglevel.ToString());
+			map.Add("TreatWarningsAsErrors", (!nodes.IsNull() && nodes.ContainsKey("TreatWarningsAsErrors")) ? nodes["TreatWarningsAsErrors".ToYamlNode()].ToString() : d_treatwarningsaserrors.ToString());
+			map.Add("Referenced",            (!nodes.IsNull() && nodes.ContainsKey("Referenced")) ? nodes["Referenced".ToYamlNode()].ToString() : d_referenced);
+			map.Add("ReferencedAssemblies",  (!nodes.IsNull() && nodes.ContainsKey("ReferencedAssemblies")) ? nodes["ReferencedAssemblies".ToYamlNode()].ToString() : d_referencedassemblies);
+			map.Add("MainClass",             (!nodes.IsNull() && nodes.ContainsKey("MainClass")) ? nodes["MainClass".ToYamlNode()].ToString() : d_mainclass);
+			map.Add("MainConstructor",       (!nodes.IsNull() && nodes.ContainsKey("MainConstructor")) ? nodes["MainConstructor".ToYamlNode()].ToString() : d_mainconstructor);
 			return map;
 		}
 	}

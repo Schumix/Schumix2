@@ -66,11 +66,12 @@ namespace Schumix.Framework.Config
 		protected const string d_addondirectory        = "Addons";
 		protected const bool d_scriptenabled           = false;
 		protected const string d_scriptdirectory       = "Scripts";
+		protected const string d_crashdirectory        = "Dumps";
 		protected const string d_locale                = "enUS";
 		protected const bool d_updateenabled           = false;
 		protected const string d_updateversion         = "stable";
 		protected const string d_updatebranch          = "master";
 		protected const string d_updatewebpage         = "https://github.com/megax/Schumix2";
-		protected bool error                          = false;
+		protected bool errors                          = false;
 	}
 }
