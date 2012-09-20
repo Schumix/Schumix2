@@ -19,7 +19,7 @@
 
 using System;
 
-namespace Schumix.RevisionAddon
+namespace Schumix.RevisionAddon.Assemblas
 {
 	class Assembla
 	{

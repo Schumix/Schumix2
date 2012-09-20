@@ -18,29 +18,14 @@
  */
 
 using System;
-using System.IO;
-using System.Text;
-using System.Runtime.Serialization.Json;
+using System.Runtime.Serialization;
 
-namespace Schumix.Irc.Commands.GoogleWebSearch
+namespace Schumix.RevisionAddon.Githubs.Author
 {
-	class JsonHelper
+	[DataContract]
+	class GithubAuthor
 	{
-		public static T Deserialise<T>(string json) where T : new()
-		{
-			if(!string.IsNullOrEmpty(json))
-			{
-				byte[] respBytes = ASCIIEncoding.UTF8.GetBytes(json);
-
-				using(var reader = new StreamReader(new MemoryStream(respBytes)))
-				{
-					var serializer = new DataContractJsonSerializer(typeof(T));
-					T returnObj = (T)serializer.ReadObject(reader.BaseStream);
-					return returnObj;
-				}
-			}
-			else
-				return new T();
-		}
+		[DataMember(Name = "author")]
+		public GithubAuthorResult AuthorResult { get; set; }
 	}
 }

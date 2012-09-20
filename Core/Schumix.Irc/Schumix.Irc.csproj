@@ -91,7 +91,6 @@
     <Compile Include="Ignore\IgnoreCommand.cs" />
     <Compile Include="Ignore\IgnoreChannel.cs" />
     <Compile Include="Ignore\IgnoreAddon.cs" />
-    <Compile Include="Commands\GoogleWebSearch\JsonHelper.cs" />
     <Compile Include="Commands\GoogleWebSearch\GoogleWebResult.cs" />
     <Compile Include="Commands\GoogleWebSearch\GoogleWebResponseData.cs" />
     <Compile Include="Commands\GoogleWebSearch\GoogleWebResultSet.cs" />

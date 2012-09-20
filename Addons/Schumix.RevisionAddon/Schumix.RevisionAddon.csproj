@@ -51,12 +51,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RevisionAddon.cs" />
     <Compile Include="Commands\Commands.cs" />
     <Compile Include="Assembla\Assembla.cs" />
+    <Compile Include="Github\Github.cs" />
+    <Compile Include="Github\Author\GithubAuthor.cs" />
+    <Compile Include="Github\Author\GithubAuthorResult.cs" />
+    <Compile Include="Github\Message\GithubMessage.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -77,5 +82,8 @@
     <Folder Include="Properties\" />
     <Folder Include="Commands\" />
     <Folder Include="Assembla\" />
+    <Folder Include="Github\" />
+    <Folder Include="Github\Author\" />
+    <Folder Include="Github\Message\" />
   </ItemGroup>
 </Project>
