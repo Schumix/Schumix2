@@ -79,6 +79,10 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 ## Log
 
 * **FileName:** Meghatározza hova mentődjenek el a log információk. Alapértelmezés: `Schumix.log`
+* **DateFileName:** Ha ez a beállítás bekapcsolásra került akkor a log fájl nevéből létrehoz egy mappát a program és abba az indítás dátumával menti el a logot. Így áttekinthetőbbé válik.
+                    Alapértelmezés: `False`
+* **MaxFileSize:** Meghatározza a log fájlt maximális méretét. Ha eléri azt a fájl akkor törlődik és a program csinál helyette egy újat.
+                    Alapértelmezés: `100` (mb-ban értendő)
 * **LogLevel:** Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelmezés: `2`
     * **Szintjei:** `0` (Normális üzenetek és a sikeresek)
                     `1` (Figyelmeztetések)

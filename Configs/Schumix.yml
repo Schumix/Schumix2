@@ -33,6 +33,8 @@ Schumix:
         MessageType: Privmsg
     Log:
         FileName: Schumix.log
+        DateFileName: False
+        MaxFileSize: 100
         LogLevel: 2
         LogDirectory: Logs
         IrcLogDirectory: Channels

@@ -34,6 +34,8 @@ namespace Schumix.Server.Config
 		private readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private const string _logfilename             = "Server.log";
+		private const bool _logdatefilename           = false;
+		private const int _logmaxfilesize             = 100;
 		private const int _loglevel                   = 2;
 		private const string _logdirectory            = "Logs";
 		private const int _listenerport               = 35220;
@@ -98,10 +100,12 @@ namespace Schumix.Server.Config
 					xmldoc.Load(sUtilities.DirectoryToSpecial(configdir, configfile));
 
 					string LogFileName = !xmldoc.SelectSingleNode("Server/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/FileName").InnerText : _logfilename;
+					bool LogDateFileName = !xmldoc.SelectSingleNode("Server/Log/DateFileName").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/DateFileName").InnerText) : _logdatefilename;
+					int LogMaxFileSize = !xmldoc.SelectSingleNode("Server/Log/MaxFileSize").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/MaxFileSize").InnerText) : _logmaxfilesize;
 					int LogLevel = !xmldoc.SelectSingleNode("Server/Log/LogLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Log/LogLevel").InnerText) : _loglevel;
 					string LogDirectory = !xmldoc.SelectSingleNode("Server/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Server/Log/LogDirectory").InnerText : _logdirectory;
 
-					new Framework.Config.LogConfig(LogFileName, LogLevel, LogDirectory, string.Empty, false);
+					new Framework.Config.LogConfig(LogFileName, LogDateFileName, LogMaxFileSize, LogLevel, LogDirectory, string.Empty, false);
 
 					Log.Initialize(LogFileName);
 					Log.Debug("Config", ">> {0}", configfile);
@@ -152,7 +156,7 @@ namespace Schumix.Server.Config
 			}
 			catch(Exception e)
 			{
-				new Framework.Config.LogConfig(_logfilename, 3, _logdirectory, string.Empty, false);
+				new Framework.Config.LogConfig(_logfilename, _logdatefilename, _logmaxfilesize, 3, _logdirectory, string.Empty, false);
 				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
@@ -170,7 +174,7 @@ namespace Schumix.Server.Config
 					return true;
 				else
 				{
-					new Framework.Config.LogConfig(_logfilename, 3, _logdirectory, string.Empty, false);
+					new Framework.Config.LogConfig(_logfilename, _logdatefilename, _logmaxfilesize, 3, _logdirectory, string.Empty, false);
 					Log.Initialize(_logfilename);
 					Log.Error("Config", sLConsole.Config("Text5"));
 					Log.Debug("Config", sLConsole.Config("Text6"));
@@ -194,6 +198,8 @@ namespace Schumix.Server.Config
 						// <Log>
 						w.WriteStartElement("Log");
 						w.WriteElementString("FileName",        (!xmldoc.SelectSingleNode("Server/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/FileName").InnerText : _logfilename));
+						w.WriteElementString("DateFileName",    (!xmldoc.SelectSingleNode("Server/Log/DateFileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/DateFileName").InnerText : _logdatefilename.ToString()));
+						w.WriteElementString("MaxFileSize",     (!xmldoc.SelectSingleNode("Server/Log/MaxFileSize").IsNull() ? xmldoc.SelectSingleNode("Server/Log/MaxFileSize").InnerText : _logmaxfilesize.ToString()));
 						w.WriteElementString("LogLevel",        (!xmldoc.SelectSingleNode("Server/Log/LogLevel").IsNull() ? xmldoc.SelectSingleNode("Server/Log/LogLevel").InnerText : _loglevel.ToString()));
 						w.WriteElementString("LogDirectory",    (!xmldoc.SelectSingleNode("Server/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Server/Log/LogDirectory").InnerText : _logdirectory));
 

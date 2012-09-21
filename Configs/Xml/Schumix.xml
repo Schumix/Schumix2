@@ -40,6 +40,8 @@
     </Irc>
     <Log>
         <FileName>Schumix.log</FileName>
+        <DateFileName>False</DateFileName>
+        <MaxFileSize>100</MaxFileSize>
         <LogLevel>2</LogLevel>
         <LogDirectory>Logs</LogDirectory>
         <IrcLogDirectory>Channels</IrcLogDirectory>

@@ -25,6 +25,8 @@ namespace Schumix.Framework.Config
 	public class DefaultConfig
 	{
 		protected const string d_logfilename           = "Schumix.log";
+		protected const bool d_logdatefilename         = false;
+		protected const int d_logmaxfilesize           = 100;
 		protected const int d_loglevel                 = 2;
 		protected const string d_logdirectory          = "Logs";
 		protected const string d_irclogdirectory       = "Channels";
