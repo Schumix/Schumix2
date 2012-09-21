@@ -78,7 +78,7 @@ namespace Schumix.Framework
 					_FileName = _FileName.Substring(0, _FileName.IndexOf(".log"));
 
 				sUtilities.CreateDirectory(LogConfig.LogDirectory + "/" + _FileName);
-				_FileName = _FileName + "/" + string.Format("{0}.{1}.{2}-{3}:{4}:{5}.log", time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+				_FileName = _FileName + "/" + string.Format("{0}_{1}_{2}-{3}_{4}_{5}.log", time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
 							time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
 							time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
 							time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
@@ -89,7 +89,6 @@ namespace Schumix.Framework
 			}
 			else
 			{
-				Console.WriteLine("asdddddddddddddddddddd");
 				string logfile = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
 
 				if(File.Exists(logfile))
