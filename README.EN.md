@@ -132,6 +132,11 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 * **Branch:** Beállítható vele az ág (branch). Ez csak a current verziók esetében érdekes. Alapértelmezés: `master`
 * **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: `https://github.com/megax/Schumix2`
 
+## Shutdown
+
+* **MaxMemory:** Meghatározza a program leállítását ha eléri a megadott memória nagyságot. Ha több szerverre is csatlakozik a bot akkor annyival fog tovább nőni ez a korlát ahány irc szerver be van állítva a konfigba.
+                 Alapértelmezés: `100` (mb-ban értendő)
+
 # Adatbázis beüzemelése
 
 ## MySql

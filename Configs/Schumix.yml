@@ -63,3 +63,5 @@ Schumix:
         Version: stable
         Branch: master
         WebPage: https://github.com/megax/Schumix2
+    Shutdown:
+        MaxMemory: 100

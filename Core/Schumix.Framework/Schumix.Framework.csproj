@@ -118,6 +118,7 @@
     <Compile Include="Config\YamlConfig.cs" />
     <Compile Include="Network\ClientPacketHandlerDelegate.cs" />
     <Compile Include="Config\CrashConfig.cs" />
+    <Compile Include="Config\ShutdownConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

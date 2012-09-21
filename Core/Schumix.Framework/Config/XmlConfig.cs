@@ -171,6 +171,10 @@ namespace Schumix.Framework.Config
 
 			new UpdateConfig(Enabled, Version.ToLower(), Branch, WebPage);
 
+			int MaxMemory = !xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").InnerText) : d_shutdownmaxmemory;
+
+			new ShutdownConfig(MaxMemory);
+
 			Log.Success("XmlConfig", sLConsole.Config("Text4"));
 			Console.WriteLine();
 		}
@@ -416,6 +420,13 @@ namespace Schumix.Framework.Config
 						w.WriteElementString("WebPage",         (!xmldoc.SelectSingleNode("Schumix/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/WebPage").InnerText : d_updatewebpage));
 
 						// </Update>
+						w.WriteEndElement();
+
+						// <Shutdown>
+						w.WriteStartElement("Shutdown");
+						w.WriteElementString("MaxMemory",       (!xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").InnerText : d_shutdownmaxmemory.ToString()));
+
+						// </Shutdown>
 						w.WriteEndElement();
 
 						// </Schumix>

@@ -78,4 +78,7 @@
         <Branch>master</Branch>
         <WebPage>https://github.com/megax/Schumix2</WebPage>
     </Update>
+    <Shutdown>
+        <MaxMemory>100</MaxMemory>
+    </Shutdown>
 </Schumix>

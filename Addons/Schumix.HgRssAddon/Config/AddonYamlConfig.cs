@@ -34,6 +34,7 @@ namespace Schumix.HgRssAddon.Config
 	{
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -46,8 +47,8 @@ namespace Schumix.HgRssAddon.Config
 
 			Log.Notice("HgRssAddonConfig", sLocalization.Config("Text"));
 
-			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("HgRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["HgRssAddon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
-			RssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("HgRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["HgRssAddon".ToYamlNode()]).Children : NullYMap;
+			RssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("HgRssAddonConfig", sLocalization.Config("Text2"));
 		}
@@ -74,10 +75,10 @@ namespace Schumix.HgRssAddon.Config
 
 				try
 				{
-					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("HgRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["HgRssAddon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
+					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("HgRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["HgRssAddon".ToYamlNode()]).Children : NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Rss", CreateRssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+					nodes2.Add("Rss", CreateRssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap));
 					nodes.Add("HgRssAddon", nodes2);
 
 					sUtilities.CreateFile(filename);

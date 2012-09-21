@@ -883,6 +883,24 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
+		public string ShutdownConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Shutdown beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the Shutdown settings.";
+					else
+						return "Loaded the Shutdown settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
 		public string ServerConfig(string Name)
 		{
 			switch(Name)
