@@ -30,7 +30,6 @@ namespace Schumix.Framework
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly object WriteLock = new object();
-
 		private static string _FileName;
 
 		/// <returns>
