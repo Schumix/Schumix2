@@ -12,7 +12,6 @@ Megírásra váró feladatok:
 	- Sűrgős:
 		- sznap parancs megírása normálisan.
 		- Server-be megcsinálni a yaml konfigot.
-		- A csatorna logokba minden extra dolog kerüljön bele. Pl: join, left stb
 		- Clean elhelyezése a configban. Ezzel a lehetőséggel lehetne majd kipucolni pl a többszerveres módban a fölösleges adatokat amelyek másik szerverekhez tartoznak. Plusz még egyéb dolgokat pucolna. Ezt a clean-t még meglehetne csinálni kapcsolónak is az exe indításánál. (pucolhatná a config mappából is a fölösleges _ jelel ellátott fájlokat is.)
 		- Magban lévő antiflood beállításait áthelyezni konfigba úgyan úgy mint a calendaraddon-nál van.
 		- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)

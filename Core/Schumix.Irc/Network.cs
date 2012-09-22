@@ -145,6 +145,8 @@ namespace Schumix.Irc
 			IrcRegisterHandler("KICK",                         HandleIrcKick);
 			IrcRegisterHandler("QUIT",                         HandleIrcQuit);
 			IrcRegisterHandler("NICK",                         HandleNewNick);
+			IrcRegisterHandler("MODE",                         HandleIrcMode);
+			IrcRegisterHandler("TOPIC",                        HandleIrcTopic);
 			IrcRegisterHandler(ReplyCode.RPL_NAMREPLY,         HandleNameList);
 			IrcRegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandlerErrorNewNickName);
 			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);

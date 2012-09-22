@@ -1342,6 +1342,69 @@ namespace Schumix.Framework.Localization
 					else
 						return "Cannot join channel (+i)!";
 				}
+				case "Text18":
+				{
+					if(Language == "huHU")
+						return "[csatlakozott]";
+					else if(Language == "enUS")
+						return "[joined]";
+					else
+						return "[joined]";
+				}
+				case "Text19":
+				{
+					if(Language == "huHU")
+						return "[kilépett innen (left)] {0}";
+					else if(Language == "enUS")
+						return "[left] {0}";
+					else
+						return "[left] {0}";
+				}
+				case "Text20":
+				{
+					if(Language == "huHU")
+						return "[kilépet (quit)] {0}";
+					else if(Language == "enUS")
+						return "[quit] {0}";
+					else
+						return "[quit] {0}";
+				}
+				case "Text21":
+				{
+					if(Language == "huHU")
+						return "[Mostantól {0}-ként ismert]";
+					else if(Language == "enUS")
+						return "[Is now known as {0}]";
+					else
+						return "[Is now known as {0}]";
+				}
+				case "Text22":
+				{
+					if(Language == "huHU")
+						return "[Kirúgta a következő felhasználót: {0} oka: {1}]";
+					else if(Language == "enUS")
+						return "[Kicked that user: {0} reason: {1}]";
+					else
+						return "[Kicked that user: {0} reason: {1}]";
+				}
+				case "Text23":
+				{
+					if(Language == "huHU")
+						return "[Beállítja a módot: {0}]";
+					else if(Language == "enUS")
+						return "[Set mode: {0}]";
+					else
+						return "[Set mode: {0}]";
+				}
+				case "Text24":
+				{
+					if(Language == "huHU")
+						return "[Téma] Új téma: {0}";
+					else if(Language == "enUS")
+						return "[Topic] New topic: {0}";
+					else
+						return "[Topic] New topic: {0}";
+				}
 				default:
 					return string.Empty;
 			}
