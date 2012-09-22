@@ -42,12 +42,14 @@ namespace Schumix.Framework.Config
 			xmldoc.Load(sUtilities.DirectoryToSpecial(configdir, configfile));
 
 			string LogFileName = !xmldoc.SelectSingleNode("Schumix/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/FileName").InnerText : d_logfilename;
+			bool LogDateFileName = !xmldoc.SelectSingleNode("Schumix/Log/DateFileName").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/DateFileName").InnerText) : d_logdatefilename;
+			int LogMaxFileSize = !xmldoc.SelectSingleNode("Schumix/Log/MaxFileSize").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/MaxFileSize").InnerText) : d_logmaxfilesize;
 			int LogLevel = !xmldoc.SelectSingleNode("Schumix/Log/LogLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText) : d_loglevel;
 			string LogDirectory = !xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").InnerText : d_logdirectory;
 			string IrcLogDirectory = !xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").InnerText : d_irclogdirectory;
 			bool IrcLog = !xmldoc.SelectSingleNode("Schumix/Log/IrcLog").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText) : d_irclog;
 
-			new LogConfig(LogFileName, LogLevel, sUtilities.GetSpecialDirectory(LogDirectory), sUtilities.GetSpecialDirectory(IrcLogDirectory), IrcLog);
+			new LogConfig(LogFileName, LogDateFileName, LogMaxFileSize, LogLevel, sUtilities.GetSpecialDirectory(LogDirectory), sUtilities.GetSpecialDirectory(IrcLogDirectory), IrcLog);
 
 			Log.Initialize(LogFileName);
 			Log.Debug("XmlConfig", ">> {0}", configfile);
@@ -171,6 +173,10 @@ namespace Schumix.Framework.Config
 
 			new UpdateConfig(Enabled, Version.ToLower(), Branch, WebPage);
 
+			int MaxMemory = !xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").InnerText) : d_shutdownmaxmemory;
+
+			new ShutdownConfig(MaxMemory);
+
 			Log.Success("XmlConfig", sLConsole.Config("Text4"));
 			Console.WriteLine();
 		}
@@ -189,7 +195,7 @@ namespace Schumix.Framework.Config
 					return true;
 				else
 				{
-					new LogConfig(d_logfilename, 3, d_logdirectory, d_irclogdirectory, d_irclog);
+					new LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, d_irclogdirectory, d_irclog);
 					Log.Initialize(d_logfilename);
 					Log.Error("XmlConfig", sLConsole.Config("Text5"));
 					Log.Debug("XmlConfig", sLConsole.Config("Text6"));
@@ -349,6 +355,8 @@ namespace Schumix.Framework.Config
 						// <Log>
 						w.WriteStartElement("Log");
 						w.WriteElementString("FileName",        (!xmldoc.SelectSingleNode("Schumix/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/FileName").InnerText : d_logfilename));
+						w.WriteElementString("DateFileName",    (!xmldoc.SelectSingleNode("Schumix/Log/DateFileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/DateFileName").InnerText : d_logdatefilename.ToString()));
+						w.WriteElementString("MaxFileSize",     (!xmldoc.SelectSingleNode("Schumix/Log/MaxFileSize").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/MaxFileSize").InnerText : d_logmaxfilesize.ToString()));
 						w.WriteElementString("LogLevel",        (!xmldoc.SelectSingleNode("Schumix/Log/LogLevel").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText : d_loglevel.ToString()));
 						w.WriteElementString("LogDirectory",    (!xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").InnerText : d_logdirectory));
 						w.WriteElementString("IrcLogDirectory", (!xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").InnerText : d_irclogdirectory));
@@ -416,6 +424,13 @@ namespace Schumix.Framework.Config
 						w.WriteElementString("WebPage",         (!xmldoc.SelectSingleNode("Schumix/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/WebPage").InnerText : d_updatewebpage));
 
 						// </Update>
+						w.WriteEndElement();
+
+						// <Shutdown>
+						w.WriteStartElement("Shutdown");
+						w.WriteElementString("MaxMemory",       (!xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").InnerText : d_shutdownmaxmemory.ToString()));
+
+						// </Shutdown>
 						w.WriteEndElement();
 
 						// </Schumix>

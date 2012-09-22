@@ -47,7 +47,7 @@ namespace Schumix.Framework
 			string filename = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
 			var filesize = new FileInfo(filename);
 
-			if(filesize.Length >= 10000000)
+			if(filesize.Length >= LogConfig.MaxFileSize * 1024 * 1024)
 			{
 				File.Delete(filename);
 				sUtilities.CreateFile(filename);
@@ -71,28 +71,47 @@ namespace Schumix.Framework
 			_FileName = FileName;
 			var time = DateTime.Now;
 			sUtilities.CreateDirectory(LogConfig.LogDirectory);
-			string logfile = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
 
-			if(File.Exists(logfile))
-				isfile = true;
+			if(LogConfig.DateFileName)
+			{
+				if(_FileName.ToLower().Contains(".log"))
+					_FileName = _FileName.Substring(0, _FileName.IndexOf(".log"));
 
-			sUtilities.CreateFile(logfile);
-			var file = new StreamWriter(logfile, true) { AutoFlush = true };
+				sUtilities.CreateDirectory(LogConfig.LogDirectory + "/" + _FileName);
+				_FileName = _FileName + "/" + string.Format("{0}_{1}_{2}-{3}_{4}_{5}.log", time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+							time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
+							time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
+							time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
+							time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
 
-			if(!isfile)
-				file.Write(sLConsole.Log("Text"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
-						time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
-						time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
-						time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
-						time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
+				string logfile = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
+				sUtilities.CreateFile(logfile);
+			}
 			else
-				file.Write(sLConsole.Log("Text2"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
-						time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
-						time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
-						time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
-						time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
+			{
+				string logfile = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
 
-			file.Close();
+				if(File.Exists(logfile))
+					isfile = true;
+
+				sUtilities.CreateFile(logfile);
+				var file = new StreamWriter(logfile, true) { AutoFlush = true };
+
+				if(!isfile)
+					file.Write(sLConsole.Log("Text"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+							time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
+							time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
+							time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
+							time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
+				else
+					file.Write(sLConsole.Log("Text2"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+							time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
+							time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
+							time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
+							time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
+
+				file.Close();
+			}
 		}
 
 		/// <summary>

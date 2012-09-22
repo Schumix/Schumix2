@@ -34,6 +34,7 @@ namespace Schumix.ExtraAddon.Config
 	{
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -46,10 +47,10 @@ namespace Schumix.ExtraAddon.Config
 
 			Log.Notice("ExtraAddonConfig", sLocalization.Config("Text"));
 
-			var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("ExtraAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["ExtraAddon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
-			ModeMap((!extramap.IsNull() && extramap.ContainsKey("Mode")) ? ((YamlMappingNode)extramap["Mode".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			WeatherMap((!extramap.IsNull() && extramap.ContainsKey("Weather")) ? ((YamlMappingNode)extramap["Weather".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			WolframAlphaMap((!extramap.IsNull() && extramap.ContainsKey("WolframAlpha")) ? ((YamlMappingNode)extramap["WolframAlpha".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("ExtraAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["ExtraAddon".ToYamlNode()]).Children : NullYMap;
+			ModeMap((!extramap.IsNull() && extramap.ContainsKey("Mode")) ? ((YamlMappingNode)extramap["Mode".ToYamlNode()]).Children : NullYMap);
+			WeatherMap((!extramap.IsNull() && extramap.ContainsKey("Weather")) ? ((YamlMappingNode)extramap["Weather".ToYamlNode()]).Children : NullYMap);
+			WolframAlphaMap((!extramap.IsNull() && extramap.ContainsKey("WolframAlpha")) ? ((YamlMappingNode)extramap["WolframAlpha".ToYamlNode()]).Children : NullYMap);
 			Log.Success("ExtraAddonConfig", sLocalization.Config("Text2"));
 		}
 
@@ -75,12 +76,12 @@ namespace Schumix.ExtraAddon.Config
 
 				try
 				{
-					var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("ExtraAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["ExtraAddon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
+					var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("ExtraAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["ExtraAddon".ToYamlNode()]).Children : NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Mode",         CreateModeMap((!extramap.IsNull() && extramap.ContainsKey("Mode")) ? ((YamlMappingNode)extramap["Mode".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
-					nodes2.Add("Weather",      CreateWeatherMap((!extramap.IsNull() && extramap.ContainsKey("Weather")) ? ((YamlMappingNode)extramap["Weather".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
-					nodes2.Add("WolframAlpha", CreateWolframAlphaMap((!extramap.IsNull() && extramap.ContainsKey("WolframAlpha")) ? ((YamlMappingNode)extramap["WolframAlpha".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+					nodes2.Add("Mode",         CreateModeMap((!extramap.IsNull() && extramap.ContainsKey("Mode")) ? ((YamlMappingNode)extramap["Mode".ToYamlNode()]).Children : NullYMap));
+					nodes2.Add("Weather",      CreateWeatherMap((!extramap.IsNull() && extramap.ContainsKey("Weather")) ? ((YamlMappingNode)extramap["Weather".ToYamlNode()]).Children : NullYMap));
+					nodes2.Add("WolframAlpha", CreateWolframAlphaMap((!extramap.IsNull() && extramap.ContainsKey("WolframAlpha")) ? ((YamlMappingNode)extramap["WolframAlpha".ToYamlNode()]).Children : NullYMap));
 					nodes.Add("ExtraAddon",    nodes2);
 
 					sUtilities.CreateFile(filename);
