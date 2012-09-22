@@ -19,6 +19,7 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
 using IronPython.Hosting;
@@ -28,75 +29,115 @@ using Microsoft.Scripting.Hosting;
 using Microsoft.Scripting.Runtime;
 using Schumix.API.Irc;
 using Schumix.API.Delegate;
+using Schumix.Irc;
+using Schumix.Framework;
 
 namespace Schumix.PythonEngine
 {
 	public sealed class PythonEngine
 	{
+		private Dictionary<ScriptSource, ScriptScope> _list = new Dictionary<ScriptSource, ScriptScope>();
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private readonly FileSystemWatcher _watcher;
+		private readonly object Lock = new object();
 		private readonly string _scriptPath;
-		private ScriptEngine engine;
-		private ScriptSource source;
-		private ScriptScope scope;
+		private ScriptEngine _engine;
 
 		public PythonEngine(string scriptsPath)
 		{
 			Console.WriteLine("start");
 			_scriptPath = scriptsPath;
+			_engine = Python.CreateEngine();
+
+			string dir = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
+			var list = new List<string>();
+			list.Add(Path.Combine(dir, "Schumix.API.dll"));
+			list.Add(Path.Combine(dir, "Schumix.Irc.dll"));
+			list.Add(Path.Combine(dir, "Schumix.Framework.dll"));
+
+			foreach(var l in list)
+				_engine.Runtime.LoadAssembly(Assembly.LoadFile(l));
+
+			list.Clear();
+
+			var paths = _engine.GetSearchPaths();
+			paths.Add(_scriptPath);
+			paths.Add(Path.Combine(_scriptPath, "Libs"));
+			_engine.SetSearchPaths(paths);
+
 			LoadScripts();
+
+			_watcher = new FileSystemWatcher(_scriptPath)
+			{
+				NotifyFilter = NotifyFilters.FileName | NotifyFilters.Attributes | NotifyFilters.LastAccess |
+				NotifyFilters.LastWrite | NotifyFilters.Security | NotifyFilters.Size,
+				EnableRaisingEvents = true
+			};
+
+			_watcher.Created += (s, e) => LoadScripts(true);
+			_watcher.Changed += (s, e) => LoadScripts(true);
+			_watcher.Deleted += (s, e) => LoadScripts(true);
+			_watcher.Renamed += (s, e) => LoadScripts(true);
 		}
 
 		public void LoadScripts(bool reload = false)
 		{
-			engine = Python.CreateEngine();
-
-string path = Assembly.GetExecutingAssembly().Location;
-string dir = Directory.GetParent(path).FullName;
-string libPath = Path.Combine(dir,"Schumix.API.dll");
-
-Assembly assembly = Assembly.LoadFile(libPath);
-engine.Runtime.LoadAssembly(assembly);
-			//engine.Runtime.LoadAssembly(typeof(IRCMessage).Assembly);
-			//engine.Runtime.LoadAssembly(typeof(BotMessage).Assembly);
-			//engine.Runtime.LoadAssembly(typeof(IRCResponse).Assembly);
-			//engine.Runtime.LoadAssembly(typeof(Settings).Assembly);
-
-			ICollection<string> paths = engine.GetSearchPaths();
-			paths.Add(_scriptPath);
-			paths.Add(Path.Combine(_scriptPath, "Libs"));
-			engine.SetSearchPaths(paths);
-
-			scope = engine.CreateScope();
-			source = engine.CreateScriptSourceFromFile(Path.Combine(_scriptPath, "asd.py"));
-
-			try
+			lock(Lock)
 			{
-			    source.Execute(scope);
-			}
-			catch(Exception e)
-			{
-			    Log(e);
-			}
+				if(reload)
+				{
+					foreach(var list in _list)
+					{
+						try
+						{
+							_engine.Operations.Invoke(list.Value.GetVariable("Destroy"), sIrcBase);
+						}
+						catch(Exception e)
+						{
+							Error(e);
+						}
+					}
+				}
 
-			var ss = new IRCMessage() { Nick = "asdddd" };
-			try
-			{
-				engine.Operations.Invoke(scope.GetVariable("RegisterCommand"), ss);
-			}
-			catch(Exception e)
-			{
-				Log(e);
+				_list.Clear();
+				var di = new DirectoryInfo(_scriptPath);
+
+				foreach(var file in di.GetFiles("*.py").AsParallel())
+				{
+					bool error = false;
+					var scope = _engine.CreateScope();
+					var source = _engine.CreateScriptSourceFromFile(file.FullName);
+					Log.Notice("PythonEngine", /*sLConsole.LuaEngine("Text2")*/ "{0}", file.Name);
+
+					try
+					{
+
+						if(source.GetCode().Contains("def Setup(IrcBase):") && source.GetCode().Contains("def Destroy(IrcBase):"))
+						{
+							source.Execute(scope);
+							_engine.Operations.Invoke(scope.GetVariable("Setup"), sIrcBase);
+						}
+						else
+							error = true;
+					}
+					catch(Exception e)
+					{
+						error = true;
+						//Log.Error("PythonEngine", /*sLConsole.LuaEngine("Text3")*/ "{0} {1}", file.Name, x.Message);
+						Error(e);
+					}
+
+					if(!error)
+						_list.Add(source, scope);
+				}
 			}
         }
 
-        private void Log(Exception e)
+        private void Error(Exception e)
         {
 			Console.WriteLine("Python Error: " + e.Message);
-			DynamicStackFrame[] frames = PythonOps.GetDynamicStackFrames(e);
-			foreach (DynamicStackFrame frame in frames)
-			    Console.WriteLine("\t" +
-			        frame.GetFileName() + " " +
-			        frame.GetFileLineNumber() + " " +
-			        frame.GetMethodName());
+			foreach(var frame in PythonOps.GetDynamicStackFrames(e))
+			    Console.WriteLine("\t" + frame.GetFileName() + " " + frame.GetFileLineNumber() + " " + frame.GetMethodName());
         }
 
 		/// <summary>
@@ -104,7 +145,7 @@ engine.Runtime.LoadAssembly(assembly);
 		/// </summary>
 		public void Free()
 		{
-
+			_list.Clear();
 		}
 	}
 }
