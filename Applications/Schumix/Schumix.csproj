@@ -94,6 +94,10 @@
       <Project>{D6E5F82D-5385-45AD-A0D1-1091EC6A5393}</Project>
       <Name>Schumix.LuaEngine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Components\Schumix.PythonEngine\Schumix.PythonEngine.csproj">
+      <Project>{D16FC33B-7EE9-4078-90A6-FB1A927F6A0B}</Project>
+      <Name>Schumix.PythonEngine</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Console\Commands\" />
