@@ -116,6 +116,10 @@
     <Compile Include="Addon\AddonBase.cs" />
     <Compile Include="Config\XmlConfig.cs" />
     <Compile Include="Config\YamlConfig.cs" />
+    <Compile Include="Network\ClientPacketHandlerDelegate.cs" />
+    <Compile Include="Config\CrashConfig.cs" />
+    <Compile Include="Config\ShutdownConfig.cs" />
+    <Compile Include="Config\FloodingConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -35,11 +35,12 @@ namespace Schumix.Framework.Config
 		{
 			try
 			{
+				configdir = sUtilities.GetSpecialDirectory(configdir);
 				_configfile = configfile;
 
 				if(!IsConfig(configdir, configfile))
 				{
-					if(!error)
+					if(!errors)
 					{
 						Log.Notice("Config", sLConsole.Config("Text"));
 						Log.Notice("Config", sLConsole.Config("Text2"));
@@ -68,7 +69,8 @@ namespace Schumix.Framework.Config
 			}
 			catch(Exception e)
 			{
-				new LogConfig(d_logfilename, 3, d_logdirectory, d_irclogdirectory, d_irclog);
+				new LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, d_irclogdirectory, d_irclog);
+				Log.Initialize(d_logfilename);
 				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
@@ -77,8 +79,8 @@ namespace Schumix.Framework.Config
 		{
 			if(ConfigFile == "Schumix.yml")
 			{
-				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "Schumix.xml");
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "Schumix.xml");
 
 				if(File.Exists(filename))
 					return 0;
@@ -90,8 +92,8 @@ namespace Schumix.Framework.Config
 			}
 			else if(ConfigFile == "Schumix.xml")
 			{
-				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "Schumix.yml");
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "Schumix.yml");
 
 				if(File.Exists(filename))
 					return 1;

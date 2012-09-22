@@ -34,6 +34,7 @@ namespace Schumix.CalendarAddon.Config
 	{
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -42,12 +43,12 @@ namespace Schumix.CalendarAddon.Config
 		public AddonYamlConfig(string configdir, string configfile)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToHome(configdir, configfile)));
+			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
 			Log.Notice("CalendarAddonConfig", sLocalization.Config("Text"));
 
-			var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("CalendarAddon"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("CalendarAddon")]).Children : (Dictionary<YamlNode, YamlNode>)null;
-			FloodingMap((!calendarmap.IsNull() && calendarmap.ContainsKey(new YamlScalarNode("Flooding"))) ? ((YamlMappingNode)calendarmap[new YamlScalarNode("Flooding")]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CalendarAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CalendarAddon".ToYamlNode()]).Children : NullYMap;
+			FloodingMap((!calendarmap.IsNull() && calendarmap.ContainsKey("Flooding")) ? ((YamlMappingNode)calendarmap["Flooding".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("CalendarAddonConfig", sLocalization.Config("Text2"));
 		}
@@ -58,7 +59,7 @@ namespace Schumix.CalendarAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -67,17 +68,17 @@ namespace Schumix.CalendarAddon.Config
 				Log.Error("CalendarAddonConfig", sLocalization.Config("Text3"));
 				Log.Debug("CalendarAddonConfig", sLocalization.Config("Text4"));
 				var yaml = new YamlStream();
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 					yaml.Load(File.OpenText(filename2));
 
 				try
 				{
-					var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("CalendarAddon"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("CalendarAddon")]).Children : (Dictionary<YamlNode, YamlNode>)null;
+					var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CalendarAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CalendarAddon".ToYamlNode()]).Children : NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Flooding", CreateFloodingMap((!calendarmap.IsNull() && calendarmap.ContainsKey(new YamlScalarNode("Flooding"))) ? ((YamlMappingNode)calendarmap[new YamlScalarNode("Flooding")]).Children : (Dictionary<YamlNode, YamlNode>)null));
+					nodes2.Add("Flooding", CreateFloodingMap((!calendarmap.IsNull() && calendarmap.ContainsKey("Flooding")) ? ((YamlMappingNode)calendarmap["Flooding".ToYamlNode()]).Children : NullYMap));
 					nodes.Add("CalendarAddon", nodes2);
 
 					sUtilities.CreateFile(filename);
@@ -101,18 +102,18 @@ namespace Schumix.CalendarAddon.Config
 
 		private void FloodingMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			int Seconds = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Seconds"))) ? Convert.ToInt32(nodes[new YamlScalarNode("Seconds")].ToString()) : _seconds;
-			int NumberOfMessages = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("NumberOfMessages"))) ? Convert.ToInt32(nodes[new YamlScalarNode("NumberOfMessages")].ToString()) : _numberofmessages;
-			int NumberOfFlooding = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("NumberOfFlooding"))) ? Convert.ToInt32(nodes[new YamlScalarNode("NumberOfFlooding")].ToString()) : _numberofflooding;
+			int Seconds = (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? Convert.ToInt32(nodes["Seconds".ToYamlNode()].ToString()) : _seconds;
+			int NumberOfMessages = (!nodes.IsNull() && nodes.ContainsKey("NumberOfMessages")) ? Convert.ToInt32(nodes["NumberOfMessages".ToYamlNode()].ToString()) : _numberofmessages;
+			int NumberOfFlooding = (!nodes.IsNull() && nodes.ContainsKey("NumberOfFlooding")) ? Convert.ToInt32(nodes["NumberOfFlooding".ToYamlNode()].ToString()) : _numberofflooding;
 			new CalendarConfig(Seconds, NumberOfMessages, NumberOfFlooding);
 		}
 
 		private YamlMappingNode CreateFloodingMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Seconds",          (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Seconds"))) ? nodes[new YamlScalarNode("Seconds")].ToString() : _seconds.ToString());
-			map.Add("NumberOfMessages", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("NumberOfMessages"))) ? nodes[new YamlScalarNode("NumberOfMessages")].ToString() : _numberofmessages.ToString());
-			map.Add("NumberOfFlooding", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("NumberOfFlooding"))) ? nodes[new YamlScalarNode("NumberOfFlooding")].ToString() : _numberofflooding.ToString());
+			map.Add("Seconds",          (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? nodes["Seconds".ToYamlNode()].ToString() : _seconds.ToString());
+			map.Add("NumberOfMessages", (!nodes.IsNull() && nodes.ContainsKey("NumberOfMessages")) ? nodes["NumberOfMessages".ToYamlNode()].ToString() : _numberofmessages.ToString());
+			map.Add("NumberOfFlooding", (!nodes.IsNull() && nodes.ContainsKey("NumberOfFlooding")) ? nodes["NumberOfFlooding".ToYamlNode()].ToString() : _numberofflooding.ToString());
 			return map;
 		}
 	}

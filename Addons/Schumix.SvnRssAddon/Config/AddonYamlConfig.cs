@@ -34,6 +34,7 @@ namespace Schumix.SvnRssAddon.Config
 	{
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -42,12 +43,12 @@ namespace Schumix.SvnRssAddon.Config
 		public AddonYamlConfig(string configdir, string configfile)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToHome(configdir, configfile)));
+			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
 			Log.Notice("SvnRssAddonConfig", sLocalization.Config("Text"));
 
-			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("SvnRssAddon"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("SvnRssAddon")]).Children : (Dictionary<YamlNode, YamlNode>)null;
-			RssMap((!rssmap.IsNull() && rssmap.ContainsKey(new YamlScalarNode("Rss"))) ? ((YamlMappingNode)rssmap[new YamlScalarNode("Rss")]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("SvnRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["SvnRssAddon".ToYamlNode()]).Children : NullYMap;
+			RssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("SvnRssAddonConfig", sLocalization.Config("Text2"));
 		}
@@ -58,7 +59,7 @@ namespace Schumix.SvnRssAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -67,17 +68,17 @@ namespace Schumix.SvnRssAddon.Config
 				Log.Error("SvnRssAddonConfig", sLocalization.Config("Text3"));
 				Log.Debug("SvnRssAddonConfig", sLocalization.Config("Text4"));
 				var yaml = new YamlStream();
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 					yaml.Load(File.OpenText(filename2));
 
 				try
 				{
-					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("SvnRssAddon"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("SvnRssAddon")]).Children : (Dictionary<YamlNode, YamlNode>)null;
+					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("SvnRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["SvnRssAddon".ToYamlNode()]).Children : NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Rss", CreateRssMap((!rssmap.IsNull() && rssmap.ContainsKey(new YamlScalarNode("Rss"))) ? ((YamlMappingNode)rssmap[new YamlScalarNode("Rss")]).Children : (Dictionary<YamlNode, YamlNode>)null));
+					nodes2.Add("Rss", CreateRssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap));
 					nodes.Add("SvnRssAddon", nodes2);
 
 					sUtilities.CreateFile(filename);
@@ -101,14 +102,14 @@ namespace Schumix.SvnRssAddon.Config
 
 		private void RssMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			int QueryTime = (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("QueryTime"))) ? Convert.ToInt32(nodes[new YamlScalarNode("QueryTime")].ToString()) : d_querytime;
+			int QueryTime = (!nodes.IsNull() && nodes.ContainsKey("QueryTime")) ? Convert.ToInt32(nodes["QueryTime".ToYamlNode()].ToString()) : d_querytime;
 			new RssConfig(QueryTime);
 		}
 
 		private YamlMappingNode CreateRssMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("QueryTime", (!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("QueryTime"))) ? nodes[new YamlScalarNode("QueryTime")].ToString() : d_querytime.ToString());
+			map.Add("QueryTime", (!nodes.IsNull() && nodes.ContainsKey("QueryTime")) ? nodes["QueryTime".ToYamlNode()].ToString() : d_querytime.ToString());
 			return map;
 		}
 	}

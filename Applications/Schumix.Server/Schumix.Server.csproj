@@ -71,6 +71,7 @@
     <Compile Include="Config\ServerConfig.cs" />
     <Compile Include="Config\ServerConfigs.cs" />
     <Compile Include="Config\LocalizationConfig.cs" />
+    <Compile Include="ServerPacketHandlerDelegate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

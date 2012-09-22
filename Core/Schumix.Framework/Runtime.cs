@@ -47,7 +47,7 @@ namespace Schumix.Framework
 
 		private void HandleTimerMemory(object sender, ElapsedEventArgs e)
 		{
-			if(Process.GetCurrentProcess().WorkingSet64/1024/1024 >= 100/* majd mehetne az a szám configba*/ * IRCConfig.List.Count)
+			if(Process.GetCurrentProcess().WorkingSet64/1024/1024 >= ShutdownConfig.MaxMemory * IRCConfig.List.Count)
 			{
 				Log.Warning("Runtime", sLConsole.Runtime("Text3"));
 				Log.Warning("Runtime", sLConsole.Runtime("Text4"));
@@ -58,6 +58,9 @@ namespace Schumix.Framework
 					if(!nw.Value.IsNull())
 						nw.Value.WriteLine("QUIT :Memory over-consumption.");
 				}
+
+				Thread.Sleep(1000);
+				Process.GetCurrentProcess().Kill();
 			}
 		}
 

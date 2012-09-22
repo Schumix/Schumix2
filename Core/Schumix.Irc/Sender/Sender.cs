@@ -22,18 +22,23 @@ using Schumix.Irc.Ignore;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Irc
 {
 	public sealed class Sender
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly object WriteLock = new object();
 		private readonly IgnoreChannel sIgnoreChannel;
 		private readonly SendMessage sSendMessage;
+		private string _servername;
 
 		public Sender(string ServerName)
 		{
+			_servername = ServerName;
 			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;
 			sIgnoreChannel = sIrcBase.Networks[ServerName].sIgnoreChannel;
 		}
@@ -85,7 +90,15 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("PART {0}", channel);
+				Part(channel, sLConsole.Sender("Text", sLManager.GetChannelLocalization(channel, _servername)));
+			}
+		}
+
+		public void Part(string channel, string message)
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("PART {0} :{1}", channel, message);
 			}
 		}
 

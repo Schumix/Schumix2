@@ -33,10 +33,10 @@ Navigate to the `Run` folder and in that proper folder for the configuration. Ru
 
 ## Server
 
-* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy kapcsolodjon-e a szerverhez a program. Alapértelmezés: `false`
-* **Host:** Ide kell beírni a szerver nevét/címét ahova csatlakozni szeretnénk.
-* **Port:** A szerver portja. Alapértelmezés: `35220`
-* **Password:** A szerver azonosító jelszava.
+* **Enabled:** Its value `true` or `false`. Defines if the program connects to the server. Default: `false`
+* **Host:** Server's address.
+* **Port:** Server's port. Default: `35220`
+* **Password:** Server's identify password.
 
 ## Irc
 
@@ -79,6 +79,10 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 ## Log
 
 * **FileName:** Meghatározza hova mentődjenek el a log információk. Alapértelmezés: `Schumix.log`
+* **DateFileName:** Ha ez a beállítás bekapcsolásra került akkor a log fájl nevéből létrehoz egy mappát a program és abba az indítás dátumával menti el a logot. Így áttekinthetőbbé válik.
+                    Alapértelmezés: `False`
+* **MaxFileSize:** Meghatározza a log fájlt maximális méretét. Ha eléri azt a fájl akkor törlődik és a program csinál helyette egy újat.
+                    Alapértelmezés: `100` (mb-ban értendő)
 * **LogLevel:** Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelmezés: `2`
     * **Szintjei:** `0` (Normális üzenetek és a sikeresek)
                     `1` (Figyelmeztetések)
@@ -115,6 +119,10 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 * **Lua:** Értéke `true` vagy `false` lehet. Engedélyezi a lua fájlok betöltését. Alapértelmezés: `true`
 * **Directory:** A script-ek mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Scripts`
 
+## Crash
+
+* **Directory:** Meghatározza az összeomláskor keletkező mappa nevét. Alapértelmezés: `Dumps`
+
 ## Localization
 
 * **Locale:** Meghatározza hogy a kód milyen nyelven fusson. (csak az irc és konzol parancsokra vonatkozik)
@@ -127,6 +135,16 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
                Alapértelmezés: `stable`
 * **Branch:** Beállítható vele az ág (branch). Ez csak a current verziók esetében érdekes. Alapértelmezés: `master`
 * **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: `https://github.com/megax/Schumix2`
+
+## Shutdown
+
+* **MaxMemory:** Meghatározza a program leállítását ha eléri a megadott memória nagyságot. Ha több szerverre is csatlakozik a bot akkor annyival fog tovább nőni ez a korlát ahány irc szerver be van állítva a konfigba.
+                 Alapértelmezés: `100` (mb-ban értendő)
+
+## Flooding
+
+* **Seconds:** Meghatározza mennyi időnként fusson le a flood elemzése. Alapértelmezés: `4` (másodpercben)
+* **NumberOfCommands:** Meghatározza hányszor használhatja a parancsot adott személy a megadott indőn belül. Ha többet add meg akkor egy percre letiltja a program a parancsainak használatát annak a személynek. Alapértelmezés: `2`
 
 # Adatbázis beüzemelése
 

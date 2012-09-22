@@ -30,8 +30,6 @@ using Schumix.Server.Config;
 
 namespace Schumix.Server
 {
-	delegate void ServerPacketHandlerDelegate(SchumixPacket packet, NetworkStream stream, string hst, int bck);
-
 	class ServerPacketHandler
 	{
 		private readonly Dictionary<string, NetworkStream> _HostList = new Dictionary<string, NetworkStream>();

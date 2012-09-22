@@ -31,6 +31,7 @@ namespace Schumix.Irc
 {
 	public partial class MessageHandler : CommandManager
 	{
+		private readonly object WriteLock = new object();
 		private string _servername;
 		private int PLength;
 		public bool Online;
@@ -374,6 +375,7 @@ namespace Schumix.Irc
 		protected void HandleIrcJoin(IRCMessage sIRCMessage)
 		{
 			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text18"));
 
 			if(sIRCMessage.Nick == sNickInfo.NickStorage)
 			{
@@ -388,6 +390,8 @@ namespace Schumix.Irc
 
 		protected void HandleIrcLeft(IRCMessage sIRCMessage)
 		{
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text19"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
+
 			if(sIRCMessage.Nick == sNickInfo.NickStorage)
 			{
 				sChannelNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
@@ -399,23 +403,51 @@ namespace Schumix.Irc
 
 		protected void HandleIrcQuit(IRCMessage sIRCMessage)
 		{
+			foreach(var chan in sChannelNameList.Names)
+			{
+				if(chan.Value.Contains(sIRCMessage.Nick.ToLower(), SchumixBase.Comma))
+					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.MessageHandler("Text20"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
+			}
+
 			sChannelNameList.Remove(sIRCMessage.ServerName, string.Empty, sIRCMessage.Nick, true);
 		}
 
 		protected void HandleNewNick(IRCMessage sIRCMessage)
 		{
+			foreach(var chan in sChannelNameList.Names)
+			{
+				if(chan.Value.Contains(sIRCMessage.Nick.ToLower(), SchumixBase.Comma))
+					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.MessageHandler("Text21"), sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
+			}
+
 			sChannelNameList.Change(sIRCMessage.ServerName, sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 		}
 
 		protected void HandleIrcKick(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Info.Length < 4)
+			if(sIRCMessage.Info.Length < 5)
 				return;
+
+			string text = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text22"), sIRCMessage.Info[3], text.Remove(0, 1, ":"));
 
 			if(sIRCMessage.Info[3].ToLower() == sNickInfo.NickStorage.ToLower())
 				sChannelNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
 			else
 				sChannelNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Info[3]);
+		}
+
+		protected void HandleIrcMode(IRCMessage sIRCMessage)
+		{
+			if(sIRCMessage.Info.Length < 5)
+				return;
+
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text23"), sIRCMessage.Info.SplitToString(3, SchumixBase.Space));
+		}
+
+		protected void HandleIrcTopic(IRCMessage sIRCMessage)
+		{
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text24"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
 		}
 
 		protected void HandleNameList(IRCMessage sIRCMessage)
@@ -463,22 +495,33 @@ namespace Schumix.Irc
 		/// <param name="args"></param>
 		private void LogToFile(string channel, string user, string args)
 		{
-			if(sChannelInfo.FSelect(IFunctions.Log) && sChannelInfo.FSelect(IChannelFunctions.Log, channel))
+			lock(WriteLock)
 			{
-				string dir = LogConfig.IrcLogDirectory + "/" + _servername;
-				sUtilities.CreateDirectory(dir);
-				string logdir = sUtilities.DirectoryToHome(dir, channel);
-				string logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year,
-								DateTime.Now.Month < 10 ? "0" + DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString(),
-								DateTime.Now.Day < 10 ? "0" + DateTime.Now.Day.ToString() : DateTime.Now.Day.ToString());
+				if(sChannelInfo.FSelect(IFunctions.Log) && sChannelInfo.FSelect(IChannelFunctions.Log, channel))
+				{
+					string dir = LogConfig.IrcLogDirectory + "/" + _servername;
+					sUtilities.CreateDirectory(dir);
+					string logdir = sUtilities.DirectoryToSpecial(dir, channel);
+					string logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year,
+									DateTime.Now.Month < 10 ? "0" + DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString(),
+									DateTime.Now.Day < 10 ? "0" + DateTime.Now.Day.ToString() : DateTime.Now.Day.ToString());
 
-				sUtilities.CreateDirectory(logdir);
-				sUtilities.CreateFile(logfile);
-				var file = new StreamWriter(logfile, true) { AutoFlush = true };
-				file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour < 10 ? "0" + DateTime.Now.Hour.ToString() :
-				               DateTime.Now.Hour.ToString(), DateTime.Now.Minute < 10 ? "0" + DateTime.Now.Minute.ToString() :
-				               DateTime.Now.Minute.ToString(), user, args);
-				file.Close();
+					sUtilities.CreateDirectory(logdir);
+					sUtilities.CreateFile(logfile);
+					var file = new StreamWriter(logfile, true) { AutoFlush = true };
+					file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour < 10 ? "0" + DateTime.Now.Hour.ToString() :
+					               DateTime.Now.Hour.ToString(), DateTime.Now.Minute < 10 ? "0" + DateTime.Now.Minute.ToString() :
+					               DateTime.Now.Minute.ToString(), user, args);
+					file.Close();
+				}
+			}
+		}
+
+		private void LogToFile(string channel, string user, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				LogToFile(channel, user, string.Format(format, args));
 			}
 		}
 	}

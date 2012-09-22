@@ -25,6 +25,8 @@ namespace Schumix.Framework.Config
 	public class DefaultConfig
 	{
 		protected const string d_logfilename           = "Schumix.log";
+		protected const bool d_logdatefilename         = false;
+		protected const int d_logmaxfilesize           = 100;
 		protected const int d_loglevel                 = 2;
 		protected const string d_logdirectory          = "Logs";
 		protected const string d_irclogdirectory       = "Channels";
@@ -59,18 +61,22 @@ namespace Schumix.Framework.Config
 		protected const string d_mysqlpassword         = "password";
 		protected const string d_mysqldatabase         = "database";
 		protected const string d_mysqlcharset          = "utf8";
-		protected const bool d_sqliteenabled           = false;
+		protected const bool d_sqliteenabled           = true;
 		protected const string d_sqlitefilename        = "Schumix.db3";
 		protected const bool d_addonenabled            = true;
 		protected const string d_addonignore           = "MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon";
 		protected const string d_addondirectory        = "Addons";
 		protected const bool d_scriptenabled           = false;
 		protected const string d_scriptdirectory       = "Scripts";
+		protected const string d_crashdirectory        = "Dumps";
 		protected const string d_locale                = "enUS";
 		protected const bool d_updateenabled           = false;
 		protected const string d_updateversion         = "stable";
 		protected const string d_updatebranch          = "master";
 		protected const string d_updatewebpage         = "https://github.com/megax/Schumix2";
-		protected bool error                          = false;
+		protected const int d_shutdownmaxmemory        = 100;
+		protected const int d_floodingseconds          = 4;
+		protected const int d_floodingnumberofcommands = 2;
+		protected bool errors                          = false;
 	}
 }

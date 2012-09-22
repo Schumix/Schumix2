@@ -34,6 +34,7 @@ namespace Schumix.ExtraAddon.Config
 	{
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -42,14 +43,14 @@ namespace Schumix.ExtraAddon.Config
 		public AddonYamlConfig(string configdir, string configfile)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToHome(configdir, configfile)));
+			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
 			Log.Notice("ExtraAddonConfig", sLocalization.Config("Text"));
 
-			var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("ExtraAddon"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("ExtraAddon")]).Children : (Dictionary<YamlNode, YamlNode>)null;
-			ModeMap((!extramap.IsNull() && extramap.ContainsKey(new YamlScalarNode("Mode"))) ? ((YamlMappingNode)extramap[new YamlScalarNode("Mode")]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			WeatherMap((!extramap.IsNull() && extramap.ContainsKey(new YamlScalarNode("Weather"))) ? ((YamlMappingNode)extramap[new YamlScalarNode("Weather")]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			WolframAlphaMap((!extramap.IsNull() && extramap.ContainsKey(new YamlScalarNode("WolframAlpha"))) ? ((YamlMappingNode)extramap[new YamlScalarNode("WolframAlpha")]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("ExtraAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["ExtraAddon".ToYamlNode()]).Children : NullYMap;
+			ModeMap((!extramap.IsNull() && extramap.ContainsKey("Mode")) ? ((YamlMappingNode)extramap["Mode".ToYamlNode()]).Children : NullYMap);
+			WeatherMap((!extramap.IsNull() && extramap.ContainsKey("Weather")) ? ((YamlMappingNode)extramap["Weather".ToYamlNode()]).Children : NullYMap);
+			WolframAlphaMap((!extramap.IsNull() && extramap.ContainsKey("WolframAlpha")) ? ((YamlMappingNode)extramap["WolframAlpha".ToYamlNode()]).Children : NullYMap);
 			Log.Success("ExtraAddonConfig", sLocalization.Config("Text2"));
 		}
 
@@ -59,7 +60,7 @@ namespace Schumix.ExtraAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -68,19 +69,19 @@ namespace Schumix.ExtraAddon.Config
 				Log.Error("ExtraAddonConfig", sLocalization.Config("Text3"));
 				Log.Debug("ExtraAddonConfig", sLocalization.Config("Text4"));
 				var yaml = new YamlStream();
-				string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 					yaml.Load(File.OpenText(filename2));
 
 				try
 				{
-					var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey(new YamlScalarNode("ExtraAddon"))) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children[new YamlScalarNode("ExtraAddon")]).Children : (Dictionary<YamlNode, YamlNode>)null;
+					var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("ExtraAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["ExtraAddon".ToYamlNode()]).Children : NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Mode",         CreateModeMap((!extramap.IsNull() && extramap.ContainsKey(new YamlScalarNode("Mode"))) ? ((YamlMappingNode)extramap[new YamlScalarNode("Mode")]).Children : (Dictionary<YamlNode, YamlNode>)null));
-					nodes2.Add("Weather",      CreateWeatherMap((!extramap.IsNull() && extramap.ContainsKey(new YamlScalarNode("Weather"))) ? ((YamlMappingNode)extramap[new YamlScalarNode("Weather")]).Children : (Dictionary<YamlNode, YamlNode>)null));
-					nodes2.Add("WolframAlpha", CreateWolframAlphaMap((!extramap.IsNull() && extramap.ContainsKey(new YamlScalarNode("WolframAlpha"))) ? ((YamlMappingNode)extramap[new YamlScalarNode("WolframAlpha")]).Children : (Dictionary<YamlNode, YamlNode>)null));
+					nodes2.Add("Mode",         CreateModeMap((!extramap.IsNull() && extramap.ContainsKey("Mode")) ? ((YamlMappingNode)extramap["Mode".ToYamlNode()]).Children : NullYMap));
+					nodes2.Add("Weather",      CreateWeatherMap((!extramap.IsNull() && extramap.ContainsKey("Weather")) ? ((YamlMappingNode)extramap["Weather".ToYamlNode()]).Children : NullYMap));
+					nodes2.Add("WolframAlpha", CreateWolframAlphaMap((!extramap.IsNull() && extramap.ContainsKey("WolframAlpha")) ? ((YamlMappingNode)extramap["WolframAlpha".ToYamlNode()]).Children : NullYMap));
 					nodes.Add("ExtraAddon",    nodes2);
 
 					sUtilities.CreateFile(filename);
@@ -107,11 +108,11 @@ namespace Schumix.ExtraAddon.Config
 			bool Enabled = d_enabled;
 			string Type = d_type;
 
-			if(!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Remove")))
+			if(!nodes.IsNull() && nodes.ContainsKey("Remove"))
 			{
-				var node2 = ((YamlMappingNode)nodes[new YamlScalarNode("Remove")]).Children;
-				Enabled = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? Convert.ToBoolean(node2[new YamlScalarNode("Enabled")].ToString()) : d_enabled;
-				Type = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Type"))) ? node2[new YamlScalarNode("Type")].ToString() : d_type;
+				var node2 = ((YamlMappingNode)nodes["Remove".ToYamlNode()]).Children;
+				Enabled = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? Convert.ToBoolean(node2["Enabled".ToYamlNode()].ToString()) : d_enabled;
+				Type = (!node2.IsNull() && node2.ContainsKey("Type")) ? node2["Type".ToYamlNode()].ToString() : d_type;
 			}
 
 			new ModeConfig(Enabled, Type);
@@ -121,10 +122,10 @@ namespace Schumix.ExtraAddon.Config
 		{
 			string City = d_weatherhomecity;
 
-			if(!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Home")))
+			if(!nodes.IsNull() && nodes.ContainsKey("Home"))
 			{
-				var node2 = ((YamlMappingNode)nodes[new YamlScalarNode("Home")]).Children;
-				City = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("City"))) ? node2[new YamlScalarNode("City")].ToString() : d_weatherhomecity;
+				var node2 = ((YamlMappingNode)nodes["Home".ToYamlNode()]).Children;
+				City = (!node2.IsNull() && node2.ContainsKey("City")) ? node2["City".ToYamlNode()].ToString() : d_weatherhomecity;
 			}
 
 			new WeatherConfig(City);
@@ -134,10 +135,10 @@ namespace Schumix.ExtraAddon.Config
 		{
 			string Key = d_wolframalphaapikey;
 
-			if(!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Api")))
+			if(!nodes.IsNull() && nodes.ContainsKey("Api"))
 			{
-				var node2 = ((YamlMappingNode)nodes[new YamlScalarNode("Api")]).Children;
-				Key = (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Key"))) ? node2[new YamlScalarNode("Key")].ToString() : d_wolframalphaapikey;
+				var node2 = ((YamlMappingNode)nodes["Api".ToYamlNode()]).Children;
+				Key = (!node2.IsNull() && node2.ContainsKey("Key")) ? node2["Key".ToYamlNode()].ToString() : d_wolframalphaapikey;
 			}
 
 			new WolframAlphaConfig(Key);
@@ -148,11 +149,11 @@ namespace Schumix.ExtraAddon.Config
 			var map = new YamlMappingNode();
 			var map2 = new YamlMappingNode();
 
-			if(!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Remove")))
+			if(!nodes.IsNull() && nodes.ContainsKey("Remove"))
 			{
-				var node2 = ((YamlMappingNode)nodes[new YamlScalarNode("Remove")]).Children;
-				map2.Add("Enabled", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Enabled"))) ? node2[new YamlScalarNode("Enabled")].ToString() : d_enabled.ToString());
-				map2.Add("Type",    (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Type"))) ? node2[new YamlScalarNode("Type")].ToString() : d_type);
+				var node2 = ((YamlMappingNode)nodes["Remove".ToYamlNode()]).Children;
+				map2.Add("Enabled", (!node2.IsNull() && node2.ContainsKey("Enabled")) ? node2["Enabled".ToYamlNode()].ToString() : d_enabled.ToString());
+				map2.Add("Type",    (!node2.IsNull() && node2.ContainsKey("Type")) ? node2["Type".ToYamlNode()].ToString() : d_type);
 			}
 			else
 			{
@@ -169,10 +170,10 @@ namespace Schumix.ExtraAddon.Config
 			var map = new YamlMappingNode();
 			var map2 = new YamlMappingNode();
 
-			if(!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Home")))
+			if(!nodes.IsNull() && nodes.ContainsKey("Home"))
 			{
-				var node2 = ((YamlMappingNode)nodes[new YamlScalarNode("Home")]).Children;
-				map2.Add("City", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("City"))) ? node2[new YamlScalarNode("City")].ToString() : d_weatherhomecity);
+				var node2 = ((YamlMappingNode)nodes["Home".ToYamlNode()]).Children;
+				map2.Add("City", (!node2.IsNull() && node2.ContainsKey("City")) ? node2["City".ToYamlNode()].ToString() : d_weatherhomecity);
 			}
 			else
 				map2.Add("City", d_weatherhomecity);
@@ -186,10 +187,10 @@ namespace Schumix.ExtraAddon.Config
 			var map = new YamlMappingNode();
 			var map2 = new YamlMappingNode();
 
-			if(!nodes.IsNull() && nodes.ContainsKey(new YamlScalarNode("Api")))
+			if(!nodes.IsNull() && nodes.ContainsKey("Api"))
 			{
-				var node2 = ((YamlMappingNode)nodes[new YamlScalarNode("Api")]).Children;
-				map2.Add("Key", (!node2.IsNull() && node2.ContainsKey(new YamlScalarNode("Key"))) ? node2[new YamlScalarNode("Key")].ToString() : d_wolframalphaapikey);
+				var node2 = ((YamlMappingNode)nodes["Api".ToYamlNode()]).Children;
+				map2.Add("Key", (!node2.IsNull() && node2.ContainsKey("Key")) ? node2["Key".ToYamlNode()].ToString() : d_wolframalphaapikey);
 			}
 			else
 				map2.Add("Key", d_wolframalphaapikey);

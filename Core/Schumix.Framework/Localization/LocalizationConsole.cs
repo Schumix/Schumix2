@@ -743,6 +743,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "The {0} server is already in use so not loaded!";
 				}
+				case "Text13":
+				{
+					if(Locale == "huHU")
+						return "Meghibásodás az yml írása során. Részletek: {0}";
+					else if(Locale == "enUS")
+						return "Failure was handled during the yml writing. Details: {0}";
+					else
+						return "Failure was handled during the yml writing. Details: {0}";
+				}
 				default:
 					return string.Empty;
 			}
@@ -868,6 +877,60 @@ namespace Schumix.Framework.Localization
 						return "Loaded the Update settings.";
 					else
 						return "Loaded the Update settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string ShutdownConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Shutdown beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the Shutdown settings.";
+					else
+						return "Loaded the Shutdown settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string CrashConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Crash beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the Crash settings.";
+					else
+						return "Loaded the Crash settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string FloodingConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Flooding beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the Flooding settings.";
+					else
+						return "Loaded the Flooding settings.";
 				}
 				default:
 					return string.Empty;
@@ -1314,6 +1377,69 @@ namespace Schumix.Framework.Localization
 						return "Cannot join channel (+i)!";
 					else
 						return "Cannot join channel (+i)!";
+				}
+				case "Text18":
+				{
+					if(Language == "huHU")
+						return "[csatlakozott]";
+					else if(Language == "enUS")
+						return "[joined]";
+					else
+						return "[joined]";
+				}
+				case "Text19":
+				{
+					if(Language == "huHU")
+						return "[kilépett innen (left)] {0}";
+					else if(Language == "enUS")
+						return "[left] {0}";
+					else
+						return "[left] {0}";
+				}
+				case "Text20":
+				{
+					if(Language == "huHU")
+						return "[kilépet (quit)] {0}";
+					else if(Language == "enUS")
+						return "[quit] {0}";
+					else
+						return "[quit] {0}";
+				}
+				case "Text21":
+				{
+					if(Language == "huHU")
+						return "[Mostantól {0}-ként ismert]";
+					else if(Language == "enUS")
+						return "[Is now known as {0}]";
+					else
+						return "[Is now known as {0}]";
+				}
+				case "Text22":
+				{
+					if(Language == "huHU")
+						return "[Kirúgta a következő felhasználót: {0} oka: {1}]";
+					else if(Language == "enUS")
+						return "[Kicked that user: {0} reason: {1}]";
+					else
+						return "[Kicked that user: {0} reason: {1}]";
+				}
+				case "Text23":
+				{
+					if(Language == "huHU")
+						return "[Beállítja a módot: {0}]";
+					else if(Language == "enUS")
+						return "[Set mode: {0}]";
+					else
+						return "[Set mode: {0}]";
+				}
+				case "Text24":
+				{
+					if(Language == "huHU")
+						return "[Téma] Új téma: {0}";
+					else if(Language == "enUS")
+						return "[Topic] New topic: {0}";
+					else
+						return "[Topic] New topic: {0}";
 				}
 				default:
 					return string.Empty;
@@ -2443,26 +2569,54 @@ namespace Schumix.Framework.Localization
 
 		public string IgnoreChannel(string Name)
 		{
+			return IgnoreChannel(Name, Locale);
+		}
+
+		public string IgnoreChannel(string Name, string Language)
+		{
 			switch(Name)
 			{
 				case "Text":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "Konfig által letiltva!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Disabled by Config!";
 					else
 						return "Disabled by Config!";
 				}
-				/*case "Text2":
+				case "Text2":
 				{
-					if(Locale == "huHU")
+					if(Language == "huHU")
 						return "A csatorna tiltásra került!";
-					else if(Locale == "enUS")
+					else if(Language == "enUS")
 						return "Channel is banned!";
 					else
 						return "Channel is banned!";
-				}*/
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string Sender(string Name)
+		{
+			return Sender(Name, Locale);
+		}
+
+		public string Sender(string Name, string Language)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Language == "huHU")
+						return "Távozom";
+					else if(Language == "enUS")
+						return "Leaving";
+					else
+						return "Leaving";
+				}
 				default:
 					return string.Empty;
 			}

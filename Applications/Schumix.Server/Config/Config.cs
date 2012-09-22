@@ -34,6 +34,8 @@ namespace Schumix.Server.Config
 		private readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private const string _logfilename             = "Server.log";
+		private const bool _logdatefilename           = false;
+		private const int _logmaxfilesize             = 100;
 		private const int _loglevel                   = 2;
 		private const string _logdirectory            = "Logs";
 		private const int _listenerport               = 35220;
@@ -55,6 +57,30 @@ namespace Schumix.Server.Config
 		{
 			try
 			{
+				configdir = sUtilities.GetSpecialDirectory(configfile);
+				string cdir = sUtilities.GetDirectoryName(configdir);
+
+				if(sUtilities.GetPlatformType() == PlatformType.Windows)
+				{
+					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
+					{
+						configfile = configdir.Substring(configdir.IndexOf(cdir));
+						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
+					}
+					else
+						configdir = sUtilities.GetSpecialDirectory(configdir);
+				}
+				else if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				{
+					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
+					{
+						configfile = configdir.Substring(configdir.IndexOf(cdir));
+						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
+					}
+					else
+						configdir = sUtilities.GetSpecialDirectory(configdir);
+				}
+
 				new ServerConfig(configdir, configfile);
 
 				if(!IsConfig(configdir, configfile))
@@ -71,13 +97,15 @@ namespace Schumix.Server.Config
 				else
 				{
 					var xmldoc = new XmlDocument();
-					xmldoc.Load(sUtilities.DirectoryToHome(configdir, configfile));
+					xmldoc.Load(sUtilities.DirectoryToSpecial(configdir, configfile));
 
 					string LogFileName = !xmldoc.SelectSingleNode("Server/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/FileName").InnerText : _logfilename;
+					bool LogDateFileName = !xmldoc.SelectSingleNode("Server/Log/DateFileName").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/DateFileName").InnerText) : _logdatefilename;
+					int LogMaxFileSize = !xmldoc.SelectSingleNode("Server/Log/MaxFileSize").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/MaxFileSize").InnerText) : _logmaxfilesize;
 					int LogLevel = !xmldoc.SelectSingleNode("Server/Log/LogLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Log/LogLevel").InnerText) : _loglevel;
 					string LogDirectory = !xmldoc.SelectSingleNode("Server/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Server/Log/LogDirectory").InnerText : _logdirectory;
 
-					new Framework.Config.LogConfig(LogFileName, LogLevel, LogDirectory, string.Empty, false);
+					new Framework.Config.LogConfig(LogFileName, LogDateFileName, LogMaxFileSize, LogLevel, LogDirectory, string.Empty, false);
 
 					Log.Initialize(LogFileName);
 					Log.Debug("Config", ">> {0}", configfile);
@@ -128,7 +156,7 @@ namespace Schumix.Server.Config
 			}
 			catch(Exception e)
 			{
-				new Framework.Config.LogConfig(_logfilename, 3, _logdirectory, string.Empty, false);
+				new Framework.Config.LogConfig(_logfilename, _logdatefilename, _logmaxfilesize, 3, _logdirectory, string.Empty, false);
 				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
@@ -140,19 +168,19 @@ namespace Schumix.Server.Config
 
 			try
 			{
-				string filename = sUtilities.DirectoryToHome(ConfigDirectory, ConfigFile);
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
 
 				if(File.Exists(filename))
 					return true;
 				else
 				{
-					new Framework.Config.LogConfig(_logfilename, 3, _logdirectory, string.Empty, false);
+					new Framework.Config.LogConfig(_logfilename, _logdatefilename, _logmaxfilesize, 3, _logdirectory, string.Empty, false);
 					Log.Initialize(_logfilename);
 					Log.Error("Config", sLConsole.Config("Text5"));
 					Log.Debug("Config", sLConsole.Config("Text6"));
 					var w = new XmlTextWriter(filename, null);
 					var xmldoc = new XmlDocument();
-					string filename2 = sUtilities.DirectoryToHome(ConfigDirectory, "_" + ConfigFile);
+					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 					if(File.Exists(filename2))
 						xmldoc.Load(filename2);
@@ -170,6 +198,8 @@ namespace Schumix.Server.Config
 						// <Log>
 						w.WriteStartElement("Log");
 						w.WriteElementString("FileName",        (!xmldoc.SelectSingleNode("Server/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/FileName").InnerText : _logfilename));
+						w.WriteElementString("DateFileName",    (!xmldoc.SelectSingleNode("Server/Log/DateFileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/DateFileName").InnerText : _logdatefilename.ToString()));
+						w.WriteElementString("MaxFileSize",     (!xmldoc.SelectSingleNode("Server/Log/MaxFileSize").IsNull() ? xmldoc.SelectSingleNode("Server/Log/MaxFileSize").InnerText : _logmaxfilesize.ToString()));
 						w.WriteElementString("LogLevel",        (!xmldoc.SelectSingleNode("Server/Log/LogLevel").IsNull() ? xmldoc.SelectSingleNode("Server/Log/LogLevel").InnerText : _loglevel.ToString()));
 						w.WriteElementString("LogDirectory",    (!xmldoc.SelectSingleNode("Server/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Server/Log/LogDirectory").InnerText : _logdirectory));
 

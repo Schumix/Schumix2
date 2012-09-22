@@ -28,8 +28,6 @@ namespace Schumix.Server
 {
 	class Linux
 	{
-		private readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private Linux() {}
 
 		public void Init()
@@ -49,19 +47,7 @@ namespace Schumix.Server
 			int which = UnixSignal.WaitAny(signals, -1);
 			Log.Debug("Linux", "Got a {0} signal!", signals[which].Signum);
 			Log.Notice("Linux", "Handler Terminated.");
-
-			sUtilities.RemovePidFile();
-			MainClass.sListener.Exit = true;
-			System.Console.CursorVisible = true;
-			var packet = new SchumixPacket();
-			packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
-			packet.Write<int>((int)0);
-
-			foreach(var list in sServerPacketHandler.HostList)
-				sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
-
-			Thread.Sleep(2000);
-			MainClass.KillAllSchumixProccess();
+			MainClass.Shutdown();
 		}
 	}
 }

@@ -20,6 +20,7 @@
 
 using System;
 using System.Threading;
+using System.Diagnostics;
 using System.Data;
 using System.Data.SQLite;
 using System.Text.RegularExpressions;
@@ -34,6 +35,7 @@ namespace Schumix.Framework.Database
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private SQLiteConnection Connection;
+		private bool _crash = false;
 
 		public SQLite(string file)
 		{
@@ -42,7 +44,7 @@ namespace Schumix.Framework.Database
 				Log.Error("SQLite", sLConsole.SQLite("Text"));
 				SchumixBase.ServerDisconnect(false);
 				Thread.Sleep(1000);
-				Environment.Exit(1);
+				Process.GetCurrentProcess().Kill();
 			}
 			else
 				Log.Notice("SQLite", sLConsole.SQLite("Text2"));
@@ -78,6 +80,9 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+				if(_crash)
+					return null;
+
 				IsConnect();
 				var adapter = new SQLiteDataAdapter();
 				var command = Connection.CreateCommand();
@@ -114,6 +119,9 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+				if(_crash)
+					return;
+
 				IsConnect();
 				var command = Connection.CreateCommand();
 				command.CommandText = sql;
@@ -142,6 +150,7 @@ namespace Schumix.Framework.Database
 		{
 			if(c)
 			{
+				_crash = true;
 				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
 				SchumixBase.Quit(false);
@@ -153,11 +162,12 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Environment.Exit(1);
+				Process.GetCurrentProcess().Kill();
 			}
 
 			if(s.Message.Contains("Fatal error encountered during command execution."))
 			{
+				_crash = true;
 				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
 				SchumixBase.Quit(false);
@@ -169,11 +179,12 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Environment.Exit(1);
+				Process.GetCurrentProcess().Kill();
 			}
 
 			if(s.Message.Contains("Timeout expired."))
 			{
+				_crash = true;
 				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
 				SchumixBase.Quit(false);
@@ -185,7 +196,7 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Environment.Exit(1);
+				Process.GetCurrentProcess().Kill();
 			}
 
 			Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);

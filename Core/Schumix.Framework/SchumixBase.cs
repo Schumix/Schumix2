@@ -215,12 +215,12 @@ namespace Schumix.Framework
 				if(ExitStatus)
 					return;
 
+				SchumixBase.ExitStatus = true;
 				var memory = Process.GetCurrentProcess().WorkingSet64;
 				sAddonManager.UnloadPlugins();
 				sUtilities.RemovePidFile();
 				SchumixBase.timer.SaveUptime(memory);
 				SchumixBase.ServerDisconnect(Reconnect);
-				SchumixBase.ExitStatus = true;
 			}
 		}
 

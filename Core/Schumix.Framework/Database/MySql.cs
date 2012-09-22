@@ -21,6 +21,7 @@
 using System;
 using System.Data;
 using System.Threading;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 using MySql.Data;
 using MySql.Data.MySqlClient;
@@ -35,6 +36,7 @@ namespace Schumix.Framework.Database
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private MySqlConnection Connection;
+		private bool _crash = false;
 
 		public MySql(string host, string username, string password, string database, string charset)
 		{
@@ -43,7 +45,7 @@ namespace Schumix.Framework.Database
 				Log.Error("MySql", sLConsole.MySql("Text"));
 				SchumixBase.ServerDisconnect(false);
 				Thread.Sleep(1000);
-				Environment.Exit(1);
+				Process.GetCurrentProcess().Kill();
 			}
 			else
 				Log.Success("MySql", sLConsole.MySql("Text2"));
@@ -74,6 +76,9 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+				if(_crash)
+					return null;
+
 				IsConnect();
 				var adapter = new MySqlDataAdapter();
 				var command = Connection.CreateCommand();
@@ -105,6 +110,9 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+				if(_crash)
+					return;
+
 				IsConnect();
 				var command = Connection.CreateCommand();
 				command.CommandText = sql;
@@ -125,6 +133,7 @@ namespace Schumix.Framework.Database
 
 				if(Connection.State == ConnectionState.Broken || Connection.State == ConnectionState.Closed)
 				{
+					_crash = true;
 					Log.Error("MySql", sLConsole.MySql("Text5"));
 					Log.Warning("MySql", sLConsole.MySql("Text4"));
 					SchumixBase.Quit(false);
@@ -136,8 +145,7 @@ namespace Schumix.Framework.Database
 					}
 	
 					Thread.Sleep(1000);
-					Environment.Exit(1);
-					return;
+					Process.GetCurrentProcess().Kill();
 				}
 			}
 			catch(MySqlException m)
@@ -150,6 +158,7 @@ namespace Schumix.Framework.Database
 		{
 			if(c)
 			{
+				_crash = true;
 				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 				Log.Warning("MySql", sLConsole.MySql("Text4"));
 				SchumixBase.Quit(false);
@@ -161,11 +170,12 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Environment.Exit(1);
+				Process.GetCurrentProcess().Kill();
 			}
 
 			if(m.Message.Contains("Fatal error encountered during command execution."))
 			{
+				_crash = true;
 				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 				Log.Warning("MySql", sLConsole.MySql("Text4"));
 				SchumixBase.Quit(false);
@@ -177,11 +187,12 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Environment.Exit(1);
+				Process.GetCurrentProcess().Kill();
 			}
 
 			if(m.Message.Contains("Timeout expired."))
 			{
+				_crash = true;
 				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 				Log.Warning("MySql", sLConsole.MySql("Text4"));
 				SchumixBase.Quit(false);
@@ -193,7 +204,24 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Environment.Exit(1);
+				Process.GetCurrentProcess().Kill();
+			}
+
+			if(m.Message.Contains("Unable to connect to any of the specified MySQL hosts."))
+			{
+				_crash = true;
+				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+				Log.Warning("MySql", sLConsole.MySql("Text4"));
+				SchumixBase.Quit(false);
+
+				foreach(var nw in INetwork.WriterList)
+				{
+					if(!nw.Value.IsNull())
+						nw.Value.WriteLine("QUIT :Sql connection timeout.");
+				}
+
+				Thread.Sleep(1000);
+				Process.GetCurrentProcess().Kill();
 			}
 
 			Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);

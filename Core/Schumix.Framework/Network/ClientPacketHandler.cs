@@ -31,14 +31,9 @@ using Schumix.Framework.Localization;
 namespace Schumix.Framework.Client
 {
 	/// <summary>
-	/// Delegate for handling client packets.
-	/// </summary>
-	public delegate void ClientPacketHandlerDelegate(SchumixPacket packet, string hst);
-
-	/// <summary>
 	/// Packet handler used by the client.
 	/// </summary>
-	public class ClientPacketHandler
+	class ClientPacketHandler
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		/// <summary>

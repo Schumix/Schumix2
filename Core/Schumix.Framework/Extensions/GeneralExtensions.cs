@@ -34,6 +34,8 @@ namespace Schumix.Framework.Extensions
 	/// </summary>
 	public static class GeneralExtensions
 	{
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
 		/// <summary>
 		/// Casts the object to the specified type.
 		/// </summary>
@@ -446,7 +448,32 @@ namespace Schumix.Framework.Extensions
 					text.Append("    ").Append(child.Key).Append(": ").Append(child.Value);
 			}
 
+			if(sUtilities.GetPlatformType() == PlatformType.Windows)
+			{
+				text = text.Replace("\r", string.Empty);
+				var split = text.ToString().Split('\n');
+				text.Remove(0, text.Length);
+
+				foreach(var line in split)
+				{
+					if(line.Trim() == string.Empty)
+						continue;
+
+					text.Append("    ").AppendLine(line);
+				}
+			}
+
 			return FileName == string.Empty ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();
+		}
+
+		public static bool ContainsKey(this IDictionary<YamlNode, YamlNode> Nodes, string Key)
+		{
+			return Nodes.ContainsKey(new YamlScalarNode(Key));
+		}
+
+		public static YamlScalarNode ToYamlNode(this string Text)
+		{
+			return new YamlScalarNode(Text);
 		}
 	}
 }

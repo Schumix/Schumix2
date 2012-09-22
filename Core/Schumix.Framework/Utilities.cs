@@ -1038,7 +1038,7 @@ namespace Schumix.Framework
 			return Environment.UserName;
 		}
 
-		public string GetHomeDirectory(string data)
+		public string GetSpecialDirectory(string data)
 		{
 			if(GetPlatformType() == PlatformType.Windows)
 			{
@@ -1050,6 +1050,15 @@ namespace Schumix.Framework
 						return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\" + data.Substring(data.IndexOf("/")+1);
 					else if(data.Contains(@"\") && data.Substring(data.IndexOf(@"\")).Length > 1 && data.Substring(data.IndexOf(@"\")).Substring(0, 1) == @"\")
 						return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\" + data.Substring(data.IndexOf(@"\")+1);
+					else
+						return data;
+				}
+				if(text.Length >= "$localappdata".Length && text.Substring(0, "$localappdata".Length) == "$localappdata")
+				{
+					if(data.Contains("/") && data.Substring(data.IndexOf("/")).Length > 1 && data.Substring(data.IndexOf("/")).Substring(0, 1) == "/")
+						return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\" + data.Substring(data.IndexOf("/")+1);
+					else if(data.Contains(@"\") && data.Substring(data.IndexOf(@"\")).Length > 1 && data.Substring(data.IndexOf(@"\")).Substring(0, 1) == @"\")
+						return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\" + data.Substring(data.IndexOf(@"\")+1);
 					else
 						return data;
 				}
@@ -1066,7 +1075,19 @@ namespace Schumix.Framework
 				return data;
 		}
 
-		public string DirectoryToHome(string dir, string file)
+		public bool IsSpecialDirectory(string dir)
+		{
+			dir = dir.ToLower();
+
+			if(dir.Contains("$home"))
+				return true;
+			else if(GetPlatformType() == PlatformType.Windows && dir.Contains("$localappdata"))
+				return true;
+			else
+				return false;
+		}
+
+		public string DirectoryToSpecial(string dir, string file)
 		{
 			if(GetPlatformType() == PlatformType.Windows)
 			{
@@ -1113,7 +1134,7 @@ namespace Schumix.Framework
 					pidfile = pidfile + ".pid";
 			}
 
-			pidfile = DirectoryToHome(LogConfig.LogDirectory, pidfile);
+			pidfile = DirectoryToSpecial(LogConfig.LogDirectory, pidfile);
 			SchumixBase.PidFile = pidfile;
 			RemovePidFile();
 			CreateFile(pidfile);

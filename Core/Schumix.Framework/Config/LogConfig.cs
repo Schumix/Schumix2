@@ -24,14 +24,18 @@ namespace Schumix.Framework.Config
 	public sealed class LogConfig
 	{
 		public static string FileName { get; private set; }
+		public static bool DateFileName { get; private set; }
+		public static int MaxFileSize { get; private set; }
 		public static int LogLevel { get; private set; }
 		public static string LogDirectory { get; private set; }
 		public static string IrcLogDirectory { get; private set; }
 		public static bool IrcLog { get; private set; }
 
-		public LogConfig(string filename, int loglevel, string logdirectory, string irclogdirectory, bool irclog)
+		public LogConfig(string filename, bool datefilename, int maxfilesize, int loglevel, string logdirectory, string irclogdirectory, bool irclog)
 		{
 			FileName        = filename;
+			DateFileName    = datefilename;
+			MaxFileSize     = maxfilesize;
 			LogLevel        = loglevel;
 			LogDirectory    = logdirectory;
 			IrcLogDirectory = irclogdirectory;
