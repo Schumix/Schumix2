@@ -14,7 +14,8 @@ PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Framework.dll \
 	../../Run/Debug/Schumix.API.dll \
 	../../Run/Debug/Schumix.Updater.dll \
-	../../Run/Debug/Schumix.LuaEngine.dll
+	../../Run/Debug/Schumix.LuaEngine.dll \
+	../../Run/Debug/Schumix.PythonEngine.dll
 BUILD_DIR = ../../Run/Debug
 
 SCHUMIX_EXE_MDB_SOURCE=../../Run/Debug/Schumix.exe.mdb
@@ -32,6 +33,11 @@ ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dl
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Debug/Schumix.LuaEngine.dll
 KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
 LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
+SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Debug/Schumix.PythonEngine.dll
+IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
+IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
+MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
 
 endif
 
@@ -46,7 +52,8 @@ PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Framework.dll \
 	../../Run/Release/Schumix.API.dll \
 	../../Run/Release/Schumix.Updater.dll \
-	../../Run/Release/Schumix.LuaEngine.dll
+	../../Run/Release/Schumix.LuaEngine.dll \
+	../../Run/Release/Schumix.PythonEngine.dll
 BUILD_DIR = ../../Run/Release
 
 SCHUMIX_EXE_MDB=
@@ -63,6 +70,11 @@ ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dl
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Release/Schumix.LuaEngine.dll
 KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
 LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
+SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Release/Schumix.PythonEngine.dll
+IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
+IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
+MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
 
 endif
 
@@ -77,7 +89,8 @@ PROJECT_REFERENCES =  \
 	../../Run/Debug_x64/Schumix.Framework.dll \
 	../../Run/Debug_x64/Schumix.API.dll \
 	../../Run/Debug_x64/Schumix.Updater.dll \
-	../../Run/Debug_x64/Schumix.LuaEngine.dll
+	../../Run/Debug_x64/Schumix.LuaEngine.dll \
+	../../Run/Debug_x64/Schumix.PythonEngine.dll
 BUILD_DIR = ../../Run/Debug_x64
 
 SCHUMIX_EXE_MDB_SOURCE=../../Run/Debug_x64/Schumix.exe.mdb
@@ -95,6 +108,11 @@ ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dl
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Debug_x64/Schumix.LuaEngine.dll
 KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
 LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
+SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Debug_x64/Schumix.PythonEngine.dll
+IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
+IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
+MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
 
 endif
 
@@ -109,7 +127,8 @@ PROJECT_REFERENCES =  \
 	../../Run/Release_x64/Schumix.Framework.dll \
 	../../Run/Release_x64/Schumix.API.dll \
 	../../Run/Release_x64/Schumix.Updater.dll \
-	../../Run/Release_x64/Schumix.LuaEngine.dll
+	../../Run/Release_x64/Schumix.LuaEngine.dll \
+	../../Run/Release_x64/Schumix.PythonEngine.dll
 BUILD_DIR = ../../Run/Release_x64
 
 SCHUMIX_EXE_MDB=
@@ -126,6 +145,11 @@ ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dl
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Release_x64/Schumix.LuaEngine.dll
 KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
 LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
+SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Release_x64/Schumix.PythonEngine.dll
+IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
+IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
+MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
 
 endif
 
@@ -146,7 +170,12 @@ PROGRAMFILES = \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
 	$(SCHUMIX_LUAENGINE_DLL) \
 	$(KOPILUA_DLL) \
-	$(LUAINTERFACE_DLL)  
+	$(LUAINTERFACE_DLL) \
+	$(SCHUMIX_PYTHONENGINE_DLL) \
+	$(IRONPYTHON_MODULES_DLL) \
+	$(IRONPYTHON_DLL) \
+	$(MICROSOFT_DYNAMIC_DLL) \
+	$(MICROSOFT_SCRIPTING_DLL)  
 
 BINARIES = \
 	$(SCHUMIX)  
@@ -206,6 +235,11 @@ ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 SCHUMIX_LUAENGINE_DLL = $(BUILD_DIR)/Schumix.LuaEngine.dll
 KOPILUA_DLL = $(BUILD_DIR)/KopiLua.dll
 LUAINTERFACE_DLL = $(BUILD_DIR)/LuaInterface.dll
+SCHUMIX_PYTHONENGINE_DLL = $(BUILD_DIR)/Schumix.PythonEngine.dll
+IRONPYTHON_MODULES_DLL = $(BUILD_DIR)/IronPython.Modules.dll
+IRONPYTHON_DLL = $(BUILD_DIR)/IronPython.dll
+MICROSOFT_DYNAMIC_DLL = $(BUILD_DIR)/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL = $(BUILD_DIR)/Microsoft.Scripting.dll
 SCHUMIX = $(BUILD_DIR)/schumix
 
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
@@ -216,6 +250,10 @@ $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-target,KOPILUA_DLL))
 $(eval $(call emit-deploy-target,LUAINTERFACE_DLL))
+$(eval $(call emit-deploy-target,IRONPYTHON_MODULES_DLL))
+$(eval $(call emit-deploy-target,IRONPYTHON_DLL))
+$(eval $(call emit-deploy-target,MICROSOFT_DYNAMIC_DLL))
+$(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX,schumix,x))
 
 
