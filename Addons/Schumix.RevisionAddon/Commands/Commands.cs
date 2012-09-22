@@ -79,9 +79,6 @@ namespace Schumix.RevisionAddon.Commands
 				sSendMessage.SendChatMessage(sIRCMessage, "Link: {0}", github.Url);
 				sSendMessage.SendChatMessage(sIRCMessage, "Szerző: {0}", github.UserName);
 			}
-			else if(sIRCMessage.Info[4].ToLower() == "assembla")
-			{
-			}
 		}
 	}
 }

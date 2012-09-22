@@ -34,16 +34,25 @@ namespace Schumix.RevisionAddon.Githubs
 
 		public Github(string username, string repositorie, string sha1)
 		{
-			string url = sUtilities.GetUrl(string.Format("https://api.github.com/repos/{0}/{1}/git/commits/{2}", username, repositorie, sha1));
-			var githubA = new GithubAuthor();
-			githubA = JsonHelper.Deserialise<GithubAuthor>(url);
-			UserName = githubA.AuthorResult.Name;
+			try
+			{
+				string url = sUtilities.GetUrl(string.Format("https://api.github.com/repos/{0}/{1}/git/commits/{2}", username, repositorie, sha1));
+				var githubA = new GithubAuthor();
+				githubA = JsonHelper.Deserialise<GithubAuthor>(url);
+				UserName = githubA.AuthorResult.Name;
 
-			var githubM = new GithubMessage();
-			githubM = JsonHelper.Deserialise<GithubMessage>(url);
-			Message = githubM.Message.Replace(SchumixBase.NewLine, SchumixBase.Space);
+				var githubM = new GithubMessage();
+				githubM = JsonHelper.Deserialise<GithubMessage>(url);
+				Message = githubM.Message.Replace(SchumixBase.NewLine, SchumixBase.Space);
 
-			Url = string.Format("https://github.com/{0}/{1}/commit/{2}", username, repositorie, sha1);
+				Url = string.Format("https://github.com/{0}/{1}/commit/{2}", username, repositorie, sha1);
+			}
+			catch(Exception)
+			{
+				UserName = string.Empty;
+				Message = string.Empty;
+				Url = string.Empty;
+			}
 		}
 	}
 }

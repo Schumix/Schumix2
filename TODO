@@ -9,8 +9,7 @@ Megírásra váró feladatok:
 	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!! (Állítottam a prioritáson. Lehetséges ez megoldja a gondot de még tesztelni kell.)
 
 - Fejleszteni kívánt részek, új funkciók:
-	- xrev parancs megírása. githubhoz ez tökéletes lehet: https://api.github.com/repos/megax/Schumix2/git/commits/defb0266a7c8a98934ec8038524436d8a3a9b820 (így kéne megadni: $xrev github megax schumix2 sha1kód)
-21:39:19 E IncomingInfo: Meghibásodás részletei: The remote server returned an error: (404) Not Found. <- az az szar az az if ami a string.empty-t nézi tehát kéne egy try catch is (meg ha sha1 kód rövidebb mint aminek kéne lennie írja ki azt is a kód)
+	- xrev parancs befejezése. (sql-be a help és a szövegek)
 
 	- Sűrgős:
 		- sznap parancs megírása normálisan.
