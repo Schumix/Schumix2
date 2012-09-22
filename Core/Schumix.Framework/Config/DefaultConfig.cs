@@ -25,6 +25,8 @@ namespace Schumix.Framework.Config
 	public class DefaultConfig
 	{
 		protected const string d_logfilename           = "Schumix.log";
+		protected const bool d_logdatefilename         = false;
+		protected const int d_logmaxfilesize           = 100;
 		protected const int d_loglevel                 = 2;
 		protected const string d_logdirectory          = "Logs";
 		protected const string d_irclogdirectory       = "Channels";
@@ -72,6 +74,9 @@ namespace Schumix.Framework.Config
 		protected const string d_updateversion         = "stable";
 		protected const string d_updatebranch          = "master";
 		protected const string d_updatewebpage         = "https://github.com/megax/Schumix2";
+		protected const int d_shutdownmaxmemory        = 100;
+		protected const int d_floodingseconds          = 4;
+		protected const int d_floodingnumberofcommands = 2;
 		protected bool errors                          = false;
 	}
 }

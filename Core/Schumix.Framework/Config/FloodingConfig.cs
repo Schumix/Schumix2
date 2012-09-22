@@ -18,28 +18,21 @@
  */
 
 using System;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
 {
-	public sealed class LogConfig
+	public sealed class FloodingConfig
 	{
-		public static string FileName { get; private set; }
-		public static bool DateFileName { get; private set; }
-		public static int MaxFileSize { get; private set; }
-		public static int LogLevel { get; private set; }
-		public static string LogDirectory { get; private set; }
-		public static string IrcLogDirectory { get; private set; }
-		public static bool IrcLog { get; private set; }
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		public static int Seconds { get; private set; }
+		public static int NumberOfCommands { get; private set; }
 
-		public LogConfig(string filename, bool datefilename, int maxfilesize, int loglevel, string logdirectory, string irclogdirectory, bool irclog)
+		public FloodingConfig(int seconds, int numberofcommands)
 		{
-			FileName        = filename;
-			DateFileName    = datefilename;
-			MaxFileSize     = maxfilesize;
-			LogLevel        = loglevel;
-			LogDirectory    = logdirectory;
-			IrcLogDirectory = irclogdirectory;
-			IrcLog          = irclog;
+			Seconds          = seconds;
+			NumberOfCommands = numberofcommands;
+			Log.Notice("FloodingConfig", sLConsole.FloodingConfig("Text"));
 		}
 	}
 }

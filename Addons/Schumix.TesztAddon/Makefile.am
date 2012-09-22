@@ -24,8 +24,6 @@ MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -49,8 +47,6 @@ MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -75,8 +71,6 @@ MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -100,8 +94,6 @@ MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 
 endif
 
@@ -116,9 +108,7 @@ PROGRAMFILES = \
 	$(MYSQL_DATA_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(YAMLDOTNET_CORE_DLL) \
-	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
-	$(SQLITE3_DLL) \
-	$(SCHUMIX_DB3)  
+	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_TESZTADDON_PC)  
@@ -158,8 +148,6 @@ MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
-SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
-SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 SCHUMIX_TESZTADDON_PC = $(BUILD_DIR)/schumix.tesztaddon.pc
 
 $(eval $(call emit-deploy-target,SCHUMIX_API_DLL))
@@ -169,8 +157,6 @@ $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
-$(eval $(call emit-deploy-target,SQLITE3_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_TESZTADDON_PC,schumix.tesztaddon.pc))
 
 

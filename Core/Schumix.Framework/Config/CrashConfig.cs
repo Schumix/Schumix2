@@ -18,16 +18,19 @@
  */
 
 using System;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
 {
 	public sealed class CrashConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static string Directory { get; private set; }
 
 		public CrashConfig(string directory)
 		{
 			Directory = directory;
+			Log.Notice("CrashConfig", sLConsole.CrashConfig("Text"));
 		}
 	}
 }

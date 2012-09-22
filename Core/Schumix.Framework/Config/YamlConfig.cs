@@ -33,6 +33,7 @@ namespace Schumix.Framework.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public YamlConfig()
 		{
@@ -43,13 +44,13 @@ namespace Schumix.Framework.Config
 			var yaml = new YamlStream();
 			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
-			var schumixmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Schumix")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Schumix".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
-			LogMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Log")) ? ((YamlMappingNode)schumixmap["Log".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			var schumixmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Schumix")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Schumix".ToYamlNode()]).Children : NullYMap;
+			LogMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Log")) ? ((YamlMappingNode)schumixmap["Log".ToYamlNode()]).Children : NullYMap);
 			Log.Initialize(LogConfig.FileName);
 			Log.Debug("YamlConfig", ">> {0}", configfile);
 
 			Log.Notice("YamlConfig", sLConsole.Config("Text3"));
-			ServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Server")) ? ((YamlMappingNode)schumixmap["Server".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			ServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Server")) ? ((YamlMappingNode)schumixmap["Server".ToYamlNode()]).Children : NullYMap);
 
 			if((!schumixmap.IsNull() && schumixmap.ContainsKey("Irc")))
 			{
@@ -64,15 +65,17 @@ namespace Schumix.Framework.Config
 				IrcMap(list);
 			}
 			else
-				IrcMap((Dictionary<YamlNode, YamlNode>)null);
+				IrcMap(NullYMap);
 
-			MySqlMap((!schumixmap.IsNull() && schumixmap.ContainsKey("MySql")) ? ((YamlMappingNode)schumixmap["MySql".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			SQLiteMap((!schumixmap.IsNull() && schumixmap.ContainsKey("SQLite")) ? ((YamlMappingNode)schumixmap["SQLite".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			AddonsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Addon")) ? ((YamlMappingNode)schumixmap["Addon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			ScriptsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Scripts")) ? ((YamlMappingNode)schumixmap["Scripts".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			CrashMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Crash")) ? ((YamlMappingNode)schumixmap["Crash".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			LocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Localization")) ? ((YamlMappingNode)schumixmap["Localization".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
-			UpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			MySqlMap((!schumixmap.IsNull() && schumixmap.ContainsKey("MySql")) ? ((YamlMappingNode)schumixmap["MySql".ToYamlNode()]).Children : NullYMap);
+			SQLiteMap((!schumixmap.IsNull() && schumixmap.ContainsKey("SQLite")) ? ((YamlMappingNode)schumixmap["SQLite".ToYamlNode()]).Children : NullYMap);
+			AddonsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Addon")) ? ((YamlMappingNode)schumixmap["Addon".ToYamlNode()]).Children : NullYMap);
+			ScriptsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Scripts")) ? ((YamlMappingNode)schumixmap["Scripts".ToYamlNode()]).Children : NullYMap);
+			CrashMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Crash")) ? ((YamlMappingNode)schumixmap["Crash".ToYamlNode()]).Children : NullYMap);
+			LocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Localization")) ? ((YamlMappingNode)schumixmap["Localization".ToYamlNode()]).Children : NullYMap);
+			UpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : NullYMap);
+			ShutdownMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Shutdown")) ? ((YamlMappingNode)schumixmap["Shutdown".ToYamlNode()]).Children : NullYMap);
+			FloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("YamlConfig", sLConsole.Config("Text4"));
 			Console.WriteLine();
@@ -92,7 +95,7 @@ namespace Schumix.Framework.Config
 					return true;
 				else
 				{
-					new LogConfig(d_logfilename, 3, d_logdirectory, d_irclogdirectory, d_irclog);
+					new LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, d_irclogdirectory, d_irclog);
 					Log.Initialize(d_logfilename);
 					Log.Error("YamlConfig", sLConsole.Config("Text5"));
 					Log.Debug("YamlConfig", sLConsole.Config("Text6"));
@@ -104,10 +107,10 @@ namespace Schumix.Framework.Config
 
 					try
 					{
-						var schumixmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Schumix")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Schumix".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
+						var schumixmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Schumix")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Schumix".ToYamlNode()]).Children : NullYMap;
 						var nodes = new YamlMappingNode();
 						var nodes2 = new YamlMappingNode();
-						nodes2.Add("Server",       CreateServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Server")) ? ((YamlMappingNode)schumixmap["Server".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+						nodes2.Add("Server",       CreateServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Server")) ? ((YamlMappingNode)schumixmap["Server".ToYamlNode()]).Children : NullYMap));
 
 						if((!schumixmap.IsNull() && schumixmap.ContainsKey("Irc")))
 						{
@@ -118,16 +121,18 @@ namespace Schumix.Framework.Config
 							}
 						}
 						else
-							nodes2.Add("Irc",      CreateIrcMap((Dictionary<YamlNode, YamlNode>)null));
+							nodes2.Add("Irc",      CreateIrcMap(NullYMap));
 
-						nodes2.Add("Log",          CreateLogMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Log")) ? ((YamlMappingNode)schumixmap["Log".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("MySql",        CreateMySqlMap((!schumixmap.IsNull() && schumixmap.ContainsKey("MySql")) ? ((YamlMappingNode)schumixmap["MySql".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("SQLite",       CreateSQLiteMap((!schumixmap.IsNull() && schumixmap.ContainsKey("SQLite")) ? ((YamlMappingNode)schumixmap["SQLite".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("Addon",        CreateAddonsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Addon")) ? ((YamlMappingNode)schumixmap["Addon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("Scripts",      CreateScriptsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Scripts")) ? ((YamlMappingNode)schumixmap["Scripts".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("Crash",        CreateCrashMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Crash")) ? ((YamlMappingNode)schumixmap["Crash".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("Localization", CreateLocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Localization")) ? ((YamlMappingNode)schumixmap["Localization".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
-						nodes2.Add("Update",       CreateUpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+						nodes2.Add("Log",          CreateLogMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Log")) ? ((YamlMappingNode)schumixmap["Log".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("MySql",        CreateMySqlMap((!schumixmap.IsNull() && schumixmap.ContainsKey("MySql")) ? ((YamlMappingNode)schumixmap["MySql".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("SQLite",       CreateSQLiteMap((!schumixmap.IsNull() && schumixmap.ContainsKey("SQLite")) ? ((YamlMappingNode)schumixmap["SQLite".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Addon",        CreateAddonsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Addon")) ? ((YamlMappingNode)schumixmap["Addon".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Scripts",      CreateScriptsMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Scripts")) ? ((YamlMappingNode)schumixmap["Scripts".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Crash",        CreateCrashMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Crash")) ? ((YamlMappingNode)schumixmap["Crash".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Localization", CreateLocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Localization")) ? ((YamlMappingNode)schumixmap["Localization".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Update",       CreateUpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Shutdown",     CreateShutdownMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Shutdown")) ? ((YamlMappingNode)schumixmap["Shutdown".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Flooding",     CreateFloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap));
 						nodes.Add("Schumix", nodes2);
 
 						sUtilities.CreateFile(filename);
@@ -158,12 +163,14 @@ namespace Schumix.Framework.Config
 		private void LogMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			string LogFileName = (!nodes.IsNull() && nodes.ContainsKey("FileName")) ? nodes["FileName".ToYamlNode()].ToString() : d_logfilename;
+			bool LogDateFileName = (!nodes.IsNull() && nodes.ContainsKey("DateFileName")) ? Convert.ToBoolean(nodes["DateFileName".ToYamlNode()].ToString()) : d_logdatefilename;
+			int LogMaxFileSize = (!nodes.IsNull() && nodes.ContainsKey("MaxFileSize")) ? Convert.ToInt32(nodes["MaxFileSize".ToYamlNode()].ToString()) : d_logmaxfilesize;
 			int LogLevel = (!nodes.IsNull() && nodes.ContainsKey("LogLevel")) ? Convert.ToInt32(nodes["LogLevel".ToYamlNode()].ToString()) : d_loglevel;
 			string LogDirectory = (!nodes.IsNull() && nodes.ContainsKey("LogDirectory")) ? nodes["LogDirectory".ToYamlNode()].ToString() : d_logdirectory;
 			string IrcLogDirectory = (!nodes.IsNull() && nodes.ContainsKey("IrcLogDirectory")) ? nodes["IrcLogDirectory".ToYamlNode()].ToString() : d_irclogdirectory;
 			bool IrcLog = (!nodes.IsNull() && nodes.ContainsKey("IrcLog")) ? Convert.ToBoolean(nodes["IrcLog".ToYamlNode()].ToString()) : d_irclog;
 
-			new LogConfig(LogFileName, LogLevel, sUtilities.GetSpecialDirectory(LogDirectory), sUtilities.GetSpecialDirectory(IrcLogDirectory), IrcLog);
+			new LogConfig(LogFileName, LogDateFileName, LogMaxFileSize, LogLevel, sUtilities.GetSpecialDirectory(LogDirectory), sUtilities.GetSpecialDirectory(IrcLogDirectory), IrcLog);
 		}
 
 		private void ServerMap(IDictionary<YamlNode, YamlNode> nodes)
@@ -351,6 +358,20 @@ namespace Schumix.Framework.Config
 			new UpdateConfig(Enabled, Version.ToLower(), Branch, WebPage);
 		}
 
+		private void ShutdownMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			int MaxMemory = (!nodes.IsNull() && nodes.ContainsKey("MaxMemory")) ? Convert.ToInt32(nodes["MaxMemory".ToYamlNode()].ToString()) : d_shutdownmaxmemory;
+
+			new ShutdownConfig(MaxMemory);
+		}
+
+		private void FloodingMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			int Seconds = (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? Convert.ToInt32(nodes["Seconds".ToYamlNode()].ToString()) : d_floodingseconds;
+			int NumberOfCommands = (!nodes.IsNull() && nodes.ContainsKey("NumberOfCommands")) ? Convert.ToInt32(nodes["NumberOfCommands".ToYamlNode()].ToString()) : d_floodingnumberofcommands;
+			new FloodingConfig(Seconds, NumberOfCommands);
+		}
+
 		private YamlMappingNode CreateServerMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
@@ -365,6 +386,8 @@ namespace Schumix.Framework.Config
 		{
 			var map = new YamlMappingNode();
 			map.Add("FileName",        (!nodes.IsNull() && nodes.ContainsKey("FileName")) ? nodes["FileName".ToYamlNode()].ToString() : d_logfilename);
+			map.Add("DateFileName",    (!nodes.IsNull() && nodes.ContainsKey("DateFileName")) ? nodes["DateFileName".ToYamlNode()].ToString() : d_logdatefilename.ToString());
+			map.Add("MaxFileSize",     (!nodes.IsNull() && nodes.ContainsKey("MaxFileSize")) ? nodes["MaxFileSize".ToYamlNode()].ToString() : d_logmaxfilesize.ToString());
 			map.Add("LogLevel",        (!nodes.IsNull() && nodes.ContainsKey("LogLevel")) ? nodes["LogLevel".ToYamlNode()].ToString() : d_loglevel.ToString());
 			map.Add("LogDirectory",    (!nodes.IsNull() && nodes.ContainsKey("LogDirectory")) ? nodes["LogDirectory".ToYamlNode()].ToString() : d_logdirectory);
 			map.Add("IrcLogDirectory", (!nodes.IsNull() && nodes.ContainsKey("IrcLogDirectory")) ? nodes["IrcLogDirectory".ToYamlNode()].ToString() : d_irclogdirectory);
@@ -555,6 +578,21 @@ namespace Schumix.Framework.Config
 			map.Add("Version", (!nodes.IsNull() && nodes.ContainsKey("Version")) ? nodes["Version".ToYamlNode()].ToString() : d_updateversion);
 			map.Add("Branch",  (!nodes.IsNull() && nodes.ContainsKey("Branch")) ? nodes["Branch".ToYamlNode()].ToString() : d_updatebranch);
 			map.Add("WebPage", (!nodes.IsNull() && nodes.ContainsKey("WebPage")) ? nodes["WebPage".ToYamlNode()].ToString() : d_updatewebpage);
+			return map;
+		}
+
+		private YamlMappingNode CreateShutdownMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			var map = new YamlMappingNode();
+			map.Add("MaxMemory", (!nodes.IsNull() && nodes.ContainsKey("MaxMemory")) ? nodes["MaxMemory".ToYamlNode()].ToString() : d_shutdownmaxmemory.ToString());
+			return map;
+		}
+
+		private YamlMappingNode CreateFloodingMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			var map = new YamlMappingNode();
+			map.Add("Seconds",          (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? nodes["Seconds".ToYamlNode()].ToString() : d_floodingseconds.ToString());
+			map.Add("NumberOfCommands", (!nodes.IsNull() && nodes.ContainsKey("NumberOfCommands")) ? nodes["NumberOfCommands".ToYamlNode()].ToString() : d_floodingnumberofcommands.ToString());
 			return map;
 		}
 	}

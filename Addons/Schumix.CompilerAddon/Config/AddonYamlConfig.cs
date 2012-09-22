@@ -34,6 +34,7 @@ namespace Schumix.CompilerAddon.Config
 	{
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -46,8 +47,8 @@ namespace Schumix.CompilerAddon.Config
 
 			Log.Notice("CompilerAddonConfig", sLocalization.Config("Text"));
 
-			var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
-			CompilerMap((!compilermap.IsNull() && compilermap.ContainsKey("Flooding")) ? ((YamlMappingNode)compilermap["Flooding".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null);
+			var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : NullYMap;
+			CompilerMap((!compilermap.IsNull() && compilermap.ContainsKey("Flooding")) ? ((YamlMappingNode)compilermap["Flooding".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("CompilerAddonConfig", sLocalization.Config("Text2"));
 		}
@@ -74,10 +75,10 @@ namespace Schumix.CompilerAddon.Config
 
 				try
 				{
-					var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
+					var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Compiler", CreateCompilerMap((!compilermap.IsNull() && compilermap.ContainsKey("Compiler")) ? ((YamlMappingNode)compilermap["Compiler".ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null));
+					nodes2.Add("Compiler", CreateCompilerMap((!compilermap.IsNull() && compilermap.ContainsKey("Compiler")) ? ((YamlMappingNode)compilermap["Compiler".ToYamlNode()]).Children : NullYMap));
 					nodes.Add("CompilerAddon", nodes2);
 
 					sUtilities.CreateFile(filename);

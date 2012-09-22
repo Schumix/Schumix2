@@ -33,6 +33,8 @@ Schumix:
         MessageType: Privmsg
     Log:
         FileName: Schumix.log
+        DateFileName: False
+        MaxFileSize: 100
         LogLevel: 2
         LogDirectory: Logs
         IrcLogDirectory: Channels
@@ -63,3 +65,8 @@ Schumix:
         Version: stable
         Branch: master
         WebPage: https://github.com/megax/Schumix2
+    Shutdown:
+        MaxMemory: 100
+    Flooding:
+        Seconds: 4
+        NumberOfCommands: 2

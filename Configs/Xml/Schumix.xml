@@ -40,6 +40,8 @@
     </Irc>
     <Log>
         <FileName>Schumix.log</FileName>
+        <DateFileName>False</DateFileName>
+        <MaxFileSize>100</MaxFileSize>
         <LogLevel>2</LogLevel>
         <LogDirectory>Logs</LogDirectory>
         <IrcLogDirectory>Channels</IrcLogDirectory>
@@ -78,4 +80,11 @@
         <Branch>master</Branch>
         <WebPage>https://github.com/megax/Schumix2</WebPage>
     </Update>
+    <Shutdown>
+        <MaxMemory>100</MaxMemory>
+    </Shutdown>
+    <Flooding>
+        <Seconds>4</Seconds>
+        <NumberOfCommands>2</NumberOfCommands>
+    </Flooding>
 </Schumix>
