@@ -27,16 +27,16 @@ using IronPython.Runtime.Operations;
 using Microsoft.CSharp;
 using Microsoft.Scripting.Hosting;
 using Microsoft.Scripting.Runtime;
-using Schumix.API.Irc;
-using Schumix.API.Delegate;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Localization;
 
 namespace Schumix.PythonEngine
 {
 	public sealed class PythonEngine
 	{
 		private Dictionary<ScriptSource, ScriptScope> _list = new Dictionary<ScriptSource, ScriptScope>();
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly FileSystemWatcher _watcher;
 		private readonly object Lock = new object();
@@ -45,7 +45,7 @@ namespace Schumix.PythonEngine
 
 		public PythonEngine(string scriptsPath)
 		{
-			Console.WriteLine("start");
+			Log.Notice("PythonEngine", sLConsole.PythonEngine("Text"));
 			_scriptPath = scriptsPath;
 			_engine = Python.CreateEngine();
 
@@ -107,7 +107,7 @@ namespace Schumix.PythonEngine
 					bool error = false;
 					var scope = _engine.CreateScope();
 					var source = _engine.CreateScriptSourceFromFile(file.FullName);
-					Log.Notice("PythonEngine", /*sLConsole.LuaEngine("Text2")*/ "{0}", file.Name);
+					Log.Notice("PythonEngine", sLConsole.PythonEngine("Text2"), file.Name);
 
 					try
 					{
@@ -123,22 +123,28 @@ namespace Schumix.PythonEngine
 					catch(Exception e)
 					{
 						error = true;
-						//Log.Error("PythonEngine", /*sLConsole.LuaEngine("Text3")*/ "{0} {1}", file.Name, x.Message);
-						Error(e);
+						Error(e, file.Name);
 					}
 
 					if(!error)
 						_list.Add(source, scope);
 				}
 			}
-        }
+		}
 
-        private void Error(Exception e)
-        {
-			Console.WriteLine("Python Error: " + e.Message);
+		private void Error(Exception e, string FileName = "")
+		{
+			string errortext = string.Empty;
+
 			foreach(var frame in PythonOps.GetDynamicStackFrames(e))
-			    Console.WriteLine("\t" + frame.GetFileName() + " " + frame.GetFileLineNumber() + " " + frame.GetMethodName());
-        }
+				errortext += SchumixBase.Space + "|" + SchumixBase.Space + frame.GetFileName() +
+							SchumixBase.Space + frame.GetFileLineNumber() + SchumixBase.Space + frame.GetMethodName();
+
+			if(FileName == string.Empty)
+				Log.Error("PythonEngine", sLConsole.PythonEngine("Text3"), e.Message, errortext);
+			else
+				Log.Error("PythonEngine", sLConsole.PythonEngine("Text4"), FileName, e.Message, errortext);
+		}
 
 		/// <summary>
 		/// Frees up resources.

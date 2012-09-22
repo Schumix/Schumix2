@@ -113,9 +113,9 @@ namespace Schumix.LuaEngine
 					{
 						_lua.DoFile(file.FullName);
 					}
-					catch(Exception x)
+					catch(Exception e)
 					{
-						Log.Error("LuaEngine", sLConsole.LuaEngine("Text3"), file.Name, x.Message);
+						Log.Error("LuaEngine", sLConsole.LuaEngine("Text3"), file.Name, e.Message);
 					}
 				}
 			}
