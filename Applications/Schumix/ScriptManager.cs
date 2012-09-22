@@ -66,8 +66,6 @@ namespace Schumix
 			_scriptsPath = scriptPath;
 			sUtilities.CreateDirectory(scriptPath);
 
-			bool asd = true;
-
 			if(ScriptsConfig.Lua)
 			{
 				sUtilities.CreateDirectory(Path.Combine(scriptPath, "Lua"));
@@ -76,13 +74,13 @@ namespace Schumix
 			else
 				Log.Warning("ScriptManager", sLConsole.ScriptManager("Text"));
 
-			if(asd)
+			if(ScriptsConfig.Python)
 			{
 				sUtilities.CreateDirectory(Path.Combine(scriptPath, "Python"));
 				_pythonEngine = new PythonEngine.PythonEngine(Path.Combine(scriptPath, "Python"));
 			}
 			else
-				Log.Warning("ScriptManager", "leállítva");
+				Log.Warning("ScriptManager", sLConsole.ScriptManager("Text2"));
 		}
 
 		/// <summary>

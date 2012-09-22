@@ -328,10 +328,11 @@ namespace Schumix.Framework.Config
 
 		private void ScriptsMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Lua = (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? Convert.ToBoolean(nodes["Lua".ToYamlNode()].ToString()) : d_scriptenabled;
-			string Directory = (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_scriptdirectory;
+			bool Lua = (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? Convert.ToBoolean(nodes["Lua".ToYamlNode()].ToString()) : d_scriptsluaenabled;
+			bool Python = (!nodes.IsNull() && nodes.ContainsKey("Python")) ? Convert.ToBoolean(nodes["Python".ToYamlNode()].ToString()) : d_scriptspythonenabled;
+			string Directory = (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_scriptsdirectory;
 
-			new ScriptsConfig(Lua, sUtilities.GetSpecialDirectory(Directory));
+			new ScriptsConfig(Lua, Python, sUtilities.GetSpecialDirectory(Directory));
 		}
 
 		private void CrashMap(IDictionary<YamlNode, YamlNode> nodes)
@@ -552,8 +553,9 @@ namespace Schumix.Framework.Config
 		private YamlMappingNode CreateScriptsMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Lua",       (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? nodes["Lua".ToYamlNode()].ToString() : d_scriptenabled.ToString());
-			map.Add("Directory", (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_scriptdirectory);
+			map.Add("Lua",       (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? nodes["Lua".ToYamlNode()].ToString() : d_scriptsluaenabled.ToString());
+			map.Add("Python",    (!nodes.IsNull() && nodes.ContainsKey("Python")) ? nodes["Python".ToYamlNode()].ToString() : d_scriptspythonenabled.ToString());
+			map.Add("Directory", (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_scriptsdirectory);
 			return map;
 		}
 

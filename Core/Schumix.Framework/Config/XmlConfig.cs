@@ -153,10 +153,11 @@ namespace Schumix.Framework.Config
 
 			new AddonsConfig(Enabled, Ignore, Directory);
 
-			bool Lua = !xmldoc.SelectSingleNode("Schumix/Scripts/Lua").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Scripts/Lua").InnerText) : d_scriptenabled;
-			Directory = !xmldoc.SelectSingleNode("Schumix/Scripts/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Directory").InnerText : d_scriptdirectory;
+			bool Lua = !xmldoc.SelectSingleNode("Schumix/Scripts/Lua").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Scripts/Lua").InnerText) : d_scriptsluaenabled;
+			bool Python = !xmldoc.SelectSingleNode("Schumix/Scripts/Python").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Scripts/Python").InnerText) : d_scriptspythonenabled;
+			Directory = !xmldoc.SelectSingleNode("Schumix/Scripts/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Directory").InnerText : d_scriptsdirectory;
 
-			new ScriptsConfig(Lua, sUtilities.GetSpecialDirectory(Directory));
+			new ScriptsConfig(Lua, Python, sUtilities.GetSpecialDirectory(Directory));
 
 			Directory = !xmldoc.SelectSingleNode("Schumix/Crash/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Crash/Directory").InnerText : d_crashdirectory;
 
@@ -401,8 +402,9 @@ namespace Schumix.Framework.Config
 
 						// <Scripts>
 						w.WriteStartElement("Scripts");
-						w.WriteElementString("Lua",              (!xmldoc.SelectSingleNode("Schumix/Scripts/Lua").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Lua").InnerText : d_scriptenabled.ToString()));
-						w.WriteElementString("Directory",        (!xmldoc.SelectSingleNode("Schumix/Scripts/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Directory").InnerText : d_scriptdirectory));
+						w.WriteElementString("Lua",              (!xmldoc.SelectSingleNode("Schumix/Scripts/Lua").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Lua").InnerText : d_scriptsluaenabled.ToString()));
+						w.WriteElementString("Python",           (!xmldoc.SelectSingleNode("Schumix/Scripts/Python").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Python").InnerText : d_scriptspythonenabled.ToString()));
+						w.WriteElementString("Directory",        (!xmldoc.SelectSingleNode("Schumix/Scripts/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Directory").InnerText : d_scriptsdirectory));
 
 						// </Scripts>
 						w.WriteEndElement();

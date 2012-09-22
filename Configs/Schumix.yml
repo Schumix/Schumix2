@@ -55,6 +55,7 @@ Schumix:
         Directory: Addons
     Scripts:
         Lua: False
+        Python: False
         Directory: Scripts
     Crash:
         Directory: Dumps
