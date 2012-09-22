@@ -83,4 +83,8 @@
     <Shutdown>
         <MaxMemory>100</MaxMemory>
     </Shutdown>
+    <Flooding>
+        <Seconds>4</Seconds>
+        <NumberOfCommands>2</NumberOfCommands>
+    </Flooding>
 </Schumix>

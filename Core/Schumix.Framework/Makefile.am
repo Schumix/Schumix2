@@ -158,7 +158,8 @@ FILES = \
 	Config/YamlConfig.cs \
 	Network/ClientPacketHandlerDelegate.cs \
 	Config/CrashConfig.cs \
-	Config/ShutdownConfig.cs 
+	Config/ShutdownConfig.cs \
+	Config/FloodingConfig.cs 
 
 DATA_FILES = 
 

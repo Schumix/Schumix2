@@ -75,6 +75,7 @@ namespace Schumix.Framework.Config
 			LocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Localization")) ? ((YamlMappingNode)schumixmap["Localization".ToYamlNode()]).Children : NullYMap);
 			UpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : NullYMap);
 			ShutdownMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Shutdown")) ? ((YamlMappingNode)schumixmap["Shutdown".ToYamlNode()]).Children : NullYMap);
+			FloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("YamlConfig", sLConsole.Config("Text4"));
 			Console.WriteLine();
@@ -131,6 +132,7 @@ namespace Schumix.Framework.Config
 						nodes2.Add("Localization", CreateLocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Localization")) ? ((YamlMappingNode)schumixmap["Localization".ToYamlNode()]).Children : NullYMap));
 						nodes2.Add("Update",       CreateUpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : NullYMap));
 						nodes2.Add("Shutdown",     CreateShutdownMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Shutdown")) ? ((YamlMappingNode)schumixmap["Shutdown".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Flooding",     CreateFloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap));
 						nodes.Add("Schumix", nodes2);
 
 						sUtilities.CreateFile(filename);
@@ -363,6 +365,13 @@ namespace Schumix.Framework.Config
 			new ShutdownConfig(MaxMemory);
 		}
 
+		private void FloodingMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			int Seconds = (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? Convert.ToInt32(nodes["Seconds".ToYamlNode()].ToString()) : d_floodingseconds;
+			int NumberOfCommands = (!nodes.IsNull() && nodes.ContainsKey("NumberOfCommands")) ? Convert.ToInt32(nodes["NumberOfCommands".ToYamlNode()].ToString()) : d_floodingnumberofcommands;
+			new FloodingConfig(Seconds, NumberOfCommands);
+		}
+
 		private YamlMappingNode CreateServerMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
@@ -576,6 +585,14 @@ namespace Schumix.Framework.Config
 		{
 			var map = new YamlMappingNode();
 			map.Add("MaxMemory", (!nodes.IsNull() && nodes.ContainsKey("MaxMemory")) ? nodes["MaxMemory".ToYamlNode()].ToString() : d_shutdownmaxmemory.ToString());
+			return map;
+		}
+
+		private YamlMappingNode CreateFloodingMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			var map = new YamlMappingNode();
+			map.Add("Seconds",          (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? nodes["Seconds".ToYamlNode()].ToString() : d_floodingseconds.ToString());
+			map.Add("NumberOfCommands", (!nodes.IsNull() && nodes.ContainsKey("NumberOfCommands")) ? nodes["NumberOfCommands".ToYamlNode()].ToString() : d_floodingnumberofcommands.ToString());
 			return map;
 		}
 	}

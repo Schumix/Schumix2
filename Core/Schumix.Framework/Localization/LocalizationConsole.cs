@@ -901,6 +901,42 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
+		public string CrashConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Crash beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the Crash settings.";
+					else
+						return "Loaded the Crash settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string FloodingConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Flooding beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the Flooding settings.";
+					else
+						return "Loaded the Flooding settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
 		public string ServerConfig(string Name)
 		{
 			switch(Name)
