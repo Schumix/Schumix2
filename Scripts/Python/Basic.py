@@ -1,4 +1,3 @@
-import sys
 from Schumix.API.Irc import IRCMessage
 from Schumix.Irc import IrcBase
 
@@ -16,6 +15,6 @@ def Destroy(IrcBase):
 
 def Test(IRCMessage):
 	sSendMessage = sIrcBase.Networks[IRCMessage.ServerName].sSendMessage;
-	sSendMessage.SendCMPrivmsg(IRCMessage.Channel, "Teszt!")
+	sSendMessage.SendCMPrivmsg(IRCMessage.Channel, "Test!")
 	return
 
