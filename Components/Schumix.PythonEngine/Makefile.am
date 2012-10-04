@@ -6,15 +6,22 @@ EXTRA_DIST =
 if ENABLE_DEBUG_X86
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = ../../Run/Debug/Schumix.Framework.dll
+ASSEMBLY = ../../Run/Debug/Schumix.PythonEngine.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
+	../../Run/Debug/Schumix.Framework.dll \
+	../../Run/Debug/Schumix.Irc.dll \
 	../../Run/Debug/Schumix.API.dll
 BUILD_DIR = ../../Run/Debug
 
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
+SCHUMIX_PYTHONENGINE_DLL_MDB_SOURCE=../../Run/Debug/Schumix.PythonEngine.dll.mdb
+SCHUMIX_PYTHONENGINE_DLL_MDB=$(BUILD_DIR)/Schumix.PythonEngine.dll.mdb
+IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
+IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
+MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
+SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
@@ -22,20 +29,28 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 
 endif
 
 if ENABLE_RELEASE_X86
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
-ASSEMBLY = ../../Run/Release/Schumix.Framework.dll
+ASSEMBLY = ../../Run/Release/Schumix.PythonEngine.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
+	../../Run/Release/Schumix.Framework.dll \
+	../../Run/Release/Schumix.Irc.dll \
 	../../Run/Release/Schumix.API.dll
 BUILD_DIR = ../../Run/Release
 
-SCHUMIX_FRAMEWORK_DLL_MDB=
+SCHUMIX_PYTHONENGINE_DLL_MDB=
+IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
+IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
+MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
+SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
@@ -43,21 +58,29 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 
 endif
 
 if ENABLE_DEBUG_X64
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = ../../Run/Debug_x64/Schumix.Framework.dll
+ASSEMBLY = ../../Run/Debug_x64/Schumix.PythonEngine.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
+	../../Run/Debug_x64/Schumix.Framework.dll \
+	../../Run/Debug_x64/Schumix.Irc.dll \
 	../../Run/Debug_x64/Schumix.API.dll
 BUILD_DIR = ../../Run/Debug_x64
 
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
+SCHUMIX_PYTHONENGINE_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.PythonEngine.dll.mdb
+SCHUMIX_PYTHONENGINE_DLL_MDB=$(BUILD_DIR)/Schumix.PythonEngine.dll.mdb
+IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
+IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
+MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
+SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
@@ -65,20 +88,28 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
 
 endif
 
 if ENABLE_RELEASE_X64
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
-ASSEMBLY = ../../Run/Release_x64/Schumix.Framework.dll
+ASSEMBLY = ../../Run/Release_x64/Schumix.PythonEngine.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
+	../../Run/Release_x64/Schumix.Framework.dll \
+	../../Run/Release_x64/Schumix.Irc.dll \
 	../../Run/Release_x64/Schumix.API.dll
 BUILD_DIR = ../../Run/Release_x64
 
-SCHUMIX_FRAMEWORK_DLL_MDB=
+SCHUMIX_PYTHONENGINE_DLL_MDB=
+IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
+IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
+MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
+SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
@@ -86,6 +117,7 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
+SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
 
 endif
 
@@ -93,17 +125,23 @@ AL=al
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
+	$(SCHUMIX_PYTHONENGINE_DLL_MDB) \
+	$(IRONPYTHON_MODULES_DLL) \
+	$(IRONPYTHON_DLL) \
+	$(MICROSOFT_DYNAMIC_DLL) \
+	$(MICROSOFT_SCRIPTING_DLL) \
+	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SQLITE3_DLL) \
 	$(SCHUMIX_DB3) \
 	$(MYSQL_DATA_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(YAMLDOTNET_CORE_DLL) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
-	$(SCHUMIX_API_DLL)  
+	$(SCHUMIX_API_DLL) \
+	$(SCHUMIX_IRC_DLL)  
 
 LINUX_PKGCONFIG = \
-	$(SCHUMIX_FRAMEWORK_PC)  
+	$(SCHUMIX_PYTHONENGINE_PC)  
 
 
 RESGEN=resgen2
@@ -111,84 +149,36 @@ RESGEN=resgen2
 all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 FILES = \
-	Config/Config.cs \
-	Config/DefaultConfig.cs \
-	Singleton.cs \
-	SchumixBase.cs \
-	ConsoleLog.cs \
 	Properties/AssemblyInfo.cs \
-	Exceptions/SingletonException.cs \
-	Database/SQLite.cs \
-	Database/DatabaseManager.cs \
-	Database/MySql.cs \
-	Exceptions/SchumixException.cs \
-	Utilities.cs \
-	Timer.cs \
-	Localization/LocalizationManager.cs \
-	Localization/LocalizationConsole.cs \
-	Extensions/GeneralExtensions.cs \
-	Extensions/CollectionExtensions.cs \
-	Extensions/ReflectionExtensions.cs \
-	Network/ClientPacketHandler.cs \
-	Network/Opcodes.cs \
-	Network/SchumixPacket.cs \
-	Network/ClientSocket.cs \
-	Runtime.cs \
-	CrashDumper.cs \
-	PlatformType.cs \
-	Mathematics/Algorithms/QuickSort.cs \
-	Mathematics/Types/AutoSortedArray.cs \
-	Mathematics/MathFunctions.cs \
-	Log.cs \
-	Config/Consts.cs \
-	Config/SchumixConfig.cs \
-	Config/IRCConfig.cs \
-	Config/MySqlConfig.cs \
-	Config/SQLiteConfig.cs \
-	Config/LogConfig.cs \
-	Config/AddonsConfig.cs \
-	Config/ScriptsConfig.cs \
-	Config/LocalizationConfig.cs \
-	Config/UpdateConfig.cs \
-	Config/ServerConfig.cs \
-	Config/IRCConfigBase.cs \
-	Addon/AddonManager.cs \
-	Addon/AddonBase.cs \
-	Config/XmlConfig.cs \
-	Config/YamlConfig.cs \
-	Network/ClientPacketHandlerDelegate.cs \
-	Config/CrashConfig.cs \
-	Config/ShutdownConfig.cs \
-	Config/FloodingConfig.cs 
+	PythonEngine.cs 
 
 DATA_FILES = 
 
 RESOURCES = 
 
 EXTRAS = \
-	../../Dependencies/sqlite3.dll \
-	../../Sql/Schumix.db3 \
-	schumix.framework.pc.in 
+	Properties \
+	schumix.pythonengine.pc.in 
 
 REFERENCES =  \
 	System \
-	System.Data \
-	System.Xml \
-	System.Web \
-	System.Management \
-	System.Core \
-	System.Net
+	Microsoft.CSharp
 
 DLL_REFERENCES =  \
-	../../Dependencies/MySql.Data.dll \
-	../../Dependencies/System.Data.SQLite.dll \
-	../../Dependencies/YamlDotNet.Core.dll \
-	../../Dependencies/YamlDotNet.RepresentationModel.dll
+	../../Dependencies/IronPython.Modules.dll \
+	../../Dependencies/IronPython.dll \
+	../../Dependencies/Microsoft.Scripting.dll \
+	../../Dependencies/Microsoft.Dynamic.dll
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 include $(top_srcdir)/Makefile.include
 
+IRONPYTHON_MODULES_DLL = $(BUILD_DIR)/IronPython.Modules.dll
+IRONPYTHON_DLL = $(BUILD_DIR)/IronPython.dll
+MICROSOFT_DYNAMIC_DLL = $(BUILD_DIR)/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL = $(BUILD_DIR)/Microsoft.Scripting.dll
+SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
@@ -196,15 +186,20 @@ SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
-SCHUMIX_FRAMEWORK_PC = $(BUILD_DIR)/schumix.framework.pc
+SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
+SCHUMIX_PYTHONENGINE_PC = $(BUILD_DIR)/schumix.pythonengine.pc
 
+$(eval $(call emit-deploy-target,IRONPYTHON_MODULES_DLL))
+$(eval $(call emit-deploy-target,IRONPYTHON_DLL))
+$(eval $(call emit-deploy-target,MICROSOFT_DYNAMIC_DLL))
+$(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_DLL))
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
-$(eval $(call emit-deploy-wrapper,SCHUMIX_FRAMEWORK_PC,schumix.framework.pc))
+$(eval $(call emit-deploy-wrapper,SCHUMIX_PYTHONENGINE_PC,schumix.pythonengine.pc))
 
 
 $(eval $(call emit_resgen_targets))

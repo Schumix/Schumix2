@@ -25,6 +25,7 @@ using Schumix.API;
 using Schumix.API.Irc;
 using Schumix.API.Functions;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Flood
@@ -48,7 +49,7 @@ namespace Schumix.Irc.Flood
 		public void Start()
 		{
 			// Flood
-			_timerflood.Interval = /*Config.Seconds*/4*1000;
+			_timerflood.Interval = FloodingConfig.Seconds*1000;
 			_timerflood.Elapsed += HandleTimerFloodElapsed;
 			_timerflood.Enabled = true;
 			_timerflood.Start();
@@ -100,13 +101,13 @@ namespace Schumix.Irc.Flood
 			if(CommandFloodList.ContainsKey(sIRCMessage.Nick.ToLower()))
 			{
 				if(!CommandFloodList[sIRCMessage.Nick.ToLower()].IsIgnore &&
-				   CommandFloodList[sIRCMessage.Nick.ToLower()].Message >= /*Config.NumberOfMessages*/2)
+				   CommandFloodList[sIRCMessage.Nick.ToLower()].Message >= FloodingConfig.NumberOfCommands)
 				{
 					CommandFloodList[sIRCMessage.Nick.ToLower()].IsIgnore = true;
 					CommandFloodList[sIRCMessage.Nick.ToLower()].Warring = true;
 					CommandFloodList[sIRCMessage.Nick.ToLower()].BanTime = DateTime.Now.AddMinutes(1);
 					CommandFloodList[sIRCMessage.Nick.ToLower()].Message = 0;
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick.ToLower(), sLManager.GetWarningText("CommandsDisabled2", sIRCMessage.Channel, sIRCMessage.ServerName), /*Config.Seconds*/4);
+					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick.ToLower(), sLManager.GetWarningText("CommandsDisabled2", sIRCMessage.Channel, sIRCMessage.ServerName), FloodingConfig.Seconds);
 					return true;
 				}
 

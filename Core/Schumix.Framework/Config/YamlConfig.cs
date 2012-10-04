@@ -75,6 +75,7 @@ namespace Schumix.Framework.Config
 			LocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Localization")) ? ((YamlMappingNode)schumixmap["Localization".ToYamlNode()]).Children : NullYMap);
 			UpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : NullYMap);
 			ShutdownMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Shutdown")) ? ((YamlMappingNode)schumixmap["Shutdown".ToYamlNode()]).Children : NullYMap);
+			FloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("YamlConfig", sLConsole.Config("Text4"));
 			Console.WriteLine();
@@ -131,6 +132,7 @@ namespace Schumix.Framework.Config
 						nodes2.Add("Localization", CreateLocalizationMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Localization")) ? ((YamlMappingNode)schumixmap["Localization".ToYamlNode()]).Children : NullYMap));
 						nodes2.Add("Update",       CreateUpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : NullYMap));
 						nodes2.Add("Shutdown",     CreateShutdownMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Shutdown")) ? ((YamlMappingNode)schumixmap["Shutdown".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Flooding",     CreateFloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap));
 						nodes.Add("Schumix", nodes2);
 
 						sUtilities.CreateFile(filename);
@@ -326,10 +328,11 @@ namespace Schumix.Framework.Config
 
 		private void ScriptsMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Lua = (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? Convert.ToBoolean(nodes["Lua".ToYamlNode()].ToString()) : d_scriptenabled;
-			string Directory = (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_scriptdirectory;
+			bool Lua = (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? Convert.ToBoolean(nodes["Lua".ToYamlNode()].ToString()) : d_scriptsluaenabled;
+			bool Python = (!nodes.IsNull() && nodes.ContainsKey("Python")) ? Convert.ToBoolean(nodes["Python".ToYamlNode()].ToString()) : d_scriptspythonenabled;
+			string Directory = (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_scriptsdirectory;
 
-			new ScriptsConfig(Lua, sUtilities.GetSpecialDirectory(Directory));
+			new ScriptsConfig(Lua, Python, sUtilities.GetSpecialDirectory(Directory));
 		}
 
 		private void CrashMap(IDictionary<YamlNode, YamlNode> nodes)
@@ -361,6 +364,13 @@ namespace Schumix.Framework.Config
 			int MaxMemory = (!nodes.IsNull() && nodes.ContainsKey("MaxMemory")) ? Convert.ToInt32(nodes["MaxMemory".ToYamlNode()].ToString()) : d_shutdownmaxmemory;
 
 			new ShutdownConfig(MaxMemory);
+		}
+
+		private void FloodingMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			int Seconds = (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? Convert.ToInt32(nodes["Seconds".ToYamlNode()].ToString()) : d_floodingseconds;
+			int NumberOfCommands = (!nodes.IsNull() && nodes.ContainsKey("NumberOfCommands")) ? Convert.ToInt32(nodes["NumberOfCommands".ToYamlNode()].ToString()) : d_floodingnumberofcommands;
+			new FloodingConfig(Seconds, NumberOfCommands);
 		}
 
 		private YamlMappingNode CreateServerMap(IDictionary<YamlNode, YamlNode> nodes)
@@ -543,8 +553,9 @@ namespace Schumix.Framework.Config
 		private YamlMappingNode CreateScriptsMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Lua",       (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? nodes["Lua".ToYamlNode()].ToString() : d_scriptenabled.ToString());
-			map.Add("Directory", (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_scriptdirectory);
+			map.Add("Lua",       (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? nodes["Lua".ToYamlNode()].ToString() : d_scriptsluaenabled.ToString());
+			map.Add("Python",    (!nodes.IsNull() && nodes.ContainsKey("Python")) ? nodes["Python".ToYamlNode()].ToString() : d_scriptspythonenabled.ToString());
+			map.Add("Directory", (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_scriptsdirectory);
 			return map;
 		}
 
@@ -576,6 +587,14 @@ namespace Schumix.Framework.Config
 		{
 			var map = new YamlMappingNode();
 			map.Add("MaxMemory", (!nodes.IsNull() && nodes.ContainsKey("MaxMemory")) ? nodes["MaxMemory".ToYamlNode()].ToString() : d_shutdownmaxmemory.ToString());
+			return map;
+		}
+
+		private YamlMappingNode CreateFloodingMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			var map = new YamlMappingNode();
+			map.Add("Seconds",          (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? nodes["Seconds".ToYamlNode()].ToString() : d_floodingseconds.ToString());
+			map.Add("NumberOfCommands", (!nodes.IsNull() && nodes.ContainsKey("NumberOfCommands")) ? nodes["NumberOfCommands".ToYamlNode()].ToString() : d_floodingnumberofcommands.ToString());
 			return map;
 		}
 	}

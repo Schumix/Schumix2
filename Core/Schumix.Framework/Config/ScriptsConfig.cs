@@ -26,11 +26,13 @@ namespace Schumix.Framework.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static bool Lua { get; private set; }
+		public static bool Python { get; private set; }
 		public static string Directory { get; private set; }
 
-		public ScriptsConfig(bool lua, string directory)
+		public ScriptsConfig(bool lua, bool python, string directory)
 		{
 			Lua       = lua;
+			Python    = python;
 			Directory = directory;
 			Log.Notice("ScriptsConfig", sLConsole.ScriptsConfig("Text"));
 		}

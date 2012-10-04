@@ -22,15 +22,17 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
 {
-	public sealed class CrashConfig
+	public sealed class FloodingConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		public static string Directory { get; private set; }
+		public static int Seconds { get; private set; }
+		public static int NumberOfCommands { get; private set; }
 
-		public CrashConfig(string directory)
+		public FloodingConfig(int seconds, int numberofcommands)
 		{
-			Directory = directory;
-			Log.Notice("CrashConfig", sLConsole.CrashConfig("Text"));
+			Seconds          = seconds;
+			NumberOfCommands = numberofcommands;
+			Log.Notice("FloodingConfig", sLConsole.FloodingConfig("Text"));
 		}
 	}
 }

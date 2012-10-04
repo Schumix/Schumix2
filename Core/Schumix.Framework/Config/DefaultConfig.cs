@@ -66,8 +66,9 @@ namespace Schumix.Framework.Config
 		protected const bool d_addonenabled            = true;
 		protected const string d_addonignore           = "MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon";
 		protected const string d_addondirectory        = "Addons";
-		protected const bool d_scriptenabled           = false;
-		protected const string d_scriptdirectory       = "Scripts";
+		protected const bool d_scriptsluaenabled       = false;
+		protected const bool d_scriptspythonenabled    = false;
+		protected const string d_scriptsdirectory      = "Scripts";
 		protected const string d_crashdirectory        = "Dumps";
 		protected const string d_locale                = "enUS";
 		protected const bool d_updateenabled           = false;
@@ -75,6 +76,8 @@ namespace Schumix.Framework.Config
 		protected const string d_updatebranch          = "master";
 		protected const string d_updatewebpage         = "https://github.com/megax/Schumix2";
 		protected const int d_shutdownmaxmemory        = 100;
+		protected const int d_floodingseconds          = 4;
+		protected const int d_floodingnumberofcommands = 2;
 		protected bool errors                          = false;
 	}
 }

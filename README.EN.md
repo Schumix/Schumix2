@@ -116,7 +116,8 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 
 ## Scripts
 
-* **Lua:** Értéke `true` vagy `false` lehet. Engedélyezi a lua fájlok betöltését. Alapértelmezés: `true`
+* **Lua:** Értéke `true` vagy `false` lehet. Engedélyezi a lua fájlok betöltését. Alapértelmezés: `false`
+* **Python:** Értéke `true` vagy `false` lehet. Engedélyezi a python fájlok betöltését. Alapértelmezés: `false`
 * **Directory:** A script-ek mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Scripts`
 
 ## Crash
@@ -140,6 +141,11 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 
 * **MaxMemory:** Meghatározza a program leállítását ha eléri a megadott memória nagyságot. Ha több szerverre is csatlakozik a bot akkor annyival fog tovább nőni ez a korlát ahány irc szerver be van állítva a konfigba.
                  Alapértelmezés: `100` (mb-ban értendő)
+
+## Flooding
+
+* **Seconds:** Meghatározza mennyi időnként fusson le a flood elemzése. Alapértelmezés: `4` (másodpercben)
+* **NumberOfCommands:** Meghatározza hányszor használhatja a parancsot adott személy a megadott indőn belül. Ha többet add meg akkor egy percre letiltja a program a parancsainak használatát annak a személynek. Alapértelmezés: `2`
 
 # Adatbázis beüzemelése
 

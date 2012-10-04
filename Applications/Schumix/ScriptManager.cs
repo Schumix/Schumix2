@@ -46,11 +46,16 @@ namespace Schumix
 		private readonly string _scriptsPath;
 #pragma warning restore 414
 		private LuaEngine.LuaEngine _luaEngine;
+		private PythonEngine.PythonEngine _pythonEngine;
 
 		/// <summary>
 		/// Gets the Lua engine.
 		/// </summary>
 		public LuaEngine.LuaEngine Lua { get { return _luaEngine; } }
+		/// <summary>
+		/// Gets the Python engine.
+		/// </summary>
+		public PythonEngine.PythonEngine Python { get { return _pythonEngine; } }
 
 		/// <summary>
 		///   Creates a new instance of ScriptManager
@@ -68,6 +73,14 @@ namespace Schumix
 			}
 			else
 				Log.Warning("ScriptManager", sLConsole.ScriptManager("Text"));
+
+			if(ScriptsConfig.Python)
+			{
+				sUtilities.CreateDirectory(Path.Combine(scriptPath, "Python"));
+				_pythonEngine = new PythonEngine.PythonEngine(Path.Combine(scriptPath, "Python"));
+			}
+			else
+				Log.Warning("ScriptManager", sLConsole.ScriptManager("Text2"));
 		}
 
 		/// <summary>

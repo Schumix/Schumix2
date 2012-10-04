@@ -121,6 +121,7 @@
     <Compile Include="Config\CrashConfig.cs" />
     <Compile Include="JsonHelper.cs" />
     <Compile Include="Config\ShutdownConfig.cs" />
+    <Compile Include="Config\FloodingConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

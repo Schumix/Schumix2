@@ -55,6 +55,7 @@ Schumix:
         Directory: Addons
     Scripts:
         Lua: False
+        Python: False
         Directory: Scripts
     Crash:
         Directory: Dumps
@@ -67,3 +68,6 @@ Schumix:
         WebPage: https://github.com/megax/Schumix2
     Shutdown:
         MaxMemory: 100
+    Flooding:
+        Seconds: 4
+        NumberOfCommands: 2

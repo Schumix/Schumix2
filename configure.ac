@@ -107,6 +107,8 @@ Components/Schumix.Updater/schumix.updater.pc
 Components/Schumix.Updater/Makefile
 Components/Schumix.LuaEngine/schumix.luaengine.pc
 Components/Schumix.LuaEngine/Makefile
+Components/Schumix.PythonEngine/schumix.pythonengine.pc
+Components/Schumix.PythonEngine/Makefile
 Components/Makefile
 Applications/Schumix/schumix
 Applications/Schumix/Makefile
