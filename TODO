@@ -16,6 +16,7 @@ Megírásra váró feladatok:
 		- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
 		- Játék addon nyelvezetét átírni angolra is.
 		- whois parancsnál megoldani a visszajelzést ha valaki fent van irc-n de nincs fent egy csatornán se
+		- Action üzenet mentése a log fájlokba.
 	- xrev parancs megírása.
 	- irc parancs listájának bővítése.
 	- Rss-nél megoldani hogy a project elnevezésének színe cserélhető legyen.
