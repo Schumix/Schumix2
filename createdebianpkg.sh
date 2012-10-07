@@ -52,7 +52,7 @@ echo "Maintainer: Csaba Jakosa <megax@yeahunter.hu>" >> control
 echo "Depends: mono-devel (>= 2.10.8)" >> control
 echo "Section: Schumix" >> control
 echo "Priority: optional" >> control
-echo "Description: Schumix2 IRC Bot and Framework" >> control
+echo "Description: Schumix IRC Bot and Framework" >> control
 
 cd ..
 cd usr
