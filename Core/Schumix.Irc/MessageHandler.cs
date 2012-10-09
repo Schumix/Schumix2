@@ -145,7 +145,6 @@ namespace Schumix.Irc
 					sNickInfo.ChangeIdentifyStatus(true);
 					Log.Error("NickServ", sLConsole.NickServ("Text2"));
 					ConnectAllChannel();
-					sNickInfo.ChangeVhostStatus(false);
 				}
 				else if(sIRCMessage.Args.Contains("You are already identified."))
 					Log.Warning("NickServ", sLConsole.NickServ("Text3"));
@@ -207,7 +206,6 @@ namespace Schumix.Irc
 				{
 					Log.Warning("HostServ", sLConsole.HostServ("Text3"));
 					ConnectAllChannel();
-					sNickInfo.ChangeVhostStatus(false);
 				}
 			}
 
@@ -541,7 +539,6 @@ namespace Schumix.Irc
 		{
 			Thread.Sleep(20*1000);
 			ConnectAllChannel();
-			sNickInfo.ChangeVhostStatus(false);
 		}
 	}
 }
