@@ -69,6 +69,7 @@
     <Reference Include="YamlDotNet.RepresentationModel">
       <HintPath>..\..\Dependencies\YamlDotNet.RepresentationModel.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Config\YamlConfig.cs" />
     <Compile Include="Network\ClientPacketHandlerDelegate.cs" />
     <Compile Include="Config\CrashConfig.cs" />
+    <Compile Include="JsonHelper.cs" />
     <Compile Include="Config\ShutdownConfig.cs" />
     <Compile Include="Config\FloodingConfig.cs" />
   </ItemGroup>

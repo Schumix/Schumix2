@@ -38,7 +38,7 @@ namespace Schumix.RevisionAddon
 		{
 			_servername = ServerName;
 			sRevision = new Revision(ServerName);
-			sIrcBase.Networks[ServerName].SchumixRegisterHandler("xrev", sRevision.HandleXrev);
+			sIrcBase.Networks[_servername].SchumixRegisterHandler("xrev", sRevision.HandleXrev);
 		}
 
 		public void Destroy()

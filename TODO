@@ -17,7 +17,6 @@ Megírásra váró feladatok:
 		- Játék addon nyelvezetét átírni angolra is.
 		- whois parancsnál megoldani a visszajelzést ha valaki fent van irc-n de nincs fent egy csatornán se
 		- Action üzenet mentése a log fájlokba.
-	- xrev parancs megírása.
 	- irc parancs listájának bővítése.
 	- Rss-nél megoldani hogy a project elnevezésének színe cserélhető legyen.
 	- Rss-be add, remove, és change parancsot létrehozni mellyel magát az rss címet tudjuk hozzáadni.
