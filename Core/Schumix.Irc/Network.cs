@@ -376,6 +376,7 @@ namespace Schumix.Irc
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
 			Online = false;
+			IsAllJoin = false;
 			_enabled = true;
 			NewNickPrivmsg = string.Empty;
 			SchumixBase.UrlTitleEnabled = false;
