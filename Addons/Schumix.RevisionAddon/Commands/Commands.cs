@@ -30,6 +30,7 @@ namespace Schumix.RevisionAddon.Commands
 {
 	class Revision : CommandInfo
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 
@@ -49,21 +50,28 @@ namespace Schumix.RevisionAddon.Commands
 
 			if(sIRCMessage.Info[4].ToLower() == "github")
 			{
+				var text = sLManager.GetCommandTexts("xrev/github", sIRCMessage.Channel, sIRCMessage.ServerName);
+				if(text.Length < 7)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					return;
+				}
+
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva a felhasználó név!");
+					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 7)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva a project!");
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 8)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva a sha1 kód!");
+					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					return;
 				}
 
@@ -71,13 +79,13 @@ namespace Schumix.RevisionAddon.Commands
 
 				if(github.UserName == string.Empty || github.Message == string.Empty || github.Url == string.Empty)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "Nincs ilyen kommit!");
+					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 					return;
 				}
 
-				sSendMessage.SendChatMessage(sIRCMessage, "Kommit: {0}", github.Message);
-				sSendMessage.SendChatMessage(sIRCMessage, "Link: {0}", github.Url);
-				sSendMessage.SendChatMessage(sIRCMessage, "Szerző: {0}", github.UserName);
+				sSendMessage.SendChatMessage(sIRCMessage, text[4], github.Message);
+				sSendMessage.SendChatMessage(sIRCMessage, text[5], github.Url);
+				sSendMessage.SendChatMessage(sIRCMessage, text[6], github.UserName);
 			}
 		}
 	}
