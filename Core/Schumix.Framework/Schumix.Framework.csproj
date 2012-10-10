@@ -122,6 +122,8 @@
     <Compile Include="JsonHelper.cs" />
     <Compile Include="Config\ShutdownConfig.cs" />
     <Compile Include="Config\FloodingConfig.cs" />
+    <Compile Include="Database\Cache\CacheDB.cs" />
+    <Compile Include="Database\Cache\LocalizedCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -142,5 +144,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Database\Cache\" />
   </ItemGroup>
 </Project>

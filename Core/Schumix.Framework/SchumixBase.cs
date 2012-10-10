@@ -29,6 +29,7 @@ using Schumix.Framework.Addon;
 using Schumix.Framework.Client;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
+using Schumix.Framework.Database.Cache;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -43,6 +44,7 @@ namespace Schumix.Framework
 		private static readonly object WriteLock = new object();
 		private static readonly Guid _guid = Guid.NewGuid();
 		public static DatabaseManager DManager { get; private set; }
+		public static CacheDB sCacheDB { get; private set; }
 		public static Timer timer { get; private set; }
 		public const string Title = "Schumix2 IRC Bot and Framework";
 		public static bool ExitStatus { get; private set; }
@@ -88,33 +90,38 @@ namespace Schumix.Framework
 				timer = new Timer();
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text2"));
 				DManager = new DatabaseManager();
+
+				// valami üzenet kéne ide
+				sCacheDB = new CacheDB();
+				sCacheDB.Load();
+
 				Log.Notice("SchumixBase", sLConsole.SchumixBase("Text3"));
 				sLManager.Locale = LocalizationConfig.Locale;
 
 				foreach(var sn in IRCConfig.List)
 				{
-					SchumixBase.DManager.Update("channels", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
-					SchumixBase.DManager.Update("schumix", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
-					SchumixBase.DManager.Update("hlmessage", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
-					SchumixBase.DManager.Update("admins", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
-					SchumixBase.DManager.Update("ignore_addons", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
-					SchumixBase.DManager.Update("ignore_channels", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
-					SchumixBase.DManager.Update("ignore_commands", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
-					SchumixBase.DManager.Update("ignore_irc_commands", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
-					SchumixBase.DManager.Update("ignore_nicks", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
+					DManager.Update("channels", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
+					DManager.Update("schumix", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
+					DManager.Update("hlmessage", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
+					DManager.Update("admins", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
+					DManager.Update("ignore_addons", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
+					DManager.Update("ignore_channels", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
+					DManager.Update("ignore_commands", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
+					DManager.Update("ignore_irc_commands", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
+					DManager.Update("ignore_nicks", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
 
-					var db1 = SchumixBase.DManager.Query("SELECT Id, ServerName FROM channels WHERE ServerId = '{0}'", sn.Value.ServerId);
+					var db1 = DManager.Query("SELECT Id, ServerName FROM channels WHERE ServerId = '{0}'", sn.Value.ServerId);
 					if(!db1.IsNull())
 					{
 						foreach(DataRow row in db1.Rows)
 						{
 							bool ignore = false;
 							int id = Convert.ToInt32(row["Id"].ToString());
-							var db3 = SchumixBase.DManager.Query("SELECT Id, Channel FROM channels WHERE ServerName = '{0}' And Channel = '{1}' ORDER BY Id ASC", row["ServerName"].ToString(), IRCConfig.List[row["ServerName"].ToString()].MasterChannel);
+							var db3 = DManager.Query("SELECT Id, Channel FROM channels WHERE ServerName = '{0}' And Channel = '{1}' ORDER BY Id ASC", row["ServerName"].ToString(), IRCConfig.List[row["ServerName"].ToString()].MasterChannel);
 							if(!db3.IsNull())
 							{
 								int id2 = 0;
-								var db4 = SchumixBase.DManager.QueryFirstRow("SELECT Id FROM channels WHERE ServerName = '{0}' ORDER BY Id ASC", row["ServerName"].ToString());
+								var db4 = DManager.QueryFirstRow("SELECT Id FROM channels WHERE ServerName = '{0}' ORDER BY Id ASC", row["ServerName"].ToString());
 
 								if(!db4.IsNull())
 									id2 = Convert.ToInt32(db4["Id"].ToString());
@@ -129,7 +136,7 @@ namespace Schumix.Framework
 								}
 							}
 								
-							var db2 = SchumixBase.DManager.QueryFirstRow("SELECT Id, ServerName, Channel FROM channels WHERE ServerName = '{0}' ORDER BY Id ASC", row["ServerName"].ToString());
+							var db2 = DManager.QueryFirstRow("SELECT Id, ServerName, Channel FROM channels WHERE ServerName = '{0}' ORDER BY Id ASC", row["ServerName"].ToString());
 
 							if(!db2.IsNull())
 							{
@@ -137,8 +144,8 @@ namespace Schumix.Framework
 								{
 									string channel = db2["Channel"].ToString();
 									string servername = db2["ServerName"].ToString();
-									SchumixBase.DManager.Update("channels", string.Format("Channel = '{0}'", IRCConfig.List[servername].MasterChannel), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, servername));
-									SchumixBase.DManager.Update("channels", string.Format("Password = '{0}'", IRCConfig.List[servername].MasterChannelPassword.Length > 0 ? IRCConfig.List[servername].MasterChannelPassword : string.Empty), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, servername));
+									DManager.Update("channels", string.Format("Channel = '{0}'", IRCConfig.List[servername].MasterChannel), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, servername));
+									DManager.Update("channels", string.Format("Password = '{0}'", IRCConfig.List[servername].MasterChannelPassword.Length > 0 ? IRCConfig.List[servername].MasterChannelPassword : string.Empty), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, servername));
 									Log.Notice("SchumixBase", sLConsole.SchumixBase("Text4"), servername, IRCConfig.List[servername].MasterChannel);
 								}
 								else if(id == Convert.ToInt32(db2["Id"].ToString()) && ignore)
@@ -151,7 +158,7 @@ namespace Schumix.Framework
 
 					NewServerSqlData(sn.Value.ServerId, sn.Key);
 
-					var db = SchumixBase.DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix WHERE ServerName = '{0}'", sn.Key);
+					var db = DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix WHERE ServerName = '{0}'", sn.Key);
 					if(!db.IsNull())
 					{
 						var list = new Dictionary<string, string>();
@@ -204,7 +211,7 @@ namespace Schumix.Framework
 			packet.Write<string>("utf-8");
 			packet.Write<string>(LocalizationConfig.Locale);
 			packet.Write<string>(Reconnect.ToString());
-			packet.Write<string>(SchumixBase.ServerIdentify);
+			packet.Write<string>(ServerIdentify);
 			ClientSocket.SendPacketToSCS(packet);
 		}
 
@@ -215,22 +222,23 @@ namespace Schumix.Framework
 				if(ExitStatus)
 					return;
 
-				SchumixBase.ExitStatus = true;
+				ExitStatus = true;
 				var memory = Process.GetCurrentProcess().WorkingSet64;
 				sAddonManager.UnloadPlugins();
 				sUtilities.RemovePidFile();
-				SchumixBase.timer.SaveUptime(memory);
-				SchumixBase.ServerDisconnect(Reconnect);
+				timer.SaveUptime(memory);
+				sCacheDB.Clean();
+				ServerDisconnect(Reconnect);
 			}
 		}
 
 		private void NewServerSqlData(int ServerId, string ServerName)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM channels WHERE ServerId = '{0}'", ServerId);
+			var db = DManager.QueryFirstRow("SELECT * FROM channels WHERE ServerId = '{0}'", ServerId);
 			if(db.IsNull())
-				SchumixBase.DManager.Insert("`channels`(ServerId, ServerName, Channel, Password, Language)", ServerId, ServerName, IRCConfig.List[ServerName].MasterChannel, IRCConfig.List[ServerName].MasterChannelPassword, sLManager.Locale);
+				DManager.Insert("`channels`(ServerId, ServerName, Channel, Password, Language)", ServerId, ServerName, IRCConfig.List[ServerName].MasterChannel, IRCConfig.List[ServerName].MasterChannelPassword, sLManager.Locale);
 
-			db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM schumix WHERE ServerId = '{0}'", ServerId);
+			db = DManager.QueryFirstRow("SELECT * FROM schumix WHERE ServerId = '{0}'", ServerId);
 			if(db.IsNull())
 			{
 				foreach(var function in Enum.GetNames(typeof(IFunctions)))
@@ -238,9 +246,9 @@ namespace Schumix.Framework
 					if(function == IFunctions.Mantisbt.ToString() || function == IFunctions.Wordpress.ToString() ||
 						function == IFunctions.Svn.ToString() || function == IFunctions.Git.ToString() ||
 						function == IFunctions.Hg.ToString())
-						SchumixBase.DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), SchumixBase.Off);
+						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), Off);
 					else
-						SchumixBase.DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), SchumixBase.On);
+						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), On);
 				}
 			}
 		}
