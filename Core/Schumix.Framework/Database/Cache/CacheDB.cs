@@ -26,12 +26,7 @@ namespace Schumix.Framework.Database.Cache
 {
 	public sealed class CacheDB
 	{
-		private static Dictionary<string, LocalizedCommand> _LocalizedCommandMap = new Dictionary<string, LocalizedCommand>();
-
-		public static Dictionary<string, LocalizedCommand> LocalizedCommandMap()
-		{
-			return _LocalizedCommandMap;
-		}
+		public static readonly Dictionary<string, LocalizedCommand> LocalizedCommandMap = new Dictionary<string, LocalizedCommand>();
 
 		public CacheDB()
 		{
@@ -52,7 +47,7 @@ namespace Schumix.Framework.Database.Cache
 
 		public void Clean()
 		{
-			_LocalizedCommandMap.Clear();
+			LocalizedCommandMap.Clear();
 		}
 
 		public void LoadLocalizedCommand()
@@ -67,7 +62,7 @@ namespace Schumix.Framework.Database.Cache
 					map.Language = row["Language"].ToString();
 					map.Command = row["Command"].ToString();
 					map.Text = row["Text"].ToString();
-					_LocalizedCommandMap.Add(map.Language + map.Command, map);
+					LocalizedCommandMap.Add(map.Language + map.Command, map);
 				}
 			}
 		}
