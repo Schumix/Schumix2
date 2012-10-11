@@ -158,6 +158,7 @@ FILES = \
 	Config/YamlConfig.cs \
 	Network/ClientPacketHandlerDelegate.cs \
 	Config/CrashConfig.cs \
+	JsonHelper.cs \
 	Config/ShutdownConfig.cs \
 	Config/FloodingConfig.cs 
 
@@ -177,7 +178,8 @@ REFERENCES =  \
 	System.Web \
 	System.Management \
 	System.Core \
-	System.Net
+	System.Net \
+	System.Runtime.Serialization
 
 DLL_REFERENCES =  \
 	../../Dependencies/MySql.Data.dll \

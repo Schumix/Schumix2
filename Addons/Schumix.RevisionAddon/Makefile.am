@@ -122,7 +122,10 @@ FILES = \
 	Properties/AssemblyInfo.cs \
 	RevisionAddon.cs \
 	Commands/Commands.cs \
-	Assembla/Assembla.cs 
+	Github/Github.cs \
+	Github/Author/GithubAuthor.cs \
+	Github/Author/GithubAuthorResult.cs \
+	Github/Message/GithubMessage.cs 
 
 DATA_FILES = 
 
@@ -131,11 +134,14 @@ RESOURCES =
 EXTRAS = \
 	Properties \
 	Commands \
-	Assembla \
+	Github \
+	Github/Author \
+	Github/Message \
 	schumix.revisionaddon.pc.in 
 
 REFERENCES =  \
-	System
+	System \
+	System.Runtime.Serialization
 
 DLL_REFERENCES = 
 

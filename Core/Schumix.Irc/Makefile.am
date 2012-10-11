@@ -154,7 +154,6 @@ FILES = \
 	Ignore/IgnoreCommand.cs \
 	Ignore/IgnoreChannel.cs \
 	Ignore/IgnoreAddon.cs \
-	Commands/GoogleWebSearch/JsonHelper.cs \
 	Commands/GoogleWebSearch/GoogleWebResult.cs \
 	Commands/GoogleWebSearch/GoogleWebResponseData.cs \
 	Commands/GoogleWebSearch/GoogleWebResultSet.cs \
