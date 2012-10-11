@@ -83,6 +83,45 @@ namespace Schumix.Irc
 		private ConnectionType CType;
 		private DateTime LastOpcode;
 
+		public Network() : base("default")
+		{
+			_servername = "default";
+			_serverid = 1;
+			_server = "localhost";
+			_port = 6667;
+			Shutdown = false;
+
+			Log.Notice("Network", sLConsole.Network("Text"));
+			Log.Notice("Network", sLConsole.Network("Text20"), _servername);
+			CType = ConnectionType.Normal;
+		}
+
+		public Network(string Server) : base("default")
+		{
+			_servername = "default";
+			_serverid = 1;
+			_server = Server;
+			_port = 6667;
+			Shutdown = false;
+
+			Log.Notice("Network", sLConsole.Network("Text"));
+			Log.Notice("Network", sLConsole.Network("Text20"), _servername);
+			CType = ConnectionType.Normal;
+		}
+
+		public Network(string Server, int Port) : base("default")
+		{
+			_servername = "default";
+			_serverid = 1;
+			_server = Server;
+			_port = Port;
+			Shutdown = false;
+
+			Log.Notice("Network", sLConsole.Network("Text"));
+			Log.Notice("Network", sLConsole.Network("Text20"), _servername);
+			CType = ConnectionType.Normal;
+		}
+
 		public Network(string ServerName, int ServerId, string Server, int Port) : base(ServerName)
 		{
 			_servername = ServerName;
