@@ -56,14 +56,14 @@ namespace Schumix.Irc
 		public bool Shutdown { get; private set; }
 
         /// <summary>
-        ///     A kapcsolatot tároljra.
-        /// </summary>
-		private TcpClient client;
-
-        /// <summary>
         ///     A bejövő információkat fogadja.
         /// </summary>
 		private StreamReader reader;
+
+        /// <summary>
+        ///     A kapcsolatot tároljra.
+        /// </summary>
+		private TcpClient client;
 
         /// <summary>
         ///     IRC szerver címe.
@@ -74,14 +74,15 @@ namespace Schumix.Irc
         ///     IRC port száma.
         /// </summary>
 		private readonly int _port;
-		private string _servername;
-		private int _serverid;
-		private bool _enabled = false;
+
 		private bool NetworkQuit = false;
-		private bool Connected = false;
 		private int ReconnectNumber = 0;
+		private bool Connected = false;
+		private bool _enabled = false;
 		private ConnectionType CType;
 		private DateTime LastOpcode;
+		private string _servername;
+		private int _serverid;
 
 		public Network() : base("default")
 		{
