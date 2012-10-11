@@ -1846,6 +1846,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Lua support is disabled!";
 				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Python támogatása le van tiltva!";
+					else if(Locale == "enUS")
+						return "Python support is disabled!";
+					else
+						return "Python support is disabled!";
+				}
 				default:
 					return string.Empty;
 			}
@@ -1881,6 +1890,51 @@ namespace Schumix.Framework.Localization
 						return "Exception thrown while loading Lua script: {0} Error: {1}";
 					else
 						return "Exception thrown while loading Lua script: {0} Error: {1}";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string PythonEngine(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Python motor betöltése.";
+					else if(Locale == "enUS")
+						return "Initializing Python engine.";
+					else
+						return "Initializing Python engine.";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Python script betöltése: {0}";
+					else if(Locale == "enUS")
+						return "Loading Python script: {0}";
+					else
+						return "Loading Python script: {0}";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Kivétel dobott betöltése közben a Python script. Error: {0} {1}";
+					else if(Locale == "enUS")
+						return "Exception thrown while loading Python script. Error: {0} {1}";
+					else
+						return "Exception thrown while loading Python script. Error: {0} {1}";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "Kivétel dobott betöltése közben a Python script: {0} Error: {1} {2}";
+					else if(Locale == "enUS")
+						return "Exception thrown while loading Python script: {0} Error: {1} {2}";
+					else
+						return "Exception thrown while loading Python script: {0} Error: {1} {2}";
 				}
 				default:
 					return string.Empty;

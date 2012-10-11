@@ -57,6 +57,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Updater", "Componen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.LuaEngine", "Components\Schumix.LuaEngine\Schumix.LuaEngine.csproj", "{D6E5F82D-5385-45AD-A0D1-1091EC6A5393}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.PythonEngine", "Components\Schumix.PythonEngine\Schumix.PythonEngine.csproj", "{D16FC33B-7EE9-4078-90A6-FB1A927F6A0B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -209,6 +211,14 @@ Global
 		{CBAB674C-120D-4E4E-90CB-FCCC61B845B3}.Release|x64.Build.0 = Release|x64
 		{CBAB674C-120D-4E4E-90CB-FCCC61B845B3}.Release|x86.ActiveCfg = Release|x86
 		{CBAB674C-120D-4E4E-90CB-FCCC61B845B3}.Release|x86.Build.0 = Release|x86
+		{D16FC33B-7EE9-4078-90A6-FB1A927F6A0B}.Debug|x64.ActiveCfg = Debug|x64
+		{D16FC33B-7EE9-4078-90A6-FB1A927F6A0B}.Debug|x64.Build.0 = Debug|x64
+		{D16FC33B-7EE9-4078-90A6-FB1A927F6A0B}.Debug|x86.ActiveCfg = Debug|x86
+		{D16FC33B-7EE9-4078-90A6-FB1A927F6A0B}.Debug|x86.Build.0 = Debug|x86
+		{D16FC33B-7EE9-4078-90A6-FB1A927F6A0B}.Release|x64.ActiveCfg = Release|x64
+		{D16FC33B-7EE9-4078-90A6-FB1A927F6A0B}.Release|x64.Build.0 = Release|x64
+		{D16FC33B-7EE9-4078-90A6-FB1A927F6A0B}.Release|x86.ActiveCfg = Release|x86
+		{D16FC33B-7EE9-4078-90A6-FB1A927F6A0B}.Release|x86.Build.0 = Release|x86
 		{D6E5F82D-5385-45AD-A0D1-1091EC6A5393}.Debug|x64.ActiveCfg = Debug|x64
 		{D6E5F82D-5385-45AD-A0D1-1091EC6A5393}.Debug|x64.Build.0 = Debug|x64
 		{D6E5F82D-5385-45AD-A0D1-1091EC6A5393}.Debug|x86.ActiveCfg = Debug|x86
@@ -274,6 +284,7 @@ Global
 		{E762D05E-DAA3-4D40-9547-5F8062312D8C} = {FE6B61BA-EE52-4FC0-95DF-7B093FE6BEDE}
 		{33ABC53E-F210-442F-B4F7-D0A7642F2584} = {FE6B61BA-EE52-4FC0-95DF-7B093FE6BEDE}
 		{D6E5F82D-5385-45AD-A0D1-1091EC6A5393} = {FE6B61BA-EE52-4FC0-95DF-7B093FE6BEDE}
+		{D16FC33B-7EE9-4078-90A6-FB1A927F6A0B} = {FE6B61BA-EE52-4FC0-95DF-7B093FE6BEDE}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Applications\Schumix\Schumix.csproj

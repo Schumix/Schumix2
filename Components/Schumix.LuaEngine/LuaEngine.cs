@@ -60,7 +60,6 @@ namespace Schumix.LuaEngine
 		/// <summary>
 		/// Creates a new instance of <c>LuaEngine</c>
 		/// </summary>
-		/// <param name="conn">IRC Connection</param>
 		/// <param name="scriptsPath">The directory where the Lua scripts are located.</param>
 		public LuaEngine(string scriptsPath)
 		{
@@ -114,9 +113,9 @@ namespace Schumix.LuaEngine
 					{
 						_lua.DoFile(file.FullName);
 					}
-					catch(Exception x)
+					catch(Exception e)
 					{
-						Log.Error("LuaEngine", sLConsole.LuaEngine("Text3"), file.Name, x.Message);
+						Log.Error("LuaEngine", sLConsole.LuaEngine("Text3"), file.Name, e.Message);
 					}
 				}
 			}

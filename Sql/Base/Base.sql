@@ -466,6 +466,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/add", "Már szerepel az ignore listán!\nAz addon sikeresen hozzáadásra került.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/remove", "Nem szerepel az ignore listán!\nAz addon sikeresen el lett távolítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "xrev/github", "Nincs megadva a felhasználó név!\nNincs megadva a project!\nNincs megadva a sha1 kód!\nNincs ilyen kommit!\n3Kommit: {0}\n3Link: {0}\n3Szerző: {0}");
 
 -- enUS
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/sys", "3Version: 10{0}\n3Platform: {0}\n3OSVersion: {0}\n3Programming language: c#\n3Memory allocation:5 {0} MB\n3Memory allocation:8 {0} MB\n3Memory allocation:3 {0} MB\n3Uptime: {0}");
@@ -622,6 +623,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/add", "Already exist on the ignore list!\nSuccesfuly added.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/remove", "Not on the ignore list!\nSuccesfuly removed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/search", "Already exist on the ignore list!\nNot on the ignore list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "xrev/github", "Username is not set!\nProject is not set!\nSha1 code is not set!\nThere is no such a commit!\n3Commit: {0}\n3Link: {0}\n3Author: {0}");
 
 -- huHU
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xbot", "9", "Felhasználók számára használható parancslista.");
@@ -808,6 +810,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/addon/add", "1", "Addon hozzáadása a kivételekhez.\nHasználata: {0}ignore addon add <parancs>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/addon/remove", "1", "Addon eltávolítása a kivételek közül.\nHasználata: {0}ignore addon remove <parancs>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/addon/search", "1", "Addon keresése a kivételekben.\nHasználata: {0}ignore addon search <parancs>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xrev", "9", "Többféle verziókezelő oldalon tárolt információ olvasható ki az adott projektről.\nXrev parancsok: github");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xrev/github", "9", "Lekérdezhető vele az adott projekt megadott kommitjának információi.\nHasználata: {0}xrev github <felhasználó> <projekt neve> <sha1 kód>");
 
 -- enUS
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "xbot", "9", "Users to use the command list.");
@@ -994,6 +998,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/addon/add", "1", "Add addon to the expection list.\Uses: {0}ignore addon add <Command>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/addon/remove", "1", "Remove addon from the expection list.\Uses: {0}ignore addon remove <Command>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/addon/search", "1", "Search addon in the expection list.\Uses: {0}ignore addon search <Command>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "xrev", "9", "Multiple data from revision control sites.\nXrev commands: github");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "xrev/github", "9", "You can query the project's commit information.\nUsage: {0}xrev github <username> <project name> <sha1 code>");
 
 -- huHU
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoName", "A név nincs megadva!");

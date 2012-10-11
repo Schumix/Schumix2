@@ -141,6 +141,8 @@ namespace Schumix.Irc
 
 					if(sIRCMessage.Info[5].ToLower() == "identify")
 					{
+						sNickInfo.ChangeIdentifyStatus(false);
+						sNickInfo.ChangeVhostStatus(false);
 						sNickInfo.ChangeNick(IRCConfig.List[sIRCMessage.ServerName].NickName);
 						sSender.Nick(IRCConfig.List[sIRCMessage.ServerName].NickName);
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick/identify", sIRCMessage.Channel, sIRCMessage.ServerName));

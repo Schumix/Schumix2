@@ -18,23 +18,20 @@
  */
 
 using System;
-using Schumix.Framework.Localization;
+using System.Runtime.Serialization;
 
-namespace Schumix.Framework.Config
+namespace Schumix.RevisionAddon.Githubs.Author
 {
-	public sealed class ScriptsConfig
+	[DataContract]
+	class GithubAuthorResult
 	{
-		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		public static bool Lua { get; private set; }
-		public static bool Python { get; private set; }
-		public static string Directory { get; private set; }
+		[DataMember(Name = "date", Order = 0)]
+		public string Date { get; set; }
 
-		public ScriptsConfig(bool lua, bool python, string directory)
-		{
-			Lua       = lua;
-			Python    = python;
-			Directory = directory;
-			Log.Notice("ScriptsConfig", sLConsole.ScriptsConfig("Text"));
-		}
+		[DataMember(Name = "email", Order = 1)]
+		public string Email { get; set; }
+
+		[DataMember(Name = "name", Order = 2)]
+		public string Name { get; set; }
 	}
 }

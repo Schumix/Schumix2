@@ -19,6 +19,8 @@
 
 using System;
 using System.IO;
+using System.Threading;
+using System.Threading.Tasks;
 using Schumix.API;
 using Schumix.API.Irc;
 using Schumix.API.Functions;
@@ -34,6 +36,7 @@ namespace Schumix.Irc
 		private readonly object WriteLock = new object();
 		private string _servername;
 		private int PLength;
+		public bool IsAllJoin;
 		public bool Online;
 
 		protected MessageHandler(string ServerName) : base(ServerName)
@@ -52,6 +55,7 @@ namespace Schumix.Irc
 			Console.WriteLine();
 			Log.Success("MessageHandler", sLConsole.MessageHandler("Text"));
 			RandomAllVhost();
+			Task.Factory.StartNew(() => IsJoin());
 
 			if(IRCConfig.List[sIRCMessage.ServerName].UseNickServ)
 			{
@@ -140,6 +144,7 @@ namespace Schumix.Irc
 				{
 					sNickInfo.ChangeIdentifyStatus(true);
 					Log.Error("NickServ", sLConsole.NickServ("Text2"));
+					ConnectAllChannel();
 				}
 				else if(sIRCMessage.Args.Contains("You are already identified."))
 					Log.Warning("NickServ", sLConsole.NickServ("Text3"));
@@ -154,12 +159,7 @@ namespace Schumix.Irc
 					Log.Warning("NickServ", sLConsole.NickServ("Text5"));
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
-
-					if(!Online)
-					{
-						sChannelInfo.JoinChannel();
-						Online = true;
-					}
+					ConnectAllChannel();
 				}
 
 				if(IsOnline)
@@ -203,7 +203,10 @@ namespace Schumix.Irc
 			if(sIRCMessage.Nick == "HostServ")
 			{
 				if(sIRCMessage.Args.Contains("You need to register before a vhost can be assigned to you."))
+				{
 					Log.Warning("HostServ", sLConsole.HostServ("Text3"));
+					ConnectAllChannel();
+				}
 			}
 
 			if(sIRCMessage.Nick == "HostServ" && IRCConfig.List[sIRCMessage.ServerName].UseHostServ)
@@ -212,13 +215,7 @@ namespace Schumix.Irc
 				{
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
-
-					if(!Online)
-					{
-						sNickInfo.ChangeVhostStatus(true);
-						sChannelInfo.JoinChannel();
-						Online = true;
-					}
+					ConnectAllChannel();
 				}
 			}
 
@@ -523,6 +520,25 @@ namespace Schumix.Irc
 			{
 				LogToFile(channel, user, string.Format(format, args));
 			}
+		}
+
+		private void ConnectAllChannel()
+		{
+			lock(WriteLock)
+			{
+				if(!Online)
+				{
+					sNickInfo.ChangeVhostStatus(true);
+					sChannelInfo.JoinChannel();
+					Online = true;
+				}
+			}
+		}
+
+		private void IsJoin()
+		{
+			Thread.Sleep(20*1000);
+			ConnectAllChannel();
 		}
 	}
 }

@@ -299,6 +299,11 @@ namespace Schumix.Irc
 
 		public void JoinChannel()
 		{
+			if(sIrcBase.Networks[_servername].IsAllJoin)
+				return;
+
+			sIrcBase.Networks[_servername].IsAllJoin = true;
+
 			Log.Debug("ChannelInfo", sLConsole.ChannelInfo("Text5"));
 			bool error = false;
 

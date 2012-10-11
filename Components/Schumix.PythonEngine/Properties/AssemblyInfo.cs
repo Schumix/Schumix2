@@ -26,14 +26,13 @@ using Schumix.Framework.Config;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Schumix.RevisionAddon")]
-[assembly: AssemblyDescription(Consts.SchumixDescription)]
+[assembly: AssemblyTitle("Schumix.PythonEngine")]
+[assembly: AssemblyDescription("Schumix bot's Python interpreter engine.")]
 [assembly: AssemblyConfiguration(Consts.SchumixConfiguration)]
 [assembly: AssemblyCompany(Consts.SchumixCompany)]
 [assembly: AssemblyProduct(Consts.SchumixProduct)]
 [assembly: AssemblyCopyright(Consts.SchumixCopyright)]
 [assembly: AssemblyTrademark(Consts.SchumixTrademark)]
-[assembly: AssemblyCulture("hu-HU")]
 
 [assembly: CLSCompliant(true)]
 
@@ -52,5 +51,5 @@ using Schumix.Framework.Config;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.8.8")]
-[assembly: AssemblyFileVersion("3.8.8.0")]
+[assembly: AssemblyVersion("0.0.2")]
+[assembly: AssemblyFileVersion("0.0.2.0")]

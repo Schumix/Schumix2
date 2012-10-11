@@ -116,7 +116,8 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 
 ## Scripts
 
-* **Lua:** Értéke `true` vagy `false` lehet. Engedélyezi a lua fájlok betöltését. Alapértelmezés: `true`
+* **Lua:** Értéke `true` vagy `false` lehet. Engedélyezi a lua fájlok betöltését. Alapértelmezés: `false`
+* **Python:** Értéke `true` vagy `false` lehet. Engedélyezi a python fájlok betöltését. Alapértelmezés: `false`
 * **Directory:** A script-ek mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Scripts`
 
 ## Crash

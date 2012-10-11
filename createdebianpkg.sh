@@ -17,9 +17,10 @@ mv package/Debian/schumix-server package/usr/bin/
 mv package/Debian/share package/usr/
 mkdir package/usr/share/doc
 mkdir package/usr/share/doc/schumix
-cp LICENSE package/usr/share/doc/schumix
+cp LICENSE package/usr/share/doc/schumix/
 mkdir package/usr/lib
 mkdir package/usr/lib/pkgconfig
+cp -rf Scripts package/usr/lib/schumix/
 cd Run/Release/Addons
 
 for file in *.pc
@@ -51,7 +52,7 @@ echo "Maintainer: Csaba Jakosa <megax@yeahunter.hu>" >> control
 echo "Depends: mono-devel (>= 2.10.8)" >> control
 echo "Section: Schumix" >> control
 echo "Priority: optional" >> control
-echo "Description: Schumix2 IRC Bot and Framework" >> control
+echo "Description: Schumix IRC Bot and Framework" >> control
 
 cd ..
 cd usr

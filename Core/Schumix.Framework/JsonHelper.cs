@@ -18,23 +18,29 @@
  */
 
 using System;
-using Schumix.Framework.Localization;
+using System.IO;
+using System.Text;
+using System.Runtime.Serialization.Json;
 
-namespace Schumix.Framework.Config
+namespace Schumix.Framework
 {
-	public sealed class ScriptsConfig
+	public sealed class JsonHelper
 	{
-		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		public static bool Lua { get; private set; }
-		public static bool Python { get; private set; }
-		public static string Directory { get; private set; }
-
-		public ScriptsConfig(bool lua, bool python, string directory)
+		public static T Deserialise<T>(string json) where T : new()
 		{
-			Lua       = lua;
-			Python    = python;
-			Directory = directory;
-			Log.Notice("ScriptsConfig", sLConsole.ScriptsConfig("Text"));
+			if(!string.IsNullOrEmpty(json))
+			{
+				byte[] respBytes = ASCIIEncoding.UTF8.GetBytes(json);
+
+				using(var reader = new StreamReader(new MemoryStream(respBytes)))
+				{
+					var serializer = new DataContractJsonSerializer(typeof(T));
+					T returnObj = (T)serializer.ReadObject(reader.BaseStream);
+					return returnObj;
+				}
+			}
+			else
+				return new T();
 		}
 	}
 }

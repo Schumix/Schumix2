@@ -112,7 +112,7 @@ namespace Schumix.CompilerAddon
 				string command = IRCConfig.List[sIRCMessage.ServerName].NickName + SchumixBase.Comma;
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
 
-				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && Enabled(sIRCMessage) && (sIRCMessage.Args.Contains(";") || sIRCMessage.Args.Contains("}")))
+				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && (sIRCMessage.Args.Contains(";") || sIRCMessage.Args.Contains("}")) && Enabled(sIRCMessage))
 					Compiler(sIRCMessage, true, command);
 				else if(sIRCMessage.Info[3].ToLower() == command.ToLower())
 				{

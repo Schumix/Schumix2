@@ -20,7 +20,7 @@ Megírásra váró feladatok:
 		- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
 		- Játék addon nyelvezetét átírni angolra is.
 		- whois parancsnál megoldani a visszajelzést ha valaki fent van irc-n de nincs fent egy csatornán se
-	- xrev parancs megírása.
+		- Action üzenet mentése a log fájlokba.
 	- irc parancs listájának bővítése.
 	- Serverben megoldani az egy szerveren lévő botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
 	- Dokumentálni az egész kódot.

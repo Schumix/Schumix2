@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <Schumix>
     <Server>
-        <Enabled>false</Enabled>
+        <Enabled>False</Enabled>
         <Host>127.0.0.1</Host>
         <Port>35220</Port>
         <Password>schumix</Password>
@@ -10,7 +10,7 @@
         <ServerName>Default</ServerName>
         <Server>localhost</Server>
         <Port>6667</Port>
-        <Ssl>false</Ssl>
+        <Ssl>False</Ssl>
         <NickName>Schumix2</NickName>
         <NickName2>_Schumix2</NickName2>
         <NickName3>__Schumix2</NickName3>
@@ -23,12 +23,12 @@
         <IgnoreChannels></IgnoreChannels>
         <IgnoreNames></IgnoreNames>
         <NickServ>
-            <Enabled>false</Enabled>
+            <Enabled>False</Enabled>
             <Password>password</Password>
         </NickServ>
         <HostServ>
-            <Enabled>false</Enabled>
-            <Vhost>false</Vhost>
+            <Enabled>False</Enabled>
+            <Vhost>False</Vhost>
         </HostServ>
         <Wait>
             <MessageSending>400</MessageSending>
@@ -45,10 +45,10 @@
         <LogLevel>2</LogLevel>
         <LogDirectory>Logs</LogDirectory>
         <IrcLogDirectory>Channels</IrcLogDirectory>
-        <IrcLog>false</IrcLog>
+        <IrcLog>False</IrcLog>
     </Log>
     <MySql>
-        <Enabled>false</Enabled>
+        <Enabled>False</Enabled>
         <Host>localhost</Host>
         <User>root</User>
         <Password>password</Password>
@@ -56,16 +56,17 @@
         <Charset>utf8</Charset>
     </MySql>
     <SQLite>
-        <Enabled>true</Enabled>
+        <Enabled>True</Enabled>
         <FileName>Schumix.db3</FileName>
     </SQLite>
     <Addons>
-        <Enabled>true</Enabled>
+        <Enabled>True</Enabled>
         <Ignore>MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon</Ignore>
         <Directory>Addons</Directory>
     </Addons>
     <Scripts>
-        <Lua>false</Lua>
+        <Lua>False</Lua>
+        <Python>False</Python>
         <Directory>Scripts</Directory>
     </Scripts>
     <Crash>
@@ -75,7 +76,7 @@
         <Locale>enUS</Locale>
     </Localization>
     <Update>
-        <Enabled>false</Enabled>
+        <Enabled>False</Enabled>
         <Version>stable</Version>
         <Branch>master</Branch>
         <WebPage>https://github.com/megax/Schumix2</WebPage>
