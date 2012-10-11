@@ -28,7 +28,7 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
 {
-	public partial class MessageHandler
+	public abstract partial class MessageHandler
 	{
 		protected void HandlePrivmsg(IRCMessage sIRCMessage)
 		{

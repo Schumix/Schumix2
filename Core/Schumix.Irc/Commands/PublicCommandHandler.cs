@@ -30,7 +30,7 @@ using Schumix.Irc.Commands.GoogleWebSearch;
 
 namespace Schumix.Irc.Commands
 {
-	public partial class CommandHandler
+	public abstract partial class CommandHandler
 	{
 		protected void HandleXbot(IRCMessage sIRCMessage)
 		{

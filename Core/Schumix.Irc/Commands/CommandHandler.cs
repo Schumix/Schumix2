@@ -31,7 +31,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Commands
 {
-	public partial class CommandHandler : CommandInfo
+	public abstract partial class CommandHandler : CommandInfo
 	{
 		protected readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;

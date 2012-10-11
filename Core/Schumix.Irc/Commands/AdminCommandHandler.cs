@@ -32,7 +32,7 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands
 {
-	public partial class CommandHandler
+	public abstract partial class CommandHandler
 	{
 		private readonly object Lock = new object();
 

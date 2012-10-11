@@ -35,7 +35,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Commands
 {
-	public class CommandManager : CommandHandler
+	public abstract class CommandManager : CommandHandler
 	{
 		public readonly Dictionary<string, CommandMethod> CommandMethodMap = new Dictionary<string, CommandMethod>();
 		private readonly object MapLock = new object();

@@ -31,7 +31,7 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
 {
-	public partial class MessageHandler : CommandManager
+	public abstract partial class MessageHandler : CommandManager
 	{
 		private readonly object WriteLock = new object();
 		private string _servername;
