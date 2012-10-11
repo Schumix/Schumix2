@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.ExtraAddon.Config
 {
-	class AddonDefaultConfig
+	abstract class AddonDefaultConfig
 	{
 		protected const bool d_enabled = false;
 		protected const string d_type = "aohv";

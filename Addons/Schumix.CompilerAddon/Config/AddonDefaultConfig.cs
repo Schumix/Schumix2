@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.CompilerAddon.Config
 {
-	class AddonDefaultConfig
+	abstract class AddonDefaultConfig
 	{
 		protected const bool d_compilerenabled = true;
 		protected const bool d_enabled = true;

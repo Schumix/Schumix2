@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.SvnRssAddon.Config
 {
-	class AddonDefaultConfig
+	abstract class AddonDefaultConfig
 	{
 		protected const int d_querytime = 60;
 	}

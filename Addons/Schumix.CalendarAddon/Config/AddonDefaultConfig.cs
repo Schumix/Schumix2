@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.CalendarAddon.Config
 {
-	class AddonDefaultConfig
+	abstract class AddonDefaultConfig
 	{
 		protected const int _seconds = 10;
 		protected const int _numberofmessages = 5;
