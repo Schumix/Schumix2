@@ -116,7 +116,7 @@ namespace Schumix.ExtraAddon.Commands
 				string webTitle = string.Empty;
 				var thread = new Thread(() => webTitle = WebHelper.GetWebTitle(url, sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 				thread.Start();
-				thread.Join(4000);
+				thread.Join(5000);
 				thread.Abort();
 
 				if(string.IsNullOrEmpty(webTitle))

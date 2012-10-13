@@ -51,7 +51,7 @@ namespace Schumix.ExtraAddon.Commands
 			try
 			{
 				var getTitleRegex = new Regex(@"<title>(?<ttl>.*\s*.+\s*.*)\s*</title>", RegexOptions.IgnoreCase);
-				string data = sUtilities.DownloadString(url, 3500, getTitleRegex);
+				string data = sUtilities.DownloadString(url, 3500, getTitleRegex, 20000);
 				var match = getTitleRegex.Match(data);
 
 				if(match.Success)
