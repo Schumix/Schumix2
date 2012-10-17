@@ -800,7 +800,7 @@ namespace Schumix.Framework
 					int length = 0;
 					byte[] buf = new byte[1024];
 					var sb = new StringBuilder();
-					var response = request.GetResponse();
+					var response = (HttpWebResponse)request.GetResponse();
 					var stream = response.GetResponseStream();
 
 					while((length = stream.Read(buf, 0, buf.Length)) != 0)
@@ -808,6 +808,7 @@ namespace Schumix.Framework
 						if(sb.Length >= maxlength)
 							break;
 
+						buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
 						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
 					}
 
@@ -917,7 +918,7 @@ namespace Schumix.Framework
 					int length = 0;
 					byte[] buf = new byte[1024];
 					var sb = new StringBuilder();
-					var response = request.GetResponse();
+					var response = (HttpWebResponse)request.GetResponse();
 					var stream = response.GetResponseStream();
 
 					if(maxlength == 0)
@@ -928,6 +929,7 @@ namespace Schumix.Framework
 						if(sb.ToString().Contains(Contains) || sb.Length >= 10000)
 							break;
 
+						buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
 						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
 					}
 
@@ -1013,7 +1015,7 @@ namespace Schumix.Framework
 						if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
 							break;
 
-                        buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
+						buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
 						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
 					}
 
