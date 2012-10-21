@@ -134,18 +134,6 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 
 				var title = Regex.Replace(webTitle, @"\s+", SchumixBase.Space.ToString());
-
-				// check if it's youtube.
-				//var youtubeRegex = new Regex(@"(?<song>.+)\-\sYouTube", RegexOptions.IgnoreCase);
-
-				//if(youtubeRegex.IsMatch(title))
-				//{
-				//	var match = youtubeRegex.Match(title);
-				//	var song = match.Groups["song"].ToString();
-				//	sSendMessage.SendChatMessage(sIRCMessage, "1,0You0,4Tube: {0}", song);
-				//	return;
-				//}
-
 				sSendMessage.SendChatMessage(sIRCMessage, "1,0Title: {0}", title);
 			}
 			catch(Exception e)
