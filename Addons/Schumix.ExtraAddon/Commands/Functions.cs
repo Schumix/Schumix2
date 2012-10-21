@@ -112,9 +112,20 @@ namespace Schumix.ExtraAddon.Commands
 			try
 			{
 				var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+				var youtube = new YoutubeTitle(msg);
+
+				if(youtube.IsYoutube())
+				{
+					if(youtube.IsTitle())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "1,0You0,4Tube: {0}", youtube.GetTitle());
+						return;
+					}
+				}
+
 				var url = new Uri(msg);
 				string webTitle = string.Empty;
-				var thread = new Thread(() => webTitle = WebHelper.GetWebTitle(url, sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+				var thread = new Thread(() => webTitle = WebHelper.GetWebTitle(url));
 				thread.Start();
 				thread.Join(5000);
 				thread.Abort();
@@ -125,15 +136,15 @@ namespace Schumix.ExtraAddon.Commands
 				var title = Regex.Replace(webTitle, @"\s+", SchumixBase.Space.ToString());
 
 				// check if it's youtube.
-				var youtubeRegex = new Regex(@"(?<song>.+)\-\sYouTube", RegexOptions.IgnoreCase);
+				//var youtubeRegex = new Regex(@"(?<song>.+)\-\sYouTube", RegexOptions.IgnoreCase);
 
-				if(youtubeRegex.IsMatch(title))
-				{
-					var match = youtubeRegex.Match(title);
-					var song = match.Groups["song"].ToString();
-					sSendMessage.SendChatMessage(sIRCMessage, "1,0You0,4Tube: {0}", song);
-					return;
-				}
+				//if(youtubeRegex.IsMatch(title))
+				//{
+				//	var match = youtubeRegex.Match(title);
+				//	var song = match.Groups["song"].ToString();
+				//	sSendMessage.SendChatMessage(sIRCMessage, "1,0You0,4Tube: {0}", song);
+				//	return;
+				//}
 
 				sSendMessage.SendChatMessage(sIRCMessage, "1,0Title: {0}", title);
 			}

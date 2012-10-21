@@ -46,7 +46,7 @@ namespace Schumix.ExtraAddon.Commands
 		/// <returns>
 		///   The webpage's title.
 		/// </returns>
-		public static string GetWebTitle(Uri url, string Language)
+		public static string GetWebTitle(Uri url)
 		{
 			try
 			{
@@ -64,7 +64,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Debug("WebHelper", sLocalization.WebHelper("Text2"), e.Message);
+				Log.Debug("WebHelper", sLocalization.WebHelper("Text"), e.Message);
 				return string.Empty;
 			}
 		}

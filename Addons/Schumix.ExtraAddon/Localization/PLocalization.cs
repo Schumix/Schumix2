@@ -145,27 +145,13 @@ namespace Schumix.ExtraAddon.Localization
 
 		public string WebHelper(string Name)
 		{
-			return WebHelper(Name, Locale);
-		}
-
-		public string WebHelper(string Name, string Language)
-		{
 			switch(Name)
 			{
 				case "Text":
 				{
-					if(Language == "huHU")
-						return "Nem található felirat!";
-					else if(Language == "enUS")
-						return "No title found!";
-					else
-						return "No title found!";
-				}
-				case "Text2":
-				{
-					if(Language == "huHU")
+					if(Locale == "huHU")
 						return "Kivételt dobott letöltése közben a web title: {0}";
-					else if(Language == "enUS")
+					else if(Locale == "enUS")
 						return "Exception thrown while fetching web title: {0}";
 					else
 						return "Exception thrown while fetching web title: {0}";
@@ -187,6 +173,24 @@ namespace Schumix.ExtraAddon.Localization
 						return "Invalid webpage address: {0}";
 					else
 						return "Invalid webpage address: {0}";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string YoutubeTitle(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Kivételt dobott letöltése közben a youtube title: {0}";
+					else if(Locale == "enUS")
+						return "Exception thrown while fetching youtube title: {0}";
+					else
+						return "Exception thrown while fetching youtube title: {0}";
 				}
 				default:
 					return string.Empty;
