@@ -159,6 +159,7 @@ namespace Schumix.Irc
 					Log.Warning("NickServ", sLConsole.NickServ("Text5"));
 					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
+					sNickInfo.ChangeIdentifyStatus(true);
 					ConnectAllChannel();
 				}
 
