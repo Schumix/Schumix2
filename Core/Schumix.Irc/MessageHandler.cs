@@ -147,10 +147,7 @@ namespace Schumix.Irc
 					ConnectAllChannel();
 				}
 				else if(sIRCMessage.Args.Contains("You are already identified."))
-				{
-					sNickInfo.ChangeIdentifyStatus(true);
 					Log.Warning("NickServ", sLConsole.NickServ("Text3"));
-				}
 				else if(sIRCMessage.Args.Contains("Password accepted - you are now recognized."))
 				{
 					sNickInfo.ChangeIdentifyStatus(true);
