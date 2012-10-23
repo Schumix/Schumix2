@@ -50,71 +50,49 @@ namespace Schumix.Framework
 
 		public string GetUrl(string url)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = (HttpWebResponse)request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return GetUrl(url, string.Empty, string.Empty);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
 		public string GetUrl(string url, string args)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url + HttpUtility.UrlEncode(args));
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = (HttpWebResponse)request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				return GetUrl(url, args, string.Empty);
 			}
-
-			response.Close();
-			return sb.ToString();
 		}
 
 		public string GetUrl(string url, string args, string noencode)
 		{
-			var request = (HttpWebRequest)WebRequest.Create(url + HttpUtility.UrlEncode(args) + noencode);
-			request.AllowAutoRedirect = true;
-			request.UserAgent = Consts.SchumixUserAgent;
-			request.Referer = Consts.SchumixReferer;
-
-			int length = 0;
-			byte[] buf = new byte[1024];
-			var sb = new StringBuilder();
-			var response = (HttpWebResponse)request.GetResponse();
-			var stream = response.GetResponseStream();
-
-			while((length = stream.Read(buf, 0, buf.Length)) != 0)
+			lock(WriteLock)
 			{
-				buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
-				sb.Append(Encoding.UTF8.GetString(buf, 0, length));
-			}
+				if(args != string.Empty && noencode == string.Empty)
+					url = url + HttpUtility.UrlEncode(args);
+				else if(args != string.Empty && noencode != string.Empty)
+					url = url + HttpUtility.UrlEncode(args) + noencode;
 
-			response.Close();
-			return sb.ToString();
+				var request = (HttpWebRequest)WebRequest.Create(url);
+				request.AllowAutoRedirect = true;
+				request.UserAgent = Consts.SchumixUserAgent;
+				request.Referer = Consts.SchumixReferer;
+
+				int length = 0;
+				byte[] buf = new byte[1024];
+				var sb = new StringBuilder();
+				var response = (HttpWebResponse)request.GetResponse();
+				var stream = response.GetResponseStream();
+
+				while((length = stream.Read(buf, 0, buf.Length)) != 0)
+				{
+					buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
+					sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				}
+
+				response.Close();
+				return sb.ToString();
+			}
 		}
 
 		public string GetUrlEncoding(string url, string encoding)

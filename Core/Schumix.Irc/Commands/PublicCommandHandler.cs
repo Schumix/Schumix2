@@ -242,12 +242,12 @@ namespace Schumix.Irc.Commands
 			}
 
 			string url = sUtilities.GetUrl("http://www.google.com/translate_t?hl=en&ie=UTF8&text=", sIRCMessage.Info.SplitToString(5, SchumixBase.Space), "&langpair=" + sIRCMessage.Info[4]);
-			var Regex = new Regex("onmouseover=\"this.style.backgroundColor='#ebeff9'\" onmouseout=\"this.style.backgroundColor='#fff'\">(?<text>.+)</span></span></div></div>");
+			var Regex = new Regex("mouseout=\"this.style.backgroundColor='#fff'\">(?<text>.+)</span></span></div></div>");
 
 			if(!Regex.IsMatch(url))
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("translate", sIRCMessage.Channel, sIRCMessage.ServerName));
 			else
-				sSendMessage.SendChatMessage(sIRCMessage, "{0}", Regex.Match(url).Groups["text"].ToString());
+				sSendMessage.SendChatMessage(sIRCMessage, "{0}", Regex.Match(url).Groups["text"].ToString().Replace("&#39;", "'"));
 		}
 
 		protected void HandleOnline(IRCMessage sIRCMessage)
