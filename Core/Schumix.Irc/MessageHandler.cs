@@ -21,6 +21,7 @@ using System;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using Schumix.API;
 using Schumix.API.Irc;
 using Schumix.API.Functions;
@@ -154,7 +155,9 @@ namespace Schumix.Irc
 					Log.Success("NickServ", sLConsole.NickServ("Text4"));
 				}
 
-				if(sIRCMessage.Args.Contains("Your nick isn't registered."))
+				var registered = new Regex("Nick (.+) isn't registered.");
+
+				if(sIRCMessage.Args.Contains("Your nick isn't registered.") || (!sNickInfo.IsIdentify && registered.IsMatch(sIRCMessage.Args)))
 				{
 					Log.Warning("NickServ", sLConsole.NickServ("Text5"));
 					WhoisPrivmsg = sNickInfo.NickStorage;
