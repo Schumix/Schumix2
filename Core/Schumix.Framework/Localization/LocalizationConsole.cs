@@ -1441,6 +1441,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "[Topic] New topic: {0}";
 				}
+				case "Text25":
+				{
+					if(Language == "huHU")
+						return "[ACTION] {0}";
+					else if(Language == "enUS")
+						return "[ACTION] {0}";
+					else
+						return "[ACTION] {0}";
+				}
 				default:
 					return string.Empty;
 			}

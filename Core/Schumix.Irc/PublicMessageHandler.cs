@@ -42,7 +42,20 @@ namespace Schumix.Irc
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
+			if(sIRCMessage.Args.Contains(((char)1).ToString()))
+			{
+				string args = sIRCMessage.Args;
+				args = args.Remove(0, 1, (char)1);
+				args = args.Substring(0, args.IndexOf((char)1));
+
+				if(args.Length > 6 && args.Substring(0, 6) == "ACTION")
+				{
+					args = args.Remove(0, 7);
+					LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, string.Format(sLConsole.MessageHandler("Text25"), args));
+				}
+			}
+			else
+				LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
 
 			if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
 				sIRCMessage.Channel = sIRCMessage.Nick;
