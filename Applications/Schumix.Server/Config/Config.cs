@@ -72,7 +72,7 @@ namespace Schumix.Server.Config
 			{
 				new Framework.Config.LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, string.Empty, false);
 				Log.Initialize(d_logfilename);
-				Log.Error("Config", sLConsole.Exception("Error"), e);
+				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
 
