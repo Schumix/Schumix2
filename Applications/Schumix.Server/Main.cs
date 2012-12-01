@@ -53,7 +53,7 @@ namespace Schumix.Server
 		{
 			sRuntime.SetProcessName("Server");
 			string configdir = "Configs";
-			string configfile = "Server.xml";
+			string configfile = "Server.yml";
 			string console_encoding = "utf-8";
 			string localization = "start";
 			System.Console.CursorVisible = false;

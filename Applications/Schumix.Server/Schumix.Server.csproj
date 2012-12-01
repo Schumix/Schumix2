@@ -56,6 +56,12 @@
     <Reference Include="Mono.Posix">
       <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
     </Reference>
+    <Reference Include="YamlDotNet.Core">
+      <HintPath>..\..\Dependencies\YamlDotNet.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="YamlDotNet.RepresentationModel">
+      <HintPath>..\..\Dependencies\YamlDotNet.RepresentationModel.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -69,9 +75,12 @@
     <Compile Include="Windows\CtrlType.cs" />
     <Compile Include="New\Settings.cs" />
     <Compile Include="Config\ServerConfig.cs" />
-    <Compile Include="Config\ServerConfigs.cs" />
     <Compile Include="Config\LocalizationConfig.cs" />
     <Compile Include="ServerPacketHandlerDelegate.cs" />
+    <Compile Include="Config\DefaultConfig.cs" />
+    <Compile Include="Config\XmlConfig.cs" />
+    <Compile Include="Config\YamlConfig.cs" />
+    <Compile Include="Config\ServerConfigs.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -47,19 +47,28 @@ namespace Schumix.Framework
 
 		private void HandleTimerMemory(object sender, ElapsedEventArgs e)
 		{
-			if(Process.GetCurrentProcess().WorkingSet64/1024/1024 >= ShutdownConfig.MaxMemory * IRCConfig.List.Count)
-			{
-				Log.Warning("Runtime", sLConsole.Runtime("Text3"));
-				Log.Warning("Runtime", sLConsole.Runtime("Text4"));
-				SchumixBase.Quit();
+			if(ShutdownConfig.MaxMemory == 0)
+				return;
 
-				foreach(var nw in INetwork.WriterList)
+			if((Process.GetCurrentProcess().WorkingSet64/1024/1024 >= ShutdownConfig.MaxMemory && IRCConfig.List.IsNull()) ||
+			   Process.GetCurrentProcess().WorkingSet64/1024/1024 >= ShutdownConfig.MaxMemory * IRCConfig.List.Count)
+			{
+				Log.Warning("Runtime", sLConsole.Runtime("Text3"), ShutdownConfig.MaxMemory);
+				Log.Warning("Runtime", sLConsole.Runtime("Text4"));
+
+				if(!IRCConfig.List.IsNull())
 				{
-					if(!nw.Value.IsNull())
-						nw.Value.WriteLine("QUIT :Memory over-consumption.");
+					SchumixBase.Quit();
+
+					foreach(var nw in INetwork.WriterList)
+					{
+						if(!nw.Value.IsNull())
+							nw.Value.WriteLine("QUIT :Memory over-consumption.");
+					}
+
+					Thread.Sleep(1000);
 				}
 
-				Thread.Sleep(1000);
 				Process.GetCurrentProcess().Kill();
 			}
 		}

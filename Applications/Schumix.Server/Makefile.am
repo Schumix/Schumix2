@@ -148,7 +148,10 @@ FILES = \
 	Config/ServerConfig.cs \
 	Config/ServerConfigs.cs \
 	Config/LocalizationConfig.cs \
-	ServerPacketHandlerDelegate.cs 
+	ServerPacketHandlerDelegate.cs \
+	Config/DefaultConfig.cs \
+	Config/XmlConfig.cs \
+	Config/YamlConfig.cs 
 
 DATA_FILES = 
 
@@ -165,7 +168,9 @@ REFERENCES =  \
 	System.Xml
 
 DLL_REFERENCES =  \
-	../../Dependencies/Mono.Posix.dll
+	../../Dependencies/Mono.Posix.dll \
+	../../Dependencies/YamlDotNet.Core.dll \
+	../../Dependencies/YamlDotNet.RepresentationModel.dll
 
 CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
 

@@ -19,73 +19,29 @@
 
 using System;
 using System.IO;
-using System.Xml;
 using System.Threading;
-using System.Threading.Tasks;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Server.Config
 {
-	sealed class Config
+	sealed class Config : DefaultConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private const string _logfilename             = "Server.log";
-		private const bool _logdatefilename           = false;
-		private const int _logmaxfilesize             = 100;
-		private const int _loglevel                   = 2;
-		private const string _logdirectory            = "Logs";
-		private const int _listenerport               = 35220;
-		private const string _password                = "schumix";
-		private const string _locale                  = "enUS";
-		private const bool _updateenabled             = false;
-		private const string _updateversion           = "stable";
-		private const string _updatebranch            = "master";
-		private const string _updatewebpage           = "http://megax.uw.hu/Schumix2/";
-		private const bool _schumixsenabled           = false;
-		private const int _schumixsnumber             = 1;
-		private const string _schumix0file            = "Schumix.xml";
-		private const string _schumix0directory       = "Configs";
-		private const string _schumix0consoleencoding = "utf-8";
-		private const string _schumix0locale          = "enUS";
-		private bool error                            = false;
+		private string _configfile;
 
 		public Config(string configdir, string configfile)
 		{
 			try
 			{
-				configdir = sUtilities.GetSpecialDirectory(configfile);
-				string cdir = sUtilities.GetDirectoryName(configdir);
-
-				if(sUtilities.GetPlatformType() == PlatformType.Windows)
-				{
-					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
-					{
-						configfile = configdir.Substring(configdir.IndexOf(cdir));
-						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
-					}
-					else
-						configdir = sUtilities.GetSpecialDirectory(configdir);
-				}
-				else if(sUtilities.GetPlatformType() == PlatformType.Linux)
-				{
-					if(cdir.Contains(".yml") || cdir.Contains(".xml"))
-					{
-						configfile = configdir.Substring(configdir.IndexOf(cdir));
-						configdir = configdir.Substring(0, configdir.IndexOf(cdir));
-					}
-					else
-						configdir = sUtilities.GetSpecialDirectory(configdir);
-				}
-
-				new ServerConfig(configdir, configfile);
+				configdir = sUtilities.GetSpecialDirectory(configdir);
+				_configfile = configfile;
 
 				if(!IsConfig(configdir, configfile))
 				{
-					if(!error)
+					if(!errors)
 					{
 						Log.Notice("Config", sLConsole.Config("Text"));
 						Log.Notice("Config", sLConsole.Config("Text2"));
@@ -96,197 +52,86 @@ namespace Schumix.Server.Config
 				}
 				else
 				{
-					var xmldoc = new XmlDocument();
-					xmldoc.Load(sUtilities.DirectoryToSpecial(configdir, configfile));
-
-					string LogFileName = !xmldoc.SelectSingleNode("Server/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/FileName").InnerText : _logfilename;
-					bool LogDateFileName = !xmldoc.SelectSingleNode("Server/Log/DateFileName").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/DateFileName").InnerText) : _logdatefilename;
-					int LogMaxFileSize = !xmldoc.SelectSingleNode("Server/Log/MaxFileSize").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/MaxFileSize").InnerText) : _logmaxfilesize;
-					int LogLevel = !xmldoc.SelectSingleNode("Server/Log/LogLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Log/LogLevel").InnerText) : _loglevel;
-					string LogDirectory = !xmldoc.SelectSingleNode("Server/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Server/Log/LogDirectory").InnerText : _logdirectory;
-
-					new Framework.Config.LogConfig(LogFileName, LogDateFileName, LogMaxFileSize, LogLevel, LogDirectory, string.Empty, false);
-
-					Log.Initialize(LogFileName);
-					Log.Debug("Config", ">> {0}", configfile);
-
-					Log.Notice("Config", sLConsole.Config("Text3"));
-					int ListenerPort = !xmldoc.SelectSingleNode("Server/Server/Listener/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Server/Listener/Port").InnerText) : _listenerport;
-					string Password = !xmldoc.SelectSingleNode("Server/Server/Password").IsNull() ? xmldoc.SelectSingleNode("Server/Server/Password").InnerText : _password;
-
-					new ServerConfigs(ListenerPort, Password);
-
-					string Locale = !xmldoc.SelectSingleNode("Server/Localization/Locale").IsNull() ? xmldoc.SelectSingleNode("Server/Localization/Locale").InnerText : _locale;
-
-					new LocalizationConfig(Locale);
-
-					bool Enabled = !xmldoc.SelectSingleNode("Server/Update/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Update/Enabled").InnerText) : _updateenabled;
-					string Version = !xmldoc.SelectSingleNode("Server/Update/Version").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Version").InnerText : _updateversion;
-					string Branch = !xmldoc.SelectSingleNode("Server/Update/Branch").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Branch").InnerText : _updatebranch;
-					string WebPage = !xmldoc.SelectSingleNode("Server/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Server/Update/WebPage").InnerText : _updatewebpage;
-
-					new Framework.Config.UpdateConfig(Enabled, Version.ToLower(), Branch, WebPage);
-
-					int number = !xmldoc.SelectSingleNode("Server/Schumixs/Number").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Schumixs/Number").InnerText) : _schumixsnumber;
-
-					if(!xmldoc.SelectSingleNode("Server/Schumixs/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Schumixs/Enabled").InnerText) : _schumixsenabled)
+					switch(ConfigType(configdir, _configfile))
 					{
-						Task.Factory.StartNew(() =>
-						{
-							Log.Notice("Schumix", sLConsole.Config("Text9"));
-							Log.Notice("Schumix", sLConsole.Config("Text10"), number);
-
-							for(int i = 0; i < number; i++)
-							{
-								string file = !xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/File").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/File").InnerText : _schumix0file;
-								string dir = !xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/Directory").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/Directory").InnerText : _schumix0directory;
-								string ce = !xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/ConsoleEncoding").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/ConsoleEncoding").InnerText : _schumix0consoleencoding;
-								string lo = !xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/Locale").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Schumix" + i + "/Config/Locale").InnerText : _schumix0locale;
-								sSchumix.Start(file, dir, ce, lo, sUtilities.GetRandomString());
-								Thread.Sleep(10*1000);
-							}
-						});
+						case 0:
+							new YamlConfig(configdir, _configfile);
+							break;
+						case 1:
+							new XmlConfig(configdir, _configfile);
+							break;
+						default:
+							new YamlConfig(configdir, _configfile);
+							break;
 					}
-					else
-						Log.Warning("Schumix", sLConsole.Config("Text11"));
 
-					Log.Success("Config", sLConsole.Config("Text4"));
-					Console.WriteLine();
+					new ServerConfig(configdir, _configfile);
 				}
 			}
 			catch(Exception e)
 			{
-				new Framework.Config.LogConfig(_logfilename, _logdatefilename, _logmaxfilesize, 3, _logdirectory, string.Empty, false);
-				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
+				new Framework.Config.LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, string.Empty, false);
+				Log.Initialize(d_logfilename);
+				Log.Error("Config", sLConsole.Exception("Error"), e);
 			}
+		}
+
+		private int ConfigType(string ConfigDirectory, string ConfigFile)
+		{
+			if(ConfigFile == "Server.yml")
+			{
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "Server.xml");
+
+				if(File.Exists(filename))
+					return 0;
+				else if(File.Exists(filename2))
+				{
+					_configfile = "Server.xml";
+					return 1;
+				}
+			}
+			else if(ConfigFile == "Server.xml")
+			{
+				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "Server.yml");
+
+				if(File.Exists(filename))
+					return 1;
+				else if(File.Exists(filename2))
+				{
+					_configfile = "Server.yml";
+					return 0;
+				}
+			}
+
+			if(ConfigFile.EndsWith(".yml"))
+				return 0;
+			else if(ConfigFile.EndsWith(".xml"))
+				return 1;
+
+			return 0;
+		}
+
+		private void CheckAndCreate(string ConfigDirectory)
+		{
+			if(!Directory.Exists(ConfigDirectory))
+				Directory.CreateDirectory(ConfigDirectory);
 		}
 
 		private bool IsConfig(string ConfigDirectory, string ConfigFile)
 		{
-			if(!Directory.Exists(ConfigDirectory))
-				Directory.CreateDirectory(ConfigDirectory);
+			CheckAndCreate(ConfigDirectory);
 
-			try
+			switch(ConfigType(ConfigDirectory, ConfigFile))
 			{
-				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
-
-				if(File.Exists(filename))
-					return true;
-				else
-				{
-					new Framework.Config.LogConfig(_logfilename, _logdatefilename, _logmaxfilesize, 3, _logdirectory, string.Empty, false);
-					Log.Initialize(_logfilename);
-					Log.Error("Config", sLConsole.Config("Text5"));
-					Log.Debug("Config", sLConsole.Config("Text6"));
-					var w = new XmlTextWriter(filename, null);
-					var xmldoc = new XmlDocument();
-					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
-
-					if(File.Exists(filename2))
-						xmldoc.Load(filename2);
-
-					try
-					{
-						w.Formatting = Formatting.Indented;
-						w.Indentation = 4;
-						w.Namespaces = false;
-						w.WriteStartDocument();
-
-						// <Server>
-						w.WriteStartElement("Server");
-
-						// <Log>
-						w.WriteStartElement("Log");
-						w.WriteElementString("FileName",        (!xmldoc.SelectSingleNode("Server/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/FileName").InnerText : _logfilename));
-						w.WriteElementString("DateFileName",    (!xmldoc.SelectSingleNode("Server/Log/DateFileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/DateFileName").InnerText : _logdatefilename.ToString()));
-						w.WriteElementString("MaxFileSize",     (!xmldoc.SelectSingleNode("Server/Log/MaxFileSize").IsNull() ? xmldoc.SelectSingleNode("Server/Log/MaxFileSize").InnerText : _logmaxfilesize.ToString()));
-						w.WriteElementString("LogLevel",        (!xmldoc.SelectSingleNode("Server/Log/LogLevel").IsNull() ? xmldoc.SelectSingleNode("Server/Log/LogLevel").InnerText : _loglevel.ToString()));
-						w.WriteElementString("LogDirectory",    (!xmldoc.SelectSingleNode("Server/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Server/Log/LogDirectory").InnerText : _logdirectory));
-
-						// </Log>
-						w.WriteEndElement();
-
-						// <Server>
-						w.WriteStartElement("Server");
-
-						// <Listener>
-						w.WriteStartElement(@"Listener");
-						w.WriteElementString("Port",            (!xmldoc.SelectSingleNode("Server/Server/Listener/Port").IsNull() ? xmldoc.SelectSingleNode("Server/Server/Listener/Port").InnerText : _listenerport.ToString()));
-
-						// </Server>
-						w.WriteEndElement();
-						w.WriteElementString("Password",        (!xmldoc.SelectSingleNode("Server/Server/Password").IsNull() ? xmldoc.SelectSingleNode("Server/Server/Password").InnerText : _password));
-
-						// </Server>
-						w.WriteEndElement();
-
-						// <Localization>
-						w.WriteStartElement("Localization");
-						w.WriteElementString("Locale",          (!xmldoc.SelectSingleNode("Server/Localization/Locale").IsNull() ? xmldoc.SelectSingleNode("Server/Localization/Locale").InnerText : _locale));
-
-						// </Localization>
-						w.WriteEndElement();
-
-						// <Update>
-						w.WriteStartElement("Update");
-						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Server/Update/Enabled").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Enabled").InnerText : _updateenabled.ToString()));
-						w.WriteElementString("Version",         (!xmldoc.SelectSingleNode("Server/Update/Version").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Version").InnerText : _updateversion));
-						w.WriteElementString("Branch",          (!xmldoc.SelectSingleNode("Server/Update/Branch").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Branch").InnerText : _updatebranch));
-						w.WriteElementString("WebPage",         (!xmldoc.SelectSingleNode("Server/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Server/Update/WebPage").InnerText : _updatewebpage));
-
-						// </Update>
-						w.WriteEndElement();
-
-						// <Schumixs>
-						w.WriteStartElement("Schumixs");
-						w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Server/Schumixs/Enabled").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Enabled").InnerText : _schumixsenabled.ToString()));
-						w.WriteElementString("Number",          (!xmldoc.SelectSingleNode("Server/Schumixs/Number").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Number").InnerText : _schumixsnumber.ToString()));
-
-						// <Schumix0>
-						w.WriteStartElement("Schumix0");
-
-						// <Config>
-						w.WriteStartElement("Config");
-						w.WriteElementString("File",            (!xmldoc.SelectSingleNode("Server/Schumixs/Schumix0/Config/File").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Schumix0/Config/File").InnerText : _schumix0file));
-						w.WriteElementString("Directory",       (!xmldoc.SelectSingleNode("Server/Schumixs/Schumix0/Config/Directory").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Schumix0/Config/Directory").InnerText : _schumix0directory));
-						w.WriteElementString("ConsoleEncoding", (!xmldoc.SelectSingleNode("Server/Schumixs/Schumix0/Config/ConsoleEncoding").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Schumix0/Config/ConsoleEncoding").InnerText : _schumix0consoleencoding));
-						w.WriteElementString("Locale",          (!xmldoc.SelectSingleNode("Server/Schumixs/Schumix0/Config/Locale").IsNull() ? xmldoc.SelectSingleNode("Server/Schumixs/Schumix0/Config/Locale").InnerText : _schumix0locale));
-
-						// </Config>
-						w.WriteEndElement();
-
-						// </Schumix0>
-						w.WriteEndElement();
-
-						// </Schumixs>
-						w.WriteEndElement();
-
-						// </Server>
-						w.WriteEndElement();
-
-						w.Flush();
-						w.Close();
-
-						if(File.Exists(filename2))
-							File.Delete(filename2);
-
-						Log.Success("Config", sLConsole.Config("Text7"));
-						return false;
-					}
-					catch(Exception e)
-					{
-						Log.Error("Config", sLConsole.Config("Text8"), e.Message);
-						error = true;
-						return false;
-					}
-				}
+				case 0:
+					return new YamlConfig().CreateConfig(ConfigDirectory, _configfile);
+				case 1:
+					return new XmlConfig().CreateConfig(ConfigDirectory, _configfile);
+				default:
+					return new YamlConfig().CreateConfig(ConfigDirectory, _configfile);
 			}
-			catch(DirectoryNotFoundException)
-			{
-				IsConfig(ConfigDirectory, ConfigFile);
-			}
-
-			return true;
 		}
 	}
 }

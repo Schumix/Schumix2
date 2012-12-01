@@ -15,7 +15,6 @@ Megírásra váró feladatok:
 		- Összes addonra alkalmazni a fejlesztéseket.
 	- Sűrgős:
 		- sznap parancs megírása normálisan.
-		- Server-be megcsinálni a yaml konfigot.
 		- Clean elhelyezése a configban. Ezzel a lehetőséggel lehetne majd kipucolni pl a többszerveres módban a fölösleges adatokat amelyek másik szerverekhez tartoznak. Plusz még egyéb dolgokat pucolna. Ezt a clean-t még meglehetne csinálni kapcsolónak is az exe indításánál. (pucolhatná a config mappából is a fölösleges _ jelel ellátott fájlokat is.)
 		- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
 		- Játék addon nyelvezetét átírni angolra is.
@@ -24,3 +23,4 @@ Megírásra váró feladatok:
 	- Serverben megoldani az egy szerveren lévő botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
 	- Dokumentálni az egész kódot.
 	- Többszerveres módnál az irc logolást leválasztani a normál logról(normális módnál maradhatna a Schumix.log-ban [Túlságosan sok mindent kéne megváltoztatni ezért jó ötleteken dolgozom hozzá.]).
+	- calendar-ban a legközelebbi időpont kiíratása ami jön időben. (szöveg kiírása ami fel van jegyezve)
