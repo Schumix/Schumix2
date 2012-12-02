@@ -9,8 +9,7 @@ Megírásra váró feladatok:
 	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!! (Állítottam a prioritáson. Lehetséges ez megoldja a gondot de még tesztelni kell.)
 
 - Fejleszteni kívánt részek, új funkciók:
-	- CacheDB kifejlesztése.
-	- CacheDB-nél megoldani hogy a channels táblát is lementse magába és mindig frissítse ha változik valami rajta.
+	- CacheDB szövegek elhelyezése oda ahova fel van írva.
 
 	- Sűrgős:
 		- sznap parancs megírása normálisan.

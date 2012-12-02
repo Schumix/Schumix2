@@ -208,7 +208,10 @@ namespace Schumix.Irc.Commands
 					int rank = sLManager.GetCommandHelpRank(commands, sIRCMessage.Channel, sIRCMessage.ServerName);
 
 					if(rank == -1)
+					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoFoundHelpCommand", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+						return;
+					}
 
 					if((adminflag == 2 && rank == 2) || (adminflag == 2 && rank == 1) || (adminflag == 2 && rank == 0) ||
 					(adminflag == 1 && rank == 1) || (adminflag == 1 && rank == 0) || (adminflag == 0 && rank == 0) ||

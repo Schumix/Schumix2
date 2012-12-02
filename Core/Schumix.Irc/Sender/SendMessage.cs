@@ -348,15 +348,19 @@ namespace Schumix.Irc
 
 		private List<string> ChannelList()
 		{
+			bool b = false;
 			var list = new List<string>();
-			var db = SchumixBase.DManager.Query("SELECT Channel FROM channels WHERE ServerName = '{0}'", _servername);
 
-			if(!db.IsNull())
+			foreach(var ch in SchumixBase.sCacheDB.ChannelsMap())
 			{
-				foreach(DataRow row in db.Rows)
-					list.Add(row["Channel"].ToString());
+				if(ch.Value.ServerName == _servername)
+				{
+					b = true;
+					list.Add(ch.Value.Channel);
+				}
 			}
-			else
+
+			if(!b)
 				Log.Error("SendMessage", sLConsole.SendMessage("Text"));
 
 			return list;

@@ -33,6 +33,7 @@ namespace Schumix.Framework.Database.Cache
 		private readonly Dictionary<string, LocalizedCommandHelp> _LocalizedCommandHelpMap = new Dictionary<string, LocalizedCommandHelp>();
 		private readonly Dictionary<string, LocalizedWarning> _LocalizedWarningMap = new Dictionary<string, LocalizedWarning>();
 		private readonly Dictionary<string, Channels> _ChannelsMap = new Dictionary<string, Channels>();
+		private readonly object Lock = new object();
 
 		public Dictionary<string, LocalizedConsoleCommand> LocalizedConsoleCommandMap()
 		{
@@ -74,90 +75,103 @@ namespace Schumix.Framework.Database.Cache
 			// valami üzenet kéne ide
 		}
 
-		public void Load(string value = "") // megoldani hogy a db neve alapján (inkább _ jel nélkül) lehessen betölteni db-t
+		public void Load(string value = "")
 		{
-			// valami üzenet kéne ide
-			switch(value.ToLower())
+			lock(Lock)
 			{
-				case "localizedconsolecommand":
-					LoadLocalizedConsoleCommand();
-					break;
-				case "localizedconsolecommandhelp":
-					LoadLocalizedConsoleCommandHelp();
-					break;
-				case "localizedconsolewarning":
-					LoadLocalizedConsoleWarning();
-					break;
-				case "localizedcommand":
-					LoadLocalizedCommand();
-					break;
-				case "localizedcommandhelp":
-					LoadLocalizedCommandHelp();
-					break;
-				case "localizedwarning":
-					LoadLocalizedWarning();
-					break;
-				case "channels":
-					LoadChannels();
-					break;
-				default:
-					LoadLocalizedConsoleCommand();
-					LoadLocalizedConsoleCommandHelp();
-					LoadLocalizedConsoleWarning();
-					LoadLocalizedCommand();
-					LoadLocalizedCommandHelp();
-					LoadLocalizedWarning();
-					LoadChannels();
-					break;
+				// valami üzenet kéne ide
+
+				switch(value.ToLower())
+				{
+					case "localizedconsolecommand":
+						LoadLocalizedConsoleCommand();
+						break;
+					case "localizedconsolecommandhelp":
+						LoadLocalizedConsoleCommandHelp();
+						break;
+					case "localizedconsolewarning":
+						LoadLocalizedConsoleWarning();
+						break;
+					case "localizedcommand":
+						LoadLocalizedCommand();
+						break;
+					case "localizedcommandhelp":
+						LoadLocalizedCommandHelp();
+						break;
+					case "localizedwarning":
+						LoadLocalizedWarning();
+						break;
+					case "channels":
+						LoadChannels();
+						break;
+					default:
+						LoadLocalizedConsoleCommand();
+						LoadLocalizedConsoleCommandHelp();
+						LoadLocalizedConsoleWarning();
+						LoadLocalizedCommand();
+						LoadLocalizedCommandHelp();
+						LoadLocalizedWarning();
+						LoadChannels();
+						break;
+				}
 			}
 		}
 
-		public void UnLoad(string value = "") // megoldani hogy a db neve alapján (inkább _ jel nélkül) lehessen törölni db-t
+		public void UnLoad(string value = "")
 		{
-			// valami üzenet kéne ide
-			Clean(value);
+			lock(Lock)
+			{
+				// valami üzenet kéne ide
+				Clean(value);
+			}
 		}
 
 		public void ReLoad(string value = "")
 		{
-			Clean(value);
-			Load(value);
+			lock(Lock)
+			{
+				Clean(value);
+				Load(value);
+			}
 		}
 
-		public void Clean(string value = "") // megoldani hogy a db neve alapján (inkább _ jel nélkül) lehessen törölni db-t
+		public void Clean(string value = "")
 		{
-			switch(value.ToLower())
+			lock(Lock)
 			{
-				case "localizedconsolecommand":
-					_LocalizedConsoleCommandMap.Clear();
-					break;
-				case "localizedconsolecommandhelp":
-					_LocalizedConsoleCommandHelpMap.Clear();
-					break;
-				case "localizedconsolewarning":
-					_LocalizedConsoleWarningMap.Clear();
-					break;
-				case "localizedcommand":
-					_LocalizedCommandMap.Clear();
-					break;
-				case "localizedcommandhelp":
-					_LocalizedCommandHelpMap.Clear();
-					break;
-				case "localizedcommandwarning":
-					_LocalizedWarningMap.Clear();
-					break;
-				case "channels":
-					_ChannelsMap.Clear();
-					break;
-				default:
-					_LocalizedConsoleCommandMap.Clear();
-					_LocalizedConsoleCommandHelpMap.Clear();
-					_LocalizedConsoleWarningMap.Clear();
-					_LocalizedCommandMap.Clear();
-					_LocalizedCommandHelpMap.Clear();
-					_LocalizedWarningMap.Clear();
-					_ChannelsMap.Clear();
-					break;
+				switch(value.ToLower())
+				{
+					case "localizedconsolecommand":
+						_LocalizedConsoleCommandMap.Clear();
+						break;
+					case "localizedconsolecommandhelp":
+						_LocalizedConsoleCommandHelpMap.Clear();
+						break;
+					case "localizedconsolewarning":
+						_LocalizedConsoleWarningMap.Clear();
+						break;
+					case "localizedcommand":
+						_LocalizedCommandMap.Clear();
+						break;
+					case "localizedcommandhelp":
+						_LocalizedCommandHelpMap.Clear();
+						break;
+					case "localizedcommandwarning":
+						_LocalizedWarningMap.Clear();
+						break;
+					case "channels":
+						_ChannelsMap.Clear();
+						break;
+					default:
+						_LocalizedConsoleCommandMap.Clear();
+						_LocalizedConsoleCommandHelpMap.Clear();
+						_LocalizedConsoleWarningMap.Clear();
+						_LocalizedCommandMap.Clear();
+						_LocalizedCommandHelpMap.Clear();
+						_LocalizedWarningMap.Clear();
+						_ChannelsMap.Clear();
+						break;
+				}
 			}
 		}
 
