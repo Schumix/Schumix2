@@ -30,6 +30,8 @@ namespace Schumix.Framework.Database.Cache
 		private readonly Dictionary<string, LocalizedConsoleCommandHelp> _LocalizedConsoleCommandHelpMap = new Dictionary<string, LocalizedConsoleCommandHelp>();
 		private readonly Dictionary<string, LocalizedConsoleWarning> _LocalizedConsoleWarningMap = new Dictionary<string, LocalizedConsoleWarning>();
 		private readonly Dictionary<string, LocalizedCommand> _LocalizedCommandMap = new Dictionary<string, LocalizedCommand>();
+		private readonly Dictionary<string, LocalizedCommandHelp> _LocalizedCommandHelpMap = new Dictionary<string, LocalizedCommandHelp>();
+		private readonly Dictionary<string, LocalizedWarning> _LocalizedWarningMap = new Dictionary<string, LocalizedWarning>();
 		private readonly Dictionary<string, Channels> _ChannelsMap = new Dictionary<string, Channels>();
 
 		public Dictionary<string, LocalizedConsoleCommand> LocalizedConsoleCommandMap()
@@ -50,6 +52,16 @@ namespace Schumix.Framework.Database.Cache
 		public Dictionary<string, LocalizedCommand> LocalizedCommandMap()
 		{
 			return _LocalizedCommandMap;
+		}
+
+		public Dictionary<string, LocalizedCommandHelp> LocalizedCommandHelpMap()
+		{
+			return _LocalizedCommandHelpMap;
+		}
+
+		public Dictionary<string, LocalizedWarning> LocalizedWarningMap()
+		{
+			return _LocalizedWarningMap;
 		}
 
 		public Dictionary<string, Channels> ChannelsMap()
@@ -79,6 +91,12 @@ namespace Schumix.Framework.Database.Cache
 				case "localizedcommand":
 					LoadLocalizedCommand();
 					break;
+				case "localizedcommandhelp":
+					LoadLocalizedCommandHelp();
+					break;
+				case "localizedwarning":
+					LoadLocalizedWarning();
+					break;
 				case "channels":
 					LoadChannels();
 					break;
@@ -87,6 +105,8 @@ namespace Schumix.Framework.Database.Cache
 					LoadLocalizedConsoleCommandHelp();
 					LoadLocalizedConsoleWarning();
 					LoadLocalizedCommand();
+					LoadLocalizedCommandHelp();
+					LoadLocalizedWarning();
 					LoadChannels();
 					break;
 			}
@@ -120,6 +140,12 @@ namespace Schumix.Framework.Database.Cache
 				case "localizedcommand":
 					_LocalizedCommandMap.Clear();
 					break;
+				case "localizedcommandhelp":
+					_LocalizedCommandHelpMap.Clear();
+					break;
+				case "localizedcommandwarning":
+					_LocalizedWarningMap.Clear();
+					break;
 				case "channels":
 					_ChannelsMap.Clear();
 					break;
@@ -128,6 +154,8 @@ namespace Schumix.Framework.Database.Cache
 					_LocalizedConsoleCommandHelpMap.Clear();
 					_LocalizedConsoleWarningMap.Clear();
 					_LocalizedCommandMap.Clear();
+					_LocalizedCommandHelpMap.Clear();
+					_LocalizedWarningMap.Clear();
 					_ChannelsMap.Clear();
 					break;
 			}
@@ -201,6 +229,41 @@ namespace Schumix.Framework.Database.Cache
 			}
 		}
 
+		private void LoadLocalizedCommandHelp()
+		{
+			var db = SchumixBase.DManager.Query("SELECT Id, Language, Command, Rank, Text FROM localized_command_help");
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					var map = new LocalizedCommandHelp();
+					map.Id = Convert.ToInt32(row["Id"].ToString());
+					map.Language = row["Language"].ToString();
+					map.Command = row["Command"].ToString();
+					map.Rank = Convert.ToInt32(row["Rank"].ToString());
+					map.Text = row["Text"].ToString();
+					_LocalizedCommandHelpMap.Add(map.Language + map.Command, map);
+				}
+			}
+		}
+
+		private void LoadLocalizedWarning()
+		{
+			var db = SchumixBase.DManager.Query("SELECT Id, Language, Command, Text FROM localized_warning");
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					var map = new LocalizedWarning();
+					map.Id = Convert.ToInt32(row["Id"].ToString());
+					map.Language = row["Language"].ToString();
+					map.Command = row["Command"].ToString();
+					map.Text = row["Text"].ToString();
+					_LocalizedWarningMap.Add(map.Language + map.Command, map);
+				}
+			}
+		}
+
 		private void LoadChannels()
 		{
 			var db = SchumixBase.DManager.Query("SELECT Id, ServerId, ServerName, Functions, Channel, Password, Enabled, Error, Language FROM channels");
@@ -223,8 +286,4 @@ namespace Schumix.Framework.Database.Cache
 			}
 		}
 	}
-
-/*
-`localized_command_help`,
-`localized_warning`,*/
 }

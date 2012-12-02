@@ -128,6 +128,8 @@
     <Compile Include="Database\Cache\LocalizedConsoleCommandHelp.cs" />
     <Compile Include="Database\Cache\LocalizedConsoleWarning.cs" />
     <Compile Include="Database\Cache\Channels.cs" />
+    <Compile Include="Database\Cache\LocalizedCommandHelp.cs" />
+    <Compile Include="Database\Cache\LocalizedWarning.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
