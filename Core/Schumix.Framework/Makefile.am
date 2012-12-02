@@ -160,7 +160,15 @@ FILES = \
 	Config/CrashConfig.cs \
 	JsonHelper.cs \
 	Config/ShutdownConfig.cs \
-	Config/FloodingConfig.cs 
+	Config/FloodingConfig.cs \
+	Database/Cache/CacheDB.cs \
+	Database/Cache/LocalizedCommand.cs \
+	Database/Cache/LocalizedConsoleCommand.cs \
+	Database/Cache/LocalizedConsoleCommandHelp.cs \
+	Database/Cache/LocalizedConsoleWarning.cs \
+	Database/Cache/Channels.cs \
+	Database/Cache/LocalizedCommandHelp.cs \
+	Database/Cache/LocalizedWarning.cs 
 
 DATA_FILES = 
 
@@ -169,6 +177,7 @@ RESOURCES =
 EXTRAS = \
 	../../Dependencies/sqlite3.dll \
 	../../Sql/Schumix.db3 \
+	Database/Cache \
 	schumix.framework.pc.in 
 
 REFERENCES =  \
