@@ -88,10 +88,11 @@ namespace Schumix.Framework
 
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text"));
 				timer = new Timer();
+
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text2"));
 				DManager = new DatabaseManager();
 
-				// valami üzenet kéne ide
+				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text8"));
 				sCacheDB = new CacheDB();
 				sCacheDB.Load();
 

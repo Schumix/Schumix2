@@ -513,6 +513,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "The master channel already exist on the database, named by default!";
 				}
+				case "Text8":
+				{
+					if(Locale == "huHU")
+						return "CacheDB indul...";
+					else if(Locale == "enUS")
+						return "CacheDB is starting...";
+					else
+						return "CacheDB is starting...";
+				}
 				default:
 					return string.Empty;
 			}
@@ -2670,6 +2679,60 @@ namespace Schumix.Framework.Localization
 						return "Leaving";
 					else
 						return "Leaving";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string CacheDB(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "CacheDB sikeresen elindult.";
+					else if(Locale == "enUS")
+						return "Successfully started the CacheDB.";
+					else
+						return "Successfully started the CacheDB.";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "Adatbázisból táblák betöltése a magba.";
+					else if(Locale == "enUS")
+						return "Load tables from the database to the core.";
+					else
+						return "Load tables from the database to the core.";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Adatbázisból {0} tábla betöltése a magba.";
+					else if(Locale == "enUS")
+						return "{0} loaded to the core.";
+					else
+						return "{0} loaded to the core.";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "Magból a táblák takarításra kerültek.";
+					else if(Locale == "enUS")
+						return "Tables cleared from the core.";
+					else
+						return "Tables cleared from the core.";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "Magból törölve a {0} tábla.";
+					else if(Locale == "enUS")
+						return "Table {0} deleted from the core.";
+					else
+						return "Table {0} deleted from the core.";
 				}
 				default:
 					return string.Empty;

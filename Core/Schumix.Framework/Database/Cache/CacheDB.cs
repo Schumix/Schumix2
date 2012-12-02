@@ -21,6 +21,7 @@ using System;
 using System.Data;
 using System.Collections.Generic;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Database.Cache
 {
@@ -33,6 +34,7 @@ namespace Schumix.Framework.Database.Cache
 		private readonly Dictionary<string, LocalizedCommandHelp> _LocalizedCommandHelpMap = new Dictionary<string, LocalizedCommandHelp>();
 		private readonly Dictionary<string, LocalizedWarning> _LocalizedWarningMap = new Dictionary<string, LocalizedWarning>();
 		private readonly Dictionary<string, Channels> _ChannelsMap = new Dictionary<string, Channels>();
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly object Lock = new object();
 
 		public Dictionary<string, LocalizedConsoleCommand> LocalizedConsoleCommandMap()
@@ -72,14 +74,17 @@ namespace Schumix.Framework.Database.Cache
 
 		public CacheDB()
 		{
-			// valami üzenet kéne ide
+			sLConsole.CacheDB("Text");
 		}
 
 		public void Load(string value = "")
 		{
 			lock(Lock)
 			{
-				// valami üzenet kéne ide
+				if(value == string.Empty)
+					Log.Debug("CacheDB", sLConsole.CacheDB("Text2"));
+				else
+					Log.Debug("CacheDB", sLConsole.CacheDB("Text3"), value);
 
 				switch(value.ToLower())
 				{
@@ -121,7 +126,6 @@ namespace Schumix.Framework.Database.Cache
 		{
 			lock(Lock)
 			{
-				// valami üzenet kéne ide
 				Clean(value);
 			}
 		}
@@ -139,6 +143,11 @@ namespace Schumix.Framework.Database.Cache
 		{
 			lock(Lock)
 			{
+				if(value == string.Empty)
+					Log.Debug("CacheDB", sLConsole.CacheDB("Text4"));
+				else
+					Log.Debug("CacheDB", sLConsole.CacheDB("Text5"), value);
+
 				switch(value.ToLower())
 				{
 					case "localizedconsolecommand":
