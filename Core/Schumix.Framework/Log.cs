@@ -348,7 +348,7 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				LargeWarning(string.Format(message, args));
+				LargeError(string.Format(message, args));
 			}
 		}
 	}
