@@ -125,6 +125,9 @@
     <Compile Include="Database\Cache\CacheDB.cs" />
     <Compile Include="Database\Cache\LocalizedCommand.cs" />
     <Compile Include="Database\Cache\LocalizedConsoleCommand.cs" />
+    <Compile Include="Database\Cache\LocalizedConsoleCommandHelp.cs" />
+    <Compile Include="Database\Cache\LocalizedConsoleWarning.cs" />
+    <Compile Include="Database\Cache\Channels.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

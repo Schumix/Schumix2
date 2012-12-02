@@ -699,6 +699,7 @@ namespace Schumix.Irc.Commands
 
 				SchumixBase.DManager.Update("channels", string.Format("Language = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[6])), string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.ServerName));
 				sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.Info[6]);
+				SchumixBase.sCacheDB.ReLoad("channels");
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "password")
 			{
@@ -754,6 +755,7 @@ namespace Schumix.Irc.Commands
 
 					SchumixBase.DManager.Update("channels", string.Format("Password = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7])), string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, text[2], sIRCMessage.Info[6]);
+					SchumixBase.sCacheDB.ReLoad("channels");
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "remove")
 				{
@@ -795,6 +797,7 @@ namespace Schumix.Irc.Commands
 
 					SchumixBase.DManager.Update("channels", "Password = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+					SchumixBase.sCacheDB.ReLoad("channels");
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "update")
 				{
@@ -842,6 +845,7 @@ namespace Schumix.Irc.Commands
 
 					SchumixBase.DManager.Update("channels", string.Format("Password = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7])), string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, text[2], sIRCMessage.Info[7]);
+					SchumixBase.sCacheDB.ReLoad("channels");
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "info")
 				{
