@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.WordPressRssAddon.Config
 {
-	class AddonDefaultConfig
+	abstract class AddonDefaultConfig
 	{
 		protected const int d_querytime = 60;
 	}

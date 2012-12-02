@@ -27,7 +27,7 @@ using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands
 {
-	public partial class CommandHandler
+	public abstract partial class CommandHandler
 	{
 		protected void HandleFunction(IRCMessage sIRCMessage)
 		{

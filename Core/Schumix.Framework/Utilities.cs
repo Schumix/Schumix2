@@ -50,34 +50,48 @@ namespace Schumix.Framework
 
 		public string GetUrl(string url)
 		{
-			using(var client = new WebClient())
+			lock(WriteLock)
 			{
-				client.Headers.Add("referer", Consts.SchumixReferer);
-				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
-				client.Encoding = Encoding.UTF8;
-				return client.DownloadString(url);
+				return GetUrl(url, string.Empty, string.Empty);
 			}
 		}
 
 		public string GetUrl(string url, string args)
 		{
-			using(var client = new WebClient())
+			lock(WriteLock)
 			{
-				client.Headers.Add("referer", Consts.SchumixReferer);
-				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
-				client.Encoding = Encoding.UTF8;
-				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
+				return GetUrl(url, args, string.Empty);
 			}
 		}
 
 		public string GetUrl(string url, string args, string noencode)
 		{
-			using(var client = new WebClient())
+			lock(WriteLock)
 			{
-				client.Headers.Add("referer", Consts.SchumixReferer);
-				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
-				client.Encoding = Encoding.UTF8;
-				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
+				if(args != string.Empty && noencode == string.Empty)
+					url = url + HttpUtility.UrlEncode(args);
+				else if(args != string.Empty && noencode != string.Empty)
+					url = url + HttpUtility.UrlEncode(args) + noencode;
+
+				var request = (HttpWebRequest)WebRequest.Create(url);
+				request.AllowAutoRedirect = true;
+				request.UserAgent = Consts.SchumixUserAgent;
+				request.Referer = Consts.SchumixReferer;
+
+				int length = 0;
+				byte[] buf = new byte[1024];
+				var sb = new StringBuilder();
+				var response = (HttpWebResponse)request.GetResponse();
+				var stream = response.GetResponseStream();
+
+				while((length = stream.Read(buf, 0, buf.Length)) != 0)
+				{
+					buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
+					sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+				}
+
+				response.Close();
+				return sb.ToString();
 			}
 		}
 
@@ -800,7 +814,7 @@ namespace Schumix.Framework
 					int length = 0;
 					byte[] buf = new byte[1024];
 					var sb = new StringBuilder();
-					var response = request.GetResponse();
+					var response = (HttpWebResponse)request.GetResponse();
 					var stream = response.GetResponseStream();
 
 					while((length = stream.Read(buf, 0, buf.Length)) != 0)
@@ -808,6 +822,7 @@ namespace Schumix.Framework
 						if(sb.Length >= maxlength)
 							break;
 
+						buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
 						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
 					}
 
@@ -917,7 +932,7 @@ namespace Schumix.Framework
 					int length = 0;
 					byte[] buf = new byte[1024];
 					var sb = new StringBuilder();
-					var response = request.GetResponse();
+					var response = (HttpWebResponse)request.GetResponse();
 					var stream = response.GetResponseStream();
 
 					if(maxlength == 0)
@@ -928,6 +943,7 @@ namespace Schumix.Framework
 						if(sb.ToString().Contains(Contains) || sb.Length >= 10000)
 							break;
 
+						buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
 						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
 					}
 
@@ -1002,7 +1018,7 @@ namespace Schumix.Framework
 					int length = 0;
 					byte[] buf = new byte[1024];
 					var sb = new StringBuilder();
-					var response = request.GetResponse();
+					var response = (HttpWebResponse)request.GetResponse();
 					var stream = response.GetResponseStream();
 
 					if(maxlength == 0)
@@ -1013,6 +1029,7 @@ namespace Schumix.Framework
 						if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
 							break;
 
+						buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
 						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
 					}
 

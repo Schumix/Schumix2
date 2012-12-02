@@ -112,6 +112,24 @@ namespace Schumix.Framework.Localization
 					else
 						return "Failure details: {0}";
 				}
+				case "FatalError":
+				{
+					if(Locale == "huHU")
+						return "VÉGZETES HIBA";
+					else if(Locale == "enUS")
+						return "FATAL ERROR";
+					else
+						return "FATAL ERROR";
+				}
+				case "MajorError":
+				{
+					if(Locale == "huHU")
+						return "SÚLYOS HIBA";
+					else if(Locale == "enUS")
+						return "MAJOR ERROR";
+					else
+						return "MAJOR ERROR";
+				}
 				default:
 					return string.Empty;
 			}
@@ -1450,6 +1468,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "[Topic] New topic: {0}";
 				}
+				case "Text25":
+				{
+					if(Language == "huHU")
+						return "[ACTION] {0}";
+					else if(Language == "enUS")
+						return "[ACTION] {0}";
+					else
+						return "[ACTION] {0}";
+				}
 				default:
 					return string.Empty;
 			}
@@ -2448,11 +2475,11 @@ namespace Schumix.Framework.Localization
 				case "Text3":
 				{
 					if(Locale == "huHU")
-						return "A program több mint 100 mb-ot fogyaszt!";
+						return "A program több mint {0} mb-ot fogyaszt!";
 					else if(Locale == "enUS")
-						return "The program, more than 100 MB consumed!";
+						return "The program, more than {0} MB consumed!";
 					else
-						return "The program, more than 100 MB consumed!";
+						return "The program, more than {0} MB consumed!";
 				}
 				case "Text4":
 				{

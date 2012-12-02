@@ -63,9 +63,8 @@ namespace Schumix.Irc.Ctcp
 
 			args = args.Remove(0, 1, (char)1);
 			args = args.Substring(0, args.IndexOf((char)1));
-			var command = args.Split(SchumixBase.NewLine);
 
-			switch(command[0])
+			switch(args)
 			{
 				case CtcpUtil.Finger:
 					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, _fingerMessage + sLConsole.CtcpSender("Text5") + FormatIdleTime());
@@ -90,7 +89,7 @@ namespace Schumix.Irc.Ctcp
 					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, args);
 					break;
 				default:
-					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, sLConsole.CtcpSender("Text6"), command[0]);
+					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, sLConsole.CtcpSender("Text6"), args);
 					break;
 			}
 		}

@@ -46,12 +46,12 @@ namespace Schumix.ExtraAddon.Commands
 		/// <returns>
 		///   The webpage's title.
 		/// </returns>
-		public static string GetWebTitle(Uri url, string Language)
+		public static string GetWebTitle(Uri url)
 		{
 			try
 			{
 				var getTitleRegex = new Regex(@"<title>(?<ttl>.*\s*.+\s*.*)\s*</title>", RegexOptions.IgnoreCase);
-				string data = sUtilities.DownloadString(url, 3500, getTitleRegex);
+				string data = sUtilities.DownloadString(url, 3500, getTitleRegex, 20000);
 				var match = getTitleRegex.Match(data);
 
 				if(match.Success)
@@ -64,7 +64,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Debug("WebHelper", sLocalization.WebHelper("Text2"), e.Message);
+				Log.Debug("WebHelper", sLocalization.WebHelper("Text"), e.Message);
 				return string.Empty;
 			}
 		}

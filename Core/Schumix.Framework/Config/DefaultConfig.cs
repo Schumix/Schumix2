@@ -22,7 +22,7 @@ using System;
 
 namespace Schumix.Framework.Config
 {
-	public class DefaultConfig
+	public abstract class DefaultConfig
 	{
 		protected const string d_logfilename           = "Schumix.log";
 		protected const bool d_logdatefilename         = false;

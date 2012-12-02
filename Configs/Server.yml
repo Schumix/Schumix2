@@ -1,0 +1,31 @@
+# Server config file (yaml)
+Server:
+    Log:
+        FileName: Server.log
+        DateFileName: False
+        MaxFileSize: 100
+        LogLevel: 2
+        LogDirectory: Logs
+    Server:
+        Listener:
+            Port: 35220
+        Password: schumix
+    Crash:
+        Directory: Dumps
+    Localization:
+        Locale: enUS
+    Update:
+        Enabled: False
+        Version: stable
+        Branch: master
+        WebPage: https://github.com/megax/Schumix2
+    Shutdown:
+        MaxMemory: 100
+    Schumixs:
+        Enabled: False
+        Schumix:
+            Config:
+                File: Schumix.yml
+                Directory: Configs
+                ConsoleEncoding: utf-8
+                Locale: enUS

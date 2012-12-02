@@ -67,6 +67,7 @@
     <Compile Include="Config\AddonDefaultConfig.cs" />
     <Compile Include="Config\AddonXmlConfig.cs" />
     <Compile Include="Config\AddonYamlConfig.cs" />
+    <Compile Include="Commands\YoutubeTitle.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

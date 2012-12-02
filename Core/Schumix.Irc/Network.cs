@@ -56,14 +56,14 @@ namespace Schumix.Irc
 		public bool Shutdown { get; private set; }
 
         /// <summary>
-        ///     A kapcsolatot tároljra.
-        /// </summary>
-		private TcpClient client;
-
-        /// <summary>
         ///     A bejövő információkat fogadja.
         /// </summary>
 		private StreamReader reader;
+
+        /// <summary>
+        ///     A kapcsolatot tároljra.
+        /// </summary>
+		private TcpClient client;
 
         /// <summary>
         ///     IRC szerver címe.
@@ -74,14 +74,54 @@ namespace Schumix.Irc
         ///     IRC port száma.
         /// </summary>
 		private readonly int _port;
-		private string _servername;
-		private int _serverid;
-		private bool _enabled = false;
+
 		private bool NetworkQuit = false;
-		private bool Connected = false;
 		private int ReconnectNumber = 0;
+		private bool Connected = false;
+		private bool _enabled = false;
 		private ConnectionType CType;
 		private DateTime LastOpcode;
+		private string _servername;
+		private int _serverid;
+
+		public Network() : base("default")
+		{
+			_servername = "default";
+			_serverid = 1;
+			_server = "localhost";
+			_port = 6667;
+			Shutdown = false;
+
+			Log.Notice("Network", sLConsole.Network("Text"));
+			Log.Notice("Network", sLConsole.Network("Text20"), _servername);
+			CType = ConnectionType.Normal;
+		}
+
+		public Network(string Server) : base("default")
+		{
+			_servername = "default";
+			_serverid = 1;
+			_server = Server;
+			_port = 6667;
+			Shutdown = false;
+
+			Log.Notice("Network", sLConsole.Network("Text"));
+			Log.Notice("Network", sLConsole.Network("Text20"), _servername);
+			CType = ConnectionType.Normal;
+		}
+
+		public Network(string Server, int Port) : base("default")
+		{
+			_servername = "default";
+			_serverid = 1;
+			_server = Server;
+			_port = Port;
+			Shutdown = false;
+
+			Log.Notice("Network", sLConsole.Network("Text"));
+			Log.Notice("Network", sLConsole.Network("Text20"), _servername);
+			CType = ConnectionType.Normal;
+		}
 
 		public Network(string ServerName, int ServerId, string Server, int Port) : base(ServerName)
 		{

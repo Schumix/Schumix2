@@ -67,12 +67,15 @@ Source: "..\Run\Release\Schumix.Framework.dll"; DestDir: "{app}"; Flags: ignorev
 Source: "..\Run\Release\Schumix.Irc.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.Libraries.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.LuaEngine.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Schumix.PythonEngine.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.Updater.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Server.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\sqlite3.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\System.Data.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\YamlDotNet.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\YamlDotNet.RepresentationModel.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\IronPython.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\IronPython.Modules.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;Addons
 Source: "..\Run\Release\Addons\CalendarAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
 Source: "..\Run\Release\Addons\ChatterBotAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion

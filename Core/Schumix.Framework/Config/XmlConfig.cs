@@ -93,7 +93,7 @@ namespace Schumix.Framework.Config
 			}
 			else
 			{
-				foreach (XmlNode xn in xmlirclist)
+				foreach(XmlNode xn in xmlirclist)
 				{
 					string ServerName = !xn["ServerName"].IsNull() ? xn["ServerName"].InnerText : d_servername;
 					string Server = !xn["Server"].IsNull() ? xn["Server"].InnerText : d_server;
@@ -238,58 +238,58 @@ namespace Schumix.Framework.Config
 						{
 							// <Irc>
 							w.WriteStartElement("Irc");
-							w.WriteElementString("ServerName",      (!xmldoc.SelectSingleNode("Schumix/Irc/ServerName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/ServerName").InnerText : d_servername));
-							w.WriteElementString("Server",          (!xmldoc.SelectSingleNode("Schumix/Irc/Server").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Server").InnerText : d_server));
-							w.WriteElementString("Port",            (!xmldoc.SelectSingleNode("Schumix/Irc/Port").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Port").InnerText : d_port.ToString()));
-							w.WriteElementString("Ssl",             (!xmldoc.SelectSingleNode("Schumix/Irc/Ssl").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Ssl").InnerText : d_ssl.ToString()));
-							w.WriteElementString("NickName",        (!xmldoc.SelectSingleNode("Schumix/Irc/NickName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName").InnerText : d_nickname));
-							w.WriteElementString("NickName2",       (!xmldoc.SelectSingleNode("Schumix/Irc/NickName2").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName2").InnerText : d_nickname2));
-							w.WriteElementString("NickName3",       (!xmldoc.SelectSingleNode("Schumix/Irc/NickName3").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickName3").InnerText : d_nickname3));
-							w.WriteElementString("UserName",        (!xmldoc.SelectSingleNode("Schumix/Irc/UserName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/UserName").InnerText : d_username));
-							w.WriteElementString("UserInfo",        (!xmldoc.SelectSingleNode("Schumix/Irc/UserInfo").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/UserInfo").InnerText : d_userinfo));
+							w.WriteElementString("ServerName",      d_servername);
+							w.WriteElementString("Server",          d_server);
+							w.WriteElementString("Port",            d_port.ToString());
+							w.WriteElementString("Ssl",             d_ssl.ToString());
+							w.WriteElementString("NickName",        d_nickname);
+							w.WriteElementString("NickName2",       d_nickname2);
+							w.WriteElementString("NickName3",       d_nickname3);
+							w.WriteElementString("UserName",        d_username);
+							w.WriteElementString("UserInfo",        d_userinfo);
 
 							// <MasterChannel>
 							w.WriteStartElement("MasterChannel");
-							w.WriteElementString("Name",            (!xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel/Name").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel/Name").InnerText : d_masterchannel));
-							w.WriteElementString("Password",        (!xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/MasterChannel/Password").InnerText : d_masterchannelpassword));
+							w.WriteElementString("Name",            d_masterchannel);
+							w.WriteElementString("Password",        d_masterchannelpassword);
 
 							// </MasterChannel>
 							w.WriteEndElement();
 
-							w.WriteElementString("IgnoreChannels",  (!xmldoc.SelectSingleNode("Schumix/Irc/IgnoreChannels").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/IgnoreChannels").InnerText : d_ignorechannels));
-							w.WriteElementString("IgnoreNames",     (!xmldoc.SelectSingleNode("Schumix/Irc/IgnoreNames").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/IgnoreNames").InnerText : d_ignorenames));
+							w.WriteElementString("IgnoreChannels",  d_ignorechannels);
+							w.WriteElementString("IgnoreNames",     d_ignorenames);
 
 							// <NickServ>
 							w.WriteStartElement("NickServ");
-							w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Enabled").InnerText : d_usenickserv.ToString()));
-							w.WriteElementString("Password",        (!xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/NickServ/Password").InnerText : d_nickservpassword));
+							w.WriteElementString("Enabled",         d_usenickserv.ToString());
+							w.WriteElementString("Password",        d_nickservpassword);
 
 							// </NickServ>
 							w.WriteEndElement();
 
 							// <HostServ>
 							w.WriteStartElement("HostServ");
-							w.WriteElementString("Enabled",         (!xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Enabled").InnerText : d_usehostserv.ToString()));
-							w.WriteElementString("Vhost",           (!xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/HostServ/Vhost").InnerText : d_hostservstatus.ToString()));
+							w.WriteElementString("Enabled",         d_usehostserv.ToString());
+							w.WriteElementString("Vhost",           d_hostservstatus.ToString());
 
 							// </HostServ>
 							w.WriteEndElement();
 
 							// <Wait>
 							w.WriteStartElement("Wait");
-							w.WriteElementString("MessageSending",  (!xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Wait/MessageSending").InnerText : d_messagesending.ToString()));
+							w.WriteElementString("MessageSending",  d_messagesending.ToString());
 
 							// </Wait>
 							w.WriteEndElement();
 
 							// <Command>
 							w.WriteStartElement("Command");
-							w.WriteElementString("Prefix",          (!xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/Command/Prefix").InnerText : d_commandprefix));
+							w.WriteElementString("Prefix",          d_commandprefix);
 
 							// </Command>
 							w.WriteEndElement();
 
-							w.WriteElementString("MessageType",     (!xmldoc.SelectSingleNode("Schumix/Irc/MessageType").IsNull() ? xmldoc.SelectSingleNode("Schumix/Irc/MessageType").InnerText : d_messagetype));
+							w.WriteElementString("MessageType",     d_messagetype);
 
 							// </Irc>
 							w.WriteEndElement();

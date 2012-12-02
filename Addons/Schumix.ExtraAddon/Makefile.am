@@ -160,7 +160,8 @@ FILES = \
 	Config/WolframAlphaConfig.cs \
 	Config/AddonDefaultConfig.cs \
 	Config/AddonXmlConfig.cs \
-	Config/AddonYamlConfig.cs 
+	Config/AddonYamlConfig.cs \
+	Commands/YoutubeTitle.cs 
 
 DATA_FILES = 
 

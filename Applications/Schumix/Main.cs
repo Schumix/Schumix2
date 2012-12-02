@@ -213,6 +213,7 @@ namespace Schumix
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
+				Log.LargeError(sLConsole.Exception("FatalError"));
 				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
 				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
 				Shutdown("Crash.", true);
