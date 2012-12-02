@@ -227,8 +227,7 @@ namespace Schumix.Irc.Commands
 					i = 1;
 					break;
 				case "cachedb":
-					SchumixBase.sCacheDB.UnLoad();
-					SchumixBase.sCacheDB.Load();
+					SchumixBase.sCacheDB.ReLoad();
 					i = 1;
 					break;
 			}
