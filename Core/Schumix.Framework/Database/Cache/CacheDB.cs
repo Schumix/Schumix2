@@ -26,31 +26,61 @@ namespace Schumix.Framework.Database.Cache
 {
 	public sealed class CacheDB
 	{
-		public static readonly Dictionary<string, LocalizedCommand> LocalizedCommandMap = new Dictionary<string, LocalizedCommand>();
+		private readonly Dictionary<string, LocalizedConsoleCommand> _LocalizedConsoleCommandMap = new Dictionary<string, LocalizedConsoleCommand>();
+		private readonly Dictionary<string, LocalizedCommand> _LocalizedCommandMap = new Dictionary<string, LocalizedCommand>();
+
+		public Dictionary<string, LocalizedConsoleCommand> LocalizedConsoleCommandMap()
+		{
+			return _LocalizedConsoleCommandMap;
+		}
+
+		public Dictionary<string, LocalizedCommand> LocalizedCommandMap()
+		{
+			return _LocalizedCommandMap;
+		}
 
 		public CacheDB()
 		{
 			// valami üzenet kéne ide
 		}
 
-		public void Load()
+		public void Load() // megoldani hogy a db neve alapján (inkább _ jel nélkül) lehessen betölteni db-t
 		{
 			// valami üzenet kéne ide
+			LoadLocalizedConsoleCommand();
 			LoadLocalizedCommand();
 		}
 
-		public void UnLoad()
+		public void UnLoad() // megoldani hogy a db neve alapján (inkább _ jel nélkül) lehessen törölni db-t
 		{
 			// valami üzenet kéne ide
 			Clean();
 		}
 
-		public void Clean()
+		public void Clean() // megoldani hogy a db neve alapján (inkább _ jel nélkül) lehessen törölni db-t
 		{
-			LocalizedCommandMap.Clear();
+			_LocalizedConsoleCommandMap.Clear();
+			_LocalizedCommandMap.Clear();
 		}
 
-		public void LoadLocalizedCommand()
+		private void LoadLocalizedConsoleCommand()
+		{
+			var db = SchumixBase.DManager.Query("SELECT Id, Language, Command, Text FROM localized_console_command");
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					var map = new LocalizedConsoleCommand();
+					map.Id = Convert.ToInt32(row["Id"].ToString());
+					map.Language = row["Language"].ToString();
+					map.Command = row["Command"].ToString();
+					map.Text = row["Text"].ToString();
+					_LocalizedConsoleCommandMap.Add(map.Language + map.Command, map);
+				}
+			}
+		}
+
+		private void LoadLocalizedCommand()
 		{
 			var db = SchumixBase.DManager.Query("SELECT Id, Language, Command, Text FROM localized_command");
 			if(!db.IsNull())
@@ -62,7 +92,7 @@ namespace Schumix.Framework.Database.Cache
 					map.Language = row["Language"].ToString();
 					map.Command = row["Command"].ToString();
 					map.Text = row["Text"].ToString();
-					LocalizedCommandMap.Add(map.Language + map.Command, map);
+					_LocalizedCommandMap.Add(map.Language + map.Command, map);
 				}
 			}
 		}

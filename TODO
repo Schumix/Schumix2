@@ -10,6 +10,7 @@ Megírásra váró feladatok:
 
 - Fejleszteni kívánt részek, új funkciók:
 	- CacheDB kifejlesztése.
+	- CacheDB-nél megoldani hogy a channels táblát is lementse magába és mindig frissítse ha változik valami rajta.
 
 	- Sűrgős:
 		- sznap parancs megírása normálisan.

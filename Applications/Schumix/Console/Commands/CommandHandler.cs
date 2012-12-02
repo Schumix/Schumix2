@@ -1176,6 +1176,11 @@ namespace Schumix.Console.Commands
 					sLConsole.Locale = LocalizationConfig.Locale;
 					i = 1;
 					break;
+				case "cachedb":
+					SchumixBase.sCacheDB.UnLoad();
+					SchumixBase.sCacheDB.Load();
+					i = 1;
+					break;
 			}
 
 			foreach(var plugin in sAddonManager.Addons[_servername].Addons)

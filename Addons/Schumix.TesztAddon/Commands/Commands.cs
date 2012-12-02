@@ -135,6 +135,11 @@ namespace Schumix.TesztAddon.Commands
 				sSendMessage.SendChatMessage(sIRCMessage, "asd: {0}", msg);
 				sSendMessage.SendChatMessage(sIRCMessage, "asd2: {0}", msg2);*/
 			}
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "cachedb")
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("xbot"));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandTexts("xbot")[1]);
+			}
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);
 		}

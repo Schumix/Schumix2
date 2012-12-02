@@ -226,6 +226,11 @@ namespace Schumix.Irc.Commands
 					sLConsole.Locale = LocalizationConfig.Locale;
 					i = 1;
 					break;
+				case "cachedb":
+					SchumixBase.sCacheDB.UnLoad();
+					SchumixBase.sCacheDB.Load();
+					i = 1;
+					break;
 			}
 
 			foreach(var plugin in sAddonManager.Addons[sIRCMessage.ServerName].Addons)

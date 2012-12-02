@@ -124,6 +124,7 @@
     <Compile Include="Config\FloodingConfig.cs" />
     <Compile Include="Database\Cache\CacheDB.cs" />
     <Compile Include="Database\Cache\LocalizedCommand.cs" />
+    <Compile Include="Database\Cache\LocalizedConsoleCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
