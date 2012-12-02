@@ -142,6 +142,7 @@ namespace Schumix.Server
 			{
 				if(sListener.Exit)
 				{
+					Log.LargeError(sLConsole.Exception("FatalError"));
 					Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
 					sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
 					Process.GetCurrentProcess().Kill();

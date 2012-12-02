@@ -112,6 +112,24 @@ namespace Schumix.Framework.Localization
 					else
 						return "Failure details: {0}";
 				}
+				case "FatalError":
+				{
+					if(Locale == "huHU")
+						return "VÉGZETES HIBA";
+					else if(Locale == "enUS")
+						return "FATAL ERROR";
+					else
+						return "FATAL ERROR";
+				}
+				case "MajorError":
+				{
+					if(Locale == "huHU")
+						return "SÚLYOS HIBA";
+					else if(Locale == "enUS")
+						return "MAJOR ERROR";
+					else
+						return "MAJOR ERROR";
+				}
 				default:
 					return string.Empty;
 			}

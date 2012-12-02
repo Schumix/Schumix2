@@ -255,6 +255,44 @@ namespace Schumix.Framework
 				}
 				
 				Console.WriteLine("**************************************************");
+				Console.ForegroundColor = ConsoleColor.Gray;
+			}
+		}
+
+		public static void LargeError(string message)
+		{
+			lock(WriteLock)
+			{
+				var sp = message.Split(SchumixBase.NewLine);
+				var lines = new List<string>(50);
+
+				foreach(string s in sp)
+				{
+					if(!string.IsNullOrEmpty(s))
+						lines.Add(s);
+				}
+
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.WriteLine();
+				Console.WriteLine("**************************************************"); // 51
+				
+				foreach(string item in lines)
+				{
+					uint len = (uint)item.Length;
+					uint diff = (48-len);
+					Console.Write("* {0}", item);
+
+					if(diff > 0)
+					{
+						for(uint u = 1; u < diff; ++u)
+							Console.Write(SchumixBase.Space);
+						
+						Console.Write("*\n");
+					}
+				}
+				
+				Console.WriteLine("**************************************************");
+				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}
 
@@ -299,6 +337,14 @@ namespace Schumix.Framework
 		}
 
 		public static void LargeWarning(string message, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				LargeWarning(string.Format(message, args));
+			}
+		}
+
+		public static void LargeError(string message, params object[] args)
 		{
 			lock(WriteLock)
 			{
