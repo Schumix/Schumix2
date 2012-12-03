@@ -81,43 +81,50 @@ namespace Schumix.Framework.Database.Cache
 		{
 			lock(Lock)
 			{
-				if(value == string.Empty)
-					Log.Debug("CacheDB", sLConsole.CacheDB("Text2"));
-				else
-					Log.Debug("CacheDB", sLConsole.CacheDB("Text3"), value);
-
-				switch(value.ToLower())
+				try
 				{
-					case "localizedconsolecommand":
-						LoadLocalizedConsoleCommand();
-						break;
-					case "localizedconsolecommandhelp":
-						LoadLocalizedConsoleCommandHelp();
-						break;
-					case "localizedconsolewarning":
-						LoadLocalizedConsoleWarning();
-						break;
-					case "localizedcommand":
-						LoadLocalizedCommand();
-						break;
-					case "localizedcommandhelp":
-						LoadLocalizedCommandHelp();
-						break;
-					case "localizedwarning":
-						LoadLocalizedWarning();
-						break;
-					case "channels":
-						LoadChannels();
-						break;
-					default:
-						LoadLocalizedConsoleCommand();
-						LoadLocalizedConsoleCommandHelp();
-						LoadLocalizedConsoleWarning();
-						LoadLocalizedCommand();
-						LoadLocalizedCommandHelp();
-						LoadLocalizedWarning();
-						LoadChannels();
-						break;
+					if(value == string.Empty)
+						Log.Debug("CacheDB", sLConsole.CacheDB("Text2"));
+					else
+						Log.Debug("CacheDB", sLConsole.CacheDB("Text3"), value);
+
+					switch(value.ToLower())
+					{
+						case "localizedconsolecommand":
+							LoadLocalizedConsoleCommand();
+							break;
+						case "localizedconsolecommandhelp":
+							LoadLocalizedConsoleCommandHelp();
+							break;
+						case "localizedconsolewarning":
+							LoadLocalizedConsoleWarning();
+							break;
+						case "localizedcommand":
+							LoadLocalizedCommand();
+							break;
+						case "localizedcommandhelp":
+							LoadLocalizedCommandHelp();
+							break;
+						case "localizedwarning":
+							LoadLocalizedWarning();
+							break;
+						case "channels":
+							LoadChannels();
+							break;
+						default:
+							LoadLocalizedConsoleCommand();
+							LoadLocalizedConsoleCommandHelp();
+							LoadLocalizedConsoleWarning();
+							LoadLocalizedCommand();
+							LoadLocalizedCommandHelp();
+							LoadLocalizedWarning();
+							LoadChannels();
+							break;
+					}
+				}
+				catch(Exception e)
+				{
+					Log.Error("CacheDB", sLConsole.Exception("Error"), e.Message);
 				}
 			}
 		}
@@ -143,43 +150,50 @@ namespace Schumix.Framework.Database.Cache
 		{
 			lock(Lock)
 			{
-				if(value == string.Empty)
-					Log.Debug("CacheDB", sLConsole.CacheDB("Text4"));
-				else
-					Log.Debug("CacheDB", sLConsole.CacheDB("Text5"), value);
-
-				switch(value.ToLower())
+				try
 				{
-					case "localizedconsolecommand":
-						_LocalizedConsoleCommandMap.Clear();
-						break;
-					case "localizedconsolecommandhelp":
-						_LocalizedConsoleCommandHelpMap.Clear();
-						break;
-					case "localizedconsolewarning":
-						_LocalizedConsoleWarningMap.Clear();
-						break;
-					case "localizedcommand":
-						_LocalizedCommandMap.Clear();
-						break;
-					case "localizedcommandhelp":
-						_LocalizedCommandHelpMap.Clear();
-						break;
-					case "localizedcommandwarning":
-						_LocalizedWarningMap.Clear();
-						break;
-					case "channels":
-						_ChannelsMap.Clear();
-						break;
-					default:
-						_LocalizedConsoleCommandMap.Clear();
-						_LocalizedConsoleCommandHelpMap.Clear();
-						_LocalizedConsoleWarningMap.Clear();
-						_LocalizedCommandMap.Clear();
-						_LocalizedCommandHelpMap.Clear();
-						_LocalizedWarningMap.Clear();
-						_ChannelsMap.Clear();
-						break;
+					if(value == string.Empty)
+						Log.Debug("CacheDB", sLConsole.CacheDB("Text4"));
+					else
+						Log.Debug("CacheDB", sLConsole.CacheDB("Text5"), value);
+
+					switch(value.ToLower())
+					{
+						case "localizedconsolecommand":
+							_LocalizedConsoleCommandMap.Clear();
+							break;
+						case "localizedconsolecommandhelp":
+							_LocalizedConsoleCommandHelpMap.Clear();
+							break;
+						case "localizedconsolewarning":
+							_LocalizedConsoleWarningMap.Clear();
+							break;
+						case "localizedcommand":
+							_LocalizedCommandMap.Clear();
+							break;
+						case "localizedcommandhelp":
+							_LocalizedCommandHelpMap.Clear();
+							break;
+						case "localizedcommandwarning":
+							_LocalizedWarningMap.Clear();
+							break;
+						case "channels":
+							_ChannelsMap.Clear();
+							break;
+						default:
+							_LocalizedConsoleCommandMap.Clear();
+							_LocalizedConsoleCommandHelpMap.Clear();
+							_LocalizedConsoleWarningMap.Clear();
+							_LocalizedCommandMap.Clear();
+							_LocalizedCommandHelpMap.Clear();
+							_LocalizedWarningMap.Clear();
+							_ChannelsMap.Clear();
+							break;
+					}
+				}
+				catch(Exception e)
+				{
+					Log.Error("CacheDB", sLConsole.Exception("Error"), e.Message);
 				}
 			}
 		}

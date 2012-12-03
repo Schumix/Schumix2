@@ -187,7 +187,6 @@ namespace Schumix.Framework
 			catch(Exception e)
 			{
 				Log.Error("SchumixBase", sLConsole.Exception("Error"), e.Message);
-				Thread.Sleep(100);
 			}
 		}
 
