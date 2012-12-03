@@ -156,13 +156,7 @@ EXTRAS = \
 	schumix.luaengine.pc.in 
 
 REFERENCES =  \
-	System \
-	System.Core \
-	System.Xml.Linq \
-	System.Data.DataSetExtensions \
-	Microsoft.CSharp \
-	System.Data \
-	System.Xml
+	System
 
 DLL_REFERENCES =  \
 	../../Dependencies/KopiLua.dll \
