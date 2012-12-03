@@ -74,7 +74,7 @@ namespace Schumix.Framework.Database.Cache
 
 		public CacheDB()
 		{
-			sLConsole.CacheDB("Text");
+			Log.Notice("CacheDB", sLConsole.CacheDB("Text"));
 		}
 
 		public void Load(string value = "")
