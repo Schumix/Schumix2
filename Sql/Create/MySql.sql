@@ -313,7 +313,7 @@ CREATE TABLE `uptime` (
   `Id` int(100) unsigned NOT NULL auto_increment,
   `Date` text NOT NULL,
   `Uptime` text NOT NULL,
-  `Memory` text NOT NULL,
+  `Memory` varbinary(20) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 

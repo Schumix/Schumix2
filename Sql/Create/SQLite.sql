@@ -278,7 +278,7 @@ CREATE TABLE "uptime" (
 Id INTEGER PRIMARY KEY AUTOINCREMENT,
 Date TEXT,
 Uptime TEXT,
-Memory TEXT
+Memory VARBYTES
 );
 
 -- ----------------------------
