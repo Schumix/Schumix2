@@ -24,3 +24,4 @@ Megírásra váró feladatok:
 	- Dokumentálni az egész kódot.
 	- Többszerveres módnál az irc logolást leválasztani a normál logról(normális módnál maradhatna a Schumix.log-ban [Túlságosan sok mindent kéne megváltoztatni ezért jó ötleteken dolgozom hozzá.]).
 	- calendar-ban a legközelebbi időpont kiíratása ami jön időben. (szöveg kiírása ami fel van jegyezve)
+	- Invite opcode résznél kigondolni hogy automatikus legyen-e a join vagy sem. (vagy éppen engedélyezhető legyen-e konfigból?)

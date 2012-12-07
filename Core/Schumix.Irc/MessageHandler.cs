@@ -451,6 +451,15 @@ namespace Schumix.Irc
 			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text24"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
 		}
 
+		protected void HandleIrcInvite(IRCMessage sIRCMessage)
+		{
+			//if(!sChannelNameList.IsChannelList(sIRCMessage.Args)) // kigondolni hogy ez lehessen automatikus is vagy se
+			//	sSender.Join(sIRCMessage.Args);
+
+			Log.Notice("MessageHandler", sLConsole.MessageHandler("Text27"), sIRCMessage.Nick, sIRCMessage.Args);
+			LogToFile(sIRCMessage.Nick, sIRCMessage.Nick, string.Format(sLConsole.MessageHandler("Text26"), sIRCMessage.Nick, sIRCMessage.Args));
+		}
+
 		protected void HandleNameList(IRCMessage sIRCMessage)
 		{
 			int i = 0;

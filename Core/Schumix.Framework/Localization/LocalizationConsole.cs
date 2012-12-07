@@ -1477,6 +1477,24 @@ namespace Schumix.Framework.Localization
 					else
 						return "[ACTION] {0}";
 				}
+				case "Text26":
+				{
+					if(Language == "huHU")
+						return "[INVITE] {0} meghívott téged a {1} szobába.";
+					else if(Language == "enUS")
+						return "[INVITE] {0} invites you to join {1}";
+					else
+						return "[INVITE] {0} invites you to join {1}";
+				}
+				case "Text27":
+				{
+					if(Language == "huHU")
+						return "{0} meghívott téged a {1} szobába.";
+					else if(Language == "enUS")
+						return "{0} invites you to join {1}";
+					else
+						return "{0} invites you to join {1}";
+				}
 				default:
 					return string.Empty;
 			}
