@@ -507,8 +507,19 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(sChannelInfo.FSelect(IFunctions.Log) && sChannelInfo.FSelect(IChannelFunctions.Log, channel))
+				if((sChannelInfo.FSelect(IFunctions.Log) && sChannelInfo.FSelect(IChannelFunctions.Log, channel)) || !IsChannel(channel))
 				{
+					if(!IsChannel(channel))
+					{
+						if((args.Contains("admin") && args.Contains("access")) ||
+						   (args.Contains("admin") && args.Contains("newpassword")) ||
+						   (args.Contains("notes") && args.Contains("user") && args.Contains("access")) ||
+						   (args.Contains("notes") && args.Contains("user") && args.Contains("register")) ||
+						   (args.Contains("notes") && args.Contains("user") && args.Contains("remove")) ||
+						   (args.Contains("notes") && args.Contains("user") && args.Contains("newpassword")))
+							return;
+					}
+
 					string dir = LogConfig.IrcLogDirectory + "/" + _servername;
 					sUtilities.CreateDirectory(dir);
 					string logdir = sUtilities.DirectoryToSpecial(dir, channel);
