@@ -475,5 +475,10 @@ namespace Schumix.Framework.Extensions
 		{
 			return new YamlScalarNode(Text);
 		}
+
+		public static string TrimMessage(this string value, int number = 150)
+		{
+			return value.Length > number ? value.Substring(0, number) + " ..." : value;
+		}
 	}
 }

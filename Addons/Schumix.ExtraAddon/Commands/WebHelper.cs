@@ -25,6 +25,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon.Commands
@@ -57,7 +58,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(match.Success)
 				{
 					string ttl = match.Groups["ttl"].ToString();
-					return ttl.Length > 140 ? ttl.Substring(0, 140) + "..." : ttl;
+					return ttl.TrimMessage();
 				}
 
 				return string.Empty;
