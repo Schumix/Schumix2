@@ -1675,6 +1675,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Server's name: {0}";
 				}
+				case "Text21":
+				{
+					if(Locale == "huHU")
+						return "Kapcsolódás típusa: {0}";
+					else if(Locale == "enUS")
+						return "Connection type: {0}";
+					else
+						return "Connection type: {0}";
+				}
 				default:
 					return string.Empty;
 			}

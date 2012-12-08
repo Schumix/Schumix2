@@ -359,6 +359,8 @@ namespace Schumix.Irc
 			if(nick)
 				sNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
 
+			Log.Notice("Network", sLConsole.Network("Text21"), CType.ToString());
+
 			try
 			{
 				client = new TcpClient();
