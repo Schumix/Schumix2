@@ -440,8 +440,14 @@ namespace Schumix.Irc
 
 		protected void HandleIrcMode(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Info.Length < 5)
+			if(sIRCMessage.Info.Length < 4)
 				return;
+
+			if(!sNickInfo.IsIdentify && sIRCMessage.Nick == "NickServ" && sIRCMessage.Channel.ToLower() == sNickInfo.NickStorage.ToLower() && sIRCMessage.Args == "+r")
+			{
+				sNickInfo.ChangeIdentifyStatus(true);
+				Log.Success("NickServ", sLConsole.NickServ("Text4"));
+			}
 
 			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text23"), sIRCMessage.Info.SplitToString(3, SchumixBase.Space));
 		}
