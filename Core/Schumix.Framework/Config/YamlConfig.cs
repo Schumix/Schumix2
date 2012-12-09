@@ -323,7 +323,7 @@ namespace Schumix.Framework.Config
 			string Ignore = (!nodes.IsNull() && nodes.ContainsKey("Ignore")) ? nodes["Ignore".ToYamlNode()].ToString() : d_addonignore;
 			string Directory = (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_addondirectory;
 
-			new AddonsConfig(Enabled, Ignore, Directory);
+			new AddonsConfig(Enabled, Ignore, sUtilities.GetSpecialDirectory(Directory));
 		}
 
 		private void ScriptsMap(IDictionary<YamlNode, YamlNode> nodes)

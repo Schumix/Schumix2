@@ -75,13 +75,7 @@ namespace Schumix.Framework.Addon
 			{
 				string file = string.Empty;
 				string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);
-
-				DirectoryInfo dir;
-				if(sUtilities.IsSpecialDirectory(directory))
-					dir = new DirectoryInfo(sUtilities.GetSpecialDirectory(directory));
-				else
-					dir = new DirectoryInfo(Path.Combine(Environment.CurrentDirectory, directory));
-
+				var dir = new DirectoryInfo(directory);
 				Log.Notice("AddonManager", sLConsole.AddonManager("Text"), dir.FullName);
 
 				foreach(var dll in dir.GetFiles("*.dll").AsParallel())

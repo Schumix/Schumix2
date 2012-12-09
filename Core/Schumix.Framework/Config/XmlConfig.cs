@@ -151,7 +151,7 @@ namespace Schumix.Framework.Config
 			string Ignore = !xmldoc.SelectSingleNode("Schumix/Addons/Ignore").IsNull() ? xmldoc.SelectSingleNode("Schumix/Addons/Ignore").InnerText : d_addonignore;
 			string Directory = !xmldoc.SelectSingleNode("Schumix/Addons/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Addons/Directory").InnerText : d_addondirectory;
 
-			new AddonsConfig(Enabled, Ignore, Directory);
+			new AddonsConfig(Enabled, Ignore, sUtilities.GetSpecialDirectory(Directory));
 
 			bool Lua = !xmldoc.SelectSingleNode("Schumix/Scripts/Lua").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Scripts/Lua").InnerText) : d_scriptsluaenabled;
 			bool Python = !xmldoc.SelectSingleNode("Schumix/Scripts/Python").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Scripts/Python").InnerText) : d_scriptspythonenabled;
