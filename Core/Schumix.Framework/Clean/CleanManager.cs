@@ -33,13 +33,43 @@ namespace Schumix.Framework.Clean
 
 		public void Initialize()
 		{
+			int cleanerror = 0;
+
 			if(_server)
 			{
+				if(true)
+				{
+					var config = new CleanConfig();
+					if(!config.IsClean())
+						cleanerror++;
+				}
 			}
 			else
 			{
+				if(true)
+				{
+					var config = new CleanConfig();
+					if(!config.IsClean())
+						cleanerror++;
+				}
+
+				if(true)
+				{
+					var database = new CleanDatabase();
+					if(!database.IsClean())
+						cleanerror++;
+				}
 			}
-			// szöveg hogy befejezte
+
+			if(cleanerror > 0)
+				Log.Warning("CleanManager", "Néhány helyen takarítás közben hiba lépett fel!");
+
+			if((true || true) && cleanerror == 0)
+				Log.Notice("CleanManager", "Sikeresen elkészültek a takarítások.");
+			else if(cleanerror == 0)
+				Log.Warning("CleanManager", "Nincs bekapcsolva a takarítás!");
+
+			// szöveg hogy befejezte (ha nincs mit takarítani mert mindegyik beállítás ki van kapcsolva akkor azt is írja ki [ főleg hogy nem történt takarítás])
 		}
 	}
 }

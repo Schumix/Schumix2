@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using Schumix.API;
 using Schumix.API.Functions;
 using Schumix.Framework.Addon;
+using Schumix.Framework.Clean;
 using Schumix.Framework.Client;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
@@ -43,6 +44,7 @@ namespace Schumix.Framework
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly object WriteLock = new object();
 		private static readonly Guid _guid = Guid.NewGuid();
+		public static CleanManager sCleanManager { get; private set; }
 		public static DatabaseManager DManager { get; private set; }
 		public static CacheDB sCacheDB { get; private set; }
 		public static Timer timer { get; private set; }
@@ -176,6 +178,10 @@ namespace Schumix.Framework
 					else
 						Log.Error("SchumixBase", sLConsole.ChannelInfo("Text11"));
 				}
+
+				//Log.Debug("SchumixBase", sLConsole.SchumixBase("Text8")); // szokásos ami ide szokott jönni szöveg
+				sCleanManager = new CleanManager();
+				sCleanManager.Initialize();
 
 				if(AddonsConfig.Enabled)
 				{

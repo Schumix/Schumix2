@@ -18,14 +18,50 @@
  */
 
 using System;
+using System.IO;
+using System.Linq;
+using Schumix.Framework.Config;
 
 namespace Schumix.Framework.Clean
 {
 	public sealed class CleanConfig
 	{
+		private bool _clean;
+		public bool IsClean() { return _clean; }
+
 		public CleanConfig()
 		{
-			// szöveg hogy elindult
+			try
+			{
+				// szöveg hogy elindult
+				CleanOldConfigFile();
+			}
+			catch(Exception e)
+			{
+				// majd hiba üzenet
+				_clean = false;
+			}
+
+			_clean = true;
+		}
+
+		private void CleanOldConfigFile()
+		{
+			// Régi konfig fájlok takarítása elindult.
+			var dir = new DirectoryInfo(SchumixConfig.ConfigDirectory);
+			Log.Notice("CleanConfig", "Konfig mapa elérhetőse: {0}", dir.FullName);
+
+			foreach(var yml in dir.GetFiles("_*.yml").AsParallel())
+			{
+				Console.WriteLine(yml.Name);
+			}
+
+			foreach(var xml in dir.GetFiles("_*.xml").AsParallel())
+			{
+				Console.WriteLine(xml.Name);
+			}
+
+			// Régi konfig fájlok törölve.
 		}
 	}
 }

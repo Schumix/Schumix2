@@ -23,6 +23,9 @@ namespace Schumix.Framework.Clean
 {
 	public sealed class CleanDatabase
 	{
+		private bool _clean;
+		public bool IsClean() { return _clean; }
+
 		public CleanDatabase()
 		{
 			// szöveg hogy elindult
