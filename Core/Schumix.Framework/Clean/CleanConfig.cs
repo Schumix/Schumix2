@@ -53,12 +53,14 @@ namespace Schumix.Framework.Clean
 
 			foreach(var yml in dir.GetFiles("_*.yml").AsParallel())
 			{
-				Console.WriteLine(yml.Name);
+				File.Delete(yml.FullName);
+				Log.Debug("CleanConfig", "Eezn régi konfig fájl törölve lett: {0}", yml.Name);
 			}
 
 			foreach(var xml in dir.GetFiles("_*.xml").AsParallel())
 			{
-				Console.WriteLine(xml.Name);
+				File.Delete(xml.FullName);
+				Log.Debug("CleanConfig", "Eezn régi konfig fájl törölve lett: {0}", xml.Name);
 			}
 
 			// Régi konfig fájlok törölve.
