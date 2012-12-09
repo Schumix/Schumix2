@@ -130,6 +130,9 @@
     <Compile Include="Database\Cache\Channels.cs" />
     <Compile Include="Database\Cache\LocalizedCommandHelp.cs" />
     <Compile Include="Database\Cache\LocalizedWarning.cs" />
+    <Compile Include="Clean\CleanManager.cs" />
+    <Compile Include="Clean\CleanConfig.cs" />
+    <Compile Include="Clean\CleanDatabase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -153,5 +156,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\Cache\" />
+    <Folder Include="Clean\" />
   </ItemGroup>
 </Project>
