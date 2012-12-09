@@ -450,7 +450,7 @@ namespace Schumix.Irc
 			if(sChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 			{
 				if(ReconnectNumber > 5)
-					_timeropcode.Interval = 300*1000;
+					_timeropcode.Interval = 5*60*1000;
 
 				if((DateTime.Now - LastOpcode).Minutes >= 1)
 				{
@@ -496,7 +496,7 @@ namespace Schumix.Irc
 						if(sChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 						{
 							if(ReconnectNumber > 5)
-								_timeropcode.Interval = 300*1000;
+								_timeropcode.Interval = 5*60*1000;
 			
 							if(Connected)
 							{
@@ -525,7 +525,7 @@ namespace Schumix.Irc
 					if(sChannelInfo.FSelect(IFunctions.Reconnect))
 					{
 						if(ReconnectNumber > 5)
-							_timeropcode.Interval = 300*1000;
+							_timeropcode.Interval = 5*60*1000;
 
 						if(Connected)
 						{
