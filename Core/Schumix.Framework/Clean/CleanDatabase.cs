@@ -18,11 +18,13 @@
  */
 
 using System;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Clean
 {
 	public sealed class CleanDatabase
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private bool _clean;
 		public bool IsClean() { return _clean; }
 
@@ -34,7 +36,7 @@ namespace Schumix.Framework.Clean
 			}
 			catch(Exception e)
 			{
-				// majd hiba üzenet
+				Log.Error("CleanDatabase", sLConsole.Exception("Error"), e.Message);
 				_clean = false;
 			}
 
