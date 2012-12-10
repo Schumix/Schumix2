@@ -68,8 +68,6 @@ namespace Schumix.Framework.Clean
 				Log.Notice("CleanManager", "Sikeresen elkészültek a takarítások.");
 			else if(cleanerror == 0)
 				Log.Warning("CleanManager", "Nincs bekapcsolva a takarítás!");
-
-			// szöveg hogy befejezte (ha nincs mit takarítani mert mindegyik beállítás ki van kapcsolva akkor azt is írja ki [ főleg hogy nem történt takarítás])
 		}
 	}
 }

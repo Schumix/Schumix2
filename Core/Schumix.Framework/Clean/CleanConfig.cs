@@ -21,11 +21,13 @@ using System;
 using System.IO;
 using System.Linq;
 using Schumix.Framework.Config;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Clean
 {
 	public sealed class CleanConfig
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private bool _clean;
 		public bool IsClean() { return _clean; }
 
@@ -33,12 +35,12 @@ namespace Schumix.Framework.Clean
 		{
 			try
 			{
-				// szöveg hogy elindult
+				Log.Notice("CleanConfig", "CleanConfig sikeresen elindult.");
 				CleanOldConfigFile();
 			}
 			catch(Exception e)
 			{
-				// majd hiba üzenet
+				Log.Error("CleanConfig", sLConsole.Exception("Error"), e.Message);
 				_clean = false;
 			}
 
@@ -47,23 +49,29 @@ namespace Schumix.Framework.Clean
 
 		private void CleanOldConfigFile()
 		{
-			// Régi konfig fájlok takarítása elindult.
+			Log.Notice("CleanConfig", "Régi konfig fájlok keresése elindult.");
 			var dir = new DirectoryInfo(SchumixConfig.ConfigDirectory);
 			Log.Notice("CleanConfig", "Konfig mapa elérhetőse: {0}", dir.FullName);
+			int i = 0;
 
 			foreach(var yml in dir.GetFiles("_*.yml").AsParallel())
 			{
+				i++;
 				File.Delete(yml.FullName);
 				Log.Debug("CleanConfig", "Eezn régi konfig fájl törölve lett: {0}", yml.Name);
 			}
 
 			foreach(var xml in dir.GetFiles("_*.xml").AsParallel())
 			{
+				i++;
 				File.Delete(xml.FullName);
-				Log.Debug("CleanConfig", "Eezn régi konfig fájl törölve lett: {0}", xml.Name);
+				Log.Debug("CleanConfig", "Ezen régi konfig fájl törölve lett: {0}", xml.Name);
 			}
 
-			// Régi konfig fájlok törölve.
+			if(i > 0)
+				Log.Notice("CleanConfig", "Régi konfig fájlok sikeresen törölve.");
+			else
+				Log.Warning("CleanConfig", "Nincsenek régi konfig fájlok!");
 		}
 	}
 }

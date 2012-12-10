@@ -28,7 +28,17 @@ namespace Schumix.Framework.Clean
 
 		public CleanDatabase()
 		{
-			// szöveg hogy elindult
+			try
+			{
+				// szöveg hogy elindult
+			}
+			catch(Exception e)
+			{
+				// majd hiba üzenet
+				_clean = false;
+			}
+
+			_clean = true;
 		}
 	}
 }
