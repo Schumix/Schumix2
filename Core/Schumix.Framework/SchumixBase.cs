@@ -181,7 +181,7 @@ namespace Schumix.Framework
 
 				//Log.Debug("SchumixBase", sLConsole.SchumixBase("Text8")); // szokásos ami ide szokott jönni szöveg
 				sCleanManager = new CleanManager();
-				sCleanManager.Initialize();
+				sCleanManager.Initialize(); // elhelyezni ezeket a serverbe is.
 
 				if(AddonsConfig.Enabled)
 				{

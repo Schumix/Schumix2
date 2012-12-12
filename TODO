@@ -24,3 +24,11 @@ Megírásra váró feladatok:
 	- Dokumentálni az egész kódot.
 	- Többszerveres módnál az irc logolást leválasztani a normál logról(normális módnál maradhatna a Schumix.log-ban [Túlságosan sok mindent kéne megváltoztatni ezért jó ötleteken dolgozom hozzá.]).
 	- calendar-ban a legközelebbi időpont kiíratása ami jön időben. (szöveg kiírása ami fel van jegyezve)
+<Megaxxx> $calendar 16:00 Emlékeztetni Petit az sql-es cuccomra!!!
+<Schumix> Lejárt dátumot/órát adtál meg!
+<Megaxxx> anyád
+<Peti> HÁ!
+<Peti> amúgy megcsinálhatnád
+<Peti> hogy akkor a következő napra gondol :D -> berakva de kellene egy szöveg majd hogy másnapra lett feljegyezve!!!!!!!
+	INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "Calendar5", "Az üzenet a holnapi napra lett feljegyezve!");
+SQL: CLEAN: <16:11:26> "Peti": GROUP BY  `táblaneve`.`ServerId`

@@ -33,6 +33,7 @@ namespace Schumix.Framework.Clean
 			try
 			{
 				// szöveg hogy elindult
+				CleanCoreTable();
 			}
 			catch(Exception e)
 			{
@@ -41,6 +42,16 @@ namespace Schumix.Framework.Clean
 			}
 
 			_clean = true;
+		}
+
+		public void CleanTable(string table)
+		{
+			// ez a függvény fogja ellátni az addonokat a törlés lehetőségével
+		}
+
+		private void CleanCoreTable()
+		{
+			// ide jön minden tábla ami a magban van
 		}
 	}
 }
