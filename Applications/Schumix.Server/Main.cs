@@ -27,6 +27,7 @@ using System.Diagnostics;
 using System.Globalization;
 using Schumix.Updater;
 using Schumix.Framework;
+using Schumix.Framework.Clean;
 using Schumix.Framework.Client;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -44,6 +45,7 @@ namespace Schumix.Server
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private static readonly Windows sWindows = Singleton<Windows>.Instance;
 		private static readonly Linux sLinux = Singleton<Linux>.Instance;
+		public static CleanManager sCleanManager { get; private set; }
 		public static ServerListener sListener { get; private set; }
 
 		/// <summary>
@@ -130,6 +132,10 @@ namespace Schumix.Server
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
+			Log.Debug("Main", sLConsole.MainText("StartText5"));
+			sCleanManager = new CleanManager(true);
+			sCleanManager.Initialize();
+
 			new Update(Server.Config.ServerConfig.ConfigDirectory);
 			sUtilities.CleanHomeDirectory(true);
 

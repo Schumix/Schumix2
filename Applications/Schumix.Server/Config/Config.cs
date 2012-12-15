@@ -66,6 +66,7 @@ namespace Schumix.Server.Config
 					}
 
 					new ServerConfig(configdir, _configfile);
+					new Schumix.Framework.Config.SchumixConfig(configdir, _configfile);
 				}
 			}
 			catch(Exception e)

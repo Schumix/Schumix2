@@ -177,9 +177,9 @@ namespace Schumix.Framework
 						Log.Error("SchumixBase", sLConsole.ChannelInfo("Text11"));
 				}
 
-				//Log.Debug("SchumixBase", sLConsole.SchumixBase("Text8")); // szokásos ami ide szokott jönni szöveg
+				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text9"));
 				sCleanManager = new CleanManager();
-				sCleanManager.Initialize(); // elhelyezni ezeket a serverbe is.
+				sCleanManager.Initialize();
 
 				if(AddonsConfig.Enabled)
 				{

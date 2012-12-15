@@ -94,6 +94,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "An unhandled exception has been thrown. ({0})";
 				}
+				case "StartText5":
+				{
+					if(Locale == "huHU")
+						return "CleanManager indul...";
+					else if(Locale == "enUS")
+						return "CleanManager is starting...";
+					else
+						return "CleanManager is starting...";
+				}
 				default:
 					return string.Empty;
 			}
@@ -539,6 +548,15 @@ namespace Schumix.Framework.Localization
 						return "CacheDB is starting...";
 					else
 						return "CacheDB is starting...";
+				}
+				case "Text9":
+				{
+					if(Locale == "huHU")
+						return "CleanManager indul...";
+					else if(Locale == "enUS")
+						return "CleanManager is starting...";
+					else
+						return "CleanManager is starting...";
 				}
 				default:
 					return string.Empty;

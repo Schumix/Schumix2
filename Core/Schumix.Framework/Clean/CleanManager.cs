@@ -40,6 +40,7 @@ namespace Schumix.Framework.Clean
 			{
 				if(true)
 				{
+					Log.Debug("CleanConfig", "CleanConfig indul...");
 					var config = new CleanConfig();
 					if(!config.IsClean())
 						cleanerror++;
@@ -49,6 +50,7 @@ namespace Schumix.Framework.Clean
 			{
 				if(true)
 				{
+					Log.Debug("CleanConfig", "CleanConfig indul...");
 					var config = new CleanConfig();
 					if(!config.IsClean())
 						cleanerror++;
@@ -56,6 +58,7 @@ namespace Schumix.Framework.Clean
 
 				if(true)
 				{
+					Log.Debug("CleanDatabase", "CleanDatabase indul...");
 					CDatabase = new CleanDatabase();
 					if(!CDatabase.IsClean())
 						cleanerror++;
