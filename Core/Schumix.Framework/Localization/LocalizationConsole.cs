@@ -81,9 +81,9 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Rendszer indul...";
 					else if(Locale == "enUS")
-						return "System starting...";
+						return "System is starting...";
 					else
-						return "System starting...";
+						return "System is starting...";
 				}
 				case "StartText4":
 				{
@@ -1030,6 +1030,60 @@ namespace Schumix.Framework.Localization
 						return "Loaded the Clean settings.";
 					else
 						return "Loaded the Clean settings.";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "CleanConfig sikeresen elindult.";
+					else if(Locale == "enUS")
+						return "Successfully started the CleanConfig.";
+					else
+						return "Successfully started the CleanConfig.";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Régi konfig fájlok keresése elindult.";
+					else if(Locale == "enUS")
+						return "Searching for old config files have been started.";
+					else
+						return "Searching for old config files have been started.";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "Konfig mapa elérhetősége: {0}";
+					else if(Locale == "enUS")
+						return "Config folder's path: {0}";
+					else
+						return "Config folder's path: {0}";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "Régi konfig fájl törölve lett: {0}";
+					else if(Locale == "enUS")
+						return "Old config file has been deleted: {0}";
+					else
+						return "Old config file has been deleted: {0}";
+				}
+				case "Text6":
+				{
+					if(Locale == "huHU")
+						return "Régi konfig fájlok sikeresen törölve.";
+					else if(Locale == "enUS")
+						return "Old config files have been deleted successfully.";
+					else
+						return "Old config files have been deleted successfully.";
+				}
+				case "Text7":
+				{
+					if(Locale == "huHU")
+						return "Nincsenek régi konfig fájlok!";
+					else if(Locale == "enUS")
+						return "There is not any old config files!";
+					else
+						return "There is not any old config files!";
 				}
 				default:
 					return string.Empty;
@@ -2823,6 +2877,132 @@ namespace Schumix.Framework.Localization
 						return "Table {0} deleted from the core.";
 					else
 						return "Table {0} deleted from the core.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string CleanManager(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "CleanManager sikeresen elindult.";
+					else if(Locale == "enUS")
+						return "Successfully started the CleanManager.";
+					else
+						return "Successfully started the CleanManager.";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "CleanConfig indul...";
+					else if(Locale == "enUS")
+						return "CleanConfig is starting...";
+					else
+						return "CleanConfig is starting...";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "CleanDatabase indul...";
+					else if(Locale == "enUS")
+						return "CleanDatabase is starting...";
+					else
+						return "CleanDatabase is starting...";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "Néhány helyen takarítás közben hiba lépett fel!";
+					else if(Locale == "enUS")
+						return "Some problems occured during cleanup in some place!";
+					else
+						return "Some problems occured during cleanup in some place!";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "Sikeresen elkészültek a takarítások.";
+					else if(Locale == "enUS")
+						return "Cleanups have been finished.";
+					else
+						return "Cleanups have been finished.";
+				}
+				case "Text6":
+				{
+					if(Locale == "huHU")
+						return "Nincs bekapcsolva a takarítás!";
+					else if(Locale == "enUS")
+						return "Cleanup is not turned on!";
+					else
+						return "Cleanup is not turned on!";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
+		public string CleanDatabase(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "CleanDatabase sikeresen elindult.";
+					else if(Locale == "enUS")
+						return "Successfully started the CleanDatabase.";
+					else
+						return "Successfully started the CleanDatabase.";
+				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "A {0} tábla takarítása megkezdődött.";
+					else if(Locale == "enUS")
+						return "The {0} table's cleanup have been started.";
+					else
+						return "The {0} table's cleanup have been started.";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Régi szervernév ({0}) törölve lett a {1} táblából.";
+					else if(Locale == "enUS")
+						return "The old servername ({0}) has been deleted from the table {1}.";
+					else
+						return "The old servername ({0}) has been deleted from the table {1}.";
+				}
+				case "Text4":
+				{
+					if(Locale == "huHU")
+						return "A {0} tábla takarítása kész.";
+					else if(Locale == "enUS")
+						return "The table {0} is ready for cleanup.";
+					else
+						return "The table {0} is ready for cleanup.";
+				}
+				case "Text5":
+				{
+					if(Locale == "huHU")
+						return "A magban lévő táblák takarítása indul.";
+					else if(Locale == "enUS")
+						return "The core tables' cleanup is starting.";
+					else
+						return "The core tables' cleanup is starting.";
+				}
+				case "Text6":
+				{
+					if(Locale == "huHU")
+						return "A magban lévő táblák takarítása kész.";
+					else if(Locale == "enUS")
+						return "The core tables' cleanup have been finished.";
+					else
+						return "The core tables' cleanup have been finished.";
 				}
 				default:
 					return string.Empty;

@@ -18,17 +18,19 @@
  */
 
 using System;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Clean
 {
 	public sealed class CleanManager
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private bool _server = false;
 		public CleanDatabase CDatabase { get; private set; }
 
 		public CleanManager(bool server = false)
 		{
-			Log.Notice("CleanManager", "CleanManager sikeresen elindult.");
+			Log.Notice("CleanManager", sLConsole.CleanManager("Text"));
 			_server = server;
 		}
 
@@ -40,7 +42,7 @@ namespace Schumix.Framework.Clean
 			{
 				if(true)
 				{
-					Log.Debug("CleanManager", "CleanConfig indul...");
+					Log.Debug("CleanManager", sLConsole.CleanManager("Text2"));
 					var config = new CleanConfig();
 					if(!config.IsClean())
 						cleanerror++;
@@ -50,7 +52,7 @@ namespace Schumix.Framework.Clean
 			{
 				if(true)
 				{
-					Log.Debug("CleanManager", "CleanConfig indul...");
+					Log.Debug("CleanManager", sLConsole.CleanManager("Text2"));
 					var config = new CleanConfig();
 					if(!config.IsClean())
 						cleanerror++;
@@ -58,7 +60,7 @@ namespace Schumix.Framework.Clean
 
 				if(true)
 				{
-					Log.Debug("CleanManager", "CleanDatabase indul...");
+					Log.Debug("CleanManager", sLConsole.CleanManager("Text3"));
 					CDatabase = new CleanDatabase();
 					if(!CDatabase.IsClean())
 						cleanerror++;
@@ -66,12 +68,12 @@ namespace Schumix.Framework.Clean
 			}
 
 			if(cleanerror > 0)
-				Log.Warning("CleanManager", "Néhány helyen takarítás közben hiba lépett fel!");
+				Log.Warning("CleanManager", sLConsole.CleanManager("Text4"));
 
 			if((Schumix.Framework.Config.CleanConfig.Config || Schumix.Framework.Config.CleanConfig.Database) && cleanerror == 0)
-				Log.Notice("CleanManager", "Sikeresen elkészültek a takarítások.");
+				Log.Notice("CleanManager", sLConsole.CleanManager("Text5"));
 			else if(cleanerror == 0)
-				Log.Warning("CleanManager", "Nincs bekapcsolva a takarítás!");
+				Log.Warning("CleanManager", sLConsole.CleanManager("Text6"));
 		}
 	}
 }

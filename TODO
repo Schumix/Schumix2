@@ -15,7 +15,6 @@ Megírásra váró feladatok:
 		- Összes addonra alkalmazni a fejlesztéseket.
 	- Sűrgős:
 		- sznap parancs megírása normálisan.
-		- Clean részek magyar szövegét lefordítani angolra.
 		- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
 		- Játék addon nyelvezetét átírni angolra is.
 		- whois parancsnál megoldani a visszajelzést ha valaki fent van irc-n de nincs fent egy csatornán se
@@ -31,3 +30,4 @@ Megírásra váró feladatok:
 <Peti> amúgy megcsinálhatnád
 <Peti> hogy akkor a következő napra gondol :D -> berakva de kellene egy szöveg majd hogy másnapra lett feljegyezve!!!!!!!
 	INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "Calendar5", "Az üzenet a holnapi napra lett feljegyezve!");
+http://pastebin.com/vRSLeV5b

@@ -36,7 +36,7 @@ namespace Schumix.Framework.Clean
 		{
 			try
 			{
-				Log.Notice("CleanDatabase", "CleanDatabase sikeresen elindult.");
+				Log.Notice("CleanDatabase", sLConsole.CleanDatabase("Text"));
 				if(!Schumix.Framework.Config.CleanConfig.Database)
 				{
 					_clean = true;
@@ -56,7 +56,7 @@ namespace Schumix.Framework.Clean
 
 		public void CleanTable(string table)
 		{
-			Log.Debug("CleanDatabase", "A {0} tábla takarítása megkezdődött.", table);
+			Log.Debug("CleanDatabase", sLConsole.CleanDatabase("Text2"), table);
 
 			var db = SchumixBase.DManager.Query("SELECT ServerName FROM {0} GROUP BY ServerName", table);
 			if(!db.IsNull())
@@ -68,17 +68,17 @@ namespace Schumix.Framework.Clean
 					if(!IRCConfig.List.ContainsKey(name))
 					{
 						SchumixBase.DManager.Delete(table, string.Format("ServerName = '{0}'", name));
-						Log.Debug("CleanDatabase", "Régi szervernév ({0}) törölve lett a {1} táblából.", name, table);
+						Log.Debug("CleanDatabase", sLConsole.CleanDatabase("Text3"), name, table);
 					}
 				}
 			}
 
-			Log.Debug("CleanDatabase", "A {0} tábla takarítása kész.", table);
+			Log.Debug("CleanDatabase", sLConsole.CleanDatabase("Text4"), table);
 		}
 
 		private void CleanCoreTable()
 		{
-			Log.Notice("CleanDatabase", "A magban lévő táblák takarítása indul.");
+			Log.Notice("CleanDatabase", sLConsole.CleanDatabase("Text5"));
 			CleanTable("channels");
 			CleanTable("schumix");
 			CleanTable("hlmessage");
@@ -88,7 +88,7 @@ namespace Schumix.Framework.Clean
 			CleanTable("ignore_commands");
 			CleanTable("ignore_irc_commands");
 			CleanTable("ignore_nicks");
-			Log.Notice("CleanDatabase", "A magban lévő táblák takarítása kész.");
+			Log.Notice("CleanDatabase", sLConsole.CleanDatabase("Text6"));
 		}
 	}
 }
