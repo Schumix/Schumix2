@@ -78,6 +78,8 @@ namespace Schumix.Framework.Config
 		protected const int d_shutdownmaxmemory        = 100;
 		protected const int d_floodingseconds          = 4;
 		protected const int d_floodingnumberofcommands = 2;
+		protected const bool d_cleanconfig             = false;
+		protected const bool d_cleandatabase           = false;
 		protected bool errors                          = false;
 	}
 }

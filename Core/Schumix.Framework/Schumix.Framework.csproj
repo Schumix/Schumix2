@@ -133,6 +133,7 @@
     <Compile Include="Clean\CleanManager.cs" />
     <Compile Include="Clean\CleanConfig.cs" />
     <Compile Include="Clean\CleanDatabase.cs" />
+    <Compile Include="Config\CleanConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

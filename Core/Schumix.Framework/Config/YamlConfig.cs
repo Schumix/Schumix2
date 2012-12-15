@@ -76,6 +76,7 @@ namespace Schumix.Framework.Config
 			UpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : NullYMap);
 			ShutdownMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Shutdown")) ? ((YamlMappingNode)schumixmap["Shutdown".ToYamlNode()]).Children : NullYMap);
 			FloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap);
+			CleanMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Clean")) ? ((YamlMappingNode)schumixmap["Clean".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("YamlConfig", sLConsole.Config("Text4"));
 			Console.WriteLine();
@@ -133,6 +134,7 @@ namespace Schumix.Framework.Config
 						nodes2.Add("Update",       CreateUpdateMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Update")) ? ((YamlMappingNode)schumixmap["Update".ToYamlNode()]).Children : NullYMap));
 						nodes2.Add("Shutdown",     CreateShutdownMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Shutdown")) ? ((YamlMappingNode)schumixmap["Shutdown".ToYamlNode()]).Children : NullYMap));
 						nodes2.Add("Flooding",     CreateFloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Clean",        CreateCleanMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Clean")) ? ((YamlMappingNode)schumixmap["Clean".ToYamlNode()]).Children : NullYMap));
 						nodes.Add("Schumix", nodes2);
 
 						sUtilities.CreateFile(filename);
@@ -373,6 +375,13 @@ namespace Schumix.Framework.Config
 			new FloodingConfig(Seconds, NumberOfCommands);
 		}
 
+		private void CleanMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			bool Config = (!nodes.IsNull() && nodes.ContainsKey("Config")) ? Convert.ToBoolean(nodes["Config".ToYamlNode()].ToString()) : d_cleanconfig;
+			bool Database = (!nodes.IsNull() && nodes.ContainsKey("Database")) ? Convert.ToBoolean(nodes["Database".ToYamlNode()].ToString()) : d_cleandatabase;
+			new CleanConfig(Config, Database);
+		}
+
 		private YamlMappingNode CreateServerMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
@@ -595,6 +604,14 @@ namespace Schumix.Framework.Config
 			var map = new YamlMappingNode();
 			map.Add("Seconds",          (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? nodes["Seconds".ToYamlNode()].ToString() : d_floodingseconds.ToString());
 			map.Add("NumberOfCommands", (!nodes.IsNull() && nodes.ContainsKey("NumberOfCommands")) ? nodes["NumberOfCommands".ToYamlNode()].ToString() : d_floodingnumberofcommands.ToString());
+			return map;
+		}
+
+		private YamlMappingNode CreateCleanMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			var map = new YamlMappingNode();
+			map.Add("Config",   (!nodes.IsNull() && nodes.ContainsKey("Config")) ? nodes["Config".ToYamlNode()].ToString() : d_cleanconfig.ToString());
+			map.Add("Database", (!nodes.IsNull() && nodes.ContainsKey("Database")) ? nodes["Database".ToYamlNode()].ToString() : d_cleandatabase.ToString());
 			return map;
 		}
 	}

@@ -28,7 +28,7 @@ namespace Schumix.Framework.Clean
 
 		public CleanManager(bool server = false)
 		{
-			// szöveg hogy elindult
+			Log.Notice("CleanManager", "CleanManager sikeresen elindult.");
 			_server = server;
 		}
 
@@ -40,7 +40,7 @@ namespace Schumix.Framework.Clean
 			{
 				if(true)
 				{
-					Log.Debug("CleanConfig", "CleanConfig indul...");
+					Log.Debug("CleanManager", "CleanConfig indul...");
 					var config = new CleanConfig();
 					if(!config.IsClean())
 						cleanerror++;
@@ -50,7 +50,7 @@ namespace Schumix.Framework.Clean
 			{
 				if(true)
 				{
-					Log.Debug("CleanConfig", "CleanConfig indul...");
+					Log.Debug("CleanManager", "CleanConfig indul...");
 					var config = new CleanConfig();
 					if(!config.IsClean())
 						cleanerror++;
@@ -58,7 +58,7 @@ namespace Schumix.Framework.Clean
 
 				if(true)
 				{
-					Log.Debug("CleanDatabase", "CleanDatabase indul...");
+					Log.Debug("CleanManager", "CleanDatabase indul...");
 					CDatabase = new CleanDatabase();
 					if(!CDatabase.IsClean())
 						cleanerror++;
@@ -68,7 +68,7 @@ namespace Schumix.Framework.Clean
 			if(cleanerror > 0)
 				Log.Warning("CleanManager", "Néhány helyen takarítás közben hiba lépett fel!");
 
-			if((true || true) && cleanerror == 0)
+			if((Schumix.Framework.Config.CleanConfig.Config || Schumix.Framework.Config.CleanConfig.Database) && cleanerror == 0)
 				Log.Notice("CleanManager", "Sikeresen elkészültek a takarítások.");
 			else if(cleanerror == 0)
 				Log.Warning("CleanManager", "Nincs bekapcsolva a takarítás!");

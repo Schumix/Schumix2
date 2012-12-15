@@ -36,6 +36,12 @@ namespace Schumix.Framework.Clean
 			try
 			{
 				Log.Notice("CleanConfig", "CleanConfig sikeresen elindult.");
+				if(!Schumix.Framework.Config.CleanConfig.Config)
+				{
+					_clean = true;
+					return;
+				}
+
 				CleanOldConfigFile();
 			}
 			catch(Exception e)

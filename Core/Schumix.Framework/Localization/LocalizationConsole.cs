@@ -1018,6 +1018,24 @@ namespace Schumix.Framework.Localization
 			}
 		}
 
+		public string CleanConfig(string Name)
+		{
+			switch(Name)
+			{
+				case "Text":
+				{
+					if(Locale == "huHU")
+						return "Clean beállításai betöltve.";
+					else if(Locale == "enUS")
+						return "Loaded the Clean settings.";
+					else
+						return "Loaded the Clean settings.";
+				}
+				default:
+					return string.Empty;
+			}
+		}
+
 		public string CommandManager(string Name)
 		{
 			switch(Name)

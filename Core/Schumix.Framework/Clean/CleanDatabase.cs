@@ -37,6 +37,12 @@ namespace Schumix.Framework.Clean
 			try
 			{
 				Log.Notice("CleanDatabase", "CleanDatabase sikeresen elindult.");
+				if(!Schumix.Framework.Config.CleanConfig.Database)
+				{
+					_clean = true;
+					return;
+				}
+
 				CleanCoreTable();
 			}
 			catch(Exception e)

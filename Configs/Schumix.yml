@@ -71,3 +71,6 @@ Schumix:
     Flooding:
         Seconds: 4
         NumberOfCommands: 2
+    Clean:
+        Config: False
+        Database: False

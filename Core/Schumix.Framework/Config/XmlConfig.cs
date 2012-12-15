@@ -183,6 +183,11 @@ namespace Schumix.Framework.Config
 
 			new FloodingConfig(Seconds, NumberOfCommands);
 
+			bool Config = !xmldoc.SelectSingleNode("Schumix/Clean/Config").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Clean/Config").InnerText) : d_cleanconfig;
+			bool Database2 = !xmldoc.SelectSingleNode("Schumix/Clean/Database").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Clean/Database").InnerText) : d_cleandatabase;
+
+			new CleanConfig(Config, Database2);
+
 			Log.Success("XmlConfig", sLConsole.Config("Text4"));
 			Console.WriteLine();
 		}
@@ -446,6 +451,14 @@ namespace Schumix.Framework.Config
 						w.WriteElementString("NumberOfCommands", (!xmldoc.SelectSingleNode("Schumix/Flooding/NumberOfCommands").IsNull() ? xmldoc.SelectSingleNode("Schumix/Flooding/NumberOfCommands").InnerText : d_floodingnumberofcommands.ToString()));
 
 						// </Flooding>
+						w.WriteEndElement();
+
+						// <Clean>
+						w.WriteStartElement("Clean");
+						w.WriteElementString("Config",           (!xmldoc.SelectSingleNode("Schumix/Clean/Config").IsNull() ? xmldoc.SelectSingleNode("Schumix/Clean/Config").InnerText : d_cleanconfig.ToString()));
+						w.WriteElementString("Database",         (!xmldoc.SelectSingleNode("Schumix/Clean/Database").IsNull() ? xmldoc.SelectSingleNode("Schumix/Clean/Database").InnerText : d_cleandatabase.ToString()));
+
+						// </Clean>
 						w.WriteEndElement();
 
 						// </Schumix>

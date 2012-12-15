@@ -88,4 +88,8 @@
         <Seconds>4</Seconds>
         <NumberOfCommands>2</NumberOfCommands>
     </Flooding>
+    <Clean>
+        <Config>False</Config>
+        <Database>False</Database>
+    </Clean>
 </Schumix>
