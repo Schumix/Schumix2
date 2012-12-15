@@ -15,7 +15,6 @@ Megírásra váró feladatok:
 		- Összes addonra alkalmazni a fejlesztéseket.
 	- Sűrgős:
 		- sznap parancs megírása normálisan.
-		- Clean elhelyezése a configban. Ezzel a lehetőséggel lehetne majd kipucolni.
 		- Clean részek magyar szövegét lefordítani angolra.
 		- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
 		- Játék addon nyelvezetét átírni angolra is.

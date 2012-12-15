@@ -81,6 +81,11 @@ namespace Schumix.Server.Config
 
 			new Framework.Config.ShutdownConfig(MaxMemory);
 
+			bool Config = !xmldoc.SelectSingleNode("Server/Clean/Config").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Clean/Config").InnerText) : d_cleanconfig;
+			bool Database = !xmldoc.SelectSingleNode("Server/Clean/Database").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Clean/Database").InnerText) : d_cleandatabase;
+
+			new Framework.Config.CleanConfig(Config, Database);
+
 			if(!xmldoc.SelectSingleNode("Server/Schumixs/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Schumixs/Enabled").InnerText) : d_schumixsenabled)
 			{
 				Task.Factory.StartNew(() =>
@@ -202,6 +207,14 @@ namespace Schumix.Server.Config
 						w.WriteElementString("MaxMemory",        (!xmldoc.SelectSingleNode("Server/Shutdown/MaxMemory").IsNull() ? xmldoc.SelectSingleNode("Server/Shutdown/MaxMemory").InnerText : d_shutdownmaxmemory.ToString()));
 
 						// </Shutdown>
+						w.WriteEndElement();
+
+						// <Clean>
+						w.WriteStartElement("Clean");
+						w.WriteElementString("Config",           (!xmldoc.SelectSingleNode("Server/Clean/Config").IsNull() ? xmldoc.SelectSingleNode("Server/Clean/Config").InnerText : d_cleanconfig.ToString()));
+						w.WriteElementString("Database",         (!xmldoc.SelectSingleNode("Server/Clean/Database").IsNull() ? xmldoc.SelectSingleNode("Server/Clean/Database").InnerText : d_cleandatabase.ToString()));
+
+						// </Clean>
 						w.WriteEndElement();
 
 						// <Schumixs>

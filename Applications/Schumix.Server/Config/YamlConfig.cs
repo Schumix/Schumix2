@@ -59,6 +59,7 @@ namespace Schumix.Server.Config
 			LocalizationMap((!servermap.IsNull() && servermap.ContainsKey("Localization")) ? ((YamlMappingNode)servermap["Localization".ToYamlNode()]).Children : NullYMap);
 			UpdateMap((!servermap.IsNull() && servermap.ContainsKey("Update")) ? ((YamlMappingNode)servermap["Update".ToYamlNode()]).Children : NullYMap);
 			ShutdownMap((!servermap.IsNull() && servermap.ContainsKey("Shutdown")) ? ((YamlMappingNode)servermap["Shutdown".ToYamlNode()]).Children : NullYMap);
+			CleanMap((!servermap.IsNull() && servermap.ContainsKey("Clean")) ? ((YamlMappingNode)servermap["Clean".ToYamlNode()]).Children : NullYMap);
 			SchumixsMap((!servermap.IsNull() && servermap.ContainsKey("Schumixs")) ? ((YamlMappingNode)servermap["Schumixs".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("YamlConfig", sLConsole.Config("Text4"));
@@ -102,6 +103,7 @@ namespace Schumix.Server.Config
 						nodes2.Add("Localization", CreateLocalizationMap((!servermap.IsNull() && servermap.ContainsKey("Localization")) ? ((YamlMappingNode)servermap["Localization".ToYamlNode()]).Children : NullYMap));
 						nodes2.Add("Update",       CreateUpdateMap((!servermap.IsNull() && servermap.ContainsKey("Update")) ? ((YamlMappingNode)servermap["Update".ToYamlNode()]).Children : NullYMap));
 						nodes2.Add("Shutdown",     CreateShutdownMap((!servermap.IsNull() && servermap.ContainsKey("Shutdown")) ? ((YamlMappingNode)servermap["Shutdown".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Clean",        CreateCleanMap((!servermap.IsNull() && servermap.ContainsKey("Clean")) ? ((YamlMappingNode)servermap["Clean".ToYamlNode()]).Children : NullYMap));
 
 						if((!servermap.IsNull() && servermap.ContainsKey("Schumixs")))
 						{
@@ -207,6 +209,13 @@ namespace Schumix.Server.Config
 			new Framework.Config.ShutdownConfig(MaxMemory);
 		}
 
+		private void CleanMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			bool Config = (!nodes.IsNull() && nodes.ContainsKey("Config")) ? Convert.ToBoolean(nodes["Config".ToYamlNode()].ToString()) : d_cleanconfig;
+			bool Database = (!nodes.IsNull() && nodes.ContainsKey("Database")) ? Convert.ToBoolean(nodes["Database".ToYamlNode()].ToString()) : d_cleandatabase;
+			new Framework.Config.CleanConfig(Config, Database);
+		}
+
 		private void SchumixsMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			if((!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? Convert.ToBoolean(nodes["Enabled".ToYamlNode()].ToString()) : d_schumixsenabled)
@@ -299,6 +308,14 @@ namespace Schumix.Server.Config
 		{
 			var map = new YamlMappingNode();
 			map.Add("MaxMemory", (!nodes.IsNull() && nodes.ContainsKey("MaxMemory")) ? nodes["MaxMemory".ToYamlNode()].ToString() : d_shutdownmaxmemory.ToString());
+			return map;
+		}
+
+		private YamlMappingNode CreateCleanMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			var map = new YamlMappingNode();
+			map.Add("Config",   (!nodes.IsNull() && nodes.ContainsKey("Config")) ? nodes["Config".ToYamlNode()].ToString() : d_cleanconfig.ToString());
+			map.Add("Database", (!nodes.IsNull() && nodes.ContainsKey("Database")) ? nodes["Database".ToYamlNode()].ToString() : d_cleandatabase.ToString());
 			return map;
 		}
 

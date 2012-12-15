@@ -44,6 +44,8 @@ namespace Schumix.Server.Config
 		protected const string d_schumixdirectory        = "Configs";
 		protected const string d_schumixconsoleencoding  = "utf-8";
 		protected const string d_schumixlocale           = "enUS";
+		protected const bool d_cleanconfig               = false;
+		protected const bool d_cleandatabase             = false;
 		protected bool errors                            = false;
 	}
 }
