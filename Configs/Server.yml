@@ -21,6 +21,9 @@ Server:
         WebPage: https://github.com/megax/Schumix2
     Shutdown:
         MaxMemory: 100
+    Clean:
+        Config: False
+        Database: False
     Schumixs:
         Enabled: False
         Schumix:

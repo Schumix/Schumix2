@@ -28,6 +28,10 @@
     <Shutdown>
         <MaxMemory>100</MaxMemory>
     </Shutdown>
+    <Clean>
+        <Config>False</Config>
+        <Database>False</Database>
+    </Clean>
     <Schumixs>
         <Enabled>False</Enabled>
         <Schumix>
