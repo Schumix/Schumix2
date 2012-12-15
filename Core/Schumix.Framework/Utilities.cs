@@ -572,8 +572,8 @@ namespace Schumix.Framework
 		{
 			get
 			{
-				var elapsed = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
-				return (elapsed.TotalSeconds);
+				var elapsed = (DateTime.UtcNow - UnixTimeStart);
+				return elapsed.TotalSeconds;
 			}
 		}
 
