@@ -63,3 +63,11 @@ Schumix:
         Version: stable
         Branch: master
         WebPage: https://github.com/megax/Schumix2
+    Shutdown:
+        MaxMemory: 100
+    Flooding:
+        Seconds: 4
+        NumberOfCommands: 2
+    Clean:
+        Config: False
+        Database: False
