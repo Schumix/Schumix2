@@ -147,6 +147,11 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 * **Seconds:** Meghatározza mennyi időnként fusson le a flood elemzése. Alapértelmezés: `4` (másodpercben)
 * **NumberOfCommands:** Meghatározza hányszor használhatja a parancsot adott személy a megadott indőn belül. Ha többet add meg akkor egy percre letiltja a program a parancsainak használatát annak a személynek. Alapértelmezés: `2`
 
+## Clean
+
+* **Config:** Értéke `true` vagy `false` lehet. Engedélyezi a konfig mappában a régi fájlok takarítását/törlését. Alapértelmezés: `false`
+* **Database:** Értéke `true` vagy `false` lehet. Engedélyezi az adatbázis takarítását. Alapértelmezés: `false`
+
 # Adatbázis beüzemelése
 
 ## MySql
