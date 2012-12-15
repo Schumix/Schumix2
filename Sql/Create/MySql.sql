@@ -63,7 +63,7 @@ CREATE TABLE `channels` (
   `Functions` varchar(500) NOT NULL default ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off',
   `Channel` varchar(20) NOT NULL default '',
   `Password` varchar(30) NOT NULL default '',
-  `Enabled` varchar(5) NOT NULL default '',
+  `Enabled` varchar(5) NOT NULL default 'false',
   `Error` text NOT NULL,
   `Language` varchar(4) NOT NULL default 'enUS',
   PRIMARY KEY  (`Id`)

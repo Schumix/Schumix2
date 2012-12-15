@@ -152,9 +152,7 @@ namespace Schumix.Framework
 									Log.Notice("SchumixBase", sLConsole.SchumixBase("Text4"), servername, IRCConfig.List[servername].MasterChannel);
 								}
 								else if(id == Convert.ToInt32(db2["Id"].ToString()) && ignore)
-								{
 									Log.Warning("SchumixBase", sLConsole.SchumixBase("Text7"));
-								}
 							}
 						}
 					}

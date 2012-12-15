@@ -58,7 +58,7 @@ namespace Schumix.Framework.Clean
 			{
 				i++;
 				File.Delete(yml.FullName);
-				Log.Debug("CleanConfig", "Eezn régi konfig fájl törölve lett: {0}", yml.Name);
+				Log.Debug("CleanConfig", "Ezen régi konfig fájl törölve lett: {0}", yml.Name);
 			}
 
 			foreach(var xml in dir.GetFiles("_*.xml").AsParallel())

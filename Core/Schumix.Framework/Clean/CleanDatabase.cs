@@ -18,6 +18,10 @@
  */
 
 using System;
+using System.Data;
+using System.Collections.Generic;
+using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Clean
@@ -47,11 +51,30 @@ namespace Schumix.Framework.Clean
 		public void CleanTable(string table)
 		{
 			// ez a függvény fogja ellátni az addonokat a törlés lehetőségével
+			Log.Notice("CleanDatabase", "A {0} tábla takarítása megkezdődött.", table);
+
+			var db = SchumixBase.DManager.Query("SELECT ServerName FROM {0} GROUP BY ServerName", table);
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string server = row["ServerName"].ToString();
+
+					if(!IRCConfig.List.ContainsKey(server))
+					{
+						Console.WriteLine(server);
+						Log.Debug("CleanDatabase", "Régi szervernév ({0}) törölve lett a {1} táblából.", server, table);
+					}
+				}
+			}
+
+			Log.Notice("CleanDatabase", "A {0} tábla takarítása kész.", table);
 		}
 
 		private void CleanCoreTable()
 		{
 			// ide jön minden tábla ami a magban van
+			CleanTable("channels");
 		}
 	}
 }

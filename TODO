@@ -23,7 +23,7 @@ Megírásra váró feladatok:
 	- Serverben megoldani az egy szerveren lévő botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
 	- Dokumentálni az egész kódot.
 	- Többszerveres módnál az irc logolást leválasztani a normál logról(normális módnál maradhatna a Schumix.log-ban [Túlságosan sok mindent kéne megváltoztatni ezért jó ötleteken dolgozom hozzá.]).
-	- calendar-ban a legközelebbi időpont kiíratása ami jön időben. (szöveg kiírása ami fel van jegyezve)
+	- calendar-ban a legközelebbi időpont kiíratása ami jön időben. (szöveg kiírása ami fel van jegyezve) [legyen az alparancs neve: nextmessage]
 <Megaxxx> $calendar 16:00 Emlékeztetni Petit az sql-es cuccomra!!!
 <Schumix> Lejárt dátumot/órát adtál meg!
 <Megaxxx> anyád
