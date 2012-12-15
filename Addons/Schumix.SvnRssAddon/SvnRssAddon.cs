@@ -55,6 +55,7 @@ namespace Schumix.SvnRssAddon
 				_config = new AddonConfig(Name, ".yml");
 
 			InitIrcCommand();
+			SchumixBase.sCleanManager.CDatabase.CleanTable("svninfo");
 			SchumixBase.DManager.Update("svninfo", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM svninfo WHERE ServerName = '{0}'", ServerName);

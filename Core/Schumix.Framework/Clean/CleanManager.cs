@@ -24,6 +24,7 @@ namespace Schumix.Framework.Clean
 	public sealed class CleanManager
 	{
 		private bool _server = false;
+		public CleanDatabase CDatabase { get; private set; }
 
 		public CleanManager(bool server = false)
 		{
@@ -55,8 +56,8 @@ namespace Schumix.Framework.Clean
 
 				if(true)
 				{
-					var database = new CleanDatabase();
-					if(!database.IsClean())
+					CDatabase = new CleanDatabase();
+					if(!CDatabase.IsClean())
 						cleanerror++;
 				}
 			}

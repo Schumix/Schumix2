@@ -50,7 +50,7 @@ namespace Schumix.Framework.Clean
 
 		public void CleanTable(string table)
 		{
-			Log.Notice("CleanDatabase", "A {0} tábla takarítása megkezdődött.", table);
+			Log.Debug("CleanDatabase", "A {0} tábla takarítása megkezdődött.", table);
 
 			var db = SchumixBase.DManager.Query("SELECT ServerName FROM {0} GROUP BY ServerName", table);
 			if(!db.IsNull())
@@ -67,7 +67,7 @@ namespace Schumix.Framework.Clean
 				}
 			}
 
-			Log.Notice("CleanDatabase", "A {0} tábla takarítása kész.", table);
+			Log.Debug("CleanDatabase", "A {0} tábla takarítása kész.", table);
 		}
 
 		private void CleanCoreTable()

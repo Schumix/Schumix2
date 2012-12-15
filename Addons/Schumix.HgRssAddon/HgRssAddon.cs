@@ -55,6 +55,7 @@ namespace Schumix.HgRssAddon
 				_config = new AddonConfig(Name, ".yml");
 
 			InitIrcCommand();
+			SchumixBase.sCleanManager.CDatabase.CleanTable("hginfo");
 			SchumixBase.DManager.Update("hginfo", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link, Website FROM hginfo WHERE ServerName = '{0}'", ServerName);

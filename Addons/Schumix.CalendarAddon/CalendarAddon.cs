@@ -66,6 +66,8 @@ namespace Schumix.CalendarAddon
 
 			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
 			InitIrcCommand();
+			SchumixBase.sCleanManager.CDatabase.CleanTable("banned");
+			SchumixBase.sCleanManager.CDatabase.CleanTable("calendar");
 			SchumixBase.DManager.Update("banned", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 			SchumixBase.DManager.Update("calendar", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 		}

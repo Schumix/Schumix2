@@ -54,6 +54,12 @@ namespace Schumix.ExtraAddon
 		public void Setup(string ServerName)
 		{
 			_servername = ServerName;
+			SchumixBase.sCleanManager.CDatabase.CleanTable("hlmessage");
+			SchumixBase.sCleanManager.CDatabase.CleanTable("kicklist");
+			SchumixBase.sCleanManager.CDatabase.CleanTable("modelist");
+			SchumixBase.sCleanManager.CDatabase.CleanTable("message");
+			SchumixBase.sCleanManager.CDatabase.CleanTable("notes");
+			SchumixBase.sCleanManager.CDatabase.CleanTable("notes_users");
 			SchumixBase.DManager.Update("hlmessage", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 			SchumixBase.DManager.Update("kicklist", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 			SchumixBase.DManager.Update("modelist", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));

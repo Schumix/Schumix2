@@ -55,6 +55,7 @@ namespace Schumix.MantisBTRssAddon
 				_config = new AddonConfig(Name, ".yml");
 
 			InitIrcCommand();
+			SchumixBase.sCleanManager.CDatabase.CleanTable("mantisbt");
 			SchumixBase.DManager.Update("mantisbt", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link FROM mantisbt WHERE ServerName = '{0}'", ServerName);
