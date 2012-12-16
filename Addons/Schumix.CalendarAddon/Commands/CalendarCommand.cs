@@ -588,6 +588,14 @@ namespace Schumix.CalendarAddon.Commands
 					}
 				}
 			}
+			else if(sIRCMessage.Info[4].ToLower() == "nextmessage")
+			{
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Message FROM calendar WHERE ServerName = '{0}' And Channel = '{1}' And Name = '{2}' And Loops = 'false' ORDER BY UnixTime ASC", sIRCMessage.ServerName, sIRCMessage.Channel.ToLower(), sIRCMessage.Nick);
+				if(!db.IsNull())
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Message: {0}", db["Message"].ToString());
+				}
+			}
 			else
 			{
 				if(sIRCMessage.Info[4].Contains(SchumixBase.Colon.ToString()))

@@ -92,7 +92,8 @@ namespace Schumix.CalendarAddon
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel, _servername);
 
-				var unixtime = (time.ToUniversalTime() - sUtilities.GetUnixTimeStart()).TotalSeconds;
+				var time2 = Convert.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}", time.Year, time.Month, time.Day, hour, minute), dtfi);
+				var unixtime = (time2.ToUniversalTime() - sUtilities.GetUnixTimeStart()).TotalSeconds;
 				SchumixBase.DManager.Insert("`calendar`(ServerId, ServerName, Name, Channel, Message, Year, Month, Day, Hour, Minute, UnixTime)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), time.Year, time.Month, time.Day, hour, minute, unixtime);
 			}
 
