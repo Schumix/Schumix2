@@ -48,6 +48,11 @@ namespace Schumix.Framework
 		private const int TicksPerSecond = 10000;
 		private Utilities() {}
 
+		public DateTime GetUnixTimeStart()
+		{
+			return UnixTimeStart;
+		}
+
 		public string GetUrl(string url)
 		{
 			lock(WriteLock)

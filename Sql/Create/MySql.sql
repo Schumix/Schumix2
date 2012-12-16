@@ -50,6 +50,7 @@ CREATE TABLE `calendar` (
   `Day` int(2) NOT NULL default '0',
   `Hour` int(2) NOT NULL default '0',
   `Minute` int(2) NOT NULL default '0',
+  `UnixTime` int(20) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 

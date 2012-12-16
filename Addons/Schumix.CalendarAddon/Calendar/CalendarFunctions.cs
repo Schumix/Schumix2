@@ -19,6 +19,7 @@
 
 using System;
 using System.Threading;
+using System.Globalization;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -29,6 +30,7 @@ namespace Schumix.CalendarAddon
 {
 	sealed class CalendarFunctions
 	{
+		private readonly DateTimeFormatInfo dtfi = new DateTimeFormatInfo { ShortDatePattern = "yyyy-MM-dd HH:mm", DateSeparator = "-" };
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
@@ -58,7 +60,8 @@ namespace Schumix.CalendarAddon
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel, _servername);
 
-				SchumixBase.DManager.Insert("`calendar`(ServerId, ServerName, Name, Channel, Message, Year, Month, Day, Hour, Minute)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), time.Year, time.Month, time.Day, time.Hour, time.Minute);
+				var unixtime = (time.ToUniversalTime() - sUtilities.GetUnixTimeStart()).TotalSeconds;
+				SchumixBase.DManager.Insert("`calendar`(ServerId, ServerName, Name, Channel, Message, Year, Month, Day, Hour, Minute, UnixTime)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), time.Year, time.Month, time.Day, time.Hour, time.Minute, unixtime);
 			}
 
 			return sLManager.GetWarningText("Calendar", channel, _servername);
@@ -89,11 +92,9 @@ namespace Schumix.CalendarAddon
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel, _servername);
 
-				SchumixBase.DManager.Insert("`calendar`(ServerId, ServerName, Name, Channel, Message, Year, Month, Day, Hour, Minute)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), time.Year, time.Month, time.Day, hour, minute);
+				var unixtime = (time.ToUniversalTime() - sUtilities.GetUnixTimeStart()).TotalSeconds;
+				SchumixBase.DManager.Insert("`calendar`(ServerId, ServerName, Name, Channel, Message, Year, Month, Day, Hour, Minute, UnixTime)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), time.Year, time.Month, time.Day, hour, minute, unixtime);
 			}
-
-			Console.WriteLine(time.ToUniversalTime());
-			Console.WriteLine(sUtilities.GetDateTimeFromUnixTime(time.Millisecond));
 
 			return b ? sLManager.GetWarningText("Calendar", channel, _servername) /* adatbázisba elkészíteni hozzá az új szöveget. */ : sLManager.GetWarningText("Calendar", channel, _servername);
 		}
@@ -117,7 +118,9 @@ namespace Schumix.CalendarAddon
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel, _servername);
 
-				SchumixBase.DManager.Insert("`calendar`(ServerId, ServerName, Name, Channel, Message, Year, Month, Day, Hour, Minute)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), year, month, day, hour, minute);
+				var time = Convert.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}", year, month, day, hour, minute), dtfi);
+				var unixtime = (time.ToUniversalTime() - sUtilities.GetUnixTimeStart()).TotalSeconds;
+				SchumixBase.DManager.Insert("`calendar`(ServerId, ServerName, Name, Channel, Message, Year, Month, Day, Hour, Minute, UnixTime)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), year, month, day, hour, minute, unixtime);
 			}
 
 			return sLManager.GetWarningText("Calendar", channel, _servername);
