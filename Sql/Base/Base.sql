@@ -443,6 +443,8 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wiki", "3Címe: {0}\n3Link: {0}\n3Leírás: {0}\n3Leírás: {0}...\nNincs találat!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "calendar", "Helytelen dátum formátum!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "calendar/nextmessage", "3Üzenet: {0}\n3Dátum: {0}. {1}. {2}. {3}:{4}\nNincs feljegyezve üzenet!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "calendar/private/nextmessage", "3Üzenet: {0}\n3Dátum: {0}. {1}. {2}. {3}:{4}\nNincs feljegyezve üzenet!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/info", "3{0} Channel: 2{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/list", "2Lista:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/start", "{0} már el van indítva!\n{0} sikeresen el lett indítva.\n{0} nem létezik!");
@@ -600,6 +602,8 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/channel/remove", "Successfully deleted channel!\nNo such name!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wiki", "3Title: {0}\n3Link: {0}\n3Description: {0}\n3Description: {0}...\nNo result!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "calendar", "Date format error!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "calendar/nextmessage", "3Message: {0}\n3Date: {0}. {1}. {2}. {3}:{4}\nThere is not any recorded message!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "calendar/private/nextmessage", "3Message: {0}\n3Date: {0}. {1}. {2}. {3}:{4}\nThere is not any recorded message!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/info", "3{0} Channel: 2{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/list", "2List:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/start", "{0} already translated!\n{0} successfully started.\n{0} no such!");
@@ -766,7 +770,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/reload/all", "1", "Minden rss újratöltése.\nHasználata: {0}mantisbt reload <rss neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "online", "9", "A parancs segítségével megállapítható ki elérhető és ki nem.\nHasználata: {0}online <név>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wiki", "9", "A parancs segítségével kereshetünk a Wikipedia oldalán.\nHasználata: {0}wiki <keresendő szöveg>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar", "9", "Eseményeket, üzeneteket lehet feljegyezni vele megadott időpontra.\nParancsok: loop | nick | private\nHasználata:\nÓra és perc: {0}calendar <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar <éééé.hh.nn> <óó:pp> <üzenet>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar", "9", "Eseményeket, üzeneteket lehet feljegyezni vele megadott időpontra.\nParancsok: loop | nick | private | nextmessage\nHasználata:\nÓra és perc: {0}calendar <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar <éééé.hh.nn> <óó:pp> <üzenet>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/loop", "0", "Naponként ismétli meg a megadott időben az üzenetet.\nParancsok: nick | private | remove\nHasználata:\nÓra és perc: {0}calendar loop <óó:pp> <üzenet>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/loop/remove", "0", "Eltávolítja az ismétlődő üzenetet.\nHasználata: {0}calendar loop remove <óó:pp>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/loop/nick", "0", "Megadott személynek jegyzi fel. \nParancsok: remove\nHasználata:\nÓra és perc: {0}calendar loop nick <név> <óó:pp> <üzenet>");
@@ -776,8 +780,10 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/loop/private/nick", "0", "Megadott személynek jegyzi fel és privátban küldi el neki.\nParancsok: remove\nHasználata:\nÓra és perc: {0}calendar loop private nick <név> <óó:pp> <üzenet>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/loop/private/nick/remove", "0", "Eltávolítja az ismétlődő üzenetet.\nHasználata: {0}calendar loop private nick remove <név> <óó:pp>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/nick", "9", "Megadott személynek jegyzi fel. \nHasználata:\nÓra és perc: {0}calendar nick <név> <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar nick <név> <éééé.hh.nn> <óó:pp> <üzenet>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/private", "9", "Privátban küldi el az üzenetet.\nParancsok: nick\nHasználata:\nÓra és perc: {0}calendar private <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar private <éééé.hh.nn> <óó:pp> <üzenet>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/private", "9", "Privátban küldi el az üzenetet.\nParancsok: nick | nextmessage\nHasználata:\nÓra és perc: {0}calendar private <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar private <éééé.hh.nn> <óó:pp> <üzenet>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/private/nick", "9", "Megadott személynek jegyzi fel és privátban küldi el neki.\nHasználata:\nÓra és perc: {0}calendar private nick <név> <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar private nick <név> <éééé.hh.nn> <óó:pp> <üzenet>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/private/nextmessage", "9", "Kiírja azon üzenetet ami a legközelebb van időpontilag.");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/nextmessage", "9", "Kiírja azon üzenetet ami a legközelebb van időpontilag.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress", "1", "WordPress rss-ek kezelése.\nWordPress parancsai: channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/channel", "1", "Rss csatornákra való kiírásának kezelése.\nChannel parancsai: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/channel/add", "1", "Új csatorna hozzáadása az rss-hez.\nHasználata: {0}wordpress channel add <rss neve> <csatorna neve>");
@@ -954,7 +960,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/reload/all", "1", "All RSS reload.\nUse: {0}mantisbt reload <rss name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "online", "9", "If you look at who is available and who is not available. If not available, when it was last above.\nUse: {0}online <Name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wiki", "9", "If you want something to look for a Wikipedia page.\nUse: {0}wiki <search text>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar", "9","With it you can save messages,events. Commands: loop | nick | private\nUses:\nHour and min: {0}calendar <hh:mm> <message>\nDate, hour and min: {0}calendar <yyyy.mm.dd> <hh:mm> <message>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar", "9", "With it you can save messages,events. Commands: loop | nick | private | nextmessage\nUses:\nHour and min: {0}calendar <hh:mm> <message>\nDate, hour and min: {0}calendar <yyyy.mm.dd> <hh:mm> <message>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/loop", "0", "Reapet the message daily.\nCommands: nick | private | remove\nHour and min: {0}calendar loop <hh:mm> <message>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/loop/remove", "0", "Remove the repeatable messages.\nUses: {0}calendar loop remove <hh:mm>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/loop/nick", "0", "Save for person.\nCommands: remove\nUses:\nHour and min: {0}calendar loop nick <name> <hh:mm> <message>");
@@ -964,8 +970,10 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/loop/private/nick", "0", "Save for person and send in private.\nCommands: remove\nUses:\nHour and min: {0}calendar loop private nick <name> <hh:mm> <message>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/loop/private/nick/remove", "0", "Remove the repeatable messages.\nUses: {0}calendar loop private nick remove <name> <hh:mm>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/nick", "9", "Save for person. \nUses:\nHour and min: {0}calendar nick <name> <hh:mm> <message>\nDate, Hour and min: {0}calendar nick <name> <yyyy.mm.dd> <hh:mm> <message>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/private", "9", "send the message in private.\nCommands: nick\nUses:\nHour and min: {0}calendar private <hh:mm> <message>\nDate, Hour and min: {0}calendar private <yyyy.mm.dd> <hh:mm> <message>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/private", "9", "Send the message in private.\nCommands: nick | nextmessage\nUses:\nHour and min: {0}calendar private <hh:mm> <message>\nDate, Hour and min: {0}calendar private <yyyy.mm.dd> <hh:mm> <message>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/private/nick", "9", "Save for person and send it in private.\nUses:\nHour and min: {0}calendar private nick <name> <óó:pp> <message>\nDate, Hour and min: {0}calendar private nick <name> <yyyy.mm.dd> <hh:mm> <message>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/private/nextmessage", "9", "Writes out the message that is the closest in time.");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/nextmessage", "9", "Writes out the message that is the closest in time.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress", "1", "Rss wordpress 's management.\nWordPress commands: channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/channel", "1", "RSS feeds on their handling of the announcement.\nChannel commands: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/channel/add", "1", "New channel added to the rss.\nUse: {0}wordpress channel add <rss name> <channel name>");
@@ -1049,6 +1057,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "Calendar2", "Feljegyzett üzenet {0} számára!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "Calendar3", "Nem szerepel a listán!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "Calendar4", "Sikeresen törlésre került.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "Calendar5", "Az üzenet a holnapi napra lett feljegyezve!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorYear", "Hibás az év (száma, formátuma)!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorMonth", "Hibás a hónap (száma, formátuma)!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ErrorDay", "Hibás a nap (száma, formátuma)!");
@@ -1117,6 +1126,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "Calendar2", "Note for {0}");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "Calendar3", "This isn't in the list!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "Calendar4", "Successfully deleted.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "Calendar5", "The message has been recorded for tomorrow!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorYear", "Wrong year (number, format)!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorMonth", "Wrong month (number, format)!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ErrorDay", "Wrong day (number, format)!");

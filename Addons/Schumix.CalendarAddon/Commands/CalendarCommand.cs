@@ -32,6 +32,7 @@ namespace Schumix.CalendarAddon.Commands
 	class CalendarCommand : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private CalendarFunctions sCalendarFunctions;
@@ -514,6 +515,24 @@ namespace Schumix.CalendarAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[6].ToLower(), sIRCMessage.Info.SplitToString(9, SchumixBase.Space), year, month, day, hour, minute));
 					}
 				}
+				else if(sIRCMessage.Info[5].ToLower() == "nextmessage")
+				{
+					var text = sLManager.GetCommandTexts("calendar/private/nextmessage", sIRCMessage.Channel, sIRCMessage.ServerName);
+					if(text.Length < 3)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Message, Year, Month, Day, Hour, Minute FROM calendar WHERE ServerName = '{0}' And Channel = '{1}' And Name = '{2}' And Loops = 'false' ORDER BY UnixTime ASC", sIRCMessage.ServerName, sIRCMessage.Nick.ToLower(), sIRCMessage.Nick.ToLower());
+					if(!db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[0], db["Message"].ToString());
+						sSendMessage.SendChatMessage(sIRCMessage, text[1], db["Year"].ToString(), db["Month"].ToString(), db["Day"].ToString(), db["Hour"].ToString(), db["Minute"].ToString());
+					}
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+				}
 				else
 				{
 					if(sIRCMessage.Info[5].Contains(SchumixBase.Colon.ToString()))
@@ -590,11 +609,21 @@ namespace Schumix.CalendarAddon.Commands
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "nextmessage")
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Message FROM calendar WHERE ServerName = '{0}' And Channel = '{1}' And Name = '{2}' And Loops = 'false' ORDER BY UnixTime ASC", sIRCMessage.ServerName, sIRCMessage.Channel.ToLower(), sIRCMessage.Nick);
+				var text = sLManager.GetCommandTexts("calendar/nextmessage", sIRCMessage.Channel, sIRCMessage.ServerName);
+				if(text.Length < 3)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					return;
+				}
+
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Message, Year, Month, Day, Hour, Minute FROM calendar WHERE ServerName = '{0}' And Channel = '{1}' And Name = '{2}' And Loops = 'false' ORDER BY UnixTime ASC", sIRCMessage.ServerName, sIRCMessage.Channel.ToLower(), sIRCMessage.Nick.ToLower());
 				if(!db.IsNull())
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "Message: {0}", db["Message"].ToString());
+					sSendMessage.SendChatMessage(sIRCMessage, text[0], db["Message"].ToString());
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], db["Year"].ToString(), db["Month"].ToString(), db["Day"].ToString(), db["Hour"].ToString(), db["Minute"].ToString());
 				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 			}
 			else
 			{
