@@ -179,18 +179,18 @@ namespace Schumix.ExtraAddon.Localization
 					if(Locale == "huHU")
 						return "30 napnál régebbi üzenetek törlése a message táblából megindult.";
 					else if(Locale == "enUS")
-						return "";
+						return "The deleting of messages that older than 30 days have been started.";
 					else
-						return "";
+						return "The deleting of messages that older than 30 days have been started.";
 				}
 				case "Text3":
 				{
 					if(Locale == "huHU")
 						return "Üzenetek törlése befejezve.";
 					else if(Locale == "enUS")
-						return "";
+						return "Message deletion has been ended.";
 					else
-						return "";
+						return "Message deletion has been ended.";
 				}
 				default:
 					return string.Empty;
