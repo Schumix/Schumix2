@@ -198,7 +198,8 @@ ServerName VARCHAR(40),
 Name VARCHAR(20),
 Channel VARCHAR(20),
 Message TEXT,
-Wrote VARCHAR(20)
+Wrote VARCHAR(20),
+UnixTime INTEGER DEFAULT 0
 );
 
 -- ----------------------------

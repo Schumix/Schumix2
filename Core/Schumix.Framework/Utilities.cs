@@ -617,7 +617,7 @@ namespace Schumix.Framework
 		/// <returns></returns>
 		public DateTime GetDateTimeFromUnixTime(long unixTime)
 		{
-			return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTime);
+			return UnixTimeStart.AddSeconds(unixTime);
 		}
 
 		/// <summary>

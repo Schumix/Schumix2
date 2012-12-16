@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Data;
 using System.Threading.Tasks;
 using Schumix.API;
 using Schumix.API.Irc;
@@ -60,6 +61,26 @@ namespace Schumix.ExtraAddon
 			SchumixBase.sCleanManager.CDatabase.CleanTable("message");
 			SchumixBase.sCleanManager.CDatabase.CleanTable("notes");
 			SchumixBase.sCleanManager.CDatabase.CleanTable("notes_users");
+
+			if(CleanConfig.Database)
+			{
+				Log.Debug("ExtraAddon", sLocalization.ExtraAddon("Text2"));
+
+				var db = SchumixBase.DManager.Query("SELECT Id, UnixTime FROM message WHERE ServerName = '{0}'", ServerName);
+				if(!db.IsNull())
+				{
+					foreach(DataRow row in db.Rows)
+					{
+						int time = Convert.ToInt32(row["UnixTime"].ToString());
+
+						if((DateTime.Now - sUtilities.GetDateTimeFromUnixTime(time)).TotalDays > 30)
+							SchumixBase.DManager.Delete("message", string.Format("Id = '{0}'", row["Id"].ToString()));
+					}
+				}
+
+				Log.Debug("ExtraAddon", sLocalization.ExtraAddon("Text3"));
+			}
+
 			SchumixBase.DManager.Update("hlmessage", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 			SchumixBase.DManager.Update("kicklist", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 			SchumixBase.DManager.Update("modelist", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));

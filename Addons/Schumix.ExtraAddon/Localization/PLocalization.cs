@@ -174,6 +174,24 @@ namespace Schumix.ExtraAddon.Localization
 					else
 						return "Invalid webpage address: {0}";
 				}
+				case "Text2":
+				{
+					if(Locale == "huHU")
+						return "30 napnál régebbi üzenetek törlése a message táblából megindult.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text3":
+				{
+					if(Locale == "huHU")
+						return "Üzenetek törlése befejezve.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
 				default:
 					return string.Empty;
 			}

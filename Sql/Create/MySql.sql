@@ -227,6 +227,7 @@ CREATE TABLE `message` (
   `Channel` varchar(20) collate utf8_hungarian_ci NOT NULL default '',
   `Message` text collate utf8_hungarian_ci NOT NULL,
   `Wrote` varchar(20) collate utf8_hungarian_ci NOT NULL default '',
+  `UnixTime` int(20) NOT NULL DEFAULT '0',
   PRIMARY KEY  (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
