@@ -96,7 +96,7 @@ namespace Schumix.CalendarAddon
 				SchumixBase.DManager.Insert("`calendar`(ServerId, ServerName, Name, Channel, Message, Year, Month, Day, Hour, Minute, UnixTime)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), sUtilities.SqlEscape(message), time.Year, time.Month, time.Day, hour, minute, unixtime);
 			}
 
-			return b ? sLManager.GetWarningText("Calendar", channel, _servername) /* adatbázisba elkészíteni hozzá az új szöveget. */ : sLManager.GetWarningText("Calendar", channel, _servername);
+			return b ? sLManager.GetWarningText("Calendar5", channel, _servername) : sLManager.GetWarningText("Calendar", channel, _servername);
 		}
 
 		public string Add(string name, string channel, string message, int year, int month, int day, int hour, int minute, bool Loop = false)
