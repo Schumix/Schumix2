@@ -168,7 +168,11 @@ FILES = \
 	Database/Cache/LocalizedConsoleWarning.cs \
 	Database/Cache/Channels.cs \
 	Database/Cache/LocalizedCommandHelp.cs \
-	Database/Cache/LocalizedWarning.cs 
+	Database/Cache/LocalizedWarning.cs \
+	Clean/CleanManager.cs \
+	Clean/CleanConfig.cs \
+	Clean/CleanDatabase.cs \
+	Config/CleanConfig.cs 
 
 DATA_FILES = 
 
@@ -178,6 +182,7 @@ EXTRAS = \
 	../../Dependencies/sqlite3.dll \
 	../../Sql/Schumix.db3 \
 	Database/Cache \
+	Clean \
 	schumix.framework.pc.in 
 
 REFERENCES =  \
