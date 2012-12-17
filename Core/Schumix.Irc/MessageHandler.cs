@@ -372,7 +372,7 @@ namespace Schumix.Irc
 			if(WhoisList.ContainsKey(nick))
 			{
 				var text = sLManager.GetCommandTexts("whois", WhoisList[nick].Channel, sIRCMessage.ServerName);
-				if(text.Length < 2) // módosítani 3-ra mivel kell még egy szöveg!!!
+				if(text.Length < 3)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(WhoisList[nick].Channel, sIRCMessage.ServerName)));
 					return;
@@ -383,7 +383,7 @@ namespace Schumix.Irc
 					if(WhoisList[nick].Message != string.Empty)
 						sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[0], WhoisList[nick].Message.Remove(0, 1, SchumixBase.Space));
 					else
-						sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, "nincs fent sehol se!!!"); 
+						sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[2]); 
 				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[1]);
