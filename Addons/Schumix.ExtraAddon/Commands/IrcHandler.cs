@@ -195,7 +195,12 @@ namespace Schumix.ExtraAddon.Commands
 			int i = 0;
 			var split = sIRCMessage.Args.Split(SchumixBase.Space);
 			string Channel = split[1];
-			sNameList.Remove(Channel);
+
+			if(!sNameList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()))
+				sNameList.Channels.Add(sIRCMessage.Channel.ToLower(), false);
+
+			if(sNameList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()) && sNameList.Channels[sIRCMessage.Channel.ToLower()])
+				sNameList.Remove(Channel);
 
 			foreach(var name in sIRCMessage.Args.Split(SchumixBase.Space))
 			{
@@ -206,6 +211,17 @@ namespace Schumix.ExtraAddon.Commands
 
 				sNameList.Add(Channel, Parse(name));
 			}
+		}
+
+		public void HandleEndNameList(IRCMessage sIRCMessage)
+		{
+			if(sNameList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()))
+				sNameList.Channels[sIRCMessage.Channel.ToLower()] = true;
+		}
+
+		public void HandleSuccessfulAuth(IRCMessage sIRCMessage)
+		{
+			sNameList.Channels.Clear();
 		}
 
 		private string Parse(string Name)

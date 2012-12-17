@@ -105,14 +105,16 @@ namespace Schumix.ExtraAddon
 			if(IRCConfig.List[_servername].ServerId == 1)
 				_config = new AddonConfig(Name, ".yml");
 
-			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG",              HandlePrivmsg);
-			sIrcBase.Networks[ServerName].IrcRegisterHandler("NOTICE",               HandleNotice);
-			sIrcBase.Networks[ServerName].IrcRegisterHandler("JOIN",                 sIrcHandler.HandleJoin);
-			sIrcBase.Networks[ServerName].IrcRegisterHandler("PART",                 sIrcHandler.HandleLeft);
-			sIrcBase.Networks[ServerName].IrcRegisterHandler("KICK",                 sIrcHandler.HandleKick);
-			sIrcBase.Networks[ServerName].IrcRegisterHandler("QUIT",                 sIrcHandler.HandleQuit);
-			sIrcBase.Networks[ServerName].IrcRegisterHandler("NICK",                 sIrcHandler.HandleNewNick);
-			sIrcBase.Networks[ServerName].IrcRegisterHandler(ReplyCode.RPL_NAMREPLY, sIrcHandler.HandleNameList);
+			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG",                HandlePrivmsg);
+			sIrcBase.Networks[ServerName].IrcRegisterHandler("NOTICE",                 HandleNotice);
+			sIrcBase.Networks[ServerName].IrcRegisterHandler("JOIN",                   sIrcHandler.HandleJoin);
+			sIrcBase.Networks[ServerName].IrcRegisterHandler("PART",                   sIrcHandler.HandleLeft);
+			sIrcBase.Networks[ServerName].IrcRegisterHandler("KICK",                   sIrcHandler.HandleKick);
+			sIrcBase.Networks[ServerName].IrcRegisterHandler("QUIT",                   sIrcHandler.HandleQuit);
+			sIrcBase.Networks[ServerName].IrcRegisterHandler("NICK",                   sIrcHandler.HandleNewNick);
+			sIrcBase.Networks[ServerName].IrcRegisterHandler(ReplyCode.RPL_NAMREPLY,   sIrcHandler.HandleNameList);
+			sIrcBase.Networks[ServerName].IrcRegisterHandler(ReplyCode.RPL_ENDOFNAMES, sIrcHandler.HandleEndNameList);
+			sIrcBase.Networks[ServerName].IrcRegisterHandler(ReplyCode.RPL_WELCOME,    sIrcHandler.HandleSuccessfulAuth);
 			InitIrcCommand();
 		}
 
@@ -123,14 +125,16 @@ namespace Schumix.ExtraAddon
 			sFunctions._timeronline.Elapsed -= sFunctions.HandleIsOnline;
 			sFunctions._timeronline.Stop();
 
-			sIrcBase.Networks[_servername].IrcRemoveHandler("PRIVMSG",               HandlePrivmsg);
-			sIrcBase.Networks[_servername].IrcRemoveHandler("NOTICE",                HandleNotice);
-			sIrcBase.Networks[_servername].IrcRemoveHandler("JOIN",                  sIrcHandler.HandleJoin);
-			sIrcBase.Networks[_servername].IrcRemoveHandler("PART",                  sIrcHandler.HandleLeft);
-			sIrcBase.Networks[_servername].IrcRemoveHandler("KICK",                  sIrcHandler.HandleKick);
-			sIrcBase.Networks[_servername].IrcRemoveHandler("QUIT",                  sIrcHandler.HandleQuit);
-			sIrcBase.Networks[_servername].IrcRemoveHandler("NICK",                  sIrcHandler.HandleNewNick);
-			sIrcBase.Networks[_servername].IrcRemoveHandler(ReplyCode.RPL_NAMREPLY,  sIrcHandler.HandleNameList);
+			sIrcBase.Networks[_servername].IrcRemoveHandler("PRIVMSG",                HandlePrivmsg);
+			sIrcBase.Networks[_servername].IrcRemoveHandler("NOTICE",                 HandleNotice);
+			sIrcBase.Networks[_servername].IrcRemoveHandler("JOIN",                   sIrcHandler.HandleJoin);
+			sIrcBase.Networks[_servername].IrcRemoveHandler("PART",                   sIrcHandler.HandleLeft);
+			sIrcBase.Networks[_servername].IrcRemoveHandler("KICK",                   sIrcHandler.HandleKick);
+			sIrcBase.Networks[_servername].IrcRemoveHandler("QUIT",                   sIrcHandler.HandleQuit);
+			sIrcBase.Networks[_servername].IrcRemoveHandler("NICK",                   sIrcHandler.HandleNewNick);
+			sIrcBase.Networks[_servername].IrcRemoveHandler(ReplyCode.RPL_NAMREPLY,   sIrcHandler.HandleNameList);
+			sIrcBase.Networks[_servername].IrcRemoveHandler(ReplyCode.RPL_ENDOFNAMES, sIrcHandler.HandleEndNameList);
+			sIrcBase.Networks[_servername].IrcRemoveHandler(ReplyCode.RPL_WELCOME,    sIrcHandler.HandleSuccessfulAuth);
 			RemoveIrcCommand();
 			sIrcHandler.sNameList.RemoveAll();
 		}

@@ -189,6 +189,7 @@ namespace Schumix.Irc
 			IrcRegisterHandler("TOPIC",                        HandleIrcTopic);
 			IrcRegisterHandler("INVITE",                       HandleIrcInvite);
 			IrcRegisterHandler(ReplyCode.RPL_NAMREPLY,         HandleNameList);
+			IrcRegisterHandler(ReplyCode.RPL_ENDOFNAMES,       HandleEndNameList);
 			IrcRegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandlerErrorNewNickName);
 			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
 			IrcRegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
@@ -564,6 +565,7 @@ namespace Schumix.Irc
 
 		private void HandleIrcCommand(string message)
 		{
+			//Log.Notice("asd", message);
 			var IMessage = new IRCMessage();
 			IMessage.ServerId = _serverid;
 			IMessage.ServerName = _servername;

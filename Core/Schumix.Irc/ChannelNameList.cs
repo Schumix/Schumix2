@@ -35,6 +35,7 @@ namespace Schumix.Irc
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
+		private readonly Dictionary<string, bool> _channels = new Dictionary<string, bool>();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly SendMessage sSendMessage;
@@ -53,7 +54,12 @@ namespace Schumix.Irc
 			get { return _names; }
 		}
 
-		public void Add(string ServerName, string Channel, string Name)
+		public Dictionary<string, bool> Channels
+		{
+			get { return _channels; }
+		}
+
+		public void Add(string Channel, string Name)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
@@ -69,7 +75,7 @@ namespace Schumix.Irc
 				_names.Add(Channel.ToLower(), Name.ToLower());
 		}
 
-		public void Remove(string ServerName, string Channel)
+		public void Remove(string Channel)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
@@ -96,7 +102,7 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void Remove(string ServerName, string Channel, string Name, bool Quit = false)
+		public void Remove(string Channel, string Name, bool Quit = false)
 		{
 			if(_names.ContainsKey(Channel.ToLower()))
 			{
@@ -163,7 +169,7 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void Change(string ServerName, string Name, string NewName, bool Identify = false)
+		public void Change(string Name, string NewName, bool Identify = false)
 		{
 			var channel = new Dictionary<string, string>();
 

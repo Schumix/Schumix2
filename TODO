@@ -6,7 +6,7 @@ Megírásra váró feladatok:
 - Apróbb hibák:
 
 - Szerver hibák:
-	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!! (Állítottam a prioritáson. Lehetséges ez megoldja a gondot de még tesztelni kell.)
+	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!! [gyaníthatóan elfogy a megszabott memória vagy cpu és azért fagy le (vagy a megengedett maximális szál)]
 
 - Fejleszteni kívánt részek, új funkciók:
 	- Rss átalakítások:

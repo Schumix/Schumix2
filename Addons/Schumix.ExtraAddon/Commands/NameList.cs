@@ -35,6 +35,7 @@ namespace Schumix.ExtraAddon.Commands
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
+		private readonly Dictionary<string, bool> _channels = new Dictionary<string, bool>();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private Functions sFunctions;
@@ -44,6 +45,11 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			_servername = ServerName;
 			sFunctions = fs;
+		}
+
+		public Dictionary<string, bool> Channels
+		{
+			get { return _channels; }
 		}
 
 		public void Add(string Channel, string Name)
