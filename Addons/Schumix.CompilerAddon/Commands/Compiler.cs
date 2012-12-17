@@ -47,6 +47,7 @@ namespace Schumix.CompilerAddon.Commands
 		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex DoRegex = new Regex(@"do\s*\{?\s*(?<content>.+)\s*\}?\s*while\s*\((?<while>.+)\s*\)");
 		private readonly Regex SystemNetRegex = new Regex(@"using\s+System.Net");
+		//private readonly Regex SchumixRegex2 = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)\s*?\{\s*(?<code>.*)\s*\}");
 		public Regex ClassRegex { get; set; }
 		public Regex EntryRegex { get; set; }
 		public Regex SchumixRegex { get; set; }
@@ -117,9 +118,12 @@ namespace Schumix.CompilerAddon.Commands
 				if(!IsClass(data))
 				{
 					if(!IsSchumix(data))
-						template = CompilerConfig.Referenced + " public class " + CompilerConfig.MainClass + " { public void " + CompilerConfig.MainConstructor + "() { " + CleanText(data) + " } }";
+						template = CompilerConfig.Referenced + " public class " + CompilerConfig.MainClass + " { public void " + CompilerConfig.MainConstructor + "() { try { " + CleanText(data) + " } catch(Exception e) { Console.WriteLine(\" -- Error: {0}\", e.Message); } } }";
 					else
+					{
+						//Console.WriteLine(SchumixRegex2.Match(CleanText(data)).Groups["code"].ToString());
 						template = CompilerConfig.Referenced + " public class " + CompilerConfig.MainClass + " { " + CleanText(data) + " }";
+					}
 				}
 				else if(IsEntry(data))
 				{
