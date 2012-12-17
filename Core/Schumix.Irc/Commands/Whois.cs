@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.Irc.Commands
 {
-	sealed class Whois
+	public sealed class Whois
 	{
 		public object Lock = new object();
 		public string Channel;
