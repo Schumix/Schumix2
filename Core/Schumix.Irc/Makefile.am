@@ -157,7 +157,8 @@ FILES = \
 	Commands/GoogleWebSearch/GoogleWebResult.cs \
 	Commands/GoogleWebSearch/GoogleWebResponseData.cs \
 	Commands/GoogleWebSearch/GoogleWebResultSet.cs \
-	IrcBase.cs 
+	IrcBase.cs \
+	Commands/Whois.cs 
 
 DATA_FILES = 
 
