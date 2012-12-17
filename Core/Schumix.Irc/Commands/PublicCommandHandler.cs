@@ -19,6 +19,7 @@
 
 using System;
 using System.Data;
+using System.Threading;
 using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.API;
@@ -166,8 +167,22 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			WhoisPrivmsg = sIRCMessage.Channel;
-			sSender.Whois(sIRCMessage.Info[4]);
+			string nick = sIRCMessage.Info[4].ToLower();
+
+			if(WhoisList.ContainsKey(nick))
+				Monitor.Enter(WhoisList[nick].Lock);
+
+			var whois = new Whois();
+			whois.Channel = sIRCMessage.Channel;
+			whois.Message = string.Empty;
+			whois.Online = false;
+			Monitor.Enter(whois.Lock);
+
+			if(WhoisList.ContainsKey(nick))
+				WhoisList.Remove(nick);
+
+			WhoisList.Add(nick, whois);
+			sSender.Whois(nick);
 		}
 
 		protected void HandleWarning(IRCMessage sIRCMessage)
