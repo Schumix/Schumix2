@@ -94,8 +94,8 @@ namespace Schumix.Irc.Commands
 			int i = 0;
 
 			foreach(var a in from asm in AppDomain.CurrentDomain.GetAssemblies()
-				where asm.GetName().FullName.ToLower(CultureInfo.InvariantCulture).Contains("schumix")
-				select asm)
+					where asm.GetName().FullName.ToLower(CultureInfo.InvariantCulture).Contains("schumix")
+					select asm)
 			{
 				i++;
 				asms.Add("currentassembly" + i.ToString(), a);
