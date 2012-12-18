@@ -209,7 +209,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(i < 3)
 					continue;
 
-				sNameList.Add(Channel, Parse(name));
+				sNameList.Add(Channel, sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.Parse(name));
 			}
 		}
 
@@ -222,25 +222,6 @@ namespace Schumix.ExtraAddon.Commands
 		public void HandleSuccessfulAuth(IRCMessage sIRCMessage)
 		{
 			sNameList.Channels.Clear();
-		}
-
-		private string Parse(string Name)
-		{
-			if(Name.Length < 1)
-				return string.Empty;
-
-			switch(Name.Substring(0, 1))
-			{
-				case ":":
-				case "~":
-				case "&":
-				case "@":
-				case "%":
-				case "+":
-					return Name.Remove(0, 1);
-				default:
-					return Name;
-			}
 		}
 	}
 }

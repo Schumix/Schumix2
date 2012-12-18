@@ -504,7 +504,7 @@ namespace Schumix.Irc
 				if(i < 3)
 					continue;
 
-				sChannelNameList.Add(Channel, Parse(name));
+				sChannelNameList.Add(Channel, sNickInfo.Parse(name));
 			}
 		}
 
@@ -512,25 +512,6 @@ namespace Schumix.Irc
 		{
 			if(sChannelNameList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()))
 				sChannelNameList.Channels[sIRCMessage.Channel.ToLower()] = true;
-		}
-
-		private string Parse(string Name)
-		{
-			if(Name.Length < 1)
-				return string.Empty;
-
-			switch(Name.Substring(0, 1))
-			{
-				case ":":
-				case "~":
-				case "&":
-				case "@":
-				case "%":
-				case "+":
-					return Name.Remove(0, 1);
-				default:
-					return Name;
-			}
 		}
 
 		/// <summary>

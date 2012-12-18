@@ -160,5 +160,24 @@ namespace Schumix.Irc
 		{
 			_Vhost = Status;
 		}
+
+		public string Parse(string Name)
+		{
+			if(Name.Length < 1)
+				return string.Empty;
+
+			switch(Name.Substring(0, 1))
+			{
+				case ":":
+				case "~":
+				case "&":
+				case "@":
+				case "%":
+				case "+":
+					return Name.Remove(0, 1);
+				default:
+					return Name;
+			}
+		}
 	}
 }
