@@ -21,7 +21,7 @@ using System;
 
 namespace Schumix.Framework
 {
-	public class ConsoleLog
+	public abstract class ConsoleLog
 	{
 		public static bool CLog { get; private set; }
 
