@@ -178,7 +178,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsg("NickServ", "identify {0}", pass);
+				sSendMessage.SendCMPrivmsg("NickServ", "IDENTIFY {0}", pass);
 			}
 		}
 
@@ -186,7 +186,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsg("NickServ", "status {0}", status);
+				sSendMessage.SendCMPrivmsg("NickServ", "STATUS {0}", status);
 			}
 		}
 
@@ -194,7 +194,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsg("NickServ", "info {0}", info);
+				sSendMessage.SendCMPrivmsg("NickServ", "INFO {0}", info);
 			}
 		}
 
@@ -210,7 +210,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsg("NickServ", "ghost {0} {1}", ghost, pass);
+				sSendMessage.SendCMPrivmsg("NickServ", "GHOST {0} {1}", ghost, pass);
 			}
 		}
 

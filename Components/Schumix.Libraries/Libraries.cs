@@ -416,8 +416,8 @@ namespace Schumix.Libraries
 		{
 			get
 			{
-				var elapsed = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
-				return (elapsed.TotalSeconds);
+				var elapsed = (DateTime.UtcNow - UnixTimeStart);
+				return elapsed.TotalSeconds;
 			}
 		}
 
@@ -485,7 +485,7 @@ namespace Schumix.Libraries
 		{
 			try
 			{
-				return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTime);
+				return UnixTimeStart.AddSeconds(unixTime);
 			}
 			catch(Exception)
 			{
