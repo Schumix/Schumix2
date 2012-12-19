@@ -18,15 +18,15 @@
  * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.IO;
+using System.Xml.Serialization;
+using System.Diagnostics.Contracts;
+using WolframAPI.Exceptions;
+//using Schumix.Framework;
+
 namespace WolframAPI
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.IO;
-	using System.Xml.Serialization;
-	using Exceptions;
-	//using Schumix.Framework;
-
 	///<summary>
 	/// Base class for XML-serialized types.
 	///</summary>

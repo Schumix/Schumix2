@@ -18,11 +18,11 @@
  * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Xml.Serialization;
+
 namespace WolframAPI
 {
-	using System;
-	using System.Xml.Serialization;
-
 	/// <summary>
 	/// Provides the Image (img) element's datas.
 	/// </summary>

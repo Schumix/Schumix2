@@ -18,12 +18,12 @@
  * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Xml.Serialization;
+using Schumix.Framework.Extensions;
+
 namespace WolframAPI
 {
-	using System;
-	using System.Xml.Serialization;
-	using Schumix.Framework.Extensions;
-
 	/// <summary>
 	/// The subpod element in the response.
 	/// </summary>

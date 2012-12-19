@@ -18,11 +18,11 @@
  * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Runtime.Serialization;
+
 namespace WolframAPI.Exceptions
 {
-	using System;
-	using System.Runtime.Serialization;
-
 	/// <summary>
 	/// Thrown by Wolfram API components.
 	/// </summary>

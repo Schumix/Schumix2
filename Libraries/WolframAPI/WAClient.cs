@@ -18,21 +18,21 @@
  * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.IO;
+using System.Net;
+using System.Web;
+using System.Linq;
+using System.Reflection;
+using System.Diagnostics.Contracts;
+using System.Runtime.Remoting.Messaging;
+using System.Xml.Serialization;
+using WolframAPI.Exceptions;
+//using Schumix.Framework;
+using Schumix.Framework.Extensions;
+
 namespace WolframAPI
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.IO;
-	using System.Linq;
-	using System.Net;
-	using System.Reflection;
-	using System.Runtime.Remoting.Messaging;
-	using System.Web;
-	using System.Xml.Serialization;
-	using Exceptions;
-	//using Schumix.Framework;
-	using Schumix.Framework.Extensions;
-
 	/// <summary>
 	/// Used to handle the response received event which occurs when a response is successfully
 	/// retrieved using the API.
