@@ -409,6 +409,11 @@ namespace Schumix.Libraries
 			return sUtilities.GetCpuId();
 		}
 
+		public static DateTime GetUnixTimeStart()
+		{
+			return UnixTimeStart;
+		}
+
 		/// <summary>
 		///   The current unix time.
 		/// </summary>
