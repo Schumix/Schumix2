@@ -412,9 +412,16 @@ namespace Schumix.GameAddon
 						}
 						case "!rescue":
 						{
+							var text = sLManager.GetCommandTexts("maffiagame/basecommand/rescue", channel, sIRCMessage.ServerName);
+							if(text.Length < 7)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
+								return;
+							}
+
 							if(sIRCMessage.Info.Length < 5)
 							{
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz megmenteni?");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 								return;
 							}
 
