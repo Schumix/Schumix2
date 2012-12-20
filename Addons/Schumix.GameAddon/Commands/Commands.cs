@@ -59,7 +59,7 @@ namespace Schumix.GameAddon.Commands
 
 			if(sIRCMessage.Info[4].ToLower() == "start")
 			{
-				if(sIRCMessage.Channel.Substring(0, 1) != "#")
+				if(!IsChannel(sIRCMessage.Channel))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, "Ez nem csatorna! Ne pm-ben írj!");
 					return;

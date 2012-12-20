@@ -98,9 +98,9 @@ namespace Schumix.CompilerAddon
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
 
-			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect(IFunctions.Commands) || !sSCompiler.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sSCompiler.IsChannel(sIRCMessage.Channel))
 					return;
 
 				if(!CompilerConfig.CompilerEnabled)
@@ -140,7 +140,7 @@ namespace Schumix.CompilerAddon
 					}
 				}
 
-				if(sIRCMessage.Channel.Substring(0, 1) != "#")
+				if(!sSCompiler.IsChannel(sIRCMessage.Channel))
 				{
 					if(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage))
 						Compiler(sIRCMessage, false, command);

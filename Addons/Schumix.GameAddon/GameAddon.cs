@@ -118,24 +118,24 @@ namespace Schumix.GameAddon
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sChannelInfo.FSelect(IFunctions.Gamecommands) || sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect(IFunctions.Gamecommands) || !sGameCommand.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sGameCommand.IsChannel(sIRCMessage.Channel))
 					return;
 
-				if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
+				if(sIRCMessage.Channel.Length >= 1 && !sGameCommand.IsChannel(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string channel = sIRCMessage.Channel.ToLower();
 
-				if(sGameCommand.MaffiaList.ContainsKey(channel) || sIRCMessage.Channel.Substring(0, 1) != "#")
+				if(sGameCommand.MaffiaList.ContainsKey(channel) || !sGameCommand.IsChannel(sIRCMessage.Channel))
 				{
 					if(sIRCMessage.Info.Length < 4)
 						return;
 
 					bool nick = false;
-	
-					if(sIRCMessage.Channel.Substring(0, 1) != "#")
+
+					if(!sGameCommand.IsChannel(sIRCMessage.Channel))
 					{
 						foreach(var maffia in sGameCommand.MaffiaList)
 						{
