@@ -394,9 +394,16 @@ namespace Schumix.GameAddon
 						}
 						case "!lynch":
 						{
+							var text = sLManager.GetCommandTexts("maffiagame/basecommand/lynch", channel, sIRCMessage.ServerName);
+							if(text.Length < 15)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
+								return;
+							}
+
 							if(sIRCMessage.Info.Length < 5)
 							{
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Kit akarsz lincselni?", sIRCMessage.Nick);
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Nick);
 								return;
 							}
 
