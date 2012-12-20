@@ -11,7 +11,7 @@ A bot kompatibilis a windows és linux rendszerrel. Valószínüleg Mac OS X-en 
 Windows alatt ajálott a `.net 4.0` használata vagy újabb.
 Monon jelenleg minimum követelmény a `2.10` vagy újabb.
 
-# Fordítása
+# Kód futtatása/Fordítása
 
 ## Windows
 A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
@@ -27,6 +27,19 @@ Telepítsük a `mono-xbuild` csomagot vagy forrásból. Ezután inditsuk el a `b
 Navigáljunk a `Run` mappába és azon belül a konfigurációnak megfelelõ mappába. Inditusk el az exe-t. A program legenerálja
 önmagának a konfig fájlt. Ha bármi gond lenne vele hozzunk létre egy `Configs` nevû mappát és a fõ mappából másoljuk bele
 a `Schumix.yml` nevû fájlt.
+
+# Telepítés
+
+## Archlinux
+
+`tar -xf schumix2.tar.gz`
+`cd schumix2`
+`makepkg -s`
+`sudo pacman -U schumix2.pkg.tar.xz`
+
+## Debian/Ubuntu
+
+...
 
 # Konfig beállítása
 

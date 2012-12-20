@@ -11,7 +11,7 @@ The bot has compatibility with the windows and linux systems. It might be run on
 Under Windows the `.NET Framework 4.0` or higher is recommended.
 Under Mono at least the `2.10` or higher is needed.
 
-# Compile
+# Run source/Compile
 
 ## Windows
 
@@ -28,6 +28,19 @@ Install the `mono-xbuild` package or from source. After run the `build.sh` comma
 # Code commissioning
 
 Navigate to the `Run` folder and in that proper folder for the configuration. Run the exe. The program is generates its config file. If there will be some problem then create a `Configs` named folder and from the root folder copy in that folder the `Schumix.yml` named file.
+
+# Install
+
+## Archlinux
+
+`tar -xf schumix2.tar.gz`
+`cd schumix2`
+`makepkg -s`
+`sudo pacman -U schumix2.pkg.tar.xz`
+
+## Debian/Ubuntu
+
+...
 
 # Config settings
 
