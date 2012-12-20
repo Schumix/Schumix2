@@ -320,6 +320,13 @@ namespace Schumix.GameAddon
 						}
 						case "!join":
 						{
+							var text = sLManager.GetCommandTexts("maffiagame/base/join", channel, sIRCMessage.ServerName);
+							if(text.Length < 5)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
+								return;
+							}
+
 							foreach(var maffia in sGameCommand.MaffiaList)
 							{
 								if(sIRCMessage.Channel.ToLower() != maffia.Key)
@@ -328,7 +335,7 @@ namespace Schumix.GameAddon
 									{
 										if(player.Value == sIRCMessage.Nick)
 										{
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Te már játékban vagy itt: {1}", sIRCMessage.Nick, maffia.Key);
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Nick, maffia.Key);
 											return;
 										}
 									}

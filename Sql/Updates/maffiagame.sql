@@ -8,6 +8,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/set/night", "{0}: Nincs megadva az állítandó paraméter!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/set/night/novoice", "{0}: Nincs megadva hogy on vagy off legyen-e ez a beállítás!\n{0}: A beállítás módosítva lett.\n{0}: Nem on illetve off kifejezés lett megadva!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/stats", "Új játék indul. Jelenleg {0} játékos van.\nJátékosok: {0}\nA játék állása a következő:\nA következő személyek vannak még életben: {0}\nA következő személyek halottak: {0}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/join", "{0}: Te már játékban vagy itt: {1}\n{0}: A játék épp most indult. Kérlek ne zavard a játékosokat!\n{0}: A játék már megy. Kérlek ne zavard a játékosokat!\n{0}: Bekerültél a játékba!\n{0}: Már játékban vagy!");
 
 -- legvégén lesznek ezek megírva
 -- INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "", "");
