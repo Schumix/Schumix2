@@ -183,7 +183,7 @@ namespace Schumix.GameAddon
 					{
 						case "!start":
 						{
-							var text = sLManager.GetCommandTexts("maffiagame/base/start", channel, sIRCMessage.ServerName);
+							var text = sLManager.GetCommandTexts("maffiagame/basecommand/start", channel, sIRCMessage.ServerName);
 							if(text.Length < 7)
 							{
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
@@ -199,7 +199,7 @@ namespace Schumix.GameAddon
 						}
 						case "!set":
 						{
-							var text = sLManager.GetCommandTexts("maffiagame/base/set", channel, sIRCMessage.ServerName);
+							var text = sLManager.GetCommandTexts("maffiagame/basecommand/set", channel, sIRCMessage.ServerName);
 							if(text.Length < 3)
 							{
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
@@ -223,7 +223,7 @@ namespace Schumix.GameAddon
 
 								if(sIRCMessage.Info[4].ToLower() == "info")
 								{
-									var text2 = sLManager.GetCommandTexts("maffiagame/base/set/info", channel, sIRCMessage.ServerName);
+									var text2 = sLManager.GetCommandTexts("maffiagame/basecommand/set/info", channel, sIRCMessage.ServerName);
 									if(text.Length < 4)
 									{
 										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
@@ -243,7 +243,7 @@ namespace Schumix.GameAddon
 								}
 								else if(sIRCMessage.Info[4].ToLower() == "nolynch")
 								{
-									var text2 = sLManager.GetCommandTexts("maffiagame/base/set/nolynch", channel, sIRCMessage.ServerName);
+									var text2 = sLManager.GetCommandTexts("maffiagame/basecommand/set/nolynch", channel, sIRCMessage.ServerName);
 									if(text.Length < 4)
 									{
 										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
@@ -274,13 +274,13 @@ namespace Schumix.GameAddon
 								{
 									if(sIRCMessage.Info.Length < 6)
 									{
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/base/set/night", channel, sIRCMessage.ServerName), sIRCMessage.Nick);
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/basecommand/set/night", channel, sIRCMessage.ServerName), sIRCMessage.Nick);
 										return;
 									}
 
 									if(sIRCMessage.Info[5].ToLower() == "novoice")
 									{
-										var text2 = sLManager.GetCommandTexts("maffiagame/base/set/night/novoice", channel, sIRCMessage.ServerName);
+										var text2 = sLManager.GetCommandTexts("maffiagame/basecommand/set/night/novoice", channel, sIRCMessage.ServerName);
 										if(text.Length < 3)
 										{
 											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
@@ -320,7 +320,7 @@ namespace Schumix.GameAddon
 						}
 						case "!join":
 						{
-							var text = sLManager.GetCommandTexts("maffiagame/base/join", channel, sIRCMessage.ServerName);
+							var text = sLManager.GetCommandTexts("maffiagame/basecommand/join", channel, sIRCMessage.ServerName);
 							if(text.Length < 5)
 							{
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
@@ -347,7 +347,7 @@ namespace Schumix.GameAddon
 						}
 						case "!leave":
 						{
-							var text = sLManager.GetCommandTexts("maffiagame/base/leave", channel, sIRCMessage.ServerName);
+							var text = sLManager.GetCommandTexts("maffiagame/basecommand/leave", channel, sIRCMessage.ServerName);
 							if(text.Length < 11)
 							{
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
@@ -376,9 +376,16 @@ namespace Schumix.GameAddon
 						}
 						case "!kill":
 						{
+							var text = sLManager.GetCommandTexts("maffiagame/basecommand/kill", channel, sIRCMessage.ServerName);
+							if(text.Length < 7)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
+								return;
+							}
+
 							if(sIRCMessage.Info.Length < 5)
 							{
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz megölni?");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 								return;
 							}
 

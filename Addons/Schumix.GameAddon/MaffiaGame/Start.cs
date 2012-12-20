@@ -41,7 +41,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
-			var text = sLManager.GetCommandTexts("maffiagame/base/start", _channel, _servername);
+			var text = sLManager.GetCommandTexts("maffiagame/basecommand/start", _channel, _servername);
 			if(text.Length < 7)
 			{
 				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));

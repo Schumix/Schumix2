@@ -31,7 +31,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 
-			var text = sLManager.GetCommandTexts("maffiagame/base/stats", _channel, _servername);
+			var text = sLManager.GetCommandTexts("maffiagame/basecommand/stats", _channel, _servername);
 			if(text.Length < 5)
 			{
 				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
