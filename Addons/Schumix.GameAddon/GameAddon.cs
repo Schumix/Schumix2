@@ -184,7 +184,7 @@ namespace Schumix.GameAddon
 						case "!start":
 						{
 							var text = sLManager.GetCommandTexts("maffiagame/basecommand/start", channel, sIRCMessage.ServerName);
-							if(text.Length < 7)
+							if(text.Length < 8)
 							{
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
 								return;
@@ -321,7 +321,7 @@ namespace Schumix.GameAddon
 						case "!join":
 						{
 							var text = sLManager.GetCommandTexts("maffiagame/basecommand/join", channel, sIRCMessage.ServerName);
-							if(text.Length < 5)
+							if(text.Length < 6)
 							{
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
 								return;

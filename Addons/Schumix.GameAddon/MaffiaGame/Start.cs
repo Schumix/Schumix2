@@ -35,16 +35,16 @@ namespace Schumix.GameAddon.MaffiaGames
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 			var sSender = sIrcBase.Networks[_servername].sSender;
 
-			if(Started || _start)
+			var text = sLManager.GetCommandTexts("maffiagame/basecommand/start", _channel, _servername);
+			if(text.Length < 8)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "A játék már megy!");
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
 				return;
 			}
 
-			var text = sLManager.GetCommandTexts("maffiagame/basecommand/start", _channel, _servername);
-			if(text.Length < 7)
+			if(Started || _start)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				sSendMessage.SendCMPrivmsg(_channel, text[7]);
 				return;
 			}
 

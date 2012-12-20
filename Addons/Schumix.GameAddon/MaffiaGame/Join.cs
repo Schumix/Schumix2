@@ -28,9 +28,16 @@ namespace Schumix.GameAddon.MaffiaGames
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 			var sSender = sIrcBase.Networks[_servername].sSender;
 
+			var text = sLManager.GetCommandTexts("maffiagame/basecommand/join", _channel, _servername);
+			if(text.Length < 6)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
 			if(_joinlist.Contains(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Már játékban vagy!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[5], Name);
 				return;
 			}
 
@@ -38,13 +45,6 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(!IsRunning(_channel, Name))
 				return;
-
-			var text = sLManager.GetCommandTexts("maffiagame/basecommand/join", _channel, _servername);
-			if(text.Length < 5)
-			{
-				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
-				return;
-			}
 
 			if(_joinstop)
 			{
