@@ -395,7 +395,7 @@ namespace Schumix.GameAddon
 						case "!lynch":
 						{
 							var text = sLManager.GetCommandTexts("maffiagame/basecommand/lynch", channel, sIRCMessage.ServerName);
-							if(text.Length < 15)
+							if(text.Length < 14)
 							{
 								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
 								return;

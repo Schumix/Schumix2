@@ -109,8 +109,15 @@ namespace Schumix.GameAddon.MaffiaGames
 			_timerowner.Start();
 
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
-			sSendMessage.SendCMPrivmsg(_channel, "{0} új játékot indított. Csatlakozni a '!join' paranccsal tudtok.", _owner);
-			sSendMessage.SendCMPrivmsg(_channel, "{0}: Írd be a '!start' parancsot, ha mindenki készen áll.", _owner);
+			var text = sLManager.GetCommandTexts("maffiagame/base/newgame", _channel, _servername);
+			if(text.Length < 2)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
+			sSendMessage.SendCMPrivmsg(_channel, text[0], _owner);
+			sSendMessage.SendCMPrivmsg(_channel, text[1], _owner);
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Game FROM maffiagame WHERE ServerName = '{0}' ORDER BY Game DESC", _servername);
 			_gameid = !db.IsNull() ? (Convert.ToInt32(db["Game"].ToString()) + 1) : 1;
@@ -326,8 +333,15 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				_owner = string.Empty;
 				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
-				sSendMessage.SendCMPrivmsg(_channel, "A játék indítója több mint 10 perce nincs itt.");
-				sSendMessage.SendCMPrivmsg(_channel, "A játékot mostantól bárki írányíthatja!");
+				var text = sLManager.GetCommandTexts("maffiagame/base/handleisownerafk", _channel, _servername);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+					return;
+				}
+
+				sSendMessage.SendCMPrivmsg(_channel, text[0]);
+				sSendMessage.SendCMPrivmsg(_channel, text[1]);
 
 				_timerowner.Enabled = false;
 				_timerowner.Elapsed -= HandleIsOwnerAfk;
@@ -335,7 +349,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			}
 		}
 
-		private void RemovePlayer(string Name)
+		private void RemovePlayer(string Name, string channel)
 		{
 			if(Name.Replace(SchumixBase.Space.ToString(), string.Empty) == string.Empty)
 				return;
@@ -389,39 +403,57 @@ namespace Schumix.GameAddon.MaffiaGames
 				_ghostlist.Add(Name.ToLower(), Name);
 
 			SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Name = '{0}' AND Game = '{1}' And ServerName = '{2}'", Name, _gameid, _servername));
+
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 			var sSender = sIrcBase.Networks[_servername].sSender;
 			sSender.Mode(_channel, "-v", Name);
+
+			if(channel != string.Empty)
+				sSendMessage.SendCMPrivmsg(channel, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
 		}
 
 		private void Corpse(string Name)
 		{
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+			var text = sLManager.GetCommandTexts("maffiagame/base/corpse", _channel, _servername);
+			if(text.Length < 4)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
 			var rank = GetRank(Name);
 
 			if(rank == Rank.Killer)
-				sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4gyilkos volt.");
+				sSendMessage.SendCMPrivmsg(_channel, text[0]);
 			else if(rank == Rank.Detective)
-				sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4nyomozó volt.");
+				sSendMessage.SendCMPrivmsg(_channel, text[1]);
 			else if(rank == Rank.Doctor)
-				sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy 4orvos volt.");
+				sSendMessage.SendCMPrivmsg(_channel, text[2]);
 			else if(rank == Rank.Normal)
-				sSendMessage.SendCMPrivmsg(_channel, "*** A holttest megvizsgálása után kiderült, hogy egy ártatlan falusi volt.");
+				sSendMessage.SendCMPrivmsg(_channel, text[3]);
 		}
 
 		public void EndText()
 		{
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+			var text = sLManager.GetCommandTexts("maffiagame/base/endtext", _channel, _servername);
+			if(text.Length < 2)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
 
 			if(_players < 8)
-				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig nem volt. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective());
+				sSendMessage.SendCMPrivmsg(_channel, text[0], GetKiller(), GetDetective());
 			else
-				sSendMessage.SendCMPrivmsg(_channel, "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.", GetKiller(), GetDetective(), GetDoctor());
+				sSendMessage.SendCMPrivmsg(_channel, text[1], GetKiller(), GetDetective(), GetDoctor());
 		}
 
 		public void EndGameText()
 		{
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
-			sSendMessage.SendCMPrivmsg(_channel, "A játék befejeződött.");
+			sSendMessage.SendCMPrivmsg(_channel, sLManager.GetCommandText("maffiagame/base/endgametext", _channel, _servername));
 		}
 
 		private bool IsRunning(string Channel, string Name = "")
@@ -429,11 +461,17 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!Running)
 			{
 				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+				var text = sLManager.GetCommandTexts("maffiagame/base/isrunning", _channel, _servername);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+					return false;
+				}
 
 				if(Name == string.Empty)
-					sSendMessage.SendCMPrivmsg(_channel, "Nem megy játék!");
+					sSendMessage.SendCMPrivmsg(_channel, text[0]);
 				else
-					sSendMessage.SendCMPrivmsg(_channel, "{0}: Nem megy játék!", Name);
+					sSendMessage.SendCMPrivmsg(_channel, text[1], Name);
 
 				return false;
 			}
@@ -446,7 +484,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!Running)
 			{
 				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
-				sSendMessage.SendCMPrivmsg(Channel, "{0}: Még nem kezdődött el játék!", Name);
+				sSendMessage.SendCMPrivmsg(Channel, sLManager.GetCommandText("maffiagame/base/isstarted", _channel, _servername), Name);
 				return false;
 			}
 			else
@@ -618,6 +656,12 @@ namespace Schumix.GameAddon.MaffiaGames
 		private void Game()
 		{
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+			var text = sLManager.GetCommandTexts("maffiagame/base/game", _channel, _servername);
+			if(text.Length < 43)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
 
 			try
 			{
@@ -630,15 +674,15 @@ namespace Schumix.GameAddon.MaffiaGames
 				string newkillghost = string.Empty;
 
 				if(_players < 8)
-					sSendMessage.SendCMPrivmsg(_channel, "Nincs elég játékos két gyilkoshoz, csak egy gyilkos van játékban (illetve nincs orvos).");
+					sSendMessage.SendCMPrivmsg(_channel, text[0]);
 				else if(_players >= 8 && _players < 15)
-					sSendMessage.SendCMPrivmsg(_channel, "Mivel legalább 8 játékos van, ezért 2 gyilkos és egy orvos lesz.");
+					sSendMessage.SendCMPrivmsg(_channel, text[1]);
 				else if(_players >= 15)
-					sSendMessage.SendCMPrivmsg(_channel, "Mivel legalább 15 játékos van, ezért 3 gyilkos, 2 nyomozó és egy orvos lesz.");
+					sSendMessage.SendCMPrivmsg(_channel, text[2]);
 
-				sSendMessage.SendCMPrivmsg(_channel, "Itt mindenki egyszerű civilnek tűnhet, de valójában köztetek van 1, 2 vagy 3 4gyilkos, akiknek célja mindenkit megölni az éj leple alatt.");
-				sSendMessage.SendCMPrivmsg(_channel, "Köztetek van egy vagy kettő 4nyomozó is: ő képes éjszakánként megtudni 1-1 emberről, hogy gyilkos-e, és lebuktatni őt a falusiak előtt, illetve a falu 4orvosa, aki minden éjjel megmenthet valakit...");
-				sSendMessage.SendCMPrivmsg(_channel, "A csoport célja tehát lebuktatni és meglincselni a gyilkos(oka)t, mielőtt mindenkit megölnek álmukban.");
+				sSendMessage.SendCMPrivmsg(_channel, text[3]);
+				sSendMessage.SendCMPrivmsg(_channel, text[4]);
+				sSendMessage.SendCMPrivmsg(_channel, text[5]);
 				Thread.Sleep(2000);
 
 				for(;;)
@@ -671,7 +715,7 @@ namespace Schumix.GameAddon.MaffiaGames
 							if(list.CompareDataInBlock() && !enabledk)
 							{
 								foreach(var kill in _killerlist)
-									sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
+									sSendMessage.SendCMPrivmsg(kill.Key, text[6]);
 
 								enabledk = true;
 								newkillghost = GetPlayerName(list[0].Trim());
@@ -698,7 +742,7 @@ namespace Schumix.GameAddon.MaffiaGames
 							if(list.CompareDataInBlock() && !enabledk)
 							{
 								foreach(var kill in _killerlist)
-									sSendMessage.SendCMPrivmsg(kill.Key, "A gyilkosok megegyeztek!");
+									sSendMessage.SendCMPrivmsg(kill.Key, text[6]);
 
 								enabledk = true;
 								newkillghost = GetPlayerName(list[0].Trim());
@@ -768,13 +812,13 @@ namespace Schumix.GameAddon.MaffiaGames
 									continue;
 
 								if(function.Value.DRank == Rank.Killer)
-									sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő a gyilkos! Buktasd le mielőtt még túl késő lenne...");
+									sSendMessage.SendCMPrivmsg(function.Key, text[7]);
 								else if(function.Value.DRank == Rank.Normal)
-									sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő egy hétköznapi falusi.");
+									sSendMessage.SendCMPrivmsg(function.Key, text[8]);
 								else if(function.Value.DRank == Rank.Doctor)
-									sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő a falu orvosa.");
+									sSendMessage.SendCMPrivmsg(function.Key, text[9]);
 								else if(function.Value.DRank == Rank.Detective)
-									sSendMessage.SendCMPrivmsg(function.Key, "Most már bebizonyosodott, hogy ő egy nyomozó.");
+									sSendMessage.SendCMPrivmsg(function.Key, text[10]);
 
 								function.Value.Detective = false;
 								function.Value.DRank = Rank.None;
@@ -791,16 +835,12 @@ namespace Schumix.GameAddon.MaffiaGames
 						if(_players >= 8)
 						{
 							if(newghost)
-							{
-								RemovePlayer(newkillghost);
-								sSendMessage.SendCMPrivmsg(newkillghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
-							}
+								RemovePlayer(newkillghost, newkillghost);
 						}
 						else
 						{
 							newghost = true;
-							RemovePlayer(newkillghost);
-							sSendMessage.SendCMPrivmsg(newkillghost, "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
+							RemovePlayer(newkillghost, newkillghost);
 						}
 
 						EndGame(newkillghost, true);
@@ -830,16 +870,16 @@ namespace Schumix.GameAddon.MaffiaGames
 						foreach(var name in _playerlist)
 							names += ", " + name.Value;
 
-						sSendMessage.SendCMPrivmsg(_channel, "A következő személyek vannak még életben: {0}", names.Remove(0, 2, ", "));
-						sSendMessage.SendCMPrivmsg(_channel, "Leszállt az 4éj.");
-						sSendMessage.SendCMPrivmsg(_channel, "Az összes civil békésen szundikál...");
+						sSendMessage.SendCMPrivmsg(_channel, text[11], names.Remove(0, 2, ", "));
+						sSendMessage.SendCMPrivmsg(_channel, text[12]);
+						sSendMessage.SendCMPrivmsg(_channel, text[13]);
 						Thread.Sleep(1000);
 
 						foreach(var name in _killerlist)
 						{
-							sSendMessage.SendCMPrivmsg(name.Key, "Miközben a falusiak alszanak, te eldöntöd, hogy kit ölsz meg az éj leple alatt.");
-							sSendMessage.SendCMPrivmsg(name.Key, "Te és a másik gyilkos (ha létezik, és él egyáltalán) meg fogjátok vitatni (PM-ben), hogy ki legyen az áldozat.");
-							sSendMessage.SendCMPrivmsg(name.Key, "Írd be PM-ként nekem: '!kill <nickname>'");
+							sSendMessage.SendCMPrivmsg(name.Key, text[14]);
+							sSendMessage.SendCMPrivmsg(name.Key, text[15]);
+							sSendMessage.SendCMPrivmsg(name.Key, text[16]);
 							Thread.Sleep(400);
 						}
 
@@ -855,9 +895,9 @@ namespace Schumix.GameAddon.MaffiaGames
 							foreach(var name in _killerlist)
 							{
 								if(name.Key == split[0])
-									sSendMessage.SendCMPrivmsg(name.Key, "A másik gyilkos {0}. PM-ben beszélgessetek.", split[1]);
+									sSendMessage.SendCMPrivmsg(name.Key, text[17], split[1]);
 								else
-									sSendMessage.SendCMPrivmsg(name.Key, "A másik gyilkos {0}. PM-ben beszélgessetek.", split[0]);
+									sSendMessage.SendCMPrivmsg(name.Key, text[17], split[0]);
 
 								Thread.Sleep(400);
 							}
@@ -866,7 +906,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						{
 							foreach(var name in _killerlist)
 							{
-								sSendMessage.SendCMPrivmsg(name.Key, "Csatlakozz ide: {0} és beszéljétek meg ki haljon meg!", _killerchannel);
+								sSendMessage.SendCMPrivmsg(name.Key, text[18], _killerchannel);
 								Thread.Sleep(400);
 							}
 						}
@@ -875,16 +915,16 @@ namespace Schumix.GameAddon.MaffiaGames
 						{
 							foreach(var name in _doctorlist)
 							{
-								sSendMessage.SendCMPrivmsg(name.Key, "A te dolgod éjszaka vigyázni a falu betegére.");
-								sSendMessage.SendCMPrivmsg(name.Key, "Most kell eldöntened hogy kit akarsz vizsgálni éjszaka: írd be PM-ként nekem: '!rescue <nickname>'.");
+								sSendMessage.SendCMPrivmsg(name.Key, text[19]);
+								sSendMessage.SendCMPrivmsg(name.Key, text[20]);
 								Thread.Sleep(400);
 							}
 						}
 
 						foreach(var name in _detectivelist)
 						{
-							sSendMessage.SendCMPrivmsg(name.Key, "A te dolgod megtudni egyes emberekről, hogy gyilkosok-e.");
-							sSendMessage.SendCMPrivmsg(name.Key, "Most kell eldöntened kit kövess éjszaka: írd be PM-ként nekem: '!see <nickname>'. Így megtudhatod, ki is ő valójában.");
+							sSendMessage.SendCMPrivmsg(name.Key, text[21]);
+							sSendMessage.SendCMPrivmsg(name.Key, text[22]);
 							Thread.Sleep(400);
 						}
 					}
@@ -894,23 +934,23 @@ namespace Schumix.GameAddon.MaffiaGames
 							continue;
 
 						_stop = true;
-						sSendMessage.SendCMPrivmsg(_channel, "Felkelt a nap!");
+						sSendMessage.SendCMPrivmsg(_channel, text[23]);
 
 						if(NoVoice)
 							AddRanks();
 
 						if(newghost)
 						{
-							sSendMessage.SendCMPrivmsg(_channel, "A falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!", newkillghost);
+							sSendMessage.SendCMPrivmsg(_channel, text[24], newkillghost);
 
 							if(GetPlayerMaster(newkillghost))
-								sSendMessage.SendCMPrivmsg(_channel, "Megölték a főnököt! Szemetek!!!");
+								sSendMessage.SendCMPrivmsg(_channel, text[25]);
 
 							Corpse(newkillghost);
-							sSendMessage.SendCMPrivmsg(_channel, "({0} meghalt, és nem szólhat hozzá a játékhoz.)", newkillghost);
+							sSendMessage.SendCMPrivmsg(_channel, text[26], newkillghost);
 						}
 						else
-							sSendMessage.SendCMPrivmsg(_channel, "Nem halt meg senki!");
+							sSendMessage.SendCMPrivmsg(_channel, text[27]);
 
 						newghost = false;
 						newkillghost = string.Empty;
@@ -919,39 +959,39 @@ namespace Schumix.GameAddon.MaffiaGames
 						foreach(var name in _playerlist)
 							names += ", " + name.Value;
 
-						sSendMessage.SendCMPrivmsg(_channel, "A következő személyek vannak még életben: {0}", names.Remove(0, 2, ", "));
+						sSendMessage.SendCMPrivmsg(_channel, text[28], names.Remove(0, 2, ", "));
 
 						/*names = string.Empty;
 						foreach(var name in _ghostlist)
-							names += ", " + name.Value;*/
+							names += ", " + name.Value;
 
-						//sSendMessage.SendCMPrivmsg(_channel, "A következő személyek halottak: {0}", names.Remove(0, 2, ", "));
-						sSendMessage.SendCMPrivmsg(_channel, "Eddig {0} személy esett áldozatul.", _ghostlist.Count);
+						sSendMessage.SendCMPrivmsg(_channel, "A következő személyek halottak: {0}", names.Remove(0, 2, ", "));*/
+						sSendMessage.SendCMPrivmsg(_channel, text[29], _ghostlist.Count);
 
 						if(!NoLynch)
 						{
-							sSendMessage.SendCMPrivmsg(_channel, "Felkelt a nap... A falusiak kirohannak a főtérre, hogy megvitassák, ki lehet a gyilkos.");
-							sSendMessage.SendCMPrivmsg(_channel, "A falusiaknak el *kell* dönteniük, hogy kit lincseljenek meg.");
-							sSendMessage.SendCMPrivmsg(_channel, "Ha mindenki készen áll, írjátok be: '!lynch <nickname>',");
-							sSendMessage.SendCMPrivmsg(_channel, "Összeszámolom a szavazatokat, és a döntő többség szava fog érvényesülni.");
-							sSendMessage.SendCMPrivmsg(_channel, "Megjegyzés: a szavazatokat bármikor meg lehet változtatni.");
+							sSendMessage.SendCMPrivmsg(_channel, text[30]);
+							sSendMessage.SendCMPrivmsg(_channel, text[31]);
+							sSendMessage.SendCMPrivmsg(_channel, text[32]);
+							sSendMessage.SendCMPrivmsg(_channel, text[33]);
+							sSendMessage.SendCMPrivmsg(_channel, text[34]);
 						}
 						else
 						{
-							sSendMessage.SendCMPrivmsg(_channel, "A lincselés a mai napon elmarad. A falusiak közösen megegyezve nem kérték.");
-							sSendMessage.SendCMPrivmsg(_channel, "A tanácskozásra viszont kapnak időt a főtéren. Mostantól számítva 2 percet.");
+							sSendMessage.SendCMPrivmsg(_channel, text[35]);
+							sSendMessage.SendCMPrivmsg(_channel, text[36]);
 							Thread.Sleep(30*1000);
-							sSendMessage.SendCMPrivmsg(_channel, "1 perc 30 másodperc van hátra.");
+							sSendMessage.SendCMPrivmsg(_channel, text[37]);
 							Thread.Sleep(30*1000);
-							sSendMessage.SendCMPrivmsg(_channel, "1 perc van hátra.");
+							sSendMessage.SendCMPrivmsg(_channel, text[38]);
 							Thread.Sleep(30*1000);
-							sSendMessage.SendCMPrivmsg(_channel, "30 másodperc van hátra.");
+							sSendMessage.SendCMPrivmsg(_channel, text[39]);
 							Thread.Sleep(20*1000);
-							sSendMessage.SendCMPrivmsg(_channel, "10 másodperc van hátra.");
+							sSendMessage.SendCMPrivmsg(_channel, text[40]);
 							Thread.Sleep(5*1000);
-							sSendMessage.SendCMPrivmsg(_channel, "5 másodperc van hátra.");
+							sSendMessage.SendCMPrivmsg(_channel, text[41]);
 							Thread.Sleep(5*1000);
-							sSendMessage.SendCMPrivmsg(_channel, "Vége!");
+							sSendMessage.SendCMPrivmsg(_channel, text[42]);
 
 							_day = false;
 							_stop = false;

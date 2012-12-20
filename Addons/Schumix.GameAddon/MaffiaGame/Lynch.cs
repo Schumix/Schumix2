@@ -44,7 +44,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					return;
 
 				var text = sLManager.GetCommandTexts("maffiagame/basecommand/lynch", _channel, _servername);
-				if(text.Length < 15)
+				if(text.Length < 14)
 				{
 					sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
 					return;
@@ -141,7 +141,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 					_lynchmaxnumber = 0;
 					namess = GetPlayerName(namess);
-					RemovePlayer(namess);
+					RemovePlayer(namess, namess);
 					sSendMessage.SendCMPrivmsg(_channel, text[11], namess);
 
 					if(GetPlayerMaster(namess))
@@ -154,7 +154,6 @@ namespace Schumix.GameAddon.MaffiaGames
 					if(_playerlist.Count >= 2 && Running)
 					{
 						sSendMessage.SendCMPrivmsg(_channel, text[13], namess);
-						sSendMessage.SendCMPrivmsg(namess, text[14]);
 						_day = false;
 						_stop = false;
 					}

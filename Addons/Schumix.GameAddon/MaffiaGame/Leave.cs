@@ -81,7 +81,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			}
 
 			sSender.Mode(_channel, "-v", Name);
-			RemovePlayer(Name);
+			RemovePlayer(Name, string.Empty);
 			sSendMessage.SendCMPrivmsg(_channel, text[4], Name);
 			var rank = GetRank(Name);
 
