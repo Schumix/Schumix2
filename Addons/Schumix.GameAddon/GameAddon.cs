@@ -36,6 +36,7 @@ namespace Schumix.GameAddon
 {
 	class GameAddon : ISchumixAddon
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private GameCommand sGameCommand;
@@ -182,11 +183,18 @@ namespace Schumix.GameAddon
 					{
 						case "!start":
 						{
+							var text = sLManager.GetCommandTexts("maffiagame/base/start", channel, sIRCMessage.ServerName);
+							if(text.Length < 7)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
+								return;
+							}
+
 							if(sGameCommand.MaffiaList[channel].GetOwner() == sIRCMessage.Nick || sGameCommand.MaffiaList[channel].GetOwner() == string.Empty ||
 								sGameCommand.IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 								sGameCommand.MaffiaList[channel].Start();
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: A játékot {1} indította!", sIRCMessage.Nick, sGameCommand.MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Nick, sGameCommand.MaffiaList[channel].GetOwner());
 							break;
 						}
 						case "!set":

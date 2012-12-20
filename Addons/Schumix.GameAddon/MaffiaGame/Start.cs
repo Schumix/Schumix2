@@ -41,9 +41,16 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
+			var text = sLManager.GetCommandTexts("maffiagame/base/start", _channel, _servername);
+			if(text.Length < 7)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
 			if(_playerlist.Count < 4)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "A játék indításához minimum 4 játékos kell!");
+				sSendMessage.SendCMPrivmsg(_channel, text[1]);
 				return;
 			}
 
@@ -173,25 +180,25 @@ namespace Schumix.GameAddon.MaffiaGames
 			}
 
 			foreach(var name in _killerlist)
-				sSendMessage.SendCMPrivmsg(name.Key, "Te egy gyilkos vagy. Célod megölni minden falusit. Csak viselkedj természetesen!");
+				sSendMessage.SendCMPrivmsg(name.Key, text[2]);
 
 			foreach(var name in _detectivelist)
-				sSendMessage.SendCMPrivmsg(name.Key, "Te vagy a nyomozó. A te dolgod éjszakánként követni 1-1 embert, hogy megtudd, ki is ő valójában, mielőtt még túl késő lenne. Ha szerencséd van, a falusiak hisznek neked - és talán nem lincselnek meg...");
+				sSendMessage.SendCMPrivmsg(name.Key, text[3]);
 
 			if(count >= 8)
 			{
 				foreach(var name in _doctorlist)
-					sSendMessage.SendCMPrivmsg(name.Key, "Te vagy a falu egyetlen orvosa. Éjszakánként megmenhtetsz egy-egy embert a zord haláltól. Ha szerencséd van, talán nem te leszel az első áldozat...");
+					sSendMessage.SendCMPrivmsg(name.Key, text[4]);
 			}
 
 			foreach(var name in _normallist)
-				sSendMessage.SendCMPrivmsg(name.Key, "Te egy teljesen hétköznapi civil vagy. Nincs más dolgod, mint kiválasztani nappal, hogy ki lehet a gyilkos, akit meglincseltek, éjszakánként pedig imádkozni az életedért...");
+				sSendMessage.SendCMPrivmsg(name.Key, text[5]);
 
 			list.Clear();
 			Started = true;
 			_start = false;
 			_players = _playerlist.Count;
-			sSendMessage.SendCMPrivmsg(_channel, "Új játék lett indítva! Most mindenki megkapja a szerepét.");
+			sSendMessage.SendCMPrivmsg(_channel, text[6]);
 			_joinstop = false;
 			sSender.Mode(_channel, "+m");
 			Thread.Sleep(1000);

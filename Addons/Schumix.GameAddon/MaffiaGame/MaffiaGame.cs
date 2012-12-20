@@ -34,6 +34,7 @@ namespace Schumix.GameAddon.MaffiaGames
 	sealed partial class MaffiaGame : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Dictionary<string, string> _detectivelist = new Dictionary<string, string>();
 		private readonly Dictionary<string, Player> _playerflist = new Dictionary<string, Player>();
