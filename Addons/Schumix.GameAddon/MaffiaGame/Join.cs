@@ -28,9 +28,16 @@ namespace Schumix.GameAddon.MaffiaGames
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 			var sSender = sIrcBase.Networks[_servername].sSender;
 
+			var text = sLManager.GetCommandTexts("maffiagame/basecommand/join", _channel, _servername);
+			if(text.Length < 6)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
 			if(_joinlist.Contains(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Már játékban vagy!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[5], Name);
 				return;
 			}
 
@@ -41,20 +48,18 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(_joinstop)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: A játék épp most indult. Kérlek ne zavard a játékosokat!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[1], Name);
 				return;
 			}
 
 			if(Started)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: A játék már megy. Kérlek ne zavard a játékosokat!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[2], Name);
 				return;
 			}
 
 			if(!_playerlist.ContainsValue(Name))
 			{
-				sSendMessage.SendCMPrivmsg(_channel, string.Empty);
-
 				int i = 0;
 				foreach(var player in _playerlist)
 				{
@@ -64,10 +69,10 @@ namespace Schumix.GameAddon.MaffiaGames
 
 				_playerlist.Add(i+1, Name);
 				sSender.Mode(_channel, "+v", Name);
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Bekerültél a játékba!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[3], Name);
 			}
 			else
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Már játékban vagy!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[4], Name);
 		}
 	}
 }

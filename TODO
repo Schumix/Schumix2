@@ -16,7 +16,7 @@ Megírásra váró feladatok:
 	- Sűrgős:
 		- sznap parancs megírása normálisan.
 		- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
-		- Játék addon nyelvezetét átírni angolra is.
+		- Játék addonban a nyelvezet kiszedve és az angolnak külön van szedve egy fájlba a magyar szöveg. Csak át kell alakítani.
 	- Közepes:
 		- Serverben megoldani az egy szerveren lévő botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
 		- Többszerveres módnál az irc logolást leválasztani a normál logról(normális módnál maradhatna a Schumix.log-ban [Túlságosan sok mindent kéne megváltoztatni ezért jó ötleteken dolgozom hozzá.]).

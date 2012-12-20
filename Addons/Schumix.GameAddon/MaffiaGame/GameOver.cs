@@ -33,20 +33,27 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!IsStarted(_channel, Name))
 				return;
 
+			var text = sLManager.GetCommandTexts("maffiagame/basecommand/gameover", _channel, _servername);
+			if(text.Length < 4)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
 			if(_gameoverlist.Contains(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "{0}: Te már kérelmezted a leállítást!", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[0], Name);
 				return;
 			}
 
 			_gameoverlist.Add(Name.ToLower());
-			sSendMessage.SendCMPrivmsg(_channel, "{0} arra szavazott, hogy vége legyen a játéknak!", Name);
-			sSendMessage.SendCMPrivmsg(_channel, "Jelenleg {0} játékos kívánja leállítani! A többséghez {1} szavazat kell!", _gameoverlist.Count, (_playerlist.Count/2)+1);
+			sSendMessage.SendCMPrivmsg(_channel, text[1], Name);
+			sSendMessage.SendCMPrivmsg(_channel, text[2], _gameoverlist.Count, (_playerlist.Count/2)+1);
 
 			if(_gameoverlist.Count >= (_playerlist.Count/2)+1)
 			{
 				RemoveRanks();
-				sSendMessage.SendCMPrivmsg(_channel, "A többség megszavazta a játék leállítását!");
+				sSendMessage.SendCMPrivmsg(_channel, text[3]);
 				EndGameText();
 				StopThread();
 			}
