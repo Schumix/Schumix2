@@ -123,7 +123,7 @@ namespace Schumix.GameAddon
 				if(!sChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sGameCommand.IsChannel(sIRCMessage.Channel))
 					return;
 
-				if(sIRCMessage.Channel.Length >= 1 && !sGameCommand.IsChannel(sIRCMessage.Channel))
+				if(!sGameCommand.IsChannel(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string channel = sIRCMessage.Channel.ToLower();

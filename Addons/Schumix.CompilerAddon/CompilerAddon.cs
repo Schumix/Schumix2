@@ -106,7 +106,7 @@ namespace Schumix.CompilerAddon
 				if(!CompilerConfig.CompilerEnabled)
 					return;
 
-				if(sIRCMessage.Channel.Length >= 1 && !sSCompiler.IsChannel(sIRCMessage.Channel))
+				if(!sSCompiler.IsChannel(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string command = IRCConfig.List[sIRCMessage.ServerName].NickName + SchumixBase.Comma;

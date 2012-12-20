@@ -57,7 +57,7 @@ namespace Schumix.Irc
 			else
 				LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
 
-			if(sIRCMessage.Channel.Length >= 1 && !IsChannel(sIRCMessage.Channel))
+			if(!IsChannel(sIRCMessage.Channel))
 				sIRCMessage.Channel = sIRCMessage.Nick;
 
 			sCtcpSender.CtcpReply(sIRCMessage);
