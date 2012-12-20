@@ -2283,6 +2283,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "No such help command!";
 				}
+				case "And":
+				{
+					if(Language == "huHU")
+						return "és";
+					else if(Language == "enUS")
+						return "and";
+					else
+						return "and";
+				}
 				default:
 					return string.Empty;
 			}
