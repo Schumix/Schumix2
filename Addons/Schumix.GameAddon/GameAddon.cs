@@ -347,6 +347,13 @@ namespace Schumix.GameAddon
 						}
 						case "!leave":
 						{
+							var text = sLManager.GetCommandTexts("maffiagame/base/leave", channel, sIRCMessage.ServerName);
+							if(text.Length < 11)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
+								return;
+							}
+
 							if(sIRCMessage.Info.Length < 5)
 							{
 								sGameCommand.MaffiaList[channel].Leave(sIRCMessage.Nick);
@@ -359,12 +366,12 @@ namespace Schumix.GameAddon
 									!sGameCommand.MaffiaList[channel].GetDetectiveList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
 									!sGameCommand.MaffiaList[channel].GetNormalList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
 									!sGameCommand.MaffiaList[channel].GetPlayerList().ContainsValue(sIRCMessage.Info[4]))
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Kit akarsz kiléptetni?", sIRCMessage.Nick);
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Nick);
 								else
 									sGameCommand.MaffiaList[channel].Leave(sIRCMessage.Info[4], sIRCMessage.Nick);
 							}
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem te indítottad a játékot!", sIRCMessage.Nick);
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Nick);
 							break;
 						}
 						case "!kill":

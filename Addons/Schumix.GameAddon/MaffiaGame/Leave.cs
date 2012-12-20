@@ -38,11 +38,18 @@ namespace Schumix.GameAddon.MaffiaGames
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 			var sSender = sIrcBase.Networks[_servername].sSender;
 
+			var text = sLManager.GetCommandTexts("maffiagame/base/leave", _channel, _servername);
+			if(text.Length < 11)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
 			if(NickName == string.Empty)
 			{
 				if(!_playerlist.ContainsValue(Name))
 				{
-					sSendMessage.SendCMPrivmsg(_channel, "{0}: Te már nem vagy játékos. Kérlek maradj csendben!", Name);
+					sSendMessage.SendCMPrivmsg(_channel, text[2], Name);
 					return;
 				}
 			}
@@ -50,7 +57,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				if(!_playerlist.ContainsValue(NickName))
 				{
-					sSendMessage.SendCMPrivmsg(_channel, "{0}: Te már nem vagy játékos. Kérlek maradj csendben!", NickName);
+					sSendMessage.SendCMPrivmsg(_channel, text[3], NickName);
 					return;
 				}
 			}
@@ -75,19 +82,19 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			sSender.Mode(_channel, "-v", Name);
 			RemovePlayer(Name);
-			sSendMessage.SendCMPrivmsg(_channel, "{0} eltűnt egy különös féreglyukban.", Name);
+			sSendMessage.SendCMPrivmsg(_channel, text[4], Name);
 			var rank = GetRank(Name);
 
 			if(rank == Rank.Killer)
-				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint gyilkos. Remélhetőleg halála izgalmasabb lesz.", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[5], Name);
 			else if(rank == Rank.Detective)
-				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint nyomozó. Remélhetőleg halála izgalmasabb lesz.", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[6], Name);
 			else if(rank == Rank.Doctor)
-				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak izgalmas szerepe volt a játékban, mint orvos. Remélhetőleg halála izgalmasabb lesz.", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[7], Name);
 			else if(rank == Rank.Normal)
-				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak unalmas szerepe volt a játékban, mint civil. Remélhetőleg halála izgalmasabb lesz.", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[8], Name);
 			else
-				sSendMessage.SendCMPrivmsg(_channel, "{0}-nak nem volt szerepe még a játékban. Remélhetőleg halála izgalmasabb lesz.", Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[9], Name);
 
 			if(_owner == Name)
 			{
@@ -101,7 +108,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				}
 
 				if(_playerlist.Count > 0)
-					sSendMessage.SendCMPrivmsg(_channel, "A játék indítója lelépett. A játékot mostantól bárki írányíthatja!");
+					sSendMessage.SendCMPrivmsg(_channel, text[10]);
 			}
 
 			if(Started)
