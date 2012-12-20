@@ -33,15 +33,22 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!IsStarted(_channel, NickName))
 				return;
 
+			var text = sLManager.GetCommandTexts("maffiagame/basecommand/see", _channel, _servername);
+			if(text.Length < 8)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
 			if(_day)
 			{
-				sSendMessage.SendCMPrivmsg(NickName, "Csak este nyomozhatsz!");
+				sSendMessage.SendCMPrivmsg(NickName, text[1]);
 				return;
 			}
 
 			if(!_detectivelist.ContainsKey(NickName.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(NickName, "Nem vagy nyomozó!");
+				sSendMessage.SendCMPrivmsg(NickName, text[2]);
 				return;
 			}
 
@@ -49,26 +56,26 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				if(function.Key == NickName.ToLower() && function.Value.Detective)
 				{
-					sSendMessage.SendCMPrivmsg(NickName, "Ma este már kikérdeztél valakit!");
+					sSendMessage.SendCMPrivmsg(NickName, text[3]);
 					return;
 				}
 			}
 
 			if(_ghostlist.ContainsKey(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(NickName, "Ő már halott. Válasz mást!");
+				sSendMessage.SendCMPrivmsg(NickName, text[4]);
 				return;
 			}
 
 			if(!_killerlist.ContainsKey(Name.ToLower()) && !_detectivelist.ContainsKey(Name.ToLower()) &&
 				!_normallist.ContainsKey(Name.ToLower()) && !_doctorlist.ContainsKey(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(NickName, "Kit akarsz kikérdezni?");
+				sSendMessage.SendCMPrivmsg(NickName, text[5]);
 				return;
 			}
 
 			if(Name.ToLower() == NickName.ToLower())
-				sSendMessage.SendCMPrivmsg(NickName, "Önmagadat akarod kikérdezni? Te tudod :P");
+				sSendMessage.SendCMPrivmsg(NickName, text[6]);
 
 			var rank = GetRank(Name);
 
@@ -81,7 +88,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			else if(_normallist.ContainsKey(Name.ToLower()))
 				rank = Rank.Normal;
 
-			sSendMessage.SendCMPrivmsg(NickName, "A jelentést reggel kapod meg!");
+			sSendMessage.SendCMPrivmsg(NickName, text[7]);
 
 			foreach(var function in _playerflist)
 			{

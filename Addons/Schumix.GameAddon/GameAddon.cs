@@ -430,9 +430,16 @@ namespace Schumix.GameAddon
 						}
 						case "!see":
 						{
+							var text = sLManager.GetCommandTexts("maffiagame/basecommand/see", channel, sIRCMessage.ServerName);
+							if(text.Length < 8)
+							{
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(channel, sIRCMessage.ServerName)));
+								return;
+							}
+
 							if(sIRCMessage.Info.Length < 5)
 							{
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "Kit akarsz kikérdezni?");
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0]);
 								return;
 							}
 
