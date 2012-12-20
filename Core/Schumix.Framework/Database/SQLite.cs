@@ -76,7 +76,7 @@ namespace Schumix.Framework.Database
 		/// </summary>
 		/// <param name="sql">The query</param>
 		/// <returns>Result from the database.</returns>
-		public DataTable Query(string query)
+		public DataTable Query(string query, bool logerror = true)
 		{
 			try
 			{
@@ -99,7 +99,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(SQLiteException s)
 			{
-				Crash(s);
+				Crash(s, logerror);
 				return null;
 			}
 		}
@@ -115,7 +115,7 @@ namespace Schumix.Framework.Database
 			return !table.Equals(null) && table.Rows.Count > 0 ? table.Rows[0] : null;
 		}
 
-		public void ExecuteNonQuery(string sql)
+		public void ExecuteNonQuery(string sql, bool logerror = true)
 		{
 			try
 			{
@@ -129,7 +129,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(SQLiteException s)
 			{
-				Crash(s);
+				Crash(s, logerror);
 			}
 		}
 
@@ -142,11 +142,11 @@ namespace Schumix.Framework.Database
 			}
 			catch(SQLiteException s)
 			{
-				Crash(s, true);
+				Crash(s, true, true);
 			}
 		}
 
-		private void Crash(SQLiteException s, bool c = false)
+		private void Crash(SQLiteException s, bool logerror, bool c = false)
 		{
 			if(c)
 			{
@@ -199,7 +199,8 @@ namespace Schumix.Framework.Database
 				Process.GetCurrentProcess().Kill();
 			}
 
-			Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+			if(logerror)
+				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
 		}
 
 		public bool Update(string sql)
@@ -300,6 +301,11 @@ namespace Schumix.Framework.Database
 			{
 				return false;
 			}
+		}
+
+		public bool IsCreatedTable(string Table)
+		{
+			return !Query(string.Format("SHOW CREATE TABLE {0}", Table), false).IsNull();
 		}
 	}
 }

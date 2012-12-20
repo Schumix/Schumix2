@@ -175,7 +175,9 @@ namespace Schumix.Irc.Commands
 
 				string pass = sUtilities.GetRandomString();
 				SchumixBase.DManager.Insert("`admins`(ServerId, ServerName, Name, Password)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(name.ToLower()), sUtilities.Sha1(pass));
-				SchumixBase.DManager.Insert("`hlmessage`(ServerId, ServerName, Name, Enabled)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(name.ToLower()), "off");
+
+				if(SchumixBase.DManager.IsCreatedTable("hlmessage"))
+					SchumixBase.DManager.Insert("`hlmessage`(ServerId, ServerName, Name, Enabled)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(name.ToLower()), "off");
 
 				sSendMessage.SendChatMessage(sIRCMessage, text[1], name);
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[2], pass);
@@ -224,7 +226,10 @@ namespace Schumix.Irc.Commands
 				}
 
 				SchumixBase.DManager.Delete("admins", string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName));
-				SchumixBase.DManager.Delete("hlmessage", string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName));
+
+				if(SchumixBase.DManager.IsCreatedTable("hlmessage"))
+					SchumixBase.DManager.Delete("hlmessage", string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName));
+
 				sSendMessage.SendChatMessage(sIRCMessage, text[1], name);
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "rank")

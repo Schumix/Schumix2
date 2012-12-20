@@ -72,7 +72,7 @@ namespace Schumix.Framework.Database
 			}
 		}
 
-		public DataTable Query(string query)
+		public DataTable Query(string query, bool logerror = true)
 		{
 			try
 			{
@@ -95,7 +95,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				Crash(m);
+				Crash(m, logerror);
 				return null;
 			}
 		}
@@ -106,7 +106,7 @@ namespace Schumix.Framework.Database
 			return !table.Equals(null) && table.Rows.Count > 0 ? table.Rows[0] : null;
 		}
 
-		public void ExecuteNonQuery(string sql)
+		public void ExecuteNonQuery(string sql, bool logerror = true)
 		{
 			try
 			{
@@ -120,7 +120,7 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				Crash(m);
+				Crash(m, logerror);
 			}
 		}
 
@@ -150,11 +150,11 @@ namespace Schumix.Framework.Database
 			}
 			catch(MySqlException m)
 			{
-				Crash(m, true);
+				Crash(m, true, true);
 			}
 		}
 
-		private void Crash(MySqlException m, bool c = false)
+		private void Crash(MySqlException m, bool logerror, bool c = false)
 		{
 			if(c)
 			{
@@ -224,7 +224,8 @@ namespace Schumix.Framework.Database
 				Process.GetCurrentProcess().Kill();
 			}
 
-			Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+			if(logerror)
+				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
 		}
 
 		public bool Update(string sql)
@@ -325,6 +326,11 @@ namespace Schumix.Framework.Database
 			{
 				return false;
 			}
+		}
+
+		public bool IsCreatedTable(string Table)
+		{
+			return !Query(string.Format("SHOW CREATE TABLE {0}", Table), false).IsNull();
 		}
 	}
 }

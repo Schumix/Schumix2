@@ -140,6 +140,14 @@ namespace Schumix.TesztAddon.Commands
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("xbot"));
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandTexts("xbot")[1]);
 			}
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "istable")
+			{
+				if(SchumixBase.DManager.IsCreatedTable("admins"))
+					sSendMessage.SendChatMessage(sIRCMessage, "létezik!");
+
+				if(!SchumixBase.DManager.IsCreatedTable("admin"))
+					sSendMessage.SendChatMessage(sIRCMessage, "nem létezik!");
+			}
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);
 		}
