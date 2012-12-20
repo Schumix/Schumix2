@@ -472,11 +472,11 @@ namespace Schumix.GameAddon
 								}
 							}
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Sajnálom, de csak {1}, a játék indítója vethet véget a játéknak!", sIRCMessage.Nick, sGameCommand.MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/basecommand/end", channel, sIRCMessage.ServerName), sIRCMessage.Nick, sGameCommand.MaffiaList[channel].GetOwner());
 							break;
 						}
 						default:
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, "{0}: Nem létezik ilyen parancs!", sIRCMessage.Nick);
+							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/basecommand", channel, sIRCMessage.ServerName), sIRCMessage.Nick);
 							break;
 					}
 				}

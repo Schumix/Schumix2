@@ -15,6 +15,8 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/rescue", "Kit akarsz megmenteni?\nCsak este menthetsz életet!\nNem vagy orvos!\nŐ már halott. Válasz mást!\nKit akarsz megmenteni?\nÖnmagadat akarod megmenteni? Ennyire nem lehetsz félős!\nElkönyveltem a kérésedet.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/see", "Kit akarsz kikérdezni?\nCsak este nyomozhatsz!\nNem vagy nyomozó!\nMa este már kikérdeztél valakit!\nŐ már halott. Válasz mást!\nKit akarsz kikérdezni?\nÖnmagadat akarod kikérdezni? Te tudod :P\nA jelentést reggel kapod meg!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/gameover", "{0}: Te már kérelmezted a leállítást!\n{0} arra szavazott, hogy vége legyen a játéknak!\nJelenleg {0} játékos kívánja leállítani! A többséghez {1} szavazat kell!\nA többség megszavazta a játék leállítását!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/end", "{0}: Sajnálom, de csak {1}, a játék indítója vethet véget a játéknak!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand", "{0}: Nem létezik ilyen parancs!");
 
 -- legvégén lesznek ezek megírva
 -- INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "", "");
