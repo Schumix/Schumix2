@@ -47,7 +47,6 @@ namespace Schumix.CompilerAddon.Commands
 		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex DoRegex = new Regex(@"do\s*\{?\s*(?<content>.+)\s*\}?\s*while\s*\((?<while>.+)\s*\)");
 		private readonly Regex SystemNetRegex = new Regex(@"using\s+System.Net");
-		//private readonly Regex SchumixRegex2 = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)\s*?\{\s*(?<code>.*)\s*\}");
 		public Regex ClassRegex { get; set; }
 		public Regex EntryRegex { get; set; }
 		public Regex SchumixRegex { get; set; }
@@ -118,12 +117,9 @@ namespace Schumix.CompilerAddon.Commands
 				if(!IsClass(data))
 				{
 					if(!IsSchumix(data))
-						template = CompilerConfig.Referenced + " public class " + CompilerConfig.MainClass + " { public void " + CompilerConfig.MainConstructor + "() { try { " + CleanText(data) + " } catch(Exception e) { Console.WriteLine(\" -- Error: {0}\", e.Message); } } }";
+						template = CompilerConfig.Referenced + " public class " + CompilerConfig.MainClass + " { public void " + CompilerConfig.MainConstructor + "() { " + CleanText(data) + " } }";
 					else
-					{
-						//Console.WriteLine(SchumixRegex2.Match(CleanText(data)).Groups["code"].ToString());
 						template = CompilerConfig.Referenced + " public class " + CompilerConfig.MainClass + " { " + CleanText(data) + " }";
-					}
 				}
 				else if(IsEntry(data))
 				{
@@ -151,7 +147,18 @@ namespace Schumix.CompilerAddon.Commands
 				}
 
 				int ReturnCode = 0;
-				var thread = new Thread(() => ReturnCode = StartCode(sIRCMessage, data, o));
+				var thread = new Thread(() =>
+				{
+					try
+					{
+						ReturnCode = StartCode(sIRCMessage, data, o);
+					}
+					catch(Exception e)
+					{
+						Log.Debug("CompilerThread", sLConsole.Exception("Error"), e.Message);
+					}
+				});
+
 				thread.Start();
 				thread.Join(3000);
 				thread.Abort();
@@ -444,7 +451,18 @@ namespace Schumix.CompilerAddon.Commands
 				if(IsFor(data) || IsDo(data) || IsWhile(data))
 				{
 					bool b = false;
-					var thread = new Thread(() => { o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
+					var thread = new Thread(() =>
+					{
+						try
+						{
+							o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true;
+						}
+						catch(Exception e)
+						{
+							Log.Debug("CompilerThread2", sLConsole.Exception("Error"), e.Message);
+						}
+					});
+
 					thread.Start();
 					thread.Join(2);
 					thread.Abort();
