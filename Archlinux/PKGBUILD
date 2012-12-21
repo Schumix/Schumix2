@@ -1,0 +1,68 @@
+# Schumix2 Archlinux install script
+# made by Jackneill
+
+pkgname=schumix2
+_pkgname=Schumix2
+pkgver=$revision
+_pkgverclassic=$revision
+pkgrel=1
+_gitdir=Schumix2
+_gitbranch=master
+_giturl="git://github.com/megax/$_gitdir.git"
+pkgdesc="Schumix2 IRC Bot and Framework"
+revision="$(echo $(cat ../../Core/Schumix.Framework/Config/Consts.cs) | grep -o 'SchumixVersion = ".*"; public const string SchumixFileVersion' | awk '{print substr($3, 2, length($3)-3)}')"
+arch=('any')
+url="git://github.com/megax/$_gitdir.git"
+license=('GNU GPL')
+groups=('')
+depends=('')
+makedepends=('git')
+optdepends=('')
+conflicts=('')
+
+build()
+{
+    echo "Version: $revision"
+
+    # Move to src dir
+    cd "${srcdir}"
+
+    # Clone from git server
+    msg "Cloning from git server..."
+    if [[ -d $_gitdir ]] ; then
+      cd "$_gitdir"
+      git pull origin "$_gitbranch"
+      msg "Files updated"
+    else
+      git clone "$_giturl" "$_gitdir"
+      cd "$_gitdir"
+    fi
+
+    # Uncomment if you aren't using the master branch
+    #git checkout "v$pkgver"
+
+    # Notify the user that the build() process is complete
+    echo "$_pkgname version $pkgver is ready to be packaged!"
+}
+
+package()
+{
+    cd "${srcdir}"
+
+    # Create installation directories
+    install -d -m755 "${pkgdir}/usr/bin/"
+
+    # Install the current theme
+    #cp -rf "$_pkgname" "${pkgdir}/usr/share/themes/$_pkgname"
+    cp -rf "$_pkgname" "/usr/bin/$_pkgname/"
+
+    # Install the classic theme
+    install -d -m755 "${pkgdir}/usr/share/themes/$_pkgname Classic"
+    cp -rf "$_pkgname.classic/gtk-2.0" "${pkgdir}/usr/share/themes/$_pkgname Classic"
+    cp -rf "$_pkgname.classic/gtk-3.0" "${pkgdir}/usr/share/themes/$_pkgname Classic"
+
+    # Cleanup
+    rm -rf "${pkgdir}/usr/share/themes/${_pkgname}/.gitignore"
+    rm -rf "${pkgdir}/usr/share/themes/${_pkgname}/.git"
+
+}
