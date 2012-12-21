@@ -264,31 +264,27 @@ namespace Schumix.CalendarAddon
 						string name0 = row["Name"].ToString();
 						string channel0 = row["Channel"].ToString();
 						string message0 = row["Message"].ToString();
-						int day = Convert.ToInt32(row["Day"].ToString());
 
-						if(time.Day == day)
+						int hour = Convert.ToInt32(row["Hour"].ToString());
+
+						if(time.Hour > hour)
+							continue;
+						else if(time.Hour < hour)
+							continue;
+						else
 						{
-							int hour = Convert.ToInt32(row["Hour"].ToString());
-
-							if(time.Hour > hour)
-								continue;
-							else if(time.Hour < hour)
-								continue;
-							else
+							if(time.Hour == hour)
 							{
-								if(time.Hour == hour)
-								{
-									int minute = Convert.ToInt32(row["Minute"].ToString());
+								int minute = Convert.ToInt32(row["Minute"].ToString());
 
-									if(time.Minute > minute)
-										continue;
-									else if(time.Minute < minute)
-										continue;
-									else
-									{
-										if(time.Minute == minute)
-											sCalendarFunctions.Write(name0, channel0, message0);
-									}
+								if(time.Minute > minute)
+									continue;
+								else if(time.Minute < minute)
+									continue;
+								else
+								{
+									if(time.Minute == minute)
+										sCalendarFunctions.Write(name0, channel0, message0);
 								}
 							}
 						}
