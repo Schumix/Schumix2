@@ -167,7 +167,7 @@ namespace Schumix.CompilerAddon
 			{
 				var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
 
-				if(memory > CompilerConfig.MaxAllocatingM)
+				if(memory > CompilerConfig.MaxAllocatingM * IRCConfig.List.Count)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/memory", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return false;
