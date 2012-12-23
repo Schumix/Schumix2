@@ -231,7 +231,11 @@ namespace Schumix.Irc.Commands
 					SchumixBase.DManager.Delete("hlmessage", string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName));
 
 				if(SchumixBase.DManager.IsCreatedTable("birthday"))
-					SchumixBase.DManager.Delete("birthday", string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName));
+				{
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT * FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
+					if(!db1.IsNull())
+						SchumixBase.DManager.Delete("birthday", string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName));
+				}
 
 				sSendMessage.SendChatMessage(sIRCMessage, text[1], name);
 			}

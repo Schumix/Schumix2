@@ -297,7 +297,11 @@ namespace Schumix.Console.Commands
 					SchumixBase.DManager.Delete("hlmessage", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
 
 				if(SchumixBase.DManager.IsCreatedTable("birthday"))
-					SchumixBase.DManager.Delete("birthday", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
+				{
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT * FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
+					if(!db1.IsNull())
+						SchumixBase.DManager.Delete("birthday", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
+				}
 
 				Log.Notice("Console", text[1], name);
 			}
