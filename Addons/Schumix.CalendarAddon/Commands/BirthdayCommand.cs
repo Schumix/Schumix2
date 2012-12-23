@@ -23,6 +23,8 @@ using Schumix.API.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.CalendarAddon;
 
@@ -32,39 +34,13 @@ namespace Schumix.CalendarAddon.Commands
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		//private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private CalendarFunctions sCalendarFunctions;
 
 		public BirthdayCommand(string ServerName) : base(ServerName)
 		{
-			sCalendarFunctions = new CalendarFunctions(ServerName);
+
 		}
-
-		/*protected void HandleSznap(IRCMessage sIRCMessage)
-		{
-			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
-				return;
-
-			if(sIRCMessage.Info.Length < 5)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			// INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'sznap', '1', 'Kiírja a megadott név születésnapjának dátumát.\nHasználata: {0}sznap <név>');
-
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT nev, honap, nap FROM sznap WHERE nev = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[4]));
-			if(!db.IsNull())
-			{
-				string name = db["nev"].ToString();
-				string month = db["honap"].ToString();
-				int day = Convert.ToInt32(db["nap"]);
-				sSendMessage.SendChatMessage(sIRCMessage, "{0} születés napja: {1} {2}", name, month, day);
-			}
-			else
-				sSendMessage.SendChatMessage(sIRCMessage, "Nincs ilyen ember!");
-		}*/
 
 		public void HandleBirthday(IRCMessage sIRCMessage)
 		{
@@ -81,9 +57,24 @@ namespace Schumix.CalendarAddon.Commands
 
 			if(sIRCMessage.Info[4].ToLower() == "info")
 			{
-				// kiírja hogy be van-e kapcsolva a születésnap
-				// kiírja mikor lesz a születésnap
-				// egy alparancs hogy látható legyen más születésnapja is (nevet kell hozzá megadni)
+				string name = sIRCMessage.Info.Length < 6 ? sIRCMessage.Nick.ToLower() : sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled, Month, Day FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
+				if(!db.IsNull())
+				{
+					bool enabled = Convert.ToBoolean(db["Enabled"].ToString());
+					int month = Convert.ToInt32(db["Month"].ToString());
+					int day = Convert.ToInt32(db["Day"].ToString());
+
+					sSendMessage.SendChatMessage(sIRCMessage, "3Születésnap funkció állapota: {0}", enabled);
+					sSendMessage.SendChatMessage(sIRCMessage, "3Születésnap időpontja: 2[Hónap] {0}, 2[Nap] {1}", month, day);
+				}
+				else
+				{
+					if(sIRCMessage.Nick.ToLower() == name)
+						sSendMessage.SendChatMessage(sIRCMessage, "Nem vagy regisztrálva!");
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, "Nincs regisztrálva!");
+				}
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "change")
 			{
@@ -92,6 +83,53 @@ namespace Schumix.CalendarAddon.Commands
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "register")
 			{
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
+				if(!db.IsNull())
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Már regisztrálva vagy!");
+					return;
+				}
+
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva a születési hónap!");
+					return;
+				}
+
+				if(sIRCMessage.Info.Length < 7)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva a születési nap!");
+					return;
+				}
+
+				int month = sIRCMessage.Info[5].ToNumber(13).ToInt();
+				if(month > 12 || month <= 0)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
+				int day = sIRCMessage.Info[6].ToNumber(32).ToInt();
+				if(!sUtilities.IsDay(2012, month, day))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
+				SchumixBase.DManager.Insert("`birthday`(ServerId, ServerName, Name, Month, Day)", IRCConfig.List[sIRCMessage.ServerName].ServerId, sIRCMessage.ServerName, sIRCMessage.Nick.ToLower(), month, day);
+				sSendMessage.SendChatMessage(sIRCMessage, "Sikeresen hozzáadásra került a születésnapod.");
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "remove")
+			{
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
+				if(db.IsNull())
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Nem szerepelsz a listán!");
+					return;
+				}
+
+				SchumixBase.DManager.Delete("birthday", string.Format("Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName));
+				sSendMessage.SendChatMessage(sIRCMessage, "Törölve lett a születésnapod!");
 			}
 		}
 	}

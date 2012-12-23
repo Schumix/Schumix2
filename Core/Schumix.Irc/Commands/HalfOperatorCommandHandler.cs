@@ -230,6 +230,9 @@ namespace Schumix.Irc.Commands
 				if(SchumixBase.DManager.IsCreatedTable("hlmessage"))
 					SchumixBase.DManager.Delete("hlmessage", string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName));
 
+				if(SchumixBase.DManager.IsCreatedTable("birthday"))
+					SchumixBase.DManager.Delete("birthday", string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName));
+
 				sSendMessage.SendChatMessage(sIRCMessage, text[1], name);
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "rank")

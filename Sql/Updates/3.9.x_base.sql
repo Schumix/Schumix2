@@ -1,1 +1,2 @@
 -- ide jön majd a régi tábla törlése "sznap"
+-- Funkció ki és bekapcsolási lehetőséget is meg kell írni!!!
