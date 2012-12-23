@@ -1,0 +1,1 @@
+-- ide jön majd a régi tábla törlése "sznap"
