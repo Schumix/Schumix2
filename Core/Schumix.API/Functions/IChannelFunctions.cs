@@ -37,6 +37,7 @@ namespace Schumix.API.Functions
 		Webtitle,
 		Randomkick,
 		Chatterbot,
-		NameDay
+		NameDay,
+		BirthDay
 	};
 }

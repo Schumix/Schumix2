@@ -52,5 +52,5 @@ using Schumix.Framework.Config;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.9.2")]
-[assembly: AssemblyFileVersion("3.9.2.0")]
+[assembly: AssemblyVersion("3.9.3")]
+[assembly: AssemblyFileVersion("3.9.3.0")]

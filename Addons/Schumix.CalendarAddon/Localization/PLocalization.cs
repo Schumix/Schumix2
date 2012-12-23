@@ -66,6 +66,15 @@ namespace Schumix.CalendarAddon.Localization
 					else
 						return "[UpdateNameDay] Failure details: {0}";
 				}
+				case "Error5":
+				{
+					if(Locale == "huHU")
+						return "[UpdateBirthDay] Meghibásodás részletei: {0}";
+					else if(Locale == "enUS")
+						return "[UpdateBirthDay] Failure details: {0}";
+					else
+						return "[UpdateBirthDay] Failure details: {0}";
+				}
 				default:
 					return string.Empty;
 			}

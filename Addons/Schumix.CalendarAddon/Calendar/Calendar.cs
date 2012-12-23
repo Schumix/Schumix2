@@ -38,6 +38,7 @@ namespace Schumix.CalendarAddon
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private System.Timers.Timer _timercalendar = new System.Timers.Timer();
+		private System.Timers.Timer _timerbirthday = new System.Timers.Timer();
 		private System.Timers.Timer _timernameday = new System.Timers.Timer();
 		private System.Timers.Timer _timerflood = new System.Timers.Timer();
 		private System.Timers.Timer _timerunban = new System.Timers.Timer();
@@ -79,6 +80,12 @@ namespace Schumix.CalendarAddon
 			_timernameday.Elapsed += HandleTimerNameDayElapsed;
 			_timernameday.Enabled = true;
 			_timernameday.Start();
+
+			// BirthDay
+			_timerbirthday.Interval = 60*1000;
+			_timerbirthday.Elapsed += HandleTimerBirthDayElapsed;
+			_timerbirthday.Enabled = true;
+			_timerbirthday.Start();
 		}
 
 		public void Stop()
@@ -102,6 +109,11 @@ namespace Schumix.CalendarAddon
 			_timernameday.Enabled = false;
 			_timernameday.Elapsed -= HandleTimerNameDayElapsed;
 			_timernameday.Stop();
+
+			// BirthDay
+			_timerbirthday.Enabled = false;
+			_timerbirthday.Elapsed -= HandleTimerBirthDayElapsed;
+			_timerbirthday.Stop();
 		}
 		
 		private void HandleTimerFloodElapsed(object sender, ElapsedEventArgs e)
@@ -122,6 +134,11 @@ namespace Schumix.CalendarAddon
 		private void HandleTimerNameDayElapsed(object sender, ElapsedEventArgs e)
 		{
 			UpdateNameDay();
+		}
+
+		private void HandleTimerBirthDayElapsed(object sender, ElapsedEventArgs e)
+		{
+			UpdateBirthDay();
 		}
 
 		private void UpdateFlood()
@@ -169,6 +186,18 @@ namespace Schumix.CalendarAddon
 			catch(Exception e)
 			{
 				Log.Error("Calendar", sLocalization.Exception("Error4"), e.Message);
+			}
+		}
+
+		private void UpdateBirthDay()
+		{
+			try
+			{
+				Task.Factory.StartNew(() => BirthDay());
+			}
+			catch(Exception e)
+			{
+				Log.Error("Calendar", sLocalization.Exception("Error5"), e.Message);
 			}
 		}
 
@@ -362,15 +391,52 @@ namespace Schumix.CalendarAddon
 			var sChannelInfo = sIrcBase.Networks[_servername].sChannelInfo;
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 
+			if(!sChannelInfo.FSelect(IFunctions.NameDay))
+				return;
+
 			if((time.Hour == 8 && time.Minute == 0) || (time.Hour == 12 && time.Minute == 0) ||
 			   (time.Hour == 16 && time.Minute == 0) || (time.Hour == 20 && time.Minute == 0))
 			{
 				foreach(var channel in sChannelInfo.CList)
 				{
-					if(sChannelInfo.FSelect(IFunctions.NameDay) && sChannelInfo.FSelect(IChannelFunctions.NameDay, channel.Key))
+					if(sChannelInfo.FSelect(IChannelFunctions.NameDay, channel.Key))
 					{
 						sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("NameDay", channel.Key, _servername), sUtilities.NameDay(channel.Key));
 						Thread.Sleep(400);
+					}
+				}
+			}
+		}
+
+		private void BirthDay()
+		{
+			var time = DateTime.Now;
+			var sChannelInfo = sIrcBase.Networks[_servername].sChannelInfo;
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+
+			if(!sChannelInfo.FSelect(IFunctions.BirthDay))
+				return;
+
+			//if((time.Hour == 8 && time.Minute == 0) || (time.Hour == 12 && time.Minute == 0) ||
+			//   (time.Hour == 16 && time.Minute == 0) || (time.Hour == 20 && time.Minute == 0))
+			{
+				var db = SchumixBase.DManager.Query("SELECT Name, Enabled FROM birthday WHERE ServerName = '{0}' And Month = '{1}' And Day = '{2}'", _servername, time.Month, time.Day);
+				if(!db.IsNull())
+				{
+					foreach(DataRow row in db.Rows)
+					{
+						bool enabled = Convert.ToBoolean(row["Enabled"].ToString());
+						if(!enabled)
+							return;
+
+						foreach(var channel in sChannelInfo.CList)
+						{
+							if(sChannelInfo.FSelect(IChannelFunctions.BirthDay, channel.Key))
+							{
+								sSendMessage.SendCMPrivmsg(channel.Key, /*sLManager.GetWarningText("BirthDay", channel.Key, _servername)*/ "Ma {0} születésnapja van.", row["Name"].ToString());
+								Thread.Sleep(400);
+							}
+						}
 					}
 				}
 			}
