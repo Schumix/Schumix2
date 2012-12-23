@@ -56,6 +56,7 @@ namespace Schumix.CalendarAddon
 			_servername = ServerName;
 			sLocalization.Locale = sLConsole.Locale;
 			sCalendarCommand = new CalendarCommand(ServerName);
+			sBirthdayCommand = new BirthdayCommand(ServerName);
 			sBanCommand = new BanCommand(ServerName);
 			sBan = new Ban(ServerName);
 
