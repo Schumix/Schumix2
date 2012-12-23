@@ -14,7 +14,6 @@ Megírásra váró feladatok:
 		- Rss-be add, remove, és change parancsot létrehozni mellyel magát az rss címet tudjuk hozzáadni.
 		- Összes addonra alkalmazni a fejlesztéseket.
 	- Sűrgős:
-		- sznap parancs megírása normálisan.
 		- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
 		- Játék addonban a nyelvezet kiszedve és az angolnak külön van szedve egy fájlba a magyar szöveg. Csak át kell alakítani.
 		- Olyan részt írni a kódba mely a schumix tábla tartalmát átpörgeti és ha hiányos akkor kipotolja.

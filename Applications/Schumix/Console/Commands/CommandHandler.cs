@@ -507,6 +507,8 @@ namespace Schumix.Console.Commands
 						sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 					}
 				}
+				else
+					Log.Error("Console", sLManager.GetConsoleWarningText("WrongSwitch"));
 			}
 			else if(Info[1].ToLower() == "update")
 			{
@@ -662,6 +664,8 @@ namespace Schumix.Console.Commands
 						sIrcBase.Networks[_servername].sChannelInfo.FunctionsReload();
 					}
 				}
+				else
+					Log.Error("Console", sLManager.GetConsoleWarningText("WrongSwitch"));
 			}
 		}
 

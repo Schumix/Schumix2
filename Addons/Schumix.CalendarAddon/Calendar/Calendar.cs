@@ -417,8 +417,8 @@ namespace Schumix.CalendarAddon
 			if(!sChannelInfo.FSelect(IFunctions.BirthDay))
 				return;
 
-			//if((time.Hour == 8 && time.Minute == 0) || (time.Hour == 12 && time.Minute == 0) ||
-			//   (time.Hour == 16 && time.Minute == 0) || (time.Hour == 20 && time.Minute == 0))
+			if((time.Hour == 8 && time.Minute == 0) || (time.Hour == 12 && time.Minute == 0) ||
+			   (time.Hour == 16 && time.Minute == 0) || (time.Hour == 20 && time.Minute == 0))
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name, Enabled FROM birthday WHERE ServerName = '{0}' And Month = '{1}' And Day = '{2}'", _servername, time.Month, time.Day);
 				if(!db.IsNull())
@@ -433,7 +433,7 @@ namespace Schumix.CalendarAddon
 						{
 							if(sChannelInfo.FSelect(IChannelFunctions.BirthDay, channel.Key))
 							{
-								sSendMessage.SendCMPrivmsg(channel.Key, /*sLManager.GetWarningText("BirthDay", channel.Key, _servername)*/ "Ma {0} születésnapja van.", row["Name"].ToString());
+								sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("BirthDay", channel.Key, _servername), row["Name"].ToString());
 								Thread.Sleep(400);
 							}
 						}

@@ -180,6 +180,8 @@ namespace Schumix.Irc.Commands
 							sChannelInfo.FunctionsReload();
 						}
 					}
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WrongSwitch", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "channel")
@@ -337,6 +339,8 @@ namespace Schumix.Irc.Commands
 						sChannelInfo.ChannelFunctionsReload();
 					}
 				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WrongSwitch", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "update")
 			{
@@ -497,6 +501,8 @@ namespace Schumix.Irc.Commands
 						sChannelInfo.ChannelFunctionsReload();
 					}
 				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WrongSwitch", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
 		}
 

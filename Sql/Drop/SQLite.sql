@@ -22,7 +22,7 @@ DROP TABLE IF EXISTS `notes`;
 DROP TABLE IF EXISTS `notes_users`;
 DROP TABLE IF EXISTS `schumix`;
 DROP TABLE IF EXISTS `svninfo`;
-DROP TABLE IF EXISTS `sznap`;
+DROP TABLE IF EXISTS `birthday`;
 DROP TABLE IF EXISTS `uptime`;
 DROP TABLE IF EXISTS `wordpressinfo`;
 DROP TABLE IF EXISTS `ignore_channels`;

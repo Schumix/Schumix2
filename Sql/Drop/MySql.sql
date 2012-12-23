@@ -23,7 +23,7 @@ DROP TABLE IF EXISTS
 `notes_users`,
 `schumix`,
 `svninfo`,
-`sznap`,
+`birthday`,
 `uptime`,
 `wordpressinfo`,
 `ignore_channels`,
