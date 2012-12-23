@@ -42,6 +42,7 @@ namespace Schumix.CalendarAddon
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private CalendarCommand sCalendarCommand;
+		private BirthdayCommand sBirthdayCommand;
 		private BanCommand sBanCommand;
 		private Calendar _calendar;
 #pragma warning disable 414
@@ -109,6 +110,7 @@ namespace Schumix.CalendarAddon
 			sIrcBase.Networks[_servername].SchumixRegisterHandler("ban",      sBanCommand.HandleBan, CommandPermission.Operator);
 			sIrcBase.Networks[_servername].SchumixRegisterHandler("unban",    sBanCommand.HandleUnban, CommandPermission.Operator);
 			sIrcBase.Networks[_servername].SchumixRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
+			sIrcBase.Networks[_servername].SchumixRegisterHandler("birthday", sBirthdayCommand.HandleBirthday, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
@@ -116,6 +118,7 @@ namespace Schumix.CalendarAddon
 			sIrcBase.Networks[_servername].SchumixRemoveHandler("ban",        sBanCommand.HandleBan);
 			sIrcBase.Networks[_servername].SchumixRemoveHandler("unban",      sBanCommand.HandleUnban);
 			sIrcBase.Networks[_servername].SchumixRemoveHandler("calendar",   sCalendarCommand.HandleCalendar);
+			sIrcBase.Networks[_servername].SchumixRemoveHandler("birthday",   sBirthdayCommand.HandleBirthday);
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)

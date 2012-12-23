@@ -22,10 +22,10 @@ using Schumix.API;
 using Schumix.API.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
-using Schumix.CalendarAddon;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.CalendarAddon;
 
 namespace Schumix.CalendarAddon.Commands
 {
