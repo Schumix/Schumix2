@@ -99,14 +99,15 @@ namespace Schumix.Irc
 					}
 
 					var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
+					int ircnetwork = sIrcBase.Networks.Count > 1 ? 20 * sIrcBase.Networks.Count : 0;
 					sSendMessage.SendChatMessage(sIRCMessage, text[0], sUtilities.GetVersion());
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sUtilities.GetPlatform());
 					sSendMessage.SendChatMessage(sIRCMessage, text[2], Environment.OSVersion.ToString());
 					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 
-					if(memory >= 60 * sIrcBase.Networks.Count)
+					if(memory >= 75 + ircnetwork)
 						sSendMessage.SendChatMessage(sIRCMessage, text[4], memory);
-					else if(memory >= 30 * sIrcBase.Networks.Count)
+					else if(memory >= 45 + ircnetwork)
 						sSendMessage.SendChatMessage(sIRCMessage, text[5], memory);
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[6], memory);
