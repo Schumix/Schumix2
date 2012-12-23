@@ -1,5 +1,3 @@
--- Funkció ki és bekapcsolási lehetőséget is meg kell írni!!! (már csak a base és mysql.sql és sqlite.sql-be kell elhelyezni)
-
 INSERT INTO `schumix` (`ServerId`, `ServerName`, `FunctionName`, `FunctionStatus`) VALUES ("1", "default", "birthday", "on");
 
 -- huHU
