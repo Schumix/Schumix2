@@ -234,10 +234,10 @@ namespace Schumix.CalendarAddon.Commands
 			if(db.IsNull())
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("birthday", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return true;
+				return false;
 			}
 
-			return false;
+			return true;
 		}
 	}
 }

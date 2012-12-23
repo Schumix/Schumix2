@@ -666,7 +666,6 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/remove", "Not on the ignore list!\nSuccesfuly removed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "xrev/github", "Username is not set!\nProject is not set!\nSha1 code is not set!\nThere is no such a commit!\n3Commit: {0}\n3Link: {0}\n3Author: {0}");
-INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WrongSwitch", "Wrong Switch!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday", "You are not registered! Please register to use this function. Command: {0}birthday register <month> <day>");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/info", "3State of birthday function: {0}\n3Date of birth: 2[Month] {0}, 2[Day] {1}\nYou are not registered!\nYou are not registered!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/change/status", "Your birthday sign is on.\nYour birthday sign is off.");
