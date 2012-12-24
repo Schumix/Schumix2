@@ -1,8 +1,8 @@
 # Schumix2 Archlinux install script
 # made by Jackneill
 
-pkgname=schumix2
-_pkgname=Schumix2
+pkgname=schumix
+_pkgname=Schumix
 pkgver=$revision
 _pkgverclassic=$revision
 pkgrel=1
@@ -43,16 +43,50 @@ build()
 
     # Notify the user that the build() process is complete
     echo "$_pkgname version $pkgver is ready to be packaged!"
+
+    sh autogen.sh
+    ./configure --prefix=/usr
+    make
 }
 
 package()
 {
     cd "${srcdir}"
 
-    # Create installation directories
-    install -d -m755 "${pkgdir}/usr/bin/"
+rm -rf package
+mkdir package
+cp -rf Archlinux package/
+mkdir package/usr
+mkdir package/usr/bin
+mv package/Archlinux/schumix package/usr/bin/
+mv package/Archlinux/schumix-server package/usr/bin/
+mv package/Archlinux/share package/usr/
+mkdir package/usr/share/doc
+mkdir package/usr/share/doc/schumix
+cp LICENSE package/usr/share/doc/schumix/
+mkdir package/usr/lib
+mkdir package/usr/lib/pkgconfig
+cp -rf Scripts package/usr/lib/schumix/
+cd Run/Release/Addons
 
-    # Install the current theme
-    #cp -rf "$_pkgname" "${pkgdir}/usr/share/themes/$_pkgname"
-    cp -rf "$_pkgname" "/usr/bin/$_pkgname/"
+for file in *.pc
+do
+	echo $file;
+	mv $file ../../../package/usr/lib/pkgconfig/$file
+done
+
+cd ..
+
+for file in *.pc
+do
+	echo $file;
+	mv $file ../../package/usr/lib/pkgconfig/$file
+done
+
+rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.API.dll Addons/Schumix.Framework.dll schumix.config schumix.installer schumix schumix.server
+cp -rf ./ ../../package/usr/lib/schumix
+cd ../../
+cd package
+rm -rf Archlinux
+cd ..
 }
