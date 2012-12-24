@@ -55,14 +55,4 @@ package()
     # Install the current theme
     #cp -rf "$_pkgname" "${pkgdir}/usr/share/themes/$_pkgname"
     cp -rf "$_pkgname" "/usr/bin/$_pkgname/"
-
-    # Install the classic theme
-    install -d -m755 "${pkgdir}/usr/share/themes/$_pkgname Classic"
-    cp -rf "$_pkgname.classic/gtk-2.0" "${pkgdir}/usr/share/themes/$_pkgname Classic"
-    cp -rf "$_pkgname.classic/gtk-3.0" "${pkgdir}/usr/share/themes/$_pkgname Classic"
-
-    # Cleanup
-    rm -rf "${pkgdir}/usr/share/themes/${_pkgname}/.gitignore"
-    rm -rf "${pkgdir}/usr/share/themes/${_pkgname}/.git"
-
 }
