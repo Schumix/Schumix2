@@ -1,5 +1,5 @@
 # Schumix2 Archlinux install script
-# made by Jackneill
+# made by Jackneill and Megax
 
 pkgname=schumix
 _pkgname=Schumix
@@ -9,14 +9,14 @@ pkgrel=1
 _gitdir=Schumix2
 _gitbranch=master
 _giturl="git://github.com/megax/$_gitdir.git"
-pkgdesc="Schumix2 IRC Bot and Framework"
+pkgdesc="Schumix IRC Bot and Framework"
 arch=('any')
 url="git://github.com/megax/$_gitdir.git"
 license=('GNU GPL')
 groups=('')
-depends=('')
+depends=('mono')
 makedepends=('git')
-optdepends=('')
+optdepends=()
 conflicts=('')
 
 build()
@@ -51,41 +51,46 @@ build()
 package()
 {
     cd "${srcdir}"
+    cd "$_gitdir"
 
-rm -rf package
-mkdir package
-cp -rf Archlinux package/
-mkdir package/usr
-mkdir package/usr/bin
-mv package/Archlinux/schumix package/usr/bin/
-mv package/Archlinux/schumix-server package/usr/bin/
-mv package/Archlinux/share package/usr/
-mkdir package/usr/share/doc
-mkdir package/usr/share/doc/schumix
-cp LICENSE package/usr/share/doc/schumix/
-mkdir package/usr/lib
-mkdir package/usr/lib/pkgconfig
-cp -rf Scripts package/usr/lib/schumix/
-cd Run/Release/Addons
+    rm -rf pkg
+    mkdir pkg
+    cp -rf Archlinux pkg/
+    mkdir pkg/usr
+    mkdir pkg/usr/bin
+    mv pkg/Archlinux/schumix pkg/usr/bin/
+    mv pkg/Archlinux/schumix-server pkg/usr/bin/
+    mv pkg/Archlinux/share pkg/usr/
+    mkdir pkg/usr/share/doc
+    mkdir pkg/usr/share/doc/schumix
+    cp LICENSE pkg/usr/share/doc/schumix/
+    mkdir pkg/usr/lib
+    mkdir pkg/usr/lib/pkgconfig
+    cp -rf Scripts pkg/usr/lib/schumix/
+    cd Run/Release/Addons
 
-for file in *.pc
-do
-	echo $file;
-	mv $file ../../../package/usr/lib/pkgconfig/$file
-done
+    for file in *.pc
+    do
+        echo $file;
+        mv $file ../../../pkg/usr/lib/pkgconfig/$file
+    done
 
-cd ..
+    cd ..
 
-for file in *.pc
-do
-	echo $file;
-	mv $file ../../package/usr/lib/pkgconfig/$file
-done
+    for file in *.pc
+    do
+        echo $file;
+        mv $file ../../pkg/usr/lib/pkgconfig/$file
+    done
 
-rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.API.dll Addons/Schumix.Framework.dll schumix.config schumix.installer schumix schumix.server
-cp -rf ./ ../../package/usr/lib/schumix
-cd ../../
-cd package
-rm -rf Archlinux
-cd ..
-}
+    rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.API.dll Addons/Schumix.Framework.dll schumix.config schumix.installer schumix schumix.server
+    cp -rf ./ ../../pkg/usr/lib/schumix
+    cd ../../
+    cd pkg
+    rm -rf Archlinux
+    cd ..
+    cd ..
+    cd ..
+    rm -rf pkg
+    cp -rf "${srcdir}"/"$_gitdir"/pkg/ pkg
+}	
