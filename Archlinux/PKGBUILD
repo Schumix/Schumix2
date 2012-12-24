@@ -31,10 +31,10 @@ build()
     msg "Cloning from git server..."
     if [[ -d $_gitdir ]] ; then
       cd "$_gitdir"
-      git pull origin "$_gitbranch"
+      git pull origin "$_gitbranch" --depth=1
       msg "Files updated"
     else
-      git clone "$_giturl" "$_gitdir"
+      git clone "$_giturl" "$_gitdir" --depth=1
       cd "$_gitdir"
     fi
 
