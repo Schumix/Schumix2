@@ -304,6 +304,7 @@ CREATE TABLE `birthday` (
   `ServerId` INT(10) NOT NULL DEFAULT '1',
   `ServerName` varchar(40) NOT NULL default '',
   `Name` varchar(20) NOT NULL default '',
+  `Year` int(4) NOT NULL default '0',
   `Month` int(2) unsigned NOT NULL default '1',
   `Day` int(2) unsigned NOT NULL default '1',
   `Enabled` varchar(5) NOT NULL default 'false',

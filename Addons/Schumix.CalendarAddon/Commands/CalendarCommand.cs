@@ -390,7 +390,13 @@ namespace Schumix.CalendarAddon.Commands
 						return;
 					}
 
-					int year = s[0].ToNumber().ToInt();
+					int year = s[0].ToNumber(-1).ToInt();
+					if(year < 0)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
 					int month = s[1].ToNumber(13).ToInt();
 					if(month > 12 || month <= 0)
 					{
@@ -483,7 +489,13 @@ namespace Schumix.CalendarAddon.Commands
 							return;
 						}
 
-						int year = s[0].ToNumber().ToInt();
+						int year = s[0].ToNumber(-1).ToInt();
+						if(year < 0)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
 						int month = s[1].ToNumber(13).ToInt();
 						if(month > 12 || month <= 0)
 						{
@@ -574,7 +586,13 @@ namespace Schumix.CalendarAddon.Commands
 							return;
 						}
 
-						int year = s[0].ToNumber().ToInt();
+						int year = s[0].ToNumber(-1).ToInt();
+						if(year < 0)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
 						int month = s[1].ToNumber(13).ToInt();
 						if(month > 12 || month <= 0)
 						{
@@ -666,7 +684,13 @@ namespace Schumix.CalendarAddon.Commands
 						return;
 					}
 
-					int year = s[0].ToNumber().ToInt();
+					int year = s[0].ToNumber(-1).ToInt();
+					if(year < 0)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
 					int month = s[1].ToNumber(13).ToInt();
 					if(month > 12 || month <= 0)
 					{

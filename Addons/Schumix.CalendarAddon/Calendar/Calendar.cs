@@ -433,7 +433,7 @@ namespace Schumix.CalendarAddon
 						{
 							if(sChannelInfo.FSelect(IChannelFunctions.BirthDay, channel.Key))
 							{
-								sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("BirthDay", channel.Key, _servername), row["Name"].ToString());
+								sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("BirthDay", channel.Key, _servername), row["Name"].ToString(), (DateTime.Now.Year - Convert.ToInt32(row["Year"].ToString())));
 								Thread.Sleep(400);
 							}
 						}
