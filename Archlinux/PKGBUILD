@@ -53,26 +53,26 @@ package()
     cd "${srcdir}"
     cd "$_gitdir"
 
-    rm -rf "${pkgdir}"
-    mkdir "${pkgdir}"
-    cp -rf Archlinux "${pkgdir}"/
-    mkdir "${pkgdir}"/usr
-    mkdir "${pkgdir}"/usr/bin
-    mv "${pkgdir}"/Archlinux/schumix "${pkgdir}"/usr/bin/
-    mv "${pkgdir}"/Archlinux/schumix-server "${pkgdir}"/usr/bin/
-    mv "${pkgdir}"/Archlinux/share "${pkgdir}"/usr/
-    mkdir "${pkgdir}"/usr/share/doc
-    mkdir "${pkgdir}"/usr/share/doc/schumix
-    cp LICENSE "${pkgdir}"/usr/share/doc/schumix/
-    mkdir "${pkgdir}"/usr/lib
-    mkdir "${pkgdir}"/usr/lib/pkgconfig
-    cp -rf Scripts "${pkgdir}"/usr/lib/schumix/
+    rm -rf pkg
+    mkdir pkg
+    cp -rf Archlinux pkg/
+    mkdir pkg/usr
+    mkdir pkg/usr/bin
+    mv pkg/Archlinux/schumix pkg/usr/bin/
+    mv pkg/Archlinux/schumix-server pkg/usr/bin/
+    mv pkg/Archlinux/share pkg/usr/
+    mkdir pkg/usr/share/doc
+    mkdir pkg/usr/share/doc/schumix
+    cp LICENSE pkg/usr/share/doc/schumix/
+    mkdir pkg/usr/lib
+    mkdir pkg/usr/lib/pkgconfig
+    cp -rf Scripts pkg/usr/lib/schumix/
     cd Run/Release/Addons
 
     for file in *.pc
     do
         echo $file;
-        mv $file ../../../"${pkgdir}"/usr/lib/pkgconfig/$file
+        mv $file ../../../pkg/usr/lib/pkgconfig/$file
     done
 
     cd ..
@@ -80,16 +80,16 @@ package()
     for file in *.pc
     do
         echo $file;
-        mv $file ../../"${pkgdir}"/usr/lib/pkgconfig/$file
+        mv $file ../../pkg/usr/lib/pkgconfig/$file
     done
 
     rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.API.dll Addons/Schumix.Framework.dll schumix.config schumix.installer schumix schumix.server
-    cp -rf ./ ../../"${pkgdir}"/usr/lib/schumix
+    cp -rf ./ ../../pkg/usr/lib/schumix
     cd ../../
-    cd "${pkgdir}"
+    cd pkg
     rm -rf Archlinux
     cd ..
     cd ..
     cd ..
-    cp -rf "${srcdir}"/"$_gitdir"/"${pkgdir}"/ ./
+    cp -rf "${srcdir}"/"$_gitdir"/pkg/ ./
 }	

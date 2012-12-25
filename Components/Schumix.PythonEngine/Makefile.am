@@ -162,7 +162,8 @@ EXTRAS = \
 
 REFERENCES =  \
 	System \
-	Microsoft.CSharp
+	Microsoft.CSharp \
+	System.Core
 
 DLL_REFERENCES =  \
 	../../Dependencies/IronPython.Modules.dll \
