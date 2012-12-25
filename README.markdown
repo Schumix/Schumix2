@@ -11,7 +11,7 @@ A bot kompatibilis a windows és linux rendszerrel. Valószínüleg Mac OS X-en 
 Windows alatt ajálott a `.net 4.0` használata vagy újabb.
 Monon jelenleg minimum követelmény a `2.10` vagy újabb.
 
-# Fordítása
+# Kód futtatása/Fordítása
 
 ## Windows
 A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
@@ -27,6 +27,21 @@ Telepítsük a `mono-xbuild` csomagot vagy forrásból. Ezután inditsuk el a `b
 Navigáljunk a `Run` mappába és azon belül a konfigurációnak megfelelõ mappába. Inditusk el az exe-t. A program legenerálja
 önmagának a konfig fájlt. Ha bármi gond lenne vele hozzunk létre egy `Configs` nevû mappát és a fõ mappából másoljuk bele
 a `Schumix.yml` nevû fájlt.
+
+# Telepítés
+
+Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mint ha be akarjuk telepíteni a rendszerbe. Figyelem! Rendszergazadi jog valószinüleg szükséges lesz a telepítés végső szakaszához.
+
+## Archlinux
+
+Futtassuk `sh createarchlinuxpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.pkg.tar.xz` (hasonló lesz a neve) nevű fájl. Ezt telepítsük a `sudo pacman -U schumix2.pkg.tar.xz` (csomag fájl neve hasonló lesz) paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+
+## Debian/Ubuntu
+
+Futtassuk `sh createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+
+## Windows
+Navigáljunk az Installer mappába. Futtassuk a `Schumix.iss` nevű fájlt. Ha lefutott kapunk egy `Setup.exe` nevű telepíthető állományt. Futtasuk és értelemszerüen telepítsük. A többit szerintem nem kell részletezni :)
 
 # Konfig beállítása
 

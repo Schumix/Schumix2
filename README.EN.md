@@ -11,7 +11,7 @@ The bot has compatibility with the windows and linux systems. It might be run on
 Under Windows the `.NET Framework 4.0` or higher is recommended.
 Under Mono at least the `2.10` or higher is needed.
 
-# Compile
+# Run source/Compile
 
 ## Windows
 
@@ -28,6 +28,21 @@ Install the `mono-xbuild` package or from source. After run the `build.sh` comma
 # Code commissioning
 
 Navigate to the `Run` folder and in that proper folder for the configuration. Run the exe. The program is generates its config file. If there will be some problem then create a `Configs` named folder and from the root folder copy in that folder the `Schumix.yml` named file.
+
+# Install
+
+Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mint ha be akarjuk telepíteni a rendszerbe. Figyelem! Rendszergazadi jog valószinüleg szükséges lesz a telepítés végső szakaszához.
+
+## Archlinux
+
+Futtassuk `sh createarchlinuxpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.pkg.tar.xz` (hasonló lesz a neve) nevű fájl. Ezt telepítsük a `sudo pacman -U schumix2.pkg.tar.xz` (csomag fájl neve hasonló lesz) paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+
+## Debian/Ubuntu
+
+Futtassuk `sh createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+
+## Windows
+Navigáljunk az Installer mappába. Futtassuk a `Schumix.iss` nevű fájlt. Ha lefutott kapunk egy `Setup.exe` nevű telepíthető állományt. Futtasuk és értelemszerüen telepítsük. A többit szerintem nem kell részletezni :)
 
 # Config settings
 
