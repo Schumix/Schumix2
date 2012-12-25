@@ -25,3 +25,4 @@ Megírásra váró feladatok:
 		- irc parancs listájának bővítése.
 
 - Frissíteni az archlinux-ban a Schumix.yml-t
+- createarchlinuxpkg.sh fájl létrehozása és onnét is fordíthatóra megcsinálni a pgkbuild-ot. Majd ha lefordult akkor .sh mellé másolni a kész állományt.

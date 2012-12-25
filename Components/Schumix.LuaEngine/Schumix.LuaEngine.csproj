@@ -62,6 +62,7 @@
     <Reference Include="LuaInterface">
       <HintPath>..\..\Dependencies\LuaInterface.dll</HintPath>
     </Reference>
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LuaEngine.cs" />
