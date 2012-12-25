@@ -31,16 +31,18 @@ Navigate to the `Run` folder and in that proper folder for the configuration. Ru
 
 # Install
 
+Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mint ha be akarjuk telepíteni a rendszerbe. Figyelem! Rendszergazadi jog valószinüleg szükséges lesz a telepítés végső szakaszához.
+
 ## Archlinux
 
-`tar -xf schumix2.tar.gz`
-`cd schumix2`
-`makepkg -s`
-`sudo pacman -U schumix2.pkg.tar.xz`
+Futtassuk `sh createarchlinuxpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.pkg.tar.xz` (hasonló lesz a neve) nevű fájl. Ezt telepítsük a `sudo pacman -U schumix2.pkg.tar.xz` (csomag fájl neve hasonló lesz) paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
 
 ## Debian/Ubuntu
 
-...
+Futtassuk `sh createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+
+## Windows
+Navigáljunk az Installer mappába. Futtassuk a `Schumix.iss` nevű fájlt. Ha lefutott kapunk egy `Setup.exe` nevű telepíthető állományt. Futtasuk és értelemszerüen telepítsük. A többit szerintem nem kell részletezni :)
 
 # Config settings
 
