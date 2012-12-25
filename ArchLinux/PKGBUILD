@@ -14,7 +14,7 @@ arch=('any')
 url="git://github.com/megax/$_gitdir.git"
 license=('GNU GPL')
 groups=('')
-depends=('mono')
+depends=('mono>=2.10.8')
 makedepends=('git')
 optdepends=()
 conflicts=('')
