@@ -1,4 +1,4 @@
 #!/bin/sh
-cd Archlinux
+cd ArchLinux
 makepkg -s -f
 cp *pkg.tar.xz ../

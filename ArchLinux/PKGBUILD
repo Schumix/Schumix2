@@ -1,4 +1,4 @@
-# Schumix2 Archlinux install script
+# Schumix2 ArchLinux install script
 # made by Jackneill and Megax
 
 pkgname=schumix
@@ -55,12 +55,12 @@ package()
 
     rm -rf pkg
     mkdir pkg
-    cp -rf Archlinux pkg/
+    cp -rf ArchLinux pkg/
     mkdir pkg/usr
     mkdir pkg/usr/bin
-    mv pkg/Archlinux/schumix pkg/usr/bin/
-    mv pkg/Archlinux/schumix-server pkg/usr/bin/
-    mv pkg/Archlinux/share pkg/usr/
+    mv pkg/ArchLinux/schumix pkg/usr/bin/
+    mv pkg/ArchLinux/schumix-server pkg/usr/bin/
+    mv pkg/ArchLinux/share pkg/usr/
     mkdir pkg/usr/share/doc
     mkdir pkg/usr/share/doc/schumix
     cp LICENSE pkg/usr/share/doc/schumix/
@@ -87,9 +87,9 @@ package()
     cp -rf ./ ../../pkg/usr/lib/schumix
     cd ../../
     cd pkg
-    rm -rf Archlinux
+    rm -rf ArchLinux
     cd ..
     cd ..
     cd ..
     cp -rf "${srcdir}"/"$_gitdir"/pkg/ ./
-}	
+}
