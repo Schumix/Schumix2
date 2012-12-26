@@ -65,6 +65,7 @@
       <HintPath>..\..\Dependencies\Microsoft.Dynamic.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

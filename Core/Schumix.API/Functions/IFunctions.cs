@@ -43,6 +43,7 @@ namespace Schumix.API.Functions
 		Mantisbt,
 		Wordpress,
 		Chatterbot,
-		NameDay
+		NameDay,
+		BirthDay
 	};
 }

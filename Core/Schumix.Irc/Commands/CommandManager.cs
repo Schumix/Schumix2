@@ -78,7 +78,6 @@ namespace Schumix.Irc.Commands
 			// Operator
 			SchumixRegisterHandler("function",     HandleFunction, CommandPermission.Operator);
 			SchumixRegisterHandler("channel",      HandleChannel,  CommandPermission.Operator);
-			SchumixRegisterHandler("sznap",        HandleSznap,    CommandPermission.Operator);
 			SchumixRegisterHandler("kick",         HandleKick,     CommandPermission.Operator);
 			SchumixRegisterHandler("mode",         HandleMode,     CommandPermission.Operator);
 			SchumixRegisterHandler("ignore",       HandleIgnore,   CommandPermission.Operator);
@@ -94,8 +93,8 @@ namespace Schumix.Irc.Commands
 			int i = 0;
 
 			foreach(var a in from asm in AppDomain.CurrentDomain.GetAssemblies()
-							where asm.GetName().FullName.ToLower(CultureInfo.InvariantCulture).Contains("schumix")
-							select asm)
+					where asm.GetName().FullName.ToLower(CultureInfo.InvariantCulture).Contains("schumix")
+					select asm)
 			{
 				i++;
 				asms.Add("currentassembly" + i.ToString(), a);
@@ -140,7 +139,6 @@ namespace Schumix.Irc.Commands
 			// Operator
 			SchumixRemoveHandler("function",      HandleFunction);
 			SchumixRemoveHandler("channel",       HandleChannel);
-			SchumixRemoveHandler("sznap",         HandleSznap);
 			SchumixRemoveHandler("kick",          HandleKick);
 			SchumixRemoveHandler("mode",          HandleMode);
 			SchumixRemoveHandler("ignore",        HandleIgnore);

@@ -195,7 +195,12 @@ namespace Schumix.ExtraAddon.Commands
 			int i = 0;
 			var split = sIRCMessage.Args.Split(SchumixBase.Space);
 			string Channel = split[1];
-			sNameList.Remove(Channel);
+
+			if(!sNameList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()))
+				sNameList.Channels.Add(sIRCMessage.Channel.ToLower(), false);
+
+			if(sNameList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()) && sNameList.Channels[sIRCMessage.Channel.ToLower()])
+				sNameList.Remove(Channel);
 
 			foreach(var name in sIRCMessage.Args.Split(SchumixBase.Space))
 			{
@@ -204,27 +209,19 @@ namespace Schumix.ExtraAddon.Commands
 				if(i < 3)
 					continue;
 
-				sNameList.Add(Channel, Parse(name));
+				sNameList.Add(Channel, sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.Parse(name));
 			}
 		}
 
-		private string Parse(string Name)
+		public void HandleEndNameList(IRCMessage sIRCMessage)
 		{
-			if(Name.Length < 1)
-				return string.Empty;
+			if(sNameList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()))
+				sNameList.Channels[sIRCMessage.Channel.ToLower()] = true;
+		}
 
-			switch(Name.Substring(0, 1))
-			{
-				case ":":
-				case "~":
-				case "&":
-				case "@":
-				case "%":
-				case "+":
-					return Name.Remove(0, 1);
-				default:
-					return Name;
-			}
+		public void HandleSuccessfulAuth(IRCMessage sIRCMessage)
+		{
+			sNameList.Channels.Clear();
 		}
 	}
 }

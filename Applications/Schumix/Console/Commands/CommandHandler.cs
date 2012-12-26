@@ -261,7 +261,10 @@ namespace Schumix.Console.Commands
 
 				string pass = sUtilities.GetRandomString();
 				SchumixBase.DManager.Insert("`admins`(ServerId, ServerName, Name, Password)", IRCConfig.List[_servername].ServerId, _servername, name.ToLower(), sUtilities.Sha1(pass));
-				SchumixBase.DManager.Insert("`hlmessage`(ServerId, ServerName, Name, Enabled)", IRCConfig.List[_servername].ServerId, _servername, name.ToLower(), SchumixBase.Off);
+
+				if(SchumixBase.DManager.IsCreatedTable("hlmessage"))
+					SchumixBase.DManager.Insert("`hlmessage`(ServerId, ServerName, Name, Enabled)", IRCConfig.List[_servername].ServerId, _servername, name.ToLower(), SchumixBase.Off);
+
 				Log.Notice("Console", text[1], name);
 				Log.Notice("Console", text[2], pass);
 			}
@@ -289,7 +292,17 @@ namespace Schumix.Console.Commands
 				}
 
 				SchumixBase.DManager.Delete("admins", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
-				SchumixBase.DManager.Delete("hlmessage", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
+
+				if(SchumixBase.DManager.IsCreatedTable("hlmessage"))
+					SchumixBase.DManager.Delete("hlmessage", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
+
+				if(SchumixBase.DManager.IsCreatedTable("birthday"))
+				{
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT * FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
+					if(!db1.IsNull())
+						SchumixBase.DManager.Delete("birthday", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
+				}
+
 				Log.Notice("Console", text[1], name);
 			}
 			else if(Info.Length >= 2 && Info[1].ToLower() == "rank")
@@ -494,6 +507,8 @@ namespace Schumix.Console.Commands
 						sIrcBase.Networks[_servername].sChannelInfo.ChannelFunctionsReload();
 					}
 				}
+				else
+					Log.Error("Console", sLManager.GetConsoleWarningText("WrongSwitch"));
 			}
 			else if(Info[1].ToLower() == "update")
 			{
@@ -649,6 +664,8 @@ namespace Schumix.Console.Commands
 						sIrcBase.Networks[_servername].sChannelInfo.FunctionsReload();
 					}
 				}
+				else
+					Log.Error("Console", sLManager.GetConsoleWarningText("WrongSwitch"));
 			}
 		}
 

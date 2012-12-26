@@ -55,6 +55,7 @@ namespace Schumix.Irc
 		{
 			Console.WriteLine();
 			Log.Success("MessageHandler", sLConsole.MessageHandler("Text"));
+			sChannelNameList.Channels.Clear();
 			RandomAllVhost();
 			Task.Factory.StartNew(() => IsJoin());
 
@@ -73,7 +74,6 @@ namespace Schumix.Irc
 					if(!Online)
 					{
 						Log.Notice("HostServ", sLConsole.HostServ("Text2"));
-						WhoisPrivmsg = sNickInfo.NickStorage;
 						ChannelPrivmsg = sNickInfo.NickStorage;
 						sChannelInfo.JoinChannel();
 						Online = true;
@@ -87,7 +87,6 @@ namespace Schumix.Irc
 					if(IRCConfig.List[sIRCMessage.ServerName].HostServEnabled)
 						sNickInfo.Vhost(SchumixBase.Off);
 
-					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
 					NewNickPrivmsg = string.Empty;
 					sChannelInfo.JoinChannel();
@@ -160,7 +159,6 @@ namespace Schumix.Irc
 				if(sIRCMessage.Args.Contains("Your nick isn't registered.") || (!sNickInfo.IsIdentify && registered.IsMatch(sIRCMessage.Args)))
 				{
 					Log.Warning("NickServ", sLConsole.NickServ("Text5"));
-					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
 					sNickInfo.ChangeIdentifyStatus(true);
 					ConnectAllChannel();
@@ -217,7 +215,6 @@ namespace Schumix.Irc
 			{
 				if(sIRCMessage.Args.Contains("Your vhost of") && !sNickInfo.IsVhost)
 				{
-					WhoisPrivmsg = sNickInfo.NickStorage;
 					ChannelPrivmsg = sNickInfo.NickStorage;
 					ConnectAllChannel();
 				}
@@ -348,29 +345,54 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			var text = sLManager.GetCommandTexts("whois", WhoisPrivmsg, sIRCMessage.ServerName);
-			if(text.Length < 2)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(WhoisPrivmsg, sIRCMessage.ServerName)));
-				return;
-			}
+			string nick = sIRCMessage.Info[3].ToLower();
 
-			string text2 = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisPrivmsg, text[0], text2.Remove(0, 1, SchumixBase.Colon));
-			WhoisPrivmsg = sNickInfo.NickStorage;
+			if(WhoisList.ContainsKey(nick))
+			{
+				WhoisList[nick].Online = true;
+				WhoisList[nick].Message += SchumixBase.Space + sIRCMessage.Info.SplitToString(4, SchumixBase.Space).Remove(0, 1, SchumixBase.Colon);
+			}
 		}
 
-		protected void HandleNoWhois(IRCMessage sIRCMessage)
+		protected void HandleWhoisServer(IRCMessage sIRCMessage)
 		{
-			var text = sLManager.GetCommandTexts("whois", WhoisPrivmsg, sIRCMessage.ServerName);
-			if(text.Length < 2)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(WhoisPrivmsg, sIRCMessage.ServerName)));
+			if(sIRCMessage.Info.Length < 4)
 				return;
-			}
 
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisPrivmsg, text[1]);
-			WhoisPrivmsg = sNickInfo.NickStorage;
+			string nick = sIRCMessage.Info[3].ToLower();
+
+			if(WhoisList.ContainsKey(nick))
+				WhoisList[nick].Online = true;
+		}
+
+		protected void HandleEndOfWhois(IRCMessage sIRCMessage)
+		{
+			string nick = sIRCMessage.Info[3].ToLower();
+
+			if(WhoisList.ContainsKey(nick))
+			{
+				var text = sLManager.GetCommandTexts("whois", WhoisList[nick].Channel, sIRCMessage.ServerName);
+				if(text.Length < 3)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(WhoisList[nick].Channel, sIRCMessage.ServerName)));
+					return;
+				}
+
+				if(WhoisList[nick].Online)
+				{
+					if(WhoisList[nick].Message != string.Empty)
+						sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[0], WhoisList[nick].Message.Remove(0, 1, SchumixBase.Space));
+					else
+						sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[2]); 
+				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[1]);
+
+				Monitor.Exit(WhoisList[nick].Lock);
+
+				if(WhoisList.ContainsKey(nick))
+					WhoisList.Remove(nick);
+			}
 		}
 
 		protected void HandleIrcJoin(IRCMessage sIRCMessage)
@@ -386,7 +408,7 @@ namespace Schumix.Irc
 				return;
 			}
 
-			sChannelNameList.Add(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Nick);
+			sChannelNameList.Add(sIRCMessage.Channel, sIRCMessage.Nick);
 		}
 
 		protected void HandleIrcLeft(IRCMessage sIRCMessage)
@@ -395,11 +417,11 @@ namespace Schumix.Irc
 
 			if(sIRCMessage.Nick == sNickInfo.NickStorage)
 			{
-				sChannelNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
+				sChannelNameList.Remove(sIRCMessage.Channel);
 				return;
 			}
 
-			sChannelNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Nick);
+			sChannelNameList.Remove(sIRCMessage.Channel, sIRCMessage.Nick);
 		}
 
 		protected void HandleIrcQuit(IRCMessage sIRCMessage)
@@ -410,7 +432,7 @@ namespace Schumix.Irc
 					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.MessageHandler("Text20"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
 			}
 
-			sChannelNameList.Remove(sIRCMessage.ServerName, string.Empty, sIRCMessage.Nick, true);
+			sChannelNameList.Remove(string.Empty, sIRCMessage.Nick, true);
 		}
 
 		protected void HandleNewNick(IRCMessage sIRCMessage)
@@ -421,7 +443,7 @@ namespace Schumix.Irc
 					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.MessageHandler("Text21"), sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 			}
 
-			sChannelNameList.Change(sIRCMessage.ServerName, sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
+			sChannelNameList.Change(sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 		}
 
 		protected void HandleIrcKick(IRCMessage sIRCMessage)
@@ -433,9 +455,9 @@ namespace Schumix.Irc
 			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text22"), sIRCMessage.Info[3], text.Remove(0, 1, ":"));
 
 			if(sIRCMessage.Info[3].ToLower() == sNickInfo.NickStorage.ToLower())
-				sChannelNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
+				sChannelNameList.Remove(sIRCMessage.Channel);
 			else
-				sChannelNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel, sIRCMessage.Info[3]);
+				sChannelNameList.Remove(sIRCMessage.Info[3]);
 		}
 
 		protected void HandleIrcMode(IRCMessage sIRCMessage)
@@ -468,7 +490,12 @@ namespace Schumix.Irc
 			int i = 0;
 			var split = sIRCMessage.Args.Split(SchumixBase.Space);
 			string Channel = split[1];
-			sChannelNameList.Remove(sIRCMessage.ServerName, Channel);
+
+			if(!sChannelNameList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()))
+				sChannelNameList.Channels.Add(sIRCMessage.Channel.ToLower(), false);
+
+			if(sChannelNameList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()) && sChannelNameList.Channels[sIRCMessage.Channel.ToLower()])
+				sChannelNameList.Remove(Channel);
 
 			foreach(var name in sIRCMessage.Args.Split(SchumixBase.Space))
 			{
@@ -477,27 +504,14 @@ namespace Schumix.Irc
 				if(i < 3)
 					continue;
 
-				sChannelNameList.Add(sIRCMessage.ServerName, Channel, Parse(name));
+				sChannelNameList.Add(Channel, sNickInfo.Parse(name));
 			}
 		}
 
-		private string Parse(string Name)
+		protected void HandleEndNameList(IRCMessage sIRCMessage)
 		{
-			if(Name.Length < 1)
-				return string.Empty;
-
-			switch(Name.Substring(0, 1))
-			{
-				case ":":
-				case "~":
-				case "&":
-				case "@":
-				case "%":
-				case "+":
-					return Name.Remove(0, 1);
-				default:
-					return Name;
-			}
+			if(sChannelNameList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()))
+				sChannelNameList.Channels[sIRCMessage.Channel.ToLower()] = true;
 		}
 
 		/// <summary>

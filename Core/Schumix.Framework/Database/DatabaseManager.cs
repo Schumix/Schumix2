@@ -180,6 +180,14 @@ namespace Schumix.Framework.Database
 			}
 		}
 
+		public bool IsCreatedTable(string Table)
+		{
+			lock(_lock)
+			{
+				return SQLiteConfig.Enabled ? sdatabase.IsCreatedTable(Table) : mdatabase.IsCreatedTable(Table);
+			}
+		}
+
 		public void ExecuteNonQuery(string Sql)
 		{
 			lock(_lock)

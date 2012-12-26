@@ -158,6 +158,7 @@ namespace Schumix.Framework
 					}
 
 					NewServerSqlData(sn.Value.ServerId, sn.Key);
+					IsAllSchumixFunction(sn.Value.ServerId, sn.Key);
 
 					var db = DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix WHERE ServerName = '{0}'", sn.Key);
 					if(!db.IsNull())
@@ -246,6 +247,23 @@ namespace Schumix.Framework
 			if(db.IsNull())
 			{
 				foreach(var function in Enum.GetNames(typeof(IFunctions)))
+				{
+					if(function == IFunctions.Mantisbt.ToString() || function == IFunctions.Wordpress.ToString() ||
+						function == IFunctions.Svn.ToString() || function == IFunctions.Git.ToString() ||
+						function == IFunctions.Hg.ToString())
+						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), Off);
+					else
+						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), On);
+				}
+			}
+		}
+
+		private void IsAllSchumixFunction(int ServerId, string ServerName)
+		{
+			foreach(var function in Enum.GetNames(typeof(IFunctions)))
+			{
+				var db = DManager.QueryFirstRow("SELECT * FROM schumix WHERE ServerId = '{0}' And FunctionName = '{1}'", ServerId, function.ToLower());
+				if(db.IsNull())
 				{
 					if(function == IFunctions.Mantisbt.ToString() || function == IFunctions.Wordpress.ToString() ||
 						function == IFunctions.Svn.ToString() || function == IFunctions.Git.ToString() ||

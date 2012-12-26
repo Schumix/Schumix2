@@ -98,15 +98,15 @@ namespace Schumix.CompilerAddon
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
 
-			if(sChannelInfo.FSelect(IFunctions.Commands) || sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(sChannelInfo.FSelect(IFunctions.Commands) || !sSCompiler.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sIRCMessage.Channel.Substring(0, 1) == "#")
+				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sSCompiler.IsChannel(sIRCMessage.Channel))
 					return;
 
 				if(!CompilerConfig.CompilerEnabled)
 					return;
 
-				if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
+				if(!sSCompiler.IsChannel(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string command = IRCConfig.List[sIRCMessage.ServerName].NickName + SchumixBase.Comma;
@@ -140,7 +140,7 @@ namespace Schumix.CompilerAddon
 					}
 				}
 
-				if(sIRCMessage.Channel.Substring(0, 1) != "#")
+				if(!sSCompiler.IsChannel(sIRCMessage.Channel))
 				{
 					if(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage))
 						Compiler(sIRCMessage, false, command);
@@ -166,8 +166,9 @@ namespace Schumix.CompilerAddon
 			if(CompilerConfig.MaxAllocatingE)
 			{
 				var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
+				int ircnetwork = sIrcBase.Networks.Count > 1 ? 20 * sIrcBase.Networks.Count : 0;
 
-				if(memory > CompilerConfig.MaxAllocatingM)
+				if(memory > CompilerConfig.MaxAllocatingM + ircnetwork)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/memory", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return false;

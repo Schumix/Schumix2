@@ -147,7 +147,18 @@ namespace Schumix.CompilerAddon.Commands
 				}
 
 				int ReturnCode = 0;
-				var thread = new Thread(() => ReturnCode = StartCode(sIRCMessage, data, o));
+				var thread = new Thread(() =>
+				{
+					try
+					{
+						ReturnCode = StartCode(sIRCMessage, data, o);
+					}
+					catch(Exception e)
+					{
+						Log.Debug("CompilerThread", sLConsole.Exception("Error"), e.Message);
+					}
+				});
+
 				thread.Start();
 				thread.Join(3000);
 				thread.Abort();
@@ -440,7 +451,18 @@ namespace Schumix.CompilerAddon.Commands
 				if(IsFor(data) || IsDo(data) || IsWhile(data))
 				{
 					bool b = false;
-					var thread = new Thread(() => { o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true; });
+					var thread = new Thread(() =>
+					{
+						try
+						{
+							o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true;
+						}
+						catch(Exception e)
+						{
+							Log.Debug("CompilerThread2", sLConsole.Exception("Error"), e.Message);
+						}
+					});
+
 					thread.Start();
 					thread.Join(2);
 					thread.Abort();

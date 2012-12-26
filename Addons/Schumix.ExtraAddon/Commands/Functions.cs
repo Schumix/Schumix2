@@ -85,8 +85,6 @@ namespace Schumix.ExtraAddon.Commands
 						return true;
 					}
 				}
-
-				return false;
 			}
 
 			if(status == "privmsg")
@@ -100,8 +98,6 @@ namespace Schumix.ExtraAddon.Commands
 						return true;
 					}
 				}
-
-				return false;
 			}
 
 			return false;

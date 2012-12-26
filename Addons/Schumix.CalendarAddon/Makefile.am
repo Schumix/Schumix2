@@ -134,7 +134,8 @@ FILES = \
 	Commands/BanCommand.cs \
 	Config/AddonDefaultConfig.cs \
 	Config/AddonXmlConfig.cs \
-	Config/AddonYamlConfig.cs 
+	Config/AddonYamlConfig.cs \
+	Commands/BirthdayCommand.cs 
 
 DATA_FILES = 
 

@@ -18,16 +18,16 @@
  * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Linq;
+using System.Xml.Serialization;
+using System.Diagnostics.Contracts;
+using WolframAPI.Collections;
+//using Schumix.Framework;
+using Schumix.Framework.Extensions;
+
 namespace WolframAPI
 {
-	using System;
-	using System.Diagnostics.Contracts;
-	using System.Linq;
-	using System.Xml.Serialization;
-	using Collections;
-	//using Schumix.Framework;
-	using Schumix.Framework.Extensions;
-
 	/// <summary>
 	///   The pod element in the response.
 	/// </summary>

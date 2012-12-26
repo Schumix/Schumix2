@@ -27,8 +27,8 @@ using System.Threading;
 using System.Reflection;
 using System.Management;
 using System.Diagnostics;
-using System.Security.Cryptography;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.API;
@@ -102,55 +102,43 @@ namespace Schumix.Framework
 
 		public string GetUrlEncoding(string url, string encoding)
 		{
-			using(var client = new WebClient())
+			lock(WriteLock)
 			{
-				double Num;
-				bool isNum = double.TryParse(encoding, out Num);
-
-				if(!isNum)
-					client.Encoding = Encoding.GetEncoding(encoding);
-				else
-					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
-
-				client.Headers.Add("referer", Consts.SchumixReferer);
-				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
-				return client.DownloadString(url);
+				return GetUrlEncoding(url, string.Empty, string.Empty, encoding);
 			}
 		}
 
 		public string GetUrlEncoding(string url, string args, string encoding)
 		{
-			using(var client = new WebClient())
+			lock(WriteLock)
 			{
-				double Num;
-				bool isNum = double.TryParse(encoding, out Num);
-
-				if(!isNum)
-					client.Encoding = Encoding.GetEncoding(encoding);
-				else
-					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
-
-				client.Headers.Add("referer", Consts.SchumixReferer);
-				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
-				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args)));
+				return GetUrlEncoding(url, args, string.Empty, encoding);
 			}
 		}
 
 		public string GetUrlEncoding(string url, string args, string noencode, string encoding)
 		{
-			using(var client = new WebClient())
+			lock(WriteLock)
 			{
-				double Num;
-				bool isNum = double.TryParse(encoding, out Num);
+				if(args != string.Empty && noencode == string.Empty)
+					url = url + HttpUtility.UrlEncode(args);
+				else if(args != string.Empty && noencode != string.Empty)
+					url = url + HttpUtility.UrlEncode(args) + noencode;
 
-				if(!isNum)
-					client.Encoding = Encoding.GetEncoding(encoding);
-				else
-					client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
+				using(var client = new WebClient())
+				{
+					double Num;
+					bool isNum = double.TryParse(encoding, out Num);
 
-				client.Headers.Add("referer", Consts.SchumixReferer);
-				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
-				return client.DownloadString(new Uri(url + HttpUtility.UrlEncode(args) + noencode));
+					if(!isNum)
+						client.Encoding = Encoding.GetEncoding(encoding);
+					else
+						client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
+
+					client.Headers.Add("referer", Consts.SchumixReferer);
+					client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+					return client.DownloadString(new Uri(url));
+				}
 			}
 		}
 

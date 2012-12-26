@@ -42,6 +42,7 @@ namespace Schumix.CalendarAddon
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private CalendarCommand sCalendarCommand;
+		private BirthdayCommand sBirthdayCommand;
 		private BanCommand sBanCommand;
 		private Calendar _calendar;
 #pragma warning disable 414
@@ -55,6 +56,7 @@ namespace Schumix.CalendarAddon
 			_servername = ServerName;
 			sLocalization.Locale = sLConsole.Locale;
 			sCalendarCommand = new CalendarCommand(ServerName);
+			sBirthdayCommand = new BirthdayCommand(ServerName);
 			sBanCommand = new BanCommand(ServerName);
 			sBan = new Ban(ServerName);
 
@@ -67,8 +69,10 @@ namespace Schumix.CalendarAddon
 			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
 			InitIrcCommand();
 			SchumixBase.sCleanManager.CDatabase.CleanTable("banned");
+			SchumixBase.sCleanManager.CDatabase.CleanTable("birthday");
 			SchumixBase.sCleanManager.CDatabase.CleanTable("calendar");
 			SchumixBase.DManager.Update("banned", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
+			SchumixBase.DManager.Update("birthday", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 			SchumixBase.DManager.Update("calendar", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
 		}
 
@@ -109,6 +113,7 @@ namespace Schumix.CalendarAddon
 			sIrcBase.Networks[_servername].SchumixRegisterHandler("ban",      sBanCommand.HandleBan, CommandPermission.Operator);
 			sIrcBase.Networks[_servername].SchumixRegisterHandler("unban",    sBanCommand.HandleUnban, CommandPermission.Operator);
 			sIrcBase.Networks[_servername].SchumixRegisterHandler("calendar", sCalendarCommand.HandleCalendar);
+			sIrcBase.Networks[_servername].SchumixRegisterHandler("birthday", sBirthdayCommand.HandleBirthday, CommandPermission.Operator);
 		}
 
 		private void RemoveIrcCommand()
@@ -116,6 +121,7 @@ namespace Schumix.CalendarAddon
 			sIrcBase.Networks[_servername].SchumixRemoveHandler("ban",        sBanCommand.HandleBan);
 			sIrcBase.Networks[_servername].SchumixRemoveHandler("unban",      sBanCommand.HandleUnban);
 			sIrcBase.Networks[_servername].SchumixRemoveHandler("calendar",   sCalendarCommand.HandleCalendar);
+			sIrcBase.Networks[_servername].SchumixRemoveHandler("birthday",   sBirthdayCommand.HandleBirthday);
 		}
 
 		private void HandlePrivmsg(IRCMessage sIRCMessage)

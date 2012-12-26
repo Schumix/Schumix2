@@ -22,10 +22,10 @@ using Schumix.API;
 using Schumix.API.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
-using Schumix.CalendarAddon;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.CalendarAddon;
 
 namespace Schumix.CalendarAddon.Commands
 {
@@ -390,7 +390,13 @@ namespace Schumix.CalendarAddon.Commands
 						return;
 					}
 
-					int year = s[0].ToNumber().ToInt();
+					int year = s[0].ToNumber(-1).ToInt();
+					if(year < 0)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
 					int month = s[1].ToNumber(13).ToInt();
 					if(month > 12 || month <= 0)
 					{
@@ -483,7 +489,13 @@ namespace Schumix.CalendarAddon.Commands
 							return;
 						}
 
-						int year = s[0].ToNumber().ToInt();
+						int year = s[0].ToNumber(-1).ToInt();
+						if(year < 0)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
 						int month = s[1].ToNumber(13).ToInt();
 						if(month > 12 || month <= 0)
 						{
@@ -574,7 +586,13 @@ namespace Schumix.CalendarAddon.Commands
 							return;
 						}
 
-						int year = s[0].ToNumber().ToInt();
+						int year = s[0].ToNumber(-1).ToInt();
+						if(year < 0)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
 						int month = s[1].ToNumber(13).ToInt();
 						if(month > 12 || month <= 0)
 						{
@@ -666,7 +684,13 @@ namespace Schumix.CalendarAddon.Commands
 						return;
 					}
 
-					int year = s[0].ToNumber().ToInt();
+					int year = s[0].ToNumber(-1).ToInt();
+					if(year < 0)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
 					int month = s[1].ToNumber(13).ToInt();
 					if(month > 12 || month <= 0)
 					{

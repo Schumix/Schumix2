@@ -37,6 +37,7 @@ namespace Schumix.GameAddon.Commands
 		public readonly Dictionary<string, string> GameChannelFunction = new Dictionary<string, string>();
 		public readonly Dictionary<string, MaffiaGame> MaffiaList = new Dictionary<string, MaffiaGame>();
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		public GameCommand sGC;
@@ -59,21 +60,28 @@ namespace Schumix.GameAddon.Commands
 
 			if(sIRCMessage.Info[4].ToLower() == "start")
 			{
-				if(sIRCMessage.Channel.Substring(0, 1) != "#")
+				var text = sLManager.GetCommandTexts("game/start", sIRCMessage.Channel, sIRCMessage.ServerName);
+				if(text.Length < 4)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "Ez nem csatorna! Ne pm-ben írj!");
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					return;
+				}
+
+				if(!IsChannel(sIRCMessage.Channel))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva a játék neve!");
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 					return;
 				}
 
 				if(sChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "Fut már játék!");
+					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					return;
 				}
 
@@ -87,7 +95,7 @@ namespace Schumix.GameAddon.Commands
 							{
 								if(player.Value == sIRCMessage.Nick)
 								{
-									sSendMessage.SendChatMessage(sIRCMessage, "{0}: Te már játékban vagy itt: {1}", sIRCMessage.Nick, maffia.Key);
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("game/start/maffiagame", sIRCMessage.Channel, sIRCMessage.ServerName), sIRCMessage.Nick, maffia.Key);
 									return;
 								}
 							}
@@ -114,7 +122,7 @@ namespace Schumix.GameAddon.Commands
 						MaffiaList[sIRCMessage.Channel.ToLower()].NewGame(sIRCMessage.Nick, sIRCMessage.Channel);
 				}
 				else
-					sSendMessage.SendChatMessage(sIRCMessage, "Nincs ilyen játék!");
+					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 			}
 		}
 	}

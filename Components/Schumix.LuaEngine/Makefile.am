@@ -156,7 +156,8 @@ EXTRAS = \
 	schumix.luaengine.pc.in 
 
 REFERENCES =  \
-	System
+	System \
+	System.Core
 
 DLL_REFERENCES =  \
 	../../Dependencies/KopiLua.dll \

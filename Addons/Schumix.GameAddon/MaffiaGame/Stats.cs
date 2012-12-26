@@ -31,30 +31,37 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 
+			var text = sLManager.GetCommandTexts("maffiagame/basecommand/stats", _channel, _servername);
+			if(text.Length < 5)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
 			if(!Started)
 			{
 				string names = string.Empty;
 				foreach(var name in _playerlist)
 					names += ", " + name.Value;
 
-				sSendMessage.SendCMPrivmsg(_channel, "Új játék indul. Jelenleg {0} játékos van.", _playerlist.Count);
-				sSendMessage.SendCMPrivmsg(_channel, "Játékosok: {0}", names.Remove(0, 2, ", "));
+				sSendMessage.SendCMPrivmsg(_channel, text[0], _playerlist.Count);
+				sSendMessage.SendCMPrivmsg(_channel, text[1], names.Remove(0, 2, ", "));
 				return;
 			}
 			else
 			{
-				sSendMessage.SendCMPrivmsg(_channel, "A játék állása a következő:");
+				sSendMessage.SendCMPrivmsg(_channel, text[2]);
 				string names = string.Empty;
 				foreach(var name in _playerlist)
 					names += ", " + name.Value;
 
-				sSendMessage.SendCMPrivmsg(_channel, "A következő személyek vannak még életben: {0}", names.Remove(0, 2, ", "));
+				sSendMessage.SendCMPrivmsg(_channel, text[3], names.Remove(0, 2, ", "));
 
 				names = string.Empty;
 				foreach(var name in _ghostlist)
 					names += ", " + name.Value;
 
-				sSendMessage.SendCMPrivmsg(_channel, "A következő személyek halottak: {0}", names.Remove(0, 2, ", "));
+				sSendMessage.SendCMPrivmsg(_channel, text[4], names.Remove(0, 2, ", "));
 			}
 		}
 	}

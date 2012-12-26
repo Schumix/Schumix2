@@ -3,7 +3,7 @@
 -- ----------------------------
 -- Records of channels
 -- ----------------------------
-INSERT INTO `channels` VALUES ("1", "1", "default", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off", "#schumix2", "", "", "", "huHU");
+INSERT INTO `channels` VALUES ("1", "1", "default", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off,birthday:off", "#schumix2", "", "false", "", "enUS");
 
 -- ----------------------------
 -- Records of gitinfo
@@ -260,6 +260,7 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "cserver", "Switch between servers.\nUse: cserver <server's name>");
 
 -- huHU
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "WrongSwitch", "Nem megfelelő kapcsoló lett megadva!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoName", "A név nincs megadva!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoValue", "Nincs paraméter!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "No1Value", "Nincs megadva egy paraméter!");
@@ -286,6 +287,7 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThereIsNoSuchAnAddon", "Ilyen addon nem létezik!");
 
 -- enUS
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WrongSwitch", "Wrong Switch!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoValue", "The parameters are not specified!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "No1Value", "A parameter was not specified!");
@@ -326,7 +328,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "date", "Ma {0}. 0{1}. 0{2}. {3} napja van.\nMa {0}. 0{1}. {2}. {3} napja van.\nMa {0}. {1}. 0{2}. {3} napja van.\nMa {0}. {1}. {2}. {3} napja van.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "roll", "Százalékos aránya {0}%");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "irc", "3Parancsok: {0}\nNem létezik ilyen parancs!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "whois", "Jelenleg itt van fent: {0}\nJelenleg nincs fent!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "whois", "Jelenleg itt van fent: {0}\nJelenleg nincs fent!\nJelenleg egy csatornán sincs fent!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "warning", "{0} keres téged itt: {1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "google", "2Title: Nincs Title.\n2Link: Nincs Link.\n2Title: {0}\n2Link: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "translate", "Nem található fordított szöveg!");
@@ -469,6 +471,42 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/remove", "Nem szerepel az ignore listán!\nAz addon sikeresen el lett távolítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/addon/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "xrev/github", "Nincs megadva a felhasználó név!\nNincs megadva a project!\nNincs megadva a sha1 kód!\nNincs ilyen kommit!\n3Kommit: {0}\n3Link: {0}\n3Szerző: {0}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "game/start", "Ez nem csatorna! Ne pm-ben írj!\nNincs megadva a játék neve!\nFut már játék!\nNincs ilyen játék!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "game/start/maffiagame", "{0}: Te már játékban vagy itt: {1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/start", "{0}: A játékot {1} indította!\nA játék indításához minimum 4 játékos kell!\nTe egy gyilkos vagy. Célod megölni minden falusit. Csak viselkedj természetesen!\nTe vagy a nyomozó. A te dolgod éjszakánként követni 1-1 embert, hogy megtudd, ki is ő valójában, mielőtt még túl késő lenne. Ha szerencséd van, a falusiak hisznek neked - és talán nem lincselnek meg...\nTe vagy a falu egyetlen orvosa. Éjszakánként megmenhtetsz egy-egy embert a zord haláltól. Ha szerencséd van, talán nem te leszel az első áldozat...\nTe egy teljesen hétköznapi civil vagy. Nincs más dolgod, mint kiválasztani nappal, hogy ki lehet a gyilkos, akit meglincseltek, éjszakánként pedig imádkozni az életedért...\nÚj játék lett indítva! Most mindenki megkapja a szerepét.\nA játék már megy!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/set", "{0}: Sajnálom de a játék már fut!\n{0}: Nincs megadva az állítandó paraméter!\n{0}: Sajnálom, de csak {1}, a játék indítója állíthat a játék menetén!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/set/info", "Nincs lynch: bekapcsolva\nNo lynch: kikapcsolva\nNincs rang este: bekapcsolva\nNincs rang este: kikapcsolva");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/set/nolynch", "{0}: Nincs megadva hogy on vagy off legyen-e ez a beállítás!\n{0}: A beállítás módosítva lett.\n{0}: Nem on illetve off kifejezés lett megadva!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/set/night", "{0}: Nincs megadva az állítandó paraméter!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/set/night/novoice", "{0}: Nincs megadva hogy on vagy off legyen-e ez a beállítás!\n{0}: A beállítás módosítva lett.\n{0}: Nem on illetve off kifejezés lett megadva!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/stats", "Új játék indul. Jelenleg {0} játékos van.\nJátékosok: {0}\nA játék állása a következő:\nA következő személyek vannak még életben: {0}\nA következő személyek halottak: {0}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/join", "{0}: Te már játékban vagy itt: {1}\n{0}: A játék épp most indult. Kérlek ne zavard a játékosokat!\n{0}: A játék már megy. Kérlek ne zavard a játékosokat!\n{0}: Bekerültél a játékba!\n{0}: Már játékban vagy!\n{0}: Már játékban vagy!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/leave", "{0}: Kit akarsz kiléptetni?\n{0}: Nem te indítottad a játékot!\n{0}: Te már nem vagy játékos. Kérlek maradj csendben!\n{0}: Te már nem vagy játékos. Kérlek maradj csendben!\n{0} eltűnt egy különös féreglyukban.\n{0}-nak izgalmas szerepe volt a játékban, mint gyilkos. Remélhetőleg halála izgalmasabb lesz.\n{0}-nak izgalmas szerepe volt a játékban, mint nyomozó. Remélhetőleg halála izgalmasabb lesz.\n{0}-nak izgalmas szerepe volt a játékban, mint orvos. Remélhetőleg halála izgalmasabb lesz.\n{0}-nak unalmas szerepe volt a játékban, mint civil. Remélhetőleg halála izgalmasabb lesz.\n{0}-nak nem volt szerepe még a játékban. Remélhetőleg halála izgalmasabb lesz.\nA játék indítója lelépett. A játékot mostantól bárki írányíthatja!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/kill", "Kit akarsz megölni?\nCsak este ölhetsz!\nNem vagy gyilkos!\nŐ már halott. Válasz mást!\nKit akarsz megölni?\nÖnmagadat akarod megölni? Te tudod :P\nElkönyveltem a szavazatodat.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/lynch", "{0}: Kit akarsz lincselni?\n{0}: A lincselési lehetőség ki van kapcsolva!\n{0}: Kérlek maradj csendben amíg a játék véget ér.\n{0}: Csak nappal lehet lincselni!\n{0}: Ilyen játékos nincs. Kérlek válasz mást!\n{0}: Ő már halott. Szavazz másra!\n{0}: Önmagadat lincselnéd meg? Normális vagy?\n{0}: Már szavaztál rá!\n{0} arra szavazott, hogy {1} legyen meglincselve!\nszavazat\n{0} szavazat kell a többséghez. Jelenlegi szavazatok:{1}\nA többség 4{0} lincselése mellett döntött! Elszabadulnak az indulatok. Ő mostantól már halott.\nMegölték a főnököt! Szemetek!!!\n({0} meghalt, és nem szólhat hozzá a játékhoz.)");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/rescue", "Kit akarsz megmenteni?\nCsak este menthetsz életet!\nNem vagy orvos!\nŐ már halott. Válasz mást!\nKit akarsz megmenteni?\nÖnmagadat akarod megmenteni? Ennyire nem lehetsz félős!\nElkönyveltem a kérésedet.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/see", "Kit akarsz kikérdezni?\nCsak este nyomozhatsz!\nNem vagy nyomozó!\nMa este már kikérdeztél valakit!\nŐ már halott. Válasz mást!\nKit akarsz kikérdezni?\nÖnmagadat akarod kikérdezni? Te tudod :P\nA jelentést reggel kapod meg!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/gameover", "{0}: Te már kérelmezted a leállítást!\n{0} arra szavazott, hogy vége legyen a játéknak!\nJelenleg {0} játékos kívánja leállítani! A többséghez {1} szavazat kell!\nA többség megszavazta a játék leállítását!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand/end", "{0}: Sajnálom, de csak {1}, a játék indítója vethet véget a játéknak!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand", "{0}: Nem létezik ilyen parancs!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/newgame", "{0} új játékot indított. Csatlakozni a '!join' paranccsal tudtok.\n{0}: Írd be a '!start' parancsot, ha mindenki készen áll.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/handleisownerafk", "A játék indítója több mint 10 perce nincs itt.\nA játékot mostantól bárki írányíthatja!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/corpse", "*** A holttest megvizsgálása után kiderült, hogy 4gyilkos volt.\n*** A holttest megvizsgálása után kiderült, hogy 4nyomozó volt.\n*** A holttest megvizsgálása után kiderült, hogy 4orvos volt.\n*** A holttest megvizsgálása után kiderült, hogy egy ártatlan falusi volt.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/endtext", "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig nem volt. Mindenki más hétköznapi civil volt.\n*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/endgametext", "A játék befejeződött.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/isrunning", "Nem megy játék!\n{0}: Nem megy játék!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/isstarted", "{0}: Még nem kezdődött el játék!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/game", "Nincs elég játékos két gyilkoshoz, csak egy gyilkos van játékban (illetve nincs orvos).\nMivel legalább 8 játékos van, ezért 2 gyilkos és egy orvos lesz.\nMivel legalább 15 játékos van, ezért 3 gyilkos, 2 nyomozó és egy orvos lesz.\nItt mindenki egyszerű civilnek tűnhet, de valójában köztetek van 1, 2 vagy 3 4gyilkos, akiknek célja mindenkit megölni az éj leple alatt.\nKöztetek van egy vagy kettő 4nyomozó is: ő képes éjszakánként megtudni 1-1 emberről, hogy gyilkos-e, és lebuktatni őt a falusiak előtt, illetve a falu 4orvosa, aki minden éjjel megmenthet valakit...\nA csoport célja tehát lebuktatni és meglincselni a gyilkos(oka)t, mielőtt mindenkit megölnek álmukban.\nA gyilkosok megegyeztek!\nMost már bebizonyosodott, hogy ő a gyilkos! Buktasd le mielőtt még túl késő lenne...\nMost már bebizonyosodott, hogy ő egy hétköznapi falusi.\nMost már bebizonyosodott, hogy ő a falu orvosa.\nMost már bebizonyosodott, hogy ő egy nyomozó.\nA következő személyek vannak még életben: {0}\nLeszállt az 4éj.\nAz összes civil békésen szundikál...\nMiközben a falusiak alszanak, te eldöntöd, hogy kit ölsz meg az éj leple alatt.\nTe és a másik gyilkos (ha létezik, és él egyáltalán) meg fogjátok vitatni (PM-ben), hogy ki legyen az áldozat.\nÍrd be PM-ként nekem: '!kill <nickname>'\nA másik gyilkos {0}. PM-ben beszélgessetek.\nCsatlakozz ide: {0} és beszéljétek meg ki haljon meg!\nA te dolgod éjszaka vigyázni a falu betegére.\nMost kell eldöntened hogy kit akarsz vizsgálni éjszaka: írd be PM-ként nekem: '!rescue <nickname>'.\nA te dolgod megtudni egyes emberekről, hogy gyilkosok-e.\nMost kell eldöntened kit kövess éjszaka: írd be PM-ként nekem: '!see <nickname>'. Így megtudhatod, ki is ő valójában.\nFelkelt a nap!\nA falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!\nMegölték a főnököt! Szemetek!!!\n({0} meghalt, és nem szólhat hozzá a játékhoz.)\nNem halt meg senki!\nA következő személyek vannak még életben: {0}\nEddig {0} személy esett áldozatul.\nFelkelt a nap... A falusiak kirohannak a főtérre, hogy megvitassák, ki lehet a gyilkos.\nA falusiaknak el *kell* dönteniük, hogy kit lincseljenek meg.\nHa mindenki készen áll, írjátok be: '!lynch <nickname>'\nÖsszeszámolom a szavazatokat, és a döntő többség szava fog érvényesülni.\nMegjegyzés: a szavazatokat bármikor meg lehet változtatni.\nA lincselés a mai napon elmarad. A falusiak közösen megegyezve nem kérték.\nA tanácskozásra viszont kapnak időt a főtéren. Mostantól számítva 2 percet.\n1 perc 30 másodperc van hátra.\n1 perc van hátra.\n30 másodperc van hátra.\n10 másodperc van hátra.\n5 másodperc van hátra.\nVége!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/removeplayer", "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/exception", "Meghibásodás történt a játékban! Oka: ");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/endgame", "A gyilkosok halottak! A 4falusiak győztek.\nA falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!\nA falusiak halottak! A 4gyilkosok győztek.\nElfogytak a játékosok!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/idonotknowwho", "Nem tudom ki vagy kik =(");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday", "Nem vagy beregisztrálva! Kérlek végezd el a regisztrálást hogy tudjad használni a funkciót. Parancs: {0}birthday register <hónap> <nap>");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/info", "3Születésnap funkció állapota: {0}\n3Születésnap időpontja:2 {0}. {1}. {2}.\nNem vagy regisztrálva!\nNincs regisztrálva!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/change/status", "Születésnapod jelzése bekapcsolva.\nSzületésnapod jelzése kikapcsolva.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/change/birthday", "Nincs megadva a születési hónap!\nNincs megadva a születési nap!\nSikeresen frissítve lett a születésnapod.\nNincs megadva a születési év!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/register", "Már regisztrálva vagy!\nNincs megadva a születési hónap!\nNincs megadva a születési nap!\nSikeresen hozzáadásra került a születésnapod.\nNincs megadva a születési év!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/remove", "Nem szerepelsz a listán!\nTörölve lett a születésnapod!");
 
 -- enUS
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/sys", "3Version: 10{0}\n3Platform: {0}\n3OSVersion: {0}\n3Programming language: c#\n3Memory allocation:5 {0} MB\n3Memory allocation:8 {0} MB\n3Memory allocation:3 {0} MB\n3Uptime: {0}");
@@ -485,7 +523,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "date", "Today is {0}. 0{1}. 0{2}. and {3}'s day.\nToday is {0}. 0{1}. {2}. and {3}'s day.\nToday is {0}. {1}. 0{2}. and {3}'s day.\nToday is {0}. {1}. {2}. and {3}'s day.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "roll", "Pencentage rate: {0}%");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "irc", "3Commands: {0}\nNo such command!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "whois", "Now online here: {0}\nCurrently offline!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "whois", "Now online here: {0}\nCurrently offline!\nCurrent is not in any channels!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "warning", "{0} is looking for you here: {1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "google", "2Title: Nothing Title.\n2Link: Nothing Link.\n2Title: {0}\n2Link: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "translate", "Nothing translated text.");
@@ -628,6 +666,12 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/remove", "Not on the ignore list!\nSuccesfuly removed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "xrev/github", "Username is not set!\nProject is not set!\nSha1 code is not set!\nThere is no such a commit!\n3Commit: {0}\n3Link: {0}\n3Author: {0}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday", "You are not registered! Please register to use this function. Command: {0}birthday register <month> <day>");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/info", "3State of birthday function: {0}\n3Date of birth:2 {0}. {1}. {2}.\nYou are not registered!\nYou are not registered!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/change/status", "Your birthday sign is on.\nYour birthday sign is off.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/change/birthday", "Month of birth missing!\nDay of birth missing!\nYour birthday is succesfully updated.\nYear of birth missing!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/register", "You are already registered!\nMonth of birth missing!\nDay of birth missing!\nBirthday succesfully added.\nYear of birth missing!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/remove", "You are not in the list!\nBirthday deleted!");
 
 -- huHU
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xbot", "9", "Felhasználók számára használható parancslista.");
@@ -818,6 +862,13 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/addon/search", "1", "Addon keresése a kivételekben.\nHasználata: {0}ignore addon search <parancs>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xrev", "9", "Többféle verziókezelő oldalon tárolt információ olvasható ki az adott projektről.\nXrev parancsok: github");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xrev/github", "9", "Lekérdezhető vele az adott projekt megadott kommitjának információi.\nHasználata: {0}xrev github <felhasználó> <projekt neve> <sha1 kód>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday", "1", "A születésnap funkció beállításai kezelhetők vele.\nBirthDay parancsok: info | change | register | remove");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/info", "1", "Kiírja a születésnap funkció állapotát.");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/change", "1", "Megváltoztatható vele a funkció több beállítása.\nParancsok: status | birthday");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/change/status", "1", "Bekapcsolható vagy kikapcsolható vele a születésnap funkció.\nHasználata: {0}birthday change status <on vagy off>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/change/birthday", "1", "Frissíthető vele a születésnap dátuma.\nHasználata: {0}birthday change birthday <év> <hónap> <nap>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/register", "1", "Beregisztrálja a születésnapot.\nHasználata: {0}birthday register <év> <hónap> <nap>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/remove", "1", "Törli a születésnapot.");
 
 -- enUS
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "xbot", "9", "Users to use the command list.");
@@ -1008,6 +1059,13 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/addon/search", "1", "Search addon in the expection list.\Uses: {0}ignore addon search <Command>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "xrev", "9", "Multiple data from revision control sites.\nXrev commands: github");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "xrev/github", "9", "You can query the project's commit information.\nUsage: {0}xrev github <username> <project name> <sha1 code>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday", "1", "With it you can control the paramteres of the birthday function.\nBirthDay commands: info | change | register | remove");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/info", "1", "Shows the state of the birthday function.");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/change", "1", "With it you can change the paramteres of the function.\nCommands: status | birthday");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/change/status", "1", "With it you can turn on/off the birthday function.\nUse: {0}birthday change status <on or off>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/change/birthday", "1", "With it you can update your birth date.\nUse: {0}birthday change birthday <year> <month> <day>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/register", "1", "Register the birth date.\nUse: {0}birthday register <year> <month> <day>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/remove", "1", "Delete the birth date.");
 
 -- huHU
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoName", "A név nincs megadva!");
@@ -1077,6 +1135,8 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoRegisteredNotesUserAccess", "Továbbra se vagy fent egy csatornán se így megvonom a jegyzetekhez hozzáférésedet.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "CommandsEnabled", "A tiltás lejárt.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThereIsNoSuchAnAddon", "Ilyen addon nem létezik!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "WrongSwitch", "Nem megfelelő kapcsoló lett megadva!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "BirthDay", "Ma {0} születésnapja van. Most töltötte be a {1}. életévét.");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1146,6 +1206,8 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoRegisteredNotesUserAccess", "You are not there any channels yet, so i remove your note edit status.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "CommandsEnabled", "The denying has been expired.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ThereIsNoSuchAnAddon", "There is no such an addon!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WrongSwitch", "Wrong Switch!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "BirthDay", "Today is {0}'s birthday. {0} is now {1} years old.");
 
 -- ----------------------------
 -- Records of schumix
@@ -1171,6 +1233,7 @@ INSERT INTO `schumix` VALUES ("18", "1", "default", "mantisbt", "off");
 INSERT INTO `schumix` VALUES ("19", "1", "default", "wordpress", "off");
 INSERT INTO `schumix` VALUES ("20", "1", "default", "chatterbot", "on");
 INSERT INTO `schumix` VALUES ("21", "1", "default", "nameday", "on");
+INSERT INTO `schumix` VALUES ("22", "1", "default", "birthday", "on");
 
 -- ----------------------------
 -- Records of svninfo

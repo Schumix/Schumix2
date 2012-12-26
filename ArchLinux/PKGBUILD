@@ -1,0 +1,95 @@
+# Schumix2 ArchLinux install script
+# made by Jackneill and Megax
+
+pkgname=schumix
+_pkgname=Schumix
+pkgver="3.9.x"
+_pkgverclassic="3.9.x"
+pkgrel=1
+_gitdir=Schumix2
+_gitbranch=master
+_giturl="git://github.com/megax/$_gitdir.git"
+pkgdesc="Schumix IRC Bot and Framework"
+arch=('any')
+url="git://github.com/megax/$_gitdir.git"
+license=('GNU GPL')
+groups=('')
+depends=('mono>=2.10.8')
+makedepends=('git')
+optdepends=()
+conflicts=('')
+
+build()
+{
+    echo "Version: $pkgver"
+
+    # Move to src dir
+    cd "${srcdir}"
+
+    # Clone from git server
+    msg "Cloning from git server..."
+    if [[ -d $_gitdir ]] ; then
+      cd "$_gitdir"
+      git pull origin "$_gitbranch" --depth=1
+      msg "Files updated"
+    else
+      git clone "$_giturl" "$_gitdir" --depth=1
+      cd "$_gitdir"
+    fi
+
+    # Uncomment if you aren't using the master branch
+    #git checkout "v$pkgver"
+
+    # Notify the user that the build() process is complete
+    echo "$_pkgname version $pkgver is ready to be packaged!"
+
+    sh autogen.sh
+    ./configure --prefix=/usr
+    make
+}
+
+package()
+{
+    cd "${srcdir}"
+    cd "$_gitdir"
+
+    rm -rf pkg
+    mkdir pkg
+    cp -rf ArchLinux pkg/
+    mkdir pkg/usr
+    mkdir pkg/usr/bin
+    mv pkg/ArchLinux/schumix pkg/usr/bin/
+    mv pkg/ArchLinux/schumix-server pkg/usr/bin/
+    mv pkg/ArchLinux/share pkg/usr/
+    mkdir pkg/usr/share/doc
+    mkdir pkg/usr/share/doc/schumix
+    cp LICENSE pkg/usr/share/doc/schumix/
+    mkdir pkg/usr/lib
+    mkdir pkg/usr/lib/pkgconfig
+    cp -rf Scripts pkg/usr/lib/schumix/
+    cd Run/Release/Addons
+
+    for file in *.pc
+    do
+        echo $file;
+        mv $file ../../../pkg/usr/lib/pkgconfig/$file
+    done
+
+    cd ..
+
+    for file in *.pc
+    do
+        echo $file;
+        mv $file ../../pkg/usr/lib/pkgconfig/$file
+    done
+
+    rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.API.dll Addons/Schumix.Framework.dll schumix.config schumix.installer schumix schumix.server
+    cp -rf ./ ../../pkg/usr/lib/schumix
+    cd ../../
+    cd pkg
+    rm -rf ArchLinux
+    cd ..
+    cd ..
+    cd ..
+    cp -rf "${srcdir}"/"$_gitdir"/pkg/ ./
+}

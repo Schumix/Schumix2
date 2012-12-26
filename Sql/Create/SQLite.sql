@@ -58,7 +58,7 @@ CREATE TABLE "channels" (
 Id INTEGER PRIMARY KEY AUTOINCREMENT,
 ServerId INTEGER DEFAULT 1,
 ServerName VARCHAR(40),
-Functions VARCHAR(500) DEFAULT ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off',
+Functions VARCHAR(500) DEFAULT ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off,birthday:off',
 Channel VARCHAR(20),
 Password VARCHAR(30),
 Enabled VARCHAR(5) DEFAULT 'false',
@@ -263,14 +263,17 @@ Channel TEXT
 );
 
 -- ----------------------------
--- Table structure for "sznap"
+-- Table structure for birthday
 -- ----------------------------
-CREATE TABLE "sznap" (
-guid INTEGER PRIMARY KEY AUTOINCREMENT,
-nev TEXT,
-honap VARCHAR(30),
-honap1 TINYINT DEFAULT 0,
-nap TINYINT DEFAULT 0
+CREATE TABLE "birthday" (
+Id INTEGER PRIMARY KEY AUTOINCREMENT,
+ServerId INTEGER DEFAULT 1,
+ServerName VARCHAR(40),
+Name VARCHAR(20),
+Year INTEGER DEFAULT 0,
+Month INTEGER DEFAULT 1,
+Day INTEGER DEFAULT 1,
+Enabled VARCHAR(5) DEFAULT 'false'
 );
 
 -- ----------------------------

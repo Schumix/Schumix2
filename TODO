@@ -1,12 +1,12 @@
 Megírásra váró feladatok:
 - Súlyos hibák:
-	- Megöli a compiler addon a botot. A pontos parancs: <Megaxxx> { bool f = false; object o = new object(); for(int i = 0; i < 10; i++) { Monitor.Enter(o, ref f); Console.Write("asd"); Monitor.Exit(o); } }
+
 - Közepes hibák:
 
 - Apróbb hibák:
 
 - Szerver hibák:
-	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!! (Állítottam a prioritáson. Lehetséges ez megoldja a gondot de még tesztelni kell.)
+	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!! [gyaníthatóan elfogy a megszabott memória vagy cpu és azért fagy le (vagy a megengedett maximális szál)]
 
 - Fejleszteni kívánt részek, új funkciók:
 	- Rss átalakítások:
@@ -14,11 +14,12 @@ Megírásra váró feladatok:
 		- Rss-be add, remove, és change parancsot létrehozni mellyel magát az rss címet tudjuk hozzáadni.
 		- Összes addonra alkalmazni a fejlesztéseket.
 	- Sűrgős:
-		- sznap parancs megírása normálisan.
 		- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
-		- Játék addon nyelvezetét átírni angolra is.
-		- whois parancsnál megoldani a visszajelzést ha valaki fent van irc-n de nincs fent egy csatornán se
-	- irc parancs listájának bővítése.
-	- Serverben megoldani az egy szerveren lévő botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
-	- Dokumentálni az egész kódot.
-	- Többszerveres módnál az irc logolást leválasztani a normál logról(normális módnál maradhatna a Schumix.log-ban [Túlságosan sok mindent kéne megváltoztatni ezért jó ötleteken dolgozom hozzá.]).
+		- Játék addonban a nyelvezet kiszedve és az angolnak külön van szedve egy fájlba a magyar szöveg. Csak át kell alakítani.
+	- Közepes:
+		- Serverben megoldani az egy szerveren lévő botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
+		- Többszerveres módnál az irc logolást leválasztani a normál logról(normális módnál maradhatna a Schumix.log-ban [Túlságosan sok mindent kéne megváltoztatni ezért jó ötleteken dolgozom hozzá.]).
+	- Ráérős:
+		- Dokumentálni az egész kódot.
+		- irc parancs listájának bővítése.
+		- changelog készítése.

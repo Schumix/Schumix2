@@ -148,6 +148,8 @@ namespace Schumix.ExtraAddon.Commands
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, text[1], name);
 					}
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WrongSwitch", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 				else
 				{

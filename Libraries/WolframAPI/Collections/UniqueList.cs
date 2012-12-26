@@ -18,14 +18,14 @@
  * along with Schumix.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+using System;
+using System.Linq;
+using System.Collections.Generic;
+using System.Diagnostics.Contracts;
+//using Schumix.Framework;
+
 namespace WolframAPI.Collections
 {
-	using System;
-	using System.Collections.Generic;
-	using System.Diagnostics.Contracts;
-	using System.Linq;
-	//using Schumix.Framework;
-
 	/// <summary>
 	/// Provides a list type which supports only unique list of elements.
 	/// </summary>

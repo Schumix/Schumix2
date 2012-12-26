@@ -409,6 +409,11 @@ namespace Schumix.Libraries
 			return sUtilities.GetCpuId();
 		}
 
+		public static DateTime GetUnixTimeStart()
+		{
+			return UnixTimeStart;
+		}
+
 		/// <summary>
 		///   The current unix time.
 		/// </summary>
@@ -416,8 +421,8 @@ namespace Schumix.Libraries
 		{
 			get
 			{
-				var elapsed = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0));
-				return (elapsed.TotalSeconds);
+				var elapsed = (DateTime.UtcNow - UnixTimeStart);
+				return elapsed.TotalSeconds;
 			}
 		}
 
@@ -485,7 +490,7 @@ namespace Schumix.Libraries
 		{
 			try
 			{
-				return new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(unixTime);
+				return UnixTimeStart.AddSeconds(unixTime);
 			}
 			catch(Exception)
 			{

@@ -33,6 +33,8 @@ Schumix:
         MessageType: Privmsg
     Log:
         FileName: Schumix.log
+        DateFileName: False
+        MaxFileSize: 100
         LogLevel: 2
         LogDirectory: $localappdata\Schumix\Logs
         IrcLogDirectory: $localappdata\Schumix\Channels
@@ -53,6 +55,7 @@ Schumix:
         Directory: $localappdata\Schumix\Addons
     Scripts:
         Lua: False
+        Python: False
         Directory: $localappdata\Schumix\Scripts
     Crash:
         Directory: $localappdata\Schumix\Dumps

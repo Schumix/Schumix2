@@ -18,6 +18,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Schumix.API;
 using Schumix.API.Irc;
 using Schumix.Irc.Ctcp;
@@ -35,6 +36,7 @@ namespace Schumix.Irc.Commands
 	{
 		protected readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		protected readonly Dictionary<string, Whois> WhoisList = new Dictionary<string, Whois>();
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
@@ -51,7 +53,6 @@ namespace Schumix.Irc.Commands
 		public NickInfo sNickInfo { get; private set; }
 		public Sender sSender { get; private set; }
 		protected string ChannelPrivmsg { get; set; }
-		protected string WhoisPrivmsg { get; set; }
 		protected string NewNickPrivmsg { get; set; }
 		protected string OnlinePrivmsg { get; set; }
 		protected bool IsOnline { get; set; }

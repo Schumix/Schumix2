@@ -174,7 +174,8 @@ namespace Schumix.Irc
 			IrcRegisterHandler(ReplyCode.ERR_BANNEDFROMCHAN,   HandleChannelBan);
 			IrcRegisterHandler(ReplyCode.ERR_BADCHANNELKEY,    HandleNoChannelPassword);
 			IrcRegisterHandler(ReplyCode.RPL_WHOISCHANNELS,    HandleMWhois);
-			IrcRegisterHandler(ReplyCode.ERR_NOSUCHNICK,       HandleNoWhois);
+			IrcRegisterHandler(ReplyCode.RPL_WHOISSERVER,      HandleWhoisServer);
+			IrcRegisterHandler(ReplyCode.RPL_ENDOFWHOIS,       HandleEndOfWhois);
 			IrcRegisterHandler(ReplyCode.ERR_UNKNOWNCOMMAND,   HandleUnknownCommand);
 			IrcRegisterHandler(ReplyCode.ERR_NICKNAMEINUSE,    HandleNickError);
 			IrcRegisterHandler(439,                            HandleWaitingForConnection);
@@ -189,6 +190,7 @@ namespace Schumix.Irc
 			IrcRegisterHandler("TOPIC",                        HandleIrcTopic);
 			IrcRegisterHandler("INVITE",                       HandleIrcInvite);
 			IrcRegisterHandler(ReplyCode.RPL_NAMREPLY,         HandleNameList);
+			IrcRegisterHandler(ReplyCode.RPL_ENDOFNAMES,       HandleEndNameList);
 			IrcRegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandlerErrorNewNickName);
 			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
 			IrcRegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);

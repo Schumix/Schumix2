@@ -180,6 +180,8 @@ namespace Schumix.Irc.Commands
 							sChannelInfo.FunctionsReload();
 						}
 					}
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WrongSwitch", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "channel")
@@ -337,6 +339,8 @@ namespace Schumix.Irc.Commands
 						sChannelInfo.ChannelFunctionsReload();
 					}
 				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WrongSwitch", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "update")
 			{
@@ -497,6 +501,8 @@ namespace Schumix.Irc.Commands
 						sChannelInfo.ChannelFunctionsReload();
 					}
 				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WrongSwitch", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
 		}
 
@@ -885,31 +891,6 @@ namespace Schumix.Irc.Commands
 					}
 				}
 			}
-		}
-
-		protected void HandleSznap(IRCMessage sIRCMessage)
-		{
-			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
-				return;
-
-			if(sIRCMessage.Info.Length < 5)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			// INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ('huHU', 'sznap', '1', 'Kiírja a megadott név születésnapjának dátumát.\nHasználata: {0}sznap <név>');
-
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT nev, honap, nap FROM sznap WHERE nev = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[4]));
-			if(!db.IsNull())
-			{
-				string name = db["nev"].ToString();
-				string month = db["honap"].ToString();
-				int day = Convert.ToInt32(db["nap"]);
-				sSendMessage.SendChatMessage(sIRCMessage, "{0} születés napja: {1} {2}", name, month, day);
-			}
-			else
-				sSendMessage.SendChatMessage(sIRCMessage, "Nincs ilyen ember!");
 		}
 
 		protected void HandleKick(IRCMessage sIRCMessage)

@@ -33,35 +33,42 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!IsStarted(_channel, Killer))
 				return;
 
+			var text = sLManager.GetCommandTexts("maffiagame/basecommand/kill", _channel, _servername);
+			if(text.Length < 7)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
 			if(_day)
 			{
-				sSendMessage.SendCMPrivmsg(Killer, "Csak este ölhetsz!");
+				sSendMessage.SendCMPrivmsg(Killer, text[1]);
 				return;
 			}
 
 			if(!_killerlist.ContainsKey(Killer.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(Killer, "Nem vagy gyilkos!");
+				sSendMessage.SendCMPrivmsg(Killer, text[2]);
 				return;
 			}
 
 			if(_ghostlist.ContainsKey(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(Killer, "Ő már halott. Válasz mást!");
+				sSendMessage.SendCMPrivmsg(Killer, text[3]);
 				return;
 			}
 
 			if(!_killerlist.ContainsKey(Name.ToLower()) && !_detectivelist.ContainsKey(Name.ToLower()) &&
 				!_doctorlist.ContainsKey(Name.ToLower()) && !_normallist.ContainsKey(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(Killer, "Kit akarsz megölni?");
+				sSendMessage.SendCMPrivmsg(Killer, text[4]);
 				return;
 			}
 
 			if(Name.ToLower() == Killer.ToLower())
-				sSendMessage.SendCMPrivmsg(Killer, "Önmagadat akarod megölni? Te tudod :P");
+				sSendMessage.SendCMPrivmsg(Killer, text[5]);
 
-			sSendMessage.SendCMPrivmsg(Killer, "Elkönyveltem a szavazatodat.");
+			sSendMessage.SendCMPrivmsg(Killer, text[6]);
 
 			foreach(var function in _playerflist)
 			{
