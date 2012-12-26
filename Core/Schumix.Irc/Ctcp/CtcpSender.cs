@@ -89,7 +89,7 @@ namespace Schumix.Irc.Ctcp
 					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, args);
 					break;
 				default:
-					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, sLConsole.CtcpSender("Text6"), args);
+					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, "{0} {1}: {2}", CtcpUtil.ErrorMessage, args, sLConsole.CtcpSender("Text6"));
 					break;
 			}
 		}

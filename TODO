@@ -6,20 +6,10 @@ Megírásra váró feladatok:
 - Apróbb hibák:
 
 - Szerver hibák:
-	- Valamiért beáll a kód de pontos hiba ok nincs. Beállás oka a Server.exe-ben keresendő!!! [gyaníthatóan elfogy a megszabott memória vagy cpu és azért fagy le (vagy a megengedett maximális szál)]
 
 - Fejleszteni kívánt részek, új funkciók:
-	- Rss átalakítások:
-		- Rss-nél megoldani hogy a project elnevezésének színe cserélhető legyen.
-		- Rss-be add, remove, és change parancsot létrehozni mellyel magát az rss címet tudjuk hozzáadni.
-		- Összes addonra alkalmazni a fejlesztéseket.
 	- Sűrgős:
-		- backup parancs létrehozása. (sql és configról lehetne elsősorban készíteni egy backup nevű mappába ami ellátja a mentés dátumával a fájl nevét is)
-		- Játék addonban a nyelvezet kiszedve és az angolnak külön van szedve egy fájlba a magyar szöveg. Csak át kell alakítani.
+
 	- Közepes:
-		- Serverben megoldani az egy szerveren lévő botok neveinek tiltását és az azonos funkciók kikapcsolását megadott csatornán (persze van kivétel amit nem fog kikapcsolni). Ezt csak akkor csinálja ha egy irc szerverre mennek fel.
-		- Többszerveres módnál az irc logolást leválasztani a normál logról(normális módnál maradhatna a Schumix.log-ban [Túlságosan sok mindent kéne megváltoztatni ezért jó ötleteken dolgozom hozzá.]).
+
 	- Ráérős:
-		- Dokumentálni az egész kódot.
-		- irc parancs listájának bővítése.
-		- changelog készítése.

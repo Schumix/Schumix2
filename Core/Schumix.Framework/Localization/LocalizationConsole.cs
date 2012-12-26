@@ -2173,11 +2173,11 @@ namespace Schumix.Framework.Localization
 				case "Text6":
 				{
 					if(Locale == "huHU")
-						return "{0} nem támogatott Ctcp lekérdezés.";
+						return "Nem támogatott Ctcp lekérdezés.";
 					else if(Locale == "enUS")
-						return "{0} is not a supported Ctcp query.";
+						return "Is not a supported Ctcp query.";
 					else
-						return "{0} is not a supported Ctcp query.";
+						return "Is not a supported Ctcp query.";
 				}
 				case "Text7":
 				{
