@@ -9,15 +9,15 @@ make
 
 rm -rf package
 mkdir package
-cp -rf Debian package/
+cp -rf Share package/
 mkdir package/usr
 mkdir package/usr/bin
-mv package/Debian/schumix package/usr/bin/
-mv package/Debian/schumix-server package/usr/bin/
-mv package/Debian/share package/usr/
+mv package/Share/schumix package/usr/bin/
+mv package/Share/schumix-server package/usr/bin/
+mv package/Share/share package/usr/
 mkdir package/usr/share/doc
 mkdir package/usr/share/doc/schumix
-cp LICENSE package/usr/share/doc/schumix/
+cp License package/usr/share/doc/schumix/
 mkdir package/usr/lib
 mkdir package/usr/lib/pkgconfig
 cp -rf Scripts package/usr/lib/schumix/
@@ -42,7 +42,7 @@ cp -rf ./ ../../package/usr/lib/schumix
 cd ../../
 cd package
 #control file
-cd Debian
+cd Share
 revision="$(echo $(cat ../../Core/Schumix.Framework/Config/Consts.cs) | grep -o 'SchumixVersion = ".*"; public const string SchumixFileVersion' | awk '{print substr($3, 2, length($3)-3)}')"
 echo "Version: $revision"
 echo "Package: schumix" >> control
@@ -56,9 +56,9 @@ echo "Description: Schumix IRC Bot and Framework" >> control
 
 cd ..
 cd usr
-find . -exec md5sum '{}' \; > ../Debian/md5sums
+find . -exec md5sum '{}' \; > ../Share/md5sums
 cd ..
-mv Debian DEBIAN
+mv Share DEBIAN
 cd ..
 dpkg-deb --build package
 echo "mv package.deb schumix.deb"

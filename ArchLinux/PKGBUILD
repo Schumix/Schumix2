@@ -55,15 +55,15 @@ package()
 
     rm -rf pkg
     mkdir pkg
-    cp -rf ArchLinux pkg/
+    cp -rf Share pkg/
     mkdir pkg/usr
     mkdir pkg/usr/bin
-    mv pkg/ArchLinux/schumix pkg/usr/bin/
-    mv pkg/ArchLinux/schumix-server pkg/usr/bin/
-    mv pkg/ArchLinux/share pkg/usr/
+    mv pkg/Share/schumix pkg/usr/bin/
+    mv pkg/Share/schumix-server pkg/usr/bin/
+    mv pkg/Share/share pkg/usr/
     mkdir pkg/usr/share/doc
     mkdir pkg/usr/share/doc/schumix
-    cp LICENSE pkg/usr/share/doc/schumix/
+    cp License pkg/usr/share/doc/schumix/
     mkdir pkg/usr/lib
     mkdir pkg/usr/lib/pkgconfig
     cp -rf Scripts pkg/usr/lib/schumix/
@@ -87,7 +87,7 @@ package()
     cp -rf ./ ../../pkg/usr/lib/schumix
     cd ../../
     cd pkg
-    rm -rf ArchLinux
+    rm -rf Share
     cd ..
     cd ..
     cd ..
