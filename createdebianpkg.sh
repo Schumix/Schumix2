@@ -7,26 +7,32 @@ echo "Running configure"
 echo "Running make"
 make
 
-rm -rf package
-mkdir package
-cp -rf Share package/
-mkdir package/usr
-mkdir package/usr/bin
-mv package/Share/schumix package/usr/bin/
-mv package/Share/schumix-server package/usr/bin/
-mv package/Share/share package/usr/
-mkdir package/usr/share/doc
-mkdir package/usr/share/doc/schumix
-cp License package/usr/share/doc/schumix/
-mkdir package/usr/lib
-mkdir package/usr/lib/pkgconfig
-cp -rf Scripts package/usr/lib/schumix/
+rm -rf pkg
+mkdir pkg
+mkdir pkg/Share
+cp -rf Share/share pkg/Share/
+cp Share/changelog pkg/Share/
+cp Share/postinst pkg/Share/
+cp Share/postrm pkg/Share/
+cp Share/schumix pkg/Share/
+cp Share/schumix-server pkg/Share/
+mkdir pkg/usr
+mkdir pkg/usr/bin
+mv pkg/Share/schumix pkg/usr/bin/
+mv pkg/Share/schumix-server pkg/usr/bin/
+mv pkg/Share/share pkg/usr/
+mkdir pkg/usr/share/doc
+mkdir pkg/usr/share/doc/schumix
+cp License pkg/usr/share/doc/schumix/
+mkdir pkg/usr/lib
+mkdir pkg/usr/lib/pkgconfig
+cp -rf Scripts pkg/usr/lib/schumix/
 cd Run/Release/Addons
 
 for file in *.pc
 do
 	echo $file;
-	mv $file ../../../package/usr/lib/pkgconfig/$file
+	mv $file ../../../pkg/usr/lib/pkgconfig/$file
 done
 
 cd ..
@@ -34,13 +40,13 @@ cd ..
 for file in *.pc
 do
 	echo $file;
-	mv $file ../../package/usr/lib/pkgconfig/$file
+	mv $file ../../pkg/usr/lib/pkgconfig/$file
 done
 
 rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.API.dll Addons/Schumix.Framework.dll schumix.config schumix.installer schumix schumix.server
-cp -rf ./ ../../package/usr/lib/schumix
+cp -rf ./ ../../pkg/usr/lib/schumix
 cd ../../
-cd package
+cd pkg
 #control file
 cd Share
 revision="$(echo $(cat ../../Core/Schumix.Framework/Config/Consts.cs) | grep -o 'SchumixVersion = ".*"; public const string SchumixFileVersion' | awk '{print substr($3, 2, length($3)-3)}')"
@@ -60,7 +66,7 @@ find . -exec md5sum '{}' \; > ../Share/md5sums
 cd ..
 mv Share DEBIAN
 cd ..
-dpkg-deb --build package
-echo "mv package.deb schumix.deb"
-mv package.deb schumix.deb
+dpkg-deb --build pkg
+echo "mv pkg.deb schumix.deb"
+mv pkg.deb schumix.deb
 echo "Success :)"
