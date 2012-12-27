@@ -46,7 +46,7 @@ Navigáljunk az Installer mappába. Futtassuk a `Schumix.iss` nevű fájlt. Ha l
 
 # Config settings
 
-A konfiguk beállításához menjünk a `Share/doc/` mappába és a `Schumix.en.md` fájlt nyissuk meg. Ez a fő konfig leírása. Fontos hogy ezt a leírást mindenképpen olvassuk el mert enélkül nem lehet elindítani a botot normálisan. Ha megvagyunk akár a többi leírást is végiglehet nézni de az elindításhoz nem szükséges.
+A konfiguk beállításához menjünk a `Share/doc/Configs` mappába és a `Schumix.en.md` fájlt nyissuk meg. Ez a fő konfig leírása. Fontos hogy ezt a leírást mindenképpen olvassuk el mert enélkül nem lehet elindítani a botot normálisan. Ha megvagyunk akár a többi leírást is végiglehet nézni de az elindításhoz nem szükséges.
 
 # Adatbázis beüzemelése
 

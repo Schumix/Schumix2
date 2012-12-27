@@ -5,7 +5,7 @@
 * **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy kapcsolodjon-e a szerverhez a program. Alapértelmezés: `false`
 * **Host:** Ide kell beírni a szerver nevét/címét ahova csatlakozni szeretnénk.
 * **Port:** A szerver portja. Alapértelmezés: `35220`
-* **Password:** A szerver azonosító jelszava.
+* **Password:** A szerver azonosító jelszava. Alapértelmezés: `schumix`
 
 ## Irc
 
