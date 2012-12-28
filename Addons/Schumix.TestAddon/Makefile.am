@@ -6,7 +6,7 @@ EXTRA_DIST =
 if ENABLE_DEBUG_X86
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = ../../Run/Debug/Addons/TesztAddon.dll
+ASSEMBLY = ../../Run/Debug/Addons/TestAddon.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
@@ -15,8 +15,8 @@ PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Framework.dll
 BUILD_DIR = ../../Run/Debug/Addons
 
-TESZTADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/TesztAddon.dll.mdb
-TESZTADDON_DLL_MDB=$(BUILD_DIR)/TesztAddon.dll.mdb
+TESTADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/TestAddon.dll.mdb
+TESTADDON_DLL_MDB=$(BUILD_DIR)/TestAddon.dll.mdb
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
@@ -30,7 +30,7 @@ endif
 if ENABLE_RELEASE_X86
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
-ASSEMBLY = ../../Run/Release/Addons/TesztAddon.dll
+ASSEMBLY = ../../Run/Release/Addons/TestAddon.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
@@ -39,7 +39,7 @@ PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Framework.dll
 BUILD_DIR = ../../Run/Release/Addons
 
-TESZTADDON_DLL_MDB=
+TESTADDON_DLL_MDB=
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
@@ -53,7 +53,7 @@ endif
 if ENABLE_DEBUG_X64
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = ../../Run/Debug_x64/Addons/TesztAddon.dll
+ASSEMBLY = ../../Run/Debug_x64/Addons/TestAddon.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
@@ -62,8 +62,8 @@ PROJECT_REFERENCES =  \
 	../../Run/Debug_x64/Schumix.Framework.dll
 BUILD_DIR = ../../Run/Debug_x64/Addons
 
-TESZTADDON_DLL_MDB_SOURCE=../../Run/Debug_x64/Addons/TesztAddon.dll.mdb
-TESZTADDON_DLL_MDB=$(BUILD_DIR)/TesztAddon.dll.mdb
+TESTADDON_DLL_MDB_SOURCE=../../Run/Debug_x64/Addons/TestAddon.dll.mdb
+TESTADDON_DLL_MDB=$(BUILD_DIR)/TestAddon.dll.mdb
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
@@ -77,7 +77,7 @@ endif
 if ENABLE_RELEASE_X64
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
-ASSEMBLY = ../../Run/Release_x64/Addons/TesztAddon.dll
+ASSEMBLY = ../../Run/Release_x64/Addons/TestAddon.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
@@ -86,7 +86,7 @@ PROJECT_REFERENCES =  \
 	../../Run/Release_x64/Schumix.Framework.dll
 BUILD_DIR = ../../Run/Release_x64/Addons
 
-TESZTADDON_DLL_MDB=
+TESTADDON_DLL_MDB=
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
@@ -101,7 +101,7 @@ AL=al
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(TESZTADDON_DLL_MDB) \
+	$(TESTADDON_DLL_MDB) \
 	$(SCHUMIX_API_DLL) \
 	$(SCHUMIX_IRC_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
@@ -111,7 +111,7 @@ PROGRAMFILES = \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL)  
 
 LINUX_PKGCONFIG = \
-	$(SCHUMIX_TESZTADDON_PC)  
+	$(SCHUMIX_TESTADDON_PC)  
 
 
 RESGEN=resgen2
@@ -121,14 +121,14 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 FILES = \
 	Properties/AssemblyInfo.cs \
 	Commands/Commands.cs \
-	TesztAddon.cs 
+	TestAddon.cs 
 
 DATA_FILES = 
 
 RESOURCES = 
 
 EXTRAS = \
-	schumix.tesztaddon.pc.in 
+	schumix.testaddon.pc.in 
 
 REFERENCES =  \
 	System \
@@ -148,7 +148,7 @@ MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
-SCHUMIX_TESZTADDON_PC = $(BUILD_DIR)/schumix.tesztaddon.pc
+SCHUMIX_TESTADDON_PC = $(BUILD_DIR)/schumix.testaddon.pc
 
 $(eval $(call emit-deploy-target,SCHUMIX_API_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL))
@@ -157,7 +157,7 @@ $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
-$(eval $(call emit-deploy-wrapper,SCHUMIX_TESZTADDON_PC,schumix.tesztaddon.pc))
+$(eval $(call emit-deploy-wrapper,SCHUMIX_TESTADDON_PC,schumix.testaddon.pc))
 
 
 $(eval $(call emit_resgen_targets))

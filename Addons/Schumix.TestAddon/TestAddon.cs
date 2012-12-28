@@ -25,11 +25,11 @@ using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
-using Schumix.TesztAddon.Commands;
+using Schumix.TestAddon.Commands;
 
-namespace Schumix.TesztAddon
+namespace Schumix.TestAddon
 {
-	class TesztAddon : ISchumixAddon
+	class TestAddon : ISchumixAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
@@ -62,7 +62,7 @@ namespace Schumix.TesztAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("TesztAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("TestAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
 				return 0;
 			}
 
@@ -101,7 +101,7 @@ namespace Schumix.TesztAddon
 		/// </summary>
 		public string Name
 		{
-			get { return "TesztAddon"; }
+			get { return "TestAddon"; }
 		}
 
 		/// <summary>

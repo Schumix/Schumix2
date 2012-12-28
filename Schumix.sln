@@ -25,7 +25,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolframAPI", "Libraries\Wol
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Addons", "Addons", "{AD8E40DF-384D-4FF0-ABA9-91A956F38867}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.TesztAddon", "Addons\Schumix.TesztAddon\Schumix.TesztAddon.csproj", "{062B6A8C-F14A-4754-81E0-66BF1E557CEF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.TestAddon", "Addons\Schumix.TestAddon\Schumix.TestAddon.csproj", "{062B6A8C-F14A-4754-81E0-66BF1E557CEF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.RevisionAddon", "Addons\Schumix.RevisionAddon\Schumix.RevisionAddon.csproj", "{1079D7FE-800A-409C-AE4D-9EC577DCE8DF}"
 EndProject

@@ -32,7 +32,7 @@ using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 //using GitSharp;
 
-namespace Schumix.TesztAddon.Commands
+namespace Schumix.TestAddon.Commands
 {
 	class TestCommand : CommandInfo
 	{

@@ -76,8 +76,8 @@ Core/Schumix.Irc/Makefile
 Core/Makefile
 Libraries/WolframAPI/wolframapi.pc
 Libraries/WolframAPI/Makefile
-Addons/Schumix.TesztAddon/schumix.tesztaddon.pc
-Addons/Schumix.TesztAddon/Makefile
+Addons/Schumix.TestAddon/schumix.testaddon.pc
+Addons/Schumix.TestAddon/Makefile
 Addons/Schumix.RevisionAddon/schumix.revisionaddon.pc
 Addons/Schumix.RevisionAddon/Makefile
 Addons/Schumix.WordPressRssAddon/schumix.wordpressrssaddon.pc
