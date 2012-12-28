@@ -74,7 +74,7 @@ namespace Schumix.Framework.Config
 		protected const bool d_updateenabled           = false;
 		protected const string d_updateversion         = "stable";
 		protected const string d_updatebranch          = "master";
-		protected const string d_updatewebpage         = "https://github.com/megax/Schumix2";
+		protected const string d_updatewebpage         = "https://github.com/Schumix/Schumix2";
 		protected const int d_shutdownmaxmemory        = 100;
 		protected const int d_floodingseconds          = 4;
 		protected const int d_floodingnumberofcommands = 2;

@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 #else
 [assembly: AssemblyConfiguration("Release")]
 #endif
-[assembly: AssemblyCompany("Megax Productions")]
+[assembly: AssemblyCompany("Schumix Productions")]
 [assembly: AssemblyProduct("Schumix")]
 [assembly: AssemblyCopyright("Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>")]
 [assembly: AssemblyTrademark("GNU General Public License")]

@@ -65,7 +65,7 @@ Schumix:
         Enabled: False
         Version: stable
         Branch: master
-        WebPage: https://github.com/megax/Schumix2
+        WebPage: https://github.com/Schumix/Schumix2
     Shutdown:
         MaxMemory: 100
     Flooding:

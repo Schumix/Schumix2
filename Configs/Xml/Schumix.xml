@@ -79,7 +79,7 @@
         <Enabled>False</Enabled>
         <Version>stable</Version>
         <Branch>master</Branch>
-        <WebPage>https://github.com/megax/Schumix2</WebPage>
+        <WebPage>https://github.com/Schumix/Schumix2</WebPage>
     </Update>
     <Shutdown>
         <MaxMemory>100</MaxMemory>
