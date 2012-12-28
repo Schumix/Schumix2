@@ -30,6 +30,7 @@ namespace Schumix.Framework
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly object WriteLock = new object();
+		private static bool _ColorblindMode;
 		private static string _FileName;
 
 		/// <returns>
@@ -60,15 +61,44 @@ namespace Schumix.Framework
 			file.Close();
 		}
 
+		public static string GetTypeCharacter(LogType type)
+		{
+			string character = "N";
+
+			switch(type)
+			{
+			case LogType.Success:
+				character = "S";
+				break;
+			case LogType.Warning:
+				character = "W";
+				break;
+			case LogType.Error:
+				character = "E";
+				break;
+			case LogType.Debug:
+				character = "D";
+				break;
+			}
+
+			return character;
+		}
+
 		public static void Initialize()
 		{
-			Initialize(d_logfilename);
+			Initialize(d_logfilename, false);
 		}
 
 		public static void Initialize(string FileName)
 		{
+			Initialize(FileName, false);
+		}
+
+		public static void Initialize(string FileName, bool ColorblindMode)
+		{
 			bool isfile = false;
 			_FileName = FileName;
+			_ColorblindMode = ColorblindMode;
 			var time = DateTime.Now;
 			sUtilities.CreateDirectory(LogConfig.LogDirectory);
 
@@ -135,6 +165,12 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
+				if(_ColorblindMode)
+				{
+					ColorblindMode(source, format, LogType.Notice);
+					return;
+				}
+
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.White;
@@ -149,6 +185,12 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
+				if(_ColorblindMode)
+				{
+					ColorblindMode(source, format, LogType.Success);
+					return;
+				}
+
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Green;
@@ -168,6 +210,12 @@ namespace Schumix.Framework
 			{
 				if(LogConfig.LogLevel < 1)
 					return;
+
+				if(_ColorblindMode)
+				{
+					ColorblindMode(source, format, LogType.Warning);
+					return;
+				}
 
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
@@ -189,6 +237,12 @@ namespace Schumix.Framework
 				if(LogConfig.LogLevel < 2)
 					return;
 
+				if(_ColorblindMode)
+				{
+					ColorblindMode(source, format, LogType.Error);
+					return;
+				}
+
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Red;
@@ -209,6 +263,12 @@ namespace Schumix.Framework
 				if(LogConfig.LogLevel < 3)
 					return;
 
+				if(_ColorblindMode)
+				{
+					ColorblindMode(source, format, LogType.Debug);
+					return;
+				}
+
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Blue;
@@ -226,6 +286,12 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
+				if(_ColorblindMode)
+				{
+					ColorblindMode(message);
+					return;
+				}
+
 				var sp = message.Split(SchumixBase.NewLine);
 				var lines = new List<string>(50);
 
@@ -263,6 +329,12 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
+				if(_ColorblindMode)
+				{
+					ColorblindMode(message);
+					return;
+				}
+
 				var sp = message.Split(SchumixBase.NewLine);
 				var lines = new List<string>(50);
 
@@ -349,6 +421,52 @@ namespace Schumix.Framework
 			lock(WriteLock)
 			{
 				LargeError(string.Format(message, args));
+			}
+		}
+
+		public static void ColorblindMode(string message)
+		{
+			lock(WriteLock)
+			{
+				var sp = message.Split(SchumixBase.NewLine);
+				var lines = new List<string>(50);
+
+				foreach(string s in sp)
+				{
+					if(!string.IsNullOrEmpty(s))
+						lines.Add(s);
+				}
+
+				Console.WriteLine();
+				Console.WriteLine("**************************************************"); // 51
+				
+				foreach(string item in lines)
+				{
+					uint len = (uint)item.Length;
+					uint diff = (48-len);
+					Console.Write("* {0}", item);
+
+					if(diff > 0)
+					{
+						for(uint u = 1; u < diff; ++u)
+							Console.Write(SchumixBase.Space);
+						
+						Console.Write("*\n");
+					}
+				}
+				
+				Console.WriteLine("**************************************************");
+			}
+		}
+
+		public static void ColorblindMode(string source, string format, LogType type = LogType.Notice)
+		{
+			lock(WriteLock)
+			{
+				Console.Write(GetTime());
+				Console.Write(" {0} {1}: ", GetTypeCharacter(type), source);
+				Console.Write("{0}\n", format);
+				LogToFile(GetTime() + string.Format(" {0} {1}: {2}\n", GetTypeCharacter(type), source, format));
 			}
 		}
 	}

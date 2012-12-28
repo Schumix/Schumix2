@@ -134,6 +134,7 @@
     <Compile Include="Clean\CleanConfig.cs" />
     <Compile Include="Clean\CleanDatabase.cs" />
     <Compile Include="Config\CleanConfig.cs" />
+    <Compile Include="LogType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

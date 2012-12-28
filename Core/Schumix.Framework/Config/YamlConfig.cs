@@ -46,7 +46,7 @@ namespace Schumix.Framework.Config
 
 			var schumixmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Schumix")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Schumix".ToYamlNode()]).Children : NullYMap;
 			LogMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Log")) ? ((YamlMappingNode)schumixmap["Log".ToYamlNode()]).Children : NullYMap);
-			Log.Initialize(LogConfig.FileName);
+			Log.Initialize(LogConfig.FileName, true);
 			Log.Debug("YamlConfig", ">> {0}", configfile);
 
 			Log.Notice("YamlConfig", sLConsole.Config("Text3"));
