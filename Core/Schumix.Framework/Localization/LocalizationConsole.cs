@@ -1525,7 +1525,7 @@ namespace Schumix.Framework.Localization
 				case "Text20":
 				{
 					if(Language == "huHU")
-						return "[kilépet (quit)] {0}";
+						return "[kilépett (quit)] {0}";
 					else if(Language == "enUS")
 						return "[quit] {0}";
 					else
