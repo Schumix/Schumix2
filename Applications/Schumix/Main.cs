@@ -90,6 +90,7 @@ namespace Schumix
 			string serverhost = "0.0.0.0";
 			string serverpassword = "0";
 			string serveridentify = string.Empty;
+			bool colorbindmode = false;
 			System.Console.BackgroundColor = ConsoleColor.Black;
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 
@@ -165,6 +166,13 @@ namespace Schumix
 
 					continue;
 				}
+				else if(arg.Contains("--colorbind-mode="))
+				{
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						colorbindmode = Convert.ToBoolean(arg.Substring(arg.IndexOf("=")+1));
+
+					continue;
+				}
 			}
 
 			if(!console_encoding.IsNumber())
@@ -174,7 +182,12 @@ namespace Schumix
 
 			sLConsole.Locale = localization;
 			System.Console.Title = SchumixBase.Title;
-			System.Console.ForegroundColor = ConsoleColor.Blue;
+
+			if(colorbindmode)
+				System.Console.ForegroundColor = ConsoleColor.Gray;
+			else
+				System.Console.ForegroundColor = ConsoleColor.Blue;
+
 			System.Console.WriteLine("[Schumix2]");
 			System.Console.WriteLine(sLConsole.MainText("StartText"));
 			System.Console.WriteLine(sLConsole.MainText("StartText2"), sUtilities.GetVersion());
@@ -185,7 +198,7 @@ namespace Schumix
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 			System.Console.WriteLine();
 
-			new Config(configdir, configfile);
+			new Config(configdir, configfile, colorbindmode);
 			sUtilities.CreatePidFile(SchumixConfig.ConfigFile);
 
 			if(serveridentify != string.Empty)

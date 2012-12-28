@@ -58,6 +58,7 @@ namespace Schumix.Server
 			string configfile = "Server.yml";
 			string console_encoding = "utf-8";
 			string localization = "start";
+			bool colorbindmode = false;
 			System.Console.CursorVisible = false;
 			System.Console.BackgroundColor = ConsoleColor.Black;
 			System.Console.ForegroundColor = ConsoleColor.Gray;
@@ -99,6 +100,13 @@ namespace Schumix.Server
 
 					continue;
 				}
+				else if(arg.Contains("--colorbind-mode="))
+				{
+					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+						colorbindmode = Convert.ToBoolean(arg.Substring(arg.IndexOf("=")+1));
+
+					continue;
+				}
 			}
 
 			if(!console_encoding.IsNumber())
@@ -108,7 +116,12 @@ namespace Schumix.Server
 
 			sLConsole.Locale = localization;
 			System.Console.Title = "Schumix2 Server";
-			System.Console.ForegroundColor = ConsoleColor.Blue;
+
+			if(colorbindmode)
+				System.Console.ForegroundColor = ConsoleColor.Gray;
+			else
+				System.Console.ForegroundColor = ConsoleColor.Blue;
+
 			System.Console.WriteLine("[Server]");
 			System.Console.WriteLine(sLConsole.MainText("StartText"));
 			System.Console.WriteLine(sLConsole.MainText("StartText2"), sUtilities.GetVersion());
@@ -119,7 +132,7 @@ namespace Schumix.Server
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 			System.Console.WriteLine();
 
-			new Server.Config.Config(configdir, configfile);
+			new Server.Config.Config(configdir, configfile, colorbindmode);
 			sUtilities.CreatePidFile(Server.Config.ServerConfig.ConfigFile);
 
 			if(localization == "start")

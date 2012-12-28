@@ -215,7 +215,7 @@ namespace Schumix.Irc.Commands
 			switch(sIRCMessage.Info[4].ToLower())
 			{
 				case "config":
-					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile);
+					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile, SchumixConfig.ColorBindMode);
 					sIgnoreAddon.RemoveConfig();
 					sIgnoreAddon.AddConfig();
 					sIgnoreChannel.RemoveConfig();

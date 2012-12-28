@@ -1186,7 +1186,7 @@ namespace Schumix.Console.Commands
 			switch(Info[1].ToLower())
 			{
 				case "config":
-					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile);
+					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile, SchumixConfig.ColorBindMode);
 					sIrcBase.Networks[_servername].sIgnoreAddon.RemoveConfig();
 					sIrcBase.Networks[_servername].sIgnoreAddon.AddConfig();
 					sIrcBase.Networks[_servername].sIgnoreChannel.RemoveConfig();

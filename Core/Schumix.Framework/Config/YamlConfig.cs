@@ -39,14 +39,14 @@ namespace Schumix.Framework.Config
 		{
 		}
 
-		public YamlConfig(string configdir, string configfile)
+		public YamlConfig(string configdir, string configfile, bool colorbindmode)
 		{
 			var yaml = new YamlStream();
 			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
 			var schumixmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Schumix")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Schumix".ToYamlNode()]).Children : NullYMap;
 			LogMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Log")) ? ((YamlMappingNode)schumixmap["Log".ToYamlNode()]).Children : NullYMap);
-			Log.Initialize(LogConfig.FileName, true);
+			Log.Initialize(LogConfig.FileName, colorbindmode);
 			Log.Debug("YamlConfig", ">> {0}", configfile);
 
 			Log.Notice("YamlConfig", sLConsole.Config("Text3"));
@@ -86,7 +86,7 @@ namespace Schumix.Framework.Config
 		{
 		}
 
-		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
+		public bool CreateConfig(string ConfigDirectory, string ConfigFile, bool ColorBindMode)
 		{
 			try
 			{
@@ -97,7 +97,7 @@ namespace Schumix.Framework.Config
 				else
 				{
 					new LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, d_irclogdirectory, d_irclog);
-					Log.Initialize(d_logfilename);
+					Log.Initialize(d_logfilename, ColorBindMode);
 					Log.Error("YamlConfig", sLConsole.Config("Text5"));
 					Log.Debug("YamlConfig", sLConsole.Config("Text6"));
 					var yaml = new YamlStream();
@@ -156,7 +156,7 @@ namespace Schumix.Framework.Config
 			}
 			catch(DirectoryNotFoundException)
 			{
-				CreateConfig(ConfigDirectory, ConfigFile);
+				CreateConfig(ConfigDirectory, ConfigFile, ColorBindMode);
 			}
 
 			return false;

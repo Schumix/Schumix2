@@ -36,7 +36,7 @@ namespace Schumix.Framework.Config
 		{
 		}
 
-		public XmlConfig(string configdir, string configfile)
+		public XmlConfig(string configdir, string configfile, bool colorbindmode)
 		{
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(sUtilities.DirectoryToSpecial(configdir, configfile));
@@ -51,7 +51,7 @@ namespace Schumix.Framework.Config
 
 			new LogConfig(LogFileName, LogDateFileName, LogMaxFileSize, LogLevel, sUtilities.GetSpecialDirectory(LogDirectory), sUtilities.GetSpecialDirectory(IrcLogDirectory), IrcLog);
 
-			Log.Initialize(LogFileName);
+			Log.Initialize(LogFileName, colorbindmode);
 			Log.Debug("XmlConfig", ">> {0}", configfile);
 
 			Log.Notice("XmlConfig", sLConsole.Config("Text3"));
@@ -196,7 +196,7 @@ namespace Schumix.Framework.Config
 		{
 		}
 
-		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
+		public bool CreateConfig(string ConfigDirectory, string ConfigFile, bool ColorBindMode)
 		{
 			try
 			{
@@ -207,7 +207,7 @@ namespace Schumix.Framework.Config
 				else
 				{
 					new LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, d_irclogdirectory, d_irclog);
-					Log.Initialize(d_logfilename);
+					Log.Initialize(d_logfilename, ColorBindMode);
 					Log.Error("XmlConfig", sLConsole.Config("Text5"));
 					Log.Debug("XmlConfig", sLConsole.Config("Text6"));
 					var w = new XmlTextWriter(filename, null);
@@ -481,7 +481,7 @@ namespace Schumix.Framework.Config
 			}
 			catch(DirectoryNotFoundException)
 			{
-				CreateConfig(ConfigDirectory, ConfigFile);
+				CreateConfig(ConfigDirectory, ConfigFile, ColorBindMode);
 			}
 
 			return false;

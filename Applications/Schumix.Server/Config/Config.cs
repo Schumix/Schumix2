@@ -32,14 +32,14 @@ namespace Schumix.Server.Config
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private string _configfile;
 
-		public Config(string configdir, string configfile)
+		public Config(string configdir, string configfile, bool colorbindmode)
 		{
 			try
 			{
 				configdir = sUtilities.GetSpecialDirectory(configdir);
 				_configfile = configfile;
 
-				if(!IsConfig(configdir, configfile))
+				if(!IsConfig(configdir, configfile, colorbindmode))
 				{
 					if(!errors)
 					{
@@ -55,24 +55,24 @@ namespace Schumix.Server.Config
 					switch(ConfigType(configdir, _configfile))
 					{
 						case 0:
-							new YamlConfig(configdir, _configfile);
+							new YamlConfig(configdir, _configfile, colorbindmode);
 							break;
 						case 1:
-							new XmlConfig(configdir, _configfile);
+							new XmlConfig(configdir, _configfile, colorbindmode);
 							break;
 						default:
-							new YamlConfig(configdir, _configfile);
+							new YamlConfig(configdir, _configfile, colorbindmode);
 							break;
 					}
 
-					new ServerConfig(configdir, _configfile);
-					new Schumix.Framework.Config.SchumixConfig(configdir, _configfile);
+					new ServerConfig(configdir, _configfile, colorbindmode);
+					new Schumix.Framework.Config.SchumixConfig(configdir, _configfile, colorbindmode);
 				}
 			}
 			catch(Exception e)
 			{
 				new Framework.Config.LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, string.Empty, false);
-				Log.Initialize(d_logfilename);
+				Log.Initialize(d_logfilename, colorbindmode);
 				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
 			}
 		}
@@ -120,18 +120,18 @@ namespace Schumix.Server.Config
 				Directory.CreateDirectory(ConfigDirectory);
 		}
 
-		private bool IsConfig(string ConfigDirectory, string ConfigFile)
+		private bool IsConfig(string ConfigDirectory, string ConfigFile, bool ColorBindMode)
 		{
 			CheckAndCreate(ConfigDirectory);
 
 			switch(ConfigType(ConfigDirectory, ConfigFile))
 			{
 				case 0:
-					return new YamlConfig().CreateConfig(ConfigDirectory, _configfile);
+					return new YamlConfig().CreateConfig(ConfigDirectory, _configfile, ColorBindMode);
 				case 1:
-					return new XmlConfig().CreateConfig(ConfigDirectory, _configfile);
+					return new XmlConfig().CreateConfig(ConfigDirectory, _configfile, ColorBindMode);
 				default:
-					return new YamlConfig().CreateConfig(ConfigDirectory, _configfile);
+					return new YamlConfig().CreateConfig(ConfigDirectory, _configfile, ColorBindMode);
 			}
 		}
 	}

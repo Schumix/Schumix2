@@ -43,14 +43,14 @@ namespace Schumix.Server.Config
 		{
 		}
 
-		public YamlConfig(string configdir, string configfile)
+		public YamlConfig(string configdir, string configfile, bool colorbindmode)
 		{
 			var yaml = new YamlStream();
 			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
 			var servermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Server")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Server".ToYamlNode()]).Children : NullYMap;
 			LogMap((!servermap.IsNull() && servermap.ContainsKey("Log")) ? ((YamlMappingNode)servermap["Log".ToYamlNode()]).Children : NullYMap);
-			Log.Initialize(Framework.Config.LogConfig.FileName);
+			Log.Initialize(Framework.Config.LogConfig.FileName, colorbindmode);
 			Log.Debug("YamlConfig", ">> {0}", configfile);
 
 			Log.Notice("YamlConfig", sLConsole.Config("Text3"));
@@ -70,7 +70,7 @@ namespace Schumix.Server.Config
 		{
 		}
 
-		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
+		public bool CreateConfig(string ConfigDirectory, string ConfigFile, bool ColorBindMode)
 		{
 			try
 			{
@@ -81,7 +81,7 @@ namespace Schumix.Server.Config
 				else
 				{
 					new Framework.Config.LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, string.Empty, false);
-					Log.Initialize(d_logfilename);
+					Log.Initialize(d_logfilename, ColorBindMode);
 					Log.Error("YamlConfig", sLConsole.Config("Text5"));
 					Log.Debug("YamlConfig", sLConsole.Config("Text6"));
 					var yaml = new YamlStream();
@@ -146,7 +146,7 @@ namespace Schumix.Server.Config
 			}
 			catch(DirectoryNotFoundException)
 			{
-				CreateConfig(ConfigDirectory, ConfigFile);
+				CreateConfig(ConfigDirectory, ConfigFile, ColorBindMode);
 			}
 
 			return false;

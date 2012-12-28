@@ -25,11 +25,13 @@ namespace Schumix.Server.Config
 	{
 		public static string ConfigDirectory { get; private set; }
 		public static string ConfigFile { get; private set; }
+		public static bool ColorBindMode { get; private set; }
 
-		public ServerConfig(string configdirectory, string configfile)
+		public ServerConfig(string configdirectory, string configfile, bool colorbindmode)
 		{
 			ConfigDirectory = configdirectory;
 			ConfigFile      = configfile;
+			ColorBindMode   = colorbindmode;
 		}
 	}
 }
