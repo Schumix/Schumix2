@@ -77,8 +77,8 @@ Ha mind ezekkel megvagyunk már csak inditanuk kell és használni a kódot :)
 * Ha már megemlítésre került. Az admin hozzáadása konzolból történik elõször. `admin add <admin neve>`
   Majd amit kapunk jelszót privát üzenetben el kell küldeni a botnak a jelszót ezen módon: `$admin access <jelszó>`
   Ha másikat szeretnénk akkor: `$admin newpassword <régi> <új>`
-* És végül a konzol parancsok. Ha már megemlítettem ;) Szóval a lista a help parancsal kapható meg.
-  Többit ki kell tapasztalni mert egyenlõre nincs hozzá help.
+* És végül a konzol parancsok. Ha már megemlítettem ;) Szóval a lista a help paranccsal kapható meg.
+  Többit pedig úgy kell mint az irc paranccsoknál. A parancs nevét vagy a parancsot és annak alparancsát kell a help parancs mögé írni.
 * Bármi lemaradt volna tudok segítséget nyújtani az irc.rizon.net szerveren a `#schumix, #schumix2` vagy `#hun_bot` csatornán.
 * Yaml konfignál minden olyan adatot amely különleges karaktert tartalmaz (pl: #) azt idézőjelek közé kell helyezni "" mert a program máskülönben megpróbálná értelmezni és az hibát okozna.
 * Remélem meg fog tetszeni a bot :)
