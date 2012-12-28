@@ -145,6 +145,10 @@ namespace Schumix.Server
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
+
+			if(colorbindmode)
+				Log.Notice("Main", sLConsole.MainText("StartText6"));
+
 			Log.Debug("Main", sLConsole.MainText("StartText5"));
 			sCleanManager = new CleanManager(true);
 			sCleanManager.Initialize();
@@ -186,6 +190,7 @@ namespace Schumix.Server
 			System.Console.WriteLine("\t--config-file=<file>\t\tSet up the config file's place");
 			System.Console.WriteLine("\t--console-encoding=Value\tSet up the program's character encoding");
 			System.Console.WriteLine("\t--console-localization=Value\tSet up the program's console language settings");
+			System.Console.WriteLine("\t--colorbind-mode=Value\t\tSet colorbind.");
 		}
 
 		public static void Shutdown(Exception eventArgs = null)

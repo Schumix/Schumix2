@@ -103,6 +103,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "CleanManager is starting...";
 				}
+				case "StartText6":
+				{
+					if(Locale == "huHU")
+						return "Színvak mód be van kapcsolva!";
+					else if(Locale == "enUS")
+						return "Colorblind mode is on!";
+					else
+						return "Colorblind mode is on!";
+				}
 				default:
 					return string.Empty;
 			}

@@ -219,6 +219,9 @@ namespace Schumix
 			System.Console.WriteLine();
 			Log.Notice("Main", sLConsole.MainText("StartText3"));
 
+			if(colorbindmode)
+				Log.Notice("Main", sLConsole.MainText("StartText6"));
+
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 				sWindows.Init();
 			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
@@ -256,6 +259,7 @@ namespace Schumix
 			System.Console.WriteLine("\t--server-port=<port>\t\tSet server port.");
 			System.Console.WriteLine("\t--server-password=<pass>\tSet password.");
 			System.Console.WriteLine("\t--server-identify=Value\t\tSet identify.");
+			System.Console.WriteLine("\t--colorbind-mode=Value\t\tSet colorbind.");
 		}
 
 		public static void Shutdown(string Message, bool Crash = false)
