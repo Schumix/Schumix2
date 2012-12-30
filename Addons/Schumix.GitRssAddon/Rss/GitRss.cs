@@ -21,6 +21,7 @@ using System;
 using System.Xml;
 using System.Net;
 using System.Text;
+using System.Timers;
 using System.Threading;
 using Schumix.API;
 using Schumix.API.Functions;
@@ -39,9 +40,12 @@ namespace Schumix.GitRssAddon
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private System.Timers.Timer _timer = new System.Timers.Timer();
 		private NetworkCredential _credential;
 		private XmlNamespaceManager _ns;
 		private Thread _thread;
+		private int errornumber;
+		private int errorday;
 		private readonly string _name;
 		private readonly string _type;
 		private readonly string _url;
@@ -133,6 +137,13 @@ namespace Schumix.GitRssAddon
 		public void Start()
 		{
 			Started = true;
+			errorday = 0;
+			errornumber = 0;
+			_timer.Interval = 24*60*60*1000;
+			_timer.Elapsed += HandleTimerError;
+			_timer.Enabled = true;
+			_timer.Start();
+
 			_thread = new Thread(Update);
 			_thread.Start();
 		}
@@ -140,6 +151,9 @@ namespace Schumix.GitRssAddon
 		public void Stop()
 		{
 			Started = false;
+			_timer.Enabled = false;
+			_timer.Elapsed -= HandleTimerError;
+			_timer.Stop();
 			_thread.Abort();
 		}
 
@@ -148,6 +162,18 @@ namespace Schumix.GitRssAddon
 			_thread.Abort();
 			_thread = new Thread(Update);
 			_thread.Start();
+		}
+
+		private void HandleTimerError(object sender, ElapsedEventArgs e)
+		{
+			if(errornumber >= 20)
+			{
+				errorday++;
+				errornumber = 0;
+			}
+
+			if(errorday > 3)
+				Stop();
 		}
 
 		private void Update()
@@ -167,7 +193,7 @@ namespace Schumix.GitRssAddon
 				{
 					try
 					{
-						if(!sIrcBase.Networks[_servername].sChannelInfo.IsNull() && sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Git))
+						if(!sIrcBase.Networks[_servername].sChannelInfo.IsNull() && sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Git) && errornumber < 20)
 						{
 							url = GetUrl();
 							if(url.IsNull())
@@ -215,6 +241,7 @@ namespace Schumix.GitRssAddon
 					}
 					catch(Exception e)
 					{
+						errornumber++;
 						Log.Error("GitRss", sLocalization.Exception("Error"), _name, _type, e.Message);
 						Thread.Sleep(RssConfig.QueryTime*1000);
 					}
@@ -222,6 +249,7 @@ namespace Schumix.GitRssAddon
 			}
 			catch(Exception e)
 			{
+				errornumber++;
 				Log.Error("GitRss", sLocalization.Exception("Error2"), _name, _type, e.Message);
 				Thread.Sleep(RssConfig.QueryTime*1000);
 
