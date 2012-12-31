@@ -1,7 +1,8 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
+ * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -32,7 +33,7 @@ namespace Schumix.Framework.Config
 #endif
 		public const string SchumixCompany = "Schumix Productions";
 		public const string SchumixProduct = "Schumix";
-		public const string SchumixCopyright = "Copyright (C) 2010-2012 Megax <http://megax.yeahunter.hu/>";
+		public const string SchumixCopyright = "Copyright (C) 2013 Schumix Team <http://schumix.eu/>";
 		public const string SchumixTrademark = "GNU General Public License";
 		public const string SchumixVersion = "3.9.5";
 		public const string SchumixFileVersion = "3.9.5.0";

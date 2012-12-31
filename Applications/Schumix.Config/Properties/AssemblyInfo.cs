@@ -1,7 +1,8 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
+ * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +35,7 @@ using System.Runtime.InteropServices;
 #endif
 [assembly: AssemblyCompany("Schumix Productions")]
 [assembly: AssemblyProduct("Schumix")]
-[assembly: AssemblyCopyright("Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>")]
+[assembly: AssemblyCopyright("Copyright (C) 2013 Schumix Team <http://schumix.eu/>")]
 [assembly: AssemblyTrademark("GNU General Public License")]
 
 [assembly: CLSCompliant(true)]
