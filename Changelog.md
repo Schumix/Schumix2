@@ -1,5 +1,77 @@
 # Schumix2 ChangeLog
 
+## 3.7.0 (2012-02-05)
+
+ * Szerverbe beépítva a config adatok tárolása újraindításhoz.
+ * Wordpress és chatterbot addon hozzá lett adva a kódhoz.
+ * Nick csere esetén jön válasz ha sikertelen.
+ * Sha1 és md5 fixálva ékezetes karakterekre.
+ * Magyar ékezetes karakterek használatára megoldás született windows alatt.
+ * Ikonok hozzádva a futtatható fájlokhoz.
+ * Calendar loop rész csak adminoknak van engedélyezve.
+ * Események feljegyzése hozzáadva a kódhoz.
+ * Szerverbe beépítve a 10 percenkénti ellenőrzés hogy újra indítsa-e a botot.
+ * Git lista és info szinezése kicsit átalakítva.
+ * Játékban javítva a rang kiírása lelépés és egyben halál esetén.
+ * Javítás a játékvezető lelépésekor fellépő hibára.
+ * A játékba bekerült a no lynch funkció és az este folyamán kikapcsolhatóvá vált a voice jog.
+ * Opcodes és Bot parancsok kezelése átírva.
+ * Rejoin fixálva nagybetüs csatornákra is.
+ * Compiler addonban fixálva a szál kilővése.
+ * Fixálva windows alatt az irc üzenetek feldolgozása.
+ * LuaEnginer tökéletesítve linuxra.
+ * Lekérdezések száma csökkentve.
+ * Nem létező funkciók észlelése hozzáadva a kódhoz.
+ * Forrásból törölve a MONO kapcsoló.
+ * A Szerverrel való kapcsolatbontás javítva.
+ * Leállási folyamat javítva az újrakapcsolódással együtt.
+
+## 3.6.0 (2011-10-15)
+
+ * A kód mostantól elkapja a végzetes hibákat és egy fájlba írja a hibát.
+ * Játékban fixálva a csatornához tartozó funckiók visszaállítása.
+ * A rangelvétel fixálva a játékban.
+ * 2 bug fixálva a játékban.
+ * Játék magja újra lett részben írva.
+ * Message fix.
+ * koszones funkció át lett nevezve greeter-re.
+ * Xbot és info parancs meglett variálva.
+ * Rss-ek mostantól felismerik ha felhasználó kell az rss eléréséhez.
+ * Gitweb lekérdezés hozzá lett adva a git rss-hez.
+ * Mono-ban a https error megkerülve így nem lesz.
+ * Runtime-ben fixálva a szál.
+ * Hozzáadva a programhoz azon lehetőség ha túllépi a 100 mb-ot akkor leáll.
+ * Ha bármi miatt megszakad a mysql kapcsolat és az a hiba jön rá ami megvan határozva akkor a program leáll. Így megakadájozható a befagyás.
+ * Updater rendszer áthelyezve a szerverbe is.
+ * Fölösleges szóközök törölve.
+ * Fölösleges using törölve.
+ * Schumix Szerver hozzáadásra került.
+ * Ha eléri a Schumix.log a 10 mb-ot törli a program és újat csinál helyette.
+ * Title lekérdezés fixálva.
+ * CTCP fixálva.
+
+## 3.5.0 (2011-09-24)
+
+ * Online help parancs hozzáadva.
+ * Translate parancs fixálva.
+ * Wiki parancs hozzáadva.
+ * Funkciók fixálva lettek.
+ * MantisBT rss rendszer hozzáadásra került.
+ * Online parancs hozzáadásra került.
+ * A nick visszavétel még írás alatt van.
+ * Whois és warning parancs javítva.
+ * CTCP üzenetek kezelése hozzáadva.
+ * Reverse() megírva stringra is.
+ * SplitToString fv továbbfejlesztve char[]-ra is.
+ * Forgatási hiba javítva.
+ * Installer hozzáadva a kódhoz.
+ * Privmsg és Notice között ezentúl konfigban lehet váltani.
+ * Integrálva lett a notice alatt müködő paracssor.
+ * Reply kódok hozzáadva az irc részhez.
+ * Lua rendszer hozza lett adva a kódhoz.
+ * Irc parancs frissitve lett.
+ * A roll, sha1, md5 es prime parancs át lett helyezve az extraaddonba.
+
 ## 3.4.0 (2011-08-22)
 
  * Sqlite hiba javítva lett.
