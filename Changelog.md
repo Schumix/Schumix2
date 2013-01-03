@@ -1,5 +1,7 @@
 # Schumix2 ChangeLog
 
+## 4.0.0 (2013-xx-xx)
+
 ## 3.9.0 (2012-06-26)
 
  * Kész a CacheDB.
