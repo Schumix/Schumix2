@@ -2,6 +2,42 @@
 
 ## 4.0.0 (2013-xx-xx)
 
+ * Changelog hozzáadva a rendszerhez.
+ * Rss szálak mostantól le fognak állni ha bizonyos számú error keletkezik. Ezeket csak akkor lehet újraindítani ha a felhasználó indítja újra.
+ * Színvak mód hozzáadva a kódhoz.
+ * Átnevezésre került a repo tulajdonosa és még egyéb más helyen is a 'megax'.
+ * TesztAddon át lett nevezve TestAddon-ra.
+ * Doxygen kezelése hozzáadva a kódhoz.
+ * Ctcp kijavítva.
+ * Arch Linux-ra ezentúl készíthető csomag.
+ * Kész a birthday sok idő után. Nagyon örülök neki hogy végre kész :)
+ * Memória kiírása átalakítva. Maxinális fogyasztás átalakítva. Így pontosabb értékekhez lesznek kötve és reálisabb a + memória amit több kapcsolat esetén kell beállítani a botnak.
+ * Calendar-ban a Loop rész ellenőrzése javítva.
+ * Compiler végzetes hibája javítva.
+ * Több helyen alkalmazásra került az IsChannel függvény. Ha már van akkor használni kell :)
+ * IsCreatedTable függvény létrehozva. Így ellenőrizhető lesz hogy egy tábla létezik-e vagy sem.
+ * GetUrlEncoding() függvények össze lettek olvasztva. Úgyan azt a feladatot így csak egy helyen kell megadni.
+ * GetUnixTimeStart() hozzáadva a Libraries-hez.
+ * WolframAPI saját izlésre szabva.
+ * ConsoleLog ellátva abstract jelzővel.
+ * Parse függvény áthelyezve a NickInfo osztályba.
+ * Fixalva az alap csatorna sql-ben. CacheDB panaszkodott ra.
+ * Whois parancs felújítva.
+ * NameList fixálva mindkét helyen.
+ * Message parancshoz hozzáadva az unixtime tárolásának lehetősége is.
+ * Nextmessage parancs hozzáadva a calendar-hoz.
+ * UnixTime oszlop hozzáadva a calendar táblához.
+ * UnixTime függvény átalakítva.
+ * Windows és debian telepítőben is frissítve lett a konfig fájl.
+ * Clean mappa hozzáadva a kódhoz.
+ * Átláthatobbá téve a reconnect idő.
+ * Kapcsolódás típusának kiírása hozzáadva a kódhoz.
+ * TrimMessage függvény hozzáadva a kódhoz.
+ * Privát logolás újraélesztve.
+ * Invite opcode elkészült.
+ * Uptime táblában ezentúl byte-ban lesznek megadva a mentett memória méretek.
+ * Kitakaritva a LueEnginer referencia listája.
+
 ## 3.9.0 (2012-06-26)
 
  * Kész a CacheDB.
