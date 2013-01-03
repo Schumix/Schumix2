@@ -1,5 +1,42 @@
 # Schumix2 ChangeLog
 
+## 2.2.0 (2011-03-08)
+
+ * Flood elleni védelem hozzáadva a compiler részhez.
+ * SQLite kezelés lehetősége hozzáadva a kódhoz.
+ * Md5 és sha1 kódja frissítve.
+ * String lecserélve string-re.
+ * Fájlba logolás lehetősége hozzáadva a Log-hoz.
+ * Konzol parancshoz hozzáadva a nick, join, left parancs.
+ * Windows javítás.
+ * Konfig automatikus legenárálásának lehetősége hozzáadva a rendszerhez.
+
+## 2.1.0 (2011-03-01)
+
+ * Alapértelmezetten a koszones, kick és mode funkciók kikapcsolásra kerültek.
+ * Url encode hozzáadva a kódhoz.
+ * WolframAPI frissítve.
+ * LargeWarning() hozzáadva a Log-hoz.
+ * "" cserélve String.Empty-re.
+ * Parancsok kezelése szétválasztva.
+ * ExtraPlugin hozzáadva.
+ * Összeomlás javítva.
+ * Kiírások javítva.
+
+## 2.0.0 (2011-02-12)
+
+ * Compiler plugin hozzáadva.
+ * Help() és Privmsg() függvény hozzáadva a plugin API-hoz.
+ * Sealed elhelyezve pár osztályban.
+ * Amin parancsnál fixálva az admin törlése. Mostantól operátor nem törölhet admin-t.
+ * Foglalt nick esetén a bot keres egy szabad nick-et.
+ * Fölösleges using törölve.
+ * Fordit parancs létrehozva.
+ * Parancs előjel innéttől bármilyen hosszú lehet.
+ * Konzol parancsoknál a szoba parancs átnevezve csatorna parancsra.
+ * Schumix tábla frissítve.
+ * Time osztály létrehozva.
+
 ## 1.6.0 (2011-02-02)
 
  * Konfig fájl olvasása átalakítva.
