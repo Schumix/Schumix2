@@ -1,14 +1,88 @@
 # Schumix2 ChangeLog
 
+## 3.4.0 (2011-08-22)
+
+ * Sqlite hiba javítva lett.
+ * Notes parancs javítva.
+ * Info parancs javítva.
+ * Windows fix.
+ * Mode parancs fixálva.
+ * Köszönések üzenetei át lettek helyezve az adatbázisba.
+ * Ssl-en való kapcsolódás hozzáadva a kódhoz.
+ * Időjárás fixálva.
+ * Youtube title javítva.
+ * Updater verziókezelése és kicsomagolás megírva.
+ * Google regex fixálva lett.
+ * Autofunction parancsban a kick és mode parancs fixálva lett. Help szövegek fixálva.
+ * Leállás javítva
+ * Rss-be megírva a start, stop, reload parancs.
+ * GitRss error szövege fixálva.
+ * Compiler addon konfigja frisstve lett.
+
+## 3.3.0 (2011-08-11)
+
+ * Sql-hez hozzáadva az update, delete, insert és removetable függvény.
+ * botnic, csc parancs hozzáadva. Ez a compiler használatáról ad bővebb információt.
+ * A nem használt addonok help részei nem használhatóak ezentúl az adatbázisból. Csak akkor ha aktívak.
+ * GameAddon hozzáadásra került.
+ * Compiler tiltások fixálva.
+ * Console üzenet javítva.
+ * Console kapcsoló javítva.
+ * Title lekérdezés fixálva.
+ * Mode parancs fixálva.
+ * Nagybetüs csatornák fixálva.
+ * Időjárás jelentés kiirása átalakítva.
+ * Libben a végzetes meghívásí hiba javítva.
+ * Uptime tabla frissitve lett. SQLite tablak is frissitesre kerultek de az utf-8 olvasassal van kis gond meg. Regi sql fajlok atlettek helyezve.
+
+## 3.2.0 (2011-07-21)
+
+ * Mag nyelvezeti konzol kiírása teljesen kész.
+ * Helyesírási hibák javítva.
+ * Commentek elhelyezve Schumix projektben.
+ * Uptime nyelvezete fixalva.
+ * Induláskor meghatározható milyen legyen a konzol nyelvezete amig nem töltődik be a konfig.
+ * Console parancsok ellátva a nyelvválasztás lehetőségével.
+ * Reload parancs hozzadava a kodhoz.
+ * Encoding fixálva.
+ * Elkészült az angol fordítások nagy része.
+
+## 3.1.0 (2011-06-24)
+
+ * Üzenet küldés az irc szerver felé fixálva. Inéttől csak a 2000 karakter alatti üzeneteket küldi el a kód.
+ * A compilerben hatalmas átalakításon eset át a végtelen ciklus elleni védelem.
+ * Compiler további fixálásokon esett át.
+ * SQLite sql fájla hozzáadásra került. Schumix.db3 frissitve lett. Compiler végtelen ciklus elleni védelme finomításra került.
+ * Compiler szövegének angolosítása kész.
+ * Compiler végtelen ciklus elleni védelem továbbfejlesztve.
+ * Console encoding beállításának lehetősége megírva. Alapértelmezés utf-8.
+ * Nick letiltásának lehetősége hozzáadva a konfighoz.
+ * A compiler fugvenyei mostantol hasznaljak a magot is igy a dll-hez kelleni fog az is ha mas celokra lenne felhasznalva.
+ * Windows hibak egyresze javitva.
+ * Compiler frissitésre került. Loop elleni védelem tökéletesítve lett de még fordulhat elő benne hiba.
+ * Compiler beüzemelése kibővítve. Ezentúl a schumix2, (persze ez mindig változik nick alapján ahogy szokott induláskor) is elérhető.
+ * Fixálások a kódban.
+ * Utilities bővitve.
+ * Config betöltése fixálva. Ha valami okból hiányzik az xml-ből valamilyen adat akkor az alapértelmezettet használja a kód.
+ * A main fv-ben hozzáadásra került a config fájl és a mappájának nevének módosítása.
+
 ## 3.0.0 (2011-05-18)
 
- * Revision addon hozzáadva de még fejlesztve lesz. Többfunkciós nyelvi használat lehetősége hozzáadva. Kód nagyon nagy százalékban angol nyelvű lett. Verziók óta hordozott híbák javítva. Egyéb javítás.
- * Mysql-hez hozzáadva a charset modósításának lehetősége.
+ * Revision addon hozzáadva de még fejlesztve lesz.
+ * Többfunkciós nyelvi használat lehetősége hozzáadva.
+ * Verziók óta hordozott híbák javítva.
+ * MySql-hez hozzáadva a charset modósításának lehetősége.
  * Minden Irc opcode ami jön új szálra kerül.
- * Uzenet parancs hozzáadva a kódhoz és a régi átnevezve. UserInfo és IgnoreChannel hozzáadva a konfighoz. Caps lock elleni védelem hozzáadva. CNick() fv helye fixálva az fv-ken belül.
+ * Uzenet parancs hozzáadva a kódhoz és a régi átnevezve.
+ * UserInfo és IgnoreChannel hozzáadva a konfighoz.
+ * Caps lock elleni védelem hozzáadva.
+ * CNick() fv helye fixálva az függvényeken belül.
  * Nyelvtani hibák kijavítva
- * Compiler egyes adatai áthelyezve konfigba. Calendar bővitve flood elleni védelemmel és bannal. Console parancsokhoz elkészült a help rész. Egyéb javítás.
- * CalendarAddon hozzáadásra került. Egyenlőre még üres. Url title kiirása hozzáadva kódhoz.
+ * Compiler egyes adatai áthelyezve konfigba.
+ * Calendar bővitve flood elleni védelemmel és bannal.
+ * Console parancsokhoz elkészült a help rész.
+ * CalendarAddon hozzáadásra került. Egyenlőre még üres.
+ * Url title kiirása hozzáadva kódhoz.
  * Fölös using törölve.
  * Végzetes hiba javítva.
  * Legtöbb Assembly információ egy helyre került.
@@ -18,14 +92,15 @@
 
  * Asmg és Me hozzáadva az üzenet küldéshez. De még nem üzemel mert nincs meg a strukturája.
  * Végtelen ciklus elleni védelem bővitve.
- * Compiler ellátva végtelen ciklus elleni védelemmel. Ez még majd változhat plusz bővülhet a kód védelemmel mert elég sok rés lehet még. =/
+ * Compiler ellátva végtelen ciklus elleni védelemmel.
  * Végzetes hiba javítva.
- * SplitToString fv hozzáadva a kóhoz. IsNull() fv használatba véve. SvnRss indulási lekérdezése fixálva.
+ * SplitToString fv hozzáadva a kóhoz. IsNull() fv használatba véve.
+ * SvnRss indulási lekérdezése fixálva.
  * Compiler addonhoz hozzáadva a konfigurálás lehetősége.
- * Compiler rész fixálva lett. Igaz nem kéne hogy a kód mögé lehessen írni szöveget de a sokszoros szóköz bekerülés és ebből a hibából eredő lefordítási hiba már idegesítő. Így jobb lesz (remélem).
+ * Compiler rész fixálva lett.
  * Jegyzet parancs végre hozzá lett adva a kódhoz. Remélem elnyeri mindenki tetszését.
  * Config fájl szerkezete megigazítva.
- * GitRss addon hozzáadásra került. Másik két rss addonba fixálva lett a csatorna hozzáadás és eltávolításra szólgáló fv.
+ * GitRss addon hozzáadásra került.
 
 ## 2.8.0 (2011-04-14)
 
