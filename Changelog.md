@@ -1,5 +1,51 @@
 # Schumix2 ChangeLog
 
+## 3.9.0 (2012-06-26)
+
+ * Kész a CacheDB.
+ * Több ponton elhelyezésre került a LargeError.
+ * ACTION üzenet kezelése megoldva a log fájlokba.
+ * Identify hiba javítva Unreal irc szerverekre.
+ * GetUrl függvények összevonásra kerültek.
+ * Translate regex fixálva.
+ * Fixálva a GetUrl függvény kódolási gondja. Mostantól utf8-ra fogja átalakítani a szöveget.
+ * Youtube title lekérdezése javítva. Most sokkal gyorsabban letölti és tökéletesebben.
+ * Növelve a title idő limitje és a karakterlimit.
+ * Network osztály kezdő függvényéből létrehozva több alternativa is.
+ * Abstract hozzáadva pár osztályhoz.
+ * Xrev elkészült.
+ * A csatornákhoz való kapcsolódás javításra került. Eddig előfordulhatott hogy a rendszer nem lépett felrossz jelszó miatt vagy hibás vhost. De olyan is volt hogy egyik se volt fent a szerveren (chanserv, nickserv) így nem lépett fel a bot. Mostantól ilyen nem fordulhat elő.
+ * Scripts mappa létrehozva a főkönyvtárban és a python basic script hozzáadva.
+ * PythonEngine hozzáadásra került.
+ * Magban lévő antiflood beállításai áthelyezve a konfig fájlba.
+ * Extra irc logok hozzáadásra kerültek. Mostantól jelezni fogja a join, left, quit, mode, newnick, topic üzeneteket.
+ * MaxFileSize és DateFileName áthelyezve konfigba.
+ * Max memória rész áthelyezve konfigba.
+ * ScriptManager-ben a Lua külön mappát kapott.
+ * Youtube title javítva.
+ * Debian mappa hozzá lett adva a kódhoz plusz a debian fájlt generáló (.deb) script. Így bármikor lehet csomagolni a botot debian alapú rendszerekre.
+ * Dumps mappa kikerült a konfigba.
+ * Title kiírásnál mostantól csak 300 karakterig írja ki. Azután 3 pontot tesz.
+ * Calendar és Ban parancsok idő érzékelése javítva.
+ * IsSpecialDirectory fv hozzáadva a kodhoz.
+ * SQLite lesz a konfigban az alapértelmezett adatbázis. (Persze ez módosítható)
+ * Windows installer hozzáadva a kódhoz.
+ * Fixálva a memória fogyasztás korlátozása. Mostantól leáll a program.
+ * Shutdown rész egyesítve Schumixban.
+ * Yaml konfig használata hozzáadva a kódhoz.
+ * A főbb szálaknak név lett adva.
+ * Part függvény átalakítva. Mostantól lehet üzenetett is küldeni vele.
+ * Copyright weboldalcím fixálva.
+ * Alenah átnevezve Invisible-re.
+ * Többszerveres irc csatlakozás létrehozva.
+ * Névnapoknál az Apolónia és Örs név javításra került.
+ * GoogleWebSearch szétbontásra került.
+ * Config.cs szét lett szedve.
+ * Amsg megírásra került.
+ * Schumix project dokumentációja frissítve.
+ * Törlésre került a config adatok Server.exe álltal történő küldése és vissza lett állytva a régi megoldásra.
+ * Fixalva az enUS nevnapkiiras.
+
 ## 3.8.0 (2012-06-26)
 
  * Vhost hiba javítva.
