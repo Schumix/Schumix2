@@ -1,5 +1,84 @@
 # Schumix2 ChangeLog
 
+## 3.0.0 (2011-05-18)
+
+ * Revision addon hozzáadva de még fejlesztve lesz. Többfunkciós nyelvi használat lehetősége hozzáadva. Kód nagyon nagy százalékban angol nyelvű lett. Verziók óta hordozott híbák javítva. Egyéb javítás.
+ * Mysql-hez hozzáadva a charset modósításának lehetősége.
+ * Minden Irc opcode ami jön új szálra kerül.
+ * Uzenet parancs hozzáadva a kódhoz és a régi átnevezve. UserInfo és IgnoreChannel hozzáadva a konfighoz. Caps lock elleni védelem hozzáadva. CNick() fv helye fixálva az fv-ken belül.
+ * Nyelvtani hibák kijavítva
+ * Compiler egyes adatai áthelyezve konfigba. Calendar bővitve flood elleni védelemmel és bannal. Console parancsokhoz elkészült a help rész. Egyéb javítás.
+ * CalendarAddon hozzáadásra került. Egyenlőre még üres. Url title kiirása hozzáadva kódhoz.
+ * Fölös using törölve.
+ * Végzetes hiba javítva.
+ * Legtöbb Assembly információ egy helyre került.
+ * Csatorna neve fixálva lett. Mostantól bármilyen formában kezeli a kód. Egyéb javítások.
+
+## 2.9.0 (2011-04-23)
+
+ * Asmg és Me hozzáadva az üzenet küldéshez. De még nem üzemel mert nincs meg a strukturája.
+ * Végtelen ciklus elleni védelem bővitve.
+ * Compiler ellátva végtelen ciklus elleni védelemmel. Ez még majd változhat plusz bővülhet a kód védelemmel mert elég sok rés lehet még. =/
+ * Végzetes hiba javítva.
+ * SplitToString fv hozzáadva a kóhoz. IsNull() fv használatba véve. SvnRss indulási lekérdezése fixálva.
+ * Compiler addonhoz hozzáadva a konfigurálás lehetősége.
+ * Compiler rész fixálva lett. Igaz nem kéne hogy a kód mögé lehessen írni szöveget de a sokszoros szóköz bekerülés és ebből a hibából eredő lefordítási hiba már idegesítő. Így jobb lesz (remélem).
+ * Jegyzet parancs végre hozzá lett adva a kódhoz. Remélem elnyeri mindenki tetszését.
+ * Config fájl szerkezete megigazítva.
+ * GitRss addon hozzáadásra került. Másik két rss addonba fixálva lett a csatorna hozzáadás és eltávolításra szólgáló fv.
+
+## 2.8.0 (2011-04-14)
+
+ * Platform kiírása áthelyezve.
+ * Konzol uptime kiirasa fixalva.
+ * Compiler addon hibája javítva lett.
+ * Kis igazitas az assembly infokon.
+ * Singleton alkalmazva az AddonManagerre.
+ * Sql hibák fixálva lettek.
+ * Schumix.sql fixálva. Hg rss hozzáadásra került. Már csak a git rss hiányzik. Svn rss ciklusa javítva. Indulásnál elmenti az akkori verziószámot így ha pl ha útána kapcsoljuk be mikor elindult és még nincs új verzió akkor nem fogja kiírni fölöslegesen a régit.
+ * Admin fv lecserélve IsAdmin-ra. Fél Operátor hozzáadva a kódhoz így jobban eloszthatóak a rangok. Régi hibák javításra kerültek. Egyéb javítás.
+ * Readme fájl frissitésre került. :)
+ * SvnInfo.cs törlésre került.
+ * Rendszer válaszüzenetei átírva vagy fixálva. Remélhetőleg így érthetöbb lesz mi baja van a kódnak.
+ * Indulasi szoveg atirva.
+ * Takarítás.
+ * Addon betöltés fixálva. Mostantól újratöltés esetén nem fogja betölteni azokat az addonokat melyek már részei a kódnak.
+ * Ignore hozzáadva az addonhoz. Fixálva a betöltendő fájlok listája. Mostantól csak az az addon töltödik be amelyik nevében szerepel az addon szó.
+ * Forditas win-en fixalva. SQLite adatbazis frissitve. Schumix.sql frissitve.
+
+## 2.7.0 (2011-04-04)
+
+ * SvnRssAddon hozzáadva a kódhoz.
+ * A Konfig fájl ezentúl a Configs mappában lesz tárolva. Emelet az addonok konfig fájlai is oda fognak legenerálodni és onnét töltödnek be. Legalább is amit én adok hozzá.
+ * Singleton fellett újítva. Autofunkciók befejezésre kerültek (mode, kick).
+ * Autofunkcó hozzáadása megkezdödött. Jelenleg a hlüzenet van csak hozzáadva. Hamarosan a többi is hozzáadásra kerül.
+ * IrcLogDirectory módosítva Szobáról Csatornára.
+ * Kód egy részéhez frissitve az adatbázis szerkezete. További frissitések várhatóak a késöbbiekben.
+ * Üzenet küldés az irc kiszolgáló felé korlátozhatóvá vált. Így megelőzhető a flood elleni védelem például.
+ * Help rész fixálva.
+ * Fixálva az admin és új csatorna hozzáadása.
+
+## 2.6.0 (2011-03-28)
+
+ * Plugin rendszer frissitésre került.
+ * Master csatorna hozzáadva a konfighoz.
+ * Mono platform hozzáadva. x64 platform hozzáadva de még nem az igazi vagy csak nálam rossz.
+ * gitignore módositva.
+ * gitignore lista bővitve.
+ * plugin mappa neve átírva.
+ * AssemblyInfok frissítesre kerültek.
+ * Finomítások a kódon.
+
+## 2.5.0 (2011-03-16)
+
+ * Console rész újra lett írva. Egyébb finomítások is történtek.
+ * Console parancsokhoz hozzáadva a channel parancs. FSelect fv átalakítva.
+ * Schumix.Libraries project hozzáadva.
+ * Előjel elemzése fixálva. Hiba oka az volt hogy ha túl hosszú volt előjel és kevesebb karakter lett beírva összeomlott kód.
+ * TODO lista frissitve. Hamarosan teljesen elkészül Schumix2 és egyszinten lesz elődjével.
+ * Válasz üzenetek hozzáadva a legtöbb részhez. Ha valahonnét hiányzik csak jelezni kell és potlom.
+ * Parancsok letiltása javítva.
+
 ## 2.2.0 (2011-03-08)
 
  * Flood elleni védelem hozzáadva a compiler részhez.
