@@ -28,7 +28,7 @@
  * Nextmessage parancs hozzáadva a calendar-hoz.
  * UnixTime oszlop hozzáadva a calendar táblához.
  * UnixTime függvény átalakítva.
- * Windows és debian telepítőben is frissítve lett a konfig fájl.
+ * Windows és debian telepítőben frissítve lett a konfig fájl.
  * Clean mappa hozzáadva a kódhoz.
  * Átláthatobbá téve a reconnect idő.
  * Kapcsolódás típusának kiírása hozzáadva a kódhoz.
