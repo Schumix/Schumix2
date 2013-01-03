@@ -1,5 +1,52 @@
 # Schumix2 ChangeLog
 
+## 3.8.0 (2012-06-26)
+
+ * Vhost hiba javítva.
+ * LuaInterface lib állomanya kicserélésre került.
+ * x64-es fordtasi mod hozzaadva az installerhez es az updaterhez.
+ * Is64BitOS() függvény hozzáadva.
+ * Installer frissitesre kerult.
+ * Frissítő mechanizmus át lett alakítva a botban.
+ * Frissítés a maffiajátékba.
+ * Ctcp-ben a karakterfelismerés pontosítva.
+ * Ignore addon parancs hozzá lett adva a kódhoz.
+ * WolframAPI fixálva windows-ra is.
+ * Windows-os leallitas javitva a botban.
+ * Attributum kezels hozzaadva az irc es command parancsokhoz.
+ * Kisebb száll pihentetés került be az opcode feldolgozásba.
+ * Reconnect rendszer javításra került.
+ * Singleton crash hiba oka megtalálva így mostantól nem kell plusz fv ahhoz hogy az eredeti funkciót lehessen használni.
+ * AntiFlood lehetőség kibővítve a parancsok floodolásának észlelésével.
+ * Compiler enum lecserélve PlatformType-re.
+ * Tiltó listánál fixálva a mester csatorna letiltása és a saját nick letiltása.
+ * Pkg-hez javítva az addon mappa elérésének beállítása.
+ * Ssl kapcsolat javításra került.
+ * Javítva a log fájl generálása.
+ * Identify és vhost aktiválás átrakva a nickinfo-ba.
+ * Pid fájl létrehozása hozzáadva a kódhoz.
+ * Icon.co lecserélésre került a Schumix.exe-nél.
+ * Makefile hozzáadva a kódhoz.
+ * Javítva a helpnél az admin parancsok észlelése és visszajelzése nem adminoknak.
+ * Console parancsokhoz hozzáadva a plugin parancs.
+ * Hozzáadásra került a nick auto visszavétele 10 perc utána ha szabad.
+ * Libraries-ben megcsinálva printf olyanra mint ahogy müködnie kéne neki :)
+ * Rss lekérdezéseknél fixálva a memóriafogyasztás.
+ * Google parancs javításra került.
+ * Translate parancs javításra került.
+ * Title kezelés javítva.
+ * Compiler error üzenet kiírása egybe lett vonva. A szöveg 1000 karakter után megtörésre kerül és új sorba kerül (globálisan).
+ * Minenhol fixálva lett az admin jog ellelnőrzése. Ne lehessen ebből törési lehetőség.
+ * Warning parancsban fixálva a csatornára való írás joga.
+ * WolframAlpha api key csere lehetőség megoldva. Mostantól a configban lehet beállítani.
+ * Chatterbot ékezet dekodolása javítva.
+ * Sql adatbázis egységesítve lett.
+ * MySql kapcsolat fenttartása fixálva.
+ * Notes részbe is beépítve az a megoldás amit az adminoknál használok.
+ * Weather parancs javítva.
+ * Join és leave parancsoknál fixálva hogy ha fentvan azon a csatornán vagy ha már lelépett, esetleg le van tiltva akkor jöjjön válasz miért nem jelenik meg ott a bot.
+ * +i érzékelés a cstornára való fellépésnél hozzáadásra került.
+
 ## 3.7.0 (2012-02-05)
 
  * Szerverbe beépítva a config adatok tárolása újraindításhoz.
