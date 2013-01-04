@@ -88,7 +88,7 @@ Source: "..\Run\Release\Addons\HgRssAddon.dll"; DestDir: "{localappdata}\Schumix
 Source: "..\Run\Release\Addons\MantisBTRssAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
 Source: "..\Run\Release\Addons\RevisionAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
 Source: "..\Run\Release\Addons\SvnRssAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\TesztAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\TestAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
 Source: "..\Run\Release\Addons\WolframAPI.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
 Source: "..\Run\Release\Addons\WordpressRssAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
 Source: "..\Run\Release\Addons\YamlDotNet.Core.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
