@@ -511,33 +511,51 @@ namespace Schumix.Framework
 			if(text.IsNull() || text == string.Empty)
 				return string.Empty;
 
-			// TODO: SQLite alatt nem működik.
-			// Nem lehet így megtartani a régi fájlstrukturát pl \\' ami csatornák és nevek esetén kellene.
+			// TODO: Nem lehet így megtartani a régi fájlstrukturát pl \\' ami csatornák és nevek esetén kellene.
 
-			if(text.Contains(@"\'"))
+			if(SQLiteConfig.Enabled)
 			{
-				for(;;)
+				if(text.Contains(@"''"))
 				{
-					if(!text.Contains(@"\'"))
-						break;
+					for(;;)
+					{
+						if(!text.Contains(@"''"))
+							break;
 
-					text = text.Replace(@"\'", @"'");
+						text = text.Replace(@"''", @"'");
+					}
 				}
+
+				text = text.Replace(@"'", @"''");
+			}
+			else
+			{
+				if(text.Contains(@"\'"))
+				{
+					for(;;)
+					{
+						if(!text.Contains(@"\'"))
+							break;
+
+						text = text.Replace(@"\'", @"'");
+					}
+				}
+
+				if(text.Contains(@"\`"))
+				{
+					for(;;)
+					{
+						if(!text.Contains(@"\`"))
+							break;
+
+						text = text.Replace(@"\`", @"`");
+					}
+				}
+
+				text = text.Replace(@"'", @"\'");
+				text = text.Replace(@"`", @"\`");
 			}
 
-			if(text.Contains(@"\`"))
-			{
-				for(;;)
-				{
-					if(!text.Contains(@"\`"))
-						break;
-
-					text = text.Replace(@"\`", @"`");
-				}
-			}
-
-			text = text.Replace(@"'", @"\'");
-			text = text.Replace(@"`", @"\`");
 			return text;
 		}
 
