@@ -206,6 +206,7 @@ namespace Schumix.Framework
 							if(!valid)
 								continue;
 						}
+
 						if(!lurl.StartsWith("http://") && !url.StartsWith("https://"))
 							lurl = string.Format("http://{0}", url);
 
@@ -510,10 +511,33 @@ namespace Schumix.Framework
 			if(text.IsNull() || text == string.Empty)
 				return string.Empty;
 
-			text = Regex.Replace(text, @"'", @"\'");
-			text = Regex.Replace(text, @"\\'", @" \'");
-			text = Regex.Replace(text, @"`", @"\`");
-			text = Regex.Replace(text, @"\\`", @" \`");
+			// TODO: SQLite alatt nem működik.
+			// Nem lehet így megtartani a régi fájlstrukturát pl \\' ami csatornák és nevek esetén kellene.
+
+			if(text.Contains(@"\'"))
+			{
+				for(;;)
+				{
+					if(!text.Contains(@"\'"))
+						break;
+
+					text = text.Replace(@"\'", @"'");
+				}
+			}
+
+			if(text.Contains(@"\`"))
+			{
+				for(;;)
+				{
+					if(!text.Contains(@"\`"))
+						break;
+
+					text = text.Replace(@"\`", @"`");
+				}
+			}
+
+			text = text.Replace(@"'", @"\'");
+			text = text.Replace(@"`", @"\`");
 			return text;
 		}
 

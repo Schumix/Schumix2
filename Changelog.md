@@ -2,6 +2,7 @@
 
 ## 4.0.0 (2013-xx-xx)
 
+ * Sql injection elleni védelem javítva.
  * Changelog hozzáadva a rendszerhez.
  * Rss szálak mostantól le fognak állni ha bizonyos számú error keletkezik. Ezeket csak akkor lehet újraindítani ha a felhasználó indítja újra.
  * Színvak mód hozzáadva a kódhoz.
