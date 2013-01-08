@@ -575,10 +575,10 @@ namespace Schumix.Irc
 			IMessage.Hostmask = IrcCommand[0];
 
 			if(IrcCommand.Length > 2)
-				IMessage.Channel = IrcCommand[2];
+				IMessage.Channel = sUtilities.SqlEscape(IrcCommand[2]);
 
 			string[] userdata = IMessage.Hostmask.Split('!');
-			IMessage.Nick = userdata[0];
+			IMessage.Nick = sUtilities.SqlEscape(userdata[0]);
 
 			if(userdata.Length > 1)
 			{
