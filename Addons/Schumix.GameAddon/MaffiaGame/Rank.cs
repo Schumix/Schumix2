@@ -28,6 +28,6 @@ namespace Schumix.GameAddon.MaffiaGames
 		Detective   = 2,
 		Doctor      = 3,
 		Normal      = 0,
-		None
+		None        = -1
 	}
 }
