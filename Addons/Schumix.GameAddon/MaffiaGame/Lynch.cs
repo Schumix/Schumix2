@@ -119,7 +119,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						_lynchmaxnumber = sp;
 
 					if(sp > 0)
-						namess += " (" + function.Key + ": " + sp + SchumixBase.Space + text[9] + ")";
+						namess += " (" + DisableHl(function.Key) + ": " + sp + SchumixBase.Space + text[9] + ")";
 				}
 
 				if(_lynch)
@@ -143,7 +143,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					_lynchmaxnumber = 0;
 					namess = GetPlayerName(namess);
 					RemovePlayer(namess, namess);
-					sSendMessage.SendCMPrivmsg(_channel, text[11], namess);
+					sSendMessage.SendCMPrivmsg(_channel, text[11], DisableHl(namess));
 
 					if(GetPlayerMaster(namess))
 						sSendMessage.SendCMPrivmsg(_channel, text[12]);
@@ -154,7 +154,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 					if(_playerlist.Count >= 2 && Running)
 					{
-						sSendMessage.SendCMPrivmsg(_channel, text[13], namess);
+						sSendMessage.SendCMPrivmsg(_channel, text[13], DisableHl(namess));
 						_day = false;
 						_stop = false;
 					}

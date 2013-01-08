@@ -43,12 +43,12 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(_gameoverlist.Contains(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(_channel, text[0], Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[0], DisableHl(Name));
 				return;
 			}
 
 			_gameoverlist.Add(Name.ToLower());
-			sSendMessage.SendCMPrivmsg(_channel, text[1], Name);
+			sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(Name));
 			sSendMessage.SendCMPrivmsg(_channel, text[2], _gameoverlist.Count, (_playerlist.Count/2)+1);
 
 			if(_gameoverlist.Count >= (_playerlist.Count/2)+1)

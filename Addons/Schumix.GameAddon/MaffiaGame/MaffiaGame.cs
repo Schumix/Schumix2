@@ -328,6 +328,11 @@ namespace Schumix.GameAddon.MaffiaGames
 			OwnerMsgTime = DateTime.Now;
 		}
 
+		public string DisableHl(string Name)
+		{
+			return "[" + Name + "]";
+		}
+
 		private void HandleIsOwnerAfk(object sender, ElapsedEventArgs e)
 		{
 			if((DateTime.Now - OwnerMsgTime).Minutes >= 10 && _owner != string.Empty)
@@ -472,7 +477,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				if(Name == string.Empty)
 					sSendMessage.SendCMPrivmsg(_channel, text[0]);
 				else
-					sSendMessage.SendCMPrivmsg(_channel, text[1], Name);
+					sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(Name));
 
 				return false;
 			}
@@ -485,7 +490,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(!Running)
 			{
 				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
-				sSendMessage.SendCMPrivmsg(Channel, sLManager.GetCommandText("maffiagame/base/isstarted", _channel, _servername), Name);
+				sSendMessage.SendCMPrivmsg(Channel, sLManager.GetCommandText("maffiagame/base/isstarted", _channel, _servername), DisableHl(Name));
 				return false;
 			}
 			else
@@ -723,7 +728,11 @@ namespace Schumix.GameAddon.MaffiaGames
 								enabledkiller = true;
 							}
 							else if(!list.CompareDataInBlock())
+							{
 								enabledk = false;
+								newkillghost = string.Empty;
+								enabledkiller = false;
+							}
 						}
 
 						list.Clear();
@@ -750,7 +759,11 @@ namespace Schumix.GameAddon.MaffiaGames
 								enabledkiller = true;
 							}
 							else if(!list.CompareDataInBlock())
+							{
 								enabledk = false;
+								newkillghost = string.Empty;
+								enabledkiller = false;
+							}
 						}
 
 						list.Clear();
@@ -790,6 +803,10 @@ namespace Schumix.GameAddon.MaffiaGames
 					}
 					else if(_doctorlist.Count == 0 && Started)
 						enableddoctor = true;
+
+					//Console.WriteLine("enabledkiller: {0}", enabledkiller);
+					//Console.WriteLine("enableddetective: {0}", enableddetective);
+					//Console.WriteLine("enableddoctor: {0}", enableddoctor);
 
 					if(enabledkiller && enableddetective && enableddoctor && Started && Running)
 					{
@@ -873,7 +890,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						names = string.Empty;
 
 						foreach(var name in _playerlist)
-							names += ", " + name.Value;
+							names += ", " + DisableHl(name.Value);
 
 						sSendMessage.SendCMPrivmsg(_channel, text[11], names.Remove(0, 2, ", "));
 						sSendMessage.SendCMPrivmsg(_channel, text[12]);
@@ -946,13 +963,13 @@ namespace Schumix.GameAddon.MaffiaGames
 
 						if(newghost)
 						{
-							sSendMessage.SendCMPrivmsg(_channel, text[24], newkillghost);
+							sSendMessage.SendCMPrivmsg(_channel, text[24], DisableHl(newkillghost));
 
 							if(GetPlayerMaster(newkillghost))
 								sSendMessage.SendCMPrivmsg(_channel, text[25]);
 
 							Corpse(newkillghost);
-							sSendMessage.SendCMPrivmsg(_channel, text[26], newkillghost);
+							sSendMessage.SendCMPrivmsg(_channel, text[26], DisableHl(newkillghost));
 						}
 						else
 							sSendMessage.SendCMPrivmsg(_channel, text[27]);
@@ -962,13 +979,13 @@ namespace Schumix.GameAddon.MaffiaGames
 
 						names = string.Empty;
 						foreach(var name in _playerlist)
-							names += ", " + name.Value;
+							names += ", " + DisableHl(name.Value);
 
 						sSendMessage.SendCMPrivmsg(_channel, text[28], names.Remove(0, 2, ", "));
 
 						/*names = string.Empty;
 						foreach(var name in _ghostlist)
-							names += ", " + name.Value;
+							names += ", " + DisableHl(name.Value);
 
 						sSendMessage.SendCMPrivmsg(_channel, "A következő személyek halottak: {0}", names.Remove(0, 2, ", "));*/
 						sSendMessage.SendCMPrivmsg(_channel, text[29], _ghostlist.Count);

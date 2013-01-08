@@ -38,7 +38,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(_joinlist.Contains(Name.ToLower()))
 			{
-				sSendMessage.SendCMPrivmsg(_channel, text[5], Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[5], DisableHl(Name));
 				return;
 			}
 
@@ -49,13 +49,13 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(_joinstop)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, text[1], Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(Name));
 				return;
 			}
 
 			if(Started)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, text[2], Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[2], DisableHl(Name));
 				return;
 			}
 
@@ -70,10 +70,10 @@ namespace Schumix.GameAddon.MaffiaGames
 
 				_playerlist.Add(i+1, Name);
 				sSender.Mode(_channel, "+v", Name);
-				sSendMessage.SendCMPrivmsg(_channel, text[3], Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[3], DisableHl(Name));
 			}
 			else
-				sSendMessage.SendCMPrivmsg(_channel, text[4], Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[4], DisableHl(Name));
 		}
 	}
 }

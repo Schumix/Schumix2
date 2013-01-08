@@ -43,7 +43,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				string names = string.Empty;
 				foreach(var name in _playerlist)
-					names += ", " + name.Value;
+					names += ", " + DisableHl(name.Value);
 
 				sSendMessage.SendCMPrivmsg(_channel, text[0], _playerlist.Count);
 				sSendMessage.SendCMPrivmsg(_channel, text[1], names.Remove(0, 2, ", "));
@@ -54,13 +54,13 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSendMessage.SendCMPrivmsg(_channel, text[2]);
 				string names = string.Empty;
 				foreach(var name in _playerlist)
-					names += ", " + name.Value;
+					names += ", " + DisableHl(name.Value);
 
 				sSendMessage.SendCMPrivmsg(_channel, text[3], names.Remove(0, 2, ", "));
 
 				names = string.Empty;
 				foreach(var name in _ghostlist)
-					names += ", " + name.Value;
+					names += ", " + DisableHl(name.Value);
 
 				sSendMessage.SendCMPrivmsg(_channel, text[4], names.Remove(0, 2, ", "));
 			}

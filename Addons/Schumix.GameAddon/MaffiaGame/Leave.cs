@@ -50,7 +50,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				if(!_playerlist.ContainsValue(Name))
 				{
-					sSendMessage.SendCMPrivmsg(_channel, text[2], Name);
+					sSendMessage.SendCMPrivmsg(_channel, text[2], DisableHl(Name));
 					return;
 				}
 			}
@@ -58,7 +58,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				if(!_playerlist.ContainsValue(NickName))
 				{
-					sSendMessage.SendCMPrivmsg(_channel, text[3], NickName);
+					sSendMessage.SendCMPrivmsg(_channel, text[3], DisableHl(NickName));
 					return;
 				}
 			}
@@ -83,19 +83,19 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			sSender.Mode(_channel, "-v", Name);
 			RemovePlayer(Name, string.Empty);
-			sSendMessage.SendCMPrivmsg(_channel, text[4], Name);
+			sSendMessage.SendCMPrivmsg(_channel, text[4], DisableHl(Name));
 			var rank = GetRank(Name);
 
 			if(rank == Rank.Killer)
-				sSendMessage.SendCMPrivmsg(_channel, text[5], Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[5], DisableHl(Name));
 			else if(rank == Rank.Detective)
-				sSendMessage.SendCMPrivmsg(_channel, text[6], Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[6], DisableHl(Name));
 			else if(rank == Rank.Doctor)
-				sSendMessage.SendCMPrivmsg(_channel, text[7], Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[7], DisableHl(Name));
 			else if(rank == Rank.Normal)
-				sSendMessage.SendCMPrivmsg(_channel, text[8], Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[8], DisableHl(Name));
 			else
-				sSendMessage.SendCMPrivmsg(_channel, text[9], Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[9], DisableHl(Name));
 
 			if(_owner == Name)
 			{
