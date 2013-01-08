@@ -791,7 +791,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					else if(_doctorlist.Count == 0 && Started)
 						enableddoctor = true;
 
-					if(enabledkiller && enableddetective && enableddoctor)
+					if(enabledkiller && enableddetective && enableddoctor && Started && Running)
 					{
 						foreach(var function in _playerflist)
 						{
@@ -806,11 +806,15 @@ namespace Schumix.GameAddon.MaffiaGames
 
 						foreach(var function in _playerflist)
 						{
-							if(function.Value.Rank == Rank.Detective)
+							if(function.Value.Rank == Rank.Detective && function.Value.Detective && function.Value.DRank != Rank.None)
 							{
 								if((function.Key == newkillghost.ToLower() && newghost) ||
 								   (function.Key == newkillghost.ToLower() && _players < 8))
+								{
+									function.Value.Detective = false;
+									function.Value.DRank = Rank.None;
 									continue;
+								}
 
 								if(function.Value.DRank == Rank.Killer)
 									sSendMessage.SendCMPrivmsg(function.Key, text[7]);
