@@ -41,15 +41,15 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
-			if(_day)
-			{
-				sSendMessage.SendCMPrivmsg(Killer, text[1]);
-				return;
-			}
-
 			if(!_killerlist.ContainsKey(Killer.ToLower()))
 			{
 				sSendMessage.SendCMPrivmsg(Killer, text[2]);
+				return;
+			}
+
+			if(_day)
+			{
+				sSendMessage.SendCMPrivmsg(Killer, text[1]);
 				return;
 			}
 
