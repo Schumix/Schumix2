@@ -53,20 +53,20 @@ namespace Schumix.GameAddon.MaffiaGames
 
 				if(NoLynch)
 				{
-					sSendMessage.SendCMPrivmsg(Channel, text[1], NickName);
+					sSendMessage.SendCMPrivmsg(Channel, text[1], DisableHl(NickName));
 					return;
 				}
 
 				if(!_killerlist.ContainsKey(NickName.ToLower()) && !_detectivelist.ContainsKey(NickName.ToLower()) &&
 					!_normallist.ContainsKey(NickName.ToLower()) && !_doctorlist.ContainsKey(NickName.ToLower()))
 				{
-					sSendMessage.SendCMPrivmsg(Channel, text[2], NickName);
+					sSendMessage.SendCMPrivmsg(Channel, text[2], DisableHl(NickName));
 					return;
 				}
 
 				if(!_day)
 				{
-					sSendMessage.SendCMPrivmsg(Channel, text[3], NickName);
+					sSendMessage.SendCMPrivmsg(Channel, text[3], DisableHl(NickName));
 					return;
 				}
 
@@ -74,19 +74,19 @@ namespace Schumix.GameAddon.MaffiaGames
 					!_normallist.ContainsKey(Name.ToLower()) && !_ghostlist.ContainsKey(Name.ToLower()) &&
 					!_doctorlist.ContainsKey(Name.ToLower()))
 				{
-					sSendMessage.SendCMPrivmsg(Channel, text[4], NickName);
+					sSendMessage.SendCMPrivmsg(Channel, text[4], DisableHl(NickName));
 					return;
 				}
 
 				if(_ghostlist.ContainsKey(Name.ToLower()))
 				{
-					sSendMessage.SendCMPrivmsg(Channel, text[5], NickName);
+					sSendMessage.SendCMPrivmsg(Channel, text[5], DisableHl(NickName));
 					return;
 				}
 
 				if(Name.ToLower() == NickName.ToLower())
 				{
-					sSendMessage.SendCMPrivmsg(Channel, text[6], NickName);
+					sSendMessage.SendCMPrivmsg(Channel, text[6], DisableHl(NickName));
 					return;
 				}
 
@@ -96,7 +96,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						if(function.Value.Lynch.Contains(NickName.ToLower()))
 						{
-							sSendMessage.SendCMPrivmsg(_channel, text[7], NickName);
+							sSendMessage.SendCMPrivmsg(_channel, text[7], DisableHl(NickName));
 							return;
 						}
 						else
@@ -109,7 +109,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					}
 				}
 
-				sSendMessage.SendCMPrivmsg(_channel, text[8], NickName, Name);
+				sSendMessage.SendCMPrivmsg(_channel, text[8], DisableHl(NickName), DisableHl(Name));
 
 				string namess = string.Empty;
 				foreach(var function in _playerflist)
