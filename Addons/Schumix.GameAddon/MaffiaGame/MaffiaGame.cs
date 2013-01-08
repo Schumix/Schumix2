@@ -979,7 +979,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 						names = string.Empty;
 						foreach(var name in _playerlist)
-							names += ", " + DisableHl(name.Value);
+							names += ", " + name.Value;
 
 						sSendMessage.SendCMPrivmsg(_channel, text[28], names.Remove(0, 2, ", "));
 
