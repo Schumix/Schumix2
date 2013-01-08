@@ -117,8 +117,8 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
-			sSendMessage.SendCMPrivmsg(_channel, text[0], _owner);
-			sSendMessage.SendCMPrivmsg(_channel, text[1], _owner);
+			sSendMessage.SendCMPrivmsg(_channel, text[0], DisableHl(_owner));
+			sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(_owner));
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Game FROM maffiagame WHERE ServerName = '{0}' ORDER BY Game DESC", _servername);
 			_gameid = !db.IsNull() ? (Convert.ToInt32(db["Game"].ToString()) + 1) : 1;

@@ -96,7 +96,7 @@ namespace Schumix.GameAddon.Commands
 							{
 								if(player.Value == sIRCMessage.Nick)
 								{
-									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("game/start/maffiagame", sIRCMessage.Channel, sIRCMessage.ServerName), sIRCMessage.Nick, maffia.Key);
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("game/start/maffiagame", sIRCMessage.Channel, sIRCMessage.ServerName), maffia.Value.DisableHl(sIRCMessage.Nick), maffia.Key);
 									return;
 								}
 							}
