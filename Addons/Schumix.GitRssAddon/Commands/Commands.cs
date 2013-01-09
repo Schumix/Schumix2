@@ -317,6 +317,57 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 			}
+			else if(sIRCMessage.Info[4].ToLower() == "url")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "add")
+				{
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "remove")
+				{
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "change")
+				{
+				}
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "change")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
+				if(sIRCMessage.Info[5].ToLower() == "color")
+				{
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(sIRCMessage.Info[6].ToLower() == "projectname")
+					{
+					}
+					else if(sIRCMessage.Info[6].ToLower() == "branch")
+					{
+					}
+					else if(sIRCMessage.Info[6].ToLower() == "author")
+					{
+					}
+					else if(sIRCMessage.Info[6].ToLower() == "commit") // jobb név ide ami a verziószámot jelőli
+					{
+					}
+					else if(sIRCMessage.Info[6].ToLower() == "commitinfo")
+					{
+					}
+				}
+			}
 		}
 	}
 }
