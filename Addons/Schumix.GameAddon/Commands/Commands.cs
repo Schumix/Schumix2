@@ -117,6 +117,7 @@ namespace Schumix.GameAddon.Commands
 					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.On, sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					sChannelInfo.ChannelFunctionsReload();
 					sSender.Mode(sIRCMessage.Channel, "+v", sIRCMessage.Nick);
+
 					if(!MaffiaList.ContainsKey(sIRCMessage.Channel.ToLower()))
 						MaffiaList.Add(sIRCMessage.Channel.ToLower(), new MaffiaGame(sIRCMessage.ServerName, sIRCMessage.Nick, sIRCMessage.Channel, sGC));
 					else
