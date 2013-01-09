@@ -74,7 +74,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			string rescued = string.Empty;
 
 			if(_killerlist.ContainsKey(Name.ToLower()))
-				rescued = string.Empty;
+				rescued = "áá(%[[]][[]]killer[[]][[]]%)áá";
 			else if(_detectivelist.ContainsKey(Name.ToLower()))
 				rescued = Name.ToLower();
 			else if(_doctorlist.ContainsKey(Name.ToLower()))

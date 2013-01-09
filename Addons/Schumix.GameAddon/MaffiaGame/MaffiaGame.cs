@@ -797,7 +797,8 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						foreach(var function in _playerflist)
 						{
-							if(function.Value.Rank == Rank.Doctor && function.Value.RName != string.Empty && !function.Value.Ghost)
+							if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && (function.Value.RName != string.Empty ||
+							   function.Value.RName == "áá(%[[]][[]]killer[[]][[]]%)áá"))
 								enableddoctor = true;
 						}
 					}
@@ -814,7 +815,8 @@ namespace Schumix.GameAddon.MaffiaGames
 						{
 							if(function.Value.Rank == Rank.Doctor)
 							{
-								if((newkillghost.ToLower() != function.Value.RName) && (newkillghost.ToLower() != string.Empty))
+								if((newkillghost.ToLower() != function.Value.RName) && (newkillghost.ToLower() != string.Empty) &&
+								   (newkillghost.ToLower() != "áá(%[[]][[]]killer[[]][[]]%)áá"))
 									newghost = true;
 							}
 
