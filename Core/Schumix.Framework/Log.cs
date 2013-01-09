@@ -85,11 +85,6 @@ namespace Schumix.Framework
 			return character;
 		}
 
-		public static bool GetColorblindMode()
-		{
-			return _ColorblindMode;
-		}
-
 		public static void Initialize()
 		{
 			Initialize(d_logfilename, false);

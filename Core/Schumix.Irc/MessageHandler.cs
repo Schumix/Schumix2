@@ -255,7 +255,7 @@ namespace Schumix.Irc
 		{
 			if(ConsoleLog.CLog)
 			{
-				if(Log.GetColorblindMode())
+				if(SchumixConfig.ColorBindMode)
 				{
 					Console.Write(sLConsole.MessageHandler("Text4"));
 					Console.Write(sLConsole.MessageHandler("Text5"));
