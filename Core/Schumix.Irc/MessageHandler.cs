@@ -255,11 +255,19 @@ namespace Schumix.Irc
 		{
 			if(ConsoleLog.CLog)
 			{
-				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write(sLConsole.MessageHandler("Text4"));
-				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.Write(sLConsole.MessageHandler("Text5"));
-				Console.ForegroundColor = ConsoleColor.Gray;
+				if(Log.GetColorblindMode())
+				{
+					Console.Write(sLConsole.MessageHandler("Text4"));
+					Console.Write(sLConsole.MessageHandler("Text5"));
+				}
+				else
+				{
+					Console.ForegroundColor = ConsoleColor.Red;
+					Console.Write(sLConsole.MessageHandler("Text4"));
+					Console.ForegroundColor = ConsoleColor.Yellow;
+					Console.Write(sLConsole.MessageHandler("Text5"));
+					Console.ForegroundColor = ConsoleColor.Gray;
+				}
 			}
 		}
 
