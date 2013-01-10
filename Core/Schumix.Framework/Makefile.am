@@ -172,7 +172,8 @@ FILES = \
 	Clean/CleanManager.cs \
 	Clean/CleanConfig.cs \
 	Clean/CleanDatabase.cs \
-	Config/CleanConfig.cs 
+	Config/CleanConfig.cs \
+	LogType.cs 
 
 DATA_FILES = 
 

@@ -62,7 +62,6 @@
     <Compile Include="Commands\CommandManager.cs" />
     <Compile Include="Commands\OperatorCommandHandler.cs" />
     <Compile Include="Commands\PublicCommandHandler.cs" />
-    <Compile Include="ChannelInfo.cs" />
     <Compile Include="MessageHandler.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="NickInfo.cs" />
@@ -73,7 +72,6 @@
     <Compile Include="ReplyCode.cs" />
     <Compile Include="Ctcp\CtcpSender.cs" />
     <Compile Include="Ctcp\CtcpUtil.cs" />
-    <Compile Include="ChannelNameList.cs" />
     <Compile Include="ConnectionType.cs" />
     <Compile Include="Flood\AntiFlood.cs" />
     <Compile Include="Flood\CommandFlood.cs" />
@@ -96,6 +94,8 @@
     <Compile Include="Commands\GoogleWebSearch\GoogleWebResultSet.cs" />
     <Compile Include="IrcBase.cs" />
     <Compile Include="Commands\Whois.cs" />
+    <Compile Include="Channel\ChannelInfo.cs" />
+    <Compile Include="Channel\ChannelList.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -113,5 +113,6 @@
     <Folder Include="Sender\" />
     <Folder Include="Ignore\" />
     <Folder Include="Commands\GoogleWebSearch\" />
+    <Folder Include="Channel\" />
   </ItemGroup>
 </Project>

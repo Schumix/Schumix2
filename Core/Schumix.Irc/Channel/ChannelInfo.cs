@@ -29,7 +29,7 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
-namespace Schumix.Irc
+namespace Schumix.Irc.Channel
 {
 	public sealed class ChannelInfo
 	{

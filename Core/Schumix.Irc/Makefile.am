@@ -125,7 +125,6 @@ FILES = \
 	Commands/CommandManager.cs \
 	Commands/OperatorCommandHandler.cs \
 	Commands/PublicCommandHandler.cs \
-	ChannelInfo.cs \
 	MessageHandler.cs \
 	Network.cs \
 	NickInfo.cs \
@@ -136,7 +135,6 @@ FILES = \
 	ReplyCode.cs \
 	Ctcp/CtcpSender.cs \
 	Ctcp/CtcpUtil.cs \
-	ChannelNameList.cs \
 	ConnectionType.cs \
 	Flood/AntiFlood.cs \
 	Flood/CommandFlood.cs \
@@ -158,7 +156,9 @@ FILES = \
 	Commands/GoogleWebSearch/GoogleWebResponseData.cs \
 	Commands/GoogleWebSearch/GoogleWebResultSet.cs \
 	IrcBase.cs \
-	Commands/Whois.cs 
+	Commands/Whois.cs \
+	Channel/ChannelInfo.cs \
+	Channel/ChannelList.cs 
 
 DATA_FILES = 
 

@@ -30,9 +30,9 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
-namespace Schumix.Irc
+namespace Schumix.Irc.Channel
 {
-	public sealed class ChannelNameList : CommandInfo
+	public sealed class ChannelList : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
@@ -43,7 +43,7 @@ namespace Schumix.Irc
 		private readonly AntiFlood sAntiFlood;
 		private string _servername;
 
-		public ChannelNameList(string ServerName) : base(ServerName)
+		public ChannelList(string ServerName) : base(ServerName)
 		{
 			_servername = ServerName;
 			sAntiFlood = sIrcBase.Networks[ServerName].sAntiFlood;

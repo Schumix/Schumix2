@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Schumix.API;
 using Schumix.API.Irc;
 using Schumix.API.Functions;
+using Schumix.Irc.Channel;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Localization;

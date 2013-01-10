@@ -25,6 +25,7 @@ using Schumix.API.Irc;
 using Schumix.Irc.Ctcp;
 using Schumix.Irc.Flood;
 using Schumix.Irc.Ignore;
+using Schumix.Irc.Channel;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
@@ -42,10 +43,10 @@ namespace Schumix.Irc.Commands
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		public IgnoreIrcCommand sIgnoreIrcCommand { get; private set; }
-		public ChannelNameList sChannelNameList { get; private set; }
 		public IgnoreNickName sIgnoreNickName { get; private set; }
 		public IgnoreChannel sIgnoreChannel { get; private set; }
 		public IgnoreCommand sIgnoreCommand { get; private set; }
+		public ChannelList sChannelList { get; private set; }
 		public IgnoreAddon sIgnoreAddon { get; private set; }
 		public SendMessage sSendMessage { get; private set; }
 		public ChannelInfo sChannelInfo { get; private set; }
@@ -82,7 +83,7 @@ namespace Schumix.Irc.Commands
 			sChannelInfo = new ChannelInfo(_servername);
 			sAntiFlood = new AntiFlood(_servername);
 			sCtcpSender = new CtcpSender(_servername);
-			sChannelNameList = new ChannelNameList(_servername);
+			sChannelList = new ChannelList(_servername);
 		}
 
 		protected void HandleHelp(IRCMessage sIRCMessage)

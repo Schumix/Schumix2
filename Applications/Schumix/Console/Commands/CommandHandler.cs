@@ -704,7 +704,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				if(sIrcBase.Networks[_servername].sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+				if(sIrcBase.Networks[_servername].sChannelList.Names.ContainsKey(Info[1].ToLower()))
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("ImAlreadyOnThisChannel"));
 					return;
@@ -1117,7 +1117,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(sIrcBase.Networks[_servername].sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+			if(sIrcBase.Networks[_servername].sChannelList.Names.ContainsKey(Info[1].ToLower()))
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("ImAlreadyOnThisChannel"));
 				return;
@@ -1154,7 +1154,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(!sIrcBase.Networks[_servername].sChannelNameList.Names.ContainsKey(Info[1].ToLower()))
+			if(!sIrcBase.Networks[_servername].sChannelList.Names.ContainsKey(Info[1].ToLower()))
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("ImNotOnThisChannel"));
 				return;
