@@ -48,7 +48,7 @@ namespace Schumix.Framework
 		public static CleanManager sCleanManager { get; private set; }
 		public static DatabaseManager DManager { get; private set; }
 		public static CacheDB sCacheDB { get; private set; }
-		public static Timer timer { get; private set; }
+		public static Timer sTimer { get; private set; }
 		public const string Title = "Schumix2 IRC Bot and Framework";
 		public static bool ExitStatus { get; private set; }
 		public static string ServerIdentify = string.Empty;
@@ -90,7 +90,8 @@ namespace Schumix.Framework
 					System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text"));
-				timer = new Timer();
+				sTimer = new Timer();
+				sTimer.Start();
 
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text2"));
 				DManager = new DatabaseManager();
@@ -232,7 +233,7 @@ namespace Schumix.Framework
 				var memory = Process.GetCurrentProcess().WorkingSet64;
 				sAddonManager.UnloadPlugins();
 				sUtilities.RemovePidFile();
-				timer.SaveUptime(memory);
+				sTimer.SaveUptime(memory);
 				sCacheDB.Clean();
 				ServerDisconnect(Reconnect);
 			}

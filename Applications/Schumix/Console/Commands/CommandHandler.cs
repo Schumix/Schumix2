@@ -139,7 +139,7 @@ namespace Schumix.Console.Commands
 			Log.Notice("Console", text[3]);
 			Log.Notice("Console", text[4], memory);
 			Log.Notice("Console", text[5], Process.GetCurrentProcess().Threads.Count);
-			Log.Notice("Console", text[6], SchumixBase.timer.Uptime());
+			Log.Notice("Console", text[6], SchumixBase.sTimer.Uptime());
 		}
 
 		/// <summary>

@@ -28,20 +28,17 @@ namespace Schumix.Framework
 	public sealed class Timer
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		public readonly Stopwatch SW = new Stopwatch();
 		/// <summary>
 		///     A bot elindításának ideje.
 		/// </summary>
-		public readonly DateTime StartTime;
-		public readonly Stopwatch SW = new Stopwatch();
+		public DateTime StartTime { get; private set; }
 
 		public Timer()
 		{
 			try
 			{
 				Log.Notice("Timer", sLConsole.Timer("Text"));
-				SW.Start();
-				StartTime = DateTime.Now;
-				Log.Debug("Timer", sLConsole.Timer("Text2"));
 			}
 			catch(Exception e)
 			{
@@ -50,7 +47,14 @@ namespace Schumix.Framework
 			}
 		}
 
-		public void StartTimer()
+		public void Start()
+		{
+			SW.Start();
+			StartTime = DateTime.Now;
+			Log.Debug("Timer", sLConsole.Timer("Text2"));
+		}
+
+		public void Stop()
 		{
 			SW.Stop();
 			Log.Debug("Timer", sLConsole.Timer("Text3"), SW.ElapsedMilliseconds);
@@ -61,8 +65,7 @@ namespace Schumix.Framework
 		/// </returns>
 		public string Uptime()
 		{
-			var Time = DateTime.Now - StartTime;
-			return string.Format(sLConsole.Timer("Uptime"), Time.Days, Time.Hours, Time.Minutes, Time.Seconds);
+			return Uptime(sLConsole.Locale);
 		}
 
 		public string Uptime(string Language)
