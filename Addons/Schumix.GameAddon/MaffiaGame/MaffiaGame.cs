@@ -187,6 +187,9 @@ namespace Schumix.GameAddon.MaffiaGames
 							function.Value.Lynch.Remove(OldName.ToLower());
 							function.Value.Lynch.Add(NewName.ToLower());
 						}
+
+						if(function.Value.RName == OldName.ToLower())
+							function.Value.RName = NewName.ToLower();
 					}
 
 					_playerflist[OldName.ToLower()].Lynch.Clear();
