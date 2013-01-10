@@ -77,6 +77,75 @@ namespace Schumix.GameAddon.MaffiaGames
 		private int _players;
 		private int _gameid;
 
+		private bool IsRunning(string Channel, string Name = "")
+		{
+			if(!Running)
+			{
+				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+				var text = sLManager.GetCommandTexts("maffiagame/base/isrunning", _channel, _servername);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+					return false;
+				}
+
+				if(Name == string.Empty)
+					sSendMessage.SendCMPrivmsg(_channel, text[0]);
+				else
+					sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(Name));
+
+				return false;
+			}
+			else
+				return true;
+		}
+
+		private bool IsStarted(string Channel, string Name)
+		{
+			if(!Running)
+			{
+				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+				sSendMessage.SendCMPrivmsg(Channel, sLManager.GetCommandText("maffiagame/base/isstarted", _channel, _servername), DisableHl(Name));
+				return false;
+			}
+			else
+				return true;
+		}
+
+		private Rank GetRank(string Name)
+		{
+			return _playerflist.ContainsKey(Name.ToLower()) ? _playerflist[Name.ToLower()].Rank : Rank.None;
+		}
+
+		private string GetPlayerName(string Name)
+		{
+			string player = string.Empty;
+
+			if(_killerlist.ContainsKey(Name))
+				player = _killerlist[Name];
+			else if(_detectivelist.ContainsKey(Name))
+				player = _detectivelist[Name];
+			else if(_doctorlist.ContainsKey(Name))
+				player = _doctorlist[Name];
+			else if(_normallist.ContainsKey(Name))
+				player = _normallist[Name];
+
+			return player;
+		}
+
+		private bool GetPlayerMaster(string Name)
+		{
+			bool master = false;
+
+			foreach(var function in _playerflist)
+			{
+				if(function.Key == Name.ToLower())
+					master = function.Value.Master;
+			}
+
+			return master;
+		}
+
 		public string GetKiller()
 		{
 			if(_players < 8)
@@ -465,46 +534,6 @@ namespace Schumix.GameAddon.MaffiaGames
 			sSendMessage.SendCMPrivmsg(_channel, sLManager.GetCommandText("maffiagame/base/endgametext", _channel, _servername));
 		}
 
-		private bool IsRunning(string Channel, string Name = "")
-		{
-			if(!Running)
-			{
-				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
-				var text = sLManager.GetCommandTexts("maffiagame/base/isrunning", _channel, _servername);
-				if(text.Length < 2)
-				{
-					sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
-					return false;
-				}
-
-				if(Name == string.Empty)
-					sSendMessage.SendCMPrivmsg(_channel, text[0]);
-				else
-					sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(Name));
-
-				return false;
-			}
-			else
-				return true;
-		}
-
-		private bool IsStarted(string Channel, string Name)
-		{
-			if(!Running)
-			{
-				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
-				sSendMessage.SendCMPrivmsg(Channel, sLManager.GetCommandText("maffiagame/base/isstarted", _channel, _servername), DisableHl(Name));
-				return false;
-			}
-			else
-				return true;
-		}
-
-		private Rank GetRank(string Name)
-		{
-			return _playerflist.ContainsKey(Name.ToLower()) ? _playerflist[Name.ToLower()].Rank : Rank.None;
-		}
-
 		private void AddRanks()
 		{
 			var sSender = sIrcBase.Networks[_servername].sSender;
@@ -587,35 +616,6 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			if(!night)
 				sSender.Mode(_channel, "-m");
-		}
-
-		private string GetPlayerName(string Name)
-		{
-			string player = string.Empty;
-
-			if(_killerlist.ContainsKey(Name))
-				player = _killerlist[Name];
-			else if(_detectivelist.ContainsKey(Name))
-				player = _detectivelist[Name];
-			else if(_doctorlist.ContainsKey(Name))
-				player = _doctorlist[Name];
-			else if(_normallist.ContainsKey(Name))
-				player = _normallist[Name];
-
-			return player;
-		}
-
-		private bool GetPlayerMaster(string Name)
-		{
-			bool master = false;
-
-			foreach(var function in _playerflist)
-			{
-				if(function.Key == Name.ToLower())
-					master = function.Value.Master;
-			}
-
-			return master;
 		}
 
 		private void StartThread()
@@ -807,10 +807,6 @@ namespace Schumix.GameAddon.MaffiaGames
 					}
 					else if(_doctorlist.Count == 0 && Started)
 						enableddoctor = true;
-
-					//Console.WriteLine("enabledkiller: {0}", enabledkiller);
-					//Console.WriteLine("enableddetective: {0}", enableddetective);
-					//Console.WriteLine("enableddoctor: {0}", enableddoctor);
 
 					if(enabledkiller && enableddetective && enableddoctor && Started && Running)
 					{
