@@ -557,8 +557,8 @@ namespace Schumix.Irc
 					sUtilities.CreateFile(logfile);
 					var file = new StreamWriter(logfile, true) { AutoFlush = true };
 					file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour < 10 ? "0" + DateTime.Now.Hour.ToString() :
-					               DateTime.Now.Hour.ToString(), DateTime.Now.Minute < 10 ? "0" + DateTime.Now.Minute.ToString() :
-					               DateTime.Now.Minute.ToString(), user, args);
+							       DateTime.Now.Hour.ToString(), DateTime.Now.Minute < 10 ? "0" + DateTime.Now.Minute.ToString() :
+							       DateTime.Now.Minute.ToString(), user, args);
 					file.Close();
 				}
 			}

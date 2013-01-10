@@ -56,24 +56,24 @@ namespace Schumix.Irc
 
 		public bool Shutdown { get; private set; }
 
-        /// <summary>
-        ///     A bejövő információkat fogadja.
-        /// </summary>
+		/// <summary>
+		///     A bejövő információkat fogadja.
+		/// </summary>
 		private StreamReader reader;
 
-        /// <summary>
-        ///     A kapcsolatot tároljra.
-        /// </summary>
+		/// <summary>
+		///     A kapcsolatot tároljra.
+		/// </summary>
 		private TcpClient client;
 
-        /// <summary>
-        ///     IRC szerver címe.
-        /// </summary>
+		/// <summary>
+		///     IRC szerver címe.
+		/// </summary>
 		private readonly string _server;
 
-        /// <summary>
-        ///     IRC port száma.
-        /// </summary>
+		/// <summary>
+		///     IRC port száma.
+		/// </summary>
 		private readonly int _port;
 
 		private bool NetworkQuit = false;
@@ -327,18 +327,18 @@ namespace Schumix.Irc
 			Connection(nick);
 		}
 
-        /// <summary>
-        ///     Lekapcsolódás az IRC koszolgálótól.
-        /// </summary>
+		/// <summary>
+		///     Lekapcsolódás az IRC koszolgálótól.
+		/// </summary>
 		public void DisConnect()
 		{
 			Close();
 			Log.Notice("Network", sLConsole.Network("Text7"));
 		}
 
-        /// <summary>
-        ///     Visszakapcsolódás az IRC kiszolgálóhoz.
-        /// </summary>
+		/// <summary>
+		///     Visszakapcsolódás az IRC kiszolgálóhoz.
+		/// </summary>
 		public void ReConnect()
 		{
 			if(SchumixBase.ExitStatus)
@@ -463,12 +463,12 @@ namespace Schumix.Irc
 			}
 		}
 
-        /// <summary>
-        ///     Ez a függvény kezeli azt IRC adatai és az opcedes-eket.
-        /// </summary>
-        /// <remarks>
-        ///     Opcodes: Az IRC-ről jövő funkciók, kódok.
-        /// </remarks>
+		/// <summary>
+		///     Ez a függvény kezeli azt IRC adatai és az opcedes-eket.
+		/// </summary>
+		/// <remarks>
+		///     Opcodes: Az IRC-ről jövő funkciók, kódok.
+		/// </remarks>
 		private void Opcodes()
 		{
 			Log.Notice("Opcodes", sLConsole.Network("Text14"));
@@ -624,9 +624,9 @@ namespace Schumix.Irc
 			}
 		}
 
-        /// <summary>
-        ///     Pingeli az IRC szervert 30 másodpercenként.
-        /// </summary>
+		/// <summary>
+		///     Pingeli az IRC szervert 30 másodpercenként.
+		/// </summary>
 		private void AutoPing()
 		{
 			Log.Notice("AutoPing", sLConsole.Network("Text14"));
