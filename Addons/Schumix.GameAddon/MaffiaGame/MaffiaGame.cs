@@ -423,7 +423,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					_gameoverlist.Add(NewName.ToLower());
 				}
 
-				SchumixBase.DManager.Update("maffiagame", string.Format("Name = '{0}'", NewName), string.Format("Name = '{0}' And ServerName = '{1}'", OldName, _servername));
+				SchumixBase.DManager.Update("maffiagame", string.Format("Name = '{0}'", NewName), string.Format("Name = '{0}' And ServerName = '{1}' AND Id = '{2}'", OldName, _servername, _gameid));
 			}
 		}
 
