@@ -102,7 +102,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private bool IsStarted(string Channel, string Name)
 		{
-			if(!Running)
+			if(!Started)
 			{
 				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 				sSendMessage.SendCMPrivmsg(Channel, sLManager.GetCommandText("maffiagame/base/isstarted", _channel, _servername), DisableHl(Name));
