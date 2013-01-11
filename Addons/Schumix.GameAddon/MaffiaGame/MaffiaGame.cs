@@ -650,12 +650,9 @@ namespace Schumix.GameAddon.MaffiaGames
 				sChannelInfo.ChannelFunctionsReload();
 			}
 
-			if(_timerowner.Enabled)
-			{
-				_timerowner.Enabled = false;
-				_timerowner.Elapsed -= HandleIsOwnerAfk;
-				_timerowner.Stop();
-			}
+			_timerowner.Enabled = false;
+			_timerowner.Elapsed -= HandleIsOwnerAfk;
+			_timerowner.Stop();
 
 			Clean();
 			Started = false;
