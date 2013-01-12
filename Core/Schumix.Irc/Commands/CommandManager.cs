@@ -88,26 +88,29 @@ namespace Schumix.Irc.Commands
 			SchumixRegisterHandler("reload",       HandleReload,   CommandPermission.Administrator);
 			SchumixRegisterHandler("quit",         HandleQuit,     CommandPermission.Administrator);
 
-			var tasm = Assembly.GetExecutingAssembly();
-			var asms = sAddonManager.Addons[_servername].Assemblies.ToDictionary(v => v.Key, v => v.Value);
-			asms.Add("currentassembly", tasm);
-			int i = 0;
-
-			foreach(var a in from asm in AppDomain.CurrentDomain.GetAssemblies()
-					where asm.GetName().FullName.ToLower(CultureInfo.InvariantCulture).Contains("schumix")
-					select asm)
+			Task.Factory.StartNew(() =>
 			{
-				i++;
-				asms.Add("currentassembly" + i.ToString(), a);
-			}
+				var tasm = Assembly.GetExecutingAssembly();
+				var asms = sAddonManager.Addons[_servername].Assemblies.ToDictionary(v => v.Key, v => v.Value);
+				asms.Add("currentassembly", tasm);
+				int i = 0;
 
-			Parallel.ForEach(asms, asm =>
-			{
-				var types = asm.Value.GetTypes();
-				Parallel.ForEach(types, type =>
+				foreach(var a in from asm in AppDomain.CurrentDomain.GetAssemblies()
+						where asm.GetName().FullName.ToLower(CultureInfo.InvariantCulture).Contains("schumix")
+						select asm)
 				{
-					var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-					ProcessMethods(methods);
+					i++;
+					asms.Add("currentassembly" + i.ToString(), a);
+				}
+
+				Parallel.ForEach(asms, asm =>
+				{
+					var types = asm.Value.GetTypes();
+					Parallel.ForEach(types, type =>
+					{
+						var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+						ProcessMethods(methods);
+					});
 				});
 			});
 

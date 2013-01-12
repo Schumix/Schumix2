@@ -196,14 +196,17 @@ namespace Schumix.Irc
 			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
 			IrcRegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
 
-			var asms = sAddonManager.Addons[_servername].Assemblies.ToDictionary(v => v.Key, v => v.Value);
-			Parallel.ForEach(asms, asm =>
+			Task.Factory.StartNew(() =>
 			{
-				var types = asm.Value.GetTypes();
-				Parallel.ForEach(types, type =>
+				var asms = sAddonManager.Addons[_servername].Assemblies.ToDictionary(v => v.Key, v => v.Value);
+				Parallel.ForEach(asms, asm =>
 				{
-					var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-					IrcProcessMethods(methods);
+					var types = asm.Value.GetTypes();
+					Parallel.ForEach(types, type =>
+					{
+						var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+						IrcProcessMethods(methods);
+					});
 				});
 			});
 
