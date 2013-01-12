@@ -63,22 +63,26 @@ namespace Schumix.GameAddon.MaffiaGames
 				}
 			}
 
+			string namess = NickName == string.Empty ? Name : NickName;
+
 			if(_start)
 			{
-				_leftlist.Add(Name);
+				_leftlist.Add(namess);
 				return;
 			}
 
-			if(_playerflist.ContainsKey(Name.ToLower()))
+			if(Started)
 			{
-				foreach(var function in _playerflist)
+				if(_playerflist.ContainsKey(namess.ToLower()))
 				{
-					if(function.Value.Lynch.Contains(Name.ToLower()))
-						function.Value.Lynch.Remove(Name.ToLower());
-				}
+					foreach(var function in _playerflist)
+					{
+						if(function.Value.Lynch.Contains(namess.ToLower()))
+							function.Value.Lynch.Remove(namess.ToLower());
+					}
 
-				_playerflist[Name.ToLower()].Lynch.Clear();
-				//_playerflist.Remove(Name.ToLower());		
+					_playerflist[Name.ToLower()].Lynch.Clear();
+				}
 			}
 
 			sSender.Mode(_channel, "-v", Name);
@@ -123,7 +127,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						_lynchmaxnumber = sp;
 				}
 
-				EndGame();
+				LynchPlayer(namess);
 			}
 			else
 			{
