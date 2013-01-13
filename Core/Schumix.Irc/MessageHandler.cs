@@ -76,7 +76,7 @@ namespace Schumix.Irc
 					{
 						Log.Notice("HostServ", sLConsole.HostServ("Text2"));
 						ChannelPrivmsg = sMyNickInfo.NickStorage;
-						sChannelInfo.JoinChannel();
+						sMyChannelInfo.JoinChannel();
 						Online = true;
 					}
 				}
@@ -90,7 +90,7 @@ namespace Schumix.Irc
 
 					ChannelPrivmsg = sMyNickInfo.NickStorage;
 					NewNickPrivmsg = string.Empty;
-					sChannelInfo.JoinChannel();
+					sMyChannelInfo.JoinChannel();
 					Online = true;
 				}
 			}
@@ -411,7 +411,7 @@ namespace Schumix.Irc
 
 			if(sIRCMessage.Nick == sMyNickInfo.NickStorage)
 			{
-				if(sChannelInfo.CList.ContainsKey(sIRCMessage.Channel.ToLower()))
+				if(sMyChannelInfo.CList.ContainsKey(sIRCMessage.Channel.ToLower()))
 					SchumixBase.DManager.Update("channels", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 
 				return;
@@ -549,7 +549,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if((sChannelInfo.FSelect(IFunctions.Log) && sChannelInfo.FSelect(IChannelFunctions.Log, channel)) || !IsChannel(channel))
+				if((sMyChannelInfo.FSelect(IFunctions.Log) && sMyChannelInfo.FSelect(IChannelFunctions.Log, channel)) || !IsChannel(channel))
 				{
 					if(!IsChannel(channel))
 					{
@@ -595,7 +595,7 @@ namespace Schumix.Irc
 				if(!Online)
 				{
 					sMyNickInfo.ChangeVhostStatus(true);
-					sChannelInfo.JoinChannel();
+					sMyChannelInfo.JoinChannel();
 					Online = true;
 				}
 			}

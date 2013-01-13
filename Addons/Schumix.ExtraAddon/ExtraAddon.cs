@@ -196,15 +196,15 @@ namespace Schumix.ExtraAddon
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 			var sIgnoreNickName = sIrcBase.Networks[sIRCMessage.ServerName].sIgnoreNickName;
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 			var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
 
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sChannelInfo.FSelect(IFunctions.Commands) || !sFunctions.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sFunctions.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sFunctions.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sFunctions.IsChannel(sIRCMessage.Channel))
 					return;
 
 				if(!sFunctions.IsChannel(sIRCMessage.Channel))
@@ -218,7 +218,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect(IFunctions.Automode) && sChannelInfo.FSelect(IChannelFunctions.Automode, sIRCMessage.Channel))
+					if(sMyChannelInfo.FSelect(IFunctions.Automode) && sMyChannelInfo.FSelect(IChannelFunctions.Automode, sIRCMessage.Channel))
 					{
 						sIrcHandler.AutoMode = true;
 						sIrcHandler.ModeChannel = sIRCMessage.Channel.ToLower();
@@ -228,7 +228,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect(IFunctions.Randomkick) && sChannelInfo.FSelect(IChannelFunctions.Randomkick, sIRCMessage.Channel))
+					if(sMyChannelInfo.FSelect(IFunctions.Randomkick) && sMyChannelInfo.FSelect(IChannelFunctions.Randomkick, sIRCMessage.Channel))
 					{
 						if(sIRCMessage.Args.IsUpper() && sIRCMessage.Args.Length > 4)
 							sSender.Kick(sIRCMessage.Channel, sIRCMessage.Nick, sLManager.GetWarningText("CapsLockOff", sIRCMessage.Channel, sIRCMessage.ServerName));
@@ -240,7 +240,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect(IFunctions.Webtitle) && sChannelInfo.FSelect(IChannelFunctions.Webtitle, sIRCMessage.Channel))
+					if(sMyChannelInfo.FSelect(IFunctions.Webtitle) && sMyChannelInfo.FSelect(IChannelFunctions.Webtitle, sIRCMessage.Channel))
 					{
 						if(!SchumixBase.UrlTitleEnabled)
 							return;

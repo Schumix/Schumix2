@@ -672,7 +672,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		public void StopThread()
 		{
-			var sChannelInfo = sIrcBase.Networks[_servername].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[_servername].sMyChannelInfo;
 			var sSender = sIrcBase.Networks[_servername].sSender;
 			Running = false;
 
@@ -681,9 +681,9 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			SchumixBase.DManager.Update("maffiagame", "Active = '0'", string.Format("Active = '1' AND Game = '{0}' And ServerName = '{1}'", _gameid, _servername));
 			SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sGameCommand.GameChannelFunction[_channel]), string.Format("Channel = '{0}' And ServerName = '{1}'", _channel, _servername));
-			sChannelInfo.ChannelFunctionsReload();
-			SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, _channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", _channel, _servername));
-			sChannelInfo.ChannelFunctionsReload();
+			sMyChannelInfo.ChannelFunctionsReload();
+			SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, _channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", _channel, _servername));
+			sMyChannelInfo.ChannelFunctionsReload();
 
 			if(Started)
 				_thread.Abort();
@@ -692,8 +692,8 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				sSender.Part(_killerchannel);
 				SchumixBase.DManager.Delete("channels", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(_killerchannel), _servername));
-				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionsReload();
+				sMyChannelInfo.ChannelListReload();
+				sMyChannelInfo.ChannelFunctionsReload();
 			}
 
 			_timerowner.Enabled = false;

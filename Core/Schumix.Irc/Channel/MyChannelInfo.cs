@@ -31,7 +31,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Channel
 {
-	public sealed class ChannelInfo
+	public sealed class MyChannelInfo
 	{
 		private readonly Dictionary<string, string> ChannelFunction = new Dictionary<string, string>();
 		private readonly Dictionary<string, string> _ChannelList = new Dictionary<string, string>();
@@ -52,7 +52,7 @@ namespace Schumix.Irc.Channel
 			get { return ChannelFunction; }
 		}
 
-		public ChannelInfo(string ServerName)
+		public MyChannelInfo(string ServerName)
 		{
 			_servername = ServerName;
 			sSender = sIrcBase.Networks[ServerName].sSender;

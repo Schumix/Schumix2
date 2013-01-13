@@ -152,7 +152,7 @@ namespace Schumix.MantisBTRssAddon
 				{
 					try
 					{
-						if(!sIrcBase.Networks[_servername].sChannelInfo.IsNull() && sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Mantisbt) && errornumber < 20)
+						if(!sIrcBase.Networks[_servername].sMyChannelInfo.IsNull() && sIrcBase.Networks[_servername].sMyChannelInfo.FSelect(IFunctions.Mantisbt) && errornumber < 20)
 						{
 							url = GetUrl();
 							if(url.IsNull())

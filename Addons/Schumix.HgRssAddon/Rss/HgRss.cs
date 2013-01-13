@@ -171,7 +171,7 @@ namespace Schumix.HgRssAddon
 				{
 					try
 					{
-						if(!sIrcBase.Networks[_servername].sChannelInfo.IsNull() && sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Hg) && errornumber < 20)
+						if(!sIrcBase.Networks[_servername].sMyChannelInfo.IsNull() && sIrcBase.Networks[_servername].sMyChannelInfo.FSelect(IFunctions.Hg) && errornumber < 20)
 						{
 							url = GetUrl();
 							if(url.IsNull())

@@ -114,15 +114,15 @@ namespace Schumix.GameAddon
 			}
 
 			var sIgnoreNickName = sIrcBase.Networks[sIRCMessage.ServerName].sIgnoreNickName;
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sChannelInfo.FSelect(IFunctions.Gamecommands) || !sGameCommand.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Gamecommands) || !sGameCommand.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sGameCommand.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sGameCommand.IsChannel(sIRCMessage.Channel))
 					return;
 
 				if(!sGameCommand.IsChannel(sIRCMessage.Channel))
@@ -630,11 +630,11 @@ namespace Schumix.GameAddon
 
 		private void CleanFunctions()
 		{
-			var sChannelInfo = sIrcBase.Networks[_servername].sChannelInfo;
-			sChannelInfo.ChannelFunctionsReload();
+			var sMyChannelInfo = sIrcBase.Networks[_servername].sMyChannelInfo;
+			sMyChannelInfo.ChannelFunctionsReload();
 			var list = new List<string>();
 
-			foreach(var function in sChannelInfo.CFunction)
+			foreach(var function in sMyChannelInfo.CFunction)
 			{
 				foreach(var comma in function.Value.Split(SchumixBase.Comma))
 				{
@@ -650,10 +650,10 @@ namespace Schumix.GameAddon
 
 			foreach(var channel in list)
 			{
-				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("commands", SchumixBase.On, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
-				sChannelInfo.ChannelFunctionsReload();
-				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
-				sChannelInfo.ChannelFunctionsReload();
+				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("commands", SchumixBase.On, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
+				sMyChannelInfo.ChannelFunctionsReload();
+				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
+				sMyChannelInfo.ChannelFunctionsReload();
 			}
 
 			list.Clear();

@@ -47,10 +47,10 @@ namespace Schumix.Irc.Commands
 		public IgnoreNickName sIgnoreNickName { get; private set; }
 		public IgnoreChannel sIgnoreChannel { get; private set; }
 		public IgnoreCommand sIgnoreCommand { get; private set; }
+		public MyChannelInfo sMyChannelInfo { get; private set; }
 		public ChannelList sChannelList { get; private set; }
 		public IgnoreAddon sIgnoreAddon { get; private set; }
 		public SendMessage sSendMessage { get; private set; }
-		public ChannelInfo sChannelInfo { get; private set; }
 		public CtcpSender sCtcpSender { get; private set; }
 		public AntiFlood sAntiFlood { get; private set; }
 		public MyNickInfo sMyNickInfo { get; private set; }
@@ -81,7 +81,7 @@ namespace Schumix.Irc.Commands
 			sIgnoreCommand = new IgnoreCommand(_servername);
 			sIgnoreNickName = new IgnoreNickName(_servername);
 			sIgnoreIrcCommand = new IgnoreIrcCommand(_servername);
-			sChannelInfo = new ChannelInfo(_servername);
+			sMyChannelInfo = new MyChannelInfo(_servername);
 			sAntiFlood = new AntiFlood(_servername);
 			sCtcpSender = new CtcpSender(_servername);
 			sChannelList = new ChannelList(_servername);

@@ -129,11 +129,11 @@ namespace Schumix.CalendarAddon
 		{
 			Task.Factory.StartNew(() =>
 			{
-				var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+				var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 				var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
 				string channel = sIRCMessage.Channel.ToLower();
 
-				if(sChannelInfo.FSelect(IFunctions.Antiflood) && sChannelInfo.FSelect(IChannelFunctions.Antiflood, channel))
+				if(sMyChannelInfo.FSelect(IFunctions.Antiflood) && sMyChannelInfo.FSelect(IChannelFunctions.Antiflood, channel))
 				{
 					string nick = sIRCMessage.Nick.ToLower();
 

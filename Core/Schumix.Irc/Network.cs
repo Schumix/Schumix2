@@ -142,7 +142,7 @@ namespace Schumix.Irc
 			InitHandler();
 			InitializeCommandHandler();
 			InitializeCommandMgr();
-			Task.Factory.StartNew(() => sChannelInfo.ChannelList());
+			Task.Factory.StartNew(() => sMyChannelInfo.ChannelList());
 			sIgnoreNickName.AddConfig();
 			sIgnoreChannel.AddConfig();
 			sIgnoreAddon.AddConfig();
@@ -454,7 +454,7 @@ namespace Schumix.Irc
 
 		private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
 		{
-			if(sChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
+			if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 			{
 				if(ReconnectNumber > 5)
 					_timeropcode.Interval = 5*60*1000;
@@ -500,7 +500,7 @@ namespace Schumix.Irc
 					{
 						Log.Error("Opcodes", sLConsole.Network("Text16"));
 
-						if(sChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
+						if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 						{
 							if(ReconnectNumber > 5)
 								_timeropcode.Interval = 5*60*1000;
@@ -529,7 +529,7 @@ namespace Schumix.Irc
 				}
 				catch(IOException)
 				{
-					if(sChannelInfo.FSelect(IFunctions.Reconnect))
+					if(sMyChannelInfo.FSelect(IFunctions.Reconnect))
 					{
 						if(ReconnectNumber > 5)
 							_timeropcode.Interval = 5*60*1000;
