@@ -36,8 +36,6 @@ namespace Schumix.Irc.Channel
 	{
 		private readonly Dictionary<string, ChannelInfos> _list = new Dictionary<string, ChannelInfos>();
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		//private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
-		//private readonly Dictionary<string, bool> _channels = new Dictionary<string, bool>();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly SendMessage sSendMessage;
@@ -148,9 +146,6 @@ namespace Schumix.Irc.Channel
 		{
 			foreach(var chan in _list)
 			{
-				foreach(var na in chan.Value.Names)
-					Console.WriteLine(na);
-
 				if(chan.Value.Names.Contains(Name.ToLower()))
 					return true;
 			}
