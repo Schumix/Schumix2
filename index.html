@@ -1,35 +1,36 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
+
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Schumix2 by megax</title>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Schumix2 : Schumix2 IRC Bot and Framework" />
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Schumix2</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
-        <h1 class="header">Schumix2</h1>
-        <p class="header">Schumix2 IRC Bot and Framework</p>
 
-        <ul>
-          <li class="download"><a class="buttons" href="https://github.com/megax/Schumix2/zipball/master">Download ZIP</a></li>
-          <li class="download"><a class="buttons" href="https://github.com/megax/Schumix2/tarball/master">Download TAR</a></li>
-          <li><a class="buttons github" href="https://github.com/megax/Schumix2">View On GitHub</a></li>
-        </ul>
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/Schumix/Schumix2">View on GitHub</a>
 
-        <p class="header">This project is maintained by <a class="header name" href="https://github.com/megax">megax</a></p>
+          <h1 id="project_title">Schumix2</h1>
+          <h2 id="project_tagline">Schumix2 IRC Bot and Framework</h2>
 
+            <section id="downloads">
+              <a class="zip_download_link" href="https://github.com/Schumix/Schumix2/zipball/master">Download this project as a .zip file</a>
+              <a class="tar_download_link" href="https://github.com/Schumix/Schumix2/tarball/master">Download this project as a tar.gz file</a>
+            </section>
+        </header>
+    </div>
 
-      </header>
-      <section>
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
         <h1>Schumix2</h1>
 
 <h1>Ismertetés</h1>
@@ -43,7 +44,7 @@ Schumixxal szemben gyorsabb és megbízhatobb. A kód c# nyelven írodott.</p>
 Windows alatt ajálott a <code>.net 4.0</code> használata vagy újabb.
 Monon jelenleg minimum követelmény a <code>2.10</code> vagy újabb.</p>
 
-<h1>Fordítása</h1>
+<h1>Kód futtatása/Fordítása</h1>
 
 <h2>Windows</h2>
 
@@ -61,211 +62,29 @@ Monon jelenleg minimum követelmény a <code>2.10</code> vagy újabb.</p>
 
 <p>Navigáljunk a <code>Run</code> mappába és azon belül a konfigurációnak megfelelõ mappába. Inditusk el az exe-t. A program legenerálja
 önmagának a konfig fájlt. Ha bármi gond lenne vele hozzunk létre egy <code>Configs</code> nevû mappát és a fõ mappából másoljuk bele
-a <code>Schumix.xml</code> nevû fájlt.</p>
+a <code>Schumix.yml</code> nevû fájlt.</p>
+
+<h1>Telepítés</h1>
+
+<p>Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mint ha be akarjuk telepíteni a rendszerbe. Figyelem! Rendszergazadi jog valószinüleg szükséges lesz a telepítés végső szakaszához.</p>
+
+<h2>Archlinux</h2>
+
+<p>Futtassuk <code>sh createarchlinuxpkg.sh</code> parancsot. Ha lefutott megjelenik egy <code>schumix.pkg.tar.xz</code> (hasonló lesz a neve) nevű fájl. Ezt telepítsük a <code>sudo pacman -U schumix2.pkg.tar.xz</code> (csomag fájl neve hasonló lesz) paranccsl és már készen is vagyunk. A botot a <code>schumix</code> paranccsal futtathatjuk.</p>
+
+<h2>Debian/Ubuntu</h2>
+
+<p>Futtassuk <code>sh createdebianpkg.sh</code> parancsot. Ha lefutott megjelenik egy <code>schumix.deb</code> nevű fájl. Ezt telepítsük a <code>sudo dbkg -i schumix.deb</code> paranccsl és már készen is vagyunk. A botot a <code>schumix</code> paranccsal futtathatjuk.</p>
+
+<h2>Windows</h2>
+
+<p>Navigáljunk az Installer mappába. Futtassuk a <code>Schumix.iss</code> nevű fájlt. Ha lefutott kapunk egy <code>Setup.exe</code> nevű telepíthető állományt. Futtasuk és értelemszerüen telepítsük. A többit szerintem nem kell részletezni :)</p>
 
 <h1>Konfig beállítása</h1>
 
-<h2>Server</h2>
+<p>A konfiguk beállításához menjünk a <code>Share/doc/Configs</code> mappába és a <code>Schumix.md</code> fájlt nyissuk meg. Ez a fő konfig leírása. Fontos hogy ezt a leírást mindenképpen olvassuk el mert enélkül nem lehet elindítani a botot normálisan. Ha megvagyunk akár a többi leírást is végiglehet nézni de az elindításhoz nem szükséges.</p>
 
-<ul>
-<li>
-<strong>Enabled:</strong> Értéke <code>true</code> vagy <code>false</code> lehet. Meghatározza hogy kapcsolodjon-e a szerverhez a program. Alapértelmezés: <code>false</code>
-</li>
-<li>
-<strong>Host:</strong> Ide kell beírni a szerver nevét/címét ahova csatlakozni szeretnénk.</li>
-<li>
-<strong>Port:</strong> A szerver portja. Alapértelmezés: <code>35220</code>
-</li>
-<li>
-<strong>Password:</strong> A szerver azonosító jelszava.</li>
-</ul><h2>Irc</h2>
-
-<p>Yaml konfignál:
-Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (Irc: ...) le kell másolni még egyszer és ott külön be kell állítani az adatokat valamint Irc ként kell megadni. Pl: Irc2: .... (ide pedig minde úgy jön utána ahogy volt csak az Irc-nél kell átírni az újat).
-Xml konfignál:
-Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt ( ... ) le kell másolni még egyszer és ott külön be kell állítani az adatokat.</p>
-
-<ul>
-<li>
-<strong>ServerName:</strong> A szerver neve. Ezzel lehet beállítani hogy többszerveres módban hogy mi legyen az egyes szervereket megkülönböztető név. FIGYELEM: Nem egyezhet meg a többi szerver nevével (kis és nagybetüt nem különbőzteti meg)!</li>
-<li>
-<strong>Server:</strong> Ide kell beírni a szerver nevét ahova csatlakozni szeretnénk.</li>
-<li>
-<strong>Port:</strong> A szerver portja. Alapértelmezés: <code>6667</code>
-</li>
-<li>
-<strong>Ssl:</strong> Értéke <code>true</code> vagy <code>false</code> lehet. Ezzel aktiválható a kapcsolódás olyan irc szerverre ahol ssl protokol van használva. Alapértelmezés: <code>false</code>
-</li>
-<li>
-<strong>NickName:</strong> Elsõdleges név.</li>
-<li>
-<strong>NickName2:</strong> Másodlagos név.</li>
-<li>
-<strong>NickName3:</strong> Harmadlagos név.</li>
-<li>
-<strong>UserName:</strong> Felhasználó név.</li>
-<li>
-<strong>UserInfo:</strong> Információ a felhasználóról.</li>
-<li>
-<strong>MasterChannel:</strong>
-
-<ul>
-<li>
-<strong>Name:</strong> Elsõdleges csatorna ahova csatlakozik minden esetben a bot. Ennek a neve itt változtatható meg. Az adatbázisból nem törölhetõ. Yaml konfig esetén "" jelek közé kell rakni a csatornát. Pl: Name: "#schumix2"</li>
-<li>
-<strong>Password:</strong> Az elsődleges csatornához tartozó jelszó.
-            Alapértelmezés: (semmi)[Ez azt jelenti hogy nem add meg jelszót az elsődleges csatornához.]</li>
-</ul>
-</li>
-<li>
-<strong>IgnoreChannels:</strong> Letilthatók a nem kívánatos csatornák vele. Ami itt szerepel oda nem megy fel a bot. Ezen rész letiltja a bot rendszerében szereplõket is.
-                  Tehát ha abból nem akarunk valahova felmenni akkor is használhatjuk ezt törlés helyett. Vesszõvel elválasztva kell egymás útán írni öket.
-                  <code>pl: #teszt,#teszt2 vagy szimplán #teszt</code>
-</li>
-<li>
-<strong>IgnoreNames:</strong> Letilthatóak vele a nem kívánatos személyek. Így csak az használhatja a botot aki megérdemli.
-               <code>pl: schumix,schumix2 vagy szimplán schumix</code>
-</li>
-<li>
-<strong>NickServ:</strong>
-
-<ul>
-<li>
-<strong>Enabled:</strong> Értéke <code>true</code> vagy <code>false</code> lehet. Ezen rész határozza meg hogy a nickhez tartozó jelszó el legyen-e küldve. true = igen, false = nem.
-           Alapértelmezés: false</li>
-<li>
-<strong>Password:</strong> Nickhez tartozó jelszó.</li>
-</ul>
-</li>
-<li>
-<strong>HostServ:</strong>
-
-<ul>
-<li>
-<strong>Enabled:</strong> Értéke <code>true</code> vagy <code>false</code> lehet. Ezen rész határózza meg hogy ha van a nickhez vhost akkor bekapcsolodjon-e. Alapértelmezés: <code>false</code>
-           Mert ha nincs akkor megjelenitödhet az ip ezért olyankor ajánlott false értékre tenni.</li>
-<li>
-<strong>Vhost:</strong> Értéke <code>true</code> vagy <code>false</code> lehet. Ezen rész határózza meg hogy a nickhez tartotó vhost aktiválásra kerüljön-e. Alapértelmezés: <code>false</code>
-</li>
-</ul>
-</li>
-<li>
-<strong>Wait:</strong>
-
-<ul>
-<li>
-<strong>MessageSending:</strong> Üzenet küldésének késleltetése. Legföbbként flood ellen van.</li>
-</ul>
-</li>
-<li>
-<strong>Command:</strong>
-
-<ul>
-<li>
-<strong>Prefix:</strong> A parancsok elõjele. Yaml konfig esetén "" jelek közé kell rakni a parancsot. Pl: Prefix: "$". Alapértelmezés: <code>$</code> (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: <code>$xbot</code>)</li>
-</ul>
-</li>
-<li>
-<strong>MessageType:</strong> Értéke <code>Privmsg</code> vagy <code>Notice</code> lehet. Meghatározza hogy milyen formában küldje az üzeneteket a szerver felé. Alapértelmezés: <code>Privmsg</code>
-</li>
-</ul><h2>Log</h2>
-
-<ul>
-<li>
-<strong>FileName:</strong> Meghatározza hova mentődjenek el a log információk. Alapértelmezés: <code>Schumix.log</code>
-</li>
-<li>
-<strong>LogLevel:</strong> Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelmezés: <code>2</code>
-
-<ul>
-<li>
-<strong>Szintjei:</strong> <code>0</code> (Normális üzenetek és a sikeresek)
-            <code>1</code> (Figyelmeztetések)
-            <code>2</code> (Hibák)
-            <code>3</code> (Hibakeresõ üzenetek)</li>
-</ul>
-</li>
-<li>
-<strong>LogDirectory:</strong> A log üzenetek mentése abba a mappába ami megvan adva. Alapértelmezés: <code>Logs</code>
-</li>
-<li>
-<strong>IrcLogDirectory:</strong> Az irc csatornák és egyéb üzenetének mentése abba a mappába ami megvan adva. Alapértelmezés: <code>Csatornak</code>
-</li>
-<li>
-<strong>IrcLog:</strong> Értéke <code>true</code> vagy <code>false</code> lehet. Meghatározza hogy a konzolba kiirásra kerülhetnek-e az irc-tõl jövõ üzenetek. Alapértelmezés: <code>false</code>
-</li>
-</ul><h2>MySql</h2>
-
-<ul>
-<li>
-<strong>Enabled:</strong> Értéke <code>true</code> vagy <code>false</code> lehet. Meghatározza hogy mysql alapú-e az adatbázis. Alapértelmezés: <code>false</code>
-</li>
-<li>
-<strong>Host:</strong> A mysql szerver címe.</li>
-<li>
-<strong>User:</strong> A szerver felhasználó neve.</li>
-<li>
-<strong>Password:</strong> A szerver jelszava.</li>
-<li>
-<strong>Database:</strong> Az adatbázis amiben megtalálhatók a bothoz tartozó táblák.</li>
-<li>
-<strong>Charset:</strong> Az adatbázisba menõ adatok kódolását és olvasását határozza meg.
-           Alapértelmezés: <code>utf8</code>
-</li>
-</ul><h2>SQLite</h2>
-
-<ul>
-<li>
-<strong>Enabled:</strong> Értéke <code>true</code> vagy <code>false</code> lehet. Meghatározza hogy sqlite alapú-e az adatbázis. Alapértelmezés: <code>false</code>
-</li>
-<li>
-<strong>FileName:</strong> Az sqlite fájl neve.</li>
-</ul><h2>Addons</h2>
-
-<ul>
-<li>
-<strong>Enabled:</strong> Értéke <code>true</code> vagy <code>false</code> lehet. Engedélyezi az addonok betöltését. Alapértelmezés: <code>true</code>
-</li>
-<li>
-<strong>Ignore:</strong> Azon addonok melyeket nem szeretnénk inditáskor betölteni. Vesszõvel elválasztva kell egymás útán írni öket. <code>(pl: TesztAddon,Teszt2Addon vagy szimplán TesztAddon)</code>
-          Alapértelmezés: <code>MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon</code>
-</li>
-<li>
-<strong>Directory:</strong> Az addonok mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: <code>Addons</code>
-</li>
-</ul><h2>Scripts</h2>
-
-<ul>
-<li>
-<strong>Lua:</strong> Értéke <code>true</code> vagy <code>false</code> lehet. Engedélyezi a lua fájlok betöltését. Alapértelmezés: <code>true</code>
-</li>
-<li>
-<strong>Directory:</strong> A script-ek mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: <code>Scripts</code>
-</li>
-</ul><h2>Localization</h2>
-
-<ul>
-<li>
-<strong>Locale:</strong> Meghatározza hogy a kód milyen nyelven fusson. (csak az irc és konzol parancsokra vonatkozik)
-          Alapértelmezés: <code>enUS</code>
-</li>
-</ul><h2>Update</h2>
-
-<ul>
-<li>
-<strong>Enabled:</strong> Értéke <code>true</code> vagy <code>false</code> lehet. Engedélyezi az automatikus frissítést. Alapértelmezés: <code>false</code>
-</li>
-<li>
-<strong>Version:</strong> Meghatározza melyik verzióra szeretnénk frissíteni. Current vagy stable lehet. A current az utolsó verzó ami a tárolóban van a stable pedig az utolsó stabil verzió.
-           Alapértelmezés: <code>stable</code>
-</li>
-<li>
-<strong>Branch:</strong> Beállítható vele az ág (branch). Ez csak a current verziók esetében érdekes. Alapértelmezés: <code>master</code>
-</li>
-<li>
-<strong>WebPage:</strong> A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: <code>https://github.com/megax/Schumix2</code>
-</li>
-</ul><h1>Adatbázis beüzemelése</h1>
+<h1>Adatbázis beüzemelése</h1>
 
 <h2>MySql</h2>
 
@@ -298,18 +117,24 @@ Funkciók használatáról leírás: <code>$help function</code> (természetesen
 Majd amit kapunk jelszót privát üzenetben el kell küldeni a botnak a jelszót ezen módon: <code>$admin access &lt;jelszó&gt;</code>
 Ha másikat szeretnénk akkor: <code>$admin newpassword &lt;régi&gt; &lt;új&gt;</code>
 </li>
-<li>És végül a konzol parancsok. Ha már megemlítettem ;) Szóval a lista a help parancsal kapható meg.
-Többit ki kell tapasztalni mert egyenlõre nincs hozzá help.</li>
+<li>És végül a konzol parancsok. Ha már megemlítettem ;) Szóval a lista a help paranccsal kapható meg.
+Többit pedig úgy kell mint az irc paranccsoknál. A parancs nevét vagy a parancsot és annak alparancsát kell a help parancs mögé írni.</li>
 <li>Bármi lemaradt volna tudok segítséget nyújtani az irc.rizon.net szerveren a <code>#schumix, #schumix2</code> vagy <code>#hun_bot</code> csatornán.</li>
 <li>Yaml konfignál minden olyan adatot amely különleges karaktert tartalmaz (pl: #) azt idézőjelek közé kell helyezni "" mert a program máskülönben megpróbálná értelmezni és az hibát okozna.</li>
 <li>Remélem meg fog tetszeni a bot :)</li>
 </ul>
       </section>
-      <footer>
-        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+        <p class="copyright">Schumix2 maintained by <a href="https://github.com/Schumix">Schumix</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
       </footer>
     </div>
-    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
-		
+
+    
+
   </body>
 </html>
