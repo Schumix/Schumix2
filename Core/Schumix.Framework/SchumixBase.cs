@@ -318,6 +318,7 @@ namespace Schumix.Framework
 						}
 					}
 
+					dic.Clear();
 					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", functions), string.Format("Channel = '{0}' And ServerId = '{1}'", Channel, ServerId));
 				}
 			}

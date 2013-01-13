@@ -2,6 +2,7 @@
 
 ## 4.0.0 (2013-xx-xx)
 
+ * Csatorna funkciókat a program ellenőrzi és javítja.
  * ChannelNameList átnevezve ChannelList-re.
  * Sql injection elleni védelem javítva.
  * Changelog hozzáadva a rendszerhez.
