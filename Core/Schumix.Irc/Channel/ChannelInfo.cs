@@ -23,7 +23,7 @@ using System.Collections.Generic;
 
 namespace Schumix.Irc.Channel
 {
-	public sealed class ChannelInfos
+	public sealed class ChannelInfo
 	{
 		private List<string> _names = new List<string>();
 		public bool IsNameList;

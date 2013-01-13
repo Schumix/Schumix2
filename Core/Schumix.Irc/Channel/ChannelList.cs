@@ -34,7 +34,7 @@ namespace Schumix.Irc.Channel
 {
 	public sealed class ChannelList : CommandInfo
 	{
-		private readonly Dictionary<string, ChannelInfos> _list = new Dictionary<string, ChannelInfos>();
+		private readonly Dictionary<string, ChannelInfo> _list = new Dictionary<string, ChannelInfo>();
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
@@ -49,7 +49,7 @@ namespace Schumix.Irc.Channel
 			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;
 		}
 
-		public Dictionary<string, ChannelInfos> List
+		public Dictionary<string, ChannelInfo> List
 		{
 			get { return _list; }
 		}
@@ -63,7 +63,7 @@ namespace Schumix.Irc.Channel
 			}
 			else
 			{
-				_list.Add(Channel.ToLower(), new ChannelInfos());
+				_list.Add(Channel.ToLower(), new ChannelInfo());
 				_list[Channel.ToLower()].Names.Add(Name.ToLower());
 			}
 		}

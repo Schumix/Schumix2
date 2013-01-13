@@ -505,7 +505,7 @@ namespace Schumix.Irc
 
 			if(!sChannelList.List.ContainsKey(sIRCMessage.Channel.ToLower()))
 			{
-				sChannelList.List.Add(sIRCMessage.Channel.ToLower(), new ChannelInfos());
+				sChannelList.List.Add(sIRCMessage.Channel.ToLower(), new ChannelInfo());
 				sChannelList.List[sIRCMessage.Channel.ToLower()].IsNameList = false;
 			}
 
