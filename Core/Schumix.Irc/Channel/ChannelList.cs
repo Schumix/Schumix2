@@ -34,9 +34,10 @@ namespace Schumix.Irc.Channel
 {
 	public sealed class ChannelList : CommandInfo
 	{
+		private readonly Dictionary<string, ChannelInfos> _list = new Dictionary<string, ChannelInfos>();
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
-		private readonly Dictionary<string, bool> _channels = new Dictionary<string, bool>();
+		//private readonly Dictionary<string, string> _names = new Dictionary<string, string>();
+		//private readonly Dictionary<string, bool> _channels = new Dictionary<string, bool>();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly SendMessage sSendMessage;
@@ -50,35 +51,31 @@ namespace Schumix.Irc.Channel
 			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;
 		}
 
-		public Dictionary<string, string> Names
+		public Dictionary<string, ChannelInfos> List
 		{
-			get { return _names; }
-		}
-
-		public Dictionary<string, bool> Channels
-		{
-			get { return _channels; }
+			get { return _list; }
 		}
 
 		public void Add(string Channel, string Name)
 		{
-			if(_names.ContainsKey(Channel.ToLower()))
+			if(_list.ContainsKey(Channel.ToLower()))
 			{
-				string channel = _names[Channel.ToLower()];
-
-				if(!channel.Contains(Name.ToLower(), SchumixBase.Comma))
-				{
-					_names.Remove(Channel.ToLower());
-					_names.Add(Channel.ToLower(), channel + SchumixBase.Comma + Name.ToLower());
-				}
+				Console.WriteLine(1);
+				Console.WriteLine(Name);
+				if(!_list[Channel.ToLower()].Names.Contains(Name.ToLower()))
+					_list[Channel.ToLower()].Names.Add(Name.ToLower());
 			}
 			else
-				_names.Add(Channel.ToLower(), Name.ToLower());
+			{
+				Console.WriteLine(Name);
+				_list.Add(Channel.ToLower(), new ChannelInfos());
+				_list[Channel.ToLower()].Names.Add(Name.ToLower());
+			}
 		}
 
 		public void Remove(string Channel)
 		{
-			if(_names.ContainsKey(Channel.ToLower()))
+			if(_list.ContainsKey(Channel.ToLower()))
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name FROM admins WHERE ServerName = '{0}'", _servername);
 				if(!db.IsNull())
@@ -88,131 +85,76 @@ namespace Schumix.Irc.Channel
 						int i = 0;
 						string name = row["Name"].ToString();
 
-						foreach(var channel in _names)
+						foreach(var ch in _list)
 						{
-							if(channel.Key != Channel.ToLower() && channel.Value.Contains(name.ToLower(), SchumixBase.Comma))
+							if(ch.Key != Channel.ToLower() && ch.Value.Names.Contains(name.ToLower()))
 								i++;
 						}
 
-						if(i == 0 && _names[Channel.ToLower()].Contains(name.ToLower(), SchumixBase.Comma))
+						if(i == 0 && _list[Channel.ToLower()].Names.Contains(name.ToLower()))
 							SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
 					}
 				}
 
-				_names.Remove(Channel.ToLower());
+				_list.Remove(Channel.ToLower());
 			}
 		}
 
 		public void Remove(string Channel, string Name, bool Quit = false)
 		{
-			if(_names.ContainsKey(Channel.ToLower()))
+			if(_list.ContainsKey(Channel.ToLower()))
 			{
-				if(_names[Channel.ToLower()].Contains(Name.ToLower(), SchumixBase.Comma))
+				if(_list[Channel.ToLower()].Names.Contains(Name.ToLower()))
 				{
-					string value = _names[Channel.ToLower()];
-					_names.Remove(Channel.ToLower());
-					string names = string.Empty;
-					var split = value.Split(SchumixBase.Comma);
-
-					foreach(var name in split)
-					{
-						if(name != Name.ToLower())
-							names += SchumixBase.Comma + name;
-					}
-
 					int i = 0;
-					_names.Add(Channel.ToLower(), names.Remove(0, 1, SchumixBase.Comma));
+					_list[Channel.ToLower()].Names.Remove(Name.ToLower());
 
-					foreach(var Channels in _names)
+					foreach(var ch in _list)
 					{
-						if(Channels.Value.Contains(Name.ToLower(), SchumixBase.Comma))
+						if(ch.Value.Names.Contains(Name.ToLower()))
 							i++;
 					}
-
+					
 					if(i == 0)
 						RandomVhost(Name.ToLower());
 				}
 			}
 			else if(Quit)
 			{
-				var channel = new Dictionary<string, string>();
-
-				foreach(var chan in _names)
+				foreach(var chan in _list)
 				{
-					if(chan.Value.Contains(Name.ToLower(), SchumixBase.Comma))
-						channel.Add(chan.Key, chan.Value);
+					if(chan.Value.Names.Contains(Name.ToLower()))
+						chan.Value.Names.Remove(Name.ToLower());
 				}
-
-				if(channel.Count.IsNull())
-				{
-					channel.Clear();
-					return;
-				}
-
-				foreach(var chan in channel)
-				{
-					_names.Remove(chan.Key);
-					string names = string.Empty;
-					var split = chan.Value.Split(SchumixBase.Comma);
-
-					foreach(var name in split)
-					{
-						if(name != Name.ToLower())
-							names += SchumixBase.Comma + name;
-					}
-
-					_names.Add(chan.Key, names.Remove(0, 1, SchumixBase.Comma));
-				}
-
-				channel.Clear();
+				
 				RandomVhost(Name.ToLower());
 				sAntiFlood.Remove(Name.ToLower());
 			}
 		}
 
-		public void Change(string Name, string NewName, bool Identify = false)
+		public void Change(string Name, string NewName)
 		{
-			var channel = new Dictionary<string, string>();
-
-			foreach(var chan in _names)
+			foreach(var chan in _list)
 			{
-				if(chan.Value.Contains(Name.ToLower(), SchumixBase.Comma))
-					channel.Add(chan.Key, chan.Value);
-			}
-
-			if(channel.Count.IsNull())
-			{
-				channel.Clear();
-				return;
-			}
-
-			foreach(var chan in channel)
-			{
-				_names.Remove(chan.Key);
-				string names = string.Empty;
-				var split = chan.Value.Split(SchumixBase.Comma);
-
-				foreach(var name in split)
+				if(chan.Value.Names.Contains(Name.ToLower()))
 				{
-					if(name != Name.ToLower())
-						names += SchumixBase.Comma + name;
-					else
-						names += SchumixBase.Comma + NewName.ToLower();
+					chan.Value.Names.Remove(Name.ToLower());
+					chan.Value.Names.Add(NewName.ToLower());
 				}
-
-				_names.Add(chan.Key, names.Remove(0, 1, SchumixBase.Comma));
 			}
 
-			channel.Clear();
 			RandomVhost(Name.ToLower());
 			sAntiFlood.Remove(Name.ToLower());
 		}
 
 		public bool IsChannelList(string Name)
 		{
-			foreach(var chan in _names)
+			foreach(var chan in _list)
 			{
-				if(chan.Value.Contains(Name.ToLower(), SchumixBase.Comma))
+				foreach(var na in chan.Value.Names)
+					Console.WriteLine(na);
+
+				if(chan.Value.Names.Contains(Name.ToLower()))
 					return true;
 			}
 
@@ -235,7 +177,7 @@ namespace Schumix.Irc.Channel
 
 		public void RemoveAll()
 		{
-			_names.Clear();
+			_list.Clear();
 		}
 	}
 }

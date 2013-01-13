@@ -431,7 +431,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			if(sChannelList.Names.ContainsKey(sIRCMessage.Info[4].ToLower()))
+			if(sChannelList.List.ContainsKey(sIRCMessage.Info[4].ToLower()))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ImAlreadyOnThisChannel", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
@@ -469,7 +469,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			if(!sChannelList.Names.ContainsKey(sIRCMessage.Info[4].ToLower()))
+			if(!sChannelList.List.ContainsKey(sIRCMessage.Info[4].ToLower()))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ImNotOnThisChannel", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;

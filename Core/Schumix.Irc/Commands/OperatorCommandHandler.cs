@@ -737,6 +737,12 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
+					if(sChannelList.List.ContainsKey(sIRCMessage.Info[6].ToLower()))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ImAlreadyOnThisChannel", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
 					if(sIRCMessage.Info.Length < 8)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoPassword", sIRCMessage.Channel, sIRCMessage.ServerName));

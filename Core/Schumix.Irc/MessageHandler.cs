@@ -56,7 +56,6 @@ namespace Schumix.Irc
 		{
 			Console.WriteLine();
 			Log.Success("MessageHandler", sLConsole.MessageHandler("Text"));
-			sChannelList.Channels.Clear();
 			RandomAllVhost();
 			Task.Factory.StartNew(() => IsJoin());
 
@@ -435,9 +434,9 @@ namespace Schumix.Irc
 
 		protected void HandleIrcQuit(IRCMessage sIRCMessage)
 		{
-			foreach(var chan in sChannelList.Names)
+			foreach(var chan in sChannelList.List)
 			{
-				if(chan.Value.Contains(sIRCMessage.Nick.ToLower(), SchumixBase.Comma))
+				if(chan.Value.Names.Contains(sIRCMessage.Nick.ToLower()))
 					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.MessageHandler("Text20"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
 			}
 
@@ -446,9 +445,9 @@ namespace Schumix.Irc
 
 		protected void HandleNewNick(IRCMessage sIRCMessage)
 		{
-			foreach(var chan in sChannelList.Names)
+			foreach(var chan in sChannelList.List)
 			{
-				if(chan.Value.Contains(sIRCMessage.Nick.ToLower(), SchumixBase.Comma))
+				if(chan.Value.Names.Contains(sIRCMessage.Nick.ToLower()))
 					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.MessageHandler("Text21"), sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 			}
 
@@ -500,10 +499,7 @@ namespace Schumix.Irc
 			var split = sIRCMessage.Args.Split(SchumixBase.Space);
 			string Channel = split[1];
 
-			if(!sChannelList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()))
-				sChannelList.Channels.Add(sIRCMessage.Channel.ToLower(), false);
-
-			if(sChannelList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()) && sChannelList.Channels[sIRCMessage.Channel.ToLower()])
+			if(sChannelList.List.ContainsKey(Channel.ToLower()) && sChannelList.List[Channel.ToLower()].IsNameList)
 				sChannelList.Remove(Channel);
 
 			foreach(var name in sIRCMessage.Args.Split(SchumixBase.Space))
@@ -513,14 +509,20 @@ namespace Schumix.Irc
 				if(i < 3)
 					continue;
 
-				sChannelList.Add(Channel, sMyNickInfo.Parse(name));
+				if(!sChannelList.List.ContainsKey(Channel.ToLower()))
+				{
+					sChannelList.Add(Channel, sMyNickInfo.Parse(name));
+					sChannelList.List[Channel.ToLower()].IsNameList = false;
+				}
+				else
+					sChannelList.Add(Channel, sMyNickInfo.Parse(name));
 			}
 		}
 
 		protected void HandleEndNameList(IRCMessage sIRCMessage)
 		{
-			if(sChannelList.Channels.ContainsKey(sIRCMessage.Channel.ToLower()))
-				sChannelList.Channels[sIRCMessage.Channel.ToLower()] = true;
+			if(sChannelList.List.ContainsKey(sIRCMessage.Channel.ToLower()))
+				sChannelList.List[sIRCMessage.Channel.ToLower()].IsNameList = true;
 		}
 
 		/// <summary>
