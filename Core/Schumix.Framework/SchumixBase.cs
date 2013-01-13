@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Text;
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
@@ -215,7 +216,7 @@ namespace Schumix.Framework
 			packet.Write<string>(_guid.ToString());
 			packet.Write<string>(SchumixConfig.ConfigFile);
 			packet.Write<string>(SchumixConfig.ConfigDirectory);
-			packet.Write<string>("utf-8");
+			packet.Write<string>(Encoding.UTF8.BodyName);
 			packet.Write<string>(LocalizationConfig.Locale);
 			packet.Write<string>(Reconnect.ToString());
 			packet.Write<string>(ServerIdentify);

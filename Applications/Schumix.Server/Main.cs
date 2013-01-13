@@ -57,7 +57,7 @@ namespace Schumix.Server
 			sRuntime.SetProcessName("Server");
 			string configdir = "Configs";
 			string configfile = "Server.yml";
-			string console_encoding = "utf-8";
+			string console_encoding = Encoding.UTF8.BodyName;
 			string localization = "start";
 			bool colorbindmode = false;
 			System.Console.CursorVisible = false;
@@ -141,7 +141,7 @@ namespace Schumix.Server
 			else if(localization != "start")
 				sLConsole.Locale = localization;
 
-			if(sUtilities.GetPlatformType() == PlatformType.Windows && console_encoding == "utf-8" &&
+			if(sUtilities.GetPlatformType() == PlatformType.Windows && console_encoding == Encoding.UTF8.BodyName &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
