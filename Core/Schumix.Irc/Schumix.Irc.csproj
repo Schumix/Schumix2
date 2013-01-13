@@ -99,6 +99,7 @@
     <Compile Include="NickName\NickList.cs" />
     <Compile Include="Channel\MyChannelInfo.cs" />
     <Compile Include="Channel\ChannelInfo.cs" />
+    <Compile Include="IrcRank.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

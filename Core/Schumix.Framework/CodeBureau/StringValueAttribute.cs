@@ -19,19 +19,32 @@
  */
 
 using System;
-using System.Collections.Generic;
 
-namespace Schumix.Irc.NickName
+namespace Schumix.Framework.CodeBureau
 {
-	public sealed class NickInfo
+	/// <summary>
+	/// Simple attribute class for storing String Values
+	/// </summary>
+	public class StringValueAttribute : Attribute
 	{
-		private List<string> _channels = new List<string>();
-		public IrcRank Rank;
-		
-		public List<string> Channels
+		private string _value;
+
+		/// <summary>
+		/// Creates a new <see cref="StringValueAttribute"/> instance.
+		/// </summary>
+		/// <param name="value">Value.</param>
+		public StringValueAttribute(string value)
 		{
-			get { return _channels; }
-			set { _channels = value; }
+			_value = value;
+		}
+
+		/// <summary>
+		/// Gets the value.
+		/// </summary>
+		/// <value></value>
+		public string Value
+		{
+			get { return _value; }
 		}
 	}
 }

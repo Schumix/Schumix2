@@ -19,19 +19,22 @@
  */
 
 using System;
-using System.Collections.Generic;
+using Schumix.Framework.CodeBureau;
 
-namespace Schumix.Irc.NickName
+namespace Schumix.Irc
 {
-	public sealed class NickInfo
+	public enum IrcRank
 	{
-		private List<string> _channels = new List<string>();
-		public IrcRank Rank;
-		
-		public List<string> Channels
-		{
-			get { return _channels; }
-			set { _channels = value; }
-		}
+		[StringValue("~")]
+		Owner,
+		[StringValue("&")]
+		Protected,
+		[StringValue("@")]
+		Operator,
+		[StringValue("%")]
+		HalfOperator,
+		[StringValue("+")]
+		Voice,
+		None
 	}
 }
