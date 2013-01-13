@@ -35,6 +35,7 @@ namespace Schumix.ChatterBotAddon
 	class ChatterBotAddon : ISchumixAddon
 	{
 		private readonly ChatterBotSession session = new ChatterBotFactory().Create(ChatterBotType.CLEVERBOT).CreateSession();
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private string _servername;
 
@@ -63,7 +64,7 @@ namespace Schumix.ChatterBotAddon
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(!sUtilities.IsChannel(sIRCMessage.Channel))
 				sIRCMessage.Channel = sIRCMessage.Nick;
 
 			if(sMyChannelInfo.FSelect(IFunctions.Chatterbot) && sMyChannelInfo.FSelect(IChannelFunctions.Chatterbot, sIRCMessage.Channel))

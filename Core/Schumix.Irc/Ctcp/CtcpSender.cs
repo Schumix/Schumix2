@@ -59,7 +59,7 @@ namespace Schumix.Irc.Ctcp
 			if(!args.Contains(((char)1).ToString()))
 				return;
 
-			if(IsChannel(sIRCMessage.Channel))
+			if(sUtilities.IsChannel(sIRCMessage.Channel))
 				return;
 
 			args = args.Remove(0, 1, (char)1);

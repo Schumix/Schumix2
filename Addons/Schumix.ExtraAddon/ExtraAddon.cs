@@ -202,12 +202,12 @@ namespace Schumix.ExtraAddon
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sFunctions.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sUtilities.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sFunctions.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
 					return;
 
-				if(!sFunctions.IsChannel(sIRCMessage.Channel))
+				if(!sUtilities.IsChannel(sIRCMessage.Channel))
 					return;
 
 				Task.Factory.StartNew(() =>

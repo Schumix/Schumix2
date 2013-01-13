@@ -549,9 +549,9 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if((sMyChannelInfo.FSelect(IFunctions.Log) && sMyChannelInfo.FSelect(IChannelFunctions.Log, channel)) || !IsChannel(channel))
+				if((sMyChannelInfo.FSelect(IFunctions.Log) && sMyChannelInfo.FSelect(IChannelFunctions.Log, channel)) || !sUtilities.IsChannel(channel))
 				{
-					if(!IsChannel(channel))
+					if(!sUtilities.IsChannel(channel))
 					{
 						if((args.Contains("admin") && args.Contains("access")) ||
 						   (args.Contains("admin") && args.Contains("newpassword")) ||

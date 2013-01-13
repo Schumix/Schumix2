@@ -92,11 +92,6 @@ namespace Schumix.Irc.Commands
 			return false;
 		}
 
-		public bool IsChannel(string Name)
-		{
-			return (Name.Length >= 2 && Name.Trim().Length > 1 && Name.Substring(0, 1) == "#");
-		}
-
 		public int Adminflag(string Name)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);

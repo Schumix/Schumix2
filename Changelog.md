@@ -2,6 +2,8 @@
 
 ## 4.0.0 (2013-xx-xx)
 
+ * IsChannel() függvény áthelyezve az Utilities osztályba.
+ * Csatorna infomációk egy helyre gyűjtve.
  * Csatorna funkciókat a program ellenőrzi és javítja.
  * ChannelNameList átnevezve ChannelList-re.
  * Sql injection elleni védelem javítva.

@@ -39,6 +39,7 @@ namespace Schumix.GameAddon
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private GameCommand sGameCommand;
 		private string _servername;
@@ -120,24 +121,24 @@ namespace Schumix.GameAddon
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sMyChannelInfo.FSelect(IFunctions.Gamecommands) || !sGameCommand.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Gamecommands) || !sUtilities.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sMyChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sGameCommand.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
 					return;
 
-				if(!sGameCommand.IsChannel(sIRCMessage.Channel))
+				if(!sUtilities.IsChannel(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string channel = sIRCMessage.Channel.ToLower();
 
-				if(sGameCommand.MaffiaList.ContainsKey(channel) || !sGameCommand.IsChannel(sIRCMessage.Channel))
+				if(sGameCommand.MaffiaList.ContainsKey(channel) || !sUtilities.IsChannel(sIRCMessage.Channel))
 				{
 					if(sIRCMessage.Info.Length < 4)
 						return;
 
 					bool nick = false;
 
-					if(!sGameCommand.IsChannel(sIRCMessage.Channel))
+					if(!sUtilities.IsChannel(sIRCMessage.Channel))
 					{
 						foreach(var maffia in sGameCommand.MaffiaList)
 						{

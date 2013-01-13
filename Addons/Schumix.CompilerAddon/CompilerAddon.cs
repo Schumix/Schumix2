@@ -45,6 +45,7 @@ namespace Schumix.CompilerAddon
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 		private SCompiler sSCompiler;
@@ -99,15 +100,15 @@ namespace Schumix.CompilerAddon
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 
-			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sSCompiler.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sUtilities.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sSCompiler.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
 					return;
 
 				if(!CompilerConfig.CompilerEnabled)
 					return;
 
-				if(!sSCompiler.IsChannel(sIRCMessage.Channel))
+				if(!sUtilities.IsChannel(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string command = IRCConfig.List[sIRCMessage.ServerName].NickName + SchumixBase.Comma;
@@ -141,7 +142,7 @@ namespace Schumix.CompilerAddon
 					}
 				}
 
-				if(!sSCompiler.IsChannel(sIRCMessage.Channel))
+				if(!sUtilities.IsChannel(sIRCMessage.Channel))
 				{
 					if(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage))
 						Compiler(sIRCMessage, false, command);

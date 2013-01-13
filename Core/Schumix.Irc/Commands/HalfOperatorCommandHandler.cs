@@ -425,7 +425,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			if(!IsChannel(sIRCMessage.Info[4]))
+			if(!sUtilities.IsChannel(sIRCMessage.Info[4]))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
@@ -463,7 +463,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			if(!IsChannel(sIRCMessage.Info[4]))
+			if(!sUtilities.IsChannel(sIRCMessage.Info[4]))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;

@@ -200,7 +200,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				if(!IsChannel(sIRCMessage.Info[5]))
+				if(!sUtilities.IsChannel(sIRCMessage.Info[5]))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
@@ -372,7 +372,7 @@ namespace Schumix.Irc.Commands
 				}
 				else
 				{
-					if(!IsChannel(sIRCMessage.Info[5]))
+					if(!sUtilities.IsChannel(sIRCMessage.Info[5]))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -535,7 +535,7 @@ namespace Schumix.Irc.Commands
 
 				string channel = sIRCMessage.Info[5].ToLower();
 
-				if(!IsChannel(channel))
+				if(!sUtilities.IsChannel(channel))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
@@ -591,7 +591,7 @@ namespace Schumix.Irc.Commands
 
 				string channel = sIRCMessage.Info[5].ToLower();
 
-				if(!IsChannel(channel))
+				if(!sUtilities.IsChannel(channel))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
@@ -675,7 +675,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				if(!IsChannel(sIRCMessage.Info[5]))
+				if(!sUtilities.IsChannel(sIRCMessage.Info[5]))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
@@ -731,7 +731,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 	
-					if(!IsChannel(sIRCMessage.Info[6]))
+					if(!sUtilities.IsChannel(sIRCMessage.Info[6]))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -785,7 +785,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 	
-					if(!IsChannel(sIRCMessage.Info[6]))
+					if(!sUtilities.IsChannel(sIRCMessage.Info[6]))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -827,7 +827,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 	
-					if(!IsChannel(sIRCMessage.Info[6]))
+					if(!sUtilities.IsChannel(sIRCMessage.Info[6]))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -875,7 +875,7 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 	
-					if(!IsChannel(sIRCMessage.Info[6]))
+					if(!sUtilities.IsChannel(sIRCMessage.Info[6]))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -1174,7 +1174,7 @@ namespace Schumix.Irc.Commands
 
 					string channel = sIRCMessage.Info[6].ToLower();
 
-					if(!IsChannel(channel))
+					if(!sUtilities.IsChannel(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -1212,7 +1212,7 @@ namespace Schumix.Irc.Commands
 
 					string channel = sIRCMessage.Info[6].ToLower();
 
-					if(!IsChannel(channel))
+					if(!sUtilities.IsChannel(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -1244,7 +1244,7 @@ namespace Schumix.Irc.Commands
 
 					string channel = sIRCMessage.Info[6].ToLower();
 
-					if(!IsChannel(channel))
+					if(!sUtilities.IsChannel(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;

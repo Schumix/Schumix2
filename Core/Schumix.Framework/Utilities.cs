@@ -1329,5 +1329,10 @@ namespace Schumix.Framework
 			if(File.Exists(AddonsConfig.Directory + "/Schumix.Framework.dll"))
 				File.Delete(AddonsConfig.Directory + "/Schumix.Framework.dll");
 		}
+
+		public bool IsChannel(string Name)
+		{
+			return (Name.Length >= 2 && Name.Trim().Length > 1 && Name.Substring(0, 1) == "#");
+		}
 	}
 }

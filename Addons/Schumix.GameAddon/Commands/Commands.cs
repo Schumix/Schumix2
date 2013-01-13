@@ -68,7 +68,7 @@ namespace Schumix.GameAddon.Commands
 					return;
 				}
 
-				if(!IsChannel(sIRCMessage.Channel))
+				if(!sUtilities.IsChannel(sIRCMessage.Channel))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					return;

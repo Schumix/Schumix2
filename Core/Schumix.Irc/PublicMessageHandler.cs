@@ -58,14 +58,14 @@ namespace Schumix.Irc
 			else
 				LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
 
-			if(!IsChannel(sIRCMessage.Channel))
+			if(!sUtilities.IsChannel(sIRCMessage.Channel))
 				sIRCMessage.Channel = sIRCMessage.Nick;
 
 			sCtcpSender.CtcpReply(sIRCMessage);
 
-			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sUtilities.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
 					return;
 
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
