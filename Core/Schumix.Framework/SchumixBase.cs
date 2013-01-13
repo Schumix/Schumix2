@@ -162,6 +162,7 @@ namespace Schumix.Framework
 
 					NewServerSqlData(sn.Value.ServerId, sn.Key);
 					IsAllSchumixFunction(sn.Value.ServerId, sn.Key);
+					IsAllChannelFunction(sn.Value.ServerId);
 
 					var db = DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix WHERE ServerName = '{0}'", sn.Key);
 					if(!db.IsNull())
@@ -274,6 +275,50 @@ namespace Schumix.Framework
 						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), Off);
 					else
 						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), On);
+				}
+			}
+		}
+
+		private void IsAllChannelFunction(int ServerId)
+		{
+			var db = DManager.Query("SELECT Functions, Channel FROM channels WHERE ServerId = '{0}'", ServerId);
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string functions = string.Empty;
+					var dic = new Dictionary<string, string>();
+					string Channel = row["Channel"].ToString();
+					string[] f = row["Functions"].ToString().Split(SchumixBase.Comma);
+
+					foreach(var ff in f)
+					{
+						if(ff == string.Empty)
+							continue;
+
+						if(!ff.Contains(SchumixBase.Colon.ToString()))
+							continue;
+
+						string name = ff.Substring(0, ff.IndexOf(SchumixBase.Colon));
+						string status = ff.Substring(ff.IndexOf(SchumixBase.Colon)+1);
+						dic.Add(name, status);
+					}
+
+					foreach(var function in Enum.GetNames(typeof(IChannelFunctions)))
+					{
+						if(dic.ContainsKey(function.ToString().ToLower()))
+							functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + dic[function.ToString().ToLower()];
+						else
+						{
+							if(function == IChannelFunctions.Log.ToString() || function == IChannelFunctions.Rejoin.ToString() ||
+							   function == IChannelFunctions.Commands.ToString())
+								functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + SchumixBase.On;
+							else
+								functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + SchumixBase.Off;
+						}
+					}
+
+					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", functions), string.Format("Channel = '{0}' And ServerId = '{1}'", Channel, ServerId));
 				}
 			}
 		}
