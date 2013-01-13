@@ -909,12 +909,12 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length == 5)
 			{
-				if(kick != sNickInfo.NickStorage.ToLower())
+				if(kick != sMyNickInfo.NickStorage.ToLower())
 					sSender.Kick(sIRCMessage.Channel, kick);
 			}
 			else if(sIRCMessage.Info.Length >= 6)
 			{
-				if(kick != sNickInfo.NickStorage.ToLower())
+				if(kick != sMyNickInfo.NickStorage.ToLower())
 					sSender.Kick(sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			}
 		}
@@ -945,7 +945,7 @@ namespace Schumix.Irc.Commands
 			string rank = sIRCMessage.Info[4].ToLower();
 			string name = sIRCMessage.Info.SplitToString(5, SchumixBase.Space).ToLower();
 
-			if(!name.Contains(sNickInfo.NickStorage.ToLower()))
+			if(!name.Contains(sMyNickInfo.NickStorage.ToLower()))
 				sSender.Mode(sIRCMessage.Channel, rank, name);
 		}
 

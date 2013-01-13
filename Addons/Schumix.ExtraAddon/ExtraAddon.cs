@@ -308,14 +308,14 @@ namespace Schumix.ExtraAddon
 			{
 				if(sIRCMessage.Args.Contains("isn't registered.") || sIRCMessage.Args.Contains("Last seen time:") || sIRCMessage.Args.Contains("Last seen:"))
 				{
-					var sNickInfo = sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo;
-					sIrcHandler.sNameList.Change(sNickInfo.NickStorage, IRCConfig.List[sIRCMessage.ServerName].NickName, true);
-					sNickInfo.ChangeNick(IRCConfig.List[sIRCMessage.ServerName].NickName);
+					var sMyNickInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo;
+					sIrcHandler.sNameList.Change(sMyNickInfo.NickStorage, IRCConfig.List[sIRCMessage.ServerName].NickName, true);
+					sMyNickInfo.ChangeNick(IRCConfig.List[sIRCMessage.ServerName].NickName);
 					sSender.Nick(IRCConfig.List[sIRCMessage.ServerName].NickName);
-					sNickInfo.Identify(IRCConfig.List[sIRCMessage.ServerName].NickServPassword);
+					sMyNickInfo.Identify(IRCConfig.List[sIRCMessage.ServerName].NickServPassword);
 
 					if(IRCConfig.List[sIRCMessage.ServerName].UseHostServ)
-						sNickInfo.Vhost(SchumixBase.On);
+						sMyNickInfo.Vhost(SchumixBase.On);
 
 					sFunctions.IsOnline = false;
 				}

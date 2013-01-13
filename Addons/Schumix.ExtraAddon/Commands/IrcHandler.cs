@@ -53,7 +53,7 @@ namespace Schumix.ExtraAddon.Commands
 		/// </summary>
 		public void HandleJoin(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.NickStorage)
+			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.NickStorage)
 				return;
 
 			if(sFunctions.AutoKick("join", sIRCMessage.Nick, sIRCMessage.Channel))
@@ -109,7 +109,7 @@ namespace Schumix.ExtraAddon.Commands
 		/// </summary>
 		public void HandleLeft(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.NickStorage)
+			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.NickStorage)
 			{
 				sNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
 				return;
@@ -160,7 +160,7 @@ namespace Schumix.ExtraAddon.Commands
 			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
 			var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
 
-			if(sIRCMessage.Info[3] == sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.NickStorage)
+			if(sIRCMessage.Info[3] == sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.NickStorage)
 			{
 				sNameList.Remove(sIRCMessage.Channel);
 
@@ -210,7 +210,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(i < 3)
 					continue;
 
-				sNameList.Add(Channel, sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.Parse(name));
+				sNameList.Add(Channel, sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.Parse(name));
 			}
 		}
 

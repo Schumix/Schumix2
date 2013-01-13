@@ -1095,7 +1095,7 @@ namespace Schumix.Console.Commands
 
 			SchumixBase.NewNick = true;
 			string nick = Info[1];
-			sIrcBase.Networks[_servername].sNickInfo.ChangeNick(nick);
+			sIrcBase.Networks[_servername].sMyNickInfo.ChangeNick(nick);
 			sIrcBase.Networks[_servername].sSender.Nick(nick);
 			Log.Notice("Console", sLManager.GetConsoleCommandText("nick"), nick);
 		}

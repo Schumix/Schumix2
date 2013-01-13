@@ -363,7 +363,7 @@ namespace Schumix.Irc
 			_cts = new CancellationTokenSource();
 
 			if(nick)
-				sNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
+				sMyNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
 
 			Log.Notice("Network", sLConsole.Network("Text21"), CType.ToString());
 
@@ -421,7 +421,7 @@ namespace Schumix.Irc
 			}
 
 			Connected = true;
-			sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
+			sSender.NameInfo(sMyNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
 			Online = false;
@@ -429,8 +429,8 @@ namespace Schumix.Irc
 			_enabled = true;
 			NewNickPrivmsg = string.Empty;
 			SchumixBase.UrlTitleEnabled = false;
-			sNickInfo.ChangeIdentifyStatus(false);
-			sNickInfo.ChangeVhostStatus(false);
+			sMyNickInfo.ChangeIdentifyStatus(false);
+			sMyNickInfo.ChangeVhostStatus(false);
 		}
 
 		private void Close()

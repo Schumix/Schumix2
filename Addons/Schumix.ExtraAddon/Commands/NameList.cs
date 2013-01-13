@@ -209,7 +209,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(IRCConfig.List[_servername].NickName.ToLower() == Name.ToLower() && !Identify)
 			{
-				sIrcBase.Networks[_servername].sNickInfo.ChangeIdentifyStatus(false);
+				sIrcBase.Networks[_servername].sMyNickInfo.ChangeIdentifyStatus(false);
 				sFunctions.IsOnline = true;
 				sSender.NickServInfo(Name);
 			}

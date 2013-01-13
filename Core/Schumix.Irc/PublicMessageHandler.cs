@@ -140,7 +140,7 @@ namespace Schumix.Irc
 
 					sSender.NickServGhost(IRCConfig.List[sIRCMessage.ServerName].NickName, IRCConfig.List[sIRCMessage.ServerName].NickServPassword);
 					sSender.Nick(IRCConfig.List[sIRCMessage.ServerName].NickName);
-					sNickInfo.ChangeNick(IRCConfig.List[sIRCMessage.ServerName].NickName);
+					sMyNickInfo.ChangeNick(IRCConfig.List[sIRCMessage.ServerName].NickName);
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/ghost", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "nick")
@@ -156,21 +156,21 @@ namespace Schumix.Irc
 
 					if(sIRCMessage.Info[5].ToLower() == "identify")
 					{
-						sNickInfo.ChangeIdentifyStatus(false);
-						sNickInfo.ChangeVhostStatus(false);
-						sNickInfo.ChangeNick(IRCConfig.List[sIRCMessage.ServerName].NickName);
+						sMyNickInfo.ChangeIdentifyStatus(false);
+						sMyNickInfo.ChangeVhostStatus(false);
+						sMyNickInfo.ChangeNick(IRCConfig.List[sIRCMessage.ServerName].NickName);
 						sSender.Nick(IRCConfig.List[sIRCMessage.ServerName].NickName);
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick/identify", sIRCMessage.Channel, sIRCMessage.ServerName));
-						sNickInfo.Identify(IRCConfig.List[sIRCMessage.ServerName].NickServPassword);
+						sMyNickInfo.Identify(IRCConfig.List[sIRCMessage.ServerName].NickServPassword);
 
 						if(IRCConfig.List[sIRCMessage.ServerName].UseHostServ)
-							sNickInfo.Vhost(SchumixBase.On);
+							sMyNickInfo.Vhost(SchumixBase.On);
 					}
 					else
 					{
 						SchumixBase.NewNick = true;
 						string nick = sIRCMessage.Info[5];
-						sNickInfo.ChangeNick(nick);
+						sMyNickInfo.ChangeNick(nick);
 						sSender.Nick(nick);
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick", sIRCMessage.Channel, sIRCMessage.ServerName), nick);
 					}

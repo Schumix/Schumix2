@@ -564,7 +564,7 @@ namespace Schumix.GameAddon
 
 		private void HandleMode(IRCMessage sIRCMessage)
 		{
-			var sNickInfo = sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo;
+			var sMyNickInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo;
 			var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
 
 			if(sIRCMessage.Info.Length < 5)
@@ -573,7 +573,7 @@ namespace Schumix.GameAddon
 			if(!sIRCMessage.Info[3].Contains("v") && !sIRCMessage.Info[3].Contains("-"))
 				return;
 
-			if(sNickInfo.NickStorage.ToLower() == sIRCMessage.Nick.ToLower())
+			if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Nick.ToLower())
 				return;
 
 			sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, "-");

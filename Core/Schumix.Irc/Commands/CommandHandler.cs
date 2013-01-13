@@ -26,6 +26,7 @@ using Schumix.Irc.Ctcp;
 using Schumix.Irc.Flood;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Channel;
+using Schumix.Irc.NickName;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
@@ -52,7 +53,7 @@ namespace Schumix.Irc.Commands
 		public ChannelInfo sChannelInfo { get; private set; }
 		public CtcpSender sCtcpSender { get; private set; }
 		public AntiFlood sAntiFlood { get; private set; }
-		public NickInfo sNickInfo { get; private set; }
+		public MyNickInfo sMyNickInfo { get; private set; }
 		public Sender sSender { get; private set; }
 		protected string ChannelPrivmsg { get; set; }
 		protected string NewNickPrivmsg { get; set; }
@@ -75,7 +76,7 @@ namespace Schumix.Irc.Commands
 			sSendMessage = new SendMessage(_servername);
 			sIgnoreChannel = new IgnoreChannel(_servername);
 			sSender = new Sender(_servername);
-			sNickInfo = new NickInfo(_servername);
+			sMyNickInfo = new MyNickInfo(_servername);
 			sIgnoreAddon = new IgnoreAddon(_servername);
 			sIgnoreCommand = new IgnoreCommand(_servername);
 			sIgnoreNickName = new IgnoreNickName(_servername);
