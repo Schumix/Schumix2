@@ -26,6 +26,7 @@ using System.Text.RegularExpressions;
 using Schumix.API;
 using Schumix.API.Irc;
 using Schumix.API.Functions;
+using Schumix.Irc.Channel;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -484,13 +485,32 @@ namespace Schumix.Irc
 
 		protected void HandleIrcTopic(IRCMessage sIRCMessage)
 		{
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text24"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
+			string text = sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args;
+			sChannelList.List[sIRCMessage.Channel.ToLower()].Topic = text;
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text24"), text);
 		}
 
 		protected void HandleIrcInvite(IRCMessage sIRCMessage)
 		{
 			Log.Notice("MessageHandler", sLConsole.MessageHandler("Text27"), sIRCMessage.Nick, sIRCMessage.Args);
 			LogToFile(sIRCMessage.Nick, sIRCMessage.Nick, string.Format(sLConsole.MessageHandler("Text26"), sIRCMessage.Nick, sIRCMessage.Args));
+		}
+
+		protected void HandleInitialTopic(IRCMessage sIRCMessage)
+		{
+			sIRCMessage.Channel = sIRCMessage.Info[3];
+			sIRCMessage.Args = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
+			sIRCMessage.Args = sIRCMessage.Args.Remove(0, 1, SchumixBase.Colon);
+			string text = sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args;
+
+			if(!sChannelList.List.ContainsKey(sIRCMessage.Channel.ToLower()))
+			{
+				sChannelList.List.Add(sIRCMessage.Channel.ToLower(), new ChannelInfos());
+				sChannelList.List[sIRCMessage.Channel.ToLower()].IsNameList = false;
+			}
+
+			sChannelList.List[sIRCMessage.Channel.ToLower()].Topic = text;
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text28"), text);
 		}
 
 		protected void HandleNameList(IRCMessage sIRCMessage)
@@ -509,13 +529,7 @@ namespace Schumix.Irc
 				if(i < 3)
 					continue;
 
-				if(!sChannelList.List.ContainsKey(Channel.ToLower()))
-				{
-					sChannelList.Add(Channel, sMyNickInfo.Parse(name));
-					sChannelList.List[Channel.ToLower()].IsNameList = false;
-				}
-				else
-					sChannelList.Add(Channel, sMyNickInfo.Parse(name));
+				sChannelList.Add(Channel, sMyNickInfo.Parse(name));
 			}
 		}
 

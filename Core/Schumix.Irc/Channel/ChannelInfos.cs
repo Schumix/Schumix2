@@ -27,7 +27,7 @@ namespace Schumix.Irc.Channel
 	{
 		private List<string> _names = new List<string>();
 		public bool IsNameList;
-		public string Title;
+		public string Topic;
 
 		public List<string> Names
 		{

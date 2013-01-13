@@ -60,14 +60,11 @@ namespace Schumix.Irc.Channel
 		{
 			if(_list.ContainsKey(Channel.ToLower()))
 			{
-				Console.WriteLine(1);
-				Console.WriteLine(Name);
 				if(!_list[Channel.ToLower()].Names.Contains(Name.ToLower()))
 					_list[Channel.ToLower()].Names.Add(Name.ToLower());
 			}
 			else
 			{
-				Console.WriteLine(Name);
 				_list.Add(Channel.ToLower(), new ChannelInfos());
 				_list[Channel.ToLower()].Names.Add(Name.ToLower());
 			}

@@ -195,6 +195,7 @@ namespace Schumix.Irc
 			IrcRegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandlerErrorNewNickName);
 			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
 			IrcRegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
+			IrcRegisterHandler(ReplyCode.RPL_TOPIC,            HandleInitialTopic);
 
 			Task.Factory.StartNew(() =>
 			{
