@@ -203,14 +203,19 @@ namespace Schumix.Irc.Channel
 		{
 			switch(Value)
 			{
+			case "~":
 			case "q":
 				return true;
+			case "&":
 			case "a":
 				return true;
+			case "@":
 			case "o":
 				return true;
+			case "%":
 			case "h":
 				return true;
+			case "+":
 			case "v":
 				return true;
 			}

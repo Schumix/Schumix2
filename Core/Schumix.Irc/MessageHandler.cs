@@ -30,6 +30,7 @@ using Schumix.Irc.Channel;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.CodeBureau;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
@@ -481,44 +482,36 @@ namespace Schumix.Irc
 			else if(sIRCMessage.Info[3].Contains("+"))
 				status = "+";
 
-			if(sIRCMessage.Info.Length >= 5 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(1, 1)))
+			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[3].Length > 1 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(1, 1)))
 			{
 				if(status == "-")
 					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(1, 1), string.Empty);
-				else if(status == "+")
+				else if(status == "+" && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(1, 1)))
 					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank += sIRCMessage.Info[3].Substring(1, 1);
-
-				Console.WriteLine(sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank);
 			}
 
-			if(sIRCMessage.Info.Length >= 6 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(2, 2)))
+			if(sIRCMessage.Info.Length >= 6 && sIRCMessage.Info[3].Length > 2 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(2).Substring(0, 1)))
 			{
 				if(status == "-")
-					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(2, 2), string.Empty);
-				else if(status == "+")
-					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank += sIRCMessage.Info[3].Substring(2, 2);
-				
-				Console.WriteLine(sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank);
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(2).Substring(0, 1), string.Empty);
+				else if(status == "+" && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(2).Substring(0, 1)))
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank += sIRCMessage.Info[3].Substring(2).Substring(0, 1);
 			}
 
-			if(sIRCMessage.Info.Length >= 7 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(3, 3)))
+			if(sIRCMessage.Info.Length >= 7 && sIRCMessage.Info[3].Length > 3 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(3).Substring(0, 1)))
 			{
 				if(status == "-")
-					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(3, 3), string.Empty);
-				else if(status == "+")
-					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank += sIRCMessage.Info[3].Substring(3, 3);
-				
-				Console.WriteLine(sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank);
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(3).Substring(0, 1), string.Empty);
+				else if(status == "+" && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(3).Substring(0, 1)))
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank += sIRCMessage.Info[3].Substring(3).Substring(0, 1);
 			}
 
-			if(sIRCMessage.Info.Length >= 8 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(4, 4)))
+			if(sIRCMessage.Info.Length >= 8 && sIRCMessage.Info[3].Length > 4 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(4).Substring(0, 1)))
 			{
 				if(status == "-")
-					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(4, 4), string.Empty);
-				else if(status == "+")
-					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank += sIRCMessage.Info[3].Substring(4, 4);
-				
-				Console.WriteLine(sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank);
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(4).Substring(0, 1), string.Empty);
+				else if(status == "+" && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(4).Substring(0, 1)))
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank += sIRCMessage.Info[3].Substring(4).Substring(0, 1);
 			}
 
 			if(!sMyNickInfo.IsIdentify && sIRCMessage.Nick == "NickServ" && sIRCMessage.Channel.ToLower() == sMyNickInfo.NickStorage.ToLower() && sIRCMessage.Args == "+r")
@@ -577,6 +570,9 @@ namespace Schumix.Irc
 					continue;
 
 				sChannelList.Add(Channel, sMyNickInfo.Parse(name));
+
+				if(sChannelList.IsChannelRank(name.Substring(0, 1)))
+					sChannelList.List[Channel.ToLower()].Names[sMyNickInfo.Parse(name).ToLower()].Rank = StringEnum.GetStringValue(sChannelList.StringToChannelRank(name.Substring(0, 1)));
 			}
 		}
 

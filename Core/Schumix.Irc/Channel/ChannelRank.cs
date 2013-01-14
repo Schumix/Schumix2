@@ -25,15 +25,15 @@ namespace Schumix.Irc.Channel
 {
 	public enum ChannelRank
 	{
-		[StringValue("~")]
+		[StringValue("q")]
 		Owner,
-		[StringValue("&")]
+		[StringValue("a")]
 		Protected,
-		[StringValue("@")]
+		[StringValue("o")]
 		Operator,
-		[StringValue("%")]
+		[StringValue("h")]
 		HalfOperator,
-		[StringValue("+")]
+		[StringValue("v")]
 		Voice,
 		None
 	}

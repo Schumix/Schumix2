@@ -2,6 +2,8 @@
 
 ## 4.0.0 (2013-xx-xx)
 
+ * Ranggal kapcsolatos hibák javítva. (pl.: GameAddon-ban)
+ * Nick név információk letárolva.
  * IsChannel() függvény áthelyezve az Utilities osztályba.
  * Csatorna infomációk egy helyre gyűjtve.
  * Csatorna funkciókat a program ellenőrzi és javítja.

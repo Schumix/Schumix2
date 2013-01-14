@@ -170,12 +170,12 @@ FILES = \
 	Commands/GoogleWebSearch/GoogleWebResultSet.cs \
 	IrcBase.cs \
 	Commands/Whois.cs \
-	Channel/MyChannelInfo.cs \
 	Channel/ChannelList.cs \
 	NickName/MyNickInfo.cs \
 	NickName/NickInfo.cs \
-	NickName/NickList.cs \
-	Channel/ChannelInfo.cs 
+	Channel/MyChannelInfo.cs \
+	Channel/ChannelInfo.cs \
+	Channel/ChannelRank.cs 
 
 DATA_FILES = 
 
@@ -187,6 +187,7 @@ EXTRAS = \
 	Ignore \
 	Commands/GoogleWebSearch \
 	Channel \
+	NickName \
 	schumix.irc.pc.in 
 
 REFERENCES =  \

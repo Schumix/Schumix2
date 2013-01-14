@@ -180,7 +180,9 @@ FILES = \
 	Clean/CleanConfig.cs \
 	Clean/CleanDatabase.cs \
 	Config/CleanConfig.cs \
-	LogType.cs 
+	LogType.cs \
+	CodeBureau/StringEnum.cs \
+	CodeBureau/StringValueAttribute.cs 
 
 DATA_FILES = 
 
@@ -191,6 +193,7 @@ EXTRAS = \
 	../../Sql/Schumix.db3 \
 	Database/Cache \
 	Clean \
+	CodeBureau \
 	schumix.framework.pc.in 
 
 REFERENCES =  \
