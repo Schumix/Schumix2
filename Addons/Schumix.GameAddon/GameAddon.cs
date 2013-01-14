@@ -577,7 +577,7 @@ namespace Schumix.GameAddon
 			if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Nick.ToLower())
 				return;
 
-			sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, "-");
+			string rank = sIRCMessage.Info[3].Remove(0, 1, "-");
 
 			foreach(var maffia in sGameCommand.MaffiaList)
 			{
@@ -586,25 +586,25 @@ namespace Schumix.GameAddon
 
 				foreach(var player in maffia.Value.GetPlayerList())
 				{
-					if(player.Value == sIRCMessage.Info[4] && sIRCMessage.Info[3].Substring(0, 1) == "v")
+					if(player.Value == sIRCMessage.Info[4] && rank.Substring(0, 1) == "v")
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[4]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 6 && player.Value == sIRCMessage.Info[5] && sIRCMessage.Info[3].Substring(1) == "v")
+					if(sIRCMessage.Info.Length >= 6 && player.Value == sIRCMessage.Info[5] && rank.Substring(1, 1) == "v")
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[5]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 7 && player.Value == sIRCMessage.Info[6] && sIRCMessage.Info[3].Substring(2) == "v")
+					if(sIRCMessage.Info.Length >= 7 && player.Value == sIRCMessage.Info[6] && rank.Substring(2, 2) == "v")
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[6]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 8 && player.Value == sIRCMessage.Info[7] && sIRCMessage.Info[3].Substring(3) == "v")
+					if(sIRCMessage.Info.Length >= 8 && player.Value == sIRCMessage.Info[7] && rank.Substring(3, 3) == "v")
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[7]);
 						continue;

@@ -96,10 +96,9 @@
     <Compile Include="Channel\ChannelList.cs" />
     <Compile Include="NickName\MyNickInfo.cs" />
     <Compile Include="NickName\NickInfo.cs" />
-    <Compile Include="NickName\NickList.cs" />
     <Compile Include="Channel\MyChannelInfo.cs" />
     <Compile Include="Channel\ChannelInfo.cs" />
-    <Compile Include="IrcRank.cs" />
+    <Compile Include="Channel\ChannelRank.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

@@ -111,7 +111,7 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.NickStorage)
 			{
-				sNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
+				sNameList.Remove(sIRCMessage.Channel);
 				return;
 			}
 
@@ -120,7 +120,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-			sNameList.Remove(sIRCMessage.Nick);
+			sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Nick);
 
 			if(sMyChannelInfo.FSelect(IFunctions.Greeter) && sMyChannelInfo.FSelect(IChannelFunctions.Greeter, sIRCMessage.Channel))
 			{
@@ -178,7 +178,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			else
 			{
-				sNameList.Remove(sIRCMessage.Info[3]);
+				sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Info[3]);
 
 				if(sMyChannelInfo.FSelect(IFunctions.Commands) && sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel))
 				{

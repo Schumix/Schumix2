@@ -20,18 +20,12 @@
 
 using System;
 using System.Collections.Generic;
+using Schumix.Irc.Channel;
 
 namespace Schumix.Irc.NickName
 {
 	public sealed class NickInfo
 	{
-		private List<string> _channels = new List<string>();
-		public IrcRank Rank;
-		
-		public List<string> Channels
-		{
-			get { return _channels; }
-			set { _channels = value; }
-		}
+		public string Rank;
 	}
 }

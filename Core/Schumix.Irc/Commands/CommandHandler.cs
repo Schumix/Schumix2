@@ -52,8 +52,8 @@ namespace Schumix.Irc.Commands
 		public IgnoreAddon sIgnoreAddon { get; private set; }
 		public SendMessage sSendMessage { get; private set; }
 		public CtcpSender sCtcpSender { get; private set; }
-		public AntiFlood sAntiFlood { get; private set; }
 		public MyNickInfo sMyNickInfo { get; private set; }
+		public AntiFlood sAntiFlood { get; private set; }
 		public Sender sSender { get; private set; }
 		protected string ChannelPrivmsg { get; set; }
 		protected string NewNickPrivmsg { get; set; }

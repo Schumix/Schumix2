@@ -21,9 +21,9 @@
 using System;
 using Schumix.Framework.CodeBureau;
 
-namespace Schumix.Irc
+namespace Schumix.Irc.Channel
 {
-	public enum IrcRank
+	public enum ChannelRank
 	{
 		[StringValue("~")]
 		Owner,

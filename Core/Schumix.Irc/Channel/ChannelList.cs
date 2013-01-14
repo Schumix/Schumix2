@@ -24,6 +24,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.Irc.Flood;
+using Schumix.Irc.NickName;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -58,13 +59,13 @@ namespace Schumix.Irc.Channel
 		{
 			if(_list.ContainsKey(Channel.ToLower()))
 			{
-				if(!_list[Channel.ToLower()].Names.Contains(Name.ToLower()))
-					_list[Channel.ToLower()].Names.Add(Name.ToLower());
+				if(!_list[Channel.ToLower()].Names.ContainsKey(Name.ToLower()))
+					_list[Channel.ToLower()].Names.Add(Name.ToLower(), new NickInfo());
 			}
 			else
 			{
 				_list.Add(Channel.ToLower(), new ChannelInfo());
-				_list[Channel.ToLower()].Names.Add(Name.ToLower());
+				_list[Channel.ToLower()].Names.Add(Name.ToLower(), new NickInfo());
 			}
 		}
 
@@ -82,11 +83,11 @@ namespace Schumix.Irc.Channel
 
 						foreach(var ch in _list)
 						{
-							if(ch.Key != Channel.ToLower() && ch.Value.Names.Contains(name.ToLower()))
+							if(ch.Key != Channel.ToLower() && ch.Value.Names.ContainsKey(name.ToLower()))
 								i++;
 						}
 
-						if(i == 0 && _list[Channel.ToLower()].Names.Contains(name.ToLower()))
+						if(i == 0 && _list[Channel.ToLower()].Names.ContainsKey(name.ToLower()))
 							SchumixBase.DManager.Update("admins", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
 					}
 				}
@@ -99,14 +100,14 @@ namespace Schumix.Irc.Channel
 		{
 			if(_list.ContainsKey(Channel.ToLower()))
 			{
-				if(_list[Channel.ToLower()].Names.Contains(Name.ToLower()))
+				if(_list[Channel.ToLower()].Names.ContainsKey(Name.ToLower()))
 				{
 					int i = 0;
 					_list[Channel.ToLower()].Names.Remove(Name.ToLower());
 
 					foreach(var ch in _list)
 					{
-						if(ch.Value.Names.Contains(Name.ToLower()))
+						if(ch.Value.Names.ContainsKey(Name.ToLower()))
 							i++;
 					}
 					
@@ -118,7 +119,7 @@ namespace Schumix.Irc.Channel
 			{
 				foreach(var chan in _list)
 				{
-					if(chan.Value.Names.Contains(Name.ToLower()))
+					if(chan.Value.Names.ContainsKey(Name.ToLower()))
 						chan.Value.Names.Remove(Name.ToLower());
 				}
 				
@@ -131,10 +132,10 @@ namespace Schumix.Irc.Channel
 		{
 			foreach(var chan in _list)
 			{
-				if(chan.Value.Names.Contains(Name.ToLower()))
+				if(chan.Value.Names.ContainsKey(Name.ToLower()))
 				{
+					chan.Value.Names.Add(NewName.ToLower(), chan.Value.Names[Name.ToLower()]);
 					chan.Value.Names.Remove(Name.ToLower());
-					chan.Value.Names.Add(NewName.ToLower());
 				}
 			}
 
@@ -146,7 +147,7 @@ namespace Schumix.Irc.Channel
 		{
 			foreach(var chan in _list)
 			{
-				if(chan.Value.Names.Contains(Name.ToLower()))
+				if(chan.Value.Names.ContainsKey(Name.ToLower()))
 					return true;
 			}
 
@@ -165,6 +166,56 @@ namespace Schumix.Irc.Channel
 					RandomVhost(Name);
 				}
 			});
+		}
+
+		public ChannelRank StringToChannelRank(string Value)
+		{
+			var rank = ChannelRank.None;
+			
+			switch(Value)
+			{
+			case "~":
+			case "q":
+				rank = ChannelRank.Owner;
+				break;
+			case "&":
+			case "a":
+				rank = ChannelRank.Protected;
+				break;
+			case "@":
+			case "o":
+				rank = ChannelRank.Operator;
+				break;
+			case "%":
+			case "h":
+				rank = ChannelRank.HalfOperator;
+				break;
+			case "+":
+			case "v":
+				rank = ChannelRank.Voice;
+				break;
+			}
+			
+			return rank;
+		}
+		
+		public bool IsChannelRank(string Value)
+		{
+			switch(Value)
+			{
+			case "q":
+				return true;
+			case "a":
+				return true;
+			case "o":
+				return true;
+			case "h":
+				return true;
+			case "v":
+				return true;
+			}
+			
+			return false;
 		}
 
 		public void RemoveAll()

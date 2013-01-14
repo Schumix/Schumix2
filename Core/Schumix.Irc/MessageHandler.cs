@@ -437,7 +437,7 @@ namespace Schumix.Irc
 		{
 			foreach(var chan in sChannelList.List)
 			{
-				if(chan.Value.Names.Contains(sIRCMessage.Nick.ToLower()))
+				if(chan.Value.Names.ContainsKey(sIRCMessage.Nick.ToLower()))
 					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.MessageHandler("Text20"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
 			}
 
@@ -448,7 +448,7 @@ namespace Schumix.Irc
 		{
 			foreach(var chan in sChannelList.List)
 			{
-				if(chan.Value.Names.Contains(sIRCMessage.Nick.ToLower()))
+				if(chan.Value.Names.ContainsKey(sIRCMessage.Nick.ToLower()))
 					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.MessageHandler("Text21"), sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 			}
 
@@ -466,13 +466,60 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info[3].ToLower() == sMyNickInfo.NickStorage.ToLower())
 				sChannelList.Remove(sIRCMessage.Channel);
 			else
-				sChannelList.Remove(sIRCMessage.Info[3]);
+				sChannelList.Remove(sIRCMessage.Channel, sIRCMessage.Info[3]);
 		}
 
 		protected void HandleIrcMode(IRCMessage sIRCMessage)
 		{
 			if(sIRCMessage.Info.Length < 4)
 				return;
+
+			string status = string.Empty;
+
+			if(sIRCMessage.Info[3].Contains("-"))
+				status = "-";
+			else if(sIRCMessage.Info[3].Contains("+"))
+				status = "+";
+
+			if(sIRCMessage.Info.Length >= 5 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(1, 1)))
+			{
+				if(status == "-")
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(1, 1), string.Empty);
+				else if(status == "+")
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank += sIRCMessage.Info[3].Substring(1, 1);
+
+				Console.WriteLine(sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank);
+			}
+
+			if(sIRCMessage.Info.Length >= 6 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(2, 2)))
+			{
+				if(status == "-")
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(2, 2), string.Empty);
+				else if(status == "+")
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank += sIRCMessage.Info[3].Substring(2, 2);
+				
+				Console.WriteLine(sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank);
+			}
+
+			if(sIRCMessage.Info.Length >= 7 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(3, 3)))
+			{
+				if(status == "-")
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(3, 3), string.Empty);
+				else if(status == "+")
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank += sIRCMessage.Info[3].Substring(3, 3);
+				
+				Console.WriteLine(sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank);
+			}
+
+			if(sIRCMessage.Info.Length >= 8 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(4, 4)))
+			{
+				if(status == "-")
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(4, 4), string.Empty);
+				else if(status == "+")
+					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank += sIRCMessage.Info[3].Substring(4, 4);
+				
+				Console.WriteLine(sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank);
+			}
 
 			if(!sMyNickInfo.IsIdentify && sIRCMessage.Nick == "NickServ" && sIRCMessage.Channel.ToLower() == sMyNickInfo.NickStorage.ToLower() && sIRCMessage.Args == "+r")
 			{

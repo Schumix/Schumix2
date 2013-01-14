@@ -20,16 +20,17 @@
 
 using System;
 using System.Collections.Generic;
+using Schumix.Irc.NickName;
 
 namespace Schumix.Irc.Channel
 {
 	public sealed class ChannelInfo
 	{
-		private List<string> _names = new List<string>();
+		private Dictionary<string, NickInfo> _names = new Dictionary<string, NickInfo>();
 		public bool IsNameList;
 		public string Topic;
 
-		public List<string> Names
+		public Dictionary<string, NickInfo> Names
 		{
 			get { return _names; }
 			set { _names = value; }
