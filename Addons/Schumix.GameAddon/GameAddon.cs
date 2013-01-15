@@ -478,7 +478,8 @@ namespace Schumix.GameAddon
 							break;
 						}
 						default:
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/basecommand", channel, sIRCMessage.ServerName), sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+							if(sIRCMessage.Info[3].TrimEnd().Length > 1)
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/basecommand", channel, sIRCMessage.ServerName), sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
 							break;
 					}
 				}
