@@ -304,7 +304,7 @@ namespace Schumix.Framework.Database.Cache
 
 		private void LoadChannels()
 		{
-			var db = SchumixBase.DManager.Query("SELECT Id, ServerId, ServerName, Functions, Channel, Password, Enabled, Error, Language FROM channels");
+			var db = SchumixBase.DManager.Query("SELECT Id, ServerId, ServerName, Functions, Channel, Password, Enabled, Hidden, Error, Language FROM channels");
 			if(!db.IsNull())
 			{
 				foreach(DataRow row in db.Rows)
@@ -317,6 +317,7 @@ namespace Schumix.Framework.Database.Cache
 					map.Channel = row["Channel"].ToString();
 					map.Password = row["Password"].ToString();
 					map.Enabled = Convert.ToBoolean(row["Enabled"].ToString());
+					map.Hidden = Convert.ToBoolean(row["Hidden"].ToString());
 					map.Error = row["Error"].ToString();
 					map.Language = row["Language"].ToString();
 					_ChannelsMap.Add(map.ServerName + map.Channel, map);

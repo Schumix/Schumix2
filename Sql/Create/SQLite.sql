@@ -62,6 +62,7 @@ Functions VARCHAR(500) DEFAULT ',greeter:off,log:on,rejoin:on,commands:on,autohl
 Channel VARCHAR(20),
 Password VARCHAR(30),
 Enabled VARCHAR(5) DEFAULT 'false',
+Hidden VARCHAR(5) DEFAULT 'false',
 Error TEXT,
 Language VARCHAR(4) DEFAULT 'enUS'
 );

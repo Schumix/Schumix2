@@ -625,26 +625,30 @@ namespace Schumix.Irc.Commands
 			else if(sIRCMessage.Info[4].ToLower() == "info")
 			{
 				var text = sLManager.GetCommandTexts("channel/info", sIRCMessage.Channel, sIRCMessage.ServerName);
-				if(text.Length < 4)
+				if(text.Length < 6)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
 				}
 
-				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channels WHERE ServerName = '{0}'", sIRCMessage.ServerName);
+				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Hidden, Error FROM channels WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
-					string ActiveChannels = string.Empty, InActiveChannels = string.Empty;
+					string ActiveChannels = string.Empty, InActiveChannels = string.Empty, HiddenChannels = string.Empty;
 
 					foreach(DataRow row in db.Rows)
 					{
 						string channel = row["Channel"].ToString();
 						bool enabled = Convert.ToBoolean(row["Enabled"].ToString());
+						bool hidden = Convert.ToBoolean(row["Hidden"].ToString());
 
-						if(enabled)
+						if(enabled && !hidden)
 							ActiveChannels += ", " + channel;
-						else if(!enabled)
+						else if(!enabled && !hidden)
 							InActiveChannels += ", " + channel + SchumixBase.Colon + row["Error"].ToString();
+
+						if(hidden)
+							HiddenChannels += ", " + channel;
 					}
 
 					if(ActiveChannels.Length > 0)
@@ -656,6 +660,14 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, text[2], InActiveChannels.Remove(0, 2, ", "));
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
+
+					if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
+					{
+						if(HiddenChannels.Length > 0)
+							sSendMessage.SendChatMessage(sIRCMessage, text[4], HiddenChannels.Remove(0, 2, ", "));
+						else
+							sSendMessage.SendChatMessage(sIRCMessage, text[5]);
+					}
 				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));

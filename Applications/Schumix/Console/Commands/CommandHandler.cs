@@ -787,26 +787,30 @@ namespace Schumix.Console.Commands
 			else if(Info[1].ToLower() == "info")
 			{
 				var text = sLManager.GetConsoleCommandTexts("channel/info");
-				if(text.Length < 3)
+				if(text.Length < 6)
 				{
 					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
-				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Error FROM channels WHERE ServerName = '{0}'", _servername);
+				var db = SchumixBase.DManager.Query("SELECT Channel, Enabled, Hidden, Error FROM channels WHERE ServerName = '{0}'", _servername);
 				if(!db.IsNull())
 				{
-					string ActiveChannels = string.Empty, InActiveChannels = string.Empty;
+					string ActiveChannels = string.Empty, InActiveChannels = string.Empty, HiddenChannels = string.Empty;
 
 					foreach(DataRow row in db.Rows)
 					{
 						string channel = row["Channel"].ToString();
 						bool enabled = Convert.ToBoolean(row["Enabled"].ToString());
-
-						if(enabled)
+						bool hidden = Convert.ToBoolean(row["Hidden"].ToString());
+						
+						if(enabled && !hidden)
 							ActiveChannels += ", " + channel;
-						else if(!enabled)
-							InActiveChannels += ", " + channel + ":" + row["Error"].ToString();
+						else if(!enabled && !hidden)
+							InActiveChannels += ", " + channel + SchumixBase.Colon + row["Error"].ToString();
+						
+						if(hidden)
+							HiddenChannels += ", " + channel;
 					}
 
 					if(ActiveChannels.Length > 0)
@@ -818,6 +822,11 @@ namespace Schumix.Console.Commands
 						Log.Notice("Console", text[2], InActiveChannels.Remove(0, 2, ", "));
 					else
 						Log.Notice("Console", text[3]);
+
+					if(HiddenChannels.Length > 0)
+						Log.Notice("Console", text[4], HiddenChannels.Remove(0, 2, ", "));
+					else
+						Log.Notice("Console", text[5]);
 				}
 				else
 					Log.Error("Console", sLManager.GetConsoleWarningText("FaultyQuery"));
