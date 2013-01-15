@@ -20,14 +20,10 @@
 
 using System;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Reflection;
-using System.Collections.Generic;
-using Schumix.API;
+using System.Threading.Tasks;
 using Schumix.API.Irc;
 using Schumix.API.Delegate;
-using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 
@@ -191,81 +187,6 @@ namespace Schumix.Irc.Commands
 				if(Plugins == string.Empty && IgnorePlugins == string.Empty)
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 			}
-		}
-
-		protected void HandleReload(IRCMessage sIRCMessage)
-		{
-			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
-				return;
-
-			if(sIRCMessage.Info.Length < 5)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			var text = sLManager.GetCommandTexts("reload", sIRCMessage.Channel, sIRCMessage.ServerName);
-			if(text.Length < 3)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
-				return;
-			}
-
-			int i = -1;
-
-			switch(sIRCMessage.Info[4].ToLower())
-			{
-				case "config":
-					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile, SchumixConfig.ColorBindMode);
-					sIgnoreAddon.RemoveConfig();
-					sIgnoreAddon.AddConfig();
-					sIgnoreChannel.RemoveConfig();
-					sIgnoreChannel.AddConfig();
-					sIgnoreNickName.RemoveConfig();
-					sIgnoreNickName.AddConfig();
-					sIrcBase.Networks[sIRCMessage.ServerName].ReloadMessageHandlerConfig();
-					sLConsole.Locale = LocalizationConfig.Locale;
-					i = 1;
-					break;
-				case "cachedb":
-					SchumixBase.sCacheDB.ReLoad();
-					i = 1;
-					break;
-			}
-
-			foreach(var plugin in sAddonManager.Addons[sIRCMessage.ServerName].Addons)
-			{
-				if(!sAddonManager.Addons[sIRCMessage.ServerName].IgnoreAssemblies.ContainsKey(plugin.Key) &&
-				   plugin.Value.Reload(sIRCMessage.Info[4].ToLower()) == 1)
-					i = 1;
-				else if(!sAddonManager.Addons[sIRCMessage.ServerName].IgnoreAssemblies.ContainsKey(plugin.Key) &&
-				   plugin.Value.Reload(sIRCMessage.Info[4].ToLower()) == 0)
-					i = 0;
-			}
-
-			if(i == -1)
-				sSendMessage.SendChatMessage(sIRCMessage, text[0]);
-			else if(i == 0)
-				sSendMessage.SendChatMessage(sIRCMessage, text[1]);
-			else if(i == 1)
-				sSendMessage.SendChatMessage(sIRCMessage, text[2], sIRCMessage.Info[4]);
-		}
-
-		protected void HandleQuit(IRCMessage sIRCMessage)
-		{
-			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
-				return;
-
-			var text = sLManager.GetCommandTexts("quit", sIRCMessage.Channel, sIRCMessage.ServerName);
-			if(text.Length < 2)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
-				return;
-			}
-
-			sSendMessage.SendChatMessage(sIRCMessage, text[0]);
-			SchumixBase.Quit();
-			sIrcBase.Shutdown(string.Format(text[1], sIRCMessage.Nick));
 		}
 	}
 }

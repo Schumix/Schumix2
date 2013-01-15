@@ -134,17 +134,13 @@ RESGEN=resgen2
 all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 FILES = \
-	Commands/AdminCommandHandler.cs \
 	Commands/CommandHandler.cs \
 	Commands/CommandManager.cs \
-	Commands/OperatorCommandHandler.cs \
-	Commands/PublicCommandHandler.cs \
 	MessageHandler.cs \
 	Network.cs \
 	PublicMessageHandler.cs \
 	Properties/AssemblyInfo.cs \
 	Commands/CommandInfo.cs \
-	Commands/HalfOperatorCommandHandler.cs \
 	ReplyCode.cs \
 	Ctcp/CtcpSender.cs \
 	Ctcp/CtcpUtil.cs \
@@ -165,17 +161,40 @@ FILES = \
 	Ignore/IgnoreCommand.cs \
 	Ignore/IgnoreChannel.cs \
 	Ignore/IgnoreAddon.cs \
-	Commands/GoogleWebSearch/GoogleWebResult.cs \
-	Commands/GoogleWebSearch/GoogleWebResponseData.cs \
-	Commands/GoogleWebSearch/GoogleWebResultSet.cs \
 	IrcBase.cs \
-	Commands/Whois.cs \
 	Channel/ChannelList.cs \
 	NickName/MyNickInfo.cs \
 	NickName/NickInfo.cs \
 	Channel/MyChannelInfo.cs \
 	Channel/ChannelInfo.cs \
-	Channel/ChannelRank.cs 
+	Channel/ChannelRank.cs \
+	Commands/Admin/PluginCommand.cs \
+	Commands/HalfOperator/AdminCommand.cs \
+	Commands/Operator/IgnoreCommand.cs \
+	Commands/Public/OnlineCommand.cs \
+	Commands/Public/Whois.cs \
+	Commands/Public/GoogleWebSearch/GoogleWebResponseData.cs \
+	Commands/Public/GoogleWebSearch/GoogleWebResult.cs \
+	Commands/Public/GoogleWebSearch/GoogleWebResultSet.cs \
+	Commands/Public/XbotCommand.cs \
+	Commands/Public/InfoCommand.cs \
+	Commands/Public/TimeCommand.cs \
+	Commands/Public/DateCommand.cs \
+	Commands/Public/IrcCommand.cs \
+	Commands/Public/WhoisCommand.cs \
+	Commands/Public/WarningCommand.cs \
+	Commands/Public/GoogleCommand.cs \
+	Commands/Public/TranslateCommand.cs \
+	Commands/Admin/QuitCommand.cs \
+	Commands/Admin/ReloadCommand.cs \
+	Commands/Operator/FunctionCommand.cs \
+	Commands/Operator/ChannelCommand.cs \
+	Commands/Operator/KickCommand.cs \
+	Commands/Operator/ModeCommand.cs \
+	Commands/HalfOperator/LeaveCommand.cs \
+	Commands/HalfOperator/JoinCommand.cs \
+	Commands/HalfOperator/NickCommand.cs \
+	Commands/HalfOperator/ColorsCommand.cs 
 
 DATA_FILES = 
 

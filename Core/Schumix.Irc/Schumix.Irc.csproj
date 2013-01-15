@@ -57,17 +57,13 @@
     <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\AdminCommandHandler.cs" />
     <Compile Include="Commands\CommandHandler.cs" />
     <Compile Include="Commands\CommandManager.cs" />
-    <Compile Include="Commands\OperatorCommandHandler.cs" />
-    <Compile Include="Commands\PublicCommandHandler.cs" />
     <Compile Include="MessageHandler.cs" />
     <Compile Include="Network.cs" />
     <Compile Include="PublicMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands\CommandInfo.cs" />
-    <Compile Include="Commands\HalfOperatorCommandHandler.cs" />
     <Compile Include="ReplyCode.cs" />
     <Compile Include="Ctcp\CtcpSender.cs" />
     <Compile Include="Ctcp\CtcpUtil.cs" />
@@ -88,17 +84,40 @@
     <Compile Include="Ignore\IgnoreCommand.cs" />
     <Compile Include="Ignore\IgnoreChannel.cs" />
     <Compile Include="Ignore\IgnoreAddon.cs" />
-    <Compile Include="Commands\GoogleWebSearch\GoogleWebResult.cs" />
-    <Compile Include="Commands\GoogleWebSearch\GoogleWebResponseData.cs" />
-    <Compile Include="Commands\GoogleWebSearch\GoogleWebResultSet.cs" />
     <Compile Include="IrcBase.cs" />
-    <Compile Include="Commands\Whois.cs" />
     <Compile Include="Channel\ChannelList.cs" />
     <Compile Include="NickName\MyNickInfo.cs" />
     <Compile Include="NickName\NickInfo.cs" />
     <Compile Include="Channel\MyChannelInfo.cs" />
     <Compile Include="Channel\ChannelInfo.cs" />
     <Compile Include="Channel\ChannelRank.cs" />
+    <Compile Include="Commands\Public\Whois.cs" />
+    <Compile Include="Commands\Public\GoogleWebSearch\GoogleWebResponseData.cs" />
+    <Compile Include="Commands\Public\GoogleWebSearch\GoogleWebResult.cs" />
+    <Compile Include="Commands\Public\GoogleWebSearch\GoogleWebResultSet.cs" />
+    <Compile Include="Commands\Public\XbotCommand.cs" />
+    <Compile Include="Commands\Public\TimeCommand.cs" />
+    <Compile Include="Commands\Public\DateCommand.cs" />
+    <Compile Include="Commands\Public\IrcCommand.cs" />
+    <Compile Include="Commands\Public\InfoCommand.cs" />
+    <Compile Include="Commands\Public\WhoisCommand.cs" />
+    <Compile Include="Commands\Public\WarningCommand.cs" />
+    <Compile Include="Commands\Public\GoogleCommand.cs" />
+    <Compile Include="Commands\Public\TranslateCommand.cs" />
+    <Compile Include="Commands\Public\OnlineCommand.cs" />
+    <Compile Include="Commands\Admin\QuitCommand.cs" />
+    <Compile Include="Commands\Admin\ReloadCommand.cs" />
+    <Compile Include="Commands\Admin\PluginCommand.cs" />
+    <Compile Include="Commands\Operator\FunctionCommand.cs" />
+    <Compile Include="Commands\Operator\ChannelCommand.cs" />
+    <Compile Include="Commands\Operator\KickCommand.cs" />
+    <Compile Include="Commands\Operator\ModeCommand.cs" />
+    <Compile Include="Commands\Operator\IgnoreCommand.cs" />
+    <Compile Include="Commands\HalfOperator\LeaveCommand.cs" />
+    <Compile Include="Commands\HalfOperator\JoinCommand.cs" />
+    <Compile Include="Commands\HalfOperator\NickCommand.cs" />
+    <Compile Include="Commands\HalfOperator\ColorsCommand.cs" />
+    <Compile Include="Commands\HalfOperator\AdminCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -118,5 +137,9 @@
     <Folder Include="Commands\GoogleWebSearch\" />
     <Folder Include="Channel\" />
     <Folder Include="NickName\" />
+    <Folder Include="Commands\Admin\" />
+    <Folder Include="Commands\Operator\" />
+    <Folder Include="Commands\HalfOperator\" />
+    <Folder Include="Commands\Public\" />
   </ItemGroup>
 </Project>

@@ -20,7 +20,6 @@
 
 using System;
 using System.Data;
-using Schumix.API;
 using Schumix.API.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -390,98 +389,6 @@ namespace Schumix.Irc.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, text[5], commands.Remove(0, 3, " | "));
 				}
 			}
-		}
-
-		protected void HandleColors(IRCMessage sIRCMessage)
-		{
-			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
-				return;
-
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("colors", sIRCMessage.Channel, sIRCMessage.ServerName));
-		}
-
-		protected void HandleNick(IRCMessage sIRCMessage)
-		{
-			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
-				return;
-
-			if(sIRCMessage.Info.Length < 5)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			SchumixBase.NewNick = true;
-			string nick = sIRCMessage.Info[4];
-			NewNickPrivmsg = sIRCMessage.Channel;
-			sMyNickInfo.ChangeNick(nick);
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("nick", sIRCMessage.Channel, sIRCMessage.ServerName), nick);
-			sSender.Nick(nick);
-		}
-
-		protected void HandleJoin(IRCMessage sIRCMessage)
-		{
-			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
-				return;
-
-			if(sIRCMessage.Info.Length < 5)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			if(!sUtilities.IsChannel(sIRCMessage.Info[4]))
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			if(sChannelList.List.ContainsKey(sIRCMessage.Info[4].ToLower()))
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ImAlreadyOnThisChannel", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			if(sIgnoreChannel.IsIgnore(sIRCMessage.Info[4].ToLower()))
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ThisChannelBlockedByAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			ChannelPrivmsg = sIRCMessage.Channel;
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("join", sIRCMessage.Channel, sIRCMessage.ServerName), sIRCMessage.Info[4]);
-
-			if(sIRCMessage.Info.Length == 5)
-				sSender.Join(sIRCMessage.Info[4]);
-			else if(sIRCMessage.Info.Length == 6)
-				sSender.Join(sIRCMessage.Info[4], sIRCMessage.Info[5]);
-		}
-
-		protected void HandleLeave(IRCMessage sIRCMessage)
-		{
-			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
-				return;
-
-			if(sIRCMessage.Info.Length < 5)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			if(!sUtilities.IsChannel(sIRCMessage.Info[4]))
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			if(!sChannelList.List.ContainsKey(sIRCMessage.Info[4].ToLower()))
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ImNotOnThisChannel", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			sSender.Part(sIRCMessage.Info[4]);
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("leave", sIRCMessage.Channel, sIRCMessage.ServerName), sIRCMessage.Info[4]);
 		}
 	}
 }
