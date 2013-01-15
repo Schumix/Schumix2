@@ -19,7 +19,7 @@
  */
 
 using System;
-using Schumix.API.Irc;
+using Schumix.Api.Irc;
 using Schumix.Framework;
 
 namespace Schumix.Irc.Commands

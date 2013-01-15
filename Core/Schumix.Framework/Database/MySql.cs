@@ -26,8 +26,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using Schumix.API;
-using Schumix.API.Irc;
+using Schumix.Api.Irc;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 

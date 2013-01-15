@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Schumix.API")]
+[assembly: AssemblyTitle("Schumix.Api")]
 [assembly: AssemblyDescription("Schumix IRC bot")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
@@ -55,5 +55,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("3.9.3")]
-[assembly: AssemblyFileVersion("3.9.3.0")]
+[assembly: AssemblyVersion("3.9.6")]
+[assembly: AssemblyFileVersion("3.9.6.0")]

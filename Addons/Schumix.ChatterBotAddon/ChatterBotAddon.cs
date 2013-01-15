@@ -21,9 +21,9 @@
 using System;
 using System.Web;
 using System.Threading.Tasks;
-using Schumix.API;
-using Schumix.API.Irc;
-using Schumix.API.Functions;
+using Schumix.Api;
+using Schumix.Api.Irc;
+using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Ignore;
 using Schumix.Framework;

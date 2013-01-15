@@ -7,8 +7,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Schumix.API</RootNamespace>
-    <AssemblyName>Schumix.API</AssemblyName>
+    <RootNamespace>Schumix.Api</RootNamespace>
+    <AssemblyName>Schumix.Api</AssemblyName>
     <ReleaseVersion>3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">

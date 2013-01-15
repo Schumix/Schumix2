@@ -25,7 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Diagnostics;
-using Schumix.API.Delegate;
+using Schumix.Api.Delegate;
 using Schumix.Irc;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;

@@ -19,19 +19,32 @@
  */
 
 using System;
-using System.IO;
-using System.Collections.Generic;
 
-namespace Schumix.API.Irc
+namespace Schumix.Api.Functions
 {
-	/// <summary>
-	///     A Network class része. Ezzel elérhető bárhonnét eggyes része.
-	/// </summary>
-	public sealed class INetwork
+	public enum IFunctions
 	{
-		/// <summary>
-		///     Üzenet küldés az irc szerver felé.
-		/// </summary>
-		public static Dictionary<string, StreamWriter> WriterList = new Dictionary<string, StreamWriter>();
-	}
+		Greeter,
+		Log,
+		Rejoin,
+		Commands,
+		Reconnect,
+		Autohl,
+		Autokick,
+		Automode,
+		Svn,
+		Hg,
+		Git,
+		Antiflood,
+		Message,
+		Compiler,
+		Gamecommands,
+		Webtitle,
+		Randomkick,
+		Mantisbt,
+		Wordpress,
+		Chatterbot,
+		NameDay,
+		BirthDay
+	};
 }

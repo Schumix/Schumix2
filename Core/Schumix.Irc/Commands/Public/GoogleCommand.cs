@@ -19,7 +19,7 @@
  */
 
 using System;
-using Schumix.API.Irc;
+using Schumix.Api.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Irc.Commands.GoogleWebSearch;

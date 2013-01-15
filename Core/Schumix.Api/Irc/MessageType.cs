@@ -20,19 +20,18 @@
 
 using System;
 
-namespace Schumix.API.Irc
+namespace Schumix.Api.Irc
 {
-	public class IRCMessage
+	/// <summary>
+	///     Meghatározza az üzenet küldési típusokat.
+	/// </summary>
+	public enum MessageType
 	{
-		public string Hostmask { get; set; }
-		public string Channel { get; set; }
-		public string Args { get; set; }
-		public string Nick { get; set; }
-		public string User { get; set; }
-		public string Host { get; set; }
-		public string[] Info { get; set; }
-		public int ServerId { get; set; }
-		public string ServerName { get; set; }
-		public MessageType MessageType { get; set; }
-	}
+		Privmsg,
+		Notice,
+		Amsg,
+		Action,
+		CtcpRequest,
+		CtcpReply
+	};
 }

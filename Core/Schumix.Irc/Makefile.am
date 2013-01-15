@@ -11,7 +11,7 @@ ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Framework.dll \
-	../../Run/Debug/Schumix.API.dll
+	../../Run/Debug/Schumix.Api.dll
 BUILD_DIR = ../../Run/Debug
 
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
@@ -25,9 +25,9 @@ YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
+SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
+SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 
 endif
 
@@ -39,7 +39,7 @@ ASSEMBLY_MDB =
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Framework.dll \
-	../../Run/Release/Schumix.API.dll
+	../../Run/Release/Schumix.Api.dll
 BUILD_DIR = ../../Run/Release
 
 SCHUMIX_IRC_DLL_MDB=
@@ -51,7 +51,7 @@ YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
+SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
 SCHUMIX_API_DLL_MDB=
 
 endif
@@ -64,7 +64,7 @@ ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Debug_x64/Schumix.Framework.dll \
-	../../Run/Debug_x64/Schumix.API.dll
+	../../Run/Debug_x64/Schumix.Api.dll
 BUILD_DIR = ../../Run/Debug_x64
 
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll.mdb
@@ -78,9 +78,9 @@ YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
+SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Api.dll.mdb
+SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 
 endif
 
@@ -92,7 +92,7 @@ ASSEMBLY_MDB =
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Release_x64/Schumix.Framework.dll \
-	../../Run/Release_x64/Schumix.API.dll
+	../../Run/Release_x64/Schumix.Api.dll
 BUILD_DIR = ../../Run/Release_x64
 
 SCHUMIX_IRC_DLL_MDB=
@@ -104,7 +104,7 @@ YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
+SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.Api.dll
 SCHUMIX_API_DLL_MDB=
 
 endif
@@ -168,33 +168,33 @@ FILES = \
 	Channel/MyChannelInfo.cs \
 	Channel/ChannelInfo.cs \
 	Channel/ChannelRank.cs \
-	Commands/Admin/PluginCommand.cs \
-	Commands/HalfOperator/AdminCommand.cs \
-	Commands/Operator/IgnoreCommand.cs \
-	Commands/Public/OnlineCommand.cs \
 	Commands/Public/Whois.cs \
 	Commands/Public/GoogleWebSearch/GoogleWebResponseData.cs \
 	Commands/Public/GoogleWebSearch/GoogleWebResult.cs \
 	Commands/Public/GoogleWebSearch/GoogleWebResultSet.cs \
 	Commands/Public/XbotCommand.cs \
-	Commands/Public/InfoCommand.cs \
 	Commands/Public/TimeCommand.cs \
 	Commands/Public/DateCommand.cs \
 	Commands/Public/IrcCommand.cs \
+	Commands/Public/InfoCommand.cs \
 	Commands/Public/WhoisCommand.cs \
 	Commands/Public/WarningCommand.cs \
 	Commands/Public/GoogleCommand.cs \
 	Commands/Public/TranslateCommand.cs \
+	Commands/Public/OnlineCommand.cs \
 	Commands/Admin/QuitCommand.cs \
 	Commands/Admin/ReloadCommand.cs \
+	Commands/Admin/PluginCommand.cs \
 	Commands/Operator/FunctionCommand.cs \
 	Commands/Operator/ChannelCommand.cs \
 	Commands/Operator/KickCommand.cs \
 	Commands/Operator/ModeCommand.cs \
+	Commands/Operator/IgnoreCommand.cs \
 	Commands/HalfOperator/LeaveCommand.cs \
 	Commands/HalfOperator/JoinCommand.cs \
 	Commands/HalfOperator/NickCommand.cs \
-	Commands/HalfOperator/ColorsCommand.cs 
+	Commands/HalfOperator/ColorsCommand.cs \
+	Commands/HalfOperator/AdminCommand.cs 
 
 DATA_FILES = 
 
@@ -204,9 +204,12 @@ EXTRAS = \
 	Flood \
 	Sender \
 	Ignore \
-	Commands/GoogleWebSearch \
 	Channel \
 	NickName \
+	Commands/Admin \
+	Commands/Operator \
+	Commands/HalfOperator \
+	Commands/Public \
 	schumix.irc.pc.in 
 
 REFERENCES =  \
@@ -229,7 +232,7 @@ YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
-SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
+SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
 SCHUMIX_IRC_PC = $(BUILD_DIR)/schumix.irc.pc
 
 $(eval $(call emit-deploy-target,SQLITE3_DLL))

@@ -20,7 +20,6 @@
 
 using System;
 using System.Data;
-using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;

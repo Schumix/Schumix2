@@ -22,8 +22,8 @@ using System;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
-using Schumix.API.Irc;
-using Schumix.API.Delegate;
+using Schumix.Api.Irc;
+using Schumix.Api.Delegate;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 

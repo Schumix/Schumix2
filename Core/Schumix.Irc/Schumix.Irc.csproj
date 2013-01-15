@@ -134,7 +134,6 @@
     <Folder Include="Flood\" />
     <Folder Include="Sender\" />
     <Folder Include="Ignore\" />
-    <Folder Include="Commands\GoogleWebSearch\" />
     <Folder Include="Channel\" />
     <Folder Include="NickName\" />
     <Folder Include="Commands\Admin\" />

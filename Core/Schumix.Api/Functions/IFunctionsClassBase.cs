@@ -19,19 +19,17 @@
  */
 
 using System;
+using System.Collections.Generic;
 
-namespace Schumix.API.Irc
+namespace Schumix.Api.Functions
 {
-	/// <summary>
-	///     Meghatározza az üzenet küldési típusokat.
-	/// </summary>
-	public enum MessageType
+	public class IFunctionsClassBase
 	{
-		Privmsg,
-		Notice,
-		Amsg,
-		Action,
-		CtcpRequest,
-		CtcpReply
-	};
+		public Dictionary<string, string> Functions { get; private set; }
+
+		public IFunctionsClassBase(Dictionary<string, string> functions)
+		{
+			Functions = functions;
+		}
+	}
 }

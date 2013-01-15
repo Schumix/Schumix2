@@ -19,9 +19,9 @@
  */
 
 using System;
-using Schumix.API.Irc;
+using Schumix.Api.Irc;
 
-namespace Schumix.API
+namespace Schumix.Api
 {
 	/// <summary>
 	/// Another attempt to implement a plugin interface.

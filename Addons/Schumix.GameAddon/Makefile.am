@@ -10,16 +10,16 @@ ASSEMBLY = ../../Run/Debug/Addons/GameAddon.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../../Run/Debug/Schumix.API.dll \
+	../../Run/Debug/Schumix.Api.dll \
 	../../Run/Debug/Schumix.Framework.dll \
 	../../Run/Debug/Schumix.Irc.dll
 BUILD_DIR = ../../Run/Debug/Addons
 
 GAMEADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/GameAddon.dll.mdb
 GAMEADDON_DLL_MDB=$(BUILD_DIR)/GameAddon.dll.mdb
-SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
+SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
+SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
@@ -42,13 +42,13 @@ ASSEMBLY = ../../Run/Release/Addons/GameAddon.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../../Run/Release/Schumix.API.dll \
+	../../Run/Release/Schumix.Api.dll \
 	../../Run/Release/Schumix.Framework.dll \
 	../../Run/Release/Schumix.Irc.dll
 BUILD_DIR = ../../Run/Release/Addons
 
 GAMEADDON_DLL_MDB=
-SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.API.dll
+SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
 SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
@@ -70,16 +70,16 @@ ASSEMBLY = ../../Run/Debug_x64/Addons/GameAddon.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../../Run/Debug_x64/Schumix.API.dll \
+	../../Run/Debug_x64/Schumix.Api.dll \
 	../../Run/Debug_x64/Schumix.Framework.dll \
 	../../Run/Debug_x64/Schumix.Irc.dll
 BUILD_DIR = ../../Run/Debug_x64/Addons
 
 GAMEADDON_DLL_MDB_SOURCE=../../Run/Debug_x64/Addons/GameAddon.dll.mdb
 GAMEADDON_DLL_MDB=$(BUILD_DIR)/GameAddon.dll.mdb
-SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.API.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.API.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.API.dll.mdb
+SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Api.dll.mdb
+SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
@@ -102,13 +102,13 @@ ASSEMBLY = ../../Run/Release_x64/Addons/GameAddon.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../../Run/Release_x64/Schumix.API.dll \
+	../../Run/Release_x64/Schumix.Api.dll \
 	../../Run/Release_x64/Schumix.Framework.dll \
 	../../Run/Release_x64/Schumix.Irc.dll
 BUILD_DIR = ../../Run/Release_x64/Addons
 
 GAMEADDON_DLL_MDB=
-SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.API.dll
+SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.Api.dll
 SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
@@ -185,7 +185,7 @@ CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 
 include $(top_srcdir)/Makefile.include
 
-SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.API.dll
+SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3

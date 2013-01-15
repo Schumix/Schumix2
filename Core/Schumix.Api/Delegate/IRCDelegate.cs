@@ -19,9 +19,9 @@
  */
 
 using System;
-using Schumix.API.Irc;
+using Schumix.Api.Irc;
 
-namespace Schumix.API.Delegate
+namespace Schumix.Api.Delegate
 {
 	public delegate void IRCDelegate(IRCMessage sIRCMessage);
 }

@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Irc", "Core\Schumix
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Framework", "Core\Schumix.Framework\Schumix.Framework.csproj", "{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.API", "Core\Schumix.API\Schumix.API.csproj", "{A346B21F-17F6-431D-86B7-7B6B2AF02A13}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Api", "Core\Schumix.Api\Schumix.Api.csproj", "{A346B21F-17F6-431D-86B7-7B6B2AF02A13}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Applications", "Applications", "{302D248E-FD07-4FF3-A935-38EAA7256379}"
 EndProject

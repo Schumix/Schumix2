@@ -32,8 +32,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using Schumix.API;
-using Schumix.API.Functions;
+using Schumix.Api.Functions;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -1305,6 +1304,9 @@ namespace Schumix.Framework
 			if(File.Exists("xbuild.exe"))
 				File.Delete("xbuild.exe");
 
+			if(File.Exists("MSBuild.exe"))
+				File.Delete("MSBuild.exe");
+
 			if(server)
 				return;
 
@@ -1323,8 +1325,8 @@ namespace Schumix.Framework
 			if(File.Exists(AddonsConfig.Directory + "/Schumix.Irc.dll"))
 				File.Delete(AddonsConfig.Directory + "/Schumix.Irc.dll");
 
-			if(File.Exists(AddonsConfig.Directory + "/Schumix.API.dll"))
-				File.Delete(AddonsConfig.Directory + "/Schumix.API.dll");
+			if(File.Exists(AddonsConfig.Directory + "/Schumix.Api.dll"))
+				File.Delete(AddonsConfig.Directory + "/Schumix.Api.dll");
 
 			if(File.Exists(AddonsConfig.Directory + "/Schumix.Framework.dll"))
 				File.Delete(AddonsConfig.Directory + "/Schumix.Framework.dll");

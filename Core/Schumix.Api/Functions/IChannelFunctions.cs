@@ -19,12 +19,26 @@
  */
 
 using System;
-using System.Collections.Generic;
 
-namespace Schumix.API.Functions
+namespace Schumix.Api.Functions
 {
-	public class IFunctionsClass
+	public enum IChannelFunctions
 	{
-		public static readonly Dictionary<string, IFunctionsClassBase> ServerList = new Dictionary<string, IFunctionsClassBase>();
-	}
+		Greeter,
+		Log,
+		Rejoin,
+		Commands,
+		Autohl,
+		Autokick,
+		Automode,
+		Antiflood,
+		Message,
+		Compiler,
+		Gamecommands,
+		Webtitle,
+		Randomkick,
+		Chatterbot,
+		NameDay,
+		BirthDay
+	};
 }

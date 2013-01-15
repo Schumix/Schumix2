@@ -19,7 +19,6 @@
  */
 
 using System;
-using Schumix.API;
 
 namespace Schumix.Irc.Commands
 {
