@@ -204,9 +204,9 @@ namespace Schumix.Irc.Commands
 				if(sIgnoreCommand.IsIgnore(sIRCMessage.Info[4].ToLower()))
 					return;
 
-				int adminflag = Adminflag(sIRCMessage.Nick, sIRCMessage.Host);
+				var adminflag = Adminflag(sIRCMessage.Nick, sIRCMessage.Host);
 
-				if(adminflag != -1)
+				if(adminflag != AdminFlag.None)
 				{
 					string commands = sIRCMessage.Info.SplitToString(4, "/");
 					int rank = sLManager.GetCommandHelpRank(commands, sIRCMessage.Channel, sIRCMessage.ServerName);
@@ -217,9 +217,11 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					if((adminflag == 2 && rank == 2) || (adminflag == 2 && rank == 1) || (adminflag == 2 && rank == 0) ||
-					(adminflag == 1 && rank == 1) || (adminflag == 1 && rank == 0) || (adminflag == 0 && rank == 0) ||
-					(adminflag == 2 && rank == 9) || (adminflag == 1 && rank == 9) || (adminflag == 0 && rank == 9))
+					if((adminflag == AdminFlag.Administrator && rank == 2) || (adminflag == AdminFlag.Administrator && rank == 1) ||
+					   (adminflag == AdminFlag.Administrator && rank == 0) || (adminflag == AdminFlag.Operator && rank == 1) ||
+					   (adminflag == AdminFlag.Operator && rank == 0) || (adminflag == AdminFlag.HalfOperator && rank == 0) ||
+					   (adminflag == AdminFlag.Administrator && rank == 9) || (adminflag == AdminFlag.Operator && rank == 9) ||
+					   (adminflag == AdminFlag.HalfOperator && rank == 9))
 						HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName, rank));
 				}
 				else

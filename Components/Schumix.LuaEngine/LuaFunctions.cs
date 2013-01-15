@@ -173,14 +173,14 @@ namespace Schumix.LuaEngine
 		}
 
 		[LuaFunction("Adminflag", "Admin rank.")]
-		public int BaseAdminflag(string ServerName, string Name)
+		public AdminFlag BaseAdminflag(string ServerName, string Name)
 		{
 			servername = ServerName;
 			return Adminflag(Name);
 		}
 
 		[LuaFunction("Adminflag2", "Admin rank.")]
-		public int BaseAdminflag(string ServerName, string Name, string Vhost)
+		public AdminFlag BaseAdminflag(string ServerName, string Name, string Vhost)
 		{
 			servername = ServerName;
 			return Adminflag(Name, Vhost);

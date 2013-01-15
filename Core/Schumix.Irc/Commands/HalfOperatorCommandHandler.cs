@@ -123,7 +123,12 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
+				string name = sIRCMessage.Nick;
+
+				if(sIRCMessage.Info.Length >= 6)
+					name = sIRCMessage.Info[5];
+
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
 				int flag = !db.IsNull() ? Convert.ToInt32(db["Flag"].ToString()) : -1;
 
 				if((AdminFlag)flag == AdminFlag.HalfOperator)

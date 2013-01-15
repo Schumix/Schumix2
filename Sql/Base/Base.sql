@@ -35,7 +35,7 @@ INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ("enUS", "owne
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "consolelog", "Console logolás bekapcsolva.\nConsole logolás kikapcsolva.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "sys", "Verzió: {0}\nPlatform: {0}\nOSVerzió: {0}\nProgramnyelv: c#\nMemória használat: {0} MB\nFutó szálak: {0}\nMűködési idő: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "cchannel", "Új csatorna ahova mostantól lehet írni: {0}");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/info", "Jelenleg Fél Operátor vagy.\nJelenleg Operátor vagy.\nJelenleg Adminisztrátor vagy.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/info", "Jelenleg fél operátor.\nJelenleg operátor.\nJelenleg adminisztrátor.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/list", "Adminok: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/add", "A név már szerepel az admin listán!\nAdmin hozzáadva: {0}\nJelenlegi jelszó: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/remove", "Ilyen név nem létezik!\nAdmin törölve: {0}");
@@ -87,7 +87,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "consolelog", "Console logging on.\nConsole logging off.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "sys", "Version: {0}\nPlatform: {0}\nOSVersion: {0}\nProgramming language: c#\nMemory allocation: {0} MB\nThread count: {0}\nUptime: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "cchannel", "The new channel to write to now: {0}");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/info", "You are half operator now.\nYou are operator now.\nYou are administrator now.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/info", "You are half operator.\nYou are operator.\nYou are administrator.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/list", "Admins: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/add", "The name is already in the admin list!\nAdmin added to the list: {0}\nPassword: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/remove", "No such nick!\nAdmin was deleted: {0}");
@@ -335,7 +335,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "prime", "Nem csak számot tartalmaz!\n{0} nem prímszám.\n{0} primszám.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/access", "Hozzáférés engedélyezve.\nHozzáférés megtagadva!\nNem vagy fent egy csatornán se ahol én.\nÍgy csak 5 percre lesz aktiválva a vhost és ha addig se lépsz fel valahova ahol fent vagyok akkor elveszem az admin hozzáférés jogát biztonsági okból.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/newpassword", "Jelszó sikeresen meg lett változtatva erre: {0}\nA mostani jelszó nem egyezik, modósítás megtagadva!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/info", "Jelenleg Fél Operátor vagy.\nJelenleg Operátor vagy.\nJelenleg Adminisztrátor vagy.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/info", "Jelenleg fél operátor.\nJelenleg operátor.\nJelenleg adminisztrátor.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/list", "2Adminok: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/add", "A név már szerepel az admin listán!\nAdmin hozzáadva: {0}\nMostantól Schumix adminja vagy. A mostani jelszavad: {0}\nHa megszeretnéd változtatni használd az {0}admin newpassword parancsot. Használata: {0}admin newpassword <régi> <új>\nAdmin nick élesítése: {0}admin access <jelszó>");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/remove", "Ilyen név nem létezik!\nAdmin törölve: {0}");
@@ -530,7 +530,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "prime", "This is not a numeric text!\n{0} is not a prime number.\n{0} is a prime number.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/access", "Access granted.\nAccess denied!\nYou are not there any channels where i am.\nThe vhost will be activated for 5 minutes and if that time you won't join any channels where i am i will remove your admin status cause safety.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/newpassword", "Successfully changed to password to: {0}\nThe current password does not match, modification denied!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/info", "You are half operator now.\nYou are operator now.\nYou are administrator now.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/info", "You are half operator.\nYou are operator.\nYou are administrator.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/list", "2Admins: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/add", "The name is already in the admin list!\nAdmin added to the list: {0}\nYou are schumix's admin now. Your current password is: {0}\nIf you want to change it, use this command: {0}admin newpassword. Usage: {0}admin newpassword <Old> <New>\nAdmin nick confirmation: {0}admin access <Password>");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/remove", "No such nick!\nAdmin was deleted: {0}");
@@ -692,7 +692,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "admin/add", "0", "Új admin hozzáadása.\nHasználata: {0}admin add <admin neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "admin/remove", "0", "Admin eltávolítása.\nHasználata: {0}admin remove <admin neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "admin/rank", "0", "Admin rangjának megváltoztatása.\nHasználata: {0}admin rank <admin neve> <új rang pl halfoperator: 0, operator: 1, administrator: 2>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "admin/info", "0", "Kiírja éppen milyen rangod van.");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "admin/info", "0", "Kiírja éppen milyen rangod van.\nVagy:\nKiírja, hogy éppen milyen rangja van.\nHasználata: admin info <admin neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "admin/list", "0", "Kiírja az összes admin nevét aki az adatbázisban szerepel.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "admin/access", "0", "Az admin parancsok használatához szükséges jelszó ellenörző és vhost aktiváló.\nHasználata: {0}admin access <jelszó>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "admin/newpassword", "0", "Az admin jelszavának cseréje ha új kéne a régi helyett.\nHasználata: {0}admin newpassword <régi jelszó> <új jelszó>");
@@ -889,7 +889,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "admin/add", "0", "Add new admin.\nUse: {0}admin add <admin name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "admin/remove", "0", "Admin removed.\nUse: {0}admin remove <admin name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "admin/rank", "0", "Admin rank change.\nUse: {0}admin rank <admin name> <new rank e.g. halfoperator: 0, operator: 1, administrator: 2>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "admin/info", "0", "It show you admin level.");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "admin/info", "0", "It show you admin level.\nOr:\nShow the admin's rank.\nUse: admin info <admin name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "admin/list", "0", "Show the names of all the admin, who is included in the database.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "admin/access", "0", "The admin password is required to command control, and activation vhost.\nUse: {0}admin access <password>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "admin/newpassword", "0", "The admin password replacement, should a new for old.\nUse: {0}admin newpassword <old password> <new password>");
