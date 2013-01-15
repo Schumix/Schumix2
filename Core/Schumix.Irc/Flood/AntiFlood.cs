@@ -22,9 +22,9 @@ using System;
 using System.Timers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Schumix.API;
-using Schumix.API.Irc;
-using Schumix.API.Functions;
+using Schumix.Api.Irc;
+using Schumix.Api.Functions;
+using Schumix.Irc.Channel;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
@@ -39,11 +39,11 @@ namespace Schumix.Irc.Flood
 		private System.Timers.Timer _timerflood = new System.Timers.Timer();
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly SendMessage sSendMessage;
-		private readonly ChannelInfo sChannelInfo;
+		private readonly MyChannelInfo sMyChannelInfo;
 
 		public AntiFlood(string ServerName)
 		{
-			sChannelInfo = sIrcBase.Networks[ServerName].sChannelInfo;
+			sMyChannelInfo = sIrcBase.Networks[ServerName].sMyChannelInfo;
 			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;
 		}
 
@@ -83,7 +83,7 @@ namespace Schumix.Irc.Flood
 
 		public void FloodCommand(IRCMessage sIRCMessage)
 		{
-			if(sChannelInfo.FSelect(IFunctions.Antiflood) && sChannelInfo.FSelect(IChannelFunctions.Antiflood, sIRCMessage.Channel.ToLower()))
+			if(sMyChannelInfo.FSelect(IFunctions.Antiflood) && sMyChannelInfo.FSelect(IChannelFunctions.Antiflood, sIRCMessage.Channel.ToLower()))
 			{
 				string nick = sIRCMessage.Nick.ToLower();
 

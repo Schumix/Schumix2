@@ -22,9 +22,9 @@
 using System;
 using System.Data;
 using System.Threading.Tasks;
-using Schumix.API;
-using Schumix.API.Irc;
-using Schumix.API.Functions;
+using Schumix.Api;
+using Schumix.Api.Irc;
+using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
@@ -196,18 +196,18 @@ namespace Schumix.ExtraAddon
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 			var sIgnoreNickName = sIrcBase.Networks[sIRCMessage.ServerName].sIgnoreNickName;
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 			var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
 
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sChannelInfo.FSelect(IFunctions.Commands) || !sFunctions.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sUtilities.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sFunctions.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
 					return;
 
-				if(!sFunctions.IsChannel(sIRCMessage.Channel))
+				if(!sUtilities.IsChannel(sIRCMessage.Channel))
 					return;
 
 				Task.Factory.StartNew(() =>
@@ -218,7 +218,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect(IFunctions.Automode) && sChannelInfo.FSelect(IChannelFunctions.Automode, sIRCMessage.Channel))
+					if(sMyChannelInfo.FSelect(IFunctions.Automode) && sMyChannelInfo.FSelect(IChannelFunctions.Automode, sIRCMessage.Channel))
 					{
 						sIrcHandler.AutoMode = true;
 						sIrcHandler.ModeChannel = sIRCMessage.Channel.ToLower();
@@ -228,7 +228,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect(IFunctions.Randomkick) && sChannelInfo.FSelect(IChannelFunctions.Randomkick, sIRCMessage.Channel))
+					if(sMyChannelInfo.FSelect(IFunctions.Randomkick) && sMyChannelInfo.FSelect(IChannelFunctions.Randomkick, sIRCMessage.Channel))
 					{
 						if(sIRCMessage.Args.IsUpper() && sIRCMessage.Args.Length > 4)
 							sSender.Kick(sIRCMessage.Channel, sIRCMessage.Nick, sLManager.GetWarningText("CapsLockOff", sIRCMessage.Channel, sIRCMessage.ServerName));
@@ -240,7 +240,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sChannelInfo.FSelect(IFunctions.Webtitle) && sChannelInfo.FSelect(IChannelFunctions.Webtitle, sIRCMessage.Channel))
+					if(sMyChannelInfo.FSelect(IFunctions.Webtitle) && sMyChannelInfo.FSelect(IChannelFunctions.Webtitle, sIRCMessage.Channel))
 					{
 						if(!SchumixBase.UrlTitleEnabled)
 							return;
@@ -308,14 +308,14 @@ namespace Schumix.ExtraAddon
 			{
 				if(sIRCMessage.Args.Contains("isn't registered.") || sIRCMessage.Args.Contains("Last seen time:") || sIRCMessage.Args.Contains("Last seen:"))
 				{
-					var sNickInfo = sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo;
-					sIrcHandler.sNameList.Change(sNickInfo.NickStorage, IRCConfig.List[sIRCMessage.ServerName].NickName, true);
-					sNickInfo.ChangeNick(IRCConfig.List[sIRCMessage.ServerName].NickName);
+					var sMyNickInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo;
+					sIrcHandler.sNameList.Change(sMyNickInfo.NickStorage, IRCConfig.List[sIRCMessage.ServerName].NickName, true);
+					sMyNickInfo.ChangeNick(IRCConfig.List[sIRCMessage.ServerName].NickName);
 					sSender.Nick(IRCConfig.List[sIRCMessage.ServerName].NickName);
-					sNickInfo.Identify(IRCConfig.List[sIRCMessage.ServerName].NickServPassword);
+					sMyNickInfo.Identify(IRCConfig.List[sIRCMessage.ServerName].NickServPassword);
 
 					if(IRCConfig.List[sIRCMessage.ServerName].UseHostServ)
-						sNickInfo.Vhost(SchumixBase.On);
+						sMyNickInfo.Vhost(SchumixBase.On);
 
 					sFunctions.IsOnline = false;
 				}

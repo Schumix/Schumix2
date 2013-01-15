@@ -21,7 +21,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Schumix.API;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Config;

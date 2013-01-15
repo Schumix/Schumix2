@@ -2,6 +2,15 @@
 
 ## 4.0.0 (2013-xx-xx)
 
+ * Schumix.API átnevezve Schumix.Api-ra.
+ * Csatornákhoz hozzáadva az elrejtés lehetősége.
+ * Admin info parancs átalakítva.
+ * Ranggal kapcsolatos hibák javítva. (pl.: GameAddon-ban)
+ * Nick név információk letárolva.
+ * IsChannel() függvény áthelyezve az Utilities osztályba.
+ * Csatorna infomációk egy helyre gyűjtve.
+ * Csatorna funkciókat a program ellenőrzi és javítja.
+ * ChannelNameList átnevezve ChannelList-re.
  * Sql injection elleni védelem javítva.
  * Changelog hozzáadva a rendszerhez.
  * Rss szálak mostantól le fognak állni ha bizonyos számú error keletkezik. Ezeket csak akkor lehet újraindítani ha a felhasználó indítja újra.

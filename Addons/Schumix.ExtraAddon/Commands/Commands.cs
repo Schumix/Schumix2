@@ -22,8 +22,7 @@ using System;
 using System.Xml;
 using System.Web;
 using System.Data;
-using Schumix.API;
-using Schumix.API.Irc;
+using Schumix.Api.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -55,7 +54,7 @@ namespace Schumix.ExtraAddon.Commands
 				return;
 
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 			var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
 
 			if(sIRCMessage.Info.Length < 5)
@@ -157,9 +156,9 @@ namespace Schumix.ExtraAddon.Commands
 					string name = sIRCMessage.Nick.ToLower();
 					SchumixBase.DManager.Update("hlmessage", string.Format("Info = '{0}', Enabled = 'on'", sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space))), string.Format("Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName));
 					SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = 'autohl' And ServerName = '{0}'", sIRCMessage.ServerName));
-					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("autohl", SchumixBase.On, sIRCMessage.Channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
-					sChannelInfo.FunctionsReload();
-					sChannelInfo.ChannelFunctionsReload();
+					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("autohl", SchumixBase.On, sIRCMessage.Channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
+					sMyChannelInfo.FunctionsReload();
+					sMyChannelInfo.ChannelFunctionsReload();
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/hlmessage", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 			}
@@ -331,7 +330,7 @@ namespace Schumix.ExtraAddon.Commands
 							return;
 						}
 
-						if(!IsChannel(sIRCMessage.Info[6].ToLower()))
+						if(!sUtilities.IsChannel(sIRCMessage.Info[6].ToLower()))
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
@@ -659,7 +658,7 @@ namespace Schumix.ExtraAddon.Commands
 							return;
 						}
 
-						if(!IsChannel(sIRCMessage.Info[6].ToLower()))
+						if(!sUtilities.IsChannel(sIRCMessage.Info[6].ToLower()))
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
@@ -747,7 +746,7 @@ namespace Schumix.ExtraAddon.Commands
 		public void HandleMessage(IRCMessage sIRCMessage)
 		{
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 
 			if(sIRCMessage.Info.Length < 5)
 			{
@@ -755,7 +754,7 @@ namespace Schumix.ExtraAddon.Commands
 				return;
 			}
 
-			if(!sChannelInfo.FSelect("message") || !sChannelInfo.FSelect("message", sIRCMessage.Channel))
+			if(!sMyChannelInfo.FSelect("message") || !sMyChannelInfo.FSelect("message", sIRCMessage.Channel))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessageFunction", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;

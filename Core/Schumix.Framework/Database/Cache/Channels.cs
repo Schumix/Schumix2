@@ -32,6 +32,7 @@ namespace Schumix.Framework.Database.Cache
 		public string Channel;
 		public string Password;
 		public bool Enabled;
+		public bool Hidden;
 		public string Error;
 		public string Language;
 	}

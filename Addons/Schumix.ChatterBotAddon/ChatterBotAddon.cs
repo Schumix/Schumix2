@@ -21,9 +21,9 @@
 using System;
 using System.Web;
 using System.Threading.Tasks;
-using Schumix.API;
-using Schumix.API.Irc;
-using Schumix.API.Functions;
+using Schumix.Api;
+using Schumix.Api.Irc;
+using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Ignore;
 using Schumix.Framework;
@@ -35,6 +35,7 @@ namespace Schumix.ChatterBotAddon
 	class ChatterBotAddon : ISchumixAddon
 	{
 		private readonly ChatterBotSession session = new ChatterBotFactory().Create(ChatterBotType.CLEVERBOT).CreateSession();
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private string _servername;
 
@@ -58,15 +59,15 @@ namespace Schumix.ChatterBotAddon
 		{
 			var sIgnoreNickName = sIrcBase.Networks[sIRCMessage.ServerName].sIgnoreNickName;
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sIRCMessage.Channel.Length >= 1 && sIRCMessage.Channel.Substring(0, 1) != "#")
+			if(!sUtilities.IsChannel(sIRCMessage.Channel))
 				sIRCMessage.Channel = sIRCMessage.Nick;
 
-			if(sChannelInfo.FSelect(IFunctions.Chatterbot) && sChannelInfo.FSelect(IChannelFunctions.Chatterbot, sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Chatterbot) && sMyChannelInfo.FSelect(IChannelFunctions.Chatterbot, sIRCMessage.Channel))
 				Task.Factory.StartNew(() => sSendMessage.SendChatMessage(sIRCMessage, HttpUtility.HtmlDecode(session.Think(sIRCMessage.Args))));
 		}
 

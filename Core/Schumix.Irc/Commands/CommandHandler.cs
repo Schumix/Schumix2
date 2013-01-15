@@ -20,11 +20,12 @@
 
 using System;
 using System.Collections.Generic;
-using Schumix.API;
-using Schumix.API.Irc;
+using Schumix.Api.Irc;
 using Schumix.Irc.Ctcp;
 using Schumix.Irc.Flood;
 using Schumix.Irc.Ignore;
+using Schumix.Irc.Channel;
+using Schumix.Irc.NickName;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
@@ -42,16 +43,16 @@ namespace Schumix.Irc.Commands
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		public IgnoreIrcCommand sIgnoreIrcCommand { get; private set; }
-		public ChannelNameList sChannelNameList { get; private set; }
 		public IgnoreNickName sIgnoreNickName { get; private set; }
 		public IgnoreChannel sIgnoreChannel { get; private set; }
 		public IgnoreCommand sIgnoreCommand { get; private set; }
+		public MyChannelInfo sMyChannelInfo { get; private set; }
+		public ChannelList sChannelList { get; private set; }
 		public IgnoreAddon sIgnoreAddon { get; private set; }
 		public SendMessage sSendMessage { get; private set; }
-		public ChannelInfo sChannelInfo { get; private set; }
 		public CtcpSender sCtcpSender { get; private set; }
+		public MyNickInfo sMyNickInfo { get; private set; }
 		public AntiFlood sAntiFlood { get; private set; }
-		public NickInfo sNickInfo { get; private set; }
 		public Sender sSender { get; private set; }
 		protected string ChannelPrivmsg { get; set; }
 		protected string NewNickPrivmsg { get; set; }
@@ -74,15 +75,15 @@ namespace Schumix.Irc.Commands
 			sSendMessage = new SendMessage(_servername);
 			sIgnoreChannel = new IgnoreChannel(_servername);
 			sSender = new Sender(_servername);
-			sNickInfo = new NickInfo(_servername);
+			sMyNickInfo = new MyNickInfo(_servername);
 			sIgnoreAddon = new IgnoreAddon(_servername);
 			sIgnoreCommand = new IgnoreCommand(_servername);
 			sIgnoreNickName = new IgnoreNickName(_servername);
 			sIgnoreIrcCommand = new IgnoreIrcCommand(_servername);
-			sChannelInfo = new ChannelInfo(_servername);
+			sMyChannelInfo = new MyChannelInfo(_servername);
 			sAntiFlood = new AntiFlood(_servername);
 			sCtcpSender = new CtcpSender(_servername);
-			sChannelNameList = new ChannelNameList(_servername);
+			sChannelList = new ChannelList(_servername);
 		}
 
 		protected void HandleHelp(IRCMessage sIRCMessage)
@@ -202,9 +203,9 @@ namespace Schumix.Irc.Commands
 				if(sIgnoreCommand.IsIgnore(sIRCMessage.Info[4].ToLower()))
 					return;
 
-				int adminflag = Adminflag(sIRCMessage.Nick, sIRCMessage.Host);
+				var adminflag = Adminflag(sIRCMessage.Nick, sIRCMessage.Host);
 
-				if(adminflag != -1)
+				if(adminflag != AdminFlag.None)
 				{
 					string commands = sIRCMessage.Info.SplitToString(4, "/");
 					int rank = sLManager.GetCommandHelpRank(commands, sIRCMessage.Channel, sIRCMessage.ServerName);
@@ -215,9 +216,11 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					if((adminflag == 2 && rank == 2) || (adminflag == 2 && rank == 1) || (adminflag == 2 && rank == 0) ||
-					(adminflag == 1 && rank == 1) || (adminflag == 1 && rank == 0) || (adminflag == 0 && rank == 0) ||
-					(adminflag == 2 && rank == 9) || (adminflag == 1 && rank == 9) || (adminflag == 0 && rank == 9))
+					if((adminflag == AdminFlag.Administrator && rank == 2) || (adminflag == AdminFlag.Administrator && rank == 1) ||
+					   (adminflag == AdminFlag.Administrator && rank == 0) || (adminflag == AdminFlag.Operator && rank == 1) ||
+					   (adminflag == AdminFlag.Operator && rank == 0) || (adminflag == AdminFlag.HalfOperator && rank == 0) ||
+					   (adminflag == AdminFlag.Administrator && rank == 9) || (adminflag == AdminFlag.Operator && rank == 9) ||
+					   (adminflag == AdminFlag.HalfOperator && rank == 9))
 						HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName, rank));
 				}
 				else

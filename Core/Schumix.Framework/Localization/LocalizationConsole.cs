@@ -1595,6 +1595,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "{0} invites you to join {1}";
 				}
+				case "Text28":
+				{
+					if(Language == "huHU")
+						return "[Téma] {0}";
+					else if(Language == "enUS")
+						return "[Topic] {0}";
+					else
+						return "[Topic] {0}";
+				}
 				default:
 					return string.Empty;
 			}

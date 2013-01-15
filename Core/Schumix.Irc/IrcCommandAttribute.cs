@@ -19,7 +19,6 @@
  */
 
 using System;
-using Schumix.API;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc

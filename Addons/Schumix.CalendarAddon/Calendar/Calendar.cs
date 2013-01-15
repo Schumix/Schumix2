@@ -23,8 +23,7 @@ using System.Data;
 using System.Timers;
 using System.Threading;
 using System.Threading.Tasks;
-using Schumix.API;
-using Schumix.API.Functions;
+using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -389,18 +388,18 @@ namespace Schumix.CalendarAddon
 		private void NameDay()
 		{
 			var time = DateTime.Now;
-			var sChannelInfo = sIrcBase.Networks[_servername].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[_servername].sMyChannelInfo;
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 
-			if(!sChannelInfo.FSelect(IFunctions.NameDay))
+			if(!sMyChannelInfo.FSelect(IFunctions.NameDay))
 				return;
 
 			if((time.Hour == 8 && time.Minute == 0) || (time.Hour == 12 && time.Minute == 0) ||
 			   (time.Hour == 16 && time.Minute == 0) || (time.Hour == 20 && time.Minute == 0))
 			{
-				foreach(var channel in sChannelInfo.CList)
+				foreach(var channel in sMyChannelInfo.CList)
 				{
-					if(sChannelInfo.FSelect(IChannelFunctions.NameDay, channel.Key))
+					if(sMyChannelInfo.FSelect(IChannelFunctions.NameDay, channel.Key))
 					{
 						sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("NameDay", channel.Key, _servername), sUtilities.NameDay(channel.Key));
 						Thread.Sleep(400);
@@ -412,10 +411,10 @@ namespace Schumix.CalendarAddon
 		private void BirthDay()
 		{
 			var time = DateTime.Now;
-			var sChannelInfo = sIrcBase.Networks[_servername].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[_servername].sMyChannelInfo;
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 
-			if(!sChannelInfo.FSelect(IFunctions.BirthDay))
+			if(!sMyChannelInfo.FSelect(IFunctions.BirthDay))
 				return;
 
 			if((time.Hour == 8 && time.Minute == 0) || (time.Hour == 12 && time.Minute == 0) ||
@@ -430,9 +429,9 @@ namespace Schumix.CalendarAddon
 						if(!enabled)
 							return;
 
-						foreach(var channel in sChannelInfo.CList)
+						foreach(var channel in sMyChannelInfo.CList)
 						{
-							if(sChannelInfo.FSelect(IChannelFunctions.BirthDay, channel.Key))
+							if(sMyChannelInfo.FSelect(IChannelFunctions.BirthDay, channel.Key))
 							{
 								sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("BirthDay", channel.Key, _servername), row["Name"].ToString(), (DateTime.Now.Year - Convert.ToInt32(row["Year"].ToString())));
 								Thread.Sleep(400);

@@ -20,9 +20,9 @@
 
 using System;
 using System.Collections.Generic;
-using Schumix.API;
-using Schumix.API.Irc;
-using Schumix.API.Functions;
+using Schumix.Api;
+using Schumix.Api.Irc;
+using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
@@ -39,6 +39,7 @@ namespace Schumix.GameAddon
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private GameCommand sGameCommand;
 		private string _servername;
@@ -114,30 +115,30 @@ namespace Schumix.GameAddon
 			}
 
 			var sIgnoreNickName = sIrcBase.Networks[sIRCMessage.ServerName].sIgnoreNickName;
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sChannelInfo.FSelect(IFunctions.Gamecommands) || !sGameCommand.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Gamecommands) || !sUtilities.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sGameCommand.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
 					return;
 
-				if(!sGameCommand.IsChannel(sIRCMessage.Channel))
+				if(!sUtilities.IsChannel(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string channel = sIRCMessage.Channel.ToLower();
 
-				if(sGameCommand.MaffiaList.ContainsKey(channel) || !sGameCommand.IsChannel(sIRCMessage.Channel))
+				if(sGameCommand.MaffiaList.ContainsKey(channel) || !sUtilities.IsChannel(sIRCMessage.Channel))
 				{
 					if(sIRCMessage.Info.Length < 4)
 						return;
 
 					bool nick = false;
 
-					if(!sGameCommand.IsChannel(sIRCMessage.Channel))
+					if(!sUtilities.IsChannel(sIRCMessage.Channel))
 					{
 						foreach(var maffia in sGameCommand.MaffiaList)
 						{
@@ -195,7 +196,7 @@ namespace Schumix.GameAddon
 								sGameCommand.IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 								sGameCommand.MaffiaList[channel].Start();
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Nick, sGameCommand.MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick), sGameCommand.MaffiaList[channel].GetOwner());
 							break;
 						}
 						case "!set":
@@ -212,13 +213,13 @@ namespace Schumix.GameAddon
 							{
 								if(sGameCommand.MaffiaList[channel].Started)
 								{
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sIRCMessage.Nick);
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
 									return;
 								}
 
 								if(sIRCMessage.Info.Length < 5)
 								{
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sIRCMessage.Nick);
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
 									return;
 								}
 
@@ -253,7 +254,7 @@ namespace Schumix.GameAddon
 
 									if(sIRCMessage.Info.Length < 6)
 									{
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[0], sIRCMessage.Nick);
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[0], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
 										return;
 									}
 
@@ -266,10 +267,10 @@ namespace Schumix.GameAddon
 										else if(status == SchumixBase.Off)
 											sGameCommand.MaffiaList[channel].NoLynch = false;
 
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[1], sIRCMessage.Nick);
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[1], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
 									}
 									else
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[2], sIRCMessage.Nick);
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[2], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
 								}
 								else if(sIRCMessage.Info[4].ToLower() == "night")
 								{
@@ -290,7 +291,7 @@ namespace Schumix.GameAddon
 
 										if(sIRCMessage.Info.Length < 7)
 										{
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[0], sIRCMessage.Nick);
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[0], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
 											return;
 										}
 
@@ -303,15 +304,15 @@ namespace Schumix.GameAddon
 											else if(status == SchumixBase.Off)
 												sGameCommand.MaffiaList[channel].NoVoice = false;
 	
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[1], sIRCMessage.Nick);
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[1], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
 										}
 										else
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[2], sIRCMessage.Nick);
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[2], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
 									}
 								}
 							}
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], sIRCMessage.Nick, sGameCommand.MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick), sGameCommand.MaffiaList[channel].GetOwner());
 							break;
 						}
 						case "!stats":
@@ -564,7 +565,7 @@ namespace Schumix.GameAddon
 
 		private void HandleMode(IRCMessage sIRCMessage)
 		{
-			var sNickInfo = sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo;
+			var sMyNickInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo;
 			var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
 
 			if(sIRCMessage.Info.Length < 5)
@@ -573,10 +574,10 @@ namespace Schumix.GameAddon
 			if(!sIRCMessage.Info[3].Contains("v") && !sIRCMessage.Info[3].Contains("-"))
 				return;
 
-			if(sNickInfo.NickStorage.ToLower() == sIRCMessage.Nick.ToLower())
+			if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Nick.ToLower())
 				return;
 
-			sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, "-");
+			string rank = sIRCMessage.Info[3].Remove(0, 1, "-");
 
 			foreach(var maffia in sGameCommand.MaffiaList)
 			{
@@ -585,25 +586,25 @@ namespace Schumix.GameAddon
 
 				foreach(var player in maffia.Value.GetPlayerList())
 				{
-					if(player.Value == sIRCMessage.Info[4] && sIRCMessage.Info[3].Substring(0, 1) == "v")
+					if(player.Value == sIRCMessage.Info[4] && rank.Substring(1, 1) == "v")
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[4]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 6 && player.Value == sIRCMessage.Info[5] && sIRCMessage.Info[3].Substring(1) == "v")
+					if(sIRCMessage.Info.Length >= 6 && player.Value == sIRCMessage.Info[5] && rank.Substring(2).Substring(0, 1) == "v")
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[5]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 7 && player.Value == sIRCMessage.Info[6] && sIRCMessage.Info[3].Substring(2) == "v")
+					if(sIRCMessage.Info.Length >= 7 && player.Value == sIRCMessage.Info[6] && rank.Substring(3).Substring(0, 1) == "v")
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[6]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 8 && player.Value == sIRCMessage.Info[7] && sIRCMessage.Info[3].Substring(3) == "v")
+					if(sIRCMessage.Info.Length >= 8 && player.Value == sIRCMessage.Info[7] && rank.Substring(4).Substring(0, 1) == "v")
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[7]);
 						continue;
@@ -630,11 +631,11 @@ namespace Schumix.GameAddon
 
 		private void CleanFunctions()
 		{
-			var sChannelInfo = sIrcBase.Networks[_servername].sChannelInfo;
-			sChannelInfo.ChannelFunctionsReload();
+			var sMyChannelInfo = sIrcBase.Networks[_servername].sMyChannelInfo;
+			sMyChannelInfo.ChannelFunctionsReload();
 			var list = new List<string>();
 
-			foreach(var function in sChannelInfo.CFunction)
+			foreach(var function in sMyChannelInfo.CFunction)
 			{
 				foreach(var comma in function.Value.Split(SchumixBase.Comma))
 				{
@@ -650,10 +651,10 @@ namespace Schumix.GameAddon
 
 			foreach(var channel in list)
 			{
-				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("commands", SchumixBase.On, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
-				sChannelInfo.ChannelFunctionsReload();
-				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
-				sChannelInfo.ChannelFunctionsReload();
+				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("commands", SchumixBase.On, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
+				sMyChannelInfo.ChannelFunctionsReload();
+				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
+				sMyChannelInfo.ChannelFunctionsReload();
 			}
 
 			list.Clear();

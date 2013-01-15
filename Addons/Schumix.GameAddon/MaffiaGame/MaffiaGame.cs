@@ -77,130 +77,73 @@ namespace Schumix.GameAddon.MaffiaGames
 		private int _players;
 		private int _gameid;
 
-		public MaffiaGame(string ServerName, string Name, string Channel, GameCommand gc) : base(ServerName)
+		private bool IsRunning(string Channel, string Name = "")
 		{
-			_servername = ServerName;
-			sGameCommand = gc;
-			NewGame(Name, Channel);
+			if(!Running)
+			{
+				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+				var text = sLManager.GetCommandTexts("maffiagame/base/isrunning", _channel, _servername);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+					return false;
+				}
+
+				if(Name == string.Empty)
+					sSendMessage.SendCMPrivmsg(_channel, text[0]);
+				else
+					sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(Name));
+
+				return false;
+			}
+			else
+				return true;
 		}
 
-		public void NewGame(string Name, string Channel)
+		private bool IsStarted(string Channel, string Name)
 		{
-			Clean();
-			_day = false;
-			_stop = false;
-			_joinstop = false;
-			_start = false;
-			_lynch = false;
-			_players = 0;
-			_lynchmaxnumber = 0;
-			Running = true;
-			Started = false;
-			NoLynch = false;
-			NoVoice = false;
-			_owner = Name;
-			_channel = Channel.ToLower();
-			_killerchannel = string.Empty;
-			_playerlist.Add(1, Name);
-			NewOwnerTime();
-
-			_timerowner.Interval = 60*1000;
-			_timerowner.Elapsed += HandleIsOwnerAfk;
-			_timerowner.Enabled = true;
-			_timerowner.Start();
-
-			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
-			var text = sLManager.GetCommandTexts("maffiagame/base/newgame", _channel, _servername);
-			if(text.Length < 2)
+			if(!Started)
 			{
-				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
-				return;
+				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+				sSendMessage.SendCMPrivmsg(Channel, sLManager.GetCommandText("maffiagame/base/isstarted", _channel, _servername), DisableHl(Name));
+				return false;
 			}
-
-			sSendMessage.SendCMPrivmsg(_channel, text[0], DisableHl(_owner));
-			sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(_owner));
-
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Game FROM maffiagame WHERE ServerName = '{0}' ORDER BY Game DESC", _servername);
-			_gameid = !db.IsNull() ? (Convert.ToInt32(db["Game"].ToString()) + 1) : 1;
+			else
+				return true;
 		}
 
-		public void NewNick(int Id, string OldName, string NewName)
+		private Rank GetRank(string Name)
 		{
-			if(_playerlist.ContainsKey(Id))
+			return _playerflist.ContainsKey(Name.ToLower()) ? _playerflist[Name.ToLower()].Rank : Rank.None;
+		}
+
+		private string GetPlayerName(string Name)
+		{
+			string player = string.Empty;
+
+			if(_killerlist.ContainsKey(Name))
+				player = _killerlist[Name];
+			else if(_detectivelist.ContainsKey(Name))
+				player = _detectivelist[Name];
+			else if(_doctorlist.ContainsKey(Name))
+				player = _doctorlist[Name];
+			else if(_normallist.ContainsKey(Name))
+				player = _normallist[Name];
+
+			return player;
+		}
+
+		private bool GetPlayerMaster(string Name)
+		{
+			bool master = false;
+
+			foreach(var function in _playerflist)
 			{
-				_playerlist.Remove(Id);
-				_playerlist.Add(Id, NewName);
+				if(function.Key == Name.ToLower())
+					master = function.Value.Master;
 			}
 
-			if(_joinlist.Contains(OldName.ToLower()))
-			{
-				_joinlist.Remove(OldName.ToLower());
-				_joinlist.Add(NewName.ToLower());
-			}
-
-			if(_owner == OldName)
-				_owner = NewName;
-
-			if(Started)
-			{
-				if(_killerlist.ContainsKey(OldName.ToLower()))
-				{
-					_killerlist.Remove(OldName.ToLower());
-					_killerlist.Add(NewName.ToLower(), NewName);
-				}
-				else if(_detectivelist.ContainsKey(OldName.ToLower()))
-				{
-					_detectivelist.Remove(OldName.ToLower());
-					_detectivelist.Add(NewName.ToLower(), NewName);
-				}
-				else if(_doctorlist.ContainsKey(OldName.ToLower()))
-				{
-					_doctorlist.Remove(OldName.ToLower());
-					_doctorlist.Add(NewName.ToLower(), NewName);
-				}
-				else if(_normallist.ContainsKey(OldName.ToLower()))
-				{
-					_normallist.Remove(OldName.ToLower());
-					_normallist.Add(NewName.ToLower(), NewName);
-				}
-				else if(_ghostlist.ContainsKey(OldName.ToLower()))
-				{
-					_ghostlist.Remove(OldName.ToLower());
-					_ghostlist.Add(NewName.ToLower(), NewName);
-				}
-
-				if(_playerflist.ContainsKey(OldName.ToLower()))
-				{
-					_playerflist.Add(NewName.ToLower(), new Player(_playerflist[OldName.ToLower()].Rank, _playerflist[OldName.ToLower()].Master));
-					_playerflist[NewName.ToLower()].RName = _playerflist[OldName.ToLower()].RName;
-					_playerflist[NewName.ToLower()].DRank = _playerflist[OldName.ToLower()].DRank;
-					_playerflist[NewName.ToLower()].Ghost = _playerflist[OldName.ToLower()].Ghost;
-					_playerflist[NewName.ToLower()].Detective = _playerflist[OldName.ToLower()].Detective;
-
-					foreach(var lynch in _playerflist[OldName.ToLower()].Lynch)
-						_playerflist[NewName.ToLower()].Lynch.Add(lynch);
-
-					foreach(var function in _playerflist)
-					{
-						if(function.Value.Lynch.Contains(OldName.ToLower()))
-						{
-							function.Value.Lynch.Remove(OldName.ToLower());
-							function.Value.Lynch.Add(NewName.ToLower());
-						}
-					}
-
-					_playerflist[OldName.ToLower()].Lynch.Clear();
-					_playerflist.Remove(OldName.ToLower());
-				}
-
-				if(_gameoverlist.Contains(OldName.ToLower()))
-				{
-					_gameoverlist.Remove(OldName.ToLower());
-					_gameoverlist.Add(NewName.ToLower());
-				}
-
-				SchumixBase.DManager.Update("maffiagame", string.Format("Name = '{0}'", NewName), string.Format("Name = '{0}' And ServerName = '{1}'", OldName, _servername));
-			}
+			return master;
 		}
 
 		public string GetKiller()
@@ -323,6 +266,53 @@ namespace Schumix.GameAddon.MaffiaGames
 			return sLManager.GetCommandText("maffiagame/base/idonotknowwho", _channel, _servername);
 		}
 
+		public MaffiaGame(string ServerName, string Name, string Channel, GameCommand gc) : base(ServerName)
+		{
+			_servername = ServerName;
+			sGameCommand = gc;
+			NewGame(Name, Channel);
+		}
+
+		public void NewGame(string Name, string Channel)
+		{
+			Clean();
+			_day = false;
+			_stop = false;
+			_joinstop = false;
+			_start = false;
+			_lynch = false;
+			_players = 0;
+			_lynchmaxnumber = 0;
+			Running = true;
+			Started = false;
+			NoLynch = false;
+			NoVoice = false;
+			_owner = Name;
+			_channel = Channel.ToLower();
+			_killerchannel = string.Empty;
+			_playerlist.Add(1, Name);
+			NewOwnerTime();
+
+			_timerowner.Interval = 60*1000;
+			_timerowner.Elapsed += HandleIsOwnerAfk;
+			_timerowner.Enabled = true;
+			_timerowner.Start();
+
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+			var text = sLManager.GetCommandTexts("maffiagame/base/newgame", _channel, _servername);
+			if(text.Length < 2)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
+			sSendMessage.SendCMPrivmsg(_channel, text[0], DisableHl(_owner));
+			sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(_owner));
+
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Game FROM maffiagame WHERE ServerName = '{0}' ORDER BY Game DESC", _servername);
+			_gameid = !db.IsNull() ? (Convert.ToInt32(db["Game"].ToString()) + 1) : 1;
+		}
+
 		public void NewOwnerTime()
 		{
 			OwnerMsgTime = DateTime.Now;
@@ -352,6 +342,88 @@ namespace Schumix.GameAddon.MaffiaGames
 				_timerowner.Enabled = false;
 				_timerowner.Elapsed -= HandleIsOwnerAfk;
 				_timerowner.Stop();
+			}
+		}
+
+		public void NewNick(int Id, string OldName, string NewName)
+		{
+			if(_playerlist.ContainsKey(Id))
+			{
+				_playerlist.Remove(Id);
+				_playerlist.Add(Id, NewName);
+			}
+
+			if(_joinlist.Contains(OldName.ToLower()))
+			{
+				_joinlist.Remove(OldName.ToLower());
+				_joinlist.Add(NewName.ToLower());
+			}
+
+			if(_owner == OldName)
+				_owner = NewName;
+
+			if(Started)
+			{
+				if(_killerlist.ContainsKey(OldName.ToLower()))
+				{
+					_killerlist.Remove(OldName.ToLower());
+					_killerlist.Add(NewName.ToLower(), NewName);
+				}
+				else if(_detectivelist.ContainsKey(OldName.ToLower()))
+				{
+					_detectivelist.Remove(OldName.ToLower());
+					_detectivelist.Add(NewName.ToLower(), NewName);
+				}
+				else if(_doctorlist.ContainsKey(OldName.ToLower()))
+				{
+					_doctorlist.Remove(OldName.ToLower());
+					_doctorlist.Add(NewName.ToLower(), NewName);
+				}
+				else if(_normallist.ContainsKey(OldName.ToLower()))
+				{
+					_normallist.Remove(OldName.ToLower());
+					_normallist.Add(NewName.ToLower(), NewName);
+				}
+				else if(_ghostlist.ContainsKey(OldName.ToLower()))
+				{
+					_ghostlist.Remove(OldName.ToLower());
+					_ghostlist.Add(NewName.ToLower(), NewName);
+				}
+
+				if(_playerflist.ContainsKey(OldName.ToLower()))
+				{
+					_playerflist.Add(NewName.ToLower(), new Player(_playerflist[OldName.ToLower()].Rank, _playerflist[OldName.ToLower()].Master));
+					_playerflist[NewName.ToLower()].RName = _playerflist[OldName.ToLower()].RName;
+					_playerflist[NewName.ToLower()].DRank = _playerflist[OldName.ToLower()].DRank;
+					_playerflist[NewName.ToLower()].Ghost = _playerflist[OldName.ToLower()].Ghost;
+					_playerflist[NewName.ToLower()].Detective = _playerflist[OldName.ToLower()].Detective;
+
+					foreach(var lynch in _playerflist[OldName.ToLower()].Lynch)
+						_playerflist[NewName.ToLower()].Lynch.Add(lynch);
+
+					foreach(var function in _playerflist)
+					{
+						if(function.Value.Lynch.Contains(OldName.ToLower()))
+						{
+							function.Value.Lynch.Remove(OldName.ToLower());
+							function.Value.Lynch.Add(NewName.ToLower());
+						}
+
+						if(function.Value.RName == OldName.ToLower())
+							function.Value.RName = NewName.ToLower();
+					}
+
+					_playerflist[OldName.ToLower()].Lynch.Clear();
+					_playerflist.Remove(OldName.ToLower());
+				}
+
+				if(_gameoverlist.Contains(OldName.ToLower()))
+				{
+					_gameoverlist.Remove(OldName.ToLower());
+					_gameoverlist.Add(NewName.ToLower());
+				}
+
+				SchumixBase.DManager.Update("maffiagame", string.Format("Name = '{0}'", NewName), string.Format("Name = '{0}' And ServerName = '{1}' AND Game = '{2}'", OldName, _servername, _gameid));
 			}
 		}
 
@@ -440,6 +512,52 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSendMessage.SendCMPrivmsg(_channel, text[3]);
 		}
 
+		private void LynchPlayer(string namess)
+		{
+			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+			var text = sLManager.GetCommandTexts("maffiagame/basecommand/lynch", _channel, _servername);
+			if(text.Length < 14)
+			{
+				sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
+				return;
+			}
+
+			if((_playerlist.Count/2)+1 <= _lynchmaxnumber)
+			{
+				_lynch = true;
+				
+				foreach(var function in _playerflist)
+				{
+					if(_lynchmaxnumber == function.Value.Lynch.Count)
+					{
+						namess = function.Key;
+						break;
+					}
+				}
+				
+				_lynchmaxnumber = 0;
+				namess = GetPlayerName(namess);
+				RemovePlayer(namess, namess);
+				sSendMessage.SendCMPrivmsg(_channel, text[11], DisableHl(namess));
+				
+				if(GetPlayerMaster(namess))
+					sSendMessage.SendCMPrivmsg(_channel, text[12]);
+				
+				Corpse(namess);
+				Thread.Sleep(400);
+				EndGame();
+				
+				if(_playerlist.Count >= 2 && Running)
+				{
+					sSendMessage.SendCMPrivmsg(_channel, text[13], DisableHl(namess));
+					_day = false;
+					_stop = false;
+				}
+				
+				_lynch = false;
+			}
+		}
+
 		public void EndText()
 		{
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
@@ -460,46 +578,6 @@ namespace Schumix.GameAddon.MaffiaGames
 		{
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 			sSendMessage.SendCMPrivmsg(_channel, sLManager.GetCommandText("maffiagame/base/endgametext", _channel, _servername));
-		}
-
-		private bool IsRunning(string Channel, string Name = "")
-		{
-			if(!Running)
-			{
-				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
-				var text = sLManager.GetCommandTexts("maffiagame/base/isrunning", _channel, _servername);
-				if(text.Length < 2)
-				{
-					sSendMessage.SendCMPrivmsg(_channel, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(_channel, _servername)));
-					return false;
-				}
-
-				if(Name == string.Empty)
-					sSendMessage.SendCMPrivmsg(_channel, text[0]);
-				else
-					sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(Name));
-
-				return false;
-			}
-			else
-				return true;
-		}
-
-		private bool IsStarted(string Channel, string Name)
-		{
-			if(!Running)
-			{
-				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
-				sSendMessage.SendCMPrivmsg(Channel, sLManager.GetCommandText("maffiagame/base/isstarted", _channel, _servername), DisableHl(Name));
-				return false;
-			}
-			else
-				return true;
-		}
-
-		private Rank GetRank(string Name)
-		{
-			return _playerflist.ContainsKey(Name.ToLower()) ? _playerflist[Name.ToLower()].Rank : Rank.None;
 		}
 
 		private void AddRanks()
@@ -586,35 +664,6 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSender.Mode(_channel, "-m");
 		}
 
-		private string GetPlayerName(string Name)
-		{
-			string player = string.Empty;
-
-			if(_killerlist.ContainsKey(Name))
-				player = _killerlist[Name];
-			else if(_detectivelist.ContainsKey(Name))
-				player = _detectivelist[Name];
-			else if(_doctorlist.ContainsKey(Name))
-				player = _doctorlist[Name];
-			else if(_normallist.ContainsKey(Name))
-				player = _normallist[Name];
-
-			return player;
-		}
-
-		private bool GetPlayerMaster(string Name)
-		{
-			bool master = false;
-
-			foreach(var function in _playerflist)
-			{
-				if(function.Key == Name.ToLower())
-					master = function.Value.Master;
-			}
-
-			return master;
-		}
-
 		private void StartThread()
 		{
 			_thread = new Thread(Game);
@@ -623,7 +672,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		public void StopThread()
 		{
-			var sChannelInfo = sIrcBase.Networks[_servername].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[_servername].sMyChannelInfo;
 			var sSender = sIrcBase.Networks[_servername].sSender;
 			Running = false;
 
@@ -632,9 +681,9 @@ namespace Schumix.GameAddon.MaffiaGames
 
 			SchumixBase.DManager.Update("maffiagame", "Active = '0'", string.Format("Active = '1' AND Game = '{0}' And ServerName = '{1}'", _gameid, _servername));
 			SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sGameCommand.GameChannelFunction[_channel]), string.Format("Channel = '{0}' And ServerName = '{1}'", _channel, _servername));
-			sChannelInfo.ChannelFunctionsReload();
-			SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, _channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", _channel, _servername));
-			sChannelInfo.ChannelFunctionsReload();
+			sMyChannelInfo.ChannelFunctionsReload();
+			SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, _channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", _channel, _servername));
+			sMyChannelInfo.ChannelFunctionsReload();
 
 			if(Started)
 				_thread.Abort();
@@ -643,16 +692,13 @@ namespace Schumix.GameAddon.MaffiaGames
 			{
 				sSender.Part(_killerchannel);
 				SchumixBase.DManager.Delete("channels", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(_killerchannel), _servername));
-				sChannelInfo.ChannelListReload();
-				sChannelInfo.ChannelFunctionsReload();
+				sMyChannelInfo.ChannelListReload();
+				sMyChannelInfo.ChannelFunctionsReload();
 			}
 
-			if(_timerowner.Enabled)
-			{
-				_timerowner.Enabled = false;
-				_timerowner.Elapsed -= HandleIsOwnerAfk;
-				_timerowner.Stop();
-			}
+			_timerowner.Enabled = false;
+			_timerowner.Elapsed -= HandleIsOwnerAfk;
+			_timerowner.Stop();
 
 			Clean();
 			Started = false;
@@ -797,16 +843,13 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						foreach(var function in _playerflist)
 						{
-							if(function.Value.Rank == Rank.Doctor && function.Value.RName != string.Empty && !function.Value.Ghost)
+							if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && (function.Value.RName != string.Empty ||
+							   function.Value.RName == "áá(%[[]][[]]killer[[]][[]]%)áá"))
 								enableddoctor = true;
 						}
 					}
 					else if(_doctorlist.Count == 0 && Started)
 						enableddoctor = true;
-
-					//Console.WriteLine("enabledkiller: {0}", enabledkiller);
-					//Console.WriteLine("enableddetective: {0}", enableddetective);
-					//Console.WriteLine("enableddoctor: {0}", enableddoctor);
 
 					if(enabledkiller && enableddetective && enableddoctor && Started && Running)
 					{
@@ -814,7 +857,8 @@ namespace Schumix.GameAddon.MaffiaGames
 						{
 							if(function.Value.Rank == Rank.Doctor)
 							{
-								if((newkillghost.ToLower() != function.Value.RName) && (newkillghost.ToLower() != string.Empty))
+								if((newkillghost.ToLower() != function.Value.RName) && (newkillghost.ToLower() != string.Empty) &&
+								   (newkillghost.ToLower() != "áá(%[[]][[]]killer[[]][[]]%)áá"))
 									newghost = true;
 							}
 

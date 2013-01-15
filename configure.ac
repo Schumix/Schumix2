@@ -67,8 +67,8 @@ dnl package checks, per config
 
 
 AC_CONFIG_FILES([
-Core/Schumix.API/schumix.api.pc
-Core/Schumix.API/Makefile
+Core/Schumix.Api/schumix.api.pc
+Core/Schumix.Api/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile
 Core/Schumix.Irc/schumix.irc.pc

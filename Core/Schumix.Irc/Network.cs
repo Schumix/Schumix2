@@ -30,10 +30,9 @@ using System.Net.Security;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Security.Authentication;
-using Schumix.API;
-using Schumix.API.Irc;
-using Schumix.API.Delegate;
-using Schumix.API.Functions;
+using Schumix.Api.Irc;
+using Schumix.Api.Delegate;
+using Schumix.Api.Functions;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
@@ -56,24 +55,24 @@ namespace Schumix.Irc
 
 		public bool Shutdown { get; private set; }
 
-        /// <summary>
-        ///     A bejövő információkat fogadja.
-        /// </summary>
+		/// <summary>
+		///     A bejövő információkat fogadja.
+		/// </summary>
 		private StreamReader reader;
 
-        /// <summary>
-        ///     A kapcsolatot tároljra.
-        /// </summary>
+		/// <summary>
+		///     A kapcsolatot tároljra.
+		/// </summary>
 		private TcpClient client;
 
-        /// <summary>
-        ///     IRC szerver címe.
-        /// </summary>
+		/// <summary>
+		///     IRC szerver címe.
+		/// </summary>
 		private readonly string _server;
 
-        /// <summary>
-        ///     IRC port száma.
-        /// </summary>
+		/// <summary>
+		///     IRC port száma.
+		/// </summary>
 		private readonly int _port;
 
 		private bool NetworkQuit = false;
@@ -142,7 +141,7 @@ namespace Schumix.Irc
 			InitHandler();
 			InitializeCommandHandler();
 			InitializeCommandMgr();
-			Task.Factory.StartNew(() => sChannelInfo.ChannelList());
+			Task.Factory.StartNew(() => sMyChannelInfo.ChannelList());
 			sIgnoreNickName.AddConfig();
 			sIgnoreChannel.AddConfig();
 			sIgnoreAddon.AddConfig();
@@ -195,15 +194,19 @@ namespace Schumix.Irc
 			IrcRegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandlerErrorNewNickName);
 			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
 			IrcRegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
+			IrcRegisterHandler(ReplyCode.RPL_TOPIC,            HandleInitialTopic);
 
-			var asms = sAddonManager.Addons[_servername].Assemblies.ToDictionary(v => v.Key, v => v.Value);
-			Parallel.ForEach(asms, asm =>
+			Task.Factory.StartNew(() =>
 			{
-				var types = asm.Value.GetTypes();
-				Parallel.ForEach(types, type =>
+				var asms = sAddonManager.Addons[_servername].Assemblies.ToDictionary(v => v.Key, v => v.Value);
+				Parallel.ForEach(asms, asm =>
 				{
-					var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-					IrcProcessMethods(methods);
+					var types = asm.Value.GetTypes();
+					Parallel.ForEach(types, type =>
+					{
+						var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+						IrcProcessMethods(methods);
+					});
 				});
 			});
 
@@ -327,18 +330,18 @@ namespace Schumix.Irc
 			Connection(nick);
 		}
 
-        /// <summary>
-        ///     Lekapcsolódás az IRC koszolgálótól.
-        /// </summary>
+		/// <summary>
+		///     Lekapcsolódás az IRC koszolgálótól.
+		/// </summary>
 		public void DisConnect()
 		{
 			Close();
 			Log.Notice("Network", sLConsole.Network("Text7"));
 		}
 
-        /// <summary>
-        ///     Visszakapcsolódás az IRC kiszolgálóhoz.
-        /// </summary>
+		/// <summary>
+		///     Visszakapcsolódás az IRC kiszolgálóhoz.
+		/// </summary>
 		public void ReConnect()
 		{
 			if(SchumixBase.ExitStatus)
@@ -360,7 +363,7 @@ namespace Schumix.Irc
 			_cts = new CancellationTokenSource();
 
 			if(nick)
-				sNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
+				sMyNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
 
 			Log.Notice("Network", sLConsole.Network("Text21"), CType.ToString());
 
@@ -418,7 +421,7 @@ namespace Schumix.Irc
 			}
 
 			Connected = true;
-			sSender.NameInfo(sNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
+			sSender.NameInfo(sMyNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
 			Online = false;
@@ -426,8 +429,8 @@ namespace Schumix.Irc
 			_enabled = true;
 			NewNickPrivmsg = string.Empty;
 			SchumixBase.UrlTitleEnabled = false;
-			sNickInfo.ChangeIdentifyStatus(false);
-			sNickInfo.ChangeVhostStatus(false);
+			sMyNickInfo.ChangeIdentifyStatus(false);
+			sMyNickInfo.ChangeVhostStatus(false);
 		}
 
 		private void Close()
@@ -450,7 +453,7 @@ namespace Schumix.Irc
 
 		private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
 		{
-			if(sChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
+			if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 			{
 				if(ReconnectNumber > 5)
 					_timeropcode.Interval = 5*60*1000;
@@ -463,12 +466,12 @@ namespace Schumix.Irc
 			}
 		}
 
-        /// <summary>
-        ///     Ez a függvény kezeli azt IRC adatai és az opcedes-eket.
-        /// </summary>
-        /// <remarks>
-        ///     Opcodes: Az IRC-ről jövő funkciók, kódok.
-        /// </remarks>
+		/// <summary>
+		///     Ez a függvény kezeli azt IRC adatai és az opcedes-eket.
+		/// </summary>
+		/// <remarks>
+		///     Opcodes: Az IRC-ről jövő funkciók, kódok.
+		/// </remarks>
 		private void Opcodes()
 		{
 			Log.Notice("Opcodes", sLConsole.Network("Text14"));
@@ -496,7 +499,7 @@ namespace Schumix.Irc
 					{
 						Log.Error("Opcodes", sLConsole.Network("Text16"));
 
-						if(sChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
+						if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 						{
 							if(ReconnectNumber > 5)
 								_timeropcode.Interval = 5*60*1000;
@@ -525,7 +528,7 @@ namespace Schumix.Irc
 				}
 				catch(IOException)
 				{
-					if(sChannelInfo.FSelect(IFunctions.Reconnect))
+					if(sMyChannelInfo.FSelect(IFunctions.Reconnect))
 					{
 						if(ReconnectNumber > 5)
 							_timeropcode.Interval = 5*60*1000;
@@ -624,9 +627,9 @@ namespace Schumix.Irc
 			}
 		}
 
-        /// <summary>
-        ///     Pingeli az IRC szervert 30 másodpercenként.
-        /// </summary>
+		/// <summary>
+		///     Pingeli az IRC szervert 30 másodpercenként.
+		/// </summary>
 		private void AutoPing()
 		{
 			Log.Notice("AutoPing", sLConsole.Network("Text14"));

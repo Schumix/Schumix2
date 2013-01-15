@@ -19,13 +19,13 @@
  */
 
 using System;
+using System.Text;
 using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Collections.Generic;
-using Schumix.API;
-using Schumix.API.Functions;
+using Schumix.Api.Functions;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Clean;
 using Schumix.Framework.Client;
@@ -48,7 +48,7 @@ namespace Schumix.Framework
 		public static CleanManager sCleanManager { get; private set; }
 		public static DatabaseManager DManager { get; private set; }
 		public static CacheDB sCacheDB { get; private set; }
-		public static Timer timer { get; private set; }
+		public static Timer sTimer { get; private set; }
 		public const string Title = "Schumix2 IRC Bot and Framework";
 		public static bool ExitStatus { get; private set; }
 		public static string ServerIdentify = string.Empty;
@@ -90,7 +90,8 @@ namespace Schumix.Framework
 					System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text"));
-				timer = new Timer();
+				sTimer = new Timer();
+				sTimer.Start();
 
 				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text2"));
 				DManager = new DatabaseManager();
@@ -160,6 +161,7 @@ namespace Schumix.Framework
 
 					NewServerSqlData(sn.Value.ServerId, sn.Key);
 					IsAllSchumixFunction(sn.Value.ServerId, sn.Key);
+					IsAllChannelFunction(sn.Value.ServerId);
 
 					var db = DManager.Query("SELECT FunctionName, FunctionStatus FROM schumix WHERE ServerName = '{0}'", sn.Key);
 					if(!db.IsNull())
@@ -214,7 +216,7 @@ namespace Schumix.Framework
 			packet.Write<string>(_guid.ToString());
 			packet.Write<string>(SchumixConfig.ConfigFile);
 			packet.Write<string>(SchumixConfig.ConfigDirectory);
-			packet.Write<string>("utf-8");
+			packet.Write<string>(Encoding.UTF8.BodyName);
 			packet.Write<string>(LocalizationConfig.Locale);
 			packet.Write<string>(Reconnect.ToString());
 			packet.Write<string>(ServerIdentify);
@@ -232,7 +234,7 @@ namespace Schumix.Framework
 				var memory = Process.GetCurrentProcess().WorkingSet64;
 				sAddonManager.UnloadPlugins();
 				sUtilities.RemovePidFile();
-				timer.SaveUptime(memory);
+				sTimer.SaveUptime(memory);
 				sCacheDB.Clean();
 				ServerDisconnect(Reconnect);
 			}
@@ -272,6 +274,51 @@ namespace Schumix.Framework
 						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), Off);
 					else
 						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), On);
+				}
+			}
+		}
+
+		private void IsAllChannelFunction(int ServerId)
+		{
+			var db = DManager.Query("SELECT Functions, Channel FROM channels WHERE ServerId = '{0}'", ServerId);
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string functions = string.Empty;
+					var dic = new Dictionary<string, string>();
+					string Channel = row["Channel"].ToString();
+					string[] f = row["Functions"].ToString().Split(SchumixBase.Comma);
+
+					foreach(var ff in f)
+					{
+						if(ff == string.Empty)
+							continue;
+
+						if(!ff.Contains(SchumixBase.Colon.ToString()))
+							continue;
+
+						string name = ff.Substring(0, ff.IndexOf(SchumixBase.Colon));
+						string status = ff.Substring(ff.IndexOf(SchumixBase.Colon)+1);
+						dic.Add(name, status);
+					}
+
+					foreach(var function in Enum.GetNames(typeof(IChannelFunctions)))
+					{
+						if(dic.ContainsKey(function.ToString().ToLower()))
+							functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + dic[function.ToString().ToLower()];
+						else
+						{
+							if(function == IChannelFunctions.Log.ToString() || function == IChannelFunctions.Rejoin.ToString() ||
+							   function == IChannelFunctions.Commands.ToString())
+								functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + SchumixBase.On;
+							else
+								functions += SchumixBase.Comma + function.ToString().ToLower() + SchumixBase.Colon + SchumixBase.Off;
+						}
+					}
+
+					dic.Clear();
+					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", functions), string.Format("Channel = '{0}' And ServerId = '{1}'", Channel, ServerId));
 				}
 			}
 		}

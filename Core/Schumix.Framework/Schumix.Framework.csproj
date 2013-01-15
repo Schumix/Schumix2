@@ -12,9 +12,9 @@
     <ReleaseVersion>3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>..\..\Run\Debug</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -23,7 +23,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>..\..\Run\Release</OutputPath>
     <DefineConstants>RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -31,9 +31,9 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>..\..\Run\Debug_x64</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -42,7 +42,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>..\..\Run\Release_x64</OutputPath>
     <DefineConstants>RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -57,12 +57,6 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
-    <Reference Include="MySql.Data, Version=6.3.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
-      <HintPath>..\..\Dependencies\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Data.SQLite, Version=1.0.66.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139">
-      <HintPath>..\..\Dependencies\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="YamlDotNet.Core">
       <HintPath>..\..\Dependencies\YamlDotNet.Core.dll</HintPath>
     </Reference>
@@ -70,6 +64,12 @@
       <HintPath>..\..\Dependencies\YamlDotNet.RepresentationModel.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\Dependencies\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\Dependencies\MySql.Data.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -135,6 +135,8 @@
     <Compile Include="Clean\CleanDatabase.cs" />
     <Compile Include="Config\CleanConfig.cs" />
     <Compile Include="LogType.cs" />
+    <Compile Include="CodeBureau\StringEnum.cs" />
+    <Compile Include="CodeBureau\StringValueAttribute.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -148,16 +150,17 @@
     <None Include="..\..\Dependencies\sqlite3.dll">
       <Link>sqlite3.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
     </None>
     <None Include="..\..\Sql\Schumix.db3">
       <Link>Schumix.db3</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Gettext-ScanForTranslations>false</Gettext-ScanForTranslations>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Database\Cache\" />
     <Folder Include="Clean\" />
+    <Folder Include="CodeBureau\" />
   </ItemGroup>
 </Project>

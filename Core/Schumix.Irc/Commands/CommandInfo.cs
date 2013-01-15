@@ -20,7 +20,6 @@
 
 using System;
 using System.Data;
-using Schumix.API;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -92,27 +91,22 @@ namespace Schumix.Irc.Commands
 			return false;
 		}
 
-		public bool IsChannel(string Name)
-		{
-			return (Name.Length >= 2 && Name.Trim().Length > 1 && Name.Substring(0, 1) == "#");
-		}
-
-		public int Adminflag(string Name)
+		public AdminFlag Adminflag(string Name)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
-			return !db.IsNull() ? Convert.ToInt32(db["Flag"]) : -1;
+			return !db.IsNull() ? (AdminFlag)Convert.ToInt32(db["Flag"]) : AdminFlag.None;
 		}
 
-		public int Adminflag(string Name, string Vhost)
+		public AdminFlag Adminflag(string Name, string Vhost)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost, Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
 			if(!db.IsNull())
 			{
 				string vhost = db["Vhost"].ToString();
-				return Vhost != vhost ? -1 : Convert.ToInt32(db["Flag"]);
+				return Vhost != vhost ? AdminFlag.None : (AdminFlag)Convert.ToInt32(db["Flag"]);
 			}
 			else
-				return -1;
+				return AdminFlag.None;
 		}
 
 		public void RandomVhost(string Name)

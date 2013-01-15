@@ -24,9 +24,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using Schumix.API;
-using Schumix.API.Irc;
-using Schumix.API.Functions;
+using Schumix.Api;
+using Schumix.Api.Irc;
+using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Flood;
 using Schumix.Irc.Commands;
@@ -45,6 +45,7 @@ namespace Schumix.CompilerAddon
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 		private SCompiler sSCompiler;
@@ -97,17 +98,17 @@ namespace Schumix.CompilerAddon
 		private void HandlePrivmsg(IRCMessage sIRCMessage)
 		{
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 
-			if(sChannelInfo.FSelect(IFunctions.Commands) || !sSCompiler.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sUtilities.IsChannel(sIRCMessage.Channel))
 			{
-				if(!sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sSCompiler.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
 					return;
 
 				if(!CompilerConfig.CompilerEnabled)
 					return;
 
-				if(!sSCompiler.IsChannel(sIRCMessage.Channel))
+				if(!sUtilities.IsChannel(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string command = IRCConfig.List[sIRCMessage.ServerName].NickName + SchumixBase.Comma;
@@ -141,14 +142,14 @@ namespace Schumix.CompilerAddon
 					}
 				}
 
-				if(!sSCompiler.IsChannel(sIRCMessage.Channel))
+				if(!sUtilities.IsChannel(sIRCMessage.Channel))
 				{
 					if(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage))
 						Compiler(sIRCMessage, false, command);
 				}
 				else
 				{
-					if((sChannelInfo.FSelect(IFunctions.Compiler) && sChannelInfo.FSelect(IChannelFunctions.Compiler, sIRCMessage.Channel)) &&
+					if((sMyChannelInfo.FSelect(IFunctions.Compiler) && sMyChannelInfo.FSelect(IChannelFunctions.Compiler, sIRCMessage.Channel)) &&
 						(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage)))
 						Compiler(sIRCMessage, false, command);
 				}

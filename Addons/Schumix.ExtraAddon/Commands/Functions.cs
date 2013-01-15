@@ -24,9 +24,8 @@ using System.Data;
 using System.Timers;
 using System.Threading;
 using System.Text.RegularExpressions;
-using Schumix.API;
-using Schumix.API.Irc;
-using Schumix.API.Functions;
+using Schumix.Api.Irc;
+using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -43,9 +42,9 @@ namespace Schumix.ExtraAddon.Commands
 		public void HLMessage(IRCMessage sIRCMessage)
 		{
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 
-			if(sChannelInfo.FSelect(IFunctions.Autohl) && sChannelInfo.FSelect(IChannelFunctions.Autohl, sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Autohl) && sMyChannelInfo.FSelect(IChannelFunctions.Autohl, sIRCMessage.Channel))
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name, Info, Enabled FROM hlmessage WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 				if(!db.IsNull())
@@ -70,14 +69,14 @@ namespace Schumix.ExtraAddon.Commands
 
 		public bool AutoKick(string status, string nick, string _channel)
 		{
-			var sChannelInfo = sIrcBase.Networks[_servername].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[_servername].sMyChannelInfo;
 			var sSender = sIrcBase.Networks[_servername].sSender;
 
 			if(status == "join")
 			{
 				string channel = _channel.Remove(0, 1, SchumixBase.Colon);
 
-				if(sChannelInfo.FSelect(IFunctions.Autokick) && sChannelInfo.FSelect(IChannelFunctions.Autokick, channel))
+				if(sMyChannelInfo.FSelect(IFunctions.Autokick) && sMyChannelInfo.FSelect(IChannelFunctions.Autokick, channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", nick.ToLower(), _servername);
 					if(!db.IsNull())
@@ -90,7 +89,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(status == "privmsg")
 			{
-				if(sChannelInfo.FSelect(IFunctions.Autokick) && sChannelInfo.FSelect(IChannelFunctions.Autokick, _channel))
+				if(sMyChannelInfo.FSelect(IFunctions.Autokick) && sMyChannelInfo.FSelect(IChannelFunctions.Autokick, _channel))
 				{
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", nick.ToLower(), _servername);
 					if(!db.IsNull())
@@ -144,10 +143,10 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			lock(Lock)
 			{
-				var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+				var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 				var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 
-				if(sChannelInfo.FSelect(IFunctions.Message) && sChannelInfo.FSelect(IChannelFunctions.Message, sIRCMessage.Channel))
+				if(sMyChannelInfo.FSelect(IFunctions.Message) && sMyChannelInfo.FSelect(IChannelFunctions.Message, sIRCMessage.Channel))
 				{
 					var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}' AND ServerName = '{2}' ORDER BY `Id` ASC", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
@@ -167,21 +166,21 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleIsOnline(object sender, ElapsedEventArgs e)
 		{
-			var sNickInfo = sIrcBase.Networks[_servername].sNickInfo;
+			var sMyNickInfo = sIrcBase.Networks[_servername].sMyNickInfo;
 			var sSender = sIrcBase.Networks[_servername].sSender;
 
-			if(sNickInfo.NickStorage.ToLower() != IRCConfig.List[_servername].NickName.ToLower())
+			if(sMyNickInfo.NickStorage.ToLower() != IRCConfig.List[_servername].NickName.ToLower())
 			{
 				IsOnline = true;
 				sSender.NickServInfo(IRCConfig.List[_servername].NickName);
 			}
-			else if(sNickInfo.NickStorage.ToLower() == IRCConfig.List[_servername].NickName.ToLower() && !sNickInfo.IsIdentify
+			else if(sMyNickInfo.NickStorage.ToLower() == IRCConfig.List[_servername].NickName.ToLower() && !sMyNickInfo.IsIdentify
 					&& IRCConfig.List[_servername].UseNickServ && sIrcBase.Networks[_servername].Online)
 			{
-				sNickInfo.Identify(IRCConfig.List[_servername].NickServPassword);
+				sMyNickInfo.Identify(IRCConfig.List[_servername].NickServPassword);
 
 				if(IRCConfig.List[_servername].UseHostServ)
-					sNickInfo.Vhost(SchumixBase.On);
+					sMyNickInfo.Vhost(SchumixBase.On);
 			}
 		}
 	}

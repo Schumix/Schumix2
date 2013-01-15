@@ -21,8 +21,7 @@
 
 using System;
 using System.Collections.Generic;
-using Schumix.API;
-using Schumix.API.Delegate;
+using Schumix.Api.Delegate;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -39,6 +38,7 @@ namespace Schumix.LuaEngine
 	{
 		private readonly Dictionary<string, SchumixCommandMethod> _RegisteredSchumix = new Dictionary<string, SchumixCommandMethod>();
 		private readonly Dictionary<string, IRCDelegate> _RegisteredIrc = new Dictionary<string, IRCDelegate>();
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Lua _lua;
 
@@ -168,18 +168,18 @@ namespace Schumix.LuaEngine
 		public bool BaseIsChannel(string ServerName, string Name)
 		{
 			servername = ServerName;
-			return IsChannel(Name);
+			return sUtilities.IsChannel(Name);
 		}
 
 		[LuaFunction("Adminflag", "Admin rank.")]
-		public int BaseAdminflag(string ServerName, string Name)
+		public AdminFlag BaseAdminflag(string ServerName, string Name)
 		{
 			servername = ServerName;
 			return Adminflag(Name);
 		}
 
 		[LuaFunction("Adminflag2", "Admin rank.")]
-		public int BaseAdminflag(string ServerName, string Name, string Vhost)
+		public AdminFlag BaseAdminflag(string ServerName, string Name, string Vhost)
 		{
 			servername = ServerName;
 			return Adminflag(Name, Vhost);

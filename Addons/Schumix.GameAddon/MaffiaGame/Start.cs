@@ -21,6 +21,7 @@
 using System;
 using System.Threading;
 using System.Collections.Generic;
+using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 
@@ -88,7 +89,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						list.TryGetValue(number, out name);
 						_killerlist.Add(name.ToLower(), name);
 
-						if(Adminflag(name.ToLower()) == 2)
+						if(Adminflag(name.ToLower()) == AdminFlag.Administrator)
 							_playerflist.Add(name.ToLower(), new Player(Rank.Killer, true));
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Killer));
@@ -122,7 +123,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						list.TryGetValue(number, out name);
 						_detectivelist.Add(name.ToLower(), name);
 
-						if(Adminflag(name.ToLower()) == 2)
+						if(Adminflag(name.ToLower()) == AdminFlag.Administrator)
 							_playerflist.Add(name.ToLower(), new Player(Rank.Detective, true));
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Detective));
@@ -150,7 +151,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						list.TryGetValue(number, out name);
 						_doctorlist.Add(name.ToLower(), name);
 
-						if(Adminflag(name.ToLower()) == 2)
+						if(Adminflag(name.ToLower()) == AdminFlag.Administrator)
 							_playerflist.Add(name.ToLower(), new Player(Rank.Doctor, true));
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Doctor));
@@ -168,7 +169,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						_normallist.Add(llist.Value.ToLower(), llist.Value);
 
-						if(Adminflag(llist.Value.ToLower()) == 2)
+						if(Adminflag(llist.Value.ToLower()) == AdminFlag.Administrator)
 							_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal, true));
 						else
 							_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal));
@@ -219,7 +220,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSender.Join(_killerchannel);
 				sSender.Mode(_killerchannel, "+s");
 				SchumixBase.DManager.Insert("`channels`(ServerId, ServerName, Channel, Password, Language)", IRCConfig.List[_servername].ServerId, _servername, sUtilities.SqlEscape(_killerchannel), string.Empty, sLManager.Locale);
-				SchumixBase.DManager.Update("channels", "Enabled = 'true'", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(_killerchannel), _servername));
+				SchumixBase.DManager.Update("channels", "Enabled = 'true', Hidden = 'true'", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(_killerchannel), _servername));
 			}
 
 			StartThread();

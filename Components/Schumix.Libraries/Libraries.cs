@@ -32,11 +32,11 @@ namespace Schumix.Libraries
 {
 	public static class Lib
 	{
-		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly DateTime UnixTimeStart = new DateTime(1970, 1, 1, 0, 0, 0);
-		private const int TicksPerSecond = 10000;
-		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly object WriteLock = new object();
+		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
+		private const int TicksPerSecond = 10000;
 
 		public static bool IsPrime(this int x)
 		{
@@ -61,10 +61,10 @@ namespace Schumix.Libraries
 					for(int a = 1; a < x.Match(text).Length; a++)
 					{
 						if(x.Match(text).Groups[a].ToString() != string.Empty)
-							s += " " + x.Match(text).Groups[a].ToString();
+							s += SchumixBase.Space + x.Match(text).Groups[a].ToString();
 					}
 
-					return s.Remove(0, 1, ' ');
+					return s.Remove(0, 1, SchumixBase.Space);
 				}
 				else
 					return "No Match!";
@@ -96,7 +96,7 @@ namespace Schumix.Libraries
 		/// <returns>The casted object.</returns>
 		public static T Cast<T>(this object ob)
 		{
-			if(ob == null)
+			if(ob.IsNull())
 				throw new ArgumentNullException("ob");
 
 			return (T)ob;
@@ -124,7 +124,7 @@ namespace Schumix.Libraries
 		/// </returns>
 		public static bool IsOfType(this object obj, Type type)
 		{
-			if(obj == null)
+			if(obj.IsNull())
 				return false;
 
 			return (obj.GetType() == type);
@@ -140,7 +140,7 @@ namespace Schumix.Libraries
 		/// </returns>
 		public static bool CanBeCastedTo<T>(this object obj)
 		{
-			if(obj == null)
+			if(obj.IsNull())
 				throw new ArgumentNullException("obj");
 
 			return (obj is T);

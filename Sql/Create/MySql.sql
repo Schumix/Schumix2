@@ -65,6 +65,7 @@ CREATE TABLE `channels` (
   `Channel` varchar(20) NOT NULL default '',
   `Password` varchar(30) NOT NULL default '',
   `Enabled` varchar(5) NOT NULL default 'false',
+  `Hidden` varchar(5) NOT NULL default 'false',
   `Error` text NOT NULL,
   `Language` varchar(4) NOT NULL default 'enUS',
   PRIMARY KEY  (`Id`)

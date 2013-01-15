@@ -24,6 +24,7 @@ namespace Schumix.Irc.Commands
 {	
 	public enum AdminFlag
 	{
+		None          = -1,
 		HalfOperator  = 0,
 		Operator      = 1,
 		Administrator = 2

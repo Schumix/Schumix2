@@ -20,9 +20,8 @@
 
 using System;
 using System.Threading;
-using Schumix.API;
-using Schumix.API.Irc;
-using Schumix.API.Functions;
+using Schumix.Api.Irc;
+using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -53,7 +52,7 @@ namespace Schumix.ExtraAddon.Commands
 		/// </summary>
 		public void HandleJoin(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.NickStorage)
+			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.NickStorage)
 				return;
 
 			if(sFunctions.AutoKick("join", sIRCMessage.Nick, sIRCMessage.Channel))
@@ -62,20 +61,20 @@ namespace Schumix.ExtraAddon.Commands
 			if(sIrcBase.Networks[sIRCMessage.ServerName].sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 			var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
 			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
 			sNameList.Add(sIRCMessage.Channel, sIRCMessage.Nick);
 
-			if(sChannelInfo.FSelect(IFunctions.Automode) && sChannelInfo.FSelect(IChannelFunctions.Automode, sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Automode) && sMyChannelInfo.FSelect(IChannelFunctions.Automode, sIRCMessage.Channel))
 			{
 				AutoMode = true;
 				ModeChannel = sIRCMessage.Channel;
 				sSender.NickServStatus(sIRCMessage.Nick);
 			}
 
-			if(sChannelInfo.FSelect(IFunctions.Greeter) && sChannelInfo.FSelect(IChannelFunctions.Greeter, sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Greeter) && sMyChannelInfo.FSelect(IChannelFunctions.Greeter, sIRCMessage.Channel))
 			{
 				var rand = new Random();
 				string greeter = string.Empty;
@@ -109,20 +108,20 @@ namespace Schumix.ExtraAddon.Commands
 		/// </summary>
 		public void HandleLeft(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.NickStorage)
+			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.NickStorage)
 			{
-				sNameList.Remove(sIRCMessage.ServerName, sIRCMessage.Channel);
+				sNameList.Remove(sIRCMessage.Channel);
 				return;
 			}
 
 			if(sIrcBase.Networks[sIRCMessage.ServerName].sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-			sNameList.Remove(sIRCMessage.Nick);
+			sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Nick);
 
-			if(sChannelInfo.FSelect(IFunctions.Greeter) && sChannelInfo.FSelect(IChannelFunctions.Greeter, sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Greeter) && sMyChannelInfo.FSelect(IChannelFunctions.Greeter, sIRCMessage.Channel))
 			{
 				var rand = new Random();
 				string greeter = string.Empty;
@@ -157,16 +156,16 @@ namespace Schumix.ExtraAddon.Commands
 			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			var sChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sChannelInfo;
+			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 			var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
 
-			if(sIRCMessage.Info[3] == sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.NickStorage)
+			if(sIRCMessage.Info[3] == sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.NickStorage)
 			{
 				sNameList.Remove(sIRCMessage.Channel);
 
-				if(sChannelInfo.FSelect(IFunctions.Rejoin) && sChannelInfo.FSelect(IChannelFunctions.Rejoin, sIRCMessage.Channel))
+				if(sMyChannelInfo.FSelect(IFunctions.Rejoin) && sMyChannelInfo.FSelect(IChannelFunctions.Rejoin, sIRCMessage.Channel))
 				{
-					foreach(var m_channel in sChannelInfo.CList)
+					foreach(var m_channel in sMyChannelInfo.CList)
 					{
 						if(sIRCMessage.Channel.ToLower() == m_channel.Key)
 						{
@@ -178,9 +177,9 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			else
 			{
-				sNameList.Remove(sIRCMessage.Info[3]);
+				sNameList.Remove(sIRCMessage.Channel, sIRCMessage.Info[3]);
 
-				if(sChannelInfo.FSelect(IFunctions.Commands) && sChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel))
+				if(sMyChannelInfo.FSelect(IFunctions.Commands) && sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel))
 				{
 					if(ConsoleLog.CLog)
 					{
@@ -210,7 +209,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(i < 3)
 					continue;
 
-				sNameList.Add(Channel, sIrcBase.Networks[sIRCMessage.ServerName].sNickInfo.Parse(name));
+				sNameList.Add(Channel, sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.Parse(name));
 			}
 		}
 

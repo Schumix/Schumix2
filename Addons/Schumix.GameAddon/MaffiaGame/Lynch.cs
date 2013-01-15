@@ -126,41 +126,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					return;
 
 				sSendMessage.SendCMPrivmsg(_channel, text[10], (_playerlist.Count/2)+1, namess);
-
-				if((_playerlist.Count/2)+1 <= _lynchmaxnumber)
-				{
-					_lynch = true;
-
-					foreach(var function in _playerflist)
-					{
-						if(_lynchmaxnumber == function.Value.Lynch.Count)
-						{
-							namess = function.Key;
-							break;
-						}
-					}
-
-					_lynchmaxnumber = 0;
-					namess = GetPlayerName(namess);
-					RemovePlayer(namess, namess);
-					sSendMessage.SendCMPrivmsg(_channel, text[11], DisableHl(namess));
-
-					if(GetPlayerMaster(namess))
-						sSendMessage.SendCMPrivmsg(_channel, text[12]);
-
-					Corpse(namess);
-					Thread.Sleep(400);
-					EndGame();
-
-					if(_playerlist.Count >= 2 && Running)
-					{
-						sSendMessage.SendCMPrivmsg(_channel, text[13], DisableHl(namess));
-						_day = false;
-						_stop = false;
-					}
-
-					_lynch = false;
-				}
+				LynchPlayer(namess);
 			}
 		}
 	}

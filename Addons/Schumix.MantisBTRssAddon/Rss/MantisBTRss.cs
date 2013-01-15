@@ -24,8 +24,7 @@ using System.Net;
 using System.Text;
 using System.Timers;
 using System.Threading;
-using Schumix.API;
-using Schumix.API.Functions;
+using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -152,7 +151,7 @@ namespace Schumix.MantisBTRssAddon
 				{
 					try
 					{
-						if(!sIrcBase.Networks[_servername].sChannelInfo.IsNull() && sIrcBase.Networks[_servername].sChannelInfo.FSelect(IFunctions.Mantisbt) && errornumber < 20)
+						if(!sIrcBase.Networks[_servername].sMyChannelInfo.IsNull() && sIrcBase.Networks[_servername].sMyChannelInfo.FSelect(IFunctions.Mantisbt) && errornumber < 20)
 						{
 							url = GetUrl();
 							if(url.IsNull())
