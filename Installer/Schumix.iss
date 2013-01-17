@@ -1,7 +1,7 @@
 #define MyAppName "Schumix"
 #define MyAppVersion "3.x"
-#define MyAppPublisher "Megax Productions"
-#define MyAppURL "https://github.com/megax/Schumix2"
+#define MyAppPublisher "Schumix Productions"
+#define MyAppURL "https://github.com/Schumix/Schumix2"
 #define MyAppExeName "Schumix.exe"
 
 [Setup]
@@ -13,8 +13,8 @@ AppSupportURL={#MyAppURL}
 AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
-LicenseFile=..\LICENSE
-InfoBeforeFile=..\README.EN.md
+LicenseFile=..\License
+InfoBeforeFile=..\Readme.en.md
 OutputDir=.\
 OutputBaseFilename=Setup
 SetupIconFile=..\Applications\Schumix\icon.ico

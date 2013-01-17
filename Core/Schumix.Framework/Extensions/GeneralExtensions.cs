@@ -452,7 +452,7 @@ namespace Schumix.Framework.Extensions
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				text = text.Replace("\r", string.Empty);
-				var split = text.ToString().Split('\n');
+				var split = text.ToString().Split(SchumixBase.NewLine);
 				text.Remove(0, text.Length);
 
 				foreach(var line in split)
