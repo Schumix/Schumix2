@@ -49,7 +49,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				RegisterConnection(ServerPassword, nickname, nickname, nickname);
+				RegisterConnection(ServerPassword, nickname, nickname, nickname, 8);
 			}
 		}
 
@@ -57,7 +57,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				RegisterConnection(ServerPassword, nickname, username, nickname);
+				RegisterConnection(ServerPassword, nickname, username, nickname, 8);
 			}
 		}
 
@@ -65,11 +65,19 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
+				RegisterConnection(ServerPassword, nickname, username, realname, 8);
+			}
+		}
+
+		public void RegisterConnection(string ServerPassword, string nickname, string username, string realname, int modemask)
+		{
+			lock(WriteLock)
+			{
 				if(ServerPassword != string.Empty)
 					Pass(ServerPassword);
 
 				Nick(nickname);
-				User(username, realname);
+				User(username, realname, modemask);
 			}
 		}
 
@@ -77,7 +85,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				Register(nickname, nickname, nickname);
+				Register(nickname, nickname, nickname, 8);
 			}
 		}
 
@@ -85,7 +93,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				Register(nickname, username, nickname);
+				Register(nickname, username, nickname, 8);
 			}
 		}
 
@@ -93,8 +101,16 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
+				Register(nickname, username, realname, 8);
+			}
+		}
+
+		public void Register(string nickname, string username, string realname, int modemask)
+		{
+			lock(WriteLock)
+			{
 				Nick(nickname);
-				User(username, realname);
+				User(username, realname, modemask);
 			}
 		}
 
@@ -113,7 +129,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				User(username, username, 4);
+				User(username, username, 8);
 			}
 		}
 
@@ -121,7 +137,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				User(username, realname, 4);
+				User(username, realname, 8);
 			}
 		}
 

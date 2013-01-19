@@ -27,7 +27,9 @@ namespace Schumix.Framework.Config
 	{
 		public int ServerId { get; private set; }
 		public string Server { get; private set; }
+		public string Password { get; private set; }
 		public int Port { get; private set; }
+		public int ModeMask { get; private set; }
 		public bool Ssl { get; private set; }
 		public string NickName { get; private set; }
 		public string NickName2 { get; private set; }
@@ -46,11 +48,13 @@ namespace Schumix.Framework.Config
 		public string CommandPrefix { get; private set; }
 		public string MessageType { get; private set; }
 
-		public IRCConfigBase(int serverid, string server, int port, bool ssl, string nickname, string nickname2, string nickname3, string username, string userinfo, string masterchannel, string masterchannelpassword, string ignorechannels, string ignorenames, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, int messagesending, string commandprefix, string messagetype)
+		public IRCConfigBase(int serverid, string server, string password, int port, int modemask, bool ssl, string nickname, string nickname2, string nickname3, string username, string userinfo, string masterchannel, string masterchannelpassword, string ignorechannels, string ignorenames, bool usenickserv, string nickservpassword, bool usehostserv, bool hostservenabled, int messagesending, string commandprefix, string messagetype)
 		{
 			ServerId              = serverid;
 			Server                = server;
+			Password              = password;
 			Port                  = port;
+			ModeMask              = modemask;
 			Ssl                   = ssl;
 			NickName              = nickname;
 			NickName2             = nickname2;

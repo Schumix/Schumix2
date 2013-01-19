@@ -15,7 +15,9 @@ Xml konfignál:
 Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (`<Irc> ... </Irc>`) le kell másolni még egyszer és ott külön be kell állítani az adatokat.
 * **ServerName:** A szerver neve. Ezzel lehet beállítani hogy többszerveres módban hogy mi legyen az egyes szervereket megkülönböztető név. FIGYELEM: Nem egyezhet meg a többi szerver nevével (kis és nagybetüt nem különbőzteti meg)!
 * **Server:** Ide kell beírni a szerver nevét ahova csatlakozni szeretnénk.
+* **Password:** A szerver jelszavát lehet vele beállítani. Ha üresen van hagyva akkor úgy veszi mintha nem kellene jelszó a szerverhez.
 * **Port:** A szerver portja. Alapértelmezés: `6667`
+* **ModeMask:** A maskot lehet vele beállítani. Alapértelmezés: `8`
 * **Ssl:** Értéke `true` vagy `false` lehet. Ezzel aktiválható a kapcsolódás olyan irc szerverre ahol ssl protokol van használva. Alapértelmezés: `false`
 * **NickName:** Elsõdleges név.
 * **NickName2:** Másodlagos név.

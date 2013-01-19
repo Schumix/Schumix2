@@ -195,7 +195,9 @@ namespace Schumix.Framework.Config
 			{
 				string ServerName            = d_servername;
 				string Server                = d_server;
+				string ServerPass            = d_ircserverpassword;
 				int Port                     = d_port;
+				int ModeMask                 = d_modemask;
 				bool Ssl                     = d_ssl;
 				string NickName              = d_nickname;
 				string NickName2             = d_nickname2;
@@ -214,7 +216,7 @@ namespace Schumix.Framework.Config
 				string CommandPrefix         = d_commandprefix;
 				string MessageType           = d_messagetype;
 
-				IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
+				IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, ServerPass.Trim(), Port, ModeMask, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
 			}
 			else
 			{
@@ -223,7 +225,9 @@ namespace Schumix.Framework.Config
 					var node = ((YamlMappingNode)irc.Value).Children;
 					string ServerName = (!node.IsNull() && node.ContainsKey("ServerName")) ? node["ServerName".ToYamlNode()].ToString() : d_servername;
 					string Server = (!node.IsNull() && node.ContainsKey("Server")) ? node["Server".ToYamlNode()].ToString() : d_server;
+					string ServerPass = (!node.IsNull() && node.ContainsKey("Password")) ? node["Password".ToYamlNode()].ToString() : d_ircserverpassword;
 					int Port = (!node.IsNull() && node.ContainsKey("Port")) ? Convert.ToInt32(node["Port".ToYamlNode()].ToString()) : d_port;
+					int ModeMask = (!node.IsNull() && node.ContainsKey("ModeMask")) ? Convert.ToInt32(node["ModeMask".ToYamlNode()].ToString()) : d_modemask;
 					bool Ssl = (!node.IsNull() && node.ContainsKey("Ssl")) ? Convert.ToBoolean(node["Ssl".ToYamlNode()].ToString()) : d_ssl;
 					string NickName = (!node.IsNull() && node.ContainsKey("NickName")) ? node["NickName".ToYamlNode()].ToString() : d_nickname;
 					string NickName2 = (!node.IsNull() && node.ContainsKey("NickName2")) ? node["NickName2".ToYamlNode()].ToString() : d_nickname2;
@@ -291,7 +295,7 @@ namespace Schumix.Framework.Config
 						Log.Error("YmlConfig", sLConsole.Config("Text12"), ServerName);
 					else
 					{
-						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
+						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, ServerPass.Trim(), Port, ModeMask, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
 						ServerId++;
 					}
 				}
@@ -414,7 +418,9 @@ namespace Schumix.Framework.Config
 			{
 				map.Add("ServerName",      d_servername);
 				map.Add("Server",          d_server);
+				map.Add("Password",        d_ircserverpassword);
 				map.Add("Port",            d_port.ToString());
+				map.Add("ModeMask",        d_modemask.ToString());
 				map.Add("Ssl",             d_ssl.ToString());
 				map.Add("NickName",        d_nickname);
 				map.Add("NickName2",       d_nickname2);
@@ -448,7 +454,9 @@ namespace Schumix.Framework.Config
 				var node = nodes;
 				map.Add("ServerName", (!node.IsNull() && node.ContainsKey("ServerName")) ? node["ServerName".ToYamlNode()].ToString() : d_servername);
 				map.Add("Server",     (!node.IsNull() && node.ContainsKey("Server")) ? node["Server".ToYamlNode()].ToString() : d_server);
+				map.Add("Password",   (!node.IsNull() && node.ContainsKey("Password")) ? node["Password".ToYamlNode()].ToString() : d_ircserverpassword);
 				map.Add("Port",       (!node.IsNull() && node.ContainsKey("Port")) ? node["Port".ToYamlNode()].ToString() : d_port.ToString());
+				map.Add("ModeMask",   (!node.IsNull() && node.ContainsKey("ModeMask")) ? node["ModeMask".ToYamlNode()].ToString() : d_modemask.ToString());
 				map.Add("Ssl",        (!node.IsNull() && node.ContainsKey("Ssl")) ? node["Ssl".ToYamlNode()].ToString() : d_ssl.ToString());
 				map.Add("NickName",   (!node.IsNull() && node.ContainsKey("NickName")) ? node["NickName".ToYamlNode()].ToString() : d_nickname);
 				map.Add("NickName2",  (!node.IsNull() && node.ContainsKey("NickName2")) ? node["NickName2".ToYamlNode()].ToString() : d_nickname2);

@@ -71,7 +71,9 @@ namespace Schumix.Framework.Config
 			{
 				string ServerName            = d_servername;
 				string Server                = d_server;
+				string ServerPass            = d_ircserverpassword;
 				int Port                     = d_port;
+				int ModeMask                 = d_modemask;
 				bool Ssl                     = d_ssl;
 				string NickName              = d_nickname;
 				string NickName2             = d_nickname2;
@@ -90,7 +92,7 @@ namespace Schumix.Framework.Config
 				string CommandPrefix         = d_commandprefix;
 				string MessageType           = d_messagetype;
 
-				IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
+				IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, ServerPass.Trim(), Port, ModeMask, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
 			}
 			else
 			{
@@ -98,7 +100,9 @@ namespace Schumix.Framework.Config
 				{
 					string ServerName = !xn["ServerName"].IsNull() ? xn["ServerName"].InnerText : d_servername;
 					string Server = !xn["Server"].IsNull() ? xn["Server"].InnerText : d_server;
+					string ServerPass = !xn["Password"].IsNull() ? xn["Password"].InnerText : d_ircserverpassword;
 					int Port = !xn["Port"].IsNull() ? Convert.ToInt32(xn["Port"].InnerText) : d_port;
+					int ModeMask = !xn["ModeMask"].IsNull() ? Convert.ToInt32(xn["ModeMask"].InnerText) : d_modemask;
 					bool Ssl = !xn["Ssl"].IsNull() ? Convert.ToBoolean(xn["Ssl"].InnerText) : d_ssl;
 					string NickName = !xn["NickName"].IsNull() ? xn["NickName"].InnerText : d_nickname;
 					string NickName2 = !xn["NickName2"].IsNull() ? xn["NickName2"].InnerText : d_nickname2;
@@ -126,7 +130,7 @@ namespace Schumix.Framework.Config
 						Log.Error("XmlConfig", sLConsole.Config("Text12"), ServerName);
 					else
 					{
-						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
+						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, ServerPass.Trim(), Port, ModeMask, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
 						ServerId++;
 					}
 				}
@@ -246,7 +250,9 @@ namespace Schumix.Framework.Config
 							w.WriteStartElement("Irc");
 							w.WriteElementString("ServerName",      d_servername);
 							w.WriteElementString("Server",          d_server);
+							w.WriteElementString("Password",        d_ircserverpassword);
 							w.WriteElementString("Port",            d_port.ToString());
+							w.WriteElementString("ModeMask",        d_modemask.ToString());
 							w.WriteElementString("Ssl",             d_ssl.ToString());
 							w.WriteElementString("NickName",        d_nickname);
 							w.WriteElementString("NickName2",       d_nickname2);
@@ -308,7 +314,9 @@ namespace Schumix.Framework.Config
 								w.WriteStartElement("Irc");
 								w.WriteElementString("ServerName",      (!xn["ServerName"].IsNull() ? xn["ServerName"].InnerText : d_servername));
 								w.WriteElementString("Server",          (!xn["Server"].IsNull() ? xn["Server"].InnerText : d_server));
+								w.WriteElementString("Password",        (!xn["Password"].IsNull() ? xn["Password"].InnerText : d_ircserverpassword));
 								w.WriteElementString("Port",            (!xn["Port"].IsNull() ? xn["Port"].InnerText : d_port.ToString()));
+								w.WriteElementString("ModeMask",        (!xn["ModeMask"].IsNull() ? xn["ModeMask"].InnerText : d_modemask.ToString()));
 								w.WriteElementString("Ssl",             (!xn["Ssl"].IsNull() ? xn["Ssl"].InnerText : d_ssl.ToString()));
 								w.WriteElementString("NickName",        (!xn["NickName"].IsNull() ? xn["NickName"].InnerText : d_nickname));
 								w.WriteElementString("NickName2",       (!xn["NickName2"].IsNull() ? xn["NickName2"].InnerText : d_nickname2));

@@ -38,7 +38,9 @@ namespace Schumix.Framework.Config
 		protected const string d_serverpassword        = "schumix";
 		protected const string d_servername            = "Default";
 		protected const string d_server                = "localhost";
+		protected const string d_ircserverpassword     = " ";
 		protected const int d_port                     = 6667;
+		protected const int d_modemask                 = 8;
 		protected const bool d_ssl                     = false;
 		protected const string d_nickname              = "Schumix2";
 		protected const string d_nickname2             = "_Schumix2";

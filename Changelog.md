@@ -2,6 +2,7 @@
 
 ## 4.0.0 (2013-xx-xx)
 
+ * Hozzáadva az irc konfighoz a szerver jelszó és modemask beállításának lehetősége.
  * Sender kibővítve.
  * Schumix.API átnevezve Schumix.Api-ra.
  * Csatornákhoz hozzáadva az elrejtés lehetősége.
