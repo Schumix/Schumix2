@@ -19,6 +19,7 @@
  */
 
 using System;
+using Schumix.Irc.Util;
 using Schumix.Irc.Ignore;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -44,12 +45,29 @@ namespace Schumix.Irc
 			sIgnoreChannel = sIrcBase.Networks[ServerName].sIgnoreChannel;
 		}
 
-		public void NameInfo(string nick, string user, string userinfo)
+		public void RegisterConnection(string ServerPassword, string nickname)
 		{
 			lock(WriteLock)
 			{
-				Nick(nick);
-				User(user, userinfo);
+				RegisterConnection(ServerPassword, nickname, nickname, nickname);
+			}
+		}
+
+		public void RegisterConnection(string ServerPassword, string nickname, string username)
+		{
+			lock(WriteLock)
+			{
+				RegisterConnection(ServerPassword, nickname, username, nickname);
+			}
+		}
+
+		public void RegisterConnection(string ServerPassword, string nickname, string username, string realname)
+		{
+			lock(WriteLock)
+			{
+				Pass(ServerPassword);
+				Nick(nickname);
+				User(username, realname);
 			}
 		}
 
@@ -57,15 +75,34 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("NICK {0}", nick);
+				if(Rfc2812Util.IsValidNick(nick))
+					sSendMessage.WriteLine("NICK {0}", nick);
+				else
+					Log.Warning("Sender", "{0} is not a valid nickname.", nick);
 			}
 		}
 
-		public void User(string user, string userinfo)
+		public void User(string username)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("USER {0} 8 * :{1}", user, userinfo);
+				User(username, username, 4);
+			}
+		}
+
+		public void User(string username, string realname)
+		{
+			lock(WriteLock)
+			{
+				User(username, realname, 4);
+			}
+		}
+
+		public void User(string username, string realname, int modemask)
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("USER {0} {1} * :{2}", username, modemask, realname);
 			}
 		}
 
@@ -73,20 +110,43 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(!sIgnoreChannel.IsIgnore(channel))
-					sSendMessage.WriteLine("JOIN {0}", channel);
+				if(Rfc2812Util.IsValidChannelName(channel))
+				{
+					if(!sIgnoreChannel.IsIgnore(channel))
+						sSendMessage.WriteLine("JOIN {0}", channel);
+					else
+						Log.Warning("Sender", "{0} csatorna elérése le van tiltva.", channel);
+				}
+				else
+					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
 			}
 		}
 
-		public void Join(string channel, string pass)
+		public void Join(string channel, string password)
 		{
 			lock(WriteLock)
 			{
-				if(!sIgnoreChannel.IsIgnore(channel))
-					sSendMessage.WriteLine("JOIN {0} {1}", channel, pass);
+				if(password.IsEmpty())
+				{
+					Log.Warning("Sender", "Password cannot be empty or null.");
+					return;
+				}
+
+				if(Rfc2812Util.IsValidChannelName(channel))
+				{
+					if(!sIgnoreChannel.IsIgnore(channel))
+						sSendMessage.WriteLine("JOIN {0} {1}", channel, password);
+					else
+						Log.Warning("Sender", "{0} csatorna elérése le van tiltva.", channel);
+				}
+				else
+					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
 			}
 		}
 
+		/// <summary>
+		///   Leave the given channel.
+		/// </summary>
 		public void Part(string channel)
 		{
 			lock(WriteLock)
@@ -95,11 +155,43 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void Part(string channel, string message)
+		/// <summary>
+		///   Leave the given channel.
+		/// </summary>
+		public void Part(string channel, string reason)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("PART {0} :{1}", channel, message);
+				if(reason.IsEmpty())
+				{
+					Log.Warning("Sender", "Part reason cannot be empty or null.");
+					return;
+				}
+
+				if(Rfc2812Util.IsValidChannelName(channel))
+					sSendMessage.WriteLine("PART {0} :{1}", channel, reason);
+				else
+					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+			}
+		}
+
+		/// <summary>
+		///   Leave the given channel.
+		/// </summary>
+		public void Part(string reason, params string[] channels)
+		{
+			lock(WriteLock)
+			{
+				if(reason.IsEmpty())
+				{
+					Log.Warning("Sender", "Part reason cannot be empty or null.");
+					return;
+				}
+
+				if(Rfc2812Util.IsValidChannelList(channels))
+					sSendMessage.WriteLine("PART {0} :{1}", string.Join(SchumixBase.Comma.ToString(), channels), reason);
+				else
+					Log.Warning("Sender", "One of the channels names is not valid.");
 			}
 		}
 
@@ -107,15 +199,72 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					Log.Warning("Sender", "{0} is not a valid nickname.", name);
+					return;
+				}
+				
+				if(!Rfc2812Util.IsValidChannelName(channel))
+				{
+					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					return;
+				}
+
 				sSendMessage.WriteLine("KICK {0} {1}", channel, name);
 			}
 		}
 
-		public void Kick(string channel, string name, string args)
+		public void Kick(string channel, string name, string reason)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("KICK {0} {1} :{2}", channel, name, args);
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					Log.Warning("Sender", "{0} is not a valid nickname.", name);
+					return;
+				}
+
+				if(!Rfc2812Util.IsValidChannelName(channel))
+				{
+					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					return;
+				}
+
+				if(reason.IsEmpty())
+				{
+					Log.Warning("Sender", "The reason for kicking cannot be null.");
+					return;
+				}
+
+				sSendMessage.WriteLine("KICK {0} {1} :{2}", channel, name, reason);
+			}
+		}
+
+		/// <summary>
+		///   Forcefully disconnect a user form the IRC server. This can only be used
+		///   by Operators.
+		/// </summary>
+		public void Kill(string nick, string reason)
+		{
+			lock(WriteLock)
+			{
+				if(nick.IsEmpty())
+				{
+					Log.Warning("Sender", "Nick cannot be empty or null.");
+					return;
+				}
+
+				if(reason.IsEmpty())
+				{
+					Log.Warning("Sender", "Reason cannot be empty or null.");
+					return;
+				}
+
+				if(Rfc2812Util.IsValidNick(nick))
+					sSendMessage.WriteLine("KILL {0} {1}", nick, reason);
+				else
+					Log.Warning("Sender", "{0} is not a valid nickname.", nick);
 			}
 		}
 
@@ -151,11 +300,20 @@ namespace Schumix.Irc
 			}
 		}
 
-		public void Quit(string args)
+		public void Quit(string reason)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.WriteLine("QUIT :{0}", args);
+				if(reason.IsEmpty())
+				{
+					Log.Warning("Sender", "Quite reason cannot be null or empty.");
+					return;
+				}
+
+				if(reason.Length > 502)
+					reason = reason.Substring(0, 502);
+
+				sSendMessage.WriteLine("QUIT :{0}", reason);
 			}
 		}
 
@@ -175,11 +333,37 @@ namespace Schumix.Irc
 			}
 		}
 
+		/// <summary>
+		///   Identifies the bot with NickServ.
+		/// </summary>
+		/// <param name = "password">
+		///   The password for the nick
+		/// </param>
 		public void NickServ(string pass)
 		{
 			lock(WriteLock)
 			{
 				sSendMessage.SendCMPrivmsg("NickServ", "IDENTIFY {0}", pass);
+			}
+		}
+
+		/// <summary>
+		///   Register's the nick with NickServ.
+		/// </summary>
+		/// <param name = "password">
+		///   The password for the nick.
+		/// </param>
+		/// <param name = "email">
+		///   The e-mail to which the confirmation code will be sent to.
+		/// </param>
+		public void NickServRegister(string password, string email)
+		{
+			lock(WriteLock)
+			{
+				if(Rfc2812Util.IsValidEmailAddress(email))
+					sSendMessage.SendCMPrivmsg("NickServ", "REGISTER {0} {1}", password, email);
+				else
+					Log.Warning("Sender", "The email address is not valid!");
 			}
 		}
 
@@ -219,7 +403,197 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					Log.Warning("Sender", "{0} is not a valid nickname.", name);
+					return;
+				}
+
 				sSendMessage.WriteLine("WHOIS {0}", name);
+			}
+		}
+
+		public void Pass(string password)
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("PASS {0}", password);
+			}
+		}
+
+		/// <summary>
+		///   Request a list of all nicknames on a given channel.
+		/// </summary>
+		public void Names(string channel)
+		{
+			lock(WriteLock)
+			{
+				if(Rfc2812Util.IsValidChannelName(channel))
+					sSendMessage.WriteLine("NAMES {0}", channel);
+				else
+					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+			}
+		}
+
+		/// <summary>
+		///   Request a list of all visible channels along with their users. If the server allows this
+		///   kind of request then expect a rather large reply.
+		/// </summary>
+		public void AllNames()
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("NAMES");
+			}
+		}
+
+		/// <summary>
+		///   Request basic information about a channel, i.e. number
+		///   of visible users and topic.
+		/// </summary>
+		public void List(string channel)
+		{
+			lock(WriteLock)
+			{
+				if(Rfc2812Util.IsValidChannelName(channel))
+					sSendMessage.WriteLine("LIST {0}", channel);
+				else
+					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+			}
+		}
+		
+		/// <summary>
+		///   Request basic information for all the channels on the current
+		///   network.
+		/// </summary>
+		public void AllList()
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("LIST");
+			}
+		}
+		
+		/// <summary>
+		///   Change the topic of the given channel.
+		/// </summary>
+		public void ChangeTopic(string channel, string newTopic)
+		{
+			lock(WriteLock)
+			{
+				if(newTopic.IsEmpty())
+				{
+					Log.Warning("Sender", "Topic cannot be empty or null.");
+					return;
+				}
+
+				if(Rfc2812Util.IsValidChannelName(channel))
+					sSendMessage.WriteLine("TOPIC {0} :{1}", channel, newTopic);
+				else
+					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+			}
+		}
+		
+		/// <summary>
+		///   Clear the channel's topic.
+		/// </summary>
+		public void ClearTopic(string channel)
+		{
+			lock(WriteLock)
+			{
+				if(Rfc2812Util.IsValidChannelName(channel))
+					sSendMessage.WriteLine("TOPIC {0} : ", channel);
+				else
+					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+			}
+		}
+		
+		/// <summary>
+		///   Request the topic for the given channel.
+		/// </summary>
+		public void RequestTopic(string channel)
+		{
+			lock(WriteLock)
+			{
+				if(Rfc2812Util.IsValidChannelName(channel))
+					sSendMessage.WriteLine("TOPIC {0}", channel);
+				else
+					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+			}
+		}
+
+		/// <summary>
+		///   Invite a user to a channel.
+		/// </summary>
+		/// <remarks>
+		public void Invite(string name, string channel)
+		{
+			lock(WriteLock)
+			{
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					Log.Warning("Sender", "{0} is not a valid nickname.", name);
+					return;
+				}
+
+				if(!Rfc2812Util.IsValidChannelName(channel))
+				{
+					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					return;
+				}
+
+				sSendMessage.WriteLine("INVITE {0} {1}", name, channel);
+			}
+		}
+
+		/// <summary>
+		///   Set the user status to away and set an automatic reply 
+		///   to any private message.
+		/// </summary>
+		public void Away(string message)
+		{
+			lock(WriteLock)
+			{
+				if(message.IsEmpty())
+				{
+					Log.Warning("Sender", "Away message cannot be empty or null.");
+					return;
+				}
+
+				sSendMessage.WriteLine("AWAY :{0}", message);
+			}
+		}
+
+		/// <summary>
+		///   Turns off the away status and the accompanying message.
+		/// </summary>
+		public void UnAway()
+		{
+			lock(WriteLock)
+			{
+				sSendMessage.WriteLine("AWAY");
+			}
+		}
+
+		/// <summary>
+		///   Request the "Message Of The Day" from the current server.
+		/// </summary>
+		public void Motd()
+		{
+			Motd(null);
+		}
+
+		/// <summary>
+		///   Request the "Message Of The Day" from the given server.
+		/// </summary>
+		public void Motd(string targetServer)
+		{
+			lock(WriteLock)
+			{
+				if(!targetServer.IsEmpty())
+					sSendMessage.WriteLine("MOTD {0}", targetServer);
+				else
+					sSendMessage.WriteLine("MOTD");
 			}
 		}
 	}

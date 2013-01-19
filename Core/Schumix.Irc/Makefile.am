@@ -194,7 +194,13 @@ FILES = \
 	Commands/HalfOperator/JoinCommand.cs \
 	Commands/HalfOperator/NickCommand.cs \
 	Commands/HalfOperator/ColorsCommand.cs \
-	Commands/HalfOperator/AdminCommand.cs 
+	Commands/HalfOperator/AdminCommand.cs \
+	Util/Rfc2812Util.cs \
+	Util/ModeAction.cs \
+	Util/UserMode.cs \
+	Util/ChannelMode.cs \
+	Util/StatsQuery.cs \
+	Util/UserInfo.cs 
 
 DATA_FILES = 
 

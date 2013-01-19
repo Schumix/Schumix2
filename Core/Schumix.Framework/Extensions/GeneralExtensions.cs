@@ -481,5 +481,10 @@ namespace Schumix.Framework.Extensions
 		{
 			return value.Length > number ? value.Substring(0, number) + " ..." : value;
 		}
+
+		public static bool IsEmpty(this string Value)
+		{
+			return Value.IsNull() || Value.Trim().Length == 0;
+		}
 	}
 }

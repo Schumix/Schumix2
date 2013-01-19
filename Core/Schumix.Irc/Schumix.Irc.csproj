@@ -118,6 +118,12 @@
     <Compile Include="Commands\HalfOperator\NickCommand.cs" />
     <Compile Include="Commands\HalfOperator\ColorsCommand.cs" />
     <Compile Include="Commands\HalfOperator\AdminCommand.cs" />
+    <Compile Include="Util\Rfc2812Util.cs" />
+    <Compile Include="Util\ModeAction.cs" />
+    <Compile Include="Util\UserMode.cs" />
+    <Compile Include="Util\ChannelMode.cs" />
+    <Compile Include="Util\StatsQuery.cs" />
+    <Compile Include="Util\UserInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -140,5 +146,6 @@
     <Folder Include="Commands\Operator\" />
     <Folder Include="Commands\HalfOperator\" />
     <Folder Include="Commands\Public\" />
+    <Folder Include="Util\" />
   </ItemGroup>
 </Project>

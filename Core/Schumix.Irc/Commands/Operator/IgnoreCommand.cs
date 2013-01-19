@@ -20,6 +20,7 @@
 
 using System;
 using Schumix.Api.Irc;
+using Schumix.Irc.Util;
 using Schumix.Framework.Config;
 
 namespace Schumix.Irc.Commands
@@ -245,7 +246,7 @@ namespace Schumix.Irc.Commands
 
 					string channel = sIRCMessage.Info[6].ToLower();
 
-					if(!sUtilities.IsChannel(channel))
+					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -283,7 +284,7 @@ namespace Schumix.Irc.Commands
 
 					string channel = sIRCMessage.Info[6].ToLower();
 
-					if(!sUtilities.IsChannel(channel))
+					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -315,7 +316,7 @@ namespace Schumix.Irc.Commands
 
 					string channel = sIRCMessage.Info[6].ToLower();
 
-					if(!sUtilities.IsChannel(channel))
+					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;

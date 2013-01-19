@@ -22,6 +22,7 @@ using System;
 using System.Diagnostics;
 using Schumix.Api.Irc;
 using Schumix.Api.Functions;
+using Schumix.Irc.Util;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -57,14 +58,14 @@ namespace Schumix.Irc
 			else
 				LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
 
-			if(!sUtilities.IsChannel(sIRCMessage.Channel))
+			if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				sIRCMessage.Channel = sIRCMessage.Nick;
 
 			sCtcpSender.CtcpReply(sIRCMessage);
 
-			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sUtilities.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 			{
-				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					return;
 
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);

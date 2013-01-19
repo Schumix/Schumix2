@@ -24,6 +24,7 @@ using Schumix.Api;
 using Schumix.Api.Irc;
 using Schumix.Api.Functions;
 using Schumix.Irc;
+using Schumix.Irc.Util;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -39,7 +40,6 @@ namespace Schumix.GameAddon
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private GameCommand sGameCommand;
 		private string _servername;
@@ -121,24 +121,24 @@ namespace Schumix.GameAddon
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sMyChannelInfo.FSelect(IFunctions.Gamecommands) || !sUtilities.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Gamecommands) || !Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 			{
-				if(!sMyChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					return;
 
-				if(!sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string channel = sIRCMessage.Channel.ToLower();
 
-				if(sGameCommand.MaffiaList.ContainsKey(channel) || !sUtilities.IsChannel(sIRCMessage.Channel))
+				if(sGameCommand.MaffiaList.ContainsKey(channel) || !Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				{
 					if(sIRCMessage.Info.Length < 4)
 						return;
 
 					bool nick = false;
 
-					if(!sUtilities.IsChannel(sIRCMessage.Channel))
+					if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					{
 						foreach(var maffia in sGameCommand.MaffiaList)
 						{

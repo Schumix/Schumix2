@@ -20,6 +20,7 @@
 
 using System;
 using Schumix.Api.Irc;
+using Schumix.Irc.Util;
 
 namespace Schumix.Irc.Commands
 {
@@ -36,7 +37,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 			
-			if(!sUtilities.IsChannel(sIRCMessage.Info[4]))
+			if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Info[4]))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;

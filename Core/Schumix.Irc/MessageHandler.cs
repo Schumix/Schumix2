@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Schumix.Api.Irc;
 using Schumix.Api.Functions;
+using Schumix.Irc.Util;
 using Schumix.Irc.Channel;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -591,9 +592,9 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if((sMyChannelInfo.FSelect(IFunctions.Log) && sMyChannelInfo.FSelect(IChannelFunctions.Log, channel)) || !sUtilities.IsChannel(channel))
+				if((sMyChannelInfo.FSelect(IFunctions.Log) && sMyChannelInfo.FSelect(IChannelFunctions.Log, channel)) || !Rfc2812Util.IsValidChannelName(channel))
 				{
-					if(!sUtilities.IsChannel(channel))
+					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
 						if((args.Contains("admin") && args.Contains("access")) ||
 						   (args.Contains("admin") && args.Contains("newpassword")) ||
