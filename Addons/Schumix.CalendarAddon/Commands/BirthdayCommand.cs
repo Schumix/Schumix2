@@ -21,6 +21,7 @@
 using System;
 using Schumix.Api.Irc;
 using Schumix.Irc;
+using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -65,6 +66,12 @@ namespace Schumix.CalendarAddon.Commands
 				}
 
 				string name = sIRCMessage.Info.Length < 6 ? sIRCMessage.Nick.ToLower() : sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower());
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled, Year, Month, Day FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{

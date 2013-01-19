@@ -118,7 +118,7 @@ namespace Schumix.Irc.Util
 			if(ContainsSpace(channel))
 				return false;
 
-			if(ChannelPrefix.IndexOf(channel[0]) != -1)
+			if(ChannelPrefix.Contains(channel[0]))
 			{
 				if(channel.Length <= 50)
 					return true;
@@ -132,9 +132,9 @@ namespace Schumix.Irc.Util
 		/// the nickname is valid.
 		/// </summary>
 		/// <returns>True is the nickname is valid</returns>
-		public static bool IsValidNick( string nick)
+		public static bool IsValidNick(string nick)
 		{
-			if(nick.IsNull() || nick.Trim().Length == 0 )
+			if(nick.IsNull() || nick.Trim().Length == 0)
 				return false;
 
 			return !ContainsSpace(nick) && NickRegex.IsMatch(nick);
@@ -151,7 +151,7 @@ namespace Schumix.Irc.Util
 		/// </returns>
 		public static bool IsValidEmailAddress(string email)
 		{
-			return (EmailRegex.IsMatch(email));
+			return EmailRegex.IsMatch(email);
 		}
 
 		/// <summary>

@@ -285,6 +285,7 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ChannelAlreadyBeenUsed", "Jelenleg is ez a csatorna van beállítva!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ServerAlreadyBeenUsed", "Jelenleg is ez a szerver van beállítva!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThereIsNoSuchAnAddon", "Ilyen addon nem létezik!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NotaNickNameHasBeenSet", "Nem nick név lett megadva!");
 
 -- enUS
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WrongSwitch", "Wrong Switch!");
@@ -312,6 +313,7 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ChannelAlreadyBeenUsed", "Channel already been used!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ServerAlreadyBeenUsed", "Server already been used!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ThereIsNoSuchAnAddon", "There is no such an addon!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NotaNickNameHasBeenSet", "Not a nickname has been set!");
 
 -- huHU
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "schumix2/sys", "3Verzió: 10{0}\n3Platform: {0}\n3OSVerzió: {0}\n3Programnyelv: c#\n3Memória használat:5 {0} MB\n3Memória használat:8 {0} MB\n3Memória használat:3 {0} MB\n3Működési idő: {0}");
@@ -507,6 +509,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/change/birthday", "Nincs megadva a születési hónap!\nNincs megadva a születési nap!\nSikeresen frissítve lett a születésnapod.\nNincs megadva a születési év!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/register", "Már regisztrálva vagy!\nNincs megadva a születési hónap!\nNincs megadva a születési nap!\nSikeresen hozzáadásra került a születésnapod.\nNincs megadva a születési év!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/remove", "Nem szerepelsz a listán!\nTörölve lett a születésnapod!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mode", "Saját rangomat nem változtathatom meg!");
 
 -- enUS
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/sys", "3Version: 10{0}\n3Platform: {0}\n3OSVersion: {0}\n3Programming language: c#\n3Memory allocation:5 {0} MB\n3Memory allocation:8 {0} MB\n3Memory allocation:3 {0} MB\n3Uptime: {0}");
@@ -672,6 +675,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/change/birthday", "Month of birth missing!\nDay of birth missing!\nYour birthday is succesfully updated.\nYear of birth missing!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/register", "You are already registered!\nMonth of birth missing!\nDay of birth missing!\nBirthday succesfully added.\nYear of birth missing!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/remove", "You are not in the list!\nBirthday deleted!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mode", "You can't change your own rank!");
 
 -- huHU
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xbot", "9", "Felhasználók számára használható parancslista.");
@@ -1137,6 +1141,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThereIsNoSuchAnAddon", "Ilyen addon nem létezik!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "WrongSwitch", "Nem megfelelő kapcsoló lett megadva!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "BirthDay", "Ma {0} születésnapja van. Most töltötte be a {1}. életévét.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NotaNickNameHasBeenSet", "Nem nick név lett megadva!");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1208,6 +1213,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ThereIsNoSuchAnAddon", "There is no such an addon!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WrongSwitch", "Wrong Switch!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "BirthDay", "Today is {0}'s birthday. {0} is now {1} years old.");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NotaNickNameHasBeenSet", "Not a nickname has been set!");
 
 -- ----------------------------
 -- Records of schumix

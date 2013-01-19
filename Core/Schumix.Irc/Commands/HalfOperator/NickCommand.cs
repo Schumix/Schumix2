@@ -20,6 +20,7 @@
 
 using System;
 using Schumix.Api.Irc;
+using Schumix.Irc.Util;
 using Schumix.Framework;
 
 namespace Schumix.Irc.Commands
@@ -39,6 +40,13 @@ namespace Schumix.Irc.Commands
 			
 			SchumixBase.NewNick = true;
 			string nick = sIRCMessage.Info[4];
+
+			if(!Rfc2812Util.IsValidNick(nick))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+				return;
+			}
+
 			NewNickPrivmsg = sIRCMessage.Channel;
 			sMyNickInfo.ChangeNick(nick);
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("nick", sIRCMessage.Channel, sIRCMessage.ServerName), nick);

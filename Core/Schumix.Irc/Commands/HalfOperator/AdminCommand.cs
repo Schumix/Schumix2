@@ -21,6 +21,7 @@
 using System;
 using System.Data;
 using Schumix.Api.Irc;
+using Schumix.Irc.Util;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -127,6 +128,12 @@ namespace Schumix.Irc.Commands
 				if(sIRCMessage.Info.Length >= 6)
 					name = sIRCMessage.Info[5];
 
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
 				int flag = !db.IsNull() ? Convert.ToInt32(db["Flag"].ToString()) : -1;
 
@@ -171,6 +178,12 @@ namespace Schumix.Irc.Commands
 				}
 
 				string name = sIRCMessage.Info[5];
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
@@ -205,6 +218,12 @@ namespace Schumix.Irc.Commands
 				}
 
 				string name = sIRCMessage.Info[5];
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
 				if(db.IsNull())
 				{
@@ -266,6 +285,12 @@ namespace Schumix.Irc.Commands
 				}
 
 				string name = sIRCMessage.Info[5].ToLower();
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
 				if(IsAdmin(sIRCMessage.Nick, AdminFlag.HalfOperator) && IsAdmin(name, AdminFlag.Operator))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoOperator", sIRCMessage.Channel, sIRCMessage.ServerName));

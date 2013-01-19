@@ -27,6 +27,7 @@ using System.Reflection;
 using System.Diagnostics;
 using Schumix.Api.Delegate;
 using Schumix.Irc;
+using Schumix.Irc.Util;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -80,14 +81,6 @@ namespace Schumix.Console.Commands
 		protected CommandHandler() : base(LogConfig.IrcLog)
 		{
 
-		}
-
-		/// <summary>
-		///     Megállapítja hogy az adot szöveg csatorna-e.
-		/// </summary>
-		private bool IsChannel(string Name)
-		{
-			return (Name.Length >= 2 && Name.Trim().Length > 1 && Name.Substring(0, 1) == "#");
 		}
 
 		/// <summary>
@@ -150,6 +143,12 @@ namespace Schumix.Console.Commands
 			if(Info.Length < 2)
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("NoChannelName"));
+				return;
+			}
+
+			if(!Rfc2812Util.IsValidChannelName(Info[1]))
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 				return;
 			}
 
@@ -253,6 +252,12 @@ namespace Schumix.Console.Commands
 				}
 
 				string name = Info[2];
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("NotaNickNameHasBeenSet"));
+					return;
+				}
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
 				if(!db.IsNull())
 				{
@@ -285,6 +290,12 @@ namespace Schumix.Console.Commands
 				}
 
 				string name = Info[2];
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("NotaNickNameHasBeenSet"));
+					return;
+				}
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
 				if(db.IsNull())
 				{
@@ -328,6 +339,12 @@ namespace Schumix.Console.Commands
 				}
 
 				string name = Info[2].ToLower();
+				if(!Rfc2812Util.IsValidNick(name))
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("NotaNickNameHasBeenSet"));
+					return;
+				}
+
 				int rank = Convert.ToInt32(Info[3]);
 
 				if((AdminFlag)rank == AdminFlag.Administrator || (AdminFlag)rank == AdminFlag.Operator || (AdminFlag)rank == AdminFlag.HalfOperator)
@@ -368,7 +385,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				if(!IsChannel(Info[2]))
+				if(!Rfc2812Util.IsValidChannelName(Info[2]))
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 					return;
@@ -538,7 +555,7 @@ namespace Schumix.Console.Commands
 				}
 				else
 				{
-					if(!IsChannel(Info[2]))
+					if(!Rfc2812Util.IsValidChannelName(Info[2]))
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 						return;
@@ -698,7 +715,7 @@ namespace Schumix.Console.Commands
 
 				string channel = Info[2].ToLower();
 
-				if(!IsChannel(channel))
+				if(!Rfc2812Util.IsValidChannelName(channel))
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 					return;
@@ -752,7 +769,7 @@ namespace Schumix.Console.Commands
 
 				string channel = Info[2].ToLower();
 
-				if(!IsChannel(channel))
+				if(!Rfc2812Util.IsValidChannelName(channel))
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 					return;
@@ -846,7 +863,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				if(!IsChannel(Info[2]))
+				if(!Rfc2812Util.IsValidChannelName(Info[2]))
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 					return;
@@ -902,7 +919,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 	
-					if(!IsChannel(Info[3]))
+					if(!Rfc2812Util.IsValidChannelName(Info[3]))
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 						return;
@@ -950,7 +967,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 	
-					if(!IsChannel(Info[3]))
+					if(!Rfc2812Util.IsValidChannelName(Info[3]))
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 						return;
@@ -992,7 +1009,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 	
-					if(!IsChannel(Info[3]))
+					if(!Rfc2812Util.IsValidChannelName(Info[3]))
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 						return;
@@ -1040,7 +1057,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 	
-					if(!IsChannel(Info[3]))
+					if(!Rfc2812Util.IsValidChannelName(Info[3]))
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 						return;
@@ -1104,6 +1121,13 @@ namespace Schumix.Console.Commands
 
 			SchumixBase.NewNick = true;
 			string nick = Info[1];
+
+			if(!Rfc2812Util.IsValidNick(nick))
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("NotaNickNameHasBeenSet"));
+				return;
+			}
+
 			sIrcBase.Networks[_servername].sMyNickInfo.ChangeNick(nick);
 			sIrcBase.Networks[_servername].sSender.Nick(nick);
 			Log.Notice("Console", sLManager.GetConsoleCommandText("nick"), nick);
@@ -1120,7 +1144,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(!IsChannel(Info[1]))
+			if(!Rfc2812Util.IsValidChannelName(Info[1]))
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 				return;
@@ -1157,7 +1181,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			if(!IsChannel(Info[1]))
+			if(!Rfc2812Util.IsValidChannelName(Info[1]))
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 				return;
@@ -1442,7 +1466,7 @@ namespace Schumix.Console.Commands
 
 					string channel = Info[3].ToLower();
 
-					if(!IsChannel(channel))
+					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 						return;
@@ -1480,7 +1504,7 @@ namespace Schumix.Console.Commands
 
 					string channel = Info[3].ToLower();
 
-					if(!IsChannel(channel))
+					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 						return;
@@ -1512,7 +1536,7 @@ namespace Schumix.Console.Commands
 
 					string channel = Info[3].ToLower();
 
-					if(!IsChannel(channel))
+					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
 						Log.Error("Console", sLManager.GetConsoleWarningText("NotaChannelHasBeenSet"));
 						return;
@@ -1549,6 +1573,12 @@ namespace Schumix.Console.Commands
 
 					string nick = Info[3].ToLower();
 
+					if(!Rfc2812Util.IsValidNick(nick))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NotaNickNameHasBeenSet"));
+						return;
+					}
+
 					if(sIrcBase.Networks[_servername].sIgnoreNickName.IsIgnore(nick))
 					{
 						Log.Error("Console", text[0]);
@@ -1575,6 +1605,12 @@ namespace Schumix.Console.Commands
 
 					string nick = Info[3].ToLower();
 
+					if(!Rfc2812Util.IsValidNick(nick))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NotaNickNameHasBeenSet"));
+						return;
+					}
+
 					if(!sIrcBase.Networks[_servername].sIgnoreNickName.IsIgnore(nick))
 					{
 						Log.Error("Console", text[0]);
@@ -1599,7 +1635,15 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					if(sIrcBase.Networks[_servername].sIgnoreNickName.Contains(Info[3].ToLower()))
+					string nick = Info[3].ToLower();
+					
+					if(!Rfc2812Util.IsValidNick(nick))
+					{
+						Log.Error("Console", sLManager.GetConsoleWarningText("NotaNickNameHasBeenSet"));
+						return;
+					}
+
+					if(sIrcBase.Networks[_servername].sIgnoreNickName.Contains(nick))
 						Log.Notice("Console", text[0]);
 					else
 						Log.Error("Console", text[1]);

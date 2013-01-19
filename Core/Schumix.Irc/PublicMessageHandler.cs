@@ -170,6 +170,13 @@ namespace Schumix.Irc
 					{
 						SchumixBase.NewNick = true;
 						string nick = sIRCMessage.Info[5];
+
+						if(!Rfc2812Util.IsValidNick(nick))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
 						sMyNickInfo.ChangeNick(nick);
 						sSender.Nick(nick);
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick", sIRCMessage.Channel, sIRCMessage.ServerName), nick);
