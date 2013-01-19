@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Text;
 using System.Data;
 using System.Threading;
 using System.Collections.Generic;
@@ -134,6 +135,14 @@ namespace Schumix.Irc
 			}
 		}
 
+		public void SendChatMessage(MessageType type, string channel, StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(type, channel, message.ToString());
+			}
+		}
+
 		public void SendChatMessage(MessageType type, string channel, string message, params object[] args)
 		{
 			lock(WriteLock)
@@ -161,6 +170,14 @@ namespace Schumix.Irc
 			}
 		}
 
+		public void SendChatMessage(IRCMessage sIRCMessage, StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				SendChatMessage(sIRCMessage, message.ToString());
+			}
+		}
+
 		public void SendChatMessage(IRCMessage sIRCMessage, string message, params object[] args)
 		{
 			lock(WriteLock)
@@ -174,6 +191,14 @@ namespace Schumix.Irc
 			lock(WriteLock)
 			{
 				SendChatMessage(MessageType.Privmsg, channel, message);
+			}
+		}
+
+		public void SendCMPrivmsg(string channel, StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				SendCMPrivmsg(channel, message.ToString());
 			}
 		}
 
@@ -193,6 +218,14 @@ namespace Schumix.Irc
 			}
 		}
 
+		public void SendCMNotice(string channel, StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				SendCMNotice(channel, message.ToString());
+			}
+		}
+
 		public void SendCMNotice(string channel, string message, params object[] args)
 		{
 			lock(WriteLock)
@@ -206,6 +239,14 @@ namespace Schumix.Irc
 			lock(WriteLock)
 			{
 				SendChatMessage(MessageType.Amsg, string.Empty, message);
+			}
+		}
+
+		public void SendCMAmsg(StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				SendCMAmsg(message.ToString());
 			}
 		}
 
@@ -225,6 +266,14 @@ namespace Schumix.Irc
 			}
 		}
 
+		public void SendCMAction(string channel, StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				SendCMAction(channel, message.ToString());
+			}
+		}
+
 		public void SendCMAction(string channel, string message, params object[] args)
 		{
 			lock(WriteLock)
@@ -241,6 +290,14 @@ namespace Schumix.Irc
 			}
 		}
 
+		public void SendCMCtcpRequest(string channel, StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				SendCMCtcpRequest(channel, message.ToString());
+			}
+		}
+
 		public void SendCMCtcpRequest(string channel, string message, params object[] args)
 		{
 			lock(WriteLock)
@@ -254,6 +311,14 @@ namespace Schumix.Irc
 			lock(WriteLock)
 			{
 				SendChatMessage(MessageType.CtcpReply, channel, message);
+			}
+		}
+
+		public void SendCMCtcpReply(string channel, StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				SendCMCtcpReply(channel, message.ToString());
 			}
 		}
 
@@ -298,6 +363,14 @@ namespace Schumix.Irc
 				{
 					Log.Debug("SendMessage", sLConsole.Exception("Error"), e.Message);
 				}
+			}
+		}
+
+		public void WriteLine(StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				WriteLine(message.ToString());
 			}
 		}
 
