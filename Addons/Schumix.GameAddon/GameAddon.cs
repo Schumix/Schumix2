@@ -572,7 +572,7 @@ namespace Schumix.GameAddon
 			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			if(!sIRCMessage.Info[3].Contains("v") && !sIRCMessage.Info[3].Contains(Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString()))
+			if(!sIRCMessage.Info[3].Contains(Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString()) && !sIRCMessage.Info[3].Contains(Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString()))
 				return;
 
 			if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Nick.ToLower())
@@ -587,25 +587,25 @@ namespace Schumix.GameAddon
 
 				foreach(var player in maffia.Value.GetPlayerList())
 				{
-					if(player.Value == sIRCMessage.Info[4] && rank.Length > 0 && rank.Substring(0, 1) == "v")
+					if(player.Value == sIRCMessage.Info[4] && rank.Length > 0 && rank.Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString())
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[4]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 6 && player.Value == sIRCMessage.Info[5] && rank.Length > 1 && rank.Substring(1).Substring(0, 1) == "v")
+					if(sIRCMessage.Info.Length >= 6 && player.Value == sIRCMessage.Info[5] && rank.Length > 1 && rank.Substring(1).Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString())
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[5]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 7 && player.Value == sIRCMessage.Info[6] && rank.Length > 2 && rank.Substring(2).Substring(0, 1) == "v")
+					if(sIRCMessage.Info.Length >= 7 && player.Value == sIRCMessage.Info[6] && rank.Length > 2 && rank.Substring(2).Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString())
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[6]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 8 && player.Value == sIRCMessage.Info[7] && rank.Length > 3 && rank.Substring(3).Substring(0, 1) == "v")
+					if(sIRCMessage.Info.Length >= 8 && player.Value == sIRCMessage.Info[7] && rank.Length > 3 && rank.Substring(3).Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString())
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[7]);
 						continue;

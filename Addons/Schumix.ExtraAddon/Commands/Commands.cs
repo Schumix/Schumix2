@@ -488,17 +488,17 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							string rank = row["Rank"].ToString().Length > 1 ? row["Rank"].ToString().Remove(0, 1) : row["Rank"].ToString();
 
-							if(rank.Length >= 1 && rank.Substring(0, 1) == "v")
+							if(rank.Length >= 1 && rank.Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString())
 							{
 								voices += ", " + row["Name"].ToString();
 								continue;
 							}
-							else if(rank.Length >= 1 && rank.Substring(0, 1) == "h")
+							else if(rank.Length >= 1 && rank.Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.HalfChannelOperator).ToString())
 							{
 								halfoperators += ", " + row["Name"].ToString();
 								continue;
 							}
-							else if(rank.Length >= 1 && rank.Substring(0, 1) == "o")
+							else if(rank.Length >= 1 && rank.Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.ChannelOperator).ToString())
 							{
 								operators += ", " + row["Name"].ToString();
 								continue;
@@ -685,17 +685,17 @@ namespace Schumix.ExtraAddon.Commands
 							{
 								string rank = row["Rank"].ToString().Length > 1 ? row["Rank"].ToString().Remove(0, 1) : row["Rank"].ToString();
 
-								if(rank.Length >= 1 && rank.Substring(0, 1) == "v")
+								if(rank.Length >= 1 && rank.Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString())
 								{
 									voices += ", " + row["Name"].ToString();
 									continue;
 								}
-								else if(rank.Length >= 1 && rank.Substring(0, 1) == "h")
+								else if(rank.Length >= 1 && rank.Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.HalfChannelOperator).ToString())
 								{
 									halfoperators += ", " + row["Name"].ToString();
 									continue;
 								}
-								else if(rank.Length >= 1 && rank.Substring(0, 1) == "o")
+								else if(rank.Length >= 1 && rank.Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.ChannelOperator).ToString())
 								{
 									operators += ", " + row["Name"].ToString();
 									continue;
