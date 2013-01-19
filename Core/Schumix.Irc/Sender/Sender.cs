@@ -78,7 +78,7 @@ namespace Schumix.Irc
 				if(Rfc2812Util.IsValidNick(nick))
 					sSendMessage.WriteLine("NICK {0}", nick);
 				else
-					Log.Warning("Sender", "{0} is not a valid nickname.", nick);
+					Log.Warning("Sender", sLConsole.Sender("Text2"), nick);
 			}
 		}
 
@@ -115,10 +115,10 @@ namespace Schumix.Irc
 					if(!sIgnoreChannel.IsIgnore(channel))
 						sSendMessage.WriteLine("JOIN {0}", channel);
 					else
-						Log.Warning("Sender", "{0} csatorna elérése le van tiltva.", channel);
+						Log.Warning("Sender", sLConsole.Sender("Text14"), channel);
 				}
 				else
-					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					Log.Warning("Sender", sLConsole.Sender("Text3"), channel);
 			}
 		}
 
@@ -128,7 +128,7 @@ namespace Schumix.Irc
 			{
 				if(password.IsEmpty())
 				{
-					Log.Warning("Sender", "Password cannot be empty or null.");
+					Log.Warning("Sender", sLConsole.Sender("Text4"));
 					return;
 				}
 
@@ -137,10 +137,10 @@ namespace Schumix.Irc
 					if(!sIgnoreChannel.IsIgnore(channel))
 						sSendMessage.WriteLine("JOIN {0} {1}", channel, password);
 					else
-						Log.Warning("Sender", "{0} csatorna elérése le van tiltva.", channel);
+						Log.Warning("Sender", sLConsole.Sender("Text14"), channel);
 				}
 				else
-					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					Log.Warning("Sender", sLConsole.Sender("Text3"), channel);
 			}
 		}
 
@@ -164,14 +164,14 @@ namespace Schumix.Irc
 			{
 				if(reason.IsEmpty())
 				{
-					Log.Warning("Sender", "Part reason cannot be empty or null.");
+					Log.Warning("Sender", sLConsole.Sender("Text5"));
 					return;
 				}
 
 				if(Rfc2812Util.IsValidChannelName(channel))
 					sSendMessage.WriteLine("PART {0} :{1}", channel, reason);
 				else
-					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					Log.Warning("Sender", sLConsole.Sender("Text3"), channel);
 			}
 		}
 
@@ -184,14 +184,14 @@ namespace Schumix.Irc
 			{
 				if(reason.IsEmpty())
 				{
-					Log.Warning("Sender", "Part reason cannot be empty or null.");
+					Log.Warning("Sender", sLConsole.Sender("Text5"));
 					return;
 				}
 
 				if(Rfc2812Util.IsValidChannelList(channels))
 					sSendMessage.WriteLine("PART {0} :{1}", string.Join(SchumixBase.Comma.ToString(), channels), reason);
 				else
-					Log.Warning("Sender", "One of the channels names is not valid.");
+					Log.Warning("Sender", sLConsole.Sender("Text6"));
 			}
 		}
 
@@ -201,13 +201,13 @@ namespace Schumix.Irc
 			{
 				if(!Rfc2812Util.IsValidNick(name))
 				{
-					Log.Warning("Sender", "{0} is not a valid nickname.", name);
+					Log.Warning("Sender", sLConsole.Sender("Text2"), name);
 					return;
 				}
 				
 				if(!Rfc2812Util.IsValidChannelName(channel))
 				{
-					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					Log.Warning("Sender", sLConsole.Sender("Text3"), channel);
 					return;
 				}
 
@@ -221,19 +221,19 @@ namespace Schumix.Irc
 			{
 				if(!Rfc2812Util.IsValidNick(name))
 				{
-					Log.Warning("Sender", "{0} is not a valid nickname.", name);
+					Log.Warning("Sender", sLConsole.Sender("Text2"), name);
 					return;
 				}
 
 				if(!Rfc2812Util.IsValidChannelName(channel))
 				{
-					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					Log.Warning("Sender", sLConsole.Sender("Text3"), channel);
 					return;
 				}
 
 				if(reason.IsEmpty())
 				{
-					Log.Warning("Sender", "The reason for kicking cannot be null.");
+					Log.Warning("Sender", sLConsole.Sender("Text7"));
 					return;
 				}
 
@@ -251,20 +251,20 @@ namespace Schumix.Irc
 			{
 				if(nick.IsEmpty())
 				{
-					Log.Warning("Sender", "Nick cannot be empty or null.");
+					Log.Warning("Sender", sLConsole.Sender("Text8"));
 					return;
 				}
 
 				if(reason.IsEmpty())
 				{
-					Log.Warning("Sender", "Reason cannot be empty or null.");
+					Log.Warning("Sender", sLConsole.Sender("Text9"));
 					return;
 				}
 
 				if(Rfc2812Util.IsValidNick(nick))
 					sSendMessage.WriteLine("KILL {0} {1}", nick, reason);
 				else
-					Log.Warning("Sender", "{0} is not a valid nickname.", nick);
+					Log.Warning("Sender", sLConsole.Sender("Text2"), nick);
 			}
 		}
 
@@ -306,7 +306,7 @@ namespace Schumix.Irc
 			{
 				if(reason.IsEmpty())
 				{
-					Log.Warning("Sender", "Quite reason cannot be null or empty.");
+					Log.Warning("Sender", sLConsole.Sender("Text10"));
 					return;
 				}
 
@@ -363,7 +363,7 @@ namespace Schumix.Irc
 				if(Rfc2812Util.IsValidEmailAddress(email))
 					sSendMessage.SendCMPrivmsg("NickServ", "REGISTER {0} {1}", password, email);
 				else
-					Log.Warning("Sender", "The email address is not valid!");
+					Log.Warning("Sender", sLConsole.Sender("Text11"));
 			}
 		}
 
@@ -405,7 +405,7 @@ namespace Schumix.Irc
 			{
 				if(!Rfc2812Util.IsValidNick(name))
 				{
-					Log.Warning("Sender", "{0} is not a valid nickname.", name);
+					Log.Warning("Sender", sLConsole.Sender("Text2"), name);
 					return;
 				}
 
@@ -431,7 +431,7 @@ namespace Schumix.Irc
 				if(Rfc2812Util.IsValidChannelName(channel))
 					sSendMessage.WriteLine("NAMES {0}", channel);
 				else
-					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					Log.Warning("Sender", sLConsole.Sender("Text3"), channel);
 			}
 		}
 
@@ -458,7 +458,7 @@ namespace Schumix.Irc
 				if(Rfc2812Util.IsValidChannelName(channel))
 					sSendMessage.WriteLine("LIST {0}", channel);
 				else
-					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					Log.Warning("Sender", sLConsole.Sender("Text3"), channel);
 			}
 		}
 		
@@ -483,14 +483,14 @@ namespace Schumix.Irc
 			{
 				if(newTopic.IsEmpty())
 				{
-					Log.Warning("Sender", "Topic cannot be empty or null.");
+					Log.Warning("Sender", sLConsole.Sender("Text12"));
 					return;
 				}
 
 				if(Rfc2812Util.IsValidChannelName(channel))
 					sSendMessage.WriteLine("TOPIC {0} :{1}", channel, newTopic);
 				else
-					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					Log.Warning("Sender", sLConsole.Sender("Text3"), channel);
 			}
 		}
 		
@@ -504,7 +504,7 @@ namespace Schumix.Irc
 				if(Rfc2812Util.IsValidChannelName(channel))
 					sSendMessage.WriteLine("TOPIC {0} : ", channel);
 				else
-					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					Log.Warning("Sender", sLConsole.Sender("Text3"), channel);
 			}
 		}
 		
@@ -518,27 +518,26 @@ namespace Schumix.Irc
 				if(Rfc2812Util.IsValidChannelName(channel))
 					sSendMessage.WriteLine("TOPIC {0}", channel);
 				else
-					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					Log.Warning("Sender", sLConsole.Sender("Text3"), channel);
 			}
 		}
 
 		/// <summary>
 		///   Invite a user to a channel.
 		/// </summary>
-		/// <remarks>
 		public void Invite(string name, string channel)
 		{
 			lock(WriteLock)
 			{
 				if(!Rfc2812Util.IsValidNick(name))
 				{
-					Log.Warning("Sender", "{0} is not a valid nickname.", name);
+					Log.Warning("Sender", sLConsole.Sender("Text2"), name);
 					return;
 				}
 
 				if(!Rfc2812Util.IsValidChannelName(channel))
 				{
-					Log.Warning("Sender", "{0} is not a valid channel name.", channel);
+					Log.Warning("Sender", sLConsole.Sender("Text3"), channel);
 					return;
 				}
 
@@ -556,7 +555,7 @@ namespace Schumix.Irc
 			{
 				if(message.IsEmpty())
 				{
-					Log.Warning("Sender", "Away message cannot be empty or null.");
+					Log.Warning("Sender", sLConsole.Sender("Text13"));
 					return;
 				}
 
