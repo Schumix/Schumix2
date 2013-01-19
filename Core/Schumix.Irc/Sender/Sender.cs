@@ -65,7 +65,34 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				Pass(ServerPassword);
+				if(ServerPassword != string.Empty)
+					Pass(ServerPassword);
+
+				Nick(nickname);
+				User(username, realname);
+			}
+		}
+
+		public void Register(string nickname)
+		{
+			lock(WriteLock)
+			{
+				Register(nickname, nickname, nickname);
+			}
+		}
+
+		public void Register(string nickname, string username)
+		{
+			lock(WriteLock)
+			{
+				Register(nickname, username, nickname);
+			}
+		}
+
+		public void Register(string nickname, string username, string realname)
+		{
+			lock(WriteLock)
+			{
 				Nick(nickname);
 				User(username, realname);
 			}
@@ -339,11 +366,11 @@ namespace Schumix.Irc
 		/// <param name = "password">
 		///   The password for the nick
 		/// </param>
-		public void NickServ(string pass)
+		public void NickServ(string password)
 		{
 			lock(WriteLock)
 			{
-				sSendMessage.SendCMPrivmsg("NickServ", "IDENTIFY {0}", pass);
+				sSendMessage.SendCMPrivmsg("NickServ", "IDENTIFY {0}", password);
 			}
 		}
 

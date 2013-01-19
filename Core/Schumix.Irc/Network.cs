@@ -421,7 +421,7 @@ namespace Schumix.Irc
 			}
 
 			Connected = true;
-			sSender.RegisterConnection("*", sMyNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
+			sSender.RegisterConnection(string.Empty, sMyNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
 
 			Log.Notice("Network", sLConsole.Network("Text13"));
 			Online = false;
