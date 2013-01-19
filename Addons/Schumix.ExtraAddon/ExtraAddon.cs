@@ -291,13 +291,13 @@ namespace Schumix.ExtraAddon
 						if(ModeConfig.RemoveEnabled)
 						{
 							if(ModeConfig.RemoveType.Length == 1)
-								sSender.Mode(sIrcHandler.ModeChannel, "-" + ModeConfig.RemoveType, sIRCMessage.Info[4]);
+								sSender.Mode(sIrcHandler.ModeChannel, Rfc2812Util.ModeActionToChar(ModeAction.Remove) + ModeConfig.RemoveType, sIRCMessage.Info[4]);
 							else if(ModeConfig.RemoveType.Length == 2)
-								sSender.Mode(sIrcHandler.ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0}", sIRCMessage.Info[4]));
+								sSender.Mode(sIrcHandler.ModeChannel, Rfc2812Util.ModeActionToChar(ModeAction.Remove) + ModeConfig.RemoveType, string.Format("{0} {0}", sIRCMessage.Info[4]));
 							else if(ModeConfig.RemoveType.Length == 3)
-								sSender.Mode(sIrcHandler.ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0}", sIRCMessage.Info[4]));
+								sSender.Mode(sIrcHandler.ModeChannel, Rfc2812Util.ModeActionToChar(ModeAction.Remove) + ModeConfig.RemoveType, string.Format("{0} {0} {0}", sIRCMessage.Info[4]));
 							else if(ModeConfig.RemoveType.Length == 4)
-								sSender.Mode(sIrcHandler.ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0} {0}", sIRCMessage.Info[4]));
+								sSender.Mode(sIrcHandler.ModeChannel, Rfc2812Util.ModeActionToChar(ModeAction.Remove) + ModeConfig.RemoveType, string.Format("{0} {0} {0} {0}", sIRCMessage.Info[4]));
 						}
 					}
 				}

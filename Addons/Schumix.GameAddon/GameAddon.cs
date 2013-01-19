@@ -572,13 +572,13 @@ namespace Schumix.GameAddon
 			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			if(!sIRCMessage.Info[3].Contains("v") && !sIRCMessage.Info[3].Contains("-"))
+			if(!sIRCMessage.Info[3].Contains("v") && !sIRCMessage.Info[3].Contains(Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString()))
 				return;
 
 			if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Nick.ToLower())
 				return;
 
-			string rank = sIRCMessage.Info[3].Remove(0, 1, "-");
+			string rank = sIRCMessage.Info[3].Remove(0, 1, Rfc2812Util.ModeActionToChar(ModeAction.Remove));
 
 			foreach(var maffia in sGameCommand.MaffiaList)
 			{

@@ -459,8 +459,8 @@ namespace Schumix.ExtraAddon.Commands
 					else
 					{
 						string rank = db["Rank"].ToString();
-						if(rank.Substring(0, 1) == "+")
-							sSender.Mode(sIRCMessage.Channel.ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[6].ToLower());	
+						if(rank.Substring(0, 1) == Rfc2812Util.ModeActionToChar(ModeAction.Add).ToString())
+							sSender.Mode(sIRCMessage.Channel.ToLower(), Rfc2812Util.ModeActionToChar(ModeAction.Remove) + rank.Remove(0, 1, Rfc2812Util.ModeActionToChar(ModeAction.Add)), sIRCMessage.Info[6].ToLower());	
 					}
 
 					SchumixBase.DManager.Delete("modelist", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
@@ -643,8 +643,8 @@ namespace Schumix.ExtraAddon.Commands
 						else
 						{
 							string rank = db["Rank"].ToString();
-							if(rank.Substring(0, 1) == "+")
-								sSender.Mode(sIRCMessage.Info[6].ToLower(), "-" + rank.Remove(0, 1, "+"), sIRCMessage.Info[8].ToLower());	
+							if(rank.Substring(0, 1) == Rfc2812Util.ModeActionToChar(ModeAction.Add).ToString())
+								sSender.Mode(sIRCMessage.Info[6].ToLower(), Rfc2812Util.ModeActionToChar(ModeAction.Remove) + rank.Remove(0, 1, Rfc2812Util.ModeActionToChar(ModeAction.Add)), sIRCMessage.Info[8].ToLower());	
 						}
 
 						SchumixBase.DManager.Delete("modelist", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
