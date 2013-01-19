@@ -279,7 +279,7 @@ namespace Schumix.Irc.Util
 
 		private static bool IsValidModeChar(char c, string validList)
 		{
-			return validList.IndexOf(c) != -1;
+			return validList.Contains(c);
 		}
 
 		private static bool ContainsSpace(string text)

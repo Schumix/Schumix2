@@ -108,6 +108,9 @@ namespace Schumix.Irc.Ignore
 			_ignorelist.Remove(Name.ToLower());
 			SchumixBase.DManager.Delete("ignore_channels", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 
+			if(SchumixBase.ExitStatus)
+				return;
+
 			db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled, Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(!db.IsNull())
 			{
@@ -116,7 +119,14 @@ namespace Schumix.Irc.Ignore
 					SchumixBase.DManager.Update("channels", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 
 					if(sIrcBase.Networks[_servername].Online)
-						sIrcBase.Networks[_servername].sSender.Join(Name.ToLower(), db["Password"].ToString().Trim());
+					{
+						string password = db["Password"].ToString();
+
+						if(password.Trim() == string.Empty)
+							sIrcBase.Networks[_servername].sSender.Join(Name.ToLower());
+						else
+							sIrcBase.Networks[_servername].sSender.Join(Name.ToLower(), db["Password"].ToString().Trim());
+					}
 				}
 			}
 		}

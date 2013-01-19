@@ -310,7 +310,10 @@ namespace Schumix.Irc.Channel
 
 			foreach(var channel in _ChannelList)
 			{
-				sSender.Join(channel.Key, channel.Value.Trim());
+				if(channel.Value.Trim() == string.Empty)
+					sSender.Join(channel.Key);
+				else
+					sSender.Join(channel.Key, channel.Value.Trim());
 
 				if(sIgnoreChannel.IsIgnore(channel.Key))
 					error = true;
