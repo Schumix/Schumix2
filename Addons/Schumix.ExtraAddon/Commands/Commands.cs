@@ -920,15 +920,15 @@ namespace Schumix.ExtraAddon.Commands
 				source = source.Replace("&#176;C", "°C");
 				source = source.Replace("&#369;", "ű");
 
-				if(source.Contains("<td class=\"vaT full\">"))
+				if(source.Contains("<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">"))
 				{
+					source = source.Remove(0, source.IndexOf("<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">") + "<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">".Length);
 					source = source.Remove(0, source.IndexOf("<td class=\"vaT full\">") + "<td class=\"vaT full\">".Length);
 
 					if(source.Contains(" <? END CHANCE OF PRECIP"))
 						day = source.Substring(0, source.IndexOf(" <? END CHANCE OF PRECIP"));
 					else
 						day = source.Substring(0, source.IndexOf("</td>"));
-						
 				}
 				else
 				{
@@ -936,10 +936,11 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
-				if(source.Contains("<td class=\"vaT full\">"))
+				if(source.Contains("<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">"))
 				{
+					source = source.Remove(0, source.IndexOf("<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">") + "<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">".Length);
 					source = source.Remove(0, source.IndexOf("<td class=\"vaT full\">") + "<td class=\"vaT full\">".Length);
-
+					
 					if(source.Contains(" <? END CHANCE OF PRECIP"))
 						night = source.Substring(0, source.IndexOf(" <? END CHANCE OF PRECIP"));
 					else
