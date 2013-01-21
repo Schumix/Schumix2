@@ -36,8 +36,12 @@ namespace Schumix.Irc.Util
 	/// </summary>
 	public static class Rfc2812Util
 	{
-		// Regex that matches the standard IRC 'nick!user@host' 
-		// Regex that matches a legal IRC nick 
+		// Odd chars that IRC allows in nicknames
+		private const string Nick = @"^[" + Special + @"a-zA-Z0-9][\w\-" + Special + @"]{0,20}$";
+		private const string User = @"(" + Nick+ @")!([\~\w]+)@([\w\.\-]+)";
+		private const string Special = @"\[\]\`_\^\{\|\}";
+		// Regex that matches the standard IRC 'nick!user@host'
+		// Regex that matches a legal IRC nick
 		private static readonly Regex NickRegex;
 		private static readonly Regex EmailRegex;
 		//Regex to create a UserInfo from a string
@@ -46,12 +50,6 @@ namespace Schumix.Irc.Util
 		private const string UserModes = "awiorOs";
 		private const string ChannelModes = "OohvaimnqpsrtklbeI";
 
-		internal static readonly TraceSwitch IrcTrace = new TraceSwitch("IrcTraceSwitch", "Debug level for RFC2812 classes.");
-		// Odd chars that IRC allows in nicknames 
-		internal const string Special = "\\[\\]\\`_\\^\\{\\|\\}";
-		internal const string Nick = "[" + Special + "a-zA-Z][\\w\\-" + Special + "]{0,8}";
-		internal const string User = "(" + Nick+ ")!([\\~\\w]+)@([\\w\\.\\-]+)";
-
 		/// <summary>
 		/// Static initializer 
 		/// </summary>
@@ -59,7 +57,7 @@ namespace Schumix.Irc.Util
 		{
 			NickRegex = new Regex(Nick); 
 			EmailRegex = new Regex(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+(?:[A-Z]{2}|com|org|net|hu|gov|mil|biz|info|mobi|name|aero|jobs|museum)\b");
-			NameSplitterRegex = new Regex("[!@]",RegexOptions.Compiled | RegexOptions.Singleline );
+			NameSplitterRegex = new Regex("[!@]", RegexOptions.Compiled | RegexOptions.Singleline);
 		}
 
 		//Should never be instantiated
@@ -138,7 +136,7 @@ namespace Schumix.Irc.Util
 			if(nick.IsNull() || nick.Trim().Length == 0)
 				return false;
 
-			return !ContainsSpace(nick) && NickRegex.IsMatch(nick);
+			return !ContainsSpace(nick) && !nick.IsNumber() && NickRegex.IsMatch(nick);
 		}
 
 		/// <summary>
