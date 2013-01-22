@@ -135,7 +135,7 @@ namespace Schumix.Irc.Util
 			if(nick.IsNull() || nick.Trim().Length == 0)
 				return false;
 
-			return !ContainsSpace(nick) && !nick.IsNumber() && NickRegex.IsMatch(nick);
+			return !ContainsSpace(nick) && !nick.IsNumber() && !nick.Substring(0, 1).IsNumber() && NickRegex.IsMatch(nick);
 		}
 
 		/// <summary>
