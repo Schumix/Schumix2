@@ -36,7 +36,7 @@ namespace Schumix.Irc.Util
 	public static class Rfc2812Util
 	{
 		// Odd chars that IRC allows in nicknames
-		private const string Nick = @"^[" + Special + @"a-zA-Z0-9][\w\-" + Special + @"]{0,20}$";
+		private const string Nick = @"^[" + Special + @"a-zA-Z0-9\-]{0,20}$";
 		private const string User = @"(" + Nick+ @")!([\~\w]+)@([\w\.\-]+)";
 		private const string Special = @"\[\]\`_\^\{\|\}";
 		// Regex that matches the standard IRC 'nick!user@host'
