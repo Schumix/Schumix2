@@ -122,9 +122,33 @@ namespace Schumix.Framework.Config
 					string MessageType = !xn["MessageType"].IsNull() ? xn["MessageType"].InnerText : d_messagetype;
 
 					if(MasterChannel.Length >= 2 && MasterChannel.Trim().Length > 1 && MasterChannel.Substring(0, 1) != "#")
+					{
+						Log.Warning("XmlConfig", sLConsole.Config("Text14"));
 						MasterChannel = "#" + MasterChannel;
+					}
 					else if(MasterChannel.Length < 2 && MasterChannel.Trim().Length <= 1)
+					{
+						Log.Warning("XmlConfig", sLConsole.Config("Text15"), d_masterchannel);
 						MasterChannel = d_masterchannel;
+					}
+
+					if(!IsValidNick(NickName))
+					{
+						Log.Warning("XmlConfig", sLConsole.Config("Text16"), d_nickname);
+						NickName = d_nickname;
+					}
+
+					if(!IsValidNick(NickName2))
+					{
+						Log.Warning("XmlConfig", sLConsole.Config("Text17"), d_nickname2);
+						NickName2 = d_nickname2;
+					}
+
+					if(!IsValidNick(NickName3))
+					{
+						Log.Warning("XmlConfig", sLConsole.Config("Text18"), d_nickname3);
+						NickName3 = d_nickname3;
+					}
 
 					if(IrcList.ContainsKey(ServerName.ToLower()))
 						Log.Error("XmlConfig", sLConsole.Config("Text12"), ServerName);

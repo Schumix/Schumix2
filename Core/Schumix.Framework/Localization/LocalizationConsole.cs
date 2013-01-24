@@ -807,6 +807,51 @@ namespace Schumix.Framework.Localization
 					else
 						return "Failure was handled during the yml writing. Details: {0}";
 				}
+				case "Text14":
+				{
+					if(Locale == "huHU")
+						return "Hibás a mester csatorna formátuma! Nincs meg a \"#\" jel. Pótolva lett.";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text15":
+				{
+					if(Locale == "huHU")
+						return "Nincs megadva a mester csatorna ezért az alapértelmezet lesz használva. ({0})";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text16":
+				{
+					if(Locale == "huHU")
+						return "Hibás az elsődleges nick név formátuma. Az alapértelmezet lesz használva: {0}";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text17":
+				{
+					if(Locale == "huHU")
+						return "Hibás a másodlagos nick név formátuma. Az alapértelmezet lesz használva: {0}";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
+				case "Text18":
+				{
+					if(Locale == "huHU")
+						return "Hibás a harmadlagos nick név formátuma. Az alapértelmezet lesz használva: {0}";
+					else if(Locale == "enUS")
+						return "";
+					else
+						return "";
+				}
 				default:
 					return string.Empty;
 			}
