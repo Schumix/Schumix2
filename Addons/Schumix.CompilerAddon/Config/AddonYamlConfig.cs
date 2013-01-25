@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.CompilerAddon.Localization;
 using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 

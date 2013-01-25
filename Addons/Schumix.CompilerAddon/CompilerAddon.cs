@@ -37,7 +37,6 @@ using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.CompilerAddon.Config;
 using Schumix.CompilerAddon.Commands;
-using Schumix.CompilerAddon.Localization;
 
 namespace Schumix.CompilerAddon
 {
@@ -45,7 +44,6 @@ namespace Schumix.CompilerAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 		private SCompiler sSCompiler;
@@ -58,7 +56,6 @@ namespace Schumix.CompilerAddon
 		{
 			_servername = ServerName;
 			sSCompiler = new SCompiler(ServerName);
-			sLocalization.Locale = sLConsole.Locale;
 
 			if(IRCConfig.List[ServerName].ServerId == 1)
 				_config = new AddonConfig(Name, ".yml");

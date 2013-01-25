@@ -24,7 +24,6 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.CompilerAddon.Localization;
 
 namespace Schumix.CompilerAddon.Config
 {

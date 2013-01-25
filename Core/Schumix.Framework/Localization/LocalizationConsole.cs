@@ -36,7 +36,8 @@ namespace Schumix.Framework.Localization
 		private LocalizationConsole()
 		{
 			Initialize("./locale");
-			SetLocale("huHU");
+			SetLocale("huHU"); // mind2-ő áthelyezése innét valahova máshova. (Oda ahonnét majd indítva lesz. Plusz a konfigba is berakni a frissítés miatt stb.)
+			//SetLocale("en-US"); Ez marad majd csak itt alapértelmezésben.
 		}
 
 		public void Initialize()
@@ -82,17 +83,14 @@ namespace Schumix.Framework.Localization
 
 		public void SetLocale()
 		{
-			SetLocale("enUS");
+			SetLocale("en-US");
 		}
 
 		public void SetLocale(string Language)
 		{
-			if(Language.Length == 4)
+			if(Language.Length == 4 && !Language.Contains("-"))
 				Language = Language.Substring(0, 2) + "-" + Language.Substring(2);
-			else if(Language.Contains("-"))
-			{
-			}
-			else
+			else if((Language.Length < 4 || Language.Length > 4) && !Language.Contains("-"))
 				Language = "en-US";
 
 			if(GetPlatformType() == PlatformType.Windows)
