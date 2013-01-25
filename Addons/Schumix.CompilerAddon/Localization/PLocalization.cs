@@ -90,7 +90,7 @@ namespace Schumix.CompilerAddon.Localization
 			}
 		}
 
-		public string CompilerConfig(string Name)
+		/*public string CompilerConfig(string Name)
 		{
 			switch(Name)
 			{
@@ -106,6 +106,6 @@ namespace Schumix.CompilerAddon.Localization
 				default:
 					return string.Empty;
 			}
-		}
+		}*/
 	}
 }

@@ -20,13 +20,13 @@
 
 using System;
 using Schumix.Framework;
-using Schumix.CompilerAddon.Localization;
+using Schumix.Framework.Localization;
 
 namespace Schumix.CompilerAddon.Config
 {
 	sealed class CompilerConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLocale = Singleton<LocalizationConsole>.Instance;
 		public static bool CompilerEnabled { get; private set; }
 		public static bool MaxAllocatingE { get; private set; }
 		public static int MaxAllocatingM { get; private set; }
@@ -47,10 +47,10 @@ namespace Schumix.CompilerAddon.Config
 			WarningLevel          = warninglevel;
 			TreatWarningsAsErrors = treatwarningsaserrors;
 			Referenced            = referenced;
-			ReferencedAssemblies  = referencedassemblies.Split(',');
+			ReferencedAssemblies  = referencedassemblies.Split(SchumixBase.Comma);
 			MainClass             = mainclass;
 			MainConstructor       = mainconstructor;
-			Log.Notice("CompilerConfig", sLocalization.CompilerConfig("Text"));
+			Log.Notice("CompilerConfig", sLocale.GetString("Loaded the Compiler settings."));
 		}
 	}
 }

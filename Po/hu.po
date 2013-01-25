@@ -1,8 +1,14 @@
+# Hungarian translation of Schumix.
+# Copyright (C) 2013 Schumix Team <http://schumix.eu/>
+# This file is distributed under the same license as the Schumix package.
+# Csaba Jakosa <megax@yeahunter.hu>, 2013.
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-25 22:06:02+0100\n"
-"PO-Revision-Date: 2013-01-25 22:05:48+0100\n"
+"POT-Creation-Date: 2013-01-25 22:18:52+0100\n"
+"PO-Revision-Date: 2013-01-25 22:18:22+0100\n"
 "Last-Translator: megax\n"
 "Language-Team: \n"
 "Language: \n"
@@ -10,3 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: MonoDevelop Gettext addin\n"
+
+#: ../Addons/Schumix.CompilerAddon/Config/CompilerConfig.cs:3
+msgid "Loaded the Compiler settings."
+msgstr "Compiler beállításai betöltve."
