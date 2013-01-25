@@ -35,6 +35,7 @@ namespace Schumix.Installer
 	{
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private const string GitUrl = "https://github.com/Schumix/Schumix2";
 
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
@@ -53,7 +54,7 @@ namespace Schumix.Installer
 				System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 			Log.Notice("Installer", sLConsole.Installer("Text2"));
-			string version = sUtilities.GetUrl("https://github.com/megax/Schumix2/tags");
+			string version = sUtilities.GetUrl(GitUrl + "/tags");
 			version = version.Remove(0, version.IndexOf("<span class=\"alt-download-links\">"));
 			version = version.Remove(0, version.IndexOf("<a href=\"") + "<a href=\"".Length);
 			version = version.Substring(0, version.IndexOf("\" rel=\"nofollow\">"));
@@ -61,7 +62,7 @@ namespace Schumix.Installer
 
 			try
 			{
-				new DownloadFile("https://github.com/megax/Schumix2/zipball/" + version);
+				new DownloadFile(GitUrl + "/zipball/" + version);
 				Log.Success("Installer", sLConsole.Installer("Text6"));
 			}
 			catch
