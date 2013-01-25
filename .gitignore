@@ -1,3 +1,6 @@
+#Autosave files
+*~
+
 *.obj
 *.pidb
 *.mdb
@@ -35,4 +38,3 @@ _ReSharper*/
 UpgradeLog.XML
 *.ReSharper
 *.userprefs
-*po~
