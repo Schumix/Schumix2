@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-25 22:20:12+0100\n"
-"PO-Revision-Date: 2013-01-25 22:20:13+0100\n"
+"POT-Creation-Date: 2013-01-25 22:29:02+0100\n"
+"PO-Revision-Date: 2013-01-25 22:29:02+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -12,5 +12,35 @@ msgstr ""
 
 #: ../Addons/Schumix.CompilerAddon/Config/CompilerConfig.cs:3
 msgid "Loaded the Compiler settings."
+msgstr ""
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:5
+msgid "Config file is loading."
+msgstr ""
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:7
+msgid "Config database is loading."
+msgstr ""
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+msgid "No such config file!"
+msgstr ""
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+msgid "Preparing..."
+msgstr ""
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+msgid "Config file is completed!"
+msgstr ""
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+msgid "Failure was handled during the xml writing. Details: {0}"
 msgstr ""
 

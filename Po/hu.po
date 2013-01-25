@@ -7,9 +7,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-25 22:18:52+0100\n"
+"POT-Creation-Date: 2013-01-25 22:29:02+0100\n"
 "PO-Revision-Date: 2013-01-25 22:18:22+0100\n"
-"Last-Translator: megax\n"
+"Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -20,3 +20,33 @@ msgstr ""
 #: ../Addons/Schumix.CompilerAddon/Config/CompilerConfig.cs:3
 msgid "Loaded the Compiler settings."
 msgstr "Compiler beállításai betöltve."
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:5
+msgid "Config file is loading."
+msgstr "Konfig fájl betöltése."
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:7
+msgid "Config database is loading."
+msgstr "Konfig adatbázis betöltve."
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+msgid "No such config file!"
+msgstr "Nincs konfig fájl!"
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+msgid "Preparing..."
+msgstr "Elkészítése folyamatban..."
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+msgid "Config file is completed!"
+msgstr "Konfig fájl elkészült!"
+
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+msgid "Failure was handled during the xml writing. Details: {0}"
+msgstr "Meghibásodás az xml írása során. Részletek: {0}"

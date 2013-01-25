@@ -31,7 +31,7 @@ namespace Schumix.CompilerAddon.Config
 {
 	sealed class AddonXmlConfig : AddonDefaultConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLocale = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		public AddonXmlConfig()
@@ -43,7 +43,7 @@ namespace Schumix.CompilerAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(sUtilities.DirectoryToSpecial(SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("CompilerAddonConfig", sLocalization.Config("Text"));
+			Log.Notice("CompilerAddonConfig", sLocale.GetString("Config file is loading."));
 
 			bool CompilerEnabled = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/Enabled").InnerText) : d_compilerenabled;
 			bool Enabled = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("CompilerAddon/Compiler/MaxAllocating/Enabled").InnerText) : d_enabled;
@@ -57,7 +57,7 @@ namespace Schumix.CompilerAddon.Config
 			string MainConstructor = !xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").IsNull() ? xmldoc.SelectSingleNode("CompilerAddon/Compiler/MainConstructor").InnerText : d_mainconstructor;
 			new CompilerConfig(CompilerEnabled, Enabled, Memory, CompilerOptions, WarningLevel, TreatWarningsAsErrors, Referenced, ReferencedAssemblies, MainClass, MainConstructor);
 
-			Log.Success("CompilerAddonConfig", sLocalization.Config("Text2"));
+			Log.Success("CompilerAddonConfig", sLocale.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
 
@@ -73,8 +73,8 @@ namespace Schumix.CompilerAddon.Config
 				return true;
 			else
 			{
-				Log.Error("CompilerAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("CompilerAddonConfig", sLocalization.Config("Text4"));
+				Log.Error("CompilerAddonConfig", sLocale.GetString("No such config file!"));
+				Log.Debug("CompilerAddonConfig", sLocale.GetString("Preparing..."));
 				var w = new XmlTextWriter(filename, null);
 				var xmldoc = new XmlDocument();
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
@@ -124,11 +124,11 @@ namespace Schumix.CompilerAddon.Config
 					if(File.Exists(filename2))
 						File.Delete(filename2);
 
-					Log.Success("CompilerAddonConfig", sLocalization.Config("Text5"));
+					Log.Success("CompilerAddonConfig", sLocale.GetString("Config file is completed!"));
 				}
 				catch(Exception e)
 				{
-					Log.Error("CompilerAddonConfig", sLocalization.Config("Text6"), e.Message);
+					Log.Error("CompilerAddonConfig", sLocale.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 				}
 
 				return false;
