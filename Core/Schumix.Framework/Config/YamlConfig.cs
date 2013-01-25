@@ -288,35 +288,35 @@ namespace Schumix.Framework.Config
 
 					if(MasterChannel.Length >= 2 && MasterChannel.Trim().Length > 1 && MasterChannel.Substring(0, 1) != "#")
 					{
-						Log.Warning("YmlConfig", sLConsole.Config("Text14"));
+						Log.Warning("YamlConfig", sLConsole.Config("Text14"));
 						MasterChannel = "#" + MasterChannel;
 					}
 					else if(MasterChannel.Length < 2 && MasterChannel.Trim().Length <= 1)
 					{
-						Log.Warning("YmlConfig", sLConsole.Config("Text15"), d_masterchannel);
+						Log.Warning("YamlConfig", sLConsole.Config("Text15"), d_masterchannel);
 						MasterChannel = d_masterchannel;
 					}
 					
 					if(!IsValidNick(NickName))
 					{
-						Log.Warning("YmlConfig", sLConsole.Config("Text16"), d_nickname);
+						Log.Warning("YamlConfig", sLConsole.Config("Text16"), d_nickname);
 						NickName = d_nickname;
 					}
 					
 					if(!IsValidNick(NickName2))
 					{
-						Log.Warning("YmlConfig", sLConsole.Config("Text17"), d_nickname2);
+						Log.Warning("YamlConfig", sLConsole.Config("Text17"), d_nickname2);
 						NickName2 = d_nickname2;
 					}
 					
 					if(!IsValidNick(NickName3))
 					{
-						Log.Warning("YmlConfig", sLConsole.Config("Text18"), d_nickname3);
+						Log.Warning("YamlConfig", sLConsole.Config("Text18"), d_nickname3);
 						NickName3 = d_nickname3;
 					}
 
 					if(IrcList.ContainsKey(ServerName.ToLower()))
-						Log.Error("YmlConfig", sLConsole.Config("Text12"), ServerName);
+						Log.Error("YamlConfig", sLConsole.Config("Text12"), ServerName);
 					else
 					{
 						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, ServerPass.Trim(), Port, ModeMask, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
