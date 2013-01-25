@@ -19,6 +19,12 @@
  */
 
 using System;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Reflection;
+using System.Globalization;
+using Mono.Unix;
 using Schumix.Framework.Config;
 
 namespace Schumix.Framework.Localization
@@ -26,7 +32,153 @@ namespace Schumix.Framework.Localization
 	public sealed class LocalizationConsole
 	{
 		public string Locale { get; set; }
-		private LocalizationConsole() {}
+
+		private LocalizationConsole()
+		{
+			Initialize("./locale");
+			SetLocale("huHU");
+		}
+
+		public void Initialize()
+		{
+			Initialize("./locale");
+		}
+
+		public void Initialize(string LocaleDir)
+		{
+			if(string.IsNullOrEmpty(LocaleDir))
+			{
+				string location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+				
+				if(GetPlatformType() == PlatformType.Windows)
+					LocaleDir = Path.Combine(location, "locale");
+				else if(GetPlatformType() == PlatformType.Linux)
+				{
+					bool enabled = false;
+					var dir = new DirectoryInfo(location);
+
+					foreach(var d in dir.GetDirectories("locale").AsParallel())
+					{
+						if(d.Name == "locale")
+							enabled = true;
+					}
+
+					if(enabled)
+						LocaleDir = "./locale";
+					else
+					{
+						// $prefix/bin
+						string prefix = Path.Combine(location, "..");
+						prefix = Path.GetFullPath(prefix);
+
+						// "$prefix/share/locale"
+						LocaleDir = Path.Combine(Path.Combine(prefix, "share"), "locale");
+					}
+				}
+			}
+			
+			Mono.Unix.Catalog.Init("Schumix", LocaleDir);
+		}
+
+		public void SetLocale()
+		{
+			SetLocale("enUS");
+		}
+
+		public void SetLocale(string Language)
+		{
+			if(Language.Length == 4)
+				Language = Language.Substring(0, 2) + "-" + Language.Substring(2);
+			else
+				Language = "en-US";
+
+			if(GetPlatformType() == PlatformType.Windows)
+				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
+			else if(GetPlatformType() == PlatformType.Linux)
+				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
+			else
+				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
+		}
+
+		private PlatformType GetPlatformType()
+		{
+			PlatformType platform = PlatformType.None;
+			var pid = Environment.OSVersion.Platform;
+			
+			switch(pid)
+			{
+			case PlatformID.Win32NT:
+			case PlatformID.Win32S:
+			case PlatformID.Win32Windows:
+			case PlatformID.WinCE:
+				platform = PlatformType.Windows;
+				break;
+			case PlatformID.Unix:
+				platform = PlatformType.Linux;
+				break;
+			case PlatformID.MacOSX:
+				platform = PlatformType.MacOSX;
+				break;
+			case PlatformID.Xbox:
+				platform = PlatformType.Xbox;
+				break;
+			default:
+				platform = PlatformType.None;
+				break;
+			}
+			
+			return platform;
+		}
+
+		public string GetString(string phrase)
+		{
+			return Catalog.GetString(phrase);
+		}
+		
+		public string GetString(string phrase, object arg0)
+		{
+			return string.Format(Catalog.GetString(phrase), arg0);
+		}
+		
+		public string GetString(string phrase, object arg0, object arg1)
+		{
+			return string.Format(Catalog.GetString(phrase), arg0, arg1);
+		}
+		
+		public string GetString(string phrase, object arg0, object arg1, object arg2)
+		{
+			return string.Format(Catalog.GetString(phrase), arg0, arg1, arg2);
+		}
+		
+		public string GetString(string phrase, params object[] args)
+		{
+			return string.Format(Catalog.GetString(phrase), args);
+		}
+		
+		public string GetPluralString(string singular, string plural, int number)
+		{
+			return Catalog.GetPluralString(singular, plural, number);
+		}
+		
+		public string GetPluralString(string singular, string plural, int number, object arg0)
+		{
+			return string.Format(Catalog.GetPluralString(singular, plural, number), arg0);
+		}
+		
+		public string GetPluralString(string singular, string plural, int number, object arg0, object arg1)
+		{
+			return string.Format(Catalog.GetPluralString(singular, plural, number), arg0, arg1);
+		}
+		
+		public string GetPluralString(string singular, string plural, int number, object arg0, object arg1, object arg2)
+		{
+			return string.Format(Catalog.GetPluralString(singular, plural, number), arg0, arg1, arg2);
+		}
+		
+		public string GetPluralString(string singular, string plural, int number, params object[] args)
+		{
+			return string.Format(Catalog.GetPluralString(singular, plural, number), args);
+		}
 
 		public string MainText(string Name)
 		{
