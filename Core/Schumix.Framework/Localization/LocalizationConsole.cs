@@ -89,6 +89,9 @@ namespace Schumix.Framework.Localization
 		{
 			if(Language.Length == 4)
 				Language = Language.Substring(0, 2) + "-" + Language.Substring(2);
+			else if(Language.Contains("-"))
+			{
+			}
 			else
 				Language = "en-US";
 
