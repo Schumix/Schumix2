@@ -812,45 +812,45 @@ namespace Schumix.Framework.Localization
 					if(Locale == "huHU")
 						return "Hibás a mester csatorna formátuma! Nincs meg a \"#\" jel. Pótolva lett.";
 					else if(Locale == "enUS")
-						return "";
+						return "The master channel's format is wrong. \"#\" is missing. Corrected.";
 					else
-						return "";
+						return "The master channel's format is wrong. \"#\" is missing. Corrected.";
 				}
 				case "Text15":
 				{
 					if(Locale == "huHU")
 						return "Nincs megadva a mester csatorna ezért az alapértelmezet lesz használva. ({0})";
 					else if(Locale == "enUS")
-						return "";
+						return "The master channel is not given so the default will be used. ({0})";
 					else
-						return "";
+						return "The master channel is not given so the default will be used. ({0})";
 				}
 				case "Text16":
 				{
 					if(Locale == "huHU")
 						return "Hibás az elsődleges nick név formátuma. Az alapértelmezet lesz használva: {0}";
 					else if(Locale == "enUS")
-						return "";
+						return "The primary nick's format is wrong. The default will be used: {0}";
 					else
-						return "";
+						return "The primary nick's format is wrong. The default will be used: {0}";
 				}
 				case "Text17":
 				{
 					if(Locale == "huHU")
 						return "Hibás a másodlagos nick név formátuma. Az alapértelmezet lesz használva: {0}";
 					else if(Locale == "enUS")
-						return "";
+						return "The secondary nick's format is wrong. The default will be used: {0}";
 					else
-						return "";
+						return "The secondary nick's format is wrong. The default will be used: {0}";
 				}
 				case "Text18":
 				{
 					if(Locale == "huHU")
 						return "Hibás a harmadlagos nick név formátuma. Az alapértelmezet lesz használva: {0}";
 					else if(Locale == "enUS")
-						return "";
+						return "The tertiary nick's format is wrong. Az alapértelmezet lesz használva: {0}";
 					else
-						return "";
+						return "The tertiary nick's format is wrong. Az alapértelmezet lesz használva: {0}";
 				}
 				default:
 					return string.Empty;
