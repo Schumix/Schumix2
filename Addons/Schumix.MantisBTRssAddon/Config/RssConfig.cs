@@ -20,19 +20,19 @@
 
 using System;
 using Schumix.Framework;
-using Schumix.MantisBTRssAddon.Localization;
+using Schumix.Framework.Localization;
 
 namespace Schumix.MantisBTRssAddon.Config
 {
 	sealed class RssConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static int QueryTime { get; private set; }
 
 		public RssConfig(int querytime)
 		{
 			QueryTime = querytime;
-			Log.Notice("MantisBTRssConfig", sLocalization.RssConfig("Text"));
+			Log.Notice("MantisBTRssConfig", sLConsole.GetString("Loaded the Rss settings."));
 		}
 	}
 }

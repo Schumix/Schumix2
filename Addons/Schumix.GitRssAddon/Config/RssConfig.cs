@@ -20,19 +20,19 @@
 
 using System;
 using Schumix.Framework;
-using Schumix.GitRssAddon.Localization;
+using Schumix.Framework.Localization;
 
 namespace Schumix.GitRssAddon.Config
 {
 	sealed class RssConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static int QueryTime { get; private set; }
 
 		public RssConfig(int querytime)
 		{
 			QueryTime = querytime;
-			Log.Notice("GitRssConfig", sLocalization.RssConfig("Text"));
+			Log.Notice("GitRssConfig", sLConsole.GetString("Loaded the Rss settings."));
 		}
 	}
 }

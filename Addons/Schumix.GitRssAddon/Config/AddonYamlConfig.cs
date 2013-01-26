@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.GitRssAddon.Localization;
 using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 
@@ -33,7 +32,7 @@ namespace Schumix.GitRssAddon.Config
 {
 	sealed class AddonYamlConfig : AddonDefaultConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
@@ -46,12 +45,12 @@ namespace Schumix.GitRssAddon.Config
 			var yaml = new YamlStream();
 			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
-			Log.Notice("GitRssAddonConfig", sLocalization.Config("Text"));
+			Log.Notice("GitRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
 			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("GitRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["GitRssAddon".ToYamlNode()]).Children : NullYMap;
 			RssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap);
 
-			Log.Success("GitRssAddonConfig", sLocalization.Config("Text2"));
+			Log.Success("GitRssAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
 
 		~AddonYamlConfig()
@@ -66,8 +65,8 @@ namespace Schumix.GitRssAddon.Config
 				return true;
 			else
 			{
-				Log.Error("GitRssAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("GitRssAddonConfig", sLocalization.Config("Text4"));
+				Log.Error("GitRssAddonConfig", sLConsole.GetString("No such config file!"));
+				Log.Debug("GitRssAddonConfig", sLConsole.GetString("Preparing..."));
 				var yaml = new YamlStream();
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
@@ -90,11 +89,11 @@ namespace Schumix.GitRssAddon.Config
 					if(File.Exists(filename2))
 						File.Delete(filename2);
 
-					Log.Success("GitRssAddonConfig", sLocalization.Config("Text5"));
+					Log.Success("GitRssAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}
 				catch(Exception e)
 				{
-					Log.Error("GitRssAddonConfig", sLocalization.Config("Text6"), e.Message);
+					Log.Error("GitRssAddonConfig", sLConsole.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 				}
 			}
 

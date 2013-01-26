@@ -79,10 +79,10 @@ namespace Schumix.SvnRssAddon
 					x++;
 				}
 
-				Log.Notice("SvnRssAddon", sLocalization.SvnRssAddon("Text"), ServerName, x);
+				Log.Notice("SvnRssAddon", sLConsole.GetString("{0}: {1} rss loaded."), ServerName, x);
 			}
 			else
-				Log.Warning("SvnRssAddon", sLocalization.SvnRssAddon("Text2"), ServerName);
+				Log.Warning("SvnRssAddon", sLConsole.GetString("{0}: Empty database!"), ServerName);
 		}
 
 		public void Destroy()

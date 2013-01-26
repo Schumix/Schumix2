@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.SvnRssAddon.Localization;
 using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 
@@ -33,7 +32,7 @@ namespace Schumix.SvnRssAddon.Config
 {
 	sealed class AddonYamlConfig : AddonDefaultConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
@@ -46,12 +45,12 @@ namespace Schumix.SvnRssAddon.Config
 			var yaml = new YamlStream();
 			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
-			Log.Notice("SvnRssAddonConfig", sLocalization.Config("Text"));
+			Log.Notice("SvnRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
 			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("SvnRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["SvnRssAddon".ToYamlNode()]).Children : NullYMap;
 			RssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap);
 
-			Log.Success("SvnRssAddonConfig", sLocalization.Config("Text2"));
+			Log.Success("SvnRssAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
 
 		~AddonYamlConfig()
@@ -66,8 +65,8 @@ namespace Schumix.SvnRssAddon.Config
 				return true;
 			else
 			{
-				Log.Error("SvnRssAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("SvnRssAddonConfig", sLocalization.Config("Text4"));
+				Log.Error("SvnRssAddonConfig", sLConsole.GetString("No such config file!"));
+				Log.Debug("SvnRssAddonConfig", sLConsole.GetString("Preparing..."));
 				var yaml = new YamlStream();
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
@@ -90,11 +89,11 @@ namespace Schumix.SvnRssAddon.Config
 					if(File.Exists(filename2))
 						File.Delete(filename2);
 
-					Log.Success("SvnRssAddonConfig", sLocalization.Config("Text5"));
+					Log.Success("SvnRssAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}
 				catch(Exception e)
 				{
-					Log.Error("SvnRssAddonConfig", sLocalization.Config("Text6"), e.Message);
+					Log.Error("SvnRssAddonConfig", sLConsole.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 				}
 			}
 

@@ -37,6 +37,7 @@ namespace Schumix.SvnRssAddon
 	sealed class SvnRss
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
@@ -211,7 +212,7 @@ namespace Schumix.SvnRssAddon
 					catch(Exception e)
 					{
 						errornumber++;
-						Log.Error("SvnRss", sLocalization.Exception("Error"), _name, e.Message);
+						Log.Error("SvnRss", sLConsole.GetString("[{0}] Failure details: {1}"), _name, e.Message);
 						Thread.Sleep(RssConfig.QueryTime*1000);
 					}
 				}
@@ -219,7 +220,7 @@ namespace Schumix.SvnRssAddon
 			catch(Exception e)
 			{
 				errornumber++;
-				Log.Error("SvnRss", sLocalization.Exception("Error2"), _name, e.Message);
+				Log.Error("SvnRss", sLConsole.GetString("[{0}] Fatal failure details: {1}"), _name, e.Message);
 				Thread.Sleep(RssConfig.QueryTime*1000);
 
 				if(e.Message != "Thread was being aborted")
@@ -252,7 +253,7 @@ namespace Schumix.SvnRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("SvnRss", sLocalization.Exception("Error"), _name, e.Message);
+				Log.Error("SvnRss", sLConsole.GetString("[{0}] Failure details: {1}"), _name, e.Message);
 				Thread.Sleep(RssConfig.QueryTime*1000);
 			}
 

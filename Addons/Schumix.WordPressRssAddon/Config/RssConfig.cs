@@ -20,19 +20,19 @@
 
 using System;
 using Schumix.Framework;
-using Schumix.WordPressRssAddon.Localization;
+using Schumix.Framework.Localization;
 
 namespace Schumix.WordPressRssAddon.Config
 {
 	sealed class RssConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static int QueryTime { get; private set; }
 
 		public RssConfig(int querytime)
 		{
 			QueryTime = querytime;
-			Log.Notice("WordPressRssConfig", sLocalization.RssConfig("Text"));
+			Log.Notice("WordPressRssConfig", sLConsole.GetString("Loaded the Rss settings."));
 		}
 	}
 }

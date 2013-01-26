@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-26 10:00:17+0100\n"
+"POT-Creation-Date: 2013-01-26 10:40:02+0100\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -17,12 +17,60 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: MonoDevelop Gettext addin\n"
 
-#: ../Addons/Schumix.CompilerAddon/Config/CompilerConfig.cs:3
-msgid "Loaded the Compiler settings."
-msgstr "Compiler beállításai betöltve."
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:220
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:261
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:213
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:254
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:202
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:243
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:221
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:272
+msgid "[{0}] Failure details: {1}"
+msgstr "[{0}] Meghibásodás részletei: {2}"
 
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:228
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:221
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:210
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:229
+msgid "[{0}] Fatal failure details: {1}"
+msgstr "[{0}] Végzetes meghibásodás részletei: {2}"
+
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:9
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:9
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:9
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:9
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:9
+msgid "{0}: {1} rss loaded."
+msgstr "{0}: {1} rss került betöltésre."
+
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:9
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:9
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:9
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:9
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:9
+msgid "{0}: Empty database!"
+msgstr "{0}: Üres az adatbázis!"
+
+#: ../Addons/Schumix.WordPressRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.SvnRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.MantisBTRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.HgRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.GitRssAddon/Config/RssConfig.cs:3
+msgid "Loaded the Rss settings."
+msgstr "Rss beállításai betöltve."
+
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:5
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:5
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:5
 #: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:5
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:5
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:5
@@ -30,8 +78,18 @@ msgstr "Compiler beállításai betöltve."
 msgid "Config file is loading."
 msgstr "Konfig fájl betöltése."
 
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:7
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:7
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:7
 #: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:7
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:7
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:9
@@ -39,8 +97,18 @@ msgstr "Konfig fájl betöltése."
 msgid "Config database is loading."
 msgstr "Konfig adatbázis betöltve."
 
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:10
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:10
 #: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
@@ -48,8 +116,18 @@ msgstr "Konfig adatbázis betöltve."
 msgid "No such config file!"
 msgstr "Nincs konfig fájl!"
 
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:10
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:10
 #: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
@@ -57,8 +135,18 @@ msgstr "Nincs konfig fájl!"
 msgid "Preparing..."
 msgstr "Elkészítése folyamatban..."
 
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
@@ -66,14 +154,37 @@ msgstr "Elkészítése folyamatban..."
 msgid "Config file is completed!"
 msgstr "Konfig fájl elkészült!"
 
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
 msgid "Failure was handled during the xml writing. Details: {0}"
 msgstr "Meghibásodás az xml írása során. Részletek: {0}"
+
+#: ../Addons/Schumix.CompilerAddon/Config/CompilerConfig.cs:3
+msgid "Loaded the Compiler settings."
+msgstr "Compiler beállításai betöltve."
+
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:244
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:285
+msgid "[{0} {1}] Failure details: {2}"
+msgstr "[{0} {1}] Meghibásodás részletei: {2}"
+
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:252
+msgid "[{0} {1}] Fatal failure details: {2}"
+msgstr "[{0} {1}] Végzetes meghibásodás részletei: {2}"
 
 #: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:18
 msgid "[UpdateFlood] Failure details: {0}"

@@ -25,13 +25,12 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.HgRssAddon.Localization;
 
 namespace Schumix.HgRssAddon.Config
 {
 	sealed class AddonXmlConfig : AddonDefaultConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		public AddonXmlConfig()
@@ -43,12 +42,12 @@ namespace Schumix.HgRssAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(sUtilities.DirectoryToSpecial(SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("HgRssAddonConfig", sLocalization.Config("Text"));
+			Log.Notice("HgRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
 			int QueryTime = !xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").InnerText) : d_querytime;
 			new RssConfig(QueryTime);
 
-			Log.Success("HgRssAddonConfig", sLocalization.Config("Text2"));
+			Log.Success("HgRssAddonConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
 
@@ -64,8 +63,8 @@ namespace Schumix.HgRssAddon.Config
 				return true;
 			else
 			{
-				Log.Error("HgRssAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("HgRssAddonConfig", sLocalization.Config("Text4"));
+				Log.Error("HgRssAddonConfig", sLConsole.GetString("No such config file!"));
+				Log.Debug("HgRssAddonConfig", sLConsole.GetString("Preparing..."));
 				var w = new XmlTextWriter(filename, null);
 				var xmldoc = new XmlDocument();
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
@@ -99,11 +98,11 @@ namespace Schumix.HgRssAddon.Config
 					if(File.Exists(filename2))
 						File.Delete(filename2);
 
-					Log.Success("HgRssAddonConfig", sLocalization.Config("Text5"));
+					Log.Success("HgRssAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}
 				catch(Exception e)
 				{
-					Log.Error("HgRssAddonConfig", sLocalization.Config("Text6"), e.Message);
+					Log.Error("HgRssAddonConfig", sLConsole.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 				}
 			}
 

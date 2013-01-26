@@ -37,6 +37,7 @@ namespace Schumix.GitRssAddon
 	sealed class GitRss
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
@@ -242,7 +243,7 @@ namespace Schumix.GitRssAddon
 					catch(Exception e)
 					{
 						errornumber++;
-						Log.Error("GitRss", sLocalization.Exception("Error"), _name, _type, e.Message);
+						Log.Error("GitRss", sLConsole.GetString("[{0} {1}] Failure details: {2}"), _name, _type, e.Message);
 						Thread.Sleep(RssConfig.QueryTime*1000);
 					}
 				}
@@ -250,7 +251,7 @@ namespace Schumix.GitRssAddon
 			catch(Exception e)
 			{
 				errornumber++;
-				Log.Error("GitRss", sLocalization.Exception("Error2"), _name, _type, e.Message);
+				Log.Error("GitRss", sLConsole.GetString("[{0} {1}] Fatal failure details: {2}"), _name, _type, e.Message);
 				Thread.Sleep(RssConfig.QueryTime*1000);
 
 				if(e.Message != "Thread was being aborted")
@@ -283,7 +284,7 @@ namespace Schumix.GitRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("GitRss", sLocalization.Exception("Error"), _name, _type, e.Message);
+				Log.Error("GitRss", sLConsole.GetString("[{0} {1}] Failure details: {2}"), _name, _type, e.Message);
 				Thread.Sleep(RssConfig.QueryTime*1000);
 			}
 
