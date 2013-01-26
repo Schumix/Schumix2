@@ -8,7 +8,9 @@ Schumix:
     Irc:
         ServerName: Default
         Server: localhost
+        Password:  
         Port: 6667
+        ModeMask: 8
         Ssl: False
         NickName: Schumix2
         NickName2: _Schumix2

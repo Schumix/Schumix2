@@ -93,6 +93,8 @@ Source: "..\Run\Release\Addons\WolframAPI.dll"; DestDir: "{localappdata}\Schumix
 Source: "..\Run\Release\Addons\WordpressRssAddon.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
 Source: "..\Run\Release\Addons\YamlDotNet.Core.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
 Source: "..\Run\Release\Addons\YamlDotNet.RepresentationModel.dll"; DestDir: "{localappdata}\Schumix\Addons\"; Flags: ignoreversion
+;Locale
+Source: "..\Run\Release\locale\*"; DestDir: "{app}\locale\"; Flags: ignoreversion recursesubdirs createallsubdirs
 ;Configs
 Source: "..\Configs\CalendarAddon.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
 Source: "..\Configs\CompilerAddon.yml"; DestDir: "{localappdata}\Schumix\Configs\"; Flags: ignoreversion
