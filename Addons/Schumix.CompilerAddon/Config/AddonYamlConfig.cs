@@ -32,7 +32,7 @@ namespace Schumix.CompilerAddon.Config
 {
 	sealed class AddonYamlConfig : AddonDefaultConfig
 	{
-		private readonly LocalizationConsole sLocale = Singleton<LocalizationConsole>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
@@ -45,12 +45,12 @@ namespace Schumix.CompilerAddon.Config
 			var yaml = new YamlStream();
 			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
-			Log.Notice("CompilerAddonConfig", sLocale.GetString("Config file is loading."));
+			Log.Notice("CompilerAddonConfig", sLConsole.GetString("Config file is loading."));
 
 			var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : NullYMap;
 			CompilerMap((!compilermap.IsNull() && compilermap.ContainsKey("Flooding")) ? ((YamlMappingNode)compilermap["Flooding".ToYamlNode()]).Children : NullYMap);
 
-			Log.Success("CompilerAddonConfig", sLocale.GetString("Config database is loading."));
+			Log.Success("CompilerAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
 
 		~AddonYamlConfig()
@@ -65,8 +65,8 @@ namespace Schumix.CompilerAddon.Config
 				return true;
 			else
 			{
-				Log.Error("CompilerAddonConfig", sLocale.GetString("No such config file!"));
-				Log.Debug("CompilerAddonConfig", sLocale.GetString("Preparing..."));
+				Log.Error("CompilerAddonConfig", sLConsole.GetString("No such config file!"));
+				Log.Debug("CompilerAddonConfig", sLConsole.GetString("Preparing..."));
 				var yaml = new YamlStream();
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
@@ -89,11 +89,11 @@ namespace Schumix.CompilerAddon.Config
 					if(File.Exists(filename2))
 						File.Delete(filename2);
 
-					Log.Success("CompilerAddonConfig", sLocale.GetString("Config file is completed!"));
+					Log.Success("CompilerAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}
 				catch(Exception e)
 				{
-					Log.Error("CompilerAddonConfig", sLocale.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
+					Log.Error("CompilerAddonConfig", sLConsole.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 				}
 			}
 

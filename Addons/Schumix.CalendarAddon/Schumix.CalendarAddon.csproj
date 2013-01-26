@@ -68,7 +68,6 @@
     <Compile Include="Calendar\Calendar.cs" />
     <Compile Include="Ban\Ban.cs" />
     <Compile Include="Ban\Unban.cs" />
-    <Compile Include="Localization\PLocalization.cs" />
     <Compile Include="Calendar\CalendarFunctions.cs" />
     <Compile Include="Flood\FloodChannelParameter.cs" />
     <Compile Include="Config\CalendarConfig.cs" />
@@ -87,7 +86,6 @@
     <Folder Include="Calendar\" />
     <Folder Include="Ban\" />
     <Folder Include="Config\" />
-    <Folder Include="Localization\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Schumix.Api\Schumix.Api.csproj">

@@ -35,7 +35,6 @@ using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.ExtraAddon.Config;
 using Schumix.ExtraAddon.Commands;
-using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon
 {
@@ -43,7 +42,6 @@ namespace Schumix.ExtraAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private IrcHandler sIrcHandler;
@@ -66,7 +64,7 @@ namespace Schumix.ExtraAddon
 
 			if(CleanConfig.Database)
 			{
-				Log.Debug("ExtraAddon", sLocalization.ExtraAddon("Text2"));
+				Log.Debug("ExtraAddon", sLConsole.GetString("The deleting of messages that older than 30 days have been started."));
 
 				var db = SchumixBase.DManager.Query("SELECT Id, UnixTime FROM message WHERE ServerName = '{0}'", ServerName);
 				if(!db.IsNull())
@@ -80,7 +78,7 @@ namespace Schumix.ExtraAddon
 					}
 				}
 
-				Log.Debug("ExtraAddon", sLocalization.ExtraAddon("Text3"));
+				Log.Debug("ExtraAddon", sLConsole.GetString("Message deletion has been ended."));
 			}
 
 			SchumixBase.DManager.Update("hlmessage", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
@@ -102,7 +100,6 @@ namespace Schumix.ExtraAddon
 
 			sFunctions.IsOnline = false;
 			sIrcHandler.sNameList.RandomAllVhost();
-			sLocalization.Locale = sLConsole.Locale;
 
 			if(IRCConfig.List[_servername].ServerId == 1)
 				_config = new AddonConfig(Name, ".yml");
@@ -261,7 +258,7 @@ namespace Schumix.ExtraAddon
 						}
 						catch(Exception e)
 						{
-							Log.Error("ExtraAddon", sLocalization.ExtraAddon("Text"), e.Message);
+							Log.Error("ExtraAddon", sLConsole.GetString("Invalid webpage address: {0}"), e.Message);
 							return;
 						}
 					}

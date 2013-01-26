@@ -29,14 +29,13 @@ using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.CalendarAddon.Config;
-using Schumix.CalendarAddon.Localization;
 
 namespace Schumix.CalendarAddon
 {
 	sealed class Calendar
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private System.Timers.Timer _timercalendar = new System.Timers.Timer();
 		private System.Timers.Timer _timerbirthday = new System.Timers.Timer();
 		private System.Timers.Timer _timernameday = new System.Timers.Timer();
@@ -149,7 +148,7 @@ namespace Schumix.CalendarAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("Calendar", sLocalization.Exception("Error"), e.Message);
+				Log.Error("Calendar", sLConsole.GetString("[UpdateFlood] Failure details: {0}"), e.Message);
 			}
 		}
 
@@ -161,7 +160,7 @@ namespace Schumix.CalendarAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("Calendar", sLocalization.Exception("Error2"), e.Message);
+				Log.Error("Calendar", sLConsole.GetString("[UpdateUnban] Failure details: {0}"), e.Message);
 			}
 		}
 
@@ -173,7 +172,7 @@ namespace Schumix.CalendarAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("Calendar", sLocalization.Exception("Error3"), e.Message);
+				Log.Error("Calendar", sLConsole.GetString("[UpdateCalendar] Failure details: {0}"), e.Message);
 			}
 		}
 
@@ -185,7 +184,7 @@ namespace Schumix.CalendarAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("Calendar", sLocalization.Exception("Error4"), e.Message);
+				Log.Error("Calendar", sLConsole.GetString("[UpdateNameDay] Failure details: {0}"), e.Message);
 			}
 		}
 
@@ -197,7 +196,7 @@ namespace Schumix.CalendarAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("Calendar", sLocalization.Exception("Error5"), e.Message);
+				Log.Error("Calendar", sLConsole.GetString("[UpdateBirthDay] Failure details: {0}"), e.Message);
 			}
 		}
 

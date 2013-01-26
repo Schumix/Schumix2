@@ -31,7 +31,6 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
 using Schumix.CalendarAddon.Config;
 using Schumix.CalendarAddon.Commands;
-using Schumix.CalendarAddon.Localization;
 
 namespace Schumix.CalendarAddon
 {
@@ -40,7 +39,6 @@ namespace Schumix.CalendarAddon
 		public static readonly Dictionary<string, Flood> FloodList = new Dictionary<string, Flood>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private CalendarCommand sCalendarCommand;
 		private BirthdayCommand sBirthdayCommand;
@@ -55,7 +53,6 @@ namespace Schumix.CalendarAddon
 		public void Setup(string ServerName)
 		{
 			_servername = ServerName;
-			sLocalization.Locale = sLConsole.Locale;
 			sCalendarCommand = new CalendarCommand(ServerName);
 			sBirthdayCommand = new BirthdayCommand(ServerName);
 			sBanCommand = new BanCommand(ServerName);

@@ -58,7 +58,6 @@
     <Compile Include="Commands\Functions.cs" />
     <Compile Include="Config\AddonConfig.cs" />
     <Compile Include="Commands\WebHelper.cs" />
-    <Compile Include="Localization\PLocalization.cs" />
     <Compile Include="Commands\NameList.cs" />
     <Compile Include="Commands\NotesCommand.cs" />
     <Compile Include="Config\ModeConfig.cs" />

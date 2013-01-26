@@ -20,13 +20,13 @@
 
 using System;
 using Schumix.Framework;
-using Schumix.ExtraAddon.Localization;
+using Schumix.Framework.Localization;
 
 namespace Schumix.ExtraAddon.Config
 {
 	sealed class ModeConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static bool RemoveEnabled { get; private set; }
 		public static string RemoveType { get; private set; }
 
@@ -34,7 +34,7 @@ namespace Schumix.ExtraAddon.Config
 		{
 			RemoveEnabled = removeenabled;
 			RemoveType    = removetype;
-			Log.Notice("ModeConfig", sLocalization.ModeConfig("Text"));
+			Log.Notice("ModeConfig", sLConsole.GetString("Loaded the Mode settings."));
 		}
 	}
 }

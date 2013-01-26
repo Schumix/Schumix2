@@ -20,19 +20,19 @@
 
 using System;
 using Schumix.Framework;
-using Schumix.ExtraAddon.Localization;
+using Schumix.Framework.Localization;
 
 namespace Schumix.ExtraAddon.Config
 {
 	sealed class WolframAlphaConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static string Key { get; private set; }
 
 		public WolframAlphaConfig(string key)
 		{
 			Key = key;
-			Log.Notice("WorlframAlphaConfig", sLocalization.WolframAlphaConfig("Text"));
+			Log.Notice("WorlframAlphaConfig", sLConsole.GetString("Loaded the WorlframAlpha settings."));
 		}
 	}
 }

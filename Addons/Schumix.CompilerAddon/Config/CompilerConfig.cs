@@ -26,7 +26,7 @@ namespace Schumix.CompilerAddon.Config
 {
 	sealed class CompilerConfig
 	{
-		private readonly LocalizationConsole sLocale = Singleton<LocalizationConsole>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static bool CompilerEnabled { get; private set; }
 		public static bool MaxAllocatingE { get; private set; }
 		public static int MaxAllocatingM { get; private set; }
@@ -50,7 +50,7 @@ namespace Schumix.CompilerAddon.Config
 			ReferencedAssemblies  = referencedassemblies.Split(SchumixBase.Comma);
 			MainClass             = mainclass;
 			MainConstructor       = mainconstructor;
-			Log.Notice("CompilerConfig", sLocale.GetString("Loaded the Compiler settings."));
+			Log.Notice("CompilerConfig", sLConsole.GetString("Loaded the Compiler settings."));
 		}
 	}
 }

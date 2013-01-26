@@ -7,8 +7,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-25 22:29:02+0100\n"
-"PO-Revision-Date: 2013-01-25 22:18:22+0100\n"
+"POT-Creation-Date: 2013-01-26 10:00:17+0100\n"
+"PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "Language: \n"
@@ -23,30 +23,110 @@ msgstr "Compiler beállításai betöltve."
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:5
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:5
 msgid "Config file is loading."
 msgstr "Konfig fájl betöltése."
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:7
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:9
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:6
 msgid "Config database is loading."
 msgstr "Konfig adatbázis betöltve."
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
 msgid "No such config file!"
 msgstr "Nincs konfig fájl!"
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
 msgid "Preparing..."
 msgstr "Elkészítése folyamatban..."
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
 msgid "Config file is completed!"
 msgstr "Konfig fájl elkészült!"
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
 msgid "Failure was handled during the xml writing. Details: {0}"
 msgstr "Meghibásodás az xml írása során. Részletek: {0}"
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:18
+msgid "[UpdateFlood] Failure details: {0}"
+msgstr "[UpdateFlood] Meghibásodás részletei: {0}"
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:19
+msgid "[UpdateUnban] Failure details: {0}"
+msgstr "[UpdateUnban] Meghibásodás részletei: {0}"
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:20
+msgid "[UpdateCalendar] Failure details: {0}"
+msgstr "[UpdateCalendar] Meghibásodás részletei: {0}"
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:21
+msgid "[UpdateNameDay] Failure details: {0}"
+msgstr "[UpdateNameDay] Meghibásodás részletei: {0}"
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:22
+msgid "[UpdateBirthDay] Failure details: {0}"
+msgstr "[UpdateBirthDay] Meghibásodás részletei: {0}"
+
+#: ../Addons/Schumix.CalendarAddon/Config/CalendarConfig.cs:3
+msgid "Loaded the Calendar settings."
+msgstr "Calendar beállításai betöltve."
+
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:4
+msgid "The deleting of messages that older than 30 days have been started."
+msgstr "30 napnál régebbi üzenetek törlése a message táblából megindult."
+
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:7
+msgid "Message deletion has been ended."
+msgstr "Üzenetek törlése befejezve."
+
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:32
+msgid "Invalid webpage address: {0}"
+msgstr "Érvénytelen weboldal cím: {0}"
+
+#: ../Addons/Schumix.ExtraAddon/Commands/WebHelper.cs:5
+msgid "Exception thrown while fetching web title: {0}"
+msgstr "Kivételt dobott letöltése közben a web title: {0}"
+
+#: ../Addons/Schumix.ExtraAddon/Config/ModeConfig.cs:3
+msgid "Loaded the Mode settings."
+msgstr "Mode beállításai betöltve."
+
+#: ../Addons/Schumix.ExtraAddon/Config/WeatherConfig.cs:3
+msgid "Loaded the Weather settings."
+msgstr "Weather beállításai betöltve."
+
+#: ../Addons/Schumix.ExtraAddon/Config/WolframAlphaConfig.cs:3
+msgid "Loaded the WorlframAlpha settings."
+msgstr "WorlframAlpha beállításai betöltve."
+
+#: ../Addons/Schumix.ExtraAddon/Commands/YoutubeTitle.cs:10
+msgid "Exception thrown while fetching youtube title: {0}"
+msgstr "Kivételt dobott letöltése közben a youtube title: {0}"

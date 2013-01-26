@@ -25,13 +25,12 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon.Config
 {
 	sealed class AddonXmlConfig : AddonDefaultConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		public AddonXmlConfig()
@@ -43,7 +42,7 @@ namespace Schumix.ExtraAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(sUtilities.DirectoryToSpecial(SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("ExtraAddonConfig", sLocalization.Config("Text"));
+			Log.Notice("ExtraAddonConfig", sLConsole.GetString("Config file is loading."));
 
 			bool Enabled = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText) : d_enabled;
 			string Type = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText : d_type;
@@ -55,7 +54,7 @@ namespace Schumix.ExtraAddon.Config
 			string Key = !xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").InnerText : d_wolframalphaapikey;
 			new WolframAlphaConfig(Key);
 
-			Log.Success("ExtraAddonConfig", sLocalization.Config("Text2"));
+			Log.Success("ExtraAddonConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
 
@@ -71,8 +70,8 @@ namespace Schumix.ExtraAddon.Config
 				return true;
 			else
 			{
-				Log.Error("ExtraAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("ExtraAddonConfig", sLocalization.Config("Text4"));
+				Log.Error("ExtraAddonConfig", sLConsole.GetString("No such config file!"));
+				Log.Debug("ExtraAddonConfig", sLConsole.GetString("Preparing..."));
 				var w = new XmlTextWriter(filename, null);
 				var xmldoc = new XmlDocument();
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
@@ -139,11 +138,11 @@ namespace Schumix.ExtraAddon.Config
 					if(File.Exists(filename2))
 						File.Delete(filename2);
 
-					Log.Success("ExtraAddonConfig", sLocalization.Config("Text5"));
+					Log.Success("ExtraAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}
 				catch(Exception e)
 				{
-					Log.Error("ExtraAddonConfig", sLocalization.Config("Text6"), e.Message);
+					Log.Error("ExtraAddonConfig", sLConsole.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 				}
 
 				return false;

@@ -25,13 +25,12 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.CalendarAddon.Localization;
 
 namespace Schumix.CalendarAddon.Config
 {
 	sealed class AddonXmlConfig : AddonDefaultConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		public AddonXmlConfig()
@@ -43,14 +42,14 @@ namespace Schumix.CalendarAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(sUtilities.DirectoryToSpecial(SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("CalendarAddonConfig", sLocalization.Config("Text"));
+			Log.Notice("CalendarAddonConfig", sLConsole.GetString("Config file is loading."));
 
 			int Seconds = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/Seconds").InnerText) : _seconds;
 			int NumberOfMessages = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfMessages").InnerText) : _numberofmessages;
 			int NumberOfFlooding = !xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("CalendarAddon/Flooding/NumberOfFlooding").InnerText) : _numberofflooding;
 			new CalendarConfig(Seconds, NumberOfMessages, NumberOfFlooding);
 
-			Log.Success("CalendarAddonConfig", sLocalization.Config("Text2"));
+			Log.Success("CalendarAddonConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
 
@@ -66,8 +65,8 @@ namespace Schumix.CalendarAddon.Config
 				return true;
 			else
 			{
-				Log.Error("CalendarAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("CalendarAddonConfig", sLocalization.Config("Text4"));
+				Log.Error("CalendarAddonConfig", sLConsole.GetString("No such config file!"));
+				Log.Debug("CalendarAddonConfig", sLConsole.GetString("Preparing..."));
 				var w = new XmlTextWriter(filename, null);
 				var xmldoc = new XmlDocument();
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
@@ -103,11 +102,11 @@ namespace Schumix.CalendarAddon.Config
 					if(File.Exists(filename2))
 						File.Delete(filename2);
 
-					Log.Success("CalendarAddonConfig", sLocalization.Config("Text5"));
+					Log.Success("CalendarAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}
 				catch(Exception e)
 				{
-					Log.Error("CalendarAddonConfig", sLocalization.Config("Text6"), e.Message);
+					Log.Error("CalendarAddonConfig", sLConsole.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 				}
 
 				return false;

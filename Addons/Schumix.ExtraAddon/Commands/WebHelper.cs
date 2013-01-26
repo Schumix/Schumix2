@@ -27,7 +27,7 @@ using System.Text.RegularExpressions;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
-using Schumix.ExtraAddon.Localization;
+using Schumix.Framework.Localization;
 
 namespace Schumix.ExtraAddon.Commands
 {
@@ -36,7 +36,7 @@ namespace Schumix.ExtraAddon.Commands
 	/// </summary>
 	static class WebHelper
 	{
-		private static readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
@@ -66,7 +66,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Debug("WebHelper", sLocalization.WebHelper("Text"), e.Message);
+				Log.Debug("WebHelper", sLConsole.GetString("Exception thrown while fetching web title: {0}"), e.Message);
 				return string.Empty;
 			}
 		}

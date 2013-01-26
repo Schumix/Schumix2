@@ -23,13 +23,13 @@ using System.Xml;
 using System.Text.RegularExpressions;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
-using Schumix.ExtraAddon.Localization;
+using Schumix.Framework.Localization;
 
 namespace Schumix.ExtraAddon.Commands
 {
 	class YoutubeTitle
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private bool _isyoutube;
 		private string _title;
@@ -89,7 +89,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Debug("YoutubeTitle", sLocalization.YoutubeTitle("Text"), e.Message);
+				Log.Debug("YoutubeTitle", sLConsole.GetString("Exception thrown while fetching youtube title: {0}"), e.Message);
 				_title = string.Empty;
 			}
 		}

@@ -1,13 +1,8 @@
-# Translation of Schumix.
-# Copyright (C) 2013 Schumix Team <http://schumix.eu/>
-# This file is distributed under the same license as the Schumix package.
-#
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-25 22:29:02+0100\n"
-"PO-Revision-Date: 2013-01-25 22:29:02+0100\n"
+"POT-Creation-Date: 2013-01-26 10:00:17+0100\n"
+"PO-Revision-Date: 2013-01-26 10:00:17+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,31 +16,111 @@ msgstr ""
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:5
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:5
 msgid "Config file is loading."
 msgstr ""
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:7
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:9
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:6
 msgid "Config database is loading."
 msgstr ""
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
 msgid "No such config file!"
 msgstr ""
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
 msgid "Preparing..."
 msgstr ""
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
 msgid "Config file is completed!"
 msgstr ""
 
 #: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
 #: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
 msgid "Failure was handled during the xml writing. Details: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:18
+msgid "[UpdateFlood] Failure details: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:19
+msgid "[UpdateUnban] Failure details: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:20
+msgid "[UpdateCalendar] Failure details: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:21
+msgid "[UpdateNameDay] Failure details: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:22
+msgid "[UpdateBirthDay] Failure details: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Config/CalendarConfig.cs:3
+msgid "Loaded the Calendar settings."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:4
+msgid "The deleting of messages that older than 30 days have been started."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:7
+msgid "Message deletion has been ended."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:32
+msgid "Invalid webpage address: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/Commands/WebHelper.cs:5
+msgid "Exception thrown while fetching web title: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/Config/ModeConfig.cs:3
+msgid "Loaded the Mode settings."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/Config/WeatherConfig.cs:3
+msgid "Loaded the Weather settings."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/Config/WolframAlphaConfig.cs:3
+msgid "Loaded the WorlframAlpha settings."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/Commands/YoutubeTitle.cs:10
+msgid "Exception thrown while fetching youtube title: {0}"
 msgstr ""
 
