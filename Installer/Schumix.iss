@@ -112,5 +112,5 @@ Name: "{group}\{cm:UninstallProgram,{#MyAppName}}"; Filename: "{uninstallexe}"
 Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--config-dir=$localappdata\Schumix\Configs\ --config-file=Schumix.yml"; Tasks: desktopicon
 
 [Run]
-Filename: "{app}\{#MyAppExeName}"; Description: "Schumix2 IRC Bot and Framework"; Flags: nowait postinstall skipifsilent
+Filename: "{app}\{#MyAppExeName}";  Parameters: "--config-dir=$localappdata\Schumix\Configs\ --config-file=Schumix.yml"; Description: "Schumix2 IRC Bot and Framework"; Flags: nowait postinstall skipifsilent
 
