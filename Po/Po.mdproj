@@ -15,5 +15,21 @@
         <Translation isoCode="hu" />
       </translations>
     </translations>
+    <ReleaseVersion>3.x</ReleaseVersion>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+  <!--
+  Everything above is for the MD translation project serializer, and isn't really valid MSBuild.
+  The real MSBuild project is below. Need to update MD to serialize this instead.
+  -->
+  <PropertyGroup>
+    <OutputPath>locale</OutputPath>
+    <GettextCatalogName>Schumix</GettextCatalogName>
+    <GettextCatalogFile>messages.po</GettextCatalogFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <GettextTranslation Include="hu.po" />
+  </ItemGroup>
+  <Import Project="Gettext.targets" />
 </Project>
