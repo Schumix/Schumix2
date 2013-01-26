@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-26 10:40:02+0100\n"
+"POT-Creation-Date: 2013-01-26 10:53:14+0100\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -16,6 +16,51 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: MonoDevelop Gettext addin\n"
+
+#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:14
+msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
+msgstr "A program leállításához használd a <Ctrl+C> vagy <quit> parancsot!"
+
+#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:14
+msgid "Schumix Version: {0}"
+msgstr "Schumix Verzió: {0}"
+
+#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:14
+msgid "Website: {0}"
+msgstr "Weboldal: {0}"
+
+#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:14
+msgid "Programmed by: {0}"
+msgstr "Programot készítette: {0}"
+
+#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:14
+msgid "Developers: {0}"
+msgstr "Fejlesztők: {0}"
+
+#: ../Applications/Schumix/Main.cs:25
+#: ../Applications/Schumix.Server/Main.cs:18
+msgid "System is starting..."
+msgstr "Rendszer indul..."
+
+#: ../Applications/Schumix/Main.cs:26
+#: ../Applications/Schumix.Server/Main.cs:18
+msgid "Colorblind mode is on!"
+msgstr "Színvak mód be van kapcsolva!"
+
+#: ../Applications/Schumix/Main.cs:28
+#: ../Applications/Schumix.Server/Main.cs:22
+#: ../Applications/Schumix.Server/Main.cs:26
+msgid "An unhandled exception has been thrown. ({0})"
+msgstr "Nem kezelt kivétel keletkezett. ({0})"
+
+#: ../Applications/Schumix.Server/Main.cs:19
+msgid "CleanManager is starting..."
+msgstr "CleanManager indul..."
 
 #: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:220
 #: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:261

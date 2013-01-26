@@ -124,11 +124,11 @@ namespace Schumix.Server
 				System.Console.ForegroundColor = ConsoleColor.Blue;
 
 			System.Console.WriteLine("[Server]");
-			System.Console.WriteLine(sLConsole.MainText("StartText"));
-			System.Console.WriteLine(sLConsole.MainText("StartText2"), sUtilities.GetVersion());
-			System.Console.WriteLine(sLConsole.MainText("StartText2-2"), Consts.SchumixWebsite);
-			System.Console.WriteLine(sLConsole.MainText("StartText2-3"), Consts.SchumixProgrammedBy);
-			System.Console.WriteLine(sLConsole.MainText("StartText2-4"), Consts.SchumixDevelopers);
+			System.Console.WriteLine(sLConsole.GetString("To shut down the program use the <Ctrl+C> or the <quit> command!"));
+			System.Console.WriteLine(sLConsole.GetString("Schumix Version: {0}"), sUtilities.GetVersion());
+			System.Console.WriteLine(sLConsole.GetString("Website: {0}"), Consts.SchumixWebsite);
+			System.Console.WriteLine(sLConsole.GetString("Programmed by: {0}"), Consts.SchumixProgrammedBy);
+			System.Console.WriteLine(sLConsole.GetString("Developers: {0}"), Consts.SchumixDevelopers);
 			System.Console.WriteLine("================================================================================"); // 80
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 			System.Console.WriteLine();
@@ -145,12 +145,12 @@ namespace Schumix.Server
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
-			Log.Notice("Main", sLConsole.MainText("StartText3"));
-
+			Log.Notice("Main", sLConsole.GetString("System is starting..."));
+			
 			if(colorbindmode)
-				Log.Notice("Main", sLConsole.MainText("StartText6"));
+				Log.Notice("Main", sLConsole.GetString("Colorblind mode is on!"));
 
-			Log.Debug("Main", sLConsole.MainText("StartText5"));
+			Log.Debug("Main", sLConsole.GetString("CleanManager is starting..."));
 			sCleanManager = new CleanManager(true);
 			sCleanManager.Initialize();
 
@@ -167,7 +167,7 @@ namespace Schumix.Server
 				if(sListener.Exit)
 				{
 					Log.LargeError(sLConsole.Exception("FatalError"));
-					Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs.ExceptionObject as Exception);
+					Log.Error("Main", sLConsole.GetString("An unhandled exception has been thrown. ({0})"), eventArgs.ExceptionObject as Exception);
 					sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
 					Process.GetCurrentProcess().Kill();
 				}
@@ -202,7 +202,7 @@ namespace Schumix.Server
 
 			if(!eventArgs.IsNull())
 			{
-				Log.Error("Main", sLConsole.MainText("StartText4"), eventArgs);
+				Log.Error("Main", sLConsole.GetString("An unhandled exception has been thrown. ({0})"), eventArgs);
 				sCrashDumper.CreateCrashDump(eventArgs);
 			}
 
