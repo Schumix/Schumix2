@@ -450,19 +450,7 @@ namespace Schumix.Framework.Extensions
 			}
 
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
-			{
 				text = text.Replace("\r", string.Empty);
-				var split = text.ToString().Split(SchumixBase.NewLine);
-				text.Remove(0, text.Length);
-
-				foreach(var line in split)
-				{
-					if(line.Trim() == string.Empty)
-						continue;
-
-					text.Append("    ").AppendLine(line);
-				}
-			}
 
 			return FileName == string.Empty ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();
 		}

@@ -1197,12 +1197,21 @@ namespace Schumix.Framework
 					else
 						return data;
 				}
-				if(text.Length >= "$localappdata".Length && text.Substring(0, "$localappdata".Length) == "$localappdata")
+				else if(text.Length >= "$localappdata".Length && text.Substring(0, "$localappdata".Length) == "$localappdata")
 				{
 					if(data.Contains("/") && data.Substring(data.IndexOf("/")).Length > 1 && data.Substring(data.IndexOf("/")).Substring(0, 1) == "/")
 						return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\" + data.Substring(data.IndexOf("/")+1);
 					else if(data.Contains(@"\") && data.Substring(data.IndexOf(@"\")).Length > 1 && data.Substring(data.IndexOf(@"\")).Substring(0, 1) == @"\")
 						return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\" + data.Substring(data.IndexOf(@"\")+1);
+					else
+						return data;
+				}
+				else if(text.Length >= "$userappdata".Length && text.Substring(0, "$userappdata".Length) == "$userappdata")
+				{
+					if(data.Contains("/") && data.Substring(data.IndexOf("/")).Length > 1 && data.Substring(data.IndexOf("/")).Substring(0, 1) == "/")
+						return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + data.Substring(data.IndexOf("/")+1);
+					else if(data.Contains(@"\") && data.Substring(data.IndexOf(@"\")).Length > 1 && data.Substring(data.IndexOf(@"\")).Substring(0, 1) == @"\")
+						return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + data.Substring(data.IndexOf(@"\")+1);
 					else
 						return data;
 				}

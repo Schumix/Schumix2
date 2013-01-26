@@ -38,8 +38,8 @@ Schumix:
         DateFileName: False
         MaxFileSize: 100
         LogLevel: 2
-        LogDirectory: $localappdata\Schumix\Logs
-        IrcLogDirectory: $localappdata\Schumix\Channels
+        LogDirectory: $userappdata\Schumix\Logs
+        IrcLogDirectory: $userappdata\Schumix\Channels
         IrcLog: False
     MySql:
         Enabled: False
@@ -50,24 +50,24 @@ Schumix:
         Charset: utf8
     SQLite:
         Enabled: True
-        FileName: $localappdata\Schumix\Schumix.db3
+        FileName: $userappdata\Schumix\Schumix.db3
     Addon:
         Enabled: True
         Ignore: MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon
-        Directory: $localappdata\Schumix\Addons
+        Directory: $userappdata\Schumix\Addons
     Scripts:
         Lua: False
         Python: False
-        Directory: $localappdata\Schumix\Scripts
+        Directory: $userappdata\Schumix\Scripts
     Crash:
-        Directory: $localappdata\Schumix\Dumps
+        Directory: $userappdata\Schumix\Dumps
     Localization:
         Locale: enUS
     Update:
         Enabled: False
         Version: stable
         Branch: master
-        WebPage: https://github.com/megax/Schumix2
+        WebPage: https://github.com/Schumix/Schumix2
     Shutdown:
         MaxMemory: 100
     Flooding:
