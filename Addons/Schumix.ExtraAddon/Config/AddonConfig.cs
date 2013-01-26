@@ -50,7 +50,7 @@ namespace Schumix.ExtraAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("ExtraAddonConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("ExtraAddonConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

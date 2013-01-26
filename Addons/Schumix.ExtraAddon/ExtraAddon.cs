@@ -156,7 +156,7 @@ namespace Schumix.ExtraAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("ExtraAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("ExtraAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

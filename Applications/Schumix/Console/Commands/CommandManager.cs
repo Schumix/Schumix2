@@ -138,7 +138,7 @@ namespace Schumix.Console.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Error("CIncomingInfo", sLConsole.Exception("Error"), e.Message);
+				Log.Error("CIncomingInfo", sLConsole.GetString("Failure details: {0}"), e.Message);
 				return true;
 			}
 		}

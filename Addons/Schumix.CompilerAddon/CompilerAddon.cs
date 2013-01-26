@@ -85,7 +85,7 @@ namespace Schumix.CompilerAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("CompilerAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("CompilerAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

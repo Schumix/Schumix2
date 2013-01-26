@@ -181,42 +181,6 @@ namespace Schumix.Framework.Localization
 			return string.Format(Catalog.GetPluralString(singular, plural, number), args);
 		}
 
-		public string Exception(string Name)
-		{
-			switch(Name)
-			{
-				case "Error":
-				{
-					if(Locale == "huHU")
-						return "Meghibásodás részletei: {0}";
-					else if(Locale == "enUS")
-						return "Failure details: {0}";
-					else
-						return "Failure details: {0}";
-				}
-				case "FatalError":
-				{
-					if(Locale == "huHU")
-						return "VÉGZETES HIBA";
-					else if(Locale == "enUS")
-						return "FATAL ERROR";
-					else
-						return "FATAL ERROR";
-				}
-				case "MajorError":
-				{
-					if(Locale == "huHU")
-						return "SÚLYOS HIBA";
-					else if(Locale == "enUS")
-						return "MAJOR ERROR";
-					else
-						return "MAJOR ERROR";
-				}
-				default:
-					return string.Empty;
-			}
-		}
-
 		public string Translations(string Name)
 		{
 			return Translations(Name, Locale);

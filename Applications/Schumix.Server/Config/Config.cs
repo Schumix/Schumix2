@@ -74,7 +74,7 @@ namespace Schumix.Server.Config
 			{
 				new Framework.Config.LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, string.Empty, false);
 				Log.Initialize(d_logfilename, colorbindmode);
-				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
+				Log.Error("Config", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

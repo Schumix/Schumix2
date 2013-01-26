@@ -105,7 +105,7 @@ namespace Schumix.Server.New
 				}
 				catch(Exception e)
 				{
-					Log.Error("Schumix", sLConsole.Exception("Error"), e.Message);
+					Log.Error("Schumix", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 
 				Thread.Sleep(10*60*1000);

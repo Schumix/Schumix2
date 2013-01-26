@@ -125,7 +125,7 @@ namespace Schumix.Framework.Database.Cache
 				}
 				catch(Exception e)
 				{
-					Log.Error("CacheDB", sLConsole.Exception("Error"), e.Message);
+					Log.Error("CacheDB", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 			}
 		}
@@ -194,7 +194,7 @@ namespace Schumix.Framework.Database.Cache
 				}
 				catch(Exception e)
 				{
-					Log.Error("CacheDB", sLConsole.Exception("Error"), e.Message);
+					Log.Error("CacheDB", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 			}
 		}

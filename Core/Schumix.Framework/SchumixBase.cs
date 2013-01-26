@@ -194,7 +194,7 @@ namespace Schumix.Framework
 			}
 			catch(Exception e)
 			{
-				Log.Error("SchumixBase", sLConsole.Exception("Error"), e.Message);
+				Log.Error("SchumixBase", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

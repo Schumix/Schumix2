@@ -42,7 +42,7 @@ namespace Schumix.Framework
 			}
 			catch(Exception e)
 			{
-				Log.Error("Timer", sLConsole.Exception("Error"), e.Message);
+				Log.Error("Timer", sLConsole.GetString("Failure details: {0}"), e.Message);
 				Thread.Sleep(100);
 			}
 		}

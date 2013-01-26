@@ -222,7 +222,7 @@ namespace Schumix.Irc.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Error("IncomingInfo", sLConsole.Exception("Error"), e.Message);
+				Log.Error("IncomingInfo", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 	}

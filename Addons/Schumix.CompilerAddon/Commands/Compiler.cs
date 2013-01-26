@@ -155,7 +155,7 @@ namespace Schumix.CompilerAddon.Commands
 					}
 					catch(Exception e)
 					{
-						Log.Debug("CompilerThread", sLConsole.Exception("Error"), e.Message);
+						Log.Debug("CompilerThread", sLConsole.GetString("Failure details: {0}"), e.Message);
 					}
 				});
 
@@ -230,7 +230,7 @@ namespace Schumix.CompilerAddon.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Debug("CompilerCommand", sLConsole.Exception("Error"), e.Message);
+				Log.Debug("CompilerCommand", sLConsole.GetString("Failure details: {0}"), e.Message);
 				return -1;
 			}
 		}
@@ -459,7 +459,7 @@ namespace Schumix.CompilerAddon.Commands
 						}
 						catch(Exception e)
 						{
-							Log.Debug("CompilerThread2", sLConsole.Exception("Error"), e.Message);
+							Log.Debug("CompilerThread2", sLConsole.GetString("Failure details: {0}"), e.Message);
 						}
 					});
 

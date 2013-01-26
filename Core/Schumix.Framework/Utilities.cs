@@ -199,7 +199,7 @@ namespace Schumix.Framework
 							}
 							catch(ArgumentException ae)
 							{
-								Log.Error("Utilities", sLConsole.Exception("Error"), ae.Message);
+								Log.Error("Utilities", sLConsole.GetString("Failure details: {0}"), ae.Message);
 							}
 
 							if(!valid)
@@ -216,7 +216,7 @@ namespace Schumix.Framework
 			}
 			catch(Exception e)
 			{
-				Log.Error("Utilities", sLConsole.Exception("Error"), e.Message);
+				Log.Error("Utilities", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 
 			return urls;
@@ -958,7 +958,7 @@ namespace Schumix.Framework
 				}
 				catch(Exception e)
 				{
-					Log.Debug("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					Log.Debug("Utilities", sLConsole.GetString("Failure details: {0}"), "(DownloadString) " + e.Message);
 					return string.Empty;
 				}
 			}
@@ -1079,7 +1079,7 @@ namespace Schumix.Framework
 				}
 				catch(Exception e)
 				{
-					Log.Debug("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					Log.Debug("Utilities", sLConsole.GetString("Failure details: {0}"), "(DownloadString) " + e.Message);
 					return string.Empty;
 				}
 			}
@@ -1165,7 +1165,7 @@ namespace Schumix.Framework
 				}
 				catch(Exception e)
 				{
-					Log.Debug("Utilities", sLConsole.Exception("Error"), "(DownloadString) " + e.Message);
+					Log.Debug("Utilities", sLConsole.GetString("Failure details: {0}"), "(DownloadString) " + e.Message);
 					return string.Empty;
 				}
 			}

@@ -50,7 +50,7 @@ namespace Schumix.CalendarAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("CalendarAddonConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("CalendarAddonConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

@@ -48,7 +48,7 @@ namespace Schumix.Framework.Clean
 			}
 			catch(Exception e)
 			{
-				Log.Error("CleanDatabase", sLConsole.Exception("Error"), e.Message);
+				Log.Error("CleanDatabase", sLConsole.GetString("Failure details: {0}"), e.Message);
 				_clean = false;
 			}
 

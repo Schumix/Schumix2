@@ -361,7 +361,7 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					Log.Debug("SendMessage", sLConsole.Exception("Error"), e.Message);
+					Log.Debug("SendMessage", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 			}
 		}

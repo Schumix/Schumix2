@@ -89,7 +89,7 @@ namespace Schumix.GameAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("GameAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("GameAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

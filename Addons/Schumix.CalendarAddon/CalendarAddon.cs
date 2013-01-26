@@ -99,7 +99,7 @@ namespace Schumix.CalendarAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("CalendarAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("CalendarAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

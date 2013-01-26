@@ -114,7 +114,7 @@ namespace Schumix.HgRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("HgRssAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("HgRssAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

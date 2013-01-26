@@ -98,7 +98,7 @@ namespace Schumix.Console
 			}
 			catch(Exception e)
 			{
-				Log.Error("ConsoleRead", sLConsole.Exception("Error"), e.Message);
+				Log.Error("ConsoleRead", sLConsole.GetString("Failure details: {0}"), e.Message);
 				Thread.Sleep(1000);
 
 				if(!SchumixBase.ExitStatus)

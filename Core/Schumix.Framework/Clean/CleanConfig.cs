@@ -47,7 +47,7 @@ namespace Schumix.Framework.Clean
 			}
 			catch(Exception e)
 			{
-				Log.Error("CleanConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("CleanConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 				_clean = false;
 			}
 

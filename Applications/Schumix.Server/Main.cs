@@ -166,7 +166,7 @@ namespace Schumix.Server
 			{
 				if(sListener.Exit)
 				{
-					Log.LargeError(sLConsole.Exception("FatalError"));
+					Log.LargeError(sLConsole.GetString("FATAL ERROR"));
 					Log.Error("Main", sLConsole.GetString("An unhandled exception has been thrown. ({0})"), eventArgs.ExceptionObject as Exception);
 					sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
 					Process.GetCurrentProcess().Kill();

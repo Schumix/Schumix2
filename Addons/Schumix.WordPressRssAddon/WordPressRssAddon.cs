@@ -113,7 +113,7 @@ namespace Schumix.WordPressRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("WordPressRssAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("WordPressRssAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

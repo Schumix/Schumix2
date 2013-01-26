@@ -400,7 +400,7 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					Log.Error("Network", sLConsole.Exception("Error"), e.Message);
+					Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 
 				reader = new StreamReader(networkStream);
@@ -544,7 +544,7 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					Log.Error("Opcodes", sLConsole.Exception("Error"), e);
+					Log.Error("Opcodes", sLConsole.GetString("Failure details: {0}"), e.Message);
 					Thread.Sleep(1000);
 				}
 			}
@@ -562,7 +562,7 @@ namespace Schumix.Irc
 			}
 			catch(Exception e)
 			{
-				Log.Error("Opcodes", sLConsole.Exception("Error"), e.Message);
+				Log.Error("Opcodes", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 
 			Shutdown = true;
@@ -647,7 +647,7 @@ namespace Schumix.Irc
 				catch(Exception e)
 				{
 					if(!SchumixBase.ExitStatus && Connected)
-						Log.Error("Ping", sLConsole.Exception("Error"), e.Message);
+						Log.Error("Ping", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 
 				Thread.Sleep(30*1000);

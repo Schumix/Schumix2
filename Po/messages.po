@@ -1,14 +1,68 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-26 10:53:14+0100\n"
-"PO-Revision-Date: 2013-01-26 10:53:15+0100\n"
+"POT-Creation-Date: 2013-01-26 11:15:51+0100\n"
+"PO-Revision-Date: 2013-01-26 11:15:52+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: MonoDevelop Gettext addin\n"
+
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:223
+#: ../Core/Schumix.Irc/Network.cs:401
+#: ../Core/Schumix.Irc/Network.cs:545
+#: ../Core/Schumix.Irc/Network.cs:563
+#: ../Core/Schumix.Irc/Network.cs:648
+#: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:362
+#: ../Core/Schumix.Framework/Config/Config.cs:6
+#: ../Core/Schumix.Framework/SchumixBase.cs:195
+#: ../Core/Schumix.Framework/Utilities.cs:200
+#: ../Core/Schumix.Framework/Utilities.cs:217
+#: ../Core/Schumix.Framework/Utilities.cs:959
+#: ../Core/Schumix.Framework/Utilities.cs:1080
+#: ../Core/Schumix.Framework/Utilities.cs:1166
+#: ../Core/Schumix.Framework/Timer.cs:43
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:12
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
+#: ../Applications/Schumix/Schumix.cs:98
+#: ../Applications/Schumix/Console/Console.cs:7
+#: ../Applications/Schumix/Console/Commands/CommandManager.cs:11
+#: ../Applications/Schumix.Server/Config/Config.cs:6
+#: ../Applications/Schumix.Server/New/Schumix.cs:16
+#: ../Addons/Schumix.TestAddon/TestAddon.cs:64
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:13
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:14
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:13
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:156
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:231
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:460
+#: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:86
+#: ../Addons/Schumix.CompilerAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:13
+#: ../Addons/Schumix.HgRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:13
+#: ../Addons/Schumix.GitRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:8
+#: ../Addons/Schumix.CalendarAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.GameAddon/GameAddon.cs:90
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:16
+#: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:17
+#: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:5
+msgid "Failure details: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:60
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:68
+msgid "MAJOR ERROR"
+msgstr ""
 
 #: ../Applications/Schumix/Main.cs:19
 #: ../Applications/Schumix.Server/Main.cs:14
@@ -43,6 +97,11 @@ msgstr ""
 #: ../Applications/Schumix/Main.cs:26
 #: ../Applications/Schumix.Server/Main.cs:18
 msgid "Colorblind mode is on!"
+msgstr ""
+
+#: ../Applications/Schumix/Main.cs:28
+#: ../Applications/Schumix.Server/Main.cs:22
+msgid "FATAL ERROR"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:28
