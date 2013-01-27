@@ -31,7 +31,7 @@ namespace Schumix.Framework.Config
 		public CrashConfig(string directory)
 		{
 			Directory = directory;
-			Log.Notice("CrashConfig", sLConsole.CrashConfig("Text"));
+			Log.Notice("CrashConfig", sLConsole.GetString("Loaded the Crash settings."));
 		}
 	}
 }

@@ -35,7 +35,7 @@ namespace Schumix.Framework.Config
 			Enabled   = enabled;
 			Ignore    = ignore;
 			Directory = directory;
-			Log.Notice("AddonsConfig", sLConsole.AddonsConfig("Text"));
+			Log.Notice("AddonsConfig", sLConsole.GetString("Loaded the Addons settings."));
 		}
 	}
 }

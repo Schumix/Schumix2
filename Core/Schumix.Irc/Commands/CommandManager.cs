@@ -48,7 +48,7 @@ namespace Schumix.Irc.Commands
 
 		public void InitializeCommandMgr()
 		{
-			Log.Notice("CommandManager", sLConsole.CommandManager("Text"));
+			Log.Notice("CommandManager", sLConsole.GetString("Successfully started the CommandManager."));
 			CreateMappings();
 			sAntiFlood.Start();
 		}
@@ -114,7 +114,7 @@ namespace Schumix.Irc.Commands
 			});
 
 			if(!Reload)
-				Log.Notice("CommandManager", sLConsole.CommandManager("Text2"));
+				Log.Notice("CommandManager", sLConsole.GetString("Successfuly registered all of Command Handlers."));
 		}
 
 		private void DeleteMappings(bool Reload = false)
@@ -155,7 +155,7 @@ namespace Schumix.Irc.Commands
 				CommandMethodMap.Clear();
 
 			if(!Reload)
-				Log.Notice("CommandManager", sLConsole.CommandManager("Text3"));
+				Log.Notice("CommandManager", sLConsole.GetString("All Command Handler were deleted."));
 		}
 
 		private void ProcessMethods(IEnumerable<MethodInfo> methods)

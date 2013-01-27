@@ -31,7 +31,7 @@ namespace Schumix.Framework.Config
 		public ShutdownConfig(int maxmemory)
 		{
 			MaxMemory = maxmemory;
-			Log.Notice("ShutdownConfig", sLConsole.ShutdownConfig("Text"));
+			Log.Notice("ShutdownConfig", sLConsole.GetString("Loaded the Shutdown settings."));
 		}
 	}
 }

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-26 11:15:51+0100\n"
-"PO-Revision-Date: 2013-01-26 11:15:52+0100\n"
+"POT-Creation-Date: 2013-01-27 10:45:51+0100\n"
+"PO-Revision-Date: 2013-01-27 10:45:51+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -10,41 +10,53 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: MonoDevelop Gettext addin\n"
 
-#: ../Core/Schumix.Irc/Commands/CommandManager.cs:223
-#: ../Core/Schumix.Irc/Network.cs:401
-#: ../Core/Schumix.Irc/Network.cs:545
-#: ../Core/Schumix.Irc/Network.cs:563
-#: ../Core/Schumix.Irc/Network.cs:648
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:4
+msgid "Successfully started the CommandManager."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:12
+msgid "Successfuly registered all of Command Handlers."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:18
+msgid "All Command Handler were deleted."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:28
+#: ../Core/Schumix.Irc/Network.cs:55
+#: ../Core/Schumix.Irc/Network.cs:78
+#: ../Core/Schumix.Irc/Network.cs:80
+#: ../Core/Schumix.Irc/Network.cs:90
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
-#: ../Core/Schumix.Irc/Sender/SendMessage.cs:362
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
-#: ../Core/Schumix.Framework/SchumixBase.cs:195
-#: ../Core/Schumix.Framework/Utilities.cs:200
-#: ../Core/Schumix.Framework/Utilities.cs:217
-#: ../Core/Schumix.Framework/Utilities.cs:959
-#: ../Core/Schumix.Framework/Utilities.cs:1080
-#: ../Core/Schumix.Framework/Utilities.cs:1166
-#: ../Core/Schumix.Framework/Timer.cs:43
+#: ../Core/Schumix.Framework/SchumixBase.cs:22
+#: ../Core/Schumix.Framework/Utilities.cs:23
+#: ../Core/Schumix.Framework/Utilities.cs:26
+#: ../Core/Schumix.Framework/Utilities.cs:119
+#: ../Core/Schumix.Framework/Utilities.cs:136
+#: ../Core/Schumix.Framework/Utilities.cs:148
+#: ../Core/Schumix.Framework/Timer.cs:3
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:12
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
-#: ../Applications/Schumix/Schumix.cs:98
+#: ../Applications/Schumix/Schumix.cs:11
 #: ../Applications/Schumix/Console/Console.cs:7
 #: ../Applications/Schumix/Console/Commands/CommandManager.cs:11
 #: ../Applications/Schumix.Server/Config/Config.cs:6
 #: ../Applications/Schumix.Server/New/Schumix.cs:16
-#: ../Addons/Schumix.TestAddon/TestAddon.cs:64
+#: ../Addons/Schumix.TestAddon/TestAddon.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:13
 #: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:14
 #: ../Addons/Schumix.SvnRssAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:13
 #: ../Addons/Schumix.MantisBTRssAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:156
-#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:231
-#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:460
-#: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:86
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:20
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:32
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:61
+#: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:7
 #: ../Addons/Schumix.CompilerAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:13
 #: ../Addons/Schumix.HgRssAddon/Config/AddonConfig.cs:5
@@ -52,16 +64,76 @@ msgstr ""
 #: ../Addons/Schumix.GitRssAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:8
 #: ../Addons/Schumix.CalendarAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.GameAddon/GameAddon.cs:90
+#: ../Addons/Schumix.GameAddon/GameAddon.cs:5
 #: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:16
 #: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:17
 #: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:5
 msgid "Failure details: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:60
-#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:68
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
 msgid "MAJOR ERROR"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Utilities.cs:26
+msgid "Checking: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Log.cs:18
+msgid ""
+"Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Log.cs:18
+msgid ""
+"\n"
+"Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/IRCConfig.cs:3
+msgid "Loaded the Irc settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/MySqlConfig.cs:3
+msgid "Loaded the MySql settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/SQLiteConfig.cs:3
+msgid "Loaded the SQLite settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/AddonsConfig.cs:3
+msgid "Loaded the Addons settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/ScriptsConfig.cs:3
+msgid "Loaded the Scripts settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/LocalizationConfig.cs:3
+#: ../Applications/Schumix.Server/Config/LocalizationConfig.cs:3
+msgid "Loaded the Localization settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/UpdateConfig.cs:3
+msgid "Loaded the Update settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/ServerConfig.cs:3
+#: ../Applications/Schumix.Server/Config/ServerConfigs.cs:3
+msgid "Loaded the Server settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/CrashConfig.cs:3
+msgid "Loaded the Crash settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/ShutdownConfig.cs:3
+msgid "Loaded the Shutdown settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/FloodingConfig.cs:3
+msgid "Loaded the Flooding settings."
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:19
@@ -110,25 +182,57 @@ msgstr ""
 msgid "An unhandled exception has been thrown. ({0})"
 msgstr ""
 
+#: ../Applications/Schumix/Schumix.cs:3
+msgid "Successfully started SchumixBot."
+msgstr ""
+
+#: ../Applications/Schumix/Schumix.cs:3
+msgid "Network starting..."
+msgstr ""
+
+#: ../Applications/Schumix/Schumix.cs:11
+msgid "Console starting..."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Console.cs:3
+msgid "Successfully started the Console."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Console.cs:3
+msgid "Console reader starting..."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Console.cs:5
+msgid "Successfully started the Console reader."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Commands/CommandManager.cs:3
+msgid "Successfully started the CCommandManager."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Commands/CommandManager.cs:7
+msgid "All Command Handler are registered."
+msgstr ""
+
 #: ../Applications/Schumix.Server/Main.cs:19
 msgid "CleanManager is starting..."
 msgstr ""
 
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:220
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:261
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:213
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:254
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:202
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:243
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:221
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:272
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:25
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:21
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:24
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:21
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:24
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:21
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:28
 msgid "[{0}] Failure details: {1}"
 msgstr ""
 
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:228
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:221
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:210
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:229
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:21
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:21
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:21
 msgid "[{0}] Fatal failure details: {1}"
 msgstr ""
 
@@ -274,12 +378,12 @@ msgstr ""
 msgid "Loaded the Compiler settings."
 msgstr ""
 
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:244
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:285
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:23
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:26
 msgid "[{0} {1}] Failure details: {2}"
 msgstr ""
 
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:252
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:23
 msgid "[{0} {1}] Fatal failure details: {2}"
 msgstr ""
 

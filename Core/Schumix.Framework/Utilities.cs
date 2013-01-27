@@ -209,7 +209,7 @@ namespace Schumix.Framework
 						if(!lurl.StartsWith("http://") && !url.StartsWith("https://"))
 							lurl = string.Format("http://{0}", url);
 
-						Log.Debug("Utilities", sLConsole.Utilities("Text"), url);
+						Log.Debug("Utilities", sLConsole.GetString("Checking: {0}"), url);
 						urls.Add(lurl);
 					}
 				}

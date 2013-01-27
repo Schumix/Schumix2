@@ -41,7 +41,7 @@ namespace Schumix.Framework.Config
 			Password = password;
 			Database = database;
 			Charset  = charset;
-			Log.Notice("MySqlConfig", sLConsole.MySqlConfig("Text"));
+			Log.Notice("MySqlConfig", sLConsole.GetString("Loaded the MySql settings."));
 		}
 	}
 }

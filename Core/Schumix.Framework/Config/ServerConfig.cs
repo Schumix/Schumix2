@@ -37,7 +37,7 @@ namespace Schumix.Framework.Config
 			Host     = host;
 			Port     = port;
 			Password = password;
-			Log.Notice("ServerConfig", sLConsole.ServerConfig("Text"));
+			Log.Notice("ServerConfig", sLConsole.GetString("Loaded the Server settings."));
 		}
 	}
 }

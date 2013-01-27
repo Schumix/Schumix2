@@ -32,7 +32,7 @@ namespace Schumix.Framework.Config
 		public IRCConfig(Dictionary<string, IRCConfigBase> list)
 		{
 			List = list;
-			Log.Notice("IRCConfig", sLConsole.IRCConfig("Text"));
+			Log.Notice("IRCConfig", sLConsole.GetString("Loaded the Irc settings."));
 		}
 	}
 }

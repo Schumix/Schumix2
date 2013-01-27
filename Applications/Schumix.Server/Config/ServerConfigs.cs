@@ -34,7 +34,7 @@ namespace Schumix.Server.Config
 		{
 			ListenerPort = listenerport;
 			Password     = password;
-			Log.Notice("ServerConfigs", sLConsole.ServerConfigs("Text"));
+			Log.Notice("ServerConfigs", sLConsole.GetString("Loaded the Server settings."));
 		}
 	}
 }
