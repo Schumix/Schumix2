@@ -474,5 +474,10 @@ namespace Schumix.Framework.Extensions
 		{
 			return Value.IsNull() || Value.Trim().Length == 0;
 		}
+
+		public static bool IsNullOrEmpty(this string Value)
+		{
+			return string.IsNullOrEmpty(Value);
+		}
 	}
 }

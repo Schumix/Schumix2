@@ -26,6 +26,7 @@ using System.Reflection;
 using System.Globalization;
 using Mono.Unix;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework.Localization
 {
@@ -47,7 +48,7 @@ namespace Schumix.Framework.Localization
 
 		public void Initialize(string LocaleDir)
 		{
-			if(string.IsNullOrEmpty(LocaleDir))
+			if(LocaleDir.IsNullOrEmpty())
 			{
 				string location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 				
