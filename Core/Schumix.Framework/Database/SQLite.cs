@@ -41,13 +41,13 @@ namespace Schumix.Framework.Database
 		{
 			if(!Initialize(file))
 			{
-				Log.Error("SQLite", sLConsole.SQLite("Text"));
+				Log.Error("SQLite", sLConsole.GetString("Error was handled when tried to connect to the database!"));
 				SchumixBase.ServerDisconnect(false);
 				Thread.Sleep(1000);
 				Process.GetCurrentProcess().Kill();
 			}
 			else
-				Log.Notice("SQLite", sLConsole.SQLite("Text2"));
+				Log.Notice("SQLite", sLConsole.GetString("Successfully connected to the SQLite database."));
 		}
 
 		~SQLite()
@@ -151,8 +151,8 @@ namespace Schumix.Framework.Database
 			if(c)
 			{
 				_crash = true;
-				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
-				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+				Log.Error("SQLite", sLConsole.GetString("Query error: {0}"), s.Message);
+				Log.Warning("SQLite", sLConsole.GetString("Program shutting down!"));
 				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
@@ -168,8 +168,8 @@ namespace Schumix.Framework.Database
 			if(s.Message.Contains("Fatal error encountered during command execution."))
 			{
 				_crash = true;
-				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
-				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+				Log.Error("SQLite", sLConsole.GetString("Query error: {0}"), s.Message);
+				Log.Warning("SQLite", sLConsole.GetString("Program shutting down!"));
 				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
@@ -185,8 +185,8 @@ namespace Schumix.Framework.Database
 			if(s.Message.Contains("Timeout expired."))
 			{
 				_crash = true;
-				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
-				Log.Warning("SQLite", sLConsole.SQLite("Text4"));
+				Log.Error("SQLite", sLConsole.GetString("Query error: {0}"), s.Message);
+				Log.Warning("SQLite", sLConsole.GetString("Program shutting down!"));
 				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
@@ -200,7 +200,7 @@ namespace Schumix.Framework.Database
 			}
 
 			if(logerror)
-				Log.Error("SQLite", sLConsole.SQLite("Text3"), s.Message);
+				Log.Error("SQLite", sLConsole.GetString("Query error: {0}"), s.Message);
 		}
 
 		public bool Update(string sql)

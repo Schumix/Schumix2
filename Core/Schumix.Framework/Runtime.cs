@@ -55,8 +55,8 @@ namespace Schumix.Framework
 			if((Process.GetCurrentProcess().WorkingSet64/1024/1024 >= ShutdownConfig.MaxMemory && IRCConfig.List.IsNull()) ||
 			   Process.GetCurrentProcess().WorkingSet64/1024/1024 >= ShutdownConfig.MaxMemory + ircnetwork)
 			{
-				Log.Warning("Runtime", sLConsole.Runtime("Text3"), ShutdownConfig.MaxMemory + ircnetwork);
-				Log.Warning("Runtime", sLConsole.Runtime("Text4"));
+				Log.Warning("Runtime", sLConsole.GetString("The program, more than {0} MB consumed!"), ShutdownConfig.MaxMemory + ircnetwork);
+				Log.Warning("Runtime", sLConsole.GetString("Program shutting down!"));
 
 				if(!IRCConfig.List.IsNull())
 				{
@@ -88,7 +88,7 @@ namespace Schumix.Framework
 				}
 				catch(Exception e)
 				{
-					Log.Error("Runtime", sLConsole.Runtime("Text"), e.Message);
+					Log.Error("Runtime", sLConsole.GetString("Failed to set process name: {0}"), e.Message);
 				}
 			}
 		}
@@ -105,7 +105,7 @@ namespace Schumix.Framework
 			try
 			{
 				if(prctl(15, Encoding.ASCII.GetBytes(Name + "\0"), IntPtr.Zero, IntPtr.Zero, IntPtr.Zero) != 0)
-					Log.Error("Runtime", sLConsole.Runtime("Text2"));
+					Log.Error("Runtime", sLConsole.GetString("Error setting process name!"));
 			}
 			catch(EntryPointNotFoundException)
 			{

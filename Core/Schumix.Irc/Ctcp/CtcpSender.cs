@@ -47,9 +47,9 @@ namespace Schumix.Irc.Ctcp
 		{
 			_userInfoMessage = "Schumix CTCP";		
 			_fingerMessage = _userInfoMessage;
-			_versionMessage = string.Format("Schumix {0}\n{1} {2}\n{3} {4}", sUtilities.GetVersion(), sLConsole.CtcpSender("Text7"), sUtilities.GetOSName(), sLConsole.CtcpSender("Text8"), sUtilities.GetCpuId());
+			_versionMessage = string.Format("Schumix {0}\n{1} {2}\n{3} {4}", sUtilities.GetVersion(), sLConsole.GetString("Operating System:"), sUtilities.GetOSName(), sLConsole.GetString("Processor:"), sUtilities.GetCpuId());
 			_sourceMessage = Consts.SchumixWebsite;
-			_clientInfoMessage = sLConsole.CtcpSender("Text");
+			_clientInfoMessage = sLConsole.GetString("This client supports: UserInfo, Finger, Version, Source, Ping, Time and ClientInfo");
 			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;
 		}
 
@@ -69,7 +69,7 @@ namespace Schumix.Irc.Ctcp
 			switch(args)
 			{
 				case CtcpUtil.Finger:
-					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, args + SchumixBase.Space + _fingerMessage + sLConsole.CtcpSender("Text5") + FormatIdleTime());
+					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, args + SchumixBase.Space + _fingerMessage + sLConsole.GetString(" Idle time ") + FormatIdleTime());
 					break;
 				case CtcpUtil.Time:
 					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, args + SchumixBase.Space + FormatDateTime());
@@ -91,7 +91,7 @@ namespace Schumix.Irc.Ctcp
 					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, args);
 					break;
 				default:
-					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, "{0} {1}: {2}", CtcpUtil.ErrorMessage, args, sLConsole.CtcpSender("Text6"));
+					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, "{0} {1}: {2}", CtcpUtil.ErrorMessage, args, sLConsole.GetString("Is not a supported Ctcp query."));
 					break;
 			}
 		}
@@ -106,7 +106,7 @@ namespace Schumix.Irc.Ctcp
 		{
 			get
 			{
-				return _fingerMessage + sLConsole.CtcpSender("Text5") + FormatIdleTime() + SchumixBase.Point;
+				return _fingerMessage + sLConsole.GetString(" Idle time ") + FormatIdleTime() + SchumixBase.Point;
 			}
 			set
 			{
@@ -187,9 +187,9 @@ namespace Schumix.Irc.Ctcp
 		private string FormatIdleTime() 
 		{
 			var builder = new StringBuilder();
-			builder.Append(sSendMessage.IdleTime.Hours + sLConsole.CtcpSender("Text2"));
-			builder.Append(sSendMessage.IdleTime.Minutes + sLConsole.CtcpSender("Text3"));
-			builder.Append(sSendMessage.IdleTime.Seconds + sLConsole.CtcpSender("Text4"));
+			builder.Append(sSendMessage.IdleTime.Hours + sLConsole.GetString(" Hours, "));
+			builder.Append(sSendMessage.IdleTime.Minutes + sLConsole.GetString(" Minutes, "));
+			builder.Append(sSendMessage.IdleTime.Seconds + sLConsole.GetString(" Seconds."));
 			return builder.ToString();
 		}
 

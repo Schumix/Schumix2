@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-27 10:45:51+0100\n"
-"PO-Revision-Date: 2013-01-27 10:45:51+0100\n"
+"POT-Creation-Date: 2013-01-27 11:52:32+0100\n"
+"PO-Revision-Date: 2013-01-27 11:52:33+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -71,12 +71,174 @@ msgstr ""
 msgid "Failure details: {0}"
 msgstr ""
 
+#: ../Core/Schumix.Irc/Commands/CommandInfo.cs:3
+msgid "Successfully started the CommandInfo."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
+msgid "Operating System:"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
+msgid "Processor:"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
+msgid ""
+"This client supports: UserInfo, Finger, Version, Source, Ping, Time and "
+"ClientInfo"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:8
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:9
+msgid " Idle time "
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:8
+msgid "Is not a supported Ctcp query."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+msgid " Hours, "
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+msgid " Minutes, "
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+msgid " Seconds."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:50
+msgid "ChannelList: Failure request!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/IrcBase.cs:29
+#: ../Core/Schumix.Framework/Database/SQLite.cs:15
+#: ../Core/Schumix.Framework/Database/SQLite.cs:18
+#: ../Core/Schumix.Framework/Database/SQLite.cs:21
+#: ../Core/Schumix.Framework/Database/MySql.cs:15
+#: ../Core/Schumix.Framework/Database/MySql.cs:16
+#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/MySql.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Runtime.cs:6
+msgid "Program shutting down!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:5
+msgid "Initiating connection."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:8
+msgid "Timer is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:9
+msgid "MySql is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:10
+msgid "CacheDB is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:11
+msgid "Successfully connected to the database."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:16
+msgid "{0} master channel is updated to: {1}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:16
+msgid "The master channel already exist on the database, named by default!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:21
+#: ../Applications/Schumix.Server/Main.cs:19
+msgid "CleanManager is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:22
+msgid "AddonManager is loading..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/SQLite.cs:3
+#: ../Core/Schumix.Framework/Database/MySql.cs:3
+msgid "Error was handled when tried to connect to the database!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/SQLite.cs:3
+msgid "Successfully connected to the SQLite database."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/SQLite.cs:15
+#: ../Core/Schumix.Framework/Database/SQLite.cs:18
+#: ../Core/Schumix.Framework/Database/SQLite.cs:21
+#: ../Core/Schumix.Framework/Database/SQLite.cs:24
+#: ../Core/Schumix.Framework/Database/MySql.cs:16
+#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/MySql.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Database/MySql.cs:28
+msgid "Query error: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:3
+msgid "Started the database loading."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:6
+msgid "Selecting the Database."
+msgstr ""
+
 #: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
 msgid "MAJOR ERROR"
 msgstr ""
 
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
+msgid "Database type's is not selected!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
+msgid "2 Database are selected!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/MySql.cs:3
+msgid "Successfully connected to the MySql database."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/MySql.cs:15
+msgid "Sql connection crash."
+msgstr ""
+
 #: ../Core/Schumix.Framework/Utilities.cs:26
 msgid "Checking: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Runtime.cs:6
+msgid "The program, more than {0} MB consumed!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Runtime.cs:12
+msgid "Failed to set process name: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Runtime.cs:15
+msgid "Error setting process name!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/CrashDumper.cs:3
+msgid "Creating crash dump..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/CrashDumper.cs:4
+msgid "Failed to write crash dump! ({0})"
+msgstr ""
+
+#: ../Core/Schumix.Framework/CrashDumper.cs:5
+msgid "Crash dump created."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Log.cs:18
@@ -214,8 +376,16 @@ msgstr ""
 msgid "All Command Handler are registered."
 msgstr ""
 
-#: ../Applications/Schumix.Server/Main.cs:19
-msgid "CleanManager is starting..."
+#: ../Applications/Schumix/ScriptManager.cs:5
+msgid "Lua support is disabled!"
+msgstr ""
+
+#: ../Applications/Schumix/ScriptManager.cs:6
+msgid "Python support is disabled!"
+msgstr ""
+
+#: ../Applications/Schumix.Server/New/Schumix.cs:12
+msgid "One of the summix has been shuted down, it will be restarted."
 msgstr ""
 
 #: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
@@ -441,5 +611,43 @@ msgstr ""
 
 #: ../Addons/Schumix.ExtraAddon/Commands/YoutubeTitle.cs:10
 msgid "Exception thrown while fetching youtube title: {0}"
+msgstr ""
+
+#: ../Components/Schumix.LuaEngine/LuaEngine.cs:6
+msgid "Initializing Lua engine."
+msgstr ""
+
+#: ../Components/Schumix.LuaEngine/LuaEngine.cs:13
+msgid "Loading Lua script: {0}"
+msgstr ""
+
+#: ../Components/Schumix.LuaEngine/LuaEngine.cs:14
+msgid "Exception thrown while loading Lua script: {0} Error: {1}"
+msgstr ""
+
+#: ../Components/Schumix.LuaEngine/LuaHelper.cs:6
+msgid ""
+"Function {0} (exported as {1}): argument number mismatch. Declared {2}, but "
+"requires {3}!"
+msgstr ""
+
+#: ../Components/Schumix.LuaEngine/LuaHelper.cs:12
+msgid "Lua compile error: {0}"
+msgstr ""
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:3
+msgid "Initializing Python engine."
+msgstr ""
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:13
+msgid "Loading Python script: {0}"
+msgstr ""
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
+msgid "Exception thrown while loading Python script. Error: {0} {1}"
+msgstr ""
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
+msgid "Exception thrown while loading Python script: {0} Error: {1} {2}"
 msgstr ""
 

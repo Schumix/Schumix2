@@ -89,7 +89,7 @@ namespace Schumix.Server.New
 
 					foreach(var ll in l)
 					{
-						Log.Notice("Schumix", sLConsole.Schumix("Text"));
+						Log.Notice("Schumix", sLConsole.GetString("One of the summix has been shuted down, it will be restarted."));
 
 						_processlist[ll].Process.Kill();
 

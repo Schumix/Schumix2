@@ -209,7 +209,7 @@ namespace Schumix.Irc
 				i++;
 			}
 
-			Log.Warning("IrcBase", sLConsole.IrcBase("Text"));
+			Log.Warning("IrcBase", sLConsole.GetString("Program shutting down!"));
 			Process.GetCurrentProcess().Kill();
 		}
 	}

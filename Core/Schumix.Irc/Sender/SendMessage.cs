@@ -434,7 +434,7 @@ namespace Schumix.Irc
 			}
 
 			if(!b)
-				Log.Error("SendMessage", sLConsole.SendMessage("Text"));
+				Log.Error("SendMessage", sLConsole.GetString("ChannelList: Failure request!"));
 
 			return list;
 		}

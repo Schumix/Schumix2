@@ -79,7 +79,7 @@ namespace Schumix.Framework
 				if(ServerConfig.Enabled)
 				{
 					var listener = new ClientSocket(ServerConfig.Host, ServerConfig.Port, ServerConfig.Password);
-					Log.Debug("SchumixServer", sLConsole.SchumixBase("Text6"));
+					Log.Debug("SchumixServer", sLConsole.GetString("Initiating connection."));
 					listener.Socket();
 
 					while(ThreadStop)
@@ -89,18 +89,18 @@ namespace Schumix.Framework
 				if(sUtilities.GetPlatformType() == PlatformType.Linux)
 					System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
-				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text"));
+				Log.Debug("SchumixBase", sLConsole.GetString("Timer is starting..."));
 				sTimer = new Timer();
 				sTimer.Start();
 
-				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text2"));
+				Log.Debug("SchumixBase", sLConsole.GetString("MySql is starting..."));
 				DManager = new DatabaseManager();
 
-				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text8"));
+				Log.Debug("SchumixBase", sLConsole.GetString("CacheDB is starting..."));
 				sCacheDB = new CacheDB();
 				sCacheDB.Load();
 
-				Log.Notice("SchumixBase", sLConsole.SchumixBase("Text3"));
+				Log.Notice("SchumixBase", sLConsole.GetString("Successfully connected to the database."));
 				sLManager.Locale = LocalizationConfig.Locale;
 
 				foreach(var sn in IRCConfig.List)
@@ -151,10 +151,10 @@ namespace Schumix.Framework
 									string servername = db2["ServerName"].ToString();
 									DManager.Update("channels", string.Format("Channel = '{0}'", IRCConfig.List[servername].MasterChannel), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, servername));
 									DManager.Update("channels", string.Format("Password = '{0}'", IRCConfig.List[servername].MasterChannelPassword.Length > 0 ? IRCConfig.List[servername].MasterChannelPassword : string.Empty), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, servername));
-									Log.Notice("SchumixBase", sLConsole.SchumixBase("Text4"), servername, IRCConfig.List[servername].MasterChannel);
+									Log.Notice("SchumixBase", sLConsole.GetString("{0} master channel is updated to: {1}"), servername, IRCConfig.List[servername].MasterChannel);
 								}
 								else if(id == Convert.ToInt32(db2["Id"].ToString()) && ignore)
-									Log.Warning("SchumixBase", sLConsole.SchumixBase("Text7"));
+									Log.Warning("SchumixBase", sLConsole.GetString("The master channel already exist on the database, named by default!"));
 							}
 						}
 					}
@@ -181,13 +181,13 @@ namespace Schumix.Framework
 						Log.Error("SchumixBase", sLConsole.ChannelInfo("Text11"));
 				}
 
-				Log.Debug("SchumixBase", sLConsole.SchumixBase("Text9"));
+				Log.Debug("SchumixBase", sLConsole.GetString("CleanManager is starting..."));
 				sCleanManager = new CleanManager();
 				sCleanManager.Initialize();
 
 				if(AddonsConfig.Enabled)
 				{
-					Log.Debug("SchumixBase", sLConsole.SchumixBase("Text5"));
+					Log.Debug("SchumixBase", sLConsole.GetString("AddonManager is loading..."));
 					sAddonManager.Initialize();
 					sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory);
 				}

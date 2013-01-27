@@ -64,7 +64,7 @@ namespace Schumix.LuaEngine
 		/// <param name="scriptsPath">The directory where the Lua scripts are located.</param>
 		public LuaEngine(string scriptsPath)
 		{
-			Log.Notice("LuaEngine", sLConsole.LuaEngine("Text"));
+			Log.Notice("LuaEngine", sLConsole.GetString("Initializing Lua engine."));
 			_lua = new Lua();
 			_luaFunctions = new Dictionary<string, LuaFunctionDescriptor>();
 			_scriptPath = scriptsPath;
@@ -108,7 +108,7 @@ namespace Schumix.LuaEngine
 
 				foreach(var file in di.GetFiles("*.lua").AsParallel())
 				{
-					Log.Notice("LuaEngine", sLConsole.LuaEngine("Text2"), file.Name);
+					Log.Notice("LuaEngine", sLConsole.GetString("Loading Lua script: {0}"), file.Name);
 
 					try
 					{
@@ -116,7 +116,7 @@ namespace Schumix.LuaEngine
 					}
 					catch(Exception e)
 					{
-						Log.Error("LuaEngine", sLConsole.LuaEngine("Text3"), file.Name, e.Message);
+						Log.Error("LuaEngine", sLConsole.GetString("Exception thrown while loading Lua script: {0} Error: {1}"), file.Name, e.Message);
 					}
 				}
 			}

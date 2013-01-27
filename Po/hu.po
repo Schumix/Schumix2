@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-27 10:45:51+0100\n"
+"POT-Creation-Date: 2013-01-27 11:50:36+0100\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -76,13 +76,177 @@ msgstr "Összes Command handler törlésre került."
 msgid "Failure details: {0}"
 msgstr "Meghibásodás részletei: {0}"
 
+#: ../Core/Schumix.Irc/Commands/CommandInfo.cs:3
+msgid "Successfully started the CommandInfo."
+msgstr "CommandInfo sikeresen elindult."
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
+msgid "Operating System:"
+msgstr "Operácios Rendszer:"
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
+msgid "Processor:"
+msgstr "Processzor:"
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
+msgid ""
+"This client supports: UserInfo, Finger, Version, Source, Ping, Time and "
+"ClientInfo"
+msgstr "Ez a kliens támogatja: UserInfo, Finger, Version, Source, Ping, Time és ClientInfo"
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:8
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:9
+msgid " Idle time "
+msgstr " Idle time "
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:8
+msgid "Is not a supported Ctcp query."
+msgstr "Nem támogatott Ctcp lekérdezés."
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+msgid " Hours, "
+msgstr " óra, "
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+msgid " Minutes, "
+msgstr " perc, "
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+msgid " Seconds."
+msgstr " másodperc."
+
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:50
+msgid "ChannelList: Failure request!"
+msgstr "ChannelList: Hibás lekérdezés!"
+
+#: ../Core/Schumix.Irc/IrcBase.cs:29
+#: ../Core/Schumix.Framework/Database/SQLite.cs:15
+#: ../Core/Schumix.Framework/Database/SQLite.cs:18
+#: ../Core/Schumix.Framework/Database/SQLite.cs:21
+#: ../Core/Schumix.Framework/Database/MySql.cs:15
+#: ../Core/Schumix.Framework/Database/MySql.cs:16
+#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/MySql.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Runtime.cs:6
+msgid "Program shutting down!"
+msgstr "A program leáll!"
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:5
+msgid "Initiating connection."
+msgstr "Kapcsolat kezdeményezése."
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:8
+msgid "Timer is starting..."
+msgstr "Timer indul..."
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:9
+msgid "MySql is starting..."
+msgstr "MySql indul..."
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:10
+msgid "CacheDB is starting..."
+msgstr "CacheDB indul..."
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:11
+msgid "Successfully connected to the database."
+msgstr "Az adatbázishoz sikeres a kapcsolodás."
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:16
+msgid "{0} master channel is updated to: {1}"
+msgstr "{0} mester csatorna frissitve lett erre: {1}"
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:16
+msgid "The master channel already exist on the database, named by default!"
+msgstr ""
+"A megadott mester csatorna már létezik egyszer az adatbázisban így az "
+"alapértelmezett fog lenni a neve!"
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:21
+#: ../Applications/Schumix.Server/Main.cs:19
+msgid "CleanManager is starting..."
+msgstr "CleanManager indul..."
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:22
+msgid "AddonManager is loading..."
+msgstr "AddonManager indul..."
+
+#: ../Core/Schumix.Framework/Database/SQLite.cs:3
+#: ../Core/Schumix.Framework/Database/MySql.cs:3
+msgid "Error was handled when tried to connect to the database!"
+msgstr "Hiba történt az adatbázishoz való kapcsolodás során!"
+
+#: ../Core/Schumix.Framework/Database/SQLite.cs:3
+msgid "Successfully connected to the SQLite database."
+msgstr "SQLite adatbázishoz sikeres a kapcsolodás."
+
+#: ../Core/Schumix.Framework/Database/SQLite.cs:15
+#: ../Core/Schumix.Framework/Database/SQLite.cs:18
+#: ../Core/Schumix.Framework/Database/SQLite.cs:21
+#: ../Core/Schumix.Framework/Database/SQLite.cs:24
+#: ../Core/Schumix.Framework/Database/MySql.cs:16
+#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/MySql.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Database/MySql.cs:28
+msgid "Query error: {0}"
+msgstr "Query hiba: {0}"
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:3
+msgid "Started the database loading."
+msgstr "Adatbázis betöltése elindult."
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:6
+msgid "Selecting the Database."
+msgstr "Adatbázis fajtájának kiválasztása folyamatban."
+
 #: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
 msgid "MAJOR ERROR"
 msgstr "SÚLYOS HIBA"
 
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
+msgid "Database type's is not selected!"
+msgstr "Nincs az adatbázis típusa kiválasztva!"
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
+msgid "2 Database are selected!"
+msgstr "Két adatbázis van kiválasztva!"
+
+#: ../Core/Schumix.Framework/Database/MySql.cs:3
+msgid "Successfully connected to the MySql database."
+msgstr "MySql adatbázishoz sikeres a kapcsolodás."
+
+#: ../Core/Schumix.Framework/Database/MySql.cs:15
+msgid "Sql connection crash."
+msgstr "Sql kapcsolat összeomlott."
+
 #: ../Core/Schumix.Framework/Utilities.cs:26
 msgid "Checking: {0}"
 msgstr "Ellenőrzése: {0}"
+
+#: ../Core/Schumix.Framework/Runtime.cs:6
+msgid "The program, more than {0} MB consumed!"
+msgstr "A program több mint {0} mb-ot fogyaszt!"
+
+#: ../Core/Schumix.Framework/Runtime.cs:12
+msgid "Failed to set process name: {0}"
+msgstr "Nem sikerült beállítani folyamat nevét: {0}"
+
+#: ../Core/Schumix.Framework/Runtime.cs:15
+msgid "Error setting process name!"
+msgstr "Hiba a folyamat nevének beállításában!"
+
+#: ../Core/Schumix.Framework/CrashDumper.cs:3
+msgid "Creating crash dump..."
+msgstr "Crash dump készítése..."
+
+#: ../Core/Schumix.Framework/CrashDumper.cs:4
+msgid "Failed to write crash dump! ({0})"
+msgstr "Nem sikerült crash dump-ot írni! ({0})"
+
+#: ../Core/Schumix.Framework/CrashDumper.cs:5
+msgid "Crash dump created."
+msgstr "Crash dump létrehozva."
 
 #: ../Core/Schumix.Framework/Log.cs:18
 msgid "Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"
@@ -220,9 +384,17 @@ msgstr "CCommandManager sikeresen elindult."
 msgid "All Command Handler are registered."
 msgstr "Összes Command handler regisztrálásra került."
 
-#: ../Applications/Schumix.Server/Main.cs:19
-msgid "CleanManager is starting..."
-msgstr "CleanManager indul..."
+#: ../Applications/Schumix/ScriptManager.cs:5
+msgid "Lua support is disabled!"
+msgstr "Lua támogatása le van tiltva!"
+
+#: ../Applications/Schumix/ScriptManager.cs:6
+msgid "Python support is disabled!"
+msgstr "Python támogatása le van tiltva!"
+
+#: ../Applications/Schumix.Server/New/Schumix.cs:12
+msgid "One of the summix has been shuted down, it will be restarted."
+msgstr "Leállt az egyik Schumix ezért újra lesz indítva."
 
 #: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
 #: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:25
@@ -448,3 +620,43 @@ msgstr "WorlframAlpha beállításai betöltve."
 #: ../Addons/Schumix.ExtraAddon/Commands/YoutubeTitle.cs:10
 msgid "Exception thrown while fetching youtube title: {0}"
 msgstr "Kivételt dobott letöltése közben a youtube title: {0}"
+
+#: ../Components/Schumix.LuaEngine/LuaEngine.cs:6
+msgid "Initializing Lua engine."
+msgstr "Lua motor betöltése."
+
+#: ../Components/Schumix.LuaEngine/LuaEngine.cs:13
+msgid "Loading Lua script: {0}"
+msgstr "Lua script betöltése: {0}"
+
+#: ../Components/Schumix.LuaEngine/LuaEngine.cs:14
+msgid "Exception thrown while loading Lua script: {0} Error: {1}"
+msgstr "Kivétel dobott betöltése közben a Lua script: {0} Error: {1}"
+
+#: ../Components/Schumix.LuaEngine/LuaHelper.cs:6
+msgid ""
+"Function {0} (exported as {1}): argument number mismatch. Declared {2}, but "
+"requires {3}!"
+msgstr ""
+"Funkció {0} (exportált {1}): argumentum szám nem egyezik. Nyilvánítva {2}, "
+"de ehhez {3}!"
+
+#: ../Components/Schumix.LuaEngine/LuaHelper.cs:12
+msgid "Lua compile error: {0}"
+msgstr "Lua fordítási hiba: {0}"
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:3
+msgid "Initializing Python engine."
+msgstr "Python motor betöltése."
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:13
+msgid "Loading Python script: {0}"
+msgstr "Python script betöltése: {0}"
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
+msgid "Exception thrown while loading Python script. Error: {0} {1}"
+msgstr "Kivétel dobott betöltése közben a Python script. Error: {0} {1}"
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
+msgid "Exception thrown while loading Python script: {0} Error: {1} {2}"
+msgstr "Kivétel dobott betöltése közben a Python script: {0} Error: {1} {2}"
