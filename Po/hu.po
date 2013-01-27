@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-27 14:47:19+0100\n"
+"POT-Creation-Date: 2013-01-27 15:22:52+0100\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -104,6 +104,90 @@ msgstr "A nick nincs beregisztrálva így a vhost nem került bekapcsolásra!"
 #: ../Core/Schumix.Irc/MessageHandler.cs:73
 msgid "Identify password accepted!"
 msgstr "Azonosító jelszó elfogadva."
+
+#: ../Core/Schumix.Irc/Network.cs:11 ../Core/Schumix.Irc/Network.cs:13
+#: ../Core/Schumix.Irc/Network.cs:15 ../Core/Schumix.Irc/Network.cs:17
+msgid "Successfully started the Network."
+msgstr "Network sikeresen elindult."
+
+#: ../Core/Schumix.Irc/Network.cs:11 ../Core/Schumix.Irc/Network.cs:13
+#: ../Core/Schumix.Irc/Network.cs:15 ../Core/Schumix.Irc/Network.cs:17
+msgid "Server's name: {0}"
+msgstr "A szerver neve: {0}"
+
+#: ../Core/Schumix.Irc/Network.cs:19
+msgid "Opcodes thread started..."
+msgstr "Opcodes szál indul..."
+
+#: ../Core/Schumix.Irc/Network.cs:20
+msgid "Ping thread started..."
+msgstr "Ping szál indul..."
+
+#: ../Core/Schumix.Irc/Network.cs:21
+msgid "Establishing connection with irc server."
+msgstr "Kapcsolat létrehozása az irc szerverrel."
+
+#: ../Core/Schumix.Irc/Network.cs:24
+msgid "All of IRC handlers are registered."
+msgstr "Összes IRC handler regisztrálásra került."
+
+#: ../Core/Schumix.Irc/Network.cs:44
+msgid "Connection to: {0}"
+msgstr "Kapcsolódás megindult ide: {0}"
+
+#: ../Core/Schumix.Irc/Network.cs:45
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+msgid "Connection closed!"
+msgstr "Kapcsolat bontva!"
+
+#: ../Core/Schumix.Irc/Network.cs:47
+msgid "Connection have been closed."
+msgstr "Kapcsolat bontásra került."
+
+#: ../Core/Schumix.Irc/Network.cs:47
+msgid "Reconnection to: {0}"
+msgstr "Újrakapcsolódás megindult ide: {0}"
+
+#: ../Core/Schumix.Irc/Network.cs:51
+msgid "Connection type: {0}"
+msgstr "Kapcsolódás típusa: {0}"
+
+#: ../Core/Schumix.Irc/Network.cs:52
+msgid "Fatal error was happened while established the connection!"
+msgstr "Végzetes hiba történt a kapcsolat létrehozásánál!"
+
+#: ../Core/Schumix.Irc/Network.cs:53
+msgid "Successfully established the connection!"
+msgstr "A kapcsolat sikeresen létrejött!"
+
+#: ../Core/Schumix.Irc/Network.cs:53
+msgid "Error was happened while established the connection!"
+msgstr "Hiba történt a kapcsolat létrehozásánál!"
+
+#: ../Core/Schumix.Irc/Network.cs:55
+msgid "Certificate not accepted, exception: {0}"
+msgstr "A tanúsítvány nem lett elfogadva, kivétel: {0}"
+
+#: ../Core/Schumix.Irc/Network.cs:60
+msgid "Users' datas are sent."
+msgstr "Felhasználói információk ellettek küldve."
+
+#: ../Core/Schumix.Irc/Network.cs:68 ../Core/Schumix.Irc/Network.cs:89
+msgid "Successfully started th thread."
+msgstr "A szál sikeresen elindult."
+
+#: ../Core/Schumix.Irc/Network.cs:68
+msgid "Started the irc data receiving."
+msgstr "Elindult az irc adatok fogadása."
+
+#: ../Core/Schumix.Irc/Network.cs:71
+msgid "Do not going data from irc server!"
+msgstr "Nem jön információ az irc szerver felöl!"
+
+#: ../Core/Schumix.Irc/Network.cs:88
+msgid "Received unhandled opcode: {0}"
+msgstr "Ismeretlen opcode kód: {0}"
 
 #: ../Core/Schumix.Irc/Commands/CommandInfo.cs:3
 msgid "Successfully started the CommandInfo."
@@ -338,11 +422,6 @@ msgstr "Csomagot kapott, ID: {0} tőle: {1}"
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
 msgid "Authentication denied to SCS server!"
 msgstr "Hitelesítést megtagadta az SCS szerver!"
-
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
-msgid "Connection closed!"
-msgstr "Kapcsolat bontva!"
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:7
 msgid "Successfully authed to SCS server."
@@ -999,6 +1078,104 @@ msgstr "WorlframAlpha beállításai betöltve."
 #: ../Addons/Schumix.ExtraAddon/Commands/YoutubeTitle.cs:10
 msgid "Exception thrown while fetching youtube title: {0}"
 msgstr "Kivételt dobott letöltése közben a youtube title: {0}"
+
+#: ../Components/Schumix.Updater/Update.cs:3
+msgid "Automatic updater is off."
+msgstr "Automatikus frissítés ki van kapcsolva."
+
+#: ../Components/Schumix.Updater/Update.cs:5
+msgid "Searching for new stable version is started."
+msgstr "Új stabil verzió keresése megindult."
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "Currently no newer version!"
+msgstr "Jelenleg nincs újabb verzió!"
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "The program starts is continuing."
+msgstr "Folytatódik a program indulása."
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "I found a newer version. The update to {0} version is starting."
+msgstr "Újabb verziót találtam. Megindul a frissítés a {0} verzióra."
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "Older version found, update interrupted!"
+msgstr "Régebbi verziót találtam ezért leáll a frissítés!"
+
+#: ../Components/Schumix.Updater/Update.cs:8
+#: ../Components/Schumix.Updater/Update.cs:12
+msgid "Downloading new version."
+msgstr "Új forrás letöltése."
+
+#: ../Components/Schumix.Updater/Update.cs:9
+#: ../Components/Schumix.Updater/Update.cs:13
+msgid "Successfully downloaded new version."
+msgstr "Forrás sikeresen le lett töltve."
+
+#: ../Components/Schumix.Updater/Update.cs:9
+#: ../Components/Schumix.Updater/Update.cs:13
+msgid "Downloading unsuccessful!"
+msgstr "Letöltés sikertelen!"
+
+#: ../Components/Schumix.Updater/Update.cs:9
+#: ../Components/Schumix.Updater/Update.cs:13
+#: ../Components/Schumix.Updater/Update.cs:15
+#: ../Components/Schumix.Updater/Update.cs:17
+msgid "Updating successful!"
+msgstr "A frissítés befejeződött!"
+
+#: ../Components/Schumix.Updater/Update.cs:9
+msgid "Searching for the last version is started."
+msgstr "A legutolsó verzió keresése megindult."
+
+#: ../Components/Schumix.Updater/Update.cs:13
+msgid "No such version like this, update interrupted!"
+msgstr "Ilyen verzió nem létezik ezért a frissítés leáll!"
+
+#: ../Components/Schumix.Updater/Update.cs:14
+msgid "Extracting new version."
+msgstr "Új forrás kibontása."
+
+#: ../Components/Schumix.Updater/Update.cs:15
+msgid "Successfully extracted the staff."
+msgstr "Az állomány sikeresen ki lett bontva."
+
+#: ../Components/Schumix.Updater/Update.cs:15
+msgid "Extracting unsuccessful!"
+msgstr "Kibontás sikertelen!"
+
+#: ../Components/Schumix.Updater/Update.cs:16
+msgid "Started translating."
+msgstr "Fordítás megkezdése."
+
+#: ../Components/Schumix.Updater/Update.cs:17
+msgid "Error was handled while translated!"
+msgstr "Hiba történt a fordítás közben!"
+
+#: ../Components/Schumix.Updater/Update.cs:18
+msgid "Successfully finished the translation."
+msgstr "Fordítás sikeresen befejeződött."
+
+#: ../Components/Schumix.Updater/Update.cs:18
+msgid "Sql files update is started. The setted database will be updated."
+msgstr "Megindult az sql fájlok frissítése. A beállított adatbázis fog frissülni."
+
+#: ../Components/Schumix.Updater/Update.cs:18
+msgid "Sql update finished."
+msgstr "Az sql frissítés befejeződött."
+
+#: ../Components/Schumix.Updater/Update.cs:22
+msgid "This step of updateing is finished. Continue with next step."
+msgstr "Frissítés ezen szakasza befejeződött. Következik a beállítás."
+
+#: ../Components/Schumix.Updater/Update.cs:23
+msgid "The update is finished. The program shutting down!"
+msgstr "A frissítés befejeződött. Leáll a program!"
 
 #: ../Components/Schumix.LuaEngine/LuaEngine.cs:6
 msgid "Initializing Lua engine."

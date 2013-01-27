@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-27 14:47:19+0100\n"
-"PO-Revision-Date: 2013-01-27 14:47:20+0100\n"
+"POT-Creation-Date: 2013-01-27 15:22:52+0100\n"
+"PO-Revision-Date: 2013-01-27 15:22:53+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -98,6 +98,95 @@ msgstr ""
 
 #: ../Core/Schumix.Irc/MessageHandler.cs:73
 msgid "Identify password accepted!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:11
+#: ../Core/Schumix.Irc/Network.cs:13
+#: ../Core/Schumix.Irc/Network.cs:15
+#: ../Core/Schumix.Irc/Network.cs:17
+msgid "Successfully started the Network."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:11
+#: ../Core/Schumix.Irc/Network.cs:13
+#: ../Core/Schumix.Irc/Network.cs:15
+#: ../Core/Schumix.Irc/Network.cs:17
+msgid "Server's name: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:19
+msgid "Opcodes thread started..."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:20
+msgid "Ping thread started..."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:21
+msgid "Establishing connection with irc server."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:24
+msgid "All of IRC handlers are registered."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:44
+msgid "Connection to: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:45
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+msgid "Connection closed!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:47
+msgid "Connection have been closed."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:47
+msgid "Reconnection to: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:51
+msgid "Connection type: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:52
+msgid "Fatal error was happened while established the connection!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:53
+msgid "Successfully established the connection!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:53
+msgid "Error was happened while established the connection!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:55
+msgid "Certificate not accepted, exception: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:60
+msgid "Users' datas are sent."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:68
+#: ../Core/Schumix.Irc/Network.cs:89
+msgid "Successfully started th thread."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:68
+msgid "Started the irc data receiving."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:71
+msgid "Do not going data from irc server!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:88
+msgid "Received unhandled opcode: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Irc/Commands/CommandInfo.cs:3
@@ -328,11 +417,6 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
 msgid "Authentication denied to SCS server!"
-msgstr ""
-
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
-msgid "Connection closed!"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:7
@@ -983,6 +1067,104 @@ msgstr ""
 
 #: ../Addons/Schumix.ExtraAddon/Commands/YoutubeTitle.cs:10
 msgid "Exception thrown while fetching youtube title: {0}"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:3
+msgid "Automatic updater is off."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:5
+msgid "Searching for new stable version is started."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "Currently no newer version!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "The program starts is continuing."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "I found a newer version. The update to {0} version is starting."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "Older version found, update interrupted!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:8
+#: ../Components/Schumix.Updater/Update.cs:12
+msgid "Downloading new version."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:9
+#: ../Components/Schumix.Updater/Update.cs:13
+msgid "Successfully downloaded new version."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:9
+#: ../Components/Schumix.Updater/Update.cs:13
+msgid "Downloading unsuccessful!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:9
+#: ../Components/Schumix.Updater/Update.cs:13
+#: ../Components/Schumix.Updater/Update.cs:15
+#: ../Components/Schumix.Updater/Update.cs:17
+msgid "Updating successful!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:9
+msgid "Searching for the last version is started."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:13
+msgid "No such version like this, update interrupted!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:14
+msgid "Extracting new version."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:15
+msgid "Successfully extracted the staff."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:15
+msgid "Extracting unsuccessful!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:16
+msgid "Started translating."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:17
+msgid "Error was handled while translated!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:18
+msgid "Successfully finished the translation."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:18
+msgid "Sql files update is started. The setted database will be updated."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:18
+msgid "Sql update finished."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:22
+msgid "This step of updateing is finished. Continue with next step."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:23
+msgid "The update is finished. The program shutting down!"
 msgstr ""
 
 #: ../Components/Schumix.LuaEngine/LuaEngine.cs:6
