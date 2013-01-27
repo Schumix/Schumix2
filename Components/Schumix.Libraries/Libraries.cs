@@ -399,6 +399,110 @@ namespace Schumix.Libraries
 			Task.WaitAll(coll.ToArray());
 		}
 
+
+		public static bool CompareDataInBlock(this string[] split)
+		{
+			int i = 0;
+			string ss = string.Empty;
+			
+			foreach(var s in split)
+			{
+				if(i == 0)
+					ss = s;
+				else
+				{
+					if(ss != s)
+						return false;
+				}
+				
+				i++;
+			}
+			
+			return true;
+		}
+		
+		public static bool CompareDataInBlock<T>(this List<T> list)
+		{
+			int i = 0;
+			string ss = string.Empty;
+			
+			foreach(var s in list)
+			{
+				if(i == 0)
+					ss = s.ToString();
+				else
+				{
+					if(ss != s.ToString())
+						return false;
+				}
+				
+				i++;
+			}
+			
+			return true;
+		}
+		
+		public static bool Contains(this string Text, string Name, char Parameter)
+		{
+			var s = Text.Split(Parameter);
+			
+			foreach(var ss in s)
+			{
+				if(ss.ToLower() == Name.ToLower())
+					return true;
+			}
+			
+			return false;
+		}
+		
+		public static bool IsNumber(this string Text)
+		{
+			double number;
+			return double.TryParse(Text, out number);
+		}
+		
+		public static double ToNumber(this string Text)
+		{
+			double number;
+			return double.TryParse(Text, out number) ? number : 0;
+		}
+		
+		public static double ToNumber(this string Text, int Else)
+		{
+			double number;
+			return double.TryParse(Text, out number) ? number : Else;
+		}
+		
+		public static int ToInt(this double Double)
+		{
+			return Convert.ToInt32(Double);
+		}
+		
+		public static string ToIrcOpcode(this int number)
+		{
+			if(number < 10)
+				return "00" + number.ToString();
+			else if(number < 100)
+				return "0" + number.ToString();
+			else
+				return number.ToString();
+		}
+
+		public static string TrimMessage(this string value, int number = 150)
+		{
+			return value.Length > number ? value.Substring(0, number) + " ..." : value;
+		}
+		
+		public static bool IsEmpty(this string Value)
+		{
+			return Value.IsNull() || Value.Trim().Length == 0;
+		}
+		
+		public static bool IsNullOrEmpty(this string Value)
+		{
+			return string.IsNullOrEmpty(Value);
+		}
+
 		/// <summary>
 		///   Gets the cpu brand string.
 		/// </summary>
