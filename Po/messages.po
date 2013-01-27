@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-27 14:11:40+0100\n"
-"PO-Revision-Date: 2013-01-27 14:11:41+0100\n"
+"POT-Creation-Date: 2013-01-27 14:47:19+0100\n"
+"PO-Revision-Date: 2013-01-27 14:47:20+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -144,6 +144,28 @@ msgstr ""
 msgid "ChannelList: Failure request!"
 msgstr ""
 
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:17
+msgid "{0} plugin is now loading."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:18
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
+msgid "Plugin can not be loaded!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:22
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
+msgid "Loaded plugin: {0} {1} by {2} ({3})"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:23
+msgid "{0} plugin denying and removing is now started."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:28
+msgid "{0} plugin successfully removed."
+msgstr ""
+
 #: ../Core/Schumix.Irc/IrcBase.cs:29
 #: ../Core/Schumix.Framework/Config/Config.cs:4
 #: ../Core/Schumix.Framework/Database/SQLite.cs:15
@@ -154,7 +176,11 @@ msgstr ""
 #: ../Core/Schumix.Framework/Database/MySql.cs:19
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
 #: ../Core/Schumix.Framework/Runtime.cs:6
+#: ../Applications/Schumix.Server/ServerListener.cs:6
 #: ../Applications/Schumix.Server/Config/Config.cs:4
 msgid "Program shutting down!"
 msgstr ""
@@ -295,6 +321,61 @@ msgstr ""
 msgid "Checking: {0}"
 msgstr ""
 
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:4
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:5
+msgid "Got packet with ID: {0} from: {1}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+msgid "Authentication denied to SCS server!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+msgid "Connection closed!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:7
+msgid "Successfully authed to SCS server."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Started..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Client connection from: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:5
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Handling client..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:7
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Stream data available, reading."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:9
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Lost connection!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
+msgid "Connected. Sending packet."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
+msgid "Packet sent."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
+msgid "Couldn't send SCS packet!"
+msgstr ""
+
 #: ../Core/Schumix.Framework/Runtime.cs:6
 msgid "The program, more than {0} MB consumed!"
 msgstr ""
@@ -370,10 +451,6 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
 msgid "This addon name already exists in the system so not loaded!"
-msgstr ""
-
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
-msgid "Loaded plugin: {0} {1} by {2} ({3})"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Addon/AddonManager.cs:22
@@ -571,6 +648,50 @@ msgstr ""
 msgid "Loaded the Flooding settings."
 msgstr ""
 
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:10
+msgid "Successfully started the CacheDB."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:11
+msgid "Load tables from the database to the core."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:11
+msgid "{0} loaded to the core."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:15
+msgid "Tables cleared from the core."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:15
+msgid "Table {0} deleted from the core."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:3
+msgid "Successfully started the CleanManager."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:5
+msgid "CleanConfig is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:6
+msgid "CleanDatabase is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:7
+msgid "Some problems occured during cleanup in some place!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:8
+msgid "Cleanups have been finished."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:8
+msgid "Cleanup is not turned on!"
+msgstr ""
+
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:3
 msgid "Successfully started the CleanConfig."
 msgstr ""
@@ -594,6 +715,30 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:9
 msgid "There is not any old config files!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:3
+msgid "Successfully started the CleanDatabase."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:6
+msgid "The {0} table's cleanup have been started."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:8
+msgid "The old servername ({0}) has been deleted from the table {1}."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:9
+msgid "The table {0} is ready for cleanup."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:10
+msgid "The core tables' cleanup is starting."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:10
+msgid "The core tables' cleanup have been finished."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Config/CleanConfig.cs:3
@@ -684,6 +829,30 @@ msgstr ""
 
 #: ../Applications/Schumix/ScriptManager.cs:6
 msgid "Python support is disabled!"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Auth unsuccessful! Guid of client: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Hash was: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Back port is: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Auth successful. Guid of client: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:15
+msgid "Connection closed! Guid of client: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:18
+msgid "Restart in progress..."
 msgstr ""
 
 #: ../Applications/Schumix.Server/New/Schumix.cs:12

@@ -75,7 +75,7 @@ namespace Schumix.Framework.Database.Cache
 
 		public CacheDB()
 		{
-			Log.Notice("CacheDB", sLConsole.CacheDB("Text"));
+			Log.Notice("CacheDB", sLConsole.GetString("Successfully started the CacheDB."));
 		}
 
 		public void Load(string value = "")
@@ -85,9 +85,9 @@ namespace Schumix.Framework.Database.Cache
 				try
 				{
 					if(value == string.Empty)
-						Log.Debug("CacheDB", sLConsole.CacheDB("Text2"));
+						Log.Debug("CacheDB", sLConsole.GetString("Load tables from the database to the core."));
 					else
-						Log.Debug("CacheDB", sLConsole.CacheDB("Text3"), value);
+						Log.Debug("CacheDB", sLConsole.GetString("{0} loaded to the core."), value);
 
 					switch(value.ToLower())
 					{
@@ -154,9 +154,9 @@ namespace Schumix.Framework.Database.Cache
 				try
 				{
 					if(value == string.Empty)
-						Log.Debug("CacheDB", sLConsole.CacheDB("Text4"));
+						Log.Debug("CacheDB", sLConsole.GetString("Tables cleared from the core."));
 					else
-						Log.Debug("CacheDB", sLConsole.CacheDB("Text5"), value);
+						Log.Debug("CacheDB", sLConsole.GetString("Table {0} deleted from the core."), value);
 
 					switch(value.ToLower())
 					{

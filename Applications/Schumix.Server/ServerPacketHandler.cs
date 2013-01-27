@@ -59,7 +59,7 @@ namespace Schumix.Server
 			int bck = Convert.ToInt32(client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[1]);
 
 			var packetid = packet.Read<int>();
-			Log.Debug("PacketHandler", sLConsole.ServerPacketHandler("Text"), packetid, client.Client.RemoteEndPoint);
+			Log.Debug("PacketHandler", sLConsole.GetString("Got packet with ID: {0} from: {1}"), packetid, client.Client.RemoteEndPoint);
 
 			if(!_AuthList.ContainsKey(hst + SchumixBase.Colon + bck))
 			{
@@ -113,9 +113,9 @@ namespace Schumix.Server
 				if(_HostList.ContainsKey(hst + SchumixBase.Colon + bck))
 					_HostList.Remove(hst + SchumixBase.Colon + bck);
 
-				Log.Warning("AuthHandler", sLConsole.ServerPacketHandler("Text2"), guid);
-				Log.Debug("Security", sLConsole.ServerPacketHandler("Text3"), hash);
-				Log.Notice("AuthHandler", sLConsole.ServerPacketHandler("Text4"), bck);
+				Log.Warning("AuthHandler", sLConsole.GetString("Auth unsuccessful! Guid of client: {0}"), guid);
+				Log.Debug("Security", sLConsole.GetString("Hash was: {0}"), hash);
+				Log.Notice("AuthHandler", sLConsole.GetString("Back port is: {0}"), bck);
 				var packet = new SchumixPacket();
 				packet.Write<int>((int)Opcode.SMSG_AUTH_DENIED);
 				packet.Write<int>((int)0);
@@ -123,9 +123,9 @@ namespace Schumix.Server
 			}
 			else
 			{
-				Log.Success("AuthHandler", sLConsole.ServerPacketHandler("Text5"), guid);
-				Log.Debug("Security", sLConsole.ServerPacketHandler("Text3"), hash);
-				Log.Notice("AuthHandler", sLConsole.ServerPacketHandler("Text4"), bck);
+				Log.Success("AuthHandler", sLConsole.GetString("Auth successful. Guid of client: {0}"), guid);
+				Log.Debug("Security", sLConsole.GetString("Hash was: {0}"), hash);
+				Log.Notice("AuthHandler", sLConsole.GetString("Back port is: {0}"), bck);
 				var packet = new SchumixPacket();
 				packet.Write<int>((int)Opcode.SMSG_AUTH_APPROVED);
 				packet.Write<int>((int)1);
@@ -149,15 +149,15 @@ namespace Schumix.Server
 			string locale = pck.Read<string>();
 			string reconnect = pck.Read<string>();
 			string identify = pck.Read<string>();
-			Log.Warning("CloseHandler", sLConsole.ServerPacketHandler("Text6"), guid);
+			Log.Warning("CloseHandler", sLConsole.GetString("Connection closed! Guid of client: {0}"), guid);
 
 			if(hst != "127.0.0.1")
 				return;
 
-			if(reconnect.ToLower() == "false")
+			if(!Convert.ToBoolean(reconnect))
 				return;
 
-			Log.Notice("CloseHandler", sLConsole.ServerPacketHandler("Text7"));
+			Log.Notice("CloseHandler", sLConsole.GetString("Restart in progress..."));
 
 			if(sSchumix._processlist.ContainsKey(identify))
 				sSchumix.Start(file, dir, ce, locale, sUtilities.GetRandomString());

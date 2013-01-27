@@ -53,12 +53,12 @@ namespace Schumix.Server
 		public void Listen()
 		{
 			_listener.Start();
-			Log.Notice("Listener", sLConsole.ServerListener("Text"));
+			Log.Notice("Listener", sLConsole.GetString("Started..."));
 			
 			while(true)
 			{
 				var client = _listener.AcceptTcpClient();
-				Log.Notice("Listener", sLConsole.ServerListener("Text2"), client.Client.RemoteEndPoint);
+				Log.Notice("Listener", sLConsole.GetString("Client connection from: {0}"), client.Client.RemoteEndPoint);
 				var client_thread = new Thread(new ParameterizedThreadStart(ClientHandler));
 				client_thread.Start(client);
 				Thread.Sleep(100);
@@ -71,7 +71,7 @@ namespace Schumix.Server
 			var stream = client.GetStream();
 			byte[] message_buffer = new byte[262144];
 			int bytes_read;
-			Log.Notice("ClientHandler", sLConsole.ServerListener("Text3"));
+			Log.Notice("ClientHandler", sLConsole.GetString("Handling client..."));
 			
 			while(true)
 			{
@@ -80,12 +80,12 @@ namespace Schumix.Server
 				// read
 				if(stream.DataAvailable && stream.CanRead)
 				{
-					Log.Debug("ClientHandler", sLConsole.ServerListener("Text4"));
+					Log.Debug("ClientHandler", sLConsole.GetString("Stream data available, reading."));
 					bytes_read = stream.Read(message_buffer, 0, message_buffer.Length);
 					
 					if(bytes_read == 0)
 					{
-						Log.Warning("ClientHandler", sLConsole.ServerListener("Text5"));
+						Log.Warning("ClientHandler", sLConsole.GetString("Lost connection!"));
 						break;
 					}
 
@@ -101,7 +101,7 @@ namespace Schumix.Server
 				Thread.Sleep(100);
 			}
 
-			Log.Warning("ClientHandler", sLConsole.ServerListener("Text6"));
+			Log.Warning("ClientHandler", sLConsole.GetString("Program shutting down!"));
 			Environment.Exit(1);
 		}
 		

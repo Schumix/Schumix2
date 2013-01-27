@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-27 14:11:40+0100\n"
+"POT-Creation-Date: 2013-01-27 14:47:19+0100\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -151,6 +151,28 @@ msgstr " másodperc."
 msgid "ChannelList: Failure request!"
 msgstr "ChannelList: Hibás lekérdezés!"
 
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:17
+msgid "{0} plugin is now loading."
+msgstr "{0} plugin betöltése megindult."
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:18
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
+msgid "Plugin can not be loaded!"
+msgstr "Nem tölthető be a plugin!"
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:22
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
+msgid "Loaded plugin: {0} {1} by {2} ({3})"
+msgstr "Betöltött plugin: {0} {1} készítette {2} ({3})"
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:23
+msgid "{0} plugin denying and removing is now started."
+msgstr "{0} plugin letiltása és leválasztása megindult."
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:28
+msgid "{0} plugin successfully removed."
+msgstr "{0} plugin sikeresen le lett választva."
+
 #: ../Core/Schumix.Irc/IrcBase.cs:29
 #: ../Core/Schumix.Framework/Config/Config.cs:4
 #: ../Core/Schumix.Framework/Database/SQLite.cs:15
@@ -161,7 +183,11 @@ msgstr "ChannelList: Hibás lekérdezés!"
 #: ../Core/Schumix.Framework/Database/MySql.cs:19
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
 #: ../Core/Schumix.Framework/Runtime.cs:6
+#: ../Applications/Schumix.Server/ServerListener.cs:6
 #: ../Applications/Schumix.Server/Config/Config.cs:4
 msgid "Program shutting down!"
 msgstr "A program leáll!"
@@ -304,6 +330,61 @@ msgstr "Sql kapcsolat összeomlott."
 msgid "Checking: {0}"
 msgstr "Ellenőrzése: {0}"
 
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:4
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:5
+msgid "Got packet with ID: {0} from: {1}"
+msgstr "Csomagot kapott, ID: {0} tőle: {1}"
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+msgid "Authentication denied to SCS server!"
+msgstr "Hitelesítést megtagadta az SCS szerver!"
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+msgid "Connection closed!"
+msgstr "Kapcsolat bontva!"
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:7
+msgid "Successfully authed to SCS server."
+msgstr "Sikeresen hitelesítve az SCS szerver."
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Started..."
+msgstr "Indul..."
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Client connection from: {0}"
+msgstr "Client kapcsolódik: {0}"
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:5
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Handling client..."
+msgstr "Client kezelése..."
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:7
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Stream data available, reading."
+msgstr "Rendelkezésre álló adatok olvasása."
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:9
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Lost connection!"
+msgstr "Elveszett a kapcsolat!"
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
+msgid "Connected. Sending packet."
+msgstr "Kapcsolodva. Csomag küldése."
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
+msgid "Packet sent."
+msgstr "Csomag elküldve."
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
+msgid "Couldn't send SCS packet!"
+msgstr "Nem sikerült elküldeni SCS csomagot!"
+
 #: ../Core/Schumix.Framework/Runtime.cs:6
 msgid "The program, more than {0} MB consumed!"
 msgstr "A program több mint {0} mb-ot fogyaszt!"
@@ -381,10 +462,6 @@ msgstr "Addonok betöltése innét: {0}"
 #: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
 msgid "This addon name already exists in the system so not loaded!"
 msgstr "Ez az addonnév már szerepel a rendszerben ezért nem kerül betöltésre!"
-
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
-msgid "Loaded plugin: {0} {1} by {2} ({3})"
-msgstr "Betöltött plugin: {0} {1} készítette {2} ({3})"
 
 #: ../Core/Schumix.Framework/Addon/AddonManager.cs:22
 msgid "Ignoring plugins (config): {0}"
@@ -586,6 +663,50 @@ msgstr "Shutdown beállításai betöltve."
 msgid "Loaded the Flooding settings."
 msgstr "Flooding beállításai betöltve."
 
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:10
+msgid "Successfully started the CacheDB."
+msgstr "CacheDB sikeresen elindult."
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:11
+msgid "Load tables from the database to the core."
+msgstr "Adatbázisból táblák betöltése a magba."
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:11
+msgid "{0} loaded to the core."
+msgstr "Adatbázisból {0} tábla betöltése a magba."
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:15
+msgid "Tables cleared from the core."
+msgstr "Magból a táblák takarításra kerültek."
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:15
+msgid "Table {0} deleted from the core."
+msgstr "Magból törölve a {0} tábla."
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:3
+msgid "Successfully started the CleanManager."
+msgstr "CleanManager sikeresen elindult."
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:5
+msgid "CleanConfig is starting..."
+msgstr "CleanConfig indul..."
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:6
+msgid "CleanDatabase is starting..."
+msgstr "CleanDatabase indul..."
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:7
+msgid "Some problems occured during cleanup in some place!"
+msgstr "Néhány helyen takarítás közben hiba lépett fel!"
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:8
+msgid "Cleanups have been finished."
+msgstr "Sikeresen elkészültek a takarítások."
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:8
+msgid "Cleanup is not turned on!"
+msgstr "Nincs bekapcsolva a takarítás!"
+
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:3
 msgid "Successfully started the CleanConfig."
 msgstr "CleanConfig sikeresen elindult."
@@ -610,6 +731,30 @@ msgstr "Régi konfig fájlok sikeresen törölve."
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:9
 msgid "There is not any old config files!"
 msgstr "Nincsenek régi konfig fájlok!"
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:3
+msgid "Successfully started the CleanDatabase."
+msgstr "CleanDatabase sikeresen elindult."
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:6
+msgid "The {0} table's cleanup have been started."
+msgstr "A {0} tábla takarítása megkezdődött."
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:8
+msgid "The old servername ({0}) has been deleted from the table {1}."
+msgstr "Régi szervernév ({0}) törölve lett a {1} táblából."
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:9
+msgid "The table {0} is ready for cleanup."
+msgstr "A {0} tábla takarítása kész."
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:10
+msgid "The core tables' cleanup is starting."
+msgstr "A magban lévő táblák takarítása indul."
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:10
+msgid "The core tables' cleanup have been finished."
+msgstr "A magban lévő táblák takarítása kész."
 
 #: ../Core/Schumix.Framework/Config/CleanConfig.cs:3
 msgid "Loaded the Clean settings."
@@ -700,6 +845,30 @@ msgstr "Lua támogatása le van tiltva!"
 #: ../Applications/Schumix/ScriptManager.cs:6
 msgid "Python support is disabled!"
 msgstr "Python támogatása le van tiltva!"
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Auth unsuccessful! Guid of client: {0}"
+msgstr "Hitelesítés sikertelen! Guid a clienttől: {0}"
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Hash was: {0}"
+msgstr "Hash volt: {0}"
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Back port is: {0}"
+msgstr "Vissza port: {0}"
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Auth successful. Guid of client: {0}"
+msgstr "Hitelesítés sikeres. Guid a clienttől: {0}"
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:15
+msgid "Connection closed! Guid of client: {0}"
+msgstr "Kapcsolat bontva! Guid a clienttől: {0}"
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:18
+msgid "Restart in progress..."
+msgstr "Újraindítás folyamatban..."
 
 #: ../Applications/Schumix.Server/New/Schumix.cs:12
 msgid "One of the summix has been shuted down, it will be restarted."

@@ -118,13 +118,13 @@ namespace Schumix.Irc.Ignore
 		{
 			if(sAddonManager.Addons[_servername].IgnoreAssemblies.ContainsKey(plugin))
 			{
-				Log.Debug("IgnoreAddon", sLConsole.IgnoreAddon("Text"), plugin);
+				Log.Debug("IgnoreAddon", sLConsole.GetString("{0} plugin is now loading."), plugin);
 				ISchumixAddon pl;
 				sAddonManager.Addons[_servername].Addons.TryGetValue(plugin, out pl);
 
 				if(pl.IsNull())
 				{
-					Log.Error("IgnoreAddon", sLConsole.IgnoreAddon("Text2"));
+					Log.Error("IgnoreAddon", sLConsole.GetString("Plugin can not be loaded!"));
 					return;
 				}
 
@@ -162,7 +162,7 @@ namespace Schumix.Irc.Ignore
 					});
 				});
 
-				Log.Success("IgnoreAddon", sLConsole.IgnoreAddon("Text3"), pl.Name, sAddonManager.Addons[_servername].IgnoreAssemblies[plugin].GetName().Version.ToString(), pl.Author, pl.Website);
+				Log.Success("IgnoreAddon", sLConsole.GetString("Loaded plugin: {0} {1} by {2} ({3})"), pl.Name, sAddonManager.Addons[_servername].IgnoreAssemblies[plugin].GetName().Version.ToString(), pl.Author, pl.Website);
 				sAddonManager.Addons[_servername].IgnoreAssemblies.Remove(plugin);
 			}
 		}
@@ -171,13 +171,13 @@ namespace Schumix.Irc.Ignore
 		{
 			if(!sAddonManager.Addons[_servername].IgnoreAssemblies.ContainsKey(plugin))
 			{
-				Log.Debug("IgnoreAddon", sLConsole.IgnoreAddon("Text4"), plugin);
+				Log.Debug("IgnoreAddon", sLConsole.GetString("{0} plugin denying and removing is now started."), plugin);
 				ISchumixAddon pl;
 				sAddonManager.Addons[_servername].Addons.TryGetValue(plugin, out pl);
 
 				if(pl.IsNull())
 				{
-					Log.Error("IgnoreAddon", sLConsole.IgnoreAddon("Text2"));
+					Log.Error("IgnoreAddon", sLConsole.GetString("Plugin can not be loaded!"));
 					return;
 				}
 
@@ -215,7 +215,7 @@ namespace Schumix.Irc.Ignore
 					});
 				});
 
-				Log.Success("IgnoreAddon", sLConsole.IgnoreAddon("Text5"), plugin);
+				Log.Success("IgnoreAddon", sLConsole.GetString("{0} plugin successfully removed."), plugin);
 				sAddonManager.Addons[_servername].Assemblies.Remove(plugin);
 			}
 		}
