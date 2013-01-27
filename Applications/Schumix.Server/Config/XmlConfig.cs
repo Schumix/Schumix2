@@ -57,7 +57,7 @@ namespace Schumix.Server.Config
 			Log.Initialize(LogFileName, colorbindmode);
 			Log.Debug("XmlConfig", ">> {0}", configfile);
 
-			Log.Notice("XmlConfig", sLConsole.Config("Text3"));
+			Log.Notice("XmlConfig", sLConsole.GetString("Config file is loading."));
 			int ListenerPort = !xmldoc.SelectSingleNode("Server/Server/Listener/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Server/Listener/Port").InnerText) : d_listenerport;
 			string Password = !xmldoc.SelectSingleNode("Server/Server/Password").IsNull() ? xmldoc.SelectSingleNode("Server/Server/Password").InnerText : d_password;
 
@@ -91,13 +91,13 @@ namespace Schumix.Server.Config
 			{
 				Task.Factory.StartNew(() =>
 				{
-					Log.Notice("Schumix", sLConsole.Config("Text9"));
+					Log.Notice("Schumix", sLConsole.GetString("Schumixs starting..."));
 
 					var xmlschumixlist = xmldoc.SelectNodes("Server/Schumixs/Schumix");
-					Log.Notice("Schumix", sLConsole.Config("Text10"), xmlschumixlist.Count);
+					Log.Notice("Schumix", sLConsole.GetString("Schumixs number: {0}"), xmlschumixlist.Count);
 
 					if(xmlschumixlist.Count == 0)
-						Log.Warning("Schumix", sLConsole.Config("Text11"));
+						Log.Warning("Schumix", sLConsole.GetString("There is no load of Schumix!"));
 					else
 					{
 						foreach(XmlNode xn in xmlschumixlist)
@@ -113,9 +113,9 @@ namespace Schumix.Server.Config
 				});
 			}
 			else
-				Log.Warning("Schumix", sLConsole.Config("Text11"));
+				Log.Warning("Schumix", sLConsole.GetString("There is no load of Schumix!"));
 
-			Log.Success("XmlConfig", sLConsole.Config("Text4"));
+			Log.Success("XmlConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
 
@@ -135,8 +135,8 @@ namespace Schumix.Server.Config
 				{
 					new Framework.Config.LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, string.Empty, false);
 					Log.Initialize(d_logfilename, ColorBindMode);
-					Log.Error("XmlConfig", sLConsole.Config("Text5"));
-					Log.Debug("XmlConfig", sLConsole.Config("Text6"));
+					Log.Error("XmlConfig", sLConsole.GetString("No such config file!"));
+					Log.Debug("XmlConfig", sLConsole.GetString("Preparing..."));
 					var w = new XmlTextWriter(filename, null);
 					var xmldoc = new XmlDocument();
 					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
@@ -276,11 +276,11 @@ namespace Schumix.Server.Config
 						if(File.Exists(filename2))
 							File.Delete(filename2);
 
-						Log.Success("XmlConfig", sLConsole.Config("Text7"));
+						Log.Success("XmlConfig", sLConsole.GetString("Config file is completed!"));
 					}
 					catch(Exception e)
 					{
-						Log.Error("XmlConfig", sLConsole.Config("Text8"), e.Message);
+						Log.Error("XmlConfig", sLConsole.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 						errors = true;
 					}
 				}

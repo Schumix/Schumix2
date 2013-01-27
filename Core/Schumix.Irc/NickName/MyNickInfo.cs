@@ -131,7 +131,7 @@ namespace Schumix.Irc.NickName
 		{
 			if(!_Identify)
 			{
-				Log.Notice("NickServ", sLConsole.NickServ("Text"));
+				Log.Notice("NickServ", sLConsole.GetString("Sending nickserv identify."));
 				sSender.NickServ(Password);
 			}
 		}
@@ -143,10 +143,10 @@ namespace Schumix.Irc.NickName
 				if(Status == SchumixBase.Off)
 				{
 					_Vhost = true;
-					Log.Notice("HostServ", sLConsole.HostServ("Text2"));
+					Log.Notice("HostServ", sLConsole.GetString("Vhost is OFF."));
 				}
 				else if(Status == SchumixBase.On)
-					Log.Notice("HostServ", sLConsole.HostServ("Text"));
+					Log.Notice("HostServ", sLConsole.GetString("Vhost is ON."));
 
 				sSender.HostServ(Status);
 			}

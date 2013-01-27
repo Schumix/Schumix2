@@ -178,7 +178,7 @@ namespace Schumix.Framework
 						IFunctionsClass.ServerList.Add(sn.Key, new IFunctionsClassBase(list));
 					}
 					else
-						Log.Error("SchumixBase", sLConsole.ChannelInfo("Text11"));
+						Log.Error("SchumixBase", sLConsole.GetString("FunctionReload: Failre request!"));
 				}
 
 				Log.Debug("SchumixBase", sLConsole.GetString("CleanManager is starting..."));

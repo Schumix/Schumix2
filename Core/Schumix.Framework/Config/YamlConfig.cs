@@ -50,7 +50,7 @@ namespace Schumix.Framework.Config
 			Log.Initialize(LogConfig.FileName, colorbindmode);
 			Log.Debug("YamlConfig", ">> {0}", configfile);
 
-			Log.Notice("YamlConfig", sLConsole.Config("Text3"));
+			Log.Notice("YamlConfig", sLConsole.GetString("Config file is loading."));
 			ServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Server")) ? ((YamlMappingNode)schumixmap["Server".ToYamlNode()]).Children : NullYMap);
 
 			if((!schumixmap.IsNull() && schumixmap.ContainsKey("Irc")))
@@ -79,7 +79,7 @@ namespace Schumix.Framework.Config
 			FloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap);
 			CleanMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Clean")) ? ((YamlMappingNode)schumixmap["Clean".ToYamlNode()]).Children : NullYMap);
 
-			Log.Success("YamlConfig", sLConsole.Config("Text4"));
+			Log.Success("YamlConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
 
@@ -99,8 +99,8 @@ namespace Schumix.Framework.Config
 				{
 					new LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, d_irclogdirectory, d_irclog);
 					Log.Initialize(d_logfilename, ColorBindMode);
-					Log.Error("YamlConfig", sLConsole.Config("Text5"));
-					Log.Debug("YamlConfig", sLConsole.Config("Text6"));
+					Log.Error("YamlConfig", sLConsole.GetString("No such config file!"));
+					Log.Debug("YamlConfig", sLConsole.GetString("Preparing..."));
 					var yaml = new YamlStream();
 					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
@@ -146,11 +146,11 @@ namespace Schumix.Framework.Config
 						if(File.Exists(filename2))
 							File.Delete(filename2);
 
-						Log.Success("YamlConfig", sLConsole.Config("Text7"));
+						Log.Success("YamlConfig", sLConsole.GetString("Config file is completed!"));
 					}
 					catch(Exception e)
 					{
-						Log.Error("YamlConfig", sLConsole.Config("Text13"), e.Message);
+						Log.Error("YamlConfig", sLConsole.GetString("Failure was handled during the yml writing. Details: {0}"), e.Message);
 						errors = true;
 					}
 				}
@@ -288,35 +288,35 @@ namespace Schumix.Framework.Config
 
 					if(MasterChannel.Length >= 2 && MasterChannel.Trim().Length > 1 && MasterChannel.Substring(0, 1) != "#")
 					{
-						Log.Warning("YamlConfig", sLConsole.Config("Text14"));
+						Log.Warning("YamlConfig", sLConsole.GetString("The master channel's format is wrong. \"#\" is missing. Corrected."));
 						MasterChannel = "#" + MasterChannel;
 					}
 					else if(MasterChannel.Length < 2 && MasterChannel.Trim().Length <= 1)
 					{
-						Log.Warning("YamlConfig", sLConsole.Config("Text15"), d_masterchannel);
+						Log.Warning("YamlConfig", sLConsole.GetString("The master channel is not given so the default will be used. ({0})"), d_masterchannel);
 						MasterChannel = d_masterchannel;
 					}
 					
 					if(!IsValidNick(NickName))
 					{
-						Log.Warning("YamlConfig", sLConsole.Config("Text16"), d_nickname);
+						Log.Warning("YamlConfig", sLConsole.GetString("The primary nick's format is wrong. The default will be used: {0}"), d_nickname);
 						NickName = d_nickname;
 					}
 					
 					if(!IsValidNick(NickName2))
 					{
-						Log.Warning("YamlConfig", sLConsole.Config("Text17"), d_nickname2);
+						Log.Warning("YamlConfig", sLConsole.GetString("The secondary nick's format is wrong. The default will be used: {0}"), d_nickname2);
 						NickName2 = d_nickname2;
 					}
 					
 					if(!IsValidNick(NickName3))
 					{
-						Log.Warning("YamlConfig", sLConsole.Config("Text18"), d_nickname3);
+						Log.Warning("YamlConfig", sLConsole.GetString("The tertiary nick's format is wrong. The default will be used: {0}"), d_nickname3);
 						NickName3 = d_nickname3;
 					}
 
 					if(IrcList.ContainsKey(ServerName.ToLower()))
-						Log.Error("YamlConfig", sLConsole.Config("Text12"), ServerName);
+						Log.Error("YamlConfig", sLConsole.GetString("The {0} server is already in use so not loaded!"), ServerName);
 					else
 					{
 						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, ServerPass.Trim(), Port, ModeMask, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));

@@ -75,7 +75,7 @@ namespace Schumix.Irc
 				{
 					if(!Online)
 					{
-						Log.Notice("HostServ", sLConsole.HostServ("Text2"));
+						Log.Notice("HostServ", sLConsole.GetString("Vhost is OFF."));
 						ChannelPrivmsg = sMyNickInfo.NickStorage;
 						sMyChannelInfo.JoinChannel();
 						Online = true;
@@ -145,22 +145,22 @@ namespace Schumix.Irc
 				if(sIRCMessage.Args.Contains("Password incorrect."))
 				{
 					sMyNickInfo.ChangeIdentifyStatus(true);
-					Log.Error("NickServ", sLConsole.NickServ("Text2"));
+					Log.Error("NickServ", sLConsole.GetString("Bad identify password!"));
 					ConnectAllChannel();
 				}
 				else if(sIRCMessage.Args.Contains("You are already identified."))
-					Log.Warning("NickServ", sLConsole.NickServ("Text3"));
+					Log.Warning("NickServ", sLConsole.GetString("Already identified!"));
 				else if(sIRCMessage.Args.Contains("Password accepted - you are now recognized."))
 				{
 					sMyNickInfo.ChangeIdentifyStatus(true);
-					Log.Success("NickServ", sLConsole.NickServ("Text4"));
+					Log.Success("NickServ", sLConsole.GetString("Identify password accepted."));
 				}
 
 				var registered = new Regex("Nick (.+) isn't registered.");
 
 				if(sIRCMessage.Args.Contains("Your nick isn't registered.") || (!sMyNickInfo.IsIdentify && registered.IsMatch(sIRCMessage.Args)))
 				{
-					Log.Warning("NickServ", sLConsole.NickServ("Text5"));
+					Log.Warning("NickServ", sLConsole.GetString("Your nick isn't registered!"));
 					ChannelPrivmsg = sMyNickInfo.NickStorage;
 					sMyNickInfo.ChangeIdentifyStatus(true);
 					ConnectAllChannel();
@@ -208,7 +208,7 @@ namespace Schumix.Irc
 			{
 				if(sIRCMessage.Args.Contains("You need to register before a vhost can be assigned to you."))
 				{
-					Log.Warning("HostServ", sLConsole.HostServ("Text3"));
+					Log.Warning("HostServ", sLConsole.GetString("Nick isnt registered, so the vhost still off!"));
 					ConnectAllChannel();
 				}
 			}
@@ -517,7 +517,7 @@ namespace Schumix.Irc
 			if(!sMyNickInfo.IsIdentify && sIRCMessage.Nick == "NickServ" && sIRCMessage.Channel.ToLower() == sMyNickInfo.NickStorage.ToLower() && sIRCMessage.Args == "+r")
 			{
 				sMyNickInfo.ChangeIdentifyStatus(true);
-				Log.Success("NickServ", sLConsole.NickServ("Text4"));
+				Log.Success("NickServ", sLConsole.GetString("Identify password accepted!"));
 			}
 
 			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text23"), sIRCMessage.Info.SplitToString(3, SchumixBase.Space));

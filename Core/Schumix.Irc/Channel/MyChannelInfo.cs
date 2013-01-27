@@ -71,7 +71,7 @@ namespace Schumix.Irc.Channel
 				}
 			}
 			else
-				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text"));
+				Log.Error("ChannelInfo", sLConsole.GetString("ChannelList: Failure request!"));
 		}
 
 		public bool FSelect(string Name)
@@ -178,7 +178,7 @@ namespace Schumix.Irc.Channel
 				}
 			}
 			else
-				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text11"));
+				Log.Error("ChannelInfo", sLConsole.GetString("FunctionReload: Failre request!"));
 		}
 
 		public void ChannelFunctionsReload()
@@ -195,11 +195,11 @@ namespace Schumix.Irc.Channel
 					if(!db1.IsNull())
 						ChannelFunction.Add(channel, db1["Functions"].ToString());
 					else
-						Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text3"));
+						Log.Error("ChannelInfo", sLConsole.GetString("ChannelFunctionReload: Failre request!"));
 				}
 			}
 			else
-				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text3"));
+				Log.Error("ChannelInfo", sLConsole.GetString("ChannelFunctionReload: Failre request!"));
 		}
 
 		public void ChannelListReload()
@@ -216,7 +216,7 @@ namespace Schumix.Irc.Channel
 				}
 			}
 			else
-				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text4"));
+				Log.Error("ChannelInfo", sLConsole.GetString("ChannelListReload: Failre request!"));
 		}
 
 		public string ChannelFunctions(string name, string status, string channel)
@@ -305,7 +305,7 @@ namespace Schumix.Irc.Channel
 
 			sIrcBase.Networks[_servername].IsAllJoin = true;
 
-			Log.Debug("ChannelInfo", sLConsole.ChannelInfo("Text5"));
+			Log.Debug("ChannelInfo", sLConsole.GetString("Connecting to channels.."));
 			bool error = false;
 
 			foreach(var channel in _ChannelList)
@@ -332,15 +332,15 @@ namespace Schumix.Irc.Channel
 				}
 			}
 			else
-				Log.Error("ChannelInfo", sLConsole.ChannelInfo("Text6"));
+				Log.Error("ChannelInfo", sLConsole.GetString("JoinChannel: Failure request!"));
 
 			if(!error)
-				Log.Success("ChannelInfo", sLConsole.ChannelInfo("Text7"));
+				Log.Success("ChannelInfo", sLConsole.GetString("Successfully connected to channels."));
 			else
-				Log.Warning("ChannelInfo", sLConsole.ChannelInfo("Text8"));
+				Log.Warning("ChannelInfo", sLConsole.GetString("Some connection unsuccessful!"));
 
 			if(IRCConfig.List[_servername].IgnoreChannels.Length > 0)
-				Log.Notice("ChannelInfo", sLConsole.ChannelInfo("Text9"), IRCConfig.List[_servername].IgnoreChannels);
+				Log.Notice("ChannelInfo", sLConsole.GetString("Banned channels: {0}"), IRCConfig.List[_servername].IgnoreChannels);
 
 			if(SchumixBase.STime)
 			{

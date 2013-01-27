@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-27 11:52:32+0100\n"
-"PO-Revision-Date: 2013-01-27 11:52:33+0100\n"
+"POT-Creation-Date: 2013-01-27 14:11:40+0100\n"
+"PO-Revision-Date: 2013-01-27 14:11:41+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -71,6 +71,35 @@ msgstr ""
 msgid "Failure details: {0}"
 msgstr ""
 
+#: ../Core/Schumix.Irc/MessageHandler.cs:7
+#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:11
+msgid "Vhost is OFF."
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:18
+msgid "Bad identify password!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:18
+msgid "Already identified!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:18
+msgid "Identify password accepted."
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:20
+msgid "Your nick isn't registered!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:24
+msgid "Nick isnt registered, so the vhost still off!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:73
+msgid "Identify password accepted!"
+msgstr ""
+
 #: ../Core/Schumix.Irc/Commands/CommandInfo.cs:3
 msgid "Successfully started the CommandInfo."
 msgstr ""
@@ -111,10 +140,12 @@ msgid " Seconds."
 msgstr ""
 
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:50
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:6
 msgid "ChannelList: Failure request!"
 msgstr ""
 
 #: ../Core/Schumix.Irc/IrcBase.cs:29
+#: ../Core/Schumix.Framework/Config/Config.cs:4
 #: ../Core/Schumix.Framework/Database/SQLite.cs:15
 #: ../Core/Schumix.Framework/Database/SQLite.cs:18
 #: ../Core/Schumix.Framework/Database/SQLite.cs:21
@@ -124,7 +155,54 @@ msgstr ""
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
 #: ../Core/Schumix.Framework/Runtime.cs:6
+#: ../Applications/Schumix.Server/Config/Config.cs:4
 msgid "Program shutting down!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:10
+msgid "Sending nickserv identify."
+msgstr ""
+
+#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:11
+msgid "Vhost is ON."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:24
+#: ../Core/Schumix.Framework/SchumixBase.cs:20
+msgid "FunctionReload: Failre request!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:25
+msgid "ChannelFunctionReload: Failre request!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:26
+msgid "ChannelListReload: Failre request!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:46
+msgid "Connecting to channels.."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:49
+msgid "JoinChannel: Failure request!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:50
+msgid "Successfully connected to channels."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:50
+msgid "Some connection unsuccessful!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:51
+msgid "Banned channels: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/Config.cs:4
+#: ../Applications/Schumix.Server/Config/Config.cs:4
+msgid "Please set up the Config file!"
 msgstr ""
 
 #: ../Core/Schumix.Framework/SchumixBase.cs:5
@@ -286,6 +364,201 @@ msgstr ""
 msgid "Loaded the Server settings."
 msgstr ""
 
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:9
+msgid "Loading addons from: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
+msgid "This addon name already exists in the system so not loaded!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
+msgid "Loaded plugin: {0} {1} by {2} ({3})"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:22
+msgid "Ignoring plugins (config): {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:23
+msgid "Error while loading one of directories! Detail: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:29
+msgid "Unload plugins"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:8
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:6
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:8
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:6
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:5
+msgid "Config file is loading."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:13
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+msgid "The master channel's format is wrong. \"#\" is missing. Corrected."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:13
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+msgid "The master channel is not given so the default will be used. ({0})"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:14
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+msgid "The primary nick's format is wrong. The default will be used: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+msgid "The secondary nick's format is wrong. The default will be used: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+msgid "The tertiary nick's format is wrong. The default will be used: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:43
+msgid "The {0} server is already in use so not loaded!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:39
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:11
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:23
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:7
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:9
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:6
+msgid "Config database is loading."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
+msgid "No such config file!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
+msgid "Preparing..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:101
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
+msgid "Config file is completed!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:101
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
+msgid "Failure was handled during the xml writing. Details: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
+msgid "Failure was handled during the yml writing. Details: {0}"
+msgstr ""
+
 #: ../Core/Schumix.Framework/Config/CrashConfig.cs:3
 msgid "Loaded the Crash settings."
 msgstr ""
@@ -296,6 +569,35 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Config/FloodingConfig.cs:3
 msgid "Loaded the Flooding settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:3
+msgid "Successfully started the CleanConfig."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:6
+msgid "Searching for old config files have been started."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:6
+msgid "Config folder's path: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:7
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:8
+msgid "Old config file has been deleted: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:9
+msgid "Old config files have been deleted successfully."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:9
+msgid "There is not any old config files!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/CleanConfig.cs:3
+msgid "Loaded the Clean settings."
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:19
@@ -388,6 +690,21 @@ msgstr ""
 msgid "One of the summix has been shuted down, it will be restarted."
 msgstr ""
 
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:20
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:37
+msgid "Schumixs starting..."
+msgstr ""
+
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:21
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:37
+msgid "Schumixs number: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:22
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:39
+msgid "There is no load of Schumix!"
+msgstr ""
+
 #: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
 #: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:25
 #: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:21
@@ -428,120 +745,6 @@ msgstr ""
 #: ../Addons/Schumix.HgRssAddon/Config/RssConfig.cs:3
 #: ../Addons/Schumix.GitRssAddon/Config/RssConfig.cs:3
 msgid "Loaded the Rss settings."
-msgstr ""
-
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:5
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:5
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:5
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:5
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:5
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:5
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:5
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:5
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:5
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:5
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:5
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:5
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:5
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:5
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:5
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:5
-msgid "Config file is loading."
-msgstr ""
-
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:7
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:7
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:7
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:7
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:7
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:7
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:7
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:7
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:7
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:7
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:7
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:7
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:7
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:7
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:9
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:6
-msgid "Config database is loading."
-msgstr ""
-
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
-msgid "No such config file!"
-msgstr ""
-
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
-msgid "Preparing..."
-msgstr ""
-
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
-msgid "Config file is completed!"
-msgstr ""
-
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
-msgid "Failure was handled during the xml writing. Details: {0}"
 msgstr ""
 
 #: ../Addons/Schumix.CompilerAddon/Config/CompilerConfig.cs:3

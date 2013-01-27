@@ -54,7 +54,7 @@ namespace Schumix.Server.Config
 			Log.Initialize(Framework.Config.LogConfig.FileName, colorbindmode);
 			Log.Debug("YamlConfig", ">> {0}", configfile);
 
-			Log.Notice("YamlConfig", sLConsole.Config("Text3"));
+			Log.Notice("YamlConfig", sLConsole.GetString("Config file is loading."));
 			ServerMap((!servermap.IsNull() && servermap.ContainsKey("Server")) ? ((YamlMappingNode)servermap["Server".ToYamlNode()]).Children : NullYMap);
 			CrashMap((!servermap.IsNull() && servermap.ContainsKey("Crash")) ? ((YamlMappingNode)servermap["Crash".ToYamlNode()]).Children : NullYMap);
 			LocalizationMap((!servermap.IsNull() && servermap.ContainsKey("Localization")) ? ((YamlMappingNode)servermap["Localization".ToYamlNode()]).Children : NullYMap);
@@ -63,7 +63,7 @@ namespace Schumix.Server.Config
 			CleanMap((!servermap.IsNull() && servermap.ContainsKey("Clean")) ? ((YamlMappingNode)servermap["Clean".ToYamlNode()]).Children : NullYMap);
 			SchumixsMap((!servermap.IsNull() && servermap.ContainsKey("Schumixs")) ? ((YamlMappingNode)servermap["Schumixs".ToYamlNode()]).Children : NullYMap);
 
-			Log.Success("YamlConfig", sLConsole.Config("Text4"));
+			Log.Success("YamlConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
 
@@ -83,8 +83,8 @@ namespace Schumix.Server.Config
 				{
 					new Framework.Config.LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, string.Empty, false);
 					Log.Initialize(d_logfilename, ColorBindMode);
-					Log.Error("YamlConfig", sLConsole.Config("Text5"));
-					Log.Debug("YamlConfig", sLConsole.Config("Text6"));
+					Log.Error("YamlConfig", sLConsole.GetString("No such config file!"));
+					Log.Debug("YamlConfig", sLConsole.GetString("Preparing..."));
 					var yaml = new YamlStream();
 					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
@@ -136,11 +136,11 @@ namespace Schumix.Server.Config
 						if(File.Exists(filename2))
 							File.Delete(filename2);
 
-						Log.Success("YamlConfig", sLConsole.Config("Text7"));
+						Log.Success("YamlConfig", sLConsole.GetString("Config file is completed!"));
 					}
 					catch(Exception e)
 					{
-						Log.Error("YamlConfig", sLConsole.Config("Text13"), e.Message);
+						Log.Error("YamlConfig", sLConsole.GetString("Failure was handled during the yml writing. Details: {0}"), e.Message);
 						errors = true;
 					}
 				}
@@ -223,8 +223,8 @@ namespace Schumix.Server.Config
 			{
 				Task.Factory.StartNew(() =>
 				{
-					Log.Notice("Schumix", sLConsole.Config("Text9"));
-					Log.Notice("Schumix", sLConsole.Config("Text10"), nodes.Count-1);
+					Log.Notice("Schumix", sLConsole.GetString("Schumixs starting..."));
+					Log.Notice("Schumix", sLConsole.GetString("Schumixs number: {0}"), nodes.Count-1);
 
 					foreach(var maps in nodes)
 					{
@@ -243,13 +243,13 @@ namespace Schumix.Server.Config
 								Thread.Sleep(10*1000);
 							}
 							else
-								Log.Warning("Schumix", sLConsole.Config("Text11"));
+								Log.Warning("Schumix", sLConsole.GetString("There is no load of Schumix!"));
 						}
 					}
 				});
 			}
 			else
-				Log.Warning("Schumix", sLConsole.Config("Text11"));
+				Log.Warning("Schumix", sLConsole.GetString("There is no load of Schumix!"));
 		}
 
 		private YamlMappingNode CreateLogMap(IDictionary<YamlNode, YamlNode> nodes)

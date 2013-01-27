@@ -43,8 +43,8 @@ namespace Schumix.Framework.Config
 				{
 					if(!errors)
 					{
-						Log.Notice("Config", sLConsole.Config("Text"));
-						Log.Notice("Config", sLConsole.Config("Text2"));
+						Log.Notice("Config", sLConsole.GetString("Program shutting down!"));
+						Log.Notice("Config", sLConsole.GetString("Please set up the Config file!"));
 					}
 
 					Thread.Sleep(5*1000);

@@ -77,7 +77,7 @@ namespace Schumix.Framework.Addon
 				string file = string.Empty;
 				string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);
 				var dir = new DirectoryInfo(directory);
-				Log.Notice("AddonManager", sLConsole.AddonManager("Text"), dir.FullName);
+				Log.Notice("AddonManager", sLConsole.GetString("Loading addons from: {0}"), dir.FullName);
 
 				foreach(var dll in dir.GetFiles("*.dll").AsParallel())
 				{
@@ -130,7 +130,7 @@ namespace Schumix.Framework.Addon
 	
 							if(Addons[sn.Key].Addons.ContainsKey(pl.Name.ToLower()))
 							{
-								Log.Error("AddonManager", sLConsole.AddonManager("Text6"));
+								Log.Error("AddonManager", sLConsole.GetString("This addon name already exists in the system so not loaded!"));
 								continue;
 							}
 	
@@ -148,7 +148,7 @@ namespace Schumix.Framework.Addon
 							}
 	
 							if(enabled && number == 0)
-								Log.Success("AddonManager", sLConsole.AddonManager("Text2"), pl.Name, asm.GetName().Version.ToString(), pl.Author, pl.Website);
+								Log.Success("AddonManager", sLConsole.GetString("Loaded plugin: {0} {1} by {2} ({3})"), pl.Name, asm.GetName().Version.ToString(), pl.Author, pl.Website);
 						}
 
 						number++;
@@ -156,7 +156,7 @@ namespace Schumix.Framework.Addon
 				}
 
 				if(AddonsConfig.Ignore.Length > 1)
-					Log.Notice("AddonManager", sLConsole.AddonManager("Text3"), AddonsConfig.Ignore);
+					Log.Notice("AddonManager", sLConsole.GetString("Ignoring plugins (config): {0}"), AddonsConfig.Ignore);
 
 				_loading = true;
 				return true;
@@ -164,7 +164,7 @@ namespace Schumix.Framework.Addon
 			catch(Exception e)
 			{
 				_loading = false;
-				Log.Error("AddonManager", sLConsole.AddonManager("Text4"), e.Message);
+				Log.Error("AddonManager", sLConsole.GetString("Error while loading one of directories! Detail: {0}"), e.Message);
 				return false;
 			}
 		}
@@ -210,7 +210,7 @@ namespace Schumix.Framework.Addon
 				_loading = false;
 			}
 
-			Log.Notice("AddonManager", sLConsole.AddonManager("Text5"));
+			Log.Notice("AddonManager", sLConsole.GetString("Unload plugins"));
 			return true;
 		}
 
