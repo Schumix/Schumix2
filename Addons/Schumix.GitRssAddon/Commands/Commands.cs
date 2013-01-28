@@ -37,24 +37,24 @@ namespace Schumix.GitRssAddon.Commands
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		public readonly List<GitRss> RssList = new List<GitRss>();
-
+		
 		public RssCommand(string ServerName) : base(ServerName)
 		{
 		}
-
+		
 		public void HandleGit(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
-
+			
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-
+			
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
-
+			
 			if(sIRCMessage.Info[4].ToLower() == "info")
 			{
 				var db = SchumixBase.DManager.Query("SELECT Name, Type, Channel FROM gitinfo WHERE ServerName = '{0}'", sIRCMessage.ServerName);
@@ -77,10 +77,10 @@ namespace Schumix.GitRssAddon.Commands
 				if(!db.IsNull())
 				{
 					string list = string.Empty;
-
+					
 					foreach(DataRow row in db.Rows)
 						list += SchumixBase.Space + string.Format("3{0}/7{1},", row["Name"].ToString(), row["Type"].ToString());
-
+					
 					if(list == string.Empty)
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/list", sIRCMessage.Channel, sIRCMessage.ServerName), SchumixBase.Space + sLConsole.Other("Nothing"));
 					else
@@ -97,19 +97,19 @@ namespace Schumix.GitRssAddon.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
 				}
-
+				
 				if(sIRCMessage.Info.Length < 6)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
-
+				
 				if(sIRCMessage.Info.Length < 7)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
-
+				
 				foreach(var list in RssList)
 				{
 					if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
@@ -119,13 +119,13 @@ namespace Schumix.GitRssAddon.Commands
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], list.Name, list.Type);
 							return;
 						}
-
+						
 						list.Start();
 						sSendMessage.SendChatMessage(sIRCMessage, text[1], list.Name, list.Type);
 						return;
 					}
 				}
-
+				
 				sSendMessage.SendChatMessage(sIRCMessage, text[2], sIRCMessage.Info[5], sIRCMessage.Info[6]);
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "stop")
@@ -136,19 +136,19 @@ namespace Schumix.GitRssAddon.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
 				}
-
+				
 				if(sIRCMessage.Info.Length < 6)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
-
+				
 				if(sIRCMessage.Info.Length < 7)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
-
+				
 				foreach(var list in RssList)
 				{
 					if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
@@ -158,13 +158,13 @@ namespace Schumix.GitRssAddon.Commands
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], list.Name, list.Type);
 							return;
 						}
-
+						
 						list.Stop();
 						sSendMessage.SendChatMessage(sIRCMessage, text[1], list.Name, list.Type);
 						return;
 					}
 				}
-
+				
 				sSendMessage.SendChatMessage(sIRCMessage, text[2], sIRCMessage.Info[5], sIRCMessage.Info[6]);
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "reload")
@@ -174,12 +174,12 @@ namespace Schumix.GitRssAddon.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("No1Value", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
-
+				
 				if(sIRCMessage.Info[5].ToLower() == "all")
 				{
 					foreach(var list in RssList)
 						list.Reload();
-
+					
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/reload/all", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
 				else
@@ -190,19 +190,19 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
-
+					
 					if(sIRCMessage.Info.Length < 6)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-
+					
 					if(sIRCMessage.Info.Length < 7)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-
+					
 					foreach(var list in RssList)
 					{
 						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
@@ -212,7 +212,7 @@ namespace Schumix.GitRssAddon.Commands
 							return;
 						}
 					}
-
+					
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[5], sIRCMessage.Info[6]);
 				}
 			}
@@ -223,7 +223,7 @@ namespace Schumix.GitRssAddon.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
-
+				
 				if(sIRCMessage.Info[5].ToLower() == "add")
 				{
 					var text = sLManager.GetCommandTexts("git/channel/add", sIRCMessage.Channel, sIRCMessage.ServerName);
@@ -232,36 +232,36 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
-
+					
 					if(sIRCMessage.Info.Length < 7)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-
+					
 					if(sIRCMessage.Info.Length < 8)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-
+					
 					if(sIRCMessage.Info.Length < 9)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-
+					
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 						string data = channel.SplitToString(SchumixBase.Comma);
-
+						
 						if(channel.Length == 1 && data == string.Empty)
 							data += sIRCMessage.Info[8].ToLower();
 						else
 							data += SchumixBase.Comma + sIRCMessage.Info[8].ToLower();
-
+						
 						SchumixBase.DManager.Update("gitinfo", string.Format("Channel = '{0}'", data), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName));
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					}
@@ -276,39 +276,39 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
-
+					
 					if(sIRCMessage.Info.Length < 7)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-
+					
 					if(sIRCMessage.Info.Length < 8)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-
+					
 					if(sIRCMessage.Info.Length < 9)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-
+					
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 						string data = string.Empty;
-
+						
 						for(int x = 0; x < channel.Length; x++)
 						{
 							if(channel[x] == sIRCMessage.Info[8].ToLower())
 								continue;
-
+							
 							data += SchumixBase.Comma + channel[x];
 						}
-
+						
 						SchumixBase.DManager.Update("gitinfo", string.Format("Channel = '{0}'", data.Remove(0, 1, SchumixBase.Comma)), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName));
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					}
@@ -323,7 +323,7 @@ namespace Schumix.GitRssAddon.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
-
+				
 				if(sIRCMessage.Info[5].ToLower() == "add")
 				{
 				}
@@ -341,7 +341,7 @@ namespace Schumix.GitRssAddon.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
-
+				
 				if(sIRCMessage.Info[5].ToLower() == "color")
 				{
 					if(sIRCMessage.Info.Length < 7)
@@ -349,7 +349,7 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-
+					
 					if(sIRCMessage.Info[6].ToLower() == "projectname")
 					{
 					}
