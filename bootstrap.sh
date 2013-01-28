@@ -1,1 +1,1 @@
-../Schumix2/autogen.sh
+autogen.sh
