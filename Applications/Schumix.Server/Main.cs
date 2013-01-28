@@ -115,7 +115,7 @@ namespace Schumix.Server
 			else
 				System.Console.OutputEncoding = Encoding.GetEncoding(Convert.ToInt32(console_encoding));
 
-			sLConsole.Locale = localization;
+			sLConsole.SetLocale(localization);
 			System.Console.Title = "Schumix2 Server";
 
 			if(colorbindmode)
@@ -137,9 +137,9 @@ namespace Schumix.Server
 			sUtilities.CreatePidFile(Server.Config.ServerConfig.ConfigFile);
 
 			if(localization == "start")
-				sLConsole.Locale = Server.Config.LocalizationConfig.Locale;
+				sLConsole.SetLocale(Server.Config.LocalizationConfig.Locale);
 			else if(localization != "start")
-				sLConsole.Locale = localization;
+				sLConsole.SetLocale(localization);
 
 			if(sUtilities.GetPlatformType() == PlatformType.Windows && console_encoding == Encoding.UTF8.BodyName &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")

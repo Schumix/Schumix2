@@ -181,7 +181,7 @@ namespace Schumix
 			else
 				System.Console.OutputEncoding = Encoding.GetEncoding(Convert.ToInt32(console_encoding));
 
-			sLConsole.Locale = localization;
+			sLConsole.SetLocale(localization);
 			System.Console.Title = SchumixBase.Title;
 
 			if(colorbindmode)
@@ -206,9 +206,9 @@ namespace Schumix
 				SchumixBase.ServerIdentify = serveridentify;
 
 			if(localization == "start")
-				sLConsole.Locale = LocalizationConfig.Locale;
+				sLConsole.SetLocale(LocalizationConfig.Locale);
 			else if(localization != "start")
-				sLConsole.Locale = localization;
+				sLConsole.SetLocale(localization);
 
 			if(sUtilities.GetPlatformType() == PlatformType.Windows && console_encoding == Encoding.UTF8.BodyName &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")

@@ -1219,22 +1219,23 @@ namespace Schumix.Console.Commands
 
 			switch(Info[1].ToLower())
 			{
-				case "config":
-					new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile, SchumixConfig.ColorBindMode);
-					sIrcBase.Networks[_servername].sIgnoreAddon.RemoveConfig();
-					sIrcBase.Networks[_servername].sIgnoreAddon.AddConfig();
-					sIrcBase.Networks[_servername].sIgnoreChannel.RemoveConfig();
-					sIrcBase.Networks[_servername].sIgnoreChannel.AddConfig();
-					sIrcBase.Networks[_servername].sIgnoreNickName.RemoveConfig();
-					sIrcBase.Networks[_servername].sIgnoreNickName.AddConfig();
-					sIrcBase.Networks[_servername].ReloadMessageHandlerConfig();
-					sLConsole.Locale = LocalizationConfig.Locale;
-					i = 1;
-					break;
-				case "cachedb":
-					SchumixBase.sCacheDB.ReLoad();
-					i = 1;
-					break;
+			case "config":
+				new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile, SchumixConfig.ColorBindMode);
+				sIrcBase.Networks[_servername].sIgnoreAddon.RemoveConfig();
+				sIrcBase.Networks[_servername].sIgnoreAddon.AddConfig();
+				sIrcBase.Networks[_servername].sIgnoreChannel.RemoveConfig();
+				sIrcBase.Networks[_servername].sIgnoreChannel.AddConfig();
+				sIrcBase.Networks[_servername].sIgnoreNickName.RemoveConfig();
+				sIrcBase.Networks[_servername].sIgnoreNickName.AddConfig();
+				sIrcBase.Networks[_servername].ReloadMessageHandlerConfig();
+				sLConsole.SetLocale(LocalizationConfig.Locale);
+				sIrcBase.Networks[_servername].sCtcpSender.ClientInfoResponse = sLConsole.GetString("This client supports: UserInfo, Finger, Version, Source, Ping, Time and ClientInfo");
+				i = 1;
+				break;
+			case "cachedb":
+				SchumixBase.sCacheDB.ReLoad();
+				i = 1;
+				break;
 			}
 
 			foreach(var plugin in sAddonManager.Addons[_servername].Addons)
