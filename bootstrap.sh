@@ -1,0 +1,1 @@
+/home/megax/Asztal/new/autogen.sh
