@@ -36,12 +36,13 @@ Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mi
 
 ## Archlinux
 
+**Figyelem!!! Root jogra lesz szükség hozzá.**
 Futtassuk `./createarchlinuxpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.pkg.tar.xz` (hasonló lesz a neve) nevű fájl. Ezt telepítsük a `sudo pacman -U schumix2.pkg.tar.xz` (csomag fájl neve hasonló lesz) paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
 
 ## Debian/Ubuntu
 
 **Figyelem!!! Root jogra lesz szükség hozzá.**
-Futtassuk `sudo ./createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+Futtassuk `./createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
 
 ## Windows
 

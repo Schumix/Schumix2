@@ -13,7 +13,6 @@ cd Po
 make DESTDIR=$sdir/Run install
 cd ..
 
-rm -rf pkg
 mkdir pkg
 mkdir pkg/Share
 cp -rf Share/share pkg/Share/
@@ -73,8 +72,9 @@ find . -exec md5sum '{}' \; > ../Share/md5sums
 cd ..
 mv Share DEBIAN
 cd ..
-chown -R root:root pkg
+sudo chown -R root:root pkg
 dpkg-deb --build pkg
+sudo rm -rf pkg
 echo "mv pkg.deb schumix.deb"
 mv pkg.deb schumix.deb
 echo "Success :)"
