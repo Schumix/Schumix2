@@ -2,6 +2,7 @@
 
 ## 4.0.0 (2013-xx-xx)
 
+ * Nyelvezetek kezelése teljesen átalakítva. Mostantól jobb megoldással lesz kezelve a konzolos részen.
  * Hozzáadva az irc konfighoz a szerver jelszó és modemask beállításának lehetősége.
  * Sender kibővítve.
  * Schumix.API átnevezve Schumix.Api-ra.
