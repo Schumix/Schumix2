@@ -7,7 +7,7 @@
     <ProductVersion>10.0.0</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{707DC067-8EC1-4F4E-A83C-0C33E21E8E8C}</ProjectGuid>
-    <packageName>Schumix</packageName>
+    <packageName>schumix</packageName>
     <outputType>RelativeToOutput</outputType>
     <relPath>locale</relPath>
     <translations>
@@ -25,7 +25,7 @@
   -->
   <PropertyGroup>
     <OutputPath>locale</OutputPath>
-    <GettextCatalogName>Schumix</GettextCatalogName>
+    <GettextCatalogName>schumix</GettextCatalogName>
     <GettextCatalogFile>messages.po</GettextCatalogFile>
   </PropertyGroup>
   <ItemGroup>

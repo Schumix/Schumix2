@@ -36,7 +36,7 @@ namespace Schumix.Framework.Localization
 
 		private LocalizationConsole()
 		{
-			Initialize("./locale");
+			Initialize();
 			SetLocale("en-US"); // Ez marad majd csak itt alapértelmezésben.
 		}
 
@@ -47,7 +47,7 @@ namespace Schumix.Framework.Localization
 
 		public void Initialize(string LocaleDir)
 		{
-			if(LocaleDir.IsNullOrEmpty())
+			if(LocaleDir.IsNullOrEmpty() || LocaleDir == "./locale")
 			{
 				string location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 				
@@ -68,8 +68,8 @@ namespace Schumix.Framework.Localization
 						LocaleDir = "./locale";
 					else
 					{
-						// $prefix/bin
-						string prefix = Path.Combine(location, "..");
+						// $prefix/lib/schumix
+						string prefix = Path.Combine(Path.Combine(location, ".."), "..");
 						prefix = Path.GetFullPath(prefix);
 
 						// "$prefix/share/locale"
@@ -78,7 +78,7 @@ namespace Schumix.Framework.Localization
 				}
 			}
 			
-			Mono.Unix.Catalog.Init("Schumix", LocaleDir);
+			Mono.Unix.Catalog.Init("schumix", LocaleDir);
 		}
 
 		public void SetLocale()

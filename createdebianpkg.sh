@@ -32,7 +32,7 @@ mkdir pkg/usr/share/doc/schumix
 cp License pkg/usr/share/doc/schumix/
 mkdir pkg/usr/lib
 mkdir pkg/usr/lib/pkgconfig
-cp -rf Scripts pkg/usr/lib/schumix/
+cp -rf Scripts pkg/usr/lib/schumix/Scripts
 cd Run/Release/Addons
 
 for file in *.pc
