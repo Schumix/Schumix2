@@ -118,6 +118,12 @@
     <Compile Include="Commands\HalfOperator\NickCommand.cs" />
     <Compile Include="Commands\HalfOperator\ColorsCommand.cs" />
     <Compile Include="Commands\HalfOperator\AdminCommand.cs" />
+    <Compile Include="Util\Rfc2812Util.cs" />
+    <Compile Include="Util\ModeAction.cs" />
+    <Compile Include="Util\UserMode.cs" />
+    <Compile Include="Util\ChannelMode.cs" />
+    <Compile Include="Util\StatsQuery.cs" />
+    <Compile Include="Util\UserInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -125,9 +131,9 @@
       <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
       <Name>Schumix.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Schumix.API\Schumix.API.csproj">
+    <ProjectReference Include="..\Schumix.Api\Schumix.Api.csproj">
       <Project>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</Project>
-      <Name>Schumix.API</Name>
+      <Name>Schumix.Api</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -140,5 +146,6 @@
     <Folder Include="Commands\Operator\" />
     <Folder Include="Commands\HalfOperator\" />
     <Folder Include="Commands\Public\" />
+    <Folder Include="Util\" />
   </ItemGroup>
 </Project>

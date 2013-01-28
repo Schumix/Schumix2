@@ -36,7 +36,7 @@ namespace Schumix.Framework.Clean
 		{
 			try
 			{
-				Log.Notice("CleanConfig", sLConsole.CleanConfig("Text2"));
+				Log.Notice("CleanConfig", sLConsole.GetString("Successfully started the CleanConfig."));
 				if(!Schumix.Framework.Config.CleanConfig.Config)
 				{
 					_clean = true;
@@ -47,7 +47,7 @@ namespace Schumix.Framework.Clean
 			}
 			catch(Exception e)
 			{
-				Log.Error("CleanConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("CleanConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 				_clean = false;
 			}
 
@@ -56,29 +56,29 @@ namespace Schumix.Framework.Clean
 
 		private void CleanOldConfigFile()
 		{
-			Log.Notice("CleanConfig", sLConsole.CleanConfig("Text3"));
+			Log.Notice("CleanConfig", sLConsole.GetString("Searching for old config files have been started."));
 			var dir = new DirectoryInfo(SchumixConfig.ConfigDirectory);
-			Log.Notice("CleanConfig", sLConsole.CleanConfig("Text4"), dir.FullName);
+			Log.Notice("CleanConfig", sLConsole.GetString("Config folder's path: {0}"), dir.FullName);
 			int i = 0;
 
 			foreach(var yml in dir.GetFiles("_*.yml").AsParallel())
 			{
 				i++;
 				File.Delete(yml.FullName);
-				Log.Debug("CleanConfig", sLConsole.CleanConfig("Text5"), yml.Name);
+				Log.Debug("CleanConfig", sLConsole.GetString("Old config file has been deleted: {0}"), yml.Name);
 			}
 
 			foreach(var xml in dir.GetFiles("_*.xml").AsParallel())
 			{
 				i++;
 				File.Delete(xml.FullName);
-				Log.Debug("CleanConfig", sLConsole.CleanConfig("Text5"), xml.Name);
+				Log.Debug("CleanConfig", sLConsole.GetString("Old config file has been deleted: {0}"), xml.Name);
 			}
 
 			if(i > 0)
-				Log.Notice("CleanConfig", sLConsole.CleanConfig("Text6"));
+				Log.Notice("CleanConfig", sLConsole.GetString("Old config files have been deleted successfully."));
 			else
-				Log.Warning("CleanConfig", sLConsole.CleanConfig("Text7"));
+				Log.Warning("CleanConfig", sLConsole.GetString("There is not any old config files!"));
 		}
 	}
 }

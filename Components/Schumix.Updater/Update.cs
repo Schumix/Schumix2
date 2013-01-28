@@ -42,7 +42,7 @@ namespace Schumix.Updater
 		{
 			if(!UpdateConfig.Enabled)
 			{
-				Log.Notice("Update", sLConsole.Update("Text"));
+				Log.Notice("Update", sLConsole.GetString("Automatic updater is off."));
 				return;
 			}
 
@@ -51,7 +51,7 @@ namespace Schumix.Updater
 
 			if(UpdateConfig.Version == "stable")
 			{
-				Log.Notice("Update", sLConsole.Update("Text2"));
+				Log.Notice("Update", sLConsole.GetString("Searching for new stable version is started."));
 				string version = sUtilities.GetUrl(UpdateConfig.WebPage + "/tags");
 				version = version.Remove(0, version.IndexOf("<span class=\"alt-download-links\">"));
 				version = version.Remove(0, version.IndexOf("<a href=\"") + "<a href=\"".Length);
@@ -64,36 +64,36 @@ namespace Schumix.Updater
 				switch(v1.CompareTo(v2))
 				{
 					case 0:
-						Log.Warning("Update", sLConsole.Update("Text16"));
-						Log.Notice("Update", sLConsole.Update("Text17"));
+						Log.Warning("Update", sLConsole.GetString("Currently no newer version!"));
+						Log.Notice("Update", sLConsole.GetString("The program starts is continuing."));
 						return;
 					case 1:
-						Log.Success("Update", sLConsole.Update("Text18"), v1.ToString());
+						Log.Success("Update", sLConsole.GetString("I found a newer version. The update to {0} version is starting."), v1.ToString());
 						break;
 					case -1:
-						Log.Warning("Update", sLConsole.Update("Text19"));
-						Log.Notice("Update", sLConsole.Update("Text17"));
+						Log.Warning("Update", sLConsole.GetString("Older version found, update interrupted!"));
+						Log.Notice("Update", sLConsole.GetString("The program starts is continuing."));
 						return;
 				}
 
-				Log.Notice("Update", sLConsole.Update("Text5"));
+				Log.Notice("Update", sLConsole.GetString("Downloading new version."));
 
 				try
 				{
 					new DownloadFile(UpdateConfig.WebPage + "/zipball/" + version);
-					Log.Success("Update", sLConsole.Update("Text6"));
+					Log.Success("Update", sLConsole.GetString("Successfully downloaded new version."));
 				}
 				catch
 				{
-					Log.Error("Update", sLConsole.Update("Text7"));
-					Log.Warning("Update", sLConsole.Update("Text8"));
+					Log.Error("Update", sLConsole.GetString("Downloading unsuccessful!"));
+					Log.Warning("Update", sLConsole.GetString("Updating successful!"));
 					Thread.Sleep(5*1000);
 					Environment.Exit(1);
 				}
 			}
 			else if(UpdateConfig.Version == "current")
 			{
-				Log.Notice("Update", sLConsole.Update("Text3"));
+				Log.Notice("Update", sLConsole.GetString("Searching for the last version is started."));
 				string url = UpdateConfig.WebPage.Remove(0, "http://".Length, "http://");
 				url = url.Remove(0, "https://".Length, "https://");
 				string version = sUtilities.GetUrl("https://raw." + url + "/" + UpdateConfig.Branch +
@@ -107,73 +107,73 @@ namespace Schumix.Updater
 				switch(v1.CompareTo(v2))
 				{
 					case 0:
-						Log.Warning("Update", sLConsole.Update("Text16"));
-						Log.Notice("Update", sLConsole.Update("Text17"));
+						Log.Warning("Update", sLConsole.GetString("Currently no newer version!"));
+						Log.Notice("Update", sLConsole.GetString("The program starts is continuing."));
 						return;
 					case 1:
-						Log.Success("Update", sLConsole.Update("Text18"), v1.ToString());
+						Log.Success("Update", sLConsole.GetString("I found a newer version. The update to {0} version is starting."), v1.ToString());
 						break;
 					case -1:
-						Log.Warning("Update", sLConsole.Update("Text19"));
-						Log.Notice("Update", sLConsole.Update("Text17"));
+						Log.Warning("Update", sLConsole.GetString("Older version found, update interrupted!"));
+						Log.Notice("Update", sLConsole.GetString("The program starts is continuing."));
 						return;
 				}
 
-				Log.Notice("Update", sLConsole.Update("Text5"));
+				Log.Notice("Update", sLConsole.GetString("Downloading new version."));
 
 				try
 				{
 					new DownloadFile(UpdateConfig.WebPage + "/zipball/" + UpdateConfig.Branch);
-					Log.Success("Update", sLConsole.Update("Text6"));
+					Log.Success("Update", sLConsole.GetString("Successfully downloaded new version."));
 				}
 				catch
 				{
-					Log.Error("Update", sLConsole.Update("Text7"));
-					Log.Warning("Update", sLConsole.Update("Text8"));
+					Log.Error("Update", sLConsole.GetString("Downloading unsuccessful!"));
+					Log.Warning("Update", sLConsole.GetString("Updating successful!"));
 					Thread.Sleep(5*1000);
 					Environment.Exit(1);
 				}
 			}
 			else
 			{
-				Log.Warning("Update", sLConsole.Update("Text4"));
+				Log.Warning("Update", sLConsole.GetString("No such version like this, update interrupted!"));
 				return;
 			}
 
-			Log.Notice("Update", sLConsole.Update("Text9"));
+			Log.Notice("Update", sLConsole.GetString("Extracting new version."));
 			GZip gzip = null;
 
 			try
 			{
 				gzip = new GZip();
-				Log.Success("Update", sLConsole.Update("Text10"));
+				Log.Success("Update", sLConsole.GetString("Successfully extracted the staff."));
 			}
 			catch
 			{
-				Log.Error("Update", sLConsole.Update("Text11"));
-				Log.Warning("Update", sLConsole.Update("Text8"));
+				Log.Error("Update", sLConsole.GetString("Extracting unsuccessful!"));
+				Log.Warning("Update", sLConsole.GetString("Updating successful!"));
 				Thread.Sleep(5*1000);
 				Environment.Exit(1);
 			}
 
 			string dir = gzip.DirectoryName;
-			Log.Notice("Update", sLConsole.Update("Text12"));
+			Log.Notice("Update", sLConsole.GetString("Started translating."));
 			var build = new Build(dir);
 
 			if(build.HasError)
 			{
-				Log.Error("Update", sLConsole.Update("Text13"));
-				Log.Warning("Update", sLConsole.Update("Text8"));
+				Log.Error("Update", sLConsole.GetString("Error was handled while translated!"));
+				Log.Warning("Update", sLConsole.GetString("Updating successful!"));
 				Thread.Sleep(5*1000);
 				Environment.Exit(1);
 			}
 
-			Log.Success("Update", sLConsole.Update("Text14"));
-			Log.Notice("Update", sLConsole.Update("Text20"));
+			Log.Success("Update", sLConsole.GetString("Successfully finished the translation."));
+			Log.Notice("Update", sLConsole.GetString("Sql files update is started. The setted database will be updated."));
 			var sql = new SqlUpdate(dir + "/Sql/Updates");
 			sql.Connect();
 			sql.Update();
-			Log.Success("Update", sLConsole.Update("Text21"));
+			Log.Success("Update", sLConsole.GetString("Sql update finished."));
 
 			if(File.Exists("Config.exe"))
 				File.Delete("Config.exe");
@@ -195,13 +195,13 @@ namespace Schumix.Updater
 				config.StartInfo.Arguments = dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
 			}
 
-			Log.Notice("Update", sLConsole.Update("Text15"));
+			Log.Notice("Update", sLConsole.GetString("This step of updateing is finished. Continue with next step."));
 			config.Start();
 
 			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				config.WaitForExit();
-				Log.Success("Update", sLConsole.Update("Text22"));
+				Log.Success("Update", sLConsole.GetString("The update is finished. The program shutting down!"));
 			}
 
 			Environment.Exit(0);

@@ -25,6 +25,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Schumix.Api.Irc;
 using Schumix.Api.Functions;
+using Schumix.Irc.Util;
 using Schumix.Irc.Channel;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -56,7 +57,7 @@ namespace Schumix.Irc
 		protected void HandleSuccessfulAuth(IRCMessage sIRCMessage)
 		{
 			Console.WriteLine();
-			Log.Success("MessageHandler", sLConsole.MessageHandler("Text"));
+			Log.Success("MessageHandler", sLConsole.GetString("Successfully connected to IRC server."));
 			RandomAllVhost();
 			Task.Factory.StartNew(() => IsJoin());
 
@@ -74,7 +75,7 @@ namespace Schumix.Irc
 				{
 					if(!Online)
 					{
-						Log.Notice("HostServ", sLConsole.HostServ("Text2"));
+						Log.Notice("HostServ", sLConsole.GetString("Vhost is OFF."));
 						ChannelPrivmsg = sMyNickInfo.NickStorage;
 						sMyChannelInfo.JoinChannel();
 						Online = true;
@@ -100,17 +101,17 @@ namespace Schumix.Irc
 
 		protected void HandleWaitingForConnection(IRCMessage sIRCMessage)
 		{
-			Log.Notice("MessageHandler", sLConsole.MessageHandler("Text2"));
+			Log.Notice("MessageHandler", sLConsole.GetString("Waiting for connection processing."));
 		}
 
 		protected void HandleNotRegistered(IRCMessage sIRCMessage)
 		{
-			Log.Notice("MessageHandler", sLConsole.MessageHandler("Text10"));
+			Log.Notice("MessageHandler", sLConsole.GetString("You have not registered!"));
 		}
 
 		protected void HandleNoNickName(IRCMessage sIRCMessage)
 		{
-			Log.Warning("MessageHandler", sLConsole.MessageHandler("Text3"));
+			Log.Warning("MessageHandler", sLConsole.GetString("No such Bot's nickname!"));
 		}
 
 		/// <summary>
@@ -130,7 +131,7 @@ namespace Schumix.Irc
 
 				if(sIRCMessage.Nick == "NickServ" || sIRCMessage.Nick == "MemoServ" ||
 					sIRCMessage.Nick == "ChanServ" || sIRCMessage.Nick == "HostServ")
-					Console.Write(sLConsole.MessageHandler("Text4"));
+					Console.Write(sLConsole.GetString("[SERVER] "));
 				else
 					Console.Write(string.Format("[{0}] ", sIRCMessage.Nick));
 
@@ -144,22 +145,22 @@ namespace Schumix.Irc
 				if(sIRCMessage.Args.Contains("Password incorrect."))
 				{
 					sMyNickInfo.ChangeIdentifyStatus(true);
-					Log.Error("NickServ", sLConsole.NickServ("Text2"));
+					Log.Error("NickServ", sLConsole.GetString("Bad identify password!"));
 					ConnectAllChannel();
 				}
 				else if(sIRCMessage.Args.Contains("You are already identified."))
-					Log.Warning("NickServ", sLConsole.NickServ("Text3"));
+					Log.Warning("NickServ", sLConsole.GetString("Already identified!"));
 				else if(sIRCMessage.Args.Contains("Password accepted - you are now recognized."))
 				{
 					sMyNickInfo.ChangeIdentifyStatus(true);
-					Log.Success("NickServ", sLConsole.NickServ("Text4"));
+					Log.Success("NickServ", sLConsole.GetString("Identify password accepted."));
 				}
 
 				var registered = new Regex("Nick (.+) isn't registered.");
 
 				if(sIRCMessage.Args.Contains("Your nick isn't registered.") || (!sMyNickInfo.IsIdentify && registered.IsMatch(sIRCMessage.Args)))
 				{
-					Log.Warning("NickServ", sLConsole.NickServ("Text5"));
+					Log.Warning("NickServ", sLConsole.GetString("Your nick isn't registered!"));
 					ChannelPrivmsg = sMyNickInfo.NickStorage;
 					sMyNickInfo.ChangeIdentifyStatus(true);
 					ConnectAllChannel();
@@ -207,7 +208,7 @@ namespace Schumix.Irc
 			{
 				if(sIRCMessage.Args.Contains("You need to register before a vhost can be assigned to you."))
 				{
-					Log.Warning("HostServ", sLConsole.HostServ("Text3"));
+					Log.Warning("HostServ", sLConsole.GetString("Nick isnt registered, so the vhost still off!"));
 					ConnectAllChannel();
 				}
 			}
@@ -257,15 +258,15 @@ namespace Schumix.Irc
 			{
 				if(SchumixConfig.ColorBindMode)
 				{
-					Console.Write(sLConsole.MessageHandler("Text4"));
-					Console.Write(sLConsole.MessageHandler("Text5"));
+					Console.Write(sLConsole.GetString("[SERVER] "));
+					Console.Write(sLConsole.GetString("No such irc command.\n"));
 				}
 				else
 				{
 					Console.ForegroundColor = ConsoleColor.Red;
-					Console.Write(sLConsole.MessageHandler("Text4"));
+					Console.Write(sLConsole.GetString("[SERVER] "));
 					Console.ForegroundColor = ConsoleColor.Yellow;
-					Console.Write(sLConsole.MessageHandler("Text5"));
+					Console.Write(sLConsole.GetString("No such irc command.\n"));
 					Console.ForegroundColor = ConsoleColor.Gray;
 				}
 			}
@@ -279,24 +280,24 @@ namespace Schumix.Irc
 		{
 			if(NewNickPrivmsg == string.Empty)
 			{
-				Log.Error("MessageHandler", sLConsole.MessageHandler("Text6"), sMyNickInfo.NickStorage);
+				Log.Error("MessageHandler", sLConsole.GetString("{0} already in use!"), sMyNickInfo.NickStorage);
 				string nick = sMyNickInfo.ChangeNick();
-				Log.Notice("MessageHandler", sLConsole.MessageHandler("Text7"), nick);
+				Log.Notice("MessageHandler", sLConsole.GetString("Retrying with: {0}"), nick);
 				Online = false;
 				sSender.Nick(nick);
 			}
 			else
 			{
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text14"));
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text14", sLManager.GetChannelLocalization(NewNickPrivmsg, sIRCMessage.ServerName)));
 				NewNickPrivmsg = string.Empty;
 			}
 		}
 
-		protected void HandlerErrorNewNickName(IRCMessage sIRCMessage)
+		protected void HandleErrorNewNickName(IRCMessage sIRCMessage)
 		{
 			if(NewNickPrivmsg != string.Empty)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text15"));
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text15", sLManager.GetChannelLocalization(NewNickPrivmsg, sIRCMessage.ServerName)));
 				NewNickPrivmsg = string.Empty;
 			}
 		}
@@ -305,7 +306,7 @@ namespace Schumix.Irc
 		{
 			if(NewNickPrivmsg != string.Empty)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text16"));
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text16", sLManager.GetChannelLocalization(NewNickPrivmsg, sIRCMessage.ServerName)));
 				NewNickPrivmsg = string.Empty;
 			}
 		}
@@ -318,8 +319,8 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 4)
 				return;
 
-			SchumixBase.DManager.Update("channels", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text8-1")), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Info[3].ToLower(), sIRCMessage.ServerName));
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text8"), sIRCMessage.Info[3]);
+			SchumixBase.DManager.Update("channels", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text8-1", sLManager.GetChannelLocalization(ChannelPrivmsg, sIRCMessage.ServerName))), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Info[3].ToLower(), sIRCMessage.ServerName));
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text8", sLManager.GetChannelLocalization(ChannelPrivmsg, sIRCMessage.ServerName)), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sMyNickInfo.NickStorage;
 		}
 
@@ -331,8 +332,8 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 4)
 				return;
 
-			SchumixBase.DManager.Update("channels", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text9-1")), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Info[3].ToLower(), sIRCMessage.ServerName));
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text9"), sIRCMessage.Info[3]);
+			SchumixBase.DManager.Update("channels", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text9-1", sLManager.GetChannelLocalization(ChannelPrivmsg, sIRCMessage.ServerName))), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Info[3].ToLower(), sIRCMessage.ServerName));
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text9", sLManager.GetChannelLocalization(ChannelPrivmsg, sIRCMessage.ServerName)), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sMyNickInfo.NickStorage;
 		}
 
@@ -341,8 +342,8 @@ namespace Schumix.Irc
 			if(sIRCMessage.Info.Length < 4)
 				return;
 
-			SchumixBase.DManager.Update("channels", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text17-1")), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Info[3].ToLower(), sIRCMessage.ServerName));
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text17"), sIRCMessage.Info[3]);
+			SchumixBase.DManager.Update("channels", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.MessageHandler("Text17-1", sLManager.GetChannelLocalization(ChannelPrivmsg, sIRCMessage.ServerName))), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Info[3].ToLower(), sIRCMessage.ServerName));
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ChannelPrivmsg, sLConsole.MessageHandler("Text17", sLManager.GetChannelLocalization(ChannelPrivmsg, sIRCMessage.ServerName)), sIRCMessage.Info[3]);
 			ChannelPrivmsg = sMyNickInfo.NickStorage;
 		}
 
@@ -407,7 +408,7 @@ namespace Schumix.Irc
 		protected void HandleIrcJoin(IRCMessage sIRCMessage)
 		{
 			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text18"));
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[joined]"));
 
 			if(sIRCMessage.Nick == sMyNickInfo.NickStorage)
 			{
@@ -422,7 +423,7 @@ namespace Schumix.Irc
 
 		protected void HandleIrcLeft(IRCMessage sIRCMessage)
 		{
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text19"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[left] {0}"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
 
 			if(sIRCMessage.Nick == sMyNickInfo.NickStorage)
 			{
@@ -438,7 +439,7 @@ namespace Schumix.Irc
 			foreach(var chan in sChannelList.List)
 			{
 				if(chan.Value.Names.ContainsKey(sIRCMessage.Nick.ToLower()))
-					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.MessageHandler("Text20"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
+					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[quit] {0}"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
 			}
 
 			sChannelList.Remove(string.Empty, sIRCMessage.Nick, true);
@@ -449,7 +450,7 @@ namespace Schumix.Irc
 			foreach(var chan in sChannelList.List)
 			{
 				if(chan.Value.Names.ContainsKey(sIRCMessage.Nick.ToLower()))
-					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.MessageHandler("Text21"), sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
+					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[Is now known as {0}]"), sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 			}
 
 			sChannelList.Change(sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
@@ -461,7 +462,7 @@ namespace Schumix.Irc
 				return;
 
 			string text = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text22"), sIRCMessage.Info[3], text.Remove(0, 1, ":"));
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Kicked that user: {0} reason: {1}]"), sIRCMessage.Info[3], text.Remove(0, 1, ":"));
 
 			if(sIRCMessage.Info[3].ToLower() == sMyNickInfo.NickStorage.ToLower())
 				sChannelList.Remove(sIRCMessage.Channel);
@@ -476,63 +477,63 @@ namespace Schumix.Irc
 
 			string status = string.Empty;
 
-			if(sIRCMessage.Info[3].Contains("-"))
-				status = "-";
-			else if(sIRCMessage.Info[3].Contains("+"))
-				status = "+";
+			if(sIRCMessage.Info[3].Contains(Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString()))
+				status = Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString();
+			else if(sIRCMessage.Info[3].Contains(Rfc2812Util.ModeActionToChar(ModeAction.Add).ToString()))
+				status = Rfc2812Util.ModeActionToChar(ModeAction.Add).ToString();
 
 			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[3].Length > 1 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(1, 1)))
 			{
-				if(status == "-")
+				if(status == Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString())
 					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(1, 1), string.Empty);
-				else if(status == "+" && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(1, 1)))
+				else if(status == Rfc2812Util.ModeActionToChar(ModeAction.Add).ToString() && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(1, 1)))
 					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[4].ToLower()].Rank += sIRCMessage.Info[3].Substring(1, 1);
 			}
 
 			if(sIRCMessage.Info.Length >= 6 && sIRCMessage.Info[3].Length > 2 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(2).Substring(0, 1)))
 			{
-				if(status == "-")
+				if(status == Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString())
 					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(2).Substring(0, 1), string.Empty);
-				else if(status == "+" && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(2).Substring(0, 1)))
+				else if(status == Rfc2812Util.ModeActionToChar(ModeAction.Add).ToString() && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(2).Substring(0, 1)))
 					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[5].ToLower()].Rank += sIRCMessage.Info[3].Substring(2).Substring(0, 1);
 			}
 
 			if(sIRCMessage.Info.Length >= 7 && sIRCMessage.Info[3].Length > 3 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(3).Substring(0, 1)))
 			{
-				if(status == "-")
+				if(status == Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString())
 					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(3).Substring(0, 1), string.Empty);
-				else if(status == "+" && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(3).Substring(0, 1)))
+				else if(status == Rfc2812Util.ModeActionToChar(ModeAction.Add).ToString() && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(3).Substring(0, 1)))
 					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[6].ToLower()].Rank += sIRCMessage.Info[3].Substring(3).Substring(0, 1);
 			}
 
 			if(sIRCMessage.Info.Length >= 8 && sIRCMessage.Info[3].Length > 4 && sChannelList.IsChannelRank(sIRCMessage.Info[3].Substring(4).Substring(0, 1)))
 			{
-				if(status == "-")
+				if(status == Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString())
 					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank = sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank.Replace(sIRCMessage.Info[3].Substring(4).Substring(0, 1), string.Empty);
-				else if(status == "+" && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(4).Substring(0, 1)))
+				else if(status == Rfc2812Util.ModeActionToChar(ModeAction.Add).ToString() && !sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank.Contains(sIRCMessage.Info[3].Substring(4).Substring(0, 1)))
 					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank += sIRCMessage.Info[3].Substring(4).Substring(0, 1);
 			}
 
 			if(!sMyNickInfo.IsIdentify && sIRCMessage.Nick == "NickServ" && sIRCMessage.Channel.ToLower() == sMyNickInfo.NickStorage.ToLower() && sIRCMessage.Args == "+r")
 			{
 				sMyNickInfo.ChangeIdentifyStatus(true);
-				Log.Success("NickServ", sLConsole.NickServ("Text4"));
+				Log.Success("NickServ", sLConsole.GetString("Identify password accepted!"));
 			}
 
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text23"), sIRCMessage.Info.SplitToString(3, SchumixBase.Space));
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Set mode: {0}]"), sIRCMessage.Info.SplitToString(3, SchumixBase.Space));
 		}
 
 		protected void HandleIrcTopic(IRCMessage sIRCMessage)
 		{
 			string text = sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args;
 			sChannelList.List[sIRCMessage.Channel.ToLower()].Topic = text;
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text24"), text);
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Topic] New topic: {0}"), text);
 		}
 
 		protected void HandleIrcInvite(IRCMessage sIRCMessage)
 		{
-			Log.Notice("MessageHandler", sLConsole.MessageHandler("Text27"), sIRCMessage.Nick, sIRCMessage.Args);
-			LogToFile(sIRCMessage.Nick, sIRCMessage.Nick, string.Format(sLConsole.MessageHandler("Text26"), sIRCMessage.Nick, sIRCMessage.Args));
+			Log.Notice("MessageHandler", sLConsole.GetString("{0} invites you to join {1}."), sIRCMessage.Nick, sIRCMessage.Args);
+			LogToFile(sIRCMessage.Nick, sIRCMessage.Nick, string.Format(sLConsole.GetString("[INVITE] {0} invites you to join {1}."), sIRCMessage.Nick, sIRCMessage.Args));
 		}
 
 		protected void HandleInitialTopic(IRCMessage sIRCMessage)
@@ -549,7 +550,7 @@ namespace Schumix.Irc
 			}
 
 			sChannelList.List[sIRCMessage.Channel.ToLower()].Topic = text;
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.MessageHandler("Text28"), text);
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Topic] {0}"), text);
 		}
 
 		protected void HandleNameList(IRCMessage sIRCMessage)
@@ -591,9 +592,9 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if((sMyChannelInfo.FSelect(IFunctions.Log) && sMyChannelInfo.FSelect(IChannelFunctions.Log, channel)) || !sUtilities.IsChannel(channel))
+				if((sMyChannelInfo.FSelect(IFunctions.Log) && sMyChannelInfo.FSelect(IChannelFunctions.Log, channel)) || !Rfc2812Util.IsValidChannelName(channel))
 				{
-					if(!sUtilities.IsChannel(channel))
+					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
 						if((args.Contains("admin") && args.Contains("access")) ||
 						   (args.Contains("admin") && args.Contains("newpassword")) ||

@@ -24,7 +24,6 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.CalendarAddon.Localization;
 
 namespace Schumix.CalendarAddon.Config
 {
@@ -51,7 +50,7 @@ namespace Schumix.CalendarAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("CalendarAddonConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("CalendarAddonConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

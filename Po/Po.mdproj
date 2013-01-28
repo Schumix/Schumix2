@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ItemType>TranslationProject</ItemType>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{707DC067-8EC1-4F4E-A83C-0C33E21E8E8C}</ProjectGuid>
+    <packageName>Schumix</packageName>
+    <outputType>RelativeToOutput</outputType>
+    <relPath>locale</relPath>
+    <translations>
+      <translations>
+        <Translation isoCode="hu" />
+      </translations>
+    </translations>
+    <ReleaseVersion>3.x</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' " />
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' " />
+  <!--
+  Everything above is for the MD translation project serializer, and isn't really valid MSBuild.
+  The real MSBuild project is below. Need to update MD to serialize this instead.
+  -->
+  <PropertyGroup>
+    <OutputPath>locale</OutputPath>
+    <GettextCatalogName>Schumix</GettextCatalogName>
+    <GettextCatalogFile>messages.po</GettextCatalogFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <GettextTranslation Include="hu.po" />
+  </ItemGroup>
+  <Import Project="Gettext.targets" />
+</Project>

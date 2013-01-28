@@ -31,7 +31,7 @@ namespace Schumix.Framework.Clean
 
 		public CleanManager(bool server = false)
 		{
-			Log.Notice("CleanManager", sLConsole.CleanManager("Text"));
+			Log.Notice("CleanManager", sLConsole.GetString("Successfully started the CleanManager."));
 			_server = server;
 		}
 
@@ -43,7 +43,7 @@ namespace Schumix.Framework.Clean
 			{
 				if(true)
 				{
-					Log.Debug("CleanManager", sLConsole.CleanManager("Text2"));
+					Log.Debug("CleanManager", sLConsole.GetString("CleanConfig is starting..."));
 					var config = new CleanConfig();
 					if(!config.IsClean())
 						cleanerror++;
@@ -53,7 +53,7 @@ namespace Schumix.Framework.Clean
 			{
 				if(true)
 				{
-					Log.Debug("CleanManager", sLConsole.CleanManager("Text2"));
+					Log.Debug("CleanManager", sLConsole.GetString("CleanConfig is starting..."));
 					var config = new CleanConfig();
 					if(!config.IsClean())
 						cleanerror++;
@@ -61,7 +61,7 @@ namespace Schumix.Framework.Clean
 
 				if(true)
 				{
-					Log.Debug("CleanManager", sLConsole.CleanManager("Text3"));
+					Log.Debug("CleanManager", sLConsole.GetString("CleanDatabase is starting..."));
 					CDatabase = new CleanDatabase();
 					if(!CDatabase.IsClean())
 						cleanerror++;
@@ -69,12 +69,12 @@ namespace Schumix.Framework.Clean
 			}
 
 			if(cleanerror > 0)
-				Log.Warning("CleanManager", sLConsole.CleanManager("Text4"));
+				Log.Warning("CleanManager", sLConsole.GetString("Some problems occured during cleanup in some place!"));
 
 			if((Schumix.Framework.Config.CleanConfig.Config || Schumix.Framework.Config.CleanConfig.Database) && cleanerror == 0)
-				Log.Notice("CleanManager", sLConsole.CleanManager("Text5"));
+				Log.Notice("CleanManager", sLConsole.GetString("Cleanups have been finished."));
 			else if(cleanerror == 0)
-				Log.Warning("CleanManager", sLConsole.CleanManager("Text6"));
+				Log.Warning("CleanManager", sLConsole.GetString("Cleanup is not turned on!"));
 		}
 	}
 }

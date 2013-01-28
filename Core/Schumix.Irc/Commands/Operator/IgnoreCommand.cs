@@ -20,6 +20,7 @@
 
 using System;
 using Schumix.Api.Irc;
+using Schumix.Irc.Util;
 using Schumix.Framework.Config;
 
 namespace Schumix.Irc.Commands
@@ -245,7 +246,7 @@ namespace Schumix.Irc.Commands
 
 					string channel = sIRCMessage.Info[6].ToLower();
 
-					if(!sUtilities.IsChannel(channel))
+					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -283,7 +284,7 @@ namespace Schumix.Irc.Commands
 
 					string channel = sIRCMessage.Info[6].ToLower();
 
-					if(!sUtilities.IsChannel(channel))
+					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -315,7 +316,7 @@ namespace Schumix.Irc.Commands
 
 					string channel = sIRCMessage.Info[6].ToLower();
 
-					if(!sUtilities.IsChannel(channel))
+					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -351,6 +352,12 @@ namespace Schumix.Irc.Commands
 					}
 
 					string nick = sIRCMessage.Info[6].ToLower();
+
+					if(!Rfc2812Util.IsValidNick(nick))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
 
 					if(nick == sIRCMessage.Nick.ToLower())
 					{
@@ -390,6 +397,12 @@ namespace Schumix.Irc.Commands
 
 					string nick = sIRCMessage.Info[6].ToLower();
 
+					if(!Rfc2812Util.IsValidNick(nick))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
 					if(!sIgnoreNickName.IsIgnore(nick))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -414,7 +427,15 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					if(sIgnoreNickName.Contains(sIRCMessage.Info[6].ToLower()))
+					string nick = sIRCMessage.Info[6].ToLower();
+					
+					if(!Rfc2812Util.IsValidNick(nick))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(sIgnoreNickName.Contains(nick))
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);

@@ -51,8 +51,8 @@ namespace Schumix
 			{
 				bool e = false;
 				string eserver = string.Empty;
-				Log.Notice("SchumixBot", sLConsole.SchumixBot("Text"));
-				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text2"));
+				Log.Notice("SchumixBot", sLConsole.GetString("Successfully started SchumixBot."));
+				Log.Debug("SchumixBot", sLConsole.GetString("Network starting..."));
 
 				foreach(var sn in IRCConfig.List)
 				{
@@ -91,13 +91,13 @@ namespace Schumix
 					}
 				});
 
-				Log.Debug("SchumixBot", sLConsole.SchumixBot("Text3"));
+				Log.Debug("SchumixBot", sLConsole.GetString("Console starting..."));
 				new ScriptManager(ScriptsConfig.Directory);
 				new Console.Console(eserver);
 			}
 			catch(Exception e)
 			{
-				Log.Error("SchumixBot", sLConsole.Exception("Error"), e.Message);
+				Log.Error("SchumixBot", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

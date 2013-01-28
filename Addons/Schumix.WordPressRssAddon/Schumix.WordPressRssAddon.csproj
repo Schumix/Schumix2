@@ -12,9 +12,9 @@
     <ReleaseVersion>3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>..\..\Run\Debug\Addons</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -23,7 +23,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>..\..\Run\Release\Addons</OutputPath>
     <DefineConstants>RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -31,9 +31,9 @@
     <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>..\..\Run\Debug_x64\Addons</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -42,7 +42,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>..\..\Run\Release_x64\Addons</OutputPath>
     <DefineConstants>RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -74,9 +74,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\Core\Schumix.API\Schumix.API.csproj">
+    <ProjectReference Include="..\..\Core\Schumix.Api\Schumix.Api.csproj">
       <Project>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</Project>
-      <Name>Schumix.API</Name>
+      <Name>Schumix.Api</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Core\Schumix.Irc\Schumix.Irc.csproj">
       <Project>{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}</Project>

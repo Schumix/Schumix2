@@ -26,6 +26,7 @@ using Schumix.Api;
 using Schumix.Api.Irc;
 using Schumix.Api.Functions;
 using Schumix.Irc;
+using Schumix.Irc.Util;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -34,7 +35,6 @@ using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.ExtraAddon.Config;
 using Schumix.ExtraAddon.Commands;
-using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon
 {
@@ -42,7 +42,6 @@ namespace Schumix.ExtraAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private IrcHandler sIrcHandler;
@@ -65,7 +64,7 @@ namespace Schumix.ExtraAddon
 
 			if(CleanConfig.Database)
 			{
-				Log.Debug("ExtraAddon", sLocalization.ExtraAddon("Text2"));
+				Log.Debug("ExtraAddon", sLConsole.GetString("The deleting of messages that older than 30 days have been started."));
 
 				var db = SchumixBase.DManager.Query("SELECT Id, UnixTime FROM message WHERE ServerName = '{0}'", ServerName);
 				if(!db.IsNull())
@@ -79,7 +78,7 @@ namespace Schumix.ExtraAddon
 					}
 				}
 
-				Log.Debug("ExtraAddon", sLocalization.ExtraAddon("Text3"));
+				Log.Debug("ExtraAddon", sLConsole.GetString("Message deletion has been ended."));
 			}
 
 			SchumixBase.DManager.Update("hlmessage", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
@@ -101,7 +100,6 @@ namespace Schumix.ExtraAddon
 
 			sFunctions.IsOnline = false;
 			sIrcHandler.sNameList.RandomAllVhost();
-			sLocalization.Locale = sLConsole.Locale;
 
 			if(IRCConfig.List[_servername].ServerId == 1)
 				_config = new AddonConfig(Name, ".yml");
@@ -158,7 +156,7 @@ namespace Schumix.ExtraAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("ExtraAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("ExtraAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 
@@ -202,12 +200,12 @@ namespace Schumix.ExtraAddon
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sUtilities.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 			{
-				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					return;
 
-				if(!sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					return;
 
 				Task.Factory.StartNew(() =>
@@ -260,7 +258,7 @@ namespace Schumix.ExtraAddon
 						}
 						catch(Exception e)
 						{
-							Log.Error("ExtraAddon", sLocalization.ExtraAddon("Text"), e.Message);
+							Log.Error("ExtraAddon", sLConsole.GetString("Invalid webpage address: {0}"), e.Message);
 							return;
 						}
 					}
@@ -290,13 +288,13 @@ namespace Schumix.ExtraAddon
 						if(ModeConfig.RemoveEnabled)
 						{
 							if(ModeConfig.RemoveType.Length == 1)
-								sSender.Mode(sIrcHandler.ModeChannel, "-" + ModeConfig.RemoveType, sIRCMessage.Info[4]);
+								sSender.Mode(sIrcHandler.ModeChannel, Rfc2812Util.ModeActionToChar(ModeAction.Remove) + ModeConfig.RemoveType, sIRCMessage.Info[4]);
 							else if(ModeConfig.RemoveType.Length == 2)
-								sSender.Mode(sIrcHandler.ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0}", sIRCMessage.Info[4]));
+								sSender.Mode(sIrcHandler.ModeChannel, Rfc2812Util.ModeActionToChar(ModeAction.Remove) + ModeConfig.RemoveType, string.Format("{0} {0}", sIRCMessage.Info[4]));
 							else if(ModeConfig.RemoveType.Length == 3)
-								sSender.Mode(sIrcHandler.ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0}", sIRCMessage.Info[4]));
+								sSender.Mode(sIrcHandler.ModeChannel, Rfc2812Util.ModeActionToChar(ModeAction.Remove) + ModeConfig.RemoveType, string.Format("{0} {0} {0}", sIRCMessage.Info[4]));
 							else if(ModeConfig.RemoveType.Length == 4)
-								sSender.Mode(sIrcHandler.ModeChannel, "-" + ModeConfig.RemoveType, string.Format("{0} {0} {0} {0}", sIRCMessage.Info[4]));
+								sSender.Mode(sIrcHandler.ModeChannel, Rfc2812Util.ModeActionToChar(ModeAction.Remove) + ModeConfig.RemoveType, string.Format("{0} {0} {0} {0}", sIRCMessage.Info[4]));
 						}
 					}
 				}

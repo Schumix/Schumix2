@@ -33,7 +33,7 @@ namespace Schumix.Framework.Config
 		{
 			Config = config;
 			Database = database;
-			Log.Notice("CleanConfig", sLConsole.CleanConfig("Text"));
+			Log.Notice("CleanConfig", sLConsole.GetString("Loaded the Clean settings."));
 		}
 	}
 }

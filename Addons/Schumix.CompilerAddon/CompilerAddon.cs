@@ -28,6 +28,7 @@ using Schumix.Api;
 using Schumix.Api.Irc;
 using Schumix.Api.Functions;
 using Schumix.Irc;
+using Schumix.Irc.Util;
 using Schumix.Irc.Flood;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -36,7 +37,6 @@ using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.CompilerAddon.Config;
 using Schumix.CompilerAddon.Commands;
-using Schumix.CompilerAddon.Localization;
 
 namespace Schumix.CompilerAddon
 {
@@ -44,8 +44,6 @@ namespace Schumix.CompilerAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 		private SCompiler sSCompiler;
@@ -58,7 +56,6 @@ namespace Schumix.CompilerAddon
 		{
 			_servername = ServerName;
 			sSCompiler = new SCompiler(ServerName);
-			sLocalization.Locale = sLConsole.Locale;
 
 			if(IRCConfig.List[ServerName].ServerId == 1)
 				_config = new AddonConfig(Name, ".yml");
@@ -88,7 +85,7 @@ namespace Schumix.CompilerAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("CompilerAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("CompilerAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 
@@ -100,15 +97,15 @@ namespace Schumix.CompilerAddon
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 
-			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sUtilities.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 			{
-				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					return;
 
 				if(!CompilerConfig.CompilerEnabled)
 					return;
 
-				if(!sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string command = IRCConfig.List[sIRCMessage.ServerName].NickName + SchumixBase.Comma;
@@ -142,7 +139,7 @@ namespace Schumix.CompilerAddon
 					}
 				}
 
-				if(!sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				{
 					if(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage))
 						Compiler(sIRCMessage, false, command);

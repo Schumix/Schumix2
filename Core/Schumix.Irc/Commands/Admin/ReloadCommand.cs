@@ -58,7 +58,8 @@ namespace Schumix.Irc.Commands
 				sIgnoreNickName.RemoveConfig();
 				sIgnoreNickName.AddConfig();
 				sIrcBase.Networks[sIRCMessage.ServerName].ReloadMessageHandlerConfig();
-				sLConsole.Locale = LocalizationConfig.Locale;
+				sLConsole.SetLocale(LocalizationConfig.Locale);
+				sCtcpSender.ClientInfoResponse = sLConsole.GetString("This client supports: UserInfo, Finger, Version, Source, Ping, Time and ClientInfo");
 				i = 1;
 				break;
 			case "cachedb":

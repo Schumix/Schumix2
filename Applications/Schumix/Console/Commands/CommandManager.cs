@@ -56,7 +56,7 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		public CCommandManager() : base()
 		{
-			Log.Notice("CCommandManager", sLConsole.CCommandManager("Text"));
+			Log.Notice("CCommandManager", sLConsole.GetString("Successfully started the CCommandManager."));
 			InitHandler();
 		}
 
@@ -99,7 +99,7 @@ namespace Schumix.Console.Commands
 			RegisterHandler("plugin",     HandlePlugin);
 			RegisterHandler("quit",       HandleQuit);
 
-			Log.Notice("CCommandManager", sLConsole.CCommandManager("Text2"));
+			Log.Notice("CCommandManager", sLConsole.GetString("All Command Handler are registered."));
 		}
 
 		/// <summary>
@@ -138,7 +138,7 @@ namespace Schumix.Console.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Error("CIncomingInfo", sLConsole.Exception("Error"), e.Message);
+				Log.Error("CIncomingInfo", sLConsole.GetString("Failure details: {0}"), e.Message);
 				return true;
 			}
 		}

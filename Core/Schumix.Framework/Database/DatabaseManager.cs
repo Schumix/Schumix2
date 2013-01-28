@@ -41,7 +41,7 @@ namespace Schumix.Framework.Database
 		public DatabaseManager()
 		{
 			byte x = 0;
-			Log.Debug("DatabaseManager", sLConsole.DatabaseManager("Text"));
+			Log.Debug("DatabaseManager", sLConsole.GetString("Started the database loading."));
 
 			if(SQLiteConfig.Enabled)
 			{
@@ -55,20 +55,20 @@ namespace Schumix.Framework.Database
 				mdatabase = new MySql(MySqlConfig.Host, MySqlConfig.User, MySqlConfig.Password, MySqlConfig.Database, MySqlConfig.Charset);
 			}
 
-			Log.Debug("DatabaseManager", sLConsole.DatabaseManager("Text2"));
+			Log.Debug("DatabaseManager", sLConsole.GetString("Selecting the Database."));
 
 			if(x == 0)
 			{
-				Log.LargeError(sLConsole.Exception("MajorError"));
-				Log.Error("DatabaseManager", sLConsole.DatabaseManager("Text3"));
+				Log.LargeError(sLConsole.GetString("MAJOR ERROR"));
+				Log.Error("DatabaseManager", sLConsole.GetString("Database type's is not selected!"));
 				SchumixBase.ServerDisconnect(false);
 				Thread.Sleep(1000);
 				Environment.Exit(1);
 			}
 			else if(x == 2)
 			{
-				Log.LargeError(sLConsole.Exception("MajorError"));
-				Log.Error("DatabaseManager", sLConsole.DatabaseManager("Text4"));
+				Log.LargeError(sLConsole.GetString("MAJOR ERROR"));
+				Log.Error("DatabaseManager", sLConsole.GetString("2 Database are selected!"));
 				SchumixBase.ServerDisconnect(false);
 				Thread.Sleep(1000);
 				Environment.Exit(1);

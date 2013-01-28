@@ -134,7 +134,7 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			catch(Exception e)
 			{
-				Log.Debug("Functions", sLConsole.Exception("Error"), e.Message);
+				Log.Debug("Functions", sLConsole.GetString("Failure details: {0}"), e.Message);
 				return;
 			}
 		}

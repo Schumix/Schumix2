@@ -31,7 +31,7 @@ namespace Schumix.Framework.Config
 		public LocalizationConfig(string locale)
 		{
 			Locale = locale;
-			Log.Notice("LocalizationConfig", sLConsole.LocalizationConfig("Text"));
+			Log.Notice("LocalizationConfig", sLConsole.GetString("Loaded the Localization settings."));
 		}
 	}
 }

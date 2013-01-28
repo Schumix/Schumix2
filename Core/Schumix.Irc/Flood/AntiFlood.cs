@@ -77,7 +77,7 @@ namespace Schumix.Irc.Flood
 			}
 			catch(Exception e)
 			{
-				Log.Error("AntiFlood", sLConsole.Exception("Error"), e.Message);
+				Log.Error("AntiFlood", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

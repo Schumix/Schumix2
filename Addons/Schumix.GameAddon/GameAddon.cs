@@ -24,6 +24,7 @@ using Schumix.Api;
 using Schumix.Api.Irc;
 using Schumix.Api.Functions;
 using Schumix.Irc;
+using Schumix.Irc.Util;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
@@ -39,7 +40,6 @@ namespace Schumix.GameAddon
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private GameCommand sGameCommand;
 		private string _servername;
@@ -89,7 +89,7 @@ namespace Schumix.GameAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("GameAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("GameAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 
@@ -121,24 +121,24 @@ namespace Schumix.GameAddon
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(sMyChannelInfo.FSelect(IFunctions.Gamecommands) || !sUtilities.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Gamecommands) || !Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 			{
-				if(!sMyChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Gamecommands, sIRCMessage.Channel) && Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					return;
 
-				if(!sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
 				string channel = sIRCMessage.Channel.ToLower();
 
-				if(sGameCommand.MaffiaList.ContainsKey(channel) || !sUtilities.IsChannel(sIRCMessage.Channel))
+				if(sGameCommand.MaffiaList.ContainsKey(channel) || !Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				{
 					if(sIRCMessage.Info.Length < 4)
 						return;
 
 					bool nick = false;
 
-					if(!sUtilities.IsChannel(sIRCMessage.Channel))
+					if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					{
 						foreach(var maffia in sGameCommand.MaffiaList)
 						{
@@ -478,7 +478,8 @@ namespace Schumix.GameAddon
 							break;
 						}
 						default:
-							sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/basecommand", channel, sIRCMessage.ServerName), sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+							if(sIRCMessage.Info[3].TrimEnd().Length > 1)
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/basecommand", channel, sIRCMessage.ServerName), sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
 							break;
 					}
 				}
@@ -571,13 +572,13 @@ namespace Schumix.GameAddon
 			if(sIRCMessage.Info.Length < 5)
 				return;
 
-			if(!sIRCMessage.Info[3].Contains("v") && !sIRCMessage.Info[3].Contains("-"))
+			if(!sIRCMessage.Info[3].Contains(Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString()) && !sIRCMessage.Info[3].Contains(Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString()))
 				return;
 
 			if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Nick.ToLower())
 				return;
 
-			string rank = sIRCMessage.Info[3].Remove(0, 1, "-");
+			string rank = sIRCMessage.Info[3].Remove(0, 1, Rfc2812Util.ModeActionToChar(ModeAction.Remove));
 
 			foreach(var maffia in sGameCommand.MaffiaList)
 			{
@@ -586,25 +587,25 @@ namespace Schumix.GameAddon
 
 				foreach(var player in maffia.Value.GetPlayerList())
 				{
-					if(player.Value == sIRCMessage.Info[4] && rank.Substring(1, 1) == "v")
+					if(player.Value == sIRCMessage.Info[4] && rank.Length > 0 && rank.Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString())
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[4]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 6 && player.Value == sIRCMessage.Info[5] && rank.Substring(2).Substring(0, 1) == "v")
+					if(sIRCMessage.Info.Length >= 6 && player.Value == sIRCMessage.Info[5] && rank.Length > 1 && rank.Substring(1).Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString())
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[5]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 7 && player.Value == sIRCMessage.Info[6] && rank.Substring(3).Substring(0, 1) == "v")
+					if(sIRCMessage.Info.Length >= 7 && player.Value == sIRCMessage.Info[6] && rank.Length > 2 && rank.Substring(2).Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString())
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[6]);
 						continue;
 					}
 
-					if(sIRCMessage.Info.Length >= 8 && player.Value == sIRCMessage.Info[7] && rank.Substring(4).Substring(0, 1) == "v")
+					if(sIRCMessage.Info.Length >= 8 && player.Value == sIRCMessage.Info[7] && rank.Length > 3 && rank.Substring(3).Substring(0, 1) == Rfc2812Util.ChannelModeToChar(ChannelMode.Voice).ToString())
 					{
 						sSender.Mode(maffia.Key, "+v", sIRCMessage.Info[7]);
 						continue;

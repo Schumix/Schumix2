@@ -51,7 +51,7 @@ namespace Schumix.MantisBTRssAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("MantisBTRssAddonConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("MantisBTRssAddonConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

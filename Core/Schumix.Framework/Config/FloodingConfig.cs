@@ -33,7 +33,7 @@ namespace Schumix.Framework.Config
 		{
 			Seconds          = seconds;
 			NumberOfCommands = numberofcommands;
-			Log.Notice("FloodingConfig", sLConsole.FloodingConfig("Text"));
+			Log.Notice("FloodingConfig", sLConsole.GetString("Loaded the Flooding settings."));
 		}
 	}
 }

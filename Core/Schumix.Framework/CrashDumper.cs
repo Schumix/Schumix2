@@ -42,7 +42,7 @@ namespace Schumix.Framework
 		public void CreateCrashDump(object Object)
 		{
 			sUtilities.CreateDirectory(CrashConfig.Directory);
-			Log.Debug("CrashDumper", sLConsole.CrashDumper("Text"));
+			Log.Debug("CrashDumper", sLConsole.GetString("Creating crash dump..."));
 
 			try
 			{
@@ -55,11 +55,11 @@ namespace Schumix.Framework
 			}
 			catch(Exception e)
 			{
-				Log.Error("CrashDumper", sLConsole.CrashDumper("Text2"), e.Message);
+				Log.Error("CrashDumper", sLConsole.GetString("Failed to write crash dump! ({0})"), e.Message);
 				return;
 			}
 
-			Log.Debug("CrashDumper", sLConsole.CrashDumper("Text3"));
+			Log.Debug("CrashDumper", sLConsole.GetString("Crash dump created."));
 		}
 	}
 }

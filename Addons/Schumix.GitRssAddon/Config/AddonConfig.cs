@@ -51,7 +51,7 @@ namespace Schumix.GitRssAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("GitRssAddonConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("GitRssAddonConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

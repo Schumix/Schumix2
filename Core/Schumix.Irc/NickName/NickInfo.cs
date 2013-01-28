@@ -26,6 +26,6 @@ namespace Schumix.Irc.NickName
 {
 	public sealed class NickInfo
 	{
-		public string Rank;
+		public string Rank = "";
 	}
 }

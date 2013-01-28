@@ -22,6 +22,7 @@ using System;
 using System.Diagnostics;
 using Schumix.Api.Irc;
 using Schumix.Api.Functions;
+using Schumix.Irc.Util;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -51,20 +52,20 @@ namespace Schumix.Irc
 				if(args.Length > 6 && args.Substring(0, 6) == "ACTION")
 				{
 					args = args.Remove(0, 7);
-					LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, string.Format(sLConsole.MessageHandler("Text25"), args));
+					LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, string.Format(sLConsole.GetString("[ACTION] {0}"), args));
 				}
 			}
 			else
 				LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
 
-			if(!sUtilities.IsChannel(sIRCMessage.Channel))
+			if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				sIRCMessage.Channel = sIRCMessage.Nick;
 
 			sCtcpSender.CtcpReply(sIRCMessage);
 
-			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !sUtilities.IsChannel(sIRCMessage.Channel))
+			if(sMyChannelInfo.FSelect(IFunctions.Commands) || !Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 			{
-				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					return;
 
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
@@ -169,6 +170,13 @@ namespace Schumix.Irc
 					{
 						SchumixBase.NewNick = true;
 						string nick = sIRCMessage.Info[5];
+
+						if(!Rfc2812Util.IsValidNick(nick))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
 						sMyNickInfo.ChangeNick(nick);
 						sSender.Nick(nick);
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/nick", sIRCMessage.Channel, sIRCMessage.ServerName), nick);

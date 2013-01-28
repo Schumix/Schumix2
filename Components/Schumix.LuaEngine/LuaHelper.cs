@@ -62,7 +62,7 @@ namespace Schumix.LuaEngine
 
 						if(!attr.FunctionParameters.IsNull() && paramInfo.Length != attr.FunctionParameters.Length)
 						{
-							Log.Error("LuaHelper", sLConsole.LuaHelper("Text"), method.Name, attr.FunctionName,
+							Log.Error("LuaHelper", sLConsole.GetString("Function {0} (exported as {1}): argument number mismatch. Declared {2}, but requires {3}!"), method.Name, attr.FunctionName,
 								attr.FunctionParameters.Length, paramInfo.Length);
 							break;
 						}
@@ -98,9 +98,9 @@ namespace Schumix.LuaEngine
 			{
 				vm.DoString(code);
 			}
-			catch(Exception x)
+			catch(Exception e)
 			{
-				Log.Error(sLConsole.LuaHelper("Text2"), x.Message);
+				Log.Error(sLConsole.GetString("Lua compile error: {0}"), e.Message);
 			}
 		}
 	}

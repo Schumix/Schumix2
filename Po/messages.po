@@ -1,0 +1,1364 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2013-01-28 18:13:32+0100\n"
+"PO-Revision-Date: 2013-01-28 18:13:33+0100\n"
+"Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: MonoDevelop Gettext addin\n"
+
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:4
+msgid "Successfully started the CommandManager."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:12
+msgid "Successfuly registered all of Command Handlers."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:18
+msgid "All Command Handler were deleted."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:28
+#: ../Core/Schumix.Irc/Network.cs:55
+#: ../Core/Schumix.Irc/Network.cs:78
+#: ../Core/Schumix.Irc/Network.cs:80
+#: ../Core/Schumix.Irc/Network.cs:90
+#: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
+#: ../Core/Schumix.Framework/Config/Config.cs:6
+#: ../Core/Schumix.Framework/SchumixBase.cs:22
+#: ../Core/Schumix.Framework/Utilities.cs:23
+#: ../Core/Schumix.Framework/Utilities.cs:26
+#: ../Core/Schumix.Framework/Utilities.cs:119
+#: ../Core/Schumix.Framework/Utilities.cs:136
+#: ../Core/Schumix.Framework/Utilities.cs:148
+#: ../Core/Schumix.Framework/Timer.cs:3
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:12
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
+#: ../Applications/Schumix/Schumix.cs:11
+#: ../Applications/Schumix/Console/Console.cs:7
+#: ../Applications/Schumix/Console/Commands/CommandManager.cs:11
+#: ../Applications/Schumix.Server/Config/Config.cs:6
+#: ../Applications/Schumix.Server/New/Schumix.cs:16
+#: ../Addons/Schumix.TestAddon/TestAddon.cs:5
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:13
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:14
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:13
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:20
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:32
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:61
+#: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:7
+#: ../Addons/Schumix.CompilerAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:13
+#: ../Addons/Schumix.HgRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:13
+#: ../Addons/Schumix.GitRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:8
+#: ../Addons/Schumix.CalendarAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.GameAddon/GameAddon.cs:5
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:16
+#: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:17
+#: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:5
+msgid "Failure details: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:5
+msgid "Successfully connected to IRC server."
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:7
+#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:11
+msgid "Vhost is OFF."
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:10
+msgid "Waiting for connection processing."
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:11
+msgid "You have not registered!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:12
+msgid "No such Bot's nickname!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:16
+#: ../Core/Schumix.Irc/MessageHandler.cs:31
+msgid "[SERVER] "
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:18
+msgid "Bad identify password!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:18
+msgid "Already identified!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:18
+msgid "Identify password accepted."
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:20
+msgid "Your nick isn't registered!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:24
+msgid "Nick isnt registered, so the vhost still off!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:31
+msgid ""
+"No such irc command.\n"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:32
+msgid "{0} already in use!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:32
+msgid "Retrying with: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:52
+msgid "[joined]"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:56
+msgid "[left] {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:59
+msgid "[quit] {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:61
+msgid "[Is now known as {0}]"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:64
+msgid "[Kicked that user: {0} reason: {1}]"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:73
+msgid "Identify password accepted!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:74
+msgid "[Set mode: {0}]"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:75
+msgid "[Topic] New topic: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:76
+msgid "{0} invites you to join {1}."
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:76
+msgid "[INVITE] {0} invites you to join {1}."
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:79
+msgid "[Topic] {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:11
+#: ../Core/Schumix.Irc/Network.cs:13
+#: ../Core/Schumix.Irc/Network.cs:15
+#: ../Core/Schumix.Irc/Network.cs:17
+msgid "Successfully started the Network."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:11
+#: ../Core/Schumix.Irc/Network.cs:13
+#: ../Core/Schumix.Irc/Network.cs:15
+#: ../Core/Schumix.Irc/Network.cs:17
+msgid "Server's name: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:19
+msgid "Opcodes thread started..."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:20
+msgid "Ping thread started..."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:21
+msgid "Establishing connection with irc server."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:24
+msgid "All of IRC handlers are registered."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:44
+msgid "Connection to: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:45
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+msgid "Connection closed!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:47
+msgid "Connection have been closed."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:47
+msgid "Reconnection to: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:51
+msgid "Connection type: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:52
+msgid "Fatal error was happened while established the connection!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:53
+msgid "Successfully established the connection!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:53
+msgid "Error was happened while established the connection!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:55
+msgid "Certificate not accepted, exception: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:60
+msgid "Users' datas are sent."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:68
+#: ../Core/Schumix.Irc/Network.cs:89
+msgid "Successfully started th thread."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:68
+msgid "Started the irc data receiving."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:71
+msgid "Do not going data from irc server!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:88
+msgid "Received unhandled opcode: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/PublicMessageHandler.cs:5
+msgid "[ACTION] {0}"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Commands/CommandInfo.cs:3
+msgid "Successfully started the CommandInfo."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
+msgid "Operating System:"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
+msgid "Processor:"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
+msgid ""
+"This client supports: UserInfo, Finger, Version, Source, Ping, Time and "
+"ClientInfo"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:8
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:9
+msgid " Idle time "
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:8
+msgid "Is not a supported Ctcp query."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+msgid " Hours, "
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+msgid " Minutes, "
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+msgid " Seconds."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:13
+#: ../Core/Schumix.Irc/Sender/Sender.cs:25
+#: ../Core/Schumix.Irc/Sender/Sender.cs:27
+#: ../Core/Schumix.Irc/Sender/Sender.cs:33
+#: ../Core/Schumix.Irc/Sender/Sender.cs:49
+#: ../Core/Schumix.Irc/Sender/Sender.cs:56
+msgid "{0} is not a valid nickname!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:17
+#: ../Core/Schumix.Irc/Sender/Sender.cs:19
+msgid "Channel {0}'s access is denied!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:17
+#: ../Core/Schumix.Irc/Sender/Sender.cs:19
+#: ../Core/Schumix.Irc/Sender/Sender.cs:22
+#: ../Core/Schumix.Irc/Sender/Sender.cs:25
+#: ../Core/Schumix.Irc/Sender/Sender.cs:28
+#: ../Core/Schumix.Irc/Sender/Sender.cs:52
+#: ../Core/Schumix.Irc/Sender/Sender.cs:54
+#: ../Core/Schumix.Irc/Sender/Sender.cs:55
+#: ../Core/Schumix.Irc/Sender/Sender.cs:57
+msgid "{0} is not a valid channel name!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:18
+msgid "Password cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:21
+#: ../Core/Schumix.Irc/Sender/Sender.cs:23
+msgid "Part reason cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:24
+msgid "One of the channels names is not valid!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:29
+msgid "The reason for kicking cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:31
+msgid "Nick cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:32
+msgid "Reason cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:38
+msgid "Quit reason cannot be null or empty!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:44
+msgid "The email address is not valid!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:54
+msgid "Topic cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:59
+msgid "Away message cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:50
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:6
+msgid "ChannelList: Failure request!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:17
+msgid "{0} plugin is now loading."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:18
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
+msgid "Plugin can not be loaded!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:22
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
+msgid "Loaded plugin: {0} {1} by {2} ({3})"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:23
+msgid "{0} plugin denying and removing is now started."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:28
+msgid "{0} plugin successfully removed."
+msgstr ""
+
+#: ../Core/Schumix.Irc/IrcBase.cs:29
+#: ../Core/Schumix.Framework/Config/Config.cs:4
+#: ../Core/Schumix.Framework/Database/SQLite.cs:15
+#: ../Core/Schumix.Framework/Database/SQLite.cs:18
+#: ../Core/Schumix.Framework/Database/SQLite.cs:21
+#: ../Core/Schumix.Framework/Database/MySql.cs:15
+#: ../Core/Schumix.Framework/Database/MySql.cs:16
+#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/MySql.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
+#: ../Core/Schumix.Framework/Runtime.cs:6
+#: ../Applications/Schumix.Server/ServerListener.cs:6
+#: ../Applications/Schumix.Server/Config/Config.cs:4
+msgid "Program shutting down!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:10
+msgid "Sending nickserv identify."
+msgstr ""
+
+#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:11
+msgid "Vhost is ON."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:24
+#: ../Core/Schumix.Framework/SchumixBase.cs:20
+msgid "FunctionReload: Failre request!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:25
+msgid "ChannelFunctionReload: Failre request!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:26
+msgid "ChannelListReload: Failre request!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:46
+msgid "Connecting to channels.."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:49
+msgid "JoinChannel: Failure request!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:50
+msgid "Successfully connected to channels."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:50
+msgid "Some connection unsuccessful!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:51
+msgid "Banned channels: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/Config.cs:4
+#: ../Applications/Schumix.Server/Config/Config.cs:4
+msgid "Please set up the Config file!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:5
+msgid "Initiating connection."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:8
+msgid "Timer is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:9
+msgid "MySql is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:10
+msgid "CacheDB is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:11
+msgid "Successfully connected to the database."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:16
+msgid "{0} master channel is updated to: {1}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:16
+msgid "The master channel already exist on the database, named by default!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:21
+#: ../Applications/Schumix.Server/Main.cs:19
+msgid "CleanManager is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:22
+msgid "AddonManager is loading..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/SQLite.cs:3
+#: ../Core/Schumix.Framework/Database/MySql.cs:3
+msgid "Error was handled when tried to connect to the database!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/SQLite.cs:3
+msgid "Successfully connected to the SQLite database."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/SQLite.cs:15
+#: ../Core/Schumix.Framework/Database/SQLite.cs:18
+#: ../Core/Schumix.Framework/Database/SQLite.cs:21
+#: ../Core/Schumix.Framework/Database/SQLite.cs:24
+#: ../Core/Schumix.Framework/Database/MySql.cs:16
+#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/MySql.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Database/MySql.cs:28
+msgid "Query error: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:3
+msgid "Started the database loading."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:6
+msgid "Selecting the Database."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
+msgid "MAJOR ERROR"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
+msgid "Database type's is not selected!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
+msgid "2 Database are selected!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/MySql.cs:3
+msgid "Successfully connected to the MySql database."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/MySql.cs:15
+msgid "Sql connection crash."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Utilities.cs:26
+msgid "Checking: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Timer.cs:3
+msgid "Successfully loaded the Timer."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Timer.cs:4
+msgid "Successfully saved the Program's started time."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Timer.cs:5
+msgid "The program is loaded under {0}ms."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:4
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:5
+msgid "Got packet with ID: {0} from: {1}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+msgid "Authentication denied to SCS server!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:7
+msgid "Successfully authed to SCS server."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Started..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Client connection from: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:5
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Handling client..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:7
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Stream data available, reading."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:9
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Lost connection!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
+msgid "Connected. Sending packet."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
+msgid "Packet sent."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
+msgid "Couldn't send SCS packet!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Runtime.cs:6
+msgid "The program, more than {0} MB consumed!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Runtime.cs:12
+msgid "Failed to set process name: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Runtime.cs:15
+msgid "Error setting process name!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/CrashDumper.cs:3
+msgid "Creating crash dump..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/CrashDumper.cs:4
+msgid "Failed to write crash dump! ({0})"
+msgstr ""
+
+#: ../Core/Schumix.Framework/CrashDumper.cs:5
+msgid "Crash dump created."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Log.cs:18
+msgid ""
+"Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Log.cs:18
+msgid ""
+"\n"
+"Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/IRCConfig.cs:3
+msgid "Loaded the Irc settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/MySqlConfig.cs:3
+msgid "Loaded the MySql settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/SQLiteConfig.cs:3
+msgid "Loaded the SQLite settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/AddonsConfig.cs:3
+msgid "Loaded the Addons settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/ScriptsConfig.cs:3
+msgid "Loaded the Scripts settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/LocalizationConfig.cs:3
+#: ../Applications/Schumix.Server/Config/LocalizationConfig.cs:3
+msgid "Loaded the Localization settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/UpdateConfig.cs:3
+msgid "Loaded the Update settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/ServerConfig.cs:3
+#: ../Applications/Schumix.Server/Config/ServerConfigs.cs:3
+msgid "Loaded the Server settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:9
+msgid "Loading addons from: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
+msgid "This addon name already exists in the system so not loaded!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:22
+msgid "Ignoring plugins (config): {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:23
+msgid "Error while loading one of directories! Detail: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:29
+msgid "Unload plugins"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:8
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:6
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:8
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:6
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:5
+msgid "Config file is loading."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:13
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+msgid "The master channel's format is wrong. \"#\" is missing. Corrected."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:13
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+msgid "The master channel is not given so the default will be used. ({0})"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:14
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+msgid "The primary nick's format is wrong. The default will be used: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+msgid "The secondary nick's format is wrong. The default will be used: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+msgid "The tertiary nick's format is wrong. The default will be used: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:43
+msgid "The {0} server is already in use so not loaded!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:39
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:11
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:23
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:7
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:9
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:6
+msgid "Config database is loading."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
+msgid "No such config file!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
+msgid "Preparing..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:101
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
+msgid "Config file is completed!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:101
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
+msgid "Failure was handled during the xml writing. Details: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
+msgid "Failure was handled during the yml writing. Details: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/CrashConfig.cs:3
+msgid "Loaded the Crash settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/ShutdownConfig.cs:3
+msgid "Loaded the Shutdown settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/FloodingConfig.cs:3
+msgid "Loaded the Flooding settings."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:10
+msgid "Successfully started the CacheDB."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:11
+msgid "Load tables from the database to the core."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:11
+msgid "{0} loaded to the core."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:15
+msgid "Tables cleared from the core."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:15
+msgid "Table {0} deleted from the core."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:3
+msgid "Successfully started the CleanManager."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:5
+msgid "CleanConfig is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:6
+msgid "CleanDatabase is starting..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:7
+msgid "Some problems occured during cleanup in some place!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:8
+msgid "Cleanups have been finished."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:8
+msgid "Cleanup is not turned on!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:3
+msgid "Successfully started the CleanConfig."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:6
+msgid "Searching for old config files have been started."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:6
+msgid "Config folder's path: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:7
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:8
+msgid "Old config file has been deleted: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:9
+msgid "Old config files have been deleted successfully."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:9
+msgid "There is not any old config files!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:3
+msgid "Successfully started the CleanDatabase."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:6
+msgid "The {0} table's cleanup have been started."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:8
+msgid "The old servername ({0}) has been deleted from the table {1}."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:9
+msgid "The table {0} is ready for cleanup."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:10
+msgid "The core tables' cleanup is starting."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:10
+msgid "The core tables' cleanup have been finished."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/CleanConfig.cs:3
+msgid "Loaded the Clean settings."
+msgstr ""
+
+#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:14
+msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
+msgstr ""
+
+#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:14
+msgid "Schumix Version: {0}"
+msgstr ""
+
+#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:14
+msgid "Website: {0}"
+msgstr ""
+
+#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:14
+msgid "Programmed by: {0}"
+msgstr ""
+
+#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:14
+msgid "Developers: {0}"
+msgstr ""
+
+#: ../Applications/Schumix/Main.cs:25
+#: ../Applications/Schumix.Server/Main.cs:18
+msgid "System is starting..."
+msgstr ""
+
+#: ../Applications/Schumix/Main.cs:26
+#: ../Applications/Schumix.Server/Main.cs:18
+msgid "Colorblind mode is on!"
+msgstr ""
+
+#: ../Applications/Schumix/Main.cs:28
+#: ../Applications/Schumix.Server/Main.cs:22
+msgid "FATAL ERROR"
+msgstr ""
+
+#: ../Applications/Schumix/Main.cs:28
+#: ../Applications/Schumix.Server/Main.cs:22
+#: ../Applications/Schumix.Server/Main.cs:26
+msgid "An unhandled exception has been thrown. ({0})"
+msgstr ""
+
+#: ../Applications/Schumix/Schumix.cs:3
+msgid "Successfully started SchumixBot."
+msgstr ""
+
+#: ../Applications/Schumix/Schumix.cs:3
+msgid "Network starting..."
+msgstr ""
+
+#: ../Applications/Schumix/Schumix.cs:11
+msgid "Console starting..."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Console.cs:3
+msgid "Successfully started the Console."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Console.cs:3
+msgid "Console reader starting..."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Console.cs:5
+msgid "Successfully started the Console reader."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Commands/CommandManager.cs:3
+msgid "Successfully started the CCommandManager."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Commands/CommandManager.cs:7
+msgid "All Command Handler are registered."
+msgstr ""
+
+#: ../Applications/Schumix/ScriptManager.cs:5
+msgid "Lua support is disabled!"
+msgstr ""
+
+#: ../Applications/Schumix/ScriptManager.cs:6
+msgid "Python support is disabled!"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Auth unsuccessful! Guid of client: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Hash was: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Back port is: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+msgid "Auth successful. Guid of client: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:15
+msgid "Connection closed! Guid of client: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:18
+msgid "Restart in progress..."
+msgstr ""
+
+#: ../Applications/Schumix.Server/New/Schumix.cs:12
+msgid "One of the summix has been shuted down, it will be restarted."
+msgstr ""
+
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:20
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:37
+msgid "Schumixs starting..."
+msgstr ""
+
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:21
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:37
+msgid "Schumixs number: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:22
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:39
+msgid "There is no load of Schumix!"
+msgstr ""
+
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:25
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:21
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:24
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:21
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:24
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:21
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:28
+msgid "[{0}] Failure details: {1}"
+msgstr ""
+
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:21
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:21
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:21
+msgid "[{0}] Fatal failure details: {1}"
+msgstr ""
+
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:9
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:9
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:9
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:9
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:9
+msgid "{0}: {1} rss loaded."
+msgstr ""
+
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:9
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:9
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:9
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:9
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:9
+msgid "{0}: Empty database!"
+msgstr ""
+
+#: ../Addons/Schumix.WordPressRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.SvnRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.MantisBTRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.HgRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.GitRssAddon/Config/RssConfig.cs:3
+msgid "Loaded the Rss settings."
+msgstr ""
+
+#: ../Addons/Schumix.CompilerAddon/Config/CompilerConfig.cs:3
+msgid "Loaded the Compiler settings."
+msgstr ""
+
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:23
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:26
+msgid "[{0} {1}] Failure details: {2}"
+msgstr ""
+
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:23
+msgid "[{0} {1}] Fatal failure details: {2}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:18
+msgid "[UpdateFlood] Failure details: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:19
+msgid "[UpdateUnban] Failure details: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:20
+msgid "[UpdateCalendar] Failure details: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:21
+msgid "[UpdateNameDay] Failure details: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:22
+msgid "[UpdateBirthDay] Failure details: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.CalendarAddon/Config/CalendarConfig.cs:3
+msgid "Loaded the Calendar settings."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:4
+msgid "The deleting of messages that older than 30 days have been started."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:7
+msgid "Message deletion has been ended."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:32
+msgid "Invalid webpage address: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/Commands/WebHelper.cs:5
+msgid "Exception thrown while fetching web title: {0}"
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/Config/ModeConfig.cs:3
+msgid "Loaded the Mode settings."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/Config/WeatherConfig.cs:3
+msgid "Loaded the Weather settings."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/Config/WolframAlphaConfig.cs:3
+msgid "Loaded the WorlframAlpha settings."
+msgstr ""
+
+#: ../Addons/Schumix.ExtraAddon/Commands/YoutubeTitle.cs:10
+msgid "Exception thrown while fetching youtube title: {0}"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:3
+msgid "Automatic updater is off."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:5
+msgid "Searching for new stable version is started."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "Currently no newer version!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "The program starts is continuing."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "I found a newer version. The update to {0} version is starting."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:7
+#: ../Components/Schumix.Updater/Update.cs:11
+msgid "Older version found, update interrupted!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:8
+#: ../Components/Schumix.Updater/Update.cs:12
+msgid "Downloading new version."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:9
+#: ../Components/Schumix.Updater/Update.cs:13
+msgid "Successfully downloaded new version."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:9
+#: ../Components/Schumix.Updater/Update.cs:13
+msgid "Downloading unsuccessful!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:9
+#: ../Components/Schumix.Updater/Update.cs:13
+#: ../Components/Schumix.Updater/Update.cs:15
+#: ../Components/Schumix.Updater/Update.cs:17
+msgid "Updating successful!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:9
+msgid "Searching for the last version is started."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:13
+msgid "No such version like this, update interrupted!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:14
+msgid "Extracting new version."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:15
+msgid "Successfully extracted the staff."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:15
+msgid "Extracting unsuccessful!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:16
+msgid "Started translating."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:17
+msgid "Error was handled while translated!"
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:18
+msgid "Successfully finished the translation."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:18
+msgid "Sql files update is started. The setted database will be updated."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:18
+msgid "Sql update finished."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:22
+msgid "This step of updateing is finished. Continue with next step."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:23
+msgid "The update is finished. The program shutting down!"
+msgstr ""
+
+#: ../Components/Schumix.LuaEngine/LuaEngine.cs:6
+msgid "Initializing Lua engine."
+msgstr ""
+
+#: ../Components/Schumix.LuaEngine/LuaEngine.cs:13
+msgid "Loading Lua script: {0}"
+msgstr ""
+
+#: ../Components/Schumix.LuaEngine/LuaEngine.cs:14
+msgid "Exception thrown while loading Lua script: {0} Error: {1}"
+msgstr ""
+
+#: ../Components/Schumix.LuaEngine/LuaHelper.cs:6
+msgid ""
+"Function {0} (exported as {1}): argument number mismatch. Declared {2}, but "
+"requires {3}!"
+msgstr ""
+
+#: ../Components/Schumix.LuaEngine/LuaHelper.cs:12
+msgid "Lua compile error: {0}"
+msgstr ""
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:3
+msgid "Initializing Python engine."
+msgstr ""
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:13
+msgid "Loading Python script: {0}"
+msgstr ""
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
+msgid "Exception thrown while loading Python script. Error: {0} {1}"
+msgstr ""
+
+#: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
+msgid "Exception thrown while loading Python script: {0} Error: {1} {2}"
+msgstr ""
+

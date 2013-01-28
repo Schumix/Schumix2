@@ -20,6 +20,7 @@
 
 using System;
 using Schumix.Api.Irc;
+using Schumix.Irc.Util;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 
@@ -31,15 +32,21 @@ namespace Schumix.Irc.Commands
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
-			
+
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
-			
+
 			string kick = sIRCMessage.Info[4].ToLower();
-			
+
+			if(!Rfc2812Util.IsValidNick(kick))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+				return;
+			}
+
 			if(sIRCMessage.Info.Length == 5)
 			{
 				if(kick != sMyNickInfo.NickStorage.ToLower())

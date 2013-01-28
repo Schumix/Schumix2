@@ -450,19 +450,7 @@ namespace Schumix.Framework.Extensions
 			}
 
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
-			{
 				text = text.Replace("\r", string.Empty);
-				var split = text.ToString().Split('\n');
-				text.Remove(0, text.Length);
-
-				foreach(var line in split)
-				{
-					if(line.Trim() == string.Empty)
-						continue;
-
-					text.Append("    ").AppendLine(line);
-				}
-			}
 
 			return FileName == string.Empty ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();
 		}
@@ -480,6 +468,16 @@ namespace Schumix.Framework.Extensions
 		public static string TrimMessage(this string value, int number = 150)
 		{
 			return value.Length > number ? value.Substring(0, number) + " ..." : value;
+		}
+
+		public static bool IsEmpty(this string Value)
+		{
+			return Value.IsNull() || Value.Trim().Length == 0;
+		}
+
+		public static bool IsNullOrEmpty(this string Value)
+		{
+			return string.IsNullOrEmpty(Value);
 		}
 	}
 }

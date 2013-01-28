@@ -79,10 +79,10 @@ namespace Schumix.HgRssAddon
 					x++;
 				}
 
-				Log.Notice("HgRssAddon", sLocalization.HgRssAddon("Text"), ServerName, x);
+				Log.Notice("HgRssAddon", sLConsole.GetString("{0}: {1} rss loaded."), ServerName, x);
 			}
 			else
-				Log.Warning("HgRssAddon", sLocalization.HgRssAddon("Text2"), ServerName);
+				Log.Warning("HgRssAddon", sLConsole.GetString("{0}: Empty database!"), ServerName);
 		}
 
 		public void Destroy()
@@ -114,7 +114,7 @@ namespace Schumix.HgRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("HgRssAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("HgRssAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

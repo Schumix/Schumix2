@@ -75,7 +75,7 @@ namespace Schumix.Framework.Client
 		{
 			var hst = client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[0];
 			var packetid = packet.Read<int>();
-			Log.Debug("PacketHandler", sLConsole.ClientPacketHandler("Text"), packetid, client.Client.RemoteEndPoint);
+			Log.Debug("PacketHandler", sLConsole.GetString("Got packet with ID: {0} from: {1}"), packetid, client.Client.RemoteEndPoint);
 
 			if(packetid == (int)Opcode.SMSG_AUTH_DENIED)
 				OnAuthDenied(packet, hst);
@@ -98,9 +98,9 @@ namespace Schumix.Framework.Client
 		/// </param>
 		public void AuthDeniedHandler(SchumixPacket pck, string hst)
 		{
-			Log.Error("SchumixServer", sLConsole.ClientPacketHandler("Text2"));
-			Log.Warning("CloseHandler", sLConsole.ClientPacketHandler("Text3"));
-			Log.Warning("CloseHandler", sLConsole.ClientPacketHandler("Text4"));
+			Log.Error("SchumixServer", sLConsole.GetString("Authentication denied to SCS server!"));
+			Log.Warning("CloseHandler", sLConsole.GetString("Connection closed!"));
+			Log.Warning("CloseHandler", sLConsole.GetString("Program shutting down!"));
 			Thread.Sleep(1000);
 			Environment.Exit(1);
 		}
@@ -116,7 +116,7 @@ namespace Schumix.Framework.Client
 		/// </param>
 		public void AuthApprovedHandler(SchumixPacket pck, string hst)
 		{
-			Log.Success("SchumixServer", sLConsole.ClientPacketHandler("Text5"));
+			Log.Success("SchumixServer", sLConsole.GetString("Successfully authed to SCS server."));
 			SchumixBase.ThreadStop = false;
 		}
 
@@ -147,8 +147,8 @@ namespace Schumix.Framework.Client
 			if(SchumixBase.ExitStatus)
 				return;
 
-			Log.Warning("CloseHandler", sLConsole.ClientPacketHandler("Text3"));
-			Log.Warning("CloseHandler", sLConsole.ClientPacketHandler("Text4"));
+			Log.Warning("CloseHandler", sLConsole.GetString("Connection closed!"));
+			Log.Warning("CloseHandler", sLConsole.GetString("Program shutting down!"));
 			SchumixBase.Quit();
 
 			foreach(var nw in INetwork.WriterList)

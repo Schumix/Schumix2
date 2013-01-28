@@ -24,7 +24,6 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.CompilerAddon.Localization;
 
 namespace Schumix.CompilerAddon.Config
 {
@@ -51,7 +50,7 @@ namespace Schumix.CompilerAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("CompilerAddonConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("CompilerAddonConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

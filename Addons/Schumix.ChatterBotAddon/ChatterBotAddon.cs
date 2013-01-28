@@ -25,6 +25,7 @@ using Schumix.Api;
 using Schumix.Api.Irc;
 using Schumix.Api.Functions;
 using Schumix.Irc;
+using Schumix.Irc.Util;
 using Schumix.Irc.Ignore;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -35,7 +36,6 @@ namespace Schumix.ChatterBotAddon
 	class ChatterBotAddon : ISchumixAddon
 	{
 		private readonly ChatterBotSession session = new ChatterBotFactory().Create(ChatterBotType.CLEVERBOT).CreateSession();
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private string _servername;
 
@@ -64,7 +64,7 @@ namespace Schumix.ChatterBotAddon
 			if(sIgnoreNickName.IsIgnore(sIRCMessage.Nick))
 				return;
 
-			if(!sUtilities.IsChannel(sIRCMessage.Channel))
+			if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				sIRCMessage.Channel = sIRCMessage.Nick;
 
 			if(sMyChannelInfo.FSelect(IFunctions.Chatterbot) && sMyChannelInfo.FSelect(IChannelFunctions.Chatterbot, sIRCMessage.Channel))

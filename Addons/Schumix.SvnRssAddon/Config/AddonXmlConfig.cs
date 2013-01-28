@@ -25,13 +25,12 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.SvnRssAddon.Localization;
 
 namespace Schumix.SvnRssAddon.Config
 {
 	sealed class AddonXmlConfig : AddonDefaultConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		public AddonXmlConfig()
@@ -43,12 +42,12 @@ namespace Schumix.SvnRssAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(sUtilities.DirectoryToSpecial(SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("SvnRssAddonConfig", sLocalization.Config("Text"));
+			Log.Notice("SvnRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
 			int QueryTime = !xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").InnerText) : d_querytime;
 			new RssConfig(QueryTime);
 
-			Log.Success("SvnRssAddonConfig", sLocalization.Config("Text2"));
+			Log.Success("SvnRssAddonConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
 
@@ -64,8 +63,8 @@ namespace Schumix.SvnRssAddon.Config
 				return true;
 			else
 			{
-				Log.Error("SvnRssAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("SvnRssAddonConfig", sLocalization.Config("Text4"));
+				Log.Error("SvnRssAddonConfig", sLConsole.GetString("No such config file!"));
+				Log.Debug("SvnRssAddonConfig", sLConsole.GetString("Preparing..."));
 				var w = new XmlTextWriter(filename, null);
 				var xmldoc = new XmlDocument();
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
@@ -99,11 +98,11 @@ namespace Schumix.SvnRssAddon.Config
 					if(File.Exists(filename2))
 						File.Delete(filename2);
 
-					Log.Success("SvnRssAddonConfig", sLocalization.Config("Text5"));
+					Log.Success("SvnRssAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}
 				catch(Exception e)
 				{
-					Log.Error("SvnRssAddonConfig", sLocalization.Config("Text6"), e.Message);
+					Log.Error("SvnRssAddonConfig", sLConsole.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 				}
 			}
 

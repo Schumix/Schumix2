@@ -20,6 +20,8 @@
  */
 
 using System;
+using System.Text.RegularExpressions;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework.Config
 {
@@ -38,7 +40,9 @@ namespace Schumix.Framework.Config
 		protected const string d_serverpassword        = "schumix";
 		protected const string d_servername            = "Default";
 		protected const string d_server                = "localhost";
+		protected const string d_ircserverpassword     = " ";
 		protected const int d_port                     = 6667;
+		protected const int d_modemask                 = 8;
 		protected const bool d_ssl                     = false;
 		protected const string d_nickname              = "Schumix2";
 		protected const string d_nickname2             = "_Schumix2";
@@ -82,5 +86,28 @@ namespace Schumix.Framework.Config
 		protected const bool d_cleanconfig             = false;
 		protected const bool d_cleandatabase           = false;
 		protected bool errors                          = false;
+
+		// Nick
+		private const string Nick = @"^[" + Special + @"a-zA-Z0-9\-]{0,20}$";
+		private const string Special = @"\[\]\`_\^\{\|\}";
+		private readonly Regex NickRegex = new Regex(Nick); 
+
+		/// <summary>
+		/// Using the rules set forth in RFC 2812 determine if
+		/// the nickname is valid.
+		/// </summary>
+		/// <returns>True is the nickname is valid</returns>
+		protected bool IsValidNick(string nick)
+		{
+			if(nick.IsNull() || nick.Trim().Length == 0)
+				return false;
+			
+			return !ContainsSpace(nick) && !nick.IsNumber() && !nick.Substring(0, 1).IsNumber() && NickRegex.IsMatch(nick);
+		}
+
+		private bool ContainsSpace(string text)
+		{
+			return text.IndexOf(SchumixBase.Space, 0, text.Length) != -1;
+		}
 	}
 }

@@ -73,7 +73,7 @@ namespace Schumix
 				_luaEngine = new LuaEngine.LuaEngine(Path.Combine(scriptPath, "Lua"));
 			}
 			else
-				Log.Warning("ScriptManager", sLConsole.ScriptManager("Text"));
+				Log.Warning("ScriptManager", sLConsole.GetString("Lua support is disabled!"));
 
 			if(ScriptsConfig.Python)
 			{
@@ -81,7 +81,7 @@ namespace Schumix
 				_pythonEngine = new PythonEngine.PythonEngine(Path.Combine(scriptPath, "Python"));
 			}
 			else
-				Log.Warning("ScriptManager", sLConsole.ScriptManager("Text2"));
+				Log.Warning("ScriptManager", sLConsole.GetString("Python support is disabled!"));
 		}
 
 		/// <summary>

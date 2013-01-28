@@ -24,7 +24,6 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.ExtraAddon.Localization;
 
 namespace Schumix.ExtraAddon.Config
 {
@@ -51,7 +50,7 @@ namespace Schumix.ExtraAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("ExtraAddonConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("ExtraAddonConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

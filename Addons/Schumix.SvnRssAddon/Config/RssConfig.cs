@@ -20,19 +20,19 @@
 
 using System;
 using Schumix.Framework;
-using Schumix.SvnRssAddon.Localization;
+using Schumix.Framework.Localization;
 
 namespace Schumix.SvnRssAddon.Config
 {
 	sealed class RssConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static int QueryTime { get; private set; }
 
 		public RssConfig(int querytime)
 		{
 			QueryTime = querytime;
-			Log.Notice("SvnRssConfig", sLocalization.RssConfig("Text"));
+			Log.Notice("SvnRssConfig", sLConsole.GetString("Loaded the Rss settings."));
 		}
 	}
 }

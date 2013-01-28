@@ -35,7 +35,7 @@ namespace Schumix.Framework.Config
 			Lua       = lua;
 			Python    = python;
 			Directory = directory;
-			Log.Notice("ScriptsConfig", sLConsole.ScriptsConfig("Text"));
+			Log.Notice("ScriptsConfig", sLConsole.GetString("Loaded the Scripts settings."));
 		}
 	}
 }

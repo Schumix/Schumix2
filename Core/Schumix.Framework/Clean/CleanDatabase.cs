@@ -37,7 +37,7 @@ namespace Schumix.Framework.Clean
 		{
 			try
 			{
-				Log.Notice("CleanDatabase", sLConsole.CleanDatabase("Text"));
+				Log.Notice("CleanDatabase", sLConsole.GetString("Successfully started the CleanDatabase."));
 				if(!Schumix.Framework.Config.CleanConfig.Database)
 				{
 					_clean = true;
@@ -48,7 +48,7 @@ namespace Schumix.Framework.Clean
 			}
 			catch(Exception e)
 			{
-				Log.Error("CleanDatabase", sLConsole.Exception("Error"), e.Message);
+				Log.Error("CleanDatabase", sLConsole.GetString("Failure details: {0}"), e.Message);
 				_clean = false;
 			}
 
@@ -57,7 +57,7 @@ namespace Schumix.Framework.Clean
 
 		public void CleanTable(string table)
 		{
-			Log.Debug("CleanDatabase", sLConsole.CleanDatabase("Text2"), table);
+			Log.Debug("CleanDatabase", sLConsole.GetString("The {0} table's cleanup have been started."), table);
 
 			var db = SchumixBase.DManager.Query("SELECT ServerName FROM {0} GROUP BY ServerName", table);
 			if(!db.IsNull())
@@ -69,17 +69,17 @@ namespace Schumix.Framework.Clean
 					if(!IRCConfig.List.ContainsKey(name))
 					{
 						SchumixBase.DManager.Delete(table, string.Format("ServerName = '{0}'", name));
-						Log.Debug("CleanDatabase", sLConsole.CleanDatabase("Text3"), name, table);
+						Log.Debug("CleanDatabase", sLConsole.GetString("The old servername ({0}) has been deleted from the table {1}."), name, table);
 					}
 				}
 			}
 
-			Log.Debug("CleanDatabase", sLConsole.CleanDatabase("Text4"), table);
+			Log.Debug("CleanDatabase", sLConsole.GetString("The table {0} is ready for cleanup."), table);
 		}
 
 		private void CleanCoreTable()
 		{
-			Log.Notice("CleanDatabase", sLConsole.CleanDatabase("Text5"));
+			Log.Notice("CleanDatabase", sLConsole.GetString("The core tables' cleanup is starting."));
 			CleanTable("channels");
 			CleanTable("schumix");
 			CleanTable("hlmessage");
@@ -89,7 +89,7 @@ namespace Schumix.Framework.Clean
 			CleanTable("ignore_commands");
 			CleanTable("ignore_irc_commands");
 			CleanTable("ignore_nicks");
-			Log.Notice("CleanDatabase", sLConsole.CleanDatabase("Text6"));
+			Log.Notice("CleanDatabase", sLConsole.GetString("The core tables' cleanup have been finished."));
 		}
 	}
 }

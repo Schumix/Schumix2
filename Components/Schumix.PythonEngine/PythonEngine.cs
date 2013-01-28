@@ -46,7 +46,7 @@ namespace Schumix.PythonEngine
 
 		public PythonEngine(string scriptsPath)
 		{
-			Log.Notice("PythonEngine", sLConsole.PythonEngine("Text"));
+			Log.Notice("PythonEngine", sLConsole.GetString("Initializing Python engine."));
 			_scriptPath = scriptsPath;
 			_engine = Python.CreateEngine();
 
@@ -108,7 +108,7 @@ namespace Schumix.PythonEngine
 					bool error = false;
 					var scope = _engine.CreateScope();
 					var source = _engine.CreateScriptSourceFromFile(file.FullName);
-					Log.Notice("PythonEngine", sLConsole.PythonEngine("Text2"), file.Name);
+					Log.Notice("PythonEngine", sLConsole.GetString("Loading Python script: {0}"), file.Name);
 
 					try
 					{
@@ -142,9 +142,9 @@ namespace Schumix.PythonEngine
 							SchumixBase.Space + frame.GetFileLineNumber() + SchumixBase.Space + frame.GetMethodName();
 
 			if(FileName == string.Empty)
-				Log.Error("PythonEngine", sLConsole.PythonEngine("Text3"), e.Message, errortext);
+				Log.Error("PythonEngine", sLConsole.GetString("Exception thrown while loading Python script. Error: {0} {1}"), e.Message, errortext);
 			else
-				Log.Error("PythonEngine", sLConsole.PythonEngine("Text4"), FileName, e.Message, errortext);
+				Log.Error("PythonEngine", sLConsole.GetString("Exception thrown while loading Python script: {0} Error: {1} {2}"), FileName, e.Message, errortext);
 		}
 
 		/// <summary>

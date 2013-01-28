@@ -9,7 +9,9 @@
     <Irc>
         <ServerName>Default</ServerName>
         <Server>localhost</Server>
+        <Password></Password>
         <Port>6667</Port>
+        <ModeMask>8</ModeMask>
         <Ssl>False</Ssl>
         <NickName>Schumix2</NickName>
         <NickName2>_Schumix2</NickName2>

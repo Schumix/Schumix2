@@ -22,32 +22,18 @@ SCHUMIX_EXE_MDB_SOURCE=../../Run/Debug/Schumix.exe.mdb
 SCHUMIX_EXE_MDB=$(BUILD_DIR)/Schumix.exe.mdb
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
-SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Debug/Schumix.Updater.dll
-SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
-SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Debug/Schumix.LuaEngine.dll
-SCHUMIX_LUAENGINE_DLL_MDB_SOURCE=../../Run/Debug/Schumix.LuaEngine.dll.mdb
-SCHUMIX_LUAENGINE_DLL_MDB=$(BUILD_DIR)/Schumix.LuaEngine.dll.mdb
 KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
 LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
 SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Debug/Schumix.PythonEngine.dll
-SCHUMIX_PYTHONENGINE_DLL_MDB_SOURCE=../../Run/Debug/Schumix.PythonEngine.dll.mdb
-SCHUMIX_PYTHONENGINE_DLL_MDB=$(BUILD_DIR)/Schumix.PythonEngine.dll.mdb
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
 MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
@@ -73,26 +59,18 @@ BUILD_DIR = ../../Run/Release
 SCHUMIX_EXE_MDB=
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Release/Schumix.Updater.dll
-SCHUMIX_UPDATER_DLL_MDB=
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Release/Schumix.LuaEngine.dll
-SCHUMIX_LUAENGINE_DLL_MDB=
 KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
 LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
 SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Release/Schumix.PythonEngine.dll
-SCHUMIX_PYTHONENGINE_DLL_MDB=
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
 MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
@@ -119,32 +97,18 @@ SCHUMIX_EXE_MDB_SOURCE=../../Run/Debug_x64/Schumix.exe.mdb
 SCHUMIX_EXE_MDB=$(BUILD_DIR)/Schumix.exe.mdb
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll.mdb
-SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Debug_x64/Schumix.Updater.dll
-SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Updater.dll.mdb
-SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Debug_x64/Schumix.LuaEngine.dll
-SCHUMIX_LUAENGINE_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.LuaEngine.dll.mdb
-SCHUMIX_LUAENGINE_DLL_MDB=$(BUILD_DIR)/Schumix.LuaEngine.dll.mdb
 KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
 LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
 SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Debug_x64/Schumix.PythonEngine.dll
-SCHUMIX_PYTHONENGINE_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.PythonEngine.dll.mdb
-SCHUMIX_PYTHONENGINE_DLL_MDB=$(BUILD_DIR)/Schumix.PythonEngine.dll.mdb
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
 MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
@@ -170,26 +134,18 @@ BUILD_DIR = ../../Run/Release_x64
 SCHUMIX_EXE_MDB=
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Release_x64/Schumix.Updater.dll
-SCHUMIX_UPDATER_DLL_MDB=
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Release_x64/Schumix.LuaEngine.dll
-SCHUMIX_LUAENGINE_DLL_MDB=
 KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
 LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
 SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Release_x64/Schumix.PythonEngine.dll
-SCHUMIX_PYTHONENGINE_DLL_MDB=
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
 MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
@@ -204,26 +160,18 @@ PROGRAMFILES = \
 	$(SCHUMIX_EXE_MDB) \
 	$(MONO_POSIX_DLL) \
 	$(SCHUMIX_IRC_DLL) \
-	$(SCHUMIX_IRC_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
-	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(YAMLDOTNET_CORE_DLL) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
 	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB) \
-	$(SQLITE3_DLL) \
-	$(SCHUMIX_DB3) \
 	$(SCHUMIX_UPDATER_DLL) \
-	$(SCHUMIX_UPDATER_DLL_MDB) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
 	$(SCHUMIX_LUAENGINE_DLL) \
-	$(SCHUMIX_LUAENGINE_DLL_MDB) \
 	$(KOPILUA_DLL) \
 	$(LUAINTERFACE_DLL) \
 	$(SCHUMIX_PYTHONENGINE_DLL) \
-	$(SCHUMIX_PYTHONENGINE_DLL_MDB) \
 	$(IRONPYTHON_MODULES_DLL) \
 	$(IRONPYTHON_DLL) \
 	$(MICROSOFT_DYNAMIC_DLL) \
@@ -282,8 +230,6 @@ YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
-SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
-SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 SCHUMIX_UPDATER_DLL = $(BUILD_DIR)/Schumix.Updater.dll
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 SCHUMIX_LUAENGINE_DLL = $(BUILD_DIR)/Schumix.LuaEngine.dll
@@ -301,8 +247,6 @@ $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
-$(eval $(call emit-deploy-target,SQLITE3_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-target,KOPILUA_DLL))
 $(eval $(call emit-deploy-target,LUAINTERFACE_DLL))

@@ -25,7 +25,6 @@ using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.CalendarAddon.Localization;
 using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 
@@ -33,7 +32,7 @@ namespace Schumix.CalendarAddon.Config
 {
 	sealed class AddonYamlConfig : AddonDefaultConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
@@ -46,12 +45,12 @@ namespace Schumix.CalendarAddon.Config
 			var yaml = new YamlStream();
 			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
 
-			Log.Notice("CalendarAddonConfig", sLocalization.Config("Text"));
+			Log.Notice("CalendarAddonConfig", sLConsole.GetString("Config file is loading."));
 
 			var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CalendarAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CalendarAddon".ToYamlNode()]).Children : NullYMap;
 			FloodingMap((!calendarmap.IsNull() && calendarmap.ContainsKey("Flooding")) ? ((YamlMappingNode)calendarmap["Flooding".ToYamlNode()]).Children : NullYMap);
 
-			Log.Success("CalendarAddonConfig", sLocalization.Config("Text2"));
+			Log.Success("CalendarAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
 
 		~AddonYamlConfig()
@@ -66,8 +65,8 @@ namespace Schumix.CalendarAddon.Config
 				return true;
 			else
 			{
-				Log.Error("CalendarAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("CalendarAddonConfig", sLocalization.Config("Text4"));
+				Log.Error("CalendarAddonConfig", sLConsole.GetString("No such config file!"));
+				Log.Debug("CalendarAddonConfig", sLConsole.GetString("Preparing..."));
 				var yaml = new YamlStream();
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
@@ -90,11 +89,11 @@ namespace Schumix.CalendarAddon.Config
 					if(File.Exists(filename2))
 						File.Delete(filename2);
 
-					Log.Success("CalendarAddonConfig", sLocalization.Config("Text5"));
+					Log.Success("CalendarAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}
 				catch(Exception e)
 				{
-					Log.Error("CalendarAddonConfig", sLocalization.Config("Text6"), e.Message);
+					Log.Error("CalendarAddonConfig", sLConsole.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 				}
 			}
 

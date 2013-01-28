@@ -25,13 +25,12 @@ using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.WordPressRssAddon.Localization;
 
 namespace Schumix.WordPressRssAddon.Config
 {
 	sealed class AddonXmlConfig : AddonDefaultConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		public AddonXmlConfig()
@@ -43,12 +42,12 @@ namespace Schumix.WordPressRssAddon.Config
 			var xmldoc = new XmlDocument();
 			xmldoc.Load(sUtilities.DirectoryToSpecial(SchumixConfig.ConfigDirectory, configfile));
 
-			Log.Notice("WordPressRssAddonConfig", sLocalization.Config("Text"));
+			Log.Notice("WordPressRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
 			int QueryTime = !xmldoc.SelectSingleNode("WordPressRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("WordPressRssAddon/Rss/QueryTime").InnerText) : d_querytime;
 			new RssConfig(QueryTime);
 
-			Log.Success("WordPressRssAddonConfig", sLocalization.Config("Text2"));
+			Log.Success("WordPressRssAddonConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
 
@@ -64,8 +63,8 @@ namespace Schumix.WordPressRssAddon.Config
 				return true;
 			else
 			{
-				Log.Error("WordPressRssAddonConfig", sLocalization.Config("Text3"));
-				Log.Debug("WordPressRssAddonConfig", sLocalization.Config("Text4"));
+				Log.Error("WordPressRssAddonConfig", sLConsole.GetString("No such config file!"));
+				Log.Debug("WordPressRssAddonConfig", sLConsole.GetString("Preparing..."));
 				var w = new XmlTextWriter(filename, null);
 				var xmldoc = new XmlDocument();
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
@@ -99,11 +98,11 @@ namespace Schumix.WordPressRssAddon.Config
 					if(File.Exists(filename2))
 						File.Delete(filename2);
 
-					Log.Success("WordPressRssAddonConfig", sLocalization.Config("Text5"));
+					Log.Success("WordPressRssAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}
 				catch(Exception e)
 				{
-					Log.Error("WordPressRssAddonConfig", sLocalization.Config("Text6"), e.Message);
+					Log.Error("WordPressRssAddonConfig", sLConsole.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 				}
 			}
 

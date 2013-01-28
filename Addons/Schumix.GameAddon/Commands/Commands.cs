@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using Schumix.Api.Irc;
 using Schumix.Api.Functions;
 using Schumix.Irc;
+using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -67,7 +68,7 @@ namespace Schumix.GameAddon.Commands
 					return;
 				}
 
-				if(!sUtilities.IsChannel(sIRCMessage.Channel))
+				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					return;

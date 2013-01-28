@@ -50,7 +50,7 @@ namespace Schumix.Framework.Config
 			Log.Initialize(LogConfig.FileName, colorbindmode);
 			Log.Debug("YamlConfig", ">> {0}", configfile);
 
-			Log.Notice("YamlConfig", sLConsole.Config("Text3"));
+			Log.Notice("YamlConfig", sLConsole.GetString("Config file is loading."));
 			ServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Server")) ? ((YamlMappingNode)schumixmap["Server".ToYamlNode()]).Children : NullYMap);
 
 			if((!schumixmap.IsNull() && schumixmap.ContainsKey("Irc")))
@@ -79,7 +79,7 @@ namespace Schumix.Framework.Config
 			FloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap);
 			CleanMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Clean")) ? ((YamlMappingNode)schumixmap["Clean".ToYamlNode()]).Children : NullYMap);
 
-			Log.Success("YamlConfig", sLConsole.Config("Text4"));
+			Log.Success("YamlConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
 
@@ -99,8 +99,8 @@ namespace Schumix.Framework.Config
 				{
 					new LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, d_irclogdirectory, d_irclog);
 					Log.Initialize(d_logfilename, ColorBindMode);
-					Log.Error("YamlConfig", sLConsole.Config("Text5"));
-					Log.Debug("YamlConfig", sLConsole.Config("Text6"));
+					Log.Error("YamlConfig", sLConsole.GetString("No such config file!"));
+					Log.Debug("YamlConfig", sLConsole.GetString("Preparing..."));
 					var yaml = new YamlStream();
 					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
@@ -146,11 +146,11 @@ namespace Schumix.Framework.Config
 						if(File.Exists(filename2))
 							File.Delete(filename2);
 
-						Log.Success("YamlConfig", sLConsole.Config("Text7"));
+						Log.Success("YamlConfig", sLConsole.GetString("Config file is completed!"));
 					}
 					catch(Exception e)
 					{
-						Log.Error("YamlConfig", sLConsole.Config("Text13"), e.Message);
+						Log.Error("YamlConfig", sLConsole.GetString("Failure was handled during the yml writing. Details: {0}"), e.Message);
 						errors = true;
 					}
 				}
@@ -195,7 +195,9 @@ namespace Schumix.Framework.Config
 			{
 				string ServerName            = d_servername;
 				string Server                = d_server;
+				string ServerPass            = d_ircserverpassword;
 				int Port                     = d_port;
+				int ModeMask                 = d_modemask;
 				bool Ssl                     = d_ssl;
 				string NickName              = d_nickname;
 				string NickName2             = d_nickname2;
@@ -214,7 +216,7 @@ namespace Schumix.Framework.Config
 				string CommandPrefix         = d_commandprefix;
 				string MessageType           = d_messagetype;
 
-				IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
+				IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, ServerPass.Trim(), Port, ModeMask, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
 			}
 			else
 			{
@@ -223,7 +225,9 @@ namespace Schumix.Framework.Config
 					var node = ((YamlMappingNode)irc.Value).Children;
 					string ServerName = (!node.IsNull() && node.ContainsKey("ServerName")) ? node["ServerName".ToYamlNode()].ToString() : d_servername;
 					string Server = (!node.IsNull() && node.ContainsKey("Server")) ? node["Server".ToYamlNode()].ToString() : d_server;
+					string ServerPass = (!node.IsNull() && node.ContainsKey("Password")) ? node["Password".ToYamlNode()].ToString() : d_ircserverpassword;
 					int Port = (!node.IsNull() && node.ContainsKey("Port")) ? Convert.ToInt32(node["Port".ToYamlNode()].ToString()) : d_port;
+					int ModeMask = (!node.IsNull() && node.ContainsKey("ModeMask")) ? Convert.ToInt32(node["ModeMask".ToYamlNode()].ToString()) : d_modemask;
 					bool Ssl = (!node.IsNull() && node.ContainsKey("Ssl")) ? Convert.ToBoolean(node["Ssl".ToYamlNode()].ToString()) : d_ssl;
 					string NickName = (!node.IsNull() && node.ContainsKey("NickName")) ? node["NickName".ToYamlNode()].ToString() : d_nickname;
 					string NickName2 = (!node.IsNull() && node.ContainsKey("NickName2")) ? node["NickName2".ToYamlNode()].ToString() : d_nickname2;
@@ -283,15 +287,39 @@ namespace Schumix.Framework.Config
 					string MessageType = (!node.IsNull() && node.ContainsKey("MessageType")) ? node["MessageType".ToYamlNode()].ToString() : d_messagetype;
 
 					if(MasterChannel.Length >= 2 && MasterChannel.Trim().Length > 1 && MasterChannel.Substring(0, 1) != "#")
+					{
+						Log.Warning("YamlConfig", sLConsole.GetString("The master channel's format is wrong. \"#\" is missing. Corrected."));
 						MasterChannel = "#" + MasterChannel;
+					}
 					else if(MasterChannel.Length < 2 && MasterChannel.Trim().Length <= 1)
+					{
+						Log.Warning("YamlConfig", sLConsole.GetString("The master channel is not given so the default will be used. ({0})"), d_masterchannel);
 						MasterChannel = d_masterchannel;
+					}
+					
+					if(!IsValidNick(NickName))
+					{
+						Log.Warning("YamlConfig", sLConsole.GetString("The primary nick's format is wrong. The default will be used: {0}"), d_nickname);
+						NickName = d_nickname;
+					}
+					
+					if(!IsValidNick(NickName2))
+					{
+						Log.Warning("YamlConfig", sLConsole.GetString("The secondary nick's format is wrong. The default will be used: {0}"), d_nickname2);
+						NickName2 = d_nickname2;
+					}
+					
+					if(!IsValidNick(NickName3))
+					{
+						Log.Warning("YamlConfig", sLConsole.GetString("The tertiary nick's format is wrong. The default will be used: {0}"), d_nickname3);
+						NickName3 = d_nickname3;
+					}
 
 					if(IrcList.ContainsKey(ServerName.ToLower()))
-						Log.Error("YmlConfig", sLConsole.Config("Text12"), ServerName);
+						Log.Error("YamlConfig", sLConsole.GetString("The {0} server is already in use so not loaded!"), ServerName);
 					else
 					{
-						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
+						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, ServerPass.Trim(), Port, ModeMask, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
 						ServerId++;
 					}
 				}
@@ -414,7 +442,9 @@ namespace Schumix.Framework.Config
 			{
 				map.Add("ServerName",      d_servername);
 				map.Add("Server",          d_server);
+				map.Add("Password",        d_ircserverpassword);
 				map.Add("Port",            d_port.ToString());
+				map.Add("ModeMask",        d_modemask.ToString());
 				map.Add("Ssl",             d_ssl.ToString());
 				map.Add("NickName",        d_nickname);
 				map.Add("NickName2",       d_nickname2);
@@ -448,7 +478,9 @@ namespace Schumix.Framework.Config
 				var node = nodes;
 				map.Add("ServerName", (!node.IsNull() && node.ContainsKey("ServerName")) ? node["ServerName".ToYamlNode()].ToString() : d_servername);
 				map.Add("Server",     (!node.IsNull() && node.ContainsKey("Server")) ? node["Server".ToYamlNode()].ToString() : d_server);
+				map.Add("Password",   (!node.IsNull() && node.ContainsKey("Password")) ? node["Password".ToYamlNode()].ToString() : d_ircserverpassword);
 				map.Add("Port",       (!node.IsNull() && node.ContainsKey("Port")) ? node["Port".ToYamlNode()].ToString() : d_port.ToString());
+				map.Add("ModeMask",   (!node.IsNull() && node.ContainsKey("ModeMask")) ? node["ModeMask".ToYamlNode()].ToString() : d_modemask.ToString());
 				map.Add("Ssl",        (!node.IsNull() && node.ContainsKey("Ssl")) ? node["Ssl".ToYamlNode()].ToString() : d_ssl.ToString());
 				map.Add("NickName",   (!node.IsNull() && node.ContainsKey("NickName")) ? node["NickName".ToYamlNode()].ToString() : d_nickname);
 				map.Add("NickName2",  (!node.IsNull() && node.ContainsKey("NickName2")) ? node["NickName2".ToYamlNode()].ToString() : d_nickname2);

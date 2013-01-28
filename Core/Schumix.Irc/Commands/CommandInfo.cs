@@ -35,7 +35,7 @@ namespace Schumix.Irc.Commands
 		protected CommandInfo(string ServerName)
 		{
 			servername = ServerName;
-			Log.Debug("CommandInfo", sLConsole.CommandInfo("Text"));
+			Log.Debug("CommandInfo", sLConsole.GetString("Successfully started the CommandInfo."));
 		}
 
 		public bool IsAdmin(string Name)

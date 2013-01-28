@@ -51,7 +51,7 @@ namespace Schumix.WordPressRssAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("WordPressRssAddonConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("WordPressRssAddonConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

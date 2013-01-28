@@ -50,8 +50,8 @@ namespace Schumix.Console
 		/// </summary>
 		public Console(string ServerName)
 		{
-			Log.Notice("Console", sLConsole.Console("Text"));
-			Log.Debug("Console", sLConsole.Console("Text2"));
+			Log.Notice("Console", sLConsole.GetString("Successfully started the Console."));
+			Log.Debug("Console", sLConsole.GetString("Console reader starting..."));
 			var thread = new Thread(() => ConsoleRead());
 			thread.Name = "Schumix Console Thread";
 			thread.Start();
@@ -84,7 +84,7 @@ namespace Schumix.Console
 			try
 			{
 				string message;
-				Log.Notice("Console", sLConsole.Console("Text3"));
+				Log.Notice("Console", sLConsole.GetString("Successfully started the Console reader."));
 
 				while(true)
 				{
@@ -98,7 +98,7 @@ namespace Schumix.Console
 			}
 			catch(Exception e)
 			{
-				Log.Error("ConsoleRead", sLConsole.Exception("Error"), e.Message);
+				Log.Error("ConsoleRead", sLConsole.GetString("Failure details: {0}"), e.Message);
 				Thread.Sleep(1000);
 
 				if(!SchumixBase.ExitStatus)

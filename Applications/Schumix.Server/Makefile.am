@@ -20,18 +20,12 @@ MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Debug/Schumix.Updater.dll
-SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
-SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 
 endif
@@ -52,15 +46,12 @@ MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Release/Schumix.Updater.dll
-SCHUMIX_UPDATER_DLL_MDB=
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 
 endif
@@ -82,18 +73,12 @@ MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Debug_x64/Schumix.Updater.dll
-SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Updater.dll.mdb
-SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 
 endif
@@ -114,15 +99,12 @@ MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Release_x64/Schumix.Updater.dll
-SCHUMIX_UPDATER_DLL_MDB=
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
 
 endif
@@ -136,15 +118,12 @@ PROGRAMFILES = \
 	$(YAMLDOTNET_CORE_DLL) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
-	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SQLITE3_DLL) \
 	$(SCHUMIX_DB3) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
 	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB) \
 	$(SCHUMIX_UPDATER_DLL) \
-	$(SCHUMIX_UPDATER_DLL_MDB) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL)  
 
 BINARIES = \

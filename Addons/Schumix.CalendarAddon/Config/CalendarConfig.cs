@@ -20,13 +20,13 @@
 
 using System;
 using Schumix.Framework;
-using Schumix.CalendarAddon.Localization;
+using Schumix.Framework.Localization;
 
 namespace Schumix.CalendarAddon.Config
 {
 	sealed class CalendarConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static int Seconds { get; private set; }
 		public static int NumberOfMessages { get; private set; }
 		public static int NumberOfFlooding { get; private set; }
@@ -36,7 +36,7 @@ namespace Schumix.CalendarAddon.Config
 			Seconds          = seconds;
 			NumberOfMessages = numberofmessages;
 			NumberOfFlooding = numberofflooding;
-			Log.Notice("CalendarConfig", sLocalization.CalendarConfig("Text"));
+			Log.Notice("CalendarConfig", sLConsole.GetString("Loaded the Calendar settings."));
 		}
 	}
 }

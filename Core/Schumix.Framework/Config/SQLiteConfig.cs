@@ -33,7 +33,7 @@ namespace Schumix.Framework.Config
 		{
 			Enabled  = enabled;
 			FileName = filename;
-			Log.Notice("SQLiteConfig", sLConsole.SQLiteConfig("Text"));
+			Log.Notice("SQLiteConfig", sLConsole.GetString("Loaded the SQLite settings."));
 		}
 	}
 }

@@ -1,8 +1,19 @@
+#Autosave files
+*~
+
+*.pc
+*.gmo
 *.obj
 *.pidb
 *.mdb
 */bin/*
 Run/
+
+#build stuff
+Applications/Schumix.Config/schumix.config
+Applications/Schumix.Installer/schumix.installer
+Applications/Schumix.Server/schumix.server
+Applications/Schumix/schumix
 
 #ignore thumbnails created by windows
 Thumbs.db
@@ -35,3 +46,19 @@ _ReSharper*/
 UpgradeLog.XML
 *.ReSharper
 *.userprefs
+
+# http://www.gnu.org/software/automake
+
+Makefile
+Makefile.in
+
+# http://www.gnu.org/software/autoconf
+
+/autom4te.cache
+/aclocal.m4
+/compile
+/configure
+/depcomp
+/install-sh
+/missing
+/config.status

@@ -51,7 +51,7 @@ namespace Schumix.SvnRssAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("SvnRssAddonConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("SvnRssAddonConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

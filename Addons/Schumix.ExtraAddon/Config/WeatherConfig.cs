@@ -20,19 +20,19 @@
 
 using System;
 using Schumix.Framework;
-using Schumix.ExtraAddon.Localization;
+using Schumix.Framework.Localization;
 
 namespace Schumix.ExtraAddon.Config
 {
 	sealed class WeatherConfig
 	{
-		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static string City { get; private set; }
 
 		public WeatherConfig(string city)
 		{
 			City = city;
-			Log.Notice("WeatherConfig", sLocalization.WeatherConfig("Text"));
+			Log.Notice("WeatherConfig", sLConsole.GetString("Loaded the Weather settings."));
 		}
 	}
 }

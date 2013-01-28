@@ -51,7 +51,7 @@ namespace Schumix.HgRssAddon.Config
 			}
 			catch(Exception e)
 			{
-				Log.Error("HgRssAddonConfig", sLConsole.Exception("Error"), e.Message);
+				Log.Error("HgRssAddonConfig", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

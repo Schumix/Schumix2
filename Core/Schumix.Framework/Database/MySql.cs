@@ -42,13 +42,13 @@ namespace Schumix.Framework.Database
 		{
 			if(!Initialize(host, username, password, database, charset))
 			{
-				Log.Error("MySql", sLConsole.MySql("Text"));
+				Log.Error("MySql", sLConsole.GetString("Error was handled when tried to connect to the database!"));
 				SchumixBase.ServerDisconnect(false);
 				Thread.Sleep(1000);
 				Process.GetCurrentProcess().Kill();
 			}
 			else
-				Log.Success("MySql", sLConsole.MySql("Text2"));
+				Log.Success("MySql", sLConsole.GetString("Successfully connected to the MySql database."));
 		}
 
 		~MySql()
@@ -134,8 +134,8 @@ namespace Schumix.Framework.Database
 				if(Connection.State == ConnectionState.Broken || Connection.State == ConnectionState.Closed)
 				{
 					_crash = true;
-					Log.Error("MySql", sLConsole.MySql("Text5"));
-					Log.Warning("MySql", sLConsole.MySql("Text4"));
+					Log.Error("MySql", sLConsole.GetString("Sql connection crash."));
+					Log.Warning("MySql", sLConsole.GetString("Program shutting down!"));
 					SchumixBase.Quit(false);
 	
 					foreach(var nw in INetwork.WriterList)
@@ -159,8 +159,8 @@ namespace Schumix.Framework.Database
 			if(c)
 			{
 				_crash = true;
-				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-				Log.Warning("MySql", sLConsole.MySql("Text4"));
+				Log.Error("MySql", sLConsole.GetString("Query error: {0}"), m.Message);
+				Log.Warning("MySql", sLConsole.GetString("Program shutting down!"));
 				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
@@ -176,8 +176,8 @@ namespace Schumix.Framework.Database
 			if(m.Message.Contains("Fatal error encountered during command execution."))
 			{
 				_crash = true;
-				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-				Log.Warning("MySql", sLConsole.MySql("Text4"));
+				Log.Error("MySql", sLConsole.GetString("Query error: {0}"), m.Message);
+				Log.Warning("MySql", sLConsole.GetString("Program shutting down!"));
 				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
@@ -193,8 +193,8 @@ namespace Schumix.Framework.Database
 			if(m.Message.Contains("Timeout expired."))
 			{
 				_crash = true;
-				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-				Log.Warning("MySql", sLConsole.MySql("Text4"));
+				Log.Error("MySql", sLConsole.GetString("Query error: {0}"), m.Message);
+				Log.Warning("MySql", sLConsole.GetString("Program shutting down!"));
 				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
@@ -210,8 +210,8 @@ namespace Schumix.Framework.Database
 			if(m.Message.Contains("Unable to connect to any of the specified MySQL hosts."))
 			{
 				_crash = true;
-				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
-				Log.Warning("MySql", sLConsole.MySql("Text4"));
+				Log.Error("MySql", sLConsole.GetString("Query error: {0}"), m.Message);
+				Log.Warning("MySql", sLConsole.GetString("Program shutting down!"));
 				SchumixBase.Quit(false);
 
 				foreach(var nw in INetwork.WriterList)
@@ -225,7 +225,7 @@ namespace Schumix.Framework.Database
 			}
 
 			if(logerror)
-				Log.Error("MySql", sLConsole.MySql("Text3"), m.Message);
+				Log.Error("MySql", sLConsole.GetString("Query error: {0}"), m.Message);
 		}
 
 		public bool Update(string sql)

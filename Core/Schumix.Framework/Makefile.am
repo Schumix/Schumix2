@@ -21,9 +21,8 @@ YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 
 endif
 
@@ -44,8 +43,8 @@ YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
 
 endif
 
@@ -67,9 +66,8 @@ YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 
 endif
 
@@ -90,8 +88,8 @@ YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
 
 endif
 
@@ -106,8 +104,8 @@ PROGRAMFILES = \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
-	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB)  
+	$(MONO_POSIX_DLL) \
+	$(SCHUMIX_API_DLL)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_FRAMEWORK_PC)  
@@ -210,7 +208,8 @@ DLL_REFERENCES =  \
 	../../Dependencies/YamlDotNet.Core.dll \
 	../../Dependencies/YamlDotNet.RepresentationModel.dll \
 	../../Dependencies/System.Data.SQLite.dll \
-	../../Dependencies/MySql.Data.dll
+	../../Dependencies/MySql.Data.dll \
+	../../Dependencies/Mono.Posix.dll
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
@@ -222,6 +221,7 @@ YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
+MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
 SCHUMIX_FRAMEWORK_PC = $(BUILD_DIR)/schumix.framework.pc
 
@@ -231,6 +231,7 @@ $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
+$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_FRAMEWORK_PC,schumix.framework.pc))
 
 

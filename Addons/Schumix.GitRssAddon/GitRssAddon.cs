@@ -80,10 +80,10 @@ namespace Schumix.GitRssAddon
 					x++;
 				}
 
-				Log.Notice("GitRssAddon", sLocalization.GitRssAddon("Text"), ServerName, x);
+				Log.Notice("GitRssAddon", sLConsole.GetString("{0}: {1} rss loaded."), ServerName, x);
 			}
 			else
-				Log.Warning("GitRssAddon", sLocalization.GitRssAddon("Text2"), ServerName);
+				Log.Warning("GitRssAddon", sLConsole.GetString("{0}: Empty database!"), ServerName);
 		}
 
 		public void Destroy()
@@ -115,7 +115,7 @@ namespace Schumix.GitRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("GitRssAddon", "Reload: " + sLConsole.Exception("Error"), e.Message);
+				Log.Error("GitRssAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

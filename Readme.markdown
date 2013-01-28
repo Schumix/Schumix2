@@ -14,12 +14,16 @@ Monon jelenleg minimum követelmény a `2.10` vagy újabb.
 # Kód futtatása/Fordítása
 
 ## Windows
+
+Szükséges a nyelvi fájlok lefordításához a `gettext`. Töltsük le és telepítsük. `http://downloads.sourceforge.net/project/gnuwin32/gettext/0.14.4/gettext-0.14.4.exe?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fgnuwin32%2Ffiles%2Fgettext%2F0.14.4%2Fgettext-0.14.4.exe%2Fdownload%3Fuse_mirror%3Dignum%26download%3D&ts=1359199569&use_mirror=freefr`
 A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
 
 ## Linux
+
 Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
 
 ## Linux terminál
+
 Telepítsük a `mono-xbuild` csomagot vagy forrásból. Ezután inditsuk el a `build.sh`-t és lefordul a kód.
 
 # Kód üzembehelyezése
@@ -41,6 +45,7 @@ Futtassuk `sh createarchlinuxpkg.sh` parancsot. Ha lefutott megjelenik egy `schu
 Futtassuk `sh createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
 
 ## Windows
+
 Navigáljunk az Installer mappába. Futtassuk a `Schumix.iss` nevű fájlt. Ha lefutott kapunk egy `Setup.exe` nevű telepíthető állományt. Futtasuk és értelemszerüen telepítsük. A többit szerintem nem kell részletezni :)
 
 # Konfig beállítása

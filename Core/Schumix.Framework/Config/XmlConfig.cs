@@ -55,7 +55,7 @@ namespace Schumix.Framework.Config
 			Log.Initialize(LogFileName, colorbindmode);
 			Log.Debug("XmlConfig", ">> {0}", configfile);
 
-			Log.Notice("XmlConfig", sLConsole.Config("Text3"));
+			Log.Notice("XmlConfig", sLConsole.GetString("Config file is loading."));
 			bool ServerEnabled = !xmldoc.SelectSingleNode("Schumix/Server/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Server/Enabled").InnerText) : d_serverenabled;
 			string ServerHost = !xmldoc.SelectSingleNode("Schumix/Server/Host").IsNull() ? xmldoc.SelectSingleNode("Schumix/Server/Host").InnerText : d_serverhost;
 			int ServerPort = !xmldoc.SelectSingleNode("Schumix/Server/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Server/Port").InnerText) : d_serverport;
@@ -71,7 +71,9 @@ namespace Schumix.Framework.Config
 			{
 				string ServerName            = d_servername;
 				string Server                = d_server;
+				string ServerPass            = d_ircserverpassword;
 				int Port                     = d_port;
+				int ModeMask                 = d_modemask;
 				bool Ssl                     = d_ssl;
 				string NickName              = d_nickname;
 				string NickName2             = d_nickname2;
@@ -90,7 +92,7 @@ namespace Schumix.Framework.Config
 				string CommandPrefix         = d_commandprefix;
 				string MessageType           = d_messagetype;
 
-				IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
+				IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, ServerPass.Trim(), Port, ModeMask, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
 			}
 			else
 			{
@@ -98,7 +100,9 @@ namespace Schumix.Framework.Config
 				{
 					string ServerName = !xn["ServerName"].IsNull() ? xn["ServerName"].InnerText : d_servername;
 					string Server = !xn["Server"].IsNull() ? xn["Server"].InnerText : d_server;
+					string ServerPass = !xn["Password"].IsNull() ? xn["Password"].InnerText : d_ircserverpassword;
 					int Port = !xn["Port"].IsNull() ? Convert.ToInt32(xn["Port"].InnerText) : d_port;
+					int ModeMask = !xn["ModeMask"].IsNull() ? Convert.ToInt32(xn["ModeMask"].InnerText) : d_modemask;
 					bool Ssl = !xn["Ssl"].IsNull() ? Convert.ToBoolean(xn["Ssl"].InnerText) : d_ssl;
 					string NickName = !xn["NickName"].IsNull() ? xn["NickName"].InnerText : d_nickname;
 					string NickName2 = !xn["NickName2"].IsNull() ? xn["NickName2"].InnerText : d_nickname2;
@@ -118,15 +122,39 @@ namespace Schumix.Framework.Config
 					string MessageType = !xn["MessageType"].IsNull() ? xn["MessageType"].InnerText : d_messagetype;
 
 					if(MasterChannel.Length >= 2 && MasterChannel.Trim().Length > 1 && MasterChannel.Substring(0, 1) != "#")
+					{
+						Log.Warning("XmlConfig", sLConsole.GetString("The master channel's format is wrong. \"#\" is missing. Corrected."));
 						MasterChannel = "#" + MasterChannel;
+					}
 					else if(MasterChannel.Length < 2 && MasterChannel.Trim().Length <= 1)
+					{
+						Log.Warning("XmlConfig", sLConsole.GetString("The master channel is not given so the default will be used. ({0})"), d_masterchannel);
 						MasterChannel = d_masterchannel;
+					}
+
+					if(!IsValidNick(NickName))
+					{
+						Log.Warning("XmlConfig", sLConsole.GetString("The primary nick's format is wrong. The default will be used: {0}"), d_nickname);
+						NickName = d_nickname;
+					}
+
+					if(!IsValidNick(NickName2))
+					{
+						Log.Warning("XmlConfig", sLConsole.GetString("The secondary nick's format is wrong. The default will be used: {0}"), d_nickname2);
+						NickName2 = d_nickname2;
+					}
+
+					if(!IsValidNick(NickName3))
+					{
+						Log.Warning("XmlConfig", sLConsole.GetString("The tertiary nick's format is wrong. The default will be used: {0}"), d_nickname3);
+						NickName3 = d_nickname3;
+					}
 
 					if(IrcList.ContainsKey(ServerName.ToLower()))
-						Log.Error("XmlConfig", sLConsole.Config("Text12"), ServerName);
+						Log.Error("XmlConfig", sLConsole.GetString("The {0} server is already in use so not loaded!"), ServerName);
 					else
 					{
-						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, Port, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
+						IrcList.Add(ServerName.ToLower(), new IRCConfigBase(ServerId, Server, ServerPass.Trim(), Port, ModeMask, Ssl, NickName, NickName2, NickName3, UserName, UserInfo, MasterChannel, MasterChannelPassword.Trim(), IgnoreChannels, IgnoreNames, UseNickServ, NickServPassword, UseHostServ, HostServStatus, MessageSending, CommandPrefix, MessageType));
 						ServerId++;
 					}
 				}
@@ -189,7 +217,7 @@ namespace Schumix.Framework.Config
 
 			new CleanConfig(Config, Database2);
 
-			Log.Success("XmlConfig", sLConsole.Config("Text4"));
+			Log.Success("XmlConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
 
@@ -209,8 +237,8 @@ namespace Schumix.Framework.Config
 				{
 					new LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, d_irclogdirectory, d_irclog);
 					Log.Initialize(d_logfilename, ColorBindMode);
-					Log.Error("XmlConfig", sLConsole.Config("Text5"));
-					Log.Debug("XmlConfig", sLConsole.Config("Text6"));
+					Log.Error("XmlConfig", sLConsole.GetString("No such config file!"));
+					Log.Debug("XmlConfig", sLConsole.GetString("Preparing..."));
 					var w = new XmlTextWriter(filename, null);
 					var xmldoc = new XmlDocument();
 					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
@@ -246,7 +274,9 @@ namespace Schumix.Framework.Config
 							w.WriteStartElement("Irc");
 							w.WriteElementString("ServerName",      d_servername);
 							w.WriteElementString("Server",          d_server);
+							w.WriteElementString("Password",        d_ircserverpassword);
 							w.WriteElementString("Port",            d_port.ToString());
+							w.WriteElementString("ModeMask",        d_modemask.ToString());
 							w.WriteElementString("Ssl",             d_ssl.ToString());
 							w.WriteElementString("NickName",        d_nickname);
 							w.WriteElementString("NickName2",       d_nickname2);
@@ -308,7 +338,9 @@ namespace Schumix.Framework.Config
 								w.WriteStartElement("Irc");
 								w.WriteElementString("ServerName",      (!xn["ServerName"].IsNull() ? xn["ServerName"].InnerText : d_servername));
 								w.WriteElementString("Server",          (!xn["Server"].IsNull() ? xn["Server"].InnerText : d_server));
+								w.WriteElementString("Password",        (!xn["Password"].IsNull() ? xn["Password"].InnerText : d_ircserverpassword));
 								w.WriteElementString("Port",            (!xn["Port"].IsNull() ? xn["Port"].InnerText : d_port.ToString()));
+								w.WriteElementString("ModeMask",        (!xn["ModeMask"].IsNull() ? xn["ModeMask"].InnerText : d_modemask.ToString()));
 								w.WriteElementString("Ssl",             (!xn["Ssl"].IsNull() ? xn["Ssl"].InnerText : d_ssl.ToString()));
 								w.WriteElementString("NickName",        (!xn["NickName"].IsNull() ? xn["NickName"].InnerText : d_nickname));
 								w.WriteElementString("NickName2",       (!xn["NickName2"].IsNull() ? xn["NickName2"].InnerText : d_nickname2));
@@ -471,11 +503,11 @@ namespace Schumix.Framework.Config
 						if(File.Exists(filename2))
 							File.Delete(filename2);
 
-						Log.Success("XmlConfig", sLConsole.Config("Text7"));
+						Log.Success("XmlConfig", sLConsole.GetString("Config file is completed!"));
 					}
 					catch(Exception e)
 					{
-						Log.Error("XmlConfig", sLConsole.Config("Text8"), e.Message);
+						Log.Error("XmlConfig", sLConsole.GetString("Failure was handled during the xml writing. Details: {0}"), e.Message);
 						errors = true;
 					}
 				}

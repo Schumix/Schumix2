@@ -43,8 +43,8 @@ namespace Schumix.Framework.Config
 				{
 					if(!errors)
 					{
-						Log.Notice("Config", sLConsole.Config("Text"));
-						Log.Notice("Config", sLConsole.Config("Text2"));
+						Log.Notice("Config", sLConsole.GetString("Program shutting down!"));
+						Log.Notice("Config", sLConsole.GetString("Please set up the Config file!"));
 					}
 
 					Thread.Sleep(5*1000);
@@ -72,7 +72,7 @@ namespace Schumix.Framework.Config
 			{
 				new LogConfig(d_logfilename, d_logdatefilename, d_logmaxfilesize, 3, d_logdirectory, d_irclogdirectory, d_irclog);
 				Log.Initialize(d_logfilename, colorbindmode);
-				Log.Error("Config", sLConsole.Exception("Error"), e.Message);
+				Log.Error("Config", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
 

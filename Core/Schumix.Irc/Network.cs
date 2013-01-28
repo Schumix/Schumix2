@@ -92,8 +92,8 @@ namespace Schumix.Irc
 			_port = 6667;
 			Shutdown = false;
 
-			Log.Notice("Network", sLConsole.Network("Text"));
-			Log.Notice("Network", sLConsole.Network("Text20"), _servername);
+			Log.Notice("Network", sLConsole.GetString("Successfully started the Network."));
+			Log.Notice("Network", sLConsole.GetString("Server's name: {0}"), _servername);
 			CType = ConnectionType.Normal;
 		}
 
@@ -105,8 +105,8 @@ namespace Schumix.Irc
 			_port = 6667;
 			Shutdown = false;
 
-			Log.Notice("Network", sLConsole.Network("Text"));
-			Log.Notice("Network", sLConsole.Network("Text20"), _servername);
+			Log.Notice("Network", sLConsole.GetString("Successfully started the Network."));
+			Log.Notice("Network", sLConsole.GetString("Server's name: {0}"), _servername);
 			CType = ConnectionType.Normal;
 		}
 
@@ -118,8 +118,8 @@ namespace Schumix.Irc
 			_port = Port;
 			Shutdown = false;
 
-			Log.Notice("Network", sLConsole.Network("Text"));
-			Log.Notice("Network", sLConsole.Network("Text20"), _servername);
+			Log.Notice("Network", sLConsole.GetString("Successfully started the Network."));
+			Log.Notice("Network", sLConsole.GetString("Server's name: {0}"), _servername);
 			CType = ConnectionType.Normal;
 		}
 
@@ -131,8 +131,8 @@ namespace Schumix.Irc
 			_port = Port;
 			Shutdown = false;
 
-			Log.Notice("Network", sLConsole.Network("Text"));
-			Log.Notice("Network", sLConsole.Network("Text20"), ServerName);
+			Log.Notice("Network", sLConsole.GetString("Successfully started the Network."));
+			Log.Notice("Network", sLConsole.GetString("Server's name: {0}"), ServerName);
 			CType = ConnectionType.Normal;
 		}
 
@@ -150,18 +150,18 @@ namespace Schumix.Irc
 		public void InitializeOpcodesAndPing()
 		{
 			// Start Opcodes thread
-			Log.Debug("Network", sLConsole.Network("Text3"));
+			Log.Debug("Network", sLConsole.GetString("Opcodes thread started..."));
 			var opcodes = new Thread(Opcodes);
 			opcodes.Name = _servername + " Opcodes Thread";
 			opcodes.Start();
 
 			// Start Ping thread
-			Log.Debug("Network", sLConsole.Network("Text4"));
+			Log.Debug("Network", sLConsole.GetString("Ping thread started..."));
 			var ping = new Thread(AutoPing);
 			ping.Name = _servername + " Ping Thread";
 			ping.Start();
 
-			Log.Debug("Network", sLConsole.Network("Text2"));
+			Log.Debug("Network", sLConsole.GetString("Establishing connection with irc server."));
 		}
 
 		private void InitHandler()
@@ -191,7 +191,7 @@ namespace Schumix.Irc
 			IrcRegisterHandler("INVITE",                       HandleIrcInvite);
 			IrcRegisterHandler(ReplyCode.RPL_NAMREPLY,         HandleNameList);
 			IrcRegisterHandler(ReplyCode.RPL_ENDOFNAMES,       HandleEndNameList);
-			IrcRegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandlerErrorNewNickName);
+			IrcRegisterHandler(ReplyCode.ERR_ERRONEUSNICKNAME, HandleErrorNewNickName);
 			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
 			IrcRegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
 			IrcRegisterHandler(ReplyCode.RPL_TOPIC,            HandleInitialTopic);
@@ -211,7 +211,7 @@ namespace Schumix.Irc
 			});
 
 			Console.WriteLine();
-			Log.Notice("Network", sLConsole.Network("Text5"));
+			Log.Notice("Network", sLConsole.GetString("All of IRC handlers are registered."));
 		}
 
 		private void IrcProcessMethods(IEnumerable<MethodInfo> methods)
@@ -326,7 +326,7 @@ namespace Schumix.Irc
 		public void Connect(bool nick = false)
 		{
 			NetworkQuit = false;
-			Log.Notice("Network", sLConsole.Network("Text6"), _server);
+			Log.Notice("Network", sLConsole.GetString("Connection to: {0}"), _server);
 			Connection(nick);
 		}
 
@@ -336,7 +336,7 @@ namespace Schumix.Irc
 		public void DisConnect()
 		{
 			Close();
-			Log.Notice("Network", sLConsole.Network("Text7"));
+			Log.Notice("Network", sLConsole.GetString("Connection closed!"));
 		}
 
 		/// <summary>
@@ -348,9 +348,9 @@ namespace Schumix.Irc
 				return;
 
 			Close();
-			Log.Notice("Network", sLConsole.Network("Text8"));
+			Log.Notice("Network", sLConsole.GetString("Connection have been closed."));
 			Connection(false);
-			Log.Debug("Network", sLConsole.Network("Text9"), _server);
+			Log.Debug("Network", sLConsole.GetString("Reconnection to: {0}"), _server);
 		}
 
 		public void SetConnectionType(ConnectionType ctype)
@@ -365,7 +365,7 @@ namespace Schumix.Irc
 			if(nick)
 				sMyNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
 
-			Log.Notice("Network", sLConsole.Network("Text21"), CType.ToString());
+			Log.Notice("Network", sLConsole.GetString("Connection type: {0}"), CType.ToString());
 
 			try
 			{
@@ -374,15 +374,15 @@ namespace Schumix.Irc
 			}
 			catch(Exception)
 			{
-				Log.Error("Network", sLConsole.Network("Text10"));
+				Log.Error("Network", sLConsole.GetString("Fatal error was happened while established the connection!"));
 				return;
 			}
 
 			if(client.Connected)
-				Log.Success("Network", sLConsole.Network("Text11"));
+				Log.Success("Network", sLConsole.GetString("Successfully established the connection!"));
 			else
 			{
-				Log.Error("Network", sLConsole.Network("Text12"));
+				Log.Error("Network", sLConsole.GetString("Error was happened while established the connection!"));
 				return;
 			}
 
@@ -396,11 +396,11 @@ namespace Schumix.Irc
 				}
 				catch(AuthenticationException e)
 				{
-					Log.Error("Network", sLConsole.Network("Text19"), e.Message);
+					Log.Error("Network", sLConsole.GetString("Certificate not accepted, exception: {0}"), e.Message);
 				}
 				catch(Exception e)
 				{
-					Log.Error("Network", sLConsole.Exception("Error"), e.Message);
+					Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 
 				reader = new StreamReader(networkStream);
@@ -421,9 +421,9 @@ namespace Schumix.Irc
 			}
 
 			Connected = true;
-			sSender.NameInfo(sMyNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
+			sSender.RegisterConnection(IRCConfig.List[_servername].Password, sMyNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
 
-			Log.Notice("Network", sLConsole.Network("Text13"));
+			Log.Notice("Network", sLConsole.GetString("Users' datas are sent."));
 			Online = false;
 			IsAllJoin = false;
 			_enabled = true;
@@ -474,12 +474,12 @@ namespace Schumix.Irc
 		/// </remarks>
 		private void Opcodes()
 		{
-			Log.Notice("Opcodes", sLConsole.Network("Text14"));
+			Log.Notice("Opcodes", sLConsole.GetString("Successfully started th thread."));
 			_timeropcode.Interval = 60*1000;
 			_timeropcode.Elapsed += HandleOpcodesTimer;
 			_timeropcode.Enabled = true;
 			_timeropcode.Start();
-			Log.Notice("Opcodes", sLConsole.Network("Text15"));
+			Log.Notice("Opcodes", sLConsole.GetString("Started the irc data receiving."));
 
 			while(true)
 			{
@@ -497,7 +497,7 @@ namespace Schumix.Irc
 					string IrcMessage;
 					if((IrcMessage = reader.ReadLine()).IsNull())
 					{
-						Log.Error("Opcodes", sLConsole.Network("Text16"));
+						Log.Error("Opcodes", sLConsole.GetString("Do not going data from irc server!"));
 
 						if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 						{
@@ -544,7 +544,7 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					Log.Error("Opcodes", sLConsole.Exception("Error"), e);
+					Log.Error("Opcodes", sLConsole.GetString("Failure details: {0}"), e.Message);
 					Thread.Sleep(1000);
 				}
 			}
@@ -562,7 +562,7 @@ namespace Schumix.Irc
 			}
 			catch(Exception e)
 			{
-				Log.Error("Opcodes", sLConsole.Exception("Error"), e.Message);
+				Log.Error("Opcodes", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 
 			Shutdown = true;
@@ -622,7 +622,7 @@ namespace Schumix.Irc
 				else
 				{
 					if(ConsoleLog.CLog)
-						Log.Notice("HandleIrcCommand", sLConsole.Network("Text18"), opcode);
+						Log.Notice("HandleIrcCommand", sLConsole.GetString("Received unhandled opcode: {0}"), opcode);
 				}
 			}
 		}
@@ -632,7 +632,7 @@ namespace Schumix.Irc
 		/// </summary>
 		private void AutoPing()
 		{
-			Log.Notice("AutoPing", sLConsole.Network("Text14"));
+			Log.Notice("AutoPing", sLConsole.GetString("Successfully started th thread."));
 
 			while(true)
 			{
@@ -647,7 +647,7 @@ namespace Schumix.Irc
 				catch(Exception e)
 				{
 					if(!SchumixBase.ExitStatus && Connected)
-						Log.Error("Ping", sLConsole.Exception("Error"), e.Message);
+						Log.Error("Ping", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 
 				Thread.Sleep(30*1000);

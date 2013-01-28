@@ -37,6 +37,7 @@ namespace Schumix.MantisBTRssAddon
 	sealed class MantisBTRss
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly PLocalization sLocalization = Singleton<PLocalization>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
@@ -200,7 +201,7 @@ namespace Schumix.MantisBTRssAddon
 					catch(Exception e)
 					{
 						errornumber++;
-						Log.Error("MantisBTRss", sLocalization.Exception("Error"), _name, e.Message);
+						Log.Error("MantisBTRss", sLConsole.GetString("[{0}] Failure details: {1}"), _name, e.Message);
 						Thread.Sleep(RssConfig.QueryTime*1000);
 					}
 				}
@@ -208,7 +209,7 @@ namespace Schumix.MantisBTRssAddon
 			catch(Exception e)
 			{
 				errornumber++;
-				Log.Error("MantisBTRss", sLocalization.Exception("Error2"), _name, e.Message);
+				Log.Error("MantisBTRss", sLConsole.GetString("[{0}] Fatal failure details: {1}"), _name, e.Message);
 				Thread.Sleep(RssConfig.QueryTime*1000);
 
 				if(e.Message != "Thread was being aborted")
@@ -241,7 +242,7 @@ namespace Schumix.MantisBTRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("MantisBTRss", sLocalization.Exception("Error"), _name, e.Message);
+				Log.Error("MantisBTRss", sLConsole.GetString("[{0}] Failure details: {1}"), _name, e.Message);
 				Thread.Sleep(RssConfig.QueryTime*1000);
 			}
 

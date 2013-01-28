@@ -37,7 +37,7 @@ namespace Schumix.Framework.Config
 			Version = version;
 			Branch  = branch;
 			WebPage = webpage;
-			Log.Notice("UpdateConfig", sLConsole.UpdateConfig("Text"));
+			Log.Notice("UpdateConfig", sLConsole.GetString("Loaded the Update settings."));
 		}
 	}
 }

@@ -110,6 +110,7 @@ Components/Schumix.LuaEngine/Makefile
 Components/Schumix.PythonEngine/schumix.pythonengine.pc
 Components/Schumix.PythonEngine/Makefile
 Components/Makefile
+Po/Makefile
 Applications/Schumix/schumix
 Applications/Schumix/Makefile
 Applications/Schumix.Config/schumix.config

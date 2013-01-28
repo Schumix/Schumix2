@@ -20,6 +20,7 @@
 
 using System;
 using System.IO;
+using System.Text;
 using System.Collections.Generic;
 using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
@@ -129,13 +130,15 @@ namespace Schumix.Framework
 				var file = new StreamWriter(logfile, true) { AutoFlush = true };
 
 				if(!isfile)
-					file.Write(sLConsole.Log("Text"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+					file.Write(sLConsole.GetString("Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"),
+							time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
 							time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
 							time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
 							time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
 							time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
 				else
-					file.Write(sLConsole.Log("Text2"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
+					file.Write(sLConsole.GetString("\nStarted time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"),
+							time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
 							time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
 							time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
 							time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
@@ -182,6 +185,14 @@ namespace Schumix.Framework
 			}
 		}
 
+		public static void Notice(string source, StringBuilder format)
+		{
+			lock(WriteLock)
+			{
+				Notice(source, format.ToString());
+			}
+		}
+
 		public static void Success(string source, string format)
 		{
 			lock(WriteLock)
@@ -202,6 +213,14 @@ namespace Schumix.Framework
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				LogToFile(GetTime() + string.Format(" S {0}: {1}\n", source, format));
+			}
+		}
+
+		public static void Success(string source, StringBuilder format)
+		{
+			lock(WriteLock)
+			{
+				Success(source, format.ToString());
 			}
 		}
 
@@ -231,6 +250,14 @@ namespace Schumix.Framework
 			}
 		}
 
+		public static void Warning(string source, StringBuilder format)
+		{
+			lock(WriteLock)
+			{
+				Warning(source, format.ToString());
+			}
+		}
+
 		public static void Error(string source, string format)
 		{
 			lock(WriteLock)
@@ -257,6 +284,14 @@ namespace Schumix.Framework
 			}
 		}
 
+		public static void Error(string source, StringBuilder format)
+		{
+			lock(WriteLock)
+			{
+				Error(source, format.ToString());
+			}
+		}
+
 		public static void Debug(string source, string format)
 		{
 			lock(WriteLock)
@@ -280,6 +315,14 @@ namespace Schumix.Framework
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				LogToFile(GetTime() + string.Format(" D {0}: {1}\n", source, format));
+			}
+		}
+
+		public static void Debug(string source, StringBuilder format)
+		{
+			lock(WriteLock)
+			{
+				Debug(source, format.ToString());
 			}
 		}
 
@@ -326,6 +369,14 @@ namespace Schumix.Framework
 			}
 		}
 
+		public static void LargeWarning(StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				LargeWarning(message.ToString());
+			}
+		}
+
 		public static void LargeError(string message)
 		{
 			lock(WriteLock)
@@ -366,6 +417,14 @@ namespace Schumix.Framework
 				
 				Console.WriteLine("**************************************************");
 				Console.ForegroundColor = ConsoleColor.Gray;
+			}
+		}
+
+		public static void LargeError(StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				LargeError(message.ToString());
 			}
 		}
 
@@ -460,6 +519,14 @@ namespace Schumix.Framework
 			}
 		}
 
+		public static void ColorblindMode(StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				ColorblindMode(message.ToString());
+			}
+		}
+
 		public static void ColorblindMode(string source, string format, LogType type = LogType.Notice)
 		{
 			lock(WriteLock)
@@ -468,6 +535,14 @@ namespace Schumix.Framework
 				Console.Write(" {0} {1}: ", GetTypeCharacter(type), source);
 				Console.Write("{0}\n", format);
 				LogToFile(GetTime() + string.Format(" {0} {1}: {2}\n", GetTypeCharacter(type), source, format));
+			}
+		}
+
+		public static void ColorblindMode(string source, StringBuilder format, LogType type = LogType.Notice)
+		{
+			lock(WriteLock)
+			{
+				ColorblindMode(source, format.ToString(), type);
 			}
 		}
 	}
