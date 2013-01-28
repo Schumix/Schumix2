@@ -7,6 +7,15 @@ echo "Running configure"
 echo "Running make"
 make
 
+echo "Locale make and install"
+cd Po
+rm Makefile Makefile.in
+mv pkg_Makefile Makefile
+make
+make install
+mv Makefile pkg_Makefile
+cd ..
+
 rm -rf pkg
 mkdir pkg
 mkdir pkg/Share
@@ -46,6 +55,7 @@ done
 rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.Api.dll Addons/Schumix.Framework.dll schumix.config schumix.installer schumix schumix.server
 cp -rf ./ ../../pkg/usr/lib/schumix
 cd ../../
+cp -rf ./Run/lib/schumix/locale pkg/usr/share/locale
 cd pkg
 #control file
 cd Share
