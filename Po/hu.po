@@ -1267,7 +1267,7 @@ msgstr "Lua script betöltése: {0}"
 
 #: ../Components/Schumix.LuaEngine/LuaEngine.cs:14
 msgid "Exception thrown while loading Lua script: {0} Error: {1}"
-msgstr "Kivétel dobott betöltése közben a Lua script: {0} Error: {1}"
+msgstr "Kivétel dobott betöltése közben a Lua script: {0} Hiba: {1}"
 
 #: ../Components/Schumix.LuaEngine/LuaHelper.cs:6
 msgid ""
@@ -1291,8 +1291,8 @@ msgstr "Python script betöltése: {0}"
 
 #: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
 msgid "Exception thrown while loading Python script. Error: {0} {1}"
-msgstr "Kivétel dobott betöltése közben a Python script. Error: {0} {1}"
+msgstr "Kivétel dobott betöltése közben a Python script. Hiba: {0} {1}"
 
 #: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
 msgid "Exception thrown while loading Python script: {0} Error: {1} {2}"
-msgstr "Kivétel dobott betöltése közben a Python script: {0} Error: {1} {2}"
+msgstr "Kivétel dobott betöltése közben a Python script: {0} Hiba: {1} {2}"
