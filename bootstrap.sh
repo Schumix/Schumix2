@@ -1,1 +1,1 @@
-/home/megax/Asztal/new/autogen.sh
+../Schumix2/autogen.sh
