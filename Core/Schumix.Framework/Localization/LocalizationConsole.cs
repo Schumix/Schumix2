@@ -246,69 +246,6 @@ namespace Schumix.Framework.Localization
 		{
 			switch(Name)
 			{
-				case "Text":
-				{
-					if(Language == "huHU")
-						return "Sikeres kapcsolódás az irc kiszolgálóhoz.";
-					else if(Language == "enUS")
-						return "Successfully connected to IRC server.";
-					else
-						return "Successfully connected to IRC server.";
-				}
-				case "Text2":
-				{
-					if(Language == "huHU")
-						return "Várakozás a kapcsolat feldolgozására.";
-					else if(Language == "enUS")
-						return "Waiting for connection processing.";
-					else
-						return "Waiting for connection processing.";
-				}
-				case "Text3":
-				{
-					if(Language == "huHU")
-						return "Nincs megadva a bot nick neve!";
-					else if(Language == "enUS")
-						return "No such Bot's nickname.";
-					else
-						return "No such Bot's nickname.";
-				}
-				case "Text4":
-				{
-					if(Language == "huHU")
-						return "[SZERVER] ";
-					else if(Language == "enUS")
-						return "[SERVER] ";
-					else
-						return "[SERVER] ";
-				}
-				case "Text5":
-				{
-					if(Language == "huHU")
-						return "Nem létező irc parancs\n";
-					else if(Language == "enUS")
-						return "No such irc command.\n";
-					else
-						return "No such irc command.\n";
-				}
-				case "Text6":
-				{
-					if(Language == "huHU")
-						return "{0}-t már használja valaki!";
-					else if(Language == "enUS")
-						return "{0} already in use.";
-					else
-						return "{0} already in use.";
-				}
-				case "Text7":
-				{
-					if(Language == "huHU")
-						return "Újra próbálom ezzel: {0}";
-					else if(Language == "enUS")
-						return "Retrying with: {0}";
-					else
-						return "Retrying with: {0}";
-				}
 				case "Text8":
 				{
 					if(Language == "huHU")
@@ -344,15 +281,6 @@ namespace Schumix.Framework.Localization
 						return "Bad password for channel!";
 					else
 						return "Bad password for channel!";
-				}
-				case "Text10":
-				{
-					if(Language == "huHU")
-						return "Nem regisztrált!";
-					else if(Language == "enUS")
-						return "You have not registered!";
-					else
-						return "You have not registered!";
 				}
 				case "Text11":
 				{
@@ -425,105 +353,6 @@ namespace Schumix.Framework.Localization
 						return "Cannot join channel (+i)!";
 					else
 						return "Cannot join channel (+i)!";
-				}
-				case "Text18":
-				{
-					if(Language == "huHU")
-						return "[csatlakozott]";
-					else if(Language == "enUS")
-						return "[joined]";
-					else
-						return "[joined]";
-				}
-				case "Text19":
-				{
-					if(Language == "huHU")
-						return "[kilépett innen (left)] {0}";
-					else if(Language == "enUS")
-						return "[left] {0}";
-					else
-						return "[left] {0}";
-				}
-				case "Text20":
-				{
-					if(Language == "huHU")
-						return "[kilépett (quit)] {0}";
-					else if(Language == "enUS")
-						return "[quit] {0}";
-					else
-						return "[quit] {0}";
-				}
-				case "Text21":
-				{
-					if(Language == "huHU")
-						return "[Mostantól {0}-ként ismert]";
-					else if(Language == "enUS")
-						return "[Is now known as {0}]";
-					else
-						return "[Is now known as {0}]";
-				}
-				case "Text22":
-				{
-					if(Language == "huHU")
-						return "[Kirúgta a következő felhasználót: {0} oka: {1}]";
-					else if(Language == "enUS")
-						return "[Kicked that user: {0} reason: {1}]";
-					else
-						return "[Kicked that user: {0} reason: {1}]";
-				}
-				case "Text23":
-				{
-					if(Language == "huHU")
-						return "[Beállítja a módot: {0}]";
-					else if(Language == "enUS")
-						return "[Set mode: {0}]";
-					else
-						return "[Set mode: {0}]";
-				}
-				case "Text24":
-				{
-					if(Language == "huHU")
-						return "[Téma] Új téma: {0}";
-					else if(Language == "enUS")
-						return "[Topic] New topic: {0}";
-					else
-						return "[Topic] New topic: {0}";
-				}
-				case "Text25":
-				{
-					if(Language == "huHU")
-						return "[ACTION] {0}";
-					else if(Language == "enUS")
-						return "[ACTION] {0}";
-					else
-						return "[ACTION] {0}";
-				}
-				case "Text26":
-				{
-					if(Language == "huHU")
-						return "[INVITE] {0} meghívott téged a {1} szobába.";
-					else if(Language == "enUS")
-						return "[INVITE] {0} invites you to join {1}";
-					else
-						return "[INVITE] {0} invites you to join {1}";
-				}
-				case "Text27":
-				{
-					if(Language == "huHU")
-						return "{0} meghívott téged a {1} szobába.";
-					else if(Language == "enUS")
-						return "{0} invites you to join {1}";
-					else
-						return "{0} invites you to join {1}";
-				}
-				case "Text28":
-				{
-					if(Language == "huHU")
-						return "[Téma] {0}";
-					else if(Language == "enUS")
-						return "[Topic] {0}";
-					else
-						return "[Topic] {0}";
 				}
 				default:
 					return string.Empty;
