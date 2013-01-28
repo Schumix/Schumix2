@@ -73,6 +73,7 @@ find . -exec md5sum '{}' \; > ../Share/md5sums
 cd ..
 mv Share DEBIAN
 cd ..
+chown -R root:root pkg
 dpkg-deb --build pkg
 echo "mv pkg.deb schumix.deb"
 mv pkg.deb schumix.deb
