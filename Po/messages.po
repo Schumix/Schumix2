@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-27 15:22:52+0100\n"
-"PO-Revision-Date: 2013-01-27 15:22:53+0100\n"
+"POT-Creation-Date: 2013-01-28 17:22:53+0100\n"
+"PO-Revision-Date: 2013-01-28 17:22:54+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -228,6 +228,73 @@ msgstr ""
 msgid " Seconds."
 msgstr ""
 
+#: ../Core/Schumix.Irc/Sender/Sender.cs:13
+#: ../Core/Schumix.Irc/Sender/Sender.cs:25
+#: ../Core/Schumix.Irc/Sender/Sender.cs:27
+#: ../Core/Schumix.Irc/Sender/Sender.cs:33
+#: ../Core/Schumix.Irc/Sender/Sender.cs:49
+#: ../Core/Schumix.Irc/Sender/Sender.cs:56
+msgid "{0} is not a valid nickname!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:17
+#: ../Core/Schumix.Irc/Sender/Sender.cs:19
+msgid "Channel {0}'s access is denied!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:17
+#: ../Core/Schumix.Irc/Sender/Sender.cs:19
+#: ../Core/Schumix.Irc/Sender/Sender.cs:22
+#: ../Core/Schumix.Irc/Sender/Sender.cs:25
+#: ../Core/Schumix.Irc/Sender/Sender.cs:28
+#: ../Core/Schumix.Irc/Sender/Sender.cs:52
+#: ../Core/Schumix.Irc/Sender/Sender.cs:54
+#: ../Core/Schumix.Irc/Sender/Sender.cs:55
+#: ../Core/Schumix.Irc/Sender/Sender.cs:57
+msgid "{0} is not a valid channel name!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:18
+msgid "Password cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:21
+#: ../Core/Schumix.Irc/Sender/Sender.cs:23
+msgid "Part reason cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:24
+msgid "One of the channels names is not valid!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:29
+msgid "The reason for kicking cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:31
+msgid "Nick cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:32
+msgid "Reason cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:38
+msgid "Quit reason cannot be null or empty!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:44
+msgid "The email address is not valid!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:54
+msgid "Topic cannot be empty or null!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:59
+msgid "Away message cannot be empty or null!"
+msgstr ""
+
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:50
 #: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:6
 msgid "ChannelList: Failure request!"
@@ -408,6 +475,18 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Utilities.cs:26
 msgid "Checking: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Timer.cs:3
+msgid "Successfully loaded the Timer."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Timer.cs:4
+msgid "Successfully saved the Program's started time."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Timer.cs:5
+msgid "The program is loaded under {0}ms."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:4

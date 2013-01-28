@@ -38,7 +38,7 @@ namespace Schumix.Framework
 		{
 			try
 			{
-				Log.Notice("Timer", sLConsole.Timer("Text"));
+				Log.Notice("Timer", sLConsole.GetString("Successfully loaded the Timer."));
 			}
 			catch(Exception e)
 			{
@@ -51,13 +51,13 @@ namespace Schumix.Framework
 		{
 			SW.Start();
 			StartTime = DateTime.Now;
-			Log.Debug("Timer", sLConsole.Timer("Text2"));
+			Log.Debug("Timer", sLConsole.GetString("Successfully saved the Program's started time."));
 		}
 
 		public void Stop()
 		{
 			SW.Stop();
-			Log.Debug("Timer", sLConsole.Timer("Text3"), SW.ElapsedMilliseconds);
+			Log.Debug("Timer", sLConsole.GetString("The program is loaded under {0}ms."), SW.ElapsedMilliseconds);
 		}
 
 		/// <returns>

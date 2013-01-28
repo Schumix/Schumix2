@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-27 15:22:52+0100\n"
+"POT-Creation-Date: 2013-01-28 17:22:53+0100\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -230,6 +230,73 @@ msgstr " perc, "
 msgid " Seconds."
 msgstr " másodperc."
 
+#: ../Core/Schumix.Irc/Sender/Sender.cs:13
+#: ../Core/Schumix.Irc/Sender/Sender.cs:25
+#: ../Core/Schumix.Irc/Sender/Sender.cs:27
+#: ../Core/Schumix.Irc/Sender/Sender.cs:33
+#: ../Core/Schumix.Irc/Sender/Sender.cs:49
+#: ../Core/Schumix.Irc/Sender/Sender.cs:56
+msgid "{0} is not a valid nickname!"
+msgstr "{0} nem érvényes a nick név!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:17
+#: ../Core/Schumix.Irc/Sender/Sender.cs:19
+msgid "Channel {0}'s access is denied!"
+msgstr "{0} csatorna elérése le van tiltva!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:17
+#: ../Core/Schumix.Irc/Sender/Sender.cs:19
+#: ../Core/Schumix.Irc/Sender/Sender.cs:22
+#: ../Core/Schumix.Irc/Sender/Sender.cs:25
+#: ../Core/Schumix.Irc/Sender/Sender.cs:28
+#: ../Core/Schumix.Irc/Sender/Sender.cs:52
+#: ../Core/Schumix.Irc/Sender/Sender.cs:54
+#: ../Core/Schumix.Irc/Sender/Sender.cs:55
+#: ../Core/Schumix.Irc/Sender/Sender.cs:57
+msgid "{0} is not a valid channel name!"
+msgstr "{0} nem érvényes a csatorna név!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:18
+msgid "Password cannot be empty or null!"
+msgstr "A jelszó nem lehet üres vagy nulla!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:21
+#: ../Core/Schumix.Irc/Sender/Sender.cs:23
+msgid "Part reason cannot be empty or null!"
+msgstr "Lelépés oka nem lehet üres vagy nulla!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:24
+msgid "One of the channels names is not valid!"
+msgstr "Az egyik csatorna neve nem érvényes!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:29
+msgid "The reason for kicking cannot be empty or null!"
+msgstr "Kirúgás oka nem lehet üres vagy nulla!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:31
+msgid "Nick cannot be empty or null!"
+msgstr "Nick nem lehet üres vagy nulla!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:32
+msgid "Reason cannot be empty or null!"
+msgstr "Oka nem lehet üres vagy nulla!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:38
+msgid "Quit reason cannot be null or empty!"
+msgstr "Kilépés oka nem lehet üres vagy nulla!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:44
+msgid "The email address is not valid!"
+msgstr "Az e-mail cím nem érvényes!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:54
+msgid "Topic cannot be empty or null!"
+msgstr "Téma nem lehet üres vagy nulla!"
+
+#: ../Core/Schumix.Irc/Sender/Sender.cs:59
+msgid "Away message cannot be empty or null!"
+msgstr "Távollét üzenet nem lehet üres vagy nulla!"
+
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:50
 #: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:6
 msgid "ChannelList: Failure request!"
@@ -413,6 +480,18 @@ msgstr "Sql kapcsolat összeomlott."
 #: ../Core/Schumix.Framework/Utilities.cs:26
 msgid "Checking: {0}"
 msgstr "Ellenőrzése: {0}"
+
+#: ../Core/Schumix.Framework/Timer.cs:3
+msgid "Successfully loaded the Timer."
+msgstr "Timer sikeresen elindult."
+
+#: ../Core/Schumix.Framework/Timer.cs:4
+msgid "Successfully saved the Program's started time."
+msgstr "Program indulási időpontja mentésre került."
+
+#: ../Core/Schumix.Framework/Timer.cs:5
+msgid "The program is loaded under {0}ms."
+msgstr "A program {0}ms alatt indult el."
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:4
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:5
@@ -1163,7 +1242,8 @@ msgstr "Fordítás sikeresen befejeződött."
 
 #: ../Components/Schumix.Updater/Update.cs:18
 msgid "Sql files update is started. The setted database will be updated."
-msgstr "Megindult az sql fájlok frissítése. A beállított adatbázis fog frissülni."
+msgstr ""
+"Megindult az sql fájlok frissítése. A beállított adatbázis fog frissülni."
 
 #: ../Components/Schumix.Updater/Update.cs:18
 msgid "Sql update finished."
