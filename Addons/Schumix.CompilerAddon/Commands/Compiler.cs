@@ -339,7 +339,9 @@ namespace Schumix.CompilerAddon.Commands
 		private bool Ban(string data, IRCMessage sIRCMessage)
 		{
 			// Environment and Security
-			if(data.Contains("Environment") || data.Contains("System.Security"))
+			if(data.Contains("Environment.Exit") || data.Contains("Environment.SetEnvironmentVariable") ||
+			   data.Contains("Environment.ExpandEnvironmentVariables") || data.Contains("Environment.FailFast") ||
+			   data.Contains("System.Security"))
 			{
 				Warning(sIRCMessage);
 				return true;
