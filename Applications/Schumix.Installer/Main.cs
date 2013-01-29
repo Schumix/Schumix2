@@ -55,14 +55,14 @@ namespace Schumix.Installer
 
 			Log.Notice("Installer", sLConsole.Installer("Text2"));
 			string version = sUtilities.GetUrl(GitUrl + "/tags");
-			version = version.Remove(0, version.IndexOf("<span class=\"alt-download-links\">"));
+			version = version.Remove(0, version.IndexOf("<ol class=\"release-list\">"));
 			version = version.Remove(0, version.IndexOf("<a href=\"") + "<a href=\"".Length);
-			version = version.Substring(0, version.IndexOf("\" rel=\"nofollow\">"));
-			version = version.Substring(version.IndexOf("zipball/") + "zipball/".Length);
+			version = version.Substring(0, version.IndexOf("\" class=\"detail-link\""));
+			version = version.Substring(version.IndexOf("tree/") + "tree/".Length);
 
 			try
 			{
-				new DownloadFile(GitUrl + "/zipball/" + version);
+				new DownloadFile(GitUrl + "/archive/" + version + ".zip");
 				Log.Success("Installer", sLConsole.Installer("Text6"));
 			}
 			catch

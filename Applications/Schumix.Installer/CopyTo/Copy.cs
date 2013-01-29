@@ -33,24 +33,40 @@ namespace Schumix.Installer.CopyTo
 		public Copy(string Dir)
 		{
 			sUtilities.CreateDirectory("Addons");
-			var dir = new DirectoryInfo(Dir + "/Run/Release/Addons");
+			string ndir = Dir;
+
+			if(Environment.Is64BitOperatingSystem)
+				Dir = Dir + "/Run/Release_x64";
+			else
+				Dir = Dir + "/Run/Release";
+
+			var dir = new DirectoryInfo(Dir + "/Addons");
 
 			foreach(var file in dir.GetFiles())
 			{
 				if(file.Name.ToLower().Contains(".db3"))
 					continue;
 
-				File.Move(Dir + "/Run/Release/Addons/" + file.Name, "Addons/" + file.Name);
+				File.Move(Dir + "/Addons/" + file.Name, "Addons/" + file.Name);
 			}
 
-			dir = new DirectoryInfo(Dir + "/Run/Release");
+			if(Directory.Exists(ndir + "/Scripts"))
+				Directory.Move(ndir + "/Scripts", "Scripts");
+
+			if(Directory.Exists(Dir + "/locale"))
+				Directory.Move(Dir + "/locale", "locale");
+
+			if(Directory.Exists(ndir + "/Configs"))
+				Directory.Move(ndir + "/Configs", "Configs");
+
+			dir = new DirectoryInfo(Dir);
 
 			foreach(var file in dir.GetFiles())
 			{
 				if(File.Exists(file.Name))
 					continue;
 
-				File.Move(Dir + "/Run/Release/" + file.Name, file.Name);
+				File.Move(Dir + "/" + file.Name, file.Name);
 			}
 		}
 	}

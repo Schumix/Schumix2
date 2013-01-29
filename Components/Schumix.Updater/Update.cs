@@ -53,10 +53,10 @@ namespace Schumix.Updater
 			{
 				Log.Notice("Update", sLConsole.GetString("Searching for new stable version is started."));
 				string version = sUtilities.GetUrl(UpdateConfig.WebPage + "/tags");
-				version = version.Remove(0, version.IndexOf("<span class=\"alt-download-links\">"));
+				version = version.Remove(0, version.IndexOf("<ol class=\"release-list\">"));
 				version = version.Remove(0, version.IndexOf("<a href=\"") + "<a href=\"".Length);
-				version = version.Substring(0, version.IndexOf("\" rel=\"nofollow\">"));
-				version = version.Substring(version.IndexOf("zipball/") + "zipball/".Length);
+				version = version.Substring(0, version.IndexOf("\" class=\"detail-link\""));
+				version = version.Substring(version.IndexOf("tree/") + "tree/".Length);
 
 				var v1 = new Version(version.Remove(0, 1, "v"));
 				var v2 = new Version(Schumix.Framework.Config.Consts.SchumixVersion);
@@ -80,7 +80,7 @@ namespace Schumix.Updater
 
 				try
 				{
-					new DownloadFile(UpdateConfig.WebPage + "/zipball/" + version);
+					new DownloadFile(UpdateConfig.WebPage + "/archive/" + version + ".zip");
 					Log.Success("Update", sLConsole.GetString("Successfully downloaded new version."));
 				}
 				catch
@@ -123,7 +123,7 @@ namespace Schumix.Updater
 
 				try
 				{
-					new DownloadFile(UpdateConfig.WebPage + "/zipball/" + UpdateConfig.Branch);
+					new DownloadFile(UpdateConfig.WebPage + "/archive/" + UpdateConfig.Branch + ".zip");
 					Log.Success("Update", sLConsole.GetString("Successfully downloaded new version."));
 				}
 				catch

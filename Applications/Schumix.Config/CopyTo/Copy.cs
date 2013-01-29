@@ -30,7 +30,14 @@ namespace Schumix.Config.CopyTo
 		/// </summary>
 		public Copy(string Dir, string Addons, string Configs)
 		{
-			var dir = new DirectoryInfo(Dir + "/Run/Release/Addons");
+			string ndir = Dir;
+			
+			if(Environment.Is64BitOperatingSystem)
+				Dir = Dir + "/Run/Release_x64";
+			else
+				Dir = Dir + "/Run/Release";
+
+			var dir = new DirectoryInfo(Dir + "/Addons");
 
 			foreach(var file in dir.GetFiles())
 			{
@@ -40,10 +47,10 @@ namespace Schumix.Config.CopyTo
 				if(File.Exists(Addons + "/" + file.Name))
 					File.Delete(Addons + "/" + file.Name);
 
-				File.Move(Dir + "/Run/Release/Addons/" + file.Name, Addons + "/" + file.Name);
+				File.Move(Dir + "/Addons/" + file.Name, Addons + "/" + file.Name);
 			}
 
-			dir = new DirectoryInfo(Dir + "/Run/Release");
+			dir = new DirectoryInfo(Dir);
 
 			foreach(var file in dir.GetFiles())
 			{
@@ -53,8 +60,14 @@ namespace Schumix.Config.CopyTo
 				if(File.Exists(file.Name))
 					File.Delete(file.Name);
 
-				File.Move(Dir + "/Run/Release/" + file.Name, file.Name);
+				File.Move(Dir + "/" + file.Name, file.Name);
 			}
+
+			if(Directory.Exists(ndir + "/Scripts"))
+				Directory.Move(ndir + "/Scripts", "Scripts");
+			
+			if(Directory.Exists(Dir + "/locale"))
+				Directory.Move(Dir + "/locale", "locale");
 
 			dir = new DirectoryInfo(Configs);
 
