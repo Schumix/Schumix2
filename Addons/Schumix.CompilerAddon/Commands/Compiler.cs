@@ -341,7 +341,9 @@ namespace Schumix.CompilerAddon.Commands
 			// Environment and Security
 			if(data.Contains("Environment.Exit") || data.Contains("Environment.SetEnvironmentVariable") ||
 			   data.Contains("Environment.ExpandEnvironmentVariables") || data.Contains("Environment.FailFast") ||
-			   data.Contains("System.Security"))
+			   data.Contains("Environment.GetLogicalDrives") || data.Contains("Environment.GetEnvironmentVariables") ||
+			   data.Contains("Environment.CommandLine") || data.Contains("Environment.CurrentDirectory") ||
+			   data.Contains("Environment.GetFolderPath") || data.Contains("System.Security"))
 			{
 				Warning(sIRCMessage);
 				return true;
