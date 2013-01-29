@@ -2,9 +2,7 @@
 
 config_dir="$HOME/.Schumix/Configs"
 
-if [ -e  $config_dir ]; then
-	echo "";
-else
+if [ ! -e  $config_dir ]; then
 	mkdir $config_dir
 fi
 
