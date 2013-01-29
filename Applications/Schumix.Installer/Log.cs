@@ -47,7 +47,7 @@ namespace Schumix.Installer
 			string filename = "Logs/" + _FileName;
 			var filesize = new FileInfo(filename);
 
-			if(filesize.Length >= 10000000)
+			if(filesize.Length >= 10 * 1024 * 1024)
 			{
 				File.Delete(filename);
 				sUtilities.CreateFile(filename);
@@ -62,15 +62,16 @@ namespace Schumix.Installer
 
 		public static void Initialize()
 		{
-			Initialize("Schumix.log");
+			Initialize("Installer.log");
 		}
-
+		
 		public static void Initialize(string FileName)
 		{
 			bool isfile = false;
 			_FileName = FileName;
 			var time = DateTime.Now;
 			sUtilities.CreateDirectory("Logs");
+
 			string logfile = "Logs/" + _FileName;
 
 			if(File.Exists(logfile))
@@ -81,17 +82,17 @@ namespace Schumix.Installer
 
 			if(!isfile)
 				file.Write(sLConsole.Log("Text"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
-						time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
-						time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
-						time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
-						time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
+				           time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
+				           time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
+				           time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
+				           time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
 			else
 				file.Write(sLConsole.Log("Text2"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
-						time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
-						time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
-						time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
-						time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
-
+				           time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
+				           time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
+				           time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
+				           time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
+				
 			file.Close();
 		}
 
