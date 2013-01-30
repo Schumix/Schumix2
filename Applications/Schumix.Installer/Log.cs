@@ -71,7 +71,6 @@ namespace Schumix.Installer
 			_FileName = FileName;
 			var time = DateTime.Now;
 			sUtilities.CreateDirectory("Logs");
-
 			string logfile = "Logs/" + _FileName;
 
 			if(File.Exists(logfile))
