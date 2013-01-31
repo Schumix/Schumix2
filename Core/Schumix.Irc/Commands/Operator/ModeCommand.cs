@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Text.RegularExpressions;
 using Schumix.Api.Irc;
 using Schumix.Irc.Util;
 using Schumix.Framework;
@@ -28,6 +29,8 @@ namespace Schumix.Irc.Commands
 {
 	public abstract partial class CommandHandler
 	{
+		private Regex ModeRegex = new Regex(@"^[a-zA-Z]{0,4}$");
+
 		protected void HandleMode(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
@@ -61,6 +64,12 @@ namespace Schumix.Irc.Commands
 			if(rank.Length > 5)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, "Túl sok rang változtatást adtál meg! Maximum 4-et lehet.");
+				return;
+			}
+
+			if(!ModeRegex.IsMatch(rank.Substring(1)))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, "Csak angol abc betűivel lehet rangot megadni!");
 				return;
 			}
 
