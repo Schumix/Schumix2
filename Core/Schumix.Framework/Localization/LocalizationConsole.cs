@@ -247,6 +247,69 @@ namespace Schumix.Framework.Localization
 		{
 			switch(Name)
 			{
+				case "Text":
+				{
+					if(Language == "huHU")
+						return "Nincs elég paraméter megadva!";
+					else if(Language == "enUS")
+						return "Not enough parameters!";
+					else
+						return "Not enough parameters!";
+				}
+				case "Text2":
+				{
+					if(Language == "huHU")
+						return "Csatorna kulcs már megvan adva!";
+					else if(Language == "enUS")
+						return "Channel key already set!";
+					else
+						return "Channel key already set!";
+				}
+				case "Text3":
+				{
+					if(Language == "huHU")
+						return "A csatorna nem támogatja a megadott módot!";
+					else if(Language == "enUS")
+						return "Channel doesn't support modes!";
+					else
+						return "Channel doesn't support modes!";
+				}
+				case "Text4":
+				{
+					if(Language == "huHU")
+						return "Nem vagyok csatorna operátor!";
+					else if(Language == "enUS")
+						return "I'm not channel operator!";
+					else
+						return "I'm not channel operator!";
+				}
+				case "Text5":
+				{
+					if(Language == "huHU")
+						return "Nincs ezen a csatornán!";
+					else if(Language == "enUS")
+						return "They aren't on that channel!";
+					else
+						return "They aren't on that channel!";
+				}
+				case "Text6":
+				{
+					if(Language == "huHU")
+						return "Ismeretlen mód a csatornához!";
+					else if(Language == "enUS")
+						return "Is unknown mode char to me for [channel]!";
+					else
+						return "Is unknown mode char to me for [channel]!";
+				}
+				case "Text7":
+				{
+					if(Language == "huHU")
+						return "Nincs ilyen nick: {0}";
+					else if(Language == "enUS")
+						return "No such nick: {0}";
+					else
+						return "No such nick: {0}";
+				}
 				case "Text8":
 				{
 					if(Language == "huHU")
@@ -354,6 +417,24 @@ namespace Schumix.Framework.Localization
 						return "Cannot join channel (+i)!";
 					else
 						return "Cannot join channel (+i)!";
+				}
+				case "Text18":
+				{
+					if(Language == "huHU")
+						return "Nem vagyok csatorna tulajdonos!";
+					else if(Language == "enUS")
+						return "I'm not a channel owner!";
+					else
+						return "I'm not a channel owner!";
+				}
+				case "Text19":
+				{
+					if(Language == "huHU")
+						return "Nem vagyok csatorna admin!";
+					else if(Language == "enUS")
+						return "I'm not a channel admin!";
+					else
+						return "I'm not a channel admin!";
 				}
 				default:
 					return string.Empty;

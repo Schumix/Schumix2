@@ -195,6 +195,15 @@ namespace Schumix.Irc
 			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
 			IrcRegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
 			IrcRegisterHandler(ReplyCode.RPL_TOPIC,            HandleInitialTopic);
+			IrcRegisterHandler(ReplyCode.ERR_NEEDMOREPARAMS,   HandleNeedMoreParams);
+			IrcRegisterHandler(ReplyCode.ERR_KEYSET,           HandleKeySet);
+			IrcRegisterHandler(ReplyCode.ERR_CHANOPRIVSNEEDED, HandleChanopPrivsNeeded);
+			IrcRegisterHandler(460,                            HandleChanopPrivsNeeded);
+			IrcRegisterHandler(ReplyCode.ERR_USERNOTINCHANNEL, HandleUserNotinChannel);
+			IrcRegisterHandler(ReplyCode.ERR_UNKNOWNMODE,      HandleUnknownMode);
+			IrcRegisterHandler(ReplyCode.ERR_NOSUCHNICK,       HandleNoSuchNick);
+			IrcRegisterHandler(499,                            HandleNotAChannelOwner);
+			IrcRegisterHandler(974,                            HandleNotAChannelAdmin);
 
 			Task.Factory.StartNew(() =>
 			{

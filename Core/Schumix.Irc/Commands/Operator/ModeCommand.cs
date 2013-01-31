@@ -139,6 +139,7 @@ namespace Schumix.Irc.Commands
 			if(error != string.Empty)
 				sSendMessage.SendChatMessage(sIRCMessage, error + SchumixBase.Colon + SchumixBase.Space + sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 
+			ModePrivmsg = sIRCMessage.Channel;
 			sSender.Mode(sIRCMessage.Channel, status + rank2, name.Remove(0, 1, SchumixBase.Space));
 		}
 	}

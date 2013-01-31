@@ -582,6 +582,57 @@ namespace Schumix.Irc
 				sChannelList.List[sIRCMessage.Channel.ToLower()].IsNameList = true;
 		}
 
+		protected void HandleNeedMoreParams(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text"));
+		}
+
+		protected void HandleKeySet(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text2"));
+		}
+
+		protected void HandleNoChanModes(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text3"));
+		}
+
+		protected void HandleChanopPrivsNeeded(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text4"));
+		}
+
+		protected void HandleUserNotinChannel(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text5"));
+		}
+
+		protected void HandleUnknownMode(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text6"));
+		}
+
+		protected void HandleNoSuchNick(IRCMessage sIRCMessage)
+		{
+			if(ModePrivmsg != string.Empty || ModePrivmsg != sMyNickInfo.NickStorage)
+			{
+				if(sIRCMessage.Info.Length < 4)
+					return;
+
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text7"), sIRCMessage.Info[3]);
+			}
+		}
+
+		protected void HandleNotAChannelOwner(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text18"));
+		}
+
+		protected void HandleNotAChannelAdmin(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text19"));
+		}
+
 		/// <summary>
 		///     
 		/// </summary>
