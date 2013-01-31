@@ -42,6 +42,35 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			string rank = sIRCMessage.Info[4].ToLower();
+			
+			if(rank.Length > 5)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, "Túl sok rang változtatást adtál meg! Maximum 4-et lehet.");
+				return;
+			}
+
+			if(rank.Split('+').Length == 1 && rank.Split('-').Length == 1)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, "+ vagy - jel megadása kötelező!");
+				return;
+			}
+			
+			if(!ModeRegex.IsMatch(rank.Substring(1)))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, "Csak angol abc betűivel lehet rangot megadni!");
+				return;
+			}
+
+			foreach(var c in rank.Substring(1).ToCharArray())
+			{
+				if(Rfc2812Util.CharToChannelMode(c).ToString().IsNumber())
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Valemelyik betű nem rang! Kérlek keresd meg melyik a hibás!");
+					return;
+				}
+			}
+
 			if(sIRCMessage.Info.Length == 5)
 			{
 				sSender.Mode(sIRCMessage.Channel, sIRCMessage.Info[4].ToLower());
@@ -54,36 +83,11 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			bool StringEmpty = false;
+			string name = string.Empty;
 			string error = string.Empty;
 			string rank2 = string.Empty;
 			string status = string.Empty;
-			string name = string.Empty;
-			bool StringEmpty = false;
-			string rank = sIRCMessage.Info[4].ToLower();
-
-			if(rank.Length > 5)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, "Túl sok rang változtatást adtál meg! Maximum 4-et lehet.");
-				return;
-			}
-
-			if(!ModeRegex.IsMatch(rank.Substring(1)))
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, "Csak angol abc betűivel lehet rangot megadni!");
-				return;
-			}
-
-			if(rank.Split('+').Length > 2 || rank.Split('-').Length > 2)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, "Túl sok a + vagy - jel!");
-				return;
-			}
-
-			if(rank.Split('+').Length >= 2 && rank.Split('-').Length >= 2)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, "Egyszerre adtál meg + és - jelet!");
-				return;
-			}
 
 			if(sIRCMessage.Info.Length >= 10)
 			{
