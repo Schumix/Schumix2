@@ -55,7 +55,44 @@ namespace Schumix.Irc.Commands
 			string rank2 = string.Empty;
 			string status = string.Empty;
 			string name = string.Empty;
+			bool StringEmpty = false;
 			string rank = sIRCMessage.Info[4].ToLower();
+
+			if(rank.Length > 5)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, "Túl sok rang változtatást adtál meg! Maximum 4-et lehet.");
+				return;
+			}
+
+			if(rank.Split('+').Length > 2 || rank.Split('-').Length > 2)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, "Túl sok a + vagy - jel!");
+				return;
+			}
+
+			if(rank.Split('+').Length >= 2 && rank.Split('-').Length >= 2)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, "Egyszerre adtál meg + és - jelet!");
+				return;
+			}
+
+			if(sIRCMessage.Info.Length >= 10)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, "Túl sok név lett megadva! Maximum 4-et lehet.");
+				return;
+			}
+
+			if(rank.Length-1 > sIRCMessage.Info.Length-5)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, "Több rangot adtál meg mint ahány nevet!");
+				return;
+			}
+
+			if(rank.Length-1 < sIRCMessage.Info.Length-5)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, "Több nevet adtál meg mint ahány rangot!");
+				return;
+			}
 
 			if(rank.Contains(Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString()))
 				status = Rfc2812Util.ModeActionToChar(ModeAction.Remove).ToString();
@@ -76,7 +113,12 @@ namespace Schumix.Irc.Commands
 				}
 			}
 			else if(sIRCMessage.Info.Length >= 6 && !Rfc2812Util.IsValidNick(sIRCMessage.Info[5]) && sIRCMessage.Info[5].ToLower() != sMyNickInfo.NickStorage.ToLower())
-				error += ", " + sIRCMessage.Info[5];
+			{
+				if(sIRCMessage.Info[5] != string.Empty)
+					error += ", " + sIRCMessage.Info[5];
+				else
+					StringEmpty = true;
+			}
 			else if(sIRCMessage.Info.Length >= 6 && Rfc2812Util.IsValidNick(sIRCMessage.Info[5]) && sIRCMessage.Info[5].ToLower() == sMyNickInfo.NickStorage.ToLower())
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("mode", sIRCMessage.Channel, sIRCMessage.ServerName));
 
@@ -94,7 +136,12 @@ namespace Schumix.Irc.Commands
 				}
 			}
 			else if(sIRCMessage.Info.Length >= 7 && !Rfc2812Util.IsValidNick(sIRCMessage.Info[6]) && sIRCMessage.Info[6].ToLower() != sMyNickInfo.NickStorage.ToLower())
-				error += ", " + sIRCMessage.Info[6];
+			{
+				if(sIRCMessage.Info[6] != string.Empty)
+					error += ", " + sIRCMessage.Info[6];
+				else
+					StringEmpty = true;
+			}
 			else if(sIRCMessage.Info.Length >= 7 && Rfc2812Util.IsValidNick(sIRCMessage.Info[6]) && sIRCMessage.Info[6].ToLower() == sMyNickInfo.NickStorage.ToLower())
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("mode", sIRCMessage.Channel, sIRCMessage.ServerName));
 
@@ -112,7 +159,12 @@ namespace Schumix.Irc.Commands
 				}
 			}
 			else if(sIRCMessage.Info.Length >= 8 && !Rfc2812Util.IsValidNick(sIRCMessage.Info[7]) && sIRCMessage.Info[7].ToLower() != sMyNickInfo.NickStorage.ToLower())
-				error += ", " + sIRCMessage.Info[7];
+			{
+				if(sIRCMessage.Info[7] != string.Empty)
+					error += ", " + sIRCMessage.Info[7];
+				else
+					StringEmpty = true;
+			}
 			else if(sIRCMessage.Info.Length >= 8 && Rfc2812Util.IsValidNick(sIRCMessage.Info[7]) && sIRCMessage.Info[7].ToLower() == sMyNickInfo.NickStorage.ToLower())
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("mode", sIRCMessage.Channel, sIRCMessage.ServerName));
 
@@ -130,7 +182,12 @@ namespace Schumix.Irc.Commands
 				}
 			}
 			else if(sIRCMessage.Info.Length >= 9 && !Rfc2812Util.IsValidNick(sIRCMessage.Info[8]) && sIRCMessage.Info[8].ToLower() != sMyNickInfo.NickStorage.ToLower())
-				error += ", " + sIRCMessage.Info[8];
+			{
+				if(sIRCMessage.Info[8] != string.Empty)
+					error += ", " + sIRCMessage.Info[8];
+				else
+					StringEmpty = true;
+			}
 			else if(sIRCMessage.Info.Length >= 9 && Rfc2812Util.IsValidNick(sIRCMessage.Info[8]) && sIRCMessage.Info[8].ToLower() == sMyNickInfo.NickStorage.ToLower())
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("mode", sIRCMessage.Channel, sIRCMessage.ServerName));
 
@@ -138,6 +195,9 @@ namespace Schumix.Irc.Commands
 
 			if(error != string.Empty)
 				sSendMessage.SendChatMessage(sIRCMessage, error + SchumixBase.Colon + SchumixBase.Space + sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+
+			if(StringEmpty)
+				sSendMessage.SendChatMessage(sIRCMessage, "Szóközöket adtál meg név helyett!");
 
 			ModePrivmsg = sIRCMessage.Channel;
 			sSender.Mode(sIRCMessage.Channel, status + rank2, name.Remove(0, 1, SchumixBase.Space));
