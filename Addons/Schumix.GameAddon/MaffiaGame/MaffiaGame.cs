@@ -449,7 +449,7 @@ namespace Schumix.GameAddon.MaffiaGames
 							}
 
 							function.Value.RName = string.Empty;
-							sSendMessage.SendCMPrivmsg(function.Key, "Meghalt azon személy akit kiválasztottál. Kérlek válassz mást!");
+							sSendMessage.SendCMPrivmsg(function.Key, sLManager.GetCommandText("maffiagame/base/removeplayer2", _channel, _servername));
 						}
 					}
 				}
