@@ -132,14 +132,8 @@ namespace Schumix.Framework.Client
 		public void ScsRandHandler(SchumixPacket pck, string hst)
 		{
 			// read random value.
-			//var rand = pck.Read<int>();
-			// read channel
-			//var chan = pck.Read<string>();
-			//var sBot = Singleton<AlarisBot>.Instance;
-			//if(string.IsNullOrEmpty(chan) || chan == "0")
-			//	chan = sBot.acs_rand_request_channel;
-
-			//sBot.SendMsg(chan, "SCS sent random: " + rand.ToString());
+			var rand = pck.Read<int>();
+			Log.Notice("Random", sLConsole.GetString("SCS sent random: {0}"), rand);
 		}
 
 		private void CloseHandler(SchumixPacket pck, string hst)
