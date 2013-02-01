@@ -39,7 +39,8 @@ namespace Schumix.Irc.Ignore
 
 		public bool IsIgnore(string Name)
 		{
-			return Contains(Name.ToLower());
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_nicks WHERE Nick = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
+			return !db.IsNull();
 		}
 
 		public void AddConfig()
