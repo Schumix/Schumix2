@@ -599,7 +599,7 @@ namespace Schumix.Irc
 
 		protected void HandleChanopPrivsNeeded(IRCMessage sIRCMessage)
 		{
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text4"));
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text19"));
 		}
 
 		protected void HandleUserNotinChannel(IRCMessage sIRCMessage)
@@ -625,7 +625,7 @@ namespace Schumix.Irc
 
 		protected void HandleNotAChannelOwner(IRCMessage sIRCMessage)
 		{
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text18"));
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text19"));
 		}
 
 		protected void HandleNotAChannelAdmin(IRCMessage sIRCMessage)

@@ -274,15 +274,6 @@ namespace Schumix.Framework.Localization
 					else
 						return "Channel doesn't support modes!";
 				}
-				case "Text4":
-				{
-					if(Language == "huHU")
-						return "Nem vagyok csatorna operátor!";
-					else if(Language == "enUS")
-						return "I'm not channel operator!";
-					else
-						return "I'm not channel operator!";
-				}
 				case "Text5":
 				{
 					if(Language == "huHU")
@@ -418,23 +409,14 @@ namespace Schumix.Framework.Localization
 					else
 						return "Cannot join channel (+i)!";
 				}
-				case "Text18":
-				{
-					if(Language == "huHU")
-						return "Nem vagyok csatorna tulajdonos!";
-					else if(Language == "enUS")
-						return "I'm not a channel owner!";
-					else
-						return "I'm not a channel owner!";
-				}
 				case "Text19":
 				{
 					if(Language == "huHU")
-						return "Nem vagyok csatorna admin!";
+						return "Nincs elég jogom a rang módosításához!";
 					else if(Language == "enUS")
-						return "I'm not a channel admin!";
+						return "";
 					else
-						return "I'm not a channel admin!";
+						return "";
 				}
 				default:
 					return string.Empty;

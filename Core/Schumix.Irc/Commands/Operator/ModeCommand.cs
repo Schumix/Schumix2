@@ -46,7 +46,7 @@ namespace Schumix.Irc.Commands
 			
 			if(rank.Length > 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, "Túl sok rang változtatást adtál meg! Maximum 4-et lehet.");
+				sSendMessage.SendChatMessage(sIRCMessage, "Túl sok rang változtatást adtál meg! Maximum 4-et lehet!");
 				return;
 			}
 
@@ -91,7 +91,7 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length >= 10)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, "Túl sok név lett megadva! Maximum 4-et lehet.");
+				sSendMessage.SendChatMessage(sIRCMessage, "Túl sok név lett megadva! Maximum 4-et lehet!");
 				return;
 			}
 
