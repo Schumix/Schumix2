@@ -15,7 +15,7 @@ Under Mono at least the `2.10` or higher is needed.
 
 ## Windows
 
-Szükséges a nyelvi fájlok lefordításához a `gettext`. Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
+Monodevelop használatakor szükséges a nyelvi fájlok lefordításához a `gettext`. Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
 The compiling is simple. Open the `Schumix.sln` file. Choose the configuration that fits for you and compile it.
 
 ## Linux

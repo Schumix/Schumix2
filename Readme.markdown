@@ -15,7 +15,7 @@ Monon jelenleg minimum követelmény a `2.10` vagy újabb.
 
 ## Windows
 
-Szükséges a nyelvi fájlok lefordításához a `gettext`. Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
+Monodevelop használatakor szükséges a nyelvi fájlok lefordításához a `gettext`. Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
 A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
 
 ## Linux
