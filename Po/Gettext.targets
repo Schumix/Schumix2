@@ -31,8 +31,8 @@
 			<_msgmerge>msgmerge</_msgmerge>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-			<_msgfmt>..\Dependencies\GnuWin32\bin\msgfmt.exe</_msgfmt>
-			<_msgmerge>..\Dependencies\GnuWin32\bin\msgmerge.exe</_msgmerge>
+			<_msgfmt>..\Dependencies\GnuWin32\msgfmt.exe</_msgfmt>
+			<_msgmerge>..\Dependencies\GnuWin32\msgmerge.exe</_msgmerge>
 		</PropertyGroup>
 	</Target>
 	
