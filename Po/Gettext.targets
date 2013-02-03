@@ -30,9 +30,9 @@
 			<_msgfmt>msgfmt</_msgfmt>
 			<_msgmerge>msgmerge</_msgmerge>
 		</PropertyGroup>
-		<PropertyGroup Condition="Exists('$(MSBuildProgramFiles32)\GnuWin32\bin\msgfmt.exe')">
-			<_msgfmt>$(MSBuildProgramFiles32)\GnuWin32\bin\msgfmt.exe</_msgfmt>
-			<_msgmerge>Exists('$(MSBuildProgramFiles32)\GnuWin32\bin\msgmerge.exe</_msgmerge>
+		<PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+			<_msgfmt>..\Dependencies\GnuWin32\bin\msgfmt.exe</_msgfmt>
+			<_msgmerge>..\Dependencies\GnuWin32\bin\msgmerge.exe</_msgmerge>
 		</PropertyGroup>
 	</Target>
 	
