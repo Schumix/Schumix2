@@ -142,9 +142,14 @@ namespace Schumix.Irc
 			InitializeCommandHandler();
 			InitializeCommandMgr();
 			Task.Factory.StartNew(() => sMyChannelInfo.ChannelList());
-			sIgnoreNickName.AddConfig();
-			sIgnoreChannel.AddConfig();
-			sIgnoreAddon.AddConfig();
+			sIgnoreNickName.LoadConfig();
+			sIgnoreNickName.LoadSql();
+			sIgnoreChannel.LoadConfig();
+			sIgnoreChannel.LoadSql();
+			sIgnoreAddon.LoadConfig();
+			sIgnoreAddon.LoadSql();
+			sIgnoreCommand.LoadSql();
+			sIgnoreIrcCommand.LoadSql();
 		}
 
 		public void InitializeOpcodesAndPing()

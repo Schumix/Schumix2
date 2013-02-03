@@ -1222,11 +1222,11 @@ namespace Schumix.Console.Commands
 			case "config":
 				new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile, SchumixConfig.ColorBindMode);
 				sIrcBase.Networks[_servername].sIgnoreAddon.RemoveConfig();
-				sIrcBase.Networks[_servername].sIgnoreAddon.AddConfig();
+				sIrcBase.Networks[_servername].sIgnoreAddon.LoadConfig();
 				sIrcBase.Networks[_servername].sIgnoreChannel.RemoveConfig();
-				sIrcBase.Networks[_servername].sIgnoreChannel.AddConfig();
+				sIrcBase.Networks[_servername].sIgnoreChannel.LoadConfig();
 				sIrcBase.Networks[_servername].sIgnoreNickName.RemoveConfig();
-				sIrcBase.Networks[_servername].sIgnoreNickName.AddConfig();
+				sIrcBase.Networks[_servername].sIgnoreNickName.LoadConfig();
 				sIrcBase.Networks[_servername].ReloadMessageHandlerConfig();
 				sLConsole.SetLocale(LocalizationConfig.Locale);
 				sIrcBase.Networks[_servername].sCtcpSender.ClientInfoResponse = sLConsole.GetString("This client supports: UserInfo, Finger, Version, Source, Ping, Time and ClientInfo");
