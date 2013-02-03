@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Data;
 using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Config;
@@ -43,11 +44,10 @@ namespace Schumix.Irc.Ignore
 
 		public bool IsIgnore(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
-			return !db.IsNull();
+			return Contains(Name);
 		}
 
-		public void AddConfig()
+		public void LoadConfig()
 		{
 			string[] ignore = IRCConfig.List[_servername].IgnoreChannels.Split(SchumixBase.Comma);
 
@@ -65,6 +65,21 @@ namespace Schumix.Irc.Ignore
 			{
 				if(IRCConfig.List[_servername].IgnoreChannels.ToLower() != IRCConfig.List[_servername].MasterChannel.ToLower())
 					Add(IRCConfig.List[_servername].IgnoreChannels.ToLower());
+			}
+		}
+
+		public void LoadSql()
+		{
+			var db = SchumixBase.DManager.Query("SELECT Channel FROM ignore_channels WHERE ServerName = '{0}'", _servername);
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string name = row["Channel"].ToString();
+
+					if(!Contains(name))
+						_ignorelist.Add(name.ToLower());
+				}
 			}
 		}
 
