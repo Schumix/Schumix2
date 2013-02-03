@@ -414,9 +414,9 @@ namespace Schumix.Framework.Localization
 					if(Language == "huHU")
 						return "Nincs elég jogom a rang módosításához!";
 					else if(Language == "enUS")
-						return "";
+						return "I have no rights to modify the rank!";
 					else
-						return "";
+						return "I have no rights to modify the rank!";
 				}
 				default:
 					return string.Empty;
