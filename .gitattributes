@@ -13,6 +13,8 @@
 # because our repo isn't normalized, in general.
 # There are even files with mixed line endings.
 *	-crlf
+
+# Auto detect text files and perform LF normalization
 * text=auto
 
 # sln is always CRLF, even on linux, so don't convert
