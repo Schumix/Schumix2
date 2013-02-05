@@ -430,8 +430,9 @@ namespace Schumix.Irc
 			Online = false;
 			IsAllJoin = false;
 			_enabled = true;
-			NewNickPrivmsg = string.Empty;
 			ModePrivmsg = string.Empty;
+			ChannelPrivmsg = string.Empty;
+			NewNickPrivmsg = string.Empty;
 			SchumixBase.UrlTitleEnabled = false;
 			sMyNickInfo.ChangeIdentifyStatus(false);
 			sMyNickInfo.ChangeVhostStatus(false);
