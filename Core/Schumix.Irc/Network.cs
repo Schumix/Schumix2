@@ -76,6 +76,8 @@ namespace Schumix.Irc
 		/// </summary>
 		private readonly int _port;
 
+		private int _ReconnectNI = 5*60*1000;
+		private int _ReconnectDI = 60*1000;
 		private bool NetworkQuit = false;
 		private int ReconnectNumber = 0;
 		private bool Connected = false;
@@ -471,7 +473,7 @@ namespace Schumix.Irc
 			if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 			{
 				if(ReconnectNumber > 5)
-					_timeropcode.Interval = 5*60*1000;
+					_timeropcode.Interval = _ReconnectNI;
 
 				if((DateTime.Now - LastOpcode).Minutes >= 1)
 				{
@@ -490,7 +492,7 @@ namespace Schumix.Irc
 		private void Opcodes()
 		{
 			Log.Notice("Opcodes", sLConsole.GetString("Successfully started th thread."));
-			_timeropcode.Interval = 60*1000;
+			_timeropcode.Interval = _ReconnectDI;
 			_timeropcode.Elapsed += HandleOpcodesTimer;
 			_timeropcode.Enabled = true;
 			_timeropcode.Start();
@@ -517,7 +519,7 @@ namespace Schumix.Irc
 						if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 						{
 							if(ReconnectNumber > 5)
-								_timeropcode.Interval = 5*60*1000;
+								_timeropcode.Interval = _ReconnectNI;
 			
 							if(Connected)
 							{
@@ -533,7 +535,7 @@ namespace Schumix.Irc
 
 					if(_enabled)
 					{
-						_timeropcode.Interval = 60*1000;
+						_timeropcode.Interval = _ReconnectDI;
 						ReconnectNumber = 0;
 						_enabled = false;
 					}
@@ -546,7 +548,7 @@ namespace Schumix.Irc
 					if(sMyChannelInfo.FSelect(IFunctions.Reconnect))
 					{
 						if(ReconnectNumber > 5)
-							_timeropcode.Interval = 5*60*1000;
+							_timeropcode.Interval = _ReconnectNI;
 
 						if(Connected)
 						{
