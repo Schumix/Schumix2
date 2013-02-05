@@ -471,13 +471,13 @@ namespace Schumix.Console.Commands
 							sIrcBase.Networks[_servername].sMyChannelInfo.ChannelFunctionsReload();
 						}
 
-						if(onfunction != string.Empty)
+						if(!onfunction.IsEmpty())
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn2"), onfunction.Remove(0, 2, ", "));
 			
-						if(offfunction != string.Empty)
+						if(!offfunction.IsEmpty())
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff2"), offfunction.Remove(0, 2, ", "));
 
-						if(nosuchfunction != string.Empty)
+						if(!nosuchfunction.IsEmpty())
 							Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), nosuchfunction.Remove(0, 2, ", "));
 
 						if(args.Length == 0)
@@ -576,7 +576,7 @@ namespace Schumix.Console.Commands
 				}
 
 				string f = sIrcBase.Networks[_servername].sMyChannelInfo.FunctionsInfo();
-				if(f == string.Empty)
+				if(f.IsEmpty())
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("FaultyQuery"));
 					return;
@@ -637,13 +637,13 @@ namespace Schumix.Console.Commands
 							sIrcBase.Networks[_servername].sMyChannelInfo.FunctionsReload();
 						}
 
-						if(onfunction != string.Empty)
+						if(!onfunction.IsEmpty())
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn2"), onfunction.Remove(0, 2, ", "));
 			
-						if(offfunction != string.Empty)
+						if(!offfunction.IsEmpty())
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff2"), offfunction.Remove(0, 2, ", "));
 
-						if(nosuchfunction != string.Empty)
+						if(!nosuchfunction.IsEmpty())
 							Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), nosuchfunction.Remove(0, 2, ", "));
 
 						if(args.Length == 0)
@@ -941,7 +941,7 @@ namespace Schumix.Console.Commands
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(!db.IsNull())
 					{
-						if(db["Password"].ToString().Trim() != string.Empty)
+						if(!db["Password"].ToString().Trim().IsEmpty())
 						{
 							Log.Notice("Console", text[1]);
 							return;
@@ -983,7 +983,7 @@ namespace Schumix.Console.Commands
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(!db.IsNull())
 					{
-						if(db["Password"].ToString().Trim() == string.Empty)
+						if(db["Password"].ToString().Trim().IsEmpty())
 						{
 							Log.Notice("Console", text[1]);
 							return;
@@ -1031,7 +1031,7 @@ namespace Schumix.Console.Commands
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(!db.IsNull())
 					{
-						if(db["Password"].ToString().Trim() == string.Empty)
+						if(db["Password"].ToString().Trim().IsEmpty())
 						{
 							Log.Notice("Console", text[1]);
 							return;
@@ -1073,7 +1073,7 @@ namespace Schumix.Console.Commands
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(!db.IsNull())
 					{
-						if(db["Password"].ToString().Trim() == string.Empty)
+						if(db["Password"].ToString().Trim().IsEmpty())
 							Log.Notice("Console", text[1]);
 						else
 							Log.Notice("Console", text[2]);
@@ -1222,11 +1222,11 @@ namespace Schumix.Console.Commands
 			case "config":
 				new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile, SchumixConfig.ColorBindMode);
 				sIrcBase.Networks[_servername].sIgnoreAddon.RemoveConfig();
-				sIrcBase.Networks[_servername].sIgnoreAddon.AddConfig();
+				sIrcBase.Networks[_servername].sIgnoreAddon.LoadConfig();
 				sIrcBase.Networks[_servername].sIgnoreChannel.RemoveConfig();
-				sIrcBase.Networks[_servername].sIgnoreChannel.AddConfig();
+				sIrcBase.Networks[_servername].sIgnoreChannel.LoadConfig();
 				sIrcBase.Networks[_servername].sIgnoreNickName.RemoveConfig();
-				sIrcBase.Networks[_servername].sIgnoreNickName.AddConfig();
+				sIrcBase.Networks[_servername].sIgnoreNickName.LoadConfig();
 				sIrcBase.Networks[_servername].ReloadMessageHandlerConfig();
 				sLConsole.SetLocale(LocalizationConfig.Locale);
 				sIrcBase.Networks[_servername].sCtcpSender.ClientInfoResponse = sLConsole.GetString("This client supports: UserInfo, Finger, Version, Source, Ping, Time and ClientInfo");
@@ -1900,13 +1900,13 @@ namespace Schumix.Console.Commands
 						IgnorePlugins += ", " + plugin.Value.Name;
 				}
 
-				if(Plugins != string.Empty)
+				if(!Plugins.IsEmpty())
 					Log.Notice("Console", text[0], Plugins.Remove(0, 2, ", "));
 
-				if(IgnorePlugins != string.Empty)
+				if(!IgnorePlugins.IsEmpty())
 					Log.Notice("Console", text[1], IgnorePlugins.Remove(0, 2, ", "));
 
-				if(Plugins == string.Empty && IgnorePlugins == string.Empty)
+				if(Plugins.IsEmpty() && IgnorePlugins.IsEmpty())
 					Log.Warning("Console", text[2]);
 			}
 		}

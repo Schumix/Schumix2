@@ -192,7 +192,7 @@ namespace Schumix.GameAddon
 								return;
 							}
 
-							if(sGameCommand.MaffiaList[channel].GetOwner() == sIRCMessage.Nick || sGameCommand.MaffiaList[channel].GetOwner() == string.Empty ||
+							if(sGameCommand.MaffiaList[channel].GetOwner() == sIRCMessage.Nick || sGameCommand.MaffiaList[channel].GetOwner().IsEmpty() ||
 								sGameCommand.IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 								sGameCommand.MaffiaList[channel].Start();
 							else
@@ -208,7 +208,7 @@ namespace Schumix.GameAddon
 								return;
 							}
 
-							if(sGameCommand.MaffiaList[channel].GetOwner() == sIRCMessage.Nick || sGameCommand.MaffiaList[channel].GetOwner() == string.Empty ||
+							if(sGameCommand.MaffiaList[channel].GetOwner() == sIRCMessage.Nick || sGameCommand.MaffiaList[channel].GetOwner().IsEmpty() ||
 								sGameCommand.IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 							{
 								if(sGameCommand.MaffiaList[channel].Started)
@@ -456,7 +456,7 @@ namespace Schumix.GameAddon
 						case "!end":
 						{
 							if(sGameCommand.MaffiaList[channel].GetOwner() == sIRCMessage.Nick ||
-								sGameCommand.MaffiaList[channel].GetOwner() == string.Empty ||
+								sGameCommand.MaffiaList[channel].GetOwner().IsEmpty() ||
 								sGameCommand.IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 							{
 								if(sGameCommand.MaffiaList[channel].Started)
@@ -640,7 +640,7 @@ namespace Schumix.GameAddon
 			{
 				foreach(var comma in function.Value.Split(SchumixBase.Comma))
 				{
-					if(comma == string.Empty)
+					if(comma.IsEmpty())
 						continue;
 
 					string[] point = comma.Split(SchumixBase.Colon);

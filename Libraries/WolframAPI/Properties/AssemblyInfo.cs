@@ -33,7 +33,7 @@ using Schumix.Framework.Config;
 [assembly: AssemblyConfiguration(Consts.SchumixConfiguration)]
 [assembly: AssemblyCompany(Consts.SchumixCompany)]
 [assembly: AssemblyProduct("WolframAPI")]
-[assembly: AssemblyCopyright("Copyright (C) 2010-2012 Twl and Megax")]
+[assembly: AssemblyCopyright("Copyright (C) 2010-2013 Twl and Megax")]
 [assembly: AssemblyTrademark(Consts.SchumixTrademark)]
 
 [assembly: CLSCompliant(true)]

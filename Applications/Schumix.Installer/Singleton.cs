@@ -79,11 +79,11 @@ namespace Schumix.Installer
 						}
 						catch(Exception e)
 						{
-							Console.WriteLine("[Singleton] {0}", e.Message);
+							Log.Error("Singleton", "{0}", e.Message);
 						}
 
 						if(constructor == null || constructor.IsAssembly) // Also exclude internal constructors.
-							Console.WriteLine("[Singleton] A private or protected constructor is missing for '{0}'.", typeof(T).Name);
+							Log.Error("Singleton", "A private or protected constructor is missing for '{0}'.", typeof(T).Name);
 
 						_instance = (T)constructor.Invoke(null);
 					}

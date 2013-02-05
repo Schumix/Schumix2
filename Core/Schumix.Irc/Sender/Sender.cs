@@ -73,7 +73,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(ServerPassword != string.Empty)
+				if(!ServerPassword.IsEmpty())
 					Pass(ServerPassword);
 
 				Nick(nickname);

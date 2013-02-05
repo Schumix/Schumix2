@@ -1,7 +1,8 @@
 /*
  * This file is part of Schumix.
  * 
- * Copyright (C) 2010-2011 Megax <http://www.megaxx.info/>
+ * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
+ * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -30,12 +31,12 @@ namespace Schumix.Installer.Config
 #else
 		public const string SchumixConfiguration = "Release";
 #endif
-		public const string SchumixCompany = "Megax Productions";
+		public const string SchumixCompany = "Schumix Productions";
 		public const string SchumixProduct = "Schumix";
-		public const string SchumixCopyright = "Copyright (C) 2010-2012 Megax <http://www.megaxx.info/>";
+		public const string SchumixCopyright = "Copyright (C) 2013 Schumix Team <http://schumix.eu/>";
 		public const string SchumixTrademark = "GNU General Public License";
-		public const string SchumixVersion = "0.0.2";
-		public const string SchumixFileVersion = "0.0.2.0";
+		public const string SchumixVersion = "0.0.3";
+		public const string SchumixFileVersion = "0.0.3.0";
 		public static string SchumixUserAgent = "Schumix2 Installer " + sUtilities.GetVersion() + " / .NET " + Environment.Version;
 		public const string SchumixReferer = "http://yeahunter.hu";
 	}

@@ -65,8 +65,9 @@ namespace Schumix.Irc.Ctcp
 
 			args = args.Remove(0, 1, (char)1);
 			args = args.Substring(0, args.IndexOf((char)1));
+			string[] split = args.Split(SchumixBase.Space);
 
-			switch(args)
+			switch(split[0])
 			{
 				case CtcpUtil.Finger:
 					sSendMessage.SendCMCtcpReply(sIRCMessage.Nick, args + SchumixBase.Space + _fingerMessage + sLConsole.GetString(" Idle time ") + FormatIdleTime());

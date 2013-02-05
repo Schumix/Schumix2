@@ -188,6 +188,6 @@ namespace Schumix.Irc.Util
 		/// 
 		/// Param is a nick or user mask.
 		/// </summary>
-		Invitation = 73// I
+		Invitation = 73 // I
 	};
 }

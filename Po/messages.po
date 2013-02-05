@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-01-28 18:13:32+0100\n"
-"PO-Revision-Date: 2013-01-28 18:13:33+0100\n"
+"POT-Creation-Date: 2013-02-01 15:01:49+0100\n"
+"PO-Revision-Date: 2013-02-01 15:01:50+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -210,7 +210,7 @@ msgstr ""
 
 #: ../Core/Schumix.Irc/Network.cs:45
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
 msgid "Connection closed!"
 msgstr ""
 
@@ -280,6 +280,8 @@ msgid "Processor:"
 msgstr ""
 
 #: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
+#: ../Core/Schumix.Irc/Commands/Admin/ReloadCommand.cs:2
+#: ../Applications/Schumix/Console/Commands/CommandHandler.cs:145
 msgid ""
 "This client supports: UserInfo, Finger, Version, Source, Ping, Time and "
 "ClientInfo"
@@ -411,7 +413,7 @@ msgstr ""
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
 #: ../Core/Schumix.Framework/Runtime.cs:6
 #: ../Applications/Schumix.Server/ServerListener.cs:6
@@ -578,6 +580,10 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:7
 msgid "Successfully authed to SCS server."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:8
+msgid "SCS sent random: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
@@ -1072,27 +1078,31 @@ msgstr ""
 msgid "Python support is disabled!"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:9
+msgid "Sending random value: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
 msgid "Auth unsuccessful! Guid of client: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
 msgid "Hash was: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
 msgid "Back port is: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
 msgid "Auth successful. Guid of client: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:15
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:16
 msgid "Connection closed! Guid of client: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:18
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
 msgid "Restart in progress..."
 msgstr ""
 

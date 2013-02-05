@@ -42,7 +42,6 @@ namespace Schumix.Server
 		public event ServerPacketHandlerDelegate OnScsRandomRequest;
 		public event ServerPacketHandlerDelegate OnCloseConnection;
 		public event ServerPacketHandlerDelegate OnAuthRequest;
-		public event ServerPacketHandlerDelegate OnNickName;
 		private ServerPacketHandler() {}
 
 		public void Init()
@@ -50,7 +49,6 @@ namespace Schumix.Server
 			OnAuthRequest      += AuthRequestPacketHandler;
 			OnScsRandomRequest += ScsRandomHandler;
 			OnCloseConnection  += CloseHandler;
-			OnNickName         += NickNameHandler;
 		}
 
 		public void HandlePacket(SchumixPacket packet, TcpClient client, NetworkStream stream)
@@ -84,21 +82,17 @@ namespace Schumix.Server
 				OnScsRandomRequest(packet, stream, hst, bck);
 			else if(packetid == (int)Opcode.CMSG_CLOSE_CONNECTION)
 				OnCloseConnection(packet, stream, hst, bck);
-			else if(packetid == (int)Opcode.CMSG_NICK_NAME)
-				OnNickName(packet, stream, hst, bck);
 		}
 
 		private void ScsRandomHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
 		{
-			// read chan
-			var chan = pck.Read<string>();
 			var rand = new Random();
 			int random = rand.Next();
-			Log.Notice("Random", "Sending random value: " + random + " to client. Will send it to: " + chan + SchumixBase.Point);
+			Log.Notice("Random", sLConsole.GetString("Sending random value: {0}"), random);
+
 			var packet = new SchumixPacket();
 			packet.Write<int>((int)Opcode.SMSG_SEND_SCS_RANDOM);
 			packet.Write<int>(random);
-			packet.Write<string>((string)chan);
 			SendPacketBack(packet, stream, hst, bck);
 		}
 
@@ -129,7 +123,6 @@ namespace Schumix.Server
 				var packet = new SchumixPacket();
 				packet.Write<int>((int)Opcode.SMSG_AUTH_APPROVED);
 				packet.Write<int>((int)1);
-				//string identify = pck.Read<string>();
 				SendPacketBack(packet, stream, hst, bck);
 			}
 		}
@@ -162,7 +155,6 @@ namespace Schumix.Server
 			if(sSchumix._processlist.ContainsKey(identify))
 				sSchumix.Start(file, dir, ce, locale, sUtilities.GetRandomString());
 
-			//sSchumix._processlist[identify].Process.Kill();
 			sSchumix._processlist.Remove(identify);
 		}
 

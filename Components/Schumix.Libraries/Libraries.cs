@@ -60,7 +60,7 @@ namespace Schumix.Libraries
 
 					for(int a = 1; a < x.Match(text).Length; a++)
 					{
-						if(x.Match(text).Groups[a].ToString() != string.Empty)
+						if(!x.Match(text).Groups[a].ToString().IsEmpty())
 							s += SchumixBase.Space + x.Match(text).Groups[a].ToString();
 					}
 

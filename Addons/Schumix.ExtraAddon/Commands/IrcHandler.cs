@@ -170,7 +170,11 @@ namespace Schumix.ExtraAddon.Commands
 						if(sIRCMessage.Channel.ToLower() == m_channel.Key)
 						{
 							Thread.Sleep(5000);
-							sSender.Join(m_channel.Key, m_channel.Value);
+
+							if(m_channel.Value.Trim().IsEmpty())
+								sSender.Join(m_channel.Key);
+							else
+								sSender.Join(m_channel.Key, m_channel.Value.Trim());
 						}
 					}
 				}

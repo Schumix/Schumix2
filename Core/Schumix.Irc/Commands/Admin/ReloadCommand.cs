@@ -52,11 +52,11 @@ namespace Schumix.Irc.Commands
 			case "config":
 				new Config(SchumixConfig.ConfigDirectory, SchumixConfig.ConfigFile, SchumixConfig.ColorBindMode);
 				sIgnoreAddon.RemoveConfig();
-				sIgnoreAddon.AddConfig();
+				sIgnoreAddon.LoadConfig();
 				sIgnoreChannel.RemoveConfig();
-				sIgnoreChannel.AddConfig();
+				sIgnoreChannel.LoadConfig();
 				sIgnoreNickName.RemoveConfig();
-				sIgnoreNickName.AddConfig();
+				sIgnoreNickName.LoadConfig();
 				sIrcBase.Networks[sIRCMessage.ServerName].ReloadMessageHandlerConfig();
 				sLConsole.SetLocale(LocalizationConfig.Locale);
 				sCtcpSender.ClientInfoResponse = sLConsole.GetString("This client supports: UserInfo, Finger, Version, Source, Ping, Time and ClientInfo");

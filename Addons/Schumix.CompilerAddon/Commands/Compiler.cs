@@ -196,7 +196,7 @@ namespace Schumix.CompilerAddon.Commands
 					{
 						i++;
 
-						if(line == string.Empty)
+						if(line.IsEmpty())
 							x++;
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, line);
@@ -211,7 +211,7 @@ namespace Schumix.CompilerAddon.Commands
 				{
 					foreach(var line in lines)
 					{
-						if(line == string.Empty)
+						if(line.IsEmpty())
 							continue;
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, line);
@@ -339,7 +339,11 @@ namespace Schumix.CompilerAddon.Commands
 		private bool Ban(string data, IRCMessage sIRCMessage)
 		{
 			// Environment and Security
-			if(data.Contains("Environment") || data.Contains("System.Security"))
+			if(data.Contains("Environment.Exit") || data.Contains("Environment.SetEnvironmentVariable") ||
+			   data.Contains("Environment.ExpandEnvironmentVariables") || data.Contains("Environment.FailFast") ||
+			   data.Contains("Environment.GetLogicalDrives") || data.Contains("Environment.GetEnvironmentVariables") ||
+			   data.Contains("Environment.CommandLine") || data.Contains("Environment.CurrentDirectory") ||
+			   data.Contains("Environment.GetFolderPath") || data.Contains("System.Security"))
 			{
 				Warning(sIRCMessage);
 				return true;
@@ -574,7 +578,7 @@ namespace Schumix.CompilerAddon.Commands
 			}
 
 			text = CleanSemicolon(text);
-			return text.Trim() == string.Empty ? "Console.Write(\":'(\");" : text;
+			return text.Trim().IsEmpty() ? "Console.Write(\":'(\");" : text;
 		}
 
 		private string CleanSemicolon(string text)

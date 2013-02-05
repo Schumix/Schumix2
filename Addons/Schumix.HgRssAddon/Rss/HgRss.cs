@@ -246,7 +246,7 @@ namespace Schumix.HgRssAddon
 		{
 			try
 			{
-				if(_username != string.Empty && _password != string.Empty)
+				if(!_username.IsEmpty() && !_password.IsEmpty())
 				{
 					var rss = new XmlDocument();
 
@@ -280,7 +280,7 @@ namespace Schumix.HgRssAddon
 
 		private string DownloadToXml(string data)
 		{
-			if(data == string.Empty)
+			if(data.IsEmpty())
 				return string.Empty;
 
 			if(_website == "bitbucket")

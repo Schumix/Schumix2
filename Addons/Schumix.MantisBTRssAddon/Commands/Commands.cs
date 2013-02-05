@@ -80,7 +80,7 @@ namespace Schumix.MantisBTRssAddon.Commands
 					foreach(DataRow row in db.Rows)
 						list += SchumixBase.Space + row["Name"].ToString();
 
-					if(list == string.Empty)
+					if(list.IsEmpty())
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("mantisbt/list", sIRCMessage.Channel, sIRCMessage.ServerName), SchumixBase.Space + sLConsole.Other("Nothing"));
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("mantisbt/list", sIRCMessage.Channel, sIRCMessage.ServerName), list);
@@ -232,7 +232,7 @@ namespace Schumix.MantisBTRssAddon.Commands
 						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 						string data = channel.SplitToString(SchumixBase.Comma);
 
-						if(channel.Length == 1 && data == string.Empty)
+						if(channel.Length == 1 && data.IsEmpty())
 							data += sIRCMessage.Info[7].ToLower();
 						else
 							data += SchumixBase.Comma + sIRCMessage.Info[7].ToLower();

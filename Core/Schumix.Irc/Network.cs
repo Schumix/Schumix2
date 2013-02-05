@@ -33,6 +33,7 @@ using System.Security.Authentication;
 using Schumix.Api.Irc;
 using Schumix.Api.Delegate;
 using Schumix.Api.Functions;
+using Schumix.Irc.Util;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
@@ -75,6 +76,8 @@ namespace Schumix.Irc
 		/// </summary>
 		private readonly int _port;
 
+		private int _ReconnectNI = 5*60*1000;
+		private int _ReconnectDI = 60*1000;
 		private bool NetworkQuit = false;
 		private int ReconnectNumber = 0;
 		private bool Connected = false;
@@ -142,9 +145,14 @@ namespace Schumix.Irc
 			InitializeCommandHandler();
 			InitializeCommandMgr();
 			Task.Factory.StartNew(() => sMyChannelInfo.ChannelList());
-			sIgnoreNickName.AddConfig();
-			sIgnoreChannel.AddConfig();
-			sIgnoreAddon.AddConfig();
+			sIgnoreNickName.LoadConfig();
+			sIgnoreNickName.LoadSql();
+			sIgnoreChannel.LoadConfig();
+			sIgnoreChannel.LoadSql();
+			sIgnoreAddon.LoadConfig();
+			sIgnoreAddon.LoadSql();
+			sIgnoreCommand.LoadSql();
+			sIgnoreIrcCommand.LoadSql();
 		}
 
 		public void InitializeOpcodesAndPing()
@@ -195,6 +203,15 @@ namespace Schumix.Irc
 			IrcRegisterHandler(ReplyCode.ERR_UNAVAILRESOURCE,  HandleNicknameWhileBannedOrModeratedOnChannel);
 			IrcRegisterHandler(ReplyCode.ERR_INVITEONLYCHAN,   HandleCannotJoinChannel);
 			IrcRegisterHandler(ReplyCode.RPL_TOPIC,            HandleInitialTopic);
+			IrcRegisterHandler(ReplyCode.ERR_NEEDMOREPARAMS,   HandleNeedMoreParams);
+			IrcRegisterHandler(ReplyCode.ERR_KEYSET,           HandleKeySet);
+			IrcRegisterHandler(ReplyCode.ERR_CHANOPRIVSNEEDED, HandleChanopPrivsNeeded);
+			IrcRegisterHandler(460,                            HandleChanopPrivsNeeded);
+			IrcRegisterHandler(ReplyCode.ERR_USERNOTINCHANNEL, HandleUserNotinChannel);
+			IrcRegisterHandler(ReplyCode.ERR_UNKNOWNMODE,      HandleUnknownMode);
+			IrcRegisterHandler(ReplyCode.ERR_NOSUCHNICK,       HandleNoSuchNick);
+			IrcRegisterHandler(499,                            HandleNotAChannelOwner);
+			IrcRegisterHandler(974,                            HandleNotAChannelAdmin);
 
 			Task.Factory.StartNew(() =>
 			{
@@ -321,8 +338,8 @@ namespace Schumix.Irc
 		}
 
 		/// <summary>
-        ///     Kapcsolódás az IRC kiszolgálóhoz.
-        /// </summary>
+		///     Kapcsolódás az IRC kiszolgálóhoz.
+		/// </summary>
 		public void Connect(bool nick = false)
 		{
 			NetworkQuit = false;
@@ -403,22 +420,10 @@ namespace Schumix.Irc
 					Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 
-				reader = new StreamReader(networkStream);
-
-				if(INetwork.WriterList.ContainsKey(_servername))
-					INetwork.WriterList[_servername] = new StreamWriter(networkStream) { AutoFlush = true };
-				else
-					INetwork.WriterList.Add(_servername, new StreamWriter(networkStream) { AutoFlush = true });
+				InitializeStream(networkStream);
 			}
 			else
-			{
-				reader = new StreamReader(client.GetStream());
-
-				if(INetwork.WriterList.ContainsKey(_servername))
-					INetwork.WriterList[_servername] = new StreamWriter(client.GetStream()) { AutoFlush = true };
-				else
-					INetwork.WriterList.Add(_servername, new StreamWriter(client.GetStream()) { AutoFlush = true });
-			}
+				InitializeStream(client.GetStream());
 
 			Connected = true;
 			sSender.RegisterConnection(IRCConfig.List[_servername].Password, sMyNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
@@ -427,6 +432,8 @@ namespace Schumix.Irc
 			Online = false;
 			IsAllJoin = false;
 			_enabled = true;
+			ModePrivmsg = string.Empty;
+			ChannelPrivmsg = string.Empty;
 			NewNickPrivmsg = string.Empty;
 			SchumixBase.UrlTitleEnabled = false;
 			sMyNickInfo.ChangeIdentifyStatus(false);
@@ -451,12 +458,22 @@ namespace Schumix.Irc
 				reader.Dispose();
 		}
 
+		private void InitializeStream(Stream stream)
+		{
+			reader = new StreamReader(stream);
+
+			if(INetwork.WriterList.ContainsKey(_servername))
+				INetwork.WriterList[_servername] = new StreamWriter(stream) { AutoFlush = true };
+			else
+				INetwork.WriterList.Add(_servername, new StreamWriter(stream) { AutoFlush = true });
+		}
+
 		private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
 		{
 			if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 			{
 				if(ReconnectNumber > 5)
-					_timeropcode.Interval = 5*60*1000;
+					_timeropcode.Interval = _ReconnectNI;
 
 				if((DateTime.Now - LastOpcode).Minutes >= 1)
 				{
@@ -475,7 +492,7 @@ namespace Schumix.Irc
 		private void Opcodes()
 		{
 			Log.Notice("Opcodes", sLConsole.GetString("Successfully started th thread."));
-			_timeropcode.Interval = 60*1000;
+			_timeropcode.Interval = _ReconnectDI;
 			_timeropcode.Elapsed += HandleOpcodesTimer;
 			_timeropcode.Enabled = true;
 			_timeropcode.Start();
@@ -502,7 +519,7 @@ namespace Schumix.Irc
 						if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
 						{
 							if(ReconnectNumber > 5)
-								_timeropcode.Interval = 5*60*1000;
+								_timeropcode.Interval = _ReconnectNI;
 			
 							if(Connected)
 							{
@@ -518,7 +535,7 @@ namespace Schumix.Irc
 
 					if(_enabled)
 					{
-						_timeropcode.Interval = 60*1000;
+						_timeropcode.Interval = _ReconnectDI;
 						ReconnectNumber = 0;
 						_enabled = false;
 					}
@@ -531,7 +548,7 @@ namespace Schumix.Irc
 					if(sMyChannelInfo.FSelect(IFunctions.Reconnect))
 					{
 						if(ReconnectNumber > 5)
-							_timeropcode.Interval = 5*60*1000;
+							_timeropcode.Interval = _ReconnectNI;
 
 						if(Connected)
 						{
@@ -594,19 +611,7 @@ namespace Schumix.Irc
 			IMessage.Info = IrcCommand;
 			IMessage.Args = IrcCommand.SplitToString(3, SchumixBase.Space);
 			IMessage.Args = IMessage.Args.Remove(0, 1, SchumixBase.Colon);
-
-			switch(IRCConfig.List[_servername].MessageType.ToLower())
-			{
-				case "privmsg":
-					IMessage.MessageType = MessageType.Privmsg;
-					break;
-				case "notice":
-					IMessage.MessageType = MessageType.Notice;
-					break;
-				default:
-					IMessage.MessageType = MessageType.Privmsg;
-					break;
-			}
+			IMessage.SetMessageType();
 
 			if(IrcMethodMap.ContainsKey(opcode))
 			{

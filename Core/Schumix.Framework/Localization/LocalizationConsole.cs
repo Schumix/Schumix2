@@ -36,7 +36,7 @@ namespace Schumix.Framework.Localization
 
 		private LocalizationConsole()
 		{
-			Initialize("./locale");
+			Initialize();
 			SetLocale("en-US"); // Ez marad majd csak itt alapértelmezésben.
 		}
 
@@ -47,7 +47,7 @@ namespace Schumix.Framework.Localization
 
 		public void Initialize(string LocaleDir)
 		{
-			if(LocaleDir.IsNullOrEmpty())
+			if(LocaleDir.IsNullOrEmpty() || LocaleDir == "./locale")
 			{
 				string location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 				
@@ -68,8 +68,8 @@ namespace Schumix.Framework.Localization
 						LocaleDir = "./locale";
 					else
 					{
-						// $prefix/bin
-						string prefix = Path.Combine(location, "..");
+						// $prefix/lib/schumix
+						string prefix = Path.Combine(Path.Combine(location, ".."), "..");
 						prefix = Path.GetFullPath(prefix);
 
 						// "$prefix/share/locale"
@@ -78,7 +78,7 @@ namespace Schumix.Framework.Localization
 				}
 			}
 			
-			Mono.Unix.Catalog.Init("Schumix", LocaleDir);
+			Mono.Unix.Catalog.Init("schumix", LocaleDir);
 		}
 
 		public void SetLocale()
@@ -247,6 +247,60 @@ namespace Schumix.Framework.Localization
 		{
 			switch(Name)
 			{
+				case "Text":
+				{
+					if(Language == "huHU")
+						return "Nincs elég paraméter megadva!";
+					else if(Language == "enUS")
+						return "Not enough parameters!";
+					else
+						return "Not enough parameters!";
+				}
+				case "Text2":
+				{
+					if(Language == "huHU")
+						return "Csatorna kulcs már megvan adva!";
+					else if(Language == "enUS")
+						return "Channel key already set!";
+					else
+						return "Channel key already set!";
+				}
+				case "Text3":
+				{
+					if(Language == "huHU")
+						return "A csatorna nem támogatja a megadott módot!";
+					else if(Language == "enUS")
+						return "Channel doesn't support modes!";
+					else
+						return "Channel doesn't support modes!";
+				}
+				case "Text5":
+				{
+					if(Language == "huHU")
+						return "Nincs ezen a csatornán!";
+					else if(Language == "enUS")
+						return "They aren't on that channel!";
+					else
+						return "They aren't on that channel!";
+				}
+				case "Text6":
+				{
+					if(Language == "huHU")
+						return "Ismeretlen mód a csatornához!";
+					else if(Language == "enUS")
+						return "Is unknown mode char to me for [channel]!";
+					else
+						return "Is unknown mode char to me for [channel]!";
+				}
+				case "Text7":
+				{
+					if(Language == "huHU")
+						return "Nincs ilyen nick: {0}";
+					else if(Language == "enUS")
+						return "No such nick: {0}";
+					else
+						return "No such nick: {0}";
+				}
 				case "Text8":
 				{
 					if(Language == "huHU")
@@ -354,6 +408,15 @@ namespace Schumix.Framework.Localization
 						return "Cannot join channel (+i)!";
 					else
 						return "Cannot join channel (+i)!";
+				}
+				case "Text19":
+				{
+					if(Language == "huHU")
+						return "Nincs elég jogom a rang módosításához!";
+					else if(Language == "enUS")
+						return "I have no rights to modify the rank!";
+					else
+						return "I have no rights to modify the rank!";
 				}
 				default:
 					return string.Empty;

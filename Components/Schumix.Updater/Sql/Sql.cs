@@ -24,6 +24,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Updater.Sql
 {
@@ -117,7 +118,7 @@ namespace Schumix.Updater.Sql
 					{
 						DManager.ExecuteNonQuery(new StreamReader(Directory + "/" + item.Key).ReadToEnd());
 
-						if(item.Value != string.Empty)
+						if(!item.Value.IsEmpty())
 							DManager.ExecuteNonQuery(new StreamReader(Directory + "/" + item.Value).ReadToEnd());
 					}
 				}
@@ -132,7 +133,7 @@ namespace Schumix.Updater.Sql
 					{
 						DManager.ExecuteNonQuery(new StreamReader(Directory + "/" + item.Key).ReadToEnd());
 
-						if(item.Value != string.Empty)
+						if(!item.Value.IsEmpty())
 							DManager.ExecuteNonQuery(new StreamReader(Directory + "/" + item.Value).ReadToEnd());
 					}
 				}

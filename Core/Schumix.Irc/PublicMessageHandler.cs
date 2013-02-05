@@ -68,15 +68,20 @@ namespace Schumix.Irc
 				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					return;
 
-				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
-				Schumix(sIRCMessage);
-
-				if(sIRCMessage.Info[3] == string.Empty || sIRCMessage.Info[3].Length < PLength || sIRCMessage.Info[3].Substring(0, PLength) != IRCConfig.List[sIRCMessage.ServerName].CommandPrefix)
-					return;
-
-				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, PLength);
-				IncomingInfo(sIRCMessage.Info[3].ToLower(), sIRCMessage);
+				HandleCommand(sIRCMessage);
 			}
+		}
+
+		private void HandleCommand(IRCMessage sIRCMessage)
+		{
+			sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
+			Schumix(sIRCMessage);
+			
+			if(sIRCMessage.Info[3].IsEmpty() || sIRCMessage.Info[3].Length < PLength || sIRCMessage.Info[3].Substring(0, PLength) != IRCConfig.List[sIRCMessage.ServerName].CommandPrefix)
+				return;
+			
+			sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, PLength);
+			IncomingInfo(sIRCMessage.Info[3].ToLower(), sIRCMessage);
 		}
 
 		private void Schumix(IRCMessage sIRCMessage)

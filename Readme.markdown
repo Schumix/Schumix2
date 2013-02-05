@@ -15,7 +15,7 @@ Monon jelenleg minimum követelmény a `2.10` vagy újabb.
 
 ## Windows
 
-Szükséges a nyelvi fájlok lefordításához a `gettext`. Töltsük le és telepítsük. `http://downloads.sourceforge.net/project/gnuwin32/gettext/0.14.4/gettext-0.14.4.exe?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fgnuwin32%2Ffiles%2Fgettext%2F0.14.4%2Fgettext-0.14.4.exe%2Fdownload%3Fuse_mirror%3Dignum%26download%3D&ts=1359199569&use_mirror=freefr`
+Monodevelop használatakor szükséges a nyelvi fájlok lefordításához a `gettext`. Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
 A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
 
 ## Linux
@@ -38,11 +38,13 @@ Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mi
 
 ## Archlinux
 
-Futtassuk `sh createarchlinuxpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.pkg.tar.xz` (hasonló lesz a neve) nevű fájl. Ezt telepítsük a `sudo pacman -U schumix2.pkg.tar.xz` (csomag fájl neve hasonló lesz) paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+**Figyelem!!! Root jogra lesz szükség hozzá.**
+Futtassuk `./createarchlinuxpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.pkg.tar.xz` (hasonló lesz a neve) nevű fájl. Ezt telepítsük a `sudo pacman -U schumix2.pkg.tar.xz` (csomag fájl neve hasonló lesz) paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
 
 ## Debian/Ubuntu
 
-Futtassuk `sh createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+**Figyelem!!! Root jogra lesz szükség hozzá.**
+Futtassuk `./createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
 
 ## Windows
 

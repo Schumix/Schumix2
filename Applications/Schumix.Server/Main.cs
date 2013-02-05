@@ -75,35 +75,35 @@ namespace Schumix.Server
 				}
 				else if(arg.Contains("--config-dir="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						configdir = arg.Substring(arg.IndexOf("=")+1);
 
 					continue;
 				}
 				else if(arg.Contains("--config-file="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						configfile = arg.Substring(arg.IndexOf("=")+1);
 
 					continue;
 				}
 				else if(arg.Contains("--console-encoding="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						console_encoding = arg.Substring(arg.IndexOf("=")+1);
 
 					continue;
 				}
 				else if(arg.Contains("--console-localization="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						localization = arg.Substring(arg.IndexOf("=")+1);
 
 					continue;
 				}
 				else if(arg.Contains("--colorbind-mode="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						colorbindmode = Convert.ToBoolean(arg.Substring(arg.IndexOf("=")+1));
 
 					continue;

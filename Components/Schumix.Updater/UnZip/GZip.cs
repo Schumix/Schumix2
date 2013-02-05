@@ -54,7 +54,7 @@ namespace Schumix.Updater.UnZip
 					if(directoryName.Length > 0)
 						Directory.CreateDirectory(directoryName);
 
-					if(fileName != string.Empty)
+					if(!fileName.IsEmpty())
 					{
 						using(var streamWriter = File.Create(theEntry.Name))
 						{

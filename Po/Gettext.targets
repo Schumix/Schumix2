@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">	
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
 	<Target Name="_GettextPrepareInputs">
 		<!-- validate properties -->
 		<Error Condition="'$(OutputPath)' == ''"
@@ -12,7 +12,7 @@
 			Text="The GettextCatalogFile property has not been set."
 		/>
 		<!-- preprocess properties -->
-		<PropertyGroup>
+		<PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
 			<_OutputPath Condition="!HasTrailingSlash('$(OutputPath)')">$(OutputPath)\</_OutputPath>
 			<_OutputPath Condition="'$(_OutputPath)'==''">$(OutputPath)</_OutputPath>
 			<_GettextCatalogName>$(GettextCatalogName)</_GettextCatalogName>
@@ -26,13 +26,13 @@
 			</_Translation>
 		</ItemGroup>
 		<!-- determine tool locations -->
-		<PropertyGroup>
+		<PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
 			<_msgfmt>msgfmt</_msgfmt>
 			<_msgmerge>msgmerge</_msgmerge>
 		</PropertyGroup>
-		<PropertyGroup Condition="Exists('$(MSBuildProgramFiles32)\GnuWin32\bin\msgfmt.exe')">
-			<_msgfmt>$(MSBuildProgramFiles32)\GnuWin32\bin\msgfmt.exe</_msgfmt>
-			<_msgmerge>Exists('$(MSBuildProgramFiles32)\GnuWin32\bin\msgmerge.exe</_msgmerge>
+		<PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+			<_msgfmt>..\Dependencies\GnuWin32\msgfmt.exe</_msgfmt>
+			<_msgmerge>..\Dependencies\GnuWin32\msgmerge.exe</_msgmerge>
 		</PropertyGroup>
 	</Target>
 	

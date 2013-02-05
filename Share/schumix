@@ -7,39 +7,27 @@ addons="$HOME/.Schumix/Addons"
 scripts="$HOME/.Schumix/Scripts"
 sqlite="$HOME/.Schumix/Schumix.db3"
 
-if [ -e $homedir ]; then
-	echo "";
-else
+if [ ! -e $homedir ]; then
 	mkdir $homedir
 fi
 
-if [ -e $config_file ]; then
-	echo "";
-else
-	if [ -e $config_dir ]; then
-		echo "";
-	else
+if [ ! -e $config_file ]; then
+	if [ ! -e $config_dir ]; then
 		mkdir $config_dir
 	fi
 
 	cp /usr/share/schumix/Schumix.yml $config_file
 fi
 
-if [ -e $sqlite ]; then
-	echo "";
-else
+if [ ! -e $sqlite ]; then
 	cp /usr/lib/schumix/Schumix.db3 $sqlite
 fi
 
-if [ -e $addons ]; then
-	echo "";
-else
+if [ ! -e $addons ]; then
 	cp -R /usr/lib/schumix/Addons $addons
 fi
 
-if [ -e $scripts ]; then
-	echo "";
-else
+if [ ! -e $scripts ]; then
 	cp -R /usr/lib/schumix/Scripts $scripts
 fi
 

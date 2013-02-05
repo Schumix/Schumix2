@@ -168,18 +168,7 @@ namespace Schumix.Irc
 
 				if(IsOnline)
 				{
-					switch(IRCConfig.List[sIRCMessage.ServerName].MessageType.ToLower())
-					{
-						case "privmsg":
-							sIRCMessage.MessageType = MessageType.Privmsg;
-							break;
-						case "notice":
-							sIRCMessage.MessageType = MessageType.Notice;
-							break;
-						default:
-							sIRCMessage.MessageType = MessageType.Privmsg;
-							break;
-					}
+					sIRCMessage.SetMessageType();
 
 					if(sIRCMessage.Args.Contains("Is online from:") || sIRCMessage.Args.Contains("is currently online."))
 					{
@@ -223,14 +212,7 @@ namespace Schumix.Irc
 			}
 
 			sIRCMessage.Channel = sIRCMessage.Nick;
-			sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
-			Schumix(sIRCMessage);
-
-			if(sIRCMessage.Info[3] == string.Empty || sIRCMessage.Info[3].Length < PLength || sIRCMessage.Info[3].Substring(0, PLength) != IRCConfig.List[sIRCMessage.ServerName].CommandPrefix)
-				return;
-
-			sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, PLength);
-			IncomingInfo(sIRCMessage.Info[3].ToLower(), sIRCMessage);
+			HandleCommand(sIRCMessage);
 		}
 
 		/// <summary>
@@ -278,7 +260,7 @@ namespace Schumix.Irc
 		/// </summary>
 		protected void HandleNickError(IRCMessage sIRCMessage)
 		{
-			if(NewNickPrivmsg == string.Empty)
+			if(NewNickPrivmsg.IsEmpty())
 			{
 				Log.Error("MessageHandler", sLConsole.GetString("{0} already in use!"), sMyNickInfo.NickStorage);
 				string nick = sMyNickInfo.ChangeNick();
@@ -295,7 +277,7 @@ namespace Schumix.Irc
 
 		protected void HandleErrorNewNickName(IRCMessage sIRCMessage)
 		{
-			if(NewNickPrivmsg != string.Empty)
+			if(!NewNickPrivmsg.IsEmpty())
 			{
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text15", sLManager.GetChannelLocalization(NewNickPrivmsg, sIRCMessage.ServerName)));
 				NewNickPrivmsg = string.Empty;
@@ -304,7 +286,7 @@ namespace Schumix.Irc
 
 		protected void HandleNicknameWhileBannedOrModeratedOnChannel(IRCMessage sIRCMessage)
 		{
-			if(NewNickPrivmsg != string.Empty)
+			if(!NewNickPrivmsg.IsEmpty())
 			{
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text16", sLManager.GetChannelLocalization(NewNickPrivmsg, sIRCMessage.ServerName)));
 				NewNickPrivmsg = string.Empty;
@@ -390,7 +372,7 @@ namespace Schumix.Irc
 
 				if(WhoisList[nick].Online)
 				{
-					if(WhoisList[nick].Message != string.Empty)
+					if(!WhoisList[nick].Message.IsEmpty())
 						sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[0], WhoisList[nick].Message.Remove(0, 1, SchumixBase.Space));
 					else
 						sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[2]); 
@@ -423,7 +405,7 @@ namespace Schumix.Irc
 
 		protected void HandleIrcLeft(IRCMessage sIRCMessage)
 		{
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[left] {0}"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[left] {0}"), sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args);
 
 			if(sIRCMessage.Nick == sMyNickInfo.NickStorage)
 			{
@@ -439,7 +421,7 @@ namespace Schumix.Irc
 			foreach(var chan in sChannelList.List)
 			{
 				if(chan.Value.Names.ContainsKey(sIRCMessage.Nick.ToLower()))
-					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[quit] {0}"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
+					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[quit] {0}"), sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args);
 			}
 
 			sChannelList.Remove(string.Empty, sIRCMessage.Nick, true);
@@ -525,7 +507,7 @@ namespace Schumix.Irc
 
 		protected void HandleIrcTopic(IRCMessage sIRCMessage)
 		{
-			string text = sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args;
+			string text = sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args;
 			sChannelList.List[sIRCMessage.Channel.ToLower()].Topic = text;
 			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Topic] New topic: {0}"), text);
 		}
@@ -541,7 +523,7 @@ namespace Schumix.Irc
 			sIRCMessage.Channel = sIRCMessage.Info[3];
 			sIRCMessage.Args = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
 			sIRCMessage.Args = sIRCMessage.Args.Remove(0, 1, SchumixBase.Colon);
-			string text = sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args;
+			string text = sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args;
 
 			if(!sChannelList.List.ContainsKey(sIRCMessage.Channel.ToLower()))
 			{
@@ -580,6 +562,63 @@ namespace Schumix.Irc
 		{
 			if(sChannelList.List.ContainsKey(sIRCMessage.Channel.ToLower()))
 				sChannelList.List[sIRCMessage.Channel.ToLower()].IsNameList = true;
+		}
+
+		protected void HandleNeedMoreParams(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text"));
+		}
+
+		protected void HandleKeySet(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text2"));
+		}
+
+		protected void HandleNoChanModes(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text3"));
+		}
+
+		protected void HandleChanopPrivsNeeded(IRCMessage sIRCMessage)
+		{
+			if(sIRCMessage.Info.Length < 4)
+				return;
+
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[3], sLConsole.MessageHandler("Text19"));
+		}
+
+		protected void HandleUserNotinChannel(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text5"));
+		}
+
+		protected void HandleUnknownMode(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text6"));
+		}
+
+		protected void HandleNoSuchNick(IRCMessage sIRCMessage)
+		{
+			if(!ModePrivmsg.IsEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			{
+				if(sIRCMessage.Info.Length < 4)
+					return;
+
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text7"), sIRCMessage.Info[3]);
+			}
+		}
+
+		protected void HandleNotAChannelOwner(IRCMessage sIRCMessage)
+		{
+			if(sIRCMessage.Info.Length < 4)
+				return;
+
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[3], sLConsole.MessageHandler("Text19"));
+		}
+
+		protected void HandleNotAChannelAdmin(IRCMessage sIRCMessage)
+		{
+			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text19"));
 		}
 
 		/// <summary>

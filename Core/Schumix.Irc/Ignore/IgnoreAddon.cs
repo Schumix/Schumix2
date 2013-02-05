@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Data;
 using System.Reflection;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -50,11 +51,10 @@ namespace Schumix.Irc.Ignore
 
 		public bool IsIgnore(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
-			return !db.IsNull() ? true : false;
+			return Contains(Name);
 		}
 
-		public void AddConfig()
+		public void LoadConfig()
 		{
 			string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);
 
@@ -67,9 +67,24 @@ namespace Schumix.Irc.Ignore
 				Add(AddonsConfig.Ignore.ToLower());
 		}
 
+		public void LoadSql()
+		{
+			var db = SchumixBase.DManager.Query("SELECT Addon FROM ignore_addons WHERE ServerName = '{0}'", _servername);
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string name = row["Addon"].ToString();
+
+					if(!Contains(name))
+						_ignorelist.Add(name.ToLower());
+				}
+			}
+		}
+
 		public void Add(string Name)
 		{
-			if(Name.Trim() == string.Empty)
+			if(Name.Trim().IsEmpty())
 				return;
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
@@ -82,7 +97,7 @@ namespace Schumix.Irc.Ignore
 
 		public void Remove(string Name)
 		{
-			if(Name.Trim() == string.Empty)
+			if(Name.Trim().IsEmpty())
 				return;
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
@@ -95,7 +110,7 @@ namespace Schumix.Irc.Ignore
 
 		public bool Contains(string Name)
 		{
-			if(Name.Trim() == string.Empty)
+			if(Name.Trim().IsEmpty())
 				return false;
 
 			return _ignorelist.Contains(Name.ToLower());

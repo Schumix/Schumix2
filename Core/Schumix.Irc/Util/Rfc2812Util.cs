@@ -25,7 +25,9 @@ using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Schumix.Api.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Util
@@ -283,6 +285,27 @@ namespace Schumix.Irc.Util
 		private static bool ContainsSpace(string text)
 		{
 			return text.IndexOf(SchumixBase.Space, 0, text.Length) != -1;
+		}
+
+		public static void SetMessageType(this IRCMessage sIRCMessage)
+		{
+			sIRCMessage.SetMessageType(IRCConfig.List[sIRCMessage.ServerName].MessageType.ToLower());
+		}
+		
+		public static void SetMessageType(this IRCMessage sIRCMessage, string type)
+		{
+			switch(type.ToLower())
+			{
+			case "privmsg":
+				sIRCMessage.MessageType = MessageType.Privmsg;
+				break;
+			case "notice":
+				sIRCMessage.MessageType = MessageType.Notice;
+				break;
+			default:
+				sIRCMessage.MessageType = MessageType.Privmsg;
+				break;
+			}
 		}
 	}
 }
