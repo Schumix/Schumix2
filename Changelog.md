@@ -478,6 +478,10 @@
  * Parancsok kezelése alapjaitól újra lett írva.
  * schumix4.0.csproj átnevezve schumix.csproj-ra
 
+## 0.2.0 (2010-10-29)
+
+ * Köszönés alapértelmezetten bekapcsolva lesz.
+
 ## 0.1.3 (2010-10-28)
 
  * A kód hozzá lett adva a githez.
