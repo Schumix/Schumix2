@@ -87,7 +87,7 @@ namespace Schumix.GitRssAddon
 			_website = website;
 			Init();
 
-			if(_username != string.Empty && _password != string.Empty)
+			if(!_username.IsEmpty() && !_password.IsEmpty())
 			{
 				var rss = new XmlDocument();
 				rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>", _credential)));
@@ -269,7 +269,7 @@ namespace Schumix.GitRssAddon
 		{
 			try
 			{
-				if(_username != string.Empty && _password != string.Empty)
+				if(!_username.IsEmpty() && !_password.IsEmpty())
 				{
 					var rss = new XmlDocument();
 					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>", _credential)));

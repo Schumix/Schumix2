@@ -246,7 +246,7 @@ namespace Schumix.HgRssAddon
 		{
 			try
 			{
-				if(_username != string.Empty && _password != string.Empty)
+				if(!_username.IsEmpty() && !_password.IsEmpty())
 				{
 					var rss = new XmlDocument();
 

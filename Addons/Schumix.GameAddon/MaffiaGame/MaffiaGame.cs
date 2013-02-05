@@ -325,7 +325,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private void HandleIsOwnerAfk(object sender, ElapsedEventArgs e)
 		{
-			if((DateTime.Now - OwnerMsgTime).Minutes >= 10 && _owner != string.Empty)
+			if((DateTime.Now - OwnerMsgTime).Minutes >= 10 && !_owner.IsEmpty())
 			{
 				_owner = string.Empty;
 				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
@@ -505,7 +505,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			var sSender = sIrcBase.Networks[_servername].sSender;
 			sSender.Mode(_channel, "-v", Name);
 
-			if(channel != string.Empty)
+			if(!channel.IsEmpty())
 				sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("maffiagame/base/removeplayer", _channel, _servername));
 		}
 
@@ -625,7 +625,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			list.Clear();
 			namesss = namesss.Remove(0, 1, SchumixBase.Space);
 
-			if(namesss != string.Empty)
+			if(!namesss.IsEmpty())
 			{
 				var split = namesss.Split(SchumixBase.Space);
 
@@ -667,7 +667,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			list.Clear();
 			namesss = namesss.Remove(0, 1, SchumixBase.Space);
 
-			if(namesss != string.Empty)
+			if(!namesss.IsEmpty())
 			{
 				var split = namesss.Split(SchumixBase.Space);
 
@@ -764,7 +764,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						foreach(var function in _playerflist)
 						{
-							if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
+							if(function.Value.Rank == Rank.Killer && !function.Value.RName.IsEmpty() && !function.Value.Ghost)
 							{
 								newkillghost = GetPlayerName(function.Value.RName.Trim());
 								enabledkiller = true;
@@ -779,7 +779,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 						foreach(var function in _playerflist)
 						{
-							if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
+							if(function.Value.Rank == Rank.Killer && !function.Value.RName.IsEmpty() && !function.Value.Ghost)
 								list.Add(function.Value.RName);
 							else if(function.Value.Rank == Rank.Killer && function.Value.RName.IsEmpty() && !function.Value.Ghost)
 								enabledkiller = false;
@@ -812,7 +812,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 						foreach(var function in _playerflist)
 						{
-							if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
+							if(function.Value.Rank == Rank.Killer && !function.Value.RName.IsEmpty() && !function.Value.Ghost)
 								list.Add(function.Value.RName);
 							else if(function.Value.Rank == Rank.Killer && function.Value.RName.IsEmpty() && !function.Value.Ghost)
 								enabledkiller = false;
@@ -872,7 +872,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						foreach(var function in _playerflist)
 						{
-							if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && (function.Value.RName != string.Empty ||
+							if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && (!function.Value.RName.IsEmpty() ||
 							   function.Value.RName == "áá(%[[]][[]]killer[[]][[]]%)áá"))
 								enableddoctor = true;
 							else if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && function.Value.RName.IsEmpty())
@@ -888,7 +888,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						{
 							if(function.Value.Rank == Rank.Doctor)
 							{
-								if((newkillghost.ToLower() != function.Value.RName) && (newkillghost.ToLower() != string.Empty) &&
+								if((newkillghost.ToLower() != function.Value.RName) && (!newkillghost.ToLower().IsEmpty()) &&
 								   (newkillghost.ToLower() != "áá(%[[]][[]]killer[[]][[]]%)áá"))
 									newghost = true;
 							}
@@ -1143,7 +1143,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 					if(_killerlist.Count >= 1 && ghosttext)
 					{
-						if(newghost != string.Empty)
+						if(!newghost.IsEmpty())
 							sSendMessage.SendCMPrivmsg(_channel, text[1], newghost);
 
 						SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Name = '{0}' AND Game = '{1}' And ServerName = '{2}'", newghost, _gameid, _servername));

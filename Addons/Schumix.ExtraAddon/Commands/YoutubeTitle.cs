@@ -52,7 +52,7 @@ namespace Schumix.ExtraAddon.Commands
 
 		public bool IsTitle()
 		{
-			return _title != string.Empty;
+			return !_title.IsEmpty();
 		}
 
 		public bool IsYoutube()
