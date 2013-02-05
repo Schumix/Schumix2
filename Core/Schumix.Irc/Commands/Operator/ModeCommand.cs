@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Threading;
 using System.Text.RegularExpressions;
 using Schumix.Api.Irc;
 using Schumix.Irc.Util;
@@ -214,6 +215,10 @@ namespace Schumix.Irc.Commands
 
 			ModePrivmsg = sIRCMessage.Channel;
 			sSender.Mode(sIRCMessage.Channel, status + rank2, name.Remove(0, 1, SchumixBase.Space));
+
+			// Clean
+			Thread.Sleep(10*1000);
+			ModePrivmsg = string.Empty;
 		}
 	}
 }
