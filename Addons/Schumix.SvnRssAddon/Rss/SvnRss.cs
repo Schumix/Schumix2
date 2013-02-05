@@ -262,7 +262,7 @@ namespace Schumix.SvnRssAddon
 
 		private string DownloadToXml(string data)
 		{
-			if(data == string.Empty)
+			if(data.IsEmpty())
 				return string.Empty;
 
 			data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);

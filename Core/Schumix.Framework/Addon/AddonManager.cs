@@ -176,7 +176,7 @@ namespace Schumix.Framework.Addon
 		{
 			lock(LoadLock)
 			{
-				if(ServerName == string.Empty)
+				if(ServerName.IsEmpty())
 				{
 					foreach(var ad in Addons)
 					{

@@ -83,7 +83,7 @@ namespace Schumix.ExtraAddon.Commands
 						codes += ", " + code;
 					}
 
-					if(codes == string.Empty)
+					if(codes.IsEmpty())
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/info", sIRCMessage.Channel, sIRCMessage.ServerName), sLConsole.Other("Nothing"));
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/info", sIRCMessage.Channel, sIRCMessage.ServerName), codes.Remove(0, 2, ", "));

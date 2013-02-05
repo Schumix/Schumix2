@@ -23,6 +23,7 @@ using Schumix.Api.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.RevisionAddon.Githubs;
 
@@ -77,7 +78,7 @@ namespace Schumix.RevisionAddon.Commands
 
 				var github = new Github(sIRCMessage.Info[5], sIRCMessage.Info[6], sIRCMessage.Info[7]);
 
-				if(github.UserName == string.Empty || github.Message == string.Empty || github.Url == string.Empty)
+				if(github.UserName.IsEmpty() || github.Message.IsEmpty() || github.Url.IsEmpty())
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 					return;

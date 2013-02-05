@@ -89,7 +89,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					return false;
 				}
 
-				if(Name == string.Empty)
+				if(Name.IsEmpty())
 					sSendMessage.SendCMPrivmsg(_channel, text[0]);
 				else
 					sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(Name));
@@ -429,7 +429,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private void RemovePlayer(string Name, string channel)
 		{
-			if(Name.Replace(SchumixBase.Space.ToString(), string.Empty) == string.Empty)
+			if(Name.Replace(SchumixBase.Space.ToString(), string.Empty).IsEmpty())
 				return;
 
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
@@ -769,7 +769,7 @@ namespace Schumix.GameAddon.MaffiaGames
 								newkillghost = GetPlayerName(function.Value.RName.Trim());
 								enabledkiller = true;
 							}
-							else if(function.Value.Rank == Rank.Killer && function.Value.RName == string.Empty && !function.Value.Ghost)
+							else if(function.Value.Rank == Rank.Killer && function.Value.RName.IsEmpty() && !function.Value.Ghost)
 								enabledkiller = false;
 						}
 					}
@@ -781,7 +781,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						{
 							if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
 								list.Add(function.Value.RName);
-							else if(function.Value.Rank == Rank.Killer && function.Value.RName == string.Empty && !function.Value.Ghost)
+							else if(function.Value.Rank == Rank.Killer && function.Value.RName.IsEmpty() && !function.Value.Ghost)
 								enabledkiller = false;
 						}
 
@@ -814,7 +814,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						{
 							if(function.Value.Rank == Rank.Killer && function.Value.RName != string.Empty && !function.Value.Ghost)
 								list.Add(function.Value.RName);
-							else if(function.Value.Rank == Rank.Killer && function.Value.RName == string.Empty && !function.Value.Ghost)
+							else if(function.Value.Rank == Rank.Killer && function.Value.RName.IsEmpty() && !function.Value.Ghost)
 								enabledkiller = false;
 						}
 
@@ -875,7 +875,7 @@ namespace Schumix.GameAddon.MaffiaGames
 							if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && (function.Value.RName != string.Empty ||
 							   function.Value.RName == "áá(%[[]][[]]killer[[]][[]]%)áá"))
 								enableddoctor = true;
-							else if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && function.Value.RName == string.Empty)
+							else if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && function.Value.RName.IsEmpty())
 								enableddoctor = false;
 						}
 					}

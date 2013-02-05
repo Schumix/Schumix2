@@ -256,7 +256,7 @@ namespace Schumix.ExtraAddon.Commands
 							names += ", " + name;
 						}
 
-						if(names == string.Empty)
+						if(names.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/kick/list", sIRCMessage.Channel, sIRCMessage.ServerName), sLConsole.Other("Nobody"));
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("autofunction/kick/list", sIRCMessage.Channel, sIRCMessage.ServerName), names.Remove(0, 2, ", "));
@@ -379,7 +379,7 @@ namespace Schumix.ExtraAddon.Commands
 								names += ", " + name;
 							}
 
-							if(names == string.Empty)
+							if(names.IsEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, text[0], sLConsole.Other("Nobody"));
 							else
 								sSendMessage.SendChatMessage(sIRCMessage, text[0], names.Remove(0, 2, ", "));
@@ -557,27 +557,27 @@ namespace Schumix.ExtraAddon.Commands
 							}
 						}
 
-						if(voices == string.Empty)
+						if(voices.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], sLConsole.Other("Nobody"));
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], voices.Remove(0, 2, ", "));
 
-						if(halfoperators == string.Empty)
+						if(halfoperators.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, text[1], sLConsole.Other("Nobody"));
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, text[1], halfoperators.Remove(0, 2, ", "));
 
-						if(operators == string.Empty)
+						if(operators.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, text[2], sLConsole.Other("Nobody"));
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, text[2], operators.Remove(0, 2, ", "));
 
-						if(admins == string.Empty)
+						if(admins.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, text[3], sLConsole.Other("Nobody"));
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, text[3], admins.Remove(0, 2, ", "));
 
-						if(owners == string.Empty)
+						if(owners.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, text[4], sLConsole.Other("Nobody"));
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, text[4], owners.Remove(0, 2, ", "));
@@ -772,27 +772,27 @@ namespace Schumix.ExtraAddon.Commands
 								}
 							}
 
-							if(voices == string.Empty)
+							if(voices.IsEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, text[0], sLConsole.Other("Nobody"));
 							else
 								sSendMessage.SendChatMessage(sIRCMessage, text[0], voices.Remove(0, 2, ", "));
 
-							if(halfoperators == string.Empty)
+							if(halfoperators.IsEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, text[1], sLConsole.Other("Nobody"));
 							else
 								sSendMessage.SendChatMessage(sIRCMessage, text[1], halfoperators.Remove(0, 2, ", "));
 
-							if(operators == string.Empty)
+							if(operators.IsEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, text[2], sLConsole.Other("Nobody"));
 							else
 								sSendMessage.SendChatMessage(sIRCMessage, text[2], operators.Remove(0, 2, ", "));
 
-							if(admins == string.Empty)
+							if(admins.IsEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, text[3], sLConsole.Other("Nobody"));
 							else
 								sSendMessage.SendChatMessage(sIRCMessage, text[3], admins.Remove(0, 2, ", "));
 
-							if(owners == string.Empty)
+							if(owners.IsEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, text[4], sLConsole.Other("Nobody"));
 							else
 								sSendMessage.SendChatMessage(sIRCMessage, text[4], owners.Remove(0, 2, ", "));

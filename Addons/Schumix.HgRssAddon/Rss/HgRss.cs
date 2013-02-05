@@ -280,7 +280,7 @@ namespace Schumix.HgRssAddon
 
 		private string DownloadToXml(string data)
 		{
-			if(data == string.Empty)
+			if(data.IsEmpty())
 				return string.Empty;
 
 			if(_website == "bitbucket")

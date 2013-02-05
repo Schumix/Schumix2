@@ -452,7 +452,7 @@ namespace Schumix.Framework.Extensions
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 				text = text.Replace("\r", string.Empty);
 
-			return FileName == string.Empty ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();
+			return FileName.IsEmpty() ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();
 		}
 
 		public static bool ContainsKey(this IDictionary<YamlNode, YamlNode> Nodes, string Key)

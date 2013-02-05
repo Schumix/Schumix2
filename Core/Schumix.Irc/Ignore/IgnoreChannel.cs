@@ -85,7 +85,7 @@ namespace Schumix.Irc.Ignore
 
 		public void Add(string Name)
 		{
-			if(Name.Trim() == string.Empty)
+			if(Name.Trim().IsEmpty())
 				return;
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
@@ -95,7 +95,7 @@ namespace Schumix.Irc.Ignore
 			db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(!db.IsNull())
 			{
-				if(db["Enabled"].ToString() == string.Empty || Convert.ToBoolean(db["Enabled"].ToString()))
+				if(db["Enabled"].ToString().IsEmpty() || Convert.ToBoolean(db["Enabled"].ToString()))
 				{
 					SchumixBase.DManager.Update("channels", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.IgnoreChannel("Text")), string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 
@@ -113,7 +113,7 @@ namespace Schumix.Irc.Ignore
 
 		public void Remove(string Name)
 		{
-			if(Name.Trim() == string.Empty)
+			if(Name.Trim().IsEmpty())
 				return;
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
@@ -129,7 +129,7 @@ namespace Schumix.Irc.Ignore
 			db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled, Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(!db.IsNull())
 			{
-				if(db["Enabled"].ToString() == string.Empty || !Convert.ToBoolean(db["Enabled"].ToString()))
+				if(db["Enabled"].ToString().IsEmpty() || !Convert.ToBoolean(db["Enabled"].ToString()))
 				{
 					SchumixBase.DManager.Update("channels", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 
@@ -137,7 +137,7 @@ namespace Schumix.Irc.Ignore
 					{
 						string password = db["Password"].ToString();
 
-						if(password.Trim() == string.Empty)
+						if(password.Trim().IsEmpty())
 							sIrcBase.Networks[_servername].sSender.Join(Name.ToLower());
 						else
 							sIrcBase.Networks[_servername].sSender.Join(Name.ToLower(), db["Password"].ToString().Trim());
@@ -148,7 +148,7 @@ namespace Schumix.Irc.Ignore
 
 		public bool Contains(string Name)
 		{
-			if(Name.Trim() == string.Empty)
+			if(Name.Trim().IsEmpty())
 				return false;
 
 			return _ignorelist.Contains(Name.ToLower());

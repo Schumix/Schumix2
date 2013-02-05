@@ -260,7 +260,7 @@ namespace Schumix.Irc
 		/// </summary>
 		protected void HandleNickError(IRCMessage sIRCMessage)
 		{
-			if(NewNickPrivmsg == string.Empty)
+			if(NewNickPrivmsg.IsEmpty())
 			{
 				Log.Error("MessageHandler", sLConsole.GetString("{0} already in use!"), sMyNickInfo.NickStorage);
 				string nick = sMyNickInfo.ChangeNick();
@@ -405,7 +405,7 @@ namespace Schumix.Irc
 
 		protected void HandleIrcLeft(IRCMessage sIRCMessage)
 		{
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[left] {0}"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[left] {0}"), sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args);
 
 			if(sIRCMessage.Nick == sMyNickInfo.NickStorage)
 			{
@@ -421,7 +421,7 @@ namespace Schumix.Irc
 			foreach(var chan in sChannelList.List)
 			{
 				if(chan.Value.Names.ContainsKey(sIRCMessage.Nick.ToLower()))
-					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[quit] {0}"), sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args);
+					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[quit] {0}"), sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args);
 			}
 
 			sChannelList.Remove(string.Empty, sIRCMessage.Nick, true);
@@ -507,7 +507,7 @@ namespace Schumix.Irc
 
 		protected void HandleIrcTopic(IRCMessage sIRCMessage)
 		{
-			string text = sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args;
+			string text = sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args;
 			sChannelList.List[sIRCMessage.Channel.ToLower()].Topic = text;
 			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Topic] New topic: {0}"), text);
 		}
@@ -523,7 +523,7 @@ namespace Schumix.Irc
 			sIRCMessage.Channel = sIRCMessage.Info[3];
 			sIRCMessage.Args = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
 			sIRCMessage.Args = sIRCMessage.Args.Remove(0, 1, SchumixBase.Colon);
-			string text = sIRCMessage.Args.Trim() == string.Empty ? string.Empty : sIRCMessage.Args;
+			string text = sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args;
 
 			if(!sChannelList.List.ContainsKey(sIRCMessage.Channel.ToLower()))
 			{

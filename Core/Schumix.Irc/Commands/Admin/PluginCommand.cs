@@ -184,7 +184,7 @@ namespace Schumix.Irc.Commands
 				if(IgnorePlugins != string.Empty)
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], IgnorePlugins.Remove(0, 2, ", "));
 
-				if(Plugins == string.Empty && IgnorePlugins == string.Empty)
+				if(Plugins.IsEmpty() && IgnorePlugins.IsEmpty())
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 			}
 		}

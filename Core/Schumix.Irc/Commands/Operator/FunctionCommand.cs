@@ -74,7 +74,7 @@ namespace Schumix.Irc.Commands
 					}
 					
 					string f = sMyChannelInfo.FunctionsInfo();
-					if(f == string.Empty)
+					if(f.IsEmpty())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
