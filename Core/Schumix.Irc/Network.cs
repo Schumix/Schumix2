@@ -417,22 +417,10 @@ namespace Schumix.Irc
 					Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 
-				reader = new StreamReader(networkStream);
-
-				if(INetwork.WriterList.ContainsKey(_servername))
-					INetwork.WriterList[_servername] = new StreamWriter(networkStream) { AutoFlush = true };
-				else
-					INetwork.WriterList.Add(_servername, new StreamWriter(networkStream) { AutoFlush = true });
+				InitializeStream(networkStream);
 			}
 			else
-			{
-				reader = new StreamReader(client.GetStream());
-
-				if(INetwork.WriterList.ContainsKey(_servername))
-					INetwork.WriterList[_servername] = new StreamWriter(client.GetStream()) { AutoFlush = true };
-				else
-					INetwork.WriterList.Add(_servername, new StreamWriter(client.GetStream()) { AutoFlush = true });
-			}
+				InitializeStream(client.GetStream());
 
 			Connected = true;
 			sSender.RegisterConnection(IRCConfig.List[_servername].Password, sMyNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
@@ -463,6 +451,16 @@ namespace Schumix.Irc
 
 			if(!reader.IsNull())
 				reader.Dispose();
+		}
+
+		private void InitializeStream(Stream stream)
+		{
+			reader = new StreamReader(stream);
+
+			if(INetwork.WriterList.ContainsKey(_servername))
+				INetwork.WriterList[_servername] = new StreamWriter(stream) { AutoFlush = true };
+			else
+				INetwork.WriterList.Add(_servername, new StreamWriter(stream) { AutoFlush = true });
 		}
 
 		private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
