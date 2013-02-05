@@ -431,6 +431,7 @@ namespace Schumix.Irc
 			IsAllJoin = false;
 			_enabled = true;
 			NewNickPrivmsg = string.Empty;
+			ModePrivmsg = string.Empty;
 			SchumixBase.UrlTitleEnabled = false;
 			sMyNickInfo.ChangeIdentifyStatus(false);
 			sMyNickInfo.ChangeVhostStatus(false);
