@@ -23,6 +23,8 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
+SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 
 endif
 
@@ -45,6 +47,7 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB=
 
 endif
 
@@ -68,6 +71,7 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB=
 
 endif
 
@@ -90,6 +94,7 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB=
 
 endif
 
@@ -105,7 +110,8 @@ PROGRAMFILES = \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
 	$(MONO_POSIX_DLL) \
-	$(SCHUMIX_API_DLL)  
+	$(SCHUMIX_API_DLL) \
+	$(SCHUMIX_API_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_FRAMEWORK_PC)  
@@ -144,7 +150,6 @@ FILES = \
 	Mathematics/Algorithms/QuickSort.cs \
 	Mathematics/Types/AutoSortedArray.cs \
 	Mathematics/MathFunctions.cs \
-	Log.cs \
 	Config/Consts.cs \
 	Config/SchumixConfig.cs \
 	Config/IRCConfig.cs \
@@ -178,9 +183,10 @@ FILES = \
 	Clean/CleanConfig.cs \
 	Clean/CleanDatabase.cs \
 	Config/CleanConfig.cs \
-	LogType.cs \
 	CodeBureau/StringEnum.cs \
-	CodeBureau/StringValueAttribute.cs 
+	CodeBureau/StringValueAttribute.cs \
+	Log/Log.cs \
+	Log/LogType.cs 
 
 DATA_FILES = 
 
@@ -192,6 +198,7 @@ EXTRAS = \
 	Database/Cache \
 	Clean \
 	CodeBureau \
+	Log \
 	schumix.framework.pc.in 
 
 REFERENCES =  \

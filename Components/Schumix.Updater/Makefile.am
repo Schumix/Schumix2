@@ -25,6 +25,10 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
+SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
+SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
+SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 
 endif
 
@@ -49,6 +53,8 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB=
+SCHUMIX_FRAMEWORK_DLL_MDB=
 
 endif
 
@@ -74,6 +80,8 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB=
+SCHUMIX_FRAMEWORK_DLL_MDB=
 
 endif
 
@@ -98,6 +106,8 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.Api.dll
+SCHUMIX_API_DLL_MDB=
+SCHUMIX_FRAMEWORK_DLL_MDB=
 
 endif
 
@@ -115,7 +125,9 @@ PROGRAMFILES = \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
 	$(MONO_POSIX_DLL) \
-	$(SCHUMIX_API_DLL)  
+	$(SCHUMIX_API_DLL) \
+	$(SCHUMIX_API_DLL_MDB) \
+	$(SCHUMIX_FRAMEWORK_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_UPDATER_PC)  
