@@ -471,13 +471,13 @@ namespace Schumix.Console.Commands
 							sIrcBase.Networks[_servername].sMyChannelInfo.ChannelFunctionsReload();
 						}
 
-						if(onfunction != string.Empty)
+						if(!onfunction.IsEmpty())
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn2"), onfunction.Remove(0, 2, ", "));
 			
-						if(offfunction != string.Empty)
+						if(!offfunction.IsEmpty())
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff2"), offfunction.Remove(0, 2, ", "));
 
-						if(nosuchfunction != string.Empty)
+						if(!nosuchfunction.IsEmpty())
 							Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), nosuchfunction.Remove(0, 2, ", "));
 
 						if(args.Length == 0)
@@ -637,13 +637,13 @@ namespace Schumix.Console.Commands
 							sIrcBase.Networks[_servername].sMyChannelInfo.FunctionsReload();
 						}
 
-						if(onfunction != string.Empty)
+						if(!onfunction.IsEmpty())
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOn2"), onfunction.Remove(0, 2, ", "));
 			
-						if(offfunction != string.Empty)
+						if(!offfunction.IsEmpty())
 							Log.Warning("Console", sLManager.GetConsoleWarningText("FunctionAlreadyTurnedOff2"), offfunction.Remove(0, 2, ", "));
 
-						if(nosuchfunction != string.Empty)
+						if(!nosuchfunction.IsEmpty())
 							Log.Error("Console", sLConsole.Other("NoSuchFunctions2"), nosuchfunction.Remove(0, 2, ", "));
 
 						if(args.Length == 0)
@@ -941,7 +941,7 @@ namespace Schumix.Console.Commands
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(!db.IsNull())
 					{
-						if(db["Password"].ToString().Trim() != string.Empty)
+						if(!db["Password"].ToString().Trim().IsEmpty())
 						{
 							Log.Notice("Console", text[1]);
 							return;
@@ -1900,10 +1900,10 @@ namespace Schumix.Console.Commands
 						IgnorePlugins += ", " + plugin.Value.Name;
 				}
 
-				if(Plugins != string.Empty)
+				if(!Plugins.IsEmpty())
 					Log.Notice("Console", text[0], Plugins.Remove(0, 2, ", "));
 
-				if(IgnorePlugins != string.Empty)
+				if(!IgnorePlugins.IsEmpty())
 					Log.Notice("Console", text[1], IgnorePlugins.Remove(0, 2, ", "));
 
 				if(Plugins.IsEmpty() && IgnorePlugins.IsEmpty())

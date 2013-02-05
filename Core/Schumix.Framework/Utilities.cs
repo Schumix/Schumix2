@@ -73,9 +73,9 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				if(args != string.Empty && noencode.IsEmpty())
+				if(!args.IsEmpty() && noencode.IsEmpty())
 					url = url + HttpUtility.UrlEncode(args);
-				else if(args != string.Empty && noencode != string.Empty)
+				else if(!args.IsEmpty() && !noencode.IsEmpty())
 					url = url + HttpUtility.UrlEncode(args) + noencode;
 
 				var request = (HttpWebRequest)WebRequest.Create(url);
@@ -120,9 +120,9 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				if(args != string.Empty && noencode.IsEmpty())
+				if(!args.IsEmpty() && noencode.IsEmpty())
 					url = url + HttpUtility.UrlEncode(args);
-				else if(args != string.Empty && noencode != string.Empty)
+				else if(!args.IsEmpty() && !noencode.IsEmpty())
 					url = url + HttpUtility.UrlEncode(args) + noencode;
 
 				using(var client = new WebClient())

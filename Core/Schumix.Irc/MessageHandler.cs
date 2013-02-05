@@ -277,7 +277,7 @@ namespace Schumix.Irc
 
 		protected void HandleErrorNewNickName(IRCMessage sIRCMessage)
 		{
-			if(NewNickPrivmsg != string.Empty)
+			if(!NewNickPrivmsg.IsEmpty())
 			{
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text15", sLManager.GetChannelLocalization(NewNickPrivmsg, sIRCMessage.ServerName)));
 				NewNickPrivmsg = string.Empty;
@@ -286,7 +286,7 @@ namespace Schumix.Irc
 
 		protected void HandleNicknameWhileBannedOrModeratedOnChannel(IRCMessage sIRCMessage)
 		{
-			if(NewNickPrivmsg != string.Empty)
+			if(!NewNickPrivmsg.IsEmpty())
 			{
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text16", sLManager.GetChannelLocalization(NewNickPrivmsg, sIRCMessage.ServerName)));
 				NewNickPrivmsg = string.Empty;
@@ -372,7 +372,7 @@ namespace Schumix.Irc
 
 				if(WhoisList[nick].Online)
 				{
-					if(WhoisList[nick].Message != string.Empty)
+					if(!WhoisList[nick].Message.IsEmpty())
 						sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[0], WhoisList[nick].Message.Remove(0, 1, SchumixBase.Space));
 					else
 						sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[2]); 
@@ -599,7 +599,7 @@ namespace Schumix.Irc
 
 		protected void HandleNoSuchNick(IRCMessage sIRCMessage)
 		{
-			if(ModePrivmsg != string.Empty || ModePrivmsg != sMyNickInfo.NickStorage)
+			if(!ModePrivmsg.IsEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
 			{
 				if(sIRCMessage.Info.Length < 4)
 					return;

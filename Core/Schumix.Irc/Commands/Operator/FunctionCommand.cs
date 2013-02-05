@@ -135,13 +135,13 @@ namespace Schumix.Irc.Commands
 								sMyChannelInfo.FunctionsReload();
 							}
 							
-							if(onfunction != string.Empty)
+							if(!onfunction.IsEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOn2", sIRCMessage.Channel, sIRCMessage.ServerName), onfunction.Remove(0, 2, ", "));
 							
-							if(offfunction != string.Empty)
+							if(!offfunction.IsEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOff2", sIRCMessage.Channel, sIRCMessage.ServerName), offfunction.Remove(0, 2, ", "));
 							
-							if(nosuchfunction != string.Empty)
+							if(!nosuchfunction.IsEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoSuchFunctions2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), nosuchfunction.Remove(0, 2, ", "));
 							
 							if(args.Length == 0)
@@ -285,13 +285,13 @@ namespace Schumix.Irc.Commands
 							sMyChannelInfo.ChannelFunctionsReload();
 						}
 
-						if(onfunction != string.Empty)
+						if(!onfunction.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOn2", sIRCMessage.Channel, sIRCMessage.ServerName), onfunction.Remove(0, 2, ", "));
 
-						if(offfunction != string.Empty)
+						if(!offfunction.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOff2", sIRCMessage.Channel, sIRCMessage.ServerName), offfunction.Remove(0, 2, ", "));
 
-						if(nosuchfunction != string.Empty)
+						if(!nosuchfunction.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoSuchFunctions2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), nosuchfunction.Remove(0, 2, ", "));
 
 						if(args.Length == 0)
@@ -447,13 +447,13 @@ namespace Schumix.Irc.Commands
 							sMyChannelInfo.ChannelFunctionsReload();
 						}
 
-						if(onfunction != string.Empty)
+						if(!onfunction.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOn2", sIRCMessage.Channel, sIRCMessage.ServerName), onfunction.Remove(0, 2, ", "));
 
-						if(offfunction != string.Empty)
+						if(!offfunction.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOff2", sIRCMessage.Channel, sIRCMessage.ServerName), offfunction.Remove(0, 2, ", "));
 
-						if(nosuchfunction != string.Empty)
+						if(!nosuchfunction.IsEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoSuchFunctions2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), nosuchfunction.Remove(0, 2, ", "));
 
 						if(args.Length == 0)

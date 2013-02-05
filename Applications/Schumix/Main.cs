@@ -106,70 +106,70 @@ namespace Schumix
 				}
 				else if(arg.Contains("--config-dir="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						configdir = arg.Substring(arg.IndexOf("=")+1);
 
 					continue;
 				}
 				else if(arg.Contains("--config-file="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						configfile = arg.Substring(arg.IndexOf("=")+1);
 
 					continue;
 				}
 				else if(arg.Contains("--console-encoding="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						console_encoding = arg.Substring(arg.IndexOf("=")+1);
 
 					continue;
 				}
 				else if(arg.Contains("--console-localization="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						localization = arg.Substring(arg.IndexOf("=")+1);
 
 					continue;
 				}
 				else if(arg.Contains("--server-enabled="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						serverenabled = Convert.ToBoolean(arg.Substring(arg.IndexOf("=")+1));
 
 					continue;
 				}
 				else if(arg.Contains("--server-host="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						serverhost = arg.Substring(arg.IndexOf("=")+1);
 
 					continue;
 				}
 				else if(arg.Contains("--server-port="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						serverport = Convert.ToInt32(arg.Substring(arg.IndexOf("=")+1));
 
 					continue;
 				}
 				else if(arg.Contains("--server-password="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						serverpassword = arg.Substring(arg.IndexOf("=")+1);
 
 					continue;
 				}
 				else if(arg.Contains("--server-identify="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						serveridentify = arg.Substring(arg.IndexOf("=")+1);
 
 					continue;
 				}
 				else if(arg.Contains("--colorbind-mode="))
 				{
-					if(arg.Substring(arg.IndexOf("=")+1) != string.Empty)
+					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
 						colorbindmode = Convert.ToBoolean(arg.Substring(arg.IndexOf("=")+1));
 
 					continue;
@@ -202,7 +202,7 @@ namespace Schumix
 			new Config(configdir, configfile, colorbindmode);
 			sUtilities.CreatePidFile(SchumixConfig.ConfigFile);
 
-			if(serveridentify != string.Empty)
+			if(!serveridentify.IsEmpty())
 				SchumixBase.ServerIdentify = serveridentify;
 
 			if(localization == "start")
