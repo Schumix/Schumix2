@@ -37,6 +37,12 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
 
+			if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ThisIsNotAChannelDoNotWriteInPM", sIRCMessage.Channel, sIRCMessage.ServerName));
+				return;
+			}
+
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoRank", sIRCMessage.Channel, sIRCMessage.ServerName));
