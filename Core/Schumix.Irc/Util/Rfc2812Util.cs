@@ -294,7 +294,7 @@ namespace Schumix.Irc.Util
 		
 		public static void SetMessageType(this IRCMessage sIRCMessage, string type)
 		{
-			switch(IRCConfig.List[sIRCMessage.ServerName].MessageType.ToLower())
+			switch(type.ToLower())
 			{
 			case "privmsg":
 				sIRCMessage.MessageType = MessageType.Privmsg;
