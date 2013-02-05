@@ -33,6 +33,7 @@ using System.Security.Authentication;
 using Schumix.Api.Irc;
 using Schumix.Api.Delegate;
 using Schumix.Api.Functions;
+using Schumix.Irc.Util;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
@@ -606,19 +607,7 @@ namespace Schumix.Irc
 			IMessage.Info = IrcCommand;
 			IMessage.Args = IrcCommand.SplitToString(3, SchumixBase.Space);
 			IMessage.Args = IMessage.Args.Remove(0, 1, SchumixBase.Colon);
-
-			switch(IRCConfig.List[_servername].MessageType.ToLower())
-			{
-				case "privmsg":
-					IMessage.MessageType = MessageType.Privmsg;
-					break;
-				case "notice":
-					IMessage.MessageType = MessageType.Notice;
-					break;
-				default:
-					IMessage.MessageType = MessageType.Privmsg;
-					break;
-			}
+			IMessage.SetMessageType();
 
 			if(IrcMethodMap.ContainsKey(opcode))
 			{

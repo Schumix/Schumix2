@@ -168,18 +168,7 @@ namespace Schumix.Irc
 
 				if(IsOnline)
 				{
-					switch(IRCConfig.List[sIRCMessage.ServerName].MessageType.ToLower())
-					{
-						case "privmsg":
-							sIRCMessage.MessageType = MessageType.Privmsg;
-							break;
-						case "notice":
-							sIRCMessage.MessageType = MessageType.Notice;
-							break;
-						default:
-							sIRCMessage.MessageType = MessageType.Privmsg;
-							break;
-					}
+					sIRCMessage.SetMessageType();
 
 					if(sIRCMessage.Args.Contains("Is online from:") || sIRCMessage.Args.Contains("is currently online."))
 					{
