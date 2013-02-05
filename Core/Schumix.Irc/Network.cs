@@ -336,8 +336,8 @@ namespace Schumix.Irc
 		}
 
 		/// <summary>
-        ///     Kapcsolódás az IRC kiszolgálóhoz.
-        /// </summary>
+		///     Kapcsolódás az IRC kiszolgálóhoz.
+		/// </summary>
 		public void Connect(bool nick = false)
 		{
 			NetworkQuit = false;
