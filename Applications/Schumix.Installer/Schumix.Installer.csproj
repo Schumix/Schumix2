@@ -74,10 +74,12 @@
     <Compile Include="PlatformType.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Config\InstallerConfig.cs" />
+    <Compile Include="Extensions\GeneralExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Config\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

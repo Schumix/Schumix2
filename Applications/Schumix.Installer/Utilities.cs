@@ -25,6 +25,7 @@ using System.Net;
 using System.Web;
 using System.Text;
 using Schumix.Installer.Config;
+using Schumix.Installer.Extensions;
 
 namespace Schumix.Installer
 {
@@ -53,9 +54,9 @@ namespace Schumix.Installer
 		{
 			lock(WriteLock)
 			{
-				if(args != string.Empty && noencode == string.Empty)
+				if(!args.IsEmpty() && noencode.IsEmpty())
 					url = url + HttpUtility.UrlEncode(args);
-				else if(args != string.Empty && noencode != string.Empty)
+				else if(!args.IsEmpty() && !noencode.IsEmpty())
 					url = url + HttpUtility.UrlEncode(args) + noencode;
 				
 				var request = (HttpWebRequest)WebRequest.Create(url);

@@ -40,7 +40,7 @@ namespace Schumix.Framework.Extensions
 		[Pure]
 		public static bool IsSimple(this Type type)
 		{
-			Contract.Requires(type != null);
+			Contract.Requires(!type.IsNull());
 			return type.IsEnum || type.IsNumeric() || type == typeof(string) || type == typeof(char) || type == typeof(bool);
 		}
 
@@ -54,7 +54,7 @@ namespace Schumix.Framework.Extensions
 		[Pure]
 		public static bool IsNumeric(this Type type)
 		{
-			Contract.Requires(type != null);
+			Contract.Requires(!type.IsNull());
 			return type.IsInteger() || type.IsFloatingPoint();
 		}
 
@@ -68,7 +68,7 @@ namespace Schumix.Framework.Extensions
 		[Pure]
 		public static bool IsFloatingPoint(this Type type)
 		{
-			Contract.Requires(type != null);
+			Contract.Requires(!type.IsNull());
 			return type == typeof(float) || type == typeof(double) || type == typeof(decimal);
 		}
 
@@ -82,7 +82,7 @@ namespace Schumix.Framework.Extensions
 		[Pure]
 		public static bool IsInteger(this Type type)
 		{
-			Contract.Requires(type != null);
+			Contract.Requires(!type.IsNull());
 			return type == typeof(int) || type == typeof(uint) || type == typeof(short) || type == typeof(ushort) ||
 				type == typeof(byte) || type == typeof(sbyte) || type == typeof(long) || type == typeof(ulong);
 		}
@@ -97,10 +97,10 @@ namespace Schumix.Framework.Extensions
 		public static T[] GetCustomAttributes<T>(this ICustomAttributeProvider type)
 			where T : Attribute
 		{
-			Contract.Requires(type != null);
-			Contract.Ensures(Contract.Result<T[]>() != null);
+			Contract.Requires(!type.IsNull());
+			Contract.Ensures(!Contract.Result<T[]>().IsNull());
 			var attribs = type.GetCustomAttributes(typeof(T), false) as T[];
-			Contract.Assume(attribs != null);
+			Contract.Assume(!attribs.IsNull());
 			return attribs;
 		}
 
@@ -114,7 +114,7 @@ namespace Schumix.Framework.Extensions
 		public static T GetCustomAttribute<T>(this ICustomAttributeProvider type)
 			where T : Attribute
 		{
-			Contract.Requires(type != null);
+			Contract.Requires(!type.IsNull());
 			return type.GetCustomAttributes<T>().TryGet(0);
 		}
 
@@ -126,7 +126,7 @@ namespace Schumix.Framework.Extensions
 		/// <returns></returns>
 		public static List<Type> GetTypesWithInterface(this Assembly asm, Type interfaceType)
 		{
-			Contract.Requires(interfaceType != null);
+			Contract.Requires(!interfaceType.IsNull());
 			var types = (from t in asm.GetTypes().AsParallel() where t.GetInterfaces().Contains(interfaceType) select t).ToList();
 			return types;
 		}

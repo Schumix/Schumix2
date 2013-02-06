@@ -90,7 +90,8 @@ FILES = \
 	Clean/FileClean.cs \
 	PlatformType.cs \
 	Log.cs \
-	Config/InstallerConfig.cs 
+	Config/InstallerConfig.cs \
+	Extensions/GeneralExtensions.cs 
 
 DATA_FILES = 
 
@@ -99,6 +100,7 @@ RESOURCES =
 EXTRAS = \
 	Properties \
 	Config \
+	Extensions \
 	schumix.installer.in 
 
 REFERENCES =  \

@@ -22,6 +22,7 @@ using System;
 using System.IO;
 using System.Reflection;
 using ICSharpCode.SharpZipLib.Zip;
+using Schumix.Installer.Extensions;
 
 namespace Schumix.Installer.UnZip
 {
@@ -41,7 +42,7 @@ namespace Schumix.Installer.UnZip
 				int i = 0;
 				ZipEntry theEntry;
 
-				while((theEntry = s.GetNextEntry()) != null)
+				while(!(theEntry = s.GetNextEntry()).IsNull())
 				{
 					string fileName      = Path.GetFileName(theEntry.Name);
 					string directoryName = Path.GetDirectoryName(theEntry.Name);
@@ -53,7 +54,7 @@ namespace Schumix.Installer.UnZip
 					if(directoryName.Length > 0)
 						Directory.CreateDirectory(directoryName);
 
-					if(fileName != string.Empty)
+					if(!fileName.IsEmpty())
 					{
 						using(var streamWriter = File.Create(theEntry.Name))
 						{

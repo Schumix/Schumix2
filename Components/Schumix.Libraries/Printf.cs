@@ -22,11 +22,15 @@ using System;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using Schumix.Framework;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Libraries
 {
 	public static class Tools
 	{
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
 		#region Public Methods
 		#region IsNumericType
 		/// <summary>
@@ -51,6 +55,7 @@ namespace Schumix.Libraries
 				o is decimal);
 		}
 		#endregion
+
 		#region IsPositive
 		/// <summary>
 		/// Determines whether the specified value is positive.
@@ -62,7 +67,7 @@ namespace Schumix.Libraries
 		/// </returns>
 		public static bool IsPositive(object Value, bool ZeroIsPositive)
 		{
-			switch (Type.GetTypeCode(Value.GetType()))
+			switch(Type.GetTypeCode(Value.GetType()))
 			{
 				case TypeCode.SByte:
 					return (ZeroIsPositive ? (sbyte)Value >= 0 : (sbyte)Value > 0);
@@ -93,6 +98,7 @@ namespace Schumix.Libraries
 			}
 		}
 		#endregion
+
 		#region ToUnsigned
 		/// <summary>
 		/// Converts the specified values boxed type to its correpsonding unsigned
@@ -102,7 +108,7 @@ namespace Schumix.Libraries
 		/// <returns>A boxed numeric object whos type is unsigned.</returns>
 		public static object ToUnsigned(object Value)
 		{
-			switch (Type.GetTypeCode(Value.GetType()))
+			switch(Type.GetTypeCode(Value.GetType()))
 			{
 				case TypeCode.SByte:
 					return (byte)((sbyte)Value);
@@ -131,6 +137,7 @@ namespace Schumix.Libraries
 			}
 		}
 		#endregion
+
 		#region ToInteger
 		/// <summary>
 		/// Converts the specified values boxed type to its correpsonding integer
@@ -140,7 +147,7 @@ namespace Schumix.Libraries
 		/// <returns>A boxed numeric object whos type is an integer type.</returns>
 		public static object ToInteger(object Value, bool Round)
 		{
-			switch (Type.GetTypeCode(Value.GetType()))
+			switch(Type.GetTypeCode(Value.GetType()))
 			{
 				case TypeCode.SByte:
 					return Value;
@@ -169,10 +176,11 @@ namespace Schumix.Libraries
 			}
 		}
 		#endregion
+
 		#region UnboxToLong
 		public static long UnboxToLong(object Value, bool Round)
 		{
-			switch (Type.GetTypeCode(Value.GetType()))
+			switch(Type.GetTypeCode(Value.GetType()))
 			{
 				case TypeCode.SByte:
 					return (long)((sbyte)Value);
@@ -201,6 +209,7 @@ namespace Schumix.Libraries
 			}
 		}
 		#endregion
+
 		#region ReplaceMetaChars
 		/// <summary>
 		/// Replaces the string representations of meta chars with their corresponding
@@ -212,6 +221,7 @@ namespace Schumix.Libraries
 		{
 			return Regex.Replace(input, @"(\\)(\d{3}|[^\d])?", new MatchEvaluator(ReplaceMetaCharsMatch));
 		}
+
 		private static string ReplaceMetaCharsMatch(Match m)
 		{
 			// convert octal quotes (like \040)
@@ -221,7 +231,7 @@ namespace Schumix.Libraries
 			{
 				// convert all other special meta characters
 				//TODO: \xhhh hex and possible dec !!
-				switch (m.Groups[2].Value)
+				switch(m.Groups[2].Value)
 				{
 					case "0":           // null
 						return "\0";
@@ -247,12 +257,14 @@ namespace Schumix.Libraries
 			}
 		}
 		#endregion
+
 		#region printf
 		public static void printf(string Format, params object[] Parameters)
 		{
 			Console.Write(Tools.sprintf(Format, Parameters));
 		}
 		#endregion
+
 		#region fprintf
 		public static void fprintf(TextWriter Destination, string Format, params object[] Parameters)
 		{
@@ -260,13 +272,13 @@ namespace Schumix.Libraries
 		}
 
 		internal static Regex r = new Regex(@"\%(\d*\$)?([\'\#\-\+ ]*)(\d*)(?:\.(\d+))?([hl])?([dioxXucsfeEgGpn%])");
-
 		#endregion
+
 		#region sprintf
 		public static string sprintf(string Format, params object[] Parameters)
 		{
 			#region Variables
-			StringBuilder f = new StringBuilder();
+			var f = new StringBuilder();
 			//Regex r = new Regex(@"\%(\d*\$)?([\'\#\-\+ ]*)(\d*)(?:\.(\d+))?([hl])?([dioxXucsfeEgGpn%])");
 			//"%[parameter][flags][width][.precision][length]type"
 			Match m = null;
@@ -286,21 +298,23 @@ namespace Schumix.Libraries
 			int fieldPrecision = 0;
 			char shortLongIndicator = '\0';
 			char formatSpecifier = '\0';
-			char paddingCharacter = ' ';
+			char paddingCharacter = SchumixBase.Space;
 			#endregion
 
 			// find all format parameters in format string
 			f.Append(Format);
 			m = r.Match(f.ToString());
-			while (m.Success)
+
+			while(m.Success)
 			{
 				#region parameter index
 				paramIx = defaultParamIx;
-				if(m.Groups[1] != null && m.Groups[1].Value.Length > 0)
+
+				if(!m.Groups[1].IsNull() && m.Groups[1].Value.Length > 0)
 				{
 					string val = m.Groups[1].Value.Substring(0, m.Groups[1].Value.Length - 1);
 					paramIx = Convert.ToInt32(val) - 1;
-				};
+				}
 				#endregion
 
 				#region format flags
@@ -311,14 +325,15 @@ namespace Schumix.Libraries
 				flagPositiveSpace = false;
 				flagZeroPadding = false;
 				flagGroupThousands = false;
-				if(m.Groups[2] != null && m.Groups[2].Value.Length > 0)
+
+				if(!m.Groups[2].IsNull() && m.Groups[2].Value.Length > 0)
 				{
 					string flags = m.Groups[2].Value;
 
 					flagAlternate = (flags.IndexOf('#') >= 0);
 					flagLeft2Right = (flags.IndexOf('-') >= 0);
 					flagPositiveSign = (flags.IndexOf('+') >= 0);
-					flagPositiveSpace = (flags.IndexOf(' ') >= 0);
+					flagPositiveSpace = (flags.IndexOf(SchumixBase.Space) >= 0);
 					flagGroupThousands = (flags.IndexOf('\'') >= 0);
 
 					// positive + indicator overrides a
@@ -331,9 +346,10 @@ namespace Schumix.Libraries
 				#region field length
 				// extract field length and 
 				// pading character
-				paddingCharacter = ' ';
+				paddingCharacter = SchumixBase.Space;
 				fieldLength = int.MinValue;
-				if(m.Groups[3] != null && m.Groups[3].Value.Length > 0)
+
+				if(!m.Groups[3].IsNull() && m.Groups[3].Value.Length > 0)
 				{
 					fieldLength = Convert.ToInt32(m.Groups[3].Value);
 					flagZeroPadding = (m.Groups[3].Value[0] == '0');
@@ -347,27 +363,30 @@ namespace Schumix.Libraries
 				if(flagLeft2Right && flagZeroPadding)
 				{
 					flagZeroPadding = false;
-					paddingCharacter = ' ';
+					paddingCharacter = SchumixBase.Space;
 				}
 
 				#region field precision
 				// extract field precision
 				fieldPrecision = int.MinValue;
-				if(m.Groups[4] != null && m.Groups[4].Value.Length > 0)
+
+				if(!m.Groups[4].IsNull() && m.Groups[4].Value.Length > 0)
 					fieldPrecision = Convert.ToInt32(m.Groups[4].Value);
 				#endregion
 
 				#region short / long indicator
 				// extract short / long indicator
 				shortLongIndicator = Char.MinValue;
-				if(m.Groups[5] != null && m.Groups[5].Value.Length > 0)
+
+				if(!m.Groups[5].IsNull() && m.Groups[5].Value.Length > 0)
 					shortLongIndicator = m.Groups[5].Value[0];
 				#endregion
 
 				#region format specifier
 				// extract format
 				formatSpecifier = Char.MinValue;
-				if(m.Groups[6] != null && m.Groups[6].Value.Length > 0)
+
+				if(!m.Groups[6].IsNull() && m.Groups[6].Value.Length > 0)
 					formatSpecifier = m.Groups[6].Value[0];
 				#endregion
 
@@ -381,7 +400,7 @@ namespace Schumix.Libraries
 
 				#region get next value parameter
 				// get next value parameter and convert value parameter depending on short / long indicator
-				if(Parameters == null || paramIx >= Parameters.Length)
+				if(Parameters.IsNull() || paramIx >= Parameters.Length)
 					o = null;
 				else
 				{
@@ -414,7 +433,8 @@ namespace Schumix.Libraries
 
 				// convert value parameters to a string depending on the formatSpecifier
 				w = string.Empty;
-				switch (formatSpecifier)
+
+				switch(formatSpecifier)
 				{
 					#region % - character
 					case '%':   // % character
@@ -475,6 +495,7 @@ namespace Schumix.Libraries
 							w = ((char)o).ToString();
 						else if(o is string && ((string)o).Length > 0)
 							w = ((string)o)[0].ToString();
+
 						defaultParamIx++;
 						break;
 					#endregion
@@ -482,14 +503,18 @@ namespace Schumix.Libraries
 					case 's':   // string
 						//string t = "{0" + (fieldLength != int.MinValue ? "," + (flagLeft2Right ? "-" : string.Empty) + fieldLength.ToString() : string.Empty) + ":s}";
 						w = o.ToString();
+
 						if(fieldPrecision >= 0)
 							w = w.Substring(0, fieldPrecision);
 
 						if(fieldLength != int.MinValue)
+						{
 							if(flagLeft2Right)
 								w = w.PadRight(fieldLength, paddingCharacter);
 							else
 								w = w.PadLeft(fieldLength, paddingCharacter);
+						}
+
 						defaultParamIx++;
 						break;
 					#endregion
@@ -541,10 +566,15 @@ namespace Schumix.Libraries
 					#region p - pointer
 					case 'p':   // pointer
 						if(o is IntPtr)
-#if XBOX || SILVERLIGHT
+						{
+#if SILVERLIGHT
 							w = ((IntPtr)o).ToString();
 #else
-							w = "0x" + ((IntPtr)o).ToString("x");
+							if(sUtilities.GetPlatformType() == PlatformType.Xbox)
+								w = ((IntPtr)o).ToString();
+							else
+								w = "0x" + ((IntPtr)o).ToString("x");
+						}
 #endif
 						defaultParamIx++;
 						break;
@@ -589,7 +619,7 @@ namespace Schumix.Libraries
 			{
 				w = Convert.ToString(UnboxToLong(Value, true), 8);
 
-				if(Left2Right || Padding == ' ')
+				if(Left2Right || Padding == SchumixBase.Space)
 				{
 					if(Alternate && w != "0")
 						w = "0" + w;
@@ -609,6 +639,7 @@ namespace Schumix.Libraries
 			return w;
 		}
 		#endregion
+
 		#region FormatHEX
 		private static string FormatHex(string NativeFormat, bool Alternate, int FieldLength, int FieldPrecision, bool Left2Right, char Padding, object Value)
 		{
@@ -620,7 +651,7 @@ namespace Schumix.Libraries
 			{
 				w = String.Format(numberFormat, Value);
 
-				if(Left2Right || Padding == ' ')
+				if(Left2Right || Padding == SchumixBase.Space)
 				{
 					if(Alternate)
 						w = (NativeFormat == "x" ? "0x" : "0X") + w;
@@ -640,6 +671,7 @@ namespace Schumix.Libraries
 			return w;
 		}
 		#endregion
+
 		#region FormatNumber
 		private static string FormatNumber(string NativeFormat, bool Alternate, int FieldLength, int FieldPrecision,
 											bool Left2Right, bool PositiveSign, bool PositiveSpace, char Padding, object Value)
@@ -652,10 +684,10 @@ namespace Schumix.Libraries
 			{
 				w = String.Format(numberFormat, Value);
 
-				if(Left2Right || Padding == ' ')
+				if(Left2Right || Padding == SchumixBase.Space)
 				{
 					if(IsPositive(Value, true))
-						w = (PositiveSign ? "+" : (PositiveSpace ? " " : string.Empty)) + w;
+						w = (PositiveSign ? "+" : (PositiveSpace ? SchumixBase.Space.ToString() : string.Empty)) + w;
 
 					w = String.Format(lengthFormat, w);
 				}
@@ -666,7 +698,7 @@ namespace Schumix.Libraries
 					if(FieldLength != int.MinValue)
 						w = w.PadLeft(FieldLength - 1, Padding);
 					if(IsPositive(Value, true))
-						w = (PositiveSign ? "+" : (PositiveSpace ? " " : (FieldLength != int.MinValue ? Padding.ToString() : string.Empty))) + w;
+						w = (PositiveSign ? "+" : (PositiveSpace ? SchumixBase.Space.ToString() : (FieldLength != int.MinValue ? Padding.ToString() : string.Empty))) + w;
 					else
 						w = "-" + w;
 				}
