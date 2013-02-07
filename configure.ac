@@ -76,6 +76,10 @@ Core/Schumix.Irc/Makefile
 Core/Makefile
 Libraries/WolframAPI/wolframapi.pc
 Libraries/WolframAPI/Makefile
+External/LuaInterface/Core/KopiLua/kopilua.pc
+External/LuaInterface/Core/KopiLua/Makefile
+External/LuaInterface/Core/LuaInterface/luainterface.pc
+External/LuaInterface/Core/LuaInterface/Makefile
 Addons/Schumix.TestAddon/schumix.testaddon.pc
 Addons/Schumix.TestAddon/Makefile
 Addons/Schumix.RevisionAddon/schumix.revisionaddon.pc

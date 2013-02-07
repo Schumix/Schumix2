@@ -13,6 +13,10 @@ Under Mono at least the `2.10` or higher is needed.
 
 # Run source/Compile
 
+## SubModule
+
+Hiányzó almodulok letöltése: git submodule update --init --recursive
+
 ## Windows
 
 Monodevelop használatakor szükséges a nyelvi fájlok lefordításához a `gettext`. Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`

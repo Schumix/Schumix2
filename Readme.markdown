@@ -13,6 +13,10 @@ Monon jelenleg minimum követelmény a `2.10` vagy újabb.
 
 # Kód futtatása/Fordítása
 
+## AlModulok
+
+Hiányzó almodulok letöltése: git submodule update --init --recursive
+
 ## Windows
 
 Monodevelop használatakor szükséges a nyelvi fájlok lefordításához a `gettext`. Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
