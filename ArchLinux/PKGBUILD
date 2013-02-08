@@ -43,6 +43,9 @@ build()
     # Notify the user that the build() process is complete
     echo "$_pkgname version $pkgver is ready to be packaged!"
 
+    # SubModule
+    git submodule update --init --recursive
+
     sdir=`ls -d $PWD`
     sh autogen.sh
     ./configure --prefix=/usr

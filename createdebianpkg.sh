@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "Init SubModule"
+git submodule update --init --recursive
+
 sdir=`ls -d $PWD`
 echo "Running autogen.sh"
 sh autogen.sh
