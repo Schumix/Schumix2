@@ -1,6 +1,6 @@
 #!/bin/bash
 
-git module init
+git submodule update --init --recursive
 
 build_conf="$(echo "$1" | tr [:upper:] [:lower:])"
 
