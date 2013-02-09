@@ -23,7 +23,6 @@ using System.IO;
 using System.Net;
 using NGit;
 using NGit.Api;
-using NGit.Transport;
 
 namespace Schumix.Installer.Download
 {
