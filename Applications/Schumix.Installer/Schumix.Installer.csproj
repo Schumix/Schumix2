@@ -67,6 +67,9 @@
     <Reference Include="Sharpen.Unix">
       <HintPath>..\..\Dependencies\NGit\Sharpen.Unix.dll</HintPath>
     </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\Dependencies\NGit\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -77,7 +80,6 @@
     <Compile Include="Singleton.cs" />
     <Compile Include="CopyTo\Copy.cs" />
     <Compile Include="Clean\DirectoryClean.cs" />
-    <Compile Include="Clean\FileClean.cs" />
     <Compile Include="PlatformType.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Config\InstallerConfig.cs" />

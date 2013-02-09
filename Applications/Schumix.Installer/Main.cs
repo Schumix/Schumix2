@@ -90,8 +90,15 @@ namespace Schumix.Installer
 			Log.Notice("Installer", sLConsole.Installer("Text3"));
 			new Copy(_dir);
 			Log.Notice("Installer", sLConsole.Installer("Text4"));
-			new FileClean();
-			new DirectoryClean(_dir);
+
+			try
+			{
+				new DirectoryClean(_dir);
+			}
+			catch(Exception e)
+			{
+				Log.Warning("Installer", e.Message);
+			}
 
 			Log.Success("Installer", sLConsole.Installer("Text15"));
 			Environment.Exit(0);
