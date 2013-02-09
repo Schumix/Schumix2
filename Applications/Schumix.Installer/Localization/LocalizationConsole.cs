@@ -130,6 +130,24 @@ namespace Schumix.Installer.Localization
 					else
 						return "The installation is finished. The program shutting down!";
 				}
+				case "Text16":
+				{
+					if(Locale == "huHU")
+						return "A program leállításához használd a <Ctrl+C> parancsot!";
+					else if(Locale == "enUS")
+						return "To shut down the program use the <Ctrl+C> command!";
+					else
+						return "To shut down the program use the <Ctrl+C> command!";
+				}
+				case "Text17":
+				{
+					if(Locale == "huHU")
+						return "Installer Verzió: {0}";
+					else if(Locale == "enUS")
+						return "Installer Version: {0}";
+					else
+						return "Installer Version: {0}";
+				}
 				default:
 					return string.Empty;
 			}

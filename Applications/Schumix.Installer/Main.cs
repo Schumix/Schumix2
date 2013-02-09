@@ -46,6 +46,8 @@ namespace Schumix.Installer
 			Console.Title = "Schumix2 Installer";
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("[Installer]");
+			Console.WriteLine(sLConsole.Installer("Text16"));
+			Console.WriteLine(sLConsole.Installer("Text17"), sUtilities.GetVersion());
 			Console.WriteLine("================================================================================"); // 80
 			Console.ForegroundColor = ConsoleColor.Gray;
 			Console.WriteLine();
