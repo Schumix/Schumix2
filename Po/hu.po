@@ -1383,12 +1383,3 @@ msgstr "Kivétel dobott betöltése közben a Python script. Hiba: {0} {1}"
 #: ../Components/Schumix.PythonEngine/PythonEngine.cs:147
 msgid "Exception thrown while loading Python script: {0} Error: {1} {2}"
 msgstr "Kivétel dobott betöltése közben a Python script: {0} Hiba: {1} {2}"
-
-#~ msgid "Extracting new version."
-#~ msgstr "Új forrás kibontása."
-
-#~ msgid "Successfully extracted the staff."
-#~ msgstr "Az állomány sikeresen ki lett bontva."
-
-#~ msgid "Extracting unsuccessful!"
-#~ msgstr "Kibontás sikertelen!"
