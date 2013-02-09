@@ -54,16 +54,23 @@
     <Reference Include="System" />
     <Reference Include="System.Net" />
     <Reference Include="System.Web" />
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Dependencies\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="NGit">
+      <HintPath>..\..\Dependencies\NGit\NGit.dll</HintPath>
+    </Reference>
+    <Reference Include="NSch">
+      <HintPath>..\..\Dependencies\NGit\NSch.dll</HintPath>
+    </Reference>
+    <Reference Include="Sharpen">
+      <HintPath>..\..\Dependencies\NGit\Sharpen.dll</HintPath>
+    </Reference>
+    <Reference Include="Sharpen.Unix">
+      <HintPath>..\..\Dependencies\NGit\Sharpen.Unix.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="Compiler\Build.cs" />
-    <Compile Include="Download\DownloadFile.cs" />
-    <Compile Include="UnZip\GZip.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Localization\LocalizationConsole.cs" />
     <Compile Include="Utilities.cs" />
@@ -75,6 +82,7 @@
     <Compile Include="Log.cs" />
     <Compile Include="Config\InstallerConfig.cs" />
     <Compile Include="Extensions\GeneralExtensions.cs" />
+    <Compile Include="Download\CloneSchumix.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

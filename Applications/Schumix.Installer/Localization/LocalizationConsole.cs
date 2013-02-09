@@ -94,33 +94,6 @@ namespace Schumix.Installer.Localization
 					else
 						return "Installation successful!";
 				}
-				case "Text9":
-				{
-					if(Locale == "huHU")
-						return "Új forrás kibontása.";
-					else if(Locale == "enUS")
-						return "Extracting new version.";
-					else
-						return "Extracting new version.";
-				}
-				case "Text10":
-				{
-					if(Locale == "huHU")
-						return "Az állomány sikeresen ki lett bontva.";
-					else if(Locale == "enUS")
-						return "Successfully extracted the staff.";
-					else
-						return "Successfully extracted the staff.";
-				}
-				case "Text11":
-				{
-					if(Locale == "huHU")
-						return "Kibontás sikertelen!";
-					else if(Locale == "enUS")
-						return "Extracting unsuccessful.";
-					else
-						return "Extracting unsuccessful.";
-				}
 				case "Text12":
 				{
 					if(Locale == "huHU")
