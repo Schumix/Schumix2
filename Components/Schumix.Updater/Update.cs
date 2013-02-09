@@ -52,13 +52,14 @@ namespace Schumix.Updater
 			if(UpdateConfig.Version == "stable")
 			{
 				Log.Notice("Update", sLConsole.GetString("Searching for new stable version is started."));
-				string version = sUtilities.GetUrl(UpdateConfig.WebPage + "/tags");
-				version = version.Remove(0, version.IndexOf("<ol class=\"release-list\">"));
-				version = version.Remove(0, version.IndexOf("<a href=\"") + "<a href=\"".Length);
-				version = version.Substring(0, version.IndexOf("\" class=\"detail-link\""));
-				version = version.Substring(version.IndexOf("tree/") + "tree/".Length);
-
-				var v1 = new Version(version.Remove(0, 1, "v"));
+				string url = UpdateConfig.WebPage.Remove(0, "http://".Length, "http://");
+				url = url.Remove(0, "https://".Length, "https://");
+				string version = sUtilities.GetUrl("https://raw." + url + "/stable" +
+				                                   "/Core/Schumix.Framework/Config/Consts.cs");
+				version = version.Remove(0, version.IndexOf("SchumixVersion = \"") + "SchumixVersion = \"".Length);
+				version = version.Substring(0, version.IndexOf("\";"));
+				
+				var v1 = new Version(version);
 				var v2 = new Version(Schumix.Framework.Config.Consts.SchumixVersion);
 
 				switch(v1.CompareTo(v2))
@@ -80,7 +81,7 @@ namespace Schumix.Updater
 
 				try
 				{
-					new DownloadFile(UpdateConfig.WebPage + "/archive/" + version + ".zip");
+					new DownloadFile(UpdateConfig.WebPage + "/archive/stable.zip");
 					Log.Success("Update", sLConsole.GetString("Successfully downloaded new version."));
 				}
 				catch
@@ -97,7 +98,7 @@ namespace Schumix.Updater
 				string url = UpdateConfig.WebPage.Remove(0, "http://".Length, "http://");
 				url = url.Remove(0, "https://".Length, "https://");
 				string version = sUtilities.GetUrl("https://raw." + url + "/" + UpdateConfig.Branch +
-				                  "/Core/Schumix.Framework/Config/SchumixConfig.cs");
+				                                   "/Core/Schumix.Framework/Config/Consts.cs");
 				version = version.Remove(0, version.IndexOf("SchumixVersion = \"") + "SchumixVersion = \"".Length);
 				version = version.Substring(0, version.IndexOf("\";"));
 

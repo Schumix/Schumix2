@@ -27,6 +27,7 @@ using Schumix.Installer.UnZip;
 using Schumix.Installer.CopyTo;
 using Schumix.Installer.Compiler;
 using Schumix.Installer.Download;
+using Schumix.Installer.Extensions;
 using Schumix.Installer.Localization;
 
 namespace Schumix.Installer
@@ -54,15 +55,16 @@ namespace Schumix.Installer
 				System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 			Log.Notice("Installer", sLConsole.Installer("Text2"));
-			string version = sUtilities.GetUrl(GitUrl + "/tags");
-			version = version.Remove(0, version.IndexOf("<ol class=\"release-list\">"));
-			version = version.Remove(0, version.IndexOf("<a href=\"") + "<a href=\"".Length);
-			version = version.Substring(0, version.IndexOf("\" class=\"detail-link\""));
-			version = version.Substring(version.IndexOf("tree/") + "tree/".Length);
+			string url = GitUrl.Remove(0, "http://".Length, "http://");
+			url = url.Remove(0, "https://".Length, "https://");
+			string version = sUtilities.GetUrl("https://raw." + url + "/stable" +
+			                                   "/Core/Schumix.Framework/Config/Consts.cs");
+			version = version.Remove(0, version.IndexOf("SchumixVersion = \"") + "SchumixVersion = \"".Length);
+			version = version.Substring(0, version.IndexOf("\";"));
 
 			try
 			{
-				new DownloadFile(GitUrl + "/archive/" + version + ".zip");
+				new DownloadFile(GitUrl + "/archive/stable.zip");
 				Log.Success("Installer", sLConsole.Installer("Text6"));
 			}
 			catch
