@@ -27,7 +27,6 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.Updater.Sql;
-using Schumix.Updater.UnZip;
 using Schumix.Updater.Compiler;
 using Schumix.Updater.Download;
 
@@ -37,6 +36,7 @@ namespace Schumix.Updater
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private const string _dir = "Schumix2";
 
 		public Update(string ConfigDirectory)
 		{
@@ -81,7 +81,7 @@ namespace Schumix.Updater
 
 				try
 				{
-					new DownloadFile(UpdateConfig.WebPage + "/archive/stable.zip");
+					new CloneSchumix("git://" + url, _dir, "stable");
 					Log.Success("Update", sLConsole.GetString("Successfully downloaded new version."));
 				}
 				catch
@@ -124,7 +124,7 @@ namespace Schumix.Updater
 
 				try
 				{
-					new DownloadFile(UpdateConfig.WebPage + "/archive/" + UpdateConfig.Branch + ".zip");
+					new CloneSchumix("git://" + url, _dir, UpdateConfig.Branch);
 					Log.Success("Update", sLConsole.GetString("Successfully downloaded new version."));
 				}
 				catch
@@ -141,25 +141,8 @@ namespace Schumix.Updater
 				return;
 			}
 
-			Log.Notice("Update", sLConsole.GetString("Extracting new version."));
-			GZip gzip = null;
-
-			try
-			{
-				gzip = new GZip();
-				Log.Success("Update", sLConsole.GetString("Successfully extracted the staff."));
-			}
-			catch
-			{
-				Log.Error("Update", sLConsole.GetString("Extracting unsuccessful!"));
-				Log.Warning("Update", sLConsole.GetString("Updating successful!"));
-				Thread.Sleep(5*1000);
-				Environment.Exit(1);
-			}
-
-			string dir = gzip.DirectoryName;
 			Log.Notice("Update", sLConsole.GetString("Started translating."));
-			var build = new Build(dir);
+			var build = new Build(_dir);
 
 			if(build.HasError)
 			{
@@ -171,7 +154,7 @@ namespace Schumix.Updater
 
 			Log.Success("Update", sLConsole.GetString("Successfully finished the translation."));
 			Log.Notice("Update", sLConsole.GetString("Sql files update is started. The setted database will be updated."));
-			var sql = new SqlUpdate(dir + "/Sql/Updates");
+			var sql = new SqlUpdate(_dir + "/Sql/Updates");
 			sql.Connect();
 			sql.Update();
 			Log.Success("Update", sLConsole.GetString("Sql update finished."));
@@ -179,7 +162,7 @@ namespace Schumix.Updater
 			if(File.Exists("Config.exe"))
 				File.Delete("Config.exe");
 
-			File.Move(dir + "/Run/Release/Config.exe", "Config.exe");
+			File.Move(_dir + "/Run/Release/Config.exe", "Config.exe");
 			var config = new Process();
 			config.StartInfo.UseShellExecute = false;
 			config.StartInfo.RedirectStandardOutput = true;
@@ -188,12 +171,12 @@ namespace Schumix.Updater
 			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 			{
 				config.StartInfo.FileName = "mono";
-				config.StartInfo.Arguments = "Config.exe " + dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
+				config.StartInfo.Arguments = "Config.exe " + _dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				config.StartInfo.FileName = "Config.exe";
-				config.StartInfo.Arguments = dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
+				config.StartInfo.Arguments = _dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
 			}
 
 			Log.Notice("Update", sLConsole.GetString("This step of updateing is finished. Continue with next step."));

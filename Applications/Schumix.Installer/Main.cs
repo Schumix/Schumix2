@@ -64,7 +64,7 @@ namespace Schumix.Installer
 
 			try
 			{
-				new CloneSchumix("git://" + GitUrl.Remove(0, "https://".Length, "https://"), _dir);
+				new CloneSchumix("git://" + url, _dir);
 				Log.Success("Installer", sLConsole.Installer("Text6"));
 			}
 			catch
