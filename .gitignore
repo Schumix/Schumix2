@@ -18,6 +18,11 @@ Applications/Schumix/schumix
 #Installer
 Installer/Setup.exe
 
+#ArchLinux pkg
+*.pkg.tar.xz
+ArchLinux/pkg/
+ArchLinux/src/
+
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio
