@@ -125,7 +125,8 @@ REFERENCES =  \
 	System \
 	System.Net \
 	System.Web \
-	Microsoft.Build.Utilities.v4.0
+	Microsoft.Build.Utilities.v4.0 \
+	System.Core
 
 DLL_REFERENCES =  \
 	../../Dependencies/NGit/NGit.dll \
