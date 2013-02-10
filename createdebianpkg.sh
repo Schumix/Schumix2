@@ -16,8 +16,6 @@ cd Po
 make DESTDIR=$sdir/Run install
 cd ..
 
-fakeroot
-
 rm -rf pkg
 mkdir pkg
 mkdir pkg/Share
@@ -84,5 +82,4 @@ dpkg-deb --build pkg
 #sudo rm -rf pkg
 echo "mv pkg.deb schumix.deb"
 mv pkg.deb schumix.deb
-exit
 echo "Success :)"

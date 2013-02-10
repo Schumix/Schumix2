@@ -48,7 +48,7 @@ Futtassuk `./createarchlinuxpkg.sh` parancsot. Ha lefutott megjelenik egy `schum
 ## Debian/Ubuntu
 
 **Figyelem!!! Root jogra lesz szükség hozzá.**
-Futtassuk `./createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+Első lépés hogy átlépünk fakeroot módba. Írjuk be hogy `fakeroot`. Ezután futtassuk `./createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
 
 ## Windows
 
