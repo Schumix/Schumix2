@@ -23,6 +23,10 @@ Installer/Setup.exe
 ArchLinux/pkg/
 ArchLinux/src/
 
+#Debian pkg
+pkg/
+*.deb
+
 #ignore thumbnails created by windows
 Thumbs.db
 #Ignore files build by Visual Studio
