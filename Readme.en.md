@@ -1,4 +1,4 @@
-# Schumix2
+# Schumix2 [![Build Status](https://travis-ci.org/Schumix/Schumix2.png?branch=master)](https://travis-ci.org/Schumix/Schumix2)
 
 # Statement
 
