@@ -1,4 +1,4 @@
-#Autosave files
+# Autosave files
 *~
 
 *.pc
@@ -9,27 +9,27 @@
 */bin/*
 Run/
 
-#build stuff
+# build stuff
 Applications/Schumix.Config/schumix.config
 Applications/Schumix.Installer/schumix.installer
 Applications/Schumix.Server/schumix.server
 Applications/Schumix/schumix
 
-#Installer
+# Installer
 Installer/Setup.exe
 
-#ArchLinux pkg
+# ArchLinux pkg
 *.pkg.tar.xz
 ArchLinux/pkg/
 ArchLinux/src/
 
-#Debian pkg
+# Debian pkg
 pkg/
 *.deb
 
-#ignore thumbnails created by windows
+# ignore thumbnails created by windows
 Thumbs.db
-#Ignore files build by Visual Studio
+# Ignore files build by Visual Studio
 *.obj
 *.exe
 *.pdb
