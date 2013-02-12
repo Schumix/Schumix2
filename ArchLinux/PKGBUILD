@@ -40,9 +40,6 @@ build()
       git checkout -b "$_gitbranch" "origin/$_gitbranch"
     fi
 
-    # Uncomment if you aren't using the master branch
-    #git checkout -b "$_gitbranch" "origin/$_gitbranch"
-
     # Notify the user that the build() process is complete
     echo "$_pkgname version $pkgver is ready to be packaged!"
 
