@@ -23,10 +23,10 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using Schumix.Installer.Clean;
-using Schumix.Installer.UnZip;
 using Schumix.Installer.CopyTo;
 using Schumix.Installer.Compiler;
 using Schumix.Installer.Download;
+using Schumix.Installer.Extensions;
 using Schumix.Installer.Localization;
 
 namespace Schumix.Installer
@@ -36,6 +36,7 @@ namespace Schumix.Installer
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private const string GitUrl = "https://github.com/Schumix/Schumix2";
+		private const string _dir = "Schumix2";
 
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
@@ -45,24 +46,27 @@ namespace Schumix.Installer
 			Console.Title = "Schumix2 Installer";
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("[Installer]");
+			Console.WriteLine(sLConsole.Installer("Text16"));
+			Console.WriteLine(sLConsole.Installer("Text17"), sUtilities.GetVersion());
 			Console.WriteLine("================================================================================"); // 80
 			Console.ForegroundColor = ConsoleColor.Gray;
-			//Console.WriteLine();
+			Console.WriteLine();
 			Log.Initialize("Installer.log");
 
 			if(sUtilities.GetPlatformType() == PlatformType.Linux)
 				System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 			Log.Notice("Installer", sLConsole.Installer("Text2"));
-			string version = sUtilities.GetUrl(GitUrl + "/tags");
-			version = version.Remove(0, version.IndexOf("<ol class=\"release-list\">"));
-			version = version.Remove(0, version.IndexOf("<a href=\"") + "<a href=\"".Length);
-			version = version.Substring(0, version.IndexOf("\" class=\"detail-link\""));
-			version = version.Substring(version.IndexOf("tree/") + "tree/".Length);
+			string url = GitUrl.Remove(0, "http://".Length, "http://");
+			url = url.Remove(0, "https://".Length, "https://");
+			string version = sUtilities.GetUrl("https://raw." + url + "/stable" +
+			                                   "/Core/Schumix.Framework/Config/Consts.cs");
+			version = version.Remove(0, version.IndexOf("SchumixVersion = \"") + "SchumixVersion = \"".Length);
+			version = version.Substring(0, version.IndexOf("\";"));
 
 			try
 			{
-				new DownloadFile(GitUrl + "/archive/" + version + ".zip");
+				new CloneSchumix("git://" + url, _dir);
 				Log.Success("Installer", sLConsole.Installer("Text6"));
 			}
 			catch
@@ -73,25 +77,8 @@ namespace Schumix.Installer
 				Environment.Exit(1);
 			}
 
-			Log.Notice("Installer", sLConsole.Installer("Text9"));
-			GZip gzip = null;
-
-			try
-			{
-				gzip = new GZip();
-				Log.Success("Installer", sLConsole.Installer("Text10"));
-			}
-			catch
-			{
-				Log.Error("Installer", sLConsole.Installer("Text11"));
-				Log.Warning("Installer", sLConsole.Installer("Text8"));
-				Thread.Sleep(5*1000);
-				Environment.Exit(1);
-			}
-
-			string dir = gzip.DirectoryName;
 			Log.Notice("Installer", sLConsole.Installer("Text12"));
-			var build = new Build(dir);
+			var build = new Build(_dir);
 
 			if(build.HasError)
 			{
@@ -103,10 +90,17 @@ namespace Schumix.Installer
 
 			Log.Success("Installer", sLConsole.Installer("Text14"));
 			Log.Notice("Installer", sLConsole.Installer("Text3"));
-			new Copy(dir);
+			new Copy(_dir);
 			Log.Notice("Installer", sLConsole.Installer("Text4"));
-			new FileClean();
-			new DirectoryClean(dir);
+
+			try
+			{
+				new DirectoryClean(_dir);
+			}
+			catch(Exception e)
+			{
+				Log.Warning("Installer", e.Message);
+			}
 
 			Log.Success("Installer", sLConsole.Installer("Text15"));
 			Environment.Exit(0);

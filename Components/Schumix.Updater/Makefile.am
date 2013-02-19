@@ -15,7 +15,11 @@ BUILD_DIR = ../../Run/Debug
 
 SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
 SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
+NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
+SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
+NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -43,7 +47,11 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release
 
 SCHUMIX_UPDATER_DLL_MDB=
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
+NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
+SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
+NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -70,7 +78,11 @@ BUILD_DIR = ../../Run/Debug_x64
 
 SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Updater.dll.mdb
 SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
+NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
+SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
+NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -96,7 +108,11 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release_x64
 
 SCHUMIX_UPDATER_DLL_MDB=
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
+NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
+SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
+NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -117,6 +133,10 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 PROGRAMFILES = \
 	$(SCHUMIX_UPDATER_DLL_MDB) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
+	$(NGIT_DLL) \
+	$(SHARPEN_DLL) \
+	$(NSCH_DLL) \
+	$(SHARPEN_UNIX_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SQLITE3_DLL) \
 	$(SCHUMIX_DB3) \
@@ -140,10 +160,9 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 FILES = \
 	Properties/AssemblyInfo.cs \
 	Update.cs \
-	Download/DownloadFile.cs \
 	Compiler/Build.cs \
-	UnZip/GZip.cs \
-	Sql/Sql.cs 
+	Sql/Sql.cs \
+	Download/CloneSchumix.cs 
 
 DATA_FILES = 
 
@@ -153,7 +172,6 @@ EXTRAS = \
 	Properties \
 	Compiler \
 	Download \
-	UnZip \
 	Sql \
 	schumix.updater.pc.in 
 
@@ -163,13 +181,21 @@ REFERENCES =  \
 	System.Core
 
 DLL_REFERENCES =  \
-	../../Dependencies/ICSharpCode.SharpZipLib.dll
+	../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll \
+	../../Dependencies/NGit/NGit.dll \
+	../../Dependencies/NGit/NSch.dll \
+	../../Dependencies/NGit/Sharpen.dll \
+	../../Dependencies/NGit/Sharpen.Unix.dll
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 include $(top_srcdir)/Makefile.include
 
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
+NGIT_DLL = $(BUILD_DIR)/NGit.dll
+SHARPEN_DLL = $(BUILD_DIR)/Sharpen.dll
+NSCH_DLL = $(BUILD_DIR)/NSch.dll
+SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
@@ -182,6 +208,10 @@ SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
 SCHUMIX_UPDATER_PC = $(BUILD_DIR)/schumix.updater.pc
 
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
+$(eval $(call emit-deploy-target,NGIT_DLL))
+$(eval $(call emit-deploy-target,SHARPEN_DLL))
+$(eval $(call emit-deploy-target,NSCH_DLL))
+$(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))

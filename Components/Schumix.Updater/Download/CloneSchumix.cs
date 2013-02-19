@@ -20,18 +20,21 @@
 
 using System;
 using System.IO;
+using System.Net;
+using NGit;
+using NGit.Api;
 
-namespace Schumix.Installer.Clean
+namespace Schumix.Updater.Download
 {
-	sealed class FileClean
+	sealed class CloneSchumix
 	{
-		/// <summary>
-		///     Törli a tömörített verzió fájlt.
-		/// </summary>
-		public FileClean()
+		public CloneSchumix(string Url, string Dir, string Branch)
 		{
-			if(File.Exists("schumix.zip"))
-				File.Delete("schumix.zip");
+			var clone = Git.CloneRepository();
+			var repo = clone.SetURI(Url).SetDirectory(Path.Combine(Environment.CurrentDirectory, Dir)).Call();
+			repo.Checkout().SetCreateBranch(true).SetUpstreamMode(CreateBranchCommand.SetupUpstreamMode.SET_UPSTREAM).SetName("origin/" + Branch).Call();
+			repo.SubmoduleInit().Call();
+			repo.SubmoduleUpdate().Call();
 		}
 	}
 }

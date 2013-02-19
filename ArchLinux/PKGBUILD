@@ -7,11 +7,11 @@ pkgver="3.9.x"
 _pkgverclassic="3.9.x"
 pkgrel=1
 _gitdir=Schumix2
-_gitbranch=master
-_giturl="git://github.com/megax/$_gitdir.git"
+_gitbranch=stable
+_giturl="git://github.com/Schumix/$_gitdir.git"
 pkgdesc="Schumix IRC Bot and Framework"
 arch=('any')
-url="git://github.com/megax/$_gitdir.git"
+url="git://github.com/Schumix/$_gitdir.git"
 license=('GNU GPL')
 groups=('')
 depends=('mono>=2.10.8')
@@ -30,18 +30,21 @@ build()
     msg "Cloning from git server..."
     if [[ -d $_gitdir ]] ; then
       cd "$_gitdir"
-      git pull origin "$_gitbranch" --depth=1
+      git pull origin "$_gitbranch"
       msg "Files updated"
     else
-      git clone "$_giturl" "$_gitdir" --depth=1
+      git clone "$_giturl" "$_gitdir"
       cd "$_gitdir"
-    fi
 
-    # Uncomment if you aren't using the master branch
-    #git checkout "v$pkgver"
+      # Uncomment if you aren't using the master branch
+      git checkout -b "$_gitbranch" "origin/$_gitbranch"
+    fi
 
     # Notify the user that the build() process is complete
     echo "$_pkgname version $pkgver is ready to be packaged!"
+
+    # SubModule
+    git submodule update --init --recursive
 
     sdir=`ls -d $PWD`
     sh autogen.sh
@@ -71,6 +74,7 @@ package()
     cp License pkg/usr/share/doc/schumix/
     mkdir pkg/usr/lib
     mkdir pkg/usr/lib/pkgconfig
+    mkdir pkg/usr/lib/schumix
     cp -rf Scripts pkg/usr/lib/schumix/Scripts
     cd Run/Release/Addons
 
@@ -88,7 +92,7 @@ package()
         mv $file ../../pkg/usr/lib/pkgconfig/$file
     done
 
-    rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.Api.dll Addons/Schumix.Framework.dll schumix.config schumix.installer schumix schumix.server
+    rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.Api.dll Addons/Schumix.Framework.dll Addons/Mono.Posix.dll schumix.config schumix.installer schumix schumix.server
     cp -rf ./ ../../pkg/usr/lib/schumix
     cd ../../
     cp -rf ./Run/usr/lib/schumix/locale pkg/usr/share/locale

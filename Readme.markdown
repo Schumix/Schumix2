@@ -1,4 +1,4 @@
-# Schumix2
+# Schumix2 [![Build Status](https://travis-ci.org/Schumix/Schumix2.png?branch=stable)](https://travis-ci.org/Schumix/Schumix2)
 
 # Ismertetés
 
@@ -12,6 +12,10 @@ Windows alatt ajálott a `.net 4.0` használata vagy újabb.
 Monon jelenleg minimum követelmény a `2.10` vagy újabb.
 
 # Kód futtatása/Fordítása
+
+## AlModulok
+
+Hiányzó almodulok letöltése: git submodule update --init --recursive
 
 ## Windows
 
@@ -44,7 +48,7 @@ Futtassuk `./createarchlinuxpkg.sh` parancsot. Ha lefutott megjelenik egy `schum
 ## Debian/Ubuntu
 
 **Figyelem!!! Root jogra lesz szükség hozzá.**
-Futtassuk `./createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+Első lépés hogy átlépünk fakeroot módba. Írjuk be hogy `fakeroot`. Ezután futtassuk `./createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
 
 ## Windows
 

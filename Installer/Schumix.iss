@@ -56,6 +56,10 @@ Name: "{userappdata}\Schumix\Channels"
 
 [Files]
 Source: "..\Run\Release\ICSharpCode.SharpZipLib.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\NGit.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\NSch.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Sharpen.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Sharpen.Unix.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\KopiLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\LuaInterface.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Mono.Posix.dll"; DestDir: "{app}"; Flags: ignoreversion

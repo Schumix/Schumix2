@@ -12,13 +12,13 @@ COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Framework.dll \
 	../../Run/Debug/Schumix.Irc.dll \
-	../../Run/Debug/Schumix.Api.dll
+	../../Run/Debug/Schumix.Api.dll \
+	../../External/LuaInterface/Run/Debug/KopiLua.dll \
+	../../External/LuaInterface/Run/Debug/LuaInterface.dll
 BUILD_DIR = ../../Run/Debug
 
 SCHUMIX_LUAENGINE_DLL_MDB_SOURCE=../../Run/Debug/Schumix.LuaEngine.dll.mdb
 SCHUMIX_LUAENGINE_DLL_MDB=$(BUILD_DIR)/Schumix.LuaEngine.dll.mdb
-KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
-LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -35,6 +35,8 @@ SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
+KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Debug/KopiLua.dll
+LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Debug/LuaInterface.dll
 
 endif
 
@@ -47,12 +49,12 @@ COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Framework.dll \
 	../../Run/Release/Schumix.Irc.dll \
-	../../Run/Release/Schumix.Api.dll
+	../../Run/Release/Schumix.Api.dll \
+	../../External/LuaInterface/Run/Release/KopiLua.dll \
+	../../External/LuaInterface/Run/Release/LuaInterface.dll
 BUILD_DIR = ../../Run/Release
 
 SCHUMIX_LUAENGINE_DLL_MDB=
-KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
-LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -66,6 +68,8 @@ SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB=
+KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Release/KopiLua.dll
+LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Release/LuaInterface.dll
 
 endif
 
@@ -78,13 +82,13 @@ COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Debug_x64/Schumix.Framework.dll \
 	../../Run/Debug_x64/Schumix.Irc.dll \
-	../../Run/Debug_x64/Schumix.Api.dll
+	../../Run/Debug_x64/Schumix.Api.dll \
+	../../External/LuaInterface/Run/Debug_x64/KopiLua.dll \
+	../../External/LuaInterface/Run/Debug_x64/LuaInterface.dll
 BUILD_DIR = ../../Run/Debug_x64
 
 SCHUMIX_LUAENGINE_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.LuaEngine.dll.mdb
 SCHUMIX_LUAENGINE_DLL_MDB=$(BUILD_DIR)/Schumix.LuaEngine.dll.mdb
-KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
-LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -98,6 +102,8 @@ SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB=
+KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Debug_x64/KopiLua.dll
+LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Debug_x64/LuaInterface.dll
 
 endif
 
@@ -110,12 +116,12 @@ COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Release_x64/Schumix.Framework.dll \
 	../../Run/Release_x64/Schumix.Irc.dll \
-	../../Run/Release_x64/Schumix.Api.dll
+	../../Run/Release_x64/Schumix.Api.dll \
+	../../External/LuaInterface/Run/Release_x64/KopiLua.dll \
+	../../External/LuaInterface/Run/Release_x64/LuaInterface.dll
 BUILD_DIR = ../../Run/Release_x64
 
 SCHUMIX_LUAENGINE_DLL_MDB=
-KOPILUA_DLL_SOURCE=../../Dependencies/KopiLua.dll
-LUAINTERFACE_DLL_SOURCE=../../Dependencies/LuaInterface.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -129,6 +135,8 @@ SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB=
+KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Release_x64/KopiLua.dll
+LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Release_x64/LuaInterface.dll
 
 endif
 
@@ -137,8 +145,6 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(SCHUMIX_LUAENGINE_DLL_MDB) \
-	$(KOPILUA_DLL) \
-	$(LUAINTERFACE_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SQLITE3_DLL) \
 	$(SCHUMIX_DB3) \
@@ -151,7 +157,9 @@ PROGRAMFILES = \
 	$(SCHUMIX_API_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL) \
-	$(SCHUMIX_IRC_DLL_MDB)  
+	$(SCHUMIX_IRC_DLL_MDB) \
+	$(KOPILUA_DLL) \
+	$(LUAINTERFACE_DLL)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_LUAENGINE_PC)  
@@ -182,16 +190,12 @@ REFERENCES =  \
 	System \
 	System.Core
 
-DLL_REFERENCES =  \
-	../../Dependencies/KopiLua.dll \
-	../../Dependencies/LuaInterface.dll
+DLL_REFERENCES = 
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 include $(top_srcdir)/Makefile.include
 
-KOPILUA_DLL = $(BUILD_DIR)/KopiLua.dll
-LUAINTERFACE_DLL = $(BUILD_DIR)/LuaInterface.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
@@ -202,10 +206,10 @@ MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
+KOPILUA_DLL = $(BUILD_DIR)/KopiLua.dll
+LUAINTERFACE_DLL = $(BUILD_DIR)/LuaInterface.dll
 SCHUMIX_LUAENGINE_PC = $(BUILD_DIR)/schumix.luaengine.pc
 
-$(eval $(call emit-deploy-target,KOPILUA_DLL))
-$(eval $(call emit-deploy-target,LUAINTERFACE_DLL))
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
@@ -213,6 +217,8 @@ $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
+$(eval $(call emit-deploy-target,KOPILUA_DLL))
+$(eval $(call emit-deploy-target,LUAINTERFACE_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_LUAENGINE_PC,schumix.luaengine.pc))
 
 

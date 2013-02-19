@@ -50,9 +50,9 @@ namespace Schumix.Updater.Compiler
 				build.StartInfo.FileName = "mono";
 
 				if(Environment.Is64BitOperatingSystem)
-					build.StartInfo.Arguments = dir + "/xbuild.exe /p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x64\" " + dir + "/Schumix.sln";
+					build.StartInfo.Arguments = dir + "/xbuild.exe /p:Configuration=\"Release\" /p:Platform=\"x64\" " + dir + "/Schumix.sln";
 				else
-					build.StartInfo.Arguments = dir + "/xbuild.exe /p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + dir + "/Schumix.sln";
+					build.StartInfo.Arguments = dir + "/xbuild.exe /p:Configuration=\"Release\" /p:Platform=\"x86\" " + dir + "/Schumix.sln";
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
@@ -60,9 +60,9 @@ namespace Schumix.Updater.Compiler
 				build.StartInfo.FileName = dir + "\\MSBuild.exe";
 
 				if(Environment.Is64BitOperatingSystem)
-					build.StartInfo.Arguments = "/p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x64\" " + dir + "/Schumix.sln";
+					build.StartInfo.Arguments = "/p:Configuration=\"Release\" /p:Platform=\"x64\" " + dir + "/Schumix.sln";
 				else
-					build.StartInfo.Arguments = "/p:DocumentationFile=\"\" /p:DefineConstants=\"RELEASE\" /p:Configuration=\"Release\" /p:Platform=\"x86\" " + dir + "/Schumix.sln";
+					build.StartInfo.Arguments = "/p:Configuration=\"Release\" /p:Platform=\"x86\" " + dir + "/Schumix.sln";
 			}
 
 			build.Start();

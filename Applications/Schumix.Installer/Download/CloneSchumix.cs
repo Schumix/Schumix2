@@ -20,17 +20,21 @@
 
 using System;
 using System.IO;
-using Schumix.Framework;
+using System.Net;
+using NGit;
+using NGit.Api;
 
-namespace Schumix.Updater.Download
+namespace Schumix.Installer.Download
 {
-	sealed class DownloadFile
+	sealed class CloneSchumix
 	{
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-
-		public DownloadFile(string Url)
+		public CloneSchumix(string Url, string Dir)
 		{
-			sUtilities.DownloadFile(Url, "schumix.zip");
+			var clone = Git.CloneRepository();
+			var repo = clone.SetURI(Url).SetDirectory(Path.Combine(Environment.CurrentDirectory, Dir)).Call();
+			repo.Checkout().SetCreateBranch(true).SetUpstreamMode(CreateBranchCommand.SetupUpstreamMode.SET_UPSTREAM).SetName("origin/stable").Call();
+			repo.SubmoduleInit().Call();
+			repo.SubmoduleUpdate().Call();
 		}
 	}
 }

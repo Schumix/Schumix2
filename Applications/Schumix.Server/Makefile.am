@@ -30,7 +30,11 @@ SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Debug/Schumix.Updater.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
+NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
+SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
+NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
 SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
 SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
 
@@ -60,7 +64,11 @@ SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
 SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Release/Schumix.Updater.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
+NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
+SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
+NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
 SCHUMIX_UPDATER_DLL_MDB=
 
 endif
@@ -90,7 +98,11 @@ SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.Api.dll
 SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Debug_x64/Schumix.Updater.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
+NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
+SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
+NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
 SCHUMIX_UPDATER_DLL_MDB=
 
 endif
@@ -119,7 +131,11 @@ SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.Api.dll
 SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Release_x64/Schumix.Updater.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
+NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
+SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
+NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
 SCHUMIX_UPDATER_DLL_MDB=
 
 endif
@@ -142,6 +158,10 @@ PROGRAMFILES = \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_UPDATER_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
+	$(NGIT_DLL) \
+	$(SHARPEN_DLL) \
+	$(NSCH_DLL) \
+	$(SHARPEN_UNIX_DLL) \
 	$(SCHUMIX_UPDATER_DLL_MDB)  
 
 BINARIES = \
@@ -205,6 +225,10 @@ MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
 SCHUMIX_UPDATER_DLL = $(BUILD_DIR)/Schumix.Updater.dll
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
+NGIT_DLL = $(BUILD_DIR)/NGit.dll
+SHARPEN_DLL = $(BUILD_DIR)/Sharpen.dll
+NSCH_DLL = $(BUILD_DIR)/NSch.dll
+SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
 SCHUMIX_SERVER = $(BUILD_DIR)/schumix.server
 
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
@@ -215,6 +239,10 @@ $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
+$(eval $(call emit-deploy-target,NGIT_DLL))
+$(eval $(call emit-deploy-target,SHARPEN_DLL))
+$(eval $(call emit-deploy-target,NSCH_DLL))
+$(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_SERVER,schumix.server,x))
 
 

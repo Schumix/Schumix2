@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "Init SubModule"
+git submodule update --init --recursive
+
 sdir=`ls -d $PWD`
 echo "Running autogen.sh"
 sh autogen.sh
@@ -13,6 +16,7 @@ cd Po
 make DESTDIR=$sdir/Run install
 cd ..
 
+rm -rf pkg
 mkdir pkg
 mkdir pkg/Share
 cp -rf Share/share pkg/Share/
@@ -31,6 +35,7 @@ mkdir pkg/usr/share/doc/schumix
 cp License pkg/usr/share/doc/schumix/
 mkdir pkg/usr/lib
 mkdir pkg/usr/lib/pkgconfig
+mkdir pkg/usr/lib/schumix
 cp -rf Scripts pkg/usr/lib/schumix/Scripts
 cd Run/Release/Addons
 
@@ -48,7 +53,7 @@ do
 	mv $file ../../pkg/usr/lib/pkgconfig/$file
 done
 
-rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.Api.dll Addons/Schumix.Framework.dll schumix.config schumix.installer schumix schumix.server
+rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.Api.dll Addons/Schumix.Framework.dll Addons/Mono.Posix.dll schumix.config schumix.installer schumix schumix.server
 cp -rf ./ ../../pkg/usr/lib/schumix
 cd ../../
 cp -rf ./Run/usr/lib/schumix/locale pkg/usr/share/locale
@@ -72,9 +77,9 @@ find . -exec md5sum '{}' \; > ../Share/md5sums
 cd ..
 mv Share DEBIAN
 cd ..
-sudo chown -R root:root pkg
+#sudo chown -R root:root pkg
 dpkg-deb --build pkg
-sudo rm -rf pkg
+#sudo rm -rf pkg
 echo "mv pkg.deb schumix.deb"
 mv pkg.deb schumix.deb
 echo "Success :)"

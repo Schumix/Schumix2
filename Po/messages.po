@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-02-01 15:01:49+0100\n"
-"PO-Revision-Date: 2013-02-01 15:01:50+0100\n"
+"POT-Creation-Date: 2013-02-13 17:36:29+0100\n"
+"PO-Revision-Date: 2013-02-13 17:36:31+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 #: ../Core/Schumix.Irc/Network.cs:55
 #: ../Core/Schumix.Irc/Network.cs:78
 #: ../Core/Schumix.Irc/Network.cs:80
-#: ../Core/Schumix.Irc/Network.cs:90
+#: ../Core/Schumix.Irc/Network.cs:89
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
@@ -93,7 +93,7 @@ msgid "No such Bot's nickname!"
 msgstr ""
 
 #: ../Core/Schumix.Irc/MessageHandler.cs:16
-#: ../Core/Schumix.Irc/MessageHandler.cs:31
+#: ../Core/Schumix.Irc/MessageHandler.cs:29
 msgid "[SERVER] "
 msgstr ""
 
@@ -117,73 +117,67 @@ msgstr ""
 msgid "Nick isnt registered, so the vhost still off!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:31
+#: ../Core/Schumix.Irc/MessageHandler.cs:29
 msgid ""
 "No such irc command.\n"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:32
+#: ../Core/Schumix.Irc/MessageHandler.cs:30
 msgid "{0} already in use!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:32
+#: ../Core/Schumix.Irc/MessageHandler.cs:30
 msgid "Retrying with: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:52
+#: ../Core/Schumix.Irc/MessageHandler.cs:50
 msgid "[joined]"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:56
+#: ../Core/Schumix.Irc/MessageHandler.cs:54
 msgid "[left] {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:59
+#: ../Core/Schumix.Irc/MessageHandler.cs:57
 msgid "[quit] {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:61
+#: ../Core/Schumix.Irc/MessageHandler.cs:59
 msgid "[Is now known as {0}]"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:64
+#: ../Core/Schumix.Irc/MessageHandler.cs:62
 msgid "[Kicked that user: {0} reason: {1}]"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:73
+#: ../Core/Schumix.Irc/MessageHandler.cs:71
 msgid "Identify password accepted!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:74
+#: ../Core/Schumix.Irc/MessageHandler.cs:72
 msgid "[Set mode: {0}]"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:75
+#: ../Core/Schumix.Irc/MessageHandler.cs:73
 msgid "[Topic] New topic: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:76
+#: ../Core/Schumix.Irc/MessageHandler.cs:74
 msgid "{0} invites you to join {1}."
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:76
+#: ../Core/Schumix.Irc/MessageHandler.cs:74
 msgid "[INVITE] {0} invites you to join {1}."
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:79
+#: ../Core/Schumix.Irc/MessageHandler.cs:77
 msgid "[Topic] {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:11
-#: ../Core/Schumix.Irc/Network.cs:13
-#: ../Core/Schumix.Irc/Network.cs:15
 #: ../Core/Schumix.Irc/Network.cs:17
 msgid "Successfully started the Network."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:11
-#: ../Core/Schumix.Irc/Network.cs:13
-#: ../Core/Schumix.Irc/Network.cs:15
 #: ../Core/Schumix.Irc/Network.cs:17
 msgid "Server's name: {0}"
 msgstr ""
@@ -210,7 +204,7 @@ msgstr ""
 
 #: ../Core/Schumix.Irc/Network.cs:45
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
 msgid "Connection closed!"
 msgstr ""
 
@@ -242,12 +236,12 @@ msgstr ""
 msgid "Certificate not accepted, exception: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:60
+#: ../Core/Schumix.Irc/Network.cs:58
 msgid "Users' datas are sent."
 msgstr ""
 
 #: ../Core/Schumix.Irc/Network.cs:68
-#: ../Core/Schumix.Irc/Network.cs:89
+#: ../Core/Schumix.Irc/Network.cs:88
 msgid "Successfully started th thread."
 msgstr ""
 
@@ -259,7 +253,7 @@ msgstr ""
 msgid "Do not going data from irc server!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:88
+#: ../Core/Schumix.Irc/Network.cs:87
 msgid "Received unhandled opcode: {0}"
 msgstr ""
 
@@ -380,25 +374,25 @@ msgstr ""
 msgid "ChannelList: Failure request!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:17
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:19
 msgid "{0} plugin is now loading."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:18
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:20
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:26
 msgid "Plugin can not be loaded!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:22
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:17
 msgid "Loaded plugin: {0} {1} by {2} ({3})"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:23
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:25
 msgid "{0} plugin denying and removing is now started."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:28
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:30
 msgid "{0} plugin successfully removed."
 msgstr ""
 
@@ -413,7 +407,7 @@ msgstr ""
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
 #: ../Core/Schumix.Framework/Runtime.cs:6
 #: ../Applications/Schumix.Server/ServerListener.cs:6
@@ -647,17 +641,6 @@ msgstr ""
 msgid "Crash dump created."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log.cs:18
-msgid ""
-"Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"
-msgstr ""
-
-#: ../Core/Schumix.Framework/Log.cs:18
-msgid ""
-"\n"
-"Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"
-msgstr ""
-
 #: ../Core/Schumix.Framework/Config/IRCConfig.cs:3
 msgid "Loaded the Irc settings."
 msgstr ""
@@ -692,23 +675,23 @@ msgstr ""
 msgid "Loaded the Server settings."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:9
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:6
 msgid "Loading addons from: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:17
 msgid "This addon name already exists in the system so not loaded!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:22
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:19
 msgid "Ignoring plugins (config): {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:23
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
 msgid "Error while loading one of directories! Detail: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:29
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:26
 msgid "Unload plugins"
 msgstr ""
 
@@ -992,6 +975,17 @@ msgstr ""
 msgid "Loaded the Clean settings."
 msgstr ""
 
+#: ../Core/Schumix.Framework/Log/Log.cs:18
+msgid ""
+"Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Log/Log.cs:18
+msgid ""
+"\n"
+"Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"
+msgstr ""
+
 #: ../Applications/Schumix/Main.cs:19
 #: ../Applications/Schumix.Server/Main.cs:14
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
@@ -1244,93 +1238,80 @@ msgstr ""
 msgid "Searching for new stable version is started."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:7
-#: ../Components/Schumix.Updater/Update.cs:11
+#: ../Components/Schumix.Updater/Update.cs:6
+#: ../Components/Schumix.Updater/Update.cs:10
 msgid "Currently no newer version!"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:7
-#: ../Components/Schumix.Updater/Update.cs:11
+#: ../Components/Schumix.Updater/Update.cs:6
+#: ../Components/Schumix.Updater/Update.cs:10
 msgid "The program starts is continuing."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:7
-#: ../Components/Schumix.Updater/Update.cs:11
+#: ../Components/Schumix.Updater/Update.cs:6
+#: ../Components/Schumix.Updater/Update.cs:10
 msgid "I found a newer version. The update to {0} version is starting."
+msgstr ""
+
+#: ../Components/Schumix.Updater/Update.cs:6
+#: ../Components/Schumix.Updater/Update.cs:10
+msgid "Older version found, update interrupted!"
 msgstr ""
 
 #: ../Components/Schumix.Updater/Update.cs:7
 #: ../Components/Schumix.Updater/Update.cs:11
-msgid "Older version found, update interrupted!"
+msgid "Downloading new version."
 msgstr ""
 
 #: ../Components/Schumix.Updater/Update.cs:8
 #: ../Components/Schumix.Updater/Update.cs:12
-msgid "Downloading new version."
-msgstr ""
-
-#: ../Components/Schumix.Updater/Update.cs:9
-#: ../Components/Schumix.Updater/Update.cs:13
 msgid "Successfully downloaded new version."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:9
-#: ../Components/Schumix.Updater/Update.cs:13
+#: ../Components/Schumix.Updater/Update.cs:8
+#: ../Components/Schumix.Updater/Update.cs:12
 msgid "Downloading unsuccessful!"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:9
-#: ../Components/Schumix.Updater/Update.cs:13
-#: ../Components/Schumix.Updater/Update.cs:15
-#: ../Components/Schumix.Updater/Update.cs:17
+#: ../Components/Schumix.Updater/Update.cs:8
+#: ../Components/Schumix.Updater/Update.cs:12
+#: ../Components/Schumix.Updater/Update.cs:14
 msgid "Updating successful!"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:9
+#: ../Components/Schumix.Updater/Update.cs:8
 msgid "Searching for the last version is started."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:13
+#: ../Components/Schumix.Updater/Update.cs:12
 msgid "No such version like this, update interrupted!"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:14
-msgid "Extracting new version."
-msgstr ""
-
-#: ../Components/Schumix.Updater/Update.cs:15
-msgid "Successfully extracted the staff."
-msgstr ""
-
-#: ../Components/Schumix.Updater/Update.cs:15
-msgid "Extracting unsuccessful!"
-msgstr ""
-
-#: ../Components/Schumix.Updater/Update.cs:16
+#: ../Components/Schumix.Updater/Update.cs:13
 msgid "Started translating."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:17
+#: ../Components/Schumix.Updater/Update.cs:14
 msgid "Error was handled while translated!"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:18
+#: ../Components/Schumix.Updater/Update.cs:15
 msgid "Successfully finished the translation."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:18
+#: ../Components/Schumix.Updater/Update.cs:15
 msgid "Sql files update is started. The setted database will be updated."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:18
+#: ../Components/Schumix.Updater/Update.cs:15
 msgid "Sql update finished."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:22
+#: ../Components/Schumix.Updater/Update.cs:19
 msgid "This step of updateing is finished. Continue with next step."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:23
+#: ../Components/Schumix.Updater/Update.cs:20
 msgid "The update is finished. The program shutting down!"
 msgstr ""
 

@@ -223,8 +223,10 @@ namespace Schumix.Irc.Commands
 			sSender.Mode(sIRCMessage.Channel, status + rank2, name.Remove(0, 1, SchumixBase.Space));
 
 			// Clean
-			Thread.Sleep(10*1000);
-			ModePrivmsg = string.Empty;
+			Thread.Sleep(5*1000);
+
+			if(sIRCMessage.Channel.ToLower() == ModePrivmsg.ToLower() || ModePrivmsg == string.Empty)
+				ModePrivmsg = string.Empty;
 		}
 	}
 }

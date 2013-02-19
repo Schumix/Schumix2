@@ -19,7 +19,7 @@
 			<_GettextCatalogFile>$(GettextCatalogFile)</_GettextCatalogFile>
 		</PropertyGroup>
 		<!-- preprocess items -->
-		<ItemGroup>
+		<ItemGroup Condition="'$(OS)' == 'Windows_NT'">
 			<_Translation Include="@(GettextTranslation)">
 				<MoDir>$(_OutputPath)%(FileName)\LC_MESSAGES\</MoDir>
 				<MoFile>$(_OutputPath)%(FileName)\LC_MESSAGES\$(_GettextCatalogName).mo</MoFile>

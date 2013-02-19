@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git submodule update --init --recursive
+
 build_conf="$(echo "$1" | tr [:upper:] [:lower:])"
 
 if [ "$2" = "" ]; then
@@ -9,11 +11,11 @@ else
 fi
 
 if [ "$1" = "" ]; then
-	xbuild /p:DocumentationFile="" /p:DefineConstants="DEBUG" /p:Configuration="Debug" /p:Platform=$build_platform Schumix.sln
+	xbuild /p:Configuration="Debug" /p:Platform=$build_platform Schumix.sln
 else
 	if [ $build_conf = "release" ]; then
-		xbuild /p:DocumentationFile="" /p:DefineConstants="RELEASE" /p:Configuration="Release" /p:Platform=$build_platform Schumix.sln
+		xbuild /p:Configuration="Release" /p:Platform=$build_platform Schumix.sln
 	else
-		xbuild /p:DocumentationFile="" /p:DefineConstants="DEBUG" /p:Configuration="Debug" /p:Platform=$build_platform Schumix.sln
+		xbuild /p:Configuration="Debug" /p:Platform=$build_platform Schumix.sln
 	fi
 fi

@@ -1,0 +1,25 @@
+#
+# Schumix2 Hook
+#
+
+# Travis language: c(sharp)
+language: c
+
+# Mono
+install:
+ - sudo apt-get install mono-devel mono-dmcs
+
+script:
+ - ./build.sh release
+
+# Only watch the master branch
+branches:
+  only:
+    - master
+    - stable
+
+# Notify if needed
+notifications:
+  irc:
+    channels:
+      - "irc.rizon.net#schumix2"

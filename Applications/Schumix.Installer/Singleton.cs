@@ -20,6 +20,7 @@
 
 using System;
 using System.Reflection;
+using Schumix.Installer.Extensions;
 
 namespace Schumix.Installer
 {
@@ -66,7 +67,7 @@ namespace Schumix.Installer
 		{
 			get
 			{
-				if(_instance == null)
+				if(_instance.IsNull())
 				{
 					lock(_lock)
 					{
