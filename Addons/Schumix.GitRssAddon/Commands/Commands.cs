@@ -349,22 +349,24 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
+
+					// szinek be vagy kikapcoslása jön ide
+					/*if(sIRCMessage.Info[6].ToLower() == "asd")
+					{
+					}*/
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "urlshort")
+				{
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
 					
-					if(sIRCMessage.Info[6].ToLower() == "projectname")
+					// url rövidítés be és kikapcsolása
+					/*if(sIRCMessage.Info[6].ToLower() == "asd")
 					{
-					}
-					else if(sIRCMessage.Info[6].ToLower() == "branch")
-					{
-					}
-					else if(sIRCMessage.Info[6].ToLower() == "author")
-					{
-					}
-					else if(sIRCMessage.Info[6].ToLower() == "commit") // jobb név ide ami a verziószámot jelőli
-					{
-					}
-					else if(sIRCMessage.Info[6].ToLower() == "commitinfo")
-					{
-					}
+					}*/
 				}
 			}
 		}
