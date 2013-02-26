@@ -432,6 +432,43 @@ namespace Schumix.GitRssAddon.Commands
 					SchumixBase.DManager.Update("gitinfo", string.Format("Link = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8])), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, "Url sikeresen módosítva!");
 				}
+				else if(sIRCMessage.Info[5].ToLower() == "website")
+				{
+					//var text = sLManager.GetCommandTexts("git/change/website", sIRCMessage.Channel, sIRCMessage.ServerName);
+					//if(text.Length < 2)
+					//{
+					//	sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					//	return;
+					//}
+					
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 9)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az oldal neve!"/*sLManager.GetWarningText("NoUrl", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+						return;
+					}
+					
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName);
+					if(!db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "Nem szerepel a listán!");
+						return;
+					}
+					
+					SchumixBase.DManager.Update("gitinfo", string.Format("Website = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower())), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName));
+					sSendMessage.SendChatMessage(sIRCMessage, "Oldal neve sikeresen módosítva!");
+				}
 			}
 		}
 	}
