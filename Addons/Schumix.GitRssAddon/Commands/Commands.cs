@@ -350,7 +350,7 @@ namespace Schumix.GitRssAddon.Commands
 				}
 
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
-				if(!db.IsNull())
+				if(db.IsNull())
 				{
 					SchumixBase.DManager.Insert("`gitinfo`(ServerId, ServerName, Name, Type, Link, Website)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()));
 					sSendMessage.SendChatMessage(sIRCMessage, "Sikeresen hozzáadva a listához!");
