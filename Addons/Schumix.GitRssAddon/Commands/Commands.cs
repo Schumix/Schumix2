@@ -330,35 +330,29 @@ namespace Schumix.GitRssAddon.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
-					
+
 				if(sIRCMessage.Info.Length < 7)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
-					
+
 				if(sIRCMessage.Info.Length < 8)
-				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
-					return;
-				}
-					
-				if(sIRCMessage.Info.Length < 9)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az url!"/*sLManager.GetWarningText("NoUrl", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
 					return;
 				}
-					
-				if(sIRCMessage.Info.Length < 10)
+
+				if(sIRCMessage.Info.Length < 9)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az oldal neve!"/*sLManager.GetWarningText("NoUrl", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
 					return;
 				}
-					
+
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
-					SchumixBase.DManager.Insert("`gitinfo`(ServerId, ServerName, Name, Type, Link, Website)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					SchumixBase.DManager.Insert("`gitinfo`(ServerId, ServerName, Name, Type, Link, Website)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()));
 					sSendMessage.SendChatMessage(sIRCMessage, "Sikeresen hozzáadva a listához!");
 				}
 				else
