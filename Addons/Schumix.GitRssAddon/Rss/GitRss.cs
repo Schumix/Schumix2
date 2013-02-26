@@ -249,6 +249,9 @@ namespace Schumix.GitRssAddon
 					}
 					catch(Exception e)
 					{
+						if(SchumixBase.ExitStatus)
+							return;
+
 						errornumber++;
 						Log.Error("GitRss", sLConsole.GetString("[{0} {1}] Failure details: {2}"), _name, _type, e.Message);
 						Thread.Sleep(RssConfig.QueryTime*1000);
@@ -257,6 +260,9 @@ namespace Schumix.GitRssAddon
 			}
 			catch(Exception e)
 			{
+				if(SchumixBase.ExitStatus)
+					return;
+
 				errornumber++;
 				Log.Error("GitRss", sLConsole.GetString("[{0} {1}] Fatal failure details: {2}"), _name, _type, e.Message);
 				Thread.Sleep(RssConfig.QueryTime*1000);

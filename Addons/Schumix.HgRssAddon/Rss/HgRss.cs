@@ -219,6 +219,9 @@ namespace Schumix.HgRssAddon
 					}
 					catch(Exception e)
 					{
+						if(SchumixBase.ExitStatus)
+							return;
+
 						errornumber++;
 						Log.Error("HgRss", sLConsole.GetString("[{0}] Failure details: {1}"), _name, e.Message);
 						Thread.Sleep(RssConfig.QueryTime*1000);
@@ -227,6 +230,9 @@ namespace Schumix.HgRssAddon
 			}
 			catch(Exception e)
 			{
+				if(SchumixBase.ExitStatus)
+					return;
+
 				errornumber++;
 				Log.Error("HgRss", sLConsole.GetString("[{0}] Fatal failure details: {1}"), _name, e.Message);
 				Thread.Sleep(RssConfig.QueryTime*1000);
