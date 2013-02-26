@@ -251,7 +251,7 @@ namespace Schumix.GitRssAddon.Commands
 						return;
 					}
 					
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
@@ -262,7 +262,7 @@ namespace Schumix.GitRssAddon.Commands
 						else
 							data += SchumixBase.Comma + sIRCMessage.Info[8].ToLower();
 						
-						SchumixBase.DManager.Update("gitinfo", string.Format("Channel = '{0}'", data), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName));
+						SchumixBase.DManager.Update("gitinfo", string.Format("Channel = '{0}'", data), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName));
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					}
 					else
@@ -295,7 +295,7 @@ namespace Schumix.GitRssAddon.Commands
 						return;
 					}
 					
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
@@ -309,7 +309,7 @@ namespace Schumix.GitRssAddon.Commands
 							data += SchumixBase.Comma + channel[x];
 						}
 						
-						SchumixBase.DManager.Update("gitinfo", string.Format("Channel = '{0}'", data.Remove(0, 1, SchumixBase.Comma)), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName));
+						SchumixBase.DManager.Update("gitinfo", string.Format("Channel = '{0}'", data.Remove(0, 1, SchumixBase.Comma)), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName));
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					}
 					else
@@ -349,10 +349,10 @@ namespace Schumix.GitRssAddon.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]), sIRCMessage.ServerName);
 				if(db.IsNull())
 				{
-					SchumixBase.DManager.Insert("`gitinfo`(ServerId, ServerName, Name, Type, Link, Website)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()));
+					SchumixBase.DManager.Insert("`gitinfo`(ServerId, ServerName, Name, Type, Link, Website)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()));
 					sSendMessage.SendChatMessage(sIRCMessage, "Sikeresen hozzáadva a listához!");
 				}
 				else
@@ -360,6 +360,33 @@ namespace Schumix.GitRssAddon.Commands
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "remove")
 			{
+				//var text = sLManager.GetCommandTexts("git/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
+				//if(text.Length < 2)
+				//{
+				//	sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+				//	return;
+				//}
+				
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+				
+				if(sIRCMessage.Info.Length < 7)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+				
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]), sIRCMessage.ServerName);
+				if(!db.IsNull())
+				{
+					SchumixBase.DManager.Delete("gitinfo", string.Format("Name = '{0}' And Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]), sIRCMessage.ServerName));
+					sSendMessage.SendChatMessage(sIRCMessage, "Sikeresen eltávolítva a listából!");
+				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage, "Nem szerepel a listán!");
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "change")
 			{
@@ -371,9 +398,22 @@ namespace Schumix.GitRssAddon.Commands
 				
 				if(sIRCMessage.Info[5].ToLower() == "color")
 				{
+					//var text = sLManager.GetCommandTexts("git/change/color", sIRCMessage.Channel, sIRCMessage.ServerName);
+					//if(text.Length < 2)
+					//{
+					//	sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					//	return;
+					//}
+					
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
@@ -384,9 +424,22 @@ namespace Schumix.GitRssAddon.Commands
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "urlshort")
 				{
+					//var text = sLManager.GetCommandTexts("git/change/urlshort", sIRCMessage.Channel, sIRCMessage.ServerName);
+					//if(text.Length < 2)
+					//{
+					//	sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					//	return;
+					//}
+					
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
@@ -422,14 +475,14 @@ namespace Schumix.GitRssAddon.Commands
 						return;
 					}
 					
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, "Nem szerepel a listán!");
 						return;
 					}
 					
-					SchumixBase.DManager.Update("gitinfo", string.Format("Link = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8])), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName));
+					SchumixBase.DManager.Update("gitinfo", string.Format("Link = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8])), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, "Url sikeresen módosítva!");
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "website")
@@ -459,14 +512,14 @@ namespace Schumix.GitRssAddon.Commands
 						return;
 					}
 					
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, "Nem szerepel a listán!");
 						return;
 					}
 					
-					SchumixBase.DManager.Update("gitinfo", string.Format("Website = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower())), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName));
+					SchumixBase.DManager.Update("gitinfo", string.Format("Website = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower())), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, "Oldal neve sikeresen módosítva!");
 				}
 			}
