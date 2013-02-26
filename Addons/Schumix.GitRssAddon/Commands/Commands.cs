@@ -316,23 +316,56 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 			}
-			else if(sIRCMessage.Info[4].ToLower() == "url")
+			else if(sIRCMessage.Info[4].ToLower() == "add")
 			{
+				//var text = sLManager.GetCommandTexts("git/add", sIRCMessage.Channel, sIRCMessage.ServerName);
+				//if(text.Length < 2)
+				//{
+				//	sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+				//	return;
+				//}
+					
 				if(sIRCMessage.Info.Length < 6)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
-				
-				if(sIRCMessage.Info[5].ToLower() == "add")
+					
+				if(sIRCMessage.Info.Length < 7)
 				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
 				}
-				else if(sIRCMessage.Info[5].ToLower() == "remove")
+					
+				if(sIRCMessage.Info.Length < 8)
 				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
 				}
-				else if(sIRCMessage.Info[5].ToLower() == "change")
+					
+				if(sIRCMessage.Info.Length < 9)
 				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az url!"/*sLManager.GetWarningText("NoUrl", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+					return;
 				}
+					
+				if(sIRCMessage.Info.Length < 10)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az oldal neve!"/*sLManager.GetWarningText("NoUrl", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+					return;
+				}
+					
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
+				if(!db.IsNull())
+				{
+					SchumixBase.DManager.Insert("`gitinfo`(ServerId, ServerName, Name, Type, Link, Website)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()));
+					sSendMessage.SendChatMessage(sIRCMessage, "Sikeresen hozzáadva a listához!");
+				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage, "Már szerepel a listában!");
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "remove")
+			{
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "change")
 			{
@@ -362,11 +395,48 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-					
+
 					// url rövidítés be és kikapcsolása
 					/*if(sIRCMessage.Info[6].ToLower() == "asd")
 					{
 					}*/
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "url")
+				{
+					//var text = sLManager.GetCommandTexts("git/change/url", sIRCMessage.Channel, sIRCMessage.ServerName);
+					//if(text.Length < 2)
+					//{
+					//	sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					//	return;
+					//}
+					
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 9)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az url!"/*sLManager.GetWarningText("NoUrl", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+						return;
+					}
+					
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName);
+					if(!db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "Nem szerepel a listán!");
+						return;
+					}
+					
+					SchumixBase.DManager.Update("gitinfo", string.Format("Link = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8])), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()), sIRCMessage.ServerName));
+					sSendMessage.SendChatMessage(sIRCMessage, "Url sikeresen módosítva!");
 				}
 			}
 		}
