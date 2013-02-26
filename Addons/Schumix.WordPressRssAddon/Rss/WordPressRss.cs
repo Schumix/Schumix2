@@ -83,19 +83,26 @@ namespace Schumix.WordPressRssAddon
 
 			Init();
 
-			if(!_username.IsEmpty() && !_password.IsEmpty())
+			try
 			{
-				var rss = new XmlDocument();
-				rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>", _credential)));
-				_ns = new XmlNamespaceManager(rss.NameTable);
-				_ns.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
+				if(!_username.IsEmpty() && !_password.IsEmpty())
+				{
+					var rss = new XmlDocument();
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>", _credential)));
+					_ns = new XmlNamespaceManager(rss.NameTable);
+					_ns.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
+				}
+				else
+				{
+					var rss = new XmlDocument();
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>")));
+					_ns = new XmlNamespaceManager(rss.NameTable);
+					_ns.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
+				}
 			}
-			else
+			catch(Exception e)
 			{
-				var rss = new XmlDocument();
-				rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>")));
-				_ns = new XmlNamespaceManager(rss.NameTable);
-				_ns.AddNamespace("dc", "http://purl.org/dc/elements/1.1/");
+				Log.Error("WordPressRss", sLConsole.GetString("[{0}] Failure details: {1}"), _name, e.Message);
 			}
 		}
 

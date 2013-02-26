@@ -87,19 +87,26 @@ namespace Schumix.GitRssAddon
 			_website = website;
 			Init();
 
-			if(!_username.IsEmpty() && !_password.IsEmpty())
+			try
 			{
-				var rss = new XmlDocument();
-				rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>", _credential)));
-				_ns = new XmlNamespaceManager(rss.NameTable);
-				_ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
+				if(!_username.IsEmpty() && !_password.IsEmpty())
+				{
+					var rss = new XmlDocument();
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>", _credential)));
+					_ns = new XmlNamespaceManager(rss.NameTable);
+					_ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
+				}
+				else
+				{
+					var rss = new XmlDocument();
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>")));
+					_ns = new XmlNamespaceManager(rss.NameTable);
+					_ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
+				}
 			}
-			else
+			catch(Exception e)
 			{
-				var rss = new XmlDocument();
-				rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>")));
-				_ns = new XmlNamespaceManager(rss.NameTable);
-				_ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
+				Log.Error("GitRss", sLConsole.GetString("[{0} {1}] Failure details: {2}"), _name, _type, e.Message);
 			}
 		}
 
