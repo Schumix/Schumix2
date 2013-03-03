@@ -34,20 +34,20 @@ namespace Schumix.Framework.Bitly
 
 		public static BitlyResults ShortenUrl(string longUrl)
 		{
-			if(UrlShortConfig.Name.IsEmpty())
+			if(ShortUrlConfig.Name.IsEmpty())
 			{
 				Log.Error("BitlyApi", sLConsole.GetString("Username missing!"));
 				return null;
 			}
 
-			if(UrlShortConfig.ApiKey.IsEmpty())
+			if(ShortUrlConfig.ApiKey.IsEmpty())
 			{
 				Log.Error("BitlyApi", sLConsole.GetString("Api key missing!"));
 				return null;
 			}
 
 			string url = string.Format("http://api.bit.ly/shorten?format=xml&version=2.0.1&longUrl={0}&login={1}&apiKey={2}",
-			                           HttpUtility.UrlEncode(longUrl), UrlShortConfig.Name, UrlShortConfig.ApiKey);
+			                           HttpUtility.UrlEncode(longUrl), ShortUrlConfig.Name, ShortUrlConfig.ApiKey);
 
 			var resultXml = XDocument.Load(url);
 			var x = (from result in resultXml.Descendants("nodeKeyVal") select new BitlyResults

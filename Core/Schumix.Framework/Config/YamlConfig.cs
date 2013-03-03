@@ -78,7 +78,7 @@ namespace Schumix.Framework.Config
 			ShutdownMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Shutdown")) ? ((YamlMappingNode)schumixmap["Shutdown".ToYamlNode()]).Children : NullYMap);
 			FloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap);
 			CleanMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Clean")) ? ((YamlMappingNode)schumixmap["Clean".ToYamlNode()]).Children : NullYMap);
-			UrlShortMap((!schumixmap.IsNull() && schumixmap.ContainsKey("UrlShort")) ? ((YamlMappingNode)schumixmap["UrlShort".ToYamlNode()]).Children : NullYMap);
+			ShortUrlMap((!schumixmap.IsNull() && schumixmap.ContainsKey("ShortUrl")) ? ((YamlMappingNode)schumixmap["ShortUrl".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("YamlConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
@@ -137,7 +137,7 @@ namespace Schumix.Framework.Config
 						nodes2.Add("Shutdown",     CreateShutdownMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Shutdown")) ? ((YamlMappingNode)schumixmap["Shutdown".ToYamlNode()]).Children : NullYMap));
 						nodes2.Add("Flooding",     CreateFloodingMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Flooding")) ? ((YamlMappingNode)schumixmap["Flooding".ToYamlNode()]).Children : NullYMap));
 						nodes2.Add("Clean",        CreateCleanMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Clean")) ? ((YamlMappingNode)schumixmap["Clean".ToYamlNode()]).Children : NullYMap));
-						nodes2.Add("UrlShort",     CreateUrlShortMap((!schumixmap.IsNull() && schumixmap.ContainsKey("UrlShort")) ? ((YamlMappingNode)schumixmap["UrlShort".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("ShortUrl",     CreateShortUrlMap((!schumixmap.IsNull() && schumixmap.ContainsKey("ShortUrl")) ? ((YamlMappingNode)schumixmap["ShortUrl".ToYamlNode()]).Children : NullYMap));
 						nodes.Add("Schumix", nodes2);
 
 						sUtilities.CreateFile(filename);
@@ -415,12 +415,12 @@ namespace Schumix.Framework.Config
 			new CleanConfig(Config, Database);
 		}
 
-		private void UrlShortMap(IDictionary<YamlNode, YamlNode> nodes)
+		private void ShortUrlMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			string Name = (!nodes.IsNull() && nodes.ContainsKey("Name")) ? nodes["Name".ToYamlNode()].ToString() : d_urlshortname;
-			string ApiKey = (!nodes.IsNull() && nodes.ContainsKey("ApiKey")) ? nodes["ApiKey".ToYamlNode()].ToString() : d_urlshortapikey;
+			string Name = (!nodes.IsNull() && nodes.ContainsKey("Name")) ? nodes["Name".ToYamlNode()].ToString() : d_shorturlname;
+			string ApiKey = (!nodes.IsNull() && nodes.ContainsKey("ApiKey")) ? nodes["ApiKey".ToYamlNode()].ToString() : d_shorturlapikey;
 
-			new UrlShortConfig(Name, ApiKey);
+			new ShortUrlConfig(Name, ApiKey);
 		}
 
 		private YamlMappingNode CreateServerMap(IDictionary<YamlNode, YamlNode> nodes)
@@ -660,11 +660,11 @@ namespace Schumix.Framework.Config
 			return map;
 		}
 
-		private YamlMappingNode CreateUrlShortMap(IDictionary<YamlNode, YamlNode> nodes)
+		private YamlMappingNode CreateShortUrlMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			var map = new YamlMappingNode();
-			map.Add("Name",   (!nodes.IsNull() && nodes.ContainsKey("Name")) ? nodes["Name".ToYamlNode()].ToString() : d_urlshortname);
-			map.Add("ApiKey", (!nodes.IsNull() && nodes.ContainsKey("ApiKey")) ? nodes["ApiKey".ToYamlNode()].ToString() : d_urlshortapikey);
+			map.Add("Name",   (!nodes.IsNull() && nodes.ContainsKey("Name")) ? nodes["Name".ToYamlNode()].ToString() : d_shorturlname);
+			map.Add("ApiKey", (!nodes.IsNull() && nodes.ContainsKey("ApiKey")) ? nodes["ApiKey".ToYamlNode()].ToString() : d_shorturlapikey);
 			return map;
 		}
 	}

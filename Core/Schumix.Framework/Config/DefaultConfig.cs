@@ -85,8 +85,8 @@ namespace Schumix.Framework.Config
 		protected const int d_floodingnumberofcommands = 2;
 		protected const bool d_cleanconfig             = false;
 		protected const bool d_cleandatabase           = false;
-		protected const string d_urlshortname          = " ";
-		protected const string d_urlshortapikey        = " ";
+		protected const string d_shorturlname          = " ";
+		protected const string d_shorturlapikey        = " ";
 		protected bool errors                          = false;
 
 		// Nick

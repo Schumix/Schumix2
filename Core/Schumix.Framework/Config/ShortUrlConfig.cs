@@ -23,17 +23,17 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
 {
-	public sealed class UrlShortConfig
+	public sealed class ShortUrlConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static string Name { get; private set; }
 		public static string ApiKey { get; private set; }
 		
-		public UrlShortConfig(string name, string apikey)
+		public ShortUrlConfig(string name, string apikey)
 		{
 			Name = name;
 			ApiKey = apikey;
-			Log.Notice("UrlShortConfig", sLConsole.GetString("Loaded the UrlShort settings."));
+			Log.Notice("ShortUrlConfig", sLConsole.GetString("Loaded the ShortUrl settings."));
 		}
 	}
 }
