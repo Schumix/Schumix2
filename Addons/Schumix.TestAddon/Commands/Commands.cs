@@ -121,20 +121,6 @@ namespace Schumix.TestAddon.Commands
 				response.Close();
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sb.Length);
 			}
-			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "gcommit")
-			{
-				if(sIRCMessage.Info.Length < 6)
-				{
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel, sIRCMessage.ServerName));
-					return;
-				}
-
-				/*var repo = new Repository("/home/megax/Asztal/Schumix2");
-				string msg = new Commit(repo, sIRCMessage.Info[5]).Message;
-				var msg2 = new Commit(repo, sIRCMessage.Info[5]).CommitDate;
-				sSendMessage.SendChatMessage(sIRCMessage, "asd: {0}", msg);
-				sSendMessage.SendChatMessage(sIRCMessage, "asd2: {0}", msg2);*/
-			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "cachedb")
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("xbot"));
