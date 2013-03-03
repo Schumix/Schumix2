@@ -22,18 +22,29 @@ using System;
 using System.Web;
 using System.Linq;
 using System.Xml.Linq;
+using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework.Bitly
 {
 	public static class BitlyApi
 	{
-		private const string apiKey = "[add api key here]";
-		private const string login = "[add login name here]";
-		
 		public static BitlyResults ShortenUrl(string longUrl)
 		{
+			if(UrlShortConfig.Name.IsEmpty())
+			{
+				Log.Error("BitlyApi", "Nincs megadva a felhasználó neve!");
+				return null;
+			}
+
+			if(UrlShortConfig.ApiKey.IsEmpty())
+			{
+				Log.Error("BitlyApi", "Nincs megadva az api kulcs!");
+				return null;
+			}
+
 			string url = string.Format("http://api.bit.ly/shorten?format=xml&version=2.0.1&longUrl={0}&login={1}&apiKey={2}",
-				              HttpUtility.UrlEncode(longUrl), login, apiKey);
+			                           HttpUtility.UrlEncode(longUrl), UrlShortConfig.Name, UrlShortConfig.ApiKey);
 
 			var resultXml = XDocument.Load(url);
 			var x = (from result in resultXml.Descendants("nodeKeyVal") select new BitlyResults

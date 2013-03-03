@@ -217,6 +217,11 @@ namespace Schumix.Framework.Config
 
 			new CleanConfig(Config, Database2);
 
+			string Name = !xmldoc.SelectSingleNode("Schumix/UrlShort/Name").IsNull() ? xmldoc.SelectSingleNode("Schumix/UrlShort/Name").InnerText : d_urlshortname;
+			string ApiKey = !xmldoc.SelectSingleNode("Schumix/UrlShort/ApiKey").IsNull() ? xmldoc.SelectSingleNode("Schumix/UrlShort/ApiKey").InnerText : d_urlshortapikey;
+			
+			new UrlShortConfig(Name, ApiKey);
+
 			Log.Success("XmlConfig", sLConsole.GetString("Config database is loading."));
 			Console.WriteLine();
 		}
@@ -492,6 +497,14 @@ namespace Schumix.Framework.Config
 						w.WriteElementString("Database",         (!xmldoc.SelectSingleNode("Schumix/Clean/Database").IsNull() ? xmldoc.SelectSingleNode("Schumix/Clean/Database").InnerText : d_cleandatabase.ToString()));
 
 						// </Clean>
+						w.WriteEndElement();
+
+						// <UrlShort>
+						w.WriteStartElement("UrlShort");
+						w.WriteElementString("Name",           (!xmldoc.SelectSingleNode("Schumix/UrlShort/Name").IsNull() ? xmldoc.SelectSingleNode("Schumix/UrlShort/Name").InnerText : d_urlshortname));
+						w.WriteElementString("ApiKey",         (!xmldoc.SelectSingleNode("Schumix/UrlShort/ApiKey").IsNull() ? xmldoc.SelectSingleNode("Schumix/UrlShort/ApiKey").InnerText : d_urlshortapikey));
+						
+						// </UrlShort>
 						w.WriteEndElement();
 
 						// </Schumix>

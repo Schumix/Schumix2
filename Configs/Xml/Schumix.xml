@@ -94,4 +94,8 @@
         <Config>False</Config>
         <Database>False</Database>
     </Clean>
+    <ShortUrl>
+        <Name></Name>
+        <ApiKey></ApiKey>
+    </ShortUrl>
 </Schumix>

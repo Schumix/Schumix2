@@ -27,10 +27,10 @@ using Schumix.Api.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Bitly;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-//using GitSharp;
 
 namespace Schumix.TestAddon.Commands
 {
@@ -147,6 +147,16 @@ namespace Schumix.TestAddon.Commands
 
 				if(!SchumixBase.DManager.IsCreatedTable("admin"))
 					sSendMessage.SendChatMessage(sIRCMessage, "nem létezik!");
+			}
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "urlshort")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva a rövidíteni kívánt url!");
+					return;
+				}
+
+				sSendMessage.SendChatMessage(sIRCMessage, BitlyApi.ShortenUrl(sIRCMessage.Info[5]).ShortUrl);
 			}
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);

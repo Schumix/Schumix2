@@ -143,6 +143,7 @@
     <Compile Include="Log\LogType.cs" />
     <Compile Include="Bitly\BitlyApi.cs" />
     <Compile Include="Bitly\BitlyResults.cs" />
+    <Compile Include="Config\BitlyConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

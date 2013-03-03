@@ -122,3 +122,9 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 
 * **Config:** Értéke `true` vagy `false` lehet. Engedélyezi a konfig mappában a régi fájlok takarítását/törlését. Alapértelmezés: `false`
 * **Database:** Értéke `true` vagy `false` lehet. Engedélyezi az adatbázis takarítását. Alapértelmezés: `false`
+
+## UrlShort
+
+A bit.ly url röviditő apihoz való adatokat kell itt megadni.
+* **Name:** A felhasználói nevet kell itt megadni.
+* **ApiKey:** A felhasználóhoz tartozó api kulcsot kell megadni itt.
