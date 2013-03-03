@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-02-13 17:36:29+0100\n"
-"PO-Revision-Date: 2013-02-13 17:36:31+0100\n"
+"POT-Creation-Date: 2013-03-03 11:40:17+0100\n"
+"PO-Revision-Date: 2013-03-03 11:40:18+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,10 +23,10 @@ msgid "All Command Handler were deleted."
 msgstr ""
 
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:28
-#: ../Core/Schumix.Irc/Network.cs:55
-#: ../Core/Schumix.Irc/Network.cs:78
-#: ../Core/Schumix.Irc/Network.cs:80
-#: ../Core/Schumix.Irc/Network.cs:89
+#: ../Core/Schumix.Irc/Network.cs:52
+#: ../Core/Schumix.Irc/Network.cs:75
+#: ../Core/Schumix.Irc/Network.cs:77
+#: ../Core/Schumix.Irc/Network.cs:86
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
@@ -48,24 +48,24 @@ msgstr ""
 #: ../Applications/Schumix.Server/New/Schumix.cs:16
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:13
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:14
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:14
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:15
 #: ../Addons/Schumix.SvnRssAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:13
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:14
 #: ../Addons/Schumix.MantisBTRssAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:20
 #: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:32
 #: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:61
 #: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:7
 #: ../Addons/Schumix.CompilerAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:13
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:14
 #: ../Addons/Schumix.HgRssAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:13
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:14
 #: ../Addons/Schumix.GitRssAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:8
+#: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:9
 #: ../Addons/Schumix.CalendarAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.GameAddon/GameAddon.cs:5
-#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:16
+#: ../Addons/Schumix.GameAddon/GameAddon.cs:7
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:17
 #: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:17
 #: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:5
 msgid "Failure details: {0}"
@@ -174,86 +174,86 @@ msgstr ""
 msgid "[Topic] {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:17
+#: ../Core/Schumix.Irc/Network.cs:14
 msgid "Successfully started the Network."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:17
+#: ../Core/Schumix.Irc/Network.cs:14
 msgid "Server's name: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:19
+#: ../Core/Schumix.Irc/Network.cs:16
 msgid "Opcodes thread started..."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:20
+#: ../Core/Schumix.Irc/Network.cs:17
 msgid "Ping thread started..."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:21
+#: ../Core/Schumix.Irc/Network.cs:18
 msgid "Establishing connection with irc server."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:24
+#: ../Core/Schumix.Irc/Network.cs:21
 msgid "All of IRC handlers are registered."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:44
+#: ../Core/Schumix.Irc/Network.cs:41
 msgid "Connection to: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:45
+#: ../Core/Schumix.Irc/Network.cs:42
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
 msgid "Connection closed!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:47
+#: ../Core/Schumix.Irc/Network.cs:44
 msgid "Connection have been closed."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:47
+#: ../Core/Schumix.Irc/Network.cs:44
 msgid "Reconnection to: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:51
+#: ../Core/Schumix.Irc/Network.cs:48
 msgid "Connection type: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:52
+#: ../Core/Schumix.Irc/Network.cs:49
 msgid "Fatal error was happened while established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:53
+#: ../Core/Schumix.Irc/Network.cs:50
 msgid "Successfully established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:53
+#: ../Core/Schumix.Irc/Network.cs:50
 msgid "Error was happened while established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:55
+#: ../Core/Schumix.Irc/Network.cs:52
 msgid "Certificate not accepted, exception: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:58
+#: ../Core/Schumix.Irc/Network.cs:55
 msgid "Users' datas are sent."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:68
-#: ../Core/Schumix.Irc/Network.cs:88
+#: ../Core/Schumix.Irc/Network.cs:65
+#: ../Core/Schumix.Irc/Network.cs:85
 msgid "Successfully started th thread."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:68
+#: ../Core/Schumix.Irc/Network.cs:65
 msgid "Started the irc data receiving."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:71
+#: ../Core/Schumix.Irc/Network.cs:68
 msgid "Do not going data from irc server!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:87
+#: ../Core/Schumix.Irc/Network.cs:84
 msgid "Received unhandled opcode: {0}"
 msgstr ""
 
@@ -384,7 +384,7 @@ msgid "Plugin can not be loaded!"
 msgstr ""
 
 #: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:17
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:18
 msgid "Loaded plugin: {0} {1} by {2} ({3})"
 msgstr ""
 
@@ -683,15 +683,15 @@ msgstr ""
 msgid "This addon name already exists in the system so not loaded!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:19
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
 msgid "Ignoring plugins (config): {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:21
 msgid "Error while loading one of directories! Detail: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:26
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:27
 msgid "Unload plugins"
 msgstr ""
 
@@ -748,7 +748,7 @@ msgstr ""
 msgid "The {0} server is already in use so not loaded!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:39
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:40
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:11
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:23
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:7
@@ -771,7 +771,7 @@ msgstr ""
 msgid "Config database is loading."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:43
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -794,7 +794,7 @@ msgstr ""
 msgid "No such config file!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:43
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -817,7 +817,7 @@ msgstr ""
 msgid "Preparing..."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:101
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:103
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
@@ -840,7 +840,7 @@ msgstr ""
 msgid "Config file is completed!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:101
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:103
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
@@ -986,6 +986,18 @@ msgid ""
 "Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"
 msgstr ""
 
+#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:2
+msgid "Username missing!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:3
+msgid "Api key missing!"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/BitlyConfig.cs:2
+msgid "Loaded the UrlShort settings."
+msgstr ""
+
 #: ../Applications/Schumix/Main.cs:19
 #: ../Applications/Schumix.Server/Main.cs:14
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
@@ -1119,37 +1131,38 @@ msgstr ""
 msgid "There is no load of Schumix!"
 msgstr ""
 
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:25
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:21
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:24
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:21
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:24
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:21
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:28
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:6
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:23
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:27
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:22
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:26
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:22
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:26
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:22
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:30
 msgid "[{0}] Failure details: {1}"
 msgstr ""
 
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:21
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:21
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:21
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:24
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:23
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:23
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:23
 msgid "[{0}] Fatal failure details: {1}"
 msgstr ""
 
-#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:9
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:9
-#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:9
-#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:9
-#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:9
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:10
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:10
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:10
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:10
 msgid "{0}: {1} rss loaded."
 msgstr ""
 
-#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:9
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:9
-#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:9
-#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:9
-#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:9
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:10
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:10
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:10
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:10
 msgid "{0}: Empty database!"
 msgstr ""
 
@@ -1165,12 +1178,13 @@ msgstr ""
 msgid "Loaded the Compiler settings."
 msgstr ""
 
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:23
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:26
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:6
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:24
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:28
 msgid "[{0} {1}] Failure details: {2}"
 msgstr ""
 
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:23
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:25
 msgid "[{0} {1}] Fatal failure details: {2}"
 msgstr ""
 
@@ -1206,7 +1220,7 @@ msgstr ""
 msgid "Message deletion has been ended."
 msgstr ""
 
-#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:32
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:33
 msgid "Invalid webpage address: {0}"
 msgstr ""
 

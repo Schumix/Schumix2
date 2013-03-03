@@ -251,7 +251,7 @@ namespace Schumix.GitRssAddon.Commands
 						return;
 					}
 					
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
@@ -262,7 +262,7 @@ namespace Schumix.GitRssAddon.Commands
 						else
 							data += SchumixBase.Comma + sIRCMessage.Info[8].ToLower();
 						
-						SchumixBase.DManager.Update("gitinfo", string.Format("Channel = '{0}'", data), string.Format("Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName));
+						SchumixBase.DManager.Update("gitinfo", string.Format("Channel = '{0}'", data), string.Format("LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName));
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					}
 					else

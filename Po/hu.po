@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-02-13 17:36:29+0100\n"
+"POT-Creation-Date: 2013-03-03 11:40:17+0100\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -30,8 +30,8 @@ msgid "All Command Handler were deleted."
 msgstr "Összes Command handler törlésre került."
 
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:28
-#: ../Core/Schumix.Irc/Network.cs:55 ../Core/Schumix.Irc/Network.cs:78
-#: ../Core/Schumix.Irc/Network.cs:80 ../Core/Schumix.Irc/Network.cs:89
+#: ../Core/Schumix.Irc/Network.cs:52 ../Core/Schumix.Irc/Network.cs:75
+#: ../Core/Schumix.Irc/Network.cs:77 ../Core/Schumix.Irc/Network.cs:86
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
@@ -53,24 +53,24 @@ msgstr "Összes Command handler törlésre került."
 #: ../Applications/Schumix.Server/New/Schumix.cs:16
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:13
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:14
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:14
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:15
 #: ../Addons/Schumix.SvnRssAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:13
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:14
 #: ../Addons/Schumix.MantisBTRssAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:20
 #: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:32
 #: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:61
 #: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:7
 #: ../Addons/Schumix.CompilerAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:13
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:14
 #: ../Addons/Schumix.HgRssAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:13
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:14
 #: ../Addons/Schumix.GitRssAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:8
+#: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:9
 #: ../Addons/Schumix.CalendarAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.GameAddon/GameAddon.cs:5
-#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:16
+#: ../Addons/Schumix.GameAddon/GameAddon.cs:7
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:17
 #: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:17
 #: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:5
 msgid "Failure details: {0}"
@@ -178,85 +178,85 @@ msgstr "[INVITE] {0} meghívott téged a {1} szobába."
 msgid "[Topic] {0}"
 msgstr "[Téma] {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:17
+#: ../Core/Schumix.Irc/Network.cs:14
 msgid "Successfully started the Network."
 msgstr "Network sikeresen elindult."
 
-#: ../Core/Schumix.Irc/Network.cs:17
+#: ../Core/Schumix.Irc/Network.cs:14
 msgid "Server's name: {0}"
 msgstr "A szerver neve: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:19
+#: ../Core/Schumix.Irc/Network.cs:16
 msgid "Opcodes thread started..."
 msgstr "Opcodes szál indul..."
 
-#: ../Core/Schumix.Irc/Network.cs:20
+#: ../Core/Schumix.Irc/Network.cs:17
 msgid "Ping thread started..."
 msgstr "Ping szál indul..."
 
-#: ../Core/Schumix.Irc/Network.cs:21
+#: ../Core/Schumix.Irc/Network.cs:18
 msgid "Establishing connection with irc server."
 msgstr "Kapcsolat létrehozása az irc szerverrel."
 
-#: ../Core/Schumix.Irc/Network.cs:24
+#: ../Core/Schumix.Irc/Network.cs:21
 msgid "All of IRC handlers are registered."
 msgstr "Összes IRC handler regisztrálásra került."
 
-#: ../Core/Schumix.Irc/Network.cs:44
+#: ../Core/Schumix.Irc/Network.cs:41
 msgid "Connection to: {0}"
 msgstr "Kapcsolódás megindult ide: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:45
+#: ../Core/Schumix.Irc/Network.cs:42
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
 msgid "Connection closed!"
 msgstr "Kapcsolat bontva!"
 
-#: ../Core/Schumix.Irc/Network.cs:47
+#: ../Core/Schumix.Irc/Network.cs:44
 msgid "Connection have been closed."
 msgstr "Kapcsolat bontásra került."
 
-#: ../Core/Schumix.Irc/Network.cs:47
+#: ../Core/Schumix.Irc/Network.cs:44
 msgid "Reconnection to: {0}"
 msgstr "Újrakapcsolódás megindult ide: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:51
+#: ../Core/Schumix.Irc/Network.cs:48
 msgid "Connection type: {0}"
 msgstr "Kapcsolódás típusa: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:52
+#: ../Core/Schumix.Irc/Network.cs:49
 msgid "Fatal error was happened while established the connection!"
 msgstr "Végzetes hiba történt a kapcsolat létrehozásánál!"
 
-#: ../Core/Schumix.Irc/Network.cs:53
+#: ../Core/Schumix.Irc/Network.cs:50
 msgid "Successfully established the connection!"
 msgstr "A kapcsolat sikeresen létrejött!"
 
-#: ../Core/Schumix.Irc/Network.cs:53
+#: ../Core/Schumix.Irc/Network.cs:50
 msgid "Error was happened while established the connection!"
 msgstr "Hiba történt a kapcsolat létrehozásánál!"
 
-#: ../Core/Schumix.Irc/Network.cs:55
+#: ../Core/Schumix.Irc/Network.cs:52
 msgid "Certificate not accepted, exception: {0}"
 msgstr "A tanúsítvány nem lett elfogadva, kivétel: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:58
+#: ../Core/Schumix.Irc/Network.cs:55
 msgid "Users' datas are sent."
 msgstr "Felhasználói információk ellettek küldve."
 
-#: ../Core/Schumix.Irc/Network.cs:68 ../Core/Schumix.Irc/Network.cs:88
+#: ../Core/Schumix.Irc/Network.cs:65 ../Core/Schumix.Irc/Network.cs:85
 msgid "Successfully started th thread."
 msgstr "A szál sikeresen elindult."
 
-#: ../Core/Schumix.Irc/Network.cs:68
+#: ../Core/Schumix.Irc/Network.cs:65
 msgid "Started the irc data receiving."
 msgstr "Elindult az irc adatok fogadása."
 
-#: ../Core/Schumix.Irc/Network.cs:71
+#: ../Core/Schumix.Irc/Network.cs:68
 msgid "Do not going data from irc server!"
 msgstr "Nem jön információ az irc szerver felöl!"
 
-#: ../Core/Schumix.Irc/Network.cs:87
+#: ../Core/Schumix.Irc/Network.cs:84
 msgid "Received unhandled opcode: {0}"
 msgstr "Ismeretlen opcode kód: {0}"
 
@@ -389,7 +389,7 @@ msgid "Plugin can not be loaded!"
 msgstr "Nem tölthető be a plugin!"
 
 #: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:17
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:18
 msgid "Loaded plugin: {0} {1} by {2} ({3})"
 msgstr "Betöltött plugin: {0} {1} készítette {2} ({3})"
 
@@ -690,15 +690,15 @@ msgstr "Addonok betöltése innét: {0}"
 msgid "This addon name already exists in the system so not loaded!"
 msgstr "Ez az addonnév már szerepel a rendszerben ezért nem kerül betöltésre!"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:19
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
 msgid "Ignoring plugins (config): {0}"
 msgstr "Tiltott pluginok (konfig): {0}"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:20
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:21
 msgid "Error while loading one of directories! Detail: {0}"
 msgstr "Hiba egy könyvtár betöltése közben! Részletek: {0}"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:26
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:27
 msgid "Unload plugins"
 msgstr "Pluginok leválasztva."
 
@@ -760,7 +760,7 @@ msgstr ""
 msgid "The {0} server is already in use so not loaded!"
 msgstr "A {0} szerver név már használva van így nem kerül betöltésre!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:39
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:40
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:11
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:23
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:7
@@ -783,7 +783,7 @@ msgstr "A {0} szerver név már használva van így nem kerül betöltésre!"
 msgid "Config database is loading."
 msgstr "Konfig adatbázis betöltve."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:43
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -806,7 +806,7 @@ msgstr "Konfig adatbázis betöltve."
 msgid "No such config file!"
 msgstr "Nincs konfig fájl!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:43
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -829,7 +829,7 @@ msgstr "Nincs konfig fájl!"
 msgid "Preparing..."
 msgstr "Elkészítése folyamatban..."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:101
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:103
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
@@ -852,7 +852,7 @@ msgstr "Elkészítése folyamatban..."
 msgid "Config file is completed!"
 msgstr "Konfig fájl elkészült!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:101
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:103
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
@@ -999,6 +999,18 @@ msgstr ""
 "\n"
 "Indulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n"
 
+#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:2
+msgid "Username missing!"
+msgstr "Nincs megadva a felhasználó neve!"
+
+#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:3
+msgid "Api key missing!"
+msgstr "Nincs megadva az api kulcs!"
+
+#: ../Core/Schumix.Framework/Config/BitlyConfig.cs:2
+msgid "Loaded the UrlShort settings."
+msgstr "UrlShort beállításai betöltve."
+
 #: ../Applications/Schumix/Main.cs:19
 #: ../Applications/Schumix.Server/Main.cs:14
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
@@ -1132,37 +1144,38 @@ msgstr "Schumixok száma: {0}"
 msgid "There is no load of Schumix!"
 msgstr "Nincs betöltendő Schumix!"
 
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:25
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:21
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:24
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:21
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:24
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:21
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:28
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:6
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:23
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:27
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:22
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:26
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:22
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:26
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:22
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:30
 msgid "[{0}] Failure details: {1}"
 msgstr "[{0}] Meghibásodás részletei: {1}"
 
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:21
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:21
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:21
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:24
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:23
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:23
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:23
 msgid "[{0}] Fatal failure details: {1}"
 msgstr "[{0}] Végzetes meghibásodás részletei: {1}"
 
-#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:9
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:9
-#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:9
-#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:9
-#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:9
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:10
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:10
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:10
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:10
 msgid "{0}: {1} rss loaded."
 msgstr "{0}: {1} rss került betöltésre."
 
-#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:9
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:9
-#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:9
-#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:9
-#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:9
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:10
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:10
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:10
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:10
 msgid "{0}: Empty database!"
 msgstr "{0}: Üres az adatbázis!"
 
@@ -1178,12 +1191,13 @@ msgstr "Rss beállításai betöltve."
 msgid "Loaded the Compiler settings."
 msgstr "Compiler beállításai betöltve."
 
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:23
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:26
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:6
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:24
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:28
 msgid "[{0} {1}] Failure details: {2}"
 msgstr "[{0} {1}] Meghibásodás részletei: {2}"
 
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:23
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:25
 msgid "[{0} {1}] Fatal failure details: {2}"
 msgstr "[{0} {1}] Végzetes meghibásodás részletei: {2}"
 
@@ -1219,7 +1233,7 @@ msgstr "30 napnál régebbi üzenetek törlése a message táblából megindult.
 msgid "Message deletion has been ended."
 msgstr "Üzenetek törlése befejezve."
 
-#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:32
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:33
 msgid "Invalid webpage address: {0}"
 msgstr "Érvénytelen weboldal cím: {0}"
 

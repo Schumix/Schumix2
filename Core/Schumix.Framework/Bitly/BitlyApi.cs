@@ -24,22 +24,25 @@ using System.Linq;
 using System.Xml.Linq;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Bitly
 {
 	public static class BitlyApi
 	{
+		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+
 		public static BitlyResults ShortenUrl(string longUrl)
 		{
 			if(UrlShortConfig.Name.IsEmpty())
 			{
-				Log.Error("BitlyApi", "Nincs megadva a felhasználó neve!");
+				Log.Error("BitlyApi", sLConsole.GetString("Username missing!"));
 				return null;
 			}
 
 			if(UrlShortConfig.ApiKey.IsEmpty())
 			{
-				Log.Error("BitlyApi", "Nincs megadva az api kulcs!");
+				Log.Error("BitlyApi", sLConsole.GetString("Api key missing!"));
 				return null;
 			}
 
