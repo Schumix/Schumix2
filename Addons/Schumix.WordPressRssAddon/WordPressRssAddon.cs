@@ -56,8 +56,10 @@ namespace Schumix.WordPressRssAddon
 				_config = new AddonConfig(Name, ".yml");
 
 			InitIrcCommand();
-			SchumixBase.sCleanManager.CDatabase.CleanTable("wordpressinfo");
 			SchumixBase.DManager.Update("wordpressinfo", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
+
+			if(CleanConfig.Database)
+				SchumixBase.sCleanManager.CDatabase.CleanTable("wordpressinfo");
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Link FROM wordpressinfo WHERE ServerName = '{0}'", ServerName);
 			if(!db.IsNull())

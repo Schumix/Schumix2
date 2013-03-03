@@ -57,8 +57,11 @@ namespace Schumix.GameAddon
 			sIrcBase.Networks[ServerName].IrcRegisterHandler("NICK",    HandleNewNick);
 			sIrcBase.Networks[ServerName].IrcRegisterHandler("MODE",    HandleMode);
 			InitIrcCommand();
-			SchumixBase.sCleanManager.CDatabase.CleanTable("maffiagame");
 			SchumixBase.DManager.Update("maffiagame", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
+
+			if(CleanConfig.Database)
+				SchumixBase.sCleanManager.CDatabase.CleanTable("maffiagame");
+
 			Console.CancelKeyPress += (sender, e) => { Clean(); };
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) => { Clean(); };
 		}

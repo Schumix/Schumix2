@@ -56,8 +56,10 @@ namespace Schumix.GitRssAddon
 				_config = new AddonConfig(Name, ".yml");
 
 			InitIrcCommand();
-			SchumixBase.sCleanManager.CDatabase.CleanTable("gitinfo");
 			SchumixBase.DManager.Update("gitinfo", string.Format("ServerName = '{0}'", ServerName), string.Format("ServerId = '{0}'", IRCConfig.List[ServerName].ServerId));
+
+			if(CleanConfig.Database)
+				SchumixBase.sCleanManager.CDatabase.CleanTable("gitinfo");
 
 			var db = SchumixBase.DManager.Query("SELECT Name, Type, Link, Website FROM gitinfo WHERE ServerName = '{0}'", ServerName);
 			if(!db.IsNull())

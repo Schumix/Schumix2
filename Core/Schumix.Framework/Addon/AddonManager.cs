@@ -109,7 +109,7 @@ namespace Schumix.Framework.Addon
 					if(asm.IsNull())
 						continue;
 
-					int number = 0;
+					bool isenabble = true;
 					ISchumixAddon pl;
 
 					foreach(var sn in IRCConfig.List)
@@ -146,12 +146,13 @@ namespace Schumix.Framework.Addon
 								else
 									Addons[sn.Key].IgnoreAssemblies.Add(pl.Name.ToLower(), asm);
 							}
-	
-							if(enabled && number == 0)
-								Log.Success("AddonManager", sLConsole.GetString("Loaded plugin: {0} {1} by {2} ({3})"), pl.Name, asm.GetName().Version.ToString(), pl.Author, pl.Website);
-						}
 
-						number++;
+							if(enabled && isenabble)
+								Log.Success("AddonManager", sLConsole.GetString("Loaded plugin: {0} {1} by {2} ({3})"), pl.Name, asm.GetName().Version.ToString(), pl.Author, pl.Website);
+
+							if(enabled)
+								isenabble = false;
+						}
 					}
 				}
 
