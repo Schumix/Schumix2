@@ -20,9 +20,11 @@
 
 using System;
 using System.Data;
+using System.Linq;
 using System.Collections.Generic;
 using Schumix.Api.Irc;
 using Schumix.Irc;
+using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -250,12 +252,24 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
+
+					if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Info[8]))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
 					
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 						string data = channel.SplitToString(SchumixBase.Comma);
+
+						if(channel.ToList().Contains(sIRCMessage.Info[8].ToLower()))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, "Már hozzá van adva a csatorna!");
+							return;
+						}
 
 						if(channel.Length == 1 && data.IsEmpty())
 							data += sIRCMessage.Info[8].ToLower();
@@ -294,12 +308,24 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
+
+					if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Info[8]))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
 					
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 						string data = string.Empty;
+
+						if(!channel.ToList().Contains(sIRCMessage.Info[8].ToLower()))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, "Nincs ilyen csatorna hozzáadva így nem törölhető!");
+							return;
+						}
 						
 						for(int x = 0; x < channel.Length; x++)
 						{

@@ -23,6 +23,7 @@ using System.Data;
 using System.Collections.Generic;
 using Schumix.Api.Irc;
 using Schumix.Irc;
+using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
@@ -226,6 +227,12 @@ namespace Schumix.SvnRssAddon.Commands
 						return;
 					}
 
+					if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Info[7]))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM svninfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
@@ -261,6 +268,12 @@ namespace Schumix.SvnRssAddon.Commands
 					if(sIRCMessage.Info.Length < 8)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoChannelName", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Info[7]))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
