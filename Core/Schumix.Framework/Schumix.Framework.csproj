@@ -73,6 +73,7 @@
     <Reference Include="Mono.Posix">
       <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -140,6 +141,8 @@
     <Compile Include="CodeBureau\StringValueAttribute.cs" />
     <Compile Include="Log\Log.cs" />
     <Compile Include="Log\LogType.cs" />
+    <Compile Include="Bitly\BitlyApi.cs" />
+    <Compile Include="Bitly\BitlyResults.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -166,5 +169,6 @@
     <Folder Include="Clean\" />
     <Folder Include="CodeBureau\" />
     <Folder Include="Log\" />
+    <Folder Include="Bitly\" />
   </ItemGroup>
 </Project>
