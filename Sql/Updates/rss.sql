@@ -1,1 +1,2 @@
--- ALTER TABLE gitinfo ADD column `ShortUrl` int(4) NOT NULL DEFAULT '0' AFTER `Name`;
+ALTER TABLE gitinfo ADD column `ShortUrl` varchar(5) NOT NULL default 'false' AFTER `Website`;
+ALTER TABLE gitinfo ADD column `Colors` varchar(5) NOT NULL default 'false' AFTER `ShortUrl`;
