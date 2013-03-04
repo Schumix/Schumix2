@@ -268,7 +268,7 @@ namespace Schumix.MantisBTRssAddon
 		private string Title(XmlDocument rss)
 		{
 			var title = rss.SelectSingleNode(_title);
-			return title.IsNull() ? "no text" : title.InnerText;
+			return title.IsNull() ? "no text" : (title.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? title.InnerText.Substring(2).TrimStart() : title.InnerText);
 		}
 
 		private string Link(XmlDocument rss)
@@ -288,6 +288,9 @@ namespace Schumix.MantisBTRssAddon
 
 		private void Informations(string bugcode, string title, string link)
 		{
+			if(!sIrcBase.Networks[_servername].Online)
+				return;
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM mantisbt WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
 			if(!db.IsNull())
 			{

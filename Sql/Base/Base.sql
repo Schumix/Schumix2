@@ -8,8 +8,8 @@ INSERT INTO `channels` VALUES ("1", "1", "default", ",greeter:off,log:on,rejoin:
 -- ----------------------------
 -- Records of gitinfo
 -- ----------------------------
--- INSERT INTO `gitinfo` VALUES ("1", "1", "default", "Schumix2", "master", "https://github.com/megax/Schumix2/commits/master.atom", "github", "#hun_bot,#schumix"); Példa a használatra
-INSERT INTO `gitinfo` VALUES ("1", "1", "default", "Schumix2", "master", "https://github.com/megax/Schumix2/commits/master.atom", "github", "#schumix");
+-- INSERT INTO `gitinfo` VALUES ("1", "1", "default", "Schumix2", "master", "https://github.com/Schumix/Schumix2/commits/master.atom", "github", "#hun_bot,#schumix"); Példa a használatra
+INSERT INTO `gitinfo` VALUES ("1", "1", "default", "Schumix2", "master", "https://github.com/Schumix/Schumix2/commits/master.atom", "github", "#schumix");
 
 -- ----------------------------
 -- Records of hginfo

@@ -306,7 +306,7 @@ namespace Schumix.HgRssAddon
 		private string Title(XmlDocument rss)
 		{
 			var title = rss.SelectSingleNode(_title);
-			return title.IsNull() ? "no text" : title.InnerText;
+			return title.IsNull() ? "no text" : (title.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? title.InnerText.Substring(2).TrimStart() : title.InnerText);
 		}
 
 		private string Author(XmlDocument rss)
@@ -349,6 +349,9 @@ namespace Schumix.HgRssAddon
 
 		private void Informations(string rev, string title, string author)
 		{
+			if(!sIrcBase.Networks[_servername].Online)
+				return;
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM hginfo WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
 			if(!db.IsNull())
 			{

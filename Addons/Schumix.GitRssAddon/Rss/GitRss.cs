@@ -219,7 +219,7 @@ namespace Schumix.GitRssAddon
 								continue;
 							}
 
-							if(_oldrev != newrev)
+							//if(_oldrev != newrev)
 							{
 								title = Title(url);
 								if(title == "no text")
@@ -317,7 +317,7 @@ namespace Schumix.GitRssAddon
 		private string Title(XmlDocument rss)
 		{
 			var title = rss.SelectSingleNode(_title, _ns);
-			return title.IsNull() ? "no text" : title.InnerText;
+			return title.IsNull() ? "no text" : (title.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? title.InnerText.Substring(2).TrimStart() : title.InnerText);
 		}
 
 		private string Author(XmlDocument rss)
@@ -360,6 +360,9 @@ namespace Schumix.GitRssAddon
 
 		private void Informations(string rev, string title, string author)
 		{
+			if(!sIrcBase.Networks[_servername].Online)
+				return;
+
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", _name, _type, _servername);
 			if(!db.IsNull())
 			{
