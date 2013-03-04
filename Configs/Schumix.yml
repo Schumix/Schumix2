@@ -76,6 +76,6 @@ Schumix:
     Clean:
         Config: False
         Database: False
-    UrlShort:
+    ShortUrl:
         Name:  
         ApiKey:  

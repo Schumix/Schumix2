@@ -39,38 +39,74 @@ namespace Schumix.GitRssAddon.Localization
 				case "github":
 				{
 					if(Language == "huHU")
-						return "3{0} 7{1} Revision: 10{2} beküldte: {3}";
+						return "[3{0}] {1} küldött új kommitot ide 7{2}: 02{3}";
 					else if(Language == "enUS")
-						return "3{0} 7{1} Revision: 10{2} by {3}";
+						return "[3{0}] {1} pushed new commit to 7{2}: 02{3}";
 					else
-						return "3{0} 7{1} Revision: 10{2} by {3}";
+						return "[3{0}] {1} pushed new commit to 7{2}: 02{3}";
 				}
 				case "github2":
 				{
 					if(Language == "huHU")
-						return "3{0} Infó: {1}";
+						return "3{0}/7{1} 10{2} {3}: {4}";
 					else if(Language == "enUS")
-						return "3{0} Info: {1}";
+						return "3{0}/7{1} 10{2} {3}: {4}";
 					else
-						return "3{0} Info: {1}";
+						return "3{0}/7{1} 10{2} {3}: {4}";
+				}
+				case "nocolorsgithub":
+				{
+					if(Language == "huHU")
+						return "[{0}] {1} küldött új kommitot ide {2}: {3}";
+					else if(Language == "enUS")
+						return "[{0}] {1} pushed new commit to {2}: {3}";
+					else
+						return "[{0}] {1} pushed new commit to {2}: {3}";
+				}
+				case "nocolorsgithub2":
+				{
+					if(Language == "huHU")
+						return "{0}/{1} {2} {3}: {4}";
+					else if(Language == "enUS")
+						return "{0}/{1} {2} {3}: {4}";
+					else
+						return "{0}/{1} {2} {3}: {4}";
 				}
 				case "gitweb":
 				{
 					if(Language == "huHU")
-						return "3{0} 7{1} Revision: 10{2} beküldte: {3}";
+						return "[3{0}] {1} küldött új kommitot ide 7{2}: 02{3}";
 					else if(Language == "enUS")
-						return "3{0} 7{1} Revision: 10{2} by {3}";
+						return "[3{0}] {1} pushed new commit to 7{2}: 02{3}";
 					else
-						return "3{0} 7{1} Revision: 10{2} by {3}";
+						return "[3{0}] {1} pushed new commit to 7{2}: 02{3}";
 				}
 				case "gitweb2":
 				{
 					if(Language == "huHU")
-						return "3{0} Infó: {1}";
+						return "3{0}/7{1} 10{2} {3}: {4}";
 					else if(Language == "enUS")
-						return "3{0} Info: {1}";
+						return "3{0}/7{1} 10{2} {3}: {4}";
 					else
-						return "3{0} Info: {1}";
+						return "3{0}/7{1} 10{2} {3}: {4}";
+				}
+				case "nocolorsgitweb":
+				{
+					if(Language == "huHU")
+						return "[{0}] {1} küldött új kommitot ide {2}: {3}";
+					else if(Language == "enUS")
+						return "[{0}] {1} pushed new commit to {2}: {3}";
+					else
+						return "[{0}] {1} pushed new commit to {2}: {3}";
+				}
+				case "nocolorsgitweb2":
+				{
+					if(Language == "huHU")
+						return "{0}/{1} {2} {3}: {4}";
+					else if(Language == "enUS")
+						return "{0}/{1} {2} {3}: {4}";
+					else
+						return "{0}/{1} {2} {3}: {4}";
 				}
 				default:
 					return string.Empty;

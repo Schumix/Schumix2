@@ -27,6 +27,7 @@ using System.Threading;
 using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Bitly;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.GitRssAddon.Config;
@@ -55,6 +56,7 @@ namespace Schumix.GitRssAddon
 		private string _id;
 		private string _title;
 		private string _author;
+		private string _link;
 		private string _username;
 		private string _password;
 		private string _servername;
@@ -115,18 +117,21 @@ namespace Schumix.GitRssAddon
 			if(_website == "github")
 			{
 				_id = "ga:feed/ga:entry/ga:id";
+				_link = "ga:feed/ga:entry/ga:link";
 				_title = "ga:feed/ga:entry/ga:title";
 				_author = "ga:feed/ga:entry/ga:author/ga:name";
 			}
 			else if(_website == "gitweb")
 			{
 				_id = "ga:feed/ga:entry/ga:id";
+				_link = "ga:feed/ga:entry/ga:link";
 				_title = "ga:feed/ga:entry/ga:title";
 				_author = "ga:feed/ga:entry/ga:author/ga:name";
 			}
 			else
 			{
 				_id = string.Empty;
+				_link = string.Empty;
 				_title = string.Empty;
 				_author = string.Empty;
 			}
@@ -188,12 +193,7 @@ namespace Schumix.GitRssAddon
 		{
 			try
 			{
-				XmlDocument url;
-				string newrev;
-				string title;
-				string author;
-
-				url = GetUrl();
+				var url = GetUrl();
 				if(!url.IsNull())
 					_oldrev = Revision(url);
 
@@ -211,7 +211,7 @@ namespace Schumix.GitRssAddon
 								continue;
 							}
 
-							newrev = Revision(url);
+							string newrev = Revision(url);
 							if(newrev == "no text")
 							{
 								Clean(url);
@@ -219,9 +219,9 @@ namespace Schumix.GitRssAddon
 								continue;
 							}
 
-							//if(_oldrev != newrev)
+							if(_oldrev != newrev)
 							{
-								title = Title(url);
+								string title = Title(url);
 								if(title == "no text")
 								{
 									Clean(url);
@@ -229,7 +229,7 @@ namespace Schumix.GitRssAddon
 									continue;
 								}
 
-								author = Author(url);
+								string author = Author(url);
 								if(author == "no text" && _website != "github")
 								{
 									Clean(url);
@@ -237,7 +237,15 @@ namespace Schumix.GitRssAddon
 									continue;
 								}
 
-								Informations(newrev, title, author);
+								string curl = CommitUrl(url);
+								if(curl == "no text")
+								{
+									Clean(url);
+									Thread.Sleep(RssConfig.QueryTime*1000);
+									continue;
+								}
+
+								Informations(newrev, title, author, curl);
 								_oldrev = newrev;
 							}
 
@@ -358,12 +366,18 @@ namespace Schumix.GitRssAddon
 			return "no text";
 		}
 
-		private void Informations(string rev, string title, string author)
+		private string CommitUrl(XmlDocument rss)
+		{
+			var curl = rss.SelectSingleNode(_link, _ns);
+			return curl.IsNull() ? "no text" : (((XmlElement)curl).HasAttribute("href") ? ((XmlElement)curl).GetAttribute("href") : "no text");
+		}
+
+		private void Informations(string rev, string title, string author, string commiturl)
 		{
 			if(!sIrcBase.Networks[_servername].Online)
 				return;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", _name, _type, _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel, ShortUrl, Colors FROM gitinfo WHERE Name = '{0}' AND Type = '{1}' And ServerName = '{2}'", _name, _type, _servername);
 			if(!db.IsNull())
 			{
 				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
@@ -372,15 +386,34 @@ namespace Schumix.GitRssAddon
 				{
 					string language = sLManager.GetChannelLocalization(chan, _servername);
 
-					if(_website == "github")
+					if(Convert.ToBoolean(db["ShortUrl"].ToString()))
+						commiturl = BitlyApi.ShortenUrl(commiturl).ShortUrl;
+
+					if(Convert.ToBoolean(db["Colors"].ToString()))
 					{
-						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author));
-						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github2", language), _name, title);
+						if(_website == "github")
+						{
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, (author == "no text" ? "?" : author), _type, commiturl);
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github2", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author), title);
+						}
+						else if(_website == "gitweb")
+						{
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb", language), _name, (author == "no text" ? "?" : author), _type, commiturl);
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb2", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author), title);
+						}
 					}
-					else if(_website == "gitweb")
+					else
 					{
-						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb", language), _name, _type, rev.Substring(0, 10), author);
-						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb2", language), _name, title);
+						if(_website == "github")
+						{
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("nocolorsgithub", language), _name, (author == "no text" ? "?" : author), _type, commiturl);
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("nocolorsgithub2", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author), title);
+						}
+						else if(_website == "gitweb")
+						{
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("nocolorsgitweb", language), _name, (author == "no text" ? "?" : author), _type, commiturl);
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("nocolorsgitweb2", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author), title);
+						}
 					}
 
 					Thread.Sleep(1000);
