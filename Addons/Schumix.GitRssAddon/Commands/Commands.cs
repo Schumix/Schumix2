@@ -540,25 +540,25 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-					
+
 					if(sIRCMessage.Info.Length < 8)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
-					
+
 					if(sIRCMessage.Info.Length < 9)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az állapot!"/*sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
 						return;
 					}
-					
+
 					if(sIRCMessage.Info[8].ToLower() != "true" && sIRCMessage.Info[8].ToLower() != "false")
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, "Nem true vagy false érték lett megadva!"/*sLManager.GetWarningText("NoTypeName", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
 						return;
 					}
-					
+
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT ShortUrl FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
