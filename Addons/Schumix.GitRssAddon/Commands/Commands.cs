@@ -229,7 +229,7 @@ namespace Schumix.GitRssAddon.Commands
 				if(sIRCMessage.Info[5].ToLower() == "add")
 				{
 					var text = sLManager.GetCommandTexts("git/channel/add", sIRCMessage.Channel, sIRCMessage.ServerName);
-					if(text.Length < 2)
+					if(text.Length < 3)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
@@ -267,7 +267,7 @@ namespace Schumix.GitRssAddon.Commands
 
 						if(channel.ToList().Contains(sIRCMessage.Info[8].ToLower()))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, "Már hozzá van adva a csatorna!");
+							sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 							return;
 						}
 
@@ -285,7 +285,7 @@ namespace Schumix.GitRssAddon.Commands
 				else if(sIRCMessage.Info[5].ToLower() == "remove")
 				{
 					var text = sLManager.GetCommandTexts("git/channel/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
-					if(text.Length < 2)
+					if(text.Length < 3)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
@@ -323,7 +323,7 @@ namespace Schumix.GitRssAddon.Commands
 
 						if(!channel.ToList().Contains(sIRCMessage.Info[8].ToLower()))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, "Nincs ilyen csatorna hozzáadva így nem törölhető!");
+							sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 							return;
 						}
 						
@@ -344,12 +344,12 @@ namespace Schumix.GitRssAddon.Commands
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "add")
 			{
-				//var text = sLManager.GetCommandTexts("git/add", sIRCMessage.Channel, sIRCMessage.ServerName);
-				//if(text.Length < 2)
-				//{
-				//	sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
-				//	return;
-				//}
+				var text = sLManager.GetCommandTexts("git/add", sIRCMessage.Channel, sIRCMessage.ServerName);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					return;
+				}
 					
 				if(sIRCMessage.Info.Length < 6)
 				{
@@ -365,33 +365,57 @@ namespace Schumix.GitRssAddon.Commands
 
 				if(sIRCMessage.Info.Length < 8)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az url!"/*sLManager.GetWarningText("NoUrl", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("UrlMissing", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(sIRCMessage.Info.Length < 9)
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az oldal neve!"/*sLManager.GetWarningText("NoUrl", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WebsiteNameMissing", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6]), sIRCMessage.ServerName);
 				if(db.IsNull())
 				{
+					bool started = false;
+
+					foreach(var list in RssList)
+					{
+						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
+						{
+							if(list.Started)
+							{
+								started = true;
+								continue;
+							}
+							
+							list.Start();
+							started = true;
+						}
+					}
+
+					if(!started)
+					{
+						var rss = new GitRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()));
+						RssList.Add(rss);
+						rss.Start();
+					}
+
 					SchumixBase.DManager.Insert("`gitinfo`(ServerId, ServerName, Name, Type, Link, Website)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()));
-					sSendMessage.SendChatMessage(sIRCMessage, "Sikeresen hozzáadva a listához!");
+					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 				}
 				else
-					sSendMessage.SendChatMessage(sIRCMessage, "Már szerepel a listában!");
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "remove")
 			{
-				//var text = sLManager.GetCommandTexts("git/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
-				//if(text.Length < 2)
-				//{
-				//	sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
-				//	return;
-				//}
+				var text = sLManager.GetCommandTexts("git/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					return;
+				}
 				
 				if(sIRCMessage.Info.Length < 6)
 				{
@@ -408,11 +432,33 @@ namespace Schumix.GitRssAddon.Commands
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[6]), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
+					GitRss gitr = null;
+					bool isstop = false;
+
+					foreach(var list in RssList)
+					{
+						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
+						{
+							if(!list.Started)
+							{
+								isstop = true;
+								continue;
+							}
+							
+							list.Stop();
+							gitr = list;
+							isstop = true;
+						}
+					}
+
+					if(isstop && !gitr.IsNull())
+						RssList.Remove(gitr);
+
 					SchumixBase.DManager.Delete("gitinfo", string.Format("Name = '{0}' And Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]), sIRCMessage.ServerName));
-					sSendMessage.SendChatMessage(sIRCMessage, "Sikeresen eltávolítva a listából!");
+					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 				}
 				else
-					sSendMessage.SendChatMessage(sIRCMessage, "Nem szerepel a név a listában!");
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "change")
 			{
@@ -464,12 +510,12 @@ namespace Schumix.GitRssAddon.Commands
 						{
 							if(enabled)
 							{
-								sSendMessage.SendChatMessage(sIRCMessage, "Már be van kapcsolva!");
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOn", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 							else
 							{
-								sSendMessage.SendChatMessage(sIRCMessage, "Már ki van kapcsolva!");
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOff", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 						}
@@ -522,12 +568,12 @@ namespace Schumix.GitRssAddon.Commands
 						{
 							if(enabled)
 							{
-								sSendMessage.SendChatMessage(sIRCMessage, "Már be van kapcsolva!");
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOn", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 							else
 							{
-								sSendMessage.SendChatMessage(sIRCMessage, "Már ki van kapcsolva!");
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOff", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 						}
@@ -561,7 +607,7 @@ namespace Schumix.GitRssAddon.Commands
 					
 					if(sIRCMessage.Info.Length < 9)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az url!"/*sLManager.GetWarningText("NoUrl", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("UrlMissing", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 					
@@ -598,7 +644,7 @@ namespace Schumix.GitRssAddon.Commands
 					
 					if(sIRCMessage.Info.Length < 9)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az oldal neve!"/*sLManager.GetWarningText("NoUrl", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WebsiteNameMissing", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 					
