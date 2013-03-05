@@ -164,12 +164,7 @@ namespace Schumix.WordPressRssAddon
 		{
 			try
 			{
-				XmlDocument url;
-				string newguid;
-				string title;
-				string author;
-
-				url = GetUrl();
+				var url = GetUrl();
 				if(!url.IsNull())
 					_oldguid = Guid(url);
 
@@ -187,7 +182,7 @@ namespace Schumix.WordPressRssAddon
 								continue;
 							}
 
-							newguid = Guid(url);
+							string newguid = Guid(url);
 							if(newguid == "no text")
 							{
 								Clean(url);
@@ -197,7 +192,7 @@ namespace Schumix.WordPressRssAddon
 
 							if(_oldguid != newguid)
 							{
-								title = Title(url);
+								string title = Title(url);
 								if(title == "no text")
 								{
 									Clean(url);
@@ -205,7 +200,7 @@ namespace Schumix.WordPressRssAddon
 									continue;
 								}
 
-								author = Author(url);
+								string author = Author(url);
 								if(author == "no text")
 								{
 									Clean(url);

@@ -150,12 +150,7 @@ namespace Schumix.SvnRssAddon
 		{
 			try
 			{
-				XmlDocument url;
-				string newrev;
-				string title;
-				string author;
-
-				url = GetUrl();
+				var url = GetUrl();
 				if(!url.IsNull())
 					_oldrev = Revision(url);
 
@@ -173,7 +168,7 @@ namespace Schumix.SvnRssAddon
 								continue;
 							}
 
-							newrev = Revision(url);
+							string newrev = Revision(url);
 							if(newrev == "no text")
 							{
 								Clean(url);
@@ -183,7 +178,7 @@ namespace Schumix.SvnRssAddon
 
 							if(_oldrev != newrev)
 							{
-								title = Title(url);
+								string title = Title(url);
 								if(title == "no text")
 								{
 									Clean(url);
@@ -191,7 +186,7 @@ namespace Schumix.SvnRssAddon
 									continue;
 								}
 
-								author = Author(url);
+								string author = Author(url);
 								if(author == "no text")
 								{
 									Clean(url);

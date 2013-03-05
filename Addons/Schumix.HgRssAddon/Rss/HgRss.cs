@@ -158,12 +158,7 @@ namespace Schumix.HgRssAddon
 		{
 			try
 			{
-				XmlDocument url;
-				string newrev;
-				string title;
-				string author;
-
-				url = GetUrl();
+				var url = GetUrl();
 				if(!url.IsNull())
 					_oldrev = Revision(url);
 
@@ -181,7 +176,7 @@ namespace Schumix.HgRssAddon
 								continue;
 							}
 
-							newrev = Revision(url);
+							string newrev = Revision(url);
 							if(newrev == "no text")
 							{
 								Clean(url);
@@ -191,7 +186,7 @@ namespace Schumix.HgRssAddon
 
 							if(_oldrev != newrev)
 							{
-								title = Title(url);
+								string title = Title(url);
 								if(title == "no text")
 								{
 									Clean(url);
@@ -199,7 +194,7 @@ namespace Schumix.HgRssAddon
 									continue;
 								}
 
-								author = Author(url);
+								string author = Author(url);
 								if(author == "no text")
 								{
 									Clean(url);

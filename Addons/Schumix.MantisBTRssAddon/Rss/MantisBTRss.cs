@@ -139,12 +139,7 @@ namespace Schumix.MantisBTRssAddon
 		{
 			try
 			{
-				XmlDocument url;
-				string newbug;
-				string title;
-				string link;
-
-				url = GetUrl();
+				var url = GetUrl();
 				if(!url.IsNull())
 					_oldbug = BugCode(url);
 
@@ -162,7 +157,7 @@ namespace Schumix.MantisBTRssAddon
 								continue;
 							}
 
-							newbug = BugCode(url);
+							string newbug = BugCode(url);
 							if(newbug == "no text")
 							{
 								Clean(url);
@@ -172,7 +167,7 @@ namespace Schumix.MantisBTRssAddon
 
 							if(_oldbug != newbug)
 							{
-								title = Title(url);
+								string title = Title(url);
 								if(title == "no text")
 								{
 									Clean(url);
@@ -180,7 +175,7 @@ namespace Schumix.MantisBTRssAddon
 									continue;
 								}
 
-								link = Link(url);
+								string link = Link(url);
 								if(link == "no text")
 								{
 									Clean(url);
