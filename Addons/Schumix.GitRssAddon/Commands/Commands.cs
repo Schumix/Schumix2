@@ -534,7 +534,7 @@ namespace Schumix.GitRssAddon.Commands
 					//	sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					//	return;
 					//}
-					
+
 					if(sIRCMessage.Info.Length < 7)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
