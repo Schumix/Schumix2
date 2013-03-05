@@ -624,7 +624,7 @@ namespace Schumix.GitRssAddon.Commands
 					
 					foreach(var list in RssList)
 					{
-						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
+						if(sIRCMessage.Info[6].ToLower() == list.Name.ToLower() && sIRCMessage.Info[7].ToLower() == list.Type.ToLower())
 						{
 							if(!list.Started)
 							{
@@ -641,10 +641,10 @@ namespace Schumix.GitRssAddon.Commands
 					if(isstop && !gitr.IsNull())
 						RssList.Remove(gitr);
 
-					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link, Website FROM gitinfo WHERE LOWER(Name) = '{0}' And Type = '{1}' And ServerName = '{2}'", sIRCMessage.Info[5].ToLower(), sIRCMessage.Info[6], sIRCMessage.ServerName);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link, Website FROM gitinfo WHERE LOWER(Name) = '{0}' And Type = '{1}' And ServerName = '{2}'", sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[7], sIRCMessage.ServerName);
 					if(!db1.IsNull())
 					{
-						var rss = new GitRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]), db1["Link"].ToString(), db1["Website"].ToString());
+						var rss = new GitRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), db1["Link"].ToString(), db1["Website"].ToString());
 						RssList.Add(rss);
 						rss.Start();
 					}
@@ -691,7 +691,7 @@ namespace Schumix.GitRssAddon.Commands
 					
 					foreach(var list in RssList)
 					{
-						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
+						if(sIRCMessage.Info[6].ToLower() == list.Name.ToLower() && sIRCMessage.Info[7].ToLower() == list.Type.ToLower())
 						{
 							if(!list.Started)
 							{
@@ -708,10 +708,10 @@ namespace Schumix.GitRssAddon.Commands
 					if(isstop && !gitr.IsNull())
 						RssList.Remove(gitr);
 					
-					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link, Website FROM gitinfo WHERE LOWER(Name) = '{0}' And Type = '{1}' And ServerName = '{2}'", sIRCMessage.Info[5].ToLower(), sIRCMessage.Info[6], sIRCMessage.ServerName);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link, Website FROM gitinfo WHERE LOWER(Name) = '{0}' And Type = '{1}' And ServerName = '{2}'", sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[7], sIRCMessage.ServerName);
 					if(!db1.IsNull())
 					{
-						var rss = new GitRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]), db1["Link"].ToString(), db1["Website"].ToString());
+						var rss = new GitRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[6]), sUtilities.SqlEscape(sIRCMessage.Info[7]), db1["Link"].ToString(), db1["Website"].ToString());
 						RssList.Add(rss);
 						rss.Start();
 					}
