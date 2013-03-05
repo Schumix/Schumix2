@@ -4,6 +4,8 @@ UPDATE `localized_command` SET Text = "Csatorna sikeresen törölve.\nNem létez
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/add", "Sikeresen hozzáadva a listához!\nMár szerepel a listán!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/remove", "Sikeresen eltávolítva a listából!\nNem szerepel a név a listában!");*/
 
+/*UPDATE `localized_command_help` SET Text = "Git rss-ek kezelése.\nGit parancsai: add | remove | channel | info | list | start | stop | reload" WHERE Language = 'huHU' AND Command = 'git';*/
+
 /*INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "UrlMissing", "Nincs megadva az url!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "WebsiteNameMissing", "Nincs megadva az oldal neve!");*/
 

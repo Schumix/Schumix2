@@ -48,11 +48,11 @@ namespace Schumix.GitRssAddon.Localization
 				case "github2":
 				{
 					if(Language == "huHU")
-						return "3{0}/7{1} 10{2} {3}: {4}";
+						return "3{0}15/7{1} 10{2} {3}: {4}";
 					else if(Language == "enUS")
-						return "3{0}/7{1} 10{2} {3}: {4}";
+						return "3{0}15/7{1} 10{2} {3}: {4}";
 					else
-						return "3{0}/7{1} 10{2} {3}: {4}";
+						return "3{0}15/7{1} 10{2} {3}: {4}";
 				}
 				case "nocolorsgithub":
 				{
@@ -84,11 +84,11 @@ namespace Schumix.GitRssAddon.Localization
 				case "gitweb2":
 				{
 					if(Language == "huHU")
-						return "3{0}/7{1} 10{2} {3}: {4}";
+						return "3{0}15/7{1} 10{2} {3}: {4}";
 					else if(Language == "enUS")
-						return "3{0}/7{1} 10{2} {3}: {4}";
+						return "3{0}15/7{1} 10{2} {3}: {4}";
 					else
-						return "3{0}/7{1} 10{2} {3}: {4}";
+						return "3{0}15/7{1} 10{2} {3}: {4}";
 				}
 				case "nocolorsgitweb":
 				{

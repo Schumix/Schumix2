@@ -79,12 +79,12 @@ namespace Schumix.HgRssAddon.Commands
 					string list = string.Empty;
 
 					foreach(DataRow row in db.Rows)
-						list += SchumixBase.Space + row["Name"].ToString();
+						list += SchumixBase.Comma + SchumixBase.Space + row["Name"].ToString();
 
 					if(list.IsEmpty())
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("hg/list", sIRCMessage.Channel, sIRCMessage.ServerName), SchumixBase.Space + sLConsole.Other("Nothing"));
 					else
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("hg/list", sIRCMessage.Channel, sIRCMessage.ServerName), list);
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("hg/list", sIRCMessage.Channel, sIRCMessage.ServerName), list.Remove(0, 1, SchumixBase.Comma));
 				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
