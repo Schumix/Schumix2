@@ -619,6 +619,36 @@ namespace Schumix.GitRssAddon.Commands
 					}
 					
 					SchumixBase.DManager.Update("gitinfo", string.Format("Link = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8])), string.Format("LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName));
+					GitRss gitr = null;
+					bool isstop = false;
+					
+					foreach(var list in RssList)
+					{
+						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
+						{
+							if(!list.Started)
+							{
+								isstop = true;
+								continue;
+							}
+							
+							list.Stop();
+							gitr = list;
+							isstop = true;
+						}
+					}
+
+					if(isstop && !gitr.IsNull())
+						RssList.Remove(gitr);
+
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link, Website FROM gitinfo WHERE LOWER(Name) = '{0}' And Type = '{1}' And ServerName = '{2}'", sIRCMessage.Info[5].ToLower(), sIRCMessage.Info[6], sIRCMessage.ServerName);
+					if(!db1.IsNull())
+					{
+						var rss = new GitRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]), db1["Link"].ToString(), db1["Website"].ToString());
+						RssList.Add(rss);
+						rss.Start();
+					}
+
 					sSendMessage.SendChatMessage(sIRCMessage, "Url sikeresen módosítva!");
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "website")
@@ -656,6 +686,36 @@ namespace Schumix.GitRssAddon.Commands
 					}
 					
 					SchumixBase.DManager.Update("gitinfo", string.Format("Website = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower())), string.Format("LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName));
+					GitRss gitr = null;
+					bool isstop = false;
+					
+					foreach(var list in RssList)
+					{
+						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower() && sIRCMessage.Info[6].ToLower() == list.Type.ToLower())
+						{
+							if(!list.Started)
+							{
+								isstop = true;
+								continue;
+							}
+							
+							list.Stop();
+							gitr = list;
+							isstop = true;
+						}
+					}
+					
+					if(isstop && !gitr.IsNull())
+						RssList.Remove(gitr);
+					
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link, Website FROM gitinfo WHERE LOWER(Name) = '{0}' And Type = '{1}' And ServerName = '{2}'", sIRCMessage.Info[5].ToLower(), sIRCMessage.Info[6], sIRCMessage.ServerName);
+					if(!db1.IsNull())
+					{
+						var rss = new GitRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]), db1["Link"].ToString(), db1["Website"].ToString());
+						RssList.Add(rss);
+						rss.Start();
+					}
+
 					sSendMessage.SendChatMessage(sIRCMessage, "Oldal neve sikeresen módosítva!");
 				}
 			}
