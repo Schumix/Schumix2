@@ -177,7 +177,8 @@ EXTRAS = \
 REFERENCES =  \
 	System \
 	System.Xml \
-	System.Data
+	System.Data \
+	System.Core
 
 DLL_REFERENCES =  \
 	../../Dependencies/YamlDotNet.Core.dll \

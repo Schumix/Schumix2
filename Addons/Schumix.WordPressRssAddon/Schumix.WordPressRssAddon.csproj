@@ -59,6 +59,7 @@
     <Reference Include="YamlDotNet.RepresentationModel">
       <HintPath>..\..\Dependencies\YamlDotNet.RepresentationModel.dll</HintPath>
     </Reference>
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
