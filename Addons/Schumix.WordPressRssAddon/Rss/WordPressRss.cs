@@ -27,6 +27,7 @@ using System.Threading;
 using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Bitly;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.WordPressRssAddon.Config;
@@ -53,6 +54,7 @@ namespace Schumix.WordPressRssAddon
 		private string _guid;
 		private string _title;
 		private string _author;
+		private string _link;
 		private string _username;
 		private string _password;
 		private string _servername;
@@ -109,6 +111,7 @@ namespace Schumix.WordPressRssAddon
 		private void Init()
 		{
 			_guid = "rss/channel/item/guid";
+			_link = "rss/channel/item/link";
 			_title = "rss/channel/item/title";
 			_author = "rss/channel/item/dc:creator";
 		}
@@ -208,7 +211,15 @@ namespace Schumix.WordPressRssAddon
 									continue;
 								}
 
-								Informations(newguid, title, author);
+								string curl = CommitUrl(url);
+								if(curl == "no text")
+								{
+									Clean(url);
+									Thread.Sleep(RssConfig.QueryTime*1000);
+									continue;
+								}
+								
+								Informations(newguid, title, author, curl);
 								_oldguid = newguid;
 							}
 
@@ -303,12 +314,18 @@ namespace Schumix.WordPressRssAddon
 			return guid.IsNull() ? "no text" : guid.InnerText;
 		}
 
-		private void Informations(string guid, string title, string author)
+		private string CommitUrl(XmlDocument rss)
+		{
+			var curl = rss.SelectSingleNode(_link, _ns);
+			return curl.IsNull() ? "no text" : (curl.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? curl.InnerText.Substring(2).TrimStart() : curl.InnerText);
+		}
+		
+		private void Informations(string guid, string title, string author, string commiturl)
 		{
 			if(!sIrcBase.Networks[_servername].Online)
 				return;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM wordpressinfo WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel, ShortUrl, Colors FROM wordpressinfo WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
 			if(!db.IsNull())
 			{
 				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
@@ -316,8 +333,21 @@ namespace Schumix.WordPressRssAddon
 				foreach(var chan in channel)
 				{
 					string language = sLManager.GetChannelLocalization(chan, _servername);
-					sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress", language), _name, author, guid);
-					sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress2", language), _name, title);
+
+					if(Convert.ToBoolean(db["ShortUrl"].ToString()))
+						commiturl = BitlyApi.ShortenUrl(commiturl).ShortUrl;
+					
+					if(Convert.ToBoolean(db["Colors"].ToString()))
+					{
+						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress", language), _name, author, commiturl);
+						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress2", language), _name, title);
+					}
+					else
+					{
+						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("nocolorsWordPress", language), _name, author, commiturl);
+						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("nocolorsWordPress2", language), _name, title);
+					}
+
 					Thread.Sleep(1000);
 				}
 			}

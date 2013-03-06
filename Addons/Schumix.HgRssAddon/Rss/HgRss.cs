@@ -27,6 +27,7 @@ using System.Threading;
 using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Bitly;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.HgRssAddon.Config;
@@ -53,6 +54,7 @@ namespace Schumix.HgRssAddon
 		private string _id;
 		private string _title;
 		private string _author;
+		private string _link;
 		private string _username;
 		private string _password;
 		private string _servername;
@@ -90,18 +92,21 @@ namespace Schumix.HgRssAddon
 			if(_website == "google")
 			{
 				_id = "feed/entry/id";
+				_link = "feed/entry/link";
 				_title = "feed/entry/title";
 				_author = "feed/entry/author/name";
 			}
 			else if(_website == "bitbucket")
 			{
 				_id = "rss/channel/item/link";
+				_link = "rss/channel/item/link";
 				_title = "rss/channel/item/title";
 				_author = "rss/channel/item/author";
 			}
 			else
 			{
 				_id = string.Empty;
+				_link = string.Empty;
 				_title = string.Empty;
 				_author = string.Empty;
 			}
@@ -202,7 +207,15 @@ namespace Schumix.HgRssAddon
 									continue;
 								}
 
-								Informations(newrev, title, author);
+								string curl = CommitUrl(url);
+								if(curl == "no text")
+								{
+									Clean(url);
+									Thread.Sleep(RssConfig.QueryTime*1000);
+									continue;
+								}
+								
+								Informations(newrev, title, author, curl);
 								_oldrev = newrev;
 							}
 
@@ -342,12 +355,18 @@ namespace Schumix.HgRssAddon
 			return "no text";
 		}
 
-		private void Informations(string rev, string title, string author)
+		private string CommitUrl(XmlDocument rss)
+		{
+			var curl = rss.SelectSingleNode(_link);
+			return curl.IsNull() ? "no text" : (((XmlElement)curl).HasAttribute("href") ? ((XmlElement)curl).GetAttribute("href") : "no text");
+		}
+		
+		private void Informations(string rev, string title, string author, string commiturl)
 		{
 			if(!sIrcBase.Networks[_servername].Online)
 				return;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM hginfo WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel, ShortUrl, Colors FROM hginfo WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
 			if(!db.IsNull())
 			{
 				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
@@ -356,18 +375,40 @@ namespace Schumix.HgRssAddon
 				{
 					string language = sLManager.GetChannelLocalization(chan, _servername);
 
-					if(_website == "google")
+					if(Convert.ToBoolean(db["ShortUrl"].ToString()))
+						commiturl = BitlyApi.ShortenUrl(commiturl).ShortUrl;
+					
+					if(Convert.ToBoolean(db["Colors"].ToString()))
 					{
-						if(title.Contains(SchumixBase.Colon.ToString()))
+						if(_website == "google")
 						{
-							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google", language), _name, rev.Substring(0, 10), author);
-							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+							if(title.Contains(SchumixBase.Colon.ToString()))
+							{
+								sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google", language), _name, author, commiturl);
+								sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google2", language), _name, rev.Substring(0, 10), author, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+							}
+						}
+						else if(_website == "bitbucket")
+						{
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("bitbucket", language), _name, author, commiturl);
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("bitbucket2", language), _name, rev.Substring(0, 10), author, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
 						}
 					}
-					else if(_website == "bitbucket")
+					else
 					{
-						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("bitbucket", language), _name, rev.Substring(0, 10), author);
-						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("bitbucket2", language), _name, title);
+						if(_website == "google")
+						{
+							if(title.Contains(SchumixBase.Colon.ToString()))
+							{
+								sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("nocolorsgoogle", language), _name, author, commiturl);
+								sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("nocolorsgoogle2", language), _name, rev.Substring(0, 10), author, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+							}
+						}
+						else if(_website == "bitbucket")
+						{
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("nocolorsbitbucket", language), _name, author, commiturl);
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("nocolorsbitbucket2", language), _name, rev.Substring(0, 10), author, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+						}
 					}
 
 					Thread.Sleep(1000);

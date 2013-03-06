@@ -54,6 +54,24 @@ namespace Schumix.MantisBTRssAddon.Localization
 					else
 						return "3{0} Info:{1}";
 				}
+				case "Text3":
+				{
+					if(Language == "huHU")
+						return "{0} BugKód: {1} Link: {2}";
+					else if(Language == "enUS")
+						return "{0} BugCode: {1} Link: {2}";
+					else
+						return "{0} BugCode: {1} Link: {2}";
+				}
+				case "Text4":
+				{
+					if(Language == "huHU")
+						return "{0} Infó:{1}";
+					else if(Language == "enUS")
+						return "{0} Info:{1}";
+					else
+						return "{0} Info:{1}";
+				}
 				default:
 					return string.Empty;
 			}

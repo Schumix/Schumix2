@@ -1247,4 +1247,4 @@ INSERT INTO `schumix` VALUES ("22", "1", "default", "birthday", "on");
 -- ----------------------------
 -- INSERT INTO `svninfo` VALUES (1, "1", "default", "Sandshroud", "http://www.assembla.com/spaces/Sandshroud/stream.rss", "assembla", "#hun_bot,#schumix"); Példa a használatra
 
--- INSERT INTO `wordpressinfo` VALUES ("1", "1", "default", "Yeahunter.hu", "http://yeahunter.hu/feed/", "#hun_bot,#schumix2"); -- Példa a használatra
+-- INSERT INTO `wordpressinfo` VALUES ("1", "1", "default", "Yeahunter.hu", "http://yeahunter.hu/blog/feed/", "#hun_bot,#schumix2"); -- Példa a használatra

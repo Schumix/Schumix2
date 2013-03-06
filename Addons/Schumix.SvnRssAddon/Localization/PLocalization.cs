@@ -39,20 +39,38 @@ namespace Schumix.SvnRssAddon.Localization
 				case "assembla":
 				{
 					if(Language == "huHU")
-						return "3{0} Revision: 10{1} beküldte: {2}";
+						return "[3{0}] {1} küldött új kommitot: 02{2}";
 					else if(Language == "enUS")
-						return "3{0} Revision: 10{1} by {2}";
+						return "[3{0}] {1} pushed new commit: 02{2}";
 					else
-						return "3{0} Revision: 10{1} by {2}";
+						return "[3{0}] {1} pushed new commit: 02{2}";
 				}
 				case "assembla2":
 				{
 					if(Language == "huHU")
-						return "3{0} Infó:{1}";
+						return "3{0} 10{1} {2}: {3}";
 					else if(Language == "enUS")
-						return "3{0} Info:{1}";
+						return "3{0} 10{1} {2}: {3}";
 					else
-						return "3{0} Info:{1}";
+						return "3{0} 10{1} {2}: {3}";
+				}
+				case "nocolorsassembla":
+				{
+					if(Language == "huHU")
+						return "[{0}] {1} küldött új kommitot: {2}";
+					else if(Language == "enUS")
+						return "[{0}] {1} pushed new commit: {2}";
+					else
+						return "[{0}] {1} pushed new commit: {2}";
+				}
+				case "nocolorsassembla2":
+				{
+					if(Language == "huHU")
+						return "{0} {1} {2}: {3}";
+					else if(Language == "enUS")
+						return "{0} {1} {2}: {3}";
+					else
+						return "{0} {1} {2}: {3}";
 				}
 				default:
 					return string.Empty;

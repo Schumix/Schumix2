@@ -39,20 +39,38 @@ namespace Schumix.WordPressRssAddon.Localization
 				case "WordPress":
 				{
 					if(Language == "huHU")
-						return "3{0} Beküldte: 3{1} Link: {2}";
+						return "[3{0}] {1} küldött új témát: 02{2}";
 					else if(Language == "enUS")
-						return "3{0} By 3{1} Link: {2}";
+						return "[3{0}] {1} pushed new topic: 02{2}";
 					else
-						return "3{0} By 3{1} Link: {2}";
+						return "[3{0}] {1} pushed new topic: 02{2}";
 				}
 				case "WordPress2":
 				{
 					if(Language == "huHU")
-						return "3{0} Infó: {1}";
+						return "3{0} Infó: {1}";
 					else if(Language == "enUS")
-						return "3{0} Info: {1}";
+						return "3{0} Info: {1}";
 					else
-						return "3{0} Info: {1}";
+						return "3{0} Info: {1}";
+				}
+				case "nocolorsWordPress":
+				{
+					if(Language == "huHU")
+						return "[{0}] {1} küldött új témát: {2}";
+					else if(Language == "enUS")
+						return "[{0}] {1} pushed new topic: {2}";
+					else
+						return "[{0}] {1} pushed new topic: {2}";
+				}
+				case "nocolorsWordPress2":
+				{
+					if(Language == "huHU")
+						return "{0} Infó: {1}";
+					else if(Language == "enUS")
+						return "{0} Info: {1}";
+					else
+						return "{0} Info: {1}";
 				}
 				default:
 					return string.Empty;

@@ -27,6 +27,7 @@ using System.Threading;
 using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Bitly;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.MantisBTRssAddon.Config;
@@ -286,7 +287,7 @@ namespace Schumix.MantisBTRssAddon
 			if(!sIrcBase.Networks[_servername].Online)
 				return;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM mantisbt WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel, ShortUrl, Colors FROM mantisbt WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
 			if(!db.IsNull())
 			{
 				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
@@ -295,10 +296,24 @@ namespace Schumix.MantisBTRssAddon
 				{
 					string language = sLManager.GetChannelLocalization(chan, _servername);
 
-					if(title.Contains(SchumixBase.Colon.ToString()))
+					if(Convert.ToBoolean(db["ShortUrl"].ToString()))
+						link = BitlyApi.ShortenUrl(link).ShortUrl;
+					
+					if(Convert.ToBoolean(db["Colors"].ToString()))
 					{
-						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.MantisBTRss("Text", language), _name, bugcode, link);
-						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.MantisBTRss("Text2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+						if(title.Contains(SchumixBase.Colon.ToString()))
+						{
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.MantisBTRss("Text", language), _name, bugcode, link);
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.MantisBTRss("Text2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+						}
+					}
+					else
+					{
+						if(title.Contains(SchumixBase.Colon.ToString()))
+						{
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.MantisBTRss("Text3", language), _name, bugcode, link);
+							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.MantisBTRss("Text4", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+						}
 					}
 
 					Thread.Sleep(1000);

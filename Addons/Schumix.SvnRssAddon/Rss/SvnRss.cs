@@ -27,6 +27,7 @@ using System.Threading;
 using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Bitly;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.SvnRssAddon.Config;
@@ -52,6 +53,7 @@ namespace Schumix.SvnRssAddon
 		private string _oldrev;
 		private string _title;
 		private string _author;
+		private string _link;
 		private string[] info;
 		private string _username;
 		private string _password;
@@ -89,11 +91,13 @@ namespace Schumix.SvnRssAddon
 		{
 			if(_website == "assembla")
 			{
+				_link = "rss/channel/item/link";
 				_title = "rss/channel/item/title";
 				_author = "rss/channel/item/author";
 			}
 			else
 			{
+				_link = string.Empty;
 				_title = string.Empty;
 				_author = string.Empty;
 			}
@@ -194,7 +198,15 @@ namespace Schumix.SvnRssAddon
 									continue;
 								}
 
-								Informations(newrev, title, author);
+								string curl = CommitUrl(url);
+								if(curl == "no text")
+								{
+									Clean(url);
+									Thread.Sleep(RssConfig.QueryTime*1000);
+									continue;
+								}
+								
+								Informations(newrev, title, author, curl);
 								_oldrev = newrev;
 							}
 
@@ -311,12 +323,18 @@ namespace Schumix.SvnRssAddon
 			return "no text";
 		}
 
-		private void Informations(string rev, string title, string author)
+		private string CommitUrl(XmlDocument rss)
+		{
+			var curl = rss.SelectSingleNode(_link);
+			return curl.IsNull() ? "no text" : (curl.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? curl.InnerText.Substring(2).TrimStart() : curl.InnerText);
+		}
+		
+		private void Informations(string rev, string title, string author, string commiturl)
 		{
 			if(!sIrcBase.Networks[_servername].Online)
 				return;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel FROM svninfo WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Channel, ShortUrl, Colors FROM svninfo WHERE Name = '{0}' And ServerName = '{1}'", _name, _servername);
 			if(!db.IsNull())
 			{
 				string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
@@ -325,12 +343,29 @@ namespace Schumix.SvnRssAddon
 				{
 					string language = sLManager.GetChannelLocalization(chan, _servername);
 
-					if(_website == "assembla")
+					if(Convert.ToBoolean(db["ShortUrl"].ToString()))
+						commiturl = BitlyApi.ShortenUrl(commiturl).ShortUrl;
+					
+					if(Convert.ToBoolean(db["Colors"].ToString()))
 					{
-						if(title.Contains(SchumixBase.Colon.ToString()))
+						if(_website == "assembla")
 						{
-							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla", language), _name, rev, author);
-							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla2", language), _name, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+							if(title.Contains(SchumixBase.Colon.ToString()))
+							{
+								sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla", language), _name, author, commiturl);
+								sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("assembla2", language), _name, rev, author, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+							}
+						}
+					}
+					else
+					{
+						if(_website == "assembla")
+						{
+							if(title.Contains(SchumixBase.Colon.ToString()))
+							{
+								sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("nocolorsassembla", language), _name, author, commiturl);
+								sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.SvnRss("nocolorsassembla2", language), _name, rev, author, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
+							}
 						}
 					}
 
