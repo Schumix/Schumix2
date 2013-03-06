@@ -186,7 +186,10 @@ FILES = \
 	CodeBureau/StringEnum.cs \
 	CodeBureau/StringValueAttribute.cs \
 	Log/Log.cs \
-	Log/LogType.cs 
+	Log/LogType.cs \
+	Bitly/BitlyApi.cs \
+	Bitly/BitlyResults.cs \
+	Config/ShortUrlConfig.cs 
 
 DATA_FILES = 
 
@@ -199,6 +202,7 @@ EXTRAS = \
 	Clean \
 	CodeBureau \
 	Log \
+	Bitly \
 	schumix.framework.pc.in 
 
 REFERENCES =  \
@@ -209,7 +213,8 @@ REFERENCES =  \
 	System.Management \
 	System.Core \
 	System.Net \
-	System.Runtime.Serialization
+	System.Runtime.Serialization \
+	System.Xml.Linq
 
 DLL_REFERENCES =  \
 	../../Dependencies/YamlDotNet.Core.dll \
