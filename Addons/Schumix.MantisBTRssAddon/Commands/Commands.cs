@@ -20,6 +20,7 @@
 
 using System;
 using System.Data;
+using System.Linq;
 using System.Collections.Generic;
 using Schumix.Api.Irc;
 using Schumix.Irc;
@@ -209,7 +210,7 @@ namespace Schumix.MantisBTRssAddon.Commands
 				if(sIRCMessage.Info[5].ToLower() == "add")
 				{
 					var text = sLManager.GetCommandTexts("mantisbt/channel/add", sIRCMessage.Channel, sIRCMessage.ServerName);
-					if(text.Length < 2)
+					if(text.Length < 3)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
@@ -239,6 +240,12 @@ namespace Schumix.MantisBTRssAddon.Commands
 						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 						string data = channel.SplitToString(SchumixBase.Comma);
 
+						if(channel.ToList().Contains(sIRCMessage.Info[7].ToLower()))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+							return;
+						}
+
 						if(channel.Length == 1 && data.IsEmpty())
 							data += sIRCMessage.Info[7].ToLower();
 						else
@@ -253,7 +260,7 @@ namespace Schumix.MantisBTRssAddon.Commands
 				else if(sIRCMessage.Info[5].ToLower() == "remove")
 				{
 					var text = sLManager.GetCommandTexts("mantisbt/channel/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
-					if(text.Length < 2)
+					if(text.Length < 3)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
@@ -283,6 +290,12 @@ namespace Schumix.MantisBTRssAddon.Commands
 						string[] channel = db["Channel"].ToString().Split(SchumixBase.Comma);
 						string data = string.Empty;
 
+						if(!channel.ToList().Contains(sIRCMessage.Info[7].ToLower()))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+							return;
+						}
+
 						for(int x = 0; x < channel.Length; x++)
 						{
 							if(channel[x] == sIRCMessage.Info[7].ToLower())
@@ -296,6 +309,280 @@ namespace Schumix.MantisBTRssAddon.Commands
 					}
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+				}
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "add")
+			{
+				var text = sLManager.GetCommandTexts("mantisbt/add", sIRCMessage.Channel, sIRCMessage.ServerName);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					return;
+				}
+				
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+				
+				if(sIRCMessage.Info.Length < 7)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("UrlMissing", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.ServerName);
+				if(db.IsNull())
+				{
+					bool started = false;
+					
+					foreach(var list in RssList)
+					{
+						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower())
+						{
+							if(list.Started)
+							{
+								started = true;
+								continue;
+							}
+							
+							list.Start();
+							started = true;
+						}
+					}
+					
+					if(!started)
+					{
+						var rss = new MantisBTRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]));
+						RssList.Add(rss);
+						rss.Start();
+					}
+					
+					SchumixBase.DManager.Insert("`mantisbt`(ServerId, ServerName, Name, Link)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[5]), sUtilities.SqlEscape(sIRCMessage.Info[6]));
+					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "remove")
+			{
+				var text = sLManager.GetCommandTexts("mantisbt/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					return;
+				}
+				
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+				
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.ServerName);
+				if(!db.IsNull())
+				{
+					MantisBTRss gitr = null;
+					bool isstop = false;
+					
+					foreach(var list in RssList)
+					{
+						if(sIRCMessage.Info[5].ToLower() == list.Name.ToLower())
+						{
+							if(!list.Started)
+							{
+								isstop = true;
+								continue;
+							}
+							
+							list.Stop();
+							gitr = list;
+							isstop = true;
+						}
+					}
+					
+					if(isstop && !gitr.IsNull())
+						RssList.Remove(gitr);
+					
+					SchumixBase.DManager.Delete("mantisbt", string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5]), sIRCMessage.ServerName));
+					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+			}
+			else if(sIRCMessage.Info[4].ToLower() == "change")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+				
+				if(sIRCMessage.Info[5].ToLower() == "colors")
+				{
+					var text = sLManager.GetCommandTexts("mantisbt/change/colors", sIRCMessage.Channel, sIRCMessage.ServerName);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("StatusIsMissing", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					if(sIRCMessage.Info[7].ToLower() != "true" && sIRCMessage.Info[7].ToLower() != "false")
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ValueIsNotTrueOrFalse", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Colors FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
+					if(!db.IsNull())
+					{
+						bool enabled = Convert.ToBoolean(db["Colors"].ToString());
+						
+						if(Convert.ToBoolean(sIRCMessage.Info[7].ToLower()) == enabled)
+						{
+							if(enabled)
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOn", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+							else
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOff", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+						}
+						
+						SchumixBase.DManager.Update("mantisbt", string.Format("Colors = '{0}'", sIRCMessage.Info[7].ToLower()), string.Format("LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+					}
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "shorturl")
+				{
+					var text = sLManager.GetCommandTexts("mantisbt/change/shorturl", sIRCMessage.Channel, sIRCMessage.ServerName);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("StatusIsMissing", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					if(sIRCMessage.Info[7].ToLower() != "true" && sIRCMessage.Info[7].ToLower() != "false")
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ValueIsNotTrueOrFalse", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT ShortUrl FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
+					if(!db.IsNull())
+					{
+						bool enabled = Convert.ToBoolean(db["ShortUrl"].ToString());
+						
+						if(Convert.ToBoolean(sIRCMessage.Info[7].ToLower()) == enabled)
+						{
+							if(enabled)
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOn", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+							else
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOff", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+						}
+						
+						SchumixBase.DManager.Update("mantisbt", string.Format("ShortUrl = '{0}'", sIRCMessage.Info[7].ToLower()), string.Format("LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+					}
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+				}
+				else if(sIRCMessage.Info[5].ToLower() == "url")
+				{
+					var text = sLManager.GetCommandTexts("mantisbt/change/url", sIRCMessage.Channel, sIRCMessage.ServerName);
+					if(text.Length < 2)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 7)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					if(sIRCMessage.Info.Length < 8)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("UrlMissing", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+					
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
+					if(!db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						return;
+					}
+					
+					SchumixBase.DManager.Update("mantisbt", string.Format("Link = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7])), string.Format("LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
+					MantisBTRss gitr = null;
+					bool isstop = false;
+					
+					foreach(var list in RssList)
+					{
+						if(sIRCMessage.Info[6].ToLower() == list.Name.ToLower())
+						{
+							if(!list.Started)
+							{
+								isstop = true;
+								continue;
+							}
+							
+							list.Stop();
+							gitr = list;
+							isstop = true;
+						}
+					}
+					
+					if(isstop && !gitr.IsNull())
+						RssList.Remove(gitr);
+					
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sIRCMessage.Info[6].ToLower(), sIRCMessage.ServerName);
+					if(!db1.IsNull())
+					{
+						var rss = new MantisBTRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[6]), db1["Link"].ToString());
+						RssList.Add(rss);
+						rss.Start();
+					}
+					
+					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 			}
 		}

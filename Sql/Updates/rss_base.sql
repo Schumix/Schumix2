@@ -49,3 +49,5 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WebsiteNameMissing", "Website name missing!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "StatusIsMissing", "Status is missing!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ValueIsNotTrueOrFalse", "Value is not true or false!");*/
+
+-- mantisbt és wordpress-hez nem kell a website rész!!!!!!!!!!!!!!!!!!
