@@ -35,7 +35,7 @@ namespace Schumix.RevisionAddon
 		private Revision sRevision;
 		private string _servername;
 
-		public void Setup(string ServerName)
+		public void Setup(string ServerName, bool LoadConfig = false)
 		{
 			_servername = ServerName;
 			sRevision = new Revision(ServerName);

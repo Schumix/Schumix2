@@ -52,7 +52,7 @@ namespace Schumix.ExtraAddon
 #pragma warning restore 414
 		private string _servername;
 
-		public void Setup(string ServerName)
+		public void Setup(string ServerName, bool LoadConfig = false)
 		{
 			_servername = ServerName;
 
@@ -105,7 +105,7 @@ namespace Schumix.ExtraAddon
 			sFunctions.IsOnline = false;
 			sIrcHandler.sNameList.RandomAllVhost();
 
-			if(IRCConfig.List[_servername].ServerId == 1)
+			if(IRCConfig.List[_servername].ServerId == 1 || LoadConfig)
 				_config = new AddonConfig(Name, ".yml");
 
 			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG",                HandlePrivmsg);

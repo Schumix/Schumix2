@@ -123,20 +123,20 @@ namespace Schumix.Framework.Addon
 						foreach(var type in asm.GetTypesWithInterface(typeof(ISchumixAddon)))
 						{
 							pl = (ISchumixAddon)Activator.CreateInstance(type);
-	
+
 							if(pl.IsNull() || Addons[sn.Key].Assemblies.ContainsValue(asm) ||
 							   Addons[sn.Key].IgnoreAssemblies.ContainsValue(asm))
 								continue;
-	
+
 							if(Addons[sn.Key].Addons.ContainsKey(pl.Name.ToLower()))
 							{
 								Log.Error("AddonManager", sLConsole.GetString("This addon name already exists in the system so not loaded!"));
 								continue;
 							}
-	
+
 							if(enabled)
 								pl.Setup(sn.Key);
-	
+
 							lock(LoadLock)
 							{
 								Addons[sn.Key].Addons.Add(pl.Name.ToLower(), pl);

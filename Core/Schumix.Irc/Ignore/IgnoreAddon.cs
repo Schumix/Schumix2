@@ -143,7 +143,7 @@ namespace Schumix.Irc.Ignore
 					return;
 				}
 
-				pl.Setup(_servername);
+				pl.Setup(_servername, true);
 				sAddonManager.Addons[_servername].Assemblies.Add(plugin, sAddonManager.Addons[_servername].IgnoreAssemblies[plugin]);
 				var types = sAddonManager.Addons[_servername].IgnoreAssemblies[plugin].GetTypes();
 

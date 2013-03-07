@@ -39,7 +39,7 @@ namespace Schumix.ChatterBotAddon
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private string _servername;
 
-		public void Setup(string ServerName)
+		public void Setup(string ServerName, bool LoadConfig = false)
 		{
 			_servername = ServerName;
 			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG", HandlePrivmsg);

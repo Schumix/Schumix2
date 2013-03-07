@@ -50,7 +50,7 @@ namespace Schumix.CalendarAddon
 		private string _servername;
 		private Ban sBan;
 
-		public void Setup(string ServerName)
+		public void Setup(string ServerName, bool LoadConfig = false)
 		{
 			_servername = ServerName;
 			sCalendarCommand = new CalendarCommand(ServerName);
@@ -58,7 +58,7 @@ namespace Schumix.CalendarAddon
 			sBanCommand = new BanCommand(ServerName);
 			sBan = new Ban(ServerName);
 
-			if(IRCConfig.List[ServerName].ServerId == 1)
+			if(IRCConfig.List[ServerName].ServerId == 1 || LoadConfig)
 				_config = new AddonConfig(Name, ".yml");
 
 			_calendar = new Calendar(ServerName);

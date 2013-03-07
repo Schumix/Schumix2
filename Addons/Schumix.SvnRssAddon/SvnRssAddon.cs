@@ -46,13 +46,13 @@ namespace Schumix.SvnRssAddon
 #pragma warning restore 414
 		private string _servername;
 
-		public void Setup(string ServerName)
+		public void Setup(string ServerName, bool LoadConfig = false)
 		{
 			_servername = ServerName;
 			sRssCommand = new RssCommand(ServerName);
 			sLocalization.Locale = sLConsole.Locale;
 
-			if(IRCConfig.List[ServerName].ServerId == 1)
+			if(IRCConfig.List[ServerName].ServerId == 1 || LoadConfig)
 				_config = new AddonConfig(Name, ".yml");
 
 			InitIrcCommand();

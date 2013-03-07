@@ -31,7 +31,7 @@ namespace Schumix.Api
 		/// <summary>
 		/// Creates the addon.
 		/// </summary>
-		void Setup(string ServerName);
+		void Setup(string ServerName, bool LoadConfig = false);
 		/// <summary>
 		/// Destroys the addon, releasing all resources.
 		/// </summary>

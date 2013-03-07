@@ -45,7 +45,7 @@ namespace Schumix.GameAddon
 		private string _servername;
 		private bool start = false;
 
-		public void Setup(string ServerName)
+		public void Setup(string ServerName, bool LoadConfig = false)
 		{
 			_servername = ServerName;
 			sGameCommand = new GameCommand(ServerName);

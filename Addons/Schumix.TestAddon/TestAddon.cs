@@ -37,7 +37,7 @@ namespace Schumix.TestAddon
 		private TestCommand sTestCommand;
 		private string _servername;
 
-		public void Setup(string ServerName)
+		public void Setup(string ServerName, bool LoadConfig = false)
 		{
 			_servername = ServerName;
 			sTestCommand = new TestCommand(ServerName);
