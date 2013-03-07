@@ -8,14 +8,14 @@ INSERT INTO `channels` VALUES ("1", "1", "default", ",greeter:off,log:on,rejoin:
 -- ----------------------------
 -- Records of gitinfo
 -- ----------------------------
--- INSERT INTO `gitinfo` VALUES ("1", "1", "default", "Schumix2", "master", "https://github.com/Schumix/Schumix2/commits/master.atom", "github", "#hun_bot,#schumix"); Példa a használatra
-INSERT INTO `gitinfo` VALUES ("1", "1", "default", "Schumix2", "master", "https://github.com/Schumix/Schumix2/commits/master.atom", "github", "#schumix");
+-- INSERT INTO `gitinfo` VALUES ("1", "1", "default", "Schumix2", "master", "https://github.com/Schumix/Schumix2/commits/master.atom", "github", "false", "true", "#hun_bot,#schumix"); Példa a használatra
+INSERT INTO `gitinfo` VALUES ("1", "1", "default", "Schumix2", "master", "https://github.com/Schumix/Schumix2/commits/master.atom", "github", "false", "true", "#schumix");
 
 -- ----------------------------
 -- Records of hginfo
 -- ----------------------------
--- INSERT INTO `hginfo` VALUES ("1", "1", "default", "TrinityDB", "http://code.google.com/feeds/p/trinitydb/hgchanges/basic", "google", "#hun_bot,#schumix"); Példa a használatra
--- INSERT INTO `hginfo` VALUES ("2", "1", "default", "NeoCore", "http://bitbucket.org/skyne/neocore/rss?token=2b6ceaf25f0a4c993ddc905327806e9c", "bitbucket", "#hun_bot,#schumix"); Példa a használatra
+-- INSERT INTO `hginfo` VALUES ("1", "1", "default", "TrinityDB", "http://code.google.com/feeds/p/trinitydb/hgchanges/basic", "google", "false", "true", "#hun_bot,#schumix"); Példa a használatra
+-- INSERT INTO `hginfo` VALUES ("2", "1", "default", "NeoCore", "http://bitbucket.org/skyne/neocore/rss?token=2b6ceaf25f0a4c993ddc905327806e9c", "bitbucket", "false", "true", "#hun_bot,#schumix"); Példa a használatra
 
 -- huHU
 INSERT INTO `irc_commands` (`Language`, `Command`, `Text`) VALUES ("huHU", "mode", "Mode használata: /mode <csatorna> <rang> <név>");
@@ -375,24 +375,42 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/stop", "{0} már le van állítva!\n{0} sikeresen le lett állítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/reload", "{0} sikeresen újra lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/reload/all", "Minden rss újra lett indítva.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/channel/remove", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/add", "Sikeresen hozzáadva a listához!\nMár szerepel a listán!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/remove", "Sikeresen eltávolítva a listából!\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/change/colors", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/change/shorturl", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/change/url", "Nem szerepel a név a listában!\nUrl sikeresen módosítva.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/change/website", "Nem szerepel a név a listában!\nOldal neve sikeresen módosítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/info", "3{0} Channel: 2{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/list", "2Lista:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/start", "{0} már el van indítva!\n{0} sikeresen el lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/stop", "{0} már le van állítva!\n{0} sikeresen le lett állítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/reload", "{0} sikeresen újra lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/reload/all", "Minden rss újra lett indítva.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/channel/remove", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/add", "Sikeresen hozzáadva a listához!\nMár szerepel a listán!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/remove", "Sikeresen eltávolítva a listából!\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/change/colors", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/change/shorturl", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/change/url", "Nem szerepel a név a listában!\nUrl sikeresen módosítva.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/change/website", "Nem szerepel a név a listában!\nOldal neve sikeresen módosítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/info", "3{0}15/7{1} Channel: 2{2}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/list", "2Lista:{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/start", "{0} {1} már el van indítva!\n{0} {1} sikeresen el lett indítva.\n{0} {1} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/stop", "{0} {1} már le van állítva!\n{0} {1} sikeresen le lett állítva.\n{0} {1} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/reload", "{0} {1} sikeresen újra lett indítva.\n{0} {1} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/reload/all", "Minden rss újra lett indítva.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!\nNincs ilyen csatorna hozzáadva így nem törölhető!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/add", "Sikeresen hozzáadva a listához!\nMár szerepel a listán!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/remove", "Sikeresen eltávolítva a listából!\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/change/colors", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/change/shorturl", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/change/url", "Nem szerepel a név a listában!\nUrl sikeresen módosítva.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/change/website", "Nem szerepel a név a listában!\nOldal neve sikeresen módosítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "compiler/memory", "Jelenleg túl sok memóriát fogyaszt a bot ezért ezen funkció nem elérhető!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "compiler/warning", "A kódban olyan részek vannak melyek veszélyeztetik a programot. Ezért leállt a fordítás!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "compiler", "Nincs megadva a fő fv! (Schumix)\nNincs megadva a fő class!\nA kimeneti szöveg túl hosszú ezért nem került kiírásra!\nA kód sikeresen lefordult csak nincs kimenő üzenet!\nHátramaradt még {0} kiírás!");
@@ -443,8 +461,14 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/stop", "{0} már le van állítva!\n{0} sikeresen le lett állítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/reload", "{0} sikeresen újra lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/reload/all", "Minden rss újra lett indítva.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!\nNincs ilyen csatorna hozzáadva így nem törölhető!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/add", "Sikeresen hozzáadva a listához!\nMár szerepel a listán!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/remove", "Sikeresen eltávolítva a listából!\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/change/colors", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/change/shorturl", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/change/url", "Nem szerepel a név a listában!\nUrl sikeresen módosítva.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/change/website", "Nem szerepel a név a listában!\nOldal neve sikeresen módosítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wiki", "3Címe: {0}\n3Link: {0}\n3Leírás: {0}\n3Leírás: {0}...\nNincs találat!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "calendar", "Helytelen dátum formátum!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "calendar/nextmessage", "3Üzenet: {0}\n3Dátum: {0}. {1}. {2}. {3}:{4}\nNincs feljegyezve üzenet!");
@@ -455,8 +479,14 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/stop", "{0} már le van állítva!\n{0} sikeresen le lett állítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/reload", "{0} sikeresen újra lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/reload/all", "Minden rss újra lett indítva.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!\nNincs ilyen csatorna hozzáadva így nem törölhető!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/add", "Sikeresen hozzáadva a listához!\nMár szerepel a listán!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/remove", "Sikeresen eltávolítva a listából!\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/change/colors", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/change/shorturl", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/change/url", "Nem szerepel a név a listában!\nUrl sikeresen módosítva.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/change/website", "Nem szerepel a név a listában!\nOldal neve sikeresen módosítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/add", "Már szerepel az ignore listán!\nA parancs sikeresen hozzáadásra került.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/remove", "Nem szerepel az ignore listán!\nA parancs sikeresen el lett távolítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "ignore/irc/command/search", "Szerepel az ignore listán!\nNem szerepel az ignore listán!");
@@ -572,24 +602,42 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/stop", "{0} already stopped!\n{0} successfully stopped.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/reload", "{0} successfully restarted.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/reload/all", "All of Rss is restarted.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/channel/add", "Successfully added channel.\nNo such name!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/channel/remove", "Successfully deleted channel!\nNo such name!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/channel/add", "The channel is succesfully added.\This username is not existing!\nThis channel is already added!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/channel/remove", "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/add", "Successfully added!\nAlready on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/remove", "Succesfully removed from the list!\nThis name is not on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/change/colors", "Option successfuly modified.\nThis name is not on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/change/shorturl", "Option succesfully modified.\nThis name is not in the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/change/url", "This name is not on the list!\nUrl succesfully modified.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/change/website", "This name is not on the list!\nPage name succesfully changed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/info", "3{0} Channel: 2{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/list", "2List:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/start", "{0} already translated!\n{0} successfully started.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/stop", "{0} already stopped!\n{0} successfully stopped.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/reload", "{0} successfully restarted.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/reload/all", "All of Rss is restarted.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/channel/add", "Sccessfully added channel!\nNo such name!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/channel/remove", "Successfully deleted channel!.\nNo such name!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/channel/add", "The channel is succesfully added.\This username is not existing!\nThis channel is already added!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/channel/remove", "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/add", "Successfully added!\nAlready on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/remove", "Succesfully removed from the list!\nThis name is not on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/change/colors", "Option successfuly modified.\nThis name is not on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/change/shorturl", "Option succesfully modified.\nThis name is not in the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/change/url", "This name is not on the list!\nUrl succesfully modified.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/change/website", "This name is not on the list!\nPage name succesfully changed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/info", "3{0}15/7{1} Channel: 2{2}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/list", "2List:{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/start", "{0} {1} already translated!\n{0} {1} successfully started.\n{0} {1} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/stop", "{0} {1} already stopped!\n{0} {1} successfully stopped.\n{0} {1} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/reload", "{0} {1} successfully restarted.\n{0} {1} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/reload/all", "All of Rss is restarted.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/channel/add", "Successfully added channel!\nNo such name!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/channel/remove", "Successfully deleted channel!\nNo such name!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/channel/add", "The channel is succesfully added.\This username is not existing!\nThis channel is already added!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/channel/remove", "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/add", "Successfully added!\nAlready on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/remove", "Succesfully removed from the list!\nThis name is not on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/change/colors", "Option successfuly modified.\nThis name is not on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/change/shorturl", "Option succesfully modified.\nThis name is not in the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/change/url", "This name is not on the list!\nUrl succesfully modified.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/change/website", "This name is not on the list!\nPage name succesfully changed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "compiler/memory", "Currently too many memory is allocated so this function is disabled!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "compiler/warning", "This code contains dangerous parts. Compiling stopped!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "compiler", "The main function is not specified! (Schumix)\nThe main class is not specified!\nThe output text is too long so did not written out!\nSuccessfully compiled the code, only nothing output text!\nLeft: {0} line!");
@@ -640,8 +688,14 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/stop", "{0} already stopped!\n{0} successfully stopped.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/reload", "{0} successfully restarted.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/reload/all", "All of Rss is restarted.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/channel/add", "Successfully added channel.\nNo such name!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/channel/remove", "Successfully deleted channel!\nNo such name!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/channel/add", "The channel is succesfully added.\This username is not existing!\nThis channel is already added!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/channel/remove", "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/add", "Successfully added!\nAlready on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/remove", "Succesfully removed from the list!\nThis name is not on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/change/colors", "Option successfuly modified.\nThis name is not on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/change/shorturl", "Option succesfully modified.\nThis name is not in the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/change/url", "This name is not on the list!\nUrl succesfully modified.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/change/website", "This name is not on the list!\nPage name succesfully changed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wiki", "3Title: {0}\n3Link: {0}\n3Description: {0}\n3Description: {0}...\nNo result!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "calendar", "Date format error!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "calendar/nextmessage", "3Message: {0}\n3Date: {0}. {1}. {2}. {3}:{4}\nThere is not any recorded message!");
@@ -652,8 +706,14 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/stop", "{0} already stopped!\n{0} successfully stopped.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/reload", "{0} successfully restarted.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/reload/all", "All of Rss is restarted.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/channel/add", "Successfully added channel.\nNo such name!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/channel/remove", "Successfully deleted channel!\nNo such name!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/channel/add", "The channel is succesfully added.\This username is not existing!\nThis channel is already added!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/channel/remove", "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/add", "Successfully added!\nAlready on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/remove", "Succesfully removed from the list!\nThis name is not on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/change/colors", "Option successfuly modified.\nThis name is not on the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/change/shorturl", "Option succesfully modified.\nThis name is not in the list!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/change/url", "This name is not on the list!\nUrl succesfully modified.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/change/website", "This name is not on the list!\nPage name succesfully changed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/add", "Already exist on the ignore list!\nCommand succesfuly added.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/remove", "Not on the ignore list!\nCommand succesfuly removed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/irc/command/search", "Already exist on the ignore list!\nNot on the ignore list!");
@@ -738,7 +798,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "schumix2/clean", "2", "Felszabadítja a lefoglalt memóriát.\nHasználata: {0} clean");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "schumix2/csc", "9", "Ez a parancs segít megérteni a c# fordító használatát.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "schumix2/c#compiler", "9", "Ez a parancs segít megérteni a c# fordító használatát.");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn", "1", "Svn rss-ek kezelése.\nSvn parancsai: channel | info | list | start | stop | reload");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn", "1", "Svn rss-ek kezelése.\nSvn parancsai: add | remove | channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/channel", "1", "Rss csatornákra való kiírásának kezelése.\nChannel parancsai: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/channel/add", "1", "Új csatorna hozzáadása az rss-hez.\nHasználata: {0}svn channel add <rss neve> <csatorna neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/channel/remove", "1", "Nem használatos csatorna eltávolítása az rss-ből.\nHasználata: {0}svn channel remove <rss neve> <csatorna neve>");
@@ -748,7 +808,14 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/stop", "1", "Rss leállítása.\nHasználata: {0}svn stop <rss neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/reload", "1", "Megadott rss újratöltése.\nSvn reload parancsai: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/reload/all", "1", "Minden rss újratöltése.\nHasználata: {0}svn reload <rss neve>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg", "1", "Hg rss-ek kezelése.\nHg parancsai: channel | info | list | start | stop | reload");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/add", "1", "Új rss hozzáadása.\nHasználata: {0}svn add <rss neve> <url> <weboldal (egyedi, a kód alapján kell beállítani)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/remove", "1", "Törli az rss-t.\nHasználata: {0}svn remove <rss neve>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/change", "1", "Rss beállítása módosíthatóak vele.\nChange parancsai: colors | shorturl | url | website");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/change/colors", "1", "Be illetve kikapcsolható vele az rss színezése.\nHasználata: {0}svn change colors <true vagy false (értelemszerűen)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/change/shorturl", "1", "Be illetve kikapcsolható vele az rss url rövidítése.\nHasználata: {0}svn change shorturl <true vagy false (értelemszerűen)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/change/url", "1", "Megváltoztatható vele az rss url címe.\nHasználata: {0}svn change url <rss neve> <url>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "svn/change/website", "1", "Megváltoztatható vele az rss weboldal címe.\nHasználata: {0}svn change url <rss neve> <weboldal (egyedi, a kód alapján kell beállítani)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg", "1", "Hg rss-ek kezelése.\nHg parancsai: add | remove | channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/channel", "1", "Rss csatornákra való kiírásának kezelése.\nChannel parancsai: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/channel/add", "1", "Új csatorna hozzáadása az rss-hez.\nHasználata: {0}hg channel add <rss neve> <csatorna>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/channel/remove", "1", "Nem használatos csatorna eltávolítása az rss-ből.\nHasználata: {0}hg channel remove <rss neve> <csatorna>");
@@ -758,7 +825,14 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/stop", "1", "Rss leállítása.\nHasználata: {0}hg stop <rss neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/reload", "1", "Megadott rss újratöltése.\nHg reload parancsai: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/reload/all", "1", "Minden rss újratöltése.\nHasználata: {0}hg reload <rss neve>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git", "1", "Git rss-ek kezelése.\nGit parancsai: channel | info | list | start | stop | reload");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/add", "1", "Új rss hozzáadása.\nHasználata: {0}hg add <rss neve> <url> <weboldal (egyedi, a kód alapján kell beállítani)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/remove", "1", "Törli az rss-t.\nHasználata: {0}hg remove <rss neve>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/change", "1", "Rss beállítása módosíthatóak vele.\nChange parancsai: colors | shorturl | url | website");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/change/colors", "1", "Be illetve kikapcsolható vele az rss színezése.\nHasználata: {0}hg change colors <true vagy false (értelemszerűen)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/change/shorturl", "1", "Be illetve kikapcsolható vele az rss url rövidítése.\nHasználata: {0}hg change shorturl <true vagy false (értelemszerűen)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/change/url", "1", "Megváltoztatható vele az rss url címe.\nHasználata: {0}hg change url <rss neve> <url>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "hg/change/website", "1", "Megváltoztatható vele az rss weboldal címe.\nHasználata: {0}hg change url <rss neve> <weboldal (egyedi, a kód alapján kell beállítani)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git", "1", "Git rss-ek kezelése.\nGit parancsai: add | remove | channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/channel", "1", "Rss csatornákra való kiirásának kezelése.\nChannel parancsai: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/channel/add", "1", "Új csatorna hozzáadása az rss-hez.\nHasználata: {0}git channel add <rss neve> <tipus> <csatorna>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/channel/remove", "1", "Nem használatos csatorna eltávolítása az rss-ből.\nHasználata: {0}git channel remove <rss neve> <tipus> <csatorna neve>");
@@ -768,6 +842,13 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/stop", "1", "Rss leállítása.\nHasználata: {0}git stop <rss neve> <tipus>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/reload", "1", "Megadott rss újratöltése.\nGit reload parancsai: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/reload/all", "1", "Minden rss újratöltése.\nHasználata: {0}git reload <rss neve> <tipus>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/add", "1", "Új rss hozzáadása.\nHasználata: {0}git add <rss neve> <tipus> <url> <weboldal (egyedi, a kód alapján kell beállítani)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/remove", "1", "Törli az rss-t.\nHasználata: {0}git remove <rss neve> <tipus>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/change", "1", "Rss beállítása módosíthatóak vele.\nChange parancsai: colors | shorturl | url | website");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/change/colors", "1", "Be illetve kikapcsolható vele az rss színezése.\nHasználata: {0}git change colors <true vagy false (értelemszerűen)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/change/shorturl", "1", "Be illetve kikapcsolható vele az rss url rövidítése.\nHasználata: {0}git change shorturl <true vagy false (értelemszerűen)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/change/url", "1", "Megváltoztatható vele az rss url címe.\nHasználata: {0}git change url <rss neve> <tipus> <url>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "git/change/website", "1", "Megváltoztatható vele az rss weboldal címe.\nHasználata: {0}git change url <rss neve> <tipus> <weboldal (egyedi, a kód alapján kell beállítani)>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ban", "1", "Tiltást rak a megadott névre vagy vhost-ra.\nHasználata:\nÓra és perc: {0}ban <név> <óó:pp> <oka>\nDátum, Óra és perc: {0}ban <név> <éééé.hh.nn> <óó:pp> <oka>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "unban", "1", "Feloldja a tiltást a névről vagy vhost-ról ha szerepel a bot rendszerében.\nHasználata: {0}unban <név vagy vhost>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "notes", "9", "Különböző adatokat jegyezhetünk fel a segítségével.\nJegyzet parancsai: info | user | code\nJegyzet beküldése: {0}notes <egy kód amit megjegyzünk pl: schumix> <amit feljegyeznél>");
@@ -807,7 +888,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "weather", "9", "Megmondja az időjárást a megadott városban.\nHasználata: {0}weather <város>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "game", "9", "Játékok indítása irc-n.\nJáték parancsai: start");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "game/start", "9", "Játék indítására szolgáló parancs.\nHasználata: {0}game start <játék neve>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt", "1", "MantisBT rss-ek kezelése.\nMantisBT parancsai: channel | info | list | start | stop | reload");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt", "1", "MantisBT rss-ek kezelése.\nMantisBT parancsai: add | remove | channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/channel", "1", "Rss csatornákra való kiírásának kezelése.\nChannel parancsai: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/channel/add", "1", "Új csatorna hozzáadása az rss-hez.\nHasználata: {0}mantisbt channel add <rss neve> <csatorna neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/channel/remove", "1", "Nem használatos csatorna eltávolítása az rss-ből.\nHasználata: {0}mantisbt channel remove <rss neve> <csatorna neve>");
@@ -817,6 +898,12 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/stop", "1", "Rss leállítása.\nHasználata: {0}mantisbt stop <rss neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/reload", "1", "Megadott rss újratöltése.\nMantisBT reload parancsai: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/reload/all", "1", "Minden rss újratöltése.\nHasználata: {0}mantisbt reload <rss neve>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/add", "1", "Új rss hozzáadása.\nHasználata: {0}mantisbt add <rss neve> <url>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/remove", "1", "Törli az rss-t.\nHasználata: {0}mantisbt remove <rss neve>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/change", "1", "Rss beállítása módosíthatóak vele.\nChange parancsai: colors | shorturl | url");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/change/colors", "1", "Be illetve kikapcsolható vele az rss színezése.\nHasználata: {0}mantisbt change colors <true vagy false (értelemszerűen)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/change/shorturl", "1", "Be illetve kikapcsolható vele az rss url rövidítése.\nHasználata: {0}mantisbt change shorturl <true vagy false (értelemszerűen)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt/change/url", "1", "Megváltoztatható vele az rss url címe.\nHasználata: {0}mantisbt change url <rss neve> <url>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "online", "9", "A parancs segítségével megállapítható ki elérhető és ki nem.\nHasználata: {0}online <név>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wiki", "9", "A parancs segítségével kereshetünk a Wikipedia oldalán.\nHasználata: {0}wiki <keresendő szöveg>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar", "9", "Eseményeket, üzeneteket lehet feljegyezni vele megadott időpontra.\nParancsok: loop | nick | private | nextmessage\nHasználata:\nÓra és perc: {0}calendar <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar <éééé.hh.nn> <óó:pp> <üzenet>");
@@ -833,7 +920,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/private/nick", "9", "Megadott személynek jegyzi fel és privátban küldi el neki.\nHasználata:\nÓra és perc: {0}calendar private nick <név> <óó:pp> <üzenet>\nDátum, Óra és perc: {0}calendar private nick <név> <éééé.hh.nn> <óó:pp> <üzenet>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/private/nextmessage", "9", "Kiírja azon üzenetet ami a legközelebb van időpontilag.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "calendar/nextmessage", "9", "Kiírja azon üzenetet ami a legközelebb van időpontilag.");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress", "1", "WordPress rss-ek kezelése.\nWordPress parancsai: channel | info | list | start | stop | reload");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress", "1", "WordPress rss-ek kezelése.\nWordPress parancsai: add | remove | channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/channel", "1", "Rss csatornákra való kiírásának kezelése.\nChannel parancsai: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/channel/add", "1", "Új csatorna hozzáadása az rss-hez.\nHasználata: {0}wordpress channel add <rss neve> <csatorna neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/channel/remove", "1", "Nem használatos csatorna eltávolítása az rss-ből.\nHasználata: {0}wordpress channel remove <rss neve> <csatorna neve>");
@@ -843,6 +930,12 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/stop", "1", "Rss leállítása.\nHasználata: {0}wordpress stop <rss neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/reload", "1", "Megadott rss újratöltése.\nWordPress reload parancsai: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/reload/all", "1", "Minden rss újratöltése.\nHasználata: {0}wordpress reload <rss neve>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/add", "1", "Új rss hozzáadása.\nHasználata: {0}wordpress add <rss neve> <url>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/remove", "1", "Törli az rss-t.\nHasználata: {0}wordpress remove <rss neve>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/change", "1", "Rss beállítása módosíthatóak vele.\nChange parancsai: colors | shorturl | url");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/change/colors", "1", "Be illetve kikapcsolható vele az rss színezése.\nHasználata: {0}wordpress change colors <true vagy false (értelemszerűen)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/change/shorturl", "1", "Be illetve kikapcsolható vele az rss url rövidítése.\nHasználata: {0}wordpress change shorturl <true vagy false (értelemszerűen)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "wordpress/change/url", "1", "Megváltoztatható vele az rss url címe.\nHasználata: {0}wordpress change url <rss neve> <url>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore", "1", "Lehetővé teszi egyes adatok kivételként való kezelését.\nIgnore parancsok: irc | command | channel | nick | addon");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/irc", "1", "Lehetővé teszi irc adatok kivételként való kezelését.\nIrc parancsok: command");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "ignore/irc/command", "1", "Lehetővé teszi irc parancsok kivételként való kezelését.\nIrc parancsok: add | remove | search");
@@ -935,7 +1028,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "schumix2/clean", "2", "Frees allocated memory.\nUse: {0} clean");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "schumix2/csc", "9", "This commands helps to understand the usage of the c# compiler.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "schumix2/c#compiler", "9", "This commands helps to understand the usage of the c# compiler.");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn", "1", "Rss svn 's management.\nSvn commands: channel | info | list | start | stop | reload");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn", "1", "Rss svn 's management.\nSvn commands: add | remove | channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/channel", "1", "RSS feeds on their handling of the announcement.\nChannel commands: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/channel/add", "1", "New channel added to the rss.\nUse: {0}svn channel add <rss name> <channel name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/channel/remove", "1", "Removed from the RSS Channel.\nUse: {0}svn channel remove <rss name> <channel name>");
@@ -945,7 +1038,14 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/stop", "1", "Rss stop.\nUse: {0}svn stop <rss name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/reload", "1", "Specify rss reload.\nSvn reload command: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/reload/all", "1", "All RSS reload.\nUse: {0}svn reload <rss name>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg", "1", "Rss hg 's management.\nHg commands: channel | info | list | start | stop | reload");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/add", "1", "Add new rss.\nUsage: {0}svn add <rss name> <url> <website (unique)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/remove", "1", "Deletes the rss.\nUsage: {0}svn remove <rss name>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/change", "1", "You can change the Rss settings with it.\nChange command: colors | shorturl | url | website");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/change/colors", "1", "Rss on/off switch.\nUsage: {0}svn change colors <true or false>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/change/shorturl", "1", "Url shortener on/off switch.\usage: {0}svn change shorturl <true or false>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/change/url", "1", "Rss url changer.\nUsage: {0}svn change url <rss name> <url>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/change/website", "1", "Rss website changer.\nUsage: {0}svn change url <rss name> <unique>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg", "1", "Rss hg 's management.\nHg commands: add | remove | channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/channel", "1", "RSS feeds on their handling of the announcement.\nChannel commands: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/channel/add", "1", "New channel added to the rss.\nUse: {0}hg channel add <rss name> <channel name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/channel/remove", "1", "Removed from the RSS Channel.\nUse: {0}hg channel remove <rss name> <channel name>");
@@ -955,7 +1055,14 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/stop", "1", "Rss stop.\nUse: {0}hg stop <rss name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/reload", "1", "Specify rss reload.\nHg reload command: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/reload/all", "1", "All RSS reload.\nUse: {0}hg reload <rss name>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git", "1", "Rss git 's management.\nGit commands: channel | info | list | start | stop | reload");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/add", "1", "Add new rss.\nUsage: {0}hg add <rss name> <url> <website (unique)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/remove", "1", "Deletes the rss.\nUsage: {0}hg remove <rss name>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/change", "1", "You can change the Rss settings with it.\nChange command: colors | shorturl | url | website");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/change/colors", "1", "Rss on/off switch.\nUsage: {0}hg change colors <true or false>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/change/shorturl", "1", "Url shortener on/off switch.\usage: {0}hg change shorturl <true or false>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/change/url", "1", "Rss url changer.\nUsage: {0}hg change url <rss name> <url>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/change/website", "1", "Rss website changer.\nUsage: {0}hg change url <rss name> <unique>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git", "1", "Rss git 's management.\nGit commands: add | remove | channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/channel", "1", "RSS feeds on their handling of the announcement.\nChannel commands: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/channel/add", "1", "New channel added to the rss.\nUse: {0}git channel add <rss name> <type> <channel name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/channel/remove", "1", "Removed from the RSS Channel.\nUse: {0}git channel remove <rss name> <type> <channel name>");
@@ -965,6 +1072,13 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/stop", "1", "Rss stop.\nUse: {0}git stop <rss name> <type>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/reload", "1", "Specify rss reload.\nGit reload command: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/reload/all", "1", "All RSS reload.\nUse: {0}git reload <rss name> <type>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/add", "1", "Add new rss.\nUsage: {0}git add <rss name> <type> <url> <website (unique)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/remove", "1", "Deletes the rss.\nUsage: {0}git remove <rss name> <type>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/change", "1", "You can change the Rss settings with it.\nChange command: colors | shorturl | url | website");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/change/colors", "1", "Rss on/off switch.\nUsage: {0}git change colors <true or false>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/change/shorturl", "1", "Url shortener on/off switch.\usage: {0}git change shorturl <true or false>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/change/url", "1", "Rss url changer.\nUsage: {0}git change url <rss name> <type> <url>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/change/website", "1", "Rss website changer.\nUsage: {0}git change url <rss name> <type> <unique>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ban", "1", "Bans the given name or a vhost.\nUse:\nHour and minute: {0}ban <name> <hh:mm> <reason>\nDate, hour and minute: {0}ban <name> <yyyy.mm.dd> <hh:mm> <reason>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "unban", "1", "Removes a ban from the given name or vhost.\nUse: {0}unban <name or vhost>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "notes", "9", "Various data can subscribe to this command.\nNotes commands: info | user | code\nSubmit a note: {0}notes <we note that a code example: schumix> <Includes the text that you want, if you remember the bot.>");
@@ -1004,7 +1118,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "weather", "9", "Displays of the canal, what is the weather in the town.\nUse: {0}weather <name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "game", "9", "Games start on IRC.\nGame command: start");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "game/start", "9", "Game launching commands.\nUse: {0}game start <game name>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt", "1", "Rss mantisbt 's management.\nMantisBT commands: channel | info | list | start | stop | reload");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt", "1", "Rss mantisbt 's management.\nMantisBT commands: add | remove | channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/channel", "1", "RSS feeds on their handling of the announcement.\nChannel commands: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/channel/add", "1", "New channel added to the rss.\nUse: {0}mantisbt channel add <rss name> <channel name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/channel/remove", "1", "Removed from the RSS Channel.\nUse: {0}mantisbt channel remove <rss name> <channel name>");
@@ -1014,6 +1128,12 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/stop", "1", "Rss stop.\nUse: {0}mantisbt stop <rss name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/reload", "1", "Specify rss reload.\nMantisBT reload command: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/reload/all", "1", "All RSS reload.\nUse: {0}mantisbt reload <rss name>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/add", "1", "Add new rss.\nUsage: {0}mantisbt add <rss name> <url>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/remove", "1", "Deletes the rss.\nUsage: {0}mantisbt remove <rss name>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/change", "1", "You can change the Rss settings with it.\nChange command: colors | shorturl | url");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/change/colors", "1", "Rss on/off switch.\nUsage: {0}mantisbt change colors <true or false>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/change/shorturl", "1", "Url shortener on/off switch.\usage: {0}mantisbt change shorturl <true or false>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/change/url", "1", "Rss url changer.\nUsage: {0}mantisbt change url <rss name> <url>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "online", "9", "If you look at who is available and who is not available. If not available, when it was last above.\nUse: {0}online <Name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wiki", "9", "If you want something to look for a Wikipedia page.\nUse: {0}wiki <search text>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar", "9", "With it you can save messages,events. Commands: loop | nick | private | nextmessage\nUses:\nHour and min: {0}calendar <hh:mm> <message>\nDate, hour and min: {0}calendar <yyyy.mm.dd> <hh:mm> <message>");
@@ -1030,7 +1150,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/private/nick", "9", "Save for person and send it in private.\nUses:\nHour and min: {0}calendar private nick <name> <óó:pp> <message>\nDate, Hour and min: {0}calendar private nick <name> <yyyy.mm.dd> <hh:mm> <message>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/private/nextmessage", "9", "Writes out the message that is the closest in time.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "calendar/nextmessage", "9", "Writes out the message that is the closest in time.");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress", "1", "Rss wordpress 's management.\nWordPress commands: channel | info | list | start | stop | reload");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress", "1", "Rss wordpress 's management.\nWordPress commands: add | remove | channel | info | list | start | stop | reload");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/channel", "1", "RSS feeds on their handling of the announcement.\nChannel commands: add | remove");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/channel/add", "1", "New channel added to the rss.\nUse: {0}wordpress channel add <rss name> <channel name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/channel/remove", "1", "Removed from the RSS Channel.\nUse: {0}wordpress channel remove <rss name> <channel name>");
@@ -1040,6 +1160,12 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/stop", "1", "Rss stop.\nUse: {0}wordpress stop <rss name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/reload", "1", "Specify rss reload.\nWordPress reload command: all");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/reload/all", "1", "All RSS reload.\nUse: {0}wordpress reload <rss name>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/add", "1", "Add new rss.\nUsage: {0}wordpress add <rss name> <url>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/remove", "1", "Deletes the rss.\nUsage: {0}wordpress remove <rss name>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/change", "1", "You can change the Rss settings with it.\nChange command: colors | shorturl | url");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/change/colors", "1", "Rss on/off switch.\nUsage: {0}wordpress change colors <true or false>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/change/shorturl", "1", "Url shortener on/off switch.\usage: {0}wordpress change shorturl <true or false>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "wordpress/change/url", "1", "Rss url changer.\nUsage: {0}mantisbt change url <rss name> <url>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore", "1", "With it you can treat the data like an expection.\nIgnore commands: irc | command | channel | nick | addon");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/irc", "1", "With it you can treat the irc datas like an expection..\nIrc commands: command");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "ignore/irc/command", "1", "With it you can treat the irc command like an expection.\nIrc commands: add | remove | search");
@@ -1143,6 +1269,10 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "WrongSwitch", "Nem megfelelő kapcsoló lett megadva!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "BirthDay", "Ma {0} születésnapja van. Most töltötte be a {1}. életévét.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NotaNickNameHasBeenSet", "Nem nick név lett megadva!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "UrlMissing", "Nincs megadva az url!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "WebsiteNameMissing", "Nincs megadva az oldal neve!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "StatusIsMissing", "Nincs megadva az állapot!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ValueIsNotTrueOrFalse", "Nem true vagy false érték lett megadva!");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1215,6 +1345,10 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WrongSwitch", "Wrong Switch!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "BirthDay", "Today is {0}'s birthday. {0} is now {1} years old.");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NotaNickNameHasBeenSet", "Not a nickname has been set!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "UrlMissing", "Url missing!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WebsiteNameMissing", "Website name missing!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "StatusIsMissing", "Status is missing!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ValueIsNotTrueOrFalse", "Value is not true or false!");
 
 -- ----------------------------
 -- Records of schumix
@@ -1245,6 +1379,6 @@ INSERT INTO `schumix` VALUES ("22", "1", "default", "birthday", "on");
 -- ----------------------------
 -- Records of svninfo
 -- ----------------------------
--- INSERT INTO `svninfo` VALUES (1, "1", "default", "Sandshroud", "http://www.assembla.com/spaces/Sandshroud/stream.rss", "assembla", "#hun_bot,#schumix"); Példa a használatra
+-- INSERT INTO `svninfo` VALUES (1, "1", "default", "Sandshroud", "http://www.assembla.com/spaces/Sandshroud/stream.rss", "assembla", "false", "true", "#hun_bot,#schumix"); Példa a használatra
 
--- INSERT INTO `wordpressinfo` VALUES ("1", "1", "default", "Yeahunter.hu", "http://yeahunter.hu/blog/feed/", "#hun_bot,#schumix2"); -- Példa a használatra
+-- INSERT INTO `wordpressinfo` VALUES ("1", "1", "default", "Yeahunter.hu", "http://yeahunter.hu/blog/feed/", "false", "true", "#hun_bot,#schumix2"); -- Példa a használatra

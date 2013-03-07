@@ -101,8 +101,8 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 -- enUS
 
 -- git
-UPDATE `localized_command` SET Text = "The channel is succesfully added.\This username is not existing!\nMár hozzá van adva a csatorna!" WHERE Language = 'enUS' AND Command = 'git/channel/add';
-UPDATE `localized_command` SET Text = "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete." WHERE Language = 'enUS' AND Command = 'git/channel/remove';
+UPDATE `localized_command` SET Text = "The channel is succesfully added.\This username is not existing!\nThis channel is already added!" WHERE Language = 'enUS' AND Command = 'git/channel/add';
+UPDATE `localized_command` SET Text = "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete!" WHERE Language = 'enUS' AND Command = 'git/channel/remove';
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/add", "Successfully added!\nAlready on the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/remove", "Succesfully removed from the list!\nThis name is not on the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/change/colors", "Option successfuly modified.\nThis name is not on the list!");
@@ -120,8 +120,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "git/change/website", "1", "Rss website changer.\nUsage: {0}git change url <rss name> <type> <unique>");
 
 -- hg
-UPDATE `localized_command` SET Text = "The channel is succesfully added.\This username is not existing!\nMár hozzá van adva a csatorna!" WHERE Language = 'enUS' AND Command = 'hg/channel/add';
-UPDATE `localized_command` SET Text = "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete." WHERE Language = 'enUS' AND Command = 'hg/channel/remove';
+UPDATE `localized_command` SET Text = "The channel is succesfully added.\This username is not existing!\nThis channel is already added!" WHERE Language = 'enUS' AND Command = 'hg/channel/add';
+UPDATE `localized_command` SET Text = "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete!" WHERE Language = 'enUS' AND Command = 'hg/channel/remove';
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/add", "Successfully added!\nAlready on the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/remove", "Succesfully removed from the list!\nThis name is not on the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/change/colors", "Option successfuly modified.\nThis name is not on the list!");
@@ -139,8 +139,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "hg/change/website", "1", "Rss website changer.\nUsage: {0}hg change url <rss name> <unique>");
 
 -- svn
-UPDATE `localized_command` SET Text = "The channel is succesfully added.\This username is not existing!\nMár hozzá van adva a csatorna!" WHERE Language = 'enUS' AND Command = 'svn/channel/add';
-UPDATE `localized_command` SET Text = "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete." WHERE Language = 'enUS' AND Command = 'svn/channel/remove';
+UPDATE `localized_command` SET Text = "The channel is succesfully added.\This username is not existing!\nThis channel is already added!" WHERE Language = 'enUS' AND Command = 'svn/channel/add';
+UPDATE `localized_command` SET Text = "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete!" WHERE Language = 'enUS' AND Command = 'svn/channel/remove';
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/add", "Successfully added!\nAlready on the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/remove", "Succesfully removed from the list!\nThis name is not on the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/change/colors", "Option successfuly modified.\nThis name is not on the list!");
@@ -158,8 +158,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "svn/change/website", "1", "Rss website changer.\nUsage: {0}svn change url <rss name> <unique>");
 
 -- mantisbt
-UPDATE `localized_command` SET Text = "The channel is succesfully added.\This username is not existing!\nMár hozzá van adva a csatorna!" WHERE Language = 'enUS' AND Command = 'mantisbt/channel/add';
-UPDATE `localized_command` SET Text = "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete." WHERE Language = 'enUS' AND Command = 'mantisbt/channel/remove';
+UPDATE `localized_command` SET Text = "The channel is succesfully added.\This username is not existing!\nThis channel is already added!" WHERE Language = 'enUS' AND Command = 'mantisbt/channel/add';
+UPDATE `localized_command` SET Text = "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete!" WHERE Language = 'enUS' AND Command = 'mantisbt/channel/remove';
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/add", "Successfully added!\nAlready on the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/remove", "Succesfully removed from the list!\nThis name is not on the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/change/colors", "Option successfuly modified.\nThis name is not on the list!");
@@ -176,8 +176,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt/change/url", "1", "Rss url changer.\nUsage: {0}mantisbt change url <rss name> <url>");
 
 -- wordpress
-UPDATE `localized_command` SET Text = "The channel is succesfully added.\This username is not existing!\nMár hozzá van adva a csatorna!" WHERE Language = 'enUS' AND Command = 'wordpress/channel/add';
-UPDATE `localized_command` SET Text = "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete." WHERE Language = 'enUS' AND Command = 'wordpress/channel/remove';
+UPDATE `localized_command` SET Text = "The channel is succesfully added.\This username is not existing!\nThis channel is already added!" WHERE Language = 'enUS' AND Command = 'wordpress/channel/add';
+UPDATE `localized_command` SET Text = "Channel successfully deleted.\nThis name is not existing!\nThere is no such a channel, so you cant delete!" WHERE Language = 'enUS' AND Command = 'wordpress/channel/remove';
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/add", "Successfully added!\nAlready on the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/remove", "Succesfully removed from the list!\nThis name is not on the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/change/colors", "Option successfuly modified.\nThis name is not on the list!");

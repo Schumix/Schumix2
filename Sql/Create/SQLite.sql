@@ -78,6 +78,8 @@ Name VARCHAR(20),
 Type VARCHAR(20),
 Link VARCHAR(255),
 Website VARCHAR(30),
+ShortUrl VARCHAR(5) DEFAULT 'false',
+Colors VARCHAR(5) DEFAULT 'true',
 Channel TEXT
 );
 
@@ -91,6 +93,22 @@ ServerName VARCHAR(40),
 Name VARCHAR(20),
 Link VARCHAR(255),
 Website VARCHAR(30),
+ShortUrl VARCHAR(5) DEFAULT 'false',
+Colors VARCHAR(5) DEFAULT 'true',
+Channel TEXT
+);
+
+-- ----------------------------
+-- Table structure for mantisbt
+-- ----------------------------
+CREATE TABLE "mantisbt" (
+Id INTEGER PRIMARY KEY AUTOINCREMENT,
+ServerId INTEGER DEFAULT 1,
+ServerName VARCHAR(40),
+Name VARCHAR(20),
+Link VARCHAR(255),
+ShortUrl VARCHAR(5) DEFAULT 'false',
+Colors VARCHAR(5) DEFAULT 'true',
 Channel TEXT
 );
 
@@ -260,6 +278,8 @@ ServerName VARCHAR(40),
 Name VARCHAR(20),
 Link VARCHAR(255),
 Website VARCHAR(30),
+ShortUrl VARCHAR(5) DEFAULT 'false',
+Colors VARCHAR(5) DEFAULT 'true',
 Channel TEXT
 );
 
@@ -296,6 +316,8 @@ ServerId INTEGER DEFAULT 1,
 ServerName VARCHAR(40),
 Name VARCHAR(20),
 Link VARCHAR(255),
+ShortUrl VARCHAR(5) DEFAULT 'false',
+Colors VARCHAR(5) DEFAULT 'true',
 Channel TEXT
 );
 
