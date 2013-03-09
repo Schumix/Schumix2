@@ -231,7 +231,7 @@ namespace Schumix
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
 				Log.LargeError(sLConsole.GetString("FATAL ERROR"));
-				Log.Error("Main", sLConsole.GetString("An unhandled exception has been thrown. ({0})"), eventArgs.ExceptionObject as Exception);
+				Log.Error("Main", sLConsole.GetString("An unhandled exception has been thrown. ({0})"), (eventArgs.ExceptionObject as Exception).Message);
 				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
 				Shutdown("Crash.", true);
 			};

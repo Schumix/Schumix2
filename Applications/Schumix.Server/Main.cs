@@ -202,7 +202,7 @@ namespace Schumix.Server
 
 			if(!eventArgs.IsNull())
 			{
-				Log.Error("Main", sLConsole.GetString("An unhandled exception has been thrown. ({0})"), eventArgs);
+				Log.Error("Main", sLConsole.GetString("An unhandled exception has been thrown. ({0})"), eventArgs.Message);
 				sCrashDumper.CreateCrashDump(eventArgs);
 			}
 
