@@ -434,13 +434,13 @@ namespace Schumix.Framework.Config
 						// </SQLite>
 						w.WriteEndElement();
 
-						// <Plugins>
+						// <Addons>
 						w.WriteStartElement("Addons");
 						w.WriteElementString("Enabled",          (!xmldoc.SelectSingleNode("Schumix/Addons/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/Addons/Enabled").InnerText : d_addonenabled.ToString()));
 						w.WriteElementString("Ignore",           (!xmldoc.SelectSingleNode("Schumix/Addons/Ignore").IsNull() ? xmldoc.SelectSingleNode("Schumix/Addons/Ignore").InnerText : d_addonignore));
 						w.WriteElementString("Directory",        (!xmldoc.SelectSingleNode("Schumix/Addons/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Addons/Directory").InnerText : d_addondirectory));
 
-						// </Plugins>
+						// </Addons>
 						w.WriteEndElement();
 
 						// <Scripts>
