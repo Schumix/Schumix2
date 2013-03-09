@@ -25,7 +25,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Schumix.Framework;
-using Schumix.Framework.Client;
+using Schumix.Framework.Network;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 

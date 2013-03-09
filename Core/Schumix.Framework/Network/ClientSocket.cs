@@ -29,7 +29,7 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
-namespace Schumix.Framework.Client
+namespace Schumix.Framework.Network
 {
 	/// <summary>
 	/// Listener used inside the Alaris bot to get and handle ACS responses.

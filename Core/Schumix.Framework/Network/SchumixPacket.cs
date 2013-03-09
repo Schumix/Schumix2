@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Schumix.Framework.Client
+namespace Schumix.Framework.Network
 {
 	/// <summary>
 	/// Class used to create packets which will be sent between Alaris server and client.

@@ -21,7 +21,7 @@
 
 using System;
 
-namespace Schumix.Framework.Client
+namespace Schumix.Framework.Network
 {
 	/// <summary>
 	/// Delegate for handling client packets.

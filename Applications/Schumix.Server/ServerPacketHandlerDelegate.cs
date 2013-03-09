@@ -20,7 +20,7 @@
 
 using System;
 using System.Net.Sockets;
-using Schumix.Framework.Client;
+using Schumix.Framework.Network;
 
 namespace Schumix.Server
 {

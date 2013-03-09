@@ -28,7 +28,7 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
-namespace Schumix.Framework.Client
+namespace Schumix.Framework.Network
 {
 	/// <summary>
 	/// Packet handler used by the client.

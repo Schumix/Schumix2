@@ -23,7 +23,7 @@ using System;
 
 #pragma warning disable 1591
 
-namespace Schumix.Framework.Client
+namespace Schumix.Framework.Network
 {
 	/// <summary>
 	/// List of possible Opcodes.

@@ -22,7 +22,7 @@ using System;
 using System.Threading;
 using System.Runtime.InteropServices;
 using Schumix.Framework;
-using Schumix.Framework.Client;
+using Schumix.Framework.Network;
 
 namespace Schumix.Server
 {

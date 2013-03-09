@@ -25,7 +25,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.Framework;
-using Schumix.Framework.Client;
+using Schumix.Framework.Network;
 using Schumix.Framework.Localization;
 using Schumix.Server.Config;
 
