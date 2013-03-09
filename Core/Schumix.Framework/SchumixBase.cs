@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Net;
 using System.Text;
 using System.Data;
 using System.Threading;
@@ -87,7 +88,9 @@ namespace Schumix.Framework
 				}
 
 				if(sUtilities.GetPlatformType() == PlatformType.Linux)
-					System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
+					ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
+
+				WebRequest.DefaultWebProxy = null;
 
 				Log.Debug("SchumixBase", sLConsole.GetString("Timer is starting..."));
 				sTimer = new Timer();
