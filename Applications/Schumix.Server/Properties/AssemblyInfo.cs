@@ -27,7 +27,7 @@ using Schumix.Framework.Config;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Schumix")]
+[assembly: AssemblyTitle("Schumix.Server")]
 [assembly: AssemblyDescription(Consts.SchumixDescription)]
 [assembly: AssemblyConfiguration(Consts.SchumixConfiguration)]
 [assembly: AssemblyCompany(Consts.SchumixCompany)]
