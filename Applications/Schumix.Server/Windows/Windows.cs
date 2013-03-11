@@ -42,10 +42,6 @@ namespace Schumix.Server
 	
 		private bool Handler(CtrlType sig)
 		{
-			var packet = new SchumixPacket();
-			packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
-			packet.Write<int>((int)0);
-
 			switch(sig)
 			{
 				case CtrlType.CTRL_C_EVENT:
