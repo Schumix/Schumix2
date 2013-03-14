@@ -635,12 +635,14 @@ namespace Schumix.Irc
 				{
 					if(!Rfc2812Util.IsValidChannelName(channel))
 					{
-						if((args.Contains("admin") && args.Contains("access")) ||
-						   (args.Contains("admin") && args.Contains("newpassword")) ||
-						   (args.Contains("notes") && args.Contains("user") && args.Contains("access")) ||
-						   (args.Contains("notes") && args.Contains("user") && args.Contains("register")) ||
-						   (args.Contains("notes") && args.Contains("user") && args.Contains("remove")) ||
-						   (args.Contains("notes") && args.Contains("user") && args.Contains("newpassword")))
+						string targs = args.ToLower();
+
+						if((targs.Contains("admin") && targs.Contains("access")) ||
+						   (targs.Contains("admin") && targs.Contains("newpassword")) ||
+						   (targs.Contains("notes") && targs.Contains("user") && targs.Contains("access")) ||
+						   (targs.Contains("notes") && targs.Contains("user") && targs.Contains("register")) ||
+						   (targs.Contains("notes") && targs.Contains("user") && targs.Contains("remove")) ||
+						   (targs.Contains("notes") && targs.Contains("user") && targs.Contains("newpassword")))
 							return;
 					}
 
