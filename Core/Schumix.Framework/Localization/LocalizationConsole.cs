@@ -37,7 +37,7 @@ namespace Schumix.Framework.Localization
 		private LocalizationConsole()
 		{
 			Initialize();
-			SetLocale("en-US"); // Ez marad majd csak itt alapértelmezésben.
+			SetLocale("en-US");
 		}
 
 		public void Initialize()

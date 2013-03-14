@@ -20,6 +20,7 @@
 
 using System;
 using System.IO;
+using System.Net;
 using System.Threading;
 using System.Diagnostics;
 using Schumix.Installer.Clean;
@@ -54,7 +55,9 @@ namespace Schumix.Installer
 			Log.Initialize("Installer.log");
 
 			if(sUtilities.GetPlatformType() == PlatformType.Linux)
-				System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
+				ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
+
+			WebRequest.DefaultWebProxy = null;
 
 			Log.Notice("Installer", sLConsole.Installer("Text2"));
 			string url = GitUrl.Remove(0, "http://".Length, "http://");
