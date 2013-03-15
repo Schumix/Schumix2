@@ -19,7 +19,6 @@
  */
 
 using System;
-using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config
 {
