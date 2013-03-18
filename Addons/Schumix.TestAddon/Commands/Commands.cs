@@ -25,6 +25,7 @@ using System.Text;
 using System.Data;
 using Schumix.Api.Irc;
 using Schumix.Irc;
+using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Bitly;
@@ -143,6 +144,17 @@ namespace Schumix.TestAddon.Commands
 				}
 
 				sSendMessage.SendChatMessage(sIRCMessage, BitlyApi.ShortenUrl(sIRCMessage.Info[5]).ShortUrl);
+			}
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "serv")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva a szervíz neve!");
+					return;
+				}
+				
+				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info[5].IsServ());
+				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info[5].IsServ(Serv.HostServ));
 			}
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);

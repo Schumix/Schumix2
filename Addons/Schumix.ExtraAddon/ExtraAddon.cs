@@ -274,7 +274,7 @@ namespace Schumix.ExtraAddon
 		{
 			var sSender = sIrcBase.Networks[sIRCMessage.ServerName].sSender;
 
-			if(sIRCMessage.Nick == "NickServ" && sIrcHandler.AutoMode)
+			if(sIRCMessage.Nick.IsServ(Serv.NickServ) && sIrcHandler.AutoMode)
 			{
 				if(sIRCMessage.Info.Length < 6)
 					return;
@@ -306,7 +306,7 @@ namespace Schumix.ExtraAddon
 				sIrcHandler.AutoMode = false;
 			}
 
-			if(sIRCMessage.Nick == "NickServ" && sFunctions.IsOnline)
+			if(sIRCMessage.Nick.IsServ(Serv.NickServ) && sFunctions.IsOnline)
 			{
 				if(sIRCMessage.Args.Contains("isn't registered.") || sIRCMessage.Args.Contains("Last seen time:") || sIRCMessage.Args.Contains("Last seen:"))
 				{

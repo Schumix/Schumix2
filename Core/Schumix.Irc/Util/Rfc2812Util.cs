@@ -307,5 +307,27 @@ namespace Schumix.Irc.Util
 				break;
 			}
 		}
+
+		public static bool IsServ(this string Value)
+		{
+			foreach(var func in Enum.GetNames(typeof(Serv)))
+			{
+				if(func == Value)
+					return true;
+			}
+
+			return false;
+		}
+
+		public static bool IsServ(this string Value, Serv serv)
+		{
+			foreach(var func in Enum.GetNames(typeof(Serv)))
+			{
+				if(func == Value && Value == serv.ToString())
+					return true;
+			}
+			
+			return false;
+		}
 	}
 }

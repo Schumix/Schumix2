@@ -203,7 +203,8 @@ FILES = \
 	Util/UserMode.cs \
 	Util/ChannelMode.cs \
 	Util/StatsQuery.cs \
-	Util/UserInfo.cs 
+	Util/UserInfo.cs \
+	Util/Serv.cs 
 
 DATA_FILES = 
 

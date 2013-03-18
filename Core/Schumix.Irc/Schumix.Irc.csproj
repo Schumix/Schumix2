@@ -124,6 +124,7 @@
     <Compile Include="Util\ChannelMode.cs" />
     <Compile Include="Util\StatsQuery.cs" />
     <Compile Include="Util\UserInfo.cs" />
+    <Compile Include="Util\Serv.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

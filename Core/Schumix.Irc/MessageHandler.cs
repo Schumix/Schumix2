@@ -129,8 +129,7 @@ namespace Schumix.Irc
 			{
 				Console.ForegroundColor = ConsoleColor.Red;
 
-				if(sIRCMessage.Nick == "NickServ" || sIRCMessage.Nick == "MemoServ" ||
-					sIRCMessage.Nick == "ChanServ" || sIRCMessage.Nick == "HostServ")
+				if(sIRCMessage.Nick.IsServ())
 					Console.Write(sLConsole.GetString("[SERVER] "));
 				else
 					Console.Write(string.Format("[{0}] ", sIRCMessage.Nick));
@@ -140,7 +139,7 @@ namespace Schumix.Irc
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 
-			if(sIRCMessage.Nick == "NickServ")
+			if(sIRCMessage.Nick.IsServ(Serv.NickServ))
 			{
 				if(sIRCMessage.Args.Contains("Password incorrect."))
 				{
@@ -193,7 +192,7 @@ namespace Schumix.Irc
 				}
 			}
 
-			if(sIRCMessage.Nick == "HostServ")
+			if(sIRCMessage.Nick.IsServ(Serv.HostServ))
 			{
 				if(sIRCMessage.Args.Contains("You need to register before a vhost can be assigned to you."))
 				{
@@ -202,7 +201,7 @@ namespace Schumix.Irc
 				}
 			}
 
-			if(sIRCMessage.Nick == "HostServ" && IRCConfig.List[sIRCMessage.ServerName].UseHostServ)
+			if(sIRCMessage.Nick.IsServ(Serv.HostServ) && IRCConfig.List[sIRCMessage.ServerName].UseHostServ)
 			{
 				if(sIRCMessage.Args.Contains("Your vhost of") && !sMyNickInfo.IsVhost)
 				{
@@ -496,7 +495,7 @@ namespace Schumix.Irc
 					sChannelList.List[sIRCMessage.Channel.ToLower()].Names[sIRCMessage.Info[7].ToLower()].Rank += sIRCMessage.Info[3].Substring(4).Substring(0, 1);
 			}
 
-			if(!sMyNickInfo.IsIdentify && sIRCMessage.Nick == "NickServ" && sIRCMessage.Channel.ToLower() == sMyNickInfo.NickStorage.ToLower() && sIRCMessage.Args == "+r")
+			if(!sMyNickInfo.IsIdentify && sIRCMessage.Nick.IsServ(Serv.NickServ) && sIRCMessage.Channel.ToLower() == sMyNickInfo.NickStorage.ToLower() && sIRCMessage.Args == "+r")
 			{
 				sMyNickInfo.ChangeIdentifyStatus(true);
 				Log.Success("NickServ", sLConsole.GetString("Identify password accepted!"));
