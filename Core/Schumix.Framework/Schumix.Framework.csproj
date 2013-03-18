@@ -80,7 +80,6 @@
     <Compile Include="Config\DefaultConfig.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="SchumixBase.cs" />
-    <Compile Include="ConsoleLog.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Exceptions\SingletonException.cs" />
     <Compile Include="Database\SQLite.cs" />
@@ -144,6 +143,7 @@
     <Compile Include="Bitly\BitlyApi.cs" />
     <Compile Include="Bitly\BitlyResults.cs" />
     <Compile Include="Config\ShortUrlConfig.cs" />
+    <Compile Include="Log\ConsoleLog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

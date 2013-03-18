@@ -126,7 +126,6 @@ FILES = \
 	Config/DefaultConfig.cs \
 	Singleton.cs \
 	SchumixBase.cs \
-	ConsoleLog.cs \
 	Properties/AssemblyInfo.cs \
 	Exceptions/SingletonException.cs \
 	Database/SQLite.cs \
@@ -189,7 +188,8 @@ FILES = \
 	Log/LogType.cs \
 	Bitly/BitlyApi.cs \
 	Bitly/BitlyResults.cs \
-	Config/ShortUrlConfig.cs 
+	Config/ShortUrlConfig.cs \
+	Log/ConsoleLog.cs 
 
 DATA_FILES = 
 
