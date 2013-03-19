@@ -12,7 +12,7 @@
     <AssemblyName>WolframAPI</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <CodeContractsAssemblyMode>1</CodeContractsAssemblyMode>
-    <ReleaseVersion>3.x</ReleaseVersion>
+    <ReleaseVersion>4.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <DebugSymbols>True</DebugSymbols>

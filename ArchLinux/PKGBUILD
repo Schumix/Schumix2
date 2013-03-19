@@ -3,8 +3,8 @@
 
 pkgname=schumix
 _pkgname=Schumix
-pkgver="3.9.x"
-_pkgverclassic="3.9.x"
+pkgver="4.0.x"
+_pkgverclassic="4.0.x"
 pkgrel=1
 _gitdir=Schumix2
 _gitbranch=stable

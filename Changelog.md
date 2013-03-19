@@ -1,6 +1,8 @@
 # Schumix2 ChangeLog
 
-## 4.0.0 (2013-xx-xx)
+## 4.1.0 (2013-xx-xx)
+
+## 4.0.0 (2013-03-19)
 
  * UrlShort beépítve a magba.
  * Almodulként hozzáadva a kódhoz a LuaInterface.

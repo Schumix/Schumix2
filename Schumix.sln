@@ -321,7 +321,7 @@ Global
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Applications\Schumix\Schumix.csproj
 		description = Schumix2 IRC Bot
-		version = 3.x
+		version = 4.x
 		outputpath = Run
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
