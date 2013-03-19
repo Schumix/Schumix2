@@ -45,6 +45,7 @@ namespace Schumix.CalendarAddon.Commands
 
 		public void HandleCalendar(IRCMessage sIRCMessage)
 		{
+			var sMyNickInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo;
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 
 			if(sIRCMessage.Info.Length < 5)
@@ -124,6 +125,12 @@ namespace Schumix.CalendarAddon.Commands
 							if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[6]))
 							{
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+
+							if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Info[6].ToLower())
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ICantLeftAMessageForMyself", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 
@@ -219,6 +226,12 @@ namespace Schumix.CalendarAddon.Commands
 								if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[7]))
 								{
 									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+									return;
+								}
+
+								if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Info[7].ToLower())
+								{
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ICantLeftAMessageForMyself", sIRCMessage.Channel, sIRCMessage.ServerName));
 									return;
 								}
 
@@ -384,6 +397,12 @@ namespace Schumix.CalendarAddon.Commands
 						return;
 					}
 
+					if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Info[5].ToLower())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ICantLeftAMessageForMyself", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
 					if(sIRCMessage.Info.Length < 8)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
@@ -411,6 +430,12 @@ namespace Schumix.CalendarAddon.Commands
 					if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[5]))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Info[5].ToLower())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ICantLeftAMessageForMyself", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
@@ -495,6 +520,12 @@ namespace Schumix.CalendarAddon.Commands
 							return;
 						}
 
+						if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Info[6].ToLower())
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ICantLeftAMessageForMyself", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
 						if(sIRCMessage.Info.Length < 9)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
@@ -522,6 +553,12 @@ namespace Schumix.CalendarAddon.Commands
 						if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[6]))
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Info[6].ToLower())
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ICantLeftAMessageForMyself", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 

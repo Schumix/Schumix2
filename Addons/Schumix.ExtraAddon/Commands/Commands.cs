@@ -806,6 +806,7 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleMessage(IRCMessage sIRCMessage)
 		{
+			var sMyNickInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo;
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 			var sMyChannelInfo = sIrcBase.Networks[sIRCMessage.ServerName].sMyChannelInfo;
 
@@ -841,9 +842,21 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
+				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Info[5]))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaChannelHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
 				if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[6]))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
+				if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Info[6].ToLower())
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ICantLeftAMessageForMyself", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
@@ -852,6 +865,12 @@ namespace Schumix.ExtraAddon.Commands
 			}
 			else
 			{
+				if(sIRCMessage.Info.Length < 5)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoName", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+				
 				if(sIRCMessage.Info.Length < 6)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
@@ -861,6 +880,12 @@ namespace Schumix.ExtraAddon.Commands
 				if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[4]))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
+				if(sMyNickInfo.NickStorage.ToLower() == sIRCMessage.Info[4].ToLower())
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ICantLeftAMessageForMyself", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 

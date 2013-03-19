@@ -1273,6 +1273,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "WebsiteNameMissing", "Nincs megadva az oldal neve!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "StatusIsMissing", "Nincs megadva az állapot!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ValueIsNotTrueOrFalse", "Nem true vagy false érték lett megadva!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ICantLeftAMessageForMyself", "Saját magamnak nem jegyezhetek fel üzenetet!");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1349,6 +1350,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WebsiteNameMissing", "Website name missing!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "StatusIsMissing", "Status is missing!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ValueIsNotTrueOrFalse", "Value is not true or false!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ICantLeftAMessageForMyself", "I cant left a message for myself!");
 
 -- ----------------------------
 -- Records of schumix
