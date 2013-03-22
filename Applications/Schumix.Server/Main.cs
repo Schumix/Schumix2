@@ -31,6 +31,8 @@ using Schumix.Framework;
 using Schumix.Framework.Clean;
 using Schumix.Framework.Config;
 using Schumix.Framework.Network;
+using Schumix.Framework.Options;
+using Schumix.Framework.Exceptions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.Server.Config;
@@ -55,6 +57,7 @@ namespace Schumix.Server
 		private static void Main(string[] args)
 		{
 			sRuntime.SetProcessName("Server");
+			bool help = false;
 			string configdir = "Configs";
 			string configfile = "Server.yml";
 			string console_encoding = Encoding.UTF8.BodyName;
@@ -64,50 +67,30 @@ namespace Schumix.Server
 			System.Console.BackgroundColor = ConsoleColor.Black;
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 
-			for(int i = 0; i < args.Length; i++)
+			var os = new OptionSet()
 			{
-				string arg = args[i];
-
-				if(arg == "-h" || arg == "--help")
+				{ "h|?|help", "Display help.", v => help = true },
+				{ "config-dir=", "Set up the config folder's path and name.", v => configdir = v },
+				{ "config-file=", "Set up the config file's place.", v => configfile = v },
+				{ "console-encoding=", "Set up the program's character encoding.", v => console_encoding = v },
+				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
+				{ "colorbind-mode=", "Set colorbind.", v => colorbindmode = Convert.ToBoolean(v) },
+			};
+			
+			try
+			{
+				os.Parse(args);
+				
+				if(help)
 				{
-					Help();
+					ShowHelp(os);
 					return;
 				}
-				else if(arg.Contains("--config-dir="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						configdir = arg.Substring(arg.IndexOf("=")+1);
-
-					continue;
-				}
-				else if(arg.Contains("--config-file="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						configfile = arg.Substring(arg.IndexOf("=")+1);
-
-					continue;
-				}
-				else if(arg.Contains("--console-encoding="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						console_encoding = arg.Substring(arg.IndexOf("=")+1);
-
-					continue;
-				}
-				else if(arg.Contains("--console-localization="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						localization = arg.Substring(arg.IndexOf("=")+1);
-
-					continue;
-				}
-				else if(arg.Contains("--colorbind-mode="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						colorbindmode = Convert.ToBoolean(arg.Substring(arg.IndexOf("=")+1));
-
-					continue;
-				}
+			}
+			catch(OptionException oe)
+			{
+				System.Console.WriteLine("{0} for options '{1}'", oe.Message, oe.OptionName);
+				return;
 			}
 
 			if(!console_encoding.IsNumber())
@@ -182,16 +165,11 @@ namespace Schumix.Server
 		/// <summary>
 		///     Segítséget nyújt a kapcsolokhoz.
 		/// </summary>
-		private static void Help()
+		private static void ShowHelp(OptionSet os)
 		{
 			System.Console.WriteLine("[Server] Version: {0}", sUtilities.GetVersion());
 			System.Console.WriteLine("Options:");
-			System.Console.WriteLine("\t-h, --help\t\t\tShow help");
-			System.Console.WriteLine("\t--config-dir=<dir>\t\tSet up the config folder's path and 'name");
-			System.Console.WriteLine("\t--config-file=<file>\t\tSet up the config file's place");
-			System.Console.WriteLine("\t--console-encoding=Value\tSet up the program's character encoding");
-			System.Console.WriteLine("\t--console-localization=Value\tSet up the program's console language settings");
-			System.Console.WriteLine("\t--colorbind-mode=Value\t\tSet colorbind.");
+			os.WriteOptionDescriptions(System.Console.Out);
 		}
 
 		public static void Shutdown(Exception eventArgs = null)

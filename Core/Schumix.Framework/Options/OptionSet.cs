@@ -30,16 +30,11 @@
 
 using System;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
-using System.ComponentModel;
-using System.Security.Permissions;
-using System.Runtime.Serialization;
 using Schumix.Framework.Exceptions;
 using Schumix.Framework.Extensions;
 
