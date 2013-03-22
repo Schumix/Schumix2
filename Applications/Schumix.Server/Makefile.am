@@ -203,7 +203,8 @@ EXTRAS = \
 
 REFERENCES =  \
 	System \
-	System.Xml
+	System.Xml \
+	System.Core
 
 DLL_REFERENCES =  \
 	../../Dependencies/Mono.Posix.dll \
