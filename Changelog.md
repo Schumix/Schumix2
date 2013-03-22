@@ -2,6 +2,8 @@
 
 ## 4.1.0 (2013-xx-xx)
 
+ * Paraméterek megadásának lehetősége átalakítva. A Mono.Options került beépítésre.
+
 ## 4.0.0 (2013-03-19)
 
  * UrlShort beépítve a magba.

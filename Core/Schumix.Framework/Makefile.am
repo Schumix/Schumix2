@@ -189,7 +189,15 @@ FILES = \
 	Bitly/BitlyApi.cs \
 	Bitly/BitlyResults.cs \
 	Config/ShortUrlConfig.cs \
-	Log/ConsoleLog.cs 
+	Log/ConsoleLog.cs \
+	Options/Option.cs \
+	Options/OptionValueCollection.cs \
+	Options/OptionDelegate.cs \
+	Options/OptionValueType.cs \
+	Options/OptionContext.cs \
+	Options/OptionSet.cs \
+	Exceptions/OptionException.cs \
+	Options/ActionOption.cs 
 
 DATA_FILES = 
 
@@ -203,6 +211,7 @@ EXTRAS = \
 	CodeBureau \
 	Log \
 	Bitly \
+	Options \
 	schumix.framework.pc.in 
 
 REFERENCES =  \

@@ -28,6 +28,8 @@ using Schumix.Irc;
 using Schumix.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Options;
+using Schumix.Framework.Exceptions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -82,6 +84,7 @@ namespace Schumix
 		private static void Main(string[] args)
 		{
 			sRuntime.SetProcessName("Schumix");
+			bool help = false;
 			string configdir = "Configs";
 			string configfile = "Schumix.yml";
 			string console_encoding = Encoding.UTF8.BodyName;
@@ -95,85 +98,35 @@ namespace Schumix
 			System.Console.BackgroundColor = ConsoleColor.Black;
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 
-			for(int i = 0; i < args.Length; i++)
+			var os = new OptionSet()
 			{
-				string arg = args[i];
+				{ "h|?|help", "Display help.", v => help = true },
+				{ "config-dir=", "Set up the config folder's path and name.", v => configdir = v },
+				{ "config-file=", "Set up the config file's place.", v => configfile = v },
+				{ "console-encoding=", "Set up the program's character encoding.", v => console_encoding = v },
+				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
+				{ "server-enabled=", "Premition to join the server.", v => serverenabled = Convert.ToBoolean(v) },
+				{ "server-host=", "Set server host.", v => serverhost = v },
+				{ "server-port=", "Set server port.", v => serverport = v.ToNumber(-1).ToInt() },
+				{ "server-password=", "Set password.", v => serverpassword = v },
+				{ "server-identify=", "Set identify.", v => serveridentify = v },
+				{ "colorbind-mode=", "Set colorbind.", v => colorbindmode = Convert.ToBoolean(v) },
+			};
 
-				if(arg == "-h" || arg == "--help")
+			try
+			{
+				os.Parse(args);
+
+				if(help)
 				{
-					Help();
+					ShowHelp(os);
 					return;
 				}
-				else if(arg.Contains("--config-dir="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						configdir = arg.Substring(arg.IndexOf("=")+1);
-
-					continue;
-				}
-				else if(arg.Contains("--config-file="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						configfile = arg.Substring(arg.IndexOf("=")+1);
-
-					continue;
-				}
-				else if(arg.Contains("--console-encoding="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						console_encoding = arg.Substring(arg.IndexOf("=")+1);
-
-					continue;
-				}
-				else if(arg.Contains("--console-localization="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						localization = arg.Substring(arg.IndexOf("=")+1);
-
-					continue;
-				}
-				else if(arg.Contains("--server-enabled="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						serverenabled = Convert.ToBoolean(arg.Substring(arg.IndexOf("=")+1));
-
-					continue;
-				}
-				else if(arg.Contains("--server-host="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						serverhost = arg.Substring(arg.IndexOf("=")+1);
-
-					continue;
-				}
-				else if(arg.Contains("--server-port="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						serverport = Convert.ToInt32(arg.Substring(arg.IndexOf("=")+1));
-
-					continue;
-				}
-				else if(arg.Contains("--server-password="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						serverpassword = arg.Substring(arg.IndexOf("=")+1);
-
-					continue;
-				}
-				else if(arg.Contains("--server-identify="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						serveridentify = arg.Substring(arg.IndexOf("=")+1);
-
-					continue;
-				}
-				else if(arg.Contains("--colorbind-mode="))
-				{
-					if(!arg.Substring(arg.IndexOf("=")+1).IsEmpty())
-						colorbindmode = Convert.ToBoolean(arg.Substring(arg.IndexOf("=")+1));
-
-					continue;
-				}
+			}
+			catch(OptionException oe)
+			{
+				System.Console.WriteLine("{0} for options '{1}'", oe.Message, oe.OptionName);
+				return;
 			}
 
 			if(!console_encoding.IsNumber())
@@ -246,21 +199,11 @@ namespace Schumix
 		/// <summary>
 		///     Segítséget nyújt a kapcsolokhoz.
 		/// </summary>
-		private static void Help()
+		private static void ShowHelp(OptionSet os)
 		{
 			System.Console.WriteLine("[Schumix2] Version: {0}", sUtilities.GetVersion());
 			System.Console.WriteLine("Options:");
-			System.Console.WriteLine("\t-h, --help\t\t\tShow help");
-			System.Console.WriteLine("\t--config-dir=<dir>\t\tSet up the config folder's path and 'name");
-			System.Console.WriteLine("\t--config-file=<file>\t\tSet up the config file's place");
-			System.Console.WriteLine("\t--console-encoding=Value\tSet up the program's character encoding");
-			System.Console.WriteLine("\t--console-localization=Value\tSet up the program's console language settings");
-			System.Console.WriteLine("\t--server-enabled=Value\t\tPremition to join the server.");
-			System.Console.WriteLine("\t--server-host=<host>\t\tSet server host.");
-			System.Console.WriteLine("\t--server-port=<port>\t\tSet server port.");
-			System.Console.WriteLine("\t--server-password=<pass>\tSet password.");
-			System.Console.WriteLine("\t--server-identify=Value\t\tSet identify.");
-			System.Console.WriteLine("\t--colorbind-mode=Value\t\tSet colorbind.");
+			os.WriteOptionDescriptions(System.Console.Out);
 		}
 
 		public static void Shutdown(string Message, bool Crash = false)

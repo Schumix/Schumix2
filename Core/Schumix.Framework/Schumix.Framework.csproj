@@ -144,6 +144,14 @@
     <Compile Include="Bitly\BitlyResults.cs" />
     <Compile Include="Config\ShortUrlConfig.cs" />
     <Compile Include="Log\ConsoleLog.cs" />
+    <Compile Include="Options\Option.cs" />
+    <Compile Include="Options\OptionValueCollection.cs" />
+    <Compile Include="Options\OptionDelegate.cs" />
+    <Compile Include="Options\OptionValueType.cs" />
+    <Compile Include="Options\OptionContext.cs" />
+    <Compile Include="Options\OptionSet.cs" />
+    <Compile Include="Exceptions\OptionException.cs" />
+    <Compile Include="Options\ActionOption.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -171,5 +179,6 @@
     <Folder Include="CodeBureau\" />
     <Folder Include="Log\" />
     <Folder Include="Bitly\" />
+    <Folder Include="Options\" />
   </ItemGroup>
 </Project>
