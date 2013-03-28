@@ -647,17 +647,15 @@ namespace Schumix.Irc
 
 					string dir = LogConfig.IrcLogDirectory + "/" + _servername;
 					sUtilities.CreateDirectory(dir);
+
 					string logdir = sUtilities.DirectoryToSpecial(dir, channel);
-					string logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year,
-									DateTime.Now.Month < 10 ? "0" + DateTime.Now.Month.ToString() : DateTime.Now.Month.ToString(),
-									DateTime.Now.Day < 10 ? "0" + DateTime.Now.Day.ToString() : DateTime.Now.Day.ToString());
+					string logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month.ToMonthFormat(), DateTime.Now.Day.ToDayFormat());
 
 					sUtilities.CreateDirectory(logdir);
 					sUtilities.CreateFile(logfile);
+
 					var file = new StreamWriter(logfile, true) { AutoFlush = true };
-					file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour < 10 ? "0" + DateTime.Now.Hour.ToString() :
-							       DateTime.Now.Hour.ToString(), DateTime.Now.Minute < 10 ? "0" + DateTime.Now.Minute.ToString() :
-							       DateTime.Now.Minute.ToString(), user, args);
+					file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour.ToHourFormat(), DateTime.Now.Minute.ToMinuteFormat(), user, args);
 					file.Close();
 				}
 			}

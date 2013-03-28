@@ -21,6 +21,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using Schumix.Installer.Extensions;
 using Schumix.Installer.Localization;
 
 namespace Schumix.Installer
@@ -37,9 +38,7 @@ namespace Schumix.Installer
 		/// </returns>
 		private static string GetTime()
 		{
-			return string.Format("{0}:{1}:{2}", DateTime.Now.Hour < 10 ? "0" + DateTime.Now.Hour.ToString() : DateTime.Now.Hour.ToString(),
-								DateTime.Now.Minute < 10 ? "0" + DateTime.Now.Minute.ToString() : DateTime.Now.Minute.ToString(),
-								DateTime.Now.Second < 10 ? "0" + DateTime.Now.Second.ToString() : DateTime.Now.Second.ToString());
+			return string.Format("{0}:{1}:{2}", DateTime.Now.Hour.ToHourFormat(), DateTime.Now.Minute.ToMinuteFormat(), DateTime.Now.Second.ToSecondFormat());
 		}
 
 		private static void LogToFile(string log)
@@ -55,8 +54,7 @@ namespace Schumix.Installer
 
 			var time = DateTime.Now;
 			var file = new StreamWriter(filename, true) { AutoFlush = true };
-			file.Write("{0}. {1}. {2}. {3}", time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
-						time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(), log);
+			file.Write("{0}. {1}. {2}. {3}", time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), log);
 			file.Close();
 		}
 
@@ -80,17 +78,9 @@ namespace Schumix.Installer
 			var file = new StreamWriter(logfile, true) { AutoFlush = true };
 
 			if(!isfile)
-				file.Write(sLConsole.Log("Text"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
-				           time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
-				           time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
-				           time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
-				           time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
+				file.Write(sLConsole.Log("Text"), time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), time.Hour.ToHourFormat(), time.Minute.ToMinuteFormat(), time.Second.ToSecondFormat());
 			else
-				file.Write(sLConsole.Log("Text2"), time.Year, time.Month < 10 ? "0" + time.Month.ToString() : time.Month.ToString(),
-				           time.Day < 10 ? "0" + time.Day.ToString() : time.Day.ToString(),
-				           time.Hour < 10 ? "0" + time.Hour.ToString() : time.Hour.ToString(),
-				           time.Minute < 10 ? "0" + time.Minute.ToString() : time.Minute.ToString(),
-				           time.Second < 10 ? "0" + time.Second.ToString() : time.Second.ToString());
+				file.Write(sLConsole.Log("Text2"), time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), time.Hour.ToHourFormat(), time.Minute.ToMinuteFormat(), time.Second.ToSecondFormat());
 				
 			file.Close();
 		}
