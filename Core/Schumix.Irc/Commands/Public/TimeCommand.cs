@@ -20,6 +20,7 @@
 
 using System;
 using Schumix.Api.Irc;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands
 {
@@ -27,17 +28,7 @@ namespace Schumix.Irc.Commands
 	{
 		protected void HandleTime(IRCMessage sIRCMessage)
 		{
-			var text = sLManager.GetCommandTexts("time", sIRCMessage.Channel, sIRCMessage.ServerName);
-			if(text.Length < 2)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
-				return;
-			}
-			
-			if(DateTime.Now.Minute < 10)
-				sSendMessage.SendChatMessage(sIRCMessage, text[0], DateTime.Now.Hour, DateTime.Now.Minute);
-			else
-				sSendMessage.SendChatMessage(sIRCMessage, text[1], DateTime.Now.Hour, DateTime.Now.Minute);
+			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("time", sIRCMessage.Channel, sIRCMessage.ServerName), DateTime.Now.Hour.ToHourFormat(), DateTime.Now.Minute.ToMinuteFormat());
 		}
 	}
 }

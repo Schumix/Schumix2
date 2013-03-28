@@ -20,6 +20,7 @@
 
 using System;
 using Schumix.Api.Irc;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands
 {
@@ -27,31 +28,8 @@ namespace Schumix.Irc.Commands
 	{
 		protected void HandleDate(IRCMessage sIRCMessage)
 		{
-			var text = sLManager.GetCommandTexts("date", sIRCMessage.Channel, sIRCMessage.ServerName);
-			if(text.Length < 4)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
-				return;
-			}
-			
-			int month = DateTime.Now.Month;
-			int day = DateTime.Now.Day;
 			string nameday = sUtilities.NameDay(sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName));
-			
-			if(month < 10)
-			{
-				if(day < 10)
-					sSendMessage.SendChatMessage(sIRCMessage, text[0], DateTime.Now.Year, month, day, nameday);
-				else
-					sSendMessage.SendChatMessage(sIRCMessage, text[1], DateTime.Now.Year, month, day, nameday);
-			}
-			else
-			{
-				if(day < 10)
-					sSendMessage.SendChatMessage(sIRCMessage, text[2], DateTime.Now.Year, month, day, nameday);
-				else
-					sSendMessage.SendChatMessage(sIRCMessage, text[3], DateTime.Now.Year, month, day, nameday);
-			}
+			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("date", sIRCMessage.Channel, sIRCMessage.ServerName), DateTime.Now.Year, DateTime.Now.Month.ToMonthFormat(), DateTime.Now.Day.ToDayFormat(), nameday);
 		}
 	}
 }
