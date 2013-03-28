@@ -81,7 +81,7 @@ namespace Schumix.CalendarAddon.Commands
 					int day = Convert.ToInt32(db["Day"].ToString());
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[0], enabled ? SchumixBase.On : SchumixBase.Off);
-					sSendMessage.SendChatMessage(sIRCMessage, text[1], year, month < 10 ? "0" + month.ToString() : month.ToString(), day < 10 ? "0" + day.ToString() : day.ToString());
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], year, month.ToMonthFormat(), day.ToDayFormat());
 				}
 				else
 				{
