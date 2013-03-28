@@ -75,8 +75,7 @@ FILES = \
 	Main.cs \
 	Properties/AssemblyInfo.cs \
 	Clean/DirectoryClean.cs \
-	CopyTo/Copy.cs \
-	Clean/FileClean.cs 
+	CopyTo/Copy.cs 
 
 DATA_FILES = 
 

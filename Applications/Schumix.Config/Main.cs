@@ -35,7 +35,6 @@ namespace Schumix.Config
 			try
 			{
 				new Copy(args[0], args[1], args[2]);
-				new FileClean();
 				new DirectoryClean(args[0]);
 			}
 			catch(Exception e)

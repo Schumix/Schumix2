@@ -45,8 +45,7 @@ namespace Schumix.Irc
 
 			if(sIRCMessage.Args.Contains(((char)1).ToString()))
 			{
-				string args = sIRCMessage.Args;
-				args = args.Remove(0, 1, (char)1);
+				string args = sIRCMessage.Args.Remove(0, 1, (char)1);
 				args = args.Substring(0, args.IndexOf((char)1));
 
 				if(args.Length > 6 && args.Substring(0, 6) == "ACTION")

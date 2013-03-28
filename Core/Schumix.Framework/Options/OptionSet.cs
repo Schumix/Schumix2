@@ -391,7 +391,7 @@ namespace Schumix.Framework.Options
 			for(int i = 0; i < n.Length; ++i)
 			{
 				Option p;
-				string opt = f + n [i].ToString();
+				string opt = f + n[i].ToString();
 				string rn = n[i].ToString();
 
 				if(!Contains(rn))
@@ -399,7 +399,7 @@ namespace Schumix.Framework.Options
 					if(i == 0)
 						return false;
 
-					throw new OptionException(string.Format(localizer ("Cannot bundle unregistered option '{0}'."), opt), opt);
+					throw new OptionException(string.Format(localizer("Cannot bundle unregistered option '{0}'."), opt), opt);
 				}
 
 				p = this[rn];
