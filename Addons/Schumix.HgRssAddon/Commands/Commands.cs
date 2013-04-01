@@ -82,7 +82,7 @@ namespace Schumix.HgRssAddon.Commands
 					foreach(DataRow row in db.Rows)
 						list += SchumixBase.Comma + SchumixBase.Space + row["Name"].ToString();
 
-					if(list.IsEmpty())
+					if(list.IsNullOrEmpty())
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("hg/list", sIRCMessage.Channel, sIRCMessage.ServerName), SchumixBase.Space + sLConsole.Other("Nothing"));
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("hg/list", sIRCMessage.Channel, sIRCMessage.ServerName), list.Remove(0, 1, SchumixBase.Comma));
@@ -246,7 +246,7 @@ namespace Schumix.HgRssAddon.Commands
 							return;
 						}
 
-						if(channel.Length == 1 && data.IsEmpty())
+						if(channel.Length == 1 && data.IsNullOrEmpty())
 							data += sIRCMessage.Info[7].ToLower();
 						else
 							data += SchumixBase.Comma + sIRCMessage.Info[7].ToLower();

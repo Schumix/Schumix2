@@ -142,7 +142,7 @@ namespace Schumix.PythonEngine
 				errortext += SchumixBase.Space + "|" + SchumixBase.Space + frame.GetFileName() +
 							SchumixBase.Space + frame.GetFileLineNumber() + SchumixBase.Space + frame.GetMethodName();
 
-			if(FileName.IsEmpty())
+			if(FileName.IsNullOrEmpty())
 				Log.Error("PythonEngine", sLConsole.GetString("Exception thrown while loading Python script. Error: {0} {1}"), e.Message, errortext);
 			else
 				Log.Error("PythonEngine", sLConsole.GetString("Exception thrown while loading Python script: {0} Error: {1} {2}"), FileName, e.Message, errortext);

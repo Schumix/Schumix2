@@ -83,7 +83,7 @@ namespace Schumix.GitRssAddon.Commands
 					foreach(DataRow row in db.Rows)
 						list += string.Format(", 3{0}15/7{1}", row["Name"].ToString(), row["Type"].ToString());
 
-					if(list.IsEmpty())
+					if(list.IsNullOrEmpty())
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/list", sIRCMessage.Channel, sIRCMessage.ServerName), SchumixBase.Space + sLConsole.Other("Nothing"));
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/list", sIRCMessage.Channel, sIRCMessage.ServerName), list.Remove(0, 1, SchumixBase.Comma));
@@ -271,7 +271,7 @@ namespace Schumix.GitRssAddon.Commands
 							return;
 						}
 
-						if(channel.Length == 1 && data.IsEmpty())
+						if(channel.Length == 1 && data.IsNullOrEmpty())
 							data += sIRCMessage.Info[8].ToLower();
 						else
 							data += SchumixBase.Comma + sIRCMessage.Info[8].ToLower();

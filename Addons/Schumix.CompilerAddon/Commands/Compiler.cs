@@ -196,7 +196,7 @@ namespace Schumix.CompilerAddon.Commands
 					{
 						i++;
 
-						if(line.IsEmpty())
+						if(line.IsNullOrEmpty())
 							x++;
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, line);
@@ -211,7 +211,7 @@ namespace Schumix.CompilerAddon.Commands
 				{
 					foreach(var line in lines)
 					{
-						if(line.IsEmpty())
+						if(line.IsNullOrEmpty())
 							continue;
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, line);
@@ -578,7 +578,7 @@ namespace Schumix.CompilerAddon.Commands
 			}
 
 			text = CleanSemicolon(text);
-			return text.Trim().IsEmpty() ? "Console.Write(\":'(\");" : text;
+			return text.IsNullOrEmpty() ? "Console.Write(\":'(\");" : text;
 		}
 
 		private string CleanSemicolon(string text)

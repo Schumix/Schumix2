@@ -295,7 +295,7 @@ namespace Schumix.Framework
 
 					foreach(var ff in f)
 					{
-						if(ff.IsEmpty())
+						if(ff.IsNullOrEmpty())
 							continue;
 
 						if(!ff.Contains(SchumixBase.Colon.ToString()))

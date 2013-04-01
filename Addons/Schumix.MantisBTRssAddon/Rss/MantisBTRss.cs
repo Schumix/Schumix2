@@ -229,7 +229,7 @@ namespace Schumix.MantisBTRssAddon
 		{
 			try
 			{
-				if(!_username.IsEmpty() && !_password.IsEmpty())
+				if(!_username.IsNullOrEmpty() && !_password.IsNullOrEmpty())
 				{
 					var rss = new XmlDocument();
 					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>", _credential)));
@@ -253,7 +253,7 @@ namespace Schumix.MantisBTRssAddon
 
 		private string DownloadToXml(string data)
 		{
-			if(data.IsEmpty())
+			if(data.IsNullOrEmpty())
 				return string.Empty;
 
 			data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);

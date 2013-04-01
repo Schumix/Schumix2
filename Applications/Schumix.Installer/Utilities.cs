@@ -54,9 +54,9 @@ namespace Schumix.Installer
 		{
 			lock(WriteLock)
 			{
-				if(!args.IsEmpty() && noencode.IsEmpty())
+				if(!args.IsNullOrEmpty() && noencode.IsNullOrEmpty())
 					url = url + HttpUtility.UrlEncode(args);
-				else if(!args.IsEmpty() && !noencode.IsEmpty())
+				else if(!args.IsNullOrEmpty() && !noencode.IsNullOrEmpty())
 					url = url + HttpUtility.UrlEncode(args) + noencode;
 				
 				var request = (HttpWebRequest)WebRequest.Create(url);

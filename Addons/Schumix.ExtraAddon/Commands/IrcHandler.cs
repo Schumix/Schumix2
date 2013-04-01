@@ -171,7 +171,7 @@ namespace Schumix.ExtraAddon.Commands
 						{
 							Thread.Sleep(5000);
 
-							if(m_channel.Value.Trim().IsEmpty())
+							if(m_channel.Value.IsNullOrEmpty())
 								sSender.Join(m_channel.Key);
 							else
 								sSender.Join(m_channel.Key, m_channel.Value.Trim());

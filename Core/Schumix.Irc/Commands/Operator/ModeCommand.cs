@@ -141,7 +141,7 @@ namespace Schumix.Irc.Commands
 			}
 			else if(sIRCMessage.Info.Length >= 6 && !Rfc2812Util.IsValidNick(sIRCMessage.Info[5]) && sIRCMessage.Info[5].ToLower() != sMyNickInfo.NickStorage.ToLower())
 			{
-				if(!sIRCMessage.Info[5].IsEmpty())
+				if(!sIRCMessage.Info[5].IsNullOrEmpty())
 					error += ", " + sIRCMessage.Info[5];
 				else
 					StringEmpty = true;
@@ -164,7 +164,7 @@ namespace Schumix.Irc.Commands
 			}
 			else if(sIRCMessage.Info.Length >= 7 && !Rfc2812Util.IsValidNick(sIRCMessage.Info[6]) && sIRCMessage.Info[6].ToLower() != sMyNickInfo.NickStorage.ToLower())
 			{
-				if(!sIRCMessage.Info[6].IsEmpty())
+				if(!sIRCMessage.Info[6].IsNullOrEmpty())
 					error += ", " + sIRCMessage.Info[6];
 				else
 					StringEmpty = true;
@@ -187,7 +187,7 @@ namespace Schumix.Irc.Commands
 			}
 			else if(sIRCMessage.Info.Length >= 8 && !Rfc2812Util.IsValidNick(sIRCMessage.Info[7]) && sIRCMessage.Info[7].ToLower() != sMyNickInfo.NickStorage.ToLower())
 			{
-				if(!sIRCMessage.Info[7].IsEmpty())
+				if(!sIRCMessage.Info[7].IsNullOrEmpty())
 					error += ", " + sIRCMessage.Info[7];
 				else
 					StringEmpty = true;
@@ -210,7 +210,7 @@ namespace Schumix.Irc.Commands
 			}
 			else if(sIRCMessage.Info.Length >= 9 && !Rfc2812Util.IsValidNick(sIRCMessage.Info[8]) && sIRCMessage.Info[8].ToLower() != sMyNickInfo.NickStorage.ToLower())
 			{
-				if(!sIRCMessage.Info[8].IsEmpty())
+				if(!sIRCMessage.Info[8].IsNullOrEmpty())
 					error += ", " + sIRCMessage.Info[8];
 				else
 					StringEmpty = true;
@@ -220,7 +220,7 @@ namespace Schumix.Irc.Commands
 
 			error = error.Remove(0, 2, ", ");
 
-			if(!error.IsEmpty())
+			if(!error.IsNullOrEmpty())
 				sSendMessage.SendChatMessage(sIRCMessage, error + SchumixBase.Colon + SchumixBase.Space + sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
 
 			if(StringEmpty)

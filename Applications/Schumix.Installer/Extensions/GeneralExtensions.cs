@@ -324,14 +324,9 @@ namespace Schumix.Installer.Extensions
 			return Convert.ToInt32(Double);
 		}
 
-		public static bool IsEmpty(this string Value)
-		{
-			return Value.IsNull() || Value.Trim().Length == 0;
-		}
-
 		public static bool IsNullOrEmpty(this string Value)
 		{
-			return string.IsNullOrEmpty(Value);
+			return string.IsNullOrEmpty(Value.IsNull() ? Value : Value.Trim());
 		}
 	}
 }

@@ -89,7 +89,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					return false;
 				}
 
-				if(Name.IsEmpty())
+				if(Name.IsNullOrEmpty())
 					sSendMessage.SendCMPrivmsg(_channel, text[0]);
 				else
 					sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(Name));
@@ -325,7 +325,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private void HandleIsOwnerAfk(object sender, ElapsedEventArgs e)
 		{
-			if((DateTime.Now - OwnerMsgTime).Minutes >= 10 && !_owner.IsEmpty())
+			if((DateTime.Now - OwnerMsgTime).Minutes >= 10 && !_owner.IsNullOrEmpty())
 			{
 				_owner = string.Empty;
 				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
@@ -429,7 +429,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private void RemovePlayer(string Name, string channel)
 		{
-			if(Name.Replace(SchumixBase.Space.ToString(), string.Empty).IsEmpty())
+			if(Name.Replace(SchumixBase.Space.ToString(), string.Empty).IsNullOrEmpty())
 				return;
 
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
@@ -505,7 +505,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			var sSender = sIrcBase.Networks[_servername].sSender;
 			sSender.Mode(_channel, "-v", Name);
 
-			if(!channel.IsEmpty())
+			if(!channel.IsNullOrEmpty())
 				sSendMessage.SendCMPrivmsg(channel, sLManager.GetCommandText("maffiagame/base/removeplayer", _channel, _servername));
 		}
 
@@ -625,7 +625,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			list.Clear();
 			namesss = namesss.Remove(0, 1, SchumixBase.Space);
 
-			if(!namesss.IsEmpty())
+			if(!namesss.IsNullOrEmpty())
 			{
 				var split = namesss.Split(SchumixBase.Space);
 
@@ -667,7 +667,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			list.Clear();
 			namesss = namesss.Remove(0, 1, SchumixBase.Space);
 
-			if(!namesss.IsEmpty())
+			if(!namesss.IsNullOrEmpty())
 			{
 				var split = namesss.Split(SchumixBase.Space);
 
@@ -764,12 +764,12 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						foreach(var function in _playerflist)
 						{
-							if(function.Value.Rank == Rank.Killer && !function.Value.RName.IsEmpty() && !function.Value.Ghost)
+							if(function.Value.Rank == Rank.Killer && !function.Value.RName.IsNullOrEmpty() && !function.Value.Ghost)
 							{
 								newkillghost = GetPlayerName(function.Value.RName.Trim());
 								enabledkiller = true;
 							}
-							else if(function.Value.Rank == Rank.Killer && function.Value.RName.IsEmpty() && !function.Value.Ghost)
+							else if(function.Value.Rank == Rank.Killer && function.Value.RName.IsNullOrEmpty() && !function.Value.Ghost)
 								enabledkiller = false;
 						}
 					}
@@ -779,9 +779,9 @@ namespace Schumix.GameAddon.MaffiaGames
 
 						foreach(var function in _playerflist)
 						{
-							if(function.Value.Rank == Rank.Killer && !function.Value.RName.IsEmpty() && !function.Value.Ghost)
+							if(function.Value.Rank == Rank.Killer && !function.Value.RName.IsNullOrEmpty() && !function.Value.Ghost)
 								list.Add(function.Value.RName);
-							else if(function.Value.Rank == Rank.Killer && function.Value.RName.IsEmpty() && !function.Value.Ghost)
+							else if(function.Value.Rank == Rank.Killer && function.Value.RName.IsNullOrEmpty() && !function.Value.Ghost)
 								enabledkiller = false;
 						}
 
@@ -812,9 +812,9 @@ namespace Schumix.GameAddon.MaffiaGames
 
 						foreach(var function in _playerflist)
 						{
-							if(function.Value.Rank == Rank.Killer && !function.Value.RName.IsEmpty() && !function.Value.Ghost)
+							if(function.Value.Rank == Rank.Killer && !function.Value.RName.IsNullOrEmpty() && !function.Value.Ghost)
 								list.Add(function.Value.RName);
-							else if(function.Value.Rank == Rank.Killer && function.Value.RName.IsEmpty() && !function.Value.Ghost)
+							else if(function.Value.Rank == Rank.Killer && function.Value.RName.IsNullOrEmpty() && !function.Value.Ghost)
 								enabledkiller = false;
 						}
 
@@ -872,10 +872,10 @@ namespace Schumix.GameAddon.MaffiaGames
 					{
 						foreach(var function in _playerflist)
 						{
-							if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && (!function.Value.RName.IsEmpty() ||
+							if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && (!function.Value.RName.IsNullOrEmpty() ||
 							   function.Value.RName == "áá(%[[]][[]]killer[[]][[]]%)áá"))
 								enableddoctor = true;
-							else if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && function.Value.RName.IsEmpty())
+							else if(function.Value.Rank == Rank.Doctor && !function.Value.Ghost && function.Value.RName.IsNullOrEmpty())
 								enableddoctor = false;
 						}
 					}
@@ -888,7 +888,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						{
 							if(function.Value.Rank == Rank.Doctor)
 							{
-								if((newkillghost.ToLower() != function.Value.RName) && (!newkillghost.ToLower().IsEmpty()) &&
+								if((newkillghost.ToLower() != function.Value.RName) && (!newkillghost.ToLower().IsNullOrEmpty()) &&
 								   (newkillghost.ToLower() != "áá(%[[]][[]]killer[[]][[]]%)áá"))
 									newghost = true;
 							}
@@ -1143,7 +1143,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 					if(_killerlist.Count >= 1 && ghosttext)
 					{
-						if(!newghost.IsEmpty())
+						if(!newghost.IsNullOrEmpty())
 							sSendMessage.SendCMPrivmsg(_channel, text[1], newghost);
 
 						SchumixBase.DManager.Update("maffiagame", "Survivor = '0'", string.Format("Name = '{0}' AND Game = '{1}' And ServerName = '{2}'", newghost, _gameid, _servername));

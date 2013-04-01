@@ -84,7 +84,7 @@ namespace Schumix.Framework.Database.Cache
 			{
 				try
 				{
-					if(value.IsEmpty())
+					if(value.IsNullOrEmpty())
 						Log.Debug("CacheDB", sLConsole.GetString("Load tables from the database to the core."));
 					else
 						Log.Debug("CacheDB", sLConsole.GetString("{0} loaded to the core."), value);
@@ -153,7 +153,7 @@ namespace Schumix.Framework.Database.Cache
 			{
 				try
 				{
-					if(value.IsEmpty())
+					if(value.IsNullOrEmpty())
 						Log.Debug("CacheDB", sLConsole.GetString("Tables cleared from the core."));
 					else
 						Log.Debug("CacheDB", sLConsole.GetString("Table {0} deleted from the core."), value);

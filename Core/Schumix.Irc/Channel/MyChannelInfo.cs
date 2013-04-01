@@ -93,7 +93,7 @@ namespace Schumix.Irc.Channel
 				{
 					foreach(var comma in ChannelFunction[Channel.ToLower()].Split(SchumixBase.Comma))
 					{
-						if(comma.IsEmpty())
+						if(comma.IsNullOrEmpty())
 							continue;
 
 						string[] point = comma.Split(SchumixBase.Colon);
@@ -118,7 +118,7 @@ namespace Schumix.Irc.Channel
 			{
 				foreach(var comma in channel.Value.Split(SchumixBase.Comma))
 				{
-					if(comma.IsEmpty())
+					if(comma.IsNullOrEmpty())
 						continue;
 
 					string[] point = comma.Split(SchumixBase.Colon);
@@ -150,7 +150,7 @@ namespace Schumix.Irc.Channel
 				{
 					foreach(var comma in ChannelFunction[Channel.ToLower()].Split(SchumixBase.Comma))
 					{
-						if(comma.IsEmpty())
+						if(comma.IsNullOrEmpty())
 							continue;
 
 						string[] point = comma.Split(SchumixBase.Colon);
@@ -227,7 +227,7 @@ namespace Schumix.Irc.Channel
 			{
 				foreach(var comma in ChannelFunction[channel.ToLower()].Split(SchumixBase.Comma))
 				{
-					if(comma.IsEmpty())
+					if(comma.IsNullOrEmpty())
 						continue;
 
 					string[] point = comma.Split(SchumixBase.Colon);
@@ -238,7 +238,7 @@ namespace Schumix.Irc.Channel
 
 				foreach(var comma in ChannelFunction[channel.ToLower()].Split(SchumixBase.Comma))
 				{
-					if(comma.IsEmpty())
+					if(comma.IsNullOrEmpty())
 						continue;
 
 					string[] point = comma.Split(SchumixBase.Colon);
@@ -283,7 +283,7 @@ namespace Schumix.Irc.Channel
 			{
 				foreach(var comma in ChannelFunction[channel.ToLower()].Split(SchumixBase.Comma))
 				{
-					if(comma.IsEmpty())
+					if(comma.IsNullOrEmpty())
 						continue;
 
 					string[] point = comma.Split(SchumixBase.Colon);
@@ -310,7 +310,7 @@ namespace Schumix.Irc.Channel
 
 			foreach(var channel in _ChannelList)
 			{
-				if(channel.Value.Trim().IsEmpty())
+				if(channel.Value.IsNullOrEmpty())
 					sSender.Join(channel.Key);
 				else
 					sSender.Join(channel.Key, channel.Value.Trim());

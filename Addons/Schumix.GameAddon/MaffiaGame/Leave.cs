@@ -46,7 +46,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
-			if(NickName.IsEmpty())
+			if(NickName.IsNullOrEmpty())
 			{
 				if(!_playerlist.ContainsValue(Name))
 				{
@@ -63,7 +63,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				}
 			}
 
-			string namess = NickName.IsEmpty() ? Name : NickName;
+			string namess = NickName.IsNullOrEmpty() ? Name : NickName;
 
 			if(_start)
 			{

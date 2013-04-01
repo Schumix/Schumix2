@@ -47,7 +47,7 @@ namespace Schumix.Irc.Commands
 					foreach(DataRow row in db.Rows)
 						commands += " | " + row["Command"].ToString();
 					
-					if(commands.IsEmpty())
+					if(commands.IsNullOrEmpty())
 						sSendMessage.SendChatMessage(sIRCMessage, text[0], "none");
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, text[0], commands.Remove(0, 3, " | "));

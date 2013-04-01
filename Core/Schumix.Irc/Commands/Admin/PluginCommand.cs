@@ -178,13 +178,13 @@ namespace Schumix.Irc.Commands
 						IgnorePlugins += ", " + plugin.Value.Name;
 				}
 
-				if(!Plugins.IsEmpty())
+				if(!Plugins.IsNullOrEmpty())
 					sSendMessage.SendChatMessage(sIRCMessage, text[0], Plugins.Remove(0, 2, ", "));
 
-				if(!IgnorePlugins.IsEmpty())
+				if(!IgnorePlugins.IsNullOrEmpty())
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], IgnorePlugins.Remove(0, 2, ", "));
 
-				if(Plugins.IsEmpty() && IgnorePlugins.IsEmpty())
+				if(Plugins.IsNullOrEmpty() && IgnorePlugins.IsNullOrEmpty())
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 			}
 		}

@@ -74,7 +74,7 @@ namespace Schumix.Irc.Commands
 					}
 					
 					string f = sMyChannelInfo.FunctionsInfo();
-					if(f.IsEmpty())
+					if(f.IsNullOrEmpty())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -135,13 +135,13 @@ namespace Schumix.Irc.Commands
 								sMyChannelInfo.FunctionsReload();
 							}
 							
-							if(!onfunction.IsEmpty())
+							if(!onfunction.IsNullOrEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOn2", sIRCMessage.Channel, sIRCMessage.ServerName), onfunction.Remove(0, 2, ", "));
 							
-							if(!offfunction.IsEmpty())
+							if(!offfunction.IsNullOrEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOff2", sIRCMessage.Channel, sIRCMessage.ServerName), offfunction.Remove(0, 2, ", "));
 							
-							if(!nosuchfunction.IsEmpty())
+							if(!nosuchfunction.IsNullOrEmpty())
 								sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoSuchFunctions2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), nosuchfunction.Remove(0, 2, ", "));
 							
 							if(args.Length == 0)
@@ -285,13 +285,13 @@ namespace Schumix.Irc.Commands
 							sMyChannelInfo.ChannelFunctionsReload();
 						}
 
-						if(!onfunction.IsEmpty())
+						if(!onfunction.IsNullOrEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOn2", sIRCMessage.Channel, sIRCMessage.ServerName), onfunction.Remove(0, 2, ", "));
 
-						if(!offfunction.IsEmpty())
+						if(!offfunction.IsNullOrEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOff2", sIRCMessage.Channel, sIRCMessage.ServerName), offfunction.Remove(0, 2, ", "));
 
-						if(!nosuchfunction.IsEmpty())
+						if(!nosuchfunction.IsNullOrEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoSuchFunctions2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), nosuchfunction.Remove(0, 2, ", "));
 
 						if(args.Length == 0)
@@ -447,13 +447,13 @@ namespace Schumix.Irc.Commands
 							sMyChannelInfo.ChannelFunctionsReload();
 						}
 
-						if(!onfunction.IsEmpty())
+						if(!onfunction.IsNullOrEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOn2", sIRCMessage.Channel, sIRCMessage.ServerName), onfunction.Remove(0, 2, ", "));
 
-						if(!offfunction.IsEmpty())
+						if(!offfunction.IsNullOrEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOff2", sIRCMessage.Channel, sIRCMessage.ServerName), offfunction.Remove(0, 2, ", "));
 
-						if(!nosuchfunction.IsEmpty())
+						if(!nosuchfunction.IsNullOrEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoSuchFunctions2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), nosuchfunction.Remove(0, 2, ", "));
 
 						if(args.Length == 0)

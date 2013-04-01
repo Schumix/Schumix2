@@ -73,7 +73,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(!ServerPassword.IsEmpty())
+				if(!ServerPassword.IsNullOrEmpty())
 					Pass(ServerPassword);
 
 				Nick(nickname);
@@ -169,7 +169,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(password.IsEmpty())
+				if(password.IsNullOrEmpty())
 				{
 					Log.Warning("Sender", sLConsole.GetString("Password cannot be empty or null!"));
 					return;
@@ -205,7 +205,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(reason.IsEmpty())
+				if(reason.IsNullOrEmpty())
 				{
 					Log.Warning("Sender", sLConsole.GetString("Part reason cannot be empty or null!"));
 					return;
@@ -225,7 +225,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(reason.IsEmpty())
+				if(reason.IsNullOrEmpty())
 				{
 					Log.Warning("Sender", sLConsole.GetString("Part reason cannot be empty or null!"));
 					return;
@@ -274,7 +274,7 @@ namespace Schumix.Irc
 					return;
 				}
 
-				if(reason.IsEmpty())
+				if(reason.IsNullOrEmpty())
 				{
 					Log.Warning("Sender", sLConsole.GetString("The reason for kicking cannot be empty or null!"));
 					return;
@@ -292,13 +292,13 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(nick.IsEmpty())
+				if(nick.IsNullOrEmpty())
 				{
 					Log.Warning("Sender", sLConsole.GetString("Nick cannot be empty or null!"));
 					return;
 				}
 
-				if(reason.IsEmpty())
+				if(reason.IsNullOrEmpty())
 				{
 					Log.Warning("Sender", sLConsole.GetString("Reason cannot be empty or null!"));
 					return;
@@ -347,7 +347,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(reason.IsEmpty())
+				if(reason.IsNullOrEmpty())
 				{
 					Log.Warning("Sender", sLConsole.GetString("Quit reason cannot be null or empty!"));
 					return;
@@ -524,7 +524,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(newTopic.IsEmpty())
+				if(newTopic.IsNullOrEmpty())
 				{
 					Log.Warning("Sender", sLConsole.GetString("Topic cannot be empty or null!"));
 					return;
@@ -596,7 +596,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(message.IsEmpty())
+				if(message.IsNullOrEmpty())
 				{
 					Log.Warning("Sender", sLConsole.GetString("Away message cannot be empty or null!"));
 					return;
@@ -632,7 +632,7 @@ namespace Schumix.Irc
 		{
 			lock(WriteLock)
 			{
-				if(!targetServer.IsEmpty())
+				if(!targetServer.IsNullOrEmpty())
 					sSendMessage.WriteLine("MOTD {0}", targetServer);
 				else
 					sSendMessage.WriteLine("MOTD");

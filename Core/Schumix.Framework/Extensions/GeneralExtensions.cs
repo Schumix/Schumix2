@@ -452,7 +452,7 @@ namespace Schumix.Framework.Extensions
 			if(sUtilities.GetPlatformType() == PlatformType.Windows)
 				text = text.Replace("\r", string.Empty);
 
-			return FileName.IsEmpty() ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();
+			return FileName.IsNullOrEmpty() ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();
 		}
 
 		public static bool ContainsKey(this IDictionary<YamlNode, YamlNode> Nodes, string Key)
@@ -470,14 +470,9 @@ namespace Schumix.Framework.Extensions
 			return value.Length > number ? value.Substring(0, number) + " ..." : value;
 		}
 
-		public static bool IsEmpty(this string Value)
-		{
-			return Value.IsNull() || Value.Trim().Length == 0;
-		}
-
 		public static bool IsNullOrEmpty(this string Value)
 		{
-			return string.IsNullOrEmpty(Value);
+			return string.IsNullOrEmpty(Value.IsNull() ? Value : Value.Trim());
 		}
 
 		public static string ToMonthFormat(this int Month)

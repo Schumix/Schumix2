@@ -78,7 +78,7 @@ namespace Schumix.RevisionAddon.Commands
 
 				var github = new Github(sIRCMessage.Info[5], sIRCMessage.Info[6], sIRCMessage.Info[7]);
 
-				if(github.UserName.IsEmpty() || github.Message.IsEmpty() || github.Url.IsEmpty())
+				if(github.UserName.IsNullOrEmpty() || github.Message.IsNullOrEmpty() || github.Url.IsNullOrEmpty())
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 					return;

@@ -73,9 +73,9 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				if(!args.IsEmpty() && noencode.IsEmpty())
+				if(!args.IsNullOrEmpty() && noencode.IsNullOrEmpty())
 					url = url + HttpUtility.UrlEncode(args);
-				else if(!args.IsEmpty() && !noencode.IsEmpty())
+				else if(!args.IsNullOrEmpty() && !noencode.IsNullOrEmpty())
 					url = url + HttpUtility.UrlEncode(args) + noencode;
 
 				var request = (HttpWebRequest)WebRequest.Create(url);
@@ -120,9 +120,9 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
-				if(!args.IsEmpty() && noencode.IsEmpty())
+				if(!args.IsNullOrEmpty() && noencode.IsNullOrEmpty())
 					url = url + HttpUtility.UrlEncode(args);
-				else if(!args.IsEmpty() && !noencode.IsEmpty())
+				else if(!args.IsNullOrEmpty() && !noencode.IsNullOrEmpty())
 					url = url + HttpUtility.UrlEncode(args) + noencode;
 
 				using(var client = new WebClient())
@@ -507,7 +507,7 @@ namespace Schumix.Framework
 
 		public string SqlEscape(string text)
 		{
-			if(text.IsNull() || text.IsEmpty())
+			if(text.IsNull() || text.IsNullOrEmpty())
 				return string.Empty;
 
 			if(SQLiteConfig.Enabled)

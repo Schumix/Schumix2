@@ -118,7 +118,7 @@ namespace Schumix.Updater.Sql
 					{
 						DManager.ExecuteNonQuery(new StreamReader(Directory + "/" + item.Key).ReadToEnd());
 
-						if(!item.Value.IsEmpty())
+						if(!item.Value.IsNullOrEmpty())
 							DManager.ExecuteNonQuery(new StreamReader(Directory + "/" + item.Value).ReadToEnd());
 					}
 				}
@@ -133,7 +133,7 @@ namespace Schumix.Updater.Sql
 					{
 						DManager.ExecuteNonQuery(new StreamReader(Directory + "/" + item.Key).ReadToEnd());
 
-						if(!item.Value.IsEmpty())
+						if(!item.Value.IsNullOrEmpty())
 							DManager.ExecuteNonQuery(new StreamReader(Directory + "/" + item.Value).ReadToEnd());
 					}
 				}

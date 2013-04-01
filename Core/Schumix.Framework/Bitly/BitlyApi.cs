@@ -34,13 +34,13 @@ namespace Schumix.Framework.Bitly
 
 		public static BitlyResults ShortenUrl(string longUrl)
 		{
-			if(ShortUrlConfig.Name.IsEmpty())
+			if(ShortUrlConfig.Name.IsNullOrEmpty())
 			{
 				Log.Error("BitlyApi", sLConsole.GetString("Username missing!"));
 				return null;
 			}
 
-			if(ShortUrlConfig.ApiKey.IsEmpty())
+			if(ShortUrlConfig.ApiKey.IsNullOrEmpty())
 			{
 				Log.Error("BitlyApi", sLConsole.GetString("Api key missing!"));
 				return null;

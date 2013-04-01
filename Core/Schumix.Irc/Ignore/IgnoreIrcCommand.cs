@@ -60,7 +60,7 @@ namespace Schumix.Irc.Ignore
 
 		public void Add(string Name)
 		{
-			if(Name.Trim().IsEmpty())
+			if(Name.IsNullOrEmpty())
 				return;
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
@@ -73,7 +73,7 @@ namespace Schumix.Irc.Ignore
 
 		public void Remove(string Name)
 		{
-			if(Name.Trim().IsEmpty())
+			if(Name.IsNullOrEmpty())
 				return;
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_irc_commands WHERE Command = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
@@ -86,7 +86,7 @@ namespace Schumix.Irc.Ignore
 
 		public bool Contains(string Name)
 		{
-			if(Name.Trim().IsEmpty())
+			if(Name.IsNullOrEmpty())
 				return false;
 
 			return _ignorelist.Contains(Name.ToLower());

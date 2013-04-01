@@ -294,7 +294,7 @@ namespace Schumix.Irc.Commands
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						if(!db["Password"].ToString().Trim().IsEmpty())
+						if(!db["Password"].ToString().IsNullOrEmpty())
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 							return;
@@ -336,7 +336,7 @@ namespace Schumix.Irc.Commands
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						if(db["Password"].ToString().Trim().IsEmpty())
+						if(db["Password"].ToString().IsNullOrEmpty())
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 							return;
@@ -384,7 +384,7 @@ namespace Schumix.Irc.Commands
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						if(db["Password"].ToString().Trim().IsEmpty())
+						if(db["Password"].ToString().IsNullOrEmpty())
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 							return;
@@ -426,7 +426,7 @@ namespace Schumix.Irc.Commands
 					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						if(db["Password"].ToString().Trim().IsEmpty())
+						if(db["Password"].ToString().IsNullOrEmpty())
 							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 						else
 							sSendMessage.SendChatMessage(sIRCMessage, text[2]);

@@ -259,7 +259,7 @@ namespace Schumix.Irc
 		/// </summary>
 		protected void HandleNickError(IRCMessage sIRCMessage)
 		{
-			if(NewNickPrivmsg.IsEmpty())
+			if(NewNickPrivmsg.IsNullOrEmpty())
 			{
 				Log.Error("MessageHandler", sLConsole.GetString("{0} already in use!"), sMyNickInfo.NickStorage);
 				string nick = sMyNickInfo.ChangeNick();
@@ -276,7 +276,7 @@ namespace Schumix.Irc
 
 		protected void HandleErrorNewNickName(IRCMessage sIRCMessage)
 		{
-			if(!NewNickPrivmsg.IsEmpty())
+			if(!NewNickPrivmsg.IsNullOrEmpty())
 			{
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text15", sLManager.GetChannelLocalization(NewNickPrivmsg, sIRCMessage.ServerName)));
 				NewNickPrivmsg = string.Empty;
@@ -285,7 +285,7 @@ namespace Schumix.Irc
 
 		protected void HandleNicknameWhileBannedOrModeratedOnChannel(IRCMessage sIRCMessage)
 		{
-			if(!NewNickPrivmsg.IsEmpty())
+			if(!NewNickPrivmsg.IsNullOrEmpty())
 			{
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text16", sLManager.GetChannelLocalization(NewNickPrivmsg, sIRCMessage.ServerName)));
 				NewNickPrivmsg = string.Empty;
@@ -371,7 +371,7 @@ namespace Schumix.Irc
 
 				if(WhoisList[nick].Online)
 				{
-					if(!WhoisList[nick].Message.IsEmpty())
+					if(!WhoisList[nick].Message.IsNullOrEmpty())
 						sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[0], WhoisList[nick].Message.Remove(0, 1, SchumixBase.Space));
 					else
 						sSendMessage.SendChatMessage(sIRCMessage.MessageType, WhoisList[nick].Channel, text[2]); 
@@ -404,7 +404,7 @@ namespace Schumix.Irc
 
 		protected void HandleIrcLeft(IRCMessage sIRCMessage)
 		{
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[left] {0}"), sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args);
+			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[left] {0}"), sIRCMessage.Args.IsNullOrEmpty() ? string.Empty : sIRCMessage.Args);
 
 			if(sIRCMessage.Nick == sMyNickInfo.NickStorage)
 			{
@@ -420,7 +420,7 @@ namespace Schumix.Irc
 			foreach(var chan in sChannelList.List)
 			{
 				if(chan.Value.Names.ContainsKey(sIRCMessage.Nick.ToLower()))
-					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[quit] {0}"), sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args);
+					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[quit] {0}"), sIRCMessage.Args.IsNullOrEmpty() ? string.Empty : sIRCMessage.Args);
 			}
 
 			sChannelList.Remove(string.Empty, sIRCMessage.Nick, true);
@@ -506,7 +506,7 @@ namespace Schumix.Irc
 
 		protected void HandleIrcTopic(IRCMessage sIRCMessage)
 		{
-			string text = sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args;
+			string text = sIRCMessage.Args.IsNullOrEmpty() ? string.Empty : sIRCMessage.Args;
 			sChannelList.List[sIRCMessage.Channel.ToLower()].Topic = text;
 			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Topic] New topic: {0}"), text);
 		}
@@ -522,7 +522,7 @@ namespace Schumix.Irc
 			sIRCMessage.Channel = sIRCMessage.Info[3];
 			sIRCMessage.Args = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
 			sIRCMessage.Args = sIRCMessage.Args.Remove(0, 1, SchumixBase.Colon);
-			string text = sIRCMessage.Args.Trim().IsEmpty() ? string.Empty : sIRCMessage.Args;
+			string text = sIRCMessage.Args.IsNullOrEmpty() ? string.Empty : sIRCMessage.Args;
 
 			if(!sChannelList.List.ContainsKey(sIRCMessage.Channel.ToLower()))
 			{
@@ -598,7 +598,7 @@ namespace Schumix.Irc
 
 		protected void HandleNoSuchNick(IRCMessage sIRCMessage)
 		{
-			if(!ModePrivmsg.IsEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
 			{
 				if(sIRCMessage.Info.Length < 4)
 					return;

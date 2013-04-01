@@ -155,7 +155,7 @@ namespace Schumix
 			new Config(configdir, configfile, colorbindmode);
 			sUtilities.CreatePidFile(SchumixConfig.ConfigFile);
 
-			if(!serveridentify.IsEmpty())
+			if(!serveridentify.IsNullOrEmpty())
 				SchumixBase.ServerIdentify = serveridentify;
 
 			if(localization == "start")

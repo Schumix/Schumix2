@@ -2,6 +2,7 @@
 
 ## 4.1.0 (2013-xx-xx)
 
+ * IsEmpty() fügvény helyett a beépített IsNullOrEmpty() függvény lesz használva.
  * Idő formátum kezelése szépítve.
  * Paraméterek megadásának lehetősége átalakítva. A Mono.Options került beépítésre.
 
