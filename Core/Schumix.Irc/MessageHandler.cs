@@ -649,13 +649,13 @@ namespace Schumix.Irc
 					sUtilities.CreateDirectory(dir);
 
 					string logdir = sUtilities.DirectoryToSpecial(dir, channel);
-					string logfile = string.Format("{0}/{1}-{2}-{3}.log", logdir, DateTime.Now.Year, DateTime.Now.Month.ToMonthFormat(), DateTime.Now.Day.ToDayFormat());
+					string logfile = string.Format("{0}/{1}.log", logdir, DateTime.Now.ToString("yyyy-MM-dd"));
 
 					sUtilities.CreateDirectory(logdir);
 					sUtilities.CreateFile(logfile);
 
 					var file = new StreamWriter(logfile, true) { AutoFlush = true };
-					file.WriteLine("[{0}:{1}] <{2}> {3}", DateTime.Now.Hour.ToHourFormat(), DateTime.Now.Minute.ToMinuteFormat(), user, args);
+					file.WriteLine("[{0}] <{1}> {2}", DateTime.Now.ToString("HH:mm:ss"), user, args);
 					file.Close();
 				}
 			}

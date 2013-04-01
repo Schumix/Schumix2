@@ -160,20 +160,20 @@ namespace Schumix.Installer.Localization
 				case "Text":
 				{
 					if(Locale == "huHU")
-						return "Indulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+						return "Indulási időpont: [{0}]\n";
 					else if(Locale == "enUS")
-						return "Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+						return "Started time: [{0}]\n";
 					else
-						return "Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+						return "Started time: [{0}]\n";
 				}
 				case "Text2":
 				{
 					if(Locale == "huHU")
-						return "\nIndulási időpont: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+						return "\nIndulási időpont: [{0}]\n";
 					else if(Locale == "enUS")
-						return "\nStarted time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+						return "\nStarted time: [{0}]\n";
 					else
-						return "\nStarted time: [{0}. {1}. {2}. {3}:{4}:{5}]\n";
+						return "\nStarted time: [{0}]\n";
 				}
 				default:
 					return string.Empty;

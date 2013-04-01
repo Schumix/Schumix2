@@ -41,7 +41,7 @@ namespace Schumix.Framework
 		/// </returns>
 		private static string GetTime()
 		{
-			return string.Format("{0}:{1}:{2}", DateTime.Now.Hour.ToHourFormat(), DateTime.Now.Minute.ToMinuteFormat(), DateTime.Now.Second.ToSecondFormat());
+			return DateTime.Now.ToString("HH:mm:ss");
 		}
 
 		private static void LogToFile(string log)
@@ -57,7 +57,7 @@ namespace Schumix.Framework
 
 			var time = DateTime.Now;
 			var file = new StreamWriter(filename, true) { AutoFlush = true };
-			file.Write("{0}. {1}. {2}. {3}", time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), log);
+			file.Write("{0} {1}", time.ToString("yyyy. MM. dd."), log);
 			file.Close();
 		}
 
@@ -108,7 +108,7 @@ namespace Schumix.Framework
 					_FileName = _FileName.Substring(0, _FileName.IndexOf(".log"));
 
 				sUtilities.CreateDirectory(LogConfig.LogDirectory + "/" + _FileName);
-				_FileName = _FileName + "/" + string.Format("{0}_{1}_{2}-{3}_{4}_{5}.log", time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), time.Hour.ToHourFormat(), time.Minute.ToMinuteFormat(), time.Second.ToSecondFormat());
+				_FileName = _FileName + "/" + time.ToString("yyyy_MM_dd-HH_mm_ss") + ".log";
 
 				string logfile = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
 				sUtilities.CreateFile(logfile);
@@ -124,9 +124,9 @@ namespace Schumix.Framework
 				var file = new StreamWriter(logfile, true) { AutoFlush = true };
 
 				if(!isfile)
-					file.Write(sLConsole.GetString("Started time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"), time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), time.Hour.ToHourFormat(), time.Minute.ToMinuteFormat(), time.Second.ToSecondFormat());
+					file.Write(sLConsole.GetString("Started time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
 				else
-					file.Write(sLConsole.GetString("\nStarted time: [{0}. {1}. {2}. {3}:{4}:{5}]\n"), time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), time.Hour.ToHourFormat(), time.Minute.ToMinuteFormat(), time.Second.ToSecondFormat());
+					file.Write(sLConsole.GetString("\nStarted time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
 
 				file.Close();
 			}

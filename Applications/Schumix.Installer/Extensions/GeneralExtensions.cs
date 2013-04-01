@@ -333,30 +333,5 @@ namespace Schumix.Installer.Extensions
 		{
 			return string.IsNullOrEmpty(Value);
 		}
-
-		public static string ToMonthFormat(this int Month)
-		{
-			return Month < 10 ? string.Format("0{0}", Month.ToString()) : Month.ToString();
-		}
-
-		public static string ToDayFormat(this int Day)
-		{
-			return Day < 10 ? string.Format("0{0}", Day.ToString()) : Day.ToString();
-		}
-
-		public static string ToHourFormat(this int Hour)
-		{
-			return Hour < 10 ? string.Format("0{0}", Hour.ToString()) : Hour.ToString();
-		}
-
-		public static string ToMinuteFormat(this int Minute)
-		{
-			return Minute < 10 ? string.Format("0{0}", Minute.ToString()) : Minute.ToString();
-		}
-
-		public static string ToSecondFormat(this int Second)
-		{
-			return Second < 10 ? string.Format("0{0}", Second.ToString()) : Second.ToString();
-		}
 	}
 }

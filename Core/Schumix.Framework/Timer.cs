@@ -83,7 +83,7 @@ namespace Schumix.Framework
 		public void SaveUptime(long Memory)
 		{
 			var time = DateTime.Now;
-			string date = string.Format("{0}. {1}. {2}. {3}:{4}", time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), time.Hour.ToHourFormat(), time.Minute.ToMinuteFormat());
+			string date = time.ToString("yyyy. MM. dd. HH:mm:ss");
 			SchumixBase.DManager.Insert("`uptime`(`Date`, `Uptime`, `Memory`)", date, Uptime(), Memory);
 		}
 	}

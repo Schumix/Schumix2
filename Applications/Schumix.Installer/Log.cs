@@ -38,7 +38,7 @@ namespace Schumix.Installer
 		/// </returns>
 		private static string GetTime()
 		{
-			return string.Format("{0}:{1}:{2}", DateTime.Now.Hour.ToHourFormat(), DateTime.Now.Minute.ToMinuteFormat(), DateTime.Now.Second.ToSecondFormat());
+			return DateTime.Now.ToString("HH:mm:ss");
 		}
 
 		private static void LogToFile(string log)
@@ -54,7 +54,7 @@ namespace Schumix.Installer
 
 			var time = DateTime.Now;
 			var file = new StreamWriter(filename, true) { AutoFlush = true };
-			file.Write("{0}. {1}. {2}. {3}", time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), log);
+			file.Write("{0} {1}", time.ToString("yyyy. MM. dd."), log);
 			file.Close();
 		}
 
@@ -78,9 +78,9 @@ namespace Schumix.Installer
 			var file = new StreamWriter(logfile, true) { AutoFlush = true };
 
 			if(!isfile)
-				file.Write(sLConsole.Log("Text"), time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), time.Hour.ToHourFormat(), time.Minute.ToMinuteFormat(), time.Second.ToSecondFormat());
+				file.Write(sLConsole.Log("Text"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
 			else
-				file.Write(sLConsole.Log("Text2"), time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), time.Hour.ToHourFormat(), time.Minute.ToMinuteFormat(), time.Second.ToSecondFormat());
+				file.Write(sLConsole.Log("Text2"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
 				
 			file.Close();
 		}
