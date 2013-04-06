@@ -325,7 +325,7 @@ namespace Schumix.GameAddon.MaffiaGames
 
 		private void HandleIsOwnerAfk(object sender, ElapsedEventArgs e)
 		{
-			if((DateTime.Now - OwnerMsgTime).Minutes >= 10 && !_owner.IsNullOrEmpty())
+			if((DateTime.Now - OwnerMsgTime).Minutes >= 10 && !_owner.IsNullOrEmpty() && Running)
 			{
 				_owner = string.Empty;
 				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
