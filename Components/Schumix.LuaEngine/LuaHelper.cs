@@ -54,12 +54,11 @@ namespace Schumix.LuaEngine
 			{
 				foreach(var attribute in Attribute.GetCustomAttributes(method))
 				{
-					var luaFunctionAttribute = attribute as LuaFunctionAttribute;
+					var attr = attribute as LuaFunctionAttribute;
 
-					if(luaFunctionAttribute.IsNull())
-							continue;
+					if(attr.IsNull())
+						continue;
 
-					var attr = luaFunctionAttribute;
 					var parameters = new List<string>();
 					var paramInfo = method.GetParameters();
 
