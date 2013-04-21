@@ -110,7 +110,6 @@ namespace Schumix.Framework.Addon
 						continue;
 
 					bool isenabble = true;
-					ISchumixAddon pl;
 
 					foreach(var sn in IRCConfig.List)
 					{
@@ -120,12 +119,9 @@ namespace Schumix.Framework.Addon
 						if(enabled && IsIgnore(dll.Name.Substring(0, dll.Name.IndexOf(".dll")), sn.Key))
 							enabled = false;
 
-						foreach(var type in asm.GetTypesWithInterface(typeof(ISchumixAddon)))
+						foreach(var pl in asm.GetTypesWithInterface(typeof(ISchumixAddon)).Select(type => (ISchumixAddon)Activator.CreateInstance(type)))
 						{
-							pl = (ISchumixAddon)Activator.CreateInstance(type);
-
-							if(pl.IsNull() || Addons[sn.Key].Assemblies.ContainsValue(asm) ||
-							   Addons[sn.Key].IgnoreAssemblies.ContainsValue(asm))
+							if(Addons[sn.Key].Assemblies.ContainsValue(asm) || Addons[sn.Key].IgnoreAssemblies.ContainsValue(asm))
 								continue;
 
 							if(Addons[sn.Key].Addons.ContainsKey(pl.Name.ToLower()))

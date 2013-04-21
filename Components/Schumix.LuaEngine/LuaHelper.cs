@@ -54,27 +54,29 @@ namespace Schumix.LuaEngine
 			{
 				foreach(var attribute in Attribute.GetCustomAttributes(method))
 				{
-					if(attribute.GetType() == typeof(LuaFunctionAttribute))
+					var luaFunctionAttribute = attribute as LuaFunctionAttribute;
+
+					if(luaFunctionAttribute.IsNull())
+							continue;
+
+					var attr = luaFunctionAttribute;
+					var parameters = new List<string>();
+					var paramInfo = method.GetParameters();
+
+					if(!attr.FunctionParameters.IsNull() && paramInfo.Length != attr.FunctionParameters.Length)
 					{
-						var attr = (LuaFunctionAttribute)attribute;
-						var parameters = new List<string>();
-						var paramInfo = method.GetParameters();
-
-						if(!attr.FunctionParameters.IsNull() && paramInfo.Length != attr.FunctionParameters.Length)
-						{
-							Log.Error("LuaHelper", sLConsole.GetString("Function {0} (exported as {1}): argument number mismatch. Declared {2}, but requires {3}!"), method.Name, attr.FunctionName,
-								attr.FunctionParameters.Length, paramInfo.Length);
-							break;
-						}
-
-						// build parameter doc hashtable.
-						if(!attr.FunctionParameters.IsNull())
-							parameters.AddRange(paramInfo.Select((t, i) => string.Format("{0} - {1}", t.Name, attr.FunctionParameters[i])));
-
-						var descriptor = new LuaFunctionDescriptor(attr.FunctionName, attr.FunctionDocumentation, parameters);
-						luaFunctions.Add(attr.FunctionName, descriptor);
-						vm.RegisterFunction(attr.FunctionName, target, method);
+						Log.Error("LuaHelper", sLConsole.GetString("Function {0} (exported as {1}): argument number mismatch. Declared {2}, but requires {3}!"), method.Name, attr.FunctionName,
+							attr.FunctionParameters.Length, paramInfo.Length);
+						break;
 					}
+
+					// build parameter doc hashtable.
+					if(!attr.FunctionParameters.IsNull())
+						parameters.AddRange(paramInfo.Select((t, i) => string.Format("{0} - {1}", t.Name, attr.FunctionParameters[i])));
+
+					var descriptor = new LuaFunctionDescriptor(attr.FunctionName, attr.FunctionDocumentation, parameters);
+					luaFunctions.Add(attr.FunctionName, descriptor);
+					vm.RegisterFunction(attr.FunctionName, target, method);
 				}
 			}
 		}
