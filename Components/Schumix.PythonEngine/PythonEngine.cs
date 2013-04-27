@@ -53,7 +53,7 @@ namespace Schumix.PythonEngine
 
 			string dir = Directory.GetParent(Assembly.GetExecutingAssembly().Location).FullName;
 			var list = new List<string>();
-			list.Add(Path.Combine(dir, "Schumix.API.dll"));
+			list.Add(Path.Combine(dir, "Schumix.Api.dll"));
 			list.Add(Path.Combine(dir, "Schumix.Irc.dll"));
 			list.Add(Path.Combine(dir, "Schumix.Framework.dll"));
 
