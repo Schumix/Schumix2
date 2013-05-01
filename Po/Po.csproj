@@ -21,23 +21,13 @@
   Everything above is for the MD translation project serializer, and isn't really valid MSBuild.
   The real MSBuild project is below. Need to update MD to serialize this instead.
   -->
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>..\Run\Debug\locale</OutputPath>
     <GettextCatalogName>schumix</GettextCatalogName>
     <GettextCatalogFile>messages.po</GettextCatalogFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\Run\Release\locale</OutputPath>
-    <GettextCatalogName>schumix</GettextCatalogName>
-    <GettextCatalogFile>messages.po</GettextCatalogFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
-    <OutputPath>..\Run\Debug_x64\locale</OutputPath>
-    <GettextCatalogName>schumix</GettextCatalogName>
-    <GettextCatalogFile>messages.po</GettextCatalogFile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
-    <OutputPath>..\Run\Release_x64\locale</OutputPath>
     <GettextCatalogName>schumix</GettextCatalogName>
     <GettextCatalogFile>messages.po</GettextCatalogFile>
   </PropertyGroup>
