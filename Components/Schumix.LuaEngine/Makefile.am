@@ -3,7 +3,7 @@ EXTRA_DIST =
 
 # Warning: This is an automatically generated file, do not edit!
 
-if ENABLE_DEBUG_X86
+if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
 ASSEMBLY = ../../Run/Debug/Schumix.LuaEngine.dll
@@ -28,19 +28,13 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
-SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
 KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Debug/KopiLua.dll
 LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Debug/LuaInterface.dll
 
 endif
 
-if ENABLE_RELEASE_X86
+if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
 ASSEMBLY = ../../Run/Release/Schumix.LuaEngine.dll
@@ -64,79 +58,9 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
-SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB=
 KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Release/KopiLua.dll
 LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Release/LuaInterface.dll
-
-endif
-
-if ENABLE_DEBUG_X64
-ASSEMBLY_COMPILER_COMMAND = dmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = ../../Run/Debug_x64/Schumix.LuaEngine.dll
-ASSEMBLY_MDB = $(ASSEMBLY).mdb
-COMPILE_TARGET = library
-PROJECT_REFERENCES =  \
-	../../Run/Debug_x64/Schumix.Framework.dll \
-	../../Run/Debug_x64/Schumix.Irc.dll \
-	../../Run/Debug_x64/Schumix.Api.dll \
-	../../External/LuaInterface/Run/Debug_x64/KopiLua.dll \
-	../../External/LuaInterface/Run/Debug_x64/LuaInterface.dll
-BUILD_DIR = ../../Run/Debug_x64
-
-SCHUMIX_LUAENGINE_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.LuaEngine.dll.mdb
-SCHUMIX_LUAENGINE_DLL_MDB=$(BUILD_DIR)/Schumix.LuaEngine.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
-YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
-YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
-SCHUMIX_FRAMEWORK_DLL_MDB=
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB=
-KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Debug_x64/KopiLua.dll
-LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Debug_x64/LuaInterface.dll
-
-endif
-
-if ENABLE_RELEASE_X64
-ASSEMBLY_COMPILER_COMMAND = dmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
-ASSEMBLY = ../../Run/Release_x64/Schumix.LuaEngine.dll
-ASSEMBLY_MDB = 
-COMPILE_TARGET = library
-PROJECT_REFERENCES =  \
-	../../Run/Release_x64/Schumix.Framework.dll \
-	../../Run/Release_x64/Schumix.Irc.dll \
-	../../Run/Release_x64/Schumix.Api.dll \
-	../../External/LuaInterface/Run/Release_x64/KopiLua.dll \
-	../../External/LuaInterface/Run/Release_x64/LuaInterface.dll
-BUILD_DIR = ../../Run/Release_x64
-
-SCHUMIX_LUAENGINE_DLL_MDB=
-SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
-YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
-YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
-SCHUMIX_FRAMEWORK_DLL_MDB=
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
-SCHUMIX_IRC_DLL_MDB=
-KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Release_x64/KopiLua.dll
-LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Release_x64/LuaInterface.dll
 
 endif
 
@@ -154,10 +78,7 @@ PROGRAMFILES = \
 	$(MYSQL_DATA_DLL) \
 	$(MONO_POSIX_DLL) \
 	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB) \
-	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL) \
-	$(SCHUMIX_IRC_DLL_MDB) \
 	$(KOPILUA_DLL) \
 	$(LUAINTERFACE_DLL)  
 

@@ -3,7 +3,7 @@ EXTRA_DIST =
 
 # Warning: This is an automatically generated file, do not edit!
 
-if ENABLE_DEBUG_X86
+if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
 ASSEMBLY = ../../Run/Debug/Installer.exe
@@ -22,7 +22,7 @@ SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
 
 endif
 
-if ENABLE_RELEASE_X86
+if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
 ASSEMBLY = ../../Run/Release/Installer.exe
@@ -30,43 +30,6 @@ ASSEMBLY_MDB =
 COMPILE_TARGET = exe
 PROJECT_REFERENCES = 
 BUILD_DIR = ../../Run/Release
-
-INSTALLER_EXE_MDB=
-NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
-SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
-NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
-SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
-
-endif
-
-if ENABLE_DEBUG_X64
-ASSEMBLY_COMPILER_COMMAND = dmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = ../../Run/Debug_x64/Installer.exe
-ASSEMBLY_MDB = $(ASSEMBLY).mdb
-COMPILE_TARGET = exe
-PROJECT_REFERENCES = 
-BUILD_DIR = ../../Run/Debug_x64
-
-INSTALLER_EXE_MDB_SOURCE=../../Run/Debug_x64/Installer.exe.mdb
-INSTALLER_EXE_MDB=$(BUILD_DIR)/Installer.exe.mdb
-NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
-SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
-NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
-SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
-
-endif
-
-if ENABLE_RELEASE_X64
-ASSEMBLY_COMPILER_COMMAND = dmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
-ASSEMBLY = ../../Run/Release_x64/Installer.exe
-ASSEMBLY_MDB = 
-COMPILE_TARGET = exe
-PROJECT_REFERENCES = 
-BUILD_DIR = ../../Run/Release_x64
 
 INSTALLER_EXE_MDB=
 NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll

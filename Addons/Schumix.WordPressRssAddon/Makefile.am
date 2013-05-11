@@ -3,7 +3,7 @@ EXTRA_DIST =
 
 # Warning: This is an automatically generated file, do not edit!
 
-if ENABLE_DEBUG_X86
+if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
 ASSEMBLY = ../../Run/Debug/Addons/WordpressRssAddon.dll
@@ -20,21 +20,15 @@ WORDPRESSRSSADDON_DLL_MDB=$(BUILD_DIR)/WordpressRssAddon.dll.mdb
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
-SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
-SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
 
 endif
 
-if ENABLE_RELEASE_X86
+if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
 ASSEMBLY = ../../Run/Release/Addons/WordpressRssAddon.dll
@@ -50,69 +44,11 @@ WORDPRESSRSSADDON_DLL_MDB=
 YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
-SCHUMIX_IRC_DLL_MDB=
-
-endif
-
-if ENABLE_DEBUG_X64
-ASSEMBLY_COMPILER_COMMAND = dmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = ../../Run/Debug_x64/Addons/WordpressRssAddon.dll
-ASSEMBLY_MDB = $(ASSEMBLY).mdb
-COMPILE_TARGET = library
-PROJECT_REFERENCES =  \
-	../../Run/Debug_x64/Schumix.Api.dll \
-	../../Run/Debug_x64/Schumix.Irc.dll \
-	../../Run/Debug_x64/Schumix.Framework.dll
-BUILD_DIR = ../../Run/Debug_x64/Addons
-
-WORDPRESSRSSADDON_DLL_MDB_SOURCE=../../Run/Debug_x64/Addons/WordpressRssAddon.dll.mdb
-WORDPRESSRSSADDON_DLL_MDB=$(BUILD_DIR)/WordpressRssAddon.dll.mdb
-YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
-YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Debug_x64/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug_x64/Schumix.Irc.dll
-SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug_x64/Schumix.Framework.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
-SCHUMIX_IRC_DLL_MDB=
-
-endif
-
-if ENABLE_RELEASE_X64
-ASSEMBLY_COMPILER_COMMAND = dmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
-ASSEMBLY = ../../Run/Release_x64/Addons/WordpressRssAddon.dll
-ASSEMBLY_MDB = 
-COMPILE_TARGET = library
-PROJECT_REFERENCES =  \
-	../../Run/Release_x64/Schumix.Api.dll \
-	../../Run/Release_x64/Schumix.Irc.dll \
-	../../Run/Release_x64/Schumix.Framework.dll
-BUILD_DIR = ../../Run/Release_x64/Addons
-
-WORDPRESSRSSADDON_DLL_MDB=
-YAMLDOTNET_CORE_DLL_SOURCE=../../Dependencies/YamlDotNet.Core.dll
-YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../Dependencies/YamlDotNet.RepresentationModel.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Release_x64/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
-SCHUMIX_IRC_DLL_SOURCE=../../Run/Release_x64/Schumix.Irc.dll
-SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release_x64/Schumix.Framework.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
-MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
-SCHUMIX_FRAMEWORK_DLL_MDB=
-SCHUMIX_IRC_DLL_MDB=
 
 endif
 
@@ -124,14 +60,11 @@ PROGRAMFILES = \
 	$(YAMLDOTNET_CORE_DLL) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
 	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
-	$(MONO_POSIX_DLL) \
-	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
-	$(SCHUMIX_IRC_DLL_MDB)  
+	$(MONO_POSIX_DLL)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_WORDPRESSRSSADDON_PC)  
@@ -187,14 +120,11 @@ SCHUMIX_WORDPRESSRSSADDON_PC = $(BUILD_DIR)/schumix.wordpressrssaddon.pc
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_API_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_API_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL_MDB))
-$(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_WORDPRESSRSSADDON_PC,schumix.wordpressrssaddon.pc))
 
 

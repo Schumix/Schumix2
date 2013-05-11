@@ -5,7 +5,7 @@ git submodule update --init --recursive
 build_conf="$(echo "$1" | tr [:upper:] [:lower:])"
 
 if [ "$2" = "" ]; then
-	build_platform="x86"
+	build_platform="AnyCPU"
 else
 	build_platform="$(echo "$2" | tr [:upper:] [:lower:])"
 fi

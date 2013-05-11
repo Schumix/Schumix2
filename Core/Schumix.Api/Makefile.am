@@ -3,7 +3,7 @@ EXTRA_DIST =
 
 # Warning: This is an automatically generated file, do not edit!
 
-if ENABLE_DEBUG_X86
+if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
 ASSEMBLY = ../../Run/Debug/Schumix.Api.dll
@@ -17,7 +17,7 @@ SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 
 endif
 
-if ENABLE_RELEASE_X86
+if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
 ASSEMBLY = ../../Run/Release/Schumix.Api.dll
@@ -25,33 +25,6 @@ ASSEMBLY_MDB =
 COMPILE_TARGET = library
 PROJECT_REFERENCES = 
 BUILD_DIR = ../../Run/Release
-
-SCHUMIX_API_DLL_MDB=
-
-endif
-
-if ENABLE_DEBUG_X64
-ASSEMBLY_COMPILER_COMMAND = dmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = ../../Run/Debug_x64/Schumix.Api.dll
-ASSEMBLY_MDB = $(ASSEMBLY).mdb
-COMPILE_TARGET = library
-PROJECT_REFERENCES = 
-BUILD_DIR = ../../Run/Debug_x64
-
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug_x64/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
-
-endif
-
-if ENABLE_RELEASE_X64
-ASSEMBLY_COMPILER_COMMAND = dmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
-ASSEMBLY = ../../Run/Release_x64/Schumix.Api.dll
-ASSEMBLY_MDB = 
-COMPILE_TARGET = library
-PROJECT_REFERENCES = 
-BUILD_DIR = ../../Run/Release_x64
 
 SCHUMIX_API_DLL_MDB=
 
