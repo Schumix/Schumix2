@@ -28,7 +28,7 @@ Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurá
 
 ## Linux terminál
 
-Telepítsük a `mono-xbuild` csomagot vagy forrásból. Ezután inditsuk el a `build.sh`-t és lefordul a kód.
+Telepítsük a `mono-xbuild` csomagot vagy forrásból a `mono`-t. Ezután inditsuk el a `build.sh`-t és lefordul a kód.
 
 # Kód üzembehelyezése
 

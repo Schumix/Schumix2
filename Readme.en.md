@@ -28,7 +28,7 @@ Open the `Schumix.sln` file. Choose the configuration that fits for you and comp
 
 ## Linux terminal
 
-Install the `mono-xbuild` package or from source. After run the `build.sh` command and the code is compiled.
+Install the `mono-xbuild` package or from source `mono`. After run the `build.sh` command and the code is compiled.
 
 # Code commissioning
 
