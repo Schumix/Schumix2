@@ -21,6 +21,10 @@ AC_PATH_PROG(DMCS, dmcs, no)
 if test "x$DMCS" = "xno"; then
         AC_MSG_ERROR([dmcs Not found])
 fi
+AC_PATH_PROG(GMCS, gmcs, no)
+if test "x$GMCS" = "xno"; then
+        AC_MSG_ERROR([gmcs Not found])
+fi
 
 
 AC_ARG_ENABLE(debug,
@@ -64,6 +68,8 @@ External/LuaInterface/Core/KopiLua/kopilua.pc
 External/LuaInterface/Core/KopiLua/Makefile
 External/LuaInterface/Core/LuaInterface/luainterface.pc
 External/LuaInterface/Core/LuaInterface/Makefile
+External/SharpZipLib/src/icsharpcode.sharpzlib.pc
+External/SharpZipLib/src/Makefile
 Addons/Schumix.TestAddon/schumix.testaddon.pc
 Addons/Schumix.TestAddon/Makefile
 Addons/Schumix.RevisionAddon/schumix.revisionaddon.pc
@@ -89,6 +95,15 @@ Addons/Schumix.GameAddon/Makefile
 Addons/Schumix.ExtraAddon/schumix.extraaddon.pc
 Addons/Schumix.ExtraAddon/Makefile
 Addons/Makefile
+Po/Makefile
+External/ngit/Sharpen/sharpen.pc
+External/ngit/Sharpen/Makefile
+External/ngit/Sharpen.Unix/sharpen.unix.pc
+External/ngit/Sharpen.Unix/Makefile
+External/ngit/NSch/nsch.pc
+External/ngit/NSch/Makefile
+External/ngit/NGit/ngit.pc
+External/ngit/NGit/Makefile
 Components/Schumix.Libraries/schumix.libraries.pc
 Components/Schumix.Libraries/Makefile
 Components/Schumix.Updater/schumix.updater.pc
@@ -98,7 +113,6 @@ Components/Schumix.LuaEngine/Makefile
 Components/Schumix.PythonEngine/schumix.pythonengine.pc
 Components/Schumix.PythonEngine/Makefile
 Components/Makefile
-Po/Makefile
 Applications/Schumix/schumix
 Applications/Schumix/Makefile
 Applications/Schumix.Config/schumix.config

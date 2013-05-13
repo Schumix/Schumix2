@@ -9,16 +9,22 @@ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-
 ASSEMBLY = ../../Run/Debug/Installer.exe
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = exe
-PROJECT_REFERENCES = 
+PROJECT_REFERENCES =  \
+	../../External/ngit/bin/NGit.dll \
+	../../External/ngit/bin/NSch.dll \
+	../../External/ngit/bin/Sharpen.dll \
+	../../External/ngit/bin/Sharpen.Unix.dll \
+	../../External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
 BUILD_DIR = ../../Run/Debug
 
 INSTALLER_EXE_MDB_SOURCE=../../Run/Debug/Installer.exe.mdb
 INSTALLER_EXE_MDB=$(BUILD_DIR)/Installer.exe.mdb
-NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
-SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
-NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
-SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
+NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
+SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
+MONO_POSIX_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Posix.dll
 
 endif
 
@@ -28,15 +34,21 @@ ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:
 ASSEMBLY = ../../Run/Release/Installer.exe
 ASSEMBLY_MDB = 
 COMPILE_TARGET = exe
-PROJECT_REFERENCES = 
+PROJECT_REFERENCES =  \
+	../../External/ngit/bin/NGit.dll \
+	../../External/ngit/bin/NSch.dll \
+	../../External/ngit/bin/Sharpen.dll \
+	../../External/ngit/bin/Sharpen.Unix.dll \
+	../../External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
 BUILD_DIR = ../../Run/Release
 
 INSTALLER_EXE_MDB=
-NGIT_DLL_SOURCE=../../Dependencies/NGit/NGit.dll
-SHARPEN_DLL_SOURCE=../../Dependencies/NGit/Sharpen.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
-NSCH_DLL_SOURCE=../../Dependencies/NGit/NSch.dll
-SHARPEN_UNIX_DLL_SOURCE=../../Dependencies/NGit/Sharpen.Unix.dll
+NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
+SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
+MONO_POSIX_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Posix.dll
 
 endif
 
@@ -49,7 +61,8 @@ PROGRAMFILES = \
 	$(SHARPEN_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
 	$(NSCH_DLL) \
-	$(SHARPEN_UNIX_DLL)  
+	$(SHARPEN_UNIX_DLL) \
+	$(MONO_POSIX_DLL)  
 
 BINARIES = \
 	$(SCHUMIX_INSTALLER)  
@@ -91,12 +104,7 @@ REFERENCES =  \
 	Microsoft.Build.Utilities.v4.0 \
 	System.Core
 
-DLL_REFERENCES =  \
-	../../Dependencies/NGit/NGit.dll \
-	../../Dependencies/NGit/NSch.dll \
-	../../Dependencies/NGit/Sharpen.dll \
-	../../Dependencies/NGit/Sharpen.Unix.dll \
-	../../Dependencies/NGit/ICSharpCode.SharpZipLib.dll
+DLL_REFERENCES = 
 
 CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
 
@@ -107,6 +115,7 @@ SHARPEN_DLL = $(BUILD_DIR)/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 NSCH_DLL = $(BUILD_DIR)/NSch.dll
 SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
+MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 SCHUMIX_INSTALLER = $(BUILD_DIR)/schumix.installer
 
 $(eval $(call emit-deploy-target,NGIT_DLL))
@@ -114,6 +123,7 @@ $(eval $(call emit-deploy-target,SHARPEN_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-target,NSCH_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
+$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_INSTALLER,schumix.installer,x))
 
 
