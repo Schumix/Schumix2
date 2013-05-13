@@ -4,6 +4,3 @@
 [submodule "External/ngit"]
 	path = External/ngit
 	url = https://github.com/Schumix/ngit.git
-[submodule "External/SharpZipLib"]
-	path = External/SharpZipLib
-	url = https://github.com/Schumix/SharpZipLib.git
