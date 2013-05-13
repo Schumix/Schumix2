@@ -57,12 +57,6 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Data" />
     <Reference Include="System.Web" />
-    <Reference Include="YamlDotNet.Core">
-      <HintPath>..\..\Dependencies\YamlDotNet.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="YamlDotNet.RepresentationModel">
-      <HintPath>..\..\Dependencies\YamlDotNet.RepresentationModel.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Schumix.Api\Schumix.Api.csproj">
@@ -80,6 +74,14 @@
     <ProjectReference Include="..\..\Libraries\WolframAPI\WolframAPI.csproj">
       <Project>{988DBA54-C500-47AF-B31C-BE12EA83E4AA}</Project>
       <Name>WolframAPI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.Core\YamlDotNet.Core.csproj">
+      <Project>{BF32DE1B-6276-4341-B212-F8862ADBBA7A}</Project>
+      <Name>YamlDotNet.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.RepresentationModel\YamlDotNet.RepresentationModel.csproj">
+      <Project>{21CA0077-E15C-446D-9C43-F6D3F9D09687}</Project>
+      <Name>YamlDotNet.RepresentationModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

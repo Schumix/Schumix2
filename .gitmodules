@@ -4,3 +4,6 @@
 [submodule "External/ngit"]
 	path = External/ngit
 	url = https://github.com/Schumix/ngit.git
+[submodule "External/YamlDotNet"]
+	path = External/YamlDotNet
+	url = https://github.com/Schumix/YamlDotNet.git

@@ -55,6 +55,17 @@ dnl package checks, per config
 
 
 AC_CONFIG_FILES([
+External/LuaInterface/Core/KopiLua/kopilua.pc
+External/LuaInterface/Core/KopiLua/Makefile
+External/LuaInterface/Core/LuaInterface/luainterface.pc
+External/LuaInterface/Core/LuaInterface/Makefile
+External/ngit/External/SharpZipLib/src/icsharpcode.sharpzlib.pc
+External/ngit/External/SharpZipLib/src/Makefile
+External/YamlDotNet/YamlDotNet.Core/yamldotnet.core.pc
+External/YamlDotNet/YamlDotNet.Core/Makefile
+External/YamlDotNet/YamlDotNet.RepresentationModel/yamldotnet.representationmodel.pc
+External/YamlDotNet/YamlDotNet.RepresentationModel/Makefile
+Po/Makefile
 Core/Schumix.Api/schumix.api.pc
 Core/Schumix.Api/Makefile
 Core/Schumix.Framework/schumix.framework.pc
@@ -64,12 +75,10 @@ Core/Schumix.Irc/Makefile
 Core/Makefile
 Libraries/WolframAPI/wolframapi.pc
 Libraries/WolframAPI/Makefile
-External/LuaInterface/Core/KopiLua/kopilua.pc
-External/LuaInterface/Core/KopiLua/Makefile
-External/LuaInterface/Core/LuaInterface/luainterface.pc
-External/LuaInterface/Core/LuaInterface/Makefile
-External/ngit/External/SharpZipLib/src/icsharpcode.sharpzlib.pc
-External/ngit/External/SharpZipLib/src/Makefile
+External/ngit/Sharpen/sharpen.pc
+External/ngit/Sharpen/Makefile
+External/ngit/Sharpen.Unix/sharpen.unix.pc
+External/ngit/Sharpen.Unix/Makefile
 Addons/Schumix.TestAddon/schumix.testaddon.pc
 Addons/Schumix.TestAddon/Makefile
 Addons/Schumix.RevisionAddon/schumix.revisionaddon.pc
@@ -95,11 +104,6 @@ Addons/Schumix.GameAddon/Makefile
 Addons/Schumix.ExtraAddon/schumix.extraaddon.pc
 Addons/Schumix.ExtraAddon/Makefile
 Addons/Makefile
-Po/Makefile
-External/ngit/Sharpen/sharpen.pc
-External/ngit/Sharpen/Makefile
-External/ngit/Sharpen.Unix/sharpen.unix.pc
-External/ngit/Sharpen.Unix/Makefile
 External/ngit/NSch/nsch.pc
 External/ngit/NSch/Makefile
 External/ngit/NGit/ngit.pc

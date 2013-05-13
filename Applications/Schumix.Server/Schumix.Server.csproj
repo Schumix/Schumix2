@@ -35,12 +35,6 @@
     <Reference Include="Mono.Posix">
       <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
     </Reference>
-    <Reference Include="YamlDotNet.Core">
-      <HintPath>..\..\Dependencies\YamlDotNet.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="YamlDotNet.RepresentationModel">
-      <HintPath>..\..\Dependencies\YamlDotNet.RepresentationModel.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -76,6 +70,14 @@
     <ProjectReference Include="..\..\Components\Schumix.Updater\Schumix.Updater.csproj">
       <Project>{33ABC53E-F210-442F-B4F7-D0A7642F2584}</Project>
       <Name>Schumix.Updater</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.Core\YamlDotNet.Core.csproj">
+      <Project>{BF32DE1B-6276-4341-B212-F8862ADBBA7A}</Project>
+      <Name>YamlDotNet.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.RepresentationModel\YamlDotNet.RepresentationModel.csproj">
+      <Project>{21CA0077-E15C-446D-9C43-F6D3F9D09687}</Project>
+      <Name>YamlDotNet.RepresentationModel</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
