@@ -48,21 +48,13 @@ namespace Schumix.Updater.Compiler
 			{
 				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "/xbuild.exe", dir + "/xbuild.exe");
 				build.StartInfo.FileName = "mono";
-
-				if(Environment.Is64BitOperatingSystem)
-					build.StartInfo.Arguments = dir + "/xbuild.exe /p:Configuration=\"Release\" /p:Platform=\"x64\" " + dir + "/Schumix.sln";
-				else
-					build.StartInfo.Arguments = dir + "/xbuild.exe /p:Configuration=\"Release\" /p:Platform=\"x86\" " + dir + "/Schumix.sln";
+				build.StartInfo.Arguments = dir + "/xbuild.exe /p:Configuration=\"Release\" " + dir + "/Schumix.sln";
 			}
 			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
 			{
 				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "\\MSBuild.exe", dir + "\\MSBuild.exe");
 				build.StartInfo.FileName = dir + "\\MSBuild.exe";
-
-				if(Environment.Is64BitOperatingSystem)
-					build.StartInfo.Arguments = "/p:Configuration=\"Release\" /p:Platform=\"x64\" " + dir + "/Schumix.sln";
-				else
-					build.StartInfo.Arguments = "/p:Configuration=\"Release\" /p:Platform=\"x86\" " + dir + "/Schumix.sln";
+				build.StartInfo.Arguments = "/p:Configuration=\"Release\" " + dir + "/Schumix.sln";
 			}
 
 			build.Start();
