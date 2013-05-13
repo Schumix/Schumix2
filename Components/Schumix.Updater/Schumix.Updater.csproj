@@ -68,5 +68,9 @@
       <Project>{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}</Project>
       <Name>ICSharpCode.SharpZLib</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\Sharpen.Unix\Sharpen.Unix.csproj">
+      <Project>{849AE05D-0058-4A8C-A0E8-77DC6BB12E52}</Project>
+      <Name>Sharpen.Unix</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

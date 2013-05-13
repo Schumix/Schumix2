@@ -39,6 +39,7 @@ SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
 SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Debug/Schumix.LuaEngine.dll
@@ -88,6 +89,7 @@ SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SCHUMIX_UPDATER_DLL_MDB=
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Release/Schumix.LuaEngine.dll
 KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Release/KopiLua.dll
@@ -123,6 +125,7 @@ PROGRAMFILES = \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
 	$(NGIT_DLL) \
 	$(NSCH_DLL) \
+	$(SHARPEN_UNIX_DLL) \
 	$(SCHUMIX_UPDATER_DLL_MDB) \
 	$(SCHUMIX_LUAENGINE_DLL) \
 	$(KOPILUA_DLL) \
@@ -193,6 +196,7 @@ SHARPEN_DLL = $(BUILD_DIR)/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 NGIT_DLL = $(BUILD_DIR)/NGit.dll
 NSCH_DLL = $(BUILD_DIR)/NSch.dll
+SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
 SCHUMIX_LUAENGINE_DLL = $(BUILD_DIR)/Schumix.LuaEngine.dll
 KOPILUA_DLL = $(BUILD_DIR)/KopiLua.dll
 LUAINTERFACE_DLL = $(BUILD_DIR)/LuaInterface.dll
@@ -212,6 +216,7 @@ $(eval $(call emit-deploy-target,SHARPEN_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-target,NGIT_DLL))
 $(eval $(call emit-deploy-target,NSCH_DLL))
+$(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-target,KOPILUA_DLL))
 $(eval $(call emit-deploy-target,LUAINTERFACE_DLL))
 $(eval $(call emit-deploy-target,IRONPYTHON_MODULES_DLL))

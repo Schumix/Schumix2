@@ -14,7 +14,8 @@ PROJECT_REFERENCES =  \
 	../../External/ngit/bin/Sharpen.dll \
 	../../External/ngit/bin/NGit.dll \
 	../../External/ngit/bin/NSch.dll \
-	../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+	../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll \
+	../../External/ngit/bin/Sharpen.Unix.dll
 BUILD_DIR = ../../Run/Debug
 
 SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
@@ -36,6 +37,7 @@ SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 
 endif
 
@@ -50,7 +52,8 @@ PROJECT_REFERENCES =  \
 	../../External/ngit/bin/Sharpen.dll \
 	../../External/ngit/bin/NGit.dll \
 	../../External/ngit/bin/NSch.dll \
-	../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+	../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll \
+	../../External/ngit/bin/Sharpen.Unix.dll
 BUILD_DIR = ../../Run/Release
 
 SCHUMIX_UPDATER_DLL_MDB=
@@ -69,6 +72,7 @@ SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
+SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 
 endif
 
@@ -91,7 +95,8 @@ PROGRAMFILES = \
 	$(SHARPEN_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
 	$(NGIT_DLL) \
-	$(NSCH_DLL)  
+	$(NSCH_DLL) \
+	$(SHARPEN_UNIX_DLL)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_UPDATER_PC)  
@@ -143,6 +148,7 @@ SHARPEN_DLL = $(BUILD_DIR)/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 NGIT_DLL = $(BUILD_DIR)/NGit.dll
 NSCH_DLL = $(BUILD_DIR)/NSch.dll
+SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
 SCHUMIX_UPDATER_PC = $(BUILD_DIR)/schumix.updater.pc
 
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
@@ -156,6 +162,7 @@ $(eval $(call emit-deploy-target,SHARPEN_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-target,NGIT_DLL))
 $(eval $(call emit-deploy-target,NSCH_DLL))
+$(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_UPDATER_PC,schumix.updater.pc))
 
 
