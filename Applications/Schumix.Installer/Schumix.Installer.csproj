@@ -66,17 +66,13 @@
       <Project>{A19E6F3F-A25B-4B01-8922-CF0CC35C781D}</Project>
       <Name>NSch</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\External\SharpZipLib\src\ICSharpCode.SharpZLib.csproj">
+      <Project>{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}</Project>
+      <Name>ICSharpCode.SharpZLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\External\ngit\Sharpen\Sharpen.csproj">
       <Project>{72944A6C-45FF-4EF8-B349-8C9CABF519D4}</Project>
       <Name>Sharpen</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\External\ngit\Sharpen.Unix\Sharpen.Unix.csproj">
-      <Project>{849AE05D-0058-4A8C-A0E8-77DC6BB12E52}</Project>
-      <Name>Sharpen.Unix</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\External\SharpZipLib\src\ICSharpCode.SharpZLib.csproj">
-      <Project>{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}</Project>
-      <Name>ICSharpCode.SharpZLib</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>
