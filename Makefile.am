@@ -3,8 +3,8 @@ EXTRA_DIST =  expansions.m4 Dependencies/YamlDotNet.Core.dll Dependencies/YamlDo
 
 #Warning: This is an automatically generated file, do not edit!
 if ENABLE_DEBUG
- SUBDIRS =  Core Libraries/WolframAPI External/LuaInterface/Core/KopiLua External/LuaInterface/Core/LuaInterface External/SharpZipLib/src Addons Po External/ngit/Sharpen External/ngit/Sharpen.Unix External/ngit/NSch External/ngit/NGit Components Applications
+ SUBDIRS =  Core Libraries/WolframAPI External/LuaInterface/Core/KopiLua External/LuaInterface/Core/LuaInterface External/ngit/External/SharpZipLib/src Addons Po External/ngit/Sharpen External/ngit/Sharpen.Unix External/ngit/NSch External/ngit/NGit Components Applications
 endif
 if ENABLE_RELEASE
- SUBDIRS =  Core Libraries/WolframAPI External/LuaInterface/Core/KopiLua External/LuaInterface/Core/LuaInterface External/SharpZipLib/src Addons Po External/ngit/Sharpen External/ngit/Sharpen.Unix External/ngit/NSch External/ngit/NGit Components Applications
+ SUBDIRS =  Core Libraries/WolframAPI External/LuaInterface/Core/KopiLua External/LuaInterface/Core/LuaInterface External/ngit/External/SharpZipLib/src Addons Po External/ngit/Sharpen External/ngit/Sharpen.Unix External/ngit/NSch External/ngit/NGit Components Applications
 endif

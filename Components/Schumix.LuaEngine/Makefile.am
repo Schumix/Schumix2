@@ -36,11 +36,7 @@ SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
 KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Debug/KopiLua.dll
-KOPILUA_DLL_MDB_SOURCE=../../External/LuaInterface/Run/Debug/KopiLua.dll.mdb
-KOPILUA_DLL_MDB=$(BUILD_DIR)/KopiLua.dll.mdb
 LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Debug/LuaInterface.dll
-LUAINTERFACE_DLL_MDB_SOURCE=../../External/LuaInterface/Run/Debug/LuaInterface.dll.mdb
-LUAINTERFACE_DLL_MDB=$(BUILD_DIR)/LuaInterface.dll.mdb
 
 endif
 
@@ -73,9 +69,7 @@ SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB=
 KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Release/KopiLua.dll
-KOPILUA_DLL_MDB=
 LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Release/LuaInterface.dll
-LUAINTERFACE_DLL_MDB=
 
 endif
 
@@ -98,9 +92,7 @@ PROGRAMFILES = \
 	$(SCHUMIX_IRC_DLL) \
 	$(SCHUMIX_IRC_DLL_MDB) \
 	$(KOPILUA_DLL) \
-	$(KOPILUA_DLL_MDB) \
-	$(LUAINTERFACE_DLL) \
-	$(LUAINTERFACE_DLL_MDB)  
+	$(LUAINTERFACE_DLL)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_LUAENGINE_PC)  
@@ -159,9 +151,7 @@ $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,KOPILUA_DLL))
-$(eval $(call emit-deploy-target,KOPILUA_DLL_MDB))
 $(eval $(call emit-deploy-target,LUAINTERFACE_DLL))
-$(eval $(call emit-deploy-target,LUAINTERFACE_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_LUAENGINE_PC,schumix.luaengine.pc))
 
 
