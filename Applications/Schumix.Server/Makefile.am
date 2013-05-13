@@ -34,6 +34,7 @@ SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
+MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
 SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
@@ -68,6 +69,7 @@ SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
+MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SCHUMIX_UPDATER_DLL_MDB=
 
@@ -94,6 +96,7 @@ PROGRAMFILES = \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
 	$(NGIT_DLL) \
 	$(NSCH_DLL) \
+	$(MONO_SECURITY_DLL) \
 	$(SHARPEN_UNIX_DLL) \
 	$(SCHUMIX_UPDATER_DLL_MDB)  
 
@@ -162,6 +165,7 @@ SHARPEN_DLL = $(BUILD_DIR)/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 NGIT_DLL = $(BUILD_DIR)/NGit.dll
 NSCH_DLL = $(BUILD_DIR)/NSch.dll
+MONO_SECURITY_DLL = $(BUILD_DIR)/Mono.Security.dll
 SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
 SCHUMIX_SERVER = $(BUILD_DIR)/schumix.server
 
@@ -176,6 +180,7 @@ $(eval $(call emit-deploy-target,SHARPEN_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-target,NGIT_DLL))
 $(eval $(call emit-deploy-target,NSCH_DLL))
+$(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_SERVER,schumix.server,x))
 
