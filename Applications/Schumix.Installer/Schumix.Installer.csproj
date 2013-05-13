@@ -34,18 +34,6 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Web" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
-    <Reference Include="NGit">
-      <HintPath>..\..\Dependencies\NGit\NGit.dll</HintPath>
-    </Reference>
-    <Reference Include="NSch">
-      <HintPath>..\..\Dependencies\NGit\NSch.dll</HintPath>
-    </Reference>
-    <Reference Include="Sharpen">
-      <HintPath>..\..\Dependencies\NGit\Sharpen.dll</HintPath>
-    </Reference>
-    <Reference Include="Sharpen.Unix">
-      <HintPath>..\..\Dependencies\NGit\Sharpen.Unix.dll</HintPath>
-    </Reference>
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>..\..\Dependencies\NGit\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
@@ -71,5 +59,23 @@
     <Folder Include="Properties\" />
     <Folder Include="Config\" />
     <Folder Include="Extensions\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\External\ngit\NGit\NGit.csproj">
+      <Project>{E3BFF8B4-189C-496A-A817-7E8B31E22B91}</Project>
+      <Name>NGit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\NSch\NSch.csproj">
+      <Project>{A19E6F3F-A25B-4B01-8922-CF0CC35C781D}</Project>
+      <Name>NSch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\Sharpen\Sharpen.csproj">
+      <Project>{72944A6C-45FF-4EF8-B349-8C9CABF519D4}</Project>
+      <Name>Sharpen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\Sharpen.Unix\Sharpen.Unix.csproj">
+      <Project>{849AE05D-0058-4A8C-A0E8-77DC6BB12E52}</Project>
+      <Name>Sharpen.Unix</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
