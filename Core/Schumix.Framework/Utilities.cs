@@ -418,6 +418,8 @@ namespace Schumix.Framework
 								Name = "Windows Vista";
 							else if(Info.Version.Minor == 1)
 								Name = "Windows 7";
+							else if(Info.Version.Minor == 2)
+								Name = "Windows 8";
 							break;
 						}
 					}
