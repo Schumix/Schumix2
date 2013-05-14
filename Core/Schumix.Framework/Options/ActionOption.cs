@@ -45,7 +45,7 @@ namespace Schumix.Framework.Options
 			this.action = action;
 		}
 		
-		protected override void OnParseComplete (OptionContext c)
+		protected override void OnParseComplete(OptionContext c)
 		{
 			action(c.OptionValues);
 		}
@@ -65,7 +65,7 @@ namespace Schumix.Framework.Options
 		
 		protected override void OnParseComplete(OptionContext c)
 		{
-			action(Parse<T> (c.OptionValues[0], c));
+			action(Parse<T>(c.OptionValues[0], c));
 		}
 	}
 
