@@ -63,6 +63,7 @@ Source: "..\Run\Release\Sharpen.Unix.dll"; DestDir: "{app}"; Flags: ignoreversio
 Source: "..\Run\Release\KopiLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\LuaInterface.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Mono.Posix.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Mono.Security.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\MySql.Data.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.Api.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.db3"; DestDir: "{userappdata}\Schumix\"; Flags: ignoreversion
@@ -95,8 +96,6 @@ Source: "..\Run\Release\Addons\SvnRssAddon.dll"; DestDir: "{userappdata}\Schumix
 Source: "..\Run\Release\Addons\TestAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
 Source: "..\Run\Release\Addons\WolframAPI.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
 Source: "..\Run\Release\Addons\WordpressRssAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\YamlDotNet.Core.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\YamlDotNet.RepresentationModel.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
 ;Locale
 Source: "..\Run\Release\locale\*"; DestDir: "{app}\locale\"; Flags: ignoreversion recursesubdirs createallsubdirs
 ;Configs
