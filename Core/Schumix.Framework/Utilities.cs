@@ -1344,6 +1344,12 @@ namespace Schumix.Framework
 
 			if(File.Exists(AddonsConfig.Directory + "/Mono.Posix.dll"))
 				File.Delete(AddonsConfig.Directory + "/Mono.Posix.dll");
+
+			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.Core.dll"))
+				File.Delete(AddonsConfig.Directory + "/YamlDotNet.Core.dll");
+
+			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll"))
+				File.Delete(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll");
 		}
 	}
 }
