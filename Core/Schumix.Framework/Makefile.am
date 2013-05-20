@@ -102,7 +102,6 @@ FILES = \
 	Network/ClientSocket.cs \
 	Runtime.cs \
 	CrashDumper.cs \
-	PlatformType.cs \
 	Mathematics/Algorithms/QuickSort.cs \
 	Mathematics/Types/AutoSortedArray.cs \
 	Mathematics/MathFunctions.cs \
@@ -154,7 +153,9 @@ FILES = \
 	Options/OptionContext.cs \
 	Options/OptionSet.cs \
 	Exceptions/OptionException.cs \
-	Options/ActionOption.cs 
+	Options/ActionOption.cs \
+	Platforms/Platform.cs \
+	Platforms/PlatformType.cs 
 
 DATA_FILES = 
 
@@ -169,6 +170,7 @@ EXTRAS = \
 	Log \
 	Bitly \
 	Options \
+	Platforms \
 	schumix.framework.pc.in 
 
 REFERENCES =  \
