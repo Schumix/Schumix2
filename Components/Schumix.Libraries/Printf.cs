@@ -23,6 +23,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Framework;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Libraries
@@ -30,6 +31,7 @@ namespace Schumix.Libraries
 	public static class Tools
 	{
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 
 		#region Public Methods
 		#region IsNumericType
@@ -570,7 +572,7 @@ namespace Schumix.Libraries
 #if SILVERLIGHT
 							w = ((IntPtr)o).ToString();
 #else
-							if(sUtilities.GetPlatformType() == PlatformType.Xbox)
+							if(sPlatform.GetPlatformType() == PlatformType.Xbox)
 								w = ((IntPtr)o).ToString();
 							else
 								w = "0x" + ((IntPtr)o).ToString("x");

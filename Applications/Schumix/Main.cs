@@ -29,6 +29,7 @@ using Schumix.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Config;
 using Schumix.Framework.Options;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Exceptions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -55,6 +56,7 @@ namespace Schumix
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Futással kapcsolatos információkat táról.
@@ -163,7 +165,7 @@ namespace Schumix
 			else if(localization != "start")
 				sLConsole.SetLocale(localization);
 
-			if(sUtilities.GetPlatformType() == PlatformType.Windows && console_encoding == Encoding.UTF8.BodyName &&
+			if(sPlatform.GetPlatformType() == PlatformType.Windows && console_encoding == Encoding.UTF8.BodyName &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
@@ -176,9 +178,9 @@ namespace Schumix
 			if(colorbindmode)
 				Log.Notice("Main", sLConsole.GetString("Colorblind mode is on!"));
 
-			if(sUtilities.GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.GetPlatformType() == PlatformType.Windows)
 				sWindows.Init();
-			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
 				sLinux.Init();
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>

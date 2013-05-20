@@ -26,6 +26,7 @@ using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -35,6 +36,7 @@ namespace Schumix.Irc.Ctcp
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly SendMessage sSendMessage;
 		private string _clientInfoMessage;
@@ -47,7 +49,7 @@ namespace Schumix.Irc.Ctcp
 		{
 			_userInfoMessage = "Schumix CTCP";		
 			_fingerMessage = _userInfoMessage;
-			_versionMessage = string.Format("Schumix {0}\n{1} {2}\n{3} {4}", sUtilities.GetVersion(), sLConsole.GetString("Operating System:"), sUtilities.GetOSName(), sLConsole.GetString("Processor:"), sUtilities.GetCpuId());
+			_versionMessage = string.Format("Schumix {0}\n{1} {2}\n{3} {4}", sUtilities.GetVersion(), sLConsole.GetString("Operating System:"), sPlatform.GetOSName(), sLConsole.GetString("Processor:"), sUtilities.GetCpuId());
 			_sourceMessage = Consts.SchumixWebsite;
 			_clientInfoMessage = sLConsole.GetString("This client supports: UserInfo, Finger, Version, Source, Ping, Time and ClientInfo");
 			sSendMessage = sIrcBase.Networks[ServerName].sSendMessage;

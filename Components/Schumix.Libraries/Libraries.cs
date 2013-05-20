@@ -24,9 +24,10 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using Schumix.Framework;
+using Schumix.Framework.Platforms;
 
 namespace Schumix.Libraries
 {
@@ -34,6 +35,7 @@ namespace Schumix.Libraries
 	{
 		private static readonly DateTime UnixTimeStart = new DateTime(1970, 1, 1, 0, 0, 0);
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private static readonly object WriteLock = new object();
 		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
 		private const int TicksPerSecond = 10000;
@@ -729,7 +731,7 @@ namespace Schumix.Libraries
 
 		public static string GetPlatform()
 		{
-			return GetPlatform();
+			return sPlatform.GetPlatform();
 		}
 
 		/// <summary>
@@ -738,7 +740,7 @@ namespace Schumix.Libraries
 		/// <returns>A string containing the the operating system name.</returns>
 		public static string GetOSName()
 		{
-			return sUtilities.GetOSName();
+			return sPlatform.GetOSName();
 		}
 
 		public static bool IsDay(int Year, int Month, int Day)

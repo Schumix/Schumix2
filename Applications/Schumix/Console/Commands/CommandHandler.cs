@@ -33,6 +33,7 @@ using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -63,6 +64,7 @@ namespace Schumix.Console.Commands
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly object Lock = new object();
 		/// <summary>
@@ -127,7 +129,7 @@ namespace Schumix.Console.Commands
 
 			var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
 			Log.Notice("Console", text[0], sUtilities.GetVersion());
-			Log.Notice("Console", text[1], sUtilities.GetPlatform());
+			Log.Notice("Console", text[1], sPlatform.GetPlatform());
 			Log.Notice("Console", text[2], Environment.OSVersion.ToString());
 			Log.Notice("Console", text[3]);
 			Log.Notice("Console", text[4], memory);

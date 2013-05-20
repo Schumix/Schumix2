@@ -24,16 +24,18 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Schumix.Framework;
-using Schumix.Framework.Localization;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Server.New
 {
 	class Schumix
 	{
+		public readonly Dictionary<string, Settings> _processlist = new Dictionary<string, Settings>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public readonly Dictionary<string, Settings> _processlist = new Dictionary<string, Settings>();
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 
 		private Schumix()
 		{
@@ -61,7 +63,7 @@ namespace Schumix.Server.New
 
 						bool run = false;
 
-						if(sUtilities.GetPlatformType() == PlatformType.Linux)
+						if(sPlatform.GetPlatformType() == PlatformType.Linux)
 						{
 							foreach(var p in Process.GetProcessesByName("mono"))
 							{
@@ -69,7 +71,7 @@ namespace Schumix.Server.New
 									run = true;
 							}
 						}
-						else if(sUtilities.GetPlatformType() == PlatformType.Windows)
+						else if(sPlatform.GetPlatformType() == PlatformType.Windows)
 						{
 							foreach(var p in Process.GetProcessesByName("Schumix"))
 							{
@@ -124,12 +126,12 @@ namespace Schumix.Server.New
 			exe.StartInfo.RedirectStandardOutput = true;
 			exe.StartInfo.RedirectStandardError = true;
 
-			if(sUtilities.GetPlatformType() == PlatformType.Linux)
+			if(sPlatform.GetPlatformType() == PlatformType.Linux)
 			{
 				exe.StartInfo.FileName = "mono";
 				exe.StartInfo.Arguments = string.Format("Schumix.exe --config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7} --server-identify={8}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password, Identify);
 			}
-			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
+			else if(sPlatform.GetPlatformType() == PlatformType.Windows)
 			{
 				exe.StartInfo.FileName = "Schumix.exe";
 				exe.StartInfo.Arguments = string.Format("--config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7} --server-identify={8}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password, Identify);

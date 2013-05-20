@@ -34,6 +34,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Api.Functions;
 using Schumix.Framework.Config;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -43,6 +44,7 @@ namespace Schumix.Framework
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly DateTime UnixTimeStart = new DateTime(1970, 1, 1, 0, 0, 0);
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
 		private readonly object WriteLock = new object();
 		private const int TicksPerSecond = 10000;
@@ -320,172 +322,6 @@ namespace Schumix.Framework
 			return p;
 		}
 
-		public string GetPlatform()
-		{
-			string platform = string.Empty;
-			var pid = Environment.OSVersion.Platform;
-
-			switch(pid)
-			{
-				case PlatformID.Win32NT:
-				case PlatformID.Win32S:
-				case PlatformID.Win32Windows:
-				case PlatformID.WinCE:
-					platform = "Windows";
-					break;
-				case PlatformID.Unix:
-					platform = "Linux";
-					break;
-				case PlatformID.MacOSX:
-					platform = "MacOSX";
-					break;
-				case PlatformID.Xbox:
-					platform = "Xbox";
-					break;
-				default:
-					platform = "Unknown";
-					break;
-			}
-
-			return platform;
-		}
-
-		/// <summary>
-		/// Returns the name of the operating system running on this computer.
-		/// </summary>
-		/// <returns>A string containing the the operating system name.</returns>
-		public string GetOSName()
-		{
-			var Info = Environment.OSVersion;
-			string Name = string.Empty;
-			
-			switch(Info.Platform)
-			{
-				case PlatformID.Win32Windows:
-				{
-					switch(Info.Version.Minor)
-					{
-						case 0:
-						{
-							Name = "Windows 95";
-							break;
-						}
-						case 10:
-						{
-							if(Info.Version.Revision.ToString() == "2222A")
-								Name = "Windows 98 Second Edition";
-							else
-								Name = "Windows 98";
-
-							break;
-						}
-						case 90:
-						{
-							Name = "Windows Me";
-							break;
-						}
-					}
-
-					break;
-				}
-				case PlatformID.Win32NT:
-				{
-					switch(Info.Version.Major)
-					{
-						case 3:
-						{
-							Name = "Windows NT 3.51";
-							break;
-						}
-						case 4:
-						{
-							Name = "Windows NT 4.0";
-							break;
-						}
-						case 5:
-						{
-							if(Info.Version.Minor == 0)
-								Name = "Windows 2000";
-							else if(Info.Version.Minor == 1)
-								Name = "Windows XP";
-							else if(Info.Version.Minor == 2)
-								Name = "Windows Server 2003";
-							break;
-						}
-						case 6:
-						{
-							if(Info.Version.Minor == 0)
-								Name = "Windows Vista";
-							else if(Info.Version.Minor == 1)
-								Name = "Windows 7";
-							else if(Info.Version.Minor == 2)
-								Name = "Windows 8";
-							break;
-						}
-					}
-
-					break;
-				}
-				case PlatformID.WinCE:
-				{
-					Name = "Windows CE";
-					break;
-				}
-				case PlatformID.Unix:
-				{
-					Name = "Linux " + Info.Version;
-					break;
-				}
-				case PlatformID.MacOSX:
-				{
-					Name = "MacOSX";
-					break;
-				}
-				case PlatformID.Xbox:
-				{
-					Name = "Xbox";
-					break;
-				}
-				default:
-				{
-					Name = "Unknown";
-					break;
-				}
-			}
-
-			return Name;
-		}
-
-		public PlatformType GetPlatformType()
-		{
-			PlatformType platform = PlatformType.None;
-			var pid = Environment.OSVersion.Platform;
-
-			switch(pid)
-			{
-				case PlatformID.Win32NT:
-				case PlatformID.Win32S:
-				case PlatformID.Win32Windows:
-				case PlatformID.WinCE:
-					platform = PlatformType.Windows;
-					break;
-				case PlatformID.Unix:
-					platform = PlatformType.Linux;
-					break;
-				case PlatformID.MacOSX:
-					platform = PlatformType.MacOSX;
-					break;
-				case PlatformID.Xbox:
-					platform = PlatformType.Xbox;
-					break;
-				default:
-					platform = PlatformType.None;
-					break;
-			}
-
-			return platform;
-		}
-
 		public string GetVersion()
 		{
 			return Schumix.Framework.Config.Consts.SchumixVersion;
@@ -660,12 +496,12 @@ namespace Schumix.Framework
 		/// </returns>
 		public string GetCpuId()
 		{
-			if(GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.GetPlatformType() == PlatformType.Windows)
 			{
 				var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
 				return (from ManagementObject mo in mos.Get() select (Regex.Replace(Convert.ToString(mo["Name"]), @"\s+", SchumixBase.Space.ToString()))).FirstOrDefault();
 			}
-			else if(GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
 			{
 				var reader = new StreamReader("/proc/cpuinfo");
 				string content = reader.ReadToEnd();
@@ -1186,7 +1022,7 @@ namespace Schumix.Framework
 
 		public string GetSpecialDirectory(string data)
 		{
-			if(GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.GetPlatformType() == PlatformType.Windows)
 			{
 				string text = data.ToLower();
 
@@ -1220,7 +1056,7 @@ namespace Schumix.Framework
 				else
 					return data;
 			}
-			else if(GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
 			{
 				string text = data.ToLower();
 				return (text.Length >= "$home".Length && text.Substring(0, "$home".Length) == "$home") ?
@@ -1236,7 +1072,7 @@ namespace Schumix.Framework
 
 			if(dir.Contains("$home"))
 				return true;
-			else if(GetPlatformType() == PlatformType.Windows && dir.Contains("$localappdata"))
+			else if(sPlatform.GetPlatformType() == PlatformType.Windows && dir.Contains("$localappdata"))
 				return true;
 			else
 				return false;
@@ -1244,7 +1080,7 @@ namespace Schumix.Framework
 
 		public string DirectoryToSpecial(string dir, string file)
 		{
-			if(GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.GetPlatformType() == PlatformType.Windows)
 			{
 				if(dir.Length > 2 && dir.Substring(1, 2) == @":\")
 					return string.Format(@"{0}\{1}", dir, file);
@@ -1253,7 +1089,7 @@ namespace Schumix.Framework
 				else
 					return string.Format("./{0}/{1}", dir, file);
 			}
-			else if(GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
 				return (dir.Length > 0 && dir.Substring(0, 1) == "/") ? string.Format("{0}/{1}", dir, file) : string.Format("./{0}/{1}", dir, file);
 			else
 				return string.Format("{0}/{1}", dir, file);
@@ -1261,12 +1097,12 @@ namespace Schumix.Framework
 
 		public string GetDirectoryName(string data)
 		{
-			if(GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.GetPlatformType() == PlatformType.Windows)
 			{
 				var split = data.Split('\\');
 				return split.Length > 1 ? split[split.Length-1] : data;
 			}
-			else if(GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
 			{
 				var split = data.Split('/');
 				return split.Length > 1 ? split[split.Length-1] : data;

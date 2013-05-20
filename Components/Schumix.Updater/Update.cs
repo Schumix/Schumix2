@@ -24,6 +24,7 @@ using System.Threading;
 using System.Diagnostics;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.Updater.Sql;
@@ -36,6 +37,7 @@ namespace Schumix.Updater
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private const string _dir = "Schumix2";
 
 		public Update(string ConfigDirectory)
@@ -46,7 +48,7 @@ namespace Schumix.Updater
 				return;
 			}
 
-			if(sUtilities.GetPlatformType() == PlatformType.Linux)
+			if(sPlatform.GetPlatformType() == PlatformType.Linux)
 				System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 			if(UpdateConfig.Version == "stable")
@@ -168,12 +170,12 @@ namespace Schumix.Updater
 			config.StartInfo.RedirectStandardOutput = true;
 			config.StartInfo.RedirectStandardError = true;
 
-			if(sUtilities.GetPlatformType() == PlatformType.Linux)
+			if(sPlatform.GetPlatformType() == PlatformType.Linux)
 			{
 				config.StartInfo.FileName = "mono";
 				config.StartInfo.Arguments = "Config.exe " + _dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
 			}
-			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
+			else if(sPlatform.GetPlatformType() == PlatformType.Windows)
 			{
 				config.StartInfo.FileName = "Config.exe";
 				config.StartInfo.Arguments = _dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
@@ -182,7 +184,7 @@ namespace Schumix.Updater
 			Log.Notice("Update", sLConsole.GetString("This step of updateing is finished. Continue with next step."));
 			config.Start();
 
-			if(sUtilities.GetPlatformType() == PlatformType.Linux)
+			if(sPlatform.GetPlatformType() == PlatformType.Linux)
 			{
 				config.WaitForExit();
 				Log.Success("Update", sLConsole.GetString("The update is finished. The program shutting down!"));

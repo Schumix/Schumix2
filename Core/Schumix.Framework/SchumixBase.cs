@@ -33,6 +33,7 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Network;
 using Schumix.Framework.Database;
 using Schumix.Framework.Database.Cache;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -44,6 +45,7 @@ namespace Schumix.Framework
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private static readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private static readonly object WriteLock = new object();
 		private static readonly Guid _guid = Guid.NewGuid();
 		public static CleanManager sCleanManager { get; private set; }
@@ -87,7 +89,7 @@ namespace Schumix.Framework
 						Thread.Sleep(100);
 				}
 
-				if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				if(sPlatform.GetPlatformType() == PlatformType.Linux)
 					ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 				WebRequest.DefaultWebProxy = null;

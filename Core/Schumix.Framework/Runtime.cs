@@ -26,6 +26,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Schumix.Api.Irc;
 using Schumix.Framework.Config;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -35,6 +36,7 @@ namespace Schumix.Framework
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private System.Timers.Timer _timer = new System.Timers.Timer();
 
 		private Runtime()
@@ -77,7 +79,7 @@ namespace Schumix.Framework
 
 		public void SetProcessName(string Name)
 		{
-			if(sUtilities.GetPlatformType() != PlatformType.Linux || sUtilities.GetPlatformType() != PlatformType.MacOSX)
+			if(sPlatform.GetPlatformType() != PlatformType.Linux || sPlatform.GetPlatformType() != PlatformType.MacOSX)
 				return;
 
 			if(Environment.OSVersion.Platform == PlatformID.Unix)

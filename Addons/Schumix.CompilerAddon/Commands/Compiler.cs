@@ -30,6 +30,7 @@ using Schumix.Api.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.CompilerAddon.Config;
@@ -41,6 +42,7 @@ namespace Schumix.CompilerAddon.Commands
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 		private readonly Regex ForRegex = new Regex(@"for\s*\(\s*(?<lol>.*)\s*\)");
@@ -254,14 +256,14 @@ namespace Schumix.CompilerAddon.Commands
 		{
 			try
 			{
-				if(sUtilities.GetPlatformType() == PlatformType.Linux)
+				if(sPlatform.GetPlatformType() == PlatformType.Linux)
 				{
 #pragma warning disable 618
 					var compiler = new CSharpCodeProvider().CreateCompiler();
 #pragma warning restore 618
 					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
 				}
-				else if(sUtilities.GetPlatformType() == PlatformType.Windows)
+				else if(sPlatform.GetPlatformType() == PlatformType.Windows)
 				{
 					var compiler = CodeDomProvider.CreateProvider("CSharp");
 					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
@@ -288,7 +290,7 @@ namespace Schumix.CompilerAddon.Commands
 
 					if(errortext.Contains("Location of the symbol related to previous error"))
 					{
-						if(sUtilities.GetPlatformType() == PlatformType.Linux)
+						if(sPlatform.GetPlatformType() == PlatformType.Linux)
 						{
 							for(;;)
 							{
@@ -305,7 +307,7 @@ namespace Schumix.CompilerAddon.Commands
 
 							errormessage += ". " + "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
 						}
-						else if(sUtilities.GetPlatformType() == PlatformType.Windows)
+						else if(sPlatform.GetPlatformType() == PlatformType.Windows)
 						{
 							for(;;)
 							{

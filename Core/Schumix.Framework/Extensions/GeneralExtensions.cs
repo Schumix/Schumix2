@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using YamlDotNet.RepresentationModel;
+using Schumix.Framework.Platforms;
 
 namespace Schumix.Framework.Extensions
 {
@@ -36,6 +37,7 @@ namespace Schumix.Framework.Extensions
 	public static class GeneralExtensions
 	{
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 
 		/// <summary>
 		/// Casts the object to the specified type.
@@ -449,7 +451,7 @@ namespace Schumix.Framework.Extensions
 					text.Append("    ").Append(child.Key).Append(": ").Append(child.Value);
 			}
 
-			if(sUtilities.GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.GetPlatformType() == PlatformType.Windows)
 				text = text.Replace("\r", string.Empty);
 
 			return FileName.IsNullOrEmpty() ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();

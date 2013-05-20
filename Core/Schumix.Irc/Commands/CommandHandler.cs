@@ -29,6 +29,7 @@ using Schumix.Irc.NickName;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -41,6 +42,7 @@ namespace Schumix.Irc.Commands
 		protected readonly Dictionary<string, Whois> WhoisList = new Dictionary<string, Whois>();
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		protected readonly Platform sPlatform = Singleton<Platform>.Instance;
 		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		public IgnoreIrcCommand sIgnoreIrcCommand { get; private set; }
 		public IgnoreNickName sIgnoreNickName { get; private set; }

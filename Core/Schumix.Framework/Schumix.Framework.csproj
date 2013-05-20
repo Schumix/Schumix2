@@ -12,9 +12,9 @@
     <ReleaseVersion>4.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
+    <Optimize>False</Optimize>
     <OutputPath>..\..\Run\Debug</OutputPath>
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -22,7 +22,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>True</Optimize>
     <OutputPath>..\..\Run\Release</OutputPath>
     <DefineConstants>RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -72,7 +72,6 @@
     <Compile Include="Network\ClientSocket.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="CrashDumper.cs" />
-    <Compile Include="PlatformType.cs" />
     <Compile Include="Mathematics\Algorithms\QuickSort.cs" />
     <Compile Include="Mathematics\Types\AutoSortedArray.cs" />
     <Compile Include="Mathematics\MathFunctions.cs" />
@@ -125,6 +124,8 @@
     <Compile Include="Options\OptionSet.cs" />
     <Compile Include="Exceptions\OptionException.cs" />
     <Compile Include="Options\ActionOption.cs" />
+    <Compile Include="Platforms\Platform.cs" />
+    <Compile Include="Platforms\PlatformType.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -161,5 +162,6 @@
     <Folder Include="Log\" />
     <Folder Include="Bitly\" />
     <Folder Include="Options\" />
+    <Folder Include="Platforms\" />
   </ItemGroup>
 </Project>

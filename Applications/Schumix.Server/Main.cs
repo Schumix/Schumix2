@@ -32,6 +32,7 @@ using Schumix.Framework.Clean;
 using Schumix.Framework.Config;
 using Schumix.Framework.Network;
 using Schumix.Framework.Options;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Exceptions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -45,6 +46,7 @@ namespace Schumix.Server
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private static readonly Windows sWindows = Singleton<Windows>.Instance;
 		private static readonly Linux sLinux = Singleton<Linux>.Instance;
@@ -124,7 +126,7 @@ namespace Schumix.Server
 			else if(localization != "start")
 				sLConsole.SetLocale(localization);
 
-			if(sUtilities.GetPlatformType() == PlatformType.Windows && console_encoding == Encoding.UTF8.BodyName &&
+			if(sPlatform.GetPlatformType() == PlatformType.Windows && console_encoding == Encoding.UTF8.BodyName &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
@@ -140,9 +142,9 @@ namespace Schumix.Server
 			new Update(Server.Config.ServerConfig.ConfigDirectory);
 			sUtilities.CleanHomeDirectory(true);
 
-			if(sUtilities.GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.GetPlatformType() == PlatformType.Windows)
 				sWindows.Init();
-			else if(sUtilities.GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
 				sLinux.Init();
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>

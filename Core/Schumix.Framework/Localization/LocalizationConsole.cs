@@ -26,6 +26,7 @@ using System.Reflection;
 using System.Globalization;
 using Mono.Unix;
 using Schumix.Framework.Config;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework.Localization
@@ -96,7 +97,11 @@ namespace Schumix.Framework.Localization
 				Language = "en-US";
 
 			if(GetPlatformType() == PlatformType.Windows)
+			{
+				// .net 4.5
+				//CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(Language);
 				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
+			}
 			else if(GetPlatformType() == PlatformType.Linux)
 				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
 			else
