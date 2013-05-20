@@ -33,6 +33,7 @@ namespace Schumix.Framework.Localization
 {
 	public sealed class LocalizationConsole
 	{
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		public string Locale { get; set; }
 
 		private LocalizationConsole()
@@ -52,9 +53,9 @@ namespace Schumix.Framework.Localization
 			{
 				string location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 				
-				if(GetPlatformType() == PlatformType.Windows)
+				if(sPlatform.GetPlatformType() == PlatformType.Windows)
 					LocaleDir = Path.Combine(location, "locale");
-				else if(GetPlatformType() == PlatformType.Linux)
+				else if(sPlatform.GetPlatformType() == PlatformType.Linux)
 				{
 					bool enabled = false;
 					var dir = new DirectoryInfo(location);
@@ -96,46 +97,16 @@ namespace Schumix.Framework.Localization
 			else if((Language.Length < 4 || Language.Length > 4) && !Language.Contains("-"))
 				Language = "en-US";
 
-			if(GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.GetPlatformType() == PlatformType.Windows)
 			{
 				// .net 4.5
 				//CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(Language);
 				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
 			}
-			else if(GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
 				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
 			else
 				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
-		}
-
-		private PlatformType GetPlatformType()
-		{
-			PlatformType platform = PlatformType.None;
-			var pid = Environment.OSVersion.Platform;
-			
-			switch(pid)
-			{
-			case PlatformID.Win32NT:
-			case PlatformID.Win32S:
-			case PlatformID.Win32Windows:
-			case PlatformID.WinCE:
-				platform = PlatformType.Windows;
-				break;
-			case PlatformID.Unix:
-				platform = PlatformType.Linux;
-				break;
-			case PlatformID.MacOSX:
-				platform = PlatformType.MacOSX;
-				break;
-			case PlatformID.Xbox:
-				platform = PlatformType.Xbox;
-				break;
-			default:
-				platform = PlatformType.None;
-				break;
-			}
-			
-			return platform;
 		}
 
 		public string GetString(string phrase)
