@@ -67,96 +67,96 @@ namespace Schumix.Framework.Platforms
 			
 			switch(Info.Platform)
 			{
-			case PlatformID.Win32Windows:
-			{
-				switch(Info.Version.Minor)
+				case PlatformID.Win32Windows:
 				{
-				case 0:
-				{
-					Name = "Windows 95";
-					break;
-				}
-				case 10:
-				{
-					if(Info.Version.Revision.ToString() == "2222A")
-						Name = "Windows 98 Second Edition";
-					else
-						Name = "Windows 98";
+					switch(Info.Version.Minor)
+					{
+						case 0:
+						{
+							Name = "Windows 95";
+							break;
+						}
+						case 10:
+						{
+							if(Info.Version.Revision.ToString() == "2222A")
+								Name = "Windows 98 Second Edition";
+							else
+								Name = "Windows 98";
+							
+							break;
+						}
+						case 90:
+						{
+							Name = "Windows Me";
+							break;
+						}
+					}
 					
 					break;
 				}
-				case 90:
+				case PlatformID.Win32NT:
 				{
-					Name = "Windows Me";
+					switch(Info.Version.Major)
+					{
+						case 3:
+						{
+							Name = "Windows NT 3.51";
+							break;
+						}
+						case 4:
+						{
+							Name = "Windows NT 4.0";
+							break;
+						}
+						case 5:
+						{
+							if(Info.Version.Minor == 0)
+								Name = "Windows 2000";
+							else if(Info.Version.Minor == 1)
+								Name = "Windows XP";
+							else if(Info.Version.Minor == 2)
+								Name = "Windows Server 2003";
+							break;
+						}
+						case 6:
+						{
+							if(Info.Version.Minor == 0)
+								Name = "Windows Vista";
+							else if(Info.Version.Minor == 1)
+								Name = "Windows 7";
+							else if(Info.Version.Minor == 2)
+								Name = "Windows 8";
+							break;
+						}
+					}
+					
 					break;
 				}
-				}
-				
-				break;
-			}
-			case PlatformID.Win32NT:
-			{
-				switch(Info.Version.Major)
+				case PlatformID.WinCE:
 				{
-				case 3:
-				{
-					Name = "Windows NT 3.51";
+					Name = "Windows CE";
 					break;
 				}
-				case 4:
+				case PlatformID.Unix:
 				{
-					Name = "Windows NT 4.0";
+					Name = "Linux " + Info.Version;
 					break;
 				}
-				case 5:
+				case PlatformID.MacOSX:
 				{
-					if(Info.Version.Minor == 0)
-						Name = "Windows 2000";
-					else if(Info.Version.Minor == 1)
-						Name = "Windows XP";
-					else if(Info.Version.Minor == 2)
-						Name = "Windows Server 2003";
+					Name = "MacOSX";
 					break;
 				}
-				case 6:
+				case PlatformID.Xbox:
 				{
-					if(Info.Version.Minor == 0)
-						Name = "Windows Vista";
-					else if(Info.Version.Minor == 1)
-						Name = "Windows 7";
-					else if(Info.Version.Minor == 2)
-						Name = "Windows 8";
+					Name = "Xbox";
 					break;
 				}
+				default:
+				{
+					Name = "Unknown";
+					break;
 				}
-				
-				break;
-			}
-			case PlatformID.WinCE:
-			{
-				Name = "Windows CE";
-				break;
-			}
-			case PlatformID.Unix:
-			{
-				Name = "Linux " + Info.Version;
-				break;
-			}
-			case PlatformID.MacOSX:
-			{
-				Name = "MacOSX";
-				break;
-			}
-			case PlatformID.Xbox:
-			{
-				Name = "Xbox";
-				break;
-			}
-			default:
-			{
-				Name = "Unknown";
-				break;
-			}
 			}
 			
 			return Name;

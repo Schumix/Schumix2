@@ -191,7 +191,7 @@ namespace WolframAPI
 		/// <returns>The string representation</returns>
 		public override string ToString()
 		{
-			//if(sPlatform.GetPlatformType()() != PlatformType.Linux)
+			//if(sPlatform.GetPlatformType() != PlatformType.Linux)
 			//	Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 
 			var sd = Serialize();
@@ -254,7 +254,7 @@ namespace WolframAPI
 		/// <filterpriority>2</filterpriority>
 		public object Clone()
 		{
-			//if(sPlatform.GetPlatformType()() != PlatformType.Linux)
+			//if(sPlatform.GetPlatformType() != PlatformType.Linux)
 			//	Contract.Ensures(!Contract.Result<object>().IsNull());
 
 			return new WAResult(Success, Error, NumPods, DataTypes, TimedOut, Timing, ParseTiming, ParseTimedOut, Recalculate, Version, Pods);

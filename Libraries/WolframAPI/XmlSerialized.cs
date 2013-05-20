@@ -43,7 +43,7 @@ namespace WolframAPI
 		/// <returns>The serialized instance.</returns>
 		public string Serialize()
 		{
-			//if(sPlatform.GetPlatformType()() != PlatformType.Linux)
+			//if(sPlatform.GetPlatformType() != PlatformType.Linux)
 			//	Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
 
 			string data;
