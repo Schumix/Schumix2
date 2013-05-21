@@ -36,10 +36,10 @@ When using Monodevelop the `gettext` is needed for translating the language file
 
 # Code commissioning
 
-<br>Navigate to the `Run` folder and in that proper folder for the configuration.
+<br>Navigate to the `Run` folder and than to the appropriate folder for the configuration file.
 <br>Run the exe.
-<br>The program is generates its config file.
-<br>If there will be some problem then create a `Configs` named folder and from the root folder copy in that folder the `Schumix.yml` named file.
+<br>The program will generate its own config file.
+<br>If any problem occurs then create a `Configs` named folder and copy the `Schumix.yml` file from the root folder into it.
 
 # Install
 
