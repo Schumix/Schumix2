@@ -21,78 +21,79 @@ Download missing submodules: git submodule update --init --recursive
 ## Windows
 
 When using Monodevelop the `gettext` is needed for translating the language files.
-<br>Download and install it. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
-<br>The compiling is simple. Open the `Schumix.sln` file.
-<br>Choose the configuration that fits for you and compile it.
+<br/>Download and install it. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
+<br/>The compiling is simple. Open the `Schumix.sln` file.
+<br/>Choose the configuration that fits for you and compile it.
+
 ## Linux
 
-<br>Open the `Schumix.sln` file.
-<br>Choose the configuration that fits for you and compile it.
+Open the `Schumix.sln` file.
+<br/>Choose the configuration that fits for you and compile it.
 
 ## Linux terminal
 
-<br>Install the `mono-xbuild` package or from source `mono`.
-<br>Than run the `build.sh` command and the code is compiled.
+Install the `mono-xbuild` package or from source `mono`.
+<br/>Than run the `build.sh` command and the code is compiled.
 
 # Code commissioning
 
-<br>Navigate to the `Run` folder and than to the appropriate folder for the configuration file.
-<br>Run the exe.
-<br>The program will generate its own config file.
-<br>If any problem occurs then create a `Configs` named folder and copy the `Schumix.yml` file from the root folder into it.
+Navigate to the `Run` folder and than to the appropriate folder for the configuration file.
+<br/>Run the exe.
+<br/>The program will generate its own config file.
+<br/>If any problem occurs then create a `Configs` named folder and copy the `Schumix.yml` file from the root folder into it.
 
 # Install
 
-<br>Use this option only if you want to innstal the bot like a program.
-<br>Attention! Administrative permissions probably needed at the final stage of install.
+Use this option only if you want to innstal the bot like a program.
+<br/>Attention! Administrative permissions probably needed at the final stage of install.
 
 ## Archlinux
 
 **Attention!!! Root permission needed for that.**
-<br>Run the `./createarchlinuxpkg.sh` command.
-<br>When it's done a `schumix.pkg.tar.xz` (the name will be similar) named file will be created.
-<br>Install it with the `sudo pacman -U schumix2.pkg.tar.xz` command (the packet name will be similar) and it's all ready.
-<br>Run the bot with the `schumix` command.
+<br/>Run the `./createarchlinuxpkg.sh` command.
+<br/>When it's done a `schumix.pkg.tar.xz` (the name will be similar) named file will be created.
+<br/>Install it with the `sudo pacman -U schumix2.pkg.tar.xz` command (the packet name will be similar) and it's all ready.
+<br/>Run the bot with the `schumix` command.
 
 ## Debian/Ubuntu
 
 **Attention!!! Root permission needed for that.**
-<br>For the first step, switch to fakeroot mode.
-<br>Type the `fakeroot` command for that.
-<br>After that run the `./createdebianpkg.sh` command.
-<br>When it's done a `schumix.deb` named file will be created.
-<br>Install it with the `sudo dbkg -i schumix.deb` command and it's all ready.
-<br>Run the bot with the `schumix` command.
+<br/>For the first step, switch to fakeroot mode.
+<br/>Type the `fakeroot` command for that.
+<br/>After that run the `./createdebianpkg.sh` command.
+<br/>When it's done a `schumix.deb` named file will be created.
+<br/>Install it with the `sudo dbkg -i schumix.deb` command and it's all ready.
+<br/>Run the bot with the `schumix` command.
 
 ## Windows
 
-<br>Navigate to the Installer folder.
-<br>Run the `Schumix.iss` named file.
-<br>When it's done a `Setup.exe` file will be created.
-<br>Run this and complete the install.
-<br>I guess I don't need to explain more. :)
+Navigate to the Installer folder.
+<br/>Run the `Schumix.iss` named file.
+<br/>When it's done a `Setup.exe` file will be created.
+<br/>Run this and complete the install.
+<br/>I guess I don't need to explain more. :)
 
 # Config settings
 
-<br>To adjust the configs navigate to the `Share/doc/Configs` folder and open the `Schumix.en.md` file.
-<br>This is the description for the main config.
-<br>Reading the description is necessary because the bot can't be started correctly without it.
-<br>After that you can take a look at the other descriptions but they aren't required for starting the bot.
+To adjust the configs navigate to the `Share/doc/Configs` folder and open the `Schumix.en.md` file.
+<br/>This is the description for the main config.
+<br/>Reading the description is necessary because the bot can't be started correctly without it.
+<br/>After that you can take a look at the other descriptions but they aren't required for starting the bot.
 
 # Database configuration
 
 ## MySql
 
-<br>If you want to use a mysql based database set the `<MySql><Enabled>false</Enabled>` permission to true.
-<br>After that, fill the database from the `Sql` folder.
-<br>If any kind of correction or update will come you don't need to refill the whole database.
-<br>Only update it from the `Updates` folder with the appropriate version number.
+If you want to use a mysql based database set the `<MySql><Enabled>false</Enabled>` permission to true.
+<br/>After that, fill the database from the `Sql` folder.
+<br/>If any kind of correction or update will come you don't need to refill the whole database.
+<br/>Only update it from the `Updates` folder with the appropriate version number.
 
 ## SQLite
 
-<br>If you want to use an SQLite based database set the `<SQLite><Enabled>false</Enabled>` permission to true.
-<br>Then copy the `Schumix.db3` file from the `Sql` folder next to the exe.
-<br>You can rename or move it but you have to change the name or the path in the config file.
+If you want to use an SQLite based database set the `<SQLite><Enabled>false</Enabled>` permission to true.
+<br/>Then copy the `Schumix.db3` file from the `Sql` folder next to the exe.
+<br/>You can rename or move it but you have to change the name or the path in the config file.
 
 # Attention!
 

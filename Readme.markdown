@@ -19,58 +19,80 @@ Hiányzó almodulok letöltése: git submodule update --init --recursive
 
 ## Windows
 
-Monodevelop használatakor szükséges a nyelvi fájlok lefordításához a `gettext`. Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
-A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
+Monodevelop használatakor szükséges a nyelvi fájlok lefordításához a `gettext`.
+<br/>Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
+<br/>A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt.
+<br/>Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
 
 ## Linux
 
-Nyissuk meg a `Schumix.sln` fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
+Nyissuk meg a `Schumix.sln` fájlt.
+<br/>Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
 
 ## Linux terminál
 
-Telepítsük a `mono-xbuild` csomagot vagy forrásból a `mono`-t. Ezután inditsuk el a `build.sh`-t és lefordul a kód.
+Telepítsük a `mono-xbuild` csomagot vagy forrásból a `mono`-t.
+<br/>Ezután inditsuk el a `build.sh`-t és lefordul a kód.
 
 # Kód üzembehelyezése
 
-Navigáljunk a `Run` mappába és azon belül a konfigurációnak megfelelõ mappába. Inditusk el az exe-t. A program legenerálja
-önmagának a konfig fájlt. Ha bármi gond lenne vele hozzunk létre egy `Configs` nevû mappát és a fõ mappából másoljuk bele
-a `Schumix.yml` nevû fájlt.
+Navigáljunk a `Run` mappába és azon belül a konfigurációnak megfelelõ mappába.
+<br/>Indítusk el az exe-t.
+<br/>A program legenerálja önmagának a konfig fájlt.
+<br/>Ha bármi gond lenne vele hozzunk létre egy `Configs` nevû mappát és a fõ mappából másoljuk bele a `Schumix.yml` nevû fájlt.
 
 # Telepítés
 
-Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mint ha be akarjuk telepíteni a rendszerbe. Figyelem! Rendszergazadi jog valószinüleg szükséges lesz a telepítés végső szakaszához.
+Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mint ha be akarjuk telepíteni a rendszerbe.
+<br/>Figyelem! Rendszergazadi jog valószinüleg szükséges lesz a telepítés végső szakaszához.
 
 ## Archlinux
 
 **Figyelem!!! Root jogra lesz szükség hozzá.**
-Futtassuk `./createarchlinuxpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.pkg.tar.xz` (hasonló lesz a neve) nevű fájl. Ezt telepítsük a `sudo pacman -U schumix2.pkg.tar.xz` (csomag fájl neve hasonló lesz) paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+<br/>Futtassuk `./createarchlinuxpkg.sh` parancsot.
+<br/>Ha lefutott megjelenik egy `schumix.pkg.tar.xz` (hasonló lesz a neve) nevű fájl.
+<br/>Ezt telepítsük a `sudo pacman -U schumix2.pkg.tar.xz` (csomag fájl neve hasonló lesz) paranccsal és már készen is vagyunk.
+<br/>A botot a `schumix` paranccsal futtathatjuk.
 
 ## Debian/Ubuntu
 
 **Figyelem!!! Root jogra lesz szükség hozzá.**
-Első lépés hogy átlépünk fakeroot módba. Írjuk be hogy `fakeroot`. Ezután futtassuk `./createdebianpkg.sh` parancsot. Ha lefutott megjelenik egy `schumix.deb` nevű fájl. Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsl és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+<br/>Első lépés hogy átlépünk fakeroot módba.
+<br/>Írjuk be hogy `fakeroot`.
+<br/>Ezután futtassuk `./createdebianpkg.sh` parancsot.
+<br/>Ha lefutott megjelenik egy `schumix.deb` nevű fájl.
+<br/>Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsal és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
 
 ## Windows
 
-Navigáljunk az Installer mappába. Futtassuk a `Schumix.iss` nevű fájlt. Ha lefutott kapunk egy `Setup.exe` nevű telepíthető állományt. Futtasuk és értelemszerüen telepítsük. A többit szerintem nem kell részletezni :)
+Navigáljunk az Installer mappába.
+<br/>Futtassuk a `Schumix.iss` nevű fájlt.
+<br/>Ha lefutott kapunk egy `Setup.exe` nevű telepíthető állományt.
+<br/>Futtasuk és értelemszerüen telepítsük.
+<br/>A többit szerintem nem kell részletezni :)
 
 # Konfig beállítása
 
-A konfiguk beállításához menjünk a `Share/doc/Configs` mappába és a `Schumix.md` fájlt nyissuk meg. Ez a fő konfig leírása. Fontos hogy ezt a leírást mindenképpen olvassuk el mert enélkül nem lehet elindítani a botot normálisan. Ha megvagyunk akár a többi leírást is végiglehet nézni de az elindításhoz nem szükséges.
+A konfiguk beállításához menjünk a `Share/doc/Configs` mappába és a `Schumix.md` fájlt nyissuk meg.
+<br/>Ez a fő konfig leírása.
+<br/>Fontos hogy ezt a leírást mindenképpen olvassuk el mert enélkül nem lehet elindítani a botot normálisan.
+<br/>Ha megvagyunk akár a többi leírást is végiglehet nézni de az elindításhoz nem szükséges.
 
 # Adatbázis beüzemelése
 
 ## MySql
 
 Ha a jó öreg mysql alapú adatbázist szeretnénk használni állítsuk a konfig fájlban `(lásd: <MySql><Enabled>false</Enabled>)` az engedélyét true értékre.
-Ezután az `Sql` mappából töltsük fel az adatbázisunkat. Ha bármiféle javítás jön a kódhoz vagy újítás nem kell az agész adatbázist újra töltenünk.
-Csak az `Updates` mappából frisistsük a megfelelõ verzió szám alapján.
+<br/>Ezután az `Sql` mappából töltsük fel az adatbázisunkat.
+<br/>Ha bármiféle javítás jön a kódhoz vagy újítás nem kell az agész adatbázist újra töltenünk.
+<br/>Csak az `Updates` mappából frisistsük a megfelelõ verzió szám alapján.
 
 ## SQLite
 
 Ha az SQLite alapú adatbázist szeretnénk használni állítsuk a konfig fájlban `(lásd: <SQLite><Enabled>false</Enabled>)` az engedélyét `true` értékre.
-Majd másoljuk az `Sql` mappából a `Schumix.db3` fájlt az exe mellé. Ezen fájl neve megváltoztatható de akkor a konfig fájlban is meg kell vátoztatni.
-Természetesen az elérési út is a névvel együtt.
+<br/>Majd másoljuk az `Sql` mappából a `Schumix.db3` fájlt az exe mellé.
+<br/>Ezen fájl neve megváltoztatható de akkor a konfig fájlban is meg kell vátoztatni.
+<br/>Természetesen az elérési út is a névvel együtt.
 
 # Figyelmeztetés!
 
