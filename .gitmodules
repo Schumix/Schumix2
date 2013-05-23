@@ -4,3 +4,6 @@
 [submodule "External/YamlDotNet"]
 	path = External/YamlDotNet
 	url = https://github.com/Schumix/YamlDotNet.git
+[submodule "External/NLua"]
+	path = External/NLua
+	url = https://github.com/Schumix/NLua.git

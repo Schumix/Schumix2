@@ -27,7 +27,7 @@ using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
-using LuaInterface;
+using NLua;
 
 namespace Schumix.LuaEngine
 {

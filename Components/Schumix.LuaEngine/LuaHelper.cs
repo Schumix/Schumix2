@@ -26,7 +26,7 @@ using System.Text.RegularExpressions;
 using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using LuaInterface;
+using NLua;
 
 namespace Schumix.LuaEngine
 {

@@ -69,5 +69,9 @@
       <Project>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</Project>
       <Name>Schumix.Api</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\External\NLua\Core\NLua\NLua.csproj">
+      <Project>{F55CABBB-4108-4A39-94E1-581FD46DC021}</Project>
+      <Name>NLua</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>
