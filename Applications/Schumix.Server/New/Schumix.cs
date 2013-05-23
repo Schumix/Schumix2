@@ -34,7 +34,6 @@ namespace Schumix.Server.New
 	{
 		public readonly Dictionary<string, Settings> _processlist = new Dictionary<string, Settings>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 
 		private Schumix()

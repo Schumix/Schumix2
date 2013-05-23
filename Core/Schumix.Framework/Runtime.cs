@@ -35,7 +35,6 @@ namespace Schumix.Framework
 	public sealed class Runtime
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private System.Timers.Timer _timer = new System.Timers.Timer();
 

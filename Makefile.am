@@ -3,8 +3,8 @@ EXTRA_DIST =  expansions.m4 Dependencies/System.Data.SQLite.dll Dependencies/MyS
 
 #Warning: This is an automatically generated file, do not edit!
 if ENABLE_DEBUG
- SUBDIRS =  External/LuaInterface/Core/KopiLua External/LuaInterface/Core/LuaInterface External/ngit/External/SharpZipLib/src External/YamlDotNet/YamlDotNet.Core External/YamlDotNet/YamlDotNet.RepresentationModel Po Core Libraries/WolframAPI External/ngit/Sharpen External/ngit/Sharpen.Unix Addons External/ngit/NSch External/ngit/NGit Components Applications
+ SUBDIRS =  External/ngit/External/SharpZipLib/src External/YamlDotNet/YamlDotNet.Core External/YamlDotNet/YamlDotNet.RepresentationModel External/NLua/Core/KopiLua/KopiLua External/NLua/Core/KeraLua/src Po Core Libraries/WolframAPI External/ngit/Sharpen External/ngit/Sharpen.Unix External/NLua/Core/NLua Addons External/ngit/NSch External/ngit/NGit Components Applications
 endif
 if ENABLE_RELEASE
- SUBDIRS =  External/LuaInterface/Core/KopiLua External/LuaInterface/Core/LuaInterface External/ngit/External/SharpZipLib/src External/YamlDotNet/YamlDotNet.Core External/YamlDotNet/YamlDotNet.RepresentationModel Po Core Libraries/WolframAPI External/ngit/Sharpen External/ngit/Sharpen.Unix Addons External/ngit/NSch External/ngit/NGit Components Applications
+ SUBDIRS =  External/ngit/External/SharpZipLib/src External/YamlDotNet/YamlDotNet.Core External/YamlDotNet/YamlDotNet.RepresentationModel External/NLua/Core/KopiLua/KopiLua External/NLua/Core/KeraLua/src Po Core Libraries/WolframAPI External/ngit/Sharpen External/ngit/Sharpen.Unix External/NLua/Core/NLua Addons External/ngit/NSch External/ngit/NGit Components Applications
 endif

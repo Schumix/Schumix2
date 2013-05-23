@@ -36,7 +36,6 @@ namespace Schumix.Framework.Extensions
 	/// </summary>
 	public static class GeneralExtensions
 	{
-		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 
 		/// <summary>

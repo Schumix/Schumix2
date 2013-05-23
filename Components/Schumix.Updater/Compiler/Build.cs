@@ -30,7 +30,6 @@ namespace Schumix.Updater.Compiler
 {
 	sealed class Build
 	{
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		public bool HasError { get; private set; }
 

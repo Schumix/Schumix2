@@ -13,8 +13,7 @@ PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Framework.dll \
 	../../Run/Debug/Schumix.Irc.dll \
 	../../Run/Debug/Schumix.Api.dll \
-	../../External/LuaInterface/Run/Debug/KopiLua.dll \
-	../../External/LuaInterface/Run/Debug/LuaInterface.dll
+	../../External/NLua/Run/Debug/NLua.dll
 BUILD_DIR = ../../Run/Debug
 
 SCHUMIX_LUAENGINE_DLL_MDB_SOURCE=../../Run/Debug/Schumix.LuaEngine.dll.mdb
@@ -35,8 +34,9 @@ SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
-KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Debug/KopiLua.dll
-LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Debug/LuaInterface.dll
+NLUA_DLL_SOURCE=../../External/NLua/Run/Debug/NLua.dll
+KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Debug/KopiLua.dll
+KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Debug/KeraLua.dll
 
 endif
 
@@ -50,8 +50,7 @@ PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Framework.dll \
 	../../Run/Release/Schumix.Irc.dll \
 	../../Run/Release/Schumix.Api.dll \
-	../../External/LuaInterface/Run/Release/KopiLua.dll \
-	../../External/LuaInterface/Run/Release/LuaInterface.dll
+	../../External/NLua/Run/Release/NLua.dll
 BUILD_DIR = ../../Run/Release
 
 SCHUMIX_LUAENGINE_DLL_MDB=
@@ -68,8 +67,9 @@ YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.R
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB=
-KOPILUA_DLL_SOURCE=../../External/LuaInterface/Run/Release/KopiLua.dll
-LUAINTERFACE_DLL_SOURCE=../../External/LuaInterface/Run/Release/LuaInterface.dll
+NLUA_DLL_SOURCE=../../External/NLua/Run/Release/NLua.dll
+KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Release/KopiLua.dll
+KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Release/KeraLua.dll
 
 endif
 
@@ -91,8 +91,9 @@ PROGRAMFILES = \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL) \
 	$(SCHUMIX_IRC_DLL_MDB) \
+	$(NLUA_DLL) \
 	$(KOPILUA_DLL) \
-	$(LUAINTERFACE_DLL)  
+	$(KERALUA_DLL)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_LUAENGINE_PC)  
@@ -139,8 +140,9 @@ SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
+NLUA_DLL = $(BUILD_DIR)/NLua.dll
 KOPILUA_DLL = $(BUILD_DIR)/KopiLua.dll
-LUAINTERFACE_DLL = $(BUILD_DIR)/LuaInterface.dll
+KERALUA_DLL = $(BUILD_DIR)/KeraLua.dll
 SCHUMIX_LUAENGINE_PC = $(BUILD_DIR)/schumix.luaengine.pc
 
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
@@ -150,8 +152,9 @@ $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
+$(eval $(call emit-deploy-target,NLUA_DLL))
 $(eval $(call emit-deploy-target,KOPILUA_DLL))
-$(eval $(call emit-deploy-target,LUAINTERFACE_DLL))
+$(eval $(call emit-deploy-target,KERALUA_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_LUAENGINE_PC,schumix.luaengine.pc))
 
 
