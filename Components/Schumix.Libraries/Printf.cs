@@ -30,7 +30,6 @@ namespace Schumix.Libraries
 {
 	public static class Tools
 	{
-		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 
 		#region Public Methods
