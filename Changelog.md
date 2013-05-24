@@ -2,6 +2,7 @@
 
 ## 4.1.0 (2013-xx-xx)
 
+ * LuaInterface lecserélve NLua-ra.
  * Platform osztály létrehozva.
  * Windows 8 felismerése hozzáadva a GetOSName() függvényhez.
  * ngit és YamlDotNet modulként hozzáadva a kódhoz.
