@@ -115,7 +115,7 @@ namespace Schumix.MantisBTRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("MantisBTRssAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
+				Log.Error("MantisBTRssAddon", sLConsole.GetString("Reload: ") + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

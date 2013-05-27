@@ -44,6 +44,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		private readonly Dictionary<string, string> _normallist = new Dictionary<string, string>();
 		private readonly Dictionary<string, string> _ghostlist = new Dictionary<string, string>();
 		private readonly Dictionary<int, string> _playerlist = new Dictionary<int, string>();
+		private System.Timers.Timer _timerplayers = new System.Timers.Timer();
 		private System.Timers.Timer _timerowner = new System.Timers.Timer();
 		private readonly List<string> _gameoverlist = new List<string>();
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
@@ -117,18 +118,23 @@ namespace Schumix.GameAddon.MaffiaGames
 			return _playerflist.ContainsKey(Name.ToLower()) ? _playerflist[Name.ToLower()].Rank : Rank.None;
 		}
 
-		private string GetPlayerName(string Name)
+		public string GetPlayerName(string Name)
 		{
 			string player = string.Empty;
 
-			if(_killerlist.ContainsKey(Name))
-				player = _killerlist[Name];
-			else if(_detectivelist.ContainsKey(Name))
-				player = _detectivelist[Name];
-			else if(_doctorlist.ContainsKey(Name))
-				player = _doctorlist[Name];
-			else if(_normallist.ContainsKey(Name))
-				player = _normallist[Name];
+			if(!Started)
+				player = Name;
+			else
+			{
+				if(_killerlist.ContainsKey(Name))
+					player = _killerlist[Name];
+				else if(_detectivelist.ContainsKey(Name))
+					player = _detectivelist[Name];
+				else if(_doctorlist.ContainsKey(Name))
+					player = _doctorlist[Name];
+				else if(_normallist.ContainsKey(Name))
+					player = _normallist[Name];
+			}
 
 			return player;
 		}
@@ -287,7 +293,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			Started = false;
 			NoLynch = false;
 			NoVoice = false;
-			_owner = Name;
+			_owner = Name.ToLower();
 			_channel = Channel.ToLower();
 			_killerchannel = string.Empty;
 			_playerlist.Add(1, Name);
@@ -306,8 +312,8 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
-			sSendMessage.SendCMPrivmsg(_channel, text[0], DisableHl(_owner));
-			sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(_owner));
+			sSendMessage.SendCMPrivmsg(_channel, text[0], DisableHl(Name));
+			sSendMessage.SendCMPrivmsg(_channel, text[1], DisableHl(Name));
 
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Game FROM maffiagame WHERE ServerName = '{0}' ORDER BY Game DESC", _servername);
 			_gameid = !db.IsNull() ? (Convert.ToInt32(db["Game"].ToString()) + 1) : 1;
@@ -316,6 +322,11 @@ namespace Schumix.GameAddon.MaffiaGames
 		public void NewOwnerTime()
 		{
 			OwnerMsgTime = DateTime.Now;
+		}
+
+		public void NewPlayerTime(string Name)
+		{
+			_playerflist[Name.ToLower()].MsgTime = DateTime.Now;
 		}
 
 		public string DisableHl(string Name)
@@ -328,6 +339,10 @@ namespace Schumix.GameAddon.MaffiaGames
 			if((DateTime.Now - OwnerMsgTime).Minutes >= 10 && !_owner.IsNullOrEmpty() && Running)
 			{
 				_owner = string.Empty;
+				_timerowner.Enabled = false;
+				_timerowner.Elapsed -= HandleIsOwnerAfk;
+				_timerowner.Stop();
+
 				var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 				var text = sLManager.GetCommandTexts("maffiagame/base/handleisownerafk", _channel, _servername);
 				if(text.Length < 2)
@@ -338,10 +353,24 @@ namespace Schumix.GameAddon.MaffiaGames
 
 				sSendMessage.SendCMPrivmsg(_channel, text[0]);
 				sSendMessage.SendCMPrivmsg(_channel, text[1]);
+			}
+		}
 
-				_timerowner.Enabled = false;
-				_timerowner.Elapsed -= HandleIsOwnerAfk;
-				_timerowner.Stop();
+		private void HandleIsPlayerAfk(object sender, ElapsedEventArgs e)
+		{
+			foreach(var player in _playerflist)
+			{
+				if((DateTime.Now - player.Value.MsgTime).Minutes >= 10 && player.Value.IsNow && !_ghostlist.ContainsKey(player.Key) && Running)
+				{
+					player.Value.IsNow = false;
+					string name = GetPlayerName(player.Key);
+					var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
+					sSendMessage.SendCMPrivmsg(_channel, sLManager.GetCommandText("maffiagame/base/handleisplayerafk", _channel, _servername), DisableHl(name));
+					RemovePlayer(name, name);
+					continue;
+				}
+				else if(_ghostlist.ContainsKey(player.Key) && Running)
+					player.Value.IsNow = false;
 			}
 		}
 
@@ -359,7 +388,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				_joinlist.Add(NewName.ToLower());
 			}
 
-			if(_owner == OldName)
+			if(_owner == OldName.ToLower())
 				_owner = NewName;
 
 			if(Started)
@@ -577,6 +606,17 @@ namespace Schumix.GameAddon.MaffiaGames
 			}
 		}
 
+		private void StartPlayerMsgTimer()
+		{
+			foreach(var player in _playerflist)
+				player.Value.MsgTime = DateTime.Now;
+
+			_timerplayers.Interval = 60*1000;
+			_timerplayers.Elapsed += HandleIsPlayerAfk;
+			_timerplayers.Enabled = true;
+			_timerplayers.Start();
+		}
+
 		public void EndText()
 		{
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
@@ -715,9 +755,19 @@ namespace Schumix.GameAddon.MaffiaGames
 				sMyChannelInfo.ChannelFunctionsReload();
 			}
 
-			_timerowner.Enabled = false;
-			_timerowner.Elapsed -= HandleIsOwnerAfk;
-			_timerowner.Stop();
+			if(_timerowner.Enabled)
+			{
+				_timerowner.Enabled = false;
+				_timerowner.Elapsed -= HandleIsOwnerAfk;
+				_timerowner.Stop();
+			}
+
+			if(_timerplayers.Enabled)
+			{
+				_timerplayers.Enabled = false;
+				_timerplayers.Elapsed -= HandleIsPlayerAfk;
+				_timerplayers.Stop();
+			}
 
 			Clean();
 			Started = false;

@@ -117,7 +117,7 @@ namespace Schumix.GitRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("GitRssAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
+				Log.Error("GitRssAddon", sLConsole.GetString("Reload: ") + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

@@ -117,7 +117,7 @@ namespace Schumix.SvnRssAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("SvnRssAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
+				Log.Error("SvnRssAddon", sLConsole.GetString("Reload: ") + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

@@ -101,7 +101,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			else
 				sSendMessage.SendCMPrivmsg(_channel, text[9], DisableHl(Name));
 
-			if(_owner == Name)
+			if(_owner == Name.ToLower())
 			{
 				_owner = string.Empty;
 
@@ -115,6 +115,8 @@ namespace Schumix.GameAddon.MaffiaGames
 				if(_playerlist.Count > 0)
 					sSendMessage.SendCMPrivmsg(_channel, text[10]);
 			}
+			else
+				_playerflist[Name.ToLower()].IsNow = false;
 
 			if(Started)
 			{

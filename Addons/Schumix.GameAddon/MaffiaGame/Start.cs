@@ -197,6 +197,7 @@ namespace Schumix.GameAddon.MaffiaGames
 				sSendMessage.SendCMPrivmsg(name.Key, text[5]);
 
 			list.Clear();
+			StartPlayerMsgTimer();
 			Started = true;
 			_start = false;
 			_players = _playerlist.Count;

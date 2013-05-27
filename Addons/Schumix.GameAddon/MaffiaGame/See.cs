@@ -41,6 +41,12 @@ namespace Schumix.GameAddon.MaffiaGames
 				return;
 			}
 
+			if(_ghostlist.ContainsKey(NickName.ToLower()))
+			{
+				sSendMessage.SendCMPrivmsg(NickName, sLManager.GetCommandText("maffiagame/base/ghost", _channel, _servername));
+				return;
+			}
+
 			if(!_detectivelist.ContainsKey(NickName.ToLower()))
 			{
 				sSendMessage.SendCMPrivmsg(NickName, text[2]);

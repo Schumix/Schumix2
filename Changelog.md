@@ -2,6 +2,9 @@
 
 ## 4.1.0 (2013-xx-xx)
 
+ * Maffia játék kicsit szépítve. Mostantól aki meghalt nem fogja tudni a szerepéhez tartozó parancsokat még véletlen se használni.
+ * "Reload: " szöveg magyarosítása elkészült.
+ * 10 perc után ezentúl a maffiás játék ki fogja vágni az inaktiv játékosokat.
  * LuaInterface lecserélve NLua-ra.
  * Platform osztály létrehozva.
  * Windows 8 felismerése hozzáadva a GetOSName() függvényhez.

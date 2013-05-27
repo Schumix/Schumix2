@@ -63,7 +63,7 @@ namespace Schumix.TestAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("TestAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
+				Log.Error("TestAddon", sLConsole.GetString("Reload: ") + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 

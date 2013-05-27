@@ -92,7 +92,7 @@ namespace Schumix.GameAddon
 			}
 			catch(Exception e)
 			{
-				Log.Error("GameAddon", "Reload: " + sLConsole.GetString("Failure details: {0}"), e.Message);
+				Log.Error("GameAddon", sLConsole.GetString("Reload: ") + sLConsole.GetString("Failure details: {0}"), e.Message);
 				return 0;
 			}
 
@@ -177,8 +177,13 @@ namespace Schumix.GameAddon
 					if(!nick)
 						return;
 
-					if(sGameCommand.MaffiaList[channel].GetOwner() == sIRCMessage.Nick)
-						sGameCommand.MaffiaList[channel].NewOwnerTime();
+					var game = sGameCommand.MaffiaList[channel];
+
+					if(game.GetOwner() == sIRCMessage.Nick.ToLower())
+						game.NewOwnerTime();
+
+					if(game.Started)
+						game.NewPlayerTime(sIRCMessage.Nick.ToLower());
 
 					sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
 					if((sIRCMessage.Info[3].Length > 0 && sIRCMessage.Info[3].Substring(0, 1) != "!") || sIRCMessage.Info[3].Length == 0)
@@ -195,11 +200,11 @@ namespace Schumix.GameAddon
 								return;
 							}
 
-							if(sGameCommand.MaffiaList[channel].GetOwner() == sIRCMessage.Nick || sGameCommand.MaffiaList[channel].GetOwner().IsNullOrEmpty() ||
+							if(game.GetOwner() == sIRCMessage.Nick.ToLower() || game.GetOwner().IsNullOrEmpty() ||
 								sGameCommand.IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
-								sGameCommand.MaffiaList[channel].Start();
+								game.Start();
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick), sGameCommand.MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], game.DisableHl(sIRCMessage.Nick), game.GetPlayerName(game.GetOwner()));
 							break;
 						}
 						case "!set":
@@ -211,18 +216,18 @@ namespace Schumix.GameAddon
 								return;
 							}
 
-							if(sGameCommand.MaffiaList[channel].GetOwner() == sIRCMessage.Nick || sGameCommand.MaffiaList[channel].GetOwner().IsNullOrEmpty() ||
+							if(game.GetOwner() == sIRCMessage.Nick.ToLower() || game.GetOwner().IsNullOrEmpty() ||
 								sGameCommand.IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 							{
-								if(sGameCommand.MaffiaList[channel].Started)
+								if(game.Started)
 								{
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], game.DisableHl(sIRCMessage.Nick));
 									return;
 								}
 
 								if(sIRCMessage.Info.Length < 5)
 								{
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], game.DisableHl(sIRCMessage.Nick));
 									return;
 								}
 
@@ -235,12 +240,12 @@ namespace Schumix.GameAddon
 										return;
 									}
 
-									if(sGameCommand.MaffiaList[channel].NoLynch)
+									if(game.NoLynch)
 										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[0]);
 									else
 										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[1]);
 
-									if(sGameCommand.MaffiaList[channel].NoVoice)
+									if(game.NoVoice)
 										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[2]);
 									else
 										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[3]);
@@ -257,7 +262,7 @@ namespace Schumix.GameAddon
 
 									if(sIRCMessage.Info.Length < 6)
 									{
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[0], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[0], game.DisableHl(sIRCMessage.Nick));
 										return;
 									}
 
@@ -266,14 +271,14 @@ namespace Schumix.GameAddon
 									if(status == SchumixBase.On || status == SchumixBase.Off)
 									{
 										if(status == SchumixBase.On)
-											sGameCommand.MaffiaList[channel].NoLynch = true;
+											game.NoLynch = true;
 										else if(status == SchumixBase.Off)
-											sGameCommand.MaffiaList[channel].NoLynch = false;
+											game.NoLynch = false;
 
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[1], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[1], game.DisableHl(sIRCMessage.Nick));
 									}
 									else
-										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[2], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+										sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[2], game.DisableHl(sIRCMessage.Nick));
 								}
 								else if(sIRCMessage.Info[4].ToLower() == "night")
 								{
@@ -294,7 +299,7 @@ namespace Schumix.GameAddon
 
 										if(sIRCMessage.Info.Length < 7)
 										{
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[0], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[0], game.DisableHl(sIRCMessage.Nick));
 											return;
 										}
 
@@ -303,24 +308,24 @@ namespace Schumix.GameAddon
 										if(status == SchumixBase.On || status == SchumixBase.Off)
 										{
 											if(status == SchumixBase.On)
-												sGameCommand.MaffiaList[channel].NoVoice = true;
+												game.NoVoice = true;
 											else if(status == SchumixBase.Off)
-												sGameCommand.MaffiaList[channel].NoVoice = false;
+												game.NoVoice = false;
 	
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[1], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[1], game.DisableHl(sIRCMessage.Nick));
 										}
 										else
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[2], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text2[2], game.DisableHl(sIRCMessage.Nick));
 									}
 								}
 							}
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick), sGameCommand.MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[2], game.DisableHl(sIRCMessage.Nick), game.GetPlayerName(game.GetOwner()));
 							break;
 						}
 						case "!stats":
 						{
-							sGameCommand.MaffiaList[channel].Stats();
+							game.Stats();
 							break;
 						}
 						case "!join":
@@ -340,14 +345,14 @@ namespace Schumix.GameAddon
 									{
 										if(player.Value == sIRCMessage.Nick)
 										{
-											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick), maffia.Key);
+											sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], game.DisableHl(sIRCMessage.Nick), maffia.Key);
 											return;
 										}
 									}
 								}
 							}
 
-							sGameCommand.MaffiaList[channel].Join(sIRCMessage.Nick);
+							game.Join(sIRCMessage.Nick);
 							break;
 						}
 						case "!leave":
@@ -361,22 +366,22 @@ namespace Schumix.GameAddon
 
 							if(sIRCMessage.Info.Length < 5)
 							{
-								sGameCommand.MaffiaList[channel].Leave(sIRCMessage.Nick);
+								game.Leave(sIRCMessage.Nick);
 								return;
 							}
 
-							if(sGameCommand.MaffiaList[channel].GetOwner() == sIRCMessage.Nick)
+							if(game.GetOwner() == sIRCMessage.Nick.ToLower())
 							{
-								if(!sGameCommand.MaffiaList[channel].GetKillerList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
-									!sGameCommand.MaffiaList[channel].GetDetectiveList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
-									!sGameCommand.MaffiaList[channel].GetNormalList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
-									!sGameCommand.MaffiaList[channel].GetPlayerList().ContainsValue(sIRCMessage.Info[4]))
-									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+								if(!game.GetKillerList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
+									!game.GetDetectiveList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
+									!game.GetNormalList().ContainsKey(sIRCMessage.Info[4].ToLower()) &&
+									!game.GetPlayerList().ContainsValue(sIRCMessage.Info[4]))
+									sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], game.DisableHl(sIRCMessage.Nick));
 								else
-									sGameCommand.MaffiaList[channel].Leave(sIRCMessage.Info[4], sIRCMessage.Nick);
+									game.Leave(sIRCMessage.Info[4], sIRCMessage.Nick);
 							}
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[1], game.DisableHl(sIRCMessage.Nick));
 							break;
 						}
 						case "!kill":
@@ -394,7 +399,7 @@ namespace Schumix.GameAddon
 								return;
 							}
 
-							sGameCommand.MaffiaList[channel].Kill(sIRCMessage.Info[4], sIRCMessage.Nick);
+							game.Kill(sIRCMessage.Info[4], sIRCMessage.Nick);
 							break;
 						}
 						case "!lynch":
@@ -408,11 +413,11 @@ namespace Schumix.GameAddon
 
 							if(sIRCMessage.Info.Length < 5)
 							{
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, text[0], game.DisableHl(sIRCMessage.Nick));
 								return;
 							}
 
-							sGameCommand.MaffiaList[channel].Lynch(sIRCMessage.Info[4], sIRCMessage.Nick, sIRCMessage.Channel);
+							game.Lynch(sIRCMessage.Info[4], sIRCMessage.Nick, sIRCMessage.Channel);
 							break;
 						}
 						case "!rescue":
@@ -430,7 +435,7 @@ namespace Schumix.GameAddon
 								return;
 							}
 
-							sGameCommand.MaffiaList[channel].Rescue(sIRCMessage.Info[4], sIRCMessage.Nick);
+							game.Rescue(sIRCMessage.Info[4], sIRCMessage.Nick);
 							break;
 						}
 						case "!see":
@@ -448,41 +453,41 @@ namespace Schumix.GameAddon
 								return;
 							}
 
-							sGameCommand.MaffiaList[channel].See(sIRCMessage.Info[4], sIRCMessage.Nick);
+							game.See(sIRCMessage.Info[4], sIRCMessage.Nick);
 							break;
 						}
 						case "!gameover":
 						{
-							sGameCommand.MaffiaList[channel].GameOver(sIRCMessage.Nick);
+							game.GameOver(sIRCMessage.Nick);
 							break;
 						}
 						case "!end":
 						{
-							if(sGameCommand.MaffiaList[channel].GetOwner() == sIRCMessage.Nick ||
-								sGameCommand.MaffiaList[channel].GetOwner().IsNullOrEmpty() ||
+							if(game.GetOwner() == sIRCMessage.Nick.ToLower() ||
+								game.GetOwner().IsNullOrEmpty() ||
 								sGameCommand.IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 							{
-								if(sGameCommand.MaffiaList[channel].Started)
+								if(game.Started)
 								{
-									sGameCommand.MaffiaList[channel].RemoveRanks();
-									sGameCommand.MaffiaList[channel].EndGameText();
-									sGameCommand.MaffiaList[channel].EndText();
-									sGameCommand.MaffiaList[channel].StopThread();
+									game.RemoveRanks();
+									game.EndGameText();
+									game.EndText();
+									game.StopThread();
 								}
 								else
 								{
-									sGameCommand.MaffiaList[channel].RemoveRanks();
-									sGameCommand.MaffiaList[channel].StopThread();
-									sGameCommand.MaffiaList[channel].EndGameText();
+									game.RemoveRanks();
+									game.StopThread();
+									game.EndGameText();
 								}
 							}
 							else
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/basecommand/end", channel, sIRCMessage.ServerName), sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick), sGameCommand.MaffiaList[channel].GetOwner());
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/basecommand/end", channel, sIRCMessage.ServerName), game.DisableHl(sIRCMessage.Nick), game.GetOwner());
 							break;
 						}
 						default:
 							if(sIRCMessage.Info[3].TrimEnd().Length > 1)
-								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/basecommand", channel, sIRCMessage.ServerName), sGameCommand.MaffiaList[channel].DisableHl(sIRCMessage.Nick));
+								sSendMessage.SendCMPrivmsg(sIRCMessage.Channel, sLManager.GetCommandText("maffiagame/basecommand", channel, sIRCMessage.ServerName), game.DisableHl(sIRCMessage.Nick));
 							break;
 					}
 				}

@@ -57,8 +57,7 @@ namespace Schumix.GameAddon.MaffiaGames
 					return;
 				}
 
-				if(!_killerlist.ContainsKey(NickName.ToLower()) && !_detectivelist.ContainsKey(NickName.ToLower()) &&
-					!_normallist.ContainsKey(NickName.ToLower()) && !_doctorlist.ContainsKey(NickName.ToLower()))
+				if(_ghostlist.ContainsKey(NickName.ToLower()))
 				{
 					sSendMessage.SendCMPrivmsg(Channel, text[2], DisableHl(NickName));
 					return;

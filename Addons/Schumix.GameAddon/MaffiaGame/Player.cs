@@ -25,6 +25,7 @@ namespace Schumix.GameAddon.MaffiaGames
 {
 	sealed class Player
 	{
+		//public readonly System.Timers.Timer Timer = new System.Timers.Timer();
 		public readonly List<string> Lynch = new List<string>();
 		public Rank Rank { get; private set; }
 		public bool Detective { get; set; }
@@ -32,6 +33,8 @@ namespace Schumix.GameAddon.MaffiaGames
 		public Rank DRank { get; set; }
 		public bool Ghost { get; set; }
 		public bool Master { get; private set; }
+		public bool IsNow { get; set; }
+		public DateTime MsgTime;
 
 		public Player(Rank rank) : this(rank, false)
 		{
@@ -41,6 +44,7 @@ namespace Schumix.GameAddon.MaffiaGames
 		public Player(Rank rank, bool master)
 		{
 			Rank = rank;
+			IsNow = true;
 			Ghost = false;
 			Master = master;
 			DRank = Rank.None;
