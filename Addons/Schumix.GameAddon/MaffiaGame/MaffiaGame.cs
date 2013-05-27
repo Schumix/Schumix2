@@ -461,6 +461,9 @@ namespace Schumix.GameAddon.MaffiaGames
 			if(Name.Replace(SchumixBase.Space.ToString(), string.Empty).IsNullOrEmpty())
 				return;
 
+			if(_ghostlist.ContainsKey(Name.ToLower()))
+				return;
+
 			var sSendMessage = sIrcBase.Networks[_servername].sSendMessage;
 
 			if(Started)
