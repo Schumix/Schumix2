@@ -246,9 +246,9 @@ namespace Schumix.Framework
 			var x = new SHA1CryptoServiceProvider();
 			var data = Encoding.UTF8.GetBytes(value);
 			data = x.ComputeHash(data);
-//#if !MONO
-			//x.Dispose();
-//#endif
+#if false
+			x.Dispose();
+#endif
 			var ret = string.Empty;
 
 			for(var i = 0; i < data.Length; i++)
@@ -265,9 +265,9 @@ namespace Schumix.Framework
 			var x = new MD5CryptoServiceProvider();
 			var data = Encoding.UTF8.GetBytes(value);
 			data = x.ComputeHash(data);
-//#if !MONO
-			//x.Dispose();
-//#endif
+#if false
+			x.Dispose();
+#endif
 			var ret = string.Empty;
 
 			for(var i = 0; i < data.Length; i++)
@@ -287,9 +287,9 @@ namespace Schumix.Framework
 			{
 				var md5 = new MD5CryptoServiceProvider();
 				retVal = md5.ComputeHash(file);
-//#if !MONO
-				//md5.Dispose();
-//#endif
+#if false
+				md5.Dispose();
+#endif
 			}
 
 			var sb = new StringBuilder();

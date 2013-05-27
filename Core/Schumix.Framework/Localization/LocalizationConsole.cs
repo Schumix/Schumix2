@@ -99,8 +99,10 @@ namespace Schumix.Framework.Localization
 
 			if(sPlatform.GetPlatformType() == PlatformType.Windows)
 			{
+#if false
 				// .net 4.5
-				//CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(Language);
+				CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(Language);
+#endif
 				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
 			}
 			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
