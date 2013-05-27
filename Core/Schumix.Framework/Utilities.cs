@@ -48,6 +48,19 @@ namespace Schumix.Framework
 		private const long TicksSince1970 = 621355968000000000; // .NET ticks for 1970
 		private readonly object WriteLock = new object();
 		private const int TicksPerSecond = 10000;
+
+		/*	Miscellaneous description --- */
+		private const string DOMAIN = @"[a-z0-9][-a-z0-9]*(\.[-a-z0-9]+)*\.";
+		private const string TLD = "[a-z][-a-z0-9]*[a-z]";
+		private const string IPADDR = @"[0-9]+(\.[0-9]+){3}";
+		private static string HOST = "(" + DOMAIN + TLD + "|" + IPADDR + ")";
+		private const string OPT_PORT = "(:[1-9][0-9]{0,4})?";
+
+		/*	URL description --- */
+		private const string SCHEME = @"(www\.|http://|https://|)";
+		private const string LPAR = @"\(";
+		private const string RPAR = @"\)";
+		private const string NOPARENS = @"[^() 	]*";
 		private Utilities() {}
 
 		public DateTime GetUnixTimeStart()
@@ -169,44 +182,39 @@ namespace Schumix.Framework
 
 			try
 			{
-				var urlFind = new Regex("(?<url>(http[s]?://)"					// http[s]
-				+ "?(([0-9a-z_!~*'().&=+$%-]+: )?[0-9a-z_!~*'().&=+$%-]+@)?"	// user@
-				+ @"(([0-9]{1,3}\.){3}[0-9]{1,3}"								// IP- 199.194.52.184
-				+ "|"															// allows either IP or domain
-				+ @"([0-9a-z_!~*'()-]+\.)*"										// tertiary domain(s)- www.
-				+ @"([0-9a-z][0-9a-z-]{0,61})?[0-9a-z]\."						// second level domain
-				+ "[a-z]{2,6})"													// first level domain- .com or .museum
-				+ "(:[0-9]{1,8})?"												// port number- :80
-				+ "(( )|(/ )|"													// a slash isn't required if there is no file name
-				+ "(/[0-9a-z_!~*'().;?:@&=+$,%#-]+)+/?)?)", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+				var urlFind = new Regex("(?<url>"
+				+ "("													/* URL or HOST */
+					+ "("
+						+ SCHEME + HOST + OPT_PORT
+						+ "("											/* Optional "/path?query_string#fragment_id" */
+							+ "/"										/* Must start with slash */
+							+ "("	
+								+ "(" + LPAR + NOPARENS + RPAR + ")"
+								+ "|"
+								+ "(" + NOPARENS + ")"
+							+ ")*"										/* Zero or more occurrences of either of these */
+							+ @"(?<![.,?!\]])"							/* Not allowed to end with these */
+						+ ")?"											/* Zero or one of this /path?query_string#fragment_id thing */
+					+ ")|("
+						+ HOST + OPT_PORT + "/"
+						+ "("											/* Optional "path?query_string#fragment_id" */
+							+ "("
+								+ "(" + LPAR + NOPARENS + RPAR + ")"
+								+ "|"
+								+ "(" + NOPARENS + ")"
+							+ ")*"										/* Zero or more occurrences of either of these */
+							+ @"(?<![.,?!\]])"							/* Not allowed to end with these */
+						+ ")?"											/* Zero or one of this /path?query_string#fragment_id thing */
+					+ ")"
+				+ @"))");
 
 				if(urlFind.IsMatch(text))
 				{
 					var matches = urlFind.Matches(text);
-					urlFind = new Regex(@"(?<ip>([0-9]{1,3}\.){3}[0-9]{1,3})", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 
 					foreach(var url in from Match match in matches select match.Groups["url"].ToString())
 					{
 						string lurl = url;
-
-						if(urlFind.IsMatch(lurl))
-						{
-							bool valid = false;
-							string sip = urlFind.Match(lurl).Groups["ip"].ToString();
-
-							try
-							{
-								IPAddress ip;
-								valid = IPAddress.TryParse(sip, out ip);
-							}
-							catch(ArgumentException ae)
-							{
-								Log.Error("Utilities", sLConsole.GetString("Failure details: {0}"), ae.Message);
-							}
-
-							if(!valid)
-								continue;
-						}
 
 						if(!lurl.StartsWith("http://") && !url.StartsWith("https://"))
 							lurl = string.Format("http://{0}", url);

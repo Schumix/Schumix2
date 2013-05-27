@@ -2,6 +2,7 @@
 
 ## 4.1.0 (2013-xx-xx)
 
+ * HexChat-ből felhasználva az url regex hogy tökéletes legyen Schumixban is.
  * Maffia játék kicsit szépítve. Mostantól aki meghalt nem fogja tudni a szerepéhez tartozó parancsokat még véletlen se használni.
  * "Reload: " szöveg magyarosítása elkészült.
  * 10 perc után ezentúl a maffiás játék ki fogja vágni az inaktiv játékosokat.
