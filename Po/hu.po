@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-05-27 15:34:51+0200\n"
+"POT-Creation-Date: 2013-05-27 17:17:01+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -36,11 +36,10 @@ msgstr "Összes Command handler törlésre került."
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
 #: ../Core/Schumix.Framework/SchumixBase.cs:23
-#: ../Core/Schumix.Framework/Utilities.cs:23
-#: ../Core/Schumix.Framework/Utilities.cs:26
-#: ../Core/Schumix.Framework/Utilities.cs:108
-#: ../Core/Schumix.Framework/Utilities.cs:125
-#: ../Core/Schumix.Framework/Utilities.cs:137
+#: ../Core/Schumix.Framework/Utilities.cs:25
+#: ../Core/Schumix.Framework/Utilities.cs:107
+#: ../Core/Schumix.Framework/Utilities.cs:124
+#: ../Core/Schumix.Framework/Utilities.cs:136
 #: ../Core/Schumix.Framework/Timer.cs:3
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:12
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
@@ -554,7 +553,7 @@ msgstr "MySql adatbázishoz sikeres a kapcsolodás."
 msgid "Sql connection crash."
 msgstr "Sql kapcsolat összeomlott."
 
-#: ../Core/Schumix.Framework/Utilities.cs:26
+#: ../Core/Schumix.Framework/Utilities.cs:25
 msgid "Checking: {0}"
 msgstr "Ellenőrzése: {0}"
 
