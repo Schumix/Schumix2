@@ -25,7 +25,6 @@ namespace Schumix.GameAddon.MaffiaGames
 {
 	sealed class Player
 	{
-		//public readonly System.Timers.Timer Timer = new System.Timers.Timer();
 		public readonly List<string> Lynch = new List<string>();
 		public Rank Rank { get; private set; }
 		public bool Detective { get; set; }
