@@ -2,6 +2,7 @@
 
 ## 4.1.0 (2013-xx-xx)
 
+ * Service nick neveket ezentúl úgy észleli a bot mintha lefoglalt nickek lenének így képes felcsatlakozni egy másikkal a szerverre.
  * HexChat-ből felhasználva az url regex hogy tökéletes legyen Schumixban is.
  * Maffia játék kicsit szépítve. Mostantól aki meghalt nem fogja tudni a szerepéhez tartozó parancsokat még véletlen se használni.
  * "Reload: " szöveg magyarosítása elkészült.

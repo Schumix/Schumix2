@@ -563,6 +563,7 @@ namespace Schumix.Irc
 
 		private void HandleIrcCommand(string message)
 		{
+			Console.WriteLine(message);
 			var IMessage = new IRCMessage();
 			IMessage.ServerId = _serverid;
 			IMessage.ServerName = _servername;

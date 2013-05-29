@@ -276,6 +276,14 @@ namespace Schumix.Irc
 
 		protected void HandleErrorNewNickName(IRCMessage sIRCMessage)
 		{
+			if(NewNickPrivmsg.IsNullOrEmpty() && !Online && sIRCMessage.Args.Contains("Erroneous Nickname: [OperServ]"))
+			{
+				Log.Error("MessageHandler", sLConsole.GetString("{0} already in use!"), sMyNickInfo.NickStorage);
+				string nick = sMyNickInfo.ChangeNick();
+				Log.Notice("MessageHandler", sLConsole.GetString("Retrying with: {0}"), nick);
+				sSender.Nick(nick);
+			}
+
 			if(!NewNickPrivmsg.IsNullOrEmpty())
 			{
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, NewNickPrivmsg, sLConsole.MessageHandler("Text15", sLManager.GetChannelLocalization(NewNickPrivmsg, sIRCMessage.ServerName)));
