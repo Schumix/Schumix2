@@ -1166,28 +1166,28 @@ msgstr "Nincs betöltendő Schumix!"
 
 #: ../Libraries/WolframAPI/Collections/UniqueList.cs:3
 msgid "The unique list already contains that element."
-msgstr ""
+msgstr "Az egyedi lista már atrtalmazza ezt az elemet."
 
 #: ../Libraries/WolframAPI/WAClient.cs:15
 #: ../Libraries/WolframAPI/WAClient.cs:19
 msgid "No solution found. The response might have been malformed."
-msgstr ""
+msgstr "Megoldás nem található. A válasz eltorzulhatott."
 
 #: ../Libraries/WolframAPI/WAClient.cs:17
 msgid "No solution found."
-msgstr ""
+msgstr "Megoldás nem található."
 
 #: ../Libraries/WolframAPI/WAClient.cs:21
 msgid "No solution found. The pod order might have changed. Report to devs!"
-msgstr ""
+msgstr "Megoldás nem található. A fő rendszer megváltozhatott. Jelentsd a fejlesztőknek!"
 
 #: ../Libraries/WolframAPI/WAClient.cs:23
 msgid "The parameter passed to this method was null or empty."
-msgstr ""
+msgstr "Az ennek a metódusnak küldött paraméter üres vagy null."
 
 #: ../Libraries/WolframAPI/WAClient.cs:29
 msgid "Couldn't retrieve information!"
-msgstr ""
+msgstr "Nem tudtam visszanyerni az információt!"
 
 #: ../Libraries/WolframAPI/WAClient.cs:29
 #, fuzzy
@@ -1196,24 +1196,23 @@ msgstr "Kivételt dobott letöltése közben a web title: {0}"
 
 #: ../Libraries/WolframAPI/WAClient.cs:29
 msgid "Unhandled exception thrown while submitting the expression."
-msgstr ""
+msgstr "Kezeletlen kivétel lépett fel a kifejezezés küldésekor."
 
 #: ../Libraries/WolframAPI/WAClient.cs:33
 msgid "Could not deserialize the response. It might have been a malformed one."
-msgstr ""
+msgstr "Nem tudtam letölteni a választ. Lehetséges, hogy torz."
 
 #: ../Libraries/WolframAPI/WAClient.cs:34
-#, fuzzy
 msgid "Exception thrown while deserializing the response."
 msgstr "Kivételt dobott letöltése közben a web title: {0}"
 
 #: ../Libraries/WolframAPI/XmlSerialized.cs:6
 msgid "Error during serialization"
-msgstr ""
+msgstr "Hiba történt sorbarendezés közben"
 
 #: ../Libraries/WolframAPI/XmlSerialized.cs:7
 msgid "Error while serializing instance! Type: {0}"
-msgstr ""
+msgstr "Hiba történt a kérelem sorbarendezésekor! Típus: {0}"
 
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:14
