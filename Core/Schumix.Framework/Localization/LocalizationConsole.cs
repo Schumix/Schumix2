@@ -396,6 +396,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "I have no rights to modify the rank!";
 				}
+				case "Text20":
+				{
+					if(Language == "huHU")
+						return "A megadott nick név egy szervíz neve!";
+					else if(Language == "enUS")
+						return "";
+					else
+						return "";
+				}
 				default:
 					return string.Empty;
 			}
