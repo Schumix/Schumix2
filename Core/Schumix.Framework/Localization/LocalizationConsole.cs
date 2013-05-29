@@ -401,9 +401,9 @@ namespace Schumix.Framework.Localization
 					if(Language == "huHU")
 						return "A megadott nick név egy szervíz neve!";
 					else if(Language == "enUS")
-						return "";
+						return "This nick name is a service name.";
 					else
-						return "";
+						return "This nick name is a service name.";
 				}
 				default:
 					return string.Empty;

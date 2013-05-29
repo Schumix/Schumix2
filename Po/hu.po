@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-05-29 14:18:08+0200\n"
+"POT-Creation-Date: 2013-05-29 17:22:34+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -126,54 +126,56 @@ msgid "No such irc command.\n"
 msgstr "Nem létező irc parancs.\n"
 
 #: ../Core/Schumix.Irc/MessageHandler.cs:30
+#: ../Core/Schumix.Irc/MessageHandler.cs:31
 msgid "{0} already in use!"
 msgstr "{0}-t már használja valaki!"
 
 #: ../Core/Schumix.Irc/MessageHandler.cs:30
+#: ../Core/Schumix.Irc/MessageHandler.cs:31
 msgid "Retrying with: {0}"
 msgstr "Újra próbálom ezzel: {0}"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:50
+#: ../Core/Schumix.Irc/MessageHandler.cs:52
 msgid "[joined]"
 msgstr "[joined]"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:54
+#: ../Core/Schumix.Irc/MessageHandler.cs:56
 msgid "[left] {0}"
 msgstr "[kilépett innen (left)] {0}"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:57
+#: ../Core/Schumix.Irc/MessageHandler.cs:59
 msgid "[quit] {0}"
 msgstr "[kilépett (quit)] {0}"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:59
+#: ../Core/Schumix.Irc/MessageHandler.cs:61
 msgid "[Is now known as {0}]"
 msgstr "[Mostantól {0}-ként ismert]"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:62
+#: ../Core/Schumix.Irc/MessageHandler.cs:64
 msgid "[Kicked that user: {0} reason: {1}]"
 msgstr "[Kirúgta a következő felhasználót: {0} oka: {1}]"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:71
+#: ../Core/Schumix.Irc/MessageHandler.cs:73
 msgid "Identify password accepted!"
 msgstr "Azonosító jelszó elfogadva."
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:72
+#: ../Core/Schumix.Irc/MessageHandler.cs:74
 msgid "[Set mode: {0}]"
 msgstr "[Beállítja a módot: {0}]"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:73
+#: ../Core/Schumix.Irc/MessageHandler.cs:75
 msgid "[Topic] New topic: {0}"
 msgstr "[Téma] Új téma: {0}"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:74
+#: ../Core/Schumix.Irc/MessageHandler.cs:76
 msgid "{0} invites you to join {1}."
 msgstr "{0} meghívott téged a {1} szobába."
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:74
+#: ../Core/Schumix.Irc/MessageHandler.cs:76
 msgid "[INVITE] {0} invites you to join {1}."
 msgstr "[INVITE] {0} meghívott téged a {1} szobába."
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:77
+#: ../Core/Schumix.Irc/MessageHandler.cs:79
 msgid "[Topic] {0}"
 msgstr "[Téma] {0}"
 
@@ -414,6 +416,8 @@ msgstr "{0} plugin sikeresen le lett választva."
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
 #: ../Core/Schumix.Framework/Runtime.cs:6
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:43
 #: ../Applications/Schumix.Server/ServerListener.cs:6
 #: ../Applications/Schumix.Server/Config/Config.cs:4
 msgid "Program shutting down!"
@@ -756,10 +760,17 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:43
+msgid ""
+"{0}: In the three nickname there are atleast two identical, please modify "
+"those."
+msgstr "{0}: A három nick név között minimum kettő olyan van aminek megegyezik a neve! Kérlek módosítsad őket hogy eltérőek legyenek!"
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:18
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The {0} server is already in use so not loaded!"
 msgstr "A {0} szerver név már használva van így nem kerül betöltésre!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:40
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:41
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:11
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:23
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:7
@@ -782,7 +793,7 @@ msgstr "A {0} szerver név már használva van így nem kerül betöltésre!"
 msgid "Config database is loading."
 msgstr "Konfig adatbázis betöltve."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:43
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:44
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -805,7 +816,7 @@ msgstr "Konfig adatbázis betöltve."
 msgid "No such config file!"
 msgstr "Nincs konfig fájl!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:43
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:44
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -828,7 +839,7 @@ msgstr "Nincs konfig fájl!"
 msgid "Preparing..."
 msgstr "Elkészítése folyamatban..."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:103
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:104
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
@@ -851,7 +862,7 @@ msgstr "Elkészítése folyamatban..."
 msgid "Config file is completed!"
 msgstr "Konfig fájl elkészült!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:103
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:104
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15

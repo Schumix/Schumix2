@@ -22,6 +22,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Collections.Generic;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -315,6 +316,14 @@ namespace Schumix.Framework.Config
 					{
 						Log.Warning("YamlConfig", sLConsole.GetString("The tertiary nick's format is wrong. The default will be used: {0}"), d_nickname3);
 						NickName3 = d_nickname3;
+					}
+
+					if(NickName.ToLower() == NickName2.ToLower() || NickName.ToLower() == NickName3.ToLower() || NickName2.ToLower() == NickName3.ToLower())
+					{
+						Log.Error("YamlConfig", sLConsole.GetString("{0}: In the three nickname there are atleast two identical, please modify those."), ServerName);
+						Log.Warning("YamlConfig", sLConsole.GetString("Program shutting down!"));
+						Thread.Sleep(5*1000);
+						Environment.Exit(1);
 					}
 
 					if(IrcList.ContainsKey(ServerName.ToLower()))
