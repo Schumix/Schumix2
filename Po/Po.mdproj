@@ -16,6 +16,20 @@
       </translations>
     </translations>
     <ReleaseVersion>4.x</ReleaseVersion>
+    <projectInformations>
+      <projectInformations>
+        <TranslationProjectInformation projectName="NGit" isIncluded="False" />
+        <TranslationProjectInformation projectName="NSch" isIncluded="False" />
+        <TranslationProjectInformation projectName="ICSharpCode.SharpZLib" isIncluded="False" />
+        <TranslationProjectInformation projectName="Sharpen" isIncluded="False" />
+        <TranslationProjectInformation projectName="KeraLua" isIncluded="False" />
+        <TranslationProjectInformation projectName="NLua" isIncluded="False" />
+        <TranslationProjectInformation projectName="KopiLua" isIncluded="False" />
+        <TranslationProjectInformation projectName="YamlDotNet.RepresentationModel" isIncluded="False" />
+        <TranslationProjectInformation projectName="YamlDotNet.Core" isIncluded="False" />
+        <TranslationProjectInformation projectName="Sharpen.Unix" isIncluded="False" />
+      </projectInformations>
+    </projectInformations>
   </PropertyGroup>
   <!--
   Everything above is for the MD translation project serializer, and isn't really valid MSBuild.

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-05-27 17:17:01+0200\n"
-"PO-Revision-Date: 2013-05-27 17:17:05+0200\n"
+"POT-Creation-Date: 2013-05-29 14:09:39+0200\n"
+"PO-Revision-Date: 2013-05-29 14:09:41+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1132,15 +1132,6 @@ msgstr ""
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:22
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:39
 msgid "There is no load of Schumix!"
-msgstr ""
-
-#: ../External/ngit/NGit/NGit/UserConfig.cs:29
-#: ../External/ngit/NGit/NGit/UserConfig.cs:31
-msgid "user"
-msgstr ""
-
-#: ../External/ngit/NGit/NGit.Diff/DiffConfig.cs:16
-msgid "diff"
 msgstr ""
 
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5

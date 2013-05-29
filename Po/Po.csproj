@@ -15,7 +15,9 @@
         <Translation isoCode="hu" />
       </translations>
     </translations>
-    <ReleaseVersion>3.x</ReleaseVersion>
+    <ReleaseVersion>4.x</ReleaseVersion>
+    <OutputType>Exe</OutputType>
+    <AssemblyName>Po</AssemblyName>
   </PropertyGroup>
   <!--
   Everything above is for the MD translation project serializer, and isn't really valid MSBuild.
@@ -25,11 +27,15 @@
     <OutputPath>..\Run\Debug\locale</OutputPath>
     <GettextCatalogName>schumix</GettextCatalogName>
     <GettextCatalogFile>messages.po</GettextCatalogFile>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>..\Run\Release\locale</OutputPath>
     <GettextCatalogName>schumix</GettextCatalogName>
     <GettextCatalogFile>messages.po</GettextCatalogFile>
+    <WarningLevel>4</WarningLevel>
+    <Optimize>false</Optimize>
   </PropertyGroup>
   <ItemGroup>
     <GettextTranslation Include="hu.po" />

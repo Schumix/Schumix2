@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-05-27 17:17:01+0200\n"
+"POT-Creation-Date: 2013-05-29 14:09:39+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -1141,15 +1141,6 @@ msgstr "Schumixok száma: {0}"
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:39
 msgid "There is no load of Schumix!"
 msgstr "Nincs betöltendő Schumix!"
-
-#: ../External/ngit/NGit/NGit/UserConfig.cs:29
-#: ../External/ngit/NGit/NGit/UserConfig.cs:31
-msgid "user"
-msgstr ""
-
-#: ../External/ngit/NGit/NGit.Diff/DiffConfig.cs:16
-msgid "diff"
-msgstr ""
 
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:14
