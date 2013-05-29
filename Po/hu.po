@@ -222,7 +222,6 @@ msgid "Reconnection to: {0}"
 msgstr "Újrakapcsolódás megindult ide: {0}"
 
 #: ../Core/Schumix.Irc/Network.cs:51
-#, fuzzy
 msgid ""
 "This nick name ({0}) is used by a service bot. Your nick is automaticly "
 "changed to a placeholder one."
@@ -1190,9 +1189,8 @@ msgid "Couldn't retrieve information!"
 msgstr "Nem tudtam visszanyerni az információt!"
 
 #: ../Libraries/WolframAPI/WAClient.cs:29
-#, fuzzy
 msgid "WebException thrown while getting the response."
-msgstr "Kivételt dobott letöltése közben a web title: {0}"
+msgstr "Kivételt dobott letöltése közben a webcím: {0}"
 
 #: ../Libraries/WolframAPI/WAClient.cs:29
 msgid "Unhandled exception thrown while submitting the expression."
@@ -1204,7 +1202,7 @@ msgstr "Nem tudtam letölteni a választ. Lehetséges, hogy torz."
 
 #: ../Libraries/WolframAPI/WAClient.cs:34
 msgid "Exception thrown while deserializing the response."
-msgstr "Kivételt dobott letöltése közben a web title: {0}"
+msgstr "Kivételt dobott letöltése közben a webcím: {0}"
 
 #: ../Libraries/WolframAPI/XmlSerialized.cs:6
 msgid "Error during serialization"
