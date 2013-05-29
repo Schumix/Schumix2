@@ -23,7 +23,8 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-//using Schumix.Framework;
+using Schumix.Framework;
+using Schumix.Framework.Localization;
 
 namespace WolframAPI.Collections
 {
@@ -33,6 +34,7 @@ namespace WolframAPI.Collections
 	[Serializable]
 	public sealed class UniqueList<T> : List<T> where T : IEquatable<T>, IEquatable<string>
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
@@ -45,7 +47,7 @@ namespace WolframAPI.Collections
 			//	Contract.Requires(!Equals(item, null));
             
 			if(Contains(item) || FindIndex(it => it.Equals(item)) != -1)
-				throw new InvalidOperationException("The unique list already contains that element.");
+				throw new InvalidOperationException(sLConsole.GetString("The unique list already contains that element."));
 
 			base.Add(item);
         }

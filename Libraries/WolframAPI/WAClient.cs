@@ -29,8 +29,9 @@ using System.Diagnostics.Contracts;
 using System.Runtime.Remoting.Messaging;
 using System.Xml.Serialization;
 using WolframAPI.Exceptions;
-//using Schumix.Framework;
+using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace WolframAPI
 {
@@ -68,7 +69,8 @@ namespace WolframAPI
 	/// </summary>
 	public sealed class WAClient
 	{
-		//private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		/// The base WA API url.
@@ -132,7 +134,7 @@ namespace WolframAPI
 			var result = Parse(response);
 			
 			if(result.Pods.IsNull() || result.Pods.Count <= 0)
-				return "No solution found. The response might have been malformed.";
+				return sLConsole.GetString("No solution found. The response might have been malformed.");
 
 			var solution = (from pod in result.Pods
 						   where pod.Title.ToLower().Contains("solution") 
@@ -142,17 +144,17 @@ namespace WolframAPI
 						   select pod).FirstOrDefault();
 
 			if(solution.IsNull())
-				return "No solution found.";
+				return sLConsole.GetString("No solution found.");
 
 
 			if(solution.SubPods.IsNull() || solution.SubPods.Count <= 0)
-				return "No solution found. The response might have been malformed.";
+				return sLConsole.GetString("No solution found. The response might have been malformed.");
 
 			//if(sPlatform.GetPlatformType() != PlatformType.Linux)
 			//	Contract.Assume(!solution.SubPods[0].IsNull());
 
 			if(string.IsNullOrEmpty(solution.SubPods[0].PlainText))
-				return "No solution found. The pod order might have changed. Report to devs!";
+				return sLConsole.GetString("No solution found. The pod order might have changed. Report to devs!");
 
 			return solution.SubPods[0].PlainText;
 		}
@@ -170,7 +172,7 @@ namespace WolframAPI
 		public WAResult GetResult(string expression)
 		{
 			if(string.IsNullOrEmpty(expression))
-				throw new ArgumentNullException("expression", "The parameter passed to this method was null or empty.");
+				throw new ArgumentNullException("expression", sLConsole.GetString("The parameter passed to this method was null or empty."));
 
 			var response = Submit(expression);
 			var result = Parse(response);
@@ -207,15 +209,15 @@ namespace WolframAPI
 				if(!string.IsNullOrEmpty(returned))
 					return returned;
 
-				return "Couldn't retrieve information!";
+				return sLConsole.GetString("Couldn't retrieve information!");
 			}
 			catch(WebException x)
 			{
-				throw new WolframException("WebException thrown while getting the response.", x);
+				throw new WolframException(sLConsole.GetString("WebException thrown while getting the response."), x);
 			}
 			catch(Exception x)
 			{
-				throw new WolframException("Unhandled exception thrown while submitting the expression.", x);
+				throw new WolframException(sLConsole.GetString("Unhandled exception thrown while submitting the expression."), x);
 			}
 		}
 
@@ -245,13 +247,13 @@ namespace WolframAPI
 				}
 
 				if(result.IsNull())
-					throw new WolframException("Could not deserialize the response. It might have been a malformed one.");
+					throw new WolframException(sLConsole.GetString("Could not deserialize the response. It might have been a malformed one."));
 
 				return result;
 			}
 			catch(InvalidOperationException x)
 			{
-				throw new WolframException("Exception thrown while deserializing the response.", x);
+				throw new WolframException(sLConsole.GetString("Exception thrown while deserializing the response."), x);
 			}
 		}
 

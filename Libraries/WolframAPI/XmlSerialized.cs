@@ -24,7 +24,8 @@ using System.IO;
 using System.Xml.Serialization;
 using System.Diagnostics.Contracts;
 using WolframAPI.Exceptions;
-//using Schumix.Framework;
+using Schumix.Framework;
+using Schumix.Framework.Localization;
 
 namespace WolframAPI
 {
@@ -34,6 +35,7 @@ namespace WolframAPI
 	public abstract class XmlSerialized : ISerializableType
 	{
 		#region Implementation of ISerializableType
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
@@ -65,11 +67,11 @@ namespace WolframAPI
 			}
 			catch(InvalidOperationException x)
 			{
-				throw new WolframException("Error during serialization", x);
+				throw new WolframException(sLConsole.GetString("Error during serialization"), x);
 			}
 
 			if(string.IsNullOrEmpty(data))
-				throw new WolframException(string.Format("Error while serializing instance! Type: {0}", GetType().FullName));
+				throw new WolframException(string.Format(sLConsole.GetString("Error while serializing instance! Type: {0}"), GetType().FullName));
 
 			return data;
 		}

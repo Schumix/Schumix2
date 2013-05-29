@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-05-29 14:09:39+0200\n"
+"POT-Creation-Date: 2013-05-29 14:18:08+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -1141,6 +1141,57 @@ msgstr "Schumixok száma: {0}"
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:39
 msgid "There is no load of Schumix!"
 msgstr "Nincs betöltendő Schumix!"
+
+#: ../Libraries/WolframAPI/Collections/UniqueList.cs:3
+msgid "The unique list already contains that element."
+msgstr ""
+
+#: ../Libraries/WolframAPI/WAClient.cs:15
+#: ../Libraries/WolframAPI/WAClient.cs:19
+msgid "No solution found. The response might have been malformed."
+msgstr ""
+
+#: ../Libraries/WolframAPI/WAClient.cs:17
+msgid "No solution found."
+msgstr ""
+
+#: ../Libraries/WolframAPI/WAClient.cs:21
+msgid "No solution found. The pod order might have changed. Report to devs!"
+msgstr ""
+
+#: ../Libraries/WolframAPI/WAClient.cs:23
+msgid "The parameter passed to this method was null or empty."
+msgstr ""
+
+#: ../Libraries/WolframAPI/WAClient.cs:29
+msgid "Couldn't retrieve information!"
+msgstr ""
+
+#: ../Libraries/WolframAPI/WAClient.cs:29
+#, fuzzy
+msgid "WebException thrown while getting the response."
+msgstr "Kivételt dobott letöltése közben a web title: {0}"
+
+#: ../Libraries/WolframAPI/WAClient.cs:29
+msgid "Unhandled exception thrown while submitting the expression."
+msgstr ""
+
+#: ../Libraries/WolframAPI/WAClient.cs:33
+msgid "Could not deserialize the response. It might have been a malformed one."
+msgstr ""
+
+#: ../Libraries/WolframAPI/WAClient.cs:34
+#, fuzzy
+msgid "Exception thrown while deserializing the response."
+msgstr "Kivételt dobott letöltése közben a web title: {0}"
+
+#: ../Libraries/WolframAPI/XmlSerialized.cs:6
+msgid "Error during serialization"
+msgstr ""
+
+#: ../Libraries/WolframAPI/XmlSerialized.cs:7
+msgid "Error while serializing instance! Type: {0}"
+msgstr ""
 
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:14
