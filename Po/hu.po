@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-05-29 17:22:34+0200\n"
+"POT-Creation-Date: 2013-05-29 17:47:33+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -30,8 +30,8 @@ msgid "All Command Handler were deleted."
 msgstr "Összes Command handler törlésre került."
 
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:28
-#: ../Core/Schumix.Irc/Network.cs:52 ../Core/Schumix.Irc/Network.cs:75
-#: ../Core/Schumix.Irc/Network.cs:77 ../Core/Schumix.Irc/Network.cs:86
+#: ../Core/Schumix.Irc/Network.cs:56 ../Core/Schumix.Irc/Network.cs:79
+#: ../Core/Schumix.Irc/Network.cs:81 ../Core/Schumix.Irc/Network.cs:90
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
@@ -221,43 +221,52 @@ msgstr "Kapcsolat bontásra került."
 msgid "Reconnection to: {0}"
 msgstr "Újrakapcsolódás megindult ide: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:48
+#: ../Core/Schumix.Irc/Network.cs:51
+#, fuzzy
+msgid ""
+"This nick name ({0}) is used by a service bot. Your nick is automaticly "
+"changed to a placeholder one."
+msgstr ""
+"Az adott nick ({0}) egy szervíz bot neve. Automatikusan egy tartalék névra "
+"meg lett változtatva."
+
+#: ../Core/Schumix.Irc/Network.cs:52
 msgid "Connection type: {0}"
 msgstr "Kapcsolódás típusa: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:49
+#: ../Core/Schumix.Irc/Network.cs:53
 msgid "Fatal error was happened while established the connection!"
 msgstr "Végzetes hiba történt a kapcsolat létrehozásánál!"
 
-#: ../Core/Schumix.Irc/Network.cs:50
+#: ../Core/Schumix.Irc/Network.cs:54
 msgid "Successfully established the connection!"
 msgstr "A kapcsolat sikeresen létrejött!"
 
-#: ../Core/Schumix.Irc/Network.cs:50
+#: ../Core/Schumix.Irc/Network.cs:54
 msgid "Error was happened while established the connection!"
 msgstr "Hiba történt a kapcsolat létrehozásánál!"
 
-#: ../Core/Schumix.Irc/Network.cs:52
+#: ../Core/Schumix.Irc/Network.cs:56
 msgid "Certificate not accepted, exception: {0}"
 msgstr "A tanúsítvány nem lett elfogadva, kivétel: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:55
+#: ../Core/Schumix.Irc/Network.cs:59
 msgid "Users' datas are sent."
 msgstr "Felhasználói információk ellettek küldve."
 
-#: ../Core/Schumix.Irc/Network.cs:65 ../Core/Schumix.Irc/Network.cs:85
+#: ../Core/Schumix.Irc/Network.cs:69 ../Core/Schumix.Irc/Network.cs:89
 msgid "Successfully started th thread."
 msgstr "A szál sikeresen elindult."
 
-#: ../Core/Schumix.Irc/Network.cs:65
+#: ../Core/Schumix.Irc/Network.cs:69
 msgid "Started the irc data receiving."
 msgstr "Elindult az irc adatok fogadása."
 
-#: ../Core/Schumix.Irc/Network.cs:68
+#: ../Core/Schumix.Irc/Network.cs:72
 msgid "Do not going data from irc server!"
 msgstr "Nem jön információ az irc szerver felöl!"
 
-#: ../Core/Schumix.Irc/Network.cs:84
+#: ../Core/Schumix.Irc/Network.cs:88
 msgid "Received unhandled opcode: {0}"
 msgstr "Ismeretlen opcode kód: {0}"
 
@@ -763,7 +772,9 @@ msgstr ""
 msgid ""
 "{0}: In the three nickname there are atleast two identical, please modify "
 "those."
-msgstr "{0}: A három nick név között minimum kettő olyan van aminek megegyezik a neve! Kérlek módosítsad őket hogy eltérőek legyenek!"
+msgstr ""
+"{0}: A három nick név között minimum kettő olyan van aminek megegyezik a "
+"neve! Kérlek módosítsad őket hogy eltérőek legyenek!"
 
 #: ../Core/Schumix.Framework/Config/XmlConfig.cs:18
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:44

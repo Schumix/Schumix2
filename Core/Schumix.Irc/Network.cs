@@ -356,7 +356,24 @@ namespace Schumix.Irc
 			_cts = new CancellationTokenSource();
 
 			if(nick)
+			{
 				sMyNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
+
+				if(Rfc2812Util.IsServToLower(sMyNickInfo.NickStorage)) // NickName
+				{
+					sMyNickInfo.ChangeNick(); // NickName -> NickName2
+
+					if(Rfc2812Util.IsServToLower(sMyNickInfo.NickStorage)) // NickName2
+					{
+						sMyNickInfo.ChangeNick(); // NickName2 -> NickName3
+
+						if(Rfc2812Util.IsServToLower(sMyNickInfo.NickStorage)) // NickName3
+							sMyNickInfo.ChangeNick(); // NickName3 -> Other
+					}
+
+					Log.Warning("Network", sLConsole.GetString("This nick name ({0}) is used by a service bot. Your nick is automaticly changed to a placeholder one."), sMyNickInfo.NickStorage);
+				}
+			}
 
 			Log.Notice("Network", sLConsole.GetString("Connection type: {0}"), CType.ToString());
 

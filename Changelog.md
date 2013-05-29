@@ -2,6 +2,7 @@
 
 ## 4.1.0 (2013-xx-xx)
 
+ * Service nick neveket észleli a bot és másikra vált róla. (Persze csak a 3 névből. De lehet hogy még így se tud olyat találni ami nincs letiltva.)
  * Ha a három névből bármelyik is egyezést mutat akkor a bot figyelmeztetést ír ki és leáll.
  * Service nick neveket ezentúl úgy észleli a bot mintha lefoglalt nickek lenének így képes felcsatlakozni egy másikkal a szerverre.
  * HexChat-ből felhasználva az url regex hogy tökéletes legyen Schumixban is.

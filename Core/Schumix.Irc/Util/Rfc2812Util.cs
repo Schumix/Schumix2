@@ -319,6 +319,17 @@ namespace Schumix.Irc.Util
 			return false;
 		}
 
+		public static bool IsServToLower(this string Value)
+		{
+			foreach(var func in Enum.GetNames(typeof(Serv)))
+			{
+				if(func.ToLower() == Value.ToLower())
+					return true;
+			}
+
+			return false;
+		}
+
 		public static bool IsServ(this string Value, Serv serv)
 		{
 			foreach(var func in Enum.GetNames(typeof(Serv)))
