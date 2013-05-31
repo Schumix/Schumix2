@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.IO;
 using System.Net;
 using System.Xml;
 using System.Text;
@@ -155,6 +156,21 @@ namespace Schumix.TestAddon.Commands
 				
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info[5].IsServ());
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info[5].IsServ(Serv.HostServ));
+			}
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "isoutredirected")
+			{
+#if false
+				var writer = new StringWriter();
+				Console.SetOut(writer);
+
+				sSendMessage.SendChatMessage(sIRCMessage, "Konzol kimenet átírányítása: {0}", Console.IsOutputRedirected);
+				
+				var sw = new StreamWriter(Console.OpenStandardOutput());
+				sw.AutoFlush = true;
+				Console.SetOut(sw);
+
+				sSendMessage.SendChatMessage(sIRCMessage, "Konzol kimenet átírányítása: {0}", Console.IsOutputRedirected);
+#endif
 			}
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);

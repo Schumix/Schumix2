@@ -21,6 +21,7 @@
 using System;
 using System.IO;
 using System.Text;
+using System.Threading;
 using System.Collections.Generic;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
@@ -158,7 +159,8 @@ namespace Schumix.Framework
 					ColorblindMode(source, format, LogType.Notice);
 					return;
 				}
-
+				
+				WaitOutputRedirected();
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.White;
@@ -186,7 +188,8 @@ namespace Schumix.Framework
 					ColorblindMode(source, format, LogType.Success);
 					return;
 				}
-
+				
+				WaitOutputRedirected();
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Green;
@@ -220,7 +223,8 @@ namespace Schumix.Framework
 					ColorblindMode(source, format, LogType.Warning);
 					return;
 				}
-
+				
+				WaitOutputRedirected();
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Yellow;
@@ -254,7 +258,8 @@ namespace Schumix.Framework
 					ColorblindMode(source, format, LogType.Error);
 					return;
 				}
-
+				
+				WaitOutputRedirected();
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Red;
@@ -289,6 +294,7 @@ namespace Schumix.Framework
 					return;
 				}
 
+				WaitOutputRedirected();
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Blue;
@@ -320,6 +326,7 @@ namespace Schumix.Framework
 					return;
 				}
 
+				WaitOutputRedirected();
 				var sp = message.Split(SchumixBase.NewLine);
 				var lines = new List<string>(50);
 
@@ -371,6 +378,7 @@ namespace Schumix.Framework
 					return;
 				}
 
+				WaitOutputRedirected();
 				var sp = message.Split(SchumixBase.NewLine);
 				var lines = new List<string>(50);
 
@@ -472,6 +480,7 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
+				WaitOutputRedirected();
 				var sp = message.Split(SchumixBase.NewLine);
 				var lines = new List<string>(50);
 
@@ -515,6 +524,7 @@ namespace Schumix.Framework
 		{
 			lock(WriteLock)
 			{
+				WaitOutputRedirected();
 				Console.Write(GetTime());
 				Console.Write(" {0} {1}: ", GetTypeCharacter(type), source);
 				Console.Write("{0}\n", format);
@@ -528,6 +538,25 @@ namespace Schumix.Framework
 			{
 				ColorblindMode(source, format.ToString(), type);
 			}
+		}
+
+		private static void WaitOutputRedirected()
+		{
+#if false
+			lock(WriteLock)
+			{
+				if(Console.IsOutputRedirected)
+				{
+					while(Console.IsOutputRedirected)
+					{
+						if(!Console.IsOutputRedirected)
+							break;
+
+						Thread.Sleep(100);
+					}
+				}
+			}
+#endif
 		}
 	}
 }
