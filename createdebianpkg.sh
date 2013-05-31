@@ -53,7 +53,15 @@ do
 	mv $file ../../pkg/usr/lib/pkgconfig/$file
 done
 
-rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll Addons/Schumix.Irc.dll Addons/Schumix.Api.dll Addons/Schumix.Framework.dll Addons/Mono.Posix.dll Addons/YamlDotNet.Core.dll Addons/YamlDotNet.RepresentationModel.dll schumix.config schumix.installer schumix schumix.server
+rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll
+rm Addons/Schumix.Irc.dll Addons/Schumix.Api.dll Addons/Schumix.Framework.dll Addons/Mono.Posix.dll Addons/YamlDotNet.Core.dll
+rm Addons/YamlDotNet.RepresentationModel.dll schumix.config schumix.installer schumix schumix.server
+
+for file in *.mdb
+do
+	rm $file
+done
+
 cp -rf ./ ../../pkg/usr/lib/schumix
 cd ../../
 cp -rf ./Run/usr/lib/schumix/locale pkg/usr/share/locale
