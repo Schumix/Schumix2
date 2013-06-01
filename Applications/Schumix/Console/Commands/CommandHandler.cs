@@ -1204,7 +1204,7 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleReload()
 		{
-			if(Info.Length < 3)
+			if(Info.Length < 2)
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
 				return;
