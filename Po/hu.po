@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-05-29 17:47:33+0200\n"
+"POT-Creation-Date: 2013-06-01 22:13:39+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -254,7 +254,7 @@ msgid "Users' datas are sent."
 msgstr "Felhasználói információk ellettek küldve."
 
 #: ../Core/Schumix.Irc/Network.cs:69 ../Core/Schumix.Irc/Network.cs:89
-msgid "Successfully started th thread."
+msgid "Successfully started the thread."
 msgstr "A szál sikeresen elindult."
 
 #: ../Core/Schumix.Irc/Network.cs:69
@@ -1178,7 +1178,9 @@ msgstr "Megoldás nem található."
 
 #: ../Libraries/WolframAPI/WAClient.cs:21
 msgid "No solution found. The pod order might have changed. Report to devs!"
-msgstr "Megoldás nem található. A fő rendszer megváltozhatott. Jelentsd a fejlesztőknek!"
+msgstr ""
+"Megoldás nem található. A fő rendszer megváltozhatott. Jelentsd a "
+"fejlesztőknek!"
 
 #: ../Libraries/WolframAPI/WAClient.cs:23
 msgid "The parameter passed to this method was null or empty."

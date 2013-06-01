@@ -484,7 +484,7 @@ namespace Schumix.Irc
 		/// </remarks>
 		private void Opcodes()
 		{
-			Log.Notice("Opcodes", sLConsole.GetString("Successfully started th thread."));
+			Log.Notice("Opcodes", sLConsole.GetString("Successfully started the thread."));
 			_timeropcode.Interval = _ReconnectDI;
 			_timeropcode.Elapsed += HandleOpcodesTimer;
 			_timeropcode.Enabled = true;
@@ -630,7 +630,7 @@ namespace Schumix.Irc
 		/// </summary>
 		private void AutoPing()
 		{
-			Log.Notice("AutoPing", sLConsole.GetString("Successfully started th thread."));
+			Log.Notice("AutoPing", sLConsole.GetString("Successfully started the thread."));
 
 			while(true)
 			{
