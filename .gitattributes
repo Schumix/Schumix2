@@ -28,3 +28,5 @@
 # MD can deal with (and preserve) either, so it doesn't matter.
 # Unfortunately MD creates with LF, so we need to convert these.
 *proj	crlf
+
+*.sh    eol=lf
