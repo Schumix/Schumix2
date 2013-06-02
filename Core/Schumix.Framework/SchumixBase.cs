@@ -55,7 +55,6 @@ namespace Schumix.Framework
 		public const string Title = "Schumix2 IRC Bot and Framework";
 		public static bool ExitStatus { get; private set; }
 		public static string ServerIdentify = string.Empty;
-		public static bool UrlTitleEnabled = false;
 		public static bool ThreadStop = true;
 		public static bool NewNick = false;
 		public static bool STime = true;

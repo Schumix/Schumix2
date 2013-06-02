@@ -38,6 +38,7 @@ namespace Schumix.Irc
 	public abstract partial class MessageHandler : CommandManager
 	{
 		private readonly object WriteLock = new object();
+		public bool UrlTitleEnabled = false;
 		private string _servername;
 		private int PLength;
 		public bool IsAllJoin;
@@ -96,7 +97,7 @@ namespace Schumix.Irc
 				}
 			}
 
-			SchumixBase.UrlTitleEnabled = true;
+			UrlTitleEnabled = true;
 		}
 
 		protected void HandleWaitingForConnection(IRCMessage sIRCMessage)

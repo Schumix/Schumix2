@@ -244,7 +244,7 @@ namespace Schumix.ExtraAddon
 				{
 					if(sMyChannelInfo.FSelect(IFunctions.Webtitle) && sMyChannelInfo.FSelect(IChannelFunctions.Webtitle, sIRCMessage.Channel))
 					{
-						if(!SchumixBase.UrlTitleEnabled)
+						if(!sIrcBase.Networks[sIRCMessage.ServerName].UrlTitleEnabled)
 							return;
 
 						if(sIRCMessage.Nick.ToLower() == "py-bopm")

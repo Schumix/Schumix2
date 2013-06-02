@@ -428,7 +428,7 @@ namespace Schumix.Irc
 			ModePrivmsg = string.Empty;
 			ChannelPrivmsg = string.Empty;
 			NewNickPrivmsg = string.Empty;
-			SchumixBase.UrlTitleEnabled = false;
+			UrlTitleEnabled = false;
 			sMyNickInfo.ChangeIdentifyStatus(false);
 			sMyNickInfo.ChangeVhostStatus(false);
 		}
