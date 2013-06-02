@@ -78,7 +78,7 @@ namespace Schumix.GameAddon
 			Clean();
 		}
 
-		public int Reload(string RName, string SName = "")
+		public int Reload(string RName, bool LoadConfig, string SName = "")
 		{
 			try
 			{

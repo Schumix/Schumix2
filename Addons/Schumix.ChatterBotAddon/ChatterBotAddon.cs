@@ -50,7 +50,7 @@ namespace Schumix.ChatterBotAddon
 			sIrcBase.Networks[_servername].IrcRemoveHandler("PRIVMSG",  HandlePrivmsg);
 		}
 
-		public int Reload(string RName, string SName = "")
+		public int Reload(string RName, bool LoadConfig, string SName = "")
 		{
 			return -1;
 		}

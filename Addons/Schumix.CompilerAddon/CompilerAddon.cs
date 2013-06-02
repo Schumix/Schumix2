@@ -71,14 +71,14 @@ namespace Schumix.CompilerAddon
 			sIrcBase.Networks[_servername].IrcRemoveHandler("PRIVMSG",  HandlePrivmsg);
 		}
 
-		public int Reload(string RName, string SName = "")
+		public int Reload(string RName, bool LoadConfig, string SName = "")
 		{
 			try
 			{
 				switch(RName.ToLower())
 				{
 					case "config":
-						if(IRCConfig.List[_servername].ServerId == 1)
+						if(IRCConfig.List[_servername].ServerId == 1 || LoadConfig)
 							_config = new AddonConfig(Name, ".yml");
 						return 1;
 				}

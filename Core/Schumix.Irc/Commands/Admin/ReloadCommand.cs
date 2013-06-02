@@ -67,15 +67,20 @@ namespace Schumix.Irc.Commands
 				i = 1;
 				break;
 			}
-			
+
+			bool load = true;
+
 			foreach(var plugin in sAddonManager.Addons[sIRCMessage.ServerName].Addons)
 			{
 				if(!sAddonManager.Addons[sIRCMessage.ServerName].IgnoreAssemblies.ContainsKey(plugin.Key) &&
-				   plugin.Value.Reload(sIRCMessage.Info[4].ToLower()) == 1)
+				   plugin.Value.Reload(sIRCMessage.Info[4].ToLower(), load) == 1)
 					i = 1;
 				else if(!sAddonManager.Addons[sIRCMessage.ServerName].IgnoreAssemblies.ContainsKey(plugin.Key) &&
-				        plugin.Value.Reload(sIRCMessage.Info[4].ToLower()) == 0)
+				   plugin.Value.Reload(sIRCMessage.Info[4].ToLower(), load) == 0)
 					i = 0;
+
+				if(load)
+					load = false;
 			}
 			
 			if(i == -1)

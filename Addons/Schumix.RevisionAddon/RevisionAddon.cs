@@ -47,7 +47,7 @@ namespace Schumix.RevisionAddon
 			sIrcBase.Networks[_servername].SchumixRemoveHandler("xrev",   sRevision.HandleXrev);
 		}
 
-		public int Reload(string RName, string SName = "")
+		public int Reload(string RName, bool LoadConfig, string SName = "")
 		{
 			return -1;
 		}

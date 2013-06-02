@@ -1240,12 +1240,19 @@ namespace Schumix.Console.Commands
 				break;
 			}
 
+			bool load = true;
+
 			foreach(var plugin in sAddonManager.Addons[_servername].Addons)
 			{
-				if(plugin.Value.Reload(Info[1].ToLower()) == 1)
+				if(!sAddonManager.Addons[_servername].IgnoreAssemblies.ContainsKey(plugin.Key) &&
+				   plugin.Value.Reload(Info[1].ToLower(), load) == 1)
 					i = 1;
-				else if(plugin.Value.Reload(Info[1].ToLower()) == 0)
+				else if(!sAddonManager.Addons[_servername].IgnoreAssemblies.ContainsKey(plugin.Key) &&
+				   plugin.Value.Reload(Info[1].ToLower(), load) == 0)
 					i = 0;
+
+				if(load)
+					load = false;
 			}
 
 			if(i == -1)

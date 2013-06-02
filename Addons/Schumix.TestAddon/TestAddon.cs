@@ -49,7 +49,7 @@ namespace Schumix.TestAddon
 			RemoveIrcCommand();
 		}
 
-		public int Reload(string RName, string SName = "")
+		public int Reload(string RName, bool LoadConfig, string SName = "")
 		{
 			try
 			{
