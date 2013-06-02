@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-06-01 22:14:11+0200\n"
-"PO-Revision-Date: 2013-06-01 22:14:12+0200\n"
+"POT-Creation-Date: 2013-06-02 12:58:10+0200\n"
+"PO-Revision-Date: 2013-06-02 12:58:11+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -48,7 +48,7 @@ msgstr ""
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:14
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:15
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:14
 #: ../Addons/Schumix.SvnRssAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:14
 #: ../Addons/Schumix.MantisBTRssAddon/Config/AddonConfig.cs:5
@@ -991,15 +991,47 @@ msgstr ""
 msgid "Loaded the Clean settings."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:18
+#: ../Core/Schumix.Framework/Log/Log.cs:24
+#: ../Core/Schumix.Framework/Log/Log.cs:31
+msgid ""
+"The log's file name changed. From now in it will be here: {0}\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Log/Log.cs:26
+msgid ""
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here.\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Log/Log.cs:26
+msgid ""
+"\n"
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here.\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Log/Log.cs:31
 msgid ""
 "Started time: [{0}]\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:18
+#: ../Core/Schumix.Framework/Log/Log.cs:31
 msgid ""
 "\n"
 "Started time: [{0}]\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Log/Log.cs:32
+msgid ""
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here. Change's time: [{1}]\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Log/Log.cs:32
+msgid ""
+"\n"
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here. Change's time: [{1}]\n"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:3
@@ -1202,7 +1234,7 @@ msgstr ""
 
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:14
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:15
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:14
 #: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:14
 #: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:7
 #: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:14

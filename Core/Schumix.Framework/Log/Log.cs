@@ -35,7 +35,15 @@ namespace Schumix.Framework
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly object WriteLock = new object();
 		private static bool _ColorblindMode;
+		private static string _LogDirectory;
+		private static bool _DateFileName;
 		private static string _FileName;
+		private static bool _started;
+
+		private Log()
+		{
+			_started = false;
+		}
 
 		/// <returns>
 		///		A visszatérési érték az aktuális dátum.
@@ -97,25 +105,66 @@ namespace Schumix.Framework
 
 		public static void Initialize(string FileName, bool ColorblindMode)
 		{
-			bool isfile = false;
+			string oldfile = _FileName;
+			bool olddatefilename = _DateFileName;
+			string oldlogdirectory = _LogDirectory;
 			_FileName = FileName;
+			_LogDirectory = LogConfig.LogDirectory;
+			_DateFileName = LogConfig.DateFileName;
 			_ColorblindMode = ColorblindMode;
 			var time = DateTime.Now;
 			sUtilities.CreateDirectory(LogConfig.LogDirectory);
 
 			if(LogConfig.DateFileName)
 			{
+				string f = _FileName;
+
+				if(f.ToLower().Contains(".log"))
+					f = f.Substring(0, f.IndexOf(".log"));
+
+				if(_started && olddatefilename && oldfile.Substring(0, oldfile.IndexOf("/")) == f)
+				{
+					_FileName = oldfile;
+					return;
+				}
+
 				if(_FileName.ToLower().Contains(".log"))
 					_FileName = _FileName.Substring(0, _FileName.IndexOf(".log"));
 
 				sUtilities.CreateDirectory(LogConfig.LogDirectory + "/" + _FileName);
 				_FileName = _FileName + "/" + time.ToString("yyyy_MM_dd-HH_mm_ss") + ".log";
 
+				bool isfile = false;
 				string logfile = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
+
+				if(File.Exists(logfile))
+					isfile = true;
+
 				sUtilities.CreateFile(logfile);
+
+				if((_started && !olddatefilename) || (_started && olddatefilename && oldfile != f))
+				{
+					string oldlogfile = sUtilities.DirectoryToSpecial(oldlogdirectory, oldfile);
+					var ofile = new StreamWriter(oldlogfile, true) { AutoFlush = true };
+					ofile.Write(sLConsole.GetString("The log's file name changed. From now in it will be here: {0}\n"), logfile);
+					ofile.Close();
+
+					var file = new StreamWriter(logfile, true) { AutoFlush = true };
+
+					if(!isfile)
+						file.Write(sLConsole.GetString("The log file's name changed. {0} was the old. From now on the logs will be here.\n"), oldfile);
+					else
+						file.Write(sLConsole.GetString("\nThe log file's name changed. {0} was the old. From now on the logs will be here.\n"), oldfile);
+
+					file.Close();
+				}
 			}
 			else
 			{
+				if(oldfile == FileName)
+					return;
+
+				bool isfile = false;
 				string logfile = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
 
 				if(File.Exists(logfile))
@@ -124,13 +173,32 @@ namespace Schumix.Framework
 				sUtilities.CreateFile(logfile);
 				var file = new StreamWriter(logfile, true) { AutoFlush = true };
 
-				if(!isfile)
-					file.Write(sLConsole.GetString("Started time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
+				if(!_started)
+				{
+					if(!isfile)
+						file.Write(sLConsole.GetString("Started time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
+					else
+						file.Write(sLConsole.GetString("\nStarted time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
+				}
 				else
-					file.Write(sLConsole.GetString("\nStarted time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
+				{
+					string oldlogfile = sUtilities.DirectoryToSpecial(oldlogdirectory, oldfile);
+					var ofile = new StreamWriter(oldlogfile, true) { AutoFlush = true };
+					ofile.Write(sLConsole.GetString("The log's file name changed. From now in it will be here: {0}\n"), logfile);
+					ofile.Close();
+
+					if(!isfile)
+						file.Write(sLConsole.GetString("The log file's name changed. {0} was the old. From now on the logs will be here. Change's time: [{1}]\n"), oldfile, time.ToString("yyyy. MM. dd. HH:mm:ss"));
+					else
+						file.Write(sLConsole.GetString("\nThe log file's name changed. {0} was the old. From now on the logs will be here. Change's time: [{1}]\n"), oldfile, time.ToString("yyyy. MM. dd. HH:mm:ss"));
+				}
+
 
 				file.Close();
 			}
+
+			if(!_started)
+				_started = true;
 		}
 
 		/// <summary>

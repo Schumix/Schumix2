@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-06-01 22:13:39+0200\n"
+"POT-Creation-Date: 2013-06-02 12:58:10+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -53,7 +53,7 @@ msgstr "Összes Command handler törlésre került."
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:14
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:15
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:14
 #: ../Addons/Schumix.SvnRssAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:14
 #: ../Addons/Schumix.MantisBTRssAddon/Config/AddonConfig.cs:5
@@ -1007,17 +1007,58 @@ msgstr "A magban lévő táblák takarítása kész."
 msgid "Loaded the Clean settings."
 msgstr "Clean beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Log/Log.cs:18
+#: ../Core/Schumix.Framework/Log/Log.cs:24
+#: ../Core/Schumix.Framework/Log/Log.cs:31
+msgid "The log's file name changed. From now in it will be here: {0}\n"
+msgstr "Megváltozott a log fájl neve. Ezentúl itt lesz: {0}\n"
+
+#: ../Core/Schumix.Framework/Log/Log.cs:26
+msgid ""
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here.\n"
+msgstr ""
+"Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
+"logok.\n"
+
+#: ../Core/Schumix.Framework/Log/Log.cs:26
+msgid ""
+"\n"
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here.\n"
+msgstr ""
+"\n"
+"Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
+"logok.\n"
+
+#: ../Core/Schumix.Framework/Log/Log.cs:31
 msgid "Started time: [{0}]\n"
 msgstr "Indulási időpont: [{0}]\n"
 
-#: ../Core/Schumix.Framework/Log/Log.cs:18
+#: ../Core/Schumix.Framework/Log/Log.cs:31
 msgid ""
 "\n"
 "Started time: [{0}]\n"
 msgstr ""
 "\n"
 "Indulási időpont: [{0}]\n"
+
+#: ../Core/Schumix.Framework/Log/Log.cs:32
+msgid ""
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here. Change's time: [{1}]\n"
+msgstr ""
+"Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
+"logok. Megváltozás időpontja: [{1}]\n"
+
+#: ../Core/Schumix.Framework/Log/Log.cs:32
+msgid ""
+"\n"
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here. Change's time: [{1}]\n"
+msgstr ""
+"\n"
+"Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
+"logok. Megváltozás időpontja: [{1}]\n"
 
 #: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:3
 msgid "Username missing!"
@@ -1216,7 +1257,7 @@ msgstr "Hiba történt a kérelem sorbarendezésekor! Típus: {0}"
 
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
 #: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:14
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:15
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:14
 #: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:14
 #: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:7
 #: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:14
