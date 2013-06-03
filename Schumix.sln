@@ -20,10 +20,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Server", "Applications\Schumix.Server\Schumix.Server.csproj", "{B57F5CBD-3E27-4213-8202-103B75765BDC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{A82C6ED9-C26B-46A2-B168-5165F230C02B}"
-	ProjectSection(SolutionItems) = preProject
-		Dependencies\intl.dll = Dependencies\intl.dll
-		Dependencies\MonoPosixHelper.dll = Dependencies\MonoPosixHelper.dll
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WolframAPI", "Libraries\WolframAPI\WolframAPI.csproj", "{988DBA54-C500-47AF-B31C-BE12EA83E4AA}"
 EndProject
