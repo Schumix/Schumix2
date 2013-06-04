@@ -45,8 +45,8 @@ SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
 SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Debug/Schumix.LuaEngine.dll
 NLUA_DLL_SOURCE=../../External/NLua/Run/Debug/NLua.dll
-KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Debug/KopiLua.dll
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Debug/KeraLua.dll
+KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Debug/KopiLua.dll
 SCHUMIX_LUAENGINE_DLL_MDB_SOURCE=../../Run/Debug/Schumix.LuaEngine.dll.mdb
 SCHUMIX_LUAENGINE_DLL_MDB=$(BUILD_DIR)/Schumix.LuaEngine.dll.mdb
 SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Debug/Schumix.PythonEngine.dll
@@ -96,8 +96,8 @@ SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SCHUMIX_UPDATER_DLL_MDB=
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Release/Schumix.LuaEngine.dll
 NLUA_DLL_SOURCE=../../External/NLua/Run/Release/NLua.dll
-KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Release/KopiLua.dll
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Release/KeraLua.dll
+KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Release/KopiLua.dll
 SCHUMIX_LUAENGINE_DLL_MDB=
 SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Release/Schumix.PythonEngine.dll
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
@@ -134,8 +134,8 @@ PROGRAMFILES = \
 	$(SCHUMIX_UPDATER_DLL_MDB) \
 	$(SCHUMIX_LUAENGINE_DLL) \
 	$(NLUA_DLL) \
-	$(KOPILUA_DLL) \
 	$(KERALUA_DLL) \
+	$(KOPILUA_DLL) \
 	$(SCHUMIX_LUAENGINE_DLL_MDB) \
 	$(SCHUMIX_PYTHONENGINE_DLL) \
 	$(IRONPYTHON_MODULES_DLL) \
@@ -206,8 +206,8 @@ MONO_SECURITY_DLL = $(BUILD_DIR)/Mono.Security.dll
 SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
 SCHUMIX_LUAENGINE_DLL = $(BUILD_DIR)/Schumix.LuaEngine.dll
 NLUA_DLL = $(BUILD_DIR)/NLua.dll
-KOPILUA_DLL = $(BUILD_DIR)/KopiLua.dll
 KERALUA_DLL = $(BUILD_DIR)/KeraLua.dll
+KOPILUA_DLL = $(BUILD_DIR)/KopiLua.dll
 SCHUMIX_PYTHONENGINE_DLL = $(BUILD_DIR)/Schumix.PythonEngine.dll
 IRONPYTHON_MODULES_DLL = $(BUILD_DIR)/IronPython.Modules.dll
 IRONPYTHON_DLL = $(BUILD_DIR)/IronPython.dll
@@ -227,8 +227,8 @@ $(eval $(call emit-deploy-target,NSCH_DLL))
 $(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-target,NLUA_DLL))
-$(eval $(call emit-deploy-target,KOPILUA_DLL))
 $(eval $(call emit-deploy-target,KERALUA_DLL))
+$(eval $(call emit-deploy-target,KOPILUA_DLL))
 $(eval $(call emit-deploy-target,IRONPYTHON_MODULES_DLL))
 $(eval $(call emit-deploy-target,IRONPYTHON_DLL))
 $(eval $(call emit-deploy-target,MICROSOFT_DYNAMIC_DLL))

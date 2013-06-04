@@ -63,6 +63,8 @@ Source: "..\Run\Release\Sharpen.Unix.dll"; DestDir: "{app}"; Flags: ignoreversio
 Source: "..\Run\Release\KeraLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\KopiLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\NLua.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\intl.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\MonoPosixHelper.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Mono.Posix.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Mono.Security.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\MySql.Data.dll"; DestDir: "{app}"; Flags: ignoreversion
