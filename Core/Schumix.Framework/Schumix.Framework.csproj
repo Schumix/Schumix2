@@ -11,6 +11,9 @@
     <AssemblyName>Schumix.Framework</AssemblyName>
     <ReleaseVersion>4.x</ReleaseVersion>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
     <DebugType>full</DebugType>
@@ -43,10 +46,10 @@
     <Reference Include="MySql.Data">
       <HintPath>..\..\Dependencies\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="System.Xml.Linq" />
     <Reference Include="Mono.Posix">
       <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
     </Reference>
-    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -151,6 +154,16 @@
     </None>
     <None Include="..\..\Sql\Schumix.db3">
       <Link>Schumix.db3</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+    </None>
+    <None Include="..\..\Dependencies\intl.dll">
+      <Link>intl.dll</Link>
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\Dependencies\MonoPosixHelper.dll">
+      <Link>MonoPosixHelper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
     </None>

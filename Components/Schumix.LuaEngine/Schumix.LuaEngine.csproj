@@ -15,6 +15,9 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Schumix.LuaEngine.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -72,6 +75,14 @@
     <ProjectReference Include="..\..\External\NLua\Core\NLua\NLua.csproj">
       <Project>{F55CABBB-4108-4A39-94E1-581FD46DC021}</Project>
       <Name>NLua</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\NLua\Core\KeraLua\src\KeraLua.csproj">
+      <Project>{47153754-10F5-44D8-B578-F5A32B69061A}</Project>
+      <Name>KeraLua</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\NLua\Core\KopiLua\KopiLua\KopiLua.csproj">
+      <Project>{E8DDBC21-EF74-4ABA-9C49-BFC702BE25D8}</Project>
+      <Name>KopiLua</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

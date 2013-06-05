@@ -2,6 +2,7 @@
 
 ## 4.1.0 (2013-xx-xx)
 
+ * Kijavításra került a 64 bites Windows-okon jelentkező indulási hiba. Mostantól Windows alatt csak 32 bites verzióban lehet lefordítani a programot és csak azt szabad elindítani. Persze a 32 bitesnél ez nem feltétlen lényeges viszont a 64 bites verziónál feltétlenül így kell.
  * Konfig újratöltésénél a log fájl módosítás/létrehozás mostantól tökéletesen fog működni.
  * Service nick neveket észleli a bot és másikra vált róla. (Persze csak a 3 névből. De lehet hogy még így se tud olyat találni ami nincs letiltva.)
  * Ha a három névből bármelyik is egyezést mutat akkor a bot figyelmeztetést ír ki és leáll.

@@ -19,6 +19,8 @@ SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
+INTL_DLL_SOURCE=../../Dependencies/intl.dll
+MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
@@ -45,6 +47,8 @@ BUILD_DIR = ../../Run/Release
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
+INTL_DLL_SOURCE=../../Dependencies/intl.dll
+MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
@@ -62,6 +66,8 @@ PROGRAMFILES = \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SQLITE3_DLL) \
 	$(SCHUMIX_DB3) \
+	$(INTL_DLL) \
+	$(MONOPOSIXHELPER_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
 	$(MONO_POSIX_DLL) \
@@ -164,6 +170,8 @@ RESOURCES =
 EXTRAS = \
 	../../Dependencies/sqlite3.dll \
 	../../Sql/Schumix.db3 \
+	../../Dependencies/intl.dll \
+	../../Dependencies/MonoPosixHelper.dll \
 	Database/Cache \
 	Clean \
 	CodeBureau \
@@ -195,6 +203,8 @@ include $(top_srcdir)/Makefile.include
 
 SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
+INTL_DLL = $(BUILD_DIR)/intl.dll
+MONOPOSIXHELPER_DLL = $(BUILD_DIR)/MonoPosixHelper.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
@@ -205,6 +215,8 @@ SCHUMIX_FRAMEWORK_PC = $(BUILD_DIR)/schumix.framework.pc
 
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
+$(eval $(call emit-deploy-target,INTL_DLL))
+$(eval $(call emit-deploy-target,MONOPOSIXHELPER_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))

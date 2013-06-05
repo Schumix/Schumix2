@@ -80,7 +80,7 @@ namespace Schumix.Framework.Localization
 				}
 			}
 			
-			Mono.Unix.Catalog.Init("schumix", LocaleDir);
+			Catalog.Init("schumix", LocaleDir);
 		}
 
 		public void SetLocale()

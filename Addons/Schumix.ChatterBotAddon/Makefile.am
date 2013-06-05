@@ -24,6 +24,8 @@ SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
+INTL_DLL_SOURCE=../../Dependencies/intl.dll
+MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
@@ -56,6 +58,8 @@ SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
+INTL_DLL_SOURCE=../../Dependencies/intl.dll
+MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
@@ -78,6 +82,8 @@ PROGRAMFILES = \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SQLITE3_DLL) \
 	$(SCHUMIX_DB3) \
+	$(INTL_DLL) \
+	$(MONOPOSIXHELPER_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
 	$(MONO_POSIX_DLL) \
@@ -123,6 +129,8 @@ SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
+INTL_DLL = $(BUILD_DIR)/intl.dll
+MONOPOSIXHELPER_DLL = $(BUILD_DIR)/MonoPosixHelper.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
@@ -137,6 +145,8 @@ $(eval $(call emit-deploy-target,SCHUMIX_API_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
+$(eval $(call emit-deploy-target,INTL_DLL))
+$(eval $(call emit-deploy-target,MONOPOSIXHELPER_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
