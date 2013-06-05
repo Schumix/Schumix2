@@ -57,10 +57,10 @@ rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.
 rm Addons/Schumix.Irc.dll Addons/Schumix.Api.dll Addons/Schumix.Framework.dll Addons/Mono.Posix.dll Addons/MonoPosixHelper.dll
 rm Addons/intl.dll Addons/YamlDotNet.Core.dll Addons/YamlDotNet.RepresentationModel.dll schumix.config schumix.installer schumix schumix.server
 
-for file in *.mdb
-do
-	rm $file
-done
+#for file in *.mdb
+#do
+#	rm $file
+#done
 
 cp -rf ./ ../../pkg/usr/lib/schumix
 cd ../../
