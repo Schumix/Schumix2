@@ -10,7 +10,7 @@ More faster and reliable than Schumix. The code is written in c#.
 The bot has compatibility with windows and linux systems.
 It might be run on Mac OS X but it's haven't been tested yet.
 Under Windows the `.NET Framework 4.0` or higher is recommended.
-Under Mono at least the `2.10` or higher is needed.
+Under Mono at least the `2.10.8.1` or higher is needed.
 
 # Run source/Compile
 
