@@ -25,8 +25,6 @@ namespace Schumix.Framework.Platforms
 {
 	public sealed class Platform
 	{
-		private Platform() {}
-
 		public bool IsWindows
 		{
 			get
@@ -75,6 +73,8 @@ namespace Schumix.Framework.Platforms
 		{
 			get { return Environment.Is64BitProcess; } // IntPtr.Size == 8
 		}
+
+		private Platform() {}
 
 		public string GetPlatform()
 		{
