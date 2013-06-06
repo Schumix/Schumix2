@@ -30,8 +30,8 @@ namespace Schumix.Framework.Platforms
 			get
 			{
 				var platform = Environment.OSVersion.Platform;
-				return (platform == PlatformID.Win32NT || platform == PlatformID.Win32S || platform == PlatformID.Win32Windows ||
-				        platform == PlatformID.WinCE);
+				return (platform == PlatformID.Win32NT || platform == PlatformID.Win32S ||
+				        platform == PlatformID.Win32Windows || platform == PlatformID.WinCE);
 			}
 		}
 
