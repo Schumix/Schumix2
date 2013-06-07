@@ -38,7 +38,7 @@ namespace Schumix.Framework.Config
 		public const string SchumixVersion = "4.0.6";
 		public const string SchumixFileVersion = "4.0.6.0";
 		public const string SchumixProgrammedBy = "Csaba Jakosa (Megax)";
-		public const string SchumixDevelopers = "Csaba Jakosa (Megax), Twl, Jackneill, Invisible";
+		public const string SchumixDevelopers = "Csaba Jakosa (Megax), Twl, Jackneill, Invisible, mqmq0, AgeNt";
 		public const string SchumixWebsite = "https://github.com/Schumix/Schumix2";
 		public static string SchumixUserAgent = SchumixBase.Title + SchumixBase.Space + sUtilities.GetVersion() + " / .NET " + Environment.Version;
 		public const string SchumixReferer = "http://yeahunter.hu";
