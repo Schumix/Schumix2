@@ -93,6 +93,11 @@ namespace Schumix.Framework.Extensions
 			return (obj == null);
 		}
 
+		public static bool IsNull(this IntPtr ptr)
+		{
+			return (ptr.Equals(IntPtr.Zero));
+		}
+
 		/// <summary>
 		/// Determines whether the specified obj is a type of the specified type.
 		/// </summary>
