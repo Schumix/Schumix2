@@ -318,7 +318,6 @@ namespace Schumix.Irc
 		/// </summary>
 		public void Connect(bool nick = false)
 		{
-			NetworkQuit = false;
 			Log.Notice("Network", sLConsole.GetString("Connection to: {0}"), _server);
 			Connection(nick);
 		}
@@ -353,6 +352,7 @@ namespace Schumix.Irc
 
 		private void Connection(bool nick = false)
 		{
+			NetworkQuit = false;
 			_cts = new CancellationTokenSource();
 
 			if(nick)
