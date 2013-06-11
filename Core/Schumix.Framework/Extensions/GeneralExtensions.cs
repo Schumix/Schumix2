@@ -304,6 +304,14 @@ namespace Schumix.Framework.Extensions
 			return ss;
 		}
 
+		public static string[] SplitAndTrim(string list)
+		{
+			if(IsNullOrEmpty(list))
+				return new string[0];
+
+			return (from f in list.Split(SchumixBase.Comma) let trimmed = f.Trim() where !trimmed.Length.IsNull() select trimmed).ToArray();
+		}
+
 		public static string Reverse(this string value)
 		{
 			return value.Reverse().ToArray().SplitToString();
