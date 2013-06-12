@@ -39,13 +39,13 @@ namespace Schumix.Framework.Options
 {
 	public abstract class ArgumentSource
 	{
+		public abstract bool GetArguments(string value, out IEnumerable<string> replacement);
+		public abstract string Description { get; }
+		public abstract string[] GetNames();
+
 		protected ArgumentSource()
 		{
 		}
-
-		public abstract string[] GetNames();
-		public abstract string Description { get; }
-		public abstract bool GetArguments(string value, out IEnumerable<string> replacement);
 
 		public static IEnumerable<string> GetArgumentsFromFile(string file)
 		{

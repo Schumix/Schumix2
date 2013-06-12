@@ -32,5 +32,5 @@ using System;
 
 namespace Schumix.Framework.Options
 {
-	public delegate void OptionAction<TKey, TValue> (TKey key, TValue value);
+	public delegate void OptionAction<TKey, TValue>(TKey key, TValue value);
 }

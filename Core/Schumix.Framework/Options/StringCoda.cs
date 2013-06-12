@@ -64,12 +64,12 @@ namespace Schumix.Framework.Options
 			using(IEnumerator<int> ewidths = widths.GetEnumerator())
 			{
 				bool? hw = null;
-				int width = GetNextWidth (ewidths, int.MaxValue, ref hw);
+				int width = GetNextWidth(ewidths, int.MaxValue, ref hw);
 				int start = 0, end;
 
 				do
 				{
-					end = GetLineEnd (start, width, self);
+					end = GetLineEnd(start, width, self);
 					char c = self[end-1];
 
 					if(char.IsWhiteSpace (c))
