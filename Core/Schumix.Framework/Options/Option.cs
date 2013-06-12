@@ -3,8 +3,10 @@
  * 
  * Authors:
  *  Jonathan Pryor <jpryor@novell.com>
+ *  Rolf Bjarne Kvinge <rolf@xamarin.com>
  *
  * Copyright (C) 2008 Novell (http://www.novell.com)
+ * Copyright (C) 2012 Xamarin Inc (http://www.xamarin.com)
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
  * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
  * 
@@ -28,6 +30,8 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
+// Utolsó kommit ami alapján frissítve lett a Mono.Options: https://github.com/mono/mono/commit/5bf49ac0efdad45a2851cf9daef3ef6ceceb0e0b
+
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -44,6 +48,7 @@ namespace Schumix.Framework.Options
 		private string description;
 		private string prototype;
 		private string[] names;
+		private bool hidden;
 		private int count;
 
 		public string Prototype
@@ -64,6 +69,11 @@ namespace Schumix.Framework.Options
 		public int MaxValueCount
 		{
 			get { return count; }
+		}
+
+		public bool Hidden
+		{
+			get { return hidden; }
 		}
 		
 		public string[] GetNames()
@@ -88,11 +98,15 @@ namespace Schumix.Framework.Options
 
 		protected abstract void OnParseComplete(OptionContext c);
 		
-		protected Option(string prototype, string description) : this(prototype, description, 1)
+		protected Option(string prototype, string description) : this(prototype, description, 1, false)
 		{
 		}
 		
-		protected Option(string prototype, string description, int maxValueCount)
+		protected Option(string prototype, string description, int maxValueCount) : this(prototype, description, maxValueCount, false)
+		{
+		}
+
+		protected Option(string prototype, string description, int maxValueCount, bool hidden)
 		{
 			if(prototype.IsNull())
 				throw new ArgumentNullException("prototype");
@@ -103,11 +117,19 @@ namespace Schumix.Framework.Options
 			if(maxValueCount < 0)
 				throw new ArgumentOutOfRangeException("maxValueCount");
 			
-			this.prototype = prototype;
-			this.names = prototype.Split('|');
+			this.prototype   = prototype;
 			this.description = description;
-			this.count = maxValueCount;
-			this.type = ParsePrototype();
+			this.count       = maxValueCount;
+			this.names       = (this is Category)
+				// append GetHashCode() so that "duplicate" categories have distinct
+				// names, e.g. adding multiple "" categories should be valid.
+				? new[] { prototype + this.GetHashCode() } : prototype.Split('|');
+
+			if(this is Category)
+				return;
+
+			this.type   = ParsePrototype();
+			this.hidden = hidden;
 			
 			if(this.count == 0 && type != OptionValueType.None)
 				throw new ArgumentException("Cannot provide maxValueCount of 0 for OptionValueType.Required or OptionValueType.Optional.", "maxValueCount");

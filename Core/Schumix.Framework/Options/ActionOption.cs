@@ -3,8 +3,10 @@
  * 
  * Authors:
  *  Jonathan Pryor <jpryor@novell.com>
+ *  Rolf Bjarne Kvinge <rolf@xamarin.com>
  *
  * Copyright (C) 2008 Novell (http://www.novell.com)
+ * Copyright (C) 2012 Xamarin Inc (http://www.xamarin.com)
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
  * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
  * 
@@ -37,7 +39,13 @@ namespace Schumix.Framework.Options
 	{
 		private Action<OptionValueCollection> action;
 		
-		public ActionOption(string prototype, string description, int count, Action<OptionValueCollection> action) : base(prototype, description, count)
+		public ActionOption(string prototype, string description, int count, Action<OptionValueCollection> action)
+			: this(prototype, description, count, action, false)
+		{
+		}
+
+		public ActionOption(string prototype, string description, int count, Action<OptionValueCollection> action, bool hidden)
+			: base(prototype, description, count, hidden)
 		{
 			if(action.IsNull())
 				throw new ArgumentNullException("action");
