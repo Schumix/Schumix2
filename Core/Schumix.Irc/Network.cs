@@ -388,7 +388,7 @@ namespace Schumix.Irc
 				return;
 			}
 
-			if(client.Connected)
+			if(!client.IsNull() && client.Connected)
 				Log.Success("Network", sLConsole.GetString("Successfully established the connection!"));
 			else
 			{
@@ -398,10 +398,11 @@ namespace Schumix.Irc
 
 			if(CType == ConnectionType.Ssl)
 			{
-				var networkStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback((s,ce,ca,p) => true), null);
+				SslStream networkStream = null;
 
 				try
 				{
+					networkStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback((s,ce,ca,p) => true), null);
 					networkStream.AuthenticateAsClient(_server);
 				}
 				catch(AuthenticationException e)
@@ -412,6 +413,9 @@ namespace Schumix.Irc
 				{
 					Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
+
+				if(networkStream.IsNull())
+					return;
 
 				InitializeStream(networkStream);
 			}
