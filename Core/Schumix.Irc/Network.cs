@@ -388,7 +388,7 @@ namespace Schumix.Irc
 				return;
 			}
 
-			if(client.Connected)
+			if(!client.IsNull() && client.Connected)
 				Log.Success("Network", sLConsole.GetString("Successfully established the connection!"));
 			else
 			{
