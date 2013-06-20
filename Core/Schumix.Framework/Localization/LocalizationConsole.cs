@@ -102,9 +102,23 @@ namespace Schumix.Framework.Localization
 				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
 			}
 			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			{
+#if false
+				// .net 4.5
+				CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(Language);
+#endif
+				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
 				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
+			}
 			else
+			{
+#if false
+				// .net 4.5
+				CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(Language);
+#endif
+				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
 				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
+			}
 		}
 
 		public string GetString(string phrase)
