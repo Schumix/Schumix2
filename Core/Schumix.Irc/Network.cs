@@ -313,6 +313,11 @@ namespace Schumix.Irc
 			}
 		}
 
+		public bool IsConnected()
+		{
+			return Connected;
+		}
+
 		/// <summary>
 		///     Kapcsolódás az IRC kiszolgálóhoz.
 		/// </summary>

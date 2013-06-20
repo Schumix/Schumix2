@@ -1089,6 +1089,13 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleConnect()
 		{
+			if(sIrcBase.Networks[_servername].IsConnected())
+			{
+				//Log.Error("Console", sLManager.GetConsoleWarningText("ConnectedIrcServer"));
+				Log.Error("Console", "Error!");
+				return;
+			}
+
 			sIrcBase.Networks[_servername].Connect();
 		}
 
@@ -1097,6 +1104,13 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleDisConnect()
 		{
+			if(!sIrcBase.Networks[_servername].IsConnected())
+			{
+				//Log.Error("Console", sLManager.GetConsoleWarningText("NoConnectedIrcServer"));
+				Log.Error("Console", "Error!");
+				return;
+			}
+
 			sIrcBase.Networks[_servername].sSender.Quit("Console: Disconnect.");
 			sIrcBase.Networks[_servername].DisConnect();
 		}
