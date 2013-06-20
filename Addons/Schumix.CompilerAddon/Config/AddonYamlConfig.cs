@@ -48,7 +48,7 @@ namespace Schumix.CompilerAddon.Config
 			Log.Notice("CompilerAddonConfig", sLConsole.GetString("Config file is loading."));
 
 			var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : NullYMap;
-			CompilerMap((!compilermap.IsNull() && compilermap.ContainsKey("Flooding")) ? ((YamlMappingNode)compilermap["Flooding".ToYamlNode()]).Children : NullYMap);
+			CompilerMap((!compilermap.IsNull() && compilermap.ContainsKey("Compiler")) ? ((YamlMappingNode)compilermap["Compiler".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("CompilerAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
