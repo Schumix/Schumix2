@@ -529,6 +529,7 @@ namespace Schumix.Framework.Extensions
 		public static bool IsMonthName(this string Name)
 		{
 #if false
+			// .net 4.5
 			try
 			{
 				var d = DateTime.ParseExact(Name, "MMMM", CultureInfo.CurrentCulture).Month;
