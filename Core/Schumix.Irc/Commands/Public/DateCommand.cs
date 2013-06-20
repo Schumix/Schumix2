@@ -29,7 +29,7 @@ namespace Schumix.Irc.Commands
 		protected void HandleDate(IRCMessage sIRCMessage)
 		{
 			string nameday = sUtilities.NameDay(sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName));
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("date", sIRCMessage.Channel, sIRCMessage.ServerName), DateTime.Now.Year, DateTime.Now.Month.ToMonthFormat(), DateTime.Now.Day.ToDayFormat(), nameday);
+			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("date", sIRCMessage.Channel, sIRCMessage.ServerName), DateTime.Now.Year, DateTime.Now.Month.ToMonthFormat(), DateTime.Now.Day.ToDayFormat(), nameday.IsNullOrEmpty() ? nameday : "?");
 		}
 	}
 }

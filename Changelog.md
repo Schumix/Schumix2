@@ -2,6 +2,7 @@
 
 ## 4.1.0 (2013-xx-xx)
 
+ * CompilerAddon yaml konfig olvasása kijavítva.
  * Mono.Options frissítésre került a mono-ban tárolt verzió alapján.
  * Platform osztályhoz hozzáadva több olyan függvény amivel pontosabban megállapítható az adott rendszer beállításai.
  * Kijavításra került a 64 bites Windows-okon jelentkező indulási hiba. Mostantól Windows alatt csak 32 bites verzióban lehet lefordítani a programot és csak azt szabad elindítani. Persze a 32 bitesnél ez nem feltétlen lényeges viszont a 64 bites verziónál feltétlenül így kell.
