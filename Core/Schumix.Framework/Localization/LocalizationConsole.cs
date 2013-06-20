@@ -91,11 +91,7 @@ namespace Schumix.Framework.Localization
 		public void SetLocale(string Language)
 		{
 			Locale = Language.Replace("-", string.Empty);
-
-			if(Language.Length == 4 && !Language.Contains("-"))
-				Language = Language.Substring(0, 2) + "-" + Language.Substring(2);
-			else if((Language.Length < 4 || Language.Length > 4) && !Language.Contains("-"))
-				Language = "en-US";
+			Language = Language.ToLocale();
 
 			if(sPlatform.GetPlatformType() == PlatformType.Windows)
 			{

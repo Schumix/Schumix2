@@ -172,6 +172,16 @@ namespace Schumix.TestAddon.Commands
 				sSendMessage.SendChatMessage(sIRCMessage, "Konzol kimenet átírányítása: {0}", Console.IsOutputRedirected);
 #endif
 			}
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "ismonthname")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva a hónap neve!");
+					return;
+				}
+
+				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info[5].IsMonthName());
+			}
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);
 		}

@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using YamlDotNet.RepresentationModel;
 using Schumix.Framework.Platforms;
+using Schumix.Framework.Localization; // .net 4.5-nél nem kell majd
 
 namespace Schumix.Framework.Extensions
 {
@@ -36,6 +37,7 @@ namespace Schumix.Framework.Extensions
 	/// </summary>
 	public static class GeneralExtensions
 	{
+		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance; // .net 4.5-nél nem kell majd
 		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 
 		/// <summary>
@@ -512,6 +514,41 @@ namespace Schumix.Framework.Extensions
 		public static string ToSecondFormat(this int Second)
 		{
 			return Second < 10 ? string.Format("0{0}", Second.ToString()) : Second.ToString();
+		}
+
+		public static string ToLocale(this string Language)
+		{
+			if(Language.Length == 4 && !Language.Contains("-"))
+				Language = Language.Substring(0, 2) + "-" + Language.Substring(2);
+			else if((Language.Length < 4 || Language.Length > 4) && !Language.Contains("-"))
+				Language = "en-US";
+
+			return Language;
+		}
+
+		public static bool IsMonthName(this string Name)
+		{
+#if false
+			try
+			{
+				var d = DateTime.ParseExact(Name, "MMMM", CultureInfo.CurrentCulture).Month;
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+#endif
+
+			try
+			{
+				var d = DateTime.ParseExact(Name, "MMMM", CultureInfo.GetCultureInfo(sLConsole.Locale.ToLocale())).Month;
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
 		}
 	}
 }
