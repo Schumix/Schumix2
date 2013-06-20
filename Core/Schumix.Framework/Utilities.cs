@@ -658,47 +658,111 @@ namespace Schumix.Framework
 
 			switch(Language)
 			{
-				case "huHU":
+			case "czCZ":
+			{
+				Nameday = new string[,]
 				{
-					Nameday = new string[,] {
-						{ "ÚJÉV","Ábel","Genovéva","Titusz","Simon","Boldizsár","Attila","Gyöngyvér","Marcell","Melánia","Ágota","Ernő","Veronika","Bódog","Lóránt","Gusztáv","Antal","Piroska","Sára","Sebestyén","Ágnes","Vince","Zelma","Timót","Pál","Vanda","Angelika","Károly","Adél","Martina","Marcella" },
-						{ "Ignác","Karolina","Balázs","Ráhel","Ágota","Dóra","Tódor","Aranka","Abigél","Elvira","Bertold","Lívia","Ella, Linda","Bálint","Kolos","Julianna","Donát","Bernadett","Zsuzsanna","Álmos","Eleonóra","Gerzson","Alfréd","Mátyás","Géza","Edina","Ákos, Bátor","Elemér","","","" },
-						{ "Albin","Lujza","Kornélia","Kázmér","Adorján","Leonóra","Tamás","Zoltán","Franciska","Ildikó","Szilárd","Gergely","Krisztián, Ajtony","Matild","Kristóf","Henrietta","Gertrúd","Sándor","József","Klaudia","Benedek","Beáta","Emőke","Gábor","Irén","Emánuel","Hajnalka","Gedeon","Auguszta","Zalán","Árpád" },
-						{ "Hugó","Áron","Buda, Richárd","Izidor","Vince","Vilmos, Bíborka","Herman","Dénes","Erhard","Zsolt","Zsolt, Leó","Gyula","Ida","Tibor","Tas, Anasztázia","Csongor","Rudolf","Andrea","Emma","Konrád, Tivadar","Konrád","Csilla","Béla","György","Márk","Ervin","Zita","Valéria","Péter","Katalin, Kitti","" },
-						{ "Fülöp","Zsigmond","Tímea","Mónika","Györgyi","Ivett","Gizella","Mihály","Gergely","Ármin","Ferenc","Pongrác","Szervác","Bonifác","Zsófia","Botond, Mózes","Paszkál","Erik","Ivó, Milán","Bernát, Felícia","Konstantin","Júlia, Rita","Dezső","Eszter","Orbán","Fülöp","Hella","Emil, Csanád","Magdolna","Zsanett, Janka","Angéla" },
-						{ "Tünde","Anita, Kármen","Klotild","Bulcsú","Fatime","Norbert","Róbert","Medárd","Félix","Margit","Barnabás","Villő","Antal, Anett","Vazul","Jolán","Jusztin","Laura","Levente","Gyárfás","Rafael","Alajos","Paulina","Zoltán","Iván","Vilmos","János","László","Levente, Irén","Péter, Pál","Pál","" },
-						{ "Annamária","Ottó","Kornél","Ulrik","Sarolta, Emese","Csaba","Apolónia","Ellák","Lukrécia","Amália","Nóra, Lili","Izabella","Jenő","Örs","Henrik","Valter","Endre, Elek","Frigyes","Emília","Illés","Dániel","Magdolna","Lenke","Kinga, Kincső","Kristóf, Jakab","Anna, Anikó","Olga","Szabolcs","Márta","Judit","Oszkár" },
-						{ "Boglárka","Lehel","Hermina","Domonkos","Krisztina","Berta","Ibolya","László","Emőd","Lörinc","Zsuzsanna","Klára","Ipoly","Marcell","Mária","Ábrahám","Jácint","Ilona","Huba","István","Sámuel","Menyhért","Bence","Bertalan","Lajos","Izsó","Gáspár","Ágoston","Beatrix","Rózsa","Erika" },
-						{ "Egon","Rebeka","Hilda","Rozália","Viktor, Lőrinc","Zakariás","Regina","Mária","Ádám","Nikolett, Hunor","Teodóra","Mária","Kornél","Szeréna","Enikő","Edit","Zsófia","Diána","Vilhelmina","Friderika","Máté","Móric","Tekla","Gellért","Eufrozina","Jusztina","Adalbert","Vencel","Mihály","Jeromos","" },
-						{ "Malvin","Petra","Helga","Ferenc","Aurél","Renáta","Amália","Koppány","Dénes","Gedeon","Brigitta","Miksa","Kálmán","Helén","Teréz","Gál","Hedvig","Lukács","Nándor","Vendel","Orsolya","Előd","Gyöngyi","Salamon","Bianka","Dömötör","Szabina","Simon","Nárcisz","Alfonz","Farkas" },
-						{ "Marianna","Achilles","Győző","Károly","Imre","Lénárd","Rezső","Zsombor","Tivadar","Réka","Márton","Jónás, Renátó","Szilvia","Aliz","Albert, Lipót","Ödön","Hortenzia, Gergő","Jenő","Erzsébet","Jolán","Olivér","Cecília","Kelemen","Emma","Katalin","Virág","Virgil","Stefánia","Taksony","András, Andor","" },
-						{ "Elza","Melinda","Ferenc","Barbara, Borbála","Vilma","Miklós","Ambrus","Mária","Natália","Judit","Árpád","Gabriella","Luca","Szilárda","Valér","Etelka","Lázár","Auguszta","Viola","Teofil","Tamás","Zéno","Viktória","Ádám, Éva","KARÁCSONY","KARÁCSONY","János","Kamilla","Tamás","Dávid","Szilveszter" },
-					};
-					break;
-				}
-				//case "enUS":
-				//{
-				//	Nameday = null;
-				//	break;
-				//}
-				default:
+					// januar
+					{ "Nový rok","Karina","Radmila","Diana","Dalimil","Tři králové","Vilma","Čestmír","Vladan","Břetislav","Bohdana","Pravoslav","Edita","Radovan","Alice","Ctirad","Drahoslav","Vladislav","Doubravka","Ilona","Běla","Slavomír","Zdeněk","Milena","Miloš","Zora","Ingrid","Otýlie","Zdislava","Robin","Marika" },
+					// Februar
+					{ "Hynek","Nela","Blažej","Jarmila","Dobromila","Vanda","Veronika","Milada","Apolena","Mojmír","Božena","Slavěna","Věnceslav","Valentýn","Jiřina","Ljuba","Miloslava","Gizela","Patrik","Oldřich","Lenka","Petr","Svatopluk","Matěj","Liliana","Dorota","Alexandr","Lumír","---","","" },
+					// Marec
+					{ "Bedřich","Anežka","Kamil","Stela","Kazimir","Miroslav","Tomáš","Gabriela","Františka","Viktorie","Anděla","Řehoř","Růžena","Růt a Matylda","Ida","Elena a Herbert","Vlastimil","Eduard","Josef","Světlana","Radek","Leona","Ivona","Gabriel","Marian","Emanuel","Dita","Soňa","Taťána","Arnošt","Kvido" },
+					// April
+					{ "Hugo","Erika","Richard","Ivana","Miroslava","Vendula","Heřman a Hermína","Ema","Dušan","Darja","Izabela","Julius","Aleš","Vincenc","Anastázie","Irena","Rudolf","Valérie","Rostislav","Marcela","Alexandra","Evženie","Vojtěch","Jiří","Marek","Oto","Jaroslav","Vlastislav","Robert","Blahoslav","" },
+					// Maj
+					{ "Státní svátek","Zikmund","Alexej","Květoslav","Klaudie","Radoslav","Stanislav","Státní svátek","Ctibor","Blažena","Svatava","Pankrác","Servác","Bonifác","Žofie","Přemysl","Aneta","Nataša","Ivo","Zbyšek","Monika","Emil","Vladimír","Jana","Viola","Filip","Valdemar","Vilém","Maxmilián","Ferdinand","Kamila" },
+					// červen
+					{ "Laura","Jarmil","Tamara","Dalibor","Dobroslav","Norbert","Iveta a Slavoj","Medard","Stanislava","Gita","Bruno","Antonie","Antonín","Roland","Vít","Zbyněk","Adolf","Milan","Leoš","Květa","Alois","Pavla","Zdeňka","Jan","Ivan","Adriana","Ladislav","Lubomír","Petr a Pavel","Šárka","" },
+					// červenec
+					{ "Jaroslava","Patricie","Radomír","Prokop","Cyril a Metoděj","Mistr Jan Hus","Bohuslava","Nora","Drahoslava","Libuše a Amálie","Olga","Bořek","Markéta","Karolína","Jindřich","Luboš","Martina","Drahomíra","Čeněk","Ilja","Vítězslav","Magdaléna","Libor","Kristýna","Jakub","Anna","Věroslav","Viktor","Marta","Bořivoj","Ignác" },
+					// srpen
+					{ "Oskar","Gustav","Miluše","Dominik","Kristian","Oldřiška","Lada","Soběslav","Roman","Vavřinec","Zuzana","Klára","Alena","Alan","Hana","Jáchym","Petra","Helena","Ludvík","Bernard","Johana","Bohuslav","Sandra","Bartoloměj","Radim","Luděk","Otakar","Augustýn","Evelína","Vladěna","Pavlína" },
+					// zari
+					{ "Linda a Samuel","Adéla","Bronislav","Jindřiška","Boris","Boleslav","Regína","Mariana","Daniela","Irma","Denisa","Marie","Lubor","Radka","Jolana","Ludmila","Naděžda","Kryštof","Zita","Oleg","Matouš","Darina","Berta","Jaromír","Zlata","Andrea","Jonáš","Václav","Michal","Jeroným","" },
+					// rijen
+					{ "Igor","Olivie a Oliver","Bohumil","František","Eliška","Hanuš","Justýna","Věra","Štefan a Sára","Marina","Andrej","Marcel","Renáta","Agáta","Tereza","Havel","Hedvika","Lukáš","Michaela","Vendelín","Brigita","Sabina","Teodor","Nina","Beáta","Erik","Šarlota a Zoe","Státní svátek","Silvie","Tadeáš","Štěpánka" },
+					// listopad
+					{ "Felix","Dušičky","Hubert","Karel","Miriam","Liběna","Saskie","Bohumír","Bohdan","Evžen","Martin","Benedikt","Tibor","Sáva","Leopold","Otmar","Mahulena","Romana","Alžběta","Nikola","Albert","Cecílie","Klement","Emílie","Kateřina","Artur","Xenie","René","Zina","Ondřej","" },
+					// prosinec
+					{ "Iva","Blanka","Svatoslav","Barbora","Jitka","Mikuláš","Ambrož a Benjamín","Květoslava","Vratislav","Julie","Dana","Simona","Lucie","Lýdie","Radana a Radan","Albína","Daniel","Miloslav","Ester","Dagmar","Natálie","Šimon","Vlasta","Adam a Eva","2. vánoční svátek","Štěpán","Žaneta","Bohumila","Judita","David","Silvester" },
+				};
+				break;
+			}
+			case "deDE":
+			{
+				Nameday = new string[,]
 				{
-					Nameday = new string[,] {
-						{ "ÚJÉV","Ábel","Genovéva","Titusz","Simon","Boldizsár","Attila","Gyöngyvér","Marcell","Melánia","Ágota","Ernő","Veronika","Bódog","Lóránt","Gusztáv","Antal","Piroska","Sára","Sebestyén","Ágnes","Vince","Zelma","Timót","Pál","Vanda","Angelika","Károly","Adél","Martina","Marcella" },
-						{ "Ignác","Karolina","Balázs","Ráhel","Ágota","Dóra","Tódor","Aranka","Abigél","Elvira","Bertold","Lívia","Ella, Linda","Bálint","Kolos","Julianna","Donát","Bernadett","Zsuzsanna","Álmos","Eleonóra","Gerzson","Alfréd","Mátyás","Géza","Edina","Ákos, Bátor","Elemér","","","" },
-						{ "Albin","Lujza","Kornélia","Kázmér","Adorján","Leonóra","Tamás","Zoltán","Franciska","Ildikó","Szilárd","Gergely","Krisztián, Ajtony","Matild","Kristóf","Henrietta","Gertrúd","Sándor","József","Klaudia","Benedek","Beáta","Emőke","Gábor","Irén","Emánuel","Hajnalka","Gedeon","Auguszta","Zalán","Árpád" },
-						{ "Hugó","Áron","Buda, Richárd","Izidor","Vince","Vilmos, Bíborka","Herman","Dénes","Erhard","Zsolt","Zsolt, Leó","Gyula","Ida","Tibor","Tas, Anasztázia","Csongor","Rudolf","Andrea","Emma","Konrád, Tivadar","Konrád","Csilla","Béla","György","Márk","Ervin","Zita","Valéria","Péter","Katalin, Kitti","" },
-						{ "Fülöp","Zsigmond","Tímea","Mónika","Györgyi","Ivett","Gizella","Mihály","Gergely","Ármin","Ferenc","Pongrác","Szervác","Bonifác","Zsófia","Botond, Mózes","Paszkál","Erik","Ivó, Milán","Bernát, Felícia","Konstantin","Júlia, Rita","Dezső","Eszter","Orbán","Fülöp","Hella","Emil, Csanád","Magdolna","Zsanett, Janka","Angéla" },
-						{ "Tünde","Anita, Kármen","Klotild","Bulcsú","Fatime","Norbert","Róbert","Medárd","Félix","Margit","Barnabás","Villő","Antal, Anett","Vazul","Jolán","Jusztin","Laura","Levente","Gyárfás","Rafael","Alajos","Paulina","Zoltán","Iván","Vilmos","János","László","Levente, Irén","Péter, Pál","Pál","" },
-						{ "Annamária","Ottó","Kornél","Ulrik","Sarolta, Emese","Csaba","Apolónia","Ellák","Lukrécia","Amália","Nóra, Lili","Izabella","Jenő","Örs","Henrik","Valter","Endre, Elek","Frigyes","Emília","Illés","Dániel","Magdolna","Lenke","Kinga, Kincső","Kristóf, Jakab","Anna, Anikó","Olga","Szabolcs","Márta","Judit","Oszkár" },
-						{ "Boglárka","Lehel","Hermina","Domonkos","Krisztina","Berta","Ibolya","László","Emőd","Lörinc","Zsuzsanna","Klára","Ipoly","Marcell","Mária","Ábrahám","Jácint","Ilona","Huba","István","Sámuel","Menyhért","Bence","Bertalan","Lajos","Izsó","Gáspár","Ágoston","Beatrix","Rózsa","Erika" },
-						{ "Egon","Rebeka","Hilda","Rozália","Viktor, Lőrinc","Zakariás","Regina","Mária","Ádám","Nikolett, Hunor","Teodóra","Mária","Kornél","Szeréna","Enikő","Edit","Zsófia","Diána","Vilhelmina","Friderika","Máté","Móric","Tekla","Gellért","Eufrozina","Jusztina","Adalbert","Vencel","Mihály","Jeromos","" },
-						{ "Malvin","Petra","Helga","Ferenc","Aurél","Renáta","Amália","Koppány","Dénes","Gedeon","Brigitta","Miksa","Kálmán","Helén","Teréz","Gál","Hedvig","Lukács","Nándor","Vendel","Orsolya","Előd","Gyöngyi","Salamon","Bianka","Dömötör","Szabina","Simon","Nárcisz","Alfonz","Farkas" },
-						{ "Marianna","Achilles","Győző","Károly","Imre","Lénárd","Rezső","Zsombor","Tivadar","Réka","Márton","Jónás, Renátó","Szilvia","Aliz","Albert, Lipót","Ödön","Hortenzia, Gergő","Jenő","Erzsébet","Jolán","Olivér","Cecília","Kelemen","Emma","Katalin","Virág","Virgil","Stefánia","Taksony","András, Andor","" },
-						{ "Elza","Melinda","Ferenc","Barbara, Borbála","Vilma","Miklós","Ambrus","Mária","Natália","Judit","Árpád","Gabriella","Luca","Szilárda","Valér","Etelka","Lázár","Auguszta","Viola","Teofil","Tamás","Zéno","Viktória","Ádám, Éva","KARÁCSONY","KARÁCSONY","János","Kamilla","Tamás","Dávid","Szilveszter" },
-					};
-					break;
-				}
+					// Januar
+					{ "Neujahr, Maria","Makarius, Gregor, Otfried, Dietmar","Genoveva, Odilo, Irma","Angelika, Christiane","Emilia, Johann Nep.","Heilige 3 Könige, Raimund","Reinhold, Valentin","Severin, Erhard, Gudula, Heiko","Adrian, Julian, Alice","Paul Eins., Leonie","Thomas v.C.","Ernst, Tatjana, Xenia","Jutta, Hilmar, Hilarius","Rainer, Felix, Engelmar","Arnold, Romedius, Mauro, Arno","Marcel, Tilman, Dietwald, Uli","Anton Eins., Rosalind","Margitta, Ulfried, Uwe","Mario, Pia, Martha","Fabian, Sebastian, Ursula","Agnes, Meinrad, Ines","Vinzenz, Dietlinde, Jana","Hartmut, Emerentia, Guido","Franz v. S., Vera, Thurid, Bernd","Pauli Bekehrung., Wolfram","Timotheus u. Titus, Paula","Angela, Alrun, Gerd","Manfred, Thomas v. A., Karl, Karolina","Gerhard, Gerd, Josef Fr.","Martina, Adelgunde","Johannes B., Marcella, Rudbert" },
+					// Februar
+					{ "Brigitta, Brigitte, Reginald, Barbara","Mariä Lichtmess, Bodo, Stephan","Blasius, Ansgar, Oskar, Michael","Andreas C., Veronika, Jenny","Agatha, Albuin","Dorothea, Doris, Paul M.","Richard, Ava, Ronan","Elfrieda, Hieronymus. Philipp","Apollonia, Anne-Kathrin, Anna, Katharina","Scholastika, Siegmar, Bruno","Maria Lourdes, Theodora, Theodor","Benedikt, Eulalia","Christina, Irmhild, Adolf, Gisela","Valentin, Cyrill, Method","Siegfried, Jovita, Georgia","Juliana, Liane","Alexis, Benignus","Constanze, Simon, Simone","Irmgard, Irma, Hedwig","Corona, Falko, Jacinta","Petrus D., Gunhild, Enrica, Peter","Petri Stuhlfeier, Isabella, Pit","Romana, Raffaela, Polyk.","Matthias","Walburga, Edeltraud","Gerlinde, Ottokar, Edigna, Denis, Mechthild","Gabriel, Marko, Baldur","Roman, Silvana, Oswald, Detlev","Schalttag, Oswald","","" },
+					// Marec
+					{ "Albin, Roger, Leontina","Volker, Agnes, Karl","Kunigunde, Camilla, Leif, Friedrich","Kasimir, Edwin, Humbert","Gerda, Olivia, Dietmar, Tim","Fridolin, Nicola, Rosa, Nicole","Reinhard, Felicitas, Perpet., Volker","Johannes v.G., Gerhard","Franziska, Bruno, Barbara, Dominik","Emil, Gustav, 40 Märtyrer","Rosina, Alram, Ulrich","Beatrix, Almut, Serafina","Judith, Pauline, Leander","Mathilde, Eva, Evelyn","Klemens, Louise","Herbert, Rüdiger","Gertrud, Gertraud, Patrick","Edward, Sibylle, Cyrill","Josef, Josefa, Josefine","Claudia, Wolfram","Christian, Axel, Emilia","Lea, Elmar, Reinhilde","Otto, Rebekka, Toribio","Karin, Elias, Heidelinde","Verkündigung d. Herrn, Lucia","Ludger, Manuel, Manuela, Lara","Augusta, Heimo, Ernst","Guntram, Ingbert, Willy","Helmut, Ludolf, Berthold","Amadeus, Diemut","Cornelia, Conny, Nelly, Ben" },
+					// April
+					{ "Irene, Irina, Hugo","Franz v.P., Mirjam, Sandra, Frank","Richard, Lisa","Isidor, Konrad, Kurt","Crescentia, Vinzenz F., Juliane","Sixtus, William","Ralph, Johann Baptist","Walter, Beate, Rose-Marie","Waltraud, Casilda, Hugo","Gernot, Holda, Ezechiel, Engelbert","Stanislaus, Hildebrand, Reiner","Herta, Julius, Zeno","Ida, Hermenegild, Gilda, Martin","Ernestine, Erna, Elmo","Anastasia, Una, Damian","Bernadette, Magnus, Joachim","Eberhard, Wanda, Isadora, Max","Werner, Wigbert","Gerold, Emma, Leo, Timo","Odetta, Hildegund","Alexandra, Anselm","Alfred, Kaj, Leonidas","Georg, Jörg, Jürgen","Wilfried, Egbert, Virginia, Marion","Markus Ev., Erwin","Helene, Consuela","Zita, Petrus C, Montserrat","Hugo, Pierre, Ludwig","Katharina v.S., Roswitha, Katja","Pauline, Silvio, Pius V.","" },
+					// Maj
+					{ "Josef d. Arbeiter, Arnold","Siegmund, Boris, Zoë","Philipp u. Jakob, Viola, Alexander","Florian, Guido, Valeria","Gotthard, Sigrid, Jutta","Gundula, Antonia, Britto","Gisela, Silke, Notker, Helga","Ida, Ulrike, Ulla, Klara","Beat, Caroline, Volkmar, Theresia","Isidor, Gordian, Liliana, Damian de Veuster","Joachim, Mamertus","Pankratius, Imelda, Joana","Servatius, Rolanda","Bonifatius, Ismar, Pascal, Christian","Sophie, Sonja, Hertraud","Johann Nepomuk, Adolf","Dietmar, Pascal,Antonella","Erich, Erika, Johannes I., Felix","Ivo, Yvonne, Kuno","Bernhardin, Elfriede,Mira","Hermann, Wiltrud, Konst.","Julia, Rita, Ortwin, Renate","Renate, Désirée, Alma","Dagmar, Esther","Urban, Beda, Magdalene, Miriam","Marianne, Philipp N.","August, Bruno, Randolph","Wilhelm, German","Erwin, Irmtraud, Maximin","Ferdinand, Johanna","Petra, Mechthild, Helma" },	
+					// Jun
+					{ "Simeon, Silka, Silvana","Armin, Erasmus, Blandina","Karl, Silvia, Hildburg, Karoline","Christa, Klothilde, Iona, Eva","Winfried Bonifatius, Erika","Norbert, Bertrand, Kevin, Alice","Robert, Gottlieb, Anita","Medardus, Elga, Chlodwig","Grazia, Annamaria, Ephr., Diana","Diana, Heinrich, Heinz, Olivia","Paula, Barnabas, Alice, Udo","Guido, Leo III., Florinda","Antonius v.P., Bernhard","Hartwig, Meinrad","Veit, Lothar, Gebhard, Bernhard","Benno, Luitgard, Quirin, Julietta","Adolf, Volker, Alena","Elisabeth, Ilsa, Marina, Isabella"," Juliana, Romuald","Adalbert, Florentina, Margot","Alois, Aloisia, Alban, Ralf","Rotraud, Thomas M.","Edeltraud, Ortrud, Marion","Johannes d.T., Reingard","Eleonora, Ella, Dorothea, Doris","David, Konstantin, Vigil., Paul","Hemma, Heimo, Cyrill, Daniel","Harald, Ekkehard, Irenäus, Senta","Peter u. Paul, Gero","Otto, Bertram, Ehrentrud","" },
+					// Jul
+					{ "Dietrich, Aaron, Theobald, Regina","Mariä Heimsuchg, Wiltrud, Jakob","Thomas Ap., Ramon, Ramona","Ulrich, Berta, Elisabeth, Else","Albrecht, Kira, Letizia","Marietta G., Goar, Isaias","Willibald, Edda, Firmin","Kilian, Amalia, Edgar","Veronika, Hermine, Hannes","Knud, Engelbert, Raphael, Sascha","Olga, Oliver, Benedikt","Siegbert, Henriette, Felix, Eleonore","Heinrich, Sarah, Arno","Roland, Camillo, Goswin","Bonaventura, Egon, Björn","Carmen, Irmgard","Gabriella, Charlotte","Arnulf, Ulf, Friedrich","Marina, Reto, Bernold","Margaretha, Greta, Elias","Daniel, Daniela, Stella, Julia","Magdalena, Marlene, Verena","Birgitta, Birgit, Liborius","Christoph, Sieglinde, Luise","Jakob d.Ä., Valentina","Anna u. Joachim, Gloria","Rudolf, Rolf, Pantaleon, Natalie","Adele, Ada, Innozenz, Benno","Martha, Olaf, Ladislaus, Flora","Ingeborg, Inga, Petrus C.","Ignatius, Joseph v. Ar., Herrmann" },
+					// August
+					{ "Alfons, Kenneth, Peter F., Uwe","Eusebius, Adriana, Julian, Julan","Lydia, August, Nikodemus","Johannes M.V., Rainer, Reinhard","Oswald, Maria Schnee","Christi Verklärung, Gilbert","Cajetan, Afra, Albert","Dominik, Cyriak, Elgar","Edith, Altmann, Roman","Laurenz, Lars, Astrid","Klara, Philomena, Donald","Radegunde, Innozenz XI., Andreas","Hippolyt, Marko, Cassian","Meinhard, Maximilian K.","Mariä Himmelfahrt, Steven","Stefan, Rochus, Alfried, Stephanie","Gudrun, Hyazinth, Janine, Clara","Helena, Rainald, Claudia","Sebald, Johann E., Julius, Bert","Bernhard, Bernd, Ronald, Samuel","Pius X., Maximilian, Pia","Regina, Maria Regina, Sigfried","Rosa, Isolde, Zachäus","Bartholomäus, Michaela, Isolde","Ludwig, Elvira, Ebba, Patricia","Patricia, Miriam, Teresa, Margarita","Monika, Gebhard, Vivian","Augustin, Adelinde, Aline, Vivian","Johannes Enthauptung, Beatrice","Felix, Heribert, Rebekka, Alma","Raimund, Aidan, Paulinus, Anja" },
+					// September
+					{ "Verena, Ruth, Ägidius","Ingrid, René, Salomon, Franz","Gregor, Silvia, Phoebe, Sonja","Rosalie, Ida, Iris, Irmgard, Sven","Roswitha, Urs, Hermine","Magnus, Gundolf, Bertram, Beate","Regina, Otto, Ralph","Mariä Geburt, Adrian, Otmar","Otmar, Edgar, Pedro Cl.","Diethard, Isabella, Carlo, Niels","Helga, Felix u. Regula, Louis","Maria Namen, Gerfried","Notburga, Tobias, Johann.","Kreuzerhöhung, Albert, Jens","Dolores, Melitta, Melissa","Ludmilla, Cornelius","Hildegard, Robert, Ariane","Lambert, Herlinde, Rica","Wilhelmine, Januarius, Thorsten","Hertha, Eustach., Candida, Susanna","Matthäus, Deborah, Jonas","Mauritius, Emmeram, Gundula","Linus, Thekla, Gerhild","Rupert, Virgil, Gerhard","Klaus, Serge, Irmfried","Kosmas, Damian, Cosima","Vinzenz, Hiltrud, Dietrich","Wenzel, Lioba, Giselher","Michael, Michaela, Gabriel, Gabriela, Gabi","Hieronymus, Urs, Victor","" },
+					// Oktober
+					{ "Remigius, Theresia v.L., Werner, Andrea","Schutzengelfest, Gideon, Bianca, Jacqueline","Ewald, Udo, Bianca, Paulina","Franz v.A., Edwin, Aurora, Emma, Thea","Herwig, Meinolf, Gallina","Bruno, Adalbero, Melanie, Brunhild, Gerald","Rosa Maria, Justina, Jörg, Denise, Marc","Günther, Laura, Hannah, Gerda","Sibylle, Sara, Dionys, Elfriede","Viktor, Samuel, Gereon, Valerie","Alexander, Manuela, Georg","Maximilian, Horst, Pilár, David","Koloman, Edward, Andre","Burkhard, Calixtus, Alan, Otilie","Theresia v.A., Aurelia, Franziska","Hedwig, Gallus, Gordon, Carlo","Rudolf, Marie-Louise, Adelheid","Lukas, Gwenn, Justus, Viviana","Frieda, Frida, Isaak, Paul v. K.","Wendelin, Ira, Irina, Jessica","Ursula, Ulla, Celina, Holger","Cordula, Salome, Ingbert","Johannes C., Severin, Uta","Anton, Armella, Alois, Aloisia, Victoria","Ludwig, Lutz, Darja, Hans","Amand., Albin, Wieland, Anastacia, Josephine","Sabina, Wolfhard, Christa, Stefan","Simon u. J. Thaddäus, Freddy","Ermelinda, Melinda, Franco, Grete","Dieter, Alfons, Angelo, Sabine","Wolfgang, Quentin, Melanie" },
+					// November
+					{ "Allerheiligen, Harald","Allerseelen, Angela","Hubert, Pirmin, Martin P., Silvia","Karl, Karla, Modesta, Charles","Emmerich, Zacharias, Hardy","Leonhard, Christine, Nina","Engelbert, Carina, Willibr., Tina","Gottfried, Willehad, Karina","Theodor, Herfried, Roland, Gregor","Leo, Andrea, Andreas, Jens, Ted","Martin, Senta, Mennas, Leonie","Christian, Kunibert","Eugen, Stanislaus, Livia, Rene","Sidonia, Nikolaus T., Karl","Leopold, Leopoldine, Albert, Nikolaus","Margarita, Otmar, Arthur","Gertrud, Hilda, Florin, Walter","Odo, Alda, Roman, Bettina","Elisabeth, Bettina, Lisa, Roman","Edmund, Corbinian, Felix, Elisabetz","Amalie, Amelia, Rufus, Edmund","Cäcilia, Silja, Salvator, Rufus","Clemens, Detlef, Columb., Salvator","Flora, Albert, Chrysogon, Clemens","Katharina, Kathrin, Katja, Jasmin","Konrad, Kurt, Anneliese","Uta, Brunhilde, Albrecht, Ida","Berta, Jakob, Albrecht","Friedrich, Friederike, Berta","Andreas, Andrea, Volkert, Kerstin","" },
+					// December
+					{ "Blanka, Natalie, Eligius","Bibiana, Lucius, Jan","Franz Xaver, Jason","Barbara, Johannes v.D.","Gerald, Reinhard, Niels","Nikolaus, Denise, Henrike","Ambros, Farah, Benedikte","Mariä Empfängnis, Edith","Valerie, Liborius, Reinmar","Emma, Imma, Loretta","Arthur, Damasus, Tassilo","Johanna, Hartmann","Lucia, Ottilia, Jodok, Johanna","Berthold, Johannes v.K.","Christiane, Nina, Paola","Adelheid, Heidi, Elke","Lazarus, Jolanda, Viviana","Esperanza, Luise, Gratian","Susanna, Benjamin","Julius, Holger, Eike","Ingmar, Ingo, Hagar","Jutta, Francesca-Saveria","Victoria, Johannes C.","Hl. Abend, Adam u. Eva","Christfest (Weihnachten)","Stephan, Stephanie","Johannes Ev., Fabiola","Unschuldige Kinder, John","David, Tamara, Jessica","Hermine, Minna, Herma","Silvester, Melanie" },
+				};
+				break;
+			}
+			case "huHU":
+			{
+				Nameday = new string[,]
+				{
+					{ "ÚJÉV","Ábel","Genovéva","Titusz","Simon","Boldizsár","Attila","Gyöngyvér","Marcell","Melánia","Ágota","Ernő","Veronika","Bódog","Lóránt","Gusztáv","Antal","Piroska","Sára","Sebestyén","Ágnes","Vince","Zelma","Timót","Pál","Vanda","Angelika","Károly","Adél","Martina","Marcella" },
+					{ "Ignác","Karolina","Balázs","Ráhel","Ágota","Dóra","Tódor","Aranka","Abigél","Elvira","Bertold","Lívia","Ella, Linda","Bálint","Kolos","Julianna","Donát","Bernadett","Zsuzsanna","Álmos","Eleonóra","Gerzson","Alfréd","Mátyás","Géza","Edina","Ákos, Bátor","Elemér","","","" },
+					{ "Albin","Lujza","Kornélia","Kázmér","Adorján","Leonóra","Tamás","Zoltán","Franciska","Ildikó","Szilárd","Gergely","Krisztián, Ajtony","Matild","Kristóf","Henrietta","Gertrúd","Sándor","József","Klaudia","Benedek","Beáta","Emőke","Gábor","Irén","Emánuel","Hajnalka","Gedeon","Auguszta","Zalán","Árpád" },
+					{ "Hugó","Áron","Buda, Richárd","Izidor","Vince","Vilmos, Bíborka","Herman","Dénes","Erhard","Zsolt","Zsolt, Leó","Gyula","Ida","Tibor","Tas, Anasztázia","Csongor","Rudolf","Andrea","Emma","Konrád, Tivadar","Konrád","Csilla","Béla","György","Márk","Ervin","Zita","Valéria","Péter","Katalin, Kitti","" },
+					{ "Fülöp","Zsigmond","Tímea","Mónika","Györgyi","Ivett","Gizella","Mihály","Gergely","Ármin","Ferenc","Pongrác","Szervác","Bonifác","Zsófia","Botond, Mózes","Paszkál","Erik","Ivó, Milán","Bernát, Felícia","Konstantin","Júlia, Rita","Dezső","Eszter","Orbán","Fülöp","Hella","Emil, Csanád","Magdolna","Zsanett, Janka","Angéla" },
+					{ "Tünde","Anita, Kármen","Klotild","Bulcsú","Fatime","Norbert","Róbert","Medárd","Félix","Margit","Barnabás","Villő","Antal, Anett","Vazul","Jolán","Jusztin","Laura","Levente","Gyárfás","Rafael","Alajos","Paulina","Zoltán","Iván","Vilmos","János","László","Levente, Irén","Péter, Pál","Pál","" },
+					{ "Annamária","Ottó","Kornél","Ulrik","Sarolta, Emese","Csaba","Apolónia","Ellák","Lukrécia","Amália","Nóra, Lili","Izabella","Jenő","Örs","Henrik","Valter","Endre, Elek","Frigyes","Emília","Illés","Dániel","Magdolna","Lenke","Kinga, Kincső","Kristóf, Jakab","Anna, Anikó","Olga","Szabolcs","Márta","Judit","Oszkár" },
+					{ "Boglárka","Lehel","Hermina","Domonkos","Krisztina","Berta","Ibolya","László","Emőd","Lörinc","Zsuzsanna","Klára","Ipoly","Marcell","Mária","Ábrahám","Jácint","Ilona","Huba","István","Sámuel","Menyhért","Bence","Bertalan","Lajos","Izsó","Gáspár","Ágoston","Beatrix","Rózsa","Erika" },
+					{ "Egon","Rebeka","Hilda","Rozália","Viktor, Lőrinc","Zakariás","Regina","Mária","Ádám","Nikolett, Hunor","Teodóra","Mária","Kornél","Szeréna","Enikő","Edit","Zsófia","Diána","Vilhelmina","Friderika","Máté","Móric","Tekla","Gellért","Eufrozina","Jusztina","Adalbert","Vencel","Mihály","Jeromos","" },
+					{ "Malvin","Petra","Helga","Ferenc","Aurél","Renáta","Amália","Koppány","Dénes","Gedeon","Brigitta","Miksa","Kálmán","Helén","Teréz","Gál","Hedvig","Lukács","Nándor","Vendel","Orsolya","Előd","Gyöngyi","Salamon","Bianka","Dömötör","Szabina","Simon","Nárcisz","Alfonz","Farkas" },
+					{ "Marianna","Achilles","Győző","Károly","Imre","Lénárd","Rezső","Zsombor","Tivadar","Réka","Márton","Jónás, Renátó","Szilvia","Aliz","Albert, Lipót","Ödön","Hortenzia, Gergő","Jenő","Erzsébet","Jolán","Olivér","Cecília","Kelemen","Emma","Katalin","Virág","Virgil","Stefánia","Taksony","András, Andor","" },
+					{ "Elza","Melinda","Ferenc","Barbara, Borbála","Vilma","Miklós","Ambrus","Mária","Natália","Judit","Árpád","Gabriella","Luca","Szilárda","Valér","Etelka","Lázár","Auguszta","Viola","Teofil","Tamás","Zéno","Viktória","Ádám, Éva","KARÁCSONY","KARÁCSONY","János","Kamilla","Tamás","Dávid","Szilveszter" },
+				};
+				break;
+			}
+			case "enUS":
+			{
+				Nameday = null;
+				break;
+			}
+			default:
+			{
+				Nameday = new string[,]
+				{
+					{ "ÚJÉV","Ábel","Genovéva","Titusz","Simon","Boldizsár","Attila","Gyöngyvér","Marcell","Melánia","Ágota","Ernő","Veronika","Bódog","Lóránt","Gusztáv","Antal","Piroska","Sára","Sebestyén","Ágnes","Vince","Zelma","Timót","Pál","Vanda","Angelika","Károly","Adél","Martina","Marcella" },
+					{ "Ignác","Karolina","Balázs","Ráhel","Ágota","Dóra","Tódor","Aranka","Abigél","Elvira","Bertold","Lívia","Ella, Linda","Bálint","Kolos","Julianna","Donát","Bernadett","Zsuzsanna","Álmos","Eleonóra","Gerzson","Alfréd","Mátyás","Géza","Edina","Ákos, Bátor","Elemér","","","" },
+					{ "Albin","Lujza","Kornélia","Kázmér","Adorján","Leonóra","Tamás","Zoltán","Franciska","Ildikó","Szilárd","Gergely","Krisztián, Ajtony","Matild","Kristóf","Henrietta","Gertrúd","Sándor","József","Klaudia","Benedek","Beáta","Emőke","Gábor","Irén","Emánuel","Hajnalka","Gedeon","Auguszta","Zalán","Árpád" },
+					{ "Hugó","Áron","Buda, Richárd","Izidor","Vince","Vilmos, Bíborka","Herman","Dénes","Erhard","Zsolt","Zsolt, Leó","Gyula","Ida","Tibor","Tas, Anasztázia","Csongor","Rudolf","Andrea","Emma","Konrád, Tivadar","Konrád","Csilla","Béla","György","Márk","Ervin","Zita","Valéria","Péter","Katalin, Kitti","" },
+					{ "Fülöp","Zsigmond","Tímea","Mónika","Györgyi","Ivett","Gizella","Mihály","Gergely","Ármin","Ferenc","Pongrác","Szervác","Bonifác","Zsófia","Botond, Mózes","Paszkál","Erik","Ivó, Milán","Bernát, Felícia","Konstantin","Júlia, Rita","Dezső","Eszter","Orbán","Fülöp","Hella","Emil, Csanád","Magdolna","Zsanett, Janka","Angéla" },
+					{ "Tünde","Anita, Kármen","Klotild","Bulcsú","Fatime","Norbert","Róbert","Medárd","Félix","Margit","Barnabás","Villő","Antal, Anett","Vazul","Jolán","Jusztin","Laura","Levente","Gyárfás","Rafael","Alajos","Paulina","Zoltán","Iván","Vilmos","János","László","Levente, Irén","Péter, Pál","Pál","" },
+					{ "Annamária","Ottó","Kornél","Ulrik","Sarolta, Emese","Csaba","Apolónia","Ellák","Lukrécia","Amália","Nóra, Lili","Izabella","Jenő","Örs","Henrik","Valter","Endre, Elek","Frigyes","Emília","Illés","Dániel","Magdolna","Lenke","Kinga, Kincső","Kristóf, Jakab","Anna, Anikó","Olga","Szabolcs","Márta","Judit","Oszkár" },
+					{ "Boglárka","Lehel","Hermina","Domonkos","Krisztina","Berta","Ibolya","László","Emőd","Lörinc","Zsuzsanna","Klára","Ipoly","Marcell","Mária","Ábrahám","Jácint","Ilona","Huba","István","Sámuel","Menyhért","Bence","Bertalan","Lajos","Izsó","Gáspár","Ágoston","Beatrix","Rózsa","Erika" },
+					{ "Egon","Rebeka","Hilda","Rozália","Viktor, Lőrinc","Zakariás","Regina","Mária","Ádám","Nikolett, Hunor","Teodóra","Mária","Kornél","Szeréna","Enikő","Edit","Zsófia","Diána","Vilhelmina","Friderika","Máté","Móric","Tekla","Gellért","Eufrozina","Jusztina","Adalbert","Vencel","Mihály","Jeromos","" },
+					{ "Malvin","Petra","Helga","Ferenc","Aurél","Renáta","Amália","Koppány","Dénes","Gedeon","Brigitta","Miksa","Kálmán","Helén","Teréz","Gál","Hedvig","Lukács","Nándor","Vendel","Orsolya","Előd","Gyöngyi","Salamon","Bianka","Dömötör","Szabina","Simon","Nárcisz","Alfonz","Farkas" },
+					{ "Marianna","Achilles","Győző","Károly","Imre","Lénárd","Rezső","Zsombor","Tivadar","Réka","Márton","Jónás, Renátó","Szilvia","Aliz","Albert, Lipót","Ödön","Hortenzia, Gergő","Jenő","Erzsébet","Jolán","Olivér","Cecília","Kelemen","Emma","Katalin","Virág","Virgil","Stefánia","Taksony","András, Andor","" },
+					{ "Elza","Melinda","Ferenc","Barbara, Borbála","Vilma","Miklós","Ambrus","Mária","Natália","Judit","Árpád","Gabriella","Luca","Szilárda","Valér","Etelka","Lázár","Auguszta","Viola","Teofil","Tamás","Zéno","Viktória","Ádám, Éva","KARÁCSONY","KARÁCSONY","János","Kamilla","Tamás","Dávid","Szilveszter" },
+				};
+				break;
+			}
 			}
 
 			if(Nameday.IsNull())
