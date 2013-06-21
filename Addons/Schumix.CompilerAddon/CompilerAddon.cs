@@ -109,15 +109,7 @@ namespace Schumix.CompilerAddon
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
 
 				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && (sIRCMessage.Args.Contains(";") || sIRCMessage.Args.Contains("}")) && Enabled(sIRCMessage))
-				{
-					if(!CompilerConfig.CompilerEnabled)
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/disabledconfig", sIRCMessage.Channel, sIRCMessage.ServerName));
-						return;
-					}
-
 					Compiler(sIRCMessage, true, command);
-				}
 				else if(sIRCMessage.Info[3].ToLower() == command.ToLower())
 				{
 					sIrcBase.Networks[sIRCMessage.ServerName].sAntiFlood.FloodCommand(sIRCMessage);
@@ -148,29 +140,13 @@ namespace Schumix.CompilerAddon
 				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				{
 					if(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage))
-					{
-						if(!CompilerConfig.CompilerEnabled)
-						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/disabledconfig", sIRCMessage.Channel, sIRCMessage.ServerName));
-							return;
-						}
-
 						Compiler(sIRCMessage, false, command);
-					}
 				}
 				else
 				{
 					if((sMyChannelInfo.FSelect(IFunctions.Compiler) && sMyChannelInfo.FSelect(IChannelFunctions.Compiler, sIRCMessage.Channel)) &&
 						(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage)))
-					{
-						if(!CompilerConfig.CompilerEnabled)
-						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/disabledconfig", sIRCMessage.Channel, sIRCMessage.ServerName));
-							return;
-						}
-
 						Compiler(sIRCMessage, false, command);
-					}
 				}
 			}
 		}
@@ -183,6 +159,12 @@ namespace Schumix.CompilerAddon
 		private bool Enabled(IRCMessage sIRCMessage)
 		{
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
+			if(!CompilerConfig.CompilerEnabled)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/disabledconfig", sIRCMessage.Channel, sIRCMessage.ServerName));
+				return false;
+			}
 
 			if(CompilerConfig.MaxAllocatingE)
 			{
