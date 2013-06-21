@@ -26,7 +26,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Commands
 {	
-	public abstract class CommandInfo
+	public abstract class CommandInfo : IDisposable
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
@@ -36,6 +36,25 @@ namespace Schumix.Irc.Commands
 		{
 			servername = ServerName;
 			Log.Debug("CommandInfo", sLConsole.GetString("Successfully started the CommandInfo."));
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			/*if(!_disposed)
+			{
+				if(disposing)
+				{
+					Console.WriteLine("Object disposed.");
+				}
+
+				_disposed = true;
+			}*/
 		}
 
 		public bool IsAdmin(string Name)

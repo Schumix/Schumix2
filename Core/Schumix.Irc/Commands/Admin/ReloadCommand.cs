@@ -63,7 +63,7 @@ namespace Schumix.Irc.Commands
 				i = 1;
 				break;
 			case "cachedb":
-				SchumixBase.sCacheDB.ReLoad();
+				SchumixBase.sCacheDB.Reload();
 				i = 1;
 				break;
 			}

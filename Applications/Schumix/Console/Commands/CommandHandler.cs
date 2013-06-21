@@ -896,7 +896,7 @@ namespace Schumix.Console.Commands
 
 				SchumixBase.DManager.Update("channels", string.Format("Language = '{0}'", Info[3]), string.Format("Channel = '{0}' And ServerName = '{1}'", Info[2].ToLower(), _servername));
 				Log.Notice("Console", text[0], Info[3]);
-				SchumixBase.sCacheDB.ReLoad("channels");
+				SchumixBase.sCacheDB.Reload("channels");
 			}
 			else if(Info[1].ToLower() == "password")
 			{
@@ -952,7 +952,7 @@ namespace Schumix.Console.Commands
 
 					SchumixBase.DManager.Update("channels", string.Format("Password = '{0}'", Info[4]), string.Format("Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername));
 					Log.Notice("Console", text[2], Info[3]);
-					SchumixBase.sCacheDB.ReLoad("channels");
+					SchumixBase.sCacheDB.Reload("channels");
 				}
 				else if(Info[2].ToLower() == "remove")
 				{
@@ -994,7 +994,7 @@ namespace Schumix.Console.Commands
 
 					SchumixBase.DManager.Update("channels", "Password = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername));
 					Log.Notice("Console", text[2]);
-					SchumixBase.sCacheDB.ReLoad("channels");
+					SchumixBase.sCacheDB.Reload("channels");
 				}
 				else if(Info[2].ToLower() == "update")
 				{
@@ -1042,7 +1042,7 @@ namespace Schumix.Console.Commands
 
 					SchumixBase.DManager.Update("channels", string.Format("Password = '{0}'", Info[4]), string.Format("Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername));
 					Log.Notice("Console", text[2], Info[4]);
-					SchumixBase.sCacheDB.ReLoad("channels");
+					SchumixBase.sCacheDB.Reload("channels");
 				}
 				else if(Info[2].ToLower() == "info")
 				{
@@ -1247,7 +1247,11 @@ namespace Schumix.Console.Commands
 				i = 1;
 				break;
 			case "cachedb":
-				SchumixBase.sCacheDB.ReLoad();
+				SchumixBase.sCacheDB.Reload();
+				i = 1;
+				break;
+			case "irc":
+				sIrcBase.Reload();
 				i = 1;
 				break;
 			}

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-06-02 12:58:10+0200\n"
-"PO-Revision-Date: 2013-06-02 12:58:11+0200\n"
+"POT-Creation-Date: 2013-06-21 13:40:00+0200\n"
+"PO-Revision-Date: 2013-06-21 13:40:01+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,14 +23,14 @@ msgid "All Command Handler were deleted."
 msgstr ""
 
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:28
-#: ../Core/Schumix.Irc/Network.cs:56
-#: ../Core/Schumix.Irc/Network.cs:79
-#: ../Core/Schumix.Irc/Network.cs:81
-#: ../Core/Schumix.Irc/Network.cs:90
+#: ../Core/Schumix.Irc/Network.cs:58
+#: ../Core/Schumix.Irc/Network.cs:82
+#: ../Core/Schumix.Irc/Network.cs:85
+#: ../Core/Schumix.Irc/Network.cs:94
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
-#: ../Core/Schumix.Framework/SchumixBase.cs:23
+#: ../Core/Schumix.Framework/SchumixBase.cs:15
 #: ../Core/Schumix.Framework/Utilities.cs:25
 #: ../Core/Schumix.Framework/Utilities.cs:107
 #: ../Core/Schumix.Framework/Utilities.cs:124
@@ -40,7 +40,7 @@ msgstr ""
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
-#: ../Applications/Schumix/Schumix.cs:11
+#: ../Applications/Schumix/Schumix.cs:5
 #: ../Applications/Schumix/Console/Console.cs:7
 #: ../Applications/Schumix/Console/Commands/CommandManager.cs:11
 #: ../Applications/Schumix.Server/Config/Config.cs:6
@@ -199,68 +199,68 @@ msgstr ""
 msgid "All of IRC handlers are registered."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:41
+#: ../Core/Schumix.Irc/Network.cs:42
 msgid "Connection to: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:42
+#: ../Core/Schumix.Irc/Network.cs:43
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
 msgid "Connection closed!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:44
+#: ../Core/Schumix.Irc/Network.cs:46
 msgid "Connection have been closed."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:44
+#: ../Core/Schumix.Irc/Network.cs:46
 msgid "Reconnection to: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:51
+#: ../Core/Schumix.Irc/Network.cs:53
 msgid ""
 "This nick name ({0}) is used by a service bot. Your nick is automaticly "
 "changed to a placeholder one."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:52
+#: ../Core/Schumix.Irc/Network.cs:54
 msgid "Connection type: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:53
+#: ../Core/Schumix.Irc/Network.cs:55
 msgid "Fatal error was happened while established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:54
+#: ../Core/Schumix.Irc/Network.cs:56
 msgid "Successfully established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:54
+#: ../Core/Schumix.Irc/Network.cs:56
 msgid "Error was happened while established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:56
+#: ../Core/Schumix.Irc/Network.cs:58
 msgid "Certificate not accepted, exception: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:59
+#: ../Core/Schumix.Irc/Network.cs:62
 msgid "Users' datas are sent."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:69
-#: ../Core/Schumix.Irc/Network.cs:89
+#: ../Core/Schumix.Irc/Network.cs:72
+#: ../Core/Schumix.Irc/Network.cs:93
 msgid "Successfully started the thread."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:69
+#: ../Core/Schumix.Irc/Network.cs:72
 msgid "Started the irc data receiving."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:72
+#: ../Core/Schumix.Irc/Network.cs:75
 msgid "Do not going data from irc server!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:88
+#: ../Core/Schumix.Irc/Network.cs:92
 msgid "Received unhandled opcode: {0}"
 msgstr ""
 
@@ -282,7 +282,7 @@ msgstr ""
 
 #: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
 #: ../Core/Schumix.Irc/Commands/Admin/ReloadCommand.cs:2
-#: ../Applications/Schumix/Console/Commands/CommandHandler.cs:145
+#: ../Applications/Schumix/Console/Commands/CommandHandler.cs:147
 msgid ""
 "This client supports: UserInfo, Finger, Version, Source, Ping, Time and "
 "ClientInfo"
@@ -403,7 +403,11 @@ msgstr ""
 msgid "{0} plugin successfully removed."
 msgstr ""
 
-#: ../Core/Schumix.Irc/IrcBase.cs:29
+#: ../Core/Schumix.Irc/IrcBase.cs:30
+msgid "Reload irc module!"
+msgstr ""
+
+#: ../Core/Schumix.Irc/IrcBase.cs:32
 #: ../Core/Schumix.Framework/Config/Config.cs:4
 #: ../Core/Schumix.Framework/Database/SQLite.cs:15
 #: ../Core/Schumix.Framework/Database/SQLite.cs:18
@@ -433,7 +437,7 @@ msgid "Vhost is ON."
 msgstr ""
 
 #: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:24
-#: ../Core/Schumix.Framework/SchumixBase.cs:21
+#: ../Core/Schumix.Framework/SchumixBase.cs:30
 msgid "FunctionReload: Failre request!"
 msgstr ""
 
@@ -490,21 +494,21 @@ msgstr ""
 msgid "Successfully connected to the database."
 msgstr ""
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:17
-msgid "{0} master channel is updated to: {1}"
-msgstr ""
-
-#: ../Core/Schumix.Framework/SchumixBase.cs:17
-msgid "The master channel already exist on the database, named by default!"
-msgstr ""
-
-#: ../Core/Schumix.Framework/SchumixBase.cs:22
+#: ../Core/Schumix.Framework/SchumixBase.cs:14
 #: ../Applications/Schumix.Server/Main.cs:13
 msgid "CleanManager is starting..."
 msgstr ""
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:23
+#: ../Core/Schumix.Framework/SchumixBase.cs:15
 msgid "AddonManager is loading..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:26
+msgid "{0} master channel is updated to: {1}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:26
+msgid "The master channel already exist on the database, named by default!"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Database/SQLite.cs:3
@@ -991,43 +995,43 @@ msgstr ""
 msgid "Loaded the Clean settings."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:24
-#: ../Core/Schumix.Framework/Log/Log.cs:31
+#: ../Core/Schumix.Framework/Log/Log.cs:22
+#: ../Core/Schumix.Framework/Log/Log.cs:29
 msgid ""
 "The log's file name changed. From now in it will be here: {0}\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:26
+#: ../Core/Schumix.Framework/Log/Log.cs:24
 msgid ""
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here.\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:26
+#: ../Core/Schumix.Framework/Log/Log.cs:24
 msgid ""
 "\n"
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here.\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:31
+#: ../Core/Schumix.Framework/Log/Log.cs:29
 msgid ""
 "Started time: [{0}]\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:31
+#: ../Core/Schumix.Framework/Log/Log.cs:29
 msgid ""
 "\n"
 "Started time: [{0}]\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:32
+#: ../Core/Schumix.Framework/Log/Log.cs:30
 msgid ""
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here. Change's time: [{1}]\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:32
+#: ../Core/Schumix.Framework/Log/Log.cs:30
 msgid ""
 "\n"
 "The log file's name changed. {0} was the old. From now on the logs will be "
@@ -1104,7 +1108,7 @@ msgstr ""
 msgid "Network starting..."
 msgstr ""
 
-#: ../Applications/Schumix/Schumix.cs:11
+#: ../Applications/Schumix/Schumix.cs:5
 msgid "Console starting..."
 msgstr ""
 
