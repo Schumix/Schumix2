@@ -412,7 +412,7 @@ msgstr "{0} plugin sikeresen le lett választva."
 
 #: ../Core/Schumix.Irc/IrcBase.cs:30
 msgid "Reload irc module!"
-msgstr ""
+msgstr "Irc modul újraindítása!"
 
 #: ../Core/Schumix.Irc/IrcBase.cs:32
 #: ../Core/Schumix.Framework/Config/Config.cs:4
