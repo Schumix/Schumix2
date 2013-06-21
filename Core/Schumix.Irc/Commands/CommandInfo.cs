@@ -46,15 +46,7 @@ namespace Schumix.Irc.Commands
 
 		protected virtual void Dispose(bool disposing)
 		{
-			/*if(!_disposed)
-			{
-				if(disposing)
-				{
-					Console.WriteLine("Object disposed.");
-				}
-
-				_disposed = true;
-			}*/
+			// none
 		}
 
 		public bool IsAdmin(string Name)
