@@ -189,7 +189,6 @@ namespace Schumix.Irc
 		{
 			bool e = false;
 			string eserver = string.Empty;
-			Console.WriteLine(Networks.Count);
 
 			if(_networks.Count > 0)
 				_networks.Clear();
