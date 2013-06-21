@@ -102,9 +102,6 @@ namespace Schumix.CompilerAddon
 				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					return;
 
-				if(!CompilerConfig.CompilerEnabled)
-					return;
-
 				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
@@ -112,7 +109,15 @@ namespace Schumix.CompilerAddon
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);
 
 				if(sIRCMessage.Info[3].ToLower() == command.ToLower() && (sIRCMessage.Args.Contains(";") || sIRCMessage.Args.Contains("}")) && Enabled(sIRCMessage))
+				{
+					if(!CompilerConfig.CompilerEnabled)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/disabledconfig", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
 					Compiler(sIRCMessage, true, command);
+				}
 				else if(sIRCMessage.Info[3].ToLower() == command.ToLower())
 				{
 					sIrcBase.Networks[sIRCMessage.ServerName].sAntiFlood.FloodCommand(sIRCMessage);
@@ -136,19 +141,36 @@ namespace Schumix.CompilerAddon
 						sSendMessage.SendChatMessage(sIRCMessage, text[4], command.ToLower());
 						sSendMessage.SendChatMessage(sIRCMessage, text[5]);
 						sSendMessage.SendChatMessage(sIRCMessage, text[6], Consts.SchumixProgrammedBy);
+						return;
 					}
 				}
 
 				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				{
 					if(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage))
+					{
+						if(!CompilerConfig.CompilerEnabled)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/disabledconfig", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
 						Compiler(sIRCMessage, false, command);
+					}
 				}
 				else
 				{
 					if((sMyChannelInfo.FSelect(IFunctions.Compiler) && sMyChannelInfo.FSelect(IChannelFunctions.Compiler, sIRCMessage.Channel)) &&
 						(regex.IsMatch(sIRCMessage.Args.TrimEnd()) && Enabled(sIRCMessage)))
+					{
+						if(!CompilerConfig.CompilerEnabled)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/disabledconfig", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
 						Compiler(sIRCMessage, false, command);
+					}
 				}
 			}
 		}

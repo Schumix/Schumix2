@@ -1091,8 +1091,7 @@ namespace Schumix.Console.Commands
 		{
 			if(sIrcBase.Networks[_servername].IsConnected())
 			{
-				//Log.Error("Console", sLManager.GetConsoleWarningText("ConnectedIrcServer"));
-				Log.Error("Console", "Error!");
+				Log.Error("Console", sLManager.GetConsoleWarningText("ConnectedIrcServer"));
 				return;
 			}
 
@@ -1106,8 +1105,7 @@ namespace Schumix.Console.Commands
 		{
 			if(!sIrcBase.Networks[_servername].IsConnected())
 			{
-				//Log.Error("Console", sLManager.GetConsoleWarningText("NoConnectedIrcServer"));
-				Log.Error("Console", "Error!");
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoConnectedIrcServer"));
 				return;
 			}
 
