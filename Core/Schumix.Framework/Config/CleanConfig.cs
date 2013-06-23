@@ -31,7 +31,7 @@ namespace Schumix.Framework.Config
 
 		public CleanConfig(bool config, bool database)
 		{
-			Config = config;
+			Config   = config;
 			Database = database;
 			Log.Notice("CleanConfig", sLConsole.GetString("Loaded the Clean settings."));
 		}

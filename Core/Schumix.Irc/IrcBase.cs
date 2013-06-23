@@ -312,7 +312,7 @@ namespace Schumix.Irc
 				{
 					Connect(sn.Key);
 
-					while(!Networks[sn.Key].Online)
+					while(!_networks[sn.Key].Online)
 					{
 						if(i >= 30)
 							break;
@@ -348,7 +348,7 @@ namespace Schumix.Irc
 
 		public void AllIrcServerShutdown(string Message, bool reload = false)
 		{
-			foreach(var nw in Networks)
+			foreach(var nw in _networks)
 				nw.Value.sSender.Quit(Message);
 
 			int i = 0;
@@ -360,7 +360,7 @@ namespace Schumix.Irc
 
 				var list = new List<bool>();
 
-				foreach(var nw in Networks)
+				foreach(var nw in _networks)
 					list.Add(nw.Value.Shutdown);
 
 				if(list.CompareDataInBlock())
