@@ -43,20 +43,18 @@ namespace Schumix
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-#pragma warning disable 414
-		private readonly string _scriptsPath;
-#pragma warning restore 414
-		private LuaEngine.LuaEngine _luaEngine;
 		private PythonEngine.PythonEngine _pythonEngine;
-
-		/// <summary>
-		/// Gets the Lua engine.
-		/// </summary>
-		public LuaEngine.LuaEngine Lua { get { return _luaEngine; } }
+		private LuaEngine.LuaEngine _luaEngine;
+		private readonly string _scriptsPath;
 		/// <summary>
 		/// Gets the Python engine.
 		/// </summary>
 		public PythonEngine.PythonEngine Python { get { return _pythonEngine; } }
+		/// <summary>
+		/// Gets the Lua engine.
+		/// </summary>
+		public LuaEngine.LuaEngine Lua { get { return _luaEngine; } }
+		public string ScriptsPath { get { return _scriptsPath; } }
 
 		/// <summary>
 		///   Creates a new instance of ScriptManager
