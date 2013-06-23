@@ -51,7 +51,7 @@ namespace Schumix.Framework
 			get { return Process.GetCurrentProcess().WorkingSet64; }
 		}
 
-		public long MemorySizeToMB
+		public long MemorySizeInMB
 		{
 			get { return Process.GetCurrentProcess().WorkingSet64/1024/1024; }
 		}
@@ -63,8 +63,8 @@ namespace Schumix.Framework
 
 			int ircnetwork = IRCConfig.List.Count > 1 ? 40 * IRCConfig.List.Count : 0;
 
-			if((MemorySizeToMB >= ShutdownConfig.MaxMemory && IRCConfig.List.IsNull()) ||
-			   MemorySizeToMB >= ShutdownConfig.MaxMemory + ircnetwork)
+			if((MemorySizeInMB >= ShutdownConfig.MaxMemory && IRCConfig.List.IsNull()) ||
+			   MemorySizeInMB >= ShutdownConfig.MaxMemory + ircnetwork)
 			{
 				Log.Warning("Runtime", sLConsole.GetString("The program, more than {0} MB consumed!"), ShutdownConfig.MaxMemory + ircnetwork);
 				Log.Warning("Runtime", sLConsole.GetString("Program shutting down!"));

@@ -125,7 +125,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			var memory = sRuntime.MemorySizeToMB;
+			var memory = sRuntime.MemorySizeInMB;
 			Log.Notice("Console", text[0], sUtilities.GetVersion());
 			Log.Notice("Console", text[1], sPlatform.GetPlatform());
 			Log.Notice("Console", text[2], Environment.OSVersion.ToString());

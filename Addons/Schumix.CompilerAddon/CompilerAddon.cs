@@ -169,7 +169,7 @@ namespace Schumix.CompilerAddon
 
 			if(CompilerConfig.MaxAllocatingE)
 			{
-				var memory = sRuntime.MemorySizeToMB;
+				var memory = sRuntime.MemorySizeInMB;
 				int ircnetwork = sIrcBase.Networks.Count > 1 ? 20 * sIrcBase.Networks.Count : 0;
 
 				if(memory > CompilerConfig.MaxAllocatingM + ircnetwork)

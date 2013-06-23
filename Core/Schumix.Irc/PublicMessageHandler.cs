@@ -103,7 +103,7 @@ namespace Schumix.Irc
 						return;
 					}
 
-					var memory = sRuntime.MemorySizeToMB;
+					var memory = sRuntime.MemorySizeInMB;
 					int ircnetwork = sIrcBase.Networks.Count > 1 ? 20 * sIrcBase.Networks.Count : 0;
 					sSendMessage.SendChatMessage(sIRCMessage, text[0], sUtilities.GetVersion());
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sPlatform.GetPlatform());
