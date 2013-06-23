@@ -2,6 +2,7 @@
 
 ## 4.1.0 (2013-xx-xx)
 
+ * Runtime osztályhoz hozzáadva a MemorySize és MemorySizeToMB változó
  * Reload részhez hozzáadva az irc rész.
  * Névnapok kibövítésre kerültek az alábbi nyelveken: czCZ, deDE, fiFI, frFR, huHU, lvLV, plPL, seSE
  * CompilerAddon yaml konfig olvasása kijavítva.

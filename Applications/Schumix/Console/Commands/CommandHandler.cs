@@ -65,6 +65,7 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly object Lock = new object();
 		/// <summary>
@@ -127,7 +128,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
+			var memory = sRuntime.MemorySizeToMB;
 			Log.Notice("Console", text[0], sUtilities.GetVersion());
 			Log.Notice("Console", text[1], sPlatform.GetPlatform());
 			Log.Notice("Console", text[2], Environment.OSVersion.ToString());

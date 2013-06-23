@@ -46,6 +46,7 @@ namespace Schumix.Framework
 		private static readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
+		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private static readonly object WriteLock = new object();
 		private static readonly Guid _guid = Guid.NewGuid();
 		public static CleanManager sCleanManager { get; private set; }
@@ -159,7 +160,7 @@ namespace Schumix.Framework
 					return;
 
 				ExitStatus = true;
-				var memory = Process.GetCurrentProcess().WorkingSet64;
+				var memory = sRuntime.MemorySize;
 				sAddonManager.UnloadPlugins();
 				sUtilities.RemovePidFile();
 				sTimer.SaveUptime(memory);
