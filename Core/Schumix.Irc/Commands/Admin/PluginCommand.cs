@@ -19,8 +19,6 @@
  */
 
 using System;
-using System.Linq;
-using System.Reflection;
 using System.Threading.Tasks;
 using Schumix.Api.Irc;
 using Schumix.Api.Delegate;
@@ -31,8 +29,6 @@ namespace Schumix.Irc.Commands
 {
 	public abstract partial class CommandHandler
 	{
-		private readonly object Lock = new object();
-
 		protected void HandlePlugin(IRCMessage sIRCMessage)
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
@@ -56,42 +52,7 @@ namespace Schumix.Irc.Commands
 				if(sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
 				{
 					foreach(var nw in sIrcBase.Networks)
-					{
-						var asms = sAddonManager.Addons[nw.Key].Assemblies.ToDictionary(v => v.Key, v => v.Value);
-						Parallel.ForEach(asms, asm =>
-						{
-							var types = asm.Value.GetTypes();
-							Parallel.ForEach(types, type =>
-							{
-								var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-								Parallel.ForEach(methods, method =>
-								{
-									foreach(var attribute in Attribute.GetCustomAttributes(method))
-									{
-										if(attribute.IsOfType(typeof(IrcCommandAttribute)))
-										{
-											var attr = (IrcCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
-												sIrcBase.Networks[nw.Key].IrcRegisterHandler(attr.Command, del);
-											}
-										}
-
-										if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
-										{
-											var attr = (SchumixCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
-												sIrcBase.Networks[nw.Key].SchumixRegisterHandler(attr.Command, del, attr.Permission);
-											}
-										}
-									}
-								});
-							});
-						});
-					}
+						sIrcBase.LoadProcessMethods(nw.Key);
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 				}
@@ -113,48 +74,11 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
+				foreach(var nw in sIrcBase.Networks)
+					sIrcBase.UnloadProcessMethods(nw.Key);
+
 				if(sAddonManager.UnloadPlugins())
-				{
-					foreach(var nw in sIrcBase.Networks)
-					{
-						var asms = sAddonManager.Addons[nw.Key].Assemblies.ToDictionary(v => v.Key, v => v.Value);
-						Parallel.ForEach(asms, asm =>
-						{
-							var types = asm.Value.GetTypes();
-							Parallel.ForEach(types, type =>
-							{
-								var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-								Parallel.ForEach(methods, method =>
-								{
-									foreach(var attribute in Attribute.GetCustomAttributes(method))
-									{
-										if(attribute.IsOfType(typeof(IrcCommandAttribute)))
-										{
-											var attr = (IrcCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
-												sIrcBase.Networks[nw.Key].IrcRemoveHandler(attr.Command, del);
-											}
-										}
-
-										if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
-										{
-											var attr = (SchumixCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
-												sIrcBase.Networks[nw.Key].SchumixRemoveHandler(attr.Command, del);
-											}
-										}
-									}
-								});
-							});
-						});
-					}
-
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
-				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 			}

@@ -20,7 +20,6 @@
 
 using System;
 using System.Data;
-using System.Reflection;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.Api;
@@ -41,7 +40,6 @@ namespace Schumix.Irc.Ignore
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly List<string> _ignorelist = new List<string>();
-		private readonly object Lock = new object();
 		private string _servername;
 
 		public IgnoreAddon(string ServerName)
@@ -146,37 +144,7 @@ namespace Schumix.Irc.Ignore
 				pl.Setup(_servername, true);
 				sAddonManager.Addons[_servername].Assemblies.Add(plugin, sAddonManager.Addons[_servername].IgnoreAssemblies[plugin]);
 				var types = sAddonManager.Addons[_servername].IgnoreAssemblies[plugin].GetTypes();
-
-				Parallel.ForEach(types, type =>
-				{
-					var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-					Parallel.ForEach(methods, method =>
-					{
-						foreach(var attribute in Attribute.GetCustomAttributes(method))
-						{
-							if(attribute.IsOfType(typeof(IrcCommandAttribute)))
-							{
-								var attr = (IrcCommandAttribute)attribute;
-								lock(Lock)
-								{
-									var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
-									sIrcBase.Networks[_servername].IrcRegisterHandler(attr.Command, del);
-								}
-							}
-
-							if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
-							{
-								var attr = (SchumixCommandAttribute)attribute;
-								lock(Lock)
-								{
-									var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
-									sIrcBase.Networks[_servername].SchumixRegisterHandler(attr.Command, del, attr.Permission);
-								}
-							}
-						}
-					});
-				});
-
+				sIrcBase.LoadProcessMethods(_servername, types);
 				Log.Success("IgnoreAddon", sLConsole.GetString("Loaded plugin: {0} {1} by {2} ({3})"), pl.Name, sAddonManager.Addons[_servername].IgnoreAssemblies[plugin].GetName().Version.ToString(), pl.Author, pl.Website);
 				sAddonManager.Addons[_servername].IgnoreAssemblies.Remove(plugin);
 			}
@@ -199,37 +167,7 @@ namespace Schumix.Irc.Ignore
 				pl.Destroy();
 				sAddonManager.Addons[_servername].IgnoreAssemblies.Add(plugin, sAddonManager.Addons[_servername].Assemblies[plugin]);
 				var types = sAddonManager.Addons[_servername].Assemblies[plugin].GetTypes();
-
-				Parallel.ForEach(types, type =>
-				{
-					var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-					Parallel.ForEach(methods, method =>
-					{
-						foreach(var attribute in Attribute.GetCustomAttributes(method))
-						{
-							if(attribute.IsOfType(typeof(IrcCommandAttribute)))
-							{
-								var attr = (IrcCommandAttribute)attribute;
-								lock(Lock)
-								{
-									var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
-									sIrcBase.Networks[_servername].IrcRemoveHandler(attr.Command, del);
-								}
-							}
-
-							if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
-							{
-								var attr = (SchumixCommandAttribute)attribute;
-								lock(Lock)
-								{
-									var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
-									sIrcBase.Networks[_servername].SchumixRemoveHandler(attr.Command, del);
-								}
-							}
-						}
-					});
-				});
-
+				sIrcBase.UnloadProcessMethods(_servername, types);
 				Log.Success("IgnoreAddon", sLConsole.GetString("{0} plugin successfully removed."), plugin);
 				sAddonManager.Addons[_servername].Assemblies.Remove(plugin);
 			}

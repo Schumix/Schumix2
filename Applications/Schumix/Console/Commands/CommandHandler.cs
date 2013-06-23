@@ -20,10 +20,8 @@
 
 using System;
 using System.Data;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Reflection;
 using System.Diagnostics;
 using Schumix.Api.Delegate;
 using Schumix.Irc;
@@ -67,7 +65,6 @@ namespace Schumix.Console.Commands
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private readonly object Lock = new object();
 		/// <summary>
 		///     A szétdarabolt információkat tárolja.
 		/// </summary>
@@ -1804,42 +1801,7 @@ namespace Schumix.Console.Commands
 				if(sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
 				{
 					foreach(var nw in sIrcBase.Networks)
-					{
-						var asms = sAddonManager.Addons[nw.Key].Assemblies.ToDictionary(v => v.Key, v => v.Value);
-						Parallel.ForEach(asms, asm =>
-						{
-							var types = asm.Value.GetTypes();
-							Parallel.ForEach(types, type =>
-							{
-								var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-								Parallel.ForEach(methods, method =>
-								{
-									foreach(var attribute in Attribute.GetCustomAttributes(method))
-									{
-										if(attribute.IsOfType(typeof(IrcCommandAttribute)))
-										{
-											var attr = (IrcCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
-												sIrcBase.Networks[nw.Key].IrcRegisterHandler(attr.Command, del);
-											}
-										}
-
-										if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
-										{
-											var attr = (SchumixCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
-												sIrcBase.Networks[nw.Key].SchumixRegisterHandler(attr.Command, del, attr.Permission);
-											}
-										}
-									}
-								});
-							});
-						});
-					}
+						sIrcBase.LoadProcessMethods(nw.Key);
 
 					Log.Notice("Console", text[0]);
 				}
@@ -1861,48 +1823,11 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
+				foreach(var nw in sIrcBase.Networks)
+					sIrcBase.UnloadProcessMethods(nw.Key);
+
 				if(sAddonManager.UnloadPlugins())
-				{
-					foreach(var nw in sIrcBase.Networks)
-					{
-						var asms = sAddonManager.Addons[nw.Key].Assemblies.ToDictionary(v => v.Key, v => v.Value);
-						Parallel.ForEach(asms, asm =>
-						{
-							var types = asm.Value.GetTypes();
-							Parallel.ForEach(types, type =>
-							{
-								var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-								Parallel.ForEach(methods, method =>
-								{
-									foreach(var attribute in Attribute.GetCustomAttributes(method))
-									{
-										if(attribute.IsOfType(typeof(IrcCommandAttribute)))
-										{
-											var attr = (IrcCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
-												sIrcBase.Networks[nw.Key].IrcRemoveHandler(attr.Command, del);
-											}
-										}
-
-										if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
-										{
-											var attr = (SchumixCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
-												sIrcBase.Networks[nw.Key].SchumixRemoveHandler(attr.Command, del);
-											}
-										}
-									}
-								});
-							});
-						});
-					}
-
 					Log.Notice("Console", text[0]);
-				}
 				else
 					Log.Error("Console", text[1]);
 			}

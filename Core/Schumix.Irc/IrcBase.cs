@@ -19,13 +19,16 @@
  */
 
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Reflection;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Schumix.Api.Delegate;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -36,6 +39,7 @@ namespace Schumix.Irc
 	{
 		private readonly Dictionary<string, Network> _networks = new Dictionary<string, Network>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		public bool ReloadStatus { get; private set; }
 		private readonly object Lock = new object();
 		private bool shutdown = false;
@@ -183,6 +187,92 @@ namespace Schumix.Irc
 				foreach(var nw in _networks)
 					nw.Value.SchumixRemoveHandler(code, method);
 			}
+		}
+
+		public void LoadProcessMethods(string ServerName)
+		{
+			var asms = sAddonManager.Addons[ServerName].Assemblies.ToDictionary(v => v.Key, v => v.Value);
+			Parallel.ForEach(asms, asm =>
+			{
+				var types = asm.Value.GetTypes();
+				LoadProcessMethods(ServerName, types);
+			});
+		}
+
+		public void LoadProcessMethods(string ServerName, Type[] types)
+		{
+			Parallel.ForEach(types, type =>
+			{
+				var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+				Parallel.ForEach(methods, method =>
+				{
+					foreach(var attribute in Attribute.GetCustomAttributes(method))
+					{
+						if(attribute.IsOfType(typeof(IrcCommandAttribute)))
+						{
+							var attr = (IrcCommandAttribute)attribute;
+							lock(Lock)
+							{
+								var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
+								_networks[ServerName].IrcRegisterHandler(attr.Command, del);
+							}
+						}
+
+						if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
+						{
+							var attr = (SchumixCommandAttribute)attribute;
+							lock(Lock)
+							{
+								var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
+								_networks[ServerName].SchumixRegisterHandler(attr.Command, del, attr.Permission);
+							}
+						}
+					}
+				});
+			});
+		}
+
+		public void UnloadProcessMethods(string ServerName)
+		{
+			var asms = sAddonManager.Addons[ServerName].Assemblies.ToDictionary(v => v.Key, v => v.Value);
+			Parallel.ForEach(asms, asm =>
+			{
+				var types = asm.Value.GetTypes();
+				UnloadProcessMethods(ServerName, types);
+			});
+		}
+
+		public void UnloadProcessMethods(string ServerName, Type[] types)
+		{
+			Parallel.ForEach(types, type =>
+			{
+				var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+				Parallel.ForEach(methods, method =>
+				{
+					foreach(var attribute in Attribute.GetCustomAttributes(method))
+					{
+						if(attribute.IsOfType(typeof(IrcCommandAttribute)))
+						{
+							var attr = (IrcCommandAttribute)attribute;
+							lock(Lock)
+							{
+								var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
+								_networks[ServerName].IrcRemoveHandler(attr.Command, del);
+							}
+						}
+
+						if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
+						{
+							var attr = (SchumixCommandAttribute)attribute;
+							lock(Lock)
+							{
+								var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
+								_networks[ServerName].SchumixRemoveHandler(attr.Command, del);
+							}
+						}
+					}
+				});
+			});
 		}
 
 		public string FirstStart()
