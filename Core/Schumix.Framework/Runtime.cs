@@ -81,7 +81,7 @@ namespace Schumix.Framework
 			if(!sPlatform.IsLinux || !sPlatform.IsMacOS)
 				return;
 
-			if(Environment.OSVersion.Platform == PlatformID.Unix)
+			if(sPlatform.IsUnix)
 			{
 				try
 				{
