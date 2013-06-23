@@ -32,5 +32,18 @@ using System;
 
 namespace Schumix.Framework.Options
 {
-	public delegate void OptionAction<TKey, TValue>(TKey key, TValue value);
+	internal sealed class Category : Option
+	{
+		// Prototype starts with '=' because this is an invalid prototype
+		// (see Option.ParsePrototype(), and thus it'll prevent Category
+		// instances from being accidentally used as normal options.
+		public Category(string description) : base("=:Category:= " + description, description)
+		{
+		}
+
+		protected override void OnParseComplete(OptionContext c)
+		{
+			throw new NotSupportedException("Category.OnParseComplete should not be invoked.");
+		}
+	}
 }

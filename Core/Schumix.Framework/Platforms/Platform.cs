@@ -19,11 +19,61 @@
  */
 
 using System;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Framework.Platforms
 {
 	public sealed class Platform
 	{
+		public bool IsWindows
+		{
+			get
+			{
+				var platform = Environment.OSVersion.Platform;
+				return (platform == PlatformID.Win32NT || platform == PlatformID.Win32S ||
+				        platform == PlatformID.Win32Windows || platform == PlatformID.WinCE);
+			}
+		}
+
+		public bool IsUnix
+		{
+			get
+			{
+				int platform = (int)Environment.OSVersion.Platform;
+				return (platform == 4 || platform == 128 || platform == 6);
+			}
+		}
+
+		public bool IsLinux
+		{
+			get { return (Environment.OSVersion.Platform == PlatformID.Unix); }
+		}
+
+		public bool IsMacOS
+		{
+			get { return Environment.OSVersion.Platform == PlatformID.MacOSX; }
+		}
+
+		public bool IsXbox
+		{
+			get { return Environment.OSVersion.Platform == PlatformID.Xbox; }
+		}
+
+		public bool IsMono
+		{
+			get { return !Type.GetType("Mono.Runtime").IsNull(); }
+		}
+
+		public bool Is32BitProcess
+		{
+			get { return IntPtr.Size == 4; }
+		}
+
+		public bool Is64BitProcess
+		{
+			get { return Environment.Is64BitProcess; } // IntPtr.Size == 8
+		}
+
 		private Platform() {}
 
 		public string GetPlatform()

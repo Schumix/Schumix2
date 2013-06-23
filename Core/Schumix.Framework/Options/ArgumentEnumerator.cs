@@ -29,8 +29,44 @@
  */
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Schumix.Framework.Options
 {
-	public delegate void OptionAction<TKey, TValue>(TKey key, TValue value);
+	class ArgumentEnumerator : IEnumerable<string>
+	{
+		private List<IEnumerator<string>> sources = new List<IEnumerator<string>>();
+
+		public ArgumentEnumerator(IEnumerable<string> arguments)
+		{
+			sources.Add(arguments.GetEnumerator());
+		}
+
+		public void Add(IEnumerable<string> arguments)
+		{
+			sources.Add(arguments.GetEnumerator());
+		}
+
+		public IEnumerator<string> GetEnumerator()
+		{
+			do
+			{
+				IEnumerator<string> c = sources[sources.Count-1];
+
+				if(c.MoveNext())
+					yield return c.Current;
+				else
+				{
+					c.Dispose();
+					sources.RemoveAt(sources.Count-1);
+				}
+			} while(sources.Count > 0);
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+	}
 }

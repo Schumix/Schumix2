@@ -130,7 +130,7 @@ namespace Schumix.Framework.Database.Cache
 			}
 		}
 
-		public void UnLoad(string value = "")
+		public void Unload(string value = "")
 		{
 			lock(Lock)
 			{
@@ -138,7 +138,7 @@ namespace Schumix.Framework.Database.Cache
 			}
 		}
 
-		public void ReLoad(string value = "")
+		public void Reload(string value = "")
 		{
 			lock(Lock)
 			{

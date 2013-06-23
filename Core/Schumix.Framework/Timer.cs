@@ -29,6 +29,7 @@ namespace Schumix.Framework
 	public sealed class Timer
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		public readonly Stopwatch SW = new Stopwatch();
 		/// <summary>
 		///     A bot elindításának ideje.
@@ -77,7 +78,7 @@ namespace Schumix.Framework
 
 		public void SaveUptime()
 		{
-			SaveUptime(Process.GetCurrentProcess().WorkingSet64);
+			SaveUptime(sRuntime.MemorySize);
 		}
 
 		public void SaveUptime(long Memory)

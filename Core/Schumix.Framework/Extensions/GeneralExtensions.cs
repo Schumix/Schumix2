@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using YamlDotNet.RepresentationModel;
 using Schumix.Framework.Platforms;
+using Schumix.Framework.Localization; // .net 4.5-nél nem kell majd
 
 namespace Schumix.Framework.Extensions
 {
@@ -36,6 +37,7 @@ namespace Schumix.Framework.Extensions
 	/// </summary>
 	public static class GeneralExtensions
 	{
+		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance; // .net 4.5-nél nem kell majd
 		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 
 		/// <summary>
@@ -91,6 +93,11 @@ namespace Schumix.Framework.Extensions
 		public static bool IsNull(this object obj)
 		{
 			return (obj == null);
+		}
+
+		public static bool IsNull(this IntPtr ptr)
+		{
+			return (ptr.Equals(IntPtr.Zero));
 		}
 
 		/// <summary>
@@ -299,6 +306,14 @@ namespace Schumix.Framework.Extensions
 			return ss;
 		}
 
+		public static string[] SplitAndTrim(string list)
+		{
+			if(IsNullOrEmpty(list))
+				return new string[0];
+
+			return (from f in list.Split(SchumixBase.Comma) let trimmed = f.Trim() where !trimmed.Length.IsNull() select trimmed).ToArray();
+		}
+
 		public static string Reverse(this string value)
 		{
 			return value.Reverse().ToArray().SplitToString();
@@ -450,7 +465,7 @@ namespace Schumix.Framework.Extensions
 					text.Append("    ").Append(child.Key).Append(": ").Append(child.Value);
 			}
 
-			if(sPlatform.GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.IsWindows)
 				text = text.Replace("\r", string.Empty);
 
 			return FileName.IsNullOrEmpty() ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();
@@ -499,6 +514,42 @@ namespace Schumix.Framework.Extensions
 		public static string ToSecondFormat(this int Second)
 		{
 			return Second < 10 ? string.Format("0{0}", Second.ToString()) : Second.ToString();
+		}
+
+		public static string ToLocale(this string Language)
+		{
+			if(Language.Length == 4 && !Language.Contains("-"))
+				Language = Language.Substring(0, 2) + "-" + Language.Substring(2);
+			else if((Language.Length < 4 || Language.Length > 4) && !Language.Contains("-"))
+				Language = "en-US";
+
+			return Language;
+		}
+
+		public static bool IsMonthName(this string Name)
+		{
+#if false
+			// .net 4.5
+			try
+			{
+				var d = DateTime.ParseExact(Name, "MMMM", CultureInfo.CurrentCulture).Month;
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+#endif
+
+			try
+			{
+				var d = DateTime.ParseExact(Name, "MMMM", CultureInfo.GetCultureInfo(sLConsole.Locale.ToLocale())).Month;
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
 		}
 	}
 }

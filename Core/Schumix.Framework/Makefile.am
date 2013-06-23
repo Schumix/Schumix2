@@ -161,7 +161,12 @@ FILES = \
 	Exceptions/OptionException.cs \
 	Options/ActionOption.cs \
 	Platforms/Platform.cs \
-	Platforms/PlatformType.cs 
+	Platforms/PlatformType.cs \
+	Options/StringCoda.cs \
+	Options/ArgumentSource.cs \
+	Options/ResponseFileSource.cs \
+	Options/ArgumentEnumerator.cs \
+	Options/Category.cs 
 
 DATA_FILES = 
 

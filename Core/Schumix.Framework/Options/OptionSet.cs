@@ -3,8 +3,12 @@
  * 
  * Authors:
  *  Jonathan Pryor <jpryor@novell.com>
+ *  Federico Di Gregorio <fog@initd.org>
+ *  Rolf Bjarne Kvinge <rolf@xamarin.com>
  *
  * Copyright (C) 2008 Novell (http://www.novell.com)
+ * Copyright (C) 2009 Federico Di Gregorio.
+ * Copyright (C) 2012 Xamarin Inc (http://www.xamarin.com)
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
  * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
  * 
@@ -43,6 +47,10 @@ namespace Schumix.Framework.Options
 	public class OptionSet : KeyedCollection<string, Option>
 	{
 		private readonly Regex ValueOption = new Regex(@"^(?<flag>--|-|/)(?<name>[^:=]+)((?<sep>[:=])(?<value>.*))?$");
+		private List<ArgumentSource> sources = new List<ArgumentSource>();
+		private const int Description_RemWidth = 80 - OptionWidth - 2;
+		private const int Description_FirstWidth = 80 - OptionWidth;
+		private ReadOnlyCollection<ArgumentSource> roSources;
 		private Converter<string, string> localizer;
 		private const int OptionWidth = 29;
 
@@ -53,11 +61,17 @@ namespace Schumix.Framework.Options
 		public OptionSet(Converter<string, string> localizer)
 		{
 			this.localizer = localizer;
+			this.roSources = new ReadOnlyCollection<ArgumentSource>(sources);
 		}
 		
 		public Converter<string, string> MessageLocalizer
 		{
 			get { return localizer; }
+		}
+
+		public ReadOnlyCollection<ArgumentSource> ArgumentSources
+		{
+			get { return roSources; }
 		}
 		
 		protected override string GetKeyForItem(Option item)
@@ -97,8 +111,8 @@ namespace Schumix.Framework.Options
 		
 		protected override void RemoveItem(int index)
 		{
-			base.RemoveItem(index);
 			Option p = Items[index];
+			base.RemoveItem(index);
 			// KeyedCollection.RemoveItem() handles the 0th item
 
 			for(int i = 1; i < p.Names.Length; ++i)
@@ -108,7 +122,6 @@ namespace Schumix.Framework.Options
 		protected override void SetItem(int index, Option item)
 		{
 			base.SetItem(index, item);
-			RemoveItem(index);
 			AddImpl(item);
 		}
 		
@@ -136,6 +149,15 @@ namespace Schumix.Framework.Options
 				throw;
 			}
 		}
+
+		public OptionSet Add(string header)
+		{
+			if(header.IsNull())
+				throw new ArgumentNullException("header");
+
+			Add(new Category(header));
+			return this;
+		}
 		
 		public new OptionSet Add(Option option)
 		{
@@ -147,13 +169,18 @@ namespace Schumix.Framework.Options
 		{
 			return Add(prototype, null, action);
 		}
-		
+
 		public OptionSet Add(string prototype, string description, Action<string> action)
+		{
+			return Add(prototype, description, action, false);
+		}
+
+		public OptionSet Add(string prototype, string description, Action<string> action, bool hidden)
 		{
 			if(action.IsNull())
 				throw new ArgumentNullException("action");
 
-			var p = new ActionOption(prototype, description, 1, delegate(OptionValueCollection v) { action(v[0]); });
+			var p = new ActionOption(prototype, description, 1, delegate(OptionValueCollection v) { action(v[0]); }, hidden);
 			base.Add(p);
 			return this;
 		}
@@ -165,10 +192,15 @@ namespace Schumix.Framework.Options
 		
 		public OptionSet Add(string prototype, string description, OptionAction<string, string> action)
 		{
+			return Add(prototype, description, action, false);
+		}
+
+		public OptionSet Add(string prototype, string description, OptionAction<string, string> action, bool hidden)
+		{
 			if(action.IsNull())
 				throw new ArgumentNullException("action");
 
-			var p = new ActionOption(prototype, description, 2, delegate(OptionValueCollection v) { action(v[0], v[1]); });
+			var p = new ActionOption(prototype, description, 2, delegate(OptionValueCollection v) { action(v[0], v[1]); }, hidden);
 			base.Add(p);
 			return this;
 		}
@@ -192,79 +224,77 @@ namespace Schumix.Framework.Options
 		{
 			return Add(new ActionOption<TKey, TValue> (prototype, description, action));
 		}
+
+		public OptionSet Add(ArgumentSource source)
+		{
+			if(source.IsNull())
+				throw new ArgumentNullException("source");
+
+			sources.Add(source);
+			return this;
+		}
 		
 		protected virtual OptionContext CreateOptionContext()
 		{
 			return new OptionContext(this);
 		}
 		
-		//#if LINQ
 		public List<string> Parse(IEnumerable<string> arguments)
 		{
-			bool process = true;
-			OptionContext c = CreateOptionContext ();
-			c.OptionIndex = -1;
-#pragma warning disable 618
-			var def = GetOptionForName("<>");
-#pragma warning restore 618
-			var unprocessed = 
-				from argument in arguments
-					where ++c.OptionIndex >= 0 && (process || !def.IsNull())
-					? process
-					? argument == "--" 
-					? (process = false)
-					: !Parse(argument, c)
-					? def != null 
-					? Unprocessed(null, def, c, argument) 
-					: true
-					: false
-					: def != null 
-					? Unprocessed(null, def, c, argument)
-					: true
-					: true
-					select argument;
+			if(arguments.IsNull())
+				throw new ArgumentNullException("arguments");
 
-			var r = unprocessed.ToList();
+			OptionContext c = CreateOptionContext();
+			c.OptionIndex = -1;
+			bool process = true;
+			List<string> unprocessed = new List<string>();
+			Option def = Contains ("<>") ? this["<>"] : null;
+			ArgumentEnumerator ae = new ArgumentEnumerator (arguments);
+
+			foreach(string argument in ae)
+			{
+				++c.OptionIndex;
+
+				if(argument == "--")
+				{
+					process = false;
+					continue;
+				}
+
+				if(!process)
+				{
+					Unprocessed(unprocessed, def, c, argument);
+					continue;
+				}
+
+				if(AddSource(ae, argument))
+					continue;
+
+				if(!Parse(argument, c))
+					Unprocessed(unprocessed, def, c, argument);
+			}
 
 			if(!c.Option.IsNull())
 				c.Option.Invoke(c);
 
-			return r;
+			return unprocessed;
 		}
-		/*#else
-			public List<string> Parse(IEnumerable<string> arguments)
+
+		bool AddSource(ArgumentEnumerator ae, string argument)
+		{
+			foreach(ArgumentSource source in sources)
 			{
-				OptionContext c = CreateOptionContext();
-				c.OptionIndex = -1;
-				bool process = true;
-				var unprocessed = new List<string> ();
-				var def = Contains("<>") ? this["<>"] : null;
-				foreach(string argument in arguments)
-				{
-					++c.OptionIndex;
+				IEnumerable<string> replacement;
 
-					if(argument == "--")
-					{
-						process = false;
-						continue;
-					}
+				if(!source.GetArguments(argument, out replacement))
+					continue;
 
-					if(!process)
-					{
-						Unprocessed(unprocessed, def, c, argument);
-						continue;
-					}
-
-					if(!Parse(argument, c))
-						Unprocessed(unprocessed, def, c, argument);
-				}
-
-				if(!c.Option.IsNull())
-					c.Option.Invoke(c);
-
-				return unprocessed;
+				ae.Add(replacement);
+				return true;
 			}
-			#endif*/
+
+			return false;
+		}
 		
 		private static bool Unprocessed(ICollection<string> extra, Option def, OptionContext c, string argument)
 		{
@@ -354,7 +384,7 @@ namespace Schumix.Framework.Options
 		{
 			if(!option.IsNull())
 			{
-				foreach(string o in !c.Option.ValueSeparators.IsNull() ? option.Split (c.Option.ValueSeparators, StringSplitOptions.None) : new string[]{ option })
+				foreach(string o in !c.Option.ValueSeparators.IsNull() ? option.Split(c.Option.ValueSeparators, c.Option.MaxValueCount - c.OptionValues.Count, StringSplitOptions.None) : new string[]{ option })
 					c.OptionValues.Add(o);
 			}
 
@@ -435,6 +465,18 @@ namespace Schumix.Framework.Options
 			foreach(Option p in this)
 			{
 				int written = 0;
+
+				if(p.Hidden)
+					continue;
+
+				Category c = p as Category;
+
+				if(!c.IsNull())
+				{
+					WriteDescription(o, p.Description, string.Empty, 80, 80);
+					continue;
+				}
+
 				if(!WriteOptionPrototype(o, p, ref written))
 					continue;
 				
@@ -446,17 +488,49 @@ namespace Schumix.Framework.Options
 					o.Write(new string(SchumixBase.Space, OptionWidth));
 				}
 				
-				bool indent = false;
-				string prefix = new string(SchumixBase.Space, OptionWidth+2);
+				WriteDescription(o, p.Description, new string(SchumixBase.Space, OptionWidth+2), Description_FirstWidth, Description_RemWidth);
+			}
 
-				foreach(string line in GetLines(localizer(GetDescription(p.Description))))
+			foreach(ArgumentSource s in sources)
+			{
+				string[] names = s.GetNames();
+
+				if(names.IsNull() || names.Length == 0)
+					continue;
+
+				int written = 0;
+
+				Write(o, ref written, "  ");
+				Write(o, ref written, names[0]);
+
+				for(int i = 1; i < names.Length; ++i)
 				{
-					if(indent) 
-						o.Write(prefix);
-
-					o.WriteLine(line);
-					indent = true;
+					Write(o, ref written, ", ");
+					Write(o, ref written, names[i]);
 				}
+
+				if(written < OptionWidth)
+					o.Write(new string(SchumixBase.Space, OptionWidth - written));
+				else
+				{
+					o.WriteLine();
+					o.Write(new string(SchumixBase.Space, OptionWidth));
+				}
+
+				WriteDescription(o, s.Description, new string(SchumixBase.Space, OptionWidth+2), Description_FirstWidth, Description_RemWidth);
+			}
+		}
+
+		void WriteDescription(TextWriter o, string value, string prefix, int firstWidth, int remWidth)
+		{
+			bool indent = false;
+			foreach(string line in GetLines(localizer(GetDescription(value)), firstWidth, remWidth))
+			{
+				if(indent)
+					o.Write(prefix);
+
+				o.WriteLine(line);
+				indent = true;
 			}
 		}
 		
@@ -607,60 +681,9 @@ namespace Schumix.Framework.Options
 			return sb.ToString();
 		}
 		
-		private static IEnumerable<string> GetLines(string description)
+		private static IEnumerable<string> GetLines(string description, int firstWidth, int remWidth)
 		{
-			if(string.IsNullOrEmpty (description))
-			{
-				yield return string.Empty;
-				yield break;
-			}
-
-			int length = 80 - OptionWidth - 1;
-			int start = 0, end;
-
-			do
-			{
-				end = GetLineEnd(start, length, description);
-				char c = description[end-1];
-
-				if(char.IsWhiteSpace(c))
-					--end;
-
-				bool writeContinuation = end != description.Length && !IsEolChar(c);
-				string line = description.Substring(start, end - start) + (writeContinuation ? "-" : string.Empty);
-				yield return line;
-				start = end;
-
-				if(char.IsWhiteSpace(c))
-					++start;
-
-				length = 80 - OptionWidth - 2 - 1;
-			} while(end < description.Length);
-		}
-		
-		private static bool IsEolChar(char c)
-		{
-			return !char.IsLetterOrDigit(c);
-		}
-		
-		private static int GetLineEnd(int start, int length, string description)
-		{
-			int end = System.Math.Min(start + length, description.Length);
-			int sep = -1;
-
-			for(int i = start; i < end; ++i)
-			{
-				if(description[i] == SchumixBase.NewLine)
-					return i+1;
-
-				if(IsEolChar(description[i]))
-					sep = i+1;
-			}
-
-			if(sep == -1 || end == description.Length)
-				return end;
-
-			return sep;
+			return StringCoda.WrappedLines(description, firstWidth, remWidth);
 		}
 	}
 }

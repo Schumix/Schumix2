@@ -9,10 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.Framework</RootNamespace>
     <AssemblyName>Schumix.Framework</AssemblyName>
-    <ReleaseVersion>4.x</ReleaseVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(OS)' == 'Windows_NT'">
-    <PlatformTarget>x86</PlatformTarget>
+    <ReleaseVersion>4.1.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -22,6 +19,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget Condition="'$(OS)' == 'Windows_NT'">x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -30,6 +28,7 @@
     <DefineConstants>RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PlatformTarget Condition="'$(OS)' == 'Windows_NT'">x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -129,6 +128,11 @@
     <Compile Include="Options\ActionOption.cs" />
     <Compile Include="Platforms\Platform.cs" />
     <Compile Include="Platforms\PlatformType.cs" />
+    <Compile Include="Options\StringCoda.cs" />
+    <Compile Include="Options\ArgumentSource.cs" />
+    <Compile Include="Options\ResponseFileSource.cs" />
+    <Compile Include="Options\ArgumentEnumerator.cs" />
+    <Compile Include="Options\Category.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -147,11 +151,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <None Include="..\..\Dependencies\sqlite3.dll">
-      <Link>sqlite3.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-    </None>
     <None Include="..\..\Sql\Schumix.db3">
       <Link>Schumix.db3</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -166,6 +165,11 @@
       <Link>MonoPosixHelper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+    </None>
+    <None Include="..\..\Dependencies\sqlite3.dll">
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <Link>sqlite3.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

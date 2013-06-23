@@ -44,6 +44,7 @@ namespace Schumix.CompilerAddon
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 		private SCompiler sSCompiler;
@@ -102,9 +103,6 @@ namespace Schumix.CompilerAddon
 				if(!sMyChannelInfo.FSelect(IChannelFunctions.Commands, sIRCMessage.Channel) && Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					return;
 
-				if(!CompilerConfig.CompilerEnabled)
-					return;
-
 				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 					sIRCMessage.Channel = sIRCMessage.Nick;
 
@@ -136,6 +134,7 @@ namespace Schumix.CompilerAddon
 						sSendMessage.SendChatMessage(sIRCMessage, text[4], command.ToLower());
 						sSendMessage.SendChatMessage(sIRCMessage, text[5]);
 						sSendMessage.SendChatMessage(sIRCMessage, text[6], Consts.SchumixProgrammedBy);
+						return;
 					}
 				}
 
@@ -162,9 +161,15 @@ namespace Schumix.CompilerAddon
 		{
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 
+			if(!CompilerConfig.CompilerEnabled)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/disabledconfig", sIRCMessage.Channel, sIRCMessage.ServerName));
+				return false;
+			}
+
 			if(CompilerConfig.MaxAllocatingE)
 			{
-				var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
+				var memory = sRuntime.MemorySizeInMB;
 				int ircnetwork = sIrcBase.Networks.Count > 1 ? 20 * sIrcBase.Networks.Count : 0;
 
 				if(memory > CompilerConfig.MaxAllocatingM + ircnetwork)

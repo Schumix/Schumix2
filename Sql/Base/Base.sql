@@ -286,6 +286,8 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ServerAlreadyBeenUsed", "Jelenleg is ez a szerver van beállítva!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThereIsNoSuchAnAddon", "Ilyen addon nem létezik!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NotaNickNameHasBeenSet", "Nem nick név lett megadva!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ConnectedIrcServer", "A kapcsolat már létrejött így nem kapcsolódhatsz fel! Előbb szakítsd meg a kapcsolatot ha fel szeretnél megint kapcsolódni vagy használd az újrakapcsolódási parancsot: reconnect");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoConnectedIrcServer", "A kapcsolat már megszünt! Előbb hozd létre a kapcsolatot ha azt meg akarod szakítani vagy használd az újrakapcsolódási parancsot: reconnect");
 
 -- enUS
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WrongSwitch", "Wrong Switch!");
@@ -314,6 +316,8 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ServerAlreadyBeenUsed", "Server already been used!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ThereIsNoSuchAnAddon", "There is no such an addon!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NotaNickNameHasBeenSet", "Not a nickname has been set!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ConnectedIrcServer", "The connection is already established thus you cannot connect. First disconnect if you want to connect again or use to reconnection command: reconnect");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoConnectedIrcServer", "The connection is disappeared. First establish the connection if you want to disconnect or use the reconnection command: reconnect");
 
 -- huHU
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "schumix2/sys", "3Verzió: 10{0}\n3Platform: {0}\n3OSVerzió: {0}\n3Programnyelv: c#\n3Memória használat:5 {0} MB\n3Memória használat:8 {0} MB\n3Memória használat:3 {0} MB\n3Működési idő: {0}");
@@ -411,6 +415,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/change/shorturl", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/change/url", "Nem szerepel a név a listában!\nUrl sikeresen módosítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/change/website", "Nem szerepel a név a listában!\nOldal neve sikeresen módosítva.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "compiler/disabledconfig", "A compiler a konfigban ki van kapcsolva ezért nem használható! Ha használni szeretnéd ott kapcsold vissza.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "compiler/memory", "Jelenleg túl sok memóriát fogyaszt a bot ezért ezen funkció nem elérhető!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "compiler/warning", "A kódban olyan részek vannak melyek veszélyeztetik a programot. Ezért leállt a fordítás!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "compiler", "Nincs megadva a fő fv! (Schumix)\nNincs megadva a fő class!\nA kimeneti szöveg túl hosszú ezért nem került kiírásra!\nA kód sikeresen lefordult csak nincs kimenő üzenet!\nHátramaradt még {0} kiírás!");
@@ -523,7 +528,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/basecommand", "{0}: Nem létezik ilyen parancs!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/newgame", "{0} új játékot indított. Csatlakozni a '!join' paranccsal tudtok.\n{0}: Írd be a '!start' parancsot, ha mindenki készen áll.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/handleisownerafk", "A játék indítója több mint 10 perce nincs itt.\nA játékot mostantól bárki írányíthatja!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "maffiagame/base/handleisplayerafk", "A {0} játékos több mint 10 perce nincs jelen így kidobásra kerül a játékból!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/handleisplayerafk", "A {0} játékos több mint 10 perce nincs jelen így kidobásra kerül a játékból!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/corpse", "*** A holttest megvizsgálása után kiderült, hogy 4gyilkos volt.\n*** A holttest megvizsgálása után kiderült, hogy 4nyomozó volt.\n*** A holttest megvizsgálása után kiderült, hogy 4orvos volt.\n*** A holttest megvizsgálása után kiderült, hogy egy ártatlan falusi volt.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/endtext", "*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig nem volt. Mindenki más hétköznapi civil volt.\n*** A gyilkos 4{0} volt, a nyomozó 4{1}, az orvos pedig 4{2}. Mindenki más hétköznapi civil volt.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/endgametext", "A játék befejeződött.");
@@ -535,7 +540,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/exception", "Meghibásodás történt a játékban! Oka: ");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/endgame", "A gyilkosok halottak! A 4falusiak győztek.\nA falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!\nA falusiak halottak! A 4gyilkosok győztek.\nElfogytak a játékosok!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/idonotknowwho", "Nem tudom ki vagy kik =(");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "maffiagame/base/ghost", "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/ghost", "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday", "Nem vagy beregisztrálva! Kérlek végezd el a regisztrálást hogy tudjad használni a funkciót. Parancs: {0}birthday register <hónap> <nap>");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/info", "3Születésnap funkció állapota: {0}\n3Születésnap időpontja:2 {0}. {1}. {2}.\nNem vagy regisztrálva!\nNincs regisztrálva!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/change/status", "Születésnapod jelzése bekapcsolva.\nSzületésnapod jelzése kikapcsolva.");
@@ -640,6 +645,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/change/shorturl", "Option succesfully modified.\nThis name is not in the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/change/url", "This name is not on the list!\nUrl succesfully modified.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/change/website", "This name is not on the list!\nPage name succesfully changed.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "compiler/disabledconfig", "The compiler is disabled in the config thus unabled to use. If you want to use enable it there.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "compiler/memory", "Currently too many memory is allocated so this function is disabled!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "compiler/warning", "This code contains dangerous parts. Compiling stopped!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "compiler", "The main function is not specified! (Schumix)\nThe main class is not specified!\nThe output text is too long so did not written out!\nSuccessfully compiled the code, only nothing output text!\nLeft: {0} line!");

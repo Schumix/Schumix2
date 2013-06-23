@@ -571,7 +571,7 @@ namespace Schumix.Libraries
 #if SILVERLIGHT
 							w = ((IntPtr)o).ToString();
 #else
-							if(sPlatform.GetPlatformType() == PlatformType.Xbox)
+							if(sPlatform.IsXbox)
 								w = ((IntPtr)o).ToString();
 							else
 								w = "0x" + ((IntPtr)o).ToString("x");

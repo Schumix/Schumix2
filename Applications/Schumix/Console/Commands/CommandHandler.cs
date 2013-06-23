@@ -20,10 +20,8 @@
 
 using System;
 using System.Data;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Reflection;
 using System.Diagnostics;
 using Schumix.Api.Delegate;
 using Schumix.Irc;
@@ -65,8 +63,8 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
-		private readonly object Lock = new object();
 		/// <summary>
 		///     A szétdarabolt információkat tárolja.
 		/// </summary>
@@ -127,7 +125,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			var memory = Process.GetCurrentProcess().WorkingSet64/1024/1024;
+			var memory = sRuntime.MemorySizeInMB;
 			Log.Notice("Console", text[0], sUtilities.GetVersion());
 			Log.Notice("Console", text[1], sPlatform.GetPlatform());
 			Log.Notice("Console", text[2], Environment.OSVersion.ToString());
@@ -896,7 +894,7 @@ namespace Schumix.Console.Commands
 
 				SchumixBase.DManager.Update("channels", string.Format("Language = '{0}'", Info[3]), string.Format("Channel = '{0}' And ServerName = '{1}'", Info[2].ToLower(), _servername));
 				Log.Notice("Console", text[0], Info[3]);
-				SchumixBase.sCacheDB.ReLoad("channels");
+				SchumixBase.sCacheDB.Reload("channels");
 			}
 			else if(Info[1].ToLower() == "password")
 			{
@@ -952,7 +950,7 @@ namespace Schumix.Console.Commands
 
 					SchumixBase.DManager.Update("channels", string.Format("Password = '{0}'", Info[4]), string.Format("Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername));
 					Log.Notice("Console", text[2], Info[3]);
-					SchumixBase.sCacheDB.ReLoad("channels");
+					SchumixBase.sCacheDB.Reload("channels");
 				}
 				else if(Info[2].ToLower() == "remove")
 				{
@@ -994,7 +992,7 @@ namespace Schumix.Console.Commands
 
 					SchumixBase.DManager.Update("channels", "Password = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername));
 					Log.Notice("Console", text[2]);
-					SchumixBase.sCacheDB.ReLoad("channels");
+					SchumixBase.sCacheDB.Reload("channels");
 				}
 				else if(Info[2].ToLower() == "update")
 				{
@@ -1042,7 +1040,7 @@ namespace Schumix.Console.Commands
 
 					SchumixBase.DManager.Update("channels", string.Format("Password = '{0}'", Info[4]), string.Format("Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername));
 					Log.Notice("Console", text[2], Info[4]);
-					SchumixBase.sCacheDB.ReLoad("channels");
+					SchumixBase.sCacheDB.Reload("channels");
 				}
 				else if(Info[2].ToLower() == "info")
 				{
@@ -1089,6 +1087,12 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleConnect()
 		{
+			if(sIrcBase.Networks[_servername].IsConnected())
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("ConnectedIrcServer"));
+				return;
+			}
+
 			sIrcBase.Networks[_servername].Connect();
 		}
 
@@ -1097,6 +1101,12 @@ namespace Schumix.Console.Commands
 		/// </summary>
 		protected void HandleDisConnect()
 		{
+			if(!sIrcBase.Networks[_servername].IsConnected())
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoConnectedIrcServer"));
+				return;
+			}
+
 			sIrcBase.Networks[_servername].sSender.Quit("Console: Disconnect.");
 			sIrcBase.Networks[_servername].DisConnect();
 		}
@@ -1235,7 +1245,11 @@ namespace Schumix.Console.Commands
 				i = 1;
 				break;
 			case "cachedb":
-				SchumixBase.sCacheDB.ReLoad();
+				SchumixBase.sCacheDB.Reload();
+				i = 1;
+				break;
+			case "irc":
+				sIrcBase.Reload();
 				i = 1;
 				break;
 			}
@@ -1787,42 +1801,7 @@ namespace Schumix.Console.Commands
 				if(sAddonManager.LoadPluginsFromDirectory(AddonsConfig.Directory))
 				{
 					foreach(var nw in sIrcBase.Networks)
-					{
-						var asms = sAddonManager.Addons[nw.Key].Assemblies.ToDictionary(v => v.Key, v => v.Value);
-						Parallel.ForEach(asms, asm =>
-						{
-							var types = asm.Value.GetTypes();
-							Parallel.ForEach(types, type =>
-							{
-								var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-								Parallel.ForEach(methods, method =>
-								{
-									foreach(var attribute in Attribute.GetCustomAttributes(method))
-									{
-										if(attribute.IsOfType(typeof(IrcCommandAttribute)))
-										{
-											var attr = (IrcCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
-												sIrcBase.Networks[nw.Key].IrcRegisterHandler(attr.Command, del);
-											}
-										}
-
-										if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
-										{
-											var attr = (SchumixCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
-												sIrcBase.Networks[nw.Key].SchumixRegisterHandler(attr.Command, del, attr.Permission);
-											}
-										}
-									}
-								});
-							});
-						});
-					}
+						sIrcBase.LoadProcessMethods(nw.Key);
 
 					Log.Notice("Console", text[0]);
 				}
@@ -1844,48 +1823,11 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
+				foreach(var nw in sIrcBase.Networks)
+					sIrcBase.UnloadProcessMethods(nw.Key);
+
 				if(sAddonManager.UnloadPlugins())
-				{
-					foreach(var nw in sIrcBase.Networks)
-					{
-						var asms = sAddonManager.Addons[nw.Key].Assemblies.ToDictionary(v => v.Key, v => v.Value);
-						Parallel.ForEach(asms, asm =>
-						{
-							var types = asm.Value.GetTypes();
-							Parallel.ForEach(types, type =>
-							{
-								var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
-								Parallel.ForEach(methods, method =>
-								{
-									foreach(var attribute in Attribute.GetCustomAttributes(method))
-									{
-										if(attribute.IsOfType(typeof(IrcCommandAttribute)))
-										{
-											var attr = (IrcCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
-												sIrcBase.Networks[nw.Key].IrcRemoveHandler(attr.Command, del);
-											}
-										}
-
-										if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
-										{
-											var attr = (SchumixCommandAttribute)attribute;
-											lock(Lock)
-											{
-												var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
-												sIrcBase.Networks[nw.Key].SchumixRemoveHandler(attr.Command, del);
-											}
-										}
-									}
-								});
-							});
-						});
-					}
-
 					Log.Notice("Console", text[0]);
-				}
 				else
 					Log.Error("Console", text[1]);
 			}

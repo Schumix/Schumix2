@@ -313,12 +313,16 @@ namespace Schumix.Irc
 			}
 		}
 
+		public bool IsConnected()
+		{
+			return Connected;
+		}
+
 		/// <summary>
 		///     Kapcsolódás az IRC kiszolgálóhoz.
 		/// </summary>
 		public void Connect(bool nick = false)
 		{
-			NetworkQuit = false;
 			Log.Notice("Network", sLConsole.GetString("Connection to: {0}"), _server);
 			Connection(nick);
 		}
@@ -340,6 +344,9 @@ namespace Schumix.Irc
 			if(SchumixBase.ExitStatus)
 				return;
 
+			if(sIrcBase.ReloadStatus)
+				return;
+
 			Close();
 			Log.Notice("Network", sLConsole.GetString("Connection have been closed."));
 			Connection(false);
@@ -353,6 +360,7 @@ namespace Schumix.Irc
 
 		private void Connection(bool nick = false)
 		{
+			NetworkQuit = false;
 			_cts = new CancellationTokenSource();
 
 			if(nick)
@@ -388,7 +396,7 @@ namespace Schumix.Irc
 				return;
 			}
 
-			if(client.Connected)
+			if(!client.IsNull() && client.Connected)
 				Log.Success("Network", sLConsole.GetString("Successfully established the connection!"));
 			else
 			{
@@ -398,10 +406,11 @@ namespace Schumix.Irc
 
 			if(CType == ConnectionType.Ssl)
 			{
-				var networkStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback((s,ce,ca,p) => true), null);
+				SslStream networkStream = null;
 
 				try
 				{
+					networkStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback((s,ce,ca,p) => true), null);
 					networkStream.AuthenticateAsClient(_server);
 				}
 				catch(AuthenticationException e)
@@ -412,6 +421,9 @@ namespace Schumix.Irc
 				{
 					Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
+
+				if(networkStream.IsNull())
+					return;
 
 				InitializeStream(networkStream);
 			}
@@ -463,7 +475,7 @@ namespace Schumix.Irc
 
 		private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
 		{
-			if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
+			if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus && !sIrcBase.ReloadStatus)
 			{
 				if(ReconnectNumber > 5)
 					_timeropcode.Interval = _ReconnectNI;
@@ -495,7 +507,7 @@ namespace Schumix.Irc
 			{
 				try
 				{
-					if(SchumixBase.ExitStatus && NetworkQuit)
+					if((SchumixBase.ExitStatus || sIrcBase.ReloadStatus) && NetworkQuit)
 						break;
 
 					if(!Connected)
@@ -509,7 +521,7 @@ namespace Schumix.Irc
 					{
 						Log.Error("Opcodes", sLConsole.GetString("Do not going data from irc server!"));
 
-						if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus)
+						if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus && !sIrcBase.ReloadStatus)
 						{
 							if(ReconnectNumber > 5)
 								_timeropcode.Interval = _ReconnectNI;
@@ -538,7 +550,7 @@ namespace Schumix.Irc
 				}
 				catch(IOException)
 				{
-					if(sMyChannelInfo.FSelect(IFunctions.Reconnect))
+					if(sMyChannelInfo.FSelect(IFunctions.Reconnect) && !SchumixBase.ExitStatus && !sIrcBase.ReloadStatus)
 					{
 						if(ReconnectNumber > 5)
 							_timeropcode.Interval = _ReconnectNI;
@@ -555,7 +567,11 @@ namespace Schumix.Irc
 				catch(Exception e)
 				{
 					Log.Error("Opcodes", sLConsole.GetString("Failure details: {0}"), e.Message);
-					Thread.Sleep(1000);
+
+					if((SchumixBase.ExitStatus || sIrcBase.ReloadStatus) && NetworkQuit)
+						break;
+					else
+						Thread.Sleep(1000);
 				}
 			}
 
@@ -576,10 +592,14 @@ namespace Schumix.Irc
 			}
 
 			Shutdown = true;
+			Dispose();
 		}
 
 		private void HandleIrcCommand(string message)
 		{
+#if DEBUG
+			Console.WriteLine(message);
+#endif
 			var IMessage = new IRCMessage();
 			IMessage.ServerId = _serverid;
 			IMessage.ServerName = _servername;
@@ -614,9 +634,15 @@ namespace Schumix.Irc
 			else
 			{
 				if(IrcCommand[0] == "PING")
+				{
 					sSender.Pong(IrcCommand[1].Remove(0, 1, SchumixBase.Colon));
-				else if(opcode == ":Closing")
+					return;
+				}
+				else if(IrcCommand[0] == "ERROR")
+				{
 					NetworkQuit = true;
+					return;
+				}
 				else
 				{
 					if(ConsoleLog.CLog)
@@ -644,7 +670,7 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					if(!SchumixBase.ExitStatus && Connected)
+					if(!SchumixBase.ExitStatus && !sIrcBase.ReloadStatus && Connected)
 						Log.Error("Ping", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 

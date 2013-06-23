@@ -116,6 +116,11 @@ namespace Schumix.Libraries
 			return (obj == null);
 		}
 
+		public static bool IsNull(this IntPtr ptr)
+		{
+			return (ptr.Equals(IntPtr.Zero));
+		}
+
 		/// <summary>
 		/// Determines whether the specified obj is a type of the specified type.
 		/// </summary>
@@ -350,6 +355,14 @@ namespace Schumix.Libraries
 			}
 		}
 
+		public static string[] SplitAndTrim(string list)
+		{
+			if(IsNullOrEmpty(list))
+				return new string[0];
+
+			return (from f in list.Split(SchumixBase.Comma) let trimmed = f.Trim() where !trimmed.Length.IsNull() select trimmed).ToArray();
+		}
+
 		public static string SReverse(this string value)
 		{
 			return value.Reverse().ToArray().SplitToString();
@@ -503,6 +516,31 @@ namespace Schumix.Libraries
 		public static bool IsNullOrEmpty(this string Value)
 		{
 			return string.IsNullOrEmpty(Value);
+		}
+
+		public static string ToMonthFormat(this int Month)
+		{
+			return Month < 10 ? string.Format("0{0}", Month.ToString()) : Month.ToString();
+		}
+
+		public static string ToDayFormat(this int Day)
+		{
+			return Day < 10 ? string.Format("0{0}", Day.ToString()) : Day.ToString();
+		}
+
+		public static string ToHourFormat(this int Hour)
+		{
+			return Hour < 10 ? string.Format("0{0}", Hour.ToString()) : Hour.ToString();
+		}
+
+		public static string ToMinuteFormat(this int Minute)
+		{
+			return Minute < 10 ? string.Format("0{0}", Minute.ToString()) : Minute.ToString();
+		}
+
+		public static string ToSecondFormat(this int Second)
+		{
+			return Second < 10 ? string.Format("0{0}", Second.ToString()) : Second.ToString();
 		}
 
 		/// <summary>

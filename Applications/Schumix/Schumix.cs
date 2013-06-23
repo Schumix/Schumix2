@@ -49,47 +49,12 @@ namespace Schumix
 		{
 			try
 			{
-				bool e = false;
-				string eserver = string.Empty;
 				Log.Notice("SchumixBot", sLConsole.GetString("Successfully started SchumixBot."));
 				Log.Debug("SchumixBot", sLConsole.GetString("Network starting..."));
 
-				foreach(var sn in IRCConfig.List)
-				{
-					if(!e)
-					{
-						eserver = sn.Key;
-						e = true;
-					}
-
-					sIrcBase.NewServer(sn.Key, sn.Value.ServerId, sn.Value.Server, sn.Value.Port);
-				}
-
+				string eserver = sIrcBase.FirstStart();
 				sSchumixBase = new SchumixBase();
-
-				Task.Factory.StartNew(() =>
-				{
-					if(IRCConfig.List.Count == 1)
-					{
-						sIrcBase.Connect(eserver);
-						return;
-					}
-
-					int i = 0;
-					foreach(var sn in IRCConfig.List)
-					{
-						sIrcBase.Connect(sn.Key);
-
-						while(!sIrcBase.Networks[sn.Key].Online)
-						{
-							if(i >= 30)
-								break;
-
-							i++;
-							Thread.Sleep(1000);
-						}
-					}
-				});
+				sIrcBase.Start(eserver);
 
 				Log.Debug("SchumixBot", sLConsole.GetString("Console starting..."));
 				new ScriptManager(ScriptsConfig.Directory);

@@ -1,7 +1,17 @@
 # Schumix2 ChangeLog
 
-## 4.1.0 (2013-xx-xx)
+## 4.2.0 (2013-xx-xx)
 
+## 4.1.0 (2013-06-23)
+
+ * NetworkQuit akkor is true értéket kap ezentúl ha egyéb hiba lépett fel a kapcsolatban.
+ * IrcBase osztályban létrehozva a LoadProcessMethods() és UnloadProcessMethods(). Így egységesebb lesz a program több része is. Javítva az addonok leválasztása.
+ * Runtime osztályhoz hozzáadva a MemorySize és MemorySizeInMB változó
+ * Reload részhez hozzáadva az irc rész.
+ * Névnapok kibövítésre kerültek az alábbi nyelveken: czCZ, deDE, fiFI, frFR, huHU, lvLV, plPL, seSE
+ * CompilerAddon yaml konfig olvasása kijavítva.
+ * Mono.Options frissítésre került a mono-ban tárolt verzió alapján.
+ * Platform osztályhoz hozzáadva több olyan függvény amivel pontosabban megállapítható az adott rendszer beállításai.
  * Kijavításra került a 64 bites Windows-okon jelentkező indulási hiba. Mostantól Windows alatt csak 32 bites verzióban lehet lefordítani a programot és csak azt szabad elindítani. Persze a 32 bitesnél ez nem feltétlen lényeges viszont a 64 bites verziónál feltétlenül így kell.
  * Konfig újratöltésénél a log fájl módosítás/létrehozás mostantól tökéletesen fog működni.
  * Service nick neveket észleli a bot és másikra vált róla. (Persze csak a 3 névből. De lehet hogy még így se tud olyat találni ami nincs letiltva.)

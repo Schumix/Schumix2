@@ -46,6 +46,16 @@ namespace Schumix.Framework
 			_timer.Start();
 		}
 
+		public long MemorySize
+		{
+			get { return Process.GetCurrentProcess().WorkingSet64; }
+		}
+
+		public long MemorySizeInMB
+		{
+			get { return Process.GetCurrentProcess().WorkingSet64/1024/1024; }
+		}
+
 		private void HandleTimerMemory(object sender, ElapsedEventArgs e)
 		{
 			if(ShutdownConfig.MaxMemory == 0)
@@ -53,8 +63,8 @@ namespace Schumix.Framework
 
 			int ircnetwork = IRCConfig.List.Count > 1 ? 40 * IRCConfig.List.Count : 0;
 
-			if((Process.GetCurrentProcess().WorkingSet64/1024/1024 >= ShutdownConfig.MaxMemory && IRCConfig.List.IsNull()) ||
-			   Process.GetCurrentProcess().WorkingSet64/1024/1024 >= ShutdownConfig.MaxMemory + ircnetwork)
+			if((MemorySizeInMB >= ShutdownConfig.MaxMemory && IRCConfig.List.IsNull()) ||
+			   MemorySizeInMB >= ShutdownConfig.MaxMemory + ircnetwork)
 			{
 				Log.Warning("Runtime", sLConsole.GetString("The program, more than {0} MB consumed!"), ShutdownConfig.MaxMemory + ircnetwork);
 				Log.Warning("Runtime", sLConsole.GetString("Program shutting down!"));
@@ -78,10 +88,7 @@ namespace Schumix.Framework
 
 		public void SetProcessName(string Name)
 		{
-			if(sPlatform.GetPlatformType() != PlatformType.Linux || sPlatform.GetPlatformType() != PlatformType.MacOSX)
-				return;
-
-			if(Environment.OSVersion.Platform == PlatformID.Unix)
+			if(sPlatform.IsUnix)
 			{
 				try
 				{

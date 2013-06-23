@@ -29,8 +29,32 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace Schumix.Framework.Options
 {
-	public delegate void OptionAction<TKey, TValue>(TKey key, TValue value);
+	public class ResponseFileSource : ArgumentSource
+	{
+		public override string[] GetNames()
+		{
+			return new string[] { "@file" };
+		}
+
+		public override string Description
+		{
+			get { return "Read response file for more options."; }
+		}
+
+		public override bool GetArguments(string value, out IEnumerable<string> replacement)
+		{
+			if(string.IsNullOrEmpty(value) || !value.StartsWith("@"))
+			{
+				replacement = null;
+				return false;
+			}
+
+			replacement = ArgumentSource.GetArgumentsFromFile(value.Substring(1));
+			return true;
+		}
+	}
 }

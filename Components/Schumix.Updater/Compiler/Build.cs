@@ -45,13 +45,13 @@ namespace Schumix.Updater.Compiler
 			build.StartInfo.RedirectStandardOutput = true;
 			build.StartInfo.RedirectStandardError = true;
 
-			if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			if(sPlatform.IsLinux)
 			{
 				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "/xbuild.exe", dir + "/xbuild.exe");
 				build.StartInfo.FileName = "mono";
 				build.StartInfo.Arguments = dir + "/xbuild.exe /p:Configuration=\"Release\" " + dir + "/Schumix.sln";
 			}
-			else if(sPlatform.GetPlatformType() == PlatformType.Windows)
+			else if(sPlatform.IsWindows)
 			{
 				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "\\MSBuild.exe", dir + "\\MSBuild.exe");
 				build.StartInfo.FileName = dir + "\\MSBuild.exe";

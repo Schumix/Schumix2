@@ -53,9 +53,9 @@ namespace Schumix.Framework.Localization
 			{
 				string location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 				
-				if(sPlatform.GetPlatformType() == PlatformType.Windows)
+				if(sPlatform.IsWindows)
 					LocaleDir = Path.Combine(location, "locale");
-				else if(sPlatform.GetPlatformType() == PlatformType.Linux)
+				else if(sPlatform.IsLinux)
 				{
 					bool enabled = false;
 					var dir = new DirectoryInfo(location);
@@ -91,13 +91,9 @@ namespace Schumix.Framework.Localization
 		public void SetLocale(string Language)
 		{
 			Locale = Language.Replace("-", string.Empty);
+			Language = Language.ToLocale();
 
-			if(Language.Length == 4 && !Language.Contains("-"))
-				Language = Language.Substring(0, 2) + "-" + Language.Substring(2);
-			else if((Language.Length < 4 || Language.Length > 4) && !Language.Contains("-"))
-				Language = "en-US";
-
-			if(sPlatform.GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.IsWindows)
 			{
 #if false
 				// .net 4.5
@@ -105,10 +101,24 @@ namespace Schumix.Framework.Localization
 #endif
 				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
 			}
-			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.IsLinux)
+			{
+#if false
+				// .net 4.5
+				CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(Language);
+#endif
+				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
 				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
+			}
 			else
+			{
+#if false
+				// .net 4.5
+				CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(Language);
+#endif
+				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
 				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
+			}
 		}
 
 		public string GetString(string phrase)

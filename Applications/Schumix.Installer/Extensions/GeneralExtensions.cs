@@ -44,6 +44,11 @@ namespace Schumix.Installer.Extensions
 			return (obj == null);
 		}
 
+		public static bool IsNull(this IntPtr ptr)
+		{
+			return (ptr.Equals(IntPtr.Zero));
+		}
+
 		/// <summary>
 		/// Determines whether the specified obj is a type of the specified type.
 		/// </summary>
@@ -248,6 +253,14 @@ namespace Schumix.Installer.Extensions
 				ss = ss.Remove(0, s.Length);
 
 			return ss;
+		}
+
+		public static string[] SplitAndTrim(string list)
+		{
+			if(IsNullOrEmpty(list))
+				return new string[0];
+
+			return (from f in list.Split(',') let trimmed = f.Trim() where !trimmed.Length.IsNull() select trimmed).ToArray();
 		}
 
 		public static string Reverse(this string value)

@@ -19,12 +19,16 @@
  */
 
 using System;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Reflection;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Schumix.Api.Delegate;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -35,14 +39,20 @@ namespace Schumix.Irc
 	{
 		private readonly Dictionary<string, Network> _networks = new Dictionary<string, Network>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
+		public bool ReloadStatus { get; private set; }
 		private readonly object Lock = new object();
+		private bool shutdown = false;
+
 		public Dictionary<string, Network> Networks
 		{
 			get { return _networks; }
 		}
 
-		private bool shutdown = false;
-		private IrcBase() {}
+		private IrcBase()
+		{
+			ReloadStatus = false;
+		}
 
 		public void NewServer(string ServerName, int ServerId, string Host, int Port)
 		{
@@ -179,38 +189,191 @@ namespace Schumix.Irc
 			}
 		}
 
+		public void LoadProcessMethods(string ServerName)
+		{
+			var asms = sAddonManager.Addons[ServerName].Assemblies.ToDictionary(v => v.Key, v => v.Value);
+			Parallel.ForEach(asms, asm =>
+			{
+				var types = asm.Value.GetTypes();
+				LoadProcessMethods(ServerName, types);
+			});
+		}
+
+		public void LoadProcessMethods(string ServerName, Type[] types)
+		{
+			Parallel.ForEach(types, type =>
+			{
+				var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+				Parallel.ForEach(methods, method =>
+				{
+					foreach(var attribute in Attribute.GetCustomAttributes(method))
+					{
+						if(attribute.IsOfType(typeof(IrcCommandAttribute)))
+						{
+							var attr = (IrcCommandAttribute)attribute;
+							lock(Lock)
+							{
+								var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
+								_networks[ServerName].IrcRegisterHandler(attr.Command, del);
+							}
+						}
+
+						if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
+						{
+							var attr = (SchumixCommandAttribute)attribute;
+							lock(Lock)
+							{
+								var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
+								_networks[ServerName].SchumixRegisterHandler(attr.Command, del, attr.Permission);
+							}
+						}
+					}
+				});
+			});
+		}
+
+		public void UnloadProcessMethods(string ServerName)
+		{
+			var asms = sAddonManager.Addons[ServerName].Assemblies.ToDictionary(v => v.Key, v => v.Value);
+			Parallel.ForEach(asms, asm =>
+			{
+				var types = asm.Value.GetTypes();
+				UnloadProcessMethods(ServerName, types);
+			});
+		}
+
+		public void UnloadProcessMethods(string ServerName, Type[] types)
+		{
+			Parallel.ForEach(types, type =>
+			{
+				var methods = type.GetMethods(BindingFlags.Public | BindingFlags.Static);
+				Parallel.ForEach(methods, method =>
+				{
+					foreach(var attribute in Attribute.GetCustomAttributes(method))
+					{
+						if(attribute.IsOfType(typeof(IrcCommandAttribute)))
+						{
+							var attr = (IrcCommandAttribute)attribute;
+							lock(Lock)
+							{
+								var del = Delegate.CreateDelegate(typeof(IRCDelegate), method) as IRCDelegate;
+								_networks[ServerName].IrcRemoveHandler(attr.Command, del);
+							}
+						}
+
+						if(attribute.IsOfType(typeof(SchumixCommandAttribute)))
+						{
+							var attr = (SchumixCommandAttribute)attribute;
+							lock(Lock)
+							{
+								var del = Delegate.CreateDelegate(typeof(CommandDelegate), method) as CommandDelegate;
+								_networks[ServerName].SchumixRemoveHandler(attr.Command, del);
+							}
+						}
+					}
+				});
+			});
+		}
+
+		public string FirstStart()
+		{
+			bool e = false;
+			string eserver = string.Empty;
+
+			if(_networks.Count > 0)
+				_networks.Clear();
+
+			foreach(var sn in IRCConfig.List)
+			{
+				if(!e)
+				{
+					eserver = sn.Key;
+					e = true;
+				}
+
+				NewServer(sn.Key, sn.Value.ServerId, sn.Value.Server, sn.Value.Port);
+			}
+
+			return eserver;
+		}
+
+		public void Start(string Name)
+		{
+			Task.Factory.StartNew(() =>
+			{
+				if(IRCConfig.List.Count == 1)
+				{
+					Connect(Name);
+					return;
+				}
+
+				int i = 0;
+				foreach(var sn in IRCConfig.List)
+				{
+					Connect(sn.Key);
+
+					while(!_networks[sn.Key].Online)
+					{
+						if(i >= 30)
+							break;
+
+						i++;
+						Thread.Sleep(1000);
+					}
+				}
+			});
+		}
+
+		public void Reload()
+		{
+			ReloadStatus = true;
+			AllIrcServerShutdown(sLConsole.GetString("Reload irc module!"), true);
+			Thread.Sleep(_networks.Count * 1000);
+			string eserver = FirstStart();
+			Start(eserver);
+			Thread.Sleep(_networks.Count * 3000);
+			ReloadStatus = false;
+		}
+
 		public void Shutdown(string Message)
 		{
 			if(shutdown)
 				return;
 
 			shutdown = true;
+			AllIrcServerShutdown(Message);
+			Log.Warning("IrcBase", sLConsole.GetString("Program shutting down!"));
+			Process.GetCurrentProcess().Kill();
+		}
 
-			foreach(var nw in Networks)
+		public void AllIrcServerShutdown(string Message, bool reload = false)
+		{
+			foreach(var nw in _networks)
 				nw.Value.sSender.Quit(Message);
 
 			int i = 0;
 
 			while(true)
 			{
-				if(i >= 30)
+				if(i >= 30 && !reload)
 					break;
 
 				var list = new List<bool>();
 
-				foreach(var nw in Networks)
+				foreach(var nw in _networks)
 					list.Add(nw.Value.Shutdown);
 
 				if(list.CompareDataInBlock())
+				{
+					list.Clear();
 					break;
+				}
 				else
-					Thread.Sleep(100);
+					Thread.Sleep(200);
 
 				i++;
+				list.Clear();
 			}
-
-			Log.Warning("IrcBase", sLConsole.GetString("Program shutting down!"));
-			Process.GetCurrentProcess().Kill();
 		}
 	}
 }

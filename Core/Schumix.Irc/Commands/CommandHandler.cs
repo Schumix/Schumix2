@@ -43,6 +43,7 @@ namespace Schumix.Irc.Commands
 		protected readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
 		protected readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		protected readonly Platform sPlatform = Singleton<Platform>.Instance;
+		protected readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		protected readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		public IgnoreIrcCommand sIgnoreIrcCommand { get; private set; }
 		public IgnoreNickName sIgnoreNickName { get; private set; }

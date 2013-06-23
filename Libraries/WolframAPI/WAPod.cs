@@ -88,7 +88,7 @@ namespace WolframAPI
 		{
 			get
 			{
-				//if(sPlatform.GetPlatformType() != PlatformType.Linux)
+				//if(!sPlatform.IsLinux)
 				//	Contract.Requires(!SubPods.IsNull());
 
 				return (from sp in SubPods where sp.Title.ToLower().Equals(name) select sp).FirstOrDefault();

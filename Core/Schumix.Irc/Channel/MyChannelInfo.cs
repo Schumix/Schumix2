@@ -184,7 +184,7 @@ namespace Schumix.Irc.Channel
 		public void ChannelFunctionsReload()
 		{
 			ChannelFunction.Clear();
-			SchumixBase.sCacheDB.ReLoad("channels");
+			SchumixBase.sCacheDB.Reload("channels");
 			var db = SchumixBase.DManager.Query("SELECT Channel FROM channels WHERE ServerName = '{0}'", _servername);
 			if(!db.IsNull())
 			{
