@@ -36,7 +36,6 @@ namespace Schumix.Framework
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
-		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private System.Timers.Timer _timer = new System.Timers.Timer();
 
 		private Runtime()
@@ -64,8 +63,8 @@ namespace Schumix.Framework
 
 			int ircnetwork = IRCConfig.List.Count > 1 ? 40 * IRCConfig.List.Count : 0;
 
-			if((sRuntime.MemorySizeToMB >= ShutdownConfig.MaxMemory && IRCConfig.List.IsNull()) ||
-			   sRuntime.MemorySizeToMB >= ShutdownConfig.MaxMemory + ircnetwork)
+			if((MemorySizeToMB >= ShutdownConfig.MaxMemory && IRCConfig.List.IsNull()) ||
+			   MemorySizeToMB >= ShutdownConfig.MaxMemory + ircnetwork)
 			{
 				Log.Warning("Runtime", sLConsole.GetString("The program, more than {0} MB consumed!"), ShutdownConfig.MaxMemory + ircnetwork);
 				Log.Warning("Runtime", sLConsole.GetString("Program shutting down!"));
