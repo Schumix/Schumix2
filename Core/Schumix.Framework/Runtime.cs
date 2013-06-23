@@ -88,9 +88,6 @@ namespace Schumix.Framework
 
 		public void SetProcessName(string Name)
 		{
-			if(!sPlatform.IsLinux || !sPlatform.IsMacOS)
-				return;
-
 			if(sPlatform.IsUnix)
 			{
 				try
