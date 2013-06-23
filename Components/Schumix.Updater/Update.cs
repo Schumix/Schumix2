@@ -48,7 +48,7 @@ namespace Schumix.Updater
 				return;
 			}
 
-			if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			if(sPlatform.IsLinux)
 				System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 			if(UpdateConfig.Version == "stable")
@@ -170,12 +170,12 @@ namespace Schumix.Updater
 			config.StartInfo.RedirectStandardOutput = true;
 			config.StartInfo.RedirectStandardError = true;
 
-			if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			if(sPlatform.IsLinux)
 			{
 				config.StartInfo.FileName = "mono";
 				config.StartInfo.Arguments = "Config.exe " + _dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
 			}
-			else if(sPlatform.GetPlatformType() == PlatformType.Windows)
+			else if(sPlatform.IsWindows)
 			{
 				config.StartInfo.FileName = "Config.exe";
 				config.StartInfo.Arguments = _dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
@@ -184,7 +184,7 @@ namespace Schumix.Updater
 			Log.Notice("Update", sLConsole.GetString("This step of updateing is finished. Continue with next step."));
 			config.Start();
 
-			if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			if(sPlatform.IsLinux)
 			{
 				config.WaitForExit();
 				Log.Success("Update", sLConsole.GetString("The update is finished. The program shutting down!"));

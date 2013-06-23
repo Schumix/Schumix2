@@ -62,7 +62,7 @@ namespace Schumix.Server.New
 
 						bool run = false;
 
-						if(sPlatform.GetPlatformType() == PlatformType.Linux)
+						if(sPlatform.IsLinux)
 						{
 							foreach(var p in Process.GetProcessesByName("mono"))
 							{
@@ -70,7 +70,7 @@ namespace Schumix.Server.New
 									run = true;
 							}
 						}
-						else if(sPlatform.GetPlatformType() == PlatformType.Windows)
+						else if(sPlatform.IsWindows)
 						{
 							foreach(var p in Process.GetProcessesByName("Schumix"))
 							{
@@ -125,12 +125,12 @@ namespace Schumix.Server.New
 			exe.StartInfo.RedirectStandardOutput = true;
 			exe.StartInfo.RedirectStandardError = true;
 
-			if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			if(sPlatform.IsLinux)
 			{
 				exe.StartInfo.FileName = "mono";
 				exe.StartInfo.Arguments = string.Format("Schumix.exe --config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7} --server-identify={8}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password, Identify);
 			}
-			else if(sPlatform.GetPlatformType() == PlatformType.Windows)
+			else if(sPlatform.IsWindows)
 			{
 				exe.StartInfo.FileName = "Schumix.exe";
 				exe.StartInfo.Arguments = string.Format("--config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7} --server-identify={8}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password, Identify);

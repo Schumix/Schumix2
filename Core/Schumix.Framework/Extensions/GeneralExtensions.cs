@@ -465,7 +465,7 @@ namespace Schumix.Framework.Extensions
 					text.Append("    ").Append(child.Key).Append(": ").Append(child.Value);
 			}
 
-			if(sPlatform.GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.IsWindows)
 				text = text.Replace("\r", string.Empty);
 
 			return FileName.IsNullOrEmpty() ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();

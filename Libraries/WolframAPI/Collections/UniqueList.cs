@@ -43,7 +43,7 @@ namespace WolframAPI.Collections
 		/// <param name="item">The item.</param>
 		public new void Add(T item)
 		{
-			//if(sPlatform.GetPlatformType() != PlatformType.Linux)
+			//if(!sPlatform.IsLinux)
 			//	Contract.Requires(!Equals(item, null));
             
 			if(Contains(item) || FindIndex(it => it.Equals(item)) != -1)
@@ -60,14 +60,14 @@ namespace WolframAPI.Collections
 		{
 			get
 			{
-				//if(sPlatform.GetPlatformType() != PlatformType.Linux)
+				//if(!sPlatform.IsLinux)
 				//	Contract.Requires(!Equals(ind, null));
 
 				return (from elem in this where elem.Equals(ind) select elem).FirstOrDefault();
 			}
 			set
 			{
-				//if(sPlatform.GetPlatformType() != PlatformType.Linux)
+				//if(!sPlatform.IsLinux)
 				//{
 				//	Contract.Requires(!Equals(ind, null));
 				//	Contract.Requires(!Equals(value, null));

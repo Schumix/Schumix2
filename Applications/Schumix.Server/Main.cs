@@ -126,7 +126,7 @@ namespace Schumix.Server
 			else if(localization != "start")
 				sLConsole.SetLocale(localization);
 
-			if(sPlatform.GetPlatformType() == PlatformType.Windows && console_encoding == Encoding.UTF8.BodyName &&
+			if(sPlatform.IsWindows && console_encoding == Encoding.UTF8.BodyName &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
 				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
@@ -142,9 +142,9 @@ namespace Schumix.Server
 			new Update(Server.Config.ServerConfig.ConfigDirectory);
 			sUtilities.CleanHomeDirectory(true);
 
-			if(sPlatform.GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.IsWindows)
 				sWindows.Init();
-			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.IsLinux)
 				sLinux.Init();
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>

@@ -88,7 +88,7 @@ namespace Schumix.Framework
 						Thread.Sleep(100);
 				}
 
-				if(sPlatform.GetPlatformType() == PlatformType.Linux)
+				if(sPlatform.IsLinux)
 					ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 				WebRequest.DefaultWebProxy = null;

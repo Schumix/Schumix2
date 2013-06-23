@@ -255,14 +255,14 @@ namespace Schumix.CompilerAddon.Commands
 		{
 			try
 			{
-				if(sPlatform.GetPlatformType() == PlatformType.Linux)
+				if(sPlatform.IsLinux)
 				{
 #pragma warning disable 618
 					var compiler = new CSharpCodeProvider().CreateCompiler();
 #pragma warning restore 618
 					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
 				}
-				else if(sPlatform.GetPlatformType() == PlatformType.Windows)
+				else if(sPlatform.IsWindows)
 				{
 					var compiler = CodeDomProvider.CreateProvider("CSharp");
 					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
@@ -289,7 +289,7 @@ namespace Schumix.CompilerAddon.Commands
 
 					if(errortext.Contains("Location of the symbol related to previous error"))
 					{
-						if(sPlatform.GetPlatformType() == PlatformType.Linux)
+						if(sPlatform.IsLinux)
 						{
 							for(;;)
 							{
@@ -306,7 +306,7 @@ namespace Schumix.CompilerAddon.Commands
 
 							errormessage += ". " + "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
 						}
-						else if(sPlatform.GetPlatformType() == PlatformType.Windows)
+						else if(sPlatform.IsWindows)
 						{
 							for(;;)
 							{

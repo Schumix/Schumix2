@@ -504,12 +504,12 @@ namespace Schumix.Framework
 		/// </returns>
 		public string GetCpuId()
 		{
-			if(sPlatform.GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.IsWindows)
 			{
 				var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
 				return (from ManagementObject mo in mos.Get() select (Regex.Replace(Convert.ToString(mo["Name"]), @"\s+", SchumixBase.Space.ToString()))).FirstOrDefault();
 			}
-			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.IsLinux)
 			{
 				var reader = new StreamReader("/proc/cpuinfo");
 				string content = reader.ReadToEnd();
@@ -1279,7 +1279,7 @@ namespace Schumix.Framework
 
 		public string GetSpecialDirectory(string data)
 		{
-			if(sPlatform.GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.IsWindows)
 			{
 				string text = data.ToLower();
 
@@ -1313,7 +1313,7 @@ namespace Schumix.Framework
 				else
 					return data;
 			}
-			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.IsLinux)
 			{
 				string text = data.ToLower();
 				return (text.Length >= "$home".Length && text.Substring(0, "$home".Length) == "$home") ?
@@ -1329,7 +1329,7 @@ namespace Schumix.Framework
 
 			if(dir.Contains("$home"))
 				return true;
-			else if(sPlatform.GetPlatformType() == PlatformType.Windows && dir.Contains("$localappdata"))
+			else if(sPlatform.IsWindows && dir.Contains("$localappdata"))
 				return true;
 			else
 				return false;
@@ -1337,7 +1337,7 @@ namespace Schumix.Framework
 
 		public string DirectoryToSpecial(string dir, string file)
 		{
-			if(sPlatform.GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.IsWindows)
 			{
 				if(dir.Length > 2 && dir.Substring(1, 2) == @":\")
 					return string.Format(@"{0}\{1}", dir, file);
@@ -1346,7 +1346,7 @@ namespace Schumix.Framework
 				else
 					return string.Format("./{0}/{1}", dir, file);
 			}
-			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.IsLinux)
 				return (dir.Length > 0 && dir.Substring(0, 1) == "/") ? string.Format("{0}/{1}", dir, file) : string.Format("./{0}/{1}", dir, file);
 			else
 				return string.Format("{0}/{1}", dir, file);
@@ -1354,12 +1354,12 @@ namespace Schumix.Framework
 
 		public string GetDirectoryName(string data)
 		{
-			if(sPlatform.GetPlatformType() == PlatformType.Windows)
+			if(sPlatform.IsWindows)
 			{
 				var split = data.Split('\\');
 				return split.Length > 1 ? split[split.Length-1] : data;
 			}
-			else if(sPlatform.GetPlatformType() == PlatformType.Linux)
+			else if(sPlatform.IsLinux)
 			{
 				var split = data.Split('/');
 				return split.Length > 1 ? split[split.Length-1] : data;
