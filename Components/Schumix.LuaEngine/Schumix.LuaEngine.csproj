@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Schumix.LuaEngine</RootNamespace>
     <AssemblyName>Schumix.LuaEngine</AssemblyName>
-    <ReleaseVersion>4.x</ReleaseVersion>
+    <ReleaseVersion>4.1.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>Schumix.LuaEngine.pfx</AssemblyOriginatorKeyFile>

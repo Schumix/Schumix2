@@ -1,7 +1,10 @@
 # Schumix2 ChangeLog
 
-## 4.1.0 (2013-xx-xx)
+## 4.2.0 (2013-xx-xx)
 
+## 4.1.0 (2013-06-23)
+
+ * NetworkQuit akkor is true értéket kap ezentúl ha egyéb hiba lépett fel a kapcsolatban.
  * IrcBase osztályban létrehozva a LoadProcessMethods() és UnloadProcessMethods(). Így egységesebb lesz a program több része is. Javítva az addonok leválasztása.
  * Runtime osztályhoz hozzáadva a MemorySize és MemorySizeInMB változó
  * Reload részhez hozzáadva az irc rész.

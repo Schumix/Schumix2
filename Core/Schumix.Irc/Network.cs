@@ -634,9 +634,15 @@ namespace Schumix.Irc
 			else
 			{
 				if(IrcCommand[0] == "PING")
+				{
 					sSender.Pong(IrcCommand[1].Remove(0, 1, SchumixBase.Colon));
-				else if(opcode == ":Closing")
+					return;
+				}
+				else if(IrcCommand[0] == "ERROR")
+				{
 					NetworkQuit = true;
+					return;
+				}
 				else
 				{
 					if(ConsoleLog.CLog)

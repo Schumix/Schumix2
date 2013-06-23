@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Schumix.PythonEngine</RootNamespace>
     <AssemblyName>Schumix.PythonEngine</AssemblyName>
-    <ReleaseVersion>4.x</ReleaseVersion>
+    <ReleaseVersion>4.1.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
