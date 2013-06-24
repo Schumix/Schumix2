@@ -58,7 +58,7 @@ namespace Schumix.Irc.Commands
 			if(sIRCMessage.Info.Length == 5)
 			{
 				if(kick == sMyNickInfo.NickStorage.ToLower())
-					sSendMessage.SendChatMessage(sIRCMessage, "Önmagamat nem rughatom ki a csatornáról!"/*sLManager.GetWarningText("", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+					sSendMessage.SendChatMessage(sIRCMessage, "Önmagamat nem rúghatom ki a csatornáról!"/*sLManager.GetWarningText("", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
 				else
 				{
 					iskick = true;
@@ -69,7 +69,7 @@ namespace Schumix.Irc.Commands
 			else if(sIRCMessage.Info.Length >= 6)
 			{
 				if(kick == sMyNickInfo.NickStorage.ToLower())
-					sSendMessage.SendChatMessage(sIRCMessage, "Önmagamat nem rughatom ki a csatornáról!"/*sLManager.GetWarningText("", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+					sSendMessage.SendChatMessage(sIRCMessage, "Önmagamat nem rúghatom ki a csatornáról!"/*sLManager.GetWarningText("", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
 				else
 				{
 					iskick = true;

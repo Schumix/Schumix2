@@ -28,6 +28,7 @@ using System.Threading;
 using System.Reflection;
 using System.Management;
 using System.Diagnostics;
+using System.Globalization;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -42,6 +43,7 @@ namespace Schumix.Framework
 {
 	public sealed class Utilities
 	{
+		private readonly DateTimeFormatInfo dtfi = new DateTimeFormatInfo { ShortDatePattern = "yyyy-MM-dd HH:mm", DateSeparator = "-" };
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly DateTime UnixTimeStart = new DateTime(1970, 1, 1, 0, 0, 0);
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
@@ -1268,8 +1270,11 @@ namespace Schumix.Framework
 
 		public bool IsValueBiggerDateTimeNow(int Year, int Month, int Day, int Hour, int Minute)
 		{
-			var time = DateTime.Now;
-			return (time.Year >= Year && time.Month >= Month && time.Day >= Day && time.Hour >= Hour && time.Minute >= Minute);
+			var nowtime = DateTime.Now;
+			nowtime = Convert.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}", nowtime.Year, nowtime.Month, nowtime.Day, nowtime.Hour, nowtime.Minute), dtfi);
+			var newtime = Convert.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}", Year, Month, Day, Hour, Minute), dtfi);
+			var compare = DateTime.Compare(nowtime, newtime);
+			return compare == 1 || compare == 0;
 		}
 
 		public string GetUserName()

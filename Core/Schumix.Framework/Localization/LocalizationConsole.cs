@@ -397,6 +397,15 @@ namespace Schumix.Framework.Localization
 					else
 						return "Cannot join channel (+i)!";
 				}
+				case "Text18":
+				{
+					if(Language == "huHU")
+						return "Nincs elég jogom hogy, kirúgjam a csatornáról!";
+					else if(Language == "enUS")
+						return "";
+					else
+						return "";
+				}
 				case "Text19":
 				{
 					if(Language == "huHU")

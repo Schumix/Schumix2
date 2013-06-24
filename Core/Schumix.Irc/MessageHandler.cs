@@ -654,14 +654,14 @@ namespace Schumix.Irc
 				if(sIRCMessage.Info.Length < 4)
 					return;
 
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[3], "Nincs elég jogom hogy, kirúgjam a csatornáról!");
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[3], sLConsole.MessageHandler("Text18"));
 			}
 		}
 
 		protected void HandleOtherKickError(IRCMessage sIRCMessage)
 		{
 			if(!KickPrivmsg.IsNullOrEmpty())
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, KickPrivmsg, "Nincs elég jogom hogy, kirúgjam a csatornáról!");
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, KickPrivmsg, sLConsole.MessageHandler("Text18"));
 		}
 
 		protected void HandleNotAChannelAdmin(IRCMessage sIRCMessage)
@@ -670,7 +670,7 @@ namespace Schumix.Irc
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text19"));
 
 			if(!KickPrivmsg.IsNullOrEmpty())
-				sSendMessage.SendChatMessage(sIRCMessage.MessageType, KickPrivmsg, "Nincs elég jogom hogy, kirúgjam a csatornáról!");
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, KickPrivmsg, sLConsole.MessageHandler("Text18"));
 		}
 
 		/// <summary>
