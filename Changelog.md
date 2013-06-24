@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Kick parancs feljavítása elkészült.
  * LogToFile függvény átnevezve LogInFile függvényre.
  * Randomkick funkciónév lecserélve Otherkick-re. Így jobban jelzi amire való.
 
