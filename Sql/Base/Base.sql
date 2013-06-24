@@ -548,6 +548,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/register", "Már regisztrálva vagy!\nNincs megadva a születési hónap!\nNincs megadva a születési nap!\nSikeresen hozzáadásra került a születésnapod.\nNincs megadva a születési év!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/remove", "Nem szerepelsz a listán!\nTörölve lett a születésnapod!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mode", "Saját rangomat nem változtathatom meg!\nTúl sok rang változtatást adtál meg! Maximum 4-et lehet!\n+ vagy - jel megadása kötelező!\nCsak angol abc betűivel lehet rangot megadni!\nValamelyik betű nem rang! Kérlek keresd meg melyik a hibás!\nTúl sok név lett megadva! Maximum 4-et lehet!\nTöbb rangot adtál meg mint ahány nevet!\nTöbb nevet adtál meg mint ahány rangot!\nSzóközöket adtál meg név helyett!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "kick", "Önmagamat nem rúghatom ki a csatornáról!");
 
 -- enUS
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/sys", "3Version: 10{0}\n3Platform: {0}\n3OSVersion: {0}\n3Programming language: c#\n3Memory allocation:5 {0} MB\n3Memory allocation:8 {0} MB\n3Memory allocation:3 {0} MB\n3Uptime: {0}");
@@ -745,6 +746,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/register", "You are already registered!\nMonth of birth missing!\nDay of birth missing!\nBirthday succesfully added.\nYear of birth missing!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/remove", "You are not in the list!\nBirthday deleted!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mode", "You can't change your own rank!\nYou changed too much rank! It can be max 4!\n+ or - symbol requied!\nYou can use characters from the english abc!\nOne of the characters is not a rank!\nYou changed too many name! It can be max 4!\nYou type more rank than name!\nYou type more name than rank!\nYou added a space instead of a name!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "kick", "I can't kick myself from the channel!");
 
 -- huHU
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xbot", "9", "Felhasználók számára használható parancslista.");

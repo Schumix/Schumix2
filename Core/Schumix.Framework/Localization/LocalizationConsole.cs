@@ -402,9 +402,9 @@ namespace Schumix.Framework.Localization
 					if(Language == "huHU")
 						return "Nincs elég jogom hogy, kirúgjam a csatornáról!";
 					else if(Language == "enUS")
-						return "";
+						return "I don't have enough permission to kick him/her from the channel!";
 					else
-						return "";
+						return "I don't have enough permission to kick him/her from the channel!";
 				}
 				case "Text19":
 				{
