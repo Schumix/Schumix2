@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using YamlDotNet.RepresentationModel;
 using Schumix.Framework.Platforms;
-using Schumix.Framework.Localization; // .net 4.5-nél nem kell majd
+using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Extensions
 {
@@ -37,7 +37,7 @@ namespace Schumix.Framework.Extensions
 	/// </summary>
 	public static class GeneralExtensions
 	{
-		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance; // .net 4.5-nél nem kell majd
+		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 
 		/// <summary>
@@ -528,27 +528,36 @@ namespace Schumix.Framework.Extensions
 
 		public static bool IsMonthName(this string Name)
 		{
-#if false
-			// .net 4.5
-			try
-			{
-				var d = DateTime.ParseExact(Name, "MMMM", CultureInfo.CurrentCulture).Month;
-				return true;
-			}
-			catch
-			{
-				return false;
-			}
-#endif
+			return Name.IsMonthName(sLConsole.Locale.ToLocale());
+		}
 
+		public static bool IsMonthName(this string Name, string Locale)
+		{
 			try
 			{
-				var d = DateTime.ParseExact(Name, "MMMM", CultureInfo.GetCultureInfo(sLConsole.Locale.ToLocale())).Month;
+				var d = DateTime.ParseExact(Name, "MMMM", CultureInfo.GetCultureInfo(Locale.ToLocale())).Month;
 				return true;
 			}
 			catch
 			{
 				return false;
+			}
+		}
+
+		public static int GetMonthNameInInt(this string Name)
+		{
+			return Name.GetMonthNameInInt(sLConsole.Locale.ToLocale());
+		}
+
+		public static int GetMonthNameInInt(this string Name, string Locale)
+		{
+			try
+			{
+				return DateTime.ParseExact(Name, "MMMM", CultureInfo.GetCultureInfo(Locale.ToLocale())).Month;
+			}
+			catch
+			{
+				return -1;
 			}
 		}
 	}
