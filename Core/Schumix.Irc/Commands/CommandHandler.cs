@@ -60,6 +60,7 @@ namespace Schumix.Irc.Commands
 		protected string ChannelPrivmsg { get; set; }
 		protected string NewNickPrivmsg { get; set; }
 		protected string OnlinePrivmsg { get; set; }
+		protected string KickPrivmsg { get; set; }
 		protected string ModePrivmsg { get; set; }
 		protected bool IsOnline { get; set; }
 		private string _servername;

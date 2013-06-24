@@ -578,25 +578,25 @@ namespace Schumix.Irc
 
 		protected void HandleNeedMoreParams(IRCMessage sIRCMessage)
 		{
-			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			if(!ModePrivmsg.IsNullOrEmpty())
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text"));
 		}
 
 		protected void HandleKeySet(IRCMessage sIRCMessage)
 		{
-			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			if(!ModePrivmsg.IsNullOrEmpty())
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text2"));
 		}
 
 		protected void HandleNoChanModes(IRCMessage sIRCMessage)
 		{
-			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			if(!ModePrivmsg.IsNullOrEmpty())
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text3"));
 		}
 
 		protected void HandleChanopPrivsNeeded(IRCMessage sIRCMessage)
 		{
-			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			if(!ModePrivmsg.IsNullOrEmpty())
 			{
 				if(sIRCMessage.Info.Length < 4)
 					return;
@@ -607,13 +607,16 @@ namespace Schumix.Irc
 
 		protected void HandleUserNotinChannel(IRCMessage sIRCMessage)
 		{
-			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			if(!ModePrivmsg.IsNullOrEmpty())
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text5"));
+
+			if(!KickPrivmsg.IsNullOrEmpty())
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, KickPrivmsg, sLConsole.MessageHandler("Text5"));
 		}
 
 		protected void HandleUnknownMode(IRCMessage sIRCMessage)
 		{
-			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			if(!ModePrivmsg.IsNullOrEmpty())
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text6"));
 		}
 
@@ -626,23 +629,48 @@ namespace Schumix.Irc
 
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text7"), sIRCMessage.Info[3]);
 			}
+
+			if(!KickPrivmsg.IsNullOrEmpty() || KickPrivmsg != sMyNickInfo.NickStorage)
+			{
+				if(sIRCMessage.Info.Length < 4)
+					return;
+
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, KickPrivmsg, sLConsole.MessageHandler("Text7"), sIRCMessage.Info[3]);
+			}
 		}
 
 		protected void HandleNotAChannelOwner(IRCMessage sIRCMessage)
 		{
-			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			if(!ModePrivmsg.IsNullOrEmpty())
 			{
 				if(sIRCMessage.Info.Length < 4)
 					return;
 
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[3], sLConsole.MessageHandler("Text19"));
 			}
+
+			if(!KickPrivmsg.IsNullOrEmpty())
+			{
+				if(sIRCMessage.Info.Length < 4)
+					return;
+
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[3], "Nincs elég jogom hogy, kirúgjam a csatornáról!");
+			}
+		}
+
+		protected void HandleOtherKickError(IRCMessage sIRCMessage)
+		{
+			if(!KickPrivmsg.IsNullOrEmpty())
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, KickPrivmsg, "Nincs elég jogom hogy, kirúgjam a csatornáról!");
 		}
 
 		protected void HandleNotAChannelAdmin(IRCMessage sIRCMessage)
 		{
-			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			if(!ModePrivmsg.IsNullOrEmpty())
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text19"));
+
+			if(!KickPrivmsg.IsNullOrEmpty())
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, KickPrivmsg, "Nincs elég jogom hogy, kirúgjam a csatornáról!");
 		}
 
 		/// <summary>

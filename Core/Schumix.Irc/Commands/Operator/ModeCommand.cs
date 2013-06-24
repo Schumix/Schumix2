@@ -232,7 +232,7 @@ namespace Schumix.Irc.Commands
 			// Clean
 			Thread.Sleep(5*1000);
 
-			if(sIRCMessage.Channel.ToLower() == ModePrivmsg.ToLower() || ModePrivmsg == string.Empty)
+			if(sIRCMessage.Channel.ToLower() == ModePrivmsg.ToLower() || !ModePrivmsg.IsNullOrEmpty())
 				ModePrivmsg = string.Empty;
 		}
 	}

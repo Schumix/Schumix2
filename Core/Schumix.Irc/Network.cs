@@ -187,6 +187,8 @@ namespace Schumix.Irc
 			IrcRegisterHandler(ReplyCode.ERR_UNKNOWNMODE,      HandleUnknownMode);
 			IrcRegisterHandler(ReplyCode.ERR_NOSUCHNICK,       HandleNoSuchNick);
 			IrcRegisterHandler(499,                            HandleNotAChannelOwner);
+			IrcRegisterHandler(482,                            HandleOtherKickError);
+			IrcRegisterHandler(972,                            HandleOtherKickError);
 			IrcRegisterHandler(974,                            HandleNotAChannelAdmin);
 
 			Task.Factory.StartNew(() =>
@@ -437,6 +439,7 @@ namespace Schumix.Irc
 			Online = false;
 			IsAllJoin = false;
 			_enabled = true;
+			KickPrivmsg = string.Empty;
 			ModePrivmsg = string.Empty;
 			ChannelPrivmsg = string.Empty;
 			NewNickPrivmsg = string.Empty;
