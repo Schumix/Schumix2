@@ -53,7 +53,7 @@ namespace Schumix.Framework
 			return DateTime.Now.ToString("HH:mm:ss");
 		}
 
-		private static void LogToFile(string log)
+		private static void LogInFile(string log)
 		{
 			string filename = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
 			var filesize = new FileInfo(filename);
@@ -235,7 +235,7 @@ namespace Schumix.Framework
 				Console.Write(" N {0}: ", source);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write("{0}\n", format);
-				LogToFile(GetTime() + string.Format(" N {0}: {1}\n", source, format));
+				LogInFile(GetTime() + string.Format(" N {0}: {1}\n", source, format));
 			}
 		}
 
@@ -267,7 +267,7 @@ namespace Schumix.Framework
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogToFile(GetTime() + string.Format(" S {0}: {1}\n", source, format));
+				LogInFile(GetTime() + string.Format(" S {0}: {1}\n", source, format));
 			}
 		}
 
@@ -302,7 +302,7 @@ namespace Schumix.Framework
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogToFile(GetTime() + string.Format(" W {0}: {1}\n", source, format));
+				LogInFile(GetTime() + string.Format(" W {0}: {1}\n", source, format));
 			}
 		}
 
@@ -337,7 +337,7 @@ namespace Schumix.Framework
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogToFile(GetTime() + string.Format(" E {0}: {1}\n", source, format));
+				LogInFile(GetTime() + string.Format(" E {0}: {1}\n", source, format));
 			}
 		}
 
@@ -372,7 +372,7 @@ namespace Schumix.Framework
 				Console.ForegroundColor = ConsoleColor.Blue;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogToFile(GetTime() + string.Format(" D {0}: {1}\n", source, format));
+				LogInFile(GetTime() + string.Format(" D {0}: {1}\n", source, format));
 			}
 		}
 
@@ -596,7 +596,7 @@ namespace Schumix.Framework
 				Console.Write(GetTime());
 				Console.Write(" {0} {1}: ", GetTypeCharacter(type), source);
 				Console.Write("{0}\n", format);
-				LogToFile(GetTime() + string.Format(" {0} {1}: {2}\n", GetTypeCharacter(type), source, format));
+				LogInFile(GetTime() + string.Format(" {0} {1}: {2}\n", GetTypeCharacter(type), source, format));
 			}
 		}
 

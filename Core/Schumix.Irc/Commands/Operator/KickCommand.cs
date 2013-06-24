@@ -55,12 +55,16 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length == 5)
 			{
-				if(kick != sMyNickInfo.NickStorage.ToLower())
+				if(kick == sMyNickInfo.NickStorage.ToLower())
+					sSendMessage.SendChatMessage(sIRCMessage, "Önmagamat nem rughatom ki a csatornáról!"/*sLManager.GetWarningText("", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+				else
 					sSender.Kick(sIRCMessage.Channel, kick);
 			}
 			else if(sIRCMessage.Info.Length >= 6)
 			{
-				if(kick != sMyNickInfo.NickStorage.ToLower())
+				if(kick == sMyNickInfo.NickStorage.ToLower())
+					sSendMessage.SendChatMessage(sIRCMessage, "Önmagamat nem rughatom ki a csatornáról!"/*sLManager.GetWarningText("", sIRCMessage.Channel, sIRCMessage.ServerName)*/);
+				else
 					sSender.Kick(sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
 			}
 		}

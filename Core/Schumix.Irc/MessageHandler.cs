@@ -402,7 +402,7 @@ namespace Schumix.Irc
 		protected void HandleIrcJoin(IRCMessage sIRCMessage)
 		{
 			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[joined]"));
+			LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[joined]"));
 
 			if(sIRCMessage.Nick == sMyNickInfo.NickStorage)
 			{
@@ -417,7 +417,7 @@ namespace Schumix.Irc
 
 		protected void HandleIrcLeft(IRCMessage sIRCMessage)
 		{
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[left] {0}"), sIRCMessage.Args.IsNullOrEmpty() ? string.Empty : sIRCMessage.Args);
+			LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[left] {0}"), sIRCMessage.Args.IsNullOrEmpty() ? string.Empty : sIRCMessage.Args);
 
 			if(sIRCMessage.Nick == sMyNickInfo.NickStorage)
 			{
@@ -433,7 +433,7 @@ namespace Schumix.Irc
 			foreach(var chan in sChannelList.List)
 			{
 				if(chan.Value.Names.ContainsKey(sIRCMessage.Nick.ToLower()))
-					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[quit] {0}"), sIRCMessage.Args.IsNullOrEmpty() ? string.Empty : sIRCMessage.Args);
+					LogInFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[quit] {0}"), sIRCMessage.Args.IsNullOrEmpty() ? string.Empty : sIRCMessage.Args);
 			}
 
 			sChannelList.Remove(string.Empty, sIRCMessage.Nick, true);
@@ -444,7 +444,7 @@ namespace Schumix.Irc
 			foreach(var chan in sChannelList.List)
 			{
 				if(chan.Value.Names.ContainsKey(sIRCMessage.Nick.ToLower()))
-					LogToFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[Is now known as {0}]"), sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
+					LogInFile(chan.Key, sIRCMessage.Nick, sLConsole.GetString("[Is now known as {0}]"), sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 			}
 
 			sChannelList.Change(sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
@@ -456,7 +456,7 @@ namespace Schumix.Irc
 				return;
 
 			string text = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Kicked that user: {0} reason: {1}]"), sIRCMessage.Info[3], text.Remove(0, 1, ":"));
+			LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Kicked that user: {0} reason: {1}]"), sIRCMessage.Info[3], text.Remove(0, 1, ":"));
 
 			if(sIRCMessage.Info[3].ToLower() == sMyNickInfo.NickStorage.ToLower())
 				sChannelList.Remove(sIRCMessage.Channel);
@@ -514,20 +514,20 @@ namespace Schumix.Irc
 				Log.Success("NickServ", sLConsole.GetString("Identify password accepted!"));
 			}
 
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Set mode: {0}]"), sIRCMessage.Info.SplitToString(3, SchumixBase.Space));
+			LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Set mode: {0}]"), sIRCMessage.Info.SplitToString(3, SchumixBase.Space));
 		}
 
 		protected void HandleIrcTopic(IRCMessage sIRCMessage)
 		{
 			string text = sIRCMessage.Args.IsNullOrEmpty() ? string.Empty : sIRCMessage.Args;
 			sChannelList.List[sIRCMessage.Channel.ToLower()].Topic = text;
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Topic] New topic: {0}"), text);
+			LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Topic] New topic: {0}"), text);
 		}
 
 		protected void HandleIrcInvite(IRCMessage sIRCMessage)
 		{
 			Log.Notice("MessageHandler", sLConsole.GetString("{0} invites you to join {1}."), sIRCMessage.Nick, sIRCMessage.Args);
-			LogToFile(sIRCMessage.Nick, sIRCMessage.Nick, string.Format(sLConsole.GetString("[INVITE] {0} invites you to join {1}."), sIRCMessage.Nick, sIRCMessage.Args));
+			LogInFile(sIRCMessage.Nick, sIRCMessage.Nick, string.Format(sLConsole.GetString("[INVITE] {0} invites you to join {1}."), sIRCMessage.Nick, sIRCMessage.Args));
 		}
 
 		protected void HandleInitialTopic(IRCMessage sIRCMessage)
@@ -544,7 +544,7 @@ namespace Schumix.Irc
 			}
 
 			sChannelList.List[sIRCMessage.Channel.ToLower()].Topic = text;
-			LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Topic] {0}"), text);
+			LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[Topic] {0}"), text);
 		}
 
 		protected void HandleNameList(IRCMessage sIRCMessage)
@@ -578,35 +578,43 @@ namespace Schumix.Irc
 
 		protected void HandleNeedMoreParams(IRCMessage sIRCMessage)
 		{
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text"));
+			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text"));
 		}
 
 		protected void HandleKeySet(IRCMessage sIRCMessage)
 		{
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text2"));
+			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text2"));
 		}
 
 		protected void HandleNoChanModes(IRCMessage sIRCMessage)
 		{
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text3"));
+			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text3"));
 		}
 
 		protected void HandleChanopPrivsNeeded(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Info.Length < 4)
-				return;
+			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			{
+				if(sIRCMessage.Info.Length < 4)
+					return;
 
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[3], sLConsole.MessageHandler("Text19"));
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[3], sLConsole.MessageHandler("Text19"));
+			}
 		}
 
 		protected void HandleUserNotinChannel(IRCMessage sIRCMessage)
 		{
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text5"));
+			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text5"));
 		}
 
 		protected void HandleUnknownMode(IRCMessage sIRCMessage)
 		{
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text6"));
+			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text6"));
 		}
 
 		protected void HandleNoSuchNick(IRCMessage sIRCMessage)
@@ -622,15 +630,19 @@ namespace Schumix.Irc
 
 		protected void HandleNotAChannelOwner(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.Info.Length < 4)
-				return;
+			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+			{
+				if(sIRCMessage.Info.Length < 4)
+					return;
 
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[3], sLConsole.MessageHandler("Text19"));
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, sIRCMessage.Info[3], sLConsole.MessageHandler("Text19"));
+			}
 		}
 
 		protected void HandleNotAChannelAdmin(IRCMessage sIRCMessage)
 		{
-			sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text19"));
+			if(!ModePrivmsg.IsNullOrEmpty() || ModePrivmsg != sMyNickInfo.NickStorage)
+				sSendMessage.SendChatMessage(sIRCMessage.MessageType, ModePrivmsg, sLConsole.MessageHandler("Text19"));
 		}
 
 		/// <summary>
@@ -639,7 +651,7 @@ namespace Schumix.Irc
 		/// <param name="channel"></param>
 		/// <param name="user"></param>
 		/// <param name="args"></param>
-		private void LogToFile(string channel, string user, string args)
+		private void LogInFile(string channel, string user, string args)
 		{
 			lock(WriteLock)
 			{
@@ -674,11 +686,11 @@ namespace Schumix.Irc
 			}
 		}
 
-		private void LogToFile(string channel, string user, string format, params object[] args)
+		private void LogInFile(string channel, string user, string format, params object[] args)
 		{
 			lock(WriteLock)
 			{
-				LogToFile(channel, user, string.Format(format, args));
+				LogInFile(channel, user, string.Format(format, args));
 			}
 		}
 

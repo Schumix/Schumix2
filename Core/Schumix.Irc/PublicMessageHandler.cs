@@ -51,11 +51,11 @@ namespace Schumix.Irc
 				if(args.Length > 6 && args.Substring(0, 6) == "ACTION")
 				{
 					args = args.Remove(0, 7);
-					LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, string.Format(sLConsole.GetString("[ACTION] {0}"), args));
+					LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, string.Format(sLConsole.GetString("[ACTION] {0}"), args));
 				}
 			}
 			else
-				LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
+				LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
 
 			if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				sIRCMessage.Channel = sIRCMessage.Nick;
