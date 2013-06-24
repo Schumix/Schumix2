@@ -40,7 +40,7 @@ namespace Schumix.Api.Functions
 		Compiler,
 		Gamecommands,
 		Webtitle,
-		Randomkick,
+		Otherkick,
 		Mantisbt,
 		Wordpress,
 		Chatterbot,

@@ -3,7 +3,7 @@
 -- ----------------------------
 -- Records of channels
 -- ----------------------------
-INSERT INTO `channels` VALUES ("1", "1", "default", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off,birthday:off", "#schumix2", "", "false", "false", "", "enUS");
+INSERT INTO `channels` VALUES ("1", "1", "default", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,otherkick:off,chatterbot:off,nameday:off,birthday:off", "#schumix2", "", "false", "false", "", "enUS");
 
 -- ----------------------------
 -- Records of gitinfo
@@ -1379,7 +1379,7 @@ INSERT INTO `schumix` VALUES ("13", "1", "default", "message", "on");
 INSERT INTO `schumix` VALUES ("14", "1", "default", "compiler", "on");
 INSERT INTO `schumix` VALUES ("15", "1", "default", "gamecommands", "on");
 INSERT INTO `schumix` VALUES ("16", "1", "default", "webtitle", "on");
-INSERT INTO `schumix` VALUES ("17", "1", "default", "randomkick", "on");
+INSERT INTO `schumix` VALUES ("17", "1", "default", "otherkick", "on");
 INSERT INTO `schumix` VALUES ("18", "1", "default", "mantisbt", "off");
 INSERT INTO `schumix` VALUES ("19", "1", "default", "wordpress", "off");
 INSERT INTO `schumix` VALUES ("20", "1", "default", "chatterbot", "on");

@@ -2,6 +2,8 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Randomkick funkciónév lecserélve Otherkick-re. Így jobban jelzi amire való.
+
 ## 4.1.0 (2013-06-23)
 
  * NetworkQuit akkor is true értéket kap ezentúl ha egyéb hiba lépett fel a kapcsolatban.

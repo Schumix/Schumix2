@@ -230,7 +230,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sMyChannelInfo.FSelect(IFunctions.Randomkick) && sMyChannelInfo.FSelect(IChannelFunctions.Randomkick, sIRCMessage.Channel))
+					if(sMyChannelInfo.FSelect(IFunctions.Otherkick) && sMyChannelInfo.FSelect(IChannelFunctions.Otherkick, sIRCMessage.Channel))
 					{
 						if(sIRCMessage.Args.IsUpper() && sIRCMessage.Args.Length > 4)
 							sSender.Kick(sIRCMessage.Channel, sIRCMessage.Nick, sLManager.GetWarningText("CapsLockOff", sIRCMessage.Channel, sIRCMessage.ServerName));

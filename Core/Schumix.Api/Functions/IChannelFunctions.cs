@@ -36,7 +36,7 @@ namespace Schumix.Api.Functions
 		Compiler,
 		Gamecommands,
 		Webtitle,
-		Randomkick,
+		Otherkick,
 		Chatterbot,
 		NameDay,
 		BirthDay
