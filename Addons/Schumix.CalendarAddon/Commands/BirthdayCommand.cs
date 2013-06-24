@@ -40,7 +40,6 @@ namespace Schumix.CalendarAddon.Commands
 
 		public BirthdayCommand(string ServerName) : base(ServerName)
 		{
-
 		}
 
 		public void HandleBirthday(IRCMessage sIRCMessage)

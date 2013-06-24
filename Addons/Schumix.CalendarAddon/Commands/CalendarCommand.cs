@@ -33,21 +33,22 @@ namespace Schumix.CalendarAddon.Commands
 {
 	class CalendarCommand : CommandInfo
 	{
-		private static Regex _regex = new Regex(@"((?<year>[0-9]{1,4})(?:[\.\s]+))?" // Year
-		                                        + @"((?<month>[0-9]{1,2}|[a-zóüöúőűáéí]{3,20})(?:[\.\s]+))?" // Month
-		                                        + @"((?<day>[0-9]{1,2})(?:[\.\s]+))?" // Day
-		                                        + @"(?<hour>[0-9]{1,2})(?:[:])?" // Hour
-		                                        + @"(?<minute>[0-9]{1,2})?" // Minute
-		                                        + @"((?:[\s]+)(?<text>(.*)))?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private CalendarFunctions sCalendarFunctions;
+		private Regex _regex;
 
 		public CalendarCommand(string ServerName) : base(ServerName)
 		{
 			sCalendarFunctions = new CalendarFunctions(ServerName);
+			_regex = new Regex(@"((?<year>[0-9]{1,4})(?:[\.\s]+))?"                         // Year
+			                   + @"((?<month>[0-9]{1,2}|[a-zóüöúőűáéí]{3,20})(?:[\.\s]+))?" // Month
+			                   + @"((?<day>[0-9]{1,2})(?:[\.\s]+))?"                        // Day
+			                   + @"(?<hour>[0-9]{1,2})(?:[:])?"                             // Hour
+			                   + @"(?<minute>[0-9]{1,2})?"                                  // Minute
+			                   + @"((?:[\s]+)(?<text>(.*)))?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		}
 
 		private int GetYear(string args)
