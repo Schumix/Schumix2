@@ -7,3 +7,6 @@
 [submodule "External/NLua"]
 	path = External/NLua
 	url = https://github.com/Schumix/NLua.git
+[submodule "Webadmin"]
+	path = Webadmin
+	url = https://github.com/Schumix/Webadmin.git
