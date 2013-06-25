@@ -1,7 +1,7 @@
-# CalendarAddon konfig fájl
+# CalendarAddon config file
 
 ## Flooding
 
-* **Seconds:** Beállítható hány másodpercet felölve ellenőrizze hogy floodolt-e az illető. Alapértelmezés: `10`
-* **NumberOfMessages:** Megadja hogy adot idő alatt hány üzenetet írhat az illető maximum. Alapértelmezés: `5`
-* **NumberOfFlooding:** Megadja hányszor ismételheti meg a floodot (kirugással jár) anélkül hogy ki lenne tiltva. Ha eléri a maximális számot 30 perc banban részesül az illető. Alapértelmezés: `10`
+* **Seconds:** You can set that in how many seconds means flooding. Default: `10`
+* **NumberOfMessages:** In a specific time how many messages are permitted. Default: `5`
+* **NumberOfFlooding:** How many times can the person flood again (goes with kick) without ban. If reaches the max it results in 30 mins ban.
