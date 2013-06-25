@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * build.bat és build.sh frissítve.
  * Calendar addonban a calendar és a ban parancsoknál alkalmazva az új regex-es működés.
  * IsValueBiggerDateTimeNow() függvény kijavítva.
  * Kick parancs feljavítása elkészült.

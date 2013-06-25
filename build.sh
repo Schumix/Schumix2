@@ -11,19 +11,19 @@ else
 fi
 
 if [ "$1" = "" ]; then
-	xbuild /p:Configuration="Debug" Schumix.sln
+	xbuild /p:Configuration="Release" Schumix.sln /flp:LogFile=xbuild.log;Verbosity=Detailed
 else
 	if [ "$build_platform" = "" ]; then
-		if [ $build_conf = "release" ]; then
-			xbuild /p:Configuration="Release" Schumix.sln /flp:LogFile=xbuild.log
+		if [ $build_conf = "debug" ]; then
+			xbuild /p:Configuration="Debug" Schumix.sln /flp:LogFile=xbuild.log;Verbosity=Detailed
 		else
-			xbuild /p:Configuration="Debug" Schumix.sln /flp:LogFile=xbuild.log
+			xbuild /p:Configuration="Release" Schumix.sln /flp:LogFile=xbuild.log;Verbosity=Detailed
 		fi
 	else
-		if [ $build_conf = "release" ]; then
-			xbuild /p:Configuration="Release" /p:PlatformTarget=$build_platform Schumix.sln /flp:LogFile=xbuild.log
+		if [ $build_conf = "debug" ]; then
+			xbuild /p:Configuration="Debug" /p:PlatformTarget=$build_platform Schumix.sln /flp:LogFile=xbuild.log;Verbosity=Detailed
 		else
-			xbuild /p:Configuration="Debug" /p:PlatformTarget=$build_platform Schumix.sln /flp:LogFile=xbuild.log
+			xbuild /p:Configuration="Release" /p:PlatformTarget=$build_platform Schumix.sln /flp:LogFile=xbuild.log;Verbosity=Detailed
 		fi
 	fi
 fi
