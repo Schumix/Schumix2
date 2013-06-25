@@ -1,11 +1,11 @@
-# Schumix konfig fájl
+# Schumix config file
 
 ## Server
 
-* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy kapcsolodjon-e a szerverhez a program. Alapértelmezés: `false`
-* **Host:** Ide kell beírni a szerver nevét/címét ahova csatlakozni szeretnénk.
-* **Port:** A szerver portja. Alapértelmezés: `35220`
-* **Password:** A szerver azonosító jelszava. Alapértelmezés: `schumix`
+* **Enabled:** `true` or `false`. Should the program connect to a server. Default: `false`
+* **Host:** Server's domain name or ip address.
+* **Port:** Server port. Default: `35220`
+* **Password:** Server's identify password. Default: `schumix`
 
 ## Irc
 
