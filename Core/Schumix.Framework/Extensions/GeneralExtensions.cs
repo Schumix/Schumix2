@@ -553,7 +553,7 @@ namespace Schumix.Framework.Extensions
 		{
 			try
 			{
-				return DateTime.ParseExact(Name, "MMMM", CultureInfo.GetCultureInfo(Locale.ToLocale())).Month;
+				return !Name.IsNumber() ? DateTime.ParseExact(Name, "MMMM", CultureInfo.GetCultureInfo(Locale.ToLocale())).Month : Name.ToNumber().ToInt();
 			}
 			catch
 			{

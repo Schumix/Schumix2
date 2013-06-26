@@ -541,7 +541,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/endgame", "A gyilkosok halottak! A 4falusiak győztek.\nA falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!\nA falusiak halottak! A 4gyilkosok győztek.\nElfogytak a játékosok!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/idonotknowwho", "Nem tudom ki vagy kik =(");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/ghost", "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday", "Nem vagy beregisztrálva! Kérlek végezd el a regisztrálást hogy tudjad használni a funkciót. Parancs: {0}birthday register <hónap> <nap>");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday", "Nem vagy beregisztrálva! Kérlek végezd el a regisztrálást hogy tudjad használni a funkciót. Parancs: {0}birthday register <éééé.hh.nn>");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/info", "3Születésnap funkció állapota: {0}\n3Születésnap időpontja:2 {0}. {1}. {2}.\nNem vagy regisztrálva!\nNincs regisztrálva!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/change/status", "Születésnapod jelzése bekapcsolva.\nSzületésnapod jelzése kikapcsolva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/change/birthday", "Nincs megadva a születési hónap!\nNincs megadva a születési nap!\nSikeresen frissítve lett a születésnapod.\nNincs megadva a születési év!");
@@ -739,7 +739,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/remove", "Not on the ignore list!\nSuccesfuly removed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "xrev/github", "Username is not set!\nProject is not set!\nSha1 code is not set!\nThere is no such a commit!\n3Commit: {0}\n3Link: {0}\n3Author: {0}");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday", "You are not registered! Please register to use this function. Command: {0}birthday register <month> <day>");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday", "You are not registered! Please register to use this function. Command: {0}birthday register <yyyy.mm.dd>");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/info", "3State of birthday function: {0}\n3Date of birth:2 {0}. {1}. {2}.\nYou are not registered!\nYou are not registered!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/change/status", "Your birthday sign is on.\nYour birthday sign is off.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/change/birthday", "Month of birth missing!\nDay of birth missing!\nYour birthday is succesfully updated.\nYear of birth missing!");
@@ -974,8 +974,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/info", "1", "Kiírja a születésnap funkció állapotát.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/change", "1", "Megváltoztatható vele a funkció több beállítása.\nParancsok: status | birthday");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/change/status", "1", "Bekapcsolható vagy kikapcsolható vele a születésnap funkció.\nHasználata: {0}birthday change status <on vagy off>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/change/birthday", "1", "Frissíthető vele a születésnap dátuma.\nHasználata: {0}birthday change birthday <év> <hónap> <nap>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/register", "1", "Beregisztrálja a születésnapot.\nHasználata: {0}birthday register <év> <hónap> <nap>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/change/birthday", "1", "Frissíthető vele a születésnap dátuma.\nHasználata: {0}birthday change birthday <éééé.hh.nn>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/register", "1", "Beregisztrálja a születésnapot.\nHasználata: {0}birthday register <éééé.hh.nn>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/remove", "1", "Törli a születésnapot.");
 
 -- enUS
@@ -1204,8 +1204,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/info", "1", "Shows the state of the birthday function.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/change", "1", "With it you can change the paramteres of the function.\nCommands: status | birthday");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/change/status", "1", "With it you can turn on/off the birthday function.\nUse: {0}birthday change status <on or off>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/change/birthday", "1", "With it you can update your birth date.\nUse: {0}birthday change birthday <year> <month> <day>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/register", "1", "Register the birth date.\nUse: {0}birthday register <year> <month> <day>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/change/birthday", "1", "With it you can update your birth date.\nUse: {0}birthday change birthday <yyyy.mm.dd>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/register", "1", "Register the birth date.\nUse: {0}birthday register <yyyy.mm.dd>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/remove", "1", "Delete the birth date.");
 
 -- huHU
