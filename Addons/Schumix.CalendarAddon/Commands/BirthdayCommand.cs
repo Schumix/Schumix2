@@ -42,8 +42,8 @@ namespace Schumix.CalendarAddon.Commands
 
 		public BirthdayCommand(string ServerName) : base(ServerName)
 		{
-			_regex = new Regex(@"((?<year>[0-9]{1,4})(?:[\.\s]+))?"                         // Year
-			                   + @"((?<month>[0-9]{1,2}|[a-zóüöúőűáéí]{3,20})(?:[\.\s]+))?" // Month
+			_regex = new Regex(@"((?<year>[0-9]{1,4})(?:[\.\s]+|))?"                         // Year
+			                   + @"((?<month>[0-9]{1,2}|[a-zóüöúőűáéí]{3,20})(?:[\.\s]+|))?" // Month
 			                   + @"((?<day>[0-9]{1,2})(?:[\.\s]|))?",                       // Day
 			                   RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		}
