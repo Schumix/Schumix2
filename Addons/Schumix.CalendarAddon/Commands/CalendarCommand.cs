@@ -46,8 +46,8 @@ namespace Schumix.CalendarAddon.Commands
 			_regex = new Regex(@"((?<year>[0-9]{1,4})(?:[\.\s]+|))?"                         // Year
 			                   + @"((?<month>[0-9]{1,2}|[a-zóüöúőűáéí]{3,20})(?:[\.\s]+|))?" // Month
 			                   + @"((?<day>[0-9]{1,2})(?:[\.\s]+|))?"                        // Day
-			                   + @"(?<hour>[0-9]{1,2})(?:[:]|)?"                             // Hour
-			                   + @"(?<minute>[0-9]{1,2})?"                                  // Minute
+			                   + @"((?<hour>[0-9]{1,2})(?:[:]|))?"                           // Hour
+			                   + @"(?<minute>[0-9]{1,2})?"                                   // Minute
 			                   + @"((?:[\s]+)(?<text>(.*)))?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		}
 
@@ -79,6 +79,31 @@ namespace Schumix.CalendarAddon.Commands
 		private string GetMessage(string args)
 		{
 			return _regex.IsMatch(args) ? _regex.Match(args).Groups["text"].ToString() : string.Empty;
+		}
+
+		private string IsYear(string args)
+		{
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["year"].ToString() : string.Empty;
+		}
+
+		private string IsMonth(string args)
+		{
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["month"].ToString() : string.Empty;
+		}
+
+		private string IsDay(string args)
+		{
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["day"].ToString() : string.Empty;
+		}
+
+		private string IsHour(string args)
+		{
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["hour"].ToString() : string.Empty;
+		}
+
+		private string IsMinute(string args)
+		{
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["minute"].ToString() : string.Empty;
 		}
 
 		private bool IsHourAndMinute(string args)
@@ -803,6 +828,36 @@ namespace Schumix.CalendarAddon.Commands
 				}
 				else
 				{
+					if(IsYear(args).IsNullOrEmpty())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "?? Year ?? ");
+						return;
+					}
+
+					if(IsMonth(args).IsNullOrEmpty())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "?? Month ?? ");
+						return;
+					}
+
+					if(IsDay(args).IsNullOrEmpty())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "?? Day ?? ");
+						return;
+					}
+
+					if(IsHour(args).IsNullOrEmpty())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "?? Hour ?? ");
+						return;
+					}
+
+					if(IsMinute(args).IsNullOrEmpty())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "?? Minute ?? ");
+						return;
+					}
+
 					if(GetMessage(args).IsNullOrEmpty())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
