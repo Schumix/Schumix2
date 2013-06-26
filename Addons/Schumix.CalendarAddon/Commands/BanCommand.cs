@@ -35,6 +35,7 @@ namespace Schumix.CalendarAddon.Commands
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
+		private Regex _hamregex;
 		private Regex _regex;
 		private Unban sUnban;
 		private Ban sBan;
@@ -43,12 +44,15 @@ namespace Schumix.CalendarAddon.Commands
 		{
 			sBan = new Ban(ServerName);
 			sUnban = new Unban(ServerName);
-			_regex = new Regex(@"((?<year>[0-9]{1,4})(?:[\.\s]+|))?"                         // Year
+			_regex = new Regex(@"((?<year>[0-9]{4,4})(?:[\.\s]+|))?"                         // Year
 			                   + @"((?<month>[0-9]{1,2}|[a-zóüöúőűáéí]{3,20})(?:[\.\s]+|))?" // Month
 			                   + @"((?<day>[0-9]{1,2})(?:[\.\s]+|))?"                        // Day
 			                   + @"((?<hour>[0-9]{1,2})(?:[:]|))?"                           // Hour
 			                   + @"(?<minute>[0-9]{1,2})?"                                   // Minute
 			                   + @"((?:[\s]+)(?<text>(.*)))?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+			_hamregex = new Regex(@"((?<hour>[0-9]{1,2})(?:[:]|))?"                          // Hour
+			                      + @"(?<minute>[0-9]{1,2})?"                                   // Minute
+			                      + @"((?:[\s]+)(?<text>(.*)))?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		}
 
 		private int GetYear(string args)
@@ -68,12 +72,24 @@ namespace Schumix.CalendarAddon.Commands
 
 		private int GetHour(string args)
 		{
-			return _regex.IsMatch(args) ? _regex.Match(args).Groups["hour"].ToString().ToNumber(25).ToInt() : 25;
+			if(_regex.IsMatch(args) && IsYear(args))
+				return _regex.Match(args).Groups["hour"].ToString().ToNumber(25).ToInt();
+
+			if(_hamregex.IsMatch(args) && !IsYear(args))
+				return _hamregex.Match(args).Groups["hour"].ToString().ToNumber(25).ToInt();
+
+			return 25;
 		}
 
 		private int GetMinute(string args)
 		{
-			return _regex.IsMatch(args) ? _regex.Match(args).Groups["minute"].ToString().ToNumber(61).ToInt() : 61;
+			if(_regex.IsMatch(args) && IsYear(args))
+				return _regex.Match(args).Groups["minute"].ToString().ToNumber(61).ToInt();
+
+			if(_hamregex.IsMatch(args) && !IsYear(args))
+				return _hamregex.Match(args).Groups["minute"].ToString().ToNumber(61).ToInt();
+
+			return 61;
 		}
 
 		private string GetMessage(string args)
@@ -81,9 +97,42 @@ namespace Schumix.CalendarAddon.Commands
 			return _regex.IsMatch(args) ? _regex.Match(args).Groups["text"].ToString() : string.Empty;
 		}
 
+		private bool IsYear(string args)
+		{
+			return _regex.IsMatch(args) && !_regex.Match(args).Groups["year"].ToString().IsNullOrEmpty();
+		}
+
+		private bool IsMonth(string args)
+		{
+			return _regex.IsMatch(args) && !_regex.Match(args).Groups["month"].ToString().IsNullOrEmpty();
+		}
+
+		private bool IsDay(string args)
+		{
+			return _regex.IsMatch(args) && !_regex.Match(args).Groups["day"].ToString().IsNullOrEmpty();
+		}
+
+		private bool IsHour(string args)
+		{
+			return (_regex.IsMatch(args) && !_regex.Match(args).Groups["hour"].ToString().IsNullOrEmpty() && IsYear(args)) ||
+				(_hamregex.IsMatch(args) && !_hamregex.Match(args).Groups["hour"].ToString().IsNullOrEmpty() && !IsYear(args));
+		}
+
+		private bool IsMinute(string args)
+		{
+			return (_regex.IsMatch(args) && !_regex.Match(args).Groups["minute"].ToString().IsNullOrEmpty() && IsYear(args)) ||
+				(_hamregex.IsMatch(args) && !_hamregex.Match(args).Groups["minute"].ToString().IsNullOrEmpty() && !IsYear(args));
+		}
+
+		private bool IsMessage(string args)
+		{
+			return (_regex.IsMatch(args) && !_regex.Match(args).Groups["text"].ToString().IsNullOrEmpty() && IsYear(args)) ||
+				(_hamregex.IsMatch(args) && !_hamregex.Match(args).Groups["text"].ToString().IsNullOrEmpty() && !IsYear(args));
+		}
+
 		private bool IsHourAndMinute(string args)
 		{
-			return GetYear(args) == -1 && GetMonth(args) == string.Empty && GetDay(args) == 32;
+			return !IsYear(args);
 		}
 
 		public void HandleBan(IRCMessage sIRCMessage)
@@ -109,7 +158,19 @@ namespace Schumix.CalendarAddon.Commands
 
 			if(IsHourAndMinute(args))
 			{
-				if(GetMessage(args).IsNullOrEmpty())
+				if(!IsHour(args))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "?? Hour ?? ");
+					return;
+				}
+
+				if(!IsMinute(args))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "?? Minute ?? ");
+					return;
+				}
+
+				if(!IsMessage(args))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
@@ -139,7 +200,37 @@ namespace Schumix.CalendarAddon.Commands
 					return;
 				}
 
-				if(GetMessage(args).IsNullOrEmpty())
+				if(!IsYear(args))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "?? Year ?? ");
+					return;
+				}
+
+				if(!IsMonth(args))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "?? Month ?? ");
+					return;
+				}
+
+				if(!IsDay(args))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "?? Day ?? ");
+					return;
+				}
+
+				if(!IsHour(args))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "?? Hour ?? ");
+					return;
+				}
+
+				if(!IsMinute(args))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "?? Minute ?? ");
+					return;
+				}
+
+				if(!IsMessage(args))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;

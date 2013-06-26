@@ -42,7 +42,7 @@ namespace Schumix.CalendarAddon.Commands
 
 		public BirthdayCommand(string ServerName) : base(ServerName)
 		{
-			_regex = new Regex(@"((?<year>[0-9]{1,4})(?:[\.\s]+|))?"                         // Year
+			_regex = new Regex(@"((?<year>[0-9]{4,4})(?:[\.\s]+|))?"                         // Year
 			                   + @"((?<month>[0-9]{1,2}|[a-zóüöúőűáéí]{3,20})(?:[\.\s]+|))?" // Month
 			                   + @"((?<day>[0-9]{1,2})(?:[\.\s]|))?",                       // Day
 			                   RegexOptions.Compiled | RegexOptions.IgnoreCase);
@@ -63,19 +63,19 @@ namespace Schumix.CalendarAddon.Commands
 			return _regex.IsMatch(args) ? _regex.Match(args).Groups["day"].ToString().ToNumber(32).ToInt() : 32;
 		}
 
-		private string IsYear(string args)
+		private bool IsYear(string args)
 		{
-			return _regex.IsMatch(args) ? _regex.Match(args).Groups["year"].ToString() : string.Empty;
+			return _regex.IsMatch(args) && !_regex.Match(args).Groups["year"].ToString().IsNullOrEmpty();
 		}
 
-		private string IsMonth(string args)
+		private bool IsMonth(string args)
 		{
-			return _regex.IsMatch(args) ? _regex.Match(args).Groups["month"].ToString() : string.Empty;
+			return _regex.IsMatch(args) && !_regex.Match(args).Groups["month"].ToString().IsNullOrEmpty();
 		}
 
-		private string IsDay(string args)
+		private bool IsDay(string args)
 		{
-			return _regex.IsMatch(args) ? _regex.Match(args).Groups["day"].ToString() : string.Empty;
+			return _regex.IsMatch(args) && !_regex.Match(args).Groups["day"].ToString().IsNullOrEmpty();
 		}
 
 		public void HandleBirthday(IRCMessage sIRCMessage)
@@ -176,19 +176,19 @@ namespace Schumix.CalendarAddon.Commands
 
 					string args = sIRCMessage.Info.SplitToString(6, SchumixBase.Space);
 
-					if(IsYear(args).IsNullOrEmpty())
+					if(!IsYear(args))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 						return;
 					}
 
-					if(IsMonth(args).IsNullOrEmpty())
+					if(!IsMonth(args))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
 					}
 
-					if(IsDay(args).IsNullOrEmpty())
+					if(!IsDay(args))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 						return;
@@ -237,19 +237,19 @@ namespace Schumix.CalendarAddon.Commands
 
 				string args = sIRCMessage.Info.SplitToString(6, SchumixBase.Space);
 
-				if(IsYear(args).IsNullOrEmpty())
+				if(!IsYear(args))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[4]);
 					return;
 				}
 
-				if(IsMonth(args).IsNullOrEmpty())
+				if(!IsMonth(args))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 					return;
 				}
 
-				if(IsDay(args).IsNullOrEmpty())
+				if(!IsDay(args))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					return;
