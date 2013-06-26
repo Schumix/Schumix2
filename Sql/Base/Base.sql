@@ -1284,6 +1284,11 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "StatusIsMissing", "Nincs megadva az állapot!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ValueIsNotTrueOrFalse", "Nem true vagy false érték lett megadva!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ICantLeftAMessageForMyself", "Saját magamnak nem jegyezhetek fel üzenetet!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "YearIsNotGiven", "Nincs megadva az év!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "MonthIsNotGiven", "Nincs megadva a hónap!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "DayIsNotGiven", "Nincs megadva a nap!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "HourIsNotGiven", "Nincs megadva az óra!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "MinuteIsNotGiven", "Nincs megadva a perc!");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1361,6 +1366,11 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "StatusIsMissing", "Status is missing!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ValueIsNotTrueOrFalse", "Value is not true or false!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ICantLeftAMessageForMyself", "I cant left a message for myself!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "YearIsNotGiven", "Year is not given!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "MonthIsNotGiven", "Month is not given!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "DayIsNotGiven", "Day is not given!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "HourIsNotGiven", "Hour is not given!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "MinuteIsNotGiven", "Minute is not given!");
 
 -- ----------------------------
 -- Records of schumix

@@ -160,13 +160,13 @@ namespace Schumix.CalendarAddon.Commands
 			{
 				if(!IsHour(args))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "?? Hour ?? ");
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(!IsMinute(args))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "?? Minute ?? ");
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
@@ -202,31 +202,31 @@ namespace Schumix.CalendarAddon.Commands
 
 				if(!IsYear(args))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "?? Year ?? ");
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("YearIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(!IsMonth(args))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "?? Month ?? ");
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MonthIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(!IsDay(args))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "?? Day ?? ");
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("DayIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(!IsHour(args))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "?? Hour ?? ");
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
 				if(!IsMinute(args))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "?? Minute ?? ");
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return;
 				}
 
