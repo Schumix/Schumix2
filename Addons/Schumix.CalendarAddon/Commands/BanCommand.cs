@@ -51,7 +51,7 @@ namespace Schumix.CalendarAddon.Commands
 			                   + @"(?<minute>[0-9]{1,2})?"                                   // Minute
 			                   + @"((?:[\s]+)(?<text>(.*)))?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 			_hamregex = new Regex(@"((?<hour>[0-9]{1,2})(?:[:]|))?"                          // Hour
-			                      + @"(?<minute>[0-9]{1,2})?"                                   // Minute
+			                      + @"(?<minute>[0-9]{1,2})?"                                // Minute
 			                      + @"((?:[\s]+)(?<text>(.*)))?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		}
 
