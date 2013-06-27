@@ -103,16 +103,19 @@ namespace Schumix.Framework
 				int length = 0;
 				byte[] buf = new byte[1024];
 				var sb = new StringBuilder();
-				var response = (HttpWebResponse)request.GetResponse();
-				var stream = response.GetResponseStream();
 
-				while((length = stream.Read(buf, 0, buf.Length)) != 0)
+				using(var response = (HttpWebResponse)request.GetResponse())
 				{
-					buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
-					sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+					using(var stream = response.GetResponseStream())
+					{
+						while((length = stream.Read(buf, 0, buf.Length)) != 0)
+						{
+							buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
+							sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+						}
+					}
 				}
 
-				response.Close();
 				return sb.ToString();
 			}
 		}
@@ -1021,7 +1024,7 @@ namespace Schumix.Framework
 				try
 				{
 					var request = (HttpWebRequest)WebRequest.Create(url);
-					new Thread(() =>
+					var th = new Thread(() =>
 					{
 						Thread.Sleep(13*1000);
 
@@ -1038,19 +1041,28 @@ namespace Schumix.Framework
 					int length = 0;
 					byte[] buf = new byte[1024];
 					var sb = new StringBuilder();
-					var response = (HttpWebResponse)request.GetResponse();
-					var stream = response.GetResponseStream();
 
-					while((length = stream.Read(buf, 0, buf.Length)) != 0)
+					using(var response = (HttpWebResponse)request.GetResponse())
 					{
-						if(sb.Length >= maxlength)
-							break;
+						using(var stream = response.GetResponseStream())
+						{
+							while((length = stream.Read(buf, 0, buf.Length)) != 0)
+							{
+								if(sb.Length >= maxlength)
+									break;
 
-						buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
-						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+								buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
+								sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+							}
+						}
 					}
 
-					response.Close();
+					if(!th.IsNull())
+					{
+						th.Interrupt();
+						th = null;
+					}
+
 					return sb.ToString();
 				}
 				catch(Exception e)
@@ -1124,7 +1136,7 @@ namespace Schumix.Framework
 				try
 				{
 					var request = (HttpWebRequest)WebRequest.Create(url);
-					new Thread(() =>
+					var th = new Thread(() =>
 					{
 						if(timeout != 0)
 							Thread.Sleep(timeout+3);
@@ -1156,22 +1168,31 @@ namespace Schumix.Framework
 					int length = 0;
 					byte[] buf = new byte[1024];
 					var sb = new StringBuilder();
-					var response = (HttpWebResponse)request.GetResponse();
-					var stream = response.GetResponseStream();
 
-					if(maxlength == 0)
-						maxlength = 10000;
-
-					while((length = stream.Read(buf, 0, buf.Length)) != 0)
+					using(var response = (HttpWebResponse)request.GetResponse())
 					{
-						if(sb.ToString().Contains(Contains) || sb.Length >= 10000)
-							break;
+						using(var stream = response.GetResponseStream())
+						{
+							if(maxlength == 0)
+								maxlength = 10000;
 
-						buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
-						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+							while((length = stream.Read(buf, 0, buf.Length)) != 0)
+							{
+								if(sb.ToString().Contains(Contains) || sb.Length >= 10000)
+									break;
+
+								buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
+								sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+							}
+						}
 					}
 
-					response.Close();
+					if(!th.IsNull())
+					{
+						th.Interrupt();
+						th = null;
+					}
+
 					return sb.ToString();
 				}
 				catch(Exception e)
@@ -1213,7 +1234,7 @@ namespace Schumix.Framework
 				try
 				{
 					var request = (HttpWebRequest)WebRequest.Create(url);
-					new Thread(() =>
+					var th = new Thread(() =>
 					{
 						if(timeout != 0)
 							Thread.Sleep(timeout+3);
@@ -1242,22 +1263,31 @@ namespace Schumix.Framework
 					int length = 0;
 					byte[] buf = new byte[1024];
 					var sb = new StringBuilder();
-					var response = (HttpWebResponse)request.GetResponse();
-					var stream = response.GetResponseStream();
 
-					if(maxlength == 0)
-						maxlength = 10000;
-
-					while((length = stream.Read(buf, 0, buf.Length)) != 0)
+					using(var response = (HttpWebResponse)request.GetResponse())
 					{
-						if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
-							break;
+						using(var stream = response.GetResponseStream())
+						{
+							if(maxlength == 0)
+								maxlength = 10000;
 
-						buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
-						sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+							while((length = stream.Read(buf, 0, buf.Length)) != 0)
+							{
+								if(regex.Match(sb.ToString()).Success || sb.Length >= maxlength)
+									break;
+
+								buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
+								sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+							}
+						}
 					}
 
-					response.Close();
+					if(!th.IsNull())
+					{
+						th.Interrupt();
+						th = null;
+					}
+
 					return sb.ToString();
 				}
 				catch(Exception e)
