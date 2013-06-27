@@ -21,7 +21,6 @@
 
 using System;
 using System.Threading;
-using System.Diagnostics;
 using System.Net.Sockets;
 using Schumix.Api.Irc;
 using Schumix.Framework.Config;
@@ -36,6 +35,7 @@ namespace Schumix.Framework.Network
 	class ClientPacketHandler
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		/// <summary>
 		/// Occurs when auth is denied.
 		/// </summary>
@@ -152,7 +152,7 @@ namespace Schumix.Framework.Network
 			}
 
 			Thread.Sleep(1000);
-			Process.GetCurrentProcess().Kill();
+			sRuntime.Exit();
 		}
 	}
 }

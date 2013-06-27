@@ -82,8 +82,13 @@ namespace Schumix.Framework
 					Thread.Sleep(1000);
 				}
 
-				Process.GetCurrentProcess().Kill();
+				Exit();
 			}
+		}
+
+		public void Exit()
+		{
+			Process.GetCurrentProcess().Kill();
 		}
 
 		public void SetProcessName(string Name)

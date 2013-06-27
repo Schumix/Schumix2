@@ -40,6 +40,7 @@ namespace Schumix.Irc
 		private readonly Dictionary<string, Network> _networks = new Dictionary<string, Network>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		public bool ReloadStatus { get; private set; }
 		private readonly object Lock = new object();
 		private bool shutdown = false;
@@ -343,7 +344,7 @@ namespace Schumix.Irc
 			shutdown = true;
 			AllIrcServerShutdown(Message);
 			Log.Warning("IrcBase", sLConsole.GetString("Program shutting down!"));
-			Process.GetCurrentProcess().Kill();
+			sRuntime.Exit();
 		}
 
 		public void AllIrcServerShutdown(string Message, bool reload = false)

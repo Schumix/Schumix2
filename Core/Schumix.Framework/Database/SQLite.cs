@@ -21,7 +21,6 @@
 
 using System;
 using System.Threading;
-using System.Diagnostics;
 using System.Data;
 using System.Data.SQLite;
 using System.Text.RegularExpressions;
@@ -34,6 +33,7 @@ namespace Schumix.Framework.Database
 	public sealed class SQLite
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private SQLiteConnection Connection;
 		private bool _crash = false;
 
@@ -44,7 +44,7 @@ namespace Schumix.Framework.Database
 				Log.Error("SQLite", sLConsole.GetString("Error was handled when tried to connect to the database!"));
 				SchumixBase.ServerDisconnect(false);
 				Thread.Sleep(1000);
-				Process.GetCurrentProcess().Kill();
+				sRuntime.Exit();
 			}
 			else
 				Log.Notice("SQLite", sLConsole.GetString("Successfully connected to the SQLite database."));
@@ -162,7 +162,7 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Process.GetCurrentProcess().Kill();
+				sRuntime.Exit();
 			}
 
 			if(s.Message.Contains("Fatal error encountered during command execution."))
@@ -179,7 +179,7 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Process.GetCurrentProcess().Kill();
+				sRuntime.Exit();
 			}
 
 			if(s.Message.Contains("Timeout expired."))
@@ -196,7 +196,7 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Process.GetCurrentProcess().Kill();
+				sRuntime.Exit();
 			}
 
 			if(logerror)

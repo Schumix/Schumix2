@@ -22,7 +22,6 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading;
-using System.Diagnostics;
 using System.Globalization;
 using Schumix.Irc;
 using Schumix.Updater;
@@ -222,10 +221,10 @@ namespace Schumix
 				if(e)
 					SchumixBase.Quit();
 				else
-					Process.GetCurrentProcess().Kill();
+					sRuntime.Exit();
 			}
 			else
-				Process.GetCurrentProcess().Kill();
+				sRuntime.Exit();
 
 			if(Crash && SchumixBase.ExitStatus)
 				return;
