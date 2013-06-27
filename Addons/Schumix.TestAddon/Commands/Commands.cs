@@ -105,22 +105,25 @@ namespace Schumix.TestAddon.Commands
 				request.AllowAutoRedirect = true;
 				request.UserAgent = Consts.SchumixUserAgent;
 				request.Referer = Consts.SchumixReferer;
-
-				var response = request.GetResponse();
-				var stream = response.GetResponseStream();
 				var sb = new StringBuilder();
-				byte[] buf = new byte[1024];
-				int length = 0;
 
-				while((length = stream.Read(buf, 0, buf.Length)) != 0)
+				using(var response = request.GetResponse())
 				{
-					if(sb.ToString().Contains("</title>"))
-						break;
+					using(var stream = response.GetResponseStream())
+					{
+						int length = 0;
+						byte[] buf = new byte[1024];
 
-					sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+						while((length = stream.Read(buf, 0, buf.Length)) != 0)
+						{
+							if(sb.ToString().Contains("</title>"))
+								break;
+
+							sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+						}
+					}
 				}
 
-				response.Close();
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sb.Length);
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "cachedb")
