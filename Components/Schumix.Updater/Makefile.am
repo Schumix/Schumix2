@@ -21,10 +21,10 @@ BUILD_DIR = ../../Run/Debug
 SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
 SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 INTL_DLL_SOURCE=../../Dependencies/intl.dll
 MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
@@ -32,15 +32,29 @@ SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
 SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
 SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
+YAMLDOTNET_CORE_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll.mdb
+YAMLDOTNET_CORE_DLL_MDB=$(BUILD_DIR)/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll.mdb
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=$(BUILD_DIR)/YamlDotNet.RepresentationModel.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_MDB_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll.mdb
+ICSHARPCODE_SHARPZIPLIB_DLL_MDB=$(BUILD_DIR)/ICSharpCode.SharpZipLib.dll.mdb
+SHARPEN_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.dll.mdb
+SHARPEN_DLL_MDB=$(BUILD_DIR)/Sharpen.dll.mdb
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
+NSCH_DLL_MDB_SOURCE=../../External/ngit/bin/NSch.dll.mdb
+NSCH_DLL_MDB=$(BUILD_DIR)/NSch.dll.mdb
+NGIT_DLL_MDB_SOURCE=../../External/ngit/bin/NGit.dll.mdb
+NGIT_DLL_MDB=$(BUILD_DIR)/NGit.dll.mdb
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
+SHARPEN_UNIX_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll.mdb
+SHARPEN_UNIX_DLL_MDB=$(BUILD_DIR)/Sharpen.Unix.dll.mdb
 
 endif
 
@@ -61,24 +75,31 @@ BUILD_DIR = ../../Run/Release
 
 SCHUMIX_UPDATER_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 INTL_DLL_SOURCE=../../Dependencies/intl.dll
 MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
 SCHUMIX_API_DLL_MDB=
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
+YAMLDOTNET_CORE_DLL_MDB=
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_MDB=
+SHARPEN_DLL_MDB=
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
+NSCH_DLL_MDB=
+NGIT_DLL_MDB=
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
+SHARPEN_UNIX_DLL_MDB=
 
 endif
 
@@ -88,24 +109,31 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 PROGRAMFILES = \
 	$(SCHUMIX_UPDATER_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
-	$(SQLITE3_DLL) \
 	$(SCHUMIX_DB3) \
 	$(INTL_DLL) \
 	$(MONOPOSIXHELPER_DLL) \
+	$(SQLITE3_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
 	$(MONO_POSIX_DLL) \
 	$(SCHUMIX_API_DLL) \
 	$(SCHUMIX_API_DLL_MDB) \
 	$(YAMLDOTNET_CORE_DLL) \
+	$(YAMLDOTNET_CORE_DLL_MDB) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
+	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SHARPEN_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
+	$(ICSHARPCODE_SHARPZIPLIB_DLL_MDB) \
+	$(SHARPEN_DLL_MDB) \
 	$(NGIT_DLL) \
 	$(NSCH_DLL) \
 	$(MONO_SECURITY_DLL) \
-	$(SHARPEN_UNIX_DLL)  
+	$(NSCH_DLL_MDB) \
+	$(NGIT_DLL_MDB) \
+	$(SHARPEN_UNIX_DLL) \
+	$(SHARPEN_UNIX_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_UPDATER_PC)  
@@ -145,10 +173,10 @@ CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 include $(top_srcdir)/Makefile.include
 
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
-SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 INTL_DLL = $(BUILD_DIR)/intl.dll
 MONOPOSIXHELPER_DLL = $(BUILD_DIR)/MonoPosixHelper.dll
+SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
@@ -163,21 +191,28 @@ MONO_SECURITY_DLL = $(BUILD_DIR)/Mono.Security.dll
 SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
 SCHUMIX_UPDATER_PC = $(BUILD_DIR)/schumix.updater.pc
 
-$(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,INTL_DLL))
 $(eval $(call emit-deploy-target,MONOPOSIXHELPER_DLL))
+$(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
+$(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL_MDB))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
+$(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB))
 $(eval $(call emit-deploy-target,SHARPEN_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
+$(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL_MDB))
+$(eval $(call emit-deploy-target,SHARPEN_DLL_MDB))
 $(eval $(call emit-deploy-target,NGIT_DLL))
 $(eval $(call emit-deploy-target,NSCH_DLL))
 $(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
+$(eval $(call emit-deploy-target,NSCH_DLL_MDB))
+$(eval $(call emit-deploy-target,NGIT_DLL_MDB))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
+$(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_UPDATER_PC,schumix.updater.pc))
 
 

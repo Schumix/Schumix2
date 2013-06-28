@@ -33,9 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Web" />
-    <Reference Include="ChatterBotAPI, Version=1.1.4406.30594, Culture=neutral, PublicKeyToken=null">
-      <HintPath>..\..\Dependencies\ChatterBotAPI.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChatterBotAddon.cs" />
@@ -57,6 +54,10 @@
     <ProjectReference Include="..\..\Core\Schumix.Irc\Schumix.Irc.csproj">
       <Project>{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}</Project>
       <Name>Schumix.Irc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ChatterBotApi\dotnet\ChatterBotAPI\ChatterBotAPI.csproj">
+      <Project>{2E624962-F155-432C-A90A-E1CE75DEE9EA}</Project>
+      <Name>ChatterBotAPI</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

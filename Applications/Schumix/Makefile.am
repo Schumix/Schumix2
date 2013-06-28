@@ -29,7 +29,11 @@ SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
 SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
 SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
+YAMLDOTNET_CORE_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll.mdb
+YAMLDOTNET_CORE_DLL_MDB=$(BUILD_DIR)/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll.mdb
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=$(BUILD_DIR)/YamlDotNet.RepresentationModel.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
@@ -37,16 +41,32 @@ SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Debug/Schumix.Updater.dll
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_MDB_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll.mdb
+ICSHARPCODE_SHARPZIPLIB_DLL_MDB=$(BUILD_DIR)/ICSharpCode.SharpZipLib.dll.mdb
+SHARPEN_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.dll.mdb
+SHARPEN_DLL_MDB=$(BUILD_DIR)/Sharpen.dll.mdb
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
+NSCH_DLL_MDB_SOURCE=../../External/ngit/bin/NSch.dll.mdb
+NSCH_DLL_MDB=$(BUILD_DIR)/NSch.dll.mdb
+NGIT_DLL_MDB_SOURCE=../../External/ngit/bin/NGit.dll.mdb
+NGIT_DLL_MDB=$(BUILD_DIR)/NGit.dll.mdb
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
+SHARPEN_UNIX_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll.mdb
+SHARPEN_UNIX_DLL_MDB=$(BUILD_DIR)/Sharpen.Unix.dll.mdb
 SCHUMIX_UPDATER_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Updater.dll.mdb
 SCHUMIX_UPDATER_DLL_MDB=$(BUILD_DIR)/Schumix.Updater.dll.mdb
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Debug/Schumix.LuaEngine.dll
 NLUA_DLL_SOURCE=../../External/NLua/Run/Debug/NLua.dll
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Debug/KeraLua.dll
+KERALUA_DLL_MDB_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Debug/KeraLua.dll.mdb
+KERALUA_DLL_MDB=$(BUILD_DIR)/KeraLua.dll.mdb
 KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Debug/KopiLua.dll
+KOPILUA_DLL_MDB_SOURCE=../../External/NLua/Core/KopiLua/Bin/Debug/KopiLua.dll.mdb
+KOPILUA_DLL_MDB=$(BUILD_DIR)/KopiLua.dll.mdb
+NLUA_DLL_MDB_SOURCE=../../External/NLua/Run/Debug/NLua.dll.mdb
+NLUA_DLL_MDB=$(BUILD_DIR)/NLua.dll.mdb
 SCHUMIX_LUAENGINE_DLL_MDB_SOURCE=../../Run/Debug/Schumix.LuaEngine.dll.mdb
 SCHUMIX_LUAENGINE_DLL_MDB=$(BUILD_DIR)/Schumix.LuaEngine.dll.mdb
 SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Debug/Schumix.PythonEngine.dll
@@ -83,21 +103,31 @@ MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
 SCHUMIX_API_DLL_MDB=
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
+YAMLDOTNET_CORE_DLL_MDB=
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_MDB=
 SCHUMIX_UPDATER_DLL_SOURCE=../../Run/Release/Schumix.Updater.dll
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_MDB=
+SHARPEN_DLL_MDB=
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
+NSCH_DLL_MDB=
+NGIT_DLL_MDB=
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
+SHARPEN_UNIX_DLL_MDB=
 SCHUMIX_UPDATER_DLL_MDB=
 SCHUMIX_LUAENGINE_DLL_SOURCE=../../Run/Release/Schumix.LuaEngine.dll
 NLUA_DLL_SOURCE=../../External/NLua/Run/Release/NLua.dll
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Release/KeraLua.dll
+KERALUA_DLL_MDB=
 KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Release/KopiLua.dll
+KOPILUA_DLL_MDB=
+NLUA_DLL_MDB=
 SCHUMIX_LUAENGINE_DLL_MDB=
 SCHUMIX_PYTHONENGINE_DLL_SOURCE=../../Run/Release/Schumix.PythonEngine.dll
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
@@ -121,21 +151,31 @@ PROGRAMFILES = \
 	$(SCHUMIX_API_DLL) \
 	$(SCHUMIX_API_DLL_MDB) \
 	$(YAMLDOTNET_CORE_DLL) \
+	$(YAMLDOTNET_CORE_DLL_MDB) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
+	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL_MDB) \
 	$(SCHUMIX_UPDATER_DLL) \
 	$(SHARPEN_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
+	$(ICSHARPCODE_SHARPZIPLIB_DLL_MDB) \
+	$(SHARPEN_DLL_MDB) \
 	$(NGIT_DLL) \
 	$(NSCH_DLL) \
 	$(MONO_SECURITY_DLL) \
+	$(NSCH_DLL_MDB) \
+	$(NGIT_DLL_MDB) \
 	$(SHARPEN_UNIX_DLL) \
+	$(SHARPEN_UNIX_DLL_MDB) \
 	$(SCHUMIX_UPDATER_DLL_MDB) \
 	$(SCHUMIX_LUAENGINE_DLL) \
 	$(NLUA_DLL) \
 	$(KERALUA_DLL) \
+	$(KERALUA_DLL_MDB) \
 	$(KOPILUA_DLL) \
+	$(KOPILUA_DLL_MDB) \
+	$(NLUA_DLL_MDB) \
 	$(SCHUMIX_LUAENGINE_DLL_MDB) \
 	$(SCHUMIX_PYTHONENGINE_DLL) \
 	$(IRONPYTHON_MODULES_DLL) \
@@ -219,16 +259,26 @@ $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
+$(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL_MDB))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
+$(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB))
 $(eval $(call emit-deploy-target,SHARPEN_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
+$(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL_MDB))
+$(eval $(call emit-deploy-target,SHARPEN_DLL_MDB))
 $(eval $(call emit-deploy-target,NGIT_DLL))
 $(eval $(call emit-deploy-target,NSCH_DLL))
 $(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
+$(eval $(call emit-deploy-target,NSCH_DLL_MDB))
+$(eval $(call emit-deploy-target,NGIT_DLL_MDB))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
+$(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL_MDB))
 $(eval $(call emit-deploy-target,NLUA_DLL))
 $(eval $(call emit-deploy-target,KERALUA_DLL))
+$(eval $(call emit-deploy-target,KERALUA_DLL_MDB))
 $(eval $(call emit-deploy-target,KOPILUA_DLL))
+$(eval $(call emit-deploy-target,KOPILUA_DLL_MDB))
+$(eval $(call emit-deploy-target,NLUA_DLL_MDB))
 $(eval $(call emit-deploy-target,IRONPYTHON_MODULES_DLL))
 $(eval $(call emit-deploy-target,IRONPYTHON_DLL))
 $(eval $(call emit-deploy-target,MICROSOFT_DYNAMIC_DLL))

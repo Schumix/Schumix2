@@ -1,7 +1,7 @@
 dnl Warning: This is an automatically generated file, do not edit!
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
-AC_INIT([Schumix], [4.x])
+AC_INIT([Schumix], [4.1.x])
 AM_INIT_AUTOMAKE([foreign])
 AM_MAINTAINER_MODE
 
@@ -65,6 +65,8 @@ External/NLua/Core/KopiLua/KopiLua/kopilua.pc
 External/NLua/Core/KopiLua/KopiLua/Makefile
 External/NLua/Core/KeraLua/src/keralua.pc
 External/NLua/Core/KeraLua/src/Makefile
+External/ChatterBotApi/dotnet/ChatterBotAPI/chatterbotapi.pc
+External/ChatterBotApi/dotnet/ChatterBotAPI/Makefile
 Po/Makefile
 Core/Schumix.Api/schumix.api.pc
 Core/Schumix.Api/Makefile
