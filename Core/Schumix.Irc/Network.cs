@@ -687,7 +687,8 @@ namespace Schumix.Irc
 			{
 				try
 				{
-					sSender.Ping(_server);
+					if(!SchumixBase.ExitStatus && !sIrcBase.ReloadStatus && Connected)
+						sSender.Ping(_server);
 				}
 				catch(IOException)
 				{
@@ -695,8 +696,7 @@ namespace Schumix.Irc
 				}
 				catch(Exception e)
 				{
-					if(!SchumixBase.ExitStatus && !sIrcBase.ReloadStatus && Connected)
-						Log.Error("Ping", sLConsole.GetString("Failure details: {0}"), e.Message);
+					Log.Error("Ping", sLConsole.GetString("Failure details: {0}"), e.Message);
 				}
 
 				Thread.Sleep(30*1000);

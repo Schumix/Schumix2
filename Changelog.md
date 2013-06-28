@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * AutoPing() függvény mostantól nem fog feleslegesen hibát okozni.
  * DebugLog mappa létrehozva. Belekerülnek a logba az IrcWrite és IrcRead üzenetek.
  * Runtime osztályban létrehozva az Exit() függvény.
  * birthday parancson is elvégezve minden módosítás ami a calendar parancson is volt.
