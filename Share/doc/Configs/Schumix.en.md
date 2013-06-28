@@ -10,7 +10,7 @@
 ## Irc
 
 Yaml konfignál:<br/>
-Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (Irc: ...) le kell másolni még egyszer és ott külön be kell állítani az adatokat valamint Irc(szám) ként kell megadni. Pl: Irc2: .... (ide pedig minde úgy jön utána ahogy volt csak az Irc-nél kell átírni az újat).
+Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (Irc: ...) le kell másolni még egyszer és ott külön be kell állítani az adatokat valamint Irc(szám) ként kell megadni. Pl: Irc2: .... (ide pedig minde úgy jön utána ahogy volt csak az Irc-nél kell átírni az újat).<br/>
 Xml konfignál:<br/>
 Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (`<Irc> ... </Irc>`) le kell másolni még egyszer és ott külön be kell állítani az adatokat.
 * **ServerName:** A szerver neve. Ezzel lehet beállítani hogy többszerveres módban hogy mi legyen az egyes szervereket megkülönböztető név. FIGYELEM: Nem egyezhet meg a többi szerver nevével (kis és nagybetüt nem különbőzteti meg)!
@@ -55,7 +55,8 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 * **MaxFileSize:** Meghatározza a log fájlt maximális méretét. Ha eléri azt a fájl akkor törlődik és a program csinál helyette egy újat.
                     Alapértelmezés: `100` (mb-ban értendő)
 * **LogLevel:** Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelmezés: `2`
-    * **Szintjei:** `0` (Normális üzenetek és a sikeresek)<br/>
+    * **Szintjei:** <br/>
+                    `0` (Normális üzenetek és a sikeresek)<br/>
                     `1` (Figyelmeztetések)<br/>
                     `2` (Hibák)<br/>
                     `3` (Hibakeresõ üzenetek)
