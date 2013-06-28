@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-06-21 13:40:00+0200\n"
+"POT-Creation-Date: 2013-06-28 09:17:21+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -30,16 +30,16 @@ msgid "All Command Handler were deleted."
 msgstr "Összes Command handler törlésre került."
 
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:28
-#: ../Core/Schumix.Irc/Network.cs:58 ../Core/Schumix.Irc/Network.cs:82
-#: ../Core/Schumix.Irc/Network.cs:85 ../Core/Schumix.Irc/Network.cs:94
+#: ../Core/Schumix.Irc/Network.cs:62 ../Core/Schumix.Irc/Network.cs:86
+#: ../Core/Schumix.Irc/Network.cs:89 ../Core/Schumix.Irc/Network.cs:98
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
-#: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:42
 #: ../Core/Schumix.Framework/Config/Config.cs:6
 #: ../Core/Schumix.Framework/SchumixBase.cs:15
 #: ../Core/Schumix.Framework/Utilities.cs:25
-#: ../Core/Schumix.Framework/Utilities.cs:107
-#: ../Core/Schumix.Framework/Utilities.cs:124
-#: ../Core/Schumix.Framework/Utilities.cs:136
+#: ../Core/Schumix.Framework/Utilities.cs:108
+#: ../Core/Schumix.Framework/Utilities.cs:126
+#: ../Core/Schumix.Framework/Utilities.cs:139
 #: ../Core/Schumix.Framework/Timer.cs:3
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:12
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
@@ -187,41 +187,57 @@ msgstr "Network sikeresen elindult."
 msgid "Server's name: {0}"
 msgstr "A szerver neve: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:16
+#: ../Core/Schumix.Irc/Network.cs:18
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:6
+#: ../Core/Schumix.Framework/Log/Log.cs:29
+msgid "Started time: [{0}]\n"
+msgstr "Indulási időpont: [{0}]\n"
+
+#: ../Core/Schumix.Irc/Network.cs:18
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:6
+#: ../Core/Schumix.Framework/Log/Log.cs:29
+msgid ""
+"\n"
+"Started time: [{0}]\n"
+msgstr ""
+"\n"
+"Indulási időpont: [{0}]\n"
+
+#: ../Core/Schumix.Irc/Network.cs:20
 msgid "Opcodes thread started..."
 msgstr "Opcodes szál indul..."
 
-#: ../Core/Schumix.Irc/Network.cs:17
+#: ../Core/Schumix.Irc/Network.cs:21
 msgid "Ping thread started..."
 msgstr "Ping szál indul..."
 
-#: ../Core/Schumix.Irc/Network.cs:18
+#: ../Core/Schumix.Irc/Network.cs:22
 msgid "Establishing connection with irc server."
 msgstr "Kapcsolat létrehozása az irc szerverrel."
 
-#: ../Core/Schumix.Irc/Network.cs:21
+#: ../Core/Schumix.Irc/Network.cs:25
 msgid "All of IRC handlers are registered."
 msgstr "Összes IRC handler regisztrálásra került."
 
-#: ../Core/Schumix.Irc/Network.cs:42
+#: ../Core/Schumix.Irc/Network.cs:46
 msgid "Connection to: {0}"
 msgstr "Kapcsolódás megindult ide: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:43
+#: ../Core/Schumix.Irc/Network.cs:47
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
 msgid "Connection closed!"
 msgstr "Kapcsolat bontva!"
 
-#: ../Core/Schumix.Irc/Network.cs:46
+#: ../Core/Schumix.Irc/Network.cs:50
 msgid "Connection have been closed."
 msgstr "Kapcsolat bontásra került."
 
-#: ../Core/Schumix.Irc/Network.cs:46
+#: ../Core/Schumix.Irc/Network.cs:50
 msgid "Reconnection to: {0}"
 msgstr "Újrakapcsolódás megindult ide: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:53
+#: ../Core/Schumix.Irc/Network.cs:57
 msgid ""
 "This nick name ({0}) is used by a service bot. Your nick is automaticly "
 "changed to a placeholder one."
@@ -229,43 +245,43 @@ msgstr ""
 "Az adott nick ({0}) egy szervíz bot neve. Automatikusan egy tartalék névra "
 "meg lett változtatva."
 
-#: ../Core/Schumix.Irc/Network.cs:54
+#: ../Core/Schumix.Irc/Network.cs:58
 msgid "Connection type: {0}"
 msgstr "Kapcsolódás típusa: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:55
+#: ../Core/Schumix.Irc/Network.cs:59
 msgid "Fatal error was happened while established the connection!"
 msgstr "Végzetes hiba történt a kapcsolat létrehozásánál!"
 
-#: ../Core/Schumix.Irc/Network.cs:56
+#: ../Core/Schumix.Irc/Network.cs:60
 msgid "Successfully established the connection!"
 msgstr "A kapcsolat sikeresen létrejött!"
 
-#: ../Core/Schumix.Irc/Network.cs:56
+#: ../Core/Schumix.Irc/Network.cs:60
 msgid "Error was happened while established the connection!"
 msgstr "Hiba történt a kapcsolat létrehozásánál!"
 
-#: ../Core/Schumix.Irc/Network.cs:58
+#: ../Core/Schumix.Irc/Network.cs:62
 msgid "Certificate not accepted, exception: {0}"
 msgstr "A tanúsítvány nem lett elfogadva, kivétel: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:62
+#: ../Core/Schumix.Irc/Network.cs:66
 msgid "Users' datas are sent."
 msgstr "Felhasználói információk ellettek küldve."
 
-#: ../Core/Schumix.Irc/Network.cs:72 ../Core/Schumix.Irc/Network.cs:93
+#: ../Core/Schumix.Irc/Network.cs:76 ../Core/Schumix.Irc/Network.cs:97
 msgid "Successfully started the thread."
 msgstr "A szál sikeresen elindult."
 
-#: ../Core/Schumix.Irc/Network.cs:72
+#: ../Core/Schumix.Irc/Network.cs:76
 msgid "Started the irc data receiving."
 msgstr "Elindult az irc adatok fogadása."
 
-#: ../Core/Schumix.Irc/Network.cs:75
+#: ../Core/Schumix.Irc/Network.cs:79
 msgid "Do not going data from irc server!"
 msgstr "Nem jön információ az irc szerver felöl!"
 
-#: ../Core/Schumix.Irc/Network.cs:92
+#: ../Core/Schumix.Irc/Network.cs:96
 msgid "Received unhandled opcode: {0}"
 msgstr "Ismeretlen opcode kód: {0}"
 
@@ -383,7 +399,7 @@ msgstr "Téma nem lehet üres vagy nulla!"
 msgid "Away message cannot be empty or null!"
 msgstr "Távollét üzenet nem lehet üres vagy nulla!"
 
-#: ../Core/Schumix.Irc/Sender/SendMessage.cs:50
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:54
 #: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:6
 msgid "ChannelList: Failure request!"
 msgstr "ChannelList: Hibás lekérdezés!"
@@ -393,28 +409,28 @@ msgid "{0} plugin is now loading."
 msgstr "{0} plugin betöltése megindult."
 
 #: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:20
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:26
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:23
 msgid "Plugin can not be loaded!"
 msgstr "Nem tölthető be a plugin!"
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:21
 #: ../Core/Schumix.Framework/Addon/AddonManager.cs:21
 msgid "Loaded plugin: {0} {1} by {2} ({3})"
 msgstr "Betöltött plugin: {0} {1} készítette {2} ({3})"
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:25
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:22
 msgid "{0} plugin denying and removing is now started."
 msgstr "{0} plugin letiltása és leválasztása megindult."
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:30
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
 msgid "{0} plugin successfully removed."
 msgstr "{0} plugin sikeresen le lett választva."
 
-#: ../Core/Schumix.Irc/IrcBase.cs:30
+#: ../Core/Schumix.Irc/IrcBase.cs:36
 msgid "Reload irc module!"
 msgstr "Irc modul újraindítása!"
 
-#: ../Core/Schumix.Irc/IrcBase.cs:32
+#: ../Core/Schumix.Irc/IrcBase.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:4
 #: ../Core/Schumix.Framework/Database/SQLite.cs:15
 #: ../Core/Schumix.Framework/Database/SQLite.cs:18
@@ -427,7 +443,7 @@ msgstr "Irc modul újraindítása!"
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
-#: ../Core/Schumix.Framework/Runtime.cs:6
+#: ../Core/Schumix.Framework/Runtime.cs:8
 #: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:43
 #: ../Applications/Schumix.Server/ServerListener.cs:6
@@ -639,15 +655,15 @@ msgstr "Csomag elküldve."
 msgid "Couldn't send SCS packet!"
 msgstr "Nem sikerült elküldeni SCS csomagot!"
 
-#: ../Core/Schumix.Framework/Runtime.cs:6
+#: ../Core/Schumix.Framework/Runtime.cs:8
 msgid "The program, more than {0} MB consumed!"
 msgstr "A program több mint {0} mb-ot fogyaszt!"
 
-#: ../Core/Schumix.Framework/Runtime.cs:12
+#: ../Core/Schumix.Framework/Runtime.cs:14
 msgid "Failed to set process name: {0}"
 msgstr "Nem sikerült beállítani folyamat nevét: {0}"
 
-#: ../Core/Schumix.Framework/Runtime.cs:15
+#: ../Core/Schumix.Framework/Runtime.cs:17
 msgid "Error setting process name!"
 msgstr "Hiba a folyamat nevének beállításában!"
 
@@ -1034,18 +1050,6 @@ msgstr ""
 "Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
 "logok.\n"
 
-#: ../Core/Schumix.Framework/Log/Log.cs:29
-msgid "Started time: [{0}]\n"
-msgstr "Indulási időpont: [{0}]\n"
-
-#: ../Core/Schumix.Framework/Log/Log.cs:29
-msgid ""
-"\n"
-"Started time: [{0}]\n"
-msgstr ""
-"\n"
-"Indulási időpont: [{0}]\n"
-
 #: ../Core/Schumix.Framework/Log/Log.cs:30
 msgid ""
 "The log file's name changed. {0} was the old. From now on the logs will be "
@@ -1153,11 +1157,11 @@ msgstr "CCommandManager sikeresen elindult."
 msgid "All Command Handler are registered."
 msgstr "Összes Command handler regisztrálásra került."
 
-#: ../Applications/Schumix/ScriptManager.cs:5
+#: ../Applications/Schumix/ScriptManager.cs:4
 msgid "Lua support is disabled!"
 msgstr "Lua támogatása le van tiltva!"
 
-#: ../Applications/Schumix/ScriptManager.cs:6
+#: ../Applications/Schumix/ScriptManager.cs:5
 msgid "Python support is disabled!"
 msgstr "Python támogatása le van tiltva!"
 
