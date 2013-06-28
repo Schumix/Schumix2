@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * ChatterBotApi.dll helyett mostantól külső tárolóból lesz elérhető a kódja így rugalmasabban fog illeszkedni a bothoz.
  * NewNick változó áthelyezve a Network osztályba. Így elkerülhető azon bug mely a többszerveres mód után lépett fel.
  * AutoPing() függvény mostantól nem fog feleslegesen hibát okozni.
  * DebugLog mappa létrehozva. Belekerülnek a logba az IrcWrite és IrcRead üzenetek.
