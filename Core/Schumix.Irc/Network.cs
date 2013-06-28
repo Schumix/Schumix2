@@ -83,6 +83,9 @@ namespace Schumix.Irc
 		private bool Connected = false;
 		private bool _enabled = false;
 		private ConnectionType CType;
+#if DEBUG
+		private string _debuglogfile;
+#endif
 		private DateTime LastOpcode;
 		private string _servername;
 		private int _serverid;
@@ -117,6 +120,25 @@ namespace Schumix.Irc
 
 		public void Initialize()
 		{
+#if DEBUG
+			sUtilities.CreateDirectory(Path.Combine(LogConfig.LogDirectory, "DebugLog"));
+			_debuglogfile = sUtilities.DirectoryToSpecial(Path.Combine(LogConfig.LogDirectory, "DebugLog"), "IrcRead_" + _servername + ".log");
+
+			bool isfile = false;
+			if(File.Exists(_debuglogfile))
+				isfile = true;
+
+			var time = DateTime.Now;
+			sUtilities.CreateFile(_debuglogfile);
+			var file = new StreamWriter(_debuglogfile, true) { AutoFlush = true };
+
+			if(!isfile)
+				file.Write(sLConsole.GetString("Started time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
+			else
+				file.Write(sLConsole.GetString("\nStarted time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
+
+			file.Close();
+#endif
 			InitHandler();
 			InitializeCommandHandler();
 			InitializeCommandMgr();
@@ -548,6 +570,9 @@ namespace Schumix.Irc
 						_enabled = false;
 					}
 
+#if DEBUG
+					DebugLogInFile(IrcMessage);
+#endif
 					Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage), _cts.Token);
 					Thread.Sleep(100);
 				}
@@ -600,9 +625,6 @@ namespace Schumix.Irc
 
 		private void HandleIrcCommand(string message)
 		{
-#if DEBUG
-			Console.WriteLine(message);
-#endif
 			var IMessage = new IRCMessage();
 			IMessage.ServerId = _serverid;
 			IMessage.ServerName = _servername;
@@ -680,5 +702,23 @@ namespace Schumix.Irc
 				Thread.Sleep(30*1000);
 			}
 		}
+
+#if DEBUG
+		private void DebugLogInFile(string log)
+		{
+			var filesize = new FileInfo(_debuglogfile);
+
+			if(filesize.Length >= LogConfig.MaxFileSize * 1024 * 1024)
+			{
+				File.Delete(_debuglogfile);
+				sUtilities.CreateFile(_debuglogfile);
+			}
+
+			var time = DateTime.Now;
+			var file = new StreamWriter(_debuglogfile, true) { AutoFlush = true };
+			file.WriteLine("{0} {1}", time.ToString("yyyy. MM. dd. HH:mm:ss"), log);
+			file.Close();
+		}
+#endif
 	}
 }
