@@ -57,7 +57,6 @@ namespace Schumix.Framework
 		public static bool ExitStatus { get; private set; }
 		public static string ServerIdentify = string.Empty;
 		public static bool ThreadStop = true;
-		public static bool NewNick = false;
 		public static bool STime = true;
 		public const string On = "on";
 		public const string Off = "off";

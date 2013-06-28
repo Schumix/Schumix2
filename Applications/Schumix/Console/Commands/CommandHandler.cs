@@ -1131,7 +1131,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			SchumixBase.NewNick = true;
+			sIrcBase.Networks[_servername].NewNick = true;
 			string nick = Info[1];
 
 			if(!Rfc2812Util.IsValidNick(nick))

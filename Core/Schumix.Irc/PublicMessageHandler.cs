@@ -172,7 +172,7 @@ namespace Schumix.Irc
 					}
 					else
 					{
-						SchumixBase.NewNick = true;
+						sIrcBase.Networks[sIRCMessage.ServerName].NewNick = true;
 						string nick = sIRCMessage.Info[5];
 
 						if(!Rfc2812Util.IsValidNick(nick))

@@ -55,6 +55,7 @@ namespace Schumix.Irc
 		}
 
 		public bool Shutdown { get; private set; }
+		public bool NewNick = false;
 
 		/// <summary>
 		///     A bejövő információkat fogadja.

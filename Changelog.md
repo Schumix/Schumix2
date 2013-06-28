@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * NewNick változó áthelyezve a Network osztályba. Így elkerülhető azon bug mely a többszerveres mód után lépett fel.
  * AutoPing() függvény mostantól nem fog feleslegesen hibát okozni.
  * DebugLog mappa létrehozva. Belekerülnek a logba az IrcWrite és IrcRead üzenetek.
  * Runtime osztályban létrehozva az Exit() függvény.

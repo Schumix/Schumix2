@@ -142,10 +142,10 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleNewNick(IRCMessage sIRCMessage)
 		{
-			if(!SchumixBase.NewNick)
+			if(!sIrcBase.Networks[sIRCMessage.ServerName].NewNick)
 				sNameList.Change(sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 			else
-				SchumixBase.NewNick = false;
+				sIrcBase.Networks[sIRCMessage.ServerName].NewNick = false;
 		}
 
 		/// <summary>
