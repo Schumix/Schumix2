@@ -51,9 +51,9 @@
 
 * **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi a Schumix-ok indítását. Alapértelmezés: `false`
 
-Yaml konfignál:
+Yaml konfignál:<br/>
 Ha több Schumix-ot szeretnék indítani akkor az egész Schumix részt (Schumix: ...) le kell másolni még egyszer és ott külön be kell állítani az adatokat valamint Schumix(szám) ként kell megadni. Pl: Schumix2: .... (ide pedig minde úgy jön utána ahogy volt csak az Schumix-nél kell átírni az újat).
-Xml konfignál:
+Xml konfignál:<br/>
 Ha több Schumix-ot szeretnék indítani akkor az egész Schumix részt (`<Schumix> ... </Schumix>`) le kell másolni még egyszer és ott külön be kell állítani az adatokat.
 * **Schumix:**
     * **Config:**
