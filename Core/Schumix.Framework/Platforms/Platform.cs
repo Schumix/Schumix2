@@ -101,6 +101,16 @@ namespace Schumix.Framework.Platforms
 				platform = "Windows";
 				break;
 			case PlatformID.Unix:
+			case (PlatformID)128:
+				// Well, there are chances MacOSX is reported as Unix instead of MacOSX.
+				// Instead of platform check, we'll do a feature checks (Mac specific root folders)
+				if(Directory.Exists("/Applications") && Directory.Exists("/System") &&
+				   Directory.Exists("/Users") && Directory.Exists("/Volumes"))
+				{
+					platform = "MacOSX";
+					break;
+				}
+
 				platform = "Linux";
 				break;
 			case PlatformID.MacOSX:
@@ -215,7 +225,7 @@ namespace Schumix.Framework.Platforms
 				}
 				case PlatformID.MacOSX:
 				{
-					Name = "MacOSX";
+					Name = "Mac OS X";
 					break;
 				}
 				case PlatformID.Xbox:
