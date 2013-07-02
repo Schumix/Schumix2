@@ -923,7 +923,7 @@ namespace Schumix.Framework
 				}
 				default:
 				{
-					// huHU lesz az alappértelmezett amíg nincs angol verzió
+					// huHU lesz az alapértelmezett amíg nincs angol verzió
 					Nameday = new string[,]
 					{
 						// Január
