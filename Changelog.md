@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * CheckAndCreate() függvény megszüntetve a konfig fájlokban.
  * GeneralExtensions.cs fájl szét lett darabólva így könnyebb átlátni.
  * Mac OS X és Linux megkülönböztetése javítva.
  * ChatterBotApi.dll helyett mostantól külső tárolóból lesz elérhető a kódja így rugalmasabban fog illeszkedni a bothoz.
