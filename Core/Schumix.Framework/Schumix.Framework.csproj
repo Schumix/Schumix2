@@ -133,6 +133,11 @@
     <Compile Include="Options\ResponseFileSource.cs" />
     <Compile Include="Options\ArgumentEnumerator.cs" />
     <Compile Include="Options\Category.cs" />
+    <Compile Include="Extensions\YamlExtensions.cs" />
+    <Compile Include="Extensions\ArrayExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\IrcExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

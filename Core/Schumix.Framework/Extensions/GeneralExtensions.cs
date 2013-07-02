@@ -26,9 +26,6 @@ using System.Globalization;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using YamlDotNet.RepresentationModel;
-using Schumix.Framework.Platforms;
-using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Extensions
 {
@@ -37,9 +34,6 @@ namespace Schumix.Framework.Extensions
 	/// </summary>
 	public static class GeneralExtensions
 	{
-		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
-
 		/// <summary>
 		/// Casts the object to the specified type.
 		/// </summary>
@@ -182,177 +176,6 @@ namespace Schumix.Framework.Extensions
 			return arr.Concatenate(SchumixBase.Space.ToString());
 		}
 
-		public static string SplitToString(this string[] split, char c)
-		{
-			string ss = string.Empty;
-
-			for(int x = 0; x < split.Length; x++)
-				ss += c + split[x];
-
-			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
-				ss = ss.Remove(0, c.ToString().Length);
-
-			return ss;
-		}
-
-		public static string SplitToString(this string[] split, int min, char c)
-		{
-			string ss = string.Empty;
-
-			for(int x = min; x < split.Length; x++)
-				ss += c + split[x];
-
-			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
-				ss = ss.Remove(0, c.ToString().Length);
-
-			return ss;
-		}
-
-		public static string SplitToString(this string[] split)
-		{
-			string ss = string.Empty;
-
-			foreach(var s in split)
-				ss += s;
-
-			return ss;
-		}
-
-		public static string SplitToString(this string[] split, string s)
-		{
-			string ss = string.Empty;
-
-			for(int x = 0; x < split.Length; x++)
-				ss += s + split[x];
-
-			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
-				ss = ss.Remove(0, s.Length);
-
-			return ss;
-		}
-
-		public static string SplitToString(this string[] split, int min, string s)
-		{
-			string ss = string.Empty;
-
-			for(int x = min; x < split.Length; x++)
-				ss += s + split[x];
-
-			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
-				ss = ss.Remove(0, s.Length);
-
-			return ss;
-		}
-
-		public static string SplitToString(this char[] split, char c)
-		{
-			string ss = string.Empty;
-
-			for(int x = 0; x < split.Length; x++)
-				ss += c + split[x];
-
-			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
-				ss = ss.Remove(0, c.ToString().Length);
-
-			return ss;
-		}
-
-		public static string SplitToString(this char[] split, int min, char c)
-		{
-			string ss = string.Empty;
-
-			for(int x = min; x < split.Length; x++)
-				ss += c + split[x];
-
-			if(ss.Length > 0 && ss.Substring(0, c.ToString().Length) == c.ToString())
-				ss = ss.Remove(0, c.ToString().Length);
-
-			return ss;
-		}
-
-		public static string SplitToString(this char[] split)
-		{
-			string ss = string.Empty;
-
-			foreach(var s in split)
-				ss += s;
-
-			return ss;
-		}
-
-		public static string SplitToString(this char[] split, string s)
-		{
-			string ss = string.Empty;
-
-			for(int x = 0; x < split.Length; x++)
-				ss += s + split[x];
-
-			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
-				ss = ss.Remove(0, s.Length);
-
-			return ss;
-		}
-
-		public static string SplitToString(this char[] split, int min, string s)
-		{
-			string ss = string.Empty;
-
-			for(int x = min; x < split.Length; x++)
-				ss += s + split[x];
-
-			if(ss.Length > 0 && ss.Substring(0, s.Length) == s)
-				ss = ss.Remove(0, s.Length);
-
-			return ss;
-		}
-
-		public static string[] SplitAndTrim(string list)
-		{
-			if(IsNullOrEmpty(list))
-				return new string[0];
-
-			return (from f in list.Split(SchumixBase.Comma) let trimmed = f.Trim() where !trimmed.Length.IsNull() select trimmed).ToArray();
-		}
-
-		public static string Reverse(this string value)
-		{
-			return value.Reverse().ToArray().SplitToString();
-		}
-
-		public static string Remove(this string s, int min, int max, char value)
-		{
-			return (s.Length >= max && s.Substring(min, max) == value.ToString()) ? s.Remove(min, max) : s;
-		}
-
-		public static string Remove(this string s, int min, int max, string value)
-		{
-			return (s.Length >= max && s.Substring(min, max) == value) ? s.Remove(min, max) : s;
-		}
-
-		public static bool IsUpper(this string value)
-		{
-			// Consider string to be uppercase if it has no lowercase letters.
-			for(int i = 0; i < value.Length; i++)
-			{
-				if(char.IsLower(value[i]))
-					return false;
-			}
-
-			return true;
-		}
-
-		public static bool IsLower(this string value)
-		{
-			// Consider string to be lowercase if it has no uppercase letters.
-			for(int i = 0; i < value.Length; i++)
-			{
-				if(char.IsUpper(value[i]))
-					return false;
-			}
-
-			return true;
-		}
-
 		/// <summary>
 		/// Waits for the pending tasks in the specified collection.
 		/// </summary>
@@ -363,61 +186,6 @@ namespace Schumix.Framework.Extensions
 				throw new ArgumentNullException("coll");
 
 			Task.WaitAll(coll.ToArray());
-		}
-
-		public static bool CompareDataInBlock(this string[] split)
-		{
-			int i = 0;
-			string ss = string.Empty;
-
-			foreach(var s in split)
-			{
-				if(i == 0)
-					ss = s;
-				else
-				{
-					if(ss != s)
-						return false;
-				}
-
-				i++;
-			}
-
-			return true;
-		}
-
-		public static bool CompareDataInBlock<T>(this List<T> list)
-		{
-			int i = 0;
-			string ss = string.Empty;
-
-			foreach(var s in list)
-			{
-				if(i == 0)
-					ss = s.ToString();
-				else
-				{
-					if(ss != s.ToString())
-						return false;
-				}
-
-				i++;
-			}
-
-			return true;
-		}
-
-		public static bool Contains(this string Text, string Name, char Parameter)
-		{
-			var s = Text.Split(Parameter);
-
-			foreach(var ss in s)
-			{
-				if(ss.ToLower() == Name.ToLower())
-					return true;
-			}
-
-			return false;
 		}
 
 		public static bool IsNumber(this string Text)
@@ -443,79 +211,6 @@ namespace Schumix.Framework.Extensions
 			return Convert.ToInt32(Double);
 		}
 
-		public static string ToIrcOpcode(this int number)
-		{
-			if(number < 10)
-				return "00" + number.ToString();
-			else if(number < 100)
-				return "0" + number.ToString();
-			else
-				return number.ToString();
-		}
-
-		public static string ToString(this IDictionary<YamlNode, YamlNode> Nodes, string FileName = "")
-		{
-			var text = new StringBuilder();
-
-			foreach(var child in Nodes)
-			{
-				if(((YamlMappingNode)child.Value).GetType() == typeof(YamlMappingNode))
-					text.Append(child.Key).Append(":\n").Append(child.Value);
-				else
-					text.Append("    ").Append(child.Key).Append(": ").Append(child.Value);
-			}
-
-			if(sPlatform.IsWindows)
-				text = text.Replace("\r", string.Empty);
-
-			return FileName.IsNullOrEmpty() ? "# Schumix config file (yaml)\n" + text.ToString() : "# " + FileName + " config file (yaml)\n" + text.ToString();
-		}
-
-		public static bool ContainsKey(this IDictionary<YamlNode, YamlNode> Nodes, string Key)
-		{
-			return Nodes.ContainsKey(new YamlScalarNode(Key));
-		}
-
-		public static YamlScalarNode ToYamlNode(this string Text)
-		{
-			return new YamlScalarNode(Text);
-		}
-
-		public static string TrimMessage(this string value, int number = 150)
-		{
-			return value.Length > number ? value.Substring(0, number) + " ..." : value;
-		}
-
-		public static bool IsNullOrEmpty(this string Value)
-		{
-			return string.IsNullOrEmpty(Value.IsNull() ? Value : Value.Trim());
-		}
-
-		public static string ToMonthFormat(this int Month)
-		{
-			return Month < 10 ? string.Format("0{0}", Month.ToString()) : Month.ToString();
-		}
-
-		public static string ToDayFormat(this int Day)
-		{
-			return Day < 10 ? string.Format("0{0}", Day.ToString()) : Day.ToString();
-		}
-
-		public static string ToHourFormat(this int Hour)
-		{
-			return Hour < 10 ? string.Format("0{0}", Hour.ToString()) : Hour.ToString();
-		}
-
-		public static string ToMinuteFormat(this int Minute)
-		{
-			return Minute < 10 ? string.Format("0{0}", Minute.ToString()) : Minute.ToString();
-		}
-
-		public static string ToSecondFormat(this int Second)
-		{
-			return Second < 10 ? string.Format("0{0}", Second.ToString()) : Second.ToString();
-		}
-
 		public static string ToLocale(this string Language)
 		{
 			if(Language.Length == 4 && !Language.Contains("-"))
@@ -524,41 +219,6 @@ namespace Schumix.Framework.Extensions
 				Language = "en-US";
 
 			return Language;
-		}
-
-		public static bool IsMonthName(this string Name)
-		{
-			return Name.IsMonthName(sLConsole.Locale.ToLocale());
-		}
-
-		public static bool IsMonthName(this string Name, string Locale)
-		{
-			try
-			{
-				var d = DateTime.ParseExact(Name, "MMMM", CultureInfo.GetCultureInfo(Locale.ToLocale())).Month;
-				return true;
-			}
-			catch
-			{
-				return false;
-			}
-		}
-
-		public static int GetMonthNameInInt(this string Name)
-		{
-			return Name.GetMonthNameInInt(sLConsole.Locale.ToLocale());
-		}
-
-		public static int GetMonthNameInInt(this string Name, string Locale)
-		{
-			try
-			{
-				return !Name.IsNumber() ? DateTime.ParseExact(Name, "MMMM", CultureInfo.GetCultureInfo(Locale.ToLocale())).Month : Name.ToNumber().ToInt();
-			}
-			catch
-			{
-				return -1;
-			}
 		}
 	}
 }

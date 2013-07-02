@@ -108,15 +108,9 @@ namespace Schumix.SvnRssAddon.Config
 			return 0;
 		}
 
-		private void CheckAndCreate(string ConfigDirectory)
-		{
-			if(!Directory.Exists(ConfigDirectory))
-				Directory.CreateDirectory(ConfigDirectory);
-		}
-
 		private bool IsConfig(string ConfigDirectory, string ConfigFile)
 		{
-			CheckAndCreate(ConfigDirectory);
+			sUtilities.CreateDirectory(ConfigDirectory);
 
 			switch(ConfigType(ConfigDirectory, ConfigFile))
 			{

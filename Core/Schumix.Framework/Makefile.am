@@ -174,7 +174,12 @@ FILES = \
 	Options/ArgumentSource.cs \
 	Options/ResponseFileSource.cs \
 	Options/ArgumentEnumerator.cs \
-	Options/Category.cs 
+	Options/Category.cs \
+	Extensions/YamlExtensions.cs \
+	Extensions/ArrayExtensions.cs \
+	Extensions/StringExtensions.cs \
+	Extensions/DateTimeExtensions.cs \
+	Extensions/IrcExtensions.cs 
 
 DATA_FILES = 
 
