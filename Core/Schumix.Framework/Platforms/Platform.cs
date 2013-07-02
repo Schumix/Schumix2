@@ -55,7 +55,7 @@ namespace Schumix.Framework.Platforms
 			}
 		}
 
-		public bool IsMacOS
+		public bool IsMacOSX
 		{
 			get
 			{
