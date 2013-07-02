@@ -2,7 +2,6 @@
 
 ## 4.2.0 (2013-xx-xx)
 
- * Csatorna logfájlok formátuma megváltoztatva. yyyy-MM-dd -ról yyyy_MM_dd -re
  * Release_x64 elméletileg most már teljesen törölve lett a programból.
  * Installer.exe forrásfájlai lefrissítve. Új verzió a 0.0.7. Jelenleg is alpha verziónak tekinthető.
  * CheckAndCreate() függvény megszüntetve a konfig fájlokban.
