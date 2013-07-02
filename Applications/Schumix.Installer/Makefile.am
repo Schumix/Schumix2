@@ -106,9 +106,12 @@ FILES = \
 	Clean/DirectoryClean.cs \
 	PlatformType.cs \
 	Log.cs \
-	Config/InstallerConfig.cs \
 	Extensions/GeneralExtensions.cs \
-	Download/CloneSchumix.cs 
+	Download/CloneSchumix.cs \
+	Extensions/ArrayExtensions.cs \
+	Extensions/StringExtensions.cs \
+	Extensions/NumberExtensions.cs \
+	Config/Consts.cs 
 
 DATA_FILES = 
 

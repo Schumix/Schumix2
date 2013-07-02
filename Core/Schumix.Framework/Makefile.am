@@ -179,7 +179,8 @@ FILES = \
 	Extensions/ArrayExtensions.cs \
 	Extensions/StringExtensions.cs \
 	Extensions/DateTimeExtensions.cs \
-	Extensions/IrcExtensions.cs 
+	Extensions/IrcExtensions.cs \
+	Extensions/NumberExtensions.cs 
 
 DATA_FILES = 
 

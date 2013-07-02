@@ -58,25 +58,28 @@ namespace Schumix.Installer
 					url = url + HttpUtility.UrlEncode(args);
 				else if(!args.IsNullOrEmpty() && !noencode.IsNullOrEmpty())
 					url = url + HttpUtility.UrlEncode(args) + noencode;
-				
+
 				var request = (HttpWebRequest)WebRequest.Create(url);
 				request.AllowAutoRedirect = true;
 				request.UserAgent = Consts.SchumixUserAgent;
 				request.Referer = Consts.SchumixReferer;
-				
+
 				int length = 0;
 				byte[] buf = new byte[1024];
 				var sb = new StringBuilder();
-				var response = (HttpWebResponse)request.GetResponse();
-				var stream = response.GetResponseStream();
-				
-				while((length = stream.Read(buf, 0, buf.Length)) != 0)
+
+				using(var response = (HttpWebResponse)request.GetResponse())
 				{
-					buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
-					sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+					using(var stream = response.GetResponseStream())
+					{
+						while((length = stream.Read(buf, 0, buf.Length)) != 0)
+						{
+							buf = Encoding.Convert(Encoding.GetEncoding(response.CharacterSet), Encoding.UTF8, buf);
+							sb.Append(Encoding.UTF8.GetString(buf, 0, length));
+						}
+					}
 				}
-				
-				response.Close();
+
 				return sb.ToString();
 			}
 		}
@@ -98,24 +101,34 @@ namespace Schumix.Installer
 
 			switch(pid)
 			{
-				case PlatformID.Win32NT:
-				case PlatformID.Win32S:
-				case PlatformID.Win32Windows:
-				case PlatformID.WinCE:
-					platform = PlatformType.Windows;
-					break;
-				case PlatformID.Unix:
-					platform = PlatformType.Linux;
-					break;
-				case PlatformID.MacOSX:
+			case PlatformID.Win32NT:
+			case PlatformID.Win32S:
+			case PlatformID.Win32Windows:
+			case PlatformID.WinCE:
+				platform = PlatformType.Windows;
+				break;
+			case PlatformID.Unix:
+			case (PlatformID)128:
+				// Well, there are chances MacOSX is reported as Unix instead of MacOSX.
+				// Instead of platform check, we'll do a feature checks (Mac specific root folders)
+				if(Directory.Exists("/Applications") && Directory.Exists("/System") &&
+				   Directory.Exists("/Users") && Directory.Exists("/Volumes"))
+				{
 					platform = PlatformType.MacOSX;
 					break;
-				case PlatformID.Xbox:
-					platform = PlatformType.Xbox;
-					break;
-				default:
-					platform = PlatformType.None;
-					break;
+				}
+
+				platform = PlatformType.Linux;
+				break;
+			case PlatformID.MacOSX:
+				platform = PlatformType.MacOSX;
+				break;
+			case PlatformID.Xbox:
+				platform = PlatformType.Xbox;
+				break;
+			default:
+				platform = PlatformType.None;
+				break;
 			}
 
 			return platform;

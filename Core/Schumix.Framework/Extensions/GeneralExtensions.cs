@@ -188,29 +188,6 @@ namespace Schumix.Framework.Extensions
 			Task.WaitAll(coll.ToArray());
 		}
 
-		public static bool IsNumber(this string Text)
-		{
-			double number;
-			return double.TryParse(Text, out number);
-		}
-
-		public static double ToNumber(this string Text)
-		{
-			double number;
-			return double.TryParse(Text, out number) ? number : 0;
-		}
-
-		public static double ToNumber(this string Text, int Else)
-		{
-			double number;
-			return double.TryParse(Text, out number) ? number : Else;
-		}
-
-		public static int ToInt(this double Double)
-		{
-			return Convert.ToInt32(Double);
-		}
-
 		public static string ToLocale(this string Language)
 		{
 			if(Language.Length == 4 && !Language.Contains("-"))
