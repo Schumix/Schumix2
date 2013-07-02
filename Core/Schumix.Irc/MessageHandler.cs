@@ -702,7 +702,7 @@ namespace Schumix.Irc
 					sUtilities.CreateDirectory(dir);
 
 					string logdir = sUtilities.DirectoryToSpecial(dir, channel);
-					string logfile = string.Format("{0}/{1}.log", logdir, DateTime.Now.ToString("yyyy-MM-dd"));
+					string logfile = string.Format("{0}/{1}.log", logdir, DateTime.Now.ToString("yyyy_MM_dd"));
 
 					sUtilities.CreateDirectory(logdir);
 					sUtilities.CreateFile(logfile);
