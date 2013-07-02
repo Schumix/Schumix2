@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Release_x64 elméletileg most már teljesen törölve lett a programból.
  * Installer.exe forrásfájlai lefrissítve. Új verzió a 0.0.7. Jelenleg is alpha verziónak tekinthető.
  * CheckAndCreate() függvény megszüntetve a konfig fájlokban.
  * GeneralExtensions.cs fájl szét lett darabólva így könnyebb átlátni.

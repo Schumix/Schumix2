@@ -31,11 +31,7 @@ namespace Schumix.Config.CopyTo
 		public Copy(string Dir, string Addons, string Configs)
 		{
 			string ndir = Dir;
-			
-			if(Environment.Is64BitOperatingSystem)
-				Dir = Dir + "/Run/Release_x64";
-			else
-				Dir = Dir + "/Run/Release";
+			Dir = Dir + "/Run/Release";
 
 			var dir = new DirectoryInfo(Dir + "/Addons");
 
