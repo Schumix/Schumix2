@@ -30,6 +30,7 @@ using Schumix.Api.Functions;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Clean;
 using Schumix.Framework.Config;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Network;
 using Schumix.Framework.Database;
 using Schumix.Framework.Database.Cache;

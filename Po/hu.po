@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-06-28 09:17:21+0200\n"
+"POT-Creation-Date: 2013-07-03 14:21:12+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -137,7 +137,7 @@ msgstr "Újra próbálom ezzel: {0}"
 
 #: ../Core/Schumix.Irc/MessageHandler.cs:52
 msgid "[joined]"
-msgstr "[joined]"
+msgstr "[csatlakozott]"
 
 #: ../Core/Schumix.Irc/MessageHandler.cs:56
 msgid "[left] {0}"
@@ -189,13 +189,13 @@ msgstr "A szerver neve: {0}"
 
 #: ../Core/Schumix.Irc/Network.cs:18
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:6
-#: ../Core/Schumix.Framework/Log/Log.cs:29
+#: ../Core/Schumix.Framework/Logger/Log.cs:29
 msgid "Started time: [{0}]\n"
 msgstr "Indulási időpont: [{0}]\n"
 
 #: ../Core/Schumix.Irc/Network.cs:18
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:6
-#: ../Core/Schumix.Framework/Log/Log.cs:29
+#: ../Core/Schumix.Framework/Logger/Log.cs:29
 msgid ""
 "\n"
 "Started time: [{0}]\n"
@@ -1027,12 +1027,12 @@ msgstr "A magban lévő táblák takarítása kész."
 msgid "Loaded the Clean settings."
 msgstr "Clean beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Log/Log.cs:22
-#: ../Core/Schumix.Framework/Log/Log.cs:29
+#: ../Core/Schumix.Framework/Logger/Log.cs:22
+#: ../Core/Schumix.Framework/Logger/Log.cs:29
 msgid "The log's file name changed. From now in it will be here: {0}\n"
 msgstr "Megváltozott a log fájl neve. Ezentúl itt lesz: {0}\n"
 
-#: ../Core/Schumix.Framework/Log/Log.cs:24
+#: ../Core/Schumix.Framework/Logger/Log.cs:24
 msgid ""
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here.\n"
@@ -1040,7 +1040,7 @@ msgstr ""
 "Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
 "logok.\n"
 
-#: ../Core/Schumix.Framework/Log/Log.cs:24
+#: ../Core/Schumix.Framework/Logger/Log.cs:24
 msgid ""
 "\n"
 "The log file's name changed. {0} was the old. From now on the logs will be "
@@ -1050,7 +1050,7 @@ msgstr ""
 "Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
 "logok.\n"
 
-#: ../Core/Schumix.Framework/Log/Log.cs:30
+#: ../Core/Schumix.Framework/Logger/Log.cs:30
 msgid ""
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here. Change's time: [{1}]\n"
@@ -1058,7 +1058,7 @@ msgstr ""
 "Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
 "logok. Megváltozás időpontja: [{1}]\n"
 
-#: ../Core/Schumix.Framework/Log/Log.cs:30
+#: ../Core/Schumix.Framework/Logger/Log.cs:30
 msgid ""
 "\n"
 "The log file's name changed. {0} was the old. From now on the logs will be "

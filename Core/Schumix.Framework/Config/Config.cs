@@ -21,6 +21,7 @@
 using System;
 using System.IO;
 using System.Threading;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 

@@ -27,7 +27,7 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
-namespace Schumix.Framework
+namespace Schumix.Framework.Logger
 {
 	public sealed class Log : DefaultConfig
 	{

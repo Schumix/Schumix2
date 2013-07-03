@@ -25,6 +25,7 @@ using System.Data;
 using System.Data.SQLite;
 using System.Threading;
 using MySql.Data;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;

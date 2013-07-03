@@ -41,6 +41,8 @@ SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
 CHATTERBOTAPI_DLL_SOURCE=../../External/ChatterBotApi/dotnet/ChatterBotAPI/bin/Debug/ChatterBotAPI.dll
+CHATTERBOTAPI_DLL_MDB_SOURCE=../../External/ChatterBotApi/dotnet/ChatterBotAPI/bin/Debug/ChatterBotAPI.dll.mdb
+CHATTERBOTAPI_DLL_MDB=$(BUILD_DIR)/ChatterBotAPI.dll.mdb
 
 endif
 
@@ -76,6 +78,7 @@ SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB=
 CHATTERBOTAPI_DLL_SOURCE=../../External/ChatterBotApi/dotnet/ChatterBotAPI/bin/Release/ChatterBotAPI.dll
+CHATTERBOTAPI_DLL_MDB=
 
 endif
 
@@ -101,7 +104,8 @@ PROGRAMFILES = \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL) \
 	$(SCHUMIX_IRC_DLL_MDB) \
-	$(CHATTERBOTAPI_DLL)  
+	$(CHATTERBOTAPI_DLL) \
+	$(CHATTERBOTAPI_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_CHATTERBOTADDON_PC)  
@@ -166,6 +170,7 @@ $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL_MDB))
 $(eval $(call emit-deploy-target,CHATTERBOTAPI_DLL))
+$(eval $(call emit-deploy-target,CHATTERBOTAPI_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_CHATTERBOTADDON_PC,schumix.chatterbotaddon.pc))
 
 

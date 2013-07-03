@@ -24,6 +24,7 @@ using System.Threading;
 using System.Diagnostics;
 using Microsoft.Build.Utilities;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Platforms;
 
 namespace Schumix.Updater.Compiler

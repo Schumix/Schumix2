@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Collections.Generic;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;

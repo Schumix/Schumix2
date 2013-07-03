@@ -22,6 +22,7 @@ using System;
 using System.Xml;
 using System.Text.RegularExpressions;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 

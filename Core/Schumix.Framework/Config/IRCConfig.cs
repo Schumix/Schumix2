@@ -20,6 +20,7 @@
 
 using System;
 using System.Collections.Generic;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Config

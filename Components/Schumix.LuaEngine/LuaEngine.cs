@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Localization;
 using NLua;
 

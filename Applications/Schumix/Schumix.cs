@@ -23,6 +23,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
 using Schumix.Framework.Localization;

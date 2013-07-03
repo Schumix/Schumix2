@@ -28,6 +28,7 @@ using System.Globalization;
 using Schumix.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Clean;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Network;
 using Schumix.Framework.Options;

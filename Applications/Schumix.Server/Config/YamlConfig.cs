@@ -26,6 +26,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using YamlDotNet.Core;

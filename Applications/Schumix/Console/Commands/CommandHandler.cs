@@ -30,6 +30,7 @@ using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;

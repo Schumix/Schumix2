@@ -154,12 +154,9 @@ FILES = \
 	Config/CleanConfig.cs \
 	CodeBureau/StringEnum.cs \
 	CodeBureau/StringValueAttribute.cs \
-	Log/Log.cs \
-	Log/LogType.cs \
 	Bitly/BitlyApi.cs \
 	Bitly/BitlyResults.cs \
 	Config/ShortUrlConfig.cs \
-	Log/ConsoleLog.cs \
 	Options/Option.cs \
 	Options/OptionValueCollection.cs \
 	Options/OptionDelegate.cs \
@@ -180,7 +177,10 @@ FILES = \
 	Extensions/StringExtensions.cs \
 	Extensions/DateTimeExtensions.cs \
 	Extensions/IrcExtensions.cs \
-	Extensions/NumberExtensions.cs 
+	Extensions/NumberExtensions.cs \
+	Logger/Log.cs \
+	Logger/LogType.cs \
+	Logger/ConsoleLog.cs 
 
 DATA_FILES = 
 
@@ -194,10 +194,10 @@ EXTRAS = \
 	Database/Cache \
 	Clean \
 	CodeBureau \
-	Log \
 	Bitly \
 	Options \
 	Platforms \
+	Logger \
 	schumix.framework.pc.in 
 
 REFERENCES =  \

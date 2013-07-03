@@ -112,12 +112,9 @@
     <Compile Include="Config\CleanConfig.cs" />
     <Compile Include="CodeBureau\StringEnum.cs" />
     <Compile Include="CodeBureau\StringValueAttribute.cs" />
-    <Compile Include="Log\Log.cs" />
-    <Compile Include="Log\LogType.cs" />
     <Compile Include="Bitly\BitlyApi.cs" />
     <Compile Include="Bitly\BitlyResults.cs" />
     <Compile Include="Config\ShortUrlConfig.cs" />
-    <Compile Include="Log\ConsoleLog.cs" />
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\OptionValueCollection.cs" />
     <Compile Include="Options\OptionDelegate.cs" />
@@ -139,6 +136,9 @@
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\IrcExtensions.cs" />
     <Compile Include="Extensions\NumberExtensions.cs" />
+    <Compile Include="Logger\Log.cs" />
+    <Compile Include="Logger\LogType.cs" />
+    <Compile Include="Logger\ConsoleLog.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -182,9 +182,9 @@
     <Folder Include="Database\Cache\" />
     <Folder Include="Clean\" />
     <Folder Include="CodeBureau\" />
-    <Folder Include="Log\" />
     <Folder Include="Bitly\" />
     <Folder Include="Options\" />
     <Folder Include="Platforms\" />
+    <Folder Include="Logger\" />
   </ItemGroup>
 </Project>

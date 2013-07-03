@@ -30,6 +30,7 @@ using Microsoft.Scripting.Hosting;
 using Microsoft.Scripting.Runtime;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 

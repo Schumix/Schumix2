@@ -24,6 +24,7 @@ using System.IO;
 using System.Xml;
 using System.Threading;
 using System.Collections.Generic;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 

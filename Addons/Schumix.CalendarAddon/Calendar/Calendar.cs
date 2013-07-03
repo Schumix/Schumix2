@@ -26,6 +26,7 @@ using System.Threading.Tasks;
 using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.CalendarAddon.Config;

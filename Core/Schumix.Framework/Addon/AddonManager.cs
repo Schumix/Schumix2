@@ -25,6 +25,7 @@ using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
 using Schumix.Api;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;

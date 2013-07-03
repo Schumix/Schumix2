@@ -24,6 +24,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 
 namespace Schumix

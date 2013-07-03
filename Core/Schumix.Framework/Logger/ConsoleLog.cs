@@ -20,7 +20,7 @@
 
 using System;
 
-namespace Schumix.Framework
+namespace Schumix.Framework.Logger
 {
 	public abstract class ConsoleLog
 	{

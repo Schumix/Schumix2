@@ -30,6 +30,7 @@ using Schumix.Api.Irc;
 using Schumix.Api.Delegate;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 

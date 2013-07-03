@@ -20,6 +20,7 @@
 
 using System;
 using System.Reflection;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Exceptions;
 using Schumix.Framework.Extensions;
 

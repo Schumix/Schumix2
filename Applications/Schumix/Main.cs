@@ -26,6 +26,7 @@ using System.Globalization;
 using Schumix.Irc;
 using Schumix.Updater;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Options;
 using Schumix.Framework.Platforms;

@@ -26,6 +26,7 @@ using Schumix.Api.Irc;
 using Schumix.Api.Functions;
 using Schumix.Irc.Channel;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
 

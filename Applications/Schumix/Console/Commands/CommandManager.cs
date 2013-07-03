@@ -25,6 +25,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Console.Commands

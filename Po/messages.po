@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-06-28 09:17:21+0200\n"
-"PO-Revision-Date: 2013-06-28 09:17:21+0200\n"
+"POT-Creation-Date: 2013-07-03 14:21:12+0200\n"
+"PO-Revision-Date: 2013-07-03 14:21:13+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -185,14 +185,14 @@ msgstr ""
 
 #: ../Core/Schumix.Irc/Network.cs:18
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:6
-#: ../Core/Schumix.Framework/Log/Log.cs:29
+#: ../Core/Schumix.Framework/Logger/Log.cs:29
 msgid ""
 "Started time: [{0}]\n"
 msgstr ""
 
 #: ../Core/Schumix.Irc/Network.cs:18
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:6
-#: ../Core/Schumix.Framework/Log/Log.cs:29
+#: ../Core/Schumix.Framework/Logger/Log.cs:29
 msgid ""
 "\n"
 "Started time: [{0}]\n"
@@ -1010,32 +1010,32 @@ msgstr ""
 msgid "Loaded the Clean settings."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:22
-#: ../Core/Schumix.Framework/Log/Log.cs:29
+#: ../Core/Schumix.Framework/Logger/Log.cs:22
+#: ../Core/Schumix.Framework/Logger/Log.cs:29
 msgid ""
 "The log's file name changed. From now in it will be here: {0}\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:24
+#: ../Core/Schumix.Framework/Logger/Log.cs:24
 msgid ""
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here.\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:24
+#: ../Core/Schumix.Framework/Logger/Log.cs:24
 msgid ""
 "\n"
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here.\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:30
+#: ../Core/Schumix.Framework/Logger/Log.cs:30
 msgid ""
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here. Change's time: [{1}]\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:30
+#: ../Core/Schumix.Framework/Logger/Log.cs:30
 msgid ""
 "\n"
 "The log file's name changed. {0} was the old. From now on the logs will be "

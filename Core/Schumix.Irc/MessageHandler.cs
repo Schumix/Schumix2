@@ -29,6 +29,7 @@ using Schumix.Irc.Util;
 using Schumix.Irc.Channel;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.CodeBureau;
 using Schumix.Framework.Extensions;
@@ -404,7 +405,7 @@ namespace Schumix.Irc
 			sIRCMessage.Channel = sIRCMessage.Channel.Remove(0, 1, SchumixBase.Colon);
 			LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[joined]"));
 
-			if(sIRCMessage.Nick == sMyNickInfo.NickStorage)
+			if(sIRCMessage.Nick.ToLower() == sMyNickInfo.NickStorage.ToLower())
 			{
 				if(sMyChannelInfo.CList.ContainsKey(sIRCMessage.Channel.ToLower()))
 					SchumixBase.DManager.Update("channels", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
@@ -419,7 +420,7 @@ namespace Schumix.Irc
 		{
 			LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[left] {0}"), sIRCMessage.Args.IsNullOrEmpty() ? string.Empty : sIRCMessage.Args);
 
-			if(sIRCMessage.Nick == sMyNickInfo.NickStorage)
+			if(sIRCMessage.Nick.ToLower() == sMyNickInfo.NickStorage.ToLower())
 			{
 				sChannelList.Remove(sIRCMessage.Channel);
 				return;
@@ -674,12 +675,12 @@ namespace Schumix.Irc
 		}
 
 		/// <summary>
-		///     
+		///     Logolja a csatornára kiírt üzeneteket. stb.
 		/// </summary>
 		/// <param name="channel"></param>
 		/// <param name="user"></param>
 		/// <param name="args"></param>
-		private void LogInFile(string channel, string user, string args)
+		public void LogInFile(string channel, string user, string args)
 		{
 			lock(WriteLock)
 			{
@@ -714,7 +715,7 @@ namespace Schumix.Irc
 			}
 		}
 
-		private void LogInFile(string channel, string user, string format, params object[] args)
+		public void LogInFile(string channel, string user, string format, params object[] args)
 		{
 			lock(WriteLock)
 			{
