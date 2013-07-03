@@ -60,7 +60,7 @@ namespace Schumix.Irc
 			Console.WriteLine();
 			Log.Success("MessageHandler", sLConsole.GetString("Successfully connected to IRC server."));
 			RandomAllVhost();
-			Task.Factory.StartNew(() => IsJoin());
+			Task.Factory.StartNew(() => JoinProgress());
 
 			if(IRCConfig.List[sIRCMessage.ServerName].UseNickServ)
 			{
@@ -78,7 +78,7 @@ namespace Schumix.Irc
 					{
 						Log.Notice("HostServ", sLConsole.GetString("Vhost is OFF."));
 						ChannelPrivmsg = sMyNickInfo.NickStorage;
-						sMyChannelInfo.JoinChannel();
+						sMyChannelInfo.JoinChannels();
 						Online = true;
 					}
 				}
@@ -92,7 +92,7 @@ namespace Schumix.Irc
 
 					ChannelPrivmsg = sMyNickInfo.NickStorage;
 					NewNickPrivmsg = string.Empty;
-					sMyChannelInfo.JoinChannel();
+					sMyChannelInfo.JoinChannels();
 					Online = true;
 				}
 			}
@@ -729,13 +729,13 @@ namespace Schumix.Irc
 				if(!Online)
 				{
 					sMyNickInfo.ChangeVhostStatus(true);
-					sMyChannelInfo.JoinChannel();
+					sMyChannelInfo.JoinChannels();
 					Online = true;
 				}
 			}
 		}
 
-		private void IsJoin()
+		private void JoinProgress()
 		{
 			Thread.Sleep(20*1000);
 			ConnectAllChannel();
