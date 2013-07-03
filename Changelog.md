@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Komponensek verziója meg fog egyezni ezentúl a rendszer verziójával.
  * Log részek átmozgatva a Logger névtérbe.
  * Release_x64 elméletileg most már teljesen törölve lett a programból.
  * Installer.exe forrásfájlai lefrissítve. Új verzió a 0.0.7. Jelenleg is alpha verziónak tekinthető.
