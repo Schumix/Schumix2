@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-04 13:59:25+0200\n"
-"PO-Revision-Date: 2013-07-04 13:59:26+0200\n"
+"POT-Creation-Date: 2013-07-04 14:05:01+0200\n"
+"PO-Revision-Date: 2013-07-04 14:05:02+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -610,7 +610,7 @@ msgid "SCS sent random: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
-msgid "Started..."
+msgid "Successfully started the ClientSocket."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
@@ -1145,7 +1145,7 @@ msgid "All Command Handler are registered."
 msgstr ""
 
 #: ../Applications/Schumix.Server/ServerListener.cs:3
-msgid "Successfully started the Listener."
+msgid "Successfully started the ServerListener."
 msgstr ""
 
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:9

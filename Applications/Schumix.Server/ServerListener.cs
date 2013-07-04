@@ -55,12 +55,12 @@ namespace Schumix.Server
 		public void Listen()
 		{
 			_listener.Start();
-			Log.Notice("Listener", sLConsole.GetString("Successfully started the Listener."));
+			Log.Notice("ServerListener", sLConsole.GetString("Successfully started the ServerListener."));
 			
 			while(true)
 			{
 				var client = _listener.AcceptTcpClient();
-				Log.Notice("Listener", sLConsole.GetString("Client connection from: {0}"), client.Client.RemoteEndPoint);
+				Log.Notice("ServerListener", sLConsole.GetString("Client connection from: {0}"), client.Client.RemoteEndPoint);
 				var client_thread = new Thread(new ParameterizedThreadStart(ClientHandler));
 				client_thread.Start(client);
 				Thread.Sleep(100);

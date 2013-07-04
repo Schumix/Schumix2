@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-04 13:59:25+0200\n"
+"POT-Creation-Date: 2013-07-04 14:02:52+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -620,8 +620,8 @@ msgid "SCS sent random: {0}"
 msgstr "SCS által küldött véletlenszerű csomag: {0}"
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
-msgid "Started..."
-msgstr "Indul..."
+msgid "Successfully started the ClientSocket."
+msgstr "ClientSocket sikeresen elindult."
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
 #: ../Applications/Schumix.Server/ServerListener.cs:3
@@ -1138,9 +1138,8 @@ msgid "Network starting..."
 msgstr "Network indul..."
 
 #: ../Applications/Schumix/Schumix.cs:5
-#, fuzzy
 msgid "SchumixListener starting..."
-msgstr "Schumixok indítása..."
+msgstr "SchumixListener indítása..."
 
 #: ../Applications/Schumix/Schumix.cs:6
 msgid "Console starting..."
@@ -1167,9 +1166,8 @@ msgid "All Command Handler are registered."
 msgstr "Összes Command handler regisztrálásra került."
 
 #: ../Applications/Schumix.Server/ServerListener.cs:3
-#, fuzzy
-msgid "Successfully started the Listener."
-msgstr "A szál sikeresen elindult."
+msgid "Successfully started the ServerListener."
+msgstr "ServerListener sikeresen elindult."
 
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:9
 msgid "Sending random value: {0}"
@@ -1535,6 +1533,5 @@ msgid "Python support is disabled!"
 msgstr "Python támogatása le van tiltva!"
 
 #: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
-#, fuzzy
 msgid "Successfully started the SchumixListener."
-msgstr "SchumixBot sikeresen elindult."
+msgstr "SchumixListener sikeresen elindult."

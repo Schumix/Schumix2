@@ -63,7 +63,7 @@ namespace Schumix.Framework.Network
 		/// </summary>
 		public void Socket()
 		{
-			Log.Notice("ClientSocket", sLConsole.GetString("Started..."));
+			Log.Notice("ClientSocket", sLConsole.GetString("Successfully started the ClientSocket."));
 			Log.Notice("ClientSocket", sLConsole.GetString("Client connection from: {0}"), client.Client.RemoteEndPoint);
 			var client_thread = new Thread(new ParameterizedThreadStart(ClientHandler));
 			client_thread.Start(client);
