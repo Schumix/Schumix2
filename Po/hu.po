@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-03 14:21:12+0200\n"
+"POT-Creation-Date: 2013-07-04 13:16:18+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -1027,6 +1027,22 @@ msgstr "A magban lévő táblák takarítása kész."
 msgid "Loaded the Clean settings."
 msgstr "Clean beállításai betöltve."
 
+#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:3
+msgid "Username missing!"
+msgstr "Nincs megadva a felhasználó neve!"
+
+#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:4
+msgid "Api key missing!"
+msgstr "Nincs megadva az api kulcs!"
+
+#: ../Core/Schumix.Framework/Config/ShortUrlConfig.cs:2
+msgid "Loaded the ShortUrl settings."
+msgstr "ShortUrl beállításai betöltve."
+
+#: ../Core/Schumix.Framework/Exceptions/OptionException.cs:3
+msgid "OptionName"
+msgstr ""
+
 #: ../Core/Schumix.Framework/Logger/Log.cs:22
 #: ../Core/Schumix.Framework/Logger/Log.cs:29
 msgid "The log's file name changed. From now in it will be here: {0}\n"
@@ -1067,22 +1083,6 @@ msgstr ""
 "\n"
 "Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
 "logok. Megváltozás időpontja: [{1}]\n"
-
-#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:3
-msgid "Username missing!"
-msgstr "Nincs megadva a felhasználó neve!"
-
-#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:4
-msgid "Api key missing!"
-msgstr "Nincs megadva az api kulcs!"
-
-#: ../Core/Schumix.Framework/Config/ShortUrlConfig.cs:2
-msgid "Loaded the ShortUrl settings."
-msgstr "ShortUrl beállításai betöltve."
-
-#: ../Core/Schumix.Framework/Exceptions/OptionException.cs:3
-msgid "OptionName"
-msgstr ""
 
 #: ../Applications/Schumix/Main.cs:10 ../Applications/Schumix.Server/Main.cs:8
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
@@ -1156,14 +1156,6 @@ msgstr "CCommandManager sikeresen elindult."
 #: ../Applications/Schumix/Console/Commands/CommandManager.cs:7
 msgid "All Command Handler are registered."
 msgstr "Összes Command handler regisztrálásra került."
-
-#: ../Applications/Schumix/ScriptManager.cs:4
-msgid "Lua support is disabled!"
-msgstr "Lua támogatása le van tiltva!"
-
-#: ../Applications/Schumix/ScriptManager.cs:5
-msgid "Python support is disabled!"
-msgstr "Python támogatása le van tiltva!"
 
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:9
 msgid "Sending random value: {0}"
@@ -1389,105 +1381,105 @@ msgstr "WorlframAlpha beállításai betöltve."
 msgid "Exception thrown while fetching youtube title: {0}"
 msgstr "Kivételt dobott letöltése közben a youtube title: {0}"
 
-#: ../Components/Schumix.Updater/Update.cs:3
+#: ../Components/Schumix.Components/Updater/Update.cs:3
 msgid "Automatic updater is off."
 msgstr "Automatikus frissítés ki van kapcsolva."
 
-#: ../Components/Schumix.Updater/Update.cs:5
+#: ../Components/Schumix.Components/Updater/Update.cs:5
 msgid "Searching for new stable version is started."
 msgstr "Új stabil verzió keresése megindult."
 
-#: ../Components/Schumix.Updater/Update.cs:6
-#: ../Components/Schumix.Updater/Update.cs:10
+#: ../Components/Schumix.Components/Updater/Update.cs:6
+#: ../Components/Schumix.Components/Updater/Update.cs:10
 msgid "Currently no newer version!"
 msgstr "Jelenleg nincs újabb verzió!"
 
-#: ../Components/Schumix.Updater/Update.cs:6
-#: ../Components/Schumix.Updater/Update.cs:10
+#: ../Components/Schumix.Components/Updater/Update.cs:6
+#: ../Components/Schumix.Components/Updater/Update.cs:10
 msgid "The program starts is continuing."
 msgstr "Folytatódik a program indulása."
 
-#: ../Components/Schumix.Updater/Update.cs:6
-#: ../Components/Schumix.Updater/Update.cs:10
+#: ../Components/Schumix.Components/Updater/Update.cs:6
+#: ../Components/Schumix.Components/Updater/Update.cs:10
 msgid "I found a newer version. The update to {0} version is starting."
 msgstr "Újabb verziót találtam. Megindul a frissítés a {0} verzióra."
 
-#: ../Components/Schumix.Updater/Update.cs:6
-#: ../Components/Schumix.Updater/Update.cs:10
+#: ../Components/Schumix.Components/Updater/Update.cs:6
+#: ../Components/Schumix.Components/Updater/Update.cs:10
 msgid "Older version found, update interrupted!"
 msgstr "Régebbi verziót találtam ezért leáll a frissítés!"
 
-#: ../Components/Schumix.Updater/Update.cs:7
-#: ../Components/Schumix.Updater/Update.cs:11
+#: ../Components/Schumix.Components/Updater/Update.cs:7
+#: ../Components/Schumix.Components/Updater/Update.cs:11
 msgid "Downloading new version."
 msgstr "Új forrás letöltése."
 
-#: ../Components/Schumix.Updater/Update.cs:8
-#: ../Components/Schumix.Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "Successfully downloaded new version."
 msgstr "Forrás sikeresen le lett töltve."
 
-#: ../Components/Schumix.Updater/Update.cs:8
-#: ../Components/Schumix.Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "Downloading unsuccessful!"
 msgstr "Letöltés sikertelen!"
 
-#: ../Components/Schumix.Updater/Update.cs:8
-#: ../Components/Schumix.Updater/Update.cs:12
-#: ../Components/Schumix.Updater/Update.cs:14
+#: ../Components/Schumix.Components/Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:14
 msgid "Updating successful!"
 msgstr "A frissítés befejeződött!"
 
-#: ../Components/Schumix.Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:8
 msgid "Searching for the last version is started."
 msgstr "A legutolsó verzió keresése megindult."
 
-#: ../Components/Schumix.Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "No such version like this, update interrupted!"
 msgstr "Ilyen verzió nem létezik ezért a frissítés leáll!"
 
-#: ../Components/Schumix.Updater/Update.cs:13
+#: ../Components/Schumix.Components/Updater/Update.cs:13
 msgid "Started translating."
 msgstr "Fordítás megkezdése."
 
-#: ../Components/Schumix.Updater/Update.cs:14
+#: ../Components/Schumix.Components/Updater/Update.cs:14
 msgid "Error was handled while translated!"
 msgstr "Hiba történt a fordítás közben!"
 
-#: ../Components/Schumix.Updater/Update.cs:15
+#: ../Components/Schumix.Components/Updater/Update.cs:15
 msgid "Successfully finished the translation."
 msgstr "Fordítás sikeresen befejeződött."
 
-#: ../Components/Schumix.Updater/Update.cs:15
+#: ../Components/Schumix.Components/Updater/Update.cs:15
 msgid "Sql files update is started. The setted database will be updated."
 msgstr ""
 "Megindult az sql fájlok frissítése. A beállított adatbázis fog frissülni."
 
-#: ../Components/Schumix.Updater/Update.cs:15
+#: ../Components/Schumix.Components/Updater/Update.cs:15
 msgid "Sql update finished."
 msgstr "Az sql frissítés befejeződött."
 
-#: ../Components/Schumix.Updater/Update.cs:19
+#: ../Components/Schumix.Components/Updater/Update.cs:19
 msgid "This step of updateing is finished. Continue with next step."
 msgstr "Frissítés ezen szakasza befejeződött. Következik a beállítás."
 
-#: ../Components/Schumix.Updater/Update.cs:20
+#: ../Components/Schumix.Components/Updater/Update.cs:20
 msgid "The update is finished. The program shutting down!"
 msgstr "A frissítés befejeződött. Leáll a program!"
 
-#: ../Components/Schumix.LuaEngine/LuaEngine.cs:6
+#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:6
 msgid "Initializing Lua engine."
 msgstr "Lua motor betöltése."
 
-#: ../Components/Schumix.LuaEngine/LuaEngine.cs:13
+#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:13
 msgid "Loading Lua script: {0}"
 msgstr "Lua script betöltése: {0}"
 
-#: ../Components/Schumix.LuaEngine/LuaEngine.cs:14
+#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:14
 msgid "Exception thrown while loading Lua script: {0} Error: {1}"
 msgstr "Kivétel dobott betöltése közben a Lua script: {0} Hiba: {1}"
 
-#: ../Components/Schumix.LuaEngine/LuaHelper.cs:8
+#: ../Components/Schumix.Components/LuaEngine/LuaHelper.cs:8
 msgid ""
 "Function {0} (exported as {1}): argument number mismatch. Declared {2}, but "
 "requires {3}!"
@@ -1495,22 +1487,30 @@ msgstr ""
 "Funkció {0} (exportált {1}): argumentum szám nem egyezik. Nyilvánítva {2}, "
 "de ehhez {3}!"
 
-#: ../Components/Schumix.LuaEngine/LuaHelper.cs:14
+#: ../Components/Schumix.Components/LuaEngine/LuaHelper.cs:14
 msgid "Lua compile error: {0}"
 msgstr "Lua fordítási hiba: {0}"
 
-#: ../Components/Schumix.PythonEngine/PythonEngine.cs:3
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:3
 msgid "Initializing Python engine."
 msgstr "Python motor betöltése."
 
-#: ../Components/Schumix.PythonEngine/PythonEngine.cs:13
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:13
 msgid "Loading Python script: {0}"
 msgstr "Python script betöltése: {0}"
 
-#: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:19
 msgid "Exception thrown while loading Python script. Error: {0} {1}"
 msgstr "Kivétel dobott betöltése közben a Python script. Hiba: {0} {1}"
 
-#: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:19
 msgid "Exception thrown while loading Python script: {0} Error: {1} {2}"
 msgstr "Kivétel dobott betöltése közben a Python script: {0} Hiba: {1} {2}"
+
+#: ../Components/Schumix.Components/ScriptManager.cs:4
+msgid "Lua support is disabled!"
+msgstr "Lua támogatása le van tiltva!"
+
+#: ../Components/Schumix.Components/ScriptManager.cs:5
+msgid "Python support is disabled!"
+msgstr "Python támogatása le van tiltva!"
