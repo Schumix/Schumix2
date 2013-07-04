@@ -21,9 +21,8 @@
 
 using System;
 using System.Net.Sockets;
-using Schumix.Framework.Network;
 
-namespace Schumix.Server
+namespace Schumix.Components.Listener
 {
-	delegate void ServerPacketHandlerDelegate(SchumixPacket packet, NetworkStream stream, string hst, int bck);
+	delegate void SchumixPacketHandlerDelegate(SchumixPacket packet, NetworkStream stream, string hst, int bck);
 }

@@ -27,29 +27,27 @@ using System.Net.Sockets;
 using System.Threading;
 using Schumix.Framework;
 using Schumix.Framework.Logger;
-using Schumix.Framework.Network;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
-namespace Schumix.Server
+namespace Schumix.Components.Listener
 {
-	sealed class ServerListener : IDisposable
+	public sealed class SchumixListener : IDisposable
 	{
-		private readonly ServerPacketHandler sServerPacketHandler = Singleton<ServerPacketHandler>.Instance;
+		private readonly SchumixPacketHandler sSchumixPacketHandler = Singleton<SchumixPacketHandler>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly TcpListener _listener;
-		public bool Exit = false;
 
 		/// <summary>
-		/// Initializes a new instance of the <see cref="Schumix.Server.ServerListener"/> class.
+		/// Initializes a new instance of the <see cref="FBI.Server.ServerListener"/> class.
 		/// </summary>
 		/// <param name='port'>
 		/// Port to listen on.
 		/// </param>
-		public ServerListener(int port)
+		public SchumixListener(int port)
 		{
 			_listener = new TcpListener(IPAddress.Any, port);
-			sServerPacketHandler.Init();
+			sSchumixPacketHandler.Init();
 		}
 		
 		public void Listen()
@@ -78,12 +76,15 @@ namespace Schumix.Server
 			while(true)
 			{
 				bytes_read = 0;
-				
+
 				// read
 				if(stream.DataAvailable && stream.CanRead)
 				{
 					Log.Debug("ClientHandler", sLConsole.GetString("Stream data available, reading."));
 					bytes_read = stream.Read(message_buffer, 0, message_buffer.Length);
+
+					if(SchumixBase.ExitStatus)
+						return;
 					
 					if(bytes_read == 0)
 					{
@@ -91,26 +92,21 @@ namespace Schumix.Server
 						break;
 					}
 
-					if(Exit)
-						return;
-
 					var encoding = new UTF8Encoding();
 					var msg = encoding.GetString(message_buffer, 0, bytes_read);
 					var packet = new SchumixPacket(msg);
-					sServerPacketHandler.HandlePacket(packet, client, stream);
+					sSchumixPacketHandler.HandlePacket(packet, client, stream);
 				}
 				
 				Thread.Sleep(100);
 			}
 
-			Log.Warning("ClientHandler", sLConsole.GetString("Program shutting down!"));
-			Environment.Exit(1);
+			// TODO
+			Log.Warning("ClientHandler", "Az adatok feldolgozása befejeződött!"/*sLConsole.GetString("Program shutting down!")*/);
 		}
 		
 		public void Dispose()
 		{
-			Exit = true;
-
 			if(!_listener.IsNull())
 				_listener.Stop();
 		}

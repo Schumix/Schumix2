@@ -27,29 +27,25 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Logger;
-using Schumix.Framework.Network;
+using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
-using Schumix.Server.Config;
 
-namespace Schumix.Server
+namespace Schumix.Components.Listener
 {
-	class ServerPacketHandler
+	class SchumixPacketHandler
 	{
 		private readonly Dictionary<string, NetworkStream> _HostList = new Dictionary<string, NetworkStream>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Dictionary<string, bool> _AuthList = new Dictionary<string, bool>();
-		private readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public Dictionary<string, NetworkStream> HostList { get { return _HostList; } }
-		public event ServerPacketHandlerDelegate OnScsRandomRequest;
-		public event ServerPacketHandlerDelegate OnCloseConnection;
-		public event ServerPacketHandlerDelegate OnAuthRequest;
-		private ServerPacketHandler() {}
+		public event SchumixPacketHandlerDelegate OnCloseConnection;
+		public event SchumixPacketHandlerDelegate OnAuthRequest;
+		private SchumixPacketHandler() {}
 
 		public void Init()
 		{
 			OnAuthRequest      += AuthRequestPacketHandler;
-			OnScsRandomRequest += ScsRandomHandler;
 			OnCloseConnection  += CloseHandler;
 		}
 
@@ -80,22 +76,8 @@ namespace Schumix.Server
 
 			if(packetid == (int)Opcode.CMSG_REQUEST_AUTH)
 				OnAuthRequest(packet, stream, hst, bck);
-			else if(packetid == (int)Opcode.CMSG_REQUEST_SCS_RANDOM)
-				OnScsRandomRequest(packet, stream, hst, bck);
 			else if(packetid == (int)Opcode.CMSG_CLOSE_CONNECTION)
 				OnCloseConnection(packet, stream, hst, bck);
-		}
-
-		private void ScsRandomHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
-		{
-			var rand = new Random();
-			int random = rand.Next();
-			Log.Notice("Random", sLConsole.GetString("Sending random value: {0}"), random);
-
-			var packet = new SchumixPacket();
-			packet.Write<int>((int)Opcode.SMSG_SEND_SCS_RANDOM);
-			packet.Write<int>(random);
-			SendPacketBack(packet, stream, hst, bck);
 		}
 
 		private void AuthRequestPacketHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
@@ -104,7 +86,7 @@ namespace Schumix.Server
 			string guid = pck.Read<string>();
 			string hash = pck.Read<string>();
 
-			if(hash != sUtilities.Md5(ServerConfigs.Password))
+			if(hash != sUtilities.Md5(ServerConfig.Password))
 			{
 				if(_HostList.ContainsKey(hst + SchumixBase.Colon + bck))
 					_HostList.Remove(hst + SchumixBase.Colon + bck);
@@ -138,31 +120,7 @@ namespace Schumix.Server
 				_AuthList.Remove(hst + SchumixBase.Colon + bck);
 
 			string guid = pck.Read<string>();
-			string file = pck.Read<string>();
-			string dir = pck.Read<string>();
-			string ce = pck.Read<string>();
-			string locale = pck.Read<string>();
-			string reconnect = pck.Read<string>();
-			string identify = pck.Read<string>();
 			Log.Warning("CloseHandler", sLConsole.GetString("Connection closed! Guid of client: {0}"), guid);
-
-			if(hst != "127.0.0.1")
-				return;
-
-			if(!Convert.ToBoolean(reconnect))
-				return;
-
-			Log.Notice("CloseHandler", sLConsole.GetString("Restart in progress..."));
-
-			if(sSchumix._processlist.ContainsKey(identify))
-				sSchumix.Start(file, dir, ce, locale, sUtilities.GetRandomString());
-
-			sSchumix._processlist.Remove(identify);
-		}
-
-		private void NickNameHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
-		{
-
 		}
 
 		public void SendPacketBack(SchumixPacket packet, NetworkStream stream, string hst, int backport)

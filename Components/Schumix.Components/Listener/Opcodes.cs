@@ -20,10 +20,23 @@
  */
 
 using System;
-using System.Net.Sockets;
-using Schumix.Framework.Network;
 
-namespace Schumix.Server
+#pragma warning disable 1591
+
+namespace Schumix.Components.Listener
 {
-	delegate void ServerPacketHandlerDelegate(SchumixPacket packet, NetworkStream stream, string hst, int bck);
+	/// <summary>
+	/// List of possible Opcodes.
+	/// </summary>
+	public enum Opcode : int
+	{
+		SCMSG_PACKET_NULL             = 0x0,
+		CMSG_REQUEST_AUTH             = 0x01,
+		SMSG_AUTH_APPROVED            = 0x02,
+		SMSG_AUTH_DENIED              = 0x03,
+		CMSG_CLOSE_CONNECTION         = 0x04,
+		SMSG_CLOSE_CONNECTION         = 0x05
+	}
 }
+
+#pragma warning restore 1591
