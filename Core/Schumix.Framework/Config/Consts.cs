@@ -25,7 +25,7 @@ namespace Schumix.Framework.Config
 	public static class Consts
 	{
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public const string SchumixDescription = "Schumix IRC bot";
+		public const string SchumixDescription = "Schumix2 IRC Bot and Framework";
 #if DEBUG
 		public const string SchumixConfiguration = "Debug";
 #else

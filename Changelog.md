@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Schumix description frissítve.
  * Mathematics osztály átnevezve Maths-ra.
  * Addonok verziója mostantól meg fog egyezni a mag verziójával.
  * Api beolvasztva a Framework-be.
