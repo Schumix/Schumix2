@@ -25,7 +25,6 @@ using System.Net;
 using System.Threading;
 using System.Net.Sockets;
 using System.Globalization;
-using Schumix.Components.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Clean;
 using Schumix.Framework.Logger;
@@ -36,6 +35,7 @@ using Schumix.Framework.Platforms;
 using Schumix.Framework.Exceptions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.Components.Updater;
 using Schumix.Server.Config;
 
 namespace Schumix.Server

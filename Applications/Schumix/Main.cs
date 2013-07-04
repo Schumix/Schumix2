@@ -24,7 +24,6 @@ using System.Text;
 using System.Threading;
 using System.Globalization;
 using Schumix.Irc;
-using Schumix.Components.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
@@ -33,6 +32,7 @@ using Schumix.Framework.Platforms;
 using Schumix.Framework.Exceptions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.Components.Updater;
 
 namespace Schumix
 {
