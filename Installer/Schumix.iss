@@ -68,7 +68,6 @@ Source: "..\Run\Release\MonoPosixHelper.dll"; DestDir: "{app}"; Flags: ignorever
 Source: "..\Run\Release\Mono.Posix.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Mono.Security.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\MySql.Data.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Run\Release\Schumix.Api.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.db3"; DestDir: "{userappdata}\Schumix\"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.Framework.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -82,6 +81,8 @@ Source: "..\Run\Release\YamlDotNet.Core.dll"; DestDir: "{app}"; Flags: ignorever
 Source: "..\Run\Release\YamlDotNet.RepresentationModel.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\IronPython.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\IronPython.Modules.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Microsoft.Dynamic.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Microsoft.Scripting.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;Addons
 Source: "..\Run\Release\Addons\CalendarAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
 Source: "..\Run\Release\Addons\ChatterBotAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion

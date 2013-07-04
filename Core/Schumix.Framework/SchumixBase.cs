@@ -26,7 +26,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Collections.Generic;
-using Schumix.Api.Functions;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Clean;
 using Schumix.Framework.Config;
@@ -35,6 +34,7 @@ using Schumix.Framework.Network;
 using Schumix.Framework.Database;
 using Schumix.Framework.Database.Cache;
 using Schumix.Framework.Platforms;
+using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 

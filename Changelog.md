@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Api beolvasztva a Framework-be.
  * LuaEngine, PythonEngine és Updater összevonva egy projektbe.
  * Komponensek verziója meg fog egyezni ezentúl a rendszer verziójával.
  * Log részek átmozgatva a Logger névtérbe.

@@ -1,6 +1,0 @@
-Name: Schumix.Api
-Description: Schumix.Api
-Version: 4.1.x
-
-Requires: 
-Libs: -r:@expanded_libdir@/@PACKAGE@/Schumix.Api.dll

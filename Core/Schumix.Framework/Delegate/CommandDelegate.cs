@@ -19,20 +19,9 @@
  */
 
 using System;
+using Schumix.Framework.Irc;
 
-namespace Schumix.Api.Irc
+namespace Schumix.Framework.Delegate
 {
-	public class IRCMessage
-	{
-		public string Hostmask { get; set; }
-		public string Channel { get; set; }
-		public string Args { get; set; }
-		public string Nick { get; set; }
-		public string User { get; set; }
-		public string Host { get; set; }
-		public string[] Info { get; set; }
-		public int ServerId { get; set; }
-		public string ServerName { get; set; }
-		public MessageType MessageType { get; set; }
-	}
+	public delegate void CommandDelegate(IRCMessage sIRCMessage);
 }

@@ -21,7 +21,7 @@
 using System;
 using System.Reflection;
 using System.Collections.Generic;
-using Schumix.Api.Delegate;
+using Schumix.Framework.Delegate;
 
 namespace Schumix.Irc
 {

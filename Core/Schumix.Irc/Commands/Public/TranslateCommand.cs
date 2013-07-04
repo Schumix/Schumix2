@@ -20,8 +20,8 @@
 
 using System;
 using System.Text.RegularExpressions;
-using Schumix.Api.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands

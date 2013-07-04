@@ -19,11 +19,10 @@
  */
 
 using System;
-using Schumix.Api;
-using Schumix.Api.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Localization;

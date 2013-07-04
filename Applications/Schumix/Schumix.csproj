@@ -62,10 +62,6 @@
       <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
       <Name>Schumix.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Core\Schumix.Api\Schumix.Api.csproj">
-      <Project>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</Project>
-      <Name>Schumix.Api</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Components\Schumix.Components\Schumix.Components.csproj">
       <Project>{A4846770-4EF1-40AE-9D14-C87A732B7316}</Project>
       <Name>Schumix.Components</Name>

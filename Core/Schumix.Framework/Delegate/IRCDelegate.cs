@@ -19,19 +19,9 @@
  */
 
 using System;
+using Schumix.Framework.Irc;
 
-namespace Schumix.Api.Irc
+namespace Schumix.Framework.Delegate
 {
-	/// <summary>
-	///     Meghatározza az üzenet küldési típusokat.
-	/// </summary>
-	public enum MessageType
-	{
-		Privmsg,
-		Notice,
-		Amsg,
-		Action,
-		CtcpRequest,
-		CtcpReply
-	};
+	public delegate void IRCDelegate(IRCMessage sIRCMessage);
 }

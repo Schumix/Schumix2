@@ -12,7 +12,6 @@ COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Irc.dll \
 	../../Run/Debug/Schumix.Framework.dll \
-	../../Run/Debug/Schumix.Api.dll \
 	../../Run/Debug/Schumix.Components.dll
 BUILD_DIR = ../../Run/Debug
 
@@ -23,9 +22,6 @@ SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_CORE_DLL_MDB=$(BUILD_DIR)/YamlDotNet.Core.dll.mdb
@@ -78,7 +74,6 @@ COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Irc.dll \
 	../../Run/Release/Schumix.Framework.dll \
-	../../Run/Release/Schumix.Api.dll \
 	../../Run/Release/Schumix.Components.dll
 BUILD_DIR = ../../Run/Release
 
@@ -88,8 +83,6 @@ SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB=
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
@@ -131,8 +124,6 @@ PROGRAMFILES = \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
-	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB) \
 	$(YAMLDOTNET_CORE_DLL) \
 	$(YAMLDOTNET_CORE_DLL_MDB) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
@@ -211,7 +202,6 @@ SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
-SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 SCHUMIX_COMPONENTS_DLL = $(BUILD_DIR)/Schumix.Components.dll

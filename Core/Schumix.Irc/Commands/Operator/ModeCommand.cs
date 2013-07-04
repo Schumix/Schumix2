@@ -21,9 +21,9 @@
 using System;
 using System.Threading;
 using System.Text.RegularExpressions;
-using Schumix.Api.Irc;
 using Schumix.Irc.Util;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands

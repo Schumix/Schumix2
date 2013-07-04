@@ -20,29 +20,23 @@
 
 using System;
 
-namespace Schumix.Api.Functions
+namespace Schumix.Framework.Functions
 {
-	public enum IFunctions
+	public enum IChannelFunctions
 	{
 		Greeter,
 		Log,
 		Rejoin,
 		Commands,
-		Reconnect,
 		Autohl,
 		Autokick,
 		Automode,
-		Svn,
-		Hg,
-		Git,
 		Antiflood,
 		Message,
 		Compiler,
 		Gamecommands,
 		Webtitle,
 		Otherkick,
-		Mantisbt,
-		Wordpress,
 		Chatterbot,
 		NameDay,
 		BirthDay

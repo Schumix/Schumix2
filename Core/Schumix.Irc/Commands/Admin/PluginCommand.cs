@@ -20,9 +20,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Schumix.Api.Irc;
-using Schumix.Api.Delegate;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Config;
+using Schumix.Framework.Delegate;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands

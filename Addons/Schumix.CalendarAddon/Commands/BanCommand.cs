@@ -20,10 +20,10 @@
 
 using System;
 using System.Text.RegularExpressions;
-using Schumix.Api.Irc;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.CalendarAddon;

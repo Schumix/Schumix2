@@ -30,15 +30,15 @@ using System.Net.Security;
 using System.Reflection;
 using System.Collections.Generic;
 using System.Security.Authentication;
-using Schumix.Api.Irc;
-using Schumix.Api.Delegate;
-using Schumix.Api.Functions;
 using Schumix.Irc.Util;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
+using Schumix.Framework.Delegate;
+using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc

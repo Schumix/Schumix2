@@ -19,9 +19,17 @@
  */
 
 using System;
-using Schumix.Api.Irc;
+using System.Collections.Generic;
 
-namespace Schumix.Api.Delegate
+namespace Schumix.Framework.Functions
 {
-	public delegate void CommandDelegate(IRCMessage sIRCMessage);
+	public class IFunctionsClassBase
+	{
+		public Dictionary<string, string> Functions { get; private set; }
+
+		public IFunctionsClassBase(Dictionary<string, string> functions)
+		{
+			Functions = functions;
+		}
+	}
 }

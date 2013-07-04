@@ -24,7 +24,7 @@ using System.Threading;
 using System.Data;
 using System.Data.SQLite;
 using System.Text.RegularExpressions;
-using Schumix.Api.Irc;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;

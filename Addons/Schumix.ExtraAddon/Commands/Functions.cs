@@ -24,13 +24,13 @@ using System.Data;
 using System.Timers;
 using System.Threading;
 using System.Text.RegularExpressions;
-using Schumix.Api.Irc;
-using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
+using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.ExtraAddon.Commands

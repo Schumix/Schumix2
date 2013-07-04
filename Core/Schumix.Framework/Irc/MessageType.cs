@@ -1,4 +1,4 @@
-﻿/*
+/*
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
@@ -19,37 +19,19 @@
  */
 
 using System;
-using Schumix.Api.Irc;
 
-namespace Schumix.Api
+namespace Schumix.Framework.Irc
 {
 	/// <summary>
-	/// Another attempt to implement a plugin interface.
+	///     Meghatározza az üzenet küldési típusokat.
 	/// </summary>
-	public interface ISchumixAddon
+	public enum MessageType
 	{
-		/// <summary>
-		/// Creates the addon.
-		/// </summary>
-		void Setup(string ServerName, bool LoadConfig = false);
-		/// <summary>
-		/// Destroys the addon, releasing all resources.
-		/// </summary>
-		void Destroy();
-		int Reload(string RName, bool LoadConfig, string SName = "");
-		bool HandleHelp(IRCMessage sIRCMessage);
-
-		/// <summary>
-		/// Name of the addon
-		/// </summary>
-		string Name { get; }
-		/// <summary>
-		/// Author of the addon.
-		/// </summary>
-		string Author { get; }
-		/// <summary>
-		/// Website where the addon is available.
-		/// </summary>
-		string Website { get; }
-	}
+		Privmsg,
+		Notice,
+		Amsg,
+		Action,
+		CtcpRequest,
+		CtcpReply
+	};
 }

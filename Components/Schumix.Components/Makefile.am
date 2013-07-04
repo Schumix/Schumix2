@@ -19,7 +19,6 @@ PROJECT_REFERENCES =  \
 	../../External/NLua/Core/KeraLua/src/bin/Debug/KeraLua.dll \
 	../../External/NLua/Core/KopiLua/Bin/Debug/KopiLua.dll \
 	../../External/NLua/Run/Debug/NLua.dll \
-	../../Run/Debug/Schumix.Api.dll \
 	../../Run/Debug/Schumix.Irc.dll
 BUILD_DIR = ../../Run/Debug
 
@@ -50,9 +49,6 @@ SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_CORE_DLL_MDB=$(BUILD_DIR)/YamlDotNet.Core.dll.mdb
@@ -95,7 +91,6 @@ PROJECT_REFERENCES =  \
 	../../External/NLua/Core/KeraLua/src/bin/Release/KeraLua.dll \
 	../../External/NLua/Core/KopiLua/Bin/Release/KopiLua.dll \
 	../../External/NLua/Run/Release/NLua.dll \
-	../../Run/Release/Schumix.Api.dll \
 	../../Run/Release/Schumix.Irc.dll
 BUILD_DIR = ../../Run/Release
 
@@ -121,8 +116,6 @@ SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
-SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB=
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
@@ -167,8 +160,6 @@ PROGRAMFILES = \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
 	$(MONO_POSIX_DLL) \
-	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB) \
 	$(YAMLDOTNET_CORE_DLL) \
 	$(YAMLDOTNET_CORE_DLL_MDB) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
@@ -251,7 +242,6 @@ SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
-SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll

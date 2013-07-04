@@ -19,8 +19,8 @@
  */
 
 using System;
-using Schumix.Api.Delegate;
 using Schumix.Irc.Commands;
+using Schumix.Framework.Delegate;
 
 namespace Schumix.Components.LuaEngine
 {

@@ -19,17 +19,32 @@
  */
 
 using System;
-using System.Collections.Generic;
 
-namespace Schumix.Api.Functions
+namespace Schumix.Framework.Functions
 {
-	public class IFunctionsClassBase
+	public enum IFunctions
 	{
-		public Dictionary<string, string> Functions { get; private set; }
-
-		public IFunctionsClassBase(Dictionary<string, string> functions)
-		{
-			Functions = functions;
-		}
-	}
+		Greeter,
+		Log,
+		Rejoin,
+		Commands,
+		Reconnect,
+		Autohl,
+		Autokick,
+		Automode,
+		Svn,
+		Hg,
+		Git,
+		Antiflood,
+		Message,
+		Compiler,
+		Gamecommands,
+		Webtitle,
+		Otherkick,
+		Mantisbt,
+		Wordpress,
+		Chatterbot,
+		NameDay,
+		BirthDay
+	};
 }

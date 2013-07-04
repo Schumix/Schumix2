@@ -33,10 +33,10 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
-using Schumix.Api.Functions;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Platforms;
+using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -1475,9 +1475,6 @@ namespace Schumix.Framework
 
 			if(File.Exists(AddonsConfig.Directory + "/Schumix.Irc.dll"))
 				File.Delete(AddonsConfig.Directory + "/Schumix.Irc.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/Schumix.Api.dll"))
-				File.Delete(AddonsConfig.Directory + "/Schumix.Api.dll");
 
 			if(File.Exists(AddonsConfig.Directory + "/Schumix.Framework.dll"))
 				File.Delete(AddonsConfig.Directory + "/Schumix.Framework.dll");

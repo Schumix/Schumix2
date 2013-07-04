@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
@@ -19,19 +19,37 @@
  */
 
 using System;
-using System.IO;
-using System.Collections.Generic;
+using Schumix.Framework.Irc;
 
-namespace Schumix.Api.Irc
+namespace Schumix.Framework
 {
 	/// <summary>
-	///     A Network class része. Ezzel elérhető bárhonnét eggyes része.
+	/// Another attempt to implement a plugin interface.
 	/// </summary>
-	public sealed class INetwork
+	public interface ISchumixAddon
 	{
 		/// <summary>
-		///     Üzenet küldés az irc szerver felé.
+		/// Creates the addon.
 		/// </summary>
-		public static Dictionary<string, StreamWriter> WriterList = new Dictionary<string, StreamWriter>();
+		void Setup(string ServerName, bool LoadConfig = false);
+		/// <summary>
+		/// Destroys the addon, releasing all resources.
+		/// </summary>
+		void Destroy();
+		int Reload(string RName, bool LoadConfig, string SName = "");
+		bool HandleHelp(IRCMessage sIRCMessage);
+
+		/// <summary>
+		/// Name of the addon
+		/// </summary>
+		string Name { get; }
+		/// <summary>
+		/// Author of the addon.
+		/// </summary>
+		string Author { get; }
+		/// <summary>
+		/// Website where the addon is available.
+		/// </summary>
+		string Website { get; }
 	}
 }

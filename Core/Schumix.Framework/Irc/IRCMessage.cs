@@ -19,12 +19,20 @@
  */
 
 using System;
-using System.Collections.Generic;
 
-namespace Schumix.Api.Functions
+namespace Schumix.Framework.Irc
 {
-	public class IFunctionsClass
+	public class IRCMessage
 	{
-		public static readonly Dictionary<string, IFunctionsClassBase> ServerList = new Dictionary<string, IFunctionsClassBase>();
+		public string Hostmask { get; set; }
+		public string Channel { get; set; }
+		public string Args { get; set; }
+		public string Nick { get; set; }
+		public string User { get; set; }
+		public string Host { get; set; }
+		public string[] Info { get; set; }
+		public int ServerId { get; set; }
+		public string ServerName { get; set; }
+		public MessageType MessageType { get; set; }
 	}
 }

@@ -21,11 +21,11 @@
 
 using System;
 using System.Collections.Generic;
-using Schumix.Api.Delegate;
 using Schumix.Irc;
 using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Delegate;
 using Schumix.Framework.Extensions;
 using NLua;
 

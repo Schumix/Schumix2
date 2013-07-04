@@ -23,14 +23,14 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
-using Schumix.Api.Irc;
-using Schumix.Api.Functions;
 using Schumix.Irc.Util;
 using Schumix.Irc.Channel;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
+using Schumix.Framework.Functions;
 using Schumix.Framework.CodeBureau;
 using Schumix.Framework.Extensions;
 

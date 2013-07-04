@@ -10,7 +10,6 @@ ASSEMBLY = ../../Run/Debug/Addons/GitRssAddon.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../../Run/Debug/Schumix.Api.dll \
 	../../Run/Debug/Schumix.Framework.dll \
 	../../Run/Debug/Schumix.Irc.dll \
 	../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll \
@@ -19,9 +18,6 @@ BUILD_DIR = ../../Run/Debug/Addons
 
 GITRSSADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/GitRssAddon.dll.mdb
 GITRSSADDON_DLL_MDB=$(BUILD_DIR)/GitRssAddon.dll.mdb
-SCHUMIX_API_DLL_SOURCE=../../Run/Debug/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Api.dll.mdb
-SCHUMIX_API_DLL_MDB=$(BUILD_DIR)/Schumix.Api.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 INTL_DLL_SOURCE=../../Dependencies/intl.dll
@@ -51,7 +47,6 @@ ASSEMBLY = ../../Run/Release/Addons/GitRssAddon.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../../Run/Release/Schumix.Api.dll \
 	../../Run/Release/Schumix.Framework.dll \
 	../../Run/Release/Schumix.Irc.dll \
 	../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll \
@@ -59,8 +54,6 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release/Addons
 
 GITRSSADDON_DLL_MDB=
-SCHUMIX_API_DLL_SOURCE=../../Run/Release/Schumix.Api.dll
-SCHUMIX_API_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 INTL_DLL_SOURCE=../../Dependencies/intl.dll
@@ -84,8 +77,6 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(GITRSSADDON_DLL_MDB) \
-	$(SCHUMIX_API_DLL) \
-	$(SCHUMIX_API_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SCHUMIX_DB3) \
 	$(INTL_DLL) \
@@ -145,7 +136,6 @@ CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 
 include $(top_srcdir)/Makefile.include
 
-SCHUMIX_API_DLL = $(BUILD_DIR)/Schumix.Api.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 INTL_DLL = $(BUILD_DIR)/intl.dll
@@ -159,8 +149,6 @@ YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
 SCHUMIX_GITRSSADDON_PC = $(BUILD_DIR)/schumix.gitrssaddon.pc
 
-$(eval $(call emit-deploy-target,SCHUMIX_API_DLL))
-$(eval $(call emit-deploy-target,SCHUMIX_API_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,INTL_DLL))
