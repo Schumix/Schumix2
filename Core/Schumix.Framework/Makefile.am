@@ -107,9 +107,6 @@ FILES = \
 	Network/ClientSocket.cs \
 	Runtime.cs \
 	CrashDumper.cs \
-	Mathematics/Algorithms/QuickSort.cs \
-	Mathematics/Types/AutoSortedArray.cs \
-	Mathematics/MathFunctions.cs \
 	Config/Consts.cs \
 	Config/SchumixConfig.cs \
 	Config/IRCConfig.cs \
@@ -181,7 +178,10 @@ FILES = \
 	Irc/INetwork.cs \
 	Irc/IRCMessage.cs \
 	Irc/MessageType.cs \
-	ISchumix.cs 
+	ISchumix.cs \
+	Maths/Algorithms/QuickSort.cs \
+	Maths/Types/AutoSortedArray.cs \
+	Maths/MathFunctions.cs 
 
 DATA_FILES = 
 

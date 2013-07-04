@@ -74,9 +74,6 @@
     <Compile Include="Network\ClientSocket.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="CrashDumper.cs" />
-    <Compile Include="Mathematics\Algorithms\QuickSort.cs" />
-    <Compile Include="Mathematics\Types\AutoSortedArray.cs" />
-    <Compile Include="Mathematics\MathFunctions.cs" />
     <Compile Include="Config\Consts.cs" />
     <Compile Include="Config\SchumixConfig.cs" />
     <Compile Include="Config\IRCConfig.cs" />
@@ -149,6 +146,9 @@
     <Compile Include="Irc\IRCMessage.cs" />
     <Compile Include="Irc\MessageType.cs" />
     <Compile Include="ISchumix.cs" />
+    <Compile Include="Maths\Algorithms\QuickSort.cs" />
+    <Compile Include="Maths\Types\AutoSortedArray.cs" />
+    <Compile Include="Maths\MathFunctions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

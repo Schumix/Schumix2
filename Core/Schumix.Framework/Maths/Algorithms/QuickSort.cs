@@ -22,7 +22,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Schumix.Framework.Mathematics.Algorithms
+namespace Schumix.Framework.Maths.Algorithms
 {
 	/// <summary>
 	/// Provides a generic implementation of the quick sort algorithm

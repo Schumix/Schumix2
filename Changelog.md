@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Mathematics osztály átnevezve Maths-ra.
  * Addonok verziója mostantól meg fog egyezni a mag verziójával.
  * Api beolvasztva a Framework-be.
  * LuaEngine, PythonEngine és Updater összevonva egy projektbe.
