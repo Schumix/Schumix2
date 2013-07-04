@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Addonok verziója mostantól meg fog egyezni a mag verziójával.
  * Api beolvasztva a Framework-be.
  * LuaEngine, PythonEngine és Updater összevonva egy projektbe.
  * Komponensek verziója meg fog egyezni ezentúl a rendszer verziójával.
