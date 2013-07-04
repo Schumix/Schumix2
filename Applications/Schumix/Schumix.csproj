@@ -48,7 +48,6 @@
     <Compile Include="Console\Commands\CommandHandler.cs" />
     <Compile Include="Console\Commands\CommandManager.cs" />
     <Compile Include="Console\Commands\CommandHelp.cs" />
-    <Compile Include="ScriptManager.cs" />
     <Compile Include="Windows\Windows.cs" />
     <Compile Include="Linux\Linux.cs" />
     <Compile Include="Windows\CtrlType.cs" />

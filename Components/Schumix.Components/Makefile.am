@@ -205,7 +205,8 @@ FILES = \
 	LuaEngine/LuaFunctions.cs \
 	LuaEngine/LuaHelper.cs \
 	LuaEngine/SchumixCommandMethod.cs \
-	PythonEngine/PythonEngine.cs 
+	PythonEngine/PythonEngine.cs \
+	ScriptManager.cs 
 
 DATA_FILES = 
 

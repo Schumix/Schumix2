@@ -178,7 +178,6 @@ FILES = \
 	Console/Commands/CommandHandler.cs \
 	Console/Commands/CommandManager.cs \
 	Console/Commands/CommandHelp.cs \
-	ScriptManager.cs \
 	Windows/Windows.cs \
 	Linux/Linux.cs \
 	Windows/CtrlType.cs 

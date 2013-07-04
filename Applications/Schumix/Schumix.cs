@@ -27,6 +27,7 @@ using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
 using Schumix.Framework.Localization;
+using Schumix.Components;
 
 namespace Schumix
 {
