@@ -1,6 +1,0 @@
-Name: Schumix.PythonEngine
-Description: Schumix.PythonEngine
-Version: 4.1.x
-
-Requires: 
-Libs: -r:@expanded_libdir@/@PACKAGE@/Schumix.PythonEngine.dll

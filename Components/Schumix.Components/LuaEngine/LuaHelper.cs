@@ -29,7 +29,7 @@ using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using NLua;
 
-namespace Schumix.LuaEngine
+namespace Schumix.Components.LuaEngine
 {
 	/// <summary>
 	/// Helper functions for the LuaEngine implementation.

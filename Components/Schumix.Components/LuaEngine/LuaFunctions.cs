@@ -29,7 +29,7 @@ using Schumix.Framework;
 using Schumix.Framework.Extensions;
 using NLua;
 
-namespace Schumix.LuaEngine
+namespace Schumix.Components.LuaEngine
 {
 	/// <summary>
 	/// Class containing most of the exported Lua functions.

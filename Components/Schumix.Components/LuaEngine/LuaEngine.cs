@@ -30,7 +30,7 @@ using Schumix.Framework.Logger;
 using Schumix.Framework.Localization;
 using NLua;
 
-namespace Schumix.LuaEngine
+namespace Schumix.Components.LuaEngine
 {
 	/// <summary>
 	/// Class used to load Lua script files.

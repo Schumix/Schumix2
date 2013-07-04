@@ -21,7 +21,7 @@
 
 using System;
 
-namespace Schumix.LuaEngine
+namespace Schumix.Components.LuaEngine
 {
 	/// <summary>
 	/// Attribute used to mark functions which are exposed to the Lua VM.

@@ -114,12 +114,8 @@ External/ngit/NGit/ngit.pc
 External/ngit/NGit/Makefile
 Components/Schumix.Libraries/schumix.libraries.pc
 Components/Schumix.Libraries/Makefile
-Components/Schumix.Updater/schumix.updater.pc
-Components/Schumix.Updater/Makefile
-Components/Schumix.LuaEngine/schumix.luaengine.pc
-Components/Schumix.LuaEngine/Makefile
-Components/Schumix.PythonEngine/schumix.pythonengine.pc
-Components/Schumix.PythonEngine/Makefile
+Components/Schumix.Components/schumix.components.pc
+Components/Schumix.Components/Makefile
 Components/Makefile
 Applications/Schumix/schumix
 Applications/Schumix/Makefile

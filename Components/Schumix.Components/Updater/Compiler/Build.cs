@@ -27,7 +27,7 @@ using Schumix.Framework;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Platforms;
 
-namespace Schumix.Updater.Compiler
+namespace Schumix.Components.Updater.Compiler
 {
 	sealed class Build
 	{

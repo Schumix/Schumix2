@@ -26,7 +26,7 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Database;
 using Schumix.Framework.Extensions;
 
-namespace Schumix.Updater.Sql
+namespace Schumix.Components.Updater.Sql
 {
 	sealed class SqlUpdate
 	{

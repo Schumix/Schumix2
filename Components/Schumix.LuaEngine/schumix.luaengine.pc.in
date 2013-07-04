@@ -1,6 +1,0 @@
-Name: Schumix.LuaEngine
-Description: Schumix.LuaEngine
-Version: 4.1.x
-
-Requires: 
-Libs: -r:@expanded_libdir@/@PACKAGE@/Schumix.LuaEngine.dll

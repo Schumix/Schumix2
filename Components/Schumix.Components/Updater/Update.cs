@@ -28,11 +28,11 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.Updater.Sql;
-using Schumix.Updater.Compiler;
-using Schumix.Updater.Download;
+using Schumix.Components.Updater.Sql;
+using Schumix.Components.Updater.Compiler;
+using Schumix.Components.Updater.Download;
 
-namespace Schumix.Updater
+namespace Schumix.Components.Updater
 {
 	public sealed class Update
 	{

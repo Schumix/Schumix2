@@ -34,7 +34,7 @@ using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
-namespace Schumix.PythonEngine
+namespace Schumix.Components.PythonEngine
 {
 	public sealed class PythonEngine
 	{

@@ -25,6 +25,8 @@ using Schumix.Framework;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Localization;
+using Schumix.Components.LuaEngine;
+using Schumix.Components.PythonEngine;
 
 namespace Schumix
 {
@@ -44,17 +46,17 @@ namespace Schumix
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private PythonEngine.PythonEngine _pythonEngine;
-		private LuaEngine.LuaEngine _luaEngine;
 		private readonly string _scriptsPath;
+		private PythonEngine _pythonEngine;
+		private LuaEngine _luaEngine;
 		/// <summary>
 		/// Gets the Python engine.
 		/// </summary>
-		public PythonEngine.PythonEngine Python { get { return _pythonEngine; } }
+		public PythonEngine Python { get { return _pythonEngine; } }
 		/// <summary>
 		/// Gets the Lua engine.
 		/// </summary>
-		public LuaEngine.LuaEngine Lua { get { return _luaEngine; } }
+		public LuaEngine Lua { get { return _luaEngine; } }
 		public string ScriptsPath { get { return _scriptsPath; } }
 
 		/// <summary>
@@ -69,7 +71,7 @@ namespace Schumix
 			if(ScriptsConfig.Lua)
 			{
 				sUtilities.CreateDirectory(Path.Combine(scriptPath, "Lua"));
-				_luaEngine = new LuaEngine.LuaEngine(Path.Combine(scriptPath, "Lua"));
+				_luaEngine = new LuaEngine(Path.Combine(scriptPath, "Lua"));
 			}
 			else
 				Log.Warning("ScriptManager", sLConsole.GetString("Lua support is disabled!"));
@@ -77,7 +79,7 @@ namespace Schumix
 			if(ScriptsConfig.Python)
 			{
 				sUtilities.CreateDirectory(Path.Combine(scriptPath, "Python"));
-				_pythonEngine = new PythonEngine.PythonEngine(Path.Combine(scriptPath, "Python"));
+				_pythonEngine = new PythonEngine(Path.Combine(scriptPath, "Python"));
 			}
 			else
 				Log.Warning("ScriptManager", sLConsole.GetString("Python support is disabled!"));

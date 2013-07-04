@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.0</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A4846770-4EF1-40AE-9D14-C87A732B7316}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Schumix.Components</RootNamespace>
+    <AssemblyName>Schumix.Components</AssemblyName>
+    <ReleaseVersion>4.1.x</ReleaseVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Run\Debug</OutputPath>
+    <DefineConstants>DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget Condition="'$(OS)' == 'Windows_NT'">x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Run\Release</OutputPath>
+    <DefineConstants>RELEASE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget Condition="'$(OS)' == 'Windows_NT'">x86</PlatformTarget>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="System.Core" />
+    <Reference Include="IronPython">
+      <HintPath>..\..\Dependencies\IronPython.dll</HintPath>
+    </Reference>
+    <Reference Include="IronPython.Modules">
+      <HintPath>..\..\Dependencies\IronPython.Modules.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Dynamic">
+      <HintPath>..\..\Dependencies\Microsoft.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Scripting">
+      <HintPath>..\..\Dependencies\Microsoft.Scripting.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Updater\Update.cs" />
+    <Compile Include="Updater\Sql\Sql.cs" />
+    <Compile Include="Updater\Download\CloneSchumix.cs" />
+    <Compile Include="Updater\Compiler\Build.cs" />
+    <Compile Include="LuaEngine\LuaEngine.cs" />
+    <Compile Include="LuaEngine\LuaFunctionAttribute.cs" />
+    <Compile Include="LuaEngine\LuaFunctionDescriptor.cs" />
+    <Compile Include="LuaEngine\LuaFunctions.cs" />
+    <Compile Include="LuaEngine\LuaHelper.cs" />
+    <Compile Include="LuaEngine\SchumixCommandMethod.cs" />
+    <Compile Include="PythonEngine\PythonEngine.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\External\ngit\External\SharpZipLib\src\ICSharpCode.SharpZLib.csproj">
+      <Project>{0E7413FF-EB9E-4714-ACF2-BE3A6A7B2FFD}</Project>
+      <Name>ICSharpCode.SharpZLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\NGit\NGit.csproj">
+      <Project>{E3BFF8B4-189C-496A-A817-7E8B31E22B91}</Project>
+      <Name>NGit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\NSch\NSch.csproj">
+      <Project>{A19E6F3F-A25B-4B01-8922-CF0CC35C781D}</Project>
+      <Name>NSch</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">
+      <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
+      <Name>Schumix.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\Sharpen\Sharpen.csproj">
+      <Project>{72944A6C-45FF-4EF8-B349-8C9CABF519D4}</Project>
+      <Name>Sharpen</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\Sharpen.Unix\Sharpen.Unix.csproj">
+      <Project>{849AE05D-0058-4A8C-A0E8-77DC6BB12E52}</Project>
+      <Name>Sharpen.Unix</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\NLua\Core\KeraLua\src\KeraLua.csproj">
+      <Project>{47153754-10F5-44D8-B578-F5A32B69061A}</Project>
+      <Name>KeraLua</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\NLua\Core\KopiLua\KopiLua\KopiLua.csproj">
+      <Project>{E8DDBC21-EF74-4ABA-9C49-BFC702BE25D8}</Project>
+      <Name>KopiLua</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\NLua\Core\NLua\NLua.csproj">
+      <Project>{F55CABBB-4108-4A39-94E1-581FD46DC021}</Project>
+      <Name>NLua</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Schumix.Api\Schumix.Api.csproj">
+      <Project>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</Project>
+      <Name>Schumix.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Schumix.Irc\Schumix.Irc.csproj">
+      <Project>{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}</Project>
+      <Name>Schumix.Irc</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Updater\" />
+    <Folder Include="LuaEngine\" />
+    <Folder Include="PythonEngine\" />
+  </ItemGroup>
+</Project>

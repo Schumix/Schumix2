@@ -27,8 +27,8 @@ using Schumix.Framework.Config;
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Schumix.Updater")]
-[assembly: AssemblyDescription(Consts.SchumixDescription)]
+[assembly: AssemblyTitle("Schumix.Components")]
+[assembly: AssemblyDescription("Schumix bot's components")]
 [assembly: AssemblyConfiguration(Consts.SchumixConfiguration)]
 [assembly: AssemblyCompany(Consts.SchumixCompany)]
 [assembly: AssemblyProduct(Consts.SchumixProduct)]

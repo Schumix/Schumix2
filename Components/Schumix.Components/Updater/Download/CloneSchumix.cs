@@ -19,22 +19,22 @@
  */
 
 using System;
-using Schumix.Api.Delegate;
-using Schumix.Irc.Commands;
+using System.IO;
+using System.Net;
+using NGit;
+using NGit.Api;
 
-namespace Schumix.LuaEngine
+namespace Schumix.Components.Updater.Download
 {
-	#pragma warning disable 3015
-	public class SchumixCommandMethod : Attribute
+	sealed class CloneSchumix
 	{
-		public CommandPermission Permission { get; private set; }
-		public CommandDelegate Method { get; set; }
-
-		public SchumixCommandMethod(CommandDelegate method, CommandPermission permission = CommandPermission.Normal)
+		public CloneSchumix(string Url, string Dir, string Branch)
 		{
-			Method = method;
-			Permission = permission;
+			var clone = Git.CloneRepository();
+			var repo = clone.SetURI(Url).SetDirectory(Path.Combine(Environment.CurrentDirectory, Dir)).Call();
+			repo.Checkout().SetCreateBranch(true).SetUpstreamMode(CreateBranchCommand.SetupUpstreamMode.SET_UPSTREAM).SetName("origin/" + Branch).Call();
+			repo.SubmoduleInit().Call();
+			repo.SubmoduleUpdate().Call();
 		}
 	}
-	#pragma warning restore 3015
 }

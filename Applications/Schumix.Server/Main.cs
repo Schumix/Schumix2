@@ -25,7 +25,7 @@ using System.Net;
 using System.Threading;
 using System.Net.Sockets;
 using System.Globalization;
-using Schumix.Updater;
+using Schumix.Components.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Clean;
 using Schumix.Framework.Logger;

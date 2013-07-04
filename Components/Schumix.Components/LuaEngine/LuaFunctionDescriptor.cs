@@ -22,7 +22,7 @@
 using System.Collections.Generic;
 using Schumix.Framework;
 
-namespace Schumix.LuaEngine
+namespace Schumix.Components.LuaEngine
 {
 	/// <summary>
 	/// Class used to describe and register Lua functions. Mainly related to attribute-based registering.
