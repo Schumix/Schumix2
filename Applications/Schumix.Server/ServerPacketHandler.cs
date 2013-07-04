@@ -33,7 +33,7 @@ using Schumix.Server.Config;
 
 namespace Schumix.Server
 {
-	class ServerPacketHandler
+	sealed class ServerPacketHandler
 	{
 		private readonly Dictionary<string, NetworkStream> _HostList = new Dictionary<string, NetworkStream>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;

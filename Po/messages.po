@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-04 13:16:18+0200\n"
-"PO-Revision-Date: 2013-07-04 13:16:19+0200\n"
+"POT-Creation-Date: 2013-07-04 13:59:25+0200\n"
+"PO-Revision-Date: 2013-07-04 13:59:26+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -40,7 +40,7 @@ msgstr ""
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
-#: ../Applications/Schumix/Schumix.cs:5
+#: ../Applications/Schumix/Schumix.cs:6
 #: ../Applications/Schumix/Console/Console.cs:7
 #: ../Applications/Schumix/Console/Commands/CommandManager.cs:11
 #: ../Applications/Schumix.Server/Config/Config.cs:6
@@ -593,6 +593,7 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:4
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:5
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:5
 msgid "Got packet with ID: {0} from: {1}"
 msgstr ""
 
@@ -609,27 +610,30 @@ msgid "SCS sent random: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
-#: ../Applications/Schumix.Server/ServerListener.cs:3
 msgid "Started..."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
 #: ../Applications/Schumix.Server/ServerListener.cs:3
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
 msgid "Client connection from: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:5
 #: ../Applications/Schumix.Server/ServerListener.cs:3
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
 msgid "Handling client..."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:7
 #: ../Applications/Schumix.Server/ServerListener.cs:3
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:4
 msgid "Stream data available, reading."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:9
 #: ../Applications/Schumix.Server/ServerListener.cs:3
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:5
 msgid "Lost connection!"
 msgstr ""
 
@@ -1113,6 +1117,10 @@ msgid "Network starting..."
 msgstr ""
 
 #: ../Applications/Schumix/Schumix.cs:5
+msgid "SchumixListener starting..."
+msgstr ""
+
+#: ../Applications/Schumix/Schumix.cs:6
 msgid "Console starting..."
 msgstr ""
 
@@ -1136,27 +1144,36 @@ msgstr ""
 msgid "All Command Handler are registered."
 msgstr ""
 
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Successfully started the Listener."
+msgstr ""
+
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:9
 msgid "Sending random value: {0}"
 msgstr ""
 
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
 msgid "Auth unsuccessful! Guid of client: {0}"
 msgstr ""
 
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
 msgid "Hash was: {0}"
 msgstr ""
 
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
 msgid "Back port is: {0}"
 msgstr ""
 
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
 msgid "Auth successful. Guid of client: {0}"
 msgstr ""
 
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:16
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:14
 msgid "Connection closed! Guid of client: {0}"
 msgstr ""
 
@@ -1487,5 +1504,9 @@ msgstr ""
 
 #: ../Components/Schumix.Components/ScriptManager.cs:5
 msgid "Python support is disabled!"
+msgstr ""
+
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
+msgid "Successfully started the SchumixListener."
 msgstr ""
 

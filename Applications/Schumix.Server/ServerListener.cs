@@ -55,7 +55,7 @@ namespace Schumix.Server
 		public void Listen()
 		{
 			_listener.Start();
-			Log.Notice("Listener", sLConsole.GetString("Started..."));
+			Log.Notice("Listener", sLConsole.GetString("Successfully started the Listener."));
 			
 			while(true)
 			{

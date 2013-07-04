@@ -32,7 +32,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Components.Listener
 {
-	class SchumixPacketHandler
+	public sealed class SchumixPacketHandler
 	{
 		private readonly Dictionary<string, NetworkStream> _HostList = new Dictionary<string, NetworkStream>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;

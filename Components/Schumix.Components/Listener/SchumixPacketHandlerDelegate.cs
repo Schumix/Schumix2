@@ -24,5 +24,5 @@ using System.Net.Sockets;
 
 namespace Schumix.Components.Listener
 {
-	delegate void SchumixPacketHandlerDelegate(SchumixPacket packet, NetworkStream stream, string hst, int bck);
+	public delegate void SchumixPacketHandlerDelegate(SchumixPacket packet, NetworkStream stream, string hst, int bck);
 }

@@ -33,7 +33,7 @@ namespace Schumix.Framework.Network
 	/// <summary>
 	/// Packet handler used by the client.
 	/// </summary>
-	class ClientPacketHandler
+	sealed class ClientPacketHandler
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;

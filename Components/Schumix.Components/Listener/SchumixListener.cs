@@ -53,12 +53,12 @@ namespace Schumix.Components.Listener
 		public void Listen()
 		{
 			_listener.Start();
-			Log.Notice("Listener", sLConsole.GetString("Started..."));
+			Log.Notice("SchumixListener", sLConsole.GetString("Successfully started the SchumixListener."));
 			
 			while(true)
 			{
 				var client = _listener.AcceptTcpClient();
-				Log.Notice("Listener", sLConsole.GetString("Client connection from: {0}"), client.Client.RemoteEndPoint);
+				Log.Notice("SchumixListener", sLConsole.GetString("Client connection from: {0}"), client.Client.RemoteEndPoint);
 				var client_thread = new Thread(new ParameterizedThreadStart(ClientHandler));
 				client_thread.Start(client);
 				Thread.Sleep(100);
@@ -71,7 +71,7 @@ namespace Schumix.Components.Listener
 			var stream = client.GetStream();
 			byte[] message_buffer = new byte[262144];
 			int bytes_read;
-			Log.Notice("ClientHandler", sLConsole.GetString("Handling client..."));
+			Log.Notice("SchumixListener", sLConsole.GetString("Handling client..."));
 			
 			while(true)
 			{
@@ -80,7 +80,7 @@ namespace Schumix.Components.Listener
 				// read
 				if(stream.DataAvailable && stream.CanRead)
 				{
-					Log.Debug("ClientHandler", sLConsole.GetString("Stream data available, reading."));
+					Log.Debug("SchumixListener", sLConsole.GetString("Stream data available, reading."));
 					bytes_read = stream.Read(message_buffer, 0, message_buffer.Length);
 
 					if(SchumixBase.ExitStatus)
@@ -88,7 +88,7 @@ namespace Schumix.Components.Listener
 					
 					if(bytes_read == 0)
 					{
-						Log.Warning("ClientHandler", sLConsole.GetString("Lost connection!"));
+						Log.Warning("SchumixListener", sLConsole.GetString("Lost connection!"));
 						break;
 					}
 
@@ -102,7 +102,7 @@ namespace Schumix.Components.Listener
 			}
 
 			// TODO
-			Log.Warning("ClientHandler", "Az adatok feldolgozása befejeződött!"/*sLConsole.GetString("Program shutting down!")*/);
+			Log.Warning("SchumixListener", "Az adatok feldolgozása befejeződött!"/*sLConsole.GetString("Program shutting down!")*/);
 		}
 		
 		public void Dispose()
