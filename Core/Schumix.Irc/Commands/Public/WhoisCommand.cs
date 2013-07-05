@@ -20,7 +20,7 @@
 
 using System;
 using System.Threading;
-using Schumix.Api.Irc;
+using Schumix.Framework.Irc;
 
 namespace Schumix.Irc.Commands
 {

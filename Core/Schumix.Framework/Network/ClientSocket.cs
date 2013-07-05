@@ -25,6 +25,7 @@ using System.Text;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -62,7 +63,7 @@ namespace Schumix.Framework.Network
 		/// </summary>
 		public void Socket()
 		{
-			Log.Notice("ClientSocket", sLConsole.GetString("Started..."));
+			Log.Notice("ClientSocket", sLConsole.GetString("Successfully started the ClientSocket."));
 			Log.Notice("ClientSocket", sLConsole.GetString("Client connection from: {0}"), client.Client.RemoteEndPoint);
 			var client_thread = new Thread(new ParameterizedThreadStart(ClientHandler));
 			client_thread.Start(client);

@@ -2,6 +2,32 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * SchumixListener hozzáadva a bothoz.Feljavításra kerültek a régi hasnoló alapon működő rendszerek.
+ * Schumix description frissítve.
+ * Mathematics osztály átnevezve Maths-ra.
+ * Addonok verziója mostantól meg fog egyezni a mag verziójával.
+ * Api beolvasztva a Framework-be.
+ * LuaEngine, PythonEngine és Updater összevonva egy projektbe.
+ * Komponensek verziója meg fog egyezni ezentúl a rendszer verziójával.
+ * Log részek átmozgatva a Logger névtérbe.
+ * Release_x64 elméletileg most már teljesen törölve lett a programból.
+ * Installer.exe forrásfájlai lefrissítve. Új verzió a 0.0.7. Jelenleg is alpha verziónak tekinthető.
+ * CheckAndCreate() függvény megszüntetve a konfig fájlokban.
+ * GeneralExtensions.cs fájl szét lett darabólva így könnyebb átlátni.
+ * Mac OS X és Linux megkülönböztetése javítva.
+ * ChatterBotApi.dll helyett mostantól külső tárolóból lesz elérhető a kódja így rugalmasabban fog illeszkedni a bothoz.
+ * NewNick változó áthelyezve a Network osztályba. Így elkerülhető azon bug mely a többszerveres mód után lépett fel.
+ * AutoPing() függvény mostantól nem fog feleslegesen hibát okozni.
+ * DebugLog mappa létrehozva. Belekerülnek a logba az IrcWrite és IrcRead üzenetek.
+ * Runtime osztályban létrehozva az Exit() függvény.
+ * birthday parancson is elvégezve minden módosítás ami a calendar parancson is volt.
+ * build.bat és build.sh frissítve.
+ * Calendar addonban a calendar és a ban parancsoknál alkalmazva az új regex-es működés.
+ * IsValueBiggerDateTimeNow() függvény kijavítva.
+ * Kick parancs feljavítása elkészült.
+ * LogToFile függvény átnevezve LogInFile függvényre.
+ * Randomkick funkciónév lecserélve Otherkick-re. Így jobban jelzi amire való.
+
 ## 4.1.0 (2013-06-23)
 
  * NetworkQuit akkor is true értéket kap ezentúl ha egyéb hiba lépett fel a kapcsolatban.

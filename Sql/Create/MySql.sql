@@ -61,7 +61,7 @@ CREATE TABLE `channels` (
   `Id` int(10) unsigned NOT NULL auto_increment,
   `ServerId` INT(10) NOT NULL DEFAULT '1',
   `ServerName` varchar(40) NOT NULL default '',
-  `Functions` varchar(500) NOT NULL default ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off,birthday:off',
+  `Functions` varchar(500) NOT NULL default ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,otherkick:off,chatterbot:off,nameday:off,birthday:off',
   `Channel` varchar(20) NOT NULL default '',
   `Password` varchar(30) NOT NULL default '',
   `Enabled` varchar(5) NOT NULL default 'false',

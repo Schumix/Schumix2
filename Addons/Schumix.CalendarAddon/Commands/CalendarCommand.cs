@@ -19,11 +19,12 @@
  */
 
 using System;
-using Schumix.Api.Irc;
+using System.Text.RegularExpressions;
 using Schumix.Irc;
 using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.CalendarAddon;
@@ -37,10 +38,101 @@ namespace Schumix.CalendarAddon.Commands
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private CalendarFunctions sCalendarFunctions;
+		private Regex _hamregex;
+		private Regex _regex;
 
 		public CalendarCommand(string ServerName) : base(ServerName)
 		{
 			sCalendarFunctions = new CalendarFunctions(ServerName);
+			_regex = new Regex(@"((?<year>[0-9]{4,4})(?:[\.\s]+|))?"                         // Year
+			                   + @"((?<month>[0-9]{1,2}|[a-zóüöúőűáéí]{3,20})(?:[\.\s]+|))?" // Month
+			                   + @"((?<day>[0-9]{1,2})(?:[\.\s]+|))?"                        // Day
+			                   + @"((?<hour>[0-9]{1,2})(?:[:]|))?"                           // Hour
+			                   + @"(?<minute>[0-9]{1,2})?"                                   // Minute
+			                   + @"((?:[\s]+)(?<text>(.*)))?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+			_hamregex = new Regex(@"((?<hour>[0-9]{1,2})(?:[:]|))?"                          // Hour
+			                   + @"(?<minute>[0-9]{1,2})?"                                   // Minute
+			                   + @"((?:[\s]+)(?<text>(.*)))?", RegexOptions.Compiled | RegexOptions.IgnoreCase);
+		}
+
+		private int GetYear(string args)
+		{
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["year"].ToString().ToNumber(-1).ToInt() : -1;
+		}
+
+		private string GetMonth(string args)
+		{
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["month"].ToString() : string.Empty;
+		}
+
+		private int GetDay(string args)
+		{
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["day"].ToString().ToNumber(32).ToInt() : 32;
+		}
+
+		private int GetHour(string args)
+		{
+			if(_regex.IsMatch(args) && IsYear(args))
+				return _regex.Match(args).Groups["hour"].ToString().ToNumber(25).ToInt();
+
+			if(_hamregex.IsMatch(args) && !IsYear(args))
+				return _hamregex.Match(args).Groups["hour"].ToString().ToNumber(25).ToInt();
+
+			return 25;
+		}
+
+		private int GetMinute(string args)
+		{
+			if(_regex.IsMatch(args) && IsYear(args))
+				return _regex.Match(args).Groups["minute"].ToString().ToNumber(61).ToInt();
+
+			if(_hamregex.IsMatch(args) && !IsYear(args))
+				return _hamregex.Match(args).Groups["minute"].ToString().ToNumber(61).ToInt();
+
+			return 61;
+		}
+
+		private string GetMessage(string args)
+		{
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["text"].ToString() : string.Empty;
+		}
+
+		private bool IsYear(string args)
+		{
+			return _regex.IsMatch(args) && !_regex.Match(args).Groups["year"].ToString().IsNullOrEmpty();
+		}
+
+		private bool IsMonth(string args)
+		{
+			return _regex.IsMatch(args) && !_regex.Match(args).Groups["month"].ToString().IsNullOrEmpty();
+		}
+
+		private bool IsDay(string args)
+		{
+			return _regex.IsMatch(args) && !_regex.Match(args).Groups["day"].ToString().IsNullOrEmpty();
+		}
+
+		private bool IsHour(string args)
+		{
+			return (_regex.IsMatch(args) && !_regex.Match(args).Groups["hour"].ToString().IsNullOrEmpty() && IsYear(args)) ||
+				(_hamregex.IsMatch(args) && !_hamregex.Match(args).Groups["hour"].ToString().IsNullOrEmpty() && !IsYear(args));
+		}
+
+		private bool IsMinute(string args)
+		{
+			return (_regex.IsMatch(args) && !_regex.Match(args).Groups["minute"].ToString().IsNullOrEmpty() && IsYear(args)) ||
+				(_hamregex.IsMatch(args) && !_hamregex.Match(args).Groups["minute"].ToString().IsNullOrEmpty() && !IsYear(args));
+		}
+
+		private bool IsMessage(string args)
+		{
+			return (_regex.IsMatch(args) && !_regex.Match(args).Groups["text"].ToString().IsNullOrEmpty() && IsYear(args)) ||
+				(_hamregex.IsMatch(args) && !_hamregex.Match(args).Groups["text"].ToString().IsNullOrEmpty() && !IsYear(args));
+		}
+
+		private bool IsHourAndMinute(string args)
+		{
+			return !IsYear(args);
 		}
 
 		public void HandleCalendar(IRCMessage sIRCMessage)
@@ -87,7 +179,9 @@ namespace Schumix.CalendarAddon.Commands
 							return;
 						}
 
-						if(sIRCMessage.Info[8].Contains(SchumixBase.Colon.ToString()))
+						string args = sIRCMessage.Info.SplitToString(8, SchumixBase.Space);
+
+						if(IsHourAndMinute(args))
 						{
 							if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[7]))
 							{
@@ -95,14 +189,26 @@ namespace Schumix.CalendarAddon.Commands
 								return;
 							}
 
-							int hour = sIRCMessage.Info[8].Substring(0, sIRCMessage.Info[8].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+							if(!IsHour(args))
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+
+							if(!IsMinute(args))
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+
+							int hour = GetHour(args);
 							if(hour >= 24 || hour < 0)
 							{
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 
-							int minute = sIRCMessage.Info[8].Substring(sIRCMessage.Info[8].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+							int minute = GetMinute(args);
 							if(minute >= 60 || minute < 0)
 							{
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
@@ -120,7 +226,9 @@ namespace Schumix.CalendarAddon.Commands
 							return;
 						}
 
-						if(sIRCMessage.Info[7].Contains(SchumixBase.Colon.ToString()))
+						string args = sIRCMessage.Info.SplitToString(7, SchumixBase.Space);
+
+						if(IsHourAndMinute(args))
 						{
 							if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[6]))
 							{
@@ -134,27 +242,39 @@ namespace Schumix.CalendarAddon.Commands
 								return;
 							}
 
-							if(sIRCMessage.Info.Length < 9)
+							if(!IsHour(args))
 							{
-								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 
-							int hour = sIRCMessage.Info[7].Substring(0, sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+							if(!IsMinute(args))
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+
+							if(!IsMessage(args))
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+
+							int hour = GetHour(args);
 							if(hour >= 24 || hour < 0)
 							{
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 
-							int minute = sIRCMessage.Info[7].Substring(sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+							int minute = GetMinute(args);
 							if(minute >= 60 || minute < 0)
 							{
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 
-							sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[6].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(8, SchumixBase.Space), hour, minute, true));
+							sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[6].ToLower(), sIRCMessage.Channel, GetMessage(args), hour, minute, true));
 						}
 					}
 				}
@@ -188,7 +308,9 @@ namespace Schumix.CalendarAddon.Commands
 								return;
 							}
 
-							if(sIRCMessage.Info[9].Contains(SchumixBase.Colon.ToString()))
+							string args = sIRCMessage.Info.SplitToString(9, SchumixBase.Space);
+
+							if(IsHourAndMinute(args))
 							{
 								if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[8]))
 								{
@@ -196,14 +318,26 @@ namespace Schumix.CalendarAddon.Commands
 									return;
 								}
 
-								int hour = sIRCMessage.Info[9].Substring(0, sIRCMessage.Info[9].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+								if(!IsHour(args))
+								{
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+									return;
+								}
+
+								if(!IsMinute(args))
+								{
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+									return;
+								}
+
+								int hour = GetHour(args);
 								if(hour >= 24 || hour < 0)
 								{
 									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 									return;
 								}
 
-								int minute = sIRCMessage.Info[9].Substring(sIRCMessage.Info[9].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+								int minute = GetMinute(args);
 								if(minute >= 60 || minute < 0)
 								{
 									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
@@ -221,7 +355,9 @@ namespace Schumix.CalendarAddon.Commands
 								return;
 							}
 
-							if(sIRCMessage.Info[8].Contains(SchumixBase.Colon.ToString()))
+							string args = sIRCMessage.Info.SplitToString(8, SchumixBase.Space);
+
+							if(IsHourAndMinute(args))
 							{
 								if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[7]))
 								{
@@ -234,28 +370,39 @@ namespace Schumix.CalendarAddon.Commands
 									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ICantLeftAMessageForMyself", sIRCMessage.Channel, sIRCMessage.ServerName));
 									return;
 								}
-
-								if(sIRCMessage.Info.Length < 10)
+								if(!IsHour(args))
 								{
-									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 									return;
 								}
 
-								int hour = sIRCMessage.Info[8].Substring(0, sIRCMessage.Info[8].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+								if(!IsMinute(args))
+								{
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+									return;
+								}
+
+								if(!IsMessage(args))
+								{
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+									return;
+								}
+
+								int hour = GetHour(args);
 								if(hour >= 24 || hour < 0)
 								{
 									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 									return;
 								}
 
-								int minute = sIRCMessage.Info[8].Substring(sIRCMessage.Info[8].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+								int minute = GetMinute(args);
 								if(minute >= 60 || minute < 0)
 								{
 									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 									return;
 								}
 
-								sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[7].ToLower(), sIRCMessage.Info[7].ToLower(), sIRCMessage.Info.SplitToString(9, SchumixBase.Space), hour, minute, true));
+								sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[7].ToLower(), sIRCMessage.Info[7].ToLower(), GetMessage(args), hour, minute, true));
 							}
 						}
 					}
@@ -269,16 +416,30 @@ namespace Schumix.CalendarAddon.Commands
 								return;
 							}
 
-							if(sIRCMessage.Info[7].Contains(SchumixBase.Colon.ToString()))
+							string args = sIRCMessage.Info.SplitToString(7, SchumixBase.Space);
+
+							if(IsHourAndMinute(args))
 							{
-								int hour = sIRCMessage.Info[7].Substring(0, sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+								if(!IsHour(args))
+								{
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+									return;
+								}
+
+								if(!IsMinute(args))
+								{
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+									return;
+								}
+
+								int hour = GetHour(args);
 								if(hour >= 24 || hour < 0)
 								{
 									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 									return;
 								}
 
-								int minute = sIRCMessage.Info[7].Substring(sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+								int minute = GetMinute(args);
 								if(minute >= 60 || minute < 0)
 								{
 									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
@@ -290,29 +451,43 @@ namespace Schumix.CalendarAddon.Commands
 						}
 						else
 						{
-							if(sIRCMessage.Info[6].Contains(SchumixBase.Colon.ToString()))
+							string args = sIRCMessage.Info.SplitToString(6, SchumixBase.Space);
+
+							if(IsHourAndMinute(args))
 							{
-								if(sIRCMessage.Info.Length < 8)
+								if(!IsHour(args))
 								{
-									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 									return;
 								}
 
-								int hour = sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+								if(!IsMinute(args))
+								{
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+									return;
+								}
+
+								if(!IsMessage(args))
+								{
+									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+									return;
+								}
+
+								int hour = GetHour(args);
 								if(hour >= 24 || hour < 0)
 								{
 									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 									return;
 								}
 
-								int minute = sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+								int minute = GetMinute(args);
 								if(minute >= 60 || minute < 0)
 								{
 									sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 									return;
 								}
 
-								sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Nick.ToLower(), sIRCMessage.Info.SplitToString(7, SchumixBase.Space), hour, minute, true));
+								sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Nick.ToLower(), GetMessage(args), hour, minute, true));
 							}
 						}
 					}
@@ -327,16 +502,30 @@ namespace Schumix.CalendarAddon.Commands
 							return;
 						}
 
-						if(sIRCMessage.Info[6].Contains(SchumixBase.Colon.ToString()))
+						string args = sIRCMessage.Info.SplitToString(6, SchumixBase.Space);
+
+						if(IsHourAndMinute(args))
 						{
-							int hour = sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+							if(!IsHour(args))
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+
+							if(!IsMinute(args))
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+
+							int hour = GetHour(args);
 							if(hour >= 24 || hour < 0)
 							{
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 
-							int minute = sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+							int minute = GetMinute(args);
 							if(minute >= 60 || minute < 0)
 							{
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
@@ -348,29 +537,43 @@ namespace Schumix.CalendarAddon.Commands
 					}
 					else
 					{
-						if(sIRCMessage.Info[5].Contains(SchumixBase.Colon.ToString()))
+						string args = sIRCMessage.Info.SplitToString(5, SchumixBase.Space);
+
+						if(IsHourAndMinute(args))
 						{
-							if(sIRCMessage.Info.Length < 7)
+							if(!IsHour(args))
 							{
-								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 
-							int hour = sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+							if(!IsMinute(args))
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+
+							if(!IsMessage(args))
+							{
+								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+								return;
+							}
+
+							int hour = GetHour(args);
 							if(hour >= 24 || hour < 0)
 							{
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 
-							int minute = sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+							int minute = GetMinute(args);
 							if(minute >= 60 || minute < 0)
 							{
 								sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 								return;
 							}
 
-							sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(6, SchumixBase.Space), hour, minute, true));
+							sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Channel, GetMessage(args), hour, minute, true));
 						}
 					}
 				}
@@ -389,7 +592,9 @@ namespace Schumix.CalendarAddon.Commands
 					return;
 				}
 
-				if(sIRCMessage.Info[6].Contains(SchumixBase.Colon.ToString()))
+				string args = sIRCMessage.Info.SplitToString(6, SchumixBase.Space);
+
+				if(IsHourAndMinute(args))
 				{
 					if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[5]))
 					{
@@ -403,27 +608,39 @@ namespace Schumix.CalendarAddon.Commands
 						return;
 					}
 
-					if(sIRCMessage.Info.Length < 8)
+					if(!IsHour(args))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int hour = sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+					if(!IsMinute(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsMessage(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					int hour = GetHour(args);
 					if(hour >= 24 || hour < 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int minute = sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+					int minute = GetMinute(args);
 					if(minute >= 60 || minute < 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[5].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(7, SchumixBase.Space), hour, minute));
+					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[5].ToLower(), sIRCMessage.Channel, GetMessage(args), hour, minute));
 				}
 				else
 				{
@@ -439,55 +656,78 @@ namespace Schumix.CalendarAddon.Commands
 						return;
 					}
 
-					if(sIRCMessage.Info.Length < 9)
+					if(!IsYear(args))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("YearIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					string[] s = sIRCMessage.Info[6].Split(SchumixBase.Point);
-					if(s.Length < 3)
+					if(!IsMonth(args))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("calendar", sIRCMessage.Channel, sIRCMessage.ServerName));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MonthIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int year = s[0].ToNumber(-1).ToInt();
+					if(!IsDay(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("DayIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsHour(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsMinute(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsMessage(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					int year = GetYear(args);
 					if(year < 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int month = s[1].ToNumber(13).ToInt();
+					int month = GetMonth(args).GetMonthNameInInt(sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName));
 					if(month > 12 || month <= 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int day = s[2].ToNumber(32).ToInt();
+					int day = GetDay(args);
 					if(!sUtilities.IsDay(year, month, day))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int hour = sIRCMessage.Info[7].Substring(0, sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+					int hour = GetHour(args);
 					if(hour >= 24 || hour < 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int minute = sIRCMessage.Info[7].Substring(sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+					int minute = GetMinute(args);
 					if(minute >= 60 || minute < 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[5].ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(8, SchumixBase.Space), year, month, day, hour, minute));
+					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[5].ToLower(), sIRCMessage.Channel, GetMessage(args), year, month, day, hour, minute));
 				}
 			}
 			else if(sIRCMessage.Info[4].ToLower() == "private")
@@ -512,7 +752,9 @@ namespace Schumix.CalendarAddon.Commands
 						return;
 					}
 
-					if(sIRCMessage.Info[7].Contains(SchumixBase.Colon.ToString()))
+					string args = sIRCMessage.Info.SplitToString(7, SchumixBase.Space);
+
+					if(IsHourAndMinute(args))
 					{
 						if(!Rfc2812Util.IsValidNick(sIRCMessage.Info[6]))
 						{
@@ -526,27 +768,39 @@ namespace Schumix.CalendarAddon.Commands
 							return;
 						}
 
-						if(sIRCMessage.Info.Length < 9)
+						if(!IsHour(args))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int hour = sIRCMessage.Info[7].Substring(0, sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+						if(!IsMinute(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						if(!IsMessage(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						int hour = GetHour(args);
 						if(hour >= 24 || hour < 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int minute = sIRCMessage.Info[7].Substring(sIRCMessage.Info[7].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+						int minute = GetMinute(args);
 						if(minute >= 60 || minute < 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[6].ToLower(), sIRCMessage.Info.SplitToString(8, SchumixBase.Space), hour, minute));
+						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[6].ToLower(), GetMessage(args), hour, minute));
 					}
 					else
 					{
@@ -562,55 +816,78 @@ namespace Schumix.CalendarAddon.Commands
 							return;
 						}
 
-						if(sIRCMessage.Info.Length < 10)
+						if(!IsYear(args))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("YearIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						string[] s = sIRCMessage.Info[7].Split(SchumixBase.Point);
-						if(s.Length < 3)
+						if(!IsMonth(args))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("calendar", sIRCMessage.Channel, sIRCMessage.ServerName));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MonthIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int year = s[0].ToNumber(-1).ToInt();
+						if(!IsDay(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("DayIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						if(!IsHour(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						if(!IsMinute(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						if(!IsMessage(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						int year = GetYear(args);
 						if(year < 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int month = s[1].ToNumber(13).ToInt();
+						int month = GetMonth(args).GetMonthNameInInt(sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName));
 						if(month > 12 || month <= 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int day = s[2].ToNumber(32).ToInt();
+						int day = GetDay(args);
 						if(!sUtilities.IsDay(year, month, day))
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int hour = sIRCMessage.Info[8].Substring(0, sIRCMessage.Info[8].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+						int hour = GetHour(args);
 						if(hour >= 24 || hour < 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int minute = sIRCMessage.Info[8].Substring(sIRCMessage.Info[8].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+						int minute = GetMinute(args);
 						if(minute >= 60 || minute < 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[6].ToLower(), sIRCMessage.Info.SplitToString(9, SchumixBase.Space), year, month, day, hour, minute));
+						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Info[6].ToLower(), sIRCMessage.Info[6].ToLower(), GetMessage(args), year, month, day, hour, minute));
 					}
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "nextmessage")
@@ -633,81 +910,118 @@ namespace Schumix.CalendarAddon.Commands
 				}
 				else
 				{
-					if(sIRCMessage.Info[5].Contains(SchumixBase.Colon.ToString()))
+					string args = sIRCMessage.Info.SplitToString(5, SchumixBase.Space);
+
+					if(IsHourAndMinute(args))
 					{
-						if(sIRCMessage.Info.Length < 7)
+						if(!IsHour(args))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int hour = sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+						if(!IsMinute(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						if(!IsMessage(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						int hour = GetHour(args);
 						if(hour >= 24 || hour < 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int minute = sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+						int minute = GetMinute(args);
 						if(minute >= 60 || minute < 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Nick.ToLower(), sIRCMessage.Info.SplitToString(6, SchumixBase.Space), hour, minute));
+						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Nick.ToLower(), GetMessage(args), hour, minute));
 					}
 					else
 					{
-						if(sIRCMessage.Info.Length < 8)
+						if(!IsYear(args))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("YearIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						string[] s = sIRCMessage.Info[5].Split(SchumixBase.Point);
-						if(s.Length < 3)
+						if(!IsMonth(args))
 						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("calendar", sIRCMessage.Channel, sIRCMessage.ServerName));
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MonthIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int year = s[0].ToNumber(-1).ToInt();
+						if(!IsDay(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("DayIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						if(!IsHour(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						if(!IsMinute(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						if(!IsMessage(args))
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
+						int year = GetYear(args);
 						if(year < 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int month = s[1].ToNumber(13).ToInt();
+						int month = GetMonth(args).GetMonthNameInInt(sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName));
 						if(month > 12 || month <= 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int day = s[2].ToNumber(32).ToInt();
+						int day = GetDay(args);
 						if(!sUtilities.IsDay(year, month, day))
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int hour = sIRCMessage.Info[6].Substring(0, sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+						int hour = GetHour(args);
 						if(hour >= 24 || hour < 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						int minute = sIRCMessage.Info[6].Substring(sIRCMessage.Info[6].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+						int minute = GetMinute(args);
 						if(minute >= 60 || minute < 0)
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
 
-						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Nick.ToLower(), sIRCMessage.Info.SplitToString(7, SchumixBase.Space), year, month, day, hour, minute));
+						sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Nick.ToLower(), GetMessage(args), year, month, day, hour, minute));
 					}
 				}
 			}
@@ -731,81 +1045,118 @@ namespace Schumix.CalendarAddon.Commands
 			}
 			else
 			{
-				if(sIRCMessage.Info[4].Contains(SchumixBase.Colon.ToString()))
+				string args = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
+
+				if(IsHourAndMinute(args))
 				{
-					if(sIRCMessage.Info.Length < 6)
+					if(!IsHour(args))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int hour = sIRCMessage.Info[4].Substring(0, sIRCMessage.Info[4].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+					if(!IsMinute(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsMessage(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					int hour = GetHour(args);
 					if(hour >= 24 || hour < 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int minute = sIRCMessage.Info[4].Substring(sIRCMessage.Info[4].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+					int minute = GetMinute(args);
 					if(minute >= 60 || minute < 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(5, SchumixBase.Space), hour, minute));
+					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Channel, GetMessage(args), hour, minute));
 				}
 				else
 				{
-					if(sIRCMessage.Info.Length < 7)
+					if(!IsYear(args))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoReason", sIRCMessage.Channel, sIRCMessage.ServerName));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("YearIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					string[] s = sIRCMessage.Info[4].Split(SchumixBase.Point);
-					if(s.Length < 3)
+					if(!IsMonth(args))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("calendar", sIRCMessage.Channel, sIRCMessage.ServerName));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MonthIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int year = s[0].ToNumber(-1).ToInt();
+					if(!IsDay(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("DayIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsHour(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("HourIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsMinute(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("MinuteIsNotGiven", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsMessage(args))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoMessage", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					int year = GetYear(args);
 					if(year < 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorYear", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int month = s[1].ToNumber(13).ToInt();
+					int month = GetMonth(args).GetMonthNameInInt(sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName));
 					if(month > 12 || month <= 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMonth", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int day = s[2].ToNumber(32).ToInt();
+					int day = GetDay(args);
 					if(!sUtilities.IsDay(year, month, day))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorDay", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int hour = sIRCMessage.Info[5].Substring(0, sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)).ToNumber(25).ToInt();
+					int hour = GetHour(args);
 					if(hour >= 24 || hour < 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorHour", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					int minute = sIRCMessage.Info[5].Substring(sIRCMessage.Info[5].IndexOf(SchumixBase.Colon)+1).ToNumber(61).ToInt();
+					int minute = GetMinute(args);
 					if(minute >= 60 || minute < 0)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ErrorMinute", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 
-					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Channel, sIRCMessage.Info.SplitToString(6, SchumixBase.Space), year, month, day, hour, minute));
+					sSendMessage.SendChatMessage(sIRCMessage, sCalendarFunctions.Add(sIRCMessage.Nick.ToLower(), sIRCMessage.Channel, GetMessage(args), year, month, day, hour, minute));
 				}
 			}
 		}

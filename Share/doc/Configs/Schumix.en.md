@@ -1,29 +1,35 @@
-# Schumix konfig fájl
+# Schumix config file
 
 ## Server
 
-* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy kapcsolodjon-e a szerverhez a program. Alapértelmezés: `false`
-* **Host:** Ide kell beírni a szerver nevét/címét ahova csatlakozni szeretnénk.
-* **Port:** A szerver portja. Alapértelmezés: `35220`
-* **Password:** A szerver azonosító jelszava. Alapértelmezés: `schumix`
+* **Enabled:** `true` or `false`. Should the program connect to a server. Default: `false`
+* **Host:** Server's domain name or ip address.
+* **Port:** Server port. Default: `35220`
+* **Password:** Server's identify password. Default: `schumix`
+
+## Listener
+
+* **Enabled:** `true` or `false`. Meghatározza hogy lehessen-e kapcsolódni a botban működő szerverhez. Default: `false`
+* **Port:** Server port. Default: `36200`
+* **Password:** Server's identify password. Default: `schumix`
 
 ## Irc
 
-Yaml konfignál:
-Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (Irc: ...) le kell másolni még egyszer és ott külön be kell állítani az adatokat valamint Irc(szám) ként kell megadni. Pl: Irc2: .... (ide pedig minde úgy jön utána ahogy volt csak az Irc-nél kell átírni az újat).
-Xml konfignál:
+With Yaml config:<br/>
+Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (Irc: ...) le kell másolni még egyszer és ott külön be kell állítani az adatokat valamint Irc(szám) ként kell megadni. Pl: Irc2: .... (ide pedig minde úgy jön utána ahogy volt csak az Irc-nél kell átírni az újat).<br/>
+With Xml config:<br/>
 Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (`<Irc> ... </Irc>`) le kell másolni még egyszer és ott külön be kell állítani az adatokat.
 * **ServerName:** A szerver neve. Ezzel lehet beállítani hogy többszerveres módban hogy mi legyen az egyes szervereket megkülönböztető név. FIGYELEM: Nem egyezhet meg a többi szerver nevével (kis és nagybetüt nem különbőzteti meg)!
-* **Server:** Ide kell beírni a szerver nevét ahova csatlakozni szeretnénk.
+* **Server:** Server's name where to connect.
 * **Password:** A szerver jelszavát lehet vele beállítani. Ha üresen van hagyva akkor úgy veszi mintha nem kellene jelszó a szerverhez.
-* **Port:** A szerver portja. Alapértelmezés: `6667`
-* **ModeMask:** A maskot lehet vele beállítani. Alapértelmezés: `8`
+* **Port:** The server's port Default: `6667`
+* **ModeMask:** Irc Mask. Default: `8`
 * **Ssl:** Értéke `true` vagy `false` lehet. Ezzel aktiválható a kapcsolódás olyan irc szerverre ahol ssl protokol van használva. Alapértelmezés: `false`
-* **NickName:** Elsõdleges név.
-* **NickName2:** Másodlagos név.
-* **NickName3:** Harmadlagos név.
-* **UserName:** Felhasználó név.
-* **UserInfo:** Információ a felhasználóról.
+* **NickName:** Primary name.
+* **NickName2:** Secondary name.
+* **NickName3:** Tertiary name.
+* **UserName:** Username.
+* **UserInfo:** Information about the user.
 * **MasterChannel:**
     * **Name:** Elsõdleges csatorna ahova csatlakozik minden esetben a bot. Ennek a neve itt változtatható meg. Az adatbázisból nem törölhetõ. Yaml konfig esetén "" jelek közé kell rakni a csatornát. Pl: Name: "#schumix2"
     * **Password:** Az elsődleges csatornához tartozó jelszó.
@@ -55,9 +61,10 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 * **MaxFileSize:** Meghatározza a log fájlt maximális méretét. Ha eléri azt a fájl akkor törlődik és a program csinál helyette egy újat.
                     Alapértelmezés: `100` (mb-ban értendő)
 * **LogLevel:** Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelmezés: `2`
-    * **Szintjei:** `0` (Normális üzenetek és a sikeresek)
-                    `1` (Figyelmeztetések)
-                    `2` (Hibák)
+    * **Szintjei:** <br/>
+                    `0` (Normális üzenetek és a sikeresek)<br/>
+                    `1` (Figyelmeztetések)<br/>
+                    `2` (Hibák)<br/>
                     `3` (Hibakeresõ üzenetek)
 * **LogDirectory:** A log üzenetek mentése abba a mappába ami megvan adva. Alapértelmezés: `Logs`
 * **IrcLogDirectory:** Az irc csatornák és egyéb üzenetének mentése abba a mappába ami megvan adva. Alapértelmezés: `Csatornak`

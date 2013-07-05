@@ -3,7 +3,7 @@
 -- ----------------------------
 -- Records of channels
 -- ----------------------------
-INSERT INTO `channels` VALUES ("1", "1", "default", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off,birthday:off", "#schumix2", "", "false", "false", "", "enUS");
+INSERT INTO `channels` VALUES ("1", "1", "default", ",greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,otherkick:off,chatterbot:off,nameday:off,birthday:off", "#schumix2", "", "false", "false", "", "enUS");
 
 -- ----------------------------
 -- Records of gitinfo
@@ -329,7 +329,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "schumix2/csc", "C# fordító verzió: {0}\nA fő osztály neve: class {0} {1}\nA fő funkció neve: void {0}() {1}\nHasználhatod egyszerűen: '{ /* program */ }'. Ez a fő funkció törzse.\nMég használhatod: '{0}, /* program */'. Ez itt /* program */ a fő funkció törzse.\nHa segítségre van szükséged, lépj kapcsolatba Jackneill-el.\nProgramot írta: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "help", "Ha a parancs mögé írod a megadott parancs nevét vagy a nevét és alparancsát információt ad a használatáról.\nFő parancsom: {0}xbot");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "xbot", "3Verzió: 10{0}\n3Programot írta: {0}\n3Parancsok: {0}");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "info", "3Programot írta: {0}\n3Fejlesztők: {0}.\n3Weboldal: {0}\n3Elérhetőség: [MSN] megax@megaxx.info");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "info", "3Programot írta: {0}\n3Fejlesztők: {0}\n3Weboldal: {0}\n3Elérhetőség: [Skype] megax@megaxx.info");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "time", "Helyi idő: {0}:{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "date", "Ma {0}. {1}. {2}. {3} napja van.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "roll", "Százalékos aránya {0}%");
@@ -541,13 +541,14 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/endgame", "A gyilkosok halottak! A 4falusiak győztek.\nA falusiakat szörnyű látvány fogadja: megtalálták 4{0} holttestét!\nA falusiak halottak! A 4gyilkosok győztek.\nElfogytak a játékosok!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/idonotknowwho", "Nem tudom ki vagy kik =(");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "maffiagame/base/ghost", "Meghaltál. Kérlek maradj csendben amíg a játék véget ér.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday", "Nem vagy beregisztrálva! Kérlek végezd el a regisztrálást hogy tudjad használni a funkciót. Parancs: {0}birthday register <hónap> <nap>");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday", "Nem vagy beregisztrálva! Kérlek végezd el a regisztrálást hogy tudjad használni a funkciót. Parancs: {0}birthday register <éééé.hh.nn>");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/info", "3Születésnap funkció állapota: {0}\n3Születésnap időpontja:2 {0}. {1}. {2}.\nNem vagy regisztrálva!\nNincs regisztrálva!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/change/status", "Születésnapod jelzése bekapcsolva.\nSzületésnapod jelzése kikapcsolva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/change/birthday", "Nincs megadva a születési hónap!\nNincs megadva a születési nap!\nSikeresen frissítve lett a születésnapod.\nNincs megadva a születési év!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/register", "Már regisztrálva vagy!\nNincs megadva a születési hónap!\nNincs megadva a születési nap!\nSikeresen hozzáadásra került a születésnapod.\nNincs megadva a születési év!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/remove", "Nem szerepelsz a listán!\nTörölve lett a születésnapod!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mode", "Saját rangomat nem változtathatom meg!\nTúl sok rang változtatást adtál meg! Maximum 4-et lehet!\n+ vagy - jel megadása kötelező!\nCsak angol abc betűivel lehet rangot megadni!\nValamelyik betű nem rang! Kérlek keresd meg melyik a hibás!\nTúl sok név lett megadva! Maximum 4-et lehet!\nTöbb rangot adtál meg mint ahány nevet!\nTöbb nevet adtál meg mint ahány rangot!\nSzóközöket adtál meg név helyett!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "kick", "Önmagamat nem rúghatom ki a csatornáról!");
 
 -- enUS
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/sys", "3Version: 10{0}\n3Platform: {0}\n3OSVersion: {0}\n3Programming language: c#\n3Memory allocation:5 {0} MB\n3Memory allocation:8 {0} MB\n3Memory allocation:3 {0} MB\n3Uptime: {0}");
@@ -559,7 +560,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/csc", "C# Compiler version: {0}\nThe main class's name: class {0} {1}\nThe main function's name: void {0}() {1}\nYou can use simply: '{ /* program */ }'. This is the man function's content.\nAlso you can use: '{0} /* program */'. Here is /* program */ is the main function's content.\nIf you need more help, please contact with Jackneill.\nProgrammed by: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "help", "If you wrote behind the command the command or the name or co-command then gets information about usage.\nMain command: {0}xbot");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "xbot", "3Version: 10{0}\n3Programmed by: {0}\n3Commands: {0}");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "info", "3Programmed by: {0}\n3Developers: {0}.\n3Website: {0}\n3Contact: [MSN] megax@megaxx.info");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "info", "3Programmed by: {0}\n3Developers: {0}\n3Website: {0}\n3Contact: [Skype] megax@megaxx.info");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "time", "Local time: {0}:{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "date", "Today is {0}. {1}. {2}. and {3}'s day.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "roll", "Pencentage rate: {0}%");
@@ -738,13 +739,14 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/remove", "Not on the ignore list!\nSuccesfuly removed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "xrev/github", "Username is not set!\nProject is not set!\nSha1 code is not set!\nThere is no such a commit!\n3Commit: {0}\n3Link: {0}\n3Author: {0}");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday", "You are not registered! Please register to use this function. Command: {0}birthday register <month> <day>");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday", "You are not registered! Please register to use this function. Command: {0}birthday register <yyyy.mm.dd>");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/info", "3State of birthday function: {0}\n3Date of birth:2 {0}. {1}. {2}.\nYou are not registered!\nYou are not registered!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/change/status", "Your birthday sign is on.\nYour birthday sign is off.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/change/birthday", "Month of birth missing!\nDay of birth missing!\nYour birthday is succesfully updated.\nYear of birth missing!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/register", "You are already registered!\nMonth of birth missing!\nDay of birth missing!\nBirthday succesfully added.\nYear of birth missing!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/remove", "You are not in the list!\nBirthday deleted!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mode", "You can't change your own rank!\nYou changed too much rank! It can be max 4!\n+ or - symbol requied!\nYou can use characters from the english abc!\nOne of the characters is not a rank!\nYou changed too many name! It can be max 4!\nYou type more rank than name!\nYou type more name than rank!\nYou added a space instead of a name!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "kick", "I can't kick myself from the channel!");
 
 -- huHU
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xbot", "9", "Felhasználók számára használható parancslista.");
@@ -972,8 +974,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/info", "1", "Kiírja a születésnap funkció állapotát.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/change", "1", "Megváltoztatható vele a funkció több beállítása.\nParancsok: status | birthday");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/change/status", "1", "Bekapcsolható vagy kikapcsolható vele a születésnap funkció.\nHasználata: {0}birthday change status <on vagy off>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/change/birthday", "1", "Frissíthető vele a születésnap dátuma.\nHasználata: {0}birthday change birthday <év> <hónap> <nap>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/register", "1", "Beregisztrálja a születésnapot.\nHasználata: {0}birthday register <év> <hónap> <nap>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/change/birthday", "1", "Frissíthető vele a születésnap dátuma.\nHasználata: {0}birthday change birthday <éééé.hh.nn>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/register", "1", "Beregisztrálja a születésnapot.\nHasználata: {0}birthday register <éééé.hh.nn>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "birthday/remove", "1", "Törli a születésnapot.");
 
 -- enUS
@@ -1202,8 +1204,8 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/info", "1", "Shows the state of the birthday function.");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/change", "1", "With it you can change the paramteres of the function.\nCommands: status | birthday");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/change/status", "1", "With it you can turn on/off the birthday function.\nUse: {0}birthday change status <on or off>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/change/birthday", "1", "With it you can update your birth date.\nUse: {0}birthday change birthday <year> <month> <day>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/register", "1", "Register the birth date.\nUse: {0}birthday register <year> <month> <day>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/change/birthday", "1", "With it you can update your birth date.\nUse: {0}birthday change birthday <yyyy.mm.dd>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/register", "1", "Register the birth date.\nUse: {0}birthday register <yyyy.mm.dd>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "birthday/remove", "1", "Delete the birth date.");
 
 -- huHU
@@ -1282,6 +1284,11 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "StatusIsMissing", "Nincs megadva az állapot!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ValueIsNotTrueOrFalse", "Nem true vagy false érték lett megadva!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ICantLeftAMessageForMyself", "Saját magamnak nem jegyezhetek fel üzenetet!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "YearIsNotGiven", "Nincs megadva az év!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "MonthIsNotGiven", "Nincs megadva a hónap!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "DayIsNotGiven", "Nincs megadva a nap!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "HourIsNotGiven", "Nincs megadva az óra!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "MinuteIsNotGiven", "Nincs megadva a perc!");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1359,6 +1366,11 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "StatusIsMissing", "Status is missing!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ValueIsNotTrueOrFalse", "Value is not true or false!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ICantLeftAMessageForMyself", "I cant left a message for myself!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "YearIsNotGiven", "Year is not given!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "MonthIsNotGiven", "Month is not given!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "DayIsNotGiven", "Day is not given!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "HourIsNotGiven", "Hour is not given!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "MinuteIsNotGiven", "Minute is not given!");
 
 -- ----------------------------
 -- Records of schumix
@@ -1379,7 +1391,7 @@ INSERT INTO `schumix` VALUES ("13", "1", "default", "message", "on");
 INSERT INTO `schumix` VALUES ("14", "1", "default", "compiler", "on");
 INSERT INTO `schumix` VALUES ("15", "1", "default", "gamecommands", "on");
 INSERT INTO `schumix` VALUES ("16", "1", "default", "webtitle", "on");
-INSERT INTO `schumix` VALUES ("17", "1", "default", "randomkick", "on");
+INSERT INTO `schumix` VALUES ("17", "1", "default", "otherkick", "on");
 INSERT INTO `schumix` VALUES ("18", "1", "default", "mantisbt", "off");
 INSERT INTO `schumix` VALUES ("19", "1", "default", "wordpress", "off");
 INSERT INTO `schumix` VALUES ("20", "1", "default", "chatterbot", "on");

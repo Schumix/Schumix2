@@ -19,8 +19,8 @@
  */
 
 using System;
-using Schumix.Api.Irc;
 using Schumix.Irc.Util;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Config;
 
 namespace Schumix.Irc.Commands

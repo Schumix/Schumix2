@@ -19,7 +19,7 @@
  */
 
 using System;
-using Schumix.Api.Irc;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 

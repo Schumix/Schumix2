@@ -20,11 +20,12 @@
 
 using System;
 using System.Diagnostics;
-using Schumix.Api.Irc;
-using Schumix.Api.Functions;
 using Schumix.Irc.Util;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
+using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc
@@ -51,11 +52,11 @@ namespace Schumix.Irc
 				if(args.Length > 6 && args.Substring(0, 6) == "ACTION")
 				{
 					args = args.Remove(0, 7);
-					LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, string.Format(sLConsole.GetString("[ACTION] {0}"), args));
+					LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, string.Format(sLConsole.GetString("[ACTION] {0}"), args));
 				}
 			}
 			else
-				LogToFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
+				LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
 
 			if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				sIRCMessage.Channel = sIRCMessage.Nick;
@@ -172,7 +173,7 @@ namespace Schumix.Irc
 					}
 					else
 					{
-						SchumixBase.NewNick = true;
+						sIrcBase.Networks[sIRCMessage.ServerName].NewNick = true;
 						string nick = sIRCMessage.Info[5];
 
 						if(!Rfc2812Util.IsValidNick(nick))

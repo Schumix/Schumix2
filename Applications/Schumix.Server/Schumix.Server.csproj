@@ -57,6 +57,7 @@
     <Compile Include="Config\XmlConfig.cs" />
     <Compile Include="Config\YamlConfig.cs" />
     <Compile Include="Config\ServerConfigs.cs" />
+    <Compile Include="ServerPacketMethod.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -69,10 +70,6 @@
       <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
       <Name>Schumix.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Components\Schumix.Updater\Schumix.Updater.csproj">
-      <Project>{33ABC53E-F210-442F-B4F7-D0A7642F2584}</Project>
-      <Name>Schumix.Updater</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.Core\YamlDotNet.Core.csproj">
       <Project>{BF32DE1B-6276-4341-B212-F8862ADBBA7A}</Project>
       <Name>YamlDotNet.Core</Name>
@@ -80,6 +77,10 @@
     <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.RepresentationModel\YamlDotNet.RepresentationModel.csproj">
       <Project>{21CA0077-E15C-446D-9C43-F6D3F9D09687}</Project>
       <Name>YamlDotNet.RepresentationModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Components\Schumix.Components\Schumix.Components.csproj">
+      <Project>{A4846770-4EF1-40AE-9D14-C87A732B7316}</Project>
+      <Name>Schumix.Components</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

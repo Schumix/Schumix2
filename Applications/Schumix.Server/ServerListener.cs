@@ -1,6 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
+ * Copyright (C) 2010-2012 Twl
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
  * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
  * 
@@ -25,6 +26,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Network;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -53,12 +55,12 @@ namespace Schumix.Server
 		public void Listen()
 		{
 			_listener.Start();
-			Log.Notice("Listener", sLConsole.GetString("Started..."));
+			Log.Notice("ServerListener", sLConsole.GetString("Successfully started the ServerListener."));
 			
 			while(true)
 			{
 				var client = _listener.AcceptTcpClient();
-				Log.Notice("Listener", sLConsole.GetString("Client connection from: {0}"), client.Client.RemoteEndPoint);
+				Log.Notice("ServerListener", sLConsole.GetString("Client connection from: {0}"), client.Client.RemoteEndPoint);
 				var client_thread = new Thread(new ParameterizedThreadStart(ClientHandler));
 				client_thread.Start(client);
 				Thread.Sleep(100);

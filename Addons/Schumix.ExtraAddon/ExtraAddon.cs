@@ -22,15 +22,15 @@
 using System;
 using System.Data;
 using System.Threading.Tasks;
-using Schumix.Api;
-using Schumix.Api.Irc;
-using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Util;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
+using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.ExtraAddon.Config;
@@ -230,7 +230,7 @@ namespace Schumix.ExtraAddon
 
 				Task.Factory.StartNew(() =>
 				{
-					if(sMyChannelInfo.FSelect(IFunctions.Randomkick) && sMyChannelInfo.FSelect(IChannelFunctions.Randomkick, sIRCMessage.Channel))
+					if(sMyChannelInfo.FSelect(IFunctions.Otherkick) && sMyChannelInfo.FSelect(IChannelFunctions.Otherkick, sIRCMessage.Channel))
 					{
 						if(sIRCMessage.Args.IsUpper() && sIRCMessage.Args.Length > 4)
 							sSender.Kick(sIRCMessage.Channel, sIRCMessage.Nick, sLManager.GetWarningText("CapsLockOff", sIRCMessage.Channel, sIRCMessage.ServerName));

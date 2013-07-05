@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-06-21 13:40:00+0200\n"
-"PO-Revision-Date: 2013-06-21 13:40:01+0200\n"
+"POT-Creation-Date: 2013-07-05 13:08:35+0200\n"
+"PO-Revision-Date: 2013-07-05 13:08:36+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,24 +23,24 @@ msgid "All Command Handler were deleted."
 msgstr ""
 
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:28
-#: ../Core/Schumix.Irc/Network.cs:58
-#: ../Core/Schumix.Irc/Network.cs:82
-#: ../Core/Schumix.Irc/Network.cs:85
-#: ../Core/Schumix.Irc/Network.cs:94
+#: ../Core/Schumix.Irc/Network.cs:62
+#: ../Core/Schumix.Irc/Network.cs:86
+#: ../Core/Schumix.Irc/Network.cs:89
+#: ../Core/Schumix.Irc/Network.cs:98
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
-#: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:42
 #: ../Core/Schumix.Framework/Config/Config.cs:6
 #: ../Core/Schumix.Framework/SchumixBase.cs:15
 #: ../Core/Schumix.Framework/Utilities.cs:25
-#: ../Core/Schumix.Framework/Utilities.cs:107
-#: ../Core/Schumix.Framework/Utilities.cs:124
-#: ../Core/Schumix.Framework/Utilities.cs:136
+#: ../Core/Schumix.Framework/Utilities.cs:108
+#: ../Core/Schumix.Framework/Utilities.cs:126
+#: ../Core/Schumix.Framework/Utilities.cs:139
 #: ../Core/Schumix.Framework/Timer.cs:3
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:12
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
-#: ../Applications/Schumix/Schumix.cs:5
+#: ../Applications/Schumix/Schumix.cs:6
 #: ../Applications/Schumix/Console/Console.cs:7
 #: ../Applications/Schumix/Console/Commands/CommandManager.cs:11
 #: ../Applications/Schumix.Server/Config/Config.cs:6
@@ -183,84 +183,99 @@ msgstr ""
 msgid "Server's name: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:16
-msgid "Opcodes thread started..."
-msgstr ""
-
-#: ../Core/Schumix.Irc/Network.cs:17
-msgid "Ping thread started..."
+#: ../Core/Schumix.Irc/Network.cs:18
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:6
+#: ../Core/Schumix.Framework/Logger/Log.cs:29
+msgid ""
+"Started time: [{0}]\n"
 msgstr ""
 
 #: ../Core/Schumix.Irc/Network.cs:18
-msgid "Establishing connection with irc server."
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:6
+#: ../Core/Schumix.Framework/Logger/Log.cs:29
+msgid ""
+"\n"
+"Started time: [{0}]\n"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:20
+msgid "Opcodes thread started..."
 msgstr ""
 
 #: ../Core/Schumix.Irc/Network.cs:21
+msgid "Ping thread started..."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:22
+msgid "Establishing connection with irc server."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Network.cs:25
 msgid "All of IRC handlers are registered."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:42
+#: ../Core/Schumix.Irc/Network.cs:46
 msgid "Connection to: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:43
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
+#: ../Core/Schumix.Irc/Network.cs:47
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:16
 msgid "Connection closed!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:46
+#: ../Core/Schumix.Irc/Network.cs:50
 msgid "Connection have been closed."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:46
+#: ../Core/Schumix.Irc/Network.cs:50
 msgid "Reconnection to: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:53
+#: ../Core/Schumix.Irc/Network.cs:57
 msgid ""
 "This nick name ({0}) is used by a service bot. Your nick is automaticly "
 "changed to a placeholder one."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:54
+#: ../Core/Schumix.Irc/Network.cs:58
 msgid "Connection type: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:55
+#: ../Core/Schumix.Irc/Network.cs:59
 msgid "Fatal error was happened while established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:56
+#: ../Core/Schumix.Irc/Network.cs:60
 msgid "Successfully established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:56
+#: ../Core/Schumix.Irc/Network.cs:60
 msgid "Error was happened while established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:58
+#: ../Core/Schumix.Irc/Network.cs:62
 msgid "Certificate not accepted, exception: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:62
+#: ../Core/Schumix.Irc/Network.cs:66
 msgid "Users' datas are sent."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:72
-#: ../Core/Schumix.Irc/Network.cs:93
+#: ../Core/Schumix.Irc/Network.cs:76
+#: ../Core/Schumix.Irc/Network.cs:97
 msgid "Successfully started the thread."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:72
+#: ../Core/Schumix.Irc/Network.cs:76
 msgid "Started the irc data receiving."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:75
+#: ../Core/Schumix.Irc/Network.cs:79
 msgid "Do not going data from irc server!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:92
+#: ../Core/Schumix.Irc/Network.cs:96
 msgid "Received unhandled opcode: {0}"
 msgstr ""
 
@@ -376,7 +391,7 @@ msgstr ""
 msgid "Away message cannot be empty or null!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Sender/SendMessage.cs:50
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:54
 #: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:6
 msgid "ChannelList: Failure request!"
 msgstr ""
@@ -386,28 +401,28 @@ msgid "{0} plugin is now loading."
 msgstr ""
 
 #: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:20
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:26
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:23
 msgid "Plugin can not be loaded!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:21
 #: ../Core/Schumix.Framework/Addon/AddonManager.cs:21
 msgid "Loaded plugin: {0} {1} by {2} ({3})"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:25
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:22
 msgid "{0} plugin denying and removing is now started."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:30
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
 msgid "{0} plugin successfully removed."
 msgstr ""
 
-#: ../Core/Schumix.Irc/IrcBase.cs:30
+#: ../Core/Schumix.Irc/IrcBase.cs:36
 msgid "Reload irc module!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/IrcBase.cs:32
+#: ../Core/Schumix.Irc/IrcBase.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:4
 #: ../Core/Schumix.Framework/Database/SQLite.cs:15
 #: ../Core/Schumix.Framework/Database/SQLite.cs:18
@@ -417,12 +432,12 @@ msgstr ""
 #: ../Core/Schumix.Framework/Database/MySql.cs:19
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:16
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
-#: ../Core/Schumix.Framework/Runtime.cs:6
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:43
+#: ../Core/Schumix.Framework/Runtime.cs:8
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:19
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 #: ../Applications/Schumix.Server/ServerListener.cs:6
 #: ../Applications/Schumix.Server/Config/Config.cs:4
 msgid "Program shutting down!"
@@ -576,45 +591,55 @@ msgstr ""
 msgid "The program is loaded under {0}ms."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:4
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:5
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:11
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
 msgid "Got packet with ID: {0} from: {1}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:14
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:14
+msgid "Received unhandled packetid: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
 msgid "Authentication denied to SCS server!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:7
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:13
 msgid "Successfully authed to SCS server."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:8
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
 msgid "SCS sent random: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
-#: ../Applications/Schumix.Server/ServerListener.cs:3
-msgid "Started..."
+msgid "Successfully started the ClientSocket."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
 #: ../Applications/Schumix.Server/ServerListener.cs:3
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
 msgid "Client connection from: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:5
 #: ../Applications/Schumix.Server/ServerListener.cs:3
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
 msgid "Handling client..."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:7
 #: ../Applications/Schumix.Server/ServerListener.cs:3
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:4
 msgid "Stream data available, reading."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:9
 #: ../Applications/Schumix.Server/ServerListener.cs:3
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:5
 msgid "Lost connection!"
 msgstr ""
 
@@ -630,15 +655,15 @@ msgstr ""
 msgid "Couldn't send SCS packet!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Runtime.cs:6
+#: ../Core/Schumix.Framework/Runtime.cs:8
 msgid "The program, more than {0} MB consumed!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Runtime.cs:12
+#: ../Core/Schumix.Framework/Runtime.cs:14
 msgid "Failed to set process name: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Runtime.cs:15
+#: ../Core/Schumix.Framework/Runtime.cs:17
 msgid "Error setting process name!"
 msgstr ""
 
@@ -731,44 +756,44 @@ msgstr ""
 msgid "Config file is loading."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:13
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The master channel's format is wrong. \"#\" is missing. Corrected."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:13
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The master channel is not given so the default will be used. ({0})"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:14
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The primary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The secondary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:18
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The tertiary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:43
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:19
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 msgid ""
 "{0}: In the three nickname there are atleast two identical, please modify "
 "those."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:18
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:20
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:46
 msgid "The {0} server is already in use so not loaded!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:41
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:43
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:11
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:23
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:7
@@ -791,7 +816,7 @@ msgstr ""
 msgid "Config database is loading."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:46
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -814,7 +839,7 @@ msgstr ""
 msgid "No such config file!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:46
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -837,7 +862,7 @@ msgstr ""
 msgid "Preparing..."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:104
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
@@ -860,7 +885,7 @@ msgstr ""
 msgid "Config file is completed!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:104
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
@@ -995,49 +1020,6 @@ msgstr ""
 msgid "Loaded the Clean settings."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Log/Log.cs:22
-#: ../Core/Schumix.Framework/Log/Log.cs:29
-msgid ""
-"The log's file name changed. From now in it will be here: {0}\n"
-msgstr ""
-
-#: ../Core/Schumix.Framework/Log/Log.cs:24
-msgid ""
-"The log file's name changed. {0} was the old. From now on the logs will be "
-"here.\n"
-msgstr ""
-
-#: ../Core/Schumix.Framework/Log/Log.cs:24
-msgid ""
-"\n"
-"The log file's name changed. {0} was the old. From now on the logs will be "
-"here.\n"
-msgstr ""
-
-#: ../Core/Schumix.Framework/Log/Log.cs:29
-msgid ""
-"Started time: [{0}]\n"
-msgstr ""
-
-#: ../Core/Schumix.Framework/Log/Log.cs:29
-msgid ""
-"\n"
-"Started time: [{0}]\n"
-msgstr ""
-
-#: ../Core/Schumix.Framework/Log/Log.cs:30
-msgid ""
-"The log file's name changed. {0} was the old. From now on the logs will be "
-"here. Change's time: [{1}]\n"
-msgstr ""
-
-#: ../Core/Schumix.Framework/Log/Log.cs:30
-msgid ""
-"\n"
-"The log file's name changed. {0} was the old. From now on the logs will be "
-"here. Change's time: [{1}]\n"
-msgstr ""
-
 #: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:3
 msgid "Username missing!"
 msgstr ""
@@ -1052,6 +1034,42 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Exceptions/OptionException.cs:3
 msgid "OptionName"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Logger/Log.cs:22
+#: ../Core/Schumix.Framework/Logger/Log.cs:29
+msgid ""
+"The log's file name changed. From now in it will be here: {0}\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Logger/Log.cs:24
+msgid ""
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here.\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Logger/Log.cs:24
+msgid ""
+"\n"
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here.\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Logger/Log.cs:30
+msgid ""
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here. Change's time: [{1}]\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Logger/Log.cs:30
+msgid ""
+"\n"
+"The log file's name changed. {0} was the old. From now on the logs will be "
+"here. Change's time: [{1}]\n"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/ListenerConfig.cs:3
+msgid "Loaded the Listener settings."
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:10
@@ -1109,6 +1127,10 @@ msgid "Network starting..."
 msgstr ""
 
 #: ../Applications/Schumix/Schumix.cs:5
+msgid "SchumixListener starting..."
+msgstr ""
+
+#: ../Applications/Schumix/Schumix.cs:6
 msgid "Console starting..."
 msgstr ""
 
@@ -1132,39 +1154,40 @@ msgstr ""
 msgid "All Command Handler are registered."
 msgstr ""
 
-#: ../Applications/Schumix/ScriptManager.cs:5
-msgid "Lua support is disabled!"
+#: ../Applications/Schumix.Server/ServerListener.cs:3
+msgid "Successfully started the ServerListener."
 msgstr ""
 
-#: ../Applications/Schumix/ScriptManager.cs:6
-msgid "Python support is disabled!"
-msgstr ""
-
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:9
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:15
 msgid "Sending random value: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Auth unsuccessful! Guid of client: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Hash was: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Back port is: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Auth successful. Guid of client: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:16
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:22
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:20
 msgid "Connection closed! Guid of client: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:25
 msgid "Restart in progress..."
 msgstr ""
 
@@ -1362,126 +1385,142 @@ msgstr ""
 msgid "Exception thrown while fetching youtube title: {0}"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:3
+#: ../Components/Schumix.Components/Updater/Update.cs:3
 msgid "Automatic updater is off."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:5
+#: ../Components/Schumix.Components/Updater/Update.cs:5
 msgid "Searching for new stable version is started."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:6
-#: ../Components/Schumix.Updater/Update.cs:10
+#: ../Components/Schumix.Components/Updater/Update.cs:6
+#: ../Components/Schumix.Components/Updater/Update.cs:10
 msgid "Currently no newer version!"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:6
-#: ../Components/Schumix.Updater/Update.cs:10
+#: ../Components/Schumix.Components/Updater/Update.cs:6
+#: ../Components/Schumix.Components/Updater/Update.cs:10
 msgid "The program starts is continuing."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:6
-#: ../Components/Schumix.Updater/Update.cs:10
+#: ../Components/Schumix.Components/Updater/Update.cs:6
+#: ../Components/Schumix.Components/Updater/Update.cs:10
 msgid "I found a newer version. The update to {0} version is starting."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:6
-#: ../Components/Schumix.Updater/Update.cs:10
+#: ../Components/Schumix.Components/Updater/Update.cs:6
+#: ../Components/Schumix.Components/Updater/Update.cs:10
 msgid "Older version found, update interrupted!"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:7
-#: ../Components/Schumix.Updater/Update.cs:11
+#: ../Components/Schumix.Components/Updater/Update.cs:7
+#: ../Components/Schumix.Components/Updater/Update.cs:11
 msgid "Downloading new version."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:8
-#: ../Components/Schumix.Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "Successfully downloaded new version."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:8
-#: ../Components/Schumix.Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "Downloading unsuccessful!"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:8
-#: ../Components/Schumix.Updater/Update.cs:12
-#: ../Components/Schumix.Updater/Update.cs:14
+#: ../Components/Schumix.Components/Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:14
 msgid "Updating successful!"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:8
 msgid "Searching for the last version is started."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "No such version like this, update interrupted!"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:13
+#: ../Components/Schumix.Components/Updater/Update.cs:13
 msgid "Started translating."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:14
+#: ../Components/Schumix.Components/Updater/Update.cs:14
 msgid "Error was handled while translated!"
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:15
+#: ../Components/Schumix.Components/Updater/Update.cs:15
 msgid "Successfully finished the translation."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:15
+#: ../Components/Schumix.Components/Updater/Update.cs:15
 msgid "Sql files update is started. The setted database will be updated."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:15
+#: ../Components/Schumix.Components/Updater/Update.cs:15
 msgid "Sql update finished."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:19
+#: ../Components/Schumix.Components/Updater/Update.cs:19
 msgid "This step of updateing is finished. Continue with next step."
 msgstr ""
 
-#: ../Components/Schumix.Updater/Update.cs:20
+#: ../Components/Schumix.Components/Updater/Update.cs:20
 msgid "The update is finished. The program shutting down!"
 msgstr ""
 
-#: ../Components/Schumix.LuaEngine/LuaEngine.cs:6
+#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:6
 msgid "Initializing Lua engine."
 msgstr ""
 
-#: ../Components/Schumix.LuaEngine/LuaEngine.cs:13
+#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:13
 msgid "Loading Lua script: {0}"
 msgstr ""
 
-#: ../Components/Schumix.LuaEngine/LuaEngine.cs:14
+#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:14
 msgid "Exception thrown while loading Lua script: {0} Error: {1}"
 msgstr ""
 
-#: ../Components/Schumix.LuaEngine/LuaHelper.cs:8
+#: ../Components/Schumix.Components/LuaEngine/LuaHelper.cs:8
 msgid ""
 "Function {0} (exported as {1}): argument number mismatch. Declared {2}, but "
 "requires {3}!"
 msgstr ""
 
-#: ../Components/Schumix.LuaEngine/LuaHelper.cs:14
+#: ../Components/Schumix.Components/LuaEngine/LuaHelper.cs:14
 msgid "Lua compile error: {0}"
 msgstr ""
 
-#: ../Components/Schumix.PythonEngine/PythonEngine.cs:3
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:3
 msgid "Initializing Python engine."
 msgstr ""
 
-#: ../Components/Schumix.PythonEngine/PythonEngine.cs:13
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:13
 msgid "Loading Python script: {0}"
 msgstr ""
 
-#: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:19
 msgid "Exception thrown while loading Python script. Error: {0} {1}"
 msgstr ""
 
-#: ../Components/Schumix.PythonEngine/PythonEngine.cs:19
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:19
 msgid "Exception thrown while loading Python script: {0} Error: {1} {2}"
+msgstr ""
+
+#: ../Components/Schumix.Components/ScriptManager.cs:4
+msgid "Lua support is disabled!"
+msgstr ""
+
+#: ../Components/Schumix.Components/ScriptManager.cs:5
+msgid "Python support is disabled!"
+msgstr ""
+
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
+msgid "Successfully started the SchumixListener."
+msgstr ""
+
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:7
+msgid "The data's processing is completed."
 msgstr ""
 

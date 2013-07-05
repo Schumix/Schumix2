@@ -22,11 +22,11 @@
 using System;
 using System.Data;
 using System.Threading;
-using System.Diagnostics;
 using System.Text.RegularExpressions;
 using MySql.Data;
 using MySql.Data.MySqlClient;
-using Schumix.Api.Irc;
+using Schumix.Framework.Irc;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -35,6 +35,7 @@ namespace Schumix.Framework.Database
 	public sealed class MySql
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private MySqlConnection Connection;
 		private bool _crash = false;
 
@@ -45,7 +46,7 @@ namespace Schumix.Framework.Database
 				Log.Error("MySql", sLConsole.GetString("Error was handled when tried to connect to the database!"));
 				SchumixBase.ServerDisconnect(false);
 				Thread.Sleep(1000);
-				Process.GetCurrentProcess().Kill();
+				sRuntime.Exit();
 			}
 			else
 				Log.Success("MySql", sLConsole.GetString("Successfully connected to the MySql database."));
@@ -145,7 +146,7 @@ namespace Schumix.Framework.Database
 					}
 	
 					Thread.Sleep(1000);
-					Process.GetCurrentProcess().Kill();
+					sRuntime.Exit();
 				}
 			}
 			catch(MySqlException m)
@@ -170,7 +171,7 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Process.GetCurrentProcess().Kill();
+				sRuntime.Exit();
 			}
 
 			if(m.Message.Contains("Fatal error encountered during command execution."))
@@ -187,7 +188,7 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Process.GetCurrentProcess().Kill();
+				sRuntime.Exit();
 			}
 
 			if(m.Message.Contains("Timeout expired."))
@@ -204,7 +205,7 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Process.GetCurrentProcess().Kill();
+				sRuntime.Exit();
 			}
 
 			if(m.Message.Contains("Unable to connect to any of the specified MySQL hosts."))
@@ -221,7 +222,7 @@ namespace Schumix.Framework.Database
 				}
 
 				Thread.Sleep(1000);
-				Process.GetCurrentProcess().Kill();
+				sRuntime.Exit();
 			}
 
 			if(logerror)

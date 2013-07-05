@@ -49,9 +49,12 @@
     <Compile Include="Clean\DirectoryClean.cs" />
     <Compile Include="PlatformType.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="Config\InstallerConfig.cs" />
     <Compile Include="Extensions\GeneralExtensions.cs" />
     <Compile Include="Download\CloneSchumix.cs" />
+    <Compile Include="Extensions\ArrayExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\NumberExtensions.cs" />
+    <Compile Include="Config\Consts.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

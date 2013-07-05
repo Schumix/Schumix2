@@ -19,9 +19,10 @@
  */
 
 using System;
-using Schumix.Api.Irc;
+using System.Threading;
 using Schumix.Irc.Util;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands
@@ -45,6 +46,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			bool iskick = false;
 			string kick = sIRCMessage.Info[4].ToLower();
 
 			if(!Rfc2812Util.IsValidNick(kick))
@@ -55,13 +57,34 @@ namespace Schumix.Irc.Commands
 
 			if(sIRCMessage.Info.Length == 5)
 			{
-				if(kick != sMyNickInfo.NickStorage.ToLower())
+				if(kick == sMyNickInfo.NickStorage.ToLower())
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("kick", sIRCMessage.Channel, sIRCMessage.ServerName));
+				else
+				{
+					iskick = true;
+					KickPrivmsg = sIRCMessage.Channel;
 					sSender.Kick(sIRCMessage.Channel, kick);
+				}
 			}
 			else if(sIRCMessage.Info.Length >= 6)
 			{
-				if(kick != sMyNickInfo.NickStorage.ToLower())
+				if(kick == sMyNickInfo.NickStorage.ToLower())
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("kick", sIRCMessage.Channel, sIRCMessage.ServerName));
+				else
+				{
+					iskick = true;
+					KickPrivmsg = sIRCMessage.Channel;
 					sSender.Kick(sIRCMessage.Channel, kick, sIRCMessage.Info.SplitToString(5, SchumixBase.Space));
+				}
+			}
+
+			if(iskick)
+			{
+				// Clean
+				Thread.Sleep(5*1000);
+
+				if(sIRCMessage.Channel.ToLower() == KickPrivmsg.ToLower() || !KickPrivmsg.IsNullOrEmpty())
+					KickPrivmsg = string.Empty;
 			}
 		}
 	}

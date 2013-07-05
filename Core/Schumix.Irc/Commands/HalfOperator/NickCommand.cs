@@ -19,9 +19,9 @@
  */
 
 using System;
-using Schumix.Api.Irc;
 using Schumix.Irc.Util;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 
 namespace Schumix.Irc.Commands
 {
@@ -38,7 +38,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 			
-			SchumixBase.NewNick = true;
+			sIrcBase.Networks[sIRCMessage.ServerName].NewNick = true;
 			string nick = sIRCMessage.Info[4];
 
 			if(!Rfc2812Util.IsValidNick(nick))

@@ -25,8 +25,8 @@ using System.Linq;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using Schumix.Api.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 

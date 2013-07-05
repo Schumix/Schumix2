@@ -24,11 +24,10 @@ using System.Text;
 using System.Net;
 using System.Threading;
 using System.Net.Sockets;
-using System.Diagnostics;
 using System.Globalization;
-using Schumix.Updater;
 using Schumix.Framework;
 using Schumix.Framework.Clean;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Network;
 using Schumix.Framework.Options;
@@ -36,6 +35,7 @@ using Schumix.Framework.Platforms;
 using Schumix.Framework.Exceptions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.Components.Updater;
 using Schumix.Server.Config;
 
 namespace Schumix.Server
@@ -154,7 +154,7 @@ namespace Schumix.Server
 					Log.LargeError(sLConsole.GetString("FATAL ERROR"));
 					Log.Error("Main", sLConsole.GetString("An unhandled exception has been thrown. ({0})"), eventArgs.ExceptionObject as Exception);
 					sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
-					Process.GetCurrentProcess().Kill();
+					sRuntime.Exit();
 				}
 				else
 					Shutdown(eventArgs.ExceptionObject as Exception);
@@ -194,7 +194,7 @@ namespace Schumix.Server
 				sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 
 			Thread.Sleep(2000);
-			Process.GetCurrentProcess().Kill();
+			sRuntime.Exit();
 		}
 	}
 }

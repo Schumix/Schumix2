@@ -20,6 +20,7 @@
 
 using System;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Server.Config

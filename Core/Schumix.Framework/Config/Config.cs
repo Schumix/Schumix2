@@ -21,6 +21,7 @@
 using System;
 using System.IO;
 using System.Threading;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -113,15 +114,9 @@ namespace Schumix.Framework.Config
 			return 0;
 		}
 
-		private void CheckAndCreate(string ConfigDirectory)
-		{
-			if(!Directory.Exists(ConfigDirectory))
-				Directory.CreateDirectory(ConfigDirectory);
-		}
-
 		private bool IsConfig(string ConfigDirectory, string ConfigFile, bool ColorBindMode)
 		{
-			CheckAndCreate(ConfigDirectory);
+			sUtilities.CreateDirectory(ConfigDirectory);
 
 			switch(ConfigType(ConfigDirectory, ConfigFile))
 			{

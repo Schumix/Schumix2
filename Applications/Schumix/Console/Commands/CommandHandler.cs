@@ -23,14 +23,15 @@ using System.Data;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using Schumix.Api.Delegate;
 using Schumix.Irc;
 using Schumix.Irc.Util;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
+using Schumix.Framework.Delegate;
 using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -1131,7 +1132,7 @@ namespace Schumix.Console.Commands
 				return;
 			}
 
-			SchumixBase.NewNick = true;
+			sIrcBase.Networks[_servername].NewNick = true;
 			string nick = Info[1];
 
 			if(!Rfc2812Util.IsValidNick(nick))

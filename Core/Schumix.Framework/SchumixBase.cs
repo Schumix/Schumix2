@@ -26,14 +26,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Collections.Generic;
-using Schumix.Api.Functions;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Clean;
 using Schumix.Framework.Config;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Network;
 using Schumix.Framework.Database;
 using Schumix.Framework.Database.Cache;
 using Schumix.Framework.Platforms;
+using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -57,7 +58,6 @@ namespace Schumix.Framework
 		public static bool ExitStatus { get; private set; }
 		public static string ServerIdentify = string.Empty;
 		public static bool ThreadStop = true;
-		public static bool NewNick = false;
 		public static bool STime = true;
 		public const string On = "on";
 		public const string Off = "off";

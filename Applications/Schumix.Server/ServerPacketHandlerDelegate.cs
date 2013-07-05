@@ -1,6 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
+ * Copyright (C) 2010-2012 Twl
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
  * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
  * 

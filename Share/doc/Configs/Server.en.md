@@ -8,9 +8,10 @@
 * **MaxFileSize:** Meghatározza a log fájlt maximális méretét. Ha eléri azt a fájl akkor törlődik és a program csinál helyette egy újat.
                     Alapértelmezés: `100` (mb-ban értendő)
 * **LogLevel:** Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelmezés: `2`
-    * **Szintjei:** `0` (Normális üzenetek és a sikeresek)
-                    `1` (Figyelmeztetések)
-                    `2` (Hibák)
+    * **Szintjei:** <br/>
+                    `0` (Normális üzenetek és a sikeresek)<br/>
+                    `1` (Figyelmeztetések)<br/>
+                    `2` (Hibák)<br/>
                     `3` (Hibakeresõ üzenetek)
 * **LogDirectory:** A log üzenetek mentése abba a mappába ami megvan adva. Alapértelmezés: `Logs`
 
@@ -51,9 +52,9 @@
 
 * **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi a Schumix-ok indítását. Alapértelmezés: `false`
 
-Yaml konfignál:
-Ha több Schumix-ot szeretnék indítani akkor az egész Schumix részt (Schumix: ...) le kell másolni még egyszer és ott külön be kell állítani az adatokat valamint Schumix(szám) ként kell megadni. Pl: Schumix2: .... (ide pedig minde úgy jön utána ahogy volt csak az Schumix-nél kell átírni az újat).
-Xml konfignál:
+Yaml konfignál:<br/>
+Ha több Schumix-ot szeretnék indítani akkor az egész Schumix részt (Schumix: ...) le kell másolni még egyszer és ott külön be kell állítani az adatokat valamint Schumix(szám) ként kell megadni. Pl: Schumix2: .... (ide pedig minde úgy jön utána ahogy volt csak az Schumix-nél kell átírni az újat).<br/>
+Xml konfignál:<br/>
 Ha több Schumix-ot szeretnék indítani akkor az egész Schumix részt (`<Schumix> ... </Schumix>`) le kell másolni még egyszer és ott külön be kell állítani az adatokat.
 * **Schumix:**
     * **Config:**

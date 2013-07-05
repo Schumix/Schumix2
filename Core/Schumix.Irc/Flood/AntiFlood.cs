@@ -22,11 +22,12 @@ using System;
 using System.Timers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Schumix.Api.Irc;
-using Schumix.Api.Functions;
 using Schumix.Irc.Channel;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
+using Schumix.Framework.Functions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Flood

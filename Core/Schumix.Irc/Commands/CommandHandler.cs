@@ -20,13 +20,13 @@
 
 using System;
 using System.Collections.Generic;
-using Schumix.Api.Irc;
 using Schumix.Irc.Ctcp;
 using Schumix.Irc.Flood;
 using Schumix.Irc.Ignore;
 using Schumix.Irc.Channel;
 using Schumix.Irc.NickName;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
 using Schumix.Framework.Platforms;
@@ -60,6 +60,7 @@ namespace Schumix.Irc.Commands
 		protected string ChannelPrivmsg { get; set; }
 		protected string NewNickPrivmsg { get; set; }
 		protected string OnlinePrivmsg { get; set; }
+		protected string KickPrivmsg { get; set; }
 		protected string ModePrivmsg { get; set; }
 		protected bool IsOnline { get; set; }
 		private string _servername;

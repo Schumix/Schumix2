@@ -22,17 +22,17 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading;
-using System.Diagnostics;
 using System.Globalization;
 using Schumix.Irc;
-using Schumix.Updater;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Options;
 using Schumix.Framework.Platforms;
 using Schumix.Framework.Exceptions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.Components.Updater;
 
 namespace Schumix
 {
@@ -222,10 +222,10 @@ namespace Schumix
 				if(e)
 					SchumixBase.Quit();
 				else
-					Process.GetCurrentProcess().Kill();
+					sRuntime.Exit();
 			}
 			else
-				Process.GetCurrentProcess().Kill();
+				sRuntime.Exit();
 
 			if(Crash && SchumixBase.ExitStatus)
 				return;

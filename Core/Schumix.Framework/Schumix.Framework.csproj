@@ -74,9 +74,6 @@
     <Compile Include="Network\ClientSocket.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="CrashDumper.cs" />
-    <Compile Include="Mathematics\Algorithms\QuickSort.cs" />
-    <Compile Include="Mathematics\Types\AutoSortedArray.cs" />
-    <Compile Include="Mathematics\MathFunctions.cs" />
     <Compile Include="Config\Consts.cs" />
     <Compile Include="Config\SchumixConfig.cs" />
     <Compile Include="Config\IRCConfig.cs" />
@@ -112,12 +109,9 @@
     <Compile Include="Config\CleanConfig.cs" />
     <Compile Include="CodeBureau\StringEnum.cs" />
     <Compile Include="CodeBureau\StringValueAttribute.cs" />
-    <Compile Include="Log\Log.cs" />
-    <Compile Include="Log\LogType.cs" />
     <Compile Include="Bitly\BitlyApi.cs" />
     <Compile Include="Bitly\BitlyResults.cs" />
     <Compile Include="Config\ShortUrlConfig.cs" />
-    <Compile Include="Log\ConsoleLog.cs" />
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\OptionValueCollection.cs" />
     <Compile Include="Options\OptionDelegate.cs" />
@@ -133,13 +127,33 @@
     <Compile Include="Options\ResponseFileSource.cs" />
     <Compile Include="Options\ArgumentEnumerator.cs" />
     <Compile Include="Options\Category.cs" />
+    <Compile Include="Extensions\YamlExtensions.cs" />
+    <Compile Include="Extensions\ArrayExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\IrcExtensions.cs" />
+    <Compile Include="Extensions\NumberExtensions.cs" />
+    <Compile Include="Logger\Log.cs" />
+    <Compile Include="Logger\LogType.cs" />
+    <Compile Include="Logger\ConsoleLog.cs" />
+    <Compile Include="Delegate\CommandDelegate.cs" />
+    <Compile Include="Delegate\IRCDelegate.cs" />
+    <Compile Include="Functions\IChannelFunctions.cs" />
+    <Compile Include="Functions\IFunctions.cs" />
+    <Compile Include="Functions\IFunctionsClass.cs" />
+    <Compile Include="Functions\IFunctionsClassBase.cs" />
+    <Compile Include="Irc\INetwork.cs" />
+    <Compile Include="Irc\IRCMessage.cs" />
+    <Compile Include="Irc\MessageType.cs" />
+    <Compile Include="ISchumix.cs" />
+    <Compile Include="Maths\Algorithms\QuickSort.cs" />
+    <Compile Include="Maths\Types\AutoSortedArray.cs" />
+    <Compile Include="Maths\MathFunctions.cs" />
+    <Compile Include="Network\ClientPacketMethod.cs" />
+    <Compile Include="Config\ListenerConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\Schumix.Api\Schumix.Api.csproj">
-      <Project>{A346B21F-17F6-431D-86B7-7B6B2AF02A13}</Project>
-      <Name>Schumix.Api</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.Core\YamlDotNet.Core.csproj">
       <Project>{BF32DE1B-6276-4341-B212-F8862ADBBA7A}</Project>
       <Name>YamlDotNet.Core</Name>
@@ -176,9 +190,9 @@
     <Folder Include="Database\Cache\" />
     <Folder Include="Clean\" />
     <Folder Include="CodeBureau\" />
-    <Folder Include="Log\" />
     <Folder Include="Bitly\" />
     <Folder Include="Options\" />
     <Folder Include="Platforms\" />
+    <Folder Include="Logger\" />
   </ItemGroup>
 </Project>

@@ -25,11 +25,12 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Diagnostics;
 using System.Collections.Generic;
-using Schumix.Api.Delegate;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Addon;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
+using Schumix.Framework.Delegate;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -40,6 +41,7 @@ namespace Schumix.Irc
 		private readonly Dictionary<string, Network> _networks = new Dictionary<string, Network>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		public bool ReloadStatus { get; private set; }
 		private readonly object Lock = new object();
 		private bool shutdown = false;
@@ -343,7 +345,7 @@ namespace Schumix.Irc
 			shutdown = true;
 			AllIrcServerShutdown(Message);
 			Log.Warning("IrcBase", sLConsole.GetString("Program shutting down!"));
-			Process.GetCurrentProcess().Kill();
+			sRuntime.Exit();
 		}
 
 		public void AllIrcServerShutdown(string Message, bool reload = false)

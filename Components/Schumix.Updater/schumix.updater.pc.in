@@ -1,6 +1,0 @@
-Name: Schumix.Updater
-Description: Schumix.Updater
-Version: 4.x
-
-Requires: 
-Libs: -r:@expanded_libdir@/@PACKAGE@/Schumix.Updater.dll

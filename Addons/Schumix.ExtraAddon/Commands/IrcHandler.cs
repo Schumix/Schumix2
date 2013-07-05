@@ -20,11 +20,12 @@
 
 using System;
 using System.Threading;
-using Schumix.Api.Irc;
-using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
+using Schumix.Framework.Logger;
+using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -142,10 +143,10 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void HandleNewNick(IRCMessage sIRCMessage)
 		{
-			if(!SchumixBase.NewNick)
+			if(!sIrcBase.Networks[sIRCMessage.ServerName].NewNick)
 				sNameList.Change(sIRCMessage.Nick, sIRCMessage.Info[2].Remove(0, 1, SchumixBase.Colon));
 			else
-				SchumixBase.NewNick = false;
+				sIrcBase.Networks[sIRCMessage.ServerName].NewNick = false;
 		}
 
 		/// <summary>

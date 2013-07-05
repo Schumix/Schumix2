@@ -24,7 +24,8 @@ using System.Timers;
 using System.Threading;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Schumix.Api.Irc;
+using Schumix.Framework.Irc;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
@@ -82,8 +83,13 @@ namespace Schumix.Framework
 					Thread.Sleep(1000);
 				}
 
-				Process.GetCurrentProcess().Kill();
+				Exit();
 			}
+		}
+
+		public void Exit()
+		{
+			Process.GetCurrentProcess().Kill();
 		}
 
 		public void SetProcessName(string Name)
@@ -126,7 +132,7 @@ namespace Schumix.Framework
 				{
 
 				}
-      		}
+			}
 		}
 	}
 }

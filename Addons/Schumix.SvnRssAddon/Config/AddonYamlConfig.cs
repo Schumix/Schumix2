@@ -23,6 +23,7 @@ using System.IO;
 using System.Text;
 using System.Collections.Generic;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using YamlDotNet.Core;

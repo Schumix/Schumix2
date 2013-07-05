@@ -21,9 +21,10 @@
 
 using System;
 using System.Threading;
-using System.Diagnostics;
 using System.Net.Sockets;
-using Schumix.Api.Irc;
+using System.Collections.Generic;
+using Schumix.Framework.Irc;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -33,22 +34,17 @@ namespace Schumix.Framework.Network
 	/// <summary>
 	/// Packet handler used by the client.
 	/// </summary>
-	class ClientPacketHandler
+	sealed class ClientPacketHandler
 	{
+		private readonly Dictionary<Opcode, ClientPacketMethod> PacketMethodMap = new Dictionary<Opcode, ClientPacketMethod>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		/// <summary>
-		/// Occurs when auth is denied.
-		/// </summary>
-		public event ClientPacketHandlerDelegate OnAuthDenied;
-		/// <summary>
-		/// Occurs when auth is approved.
-		/// </summary>
-		public event ClientPacketHandlerDelegate OnAuthApproved;
-		/// <summary>
-		/// Occurs when SCS sends a random number packet back.
-		/// </summary>
-		public event ClientPacketHandlerDelegate OnScsRandom;
-		public event ClientPacketHandlerDelegate OnCloseConnection;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
+
+		public Dictionary<Opcode, ClientPacketMethod> GetPacketMethodMap()
+		{
+			return PacketMethodMap;
+		}
+
 		private ClientPacketHandler() {}
 
 		/// <summary>
@@ -56,10 +52,35 @@ namespace Schumix.Framework.Network
 		/// </summary>
 		public void Init()
 		{
-			OnAuthApproved    += AuthApprovedHandler;
-			OnAuthDenied      += AuthDeniedHandler;
-			OnScsRandom       += ScsRandHandler;
-			OnCloseConnection += CloseHandler;
+			RegisterHandler(Opcode.SMSG_AUTH_APPROVED,    AuthApprovedHandler);
+			RegisterHandler(Opcode.SMSG_AUTH_DENIED,      AuthDeniedHandler);
+			RegisterHandler(Opcode.SMSG_SEND_SCS_RANDOM,  ScsRandHandler);
+			RegisterHandler(Opcode.SMSG_CLOSE_CONNECTION, CloseHandler);
+		}
+
+		public void RegisterHandler(Opcode packetid, ClientPacketHandlerDelegate method)
+		{
+			if(PacketMethodMap.ContainsKey(packetid))
+				PacketMethodMap[packetid].Method += method;
+			else
+				PacketMethodMap.Add(packetid, new ClientPacketMethod(method));
+		}
+
+		public void RemoveHandler(Opcode packetid)
+		{
+			if(PacketMethodMap.ContainsKey(packetid))
+				PacketMethodMap.Remove(packetid);
+		}
+
+		public void RemoveHandler(Opcode packetid, ClientPacketHandlerDelegate method)
+		{
+			if(PacketMethodMap.ContainsKey(packetid))
+			{
+				PacketMethodMap[packetid].Method -= method;
+
+				if(PacketMethodMap[packetid].Method.IsNull())
+					PacketMethodMap.Remove(packetid);
+			}
 		}
 
 		/// <summary>
@@ -77,14 +98,13 @@ namespace Schumix.Framework.Network
 			var packetid = packet.Read<int>();
 			Log.Debug("PacketHandler", sLConsole.GetString("Got packet with ID: {0} from: {1}"), packetid, client.Client.RemoteEndPoint);
 
-			if(packetid == (int)Opcode.SMSG_AUTH_DENIED)
-				OnAuthDenied(packet, hst);
-			else if(packetid == (int)Opcode.SMSG_AUTH_APPROVED)
-				OnAuthApproved(packet, hst);
-			else if(packetid == (int)Opcode.SMSG_SEND_SCS_RANDOM)
-				OnScsRandom(packet, hst);
-			else if(packetid == (int)Opcode.SMSG_CLOSE_CONNECTION)
-				OnCloseConnection(packet, hst);
+			if(PacketMethodMap.ContainsKey((Opcode)packetid))
+			{
+				PacketMethodMap[(Opcode)packetid].Method.Invoke(packet, hst);
+				return;
+			}
+			else
+				Log.Notice("HandlePacket", sLConsole.GetString("Received unhandled packetid: {0}"), packetid);
 		}
 
 		/// <summary>
@@ -152,7 +172,7 @@ namespace Schumix.Framework.Network
 			}
 
 			Thread.Sleep(1000);
-			Process.GetCurrentProcess().Kill();
+			sRuntime.Exit();
 		}
 	}
 }

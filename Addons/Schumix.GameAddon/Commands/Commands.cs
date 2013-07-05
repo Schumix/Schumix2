@@ -21,12 +21,12 @@
 using System;
 using System.Data;
 using System.Collections.Generic;
-using Schumix.Api.Irc;
-using Schumix.Api.Functions;
 using Schumix.Irc;
 using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Irc;
+using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.GameAddon.MaffiaGames;

@@ -1,6 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
+ * Copyright (C) 2010-2012 Twl
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
  * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
  * 
@@ -25,30 +26,61 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Network;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.Server.Config;
 
 namespace Schumix.Server
 {
-	class ServerPacketHandler
+	sealed class ServerPacketHandler
 	{
+		private readonly Dictionary<Opcode, ServerPacketMethod> PacketMethodMap = new Dictionary<Opcode, ServerPacketMethod>();
 		private readonly Dictionary<string, NetworkStream> _HostList = new Dictionary<string, NetworkStream>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Dictionary<string, bool> _AuthList = new Dictionary<string, bool>();
 		private readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public Dictionary<string, NetworkStream> HostList { get { return _HostList; } }
-		public event ServerPacketHandlerDelegate OnScsRandomRequest;
-		public event ServerPacketHandlerDelegate OnCloseConnection;
-		public event ServerPacketHandlerDelegate OnAuthRequest;
+
+		public Dictionary<Opcode, ServerPacketMethod> GetPacketMethodMap()
+		{
+			return PacketMethodMap;
+		}
+
 		private ServerPacketHandler() {}
 
 		public void Init()
 		{
-			OnAuthRequest      += AuthRequestPacketHandler;
-			OnScsRandomRequest += ScsRandomHandler;
-			OnCloseConnection  += CloseHandler;
+			RegisterHandler(Opcode.CMSG_REQUEST_AUTH,       AuthRequestPacketHandler);
+			RegisterHandler(Opcode.CMSG_REQUEST_SCS_RANDOM, ScsRandomHandler);
+			RegisterHandler(Opcode.CMSG_CLOSE_CONNECTION,   CloseHandler);
+		}
+
+		public void RegisterHandler(Opcode packetid, ServerPacketHandlerDelegate method)
+		{
+			if(PacketMethodMap.ContainsKey(packetid))
+				PacketMethodMap[packetid].Method += method;
+			else
+				PacketMethodMap.Add(packetid, new ServerPacketMethod(method));
+		}
+
+		public void RemoveHandler(Opcode packetid)
+		{
+			if(PacketMethodMap.ContainsKey(packetid))
+				PacketMethodMap.Remove(packetid);
+		}
+
+		public void RemoveHandler(Opcode packetid, ServerPacketHandlerDelegate method)
+		{
+			if(PacketMethodMap.ContainsKey(packetid))
+			{
+				PacketMethodMap[packetid].Method -= method;
+
+				if(PacketMethodMap[packetid].Method.IsNull())
+					PacketMethodMap.Remove(packetid);
+			}
 		}
 
 		public void HandlePacket(SchumixPacket packet, TcpClient client, NetworkStream stream)
@@ -76,12 +108,13 @@ namespace Schumix.Server
 			if(!_HostList.ContainsKey(hst + SchumixBase.Colon + bck))
 				_HostList.Add(hst + SchumixBase.Colon + bck, stream);
 
-			if(packetid == (int)Opcode.CMSG_REQUEST_AUTH)
-				OnAuthRequest(packet, stream, hst, bck);
-			else if(packetid == (int)Opcode.CMSG_REQUEST_SCS_RANDOM)
-				OnScsRandomRequest(packet, stream, hst, bck);
-			else if(packetid == (int)Opcode.CMSG_CLOSE_CONNECTION)
-				OnCloseConnection(packet, stream, hst, bck);
+			if(PacketMethodMap.ContainsKey((Opcode)packetid))
+			{
+				PacketMethodMap[(Opcode)packetid].Method.Invoke(packet, stream, hst, bck);
+				return;
+			}
+			else
+				Log.Notice("HandlePacket", sLConsole.GetString("Received unhandled packetid: {0}"), packetid);
 		}
 
 		private void ScsRandomHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)

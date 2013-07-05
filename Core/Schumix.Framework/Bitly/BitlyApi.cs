@@ -22,6 +22,7 @@ using System;
 using System.Web;
 using System.Linq;
 using System.Xml.Linq;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;

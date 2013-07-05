@@ -25,6 +25,7 @@ using Mono.Unix;
 using Mono.Unix.Native;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 
 namespace Schumix

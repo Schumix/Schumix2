@@ -1,7 +1,7 @@
 dnl Warning: This is an automatically generated file, do not edit!
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
-AC_INIT([Schumix], [4.x])
+AC_INIT([Schumix], [4.1.x])
 AM_INIT_AUTOMAKE([foreign])
 AM_MAINTAINER_MODE
 
@@ -65,9 +65,9 @@ External/NLua/Core/KopiLua/KopiLua/kopilua.pc
 External/NLua/Core/KopiLua/KopiLua/Makefile
 External/NLua/Core/KeraLua/src/keralua.pc
 External/NLua/Core/KeraLua/src/Makefile
+External/ChatterBotApi/dotnet/ChatterBotAPI/chatterbotapi.pc
+External/ChatterBotApi/dotnet/ChatterBotAPI/Makefile
 Po/Makefile
-Core/Schumix.Api/schumix.api.pc
-Core/Schumix.Api/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile
 Core/Schumix.Irc/schumix.irc.pc
@@ -112,12 +112,8 @@ External/ngit/NGit/ngit.pc
 External/ngit/NGit/Makefile
 Components/Schumix.Libraries/schumix.libraries.pc
 Components/Schumix.Libraries/Makefile
-Components/Schumix.Updater/schumix.updater.pc
-Components/Schumix.Updater/Makefile
-Components/Schumix.LuaEngine/schumix.luaengine.pc
-Components/Schumix.LuaEngine/Makefile
-Components/Schumix.PythonEngine/schumix.pythonengine.pc
-Components/Schumix.PythonEngine/Makefile
+Components/Schumix.Components/schumix.components.pc
+Components/Schumix.Components/Makefile
 Components/Makefile
 Applications/Schumix/schumix
 Applications/Schumix/Makefile

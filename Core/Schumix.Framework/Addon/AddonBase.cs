@@ -22,7 +22,7 @@
 using System;
 using System.Reflection;
 using System.Collections.Generic;
-using Schumix.Api;
+using Schumix.Framework;
 
 namespace Schumix.Framework.Addon
 {

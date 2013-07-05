@@ -58,7 +58,7 @@ CREATE TABLE "channels" (
 Id INTEGER PRIMARY KEY AUTOINCREMENT,
 ServerId INTEGER DEFAULT 1,
 ServerName VARCHAR(40),
-Functions VARCHAR(500) DEFAULT ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,randomkick:off,chatterbot:off,nameday:off,birthday:off',
+Functions VARCHAR(500) DEFAULT ',greeter:off,log:on,rejoin:on,commands:on,autohl:off,autokick:off,automode:off,antiflood:off,message:off,compiler:off,gamecommands:off,webtitle:off,otherkick:off,chatterbot:off,nameday:off,birthday:off',
 Channel VARCHAR(20),
 Password VARCHAR(30),
 Enabled VARCHAR(5) DEFAULT 'false',
