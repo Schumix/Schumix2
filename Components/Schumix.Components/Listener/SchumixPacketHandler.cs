@@ -55,28 +55,28 @@ namespace Schumix.Components.Listener
 			RegisterHandler(Opcode.CMSG_CLOSE_CONNECTION, CloseHandler);
 		}
 
-		public void RegisterHandler(Opcode code, SchumixPacketHandlerDelegate method)
+		public void RegisterHandler(Opcode packetid, SchumixPacketHandlerDelegate method)
 		{
-			if(PacketMethodMap.ContainsKey(code))
-				PacketMethodMap[code].Method += method;
+			if(PacketMethodMap.ContainsKey(packetid))
+				PacketMethodMap[packetid].Method += method;
 			else
-				PacketMethodMap.Add(code, new PacketMethod(method));
+				PacketMethodMap.Add(packetid, new PacketMethod(method));
 		}
 
-		public void RemoveHandler(Opcode code)
+		public void RemoveHandler(Opcode packetid)
 		{
-			if(PacketMethodMap.ContainsKey(code))
-				PacketMethodMap.Remove(code);
+			if(PacketMethodMap.ContainsKey(packetid))
+				PacketMethodMap.Remove(packetid);
 		}
 
-		public void RemoveHandler(Opcode code, SchumixPacketHandlerDelegate method)
+		public void RemoveHandler(Opcode packetid, SchumixPacketHandlerDelegate method)
 		{
-			if(PacketMethodMap.ContainsKey(code))
+			if(PacketMethodMap.ContainsKey(packetid))
 			{
-				PacketMethodMap[code].Method -= method;
+				PacketMethodMap[packetid].Method -= method;
 
-				if(PacketMethodMap[code].Method.IsNull())
-					PacketMethodMap.Remove(code);
+				if(PacketMethodMap[packetid].Method.IsNull())
+					PacketMethodMap.Remove(packetid);
 			}
 		}
 
