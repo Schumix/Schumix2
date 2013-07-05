@@ -67,6 +67,7 @@
     <Compile Include="Listener\SchumixPacket.cs" />
     <Compile Include="Listener\SchumixPacketHandler.cs" />
     <Compile Include="Listener\SchumixPacketHandlerDelegate.cs" />
+    <Compile Include="Listener\PacketMethod.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

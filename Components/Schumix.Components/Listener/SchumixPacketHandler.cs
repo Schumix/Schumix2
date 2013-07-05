@@ -28,25 +28,56 @@ using System.Collections.Generic;
 using Schumix.Framework;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace Schumix.Components.Listener
 {
 	public sealed class SchumixPacketHandler
 	{
+		private readonly Dictionary<Opcode, PacketMethod> PacketMethodMap = new Dictionary<Opcode, PacketMethod>();
 		private readonly Dictionary<string, NetworkStream> _HostList = new Dictionary<string, NetworkStream>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Dictionary<string, bool> _AuthList = new Dictionary<string, bool>();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public Dictionary<string, NetworkStream> HostList { get { return _HostList; } }
-		public event SchumixPacketHandlerDelegate OnCloseConnection;
-		public event SchumixPacketHandlerDelegate OnAuthRequest;
+
+		public Dictionary<Opcode, PacketMethod> GetPacketMethodMap()
+		{
+			return PacketMethodMap;
+		}
+
 		private SchumixPacketHandler() {}
 
 		public void Init()
 		{
-			OnAuthRequest      += AuthRequestPacketHandler;
-			OnCloseConnection  += CloseHandler;
+			RegisterHandler(Opcode.CMSG_REQUEST_AUTH,     AuthRequestPacketHandler);
+			RegisterHandler(Opcode.CMSG_CLOSE_CONNECTION, CloseHandler);
+		}
+
+		public void RegisterHandler(Opcode code, SchumixPacketHandlerDelegate method)
+		{
+			if(PacketMethodMap.ContainsKey(code))
+				PacketMethodMap[code].Method += method;
+			else
+				PacketMethodMap.Add(code, new PacketMethod(method));
+		}
+
+		public void RemoveHandler(Opcode code)
+		{
+			if(PacketMethodMap.ContainsKey(code))
+				PacketMethodMap.Remove(code);
+		}
+
+		public void RemoveHandler(Opcode code, SchumixPacketHandlerDelegate method)
+		{
+			if(PacketMethodMap.ContainsKey(code))
+			{
+				PacketMethodMap[code].Method -= method;
+
+				if(PacketMethodMap[code].Method.IsNull())
+					PacketMethodMap.Remove(code);
+			}
 		}
 
 		public void HandlePacket(SchumixPacket packet, TcpClient client, NetworkStream stream)
@@ -74,10 +105,13 @@ namespace Schumix.Components.Listener
 			if(!_HostList.ContainsKey(hst + SchumixBase.Colon + bck))
 				_HostList.Add(hst + SchumixBase.Colon + bck, stream);
 
-			if(packetid == (int)Opcode.CMSG_REQUEST_AUTH)
-				OnAuthRequest(packet, stream, hst, bck);
-			else if(packetid == (int)Opcode.CMSG_CLOSE_CONNECTION)
-				OnCloseConnection(packet, stream, hst, bck);
+			if(PacketMethodMap.ContainsKey((Opcode)packetid))
+			{
+				PacketMethodMap[(Opcode)packetid].Method.Invoke(packet, stream, hst, bck);
+				return;
+			}
+			else
+				Log.Notice("HandlePacket", sLConsole.GetString("Received unhandled packetid: {0}"), packetid);
 		}
 
 		private void AuthRequestPacketHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
@@ -86,7 +120,7 @@ namespace Schumix.Components.Listener
 			string guid = pck.Read<string>();
 			string hash = pck.Read<string>();
 
-			if(hash != sUtilities.Md5(ServerConfig.Password))
+			if(hash != sUtilities.Md5(/*ServerConfig.Password*/ "schumix"))
 			{
 				if(_HostList.ContainsKey(hst + SchumixBase.Colon + bck))
 					_HostList.Remove(hst + SchumixBase.Colon + bck);
