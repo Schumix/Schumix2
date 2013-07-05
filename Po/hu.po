@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-04 14:02:52+0200\n"
+"POT-Creation-Date: 2013-07-05 13:08:35+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -224,8 +224,8 @@ msgid "Connection to: {0}"
 msgstr "Kapcsolódás megindult ide: {0}"
 
 #: ../Core/Schumix.Irc/Network.cs:47
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:16
 msgid "Connection closed!"
 msgstr "Kapcsolat bontva!"
 
@@ -440,12 +440,12 @@ msgstr "Irc modul újraindítása!"
 #: ../Core/Schumix.Framework/Database/MySql.cs:19
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:16
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
 #: ../Core/Schumix.Framework/Runtime.cs:8
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:43
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:19
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 #: ../Applications/Schumix.Server/ServerListener.cs:6
 #: ../Applications/Schumix.Server/Config/Config.cs:4
 msgid "Program shutting down!"
@@ -601,21 +601,28 @@ msgstr "Program indulási időpontja mentésre került."
 msgid "The program is loaded under {0}ms."
 msgstr "A program {0}ms alatt indult el."
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:4
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:5
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:5
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:11
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
 msgid "Got packet with ID: {0} from: {1}"
 msgstr "Csomagot kapott, ID: {0} tőle: {1}"
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:14
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:14
+#, fuzzy
+msgid "Received unhandled packetid: {0}"
+msgstr "Ismeretlen opcode kód: {0}"
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
 msgid "Authentication denied to SCS server!"
 msgstr "Hitelesítést megtagadta az SCS szerver!"
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:7
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:13
 msgid "Successfully authed to SCS server."
 msgstr "Sikeresen hitelesítve az SCS szerver."
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:8
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
 msgid "SCS sent random: {0}"
 msgstr "SCS által küldött véletlenszerű csomag: {0}"
 
@@ -760,38 +767,38 @@ msgstr "Pluginok leválasztva."
 msgid "Config file is loading."
 msgstr "Konfig fájl betöltése."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:13
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The master channel's format is wrong. \"#\" is missing. Corrected."
 msgstr ""
 "Hibás a mester csatorna formátuma! Nincs meg a \"#\" jel. Pótolva lett."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:13
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The master channel is not given so the default will be used. ({0})"
 msgstr ""
 "Nincs megadva a mester csatorna ezért az alapértelmezet lesz használva. ({0})"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:14
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The primary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 "Hibás az elsődleges nick név formátuma. Az alapértelmezet lesz használva: {0}"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The secondary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 "Hibás a másodlagos nick név formátuma. Az alapértelmezet lesz használva: {0}"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:18
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The tertiary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 "Hibás a harmadlagos nick név formátuma. Az alapértelmezet lesz használva: {0}"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:43
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:19
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 msgid ""
 "{0}: In the three nickname there are atleast two identical, please modify "
 "those."
@@ -799,12 +806,12 @@ msgstr ""
 "{0}: A három nick név között minimum kettő olyan van aminek megegyezik a "
 "neve! Kérlek módosítsad őket hogy eltérőek legyenek!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:18
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:20
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:46
 msgid "The {0} server is already in use so not loaded!"
 msgstr "A {0} szerver név már használva van így nem kerül betöltésre!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:41
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:43
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:11
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:23
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:7
@@ -827,7 +834,7 @@ msgstr "A {0} szerver név már használva van így nem kerül betöltésre!"
 msgid "Config database is loading."
 msgstr "Konfig adatbázis betöltve."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:46
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -850,7 +857,7 @@ msgstr "Konfig adatbázis betöltve."
 msgid "No such config file!"
 msgstr "Nincs konfig fájl!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:46
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -873,7 +880,7 @@ msgstr "Nincs konfig fájl!"
 msgid "Preparing..."
 msgstr "Elkészítése folyamatban..."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:104
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
@@ -896,7 +903,7 @@ msgstr "Elkészítése folyamatban..."
 msgid "Config file is completed!"
 msgstr "Konfig fájl elkészült!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:104
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
@@ -1088,6 +1095,11 @@ msgstr ""
 "Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
 "logok. Megváltozás időpontja: [{1}]\n"
 
+#: ../Core/Schumix.Framework/Config/ListenerConfig.cs:3
+#, fuzzy
+msgid "Loaded the Listener settings."
+msgstr "SQLite beállításai betöltve."
+
 #: ../Applications/Schumix/Main.cs:10 ../Applications/Schumix.Server/Main.cs:8
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
 msgstr "A program leállításához használd a <Ctrl+C> vagy <quit> parancsot!"
@@ -1169,36 +1181,36 @@ msgstr "Összes Command handler regisztrálásra került."
 msgid "Successfully started the ServerListener."
 msgstr "ServerListener sikeresen elindult."
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:9
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:15
 msgid "Sending random value: {0}"
 msgstr "Véletlenszerű érték küldése: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Auth unsuccessful! Guid of client: {0}"
 msgstr "Hitelesítés sikertelen! Guid a clienttől: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Hash was: {0}"
 msgstr "Hash volt: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Back port is: {0}"
 msgstr "Vissza port: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Auth successful. Guid of client: {0}"
 msgstr "Hitelesítés sikeres. Guid a clienttől: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:16
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:14
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:22
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:20
 msgid "Connection closed! Guid of client: {0}"
 msgstr "Kapcsolat bontva! Guid a clienttől: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:25
 msgid "Restart in progress..."
 msgstr "Újraindítás folyamatban..."
 
@@ -1535,3 +1547,7 @@ msgstr "Python támogatása le van tiltva!"
 #: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
 msgid "Successfully started the SchumixListener."
 msgstr "SchumixListener sikeresen elindult."
+
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:7
+msgid "The data's processing is completed."
+msgstr "Az adatok feldolgozása befejeződött!"

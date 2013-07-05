@@ -197,7 +197,13 @@ FILES = \
 	LuaEngine/LuaHelper.cs \
 	LuaEngine/SchumixCommandMethod.cs \
 	PythonEngine/PythonEngine.cs \
-	ScriptManager.cs 
+	ScriptManager.cs \
+	Listener/Opcodes.cs \
+	Listener/SchumixListener.cs \
+	Listener/SchumixPacket.cs \
+	Listener/SchumixPacketHandler.cs \
+	Listener/SchumixPacketHandlerDelegate.cs \
+	Listener/PacketMethod.cs 
 
 DATA_FILES = 
 
@@ -207,6 +213,7 @@ EXTRAS = \
 	Updater \
 	LuaEngine \
 	PythonEngine \
+	Listener \
 	schumix.components.pc.in 
 
 REFERENCES =  \

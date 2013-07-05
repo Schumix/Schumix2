@@ -65,6 +65,12 @@ namespace Schumix.Framework.Config
 
 			new ServerConfig(ServerEnabled, ServerHost, ServerPort, ServerPassword);
 
+			bool ListenerEnabled = !xmldoc.SelectSingleNode("Schumix/Listener/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Listener/Enabled").InnerText) : d_listenerenabled;
+			int ListenerPort = !xmldoc.SelectSingleNode("Schumix/Listener/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Listener/Port").InnerText) : d_listenerport;
+			string ListenerPassword = !xmldoc.SelectSingleNode("Schumix/Listener/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Listener/Password").InnerText : d_listenerpassword;
+
+			new ListenerConfig(ListenerEnabled, ListenerPort, ListenerPassword);
+
 			int ServerId = 1;
 			var xmlirclist = xmldoc.SelectNodes("Schumix/Irc");
 			var IrcList = new Dictionary<string, IRCConfigBase>();
@@ -279,6 +285,15 @@ namespace Schumix.Framework.Config
 						w.WriteElementString("Password",         (!xmldoc.SelectSingleNode("Schumix/Server/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Server/Password").InnerText : d_serverpassword));
 
 						// </Server>
+						w.WriteEndElement();
+
+						// <Listener>
+						w.WriteStartElement("Listener");
+						w.WriteElementString("Enabled",          (!xmldoc.SelectSingleNode("Schumix/Listener/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/Listener/Enabled").InnerText : d_listenerenabled.ToString()));
+						w.WriteElementString("Port",             (!xmldoc.SelectSingleNode("Schumix/Listener/Port").IsNull() ? xmldoc.SelectSingleNode("Schumix/Listener/Port").InnerText : d_listenerport.ToString()));
+						w.WriteElementString("Password",         (!xmldoc.SelectSingleNode("Schumix/Listener/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Listener/Password").InnerText : d_listenerpassword));
+
+						// </Listener>
 						w.WriteEndElement();
 
 						var xmlirclist = xmldoc.SelectNodes("Schumix/Irc");

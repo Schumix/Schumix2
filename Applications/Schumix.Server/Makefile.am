@@ -192,7 +192,8 @@ FILES = \
 	Config/DefaultConfig.cs \
 	Config/XmlConfig.cs \
 	Config/YamlConfig.cs \
-	Config/ServerConfigs.cs 
+	Config/ServerConfigs.cs \
+	ServerPacketMethod.cs 
 
 DATA_FILES = 
 

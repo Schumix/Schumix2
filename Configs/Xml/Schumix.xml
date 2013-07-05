@@ -6,6 +6,11 @@
         <Port>35220</Port>
         <Password>schumix</Password>
     </Server>
+    <Listener>
+        <Enabled>False</Enabled>
+        <Port>36200</Port>
+        <Password>schumix</Password>
+    </Listener>
     <Irc>
         <ServerName>Default</ServerName>
         <Server>localhost</Server>

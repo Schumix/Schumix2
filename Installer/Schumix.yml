@@ -5,6 +5,10 @@ Schumix:
         Host: 127.0.0.1
         Port: 35220
         Password: schumix
+    Listener:
+        Enabled: False
+        Port: 36200
+        Password: schumix
     Irc:
         ServerName: Default
         Server: localhost

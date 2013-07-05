@@ -150,6 +150,7 @@
     <Compile Include="Maths\Types\AutoSortedArray.cs" />
     <Compile Include="Maths\MathFunctions.cs" />
     <Compile Include="Network\ClientPacketMethod.cs" />
+    <Compile Include="Config\ListenerConfig.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

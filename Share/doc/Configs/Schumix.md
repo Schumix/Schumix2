@@ -7,6 +7,12 @@
 * **Port:** A szerver portja. Alapértelmezés: `35220`
 * **Password:** A szerver azonosító jelszava. Alapértelmezés: `schumix`
 
+## Listener
+
+* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy lehessen-e kapcsolódni a botban működő szerverhez. Alapértelmezés: `false`
+* **Port:** A szerver portja. Alapértelmezés: `36200`
+* **Password:** A szerver azonosító jelszava. Alapértelmezés: `schumix`
+
 ## Irc
 
 Yaml konfignál:<br/>

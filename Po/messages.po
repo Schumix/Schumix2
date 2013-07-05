@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-04 14:05:01+0200\n"
-"PO-Revision-Date: 2013-07-04 14:05:02+0200\n"
+"POT-Creation-Date: 2013-07-05 13:08:35+0200\n"
+"PO-Revision-Date: 2013-07-05 13:08:36+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -219,8 +219,8 @@ msgid "Connection to: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Irc/Network.cs:47
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:16
 msgid "Connection closed!"
 msgstr ""
 
@@ -432,12 +432,12 @@ msgstr ""
 #: ../Core/Schumix.Framework/Database/MySql.cs:19
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:16
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
 #: ../Core/Schumix.Framework/Runtime.cs:8
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:43
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:19
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 #: ../Applications/Schumix.Server/ServerListener.cs:6
 #: ../Applications/Schumix.Server/Config/Config.cs:4
 msgid "Program shutting down!"
@@ -591,21 +591,27 @@ msgstr ""
 msgid "The program is loaded under {0}ms."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:4
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:5
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:5
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:11
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
 msgid "Got packet with ID: {0} from: {1}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:6
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:14
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:14
+msgid "Received unhandled packetid: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
 msgid "Authentication denied to SCS server!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:7
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:13
 msgid "Successfully authed to SCS server."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:8
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
 msgid "SCS sent random: {0}"
 msgstr ""
 
@@ -750,44 +756,44 @@ msgstr ""
 msgid "Config file is loading."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:13
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The master channel's format is wrong. \"#\" is missing. Corrected."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:13
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The master channel is not given so the default will be used. ({0})"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:14
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The primary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The secondary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:42
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:18
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
 msgid "The tertiary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:43
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:19
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 msgid ""
 "{0}: In the three nickname there are atleast two identical, please modify "
 "those."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:18
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:20
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:46
 msgid "The {0} server is already in use so not loaded!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:41
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:43
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:11
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:23
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:7
@@ -810,7 +816,7 @@ msgstr ""
 msgid "Config database is loading."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:46
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -833,7 +839,7 @@ msgstr ""
 msgid "No such config file!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:46
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -856,7 +862,7 @@ msgstr ""
 msgid "Preparing..."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:104
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
@@ -879,7 +885,7 @@ msgstr ""
 msgid "Config file is completed!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:104
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
@@ -1062,6 +1068,10 @@ msgid ""
 "here. Change's time: [{1}]\n"
 msgstr ""
 
+#: ../Core/Schumix.Framework/Config/ListenerConfig.cs:3
+msgid "Loaded the Listener settings."
+msgstr ""
+
 #: ../Applications/Schumix/Main.cs:10
 #: ../Applications/Schumix.Server/Main.cs:8
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
@@ -1148,36 +1158,36 @@ msgstr ""
 msgid "Successfully started the ServerListener."
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:9
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:15
 msgid "Sending random value: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Auth unsuccessful! Guid of client: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Hash was: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Back port is: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
 msgid "Auth successful. Guid of client: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:16
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:14
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:22
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:20
 msgid "Connection closed! Guid of client: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:25
 msgid "Restart in progress..."
 msgstr ""
 
@@ -1508,5 +1518,9 @@ msgstr ""
 
 #: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
 msgid "Successfully started the SchumixListener."
+msgstr ""
+
+#: ../Components/Schumix.Components/Listener/SchumixListener.cs:7
+msgid "The data's processing is completed."
 msgstr ""
 

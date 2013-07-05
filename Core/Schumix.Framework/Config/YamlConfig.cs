@@ -54,6 +54,7 @@ namespace Schumix.Framework.Config
 
 			Log.Notice("YamlConfig", sLConsole.GetString("Config file is loading."));
 			ServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Server")) ? ((YamlMappingNode)schumixmap["Server".ToYamlNode()]).Children : NullYMap);
+			ListenerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Listener")) ? ((YamlMappingNode)schumixmap["Listener".ToYamlNode()]).Children : NullYMap);
 
 			if((!schumixmap.IsNull() && schumixmap.ContainsKey("Irc")))
 			{
@@ -116,6 +117,7 @@ namespace Schumix.Framework.Config
 						var nodes = new YamlMappingNode();
 						var nodes2 = new YamlMappingNode();
 						nodes2.Add("Server",       CreateServerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Server")) ? ((YamlMappingNode)schumixmap["Server".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Listener",     CreateListenerMap((!schumixmap.IsNull() && schumixmap.ContainsKey("Listener")) ? ((YamlMappingNode)schumixmap["Listener".ToYamlNode()]).Children : NullYMap));
 
 						if((!schumixmap.IsNull() && schumixmap.ContainsKey("Irc")))
 						{
@@ -188,6 +190,15 @@ namespace Schumix.Framework.Config
 			string ServerPassword = (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_serverpassword;
 
 			new ServerConfig(ServerEnabled, ServerHost, ServerPort, ServerPassword);
+		}
+
+		private void ListenerMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			bool ListenerEnabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? Convert.ToBoolean(nodes["Enabled".ToYamlNode()].ToString()) : d_listenerenabled;
+			int ListenerPort = (!nodes.IsNull() && nodes.ContainsKey("Port")) ? Convert.ToInt32(nodes["Port".ToYamlNode()].ToString()) : d_listenerport;
+			string ListenerPassword = (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_listenerpassword;
+
+			new ListenerConfig(ListenerEnabled, ListenerPort, ListenerPassword);
 		}
 
 		private void IrcMap(IDictionary<YamlNode, YamlNode> nodes)
@@ -440,6 +451,15 @@ namespace Schumix.Framework.Config
 			map.Add("Host",     (!nodes.IsNull() && nodes.ContainsKey("Host")) ? nodes["Host".ToYamlNode()].ToString() : d_serverhost);
 			map.Add("Port",     (!nodes.IsNull() && nodes.ContainsKey("Port")) ? nodes["Port".ToYamlNode()].ToString() : d_serverport.ToString());
 			map.Add("Password", (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_serverpassword);
+			return map;
+		}
+
+		private YamlMappingNode CreateListenerMap(IDictionary<YamlNode, YamlNode> nodes)
+		{
+			var map = new YamlMappingNode();
+			map.Add("Enabled",  (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString() : d_listenerenabled.ToString());
+			map.Add("Port",     (!nodes.IsNull() && nodes.ContainsKey("Port")) ? nodes["Port".ToYamlNode()].ToString() : d_listenerport.ToString());
+			map.Add("Password", (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_listenerpassword);
 			return map;
 		}
 

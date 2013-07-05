@@ -101,8 +101,7 @@ namespace Schumix.Components.Listener
 				Thread.Sleep(100);
 			}
 
-			// TODO
-			Log.Warning("SchumixListener", "Az adatok feldolgozása befejeződött!"/*sLConsole.GetString("Program shutting down!")*/);
+			Log.Warning("SchumixListener", sLConsole.GetString("The data's processing is completed."));
 		}
 		
 		public void Dispose()

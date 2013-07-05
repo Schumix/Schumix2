@@ -181,7 +181,9 @@ FILES = \
 	ISchumix.cs \
 	Maths/Algorithms/QuickSort.cs \
 	Maths/Types/AutoSortedArray.cs \
-	Maths/MathFunctions.cs 
+	Maths/MathFunctions.cs \
+	Network/ClientPacketMethod.cs \
+	Config/ListenerConfig.cs 
 
 DATA_FILES = 
 

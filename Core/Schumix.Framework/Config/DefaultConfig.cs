@@ -38,6 +38,9 @@ namespace Schumix.Framework.Config
 		protected const string d_serverhost            = "127.0.0.1";
 		protected const int d_serverport               = 35220;
 		protected const string d_serverpassword        = "schumix";
+		protected const bool d_listenerenabled         = false;
+		protected const int d_listenerport             = 36200;
+		protected const string d_listenerpassword      = "schumix";
 		protected const string d_servername            = "Default";
 		protected const string d_server                = "localhost";
 		protected const string d_ircserverpassword     = " ";

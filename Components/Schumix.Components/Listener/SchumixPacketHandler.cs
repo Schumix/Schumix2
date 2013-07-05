@@ -120,7 +120,7 @@ namespace Schumix.Components.Listener
 			string guid = pck.Read<string>();
 			string hash = pck.Read<string>();
 
-			if(hash != sUtilities.Md5(/*ServerConfig.Password*/ "schumix"))
+			if(hash != sUtilities.Md5(ListenerConfig.Password))
 			{
 				if(_HostList.ContainsKey(hst + SchumixBase.Colon + bck))
 					_HostList.Remove(hst + SchumixBase.Colon + bck);

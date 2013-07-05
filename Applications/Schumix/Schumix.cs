@@ -59,12 +59,12 @@ namespace Schumix
 				sSchumixBase = new SchumixBase();
 				sIrcBase.Start(eserver);
 
-				//if(ServerConfig.Enabled)
-				//{
+				if(ListenerConfig.Enabled)
+				{
 					Log.Debug("SchumixBot", sLConsole.GetString("SchumixListener starting..."));
-					var sListener = new SchumixListener(36200);
+					var sListener = new SchumixListener(ListenerConfig.Port);
 					new Thread(() => sListener.Listen()).Start();
-				//}
+				}
 
 				Log.Debug("SchumixBot", sLConsole.GetString("Console starting..."));
 				new ScriptManager(ScriptsConfig.Directory);

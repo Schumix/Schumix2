@@ -7,6 +7,12 @@
 * **Port:** Server port. Default: `35220`
 * **Password:** Server's identify password. Default: `schumix`
 
+## Listener
+
+* **Enabled:** `true` or `false`. Meghatározza hogy lehessen-e kapcsolódni a botban működő szerverhez. Default: `false`
+* **Port:** Server port. Default: `36200`
+* **Password:** Server's identify password. Default: `schumix`
+
 ## Irc
 
 With Yaml config:<br/>
