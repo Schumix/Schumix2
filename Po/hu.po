@@ -610,9 +610,8 @@ msgstr "Csomagot kapott, ID: {0} tőle: {1}"
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:14
 #: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:14
-#, fuzzy
 msgid "Received unhandled packetid: {0}"
-msgstr "Ismeretlen opcode kód: {0}"
+msgstr "Ismeretlen packetid: {0}"
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
 msgid "Authentication denied to SCS server!"
@@ -1096,9 +1095,8 @@ msgstr ""
 "logok. Megváltozás időpontja: [{1}]\n"
 
 #: ../Core/Schumix.Framework/Config/ListenerConfig.cs:3
-#, fuzzy
 msgid "Loaded the Listener settings."
-msgstr "SQLite beállításai betöltve."
+msgstr "Listener beállításai betöltve."
 
 #: ../Applications/Schumix/Main.cs:10 ../Applications/Schumix.Server/Main.cs:8
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
