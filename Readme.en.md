@@ -24,6 +24,8 @@ When using Monodevelop the `gettext` is needed for translating the language file
 <br/>Download and install it. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
 <br/>The compiling is simple. Open the `Schumix.sln` file.
 <br/>Choose the configuration that fits for you and compile it.
+<br/><br/>When using Visual Studio you only need to open SchumixVS.sln.
+<br/>Choose the configuration that fits for you and compile it.
 
 ## Linux
 
