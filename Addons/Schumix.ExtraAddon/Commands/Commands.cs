@@ -141,9 +141,28 @@ namespace Schumix.ExtraAddon.Commands
 					string status = sIRCMessage.Info[6].ToLower();
 					if(status == SchumixBase.On || status == SchumixBase.Off)
 					{
+						bool enabled = false;
 						string name = sIRCMessage.Nick.ToLower();
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled FROM hlmessage WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
+
+						if(!db.IsNull())
+							enabled = db["Enabled"].ToString().ToLower() == SchumixBase.On;
+						else
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
+
+						if(enabled && status == SchumixBase.On)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOn", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+						else if(!enabled && status == SchumixBase.Off)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FunctionAlreadyTurnedOff", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+
 						SchumixBase.DManager.Update("hlmessage", string.Format("Enabled = '{0}'", status), string.Format("Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName));
-	
+
 						if(status == SchumixBase.On)
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], name);
 						else
