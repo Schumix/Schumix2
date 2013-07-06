@@ -67,6 +67,8 @@ NLUA_DLL_MDB=$(BUILD_DIR)/NLua.dll.mdb
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
+SCHUMIX_COMPONENTS_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Components.dll.mdb
+SCHUMIX_COMPONENTS_DLL_MDB=$(BUILD_DIR)/Schumix.Components.dll.mdb
 
 endif
 
@@ -121,6 +123,7 @@ NLUA_DLL_SOURCE=../../External/NLua/Run/Release/NLua.dll
 NLUA_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB=
+SCHUMIX_COMPONENTS_DLL_MDB=
 
 endif
 
@@ -165,7 +168,8 @@ PROGRAMFILES = \
 	$(NLUA_DLL) \
 	$(NLUA_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL) \
-	$(SCHUMIX_IRC_DLL_MDB)  
+	$(SCHUMIX_IRC_DLL_MDB) \
+	$(SCHUMIX_COMPONENTS_DLL_MDB)  
 
 BINARIES = \
 	$(SCHUMIX_SERVER)  

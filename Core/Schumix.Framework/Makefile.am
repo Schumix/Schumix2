@@ -183,7 +183,8 @@ FILES = \
 	Maths/Types/AutoSortedArray.cs \
 	Maths/MathFunctions.cs \
 	Network/ClientPacketMethod.cs \
-	Config/ListenerConfig.cs 
+	Config/ListenerConfig.cs \
+	Logger/DebugLog.cs 
 
 DATA_FILES = 
 

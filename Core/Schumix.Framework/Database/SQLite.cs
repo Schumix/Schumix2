@@ -37,6 +37,9 @@ namespace Schumix.Framework.Database
 		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private SQLiteConnection Connection;
 		private bool _crash = false;
+#if DEBUG
+		private DebugLog _debuglog;
+#endif
 
 		public SQLite(string file)
 		{
@@ -61,6 +64,9 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+#if DEBUG
+				_debuglog = new DebugLog("SQLite.log");
+#endif
 				Connection = new SQLiteConnection("Data Source=" + file);
 				Connection.Open();
 				return true;
@@ -87,6 +93,9 @@ namespace Schumix.Framework.Database
 				IsConnect();
 				var adapter = new SQLiteDataAdapter();
 				var command = Connection.CreateCommand();
+#if DEBUG
+				_debuglog.LogInFile(query);
+#endif
 				command.CommandText = query;
 				adapter.SelectCommand = command;
 
@@ -125,6 +134,9 @@ namespace Schumix.Framework.Database
 
 				IsConnect();
 				var command = Connection.CreateCommand();
+#if DEBUG
+				_debuglog.LogInFile(sql);
+#endif
 				command.CommandText = sql;
 				command.ExecuteNonQuery();
 			}

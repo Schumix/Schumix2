@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * DebugLog-ba belekerült az sql lekérdezések logolása.
  * Sql lekérdezésnél a SELECT* átírva SELECT 1-re.
  * SqlEscape() függvény feljavítva. Mostantól a MySql-hez az ahhoz beépítettet fogja használni.
  * SchumixListener hozzáadva a bothoz.Feljavításra kerültek a régi hasnoló alapon működő rendszerek.

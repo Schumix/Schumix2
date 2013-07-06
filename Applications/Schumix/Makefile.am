@@ -62,6 +62,8 @@ KOPILUA_DLL_MDB=$(BUILD_DIR)/KopiLua.dll.mdb
 NLUA_DLL_SOURCE=../../External/NLua/Run/Debug/NLua.dll
 NLUA_DLL_MDB_SOURCE=../../External/NLua/Run/Debug/NLua.dll.mdb
 NLUA_DLL_MDB=$(BUILD_DIR)/NLua.dll.mdb
+SCHUMIX_COMPONENTS_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Components.dll.mdb
+SCHUMIX_COMPONENTS_DLL_MDB=$(BUILD_DIR)/Schumix.Components.dll.mdb
 
 endif
 
@@ -111,6 +113,7 @@ KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Release/KopiLua.dll
 KOPILUA_DLL_MDB=
 NLUA_DLL_SOURCE=../../External/NLua/Run/Release/NLua.dll
 NLUA_DLL_MDB=
+SCHUMIX_COMPONENTS_DLL_MDB=
 
 endif
 
@@ -151,7 +154,8 @@ PROGRAMFILES = \
 	$(KOPILUA_DLL) \
 	$(KOPILUA_DLL_MDB) \
 	$(NLUA_DLL) \
-	$(NLUA_DLL_MDB)  
+	$(NLUA_DLL_MDB) \
+	$(SCHUMIX_COMPONENTS_DLL_MDB)  
 
 BINARIES = \
 	$(SCHUMIX)  

@@ -19,7 +19,7 @@ With Yaml config:<br/>
 If you want to connect to more irc server you need to copy the whole irc part (Irc: ...) and you need to configure there the settings and you need to name it as Irc(number). eg.: Irc2: ... (after here is the same as in Irc).<br/>
 With Xml config:<br/>
 If you want to connect to more irc server you need to copy the while irc part (`<Irc>...</Irc>`) and you need to configure there the settings.
-* **ServerName:** A szerver neve. Ezzel lehet beállítani hogy többszerveres módban hogy mi legyen az egyes szervereket megkülönböztető név. FIGYELEM: Nem egyezhet meg a többi szerver nevével (kis és nagybetüt nem különbőzteti meg)!
+* **ServerName:** The Server's name. With more servers connected you can set each server's name. ATTENTION: The server's name can't be the same. (Little and big letters isn't different)!
 * **Server:** Server's name where to connect.
 * **Password:** A szerver jelszavát lehet vele beállítani. Ha üresen van hagyva akkor úgy veszi mintha nem kellene jelszó a szerverhez.
 * **Port:** The server's port Default: `6667`
