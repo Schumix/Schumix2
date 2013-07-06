@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * SqlEscape() függvény feljavítva. Mostantól a MySql-hez az ahhoz beépítettet fogja használni.
  * SchumixListener hozzáadva a bothoz.Feljavításra kerültek a régi hasnoló alapon működő rendszerek.
  * Schumix description frissítve.
  * Mathematics osztály átnevezve Maths-ra.
