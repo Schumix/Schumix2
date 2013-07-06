@@ -19,11 +19,14 @@ Hiányzó almodulok letöltése: git submodule update --init --recursive
 
 ## Windows
 
+### Monodevelop/Xamarin Studio
 Monodevelop használatakor szükséges a nyelvi fájlok lefordításához a `gettext`.
 <br/>Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
 <br/>A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt.
 <br/>Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
-<br/><br/>Visual Studio használatakor csak a `SchumixVS.sln` fájlt kell megnyitnunk.
+
+### Visual Studio
+Visual Studio használatakor csak a `SchumixVS.sln` fájlt kell megnyitnunk.
 <br/>Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
 
 ## Linux
