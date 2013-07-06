@@ -660,9 +660,9 @@ namespace Schumix.GameAddon
 
 			foreach(var channel in list)
 			{
-				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("commands", SchumixBase.On, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
+				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions(IChannelFunctions.Commands, SchumixBase.On, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
 				sMyChannelInfo.ChannelFunctionsReload();
-				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
+				SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions(IChannelFunctions.Gamecommands, SchumixBase.Off, channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, _servername));
 				sMyChannelInfo.ChannelFunctionsReload();
 			}
 
