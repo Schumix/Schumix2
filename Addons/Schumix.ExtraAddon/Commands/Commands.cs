@@ -148,7 +148,10 @@ namespace Schumix.ExtraAddon.Commands
 						if(!db.IsNull())
 							enabled = db["Enabled"].ToString().ToLower() == SchumixBase.On;
 						else
+						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
 
 						if(enabled && status == SchumixBase.On)
 						{
