@@ -306,7 +306,7 @@ namespace Schumix.Framework.Database
 
 		public bool IsCreatedTable(string Table)
 		{
-			return !Query(string.Format("SELECT * FROM {0}", Table), false).IsNull();
+			return !Query(string.Format("SELECT 1 FROM {0}", Table), false).IsNull();
 		}
 	}
 }

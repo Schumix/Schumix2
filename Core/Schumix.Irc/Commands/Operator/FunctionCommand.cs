@@ -205,7 +205,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 				
-				var db0 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.ServerName);
+				var db0 = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.ServerName);
 				if(db0.IsNull())
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);

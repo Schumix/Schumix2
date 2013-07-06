@@ -447,7 +447,7 @@ namespace Schumix.Framework
 		{
 			if(sPlatform.IsWindows)
 			{
-				var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
+				var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT 1 FROM Win32_Processor");
 				return (from ManagementObject mo in mos.Get() select (Regex.Replace(Convert.ToString(mo["Name"]), @"\s+", SchumixBase.Space.ToString()))).FirstOrDefault();
 			}
 			else if(sPlatform.IsLinux)

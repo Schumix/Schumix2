@@ -248,7 +248,7 @@ namespace Schumix.ExtraAddon.Commands
 
 		public void RandomVhost(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(!db.IsNull())
 				SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sUtilities.GetRandomString()), string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 		}

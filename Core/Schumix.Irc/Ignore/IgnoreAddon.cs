@@ -85,7 +85,7 @@ namespace Schumix.Irc.Ignore
 			if(Name.IsNullOrEmpty())
 				return;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(!db.IsNull())
 				return;
 
@@ -98,7 +98,7 @@ namespace Schumix.Irc.Ignore
 			if(Name.IsNullOrEmpty())
 				return;
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(db.IsNull())
 				return;
 

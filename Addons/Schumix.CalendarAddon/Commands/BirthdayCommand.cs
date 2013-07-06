@@ -228,7 +228,7 @@ namespace Schumix.CalendarAddon.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -288,7 +288,7 @@ namespace Schumix.CalendarAddon.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
 				if(db.IsNull())
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -303,7 +303,7 @@ namespace Schumix.CalendarAddon.Commands
 		private bool Warning(IRCMessage sIRCMessage)
 		{
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
 			if(db.IsNull())
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("birthday", sIRCMessage.Channel, sIRCMessage.ServerName));

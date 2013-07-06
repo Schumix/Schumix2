@@ -184,7 +184,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -224,7 +224,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
 				if(db.IsNull())
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -256,7 +256,7 @@ namespace Schumix.Irc.Commands
 
 				if(SchumixBase.DManager.IsCreatedTable("birthday"))
 				{
-					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT * FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
 					if(!db1.IsNull())
 						SchumixBase.DManager.Delete("birthday", string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName));
 				}

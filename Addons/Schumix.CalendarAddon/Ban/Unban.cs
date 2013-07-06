@@ -41,7 +41,7 @@ namespace Schumix.CalendarAddon
 		public string UnbanName(string name, string channel)
 		{
 			var sSender = sIrcBase.Networks[_servername].sSender;
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
 			if(db.IsNull())
 				return sLManager.GetWarningText("UnbanList", channel, _servername);
 

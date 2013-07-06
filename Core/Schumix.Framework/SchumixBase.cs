@@ -252,11 +252,11 @@ namespace Schumix.Framework
 
 		private static void NewServerSqlData(int ServerId, string ServerName)
 		{
-			var db = DManager.QueryFirstRow("SELECT * FROM channels WHERE ServerId = '{0}'", ServerId);
+			var db = DManager.QueryFirstRow("SELECT 1 FROM channels WHERE ServerId = '{0}'", ServerId);
 			if(db.IsNull())
 				DManager.Insert("`channels`(ServerId, ServerName, Channel, Password, Language)", ServerId, ServerName, IRCConfig.List[ServerName].MasterChannel, IRCConfig.List[ServerName].MasterChannelPassword, sLManager.Locale);
 
-			db = DManager.QueryFirstRow("SELECT * FROM schumix WHERE ServerId = '{0}'", ServerId);
+			db = DManager.QueryFirstRow("SELECT 1 FROM schumix WHERE ServerId = '{0}'", ServerId);
 			if(db.IsNull())
 			{
 				foreach(var function in Enum.GetNames(typeof(IFunctions)))
@@ -275,7 +275,7 @@ namespace Schumix.Framework
 		{
 			foreach(var function in Enum.GetNames(typeof(IFunctions)))
 			{
-				var db = DManager.QueryFirstRow("SELECT * FROM schumix WHERE ServerId = '{0}' And FunctionName = '{1}'", ServerId, function.ToLower());
+				var db = DManager.QueryFirstRow("SELECT 1 FROM schumix WHERE ServerId = '{0}' And FunctionName = '{1}'", ServerId, function.ToLower());
 				if(db.IsNull())
 				{
 					if(function == IFunctions.Mantisbt.ToString() || function == IFunctions.Wordpress.ToString() ||

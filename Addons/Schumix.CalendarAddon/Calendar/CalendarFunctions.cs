@@ -46,7 +46,7 @@ namespace Schumix.CalendarAddon
 		{
 			if(Loop)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), 0, 0, 0, time.Hour, time.Minute, _servername);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), 0, 0, 0, time.Hour, time.Minute, _servername);
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel, _servername);
 
@@ -57,7 +57,7 @@ namespace Schumix.CalendarAddon
 				if(sUtilities.IsValueBiggerDateTimeNow(time.Year, time.Month, time.Day, time.Hour, time.Minute))
 					return sLManager.GetWarningText("GaveExpiredDateTime", channel, _servername);
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), time.Year, time.Month, time.Day, time.Hour, time.Minute, _servername);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), time.Year, time.Month, time.Day, time.Hour, time.Minute, _servername);
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel, _servername);
 
@@ -75,7 +75,7 @@ namespace Schumix.CalendarAddon
 
 			if(Loop)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), 0, 0, 0, hour, minute, _servername);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), 0, 0, 0, hour, minute, _servername);
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel, _servername);
 
@@ -89,7 +89,7 @@ namespace Schumix.CalendarAddon
 					time = time.AddDays(1);
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), time.Year, time.Month, time.Day, hour, minute, _servername);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), time.Year, time.Month, time.Day, hour, minute, _servername);
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel, _servername);
 
@@ -105,7 +105,7 @@ namespace Schumix.CalendarAddon
 		{
 			if(Loop)
 			{
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), 0, 0, 0, hour, minute, _servername);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), 0, 0, 0, hour, minute, _servername);
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel, _servername);
 
@@ -116,7 +116,7 @@ namespace Schumix.CalendarAddon
 				if(sUtilities.IsValueBiggerDateTimeNow(year, month, day, hour, minute))
 					return sLManager.GetWarningText("GaveExpiredDateTime", channel, _servername);
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), year, month, day, hour, minute, _servername);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Year = '{2}' AND Month = '{3}' AND Day = '{4}' AND Hour = '{5}' AND Minute = '{6}' And ServerName = '{7}'", sUtilities.SqlEscape(name.ToLower()), sUtilities.SqlEscape(channel.ToLower()), year, month, day, hour, minute, _servername);
 				if(!db.IsNull())
 					return sLManager.GetWarningText("Calendar1", channel, _servername);
 
@@ -138,7 +138,7 @@ namespace Schumix.CalendarAddon
 
 		public void Remove(int Id)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Id = '{0}' And ServerName = '{1}'", Id, _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM calendar WHERE Id = '{0}' And ServerName = '{1}'", Id, _servername);
 			if(db.IsNull())
 				return;
 
@@ -147,7 +147,7 @@ namespace Schumix.CalendarAddon
 
 		public string Remove(string Name, string Channel, int hour, int minute)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Hour = '{2}' AND Minute = '{3}' And ServerName = '{4}'", sUtilities.SqlEscape(Name.ToLower()), sUtilities.SqlEscape(Channel.ToLower()), hour, minute, _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM calendar WHERE Name = '{0}' AND Channel = '{1}' AND Hour = '{2}' AND Minute = '{3}' And ServerName = '{4}'", sUtilities.SqlEscape(Name.ToLower()), sUtilities.SqlEscape(Channel.ToLower()), hour, minute, _servername);
 			if(db.IsNull())
 				return sLManager.GetWarningText("Calendar3", Channel, _servername);
 

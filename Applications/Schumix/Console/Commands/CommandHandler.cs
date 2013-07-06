@@ -259,7 +259,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
 				if(!db.IsNull())
 				{
 					Log.Warning("Console", text[0]);
@@ -297,7 +297,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
 				if(db.IsNull())
 				{
 					Log.Warning("Console", text[0]);
@@ -311,7 +311,7 @@ namespace Schumix.Console.Commands
 
 				if(SchumixBase.DManager.IsCreatedTable("birthday"))
 				{
-					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT * FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
 					if(!db1.IsNull())
 						SchumixBase.DManager.Delete("birthday", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername));
 				}
@@ -392,7 +392,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				var db0 = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[2].ToLower(), _servername);
+				var db0 = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[2].ToLower(), _servername);
 				if(db0.IsNull())
 				{
 					Log.Error("Console", text[2]);
@@ -728,7 +728,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel, _servername);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel, _servername);
 				if(!db.IsNull())
 				{
 					Log.Warning("Console", text[0]);
@@ -782,7 +782,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel, _servername);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", channel, _servername);
 				if(db.IsNull())
 				{
 					Log.Warning("Console", text[1]);
@@ -870,7 +870,7 @@ namespace Schumix.Console.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[2].ToLower(), _servername);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[2].ToLower(), _servername);
 				if(db.IsNull())
 				{
 					Log.Warning("Console", text[1]);
@@ -932,7 +932,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(db.IsNull())
 					{
 						Log.Warning("Console", text[0]);
@@ -974,7 +974,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(db.IsNull())
 					{
 						Log.Warning("Console", text[0]);
@@ -1022,7 +1022,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(db.IsNull())
 					{
 						Log.Warning("Console", text[0]);
@@ -1064,7 +1064,7 @@ namespace Schumix.Console.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", Info[3].ToLower(), _servername);
 					if(db.IsNull())
 					{
 						Log.Warning("Console", text[0]);

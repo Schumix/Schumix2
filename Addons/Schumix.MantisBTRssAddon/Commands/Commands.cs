@@ -332,7 +332,7 @@ namespace Schumix.MantisBTRssAddon.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.ServerName);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.ServerName);
 				if(db.IsNull())
 				{
 					bool started = false;
@@ -380,7 +380,7 @@ namespace Schumix.MantisBTRssAddon.Commands
 					return;
 				}
 				
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.ServerName);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					MantisBTRss gitr = null;
@@ -544,7 +544,7 @@ namespace Schumix.MantisBTRssAddon.Commands
 						return;
 					}
 					
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT * FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM mantisbt WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
