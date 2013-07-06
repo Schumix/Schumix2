@@ -97,7 +97,9 @@ Ha a jó öreg mysql alapú adatbázist szeretnénk használni állítsuk a konf
 Ha az SQLite alapú adatbázist szeretnénk használni állítsuk a konfig fájlban `(lásd: <SQLite><Enabled>false</Enabled>)` az engedélyét `true` értékre.
 <br/>Majd másoljuk az `Sql` mappából a `Schumix.db3` fájlt az exe mellé.
 <br/>Ezen fájl neve megváltoztatható de akkor a konfig fájlban is meg kell vátoztatni.
-<br/>Természetesen az elérési út is a névvel együtt.
+<br/>Természetesen az elérési útat is a névvel együtt.
+<br/>Ha bármiféle javítás jön a kódhoz vagy újítás nem kell az agész adatbázist újra töltenünk.
+<br/>Csak az `Updates` mappából frisistsük a megfelelõ verzió szám alapján.
 
 # Figyelmeztetés!
 

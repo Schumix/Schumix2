@@ -99,6 +99,8 @@ If you want to use a mysql based database set the `<MySql><Enabled>false</Enable
 If you want to use an SQLite based database set the `<SQLite><Enabled>false</Enabled>` permission to true.
 <br/>Then copy the `Schumix.db3` file from the `Sql` folder next to the exe.
 <br/>You can rename or move it but you have to change the name or the path in the config file.
+<br/>If any kind of correction or update will come you don't need to refill the whole database.
+<br/>Only update it from the `Updates` folder with the appropriate version number.
 
 # Attention!
 
