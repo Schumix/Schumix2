@@ -459,7 +459,9 @@ namespace Schumix.Irc
 		private void Close()
 		{
 			Connected = false;
-			_cts.Cancel();
+
+			if(!_cts.IsNull())
+				_cts.Cancel();
 
 			if(!SchumixBase.ExitStatus)
 				Thread.Sleep(2000);
