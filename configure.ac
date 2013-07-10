@@ -67,6 +67,10 @@ External/NLua/Core/KeraLua/src/keralua.pc
 External/NLua/Core/KeraLua/src/Makefile
 External/ChatterBotApi/dotnet/ChatterBotAPI/chatterbotapi.pc
 External/ChatterBotApi/dotnet/ChatterBotAPI/Makefile
+External/csharp-sqlite/Community.CsharpSqlite/community.csharpsqlite.pc
+External/csharp-sqlite/Community.CsharpSqlite/Makefile
+External/csharp-sqlite/Community.CsharpSqlite.SQLiteClient/community.csharpsqlite.sqliteclient.pc
+External/csharp-sqlite/Community.CsharpSqlite.SQLiteClient/Makefile
 Po/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile
