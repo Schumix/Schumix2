@@ -10,7 +10,7 @@ install:
  - sudo apt-get install mono-devel mono-dmcs mono-gmcs
 
 script:
- - ./build.sh release
+ - ./build.sh
 
 # Only watch the master branch
 branches:
