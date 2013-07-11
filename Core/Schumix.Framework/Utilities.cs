@@ -1323,22 +1323,6 @@ namespace Schumix.Framework
 				return string.Format("{0}/{1}", dir, file);
 		}
 
-		public string GetDirectoryName(string data)
-		{
-			if(sPlatform.IsWindows)
-			{
-				var split = data.Split('\\');
-				return split.Length > 1 ? split[split.Length-1] : data;
-			}
-			else if(sPlatform.IsLinux)
-			{
-				var split = data.Split('/');
-				return split.Length > 1 ? split[split.Length-1] : data;
-			}
-			else
-				return data;
-		}
-
 		public void CreatePidFile(string Name)
 		{
 			string pidfile = Name;
