@@ -22,8 +22,8 @@
 using System;
 using System.Threading;
 using System.Data;
+using System.Data.SQLite;
 using System.Text.RegularExpressions;
-using Community.CsharpSqlite.SQLiteClient;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
@@ -35,7 +35,7 @@ namespace Schumix.Framework.Database
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
-		private SqliteConnection Connection;
+		private SQLiteConnection Connection;
 		private bool _crash = false;
 #if DEBUG
 		private DebugLog _debuglog;
@@ -67,11 +67,11 @@ namespace Schumix.Framework.Database
 #if DEBUG
 				_debuglog = new DebugLog("SQLite.log");
 #endif
-				Connection = new SqliteConnection("Data Source=" + file);
+				Connection = new SQLiteConnection("Data Source=" + file);
 				Connection.Open();
 				return true;
 			}
-			catch(SqliteException s)
+			catch(SQLiteException s)
 			{
 				Log.Error("SQLite", s.Message);
 				return false;
@@ -91,7 +91,7 @@ namespace Schumix.Framework.Database
 					return null;
 
 				IsConnect();
-				var adapter = new SqliteDataAdapter();
+				var adapter = new SQLiteDataAdapter();
 				var command = Connection.CreateCommand();
 #if DEBUG
 				_debuglog.LogInFile(query);
@@ -107,7 +107,7 @@ namespace Schumix.Framework.Database
 
 				return table;
 			}
-			catch(SqliteException s)
+			catch(SQLiteException s)
 			{
 				Crash(s, logerror);
 				return null;
@@ -140,7 +140,7 @@ namespace Schumix.Framework.Database
 				command.CommandText = sql;
 				command.ExecuteNonQuery();
 			}
-			catch(SqliteException s)
+			catch(SQLiteException s)
 			{
 				Crash(s, logerror);
 			}
@@ -153,13 +153,13 @@ namespace Schumix.Framework.Database
 				if(Connection.State != ConnectionState.Open)
 					Connection.Open();
 			}
-			catch(SqliteException s)
+			catch(SQLiteException s)
 			{
 				Crash(s, true, true);
 			}
 		}
 
-		private void Crash(SqliteException s, bool logerror, bool c = false)
+		private void Crash(SQLiteException s, bool logerror, bool c = false)
 		{
 			if(c)
 			{

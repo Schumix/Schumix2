@@ -19,12 +19,16 @@ SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 INTL_DLL_SOURCE=../../Dependencies/intl.dll
 MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
+SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
+YAMLDOTNET_CORE_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll.mdb
+YAMLDOTNET_CORE_DLL_MDB=$(BUILD_DIR)/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll
-COMMUNITY_CSHARPSQLITE_DLL_SOURCE=../../External/csharp-sqlite/Community.CsharpSqlite/bin/Debug/Community.CsharpSqlite.dll
-COMMUNITY_CSHARPSQLITE_SQLITECLIENT_DLL_SOURCE=../../External/csharp-sqlite/Community.CsharpSqlite.SQLiteClient/bin/Debug/Community.CsharpSqlite.SQLiteClient.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll.mdb
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=$(BUILD_DIR)/YamlDotNet.RepresentationModel.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 
@@ -45,12 +49,14 @@ SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 INTL_DLL_SOURCE=../../Dependencies/intl.dll
 MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
+SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
+SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
+YAMLDOTNET_CORE_DLL_MDB=
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
-COMMUNITY_CSHARPSQLITE_DLL_SOURCE=../../External/csharp-sqlite/Community.CsharpSqlite/bin/Release/Community.CsharpSqlite.dll
-COMMUNITY_CSHARPSQLITE_SQLITECLIENT_DLL_SOURCE=../../External/csharp-sqlite/Community.CsharpSqlite.SQLiteClient/bin/Release/Community.CsharpSqlite.SQLiteClient.dll
+YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 
 endif
@@ -64,12 +70,14 @@ PROGRAMFILES = \
 	$(SCHUMIX_DB3) \
 	$(INTL_DLL) \
 	$(MONOPOSIXHELPER_DLL) \
+	$(SQLITE3_DLL) \
+	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
 	$(MONO_POSIX_DLL) \
 	$(YAMLDOTNET_CORE_DLL) \
+	$(YAMLDOTNET_CORE_DLL_MDB) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
-	$(COMMUNITY_CSHARPSQLITE_DLL) \
-	$(COMMUNITY_CSHARPSQLITE_SQLITECLIENT_DLL) \
+	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
@@ -113,23 +121,25 @@ SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 INTL_DLL = $(BUILD_DIR)/intl.dll
 MONOPOSIXHELPER_DLL = $(BUILD_DIR)/MonoPosixHelper.dll
+SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
+SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
-COMMUNITY_CSHARPSQLITE_DLL = $(BUILD_DIR)/Community.CsharpSqlite.dll
-COMMUNITY_CSHARPSQLITE_SQLITECLIENT_DLL = $(BUILD_DIR)/Community.CsharpSqlite.SQLiteClient.dll
 SCHUMIX_LIBRARIES_PC = $(BUILD_DIR)/schumix.libraries.pc
 
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,INTL_DLL))
 $(eval $(call emit-deploy-target,MONOPOSIXHELPER_DLL))
+$(eval $(call emit-deploy-target,SQLITE3_DLL))
+$(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
+$(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL_MDB))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
-$(eval $(call emit-deploy-target,COMMUNITY_CSHARPSQLITE_DLL))
-$(eval $(call emit-deploy-target,COMMUNITY_CSHARPSQLITE_SQLITECLIENT_DLL))
+$(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_LIBRARIES_PC,schumix.libraries.pc))
 
 

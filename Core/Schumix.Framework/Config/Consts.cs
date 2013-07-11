@@ -35,8 +35,8 @@ namespace Schumix.Framework.Config
 		public const string SchumixProduct = "Schumix";
 		public const string SchumixCopyright = "Copyright (C) 2013 Schumix Team <http://schumix.eu/>";
 		public const string SchumixTrademark = "GNU General Public License";
-		public const string SchumixVersion = "4.1.7";
-		public const string SchumixFileVersion = "4.1.7.0";
+		public const string SchumixVersion = "4.1.6";
+		public const string SchumixFileVersion = "4.1.6.0";
 		public const string SchumixProgrammedBy = "Csaba Jakosa (Megax)";
 		public const string SchumixDevelopers = "Csaba Jakosa (Megax), Twl, Jackneill, Invisible, mqmq0, AgeNt";
 		public const string SchumixWebsite = "https://github.com/Schumix/Schumix2";

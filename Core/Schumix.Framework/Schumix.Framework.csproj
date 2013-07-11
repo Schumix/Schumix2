@@ -39,6 +39,9 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Data.SQLite">
+      <HintPath>..\..\Dependencies\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\..\Dependencies\MySql.Data.dll</HintPath>
     </Reference>
@@ -160,14 +163,6 @@
       <Project>{21CA0077-E15C-446D-9C43-F6D3F9D09687}</Project>
       <Name>YamlDotNet.RepresentationModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\External\csharp-sqlite\Community.CsharpSqlite\Community.CsharpSqlite.csproj">
-      <Project>{F1653F20-D47D-4F29-8C55-3C835542AF5F}</Project>
-      <Name>Community.CsharpSqlite</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\External\csharp-sqlite\Community.CsharpSqlite.SQLiteClient\Community.CsharpSqlite.SQLiteClient.csproj">
-      <Project>{7BC68E61-C64C-488C-975F-1E2248383B80}</Project>
-      <Name>Community.CsharpSqlite.SQLiteClient</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -185,6 +180,11 @@
       <Link>MonoPosixHelper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+    </None>
+    <None Include="..\..\Dependencies\sqlite3.dll">
+      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
+      <Link>sqlite3.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

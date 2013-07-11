@@ -22,9 +22,9 @@
 using System;
 using System.Text;
 using System.Data;
+using System.Data.SQLite;
 using System.Threading;
 using MySql.Data;
-using Community.CsharpSqlite.SQLiteClient;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;

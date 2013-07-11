@@ -1383,11 +1383,11 @@ namespace Schumix.Framework
 			if(File.Exists(AddonsConfig.Directory + "/Schumix.db3"))
 				File.Delete(AddonsConfig.Directory + "/Schumix.db3");
 
-			if(File.Exists(AddonsConfig.Directory + "/Community.CsharpSqlite.dll"))
-				File.Delete(AddonsConfig.Directory + "/Community.CsharpSqlite.dll");
+			if(File.Exists(AddonsConfig.Directory + "/sqlite3.dll"))
+				File.Delete(AddonsConfig.Directory + "/sqlite3.dll");
 
-			if(File.Exists(AddonsConfig.Directory + "/Community.CsharpSqlite.SQLiteClient.dll"))
-				File.Delete(AddonsConfig.Directory + "/Community.CsharpSqlite.SQLiteClient.dll");
+			if(File.Exists(AddonsConfig.Directory + "/System.Data.SQLite.dll"))
+				File.Delete(AddonsConfig.Directory + "/System.Data.SQLite.dll");
 
 			if(File.Exists(AddonsConfig.Directory + "/MySql.Data.dll"))
 				File.Delete(AddonsConfig.Directory + "/MySql.Data.dll");

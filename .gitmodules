@@ -13,6 +13,3 @@
 [submodule "External/ChatterBotApi"]
 	path = External/ChatterBotApi
 	url = https://github.com/Schumix/ChatterBotApi.git
-[submodule "External/csharp-sqlite"]
-	path = External/csharp-sqlite
-	url = https://github.com/Schumix/csharp-sqlite.git
