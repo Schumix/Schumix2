@@ -117,7 +117,7 @@ namespace Schumix.Components.LuaEngine
 					}
 					catch(Exception e)
 					{
-						Log.Error("LuaEngine", sLConsole.GetString("Exception thrown while loading Lua script: {0} Error: {1}"), file.Name, e.Message);
+						Log.Error("LuaEngine", sLConsole.GetString("Exception thrown while loading Lua script: {0} Error: {1}"), file.Name, e.InnerException);
 					}
 				}
 			}

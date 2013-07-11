@@ -67,7 +67,7 @@ namespace Schumix.Framework.Database
 #if DEBUG
 				_debuglog = new DebugLog("SQLite.log");
 #endif
-				Connection = new SqliteConnection("Data Source=" + file);
+				Connection = new SqliteConnection(string.Format("Data Source=file:{0}", file));
 				Connection.Open();
 				return true;
 			}
