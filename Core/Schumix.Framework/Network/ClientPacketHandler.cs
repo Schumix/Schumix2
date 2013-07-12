@@ -103,6 +103,10 @@ namespace Schumix.Framework.Network
 			}
 			catch(Exception)
 			{
+				var packet2 = new SchumixPacket();
+				packet2.Write<int>((int)Opcode.SCMSG_PACKET_NULL);
+				packet2.Write<string>(sLConsole.GetString("Wrong packetid, aborting connection!"));
+				ClientSocket.SendPacketToSCS(packet);
 				Log.Warning("ClientPacketHandler", sLConsole.GetString("Wrong packetid, aborting connection!"));
 				return;
 			}

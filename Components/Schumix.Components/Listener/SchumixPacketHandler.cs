@@ -93,6 +93,10 @@ namespace Schumix.Components.Listener
 			}
 			catch(Exception)
 			{
+				var packet2 = new SchumixPacket();
+				packet2.Write<int>((int)Opcode.SCMSG_PACKET_NULL);
+				packet2.Write<string>(sLConsole.GetString("Wrong packetid, aborting connection!"));
+				SendPacketBack(packet2, stream, hst, bck);
 				Log.Warning("SchumixPacketHandler", sLConsole.GetString("Wrong packetid, aborting connection!"));
 				return;
 			}
