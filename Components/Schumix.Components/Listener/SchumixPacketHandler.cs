@@ -85,8 +85,19 @@ namespace Schumix.Components.Listener
 			var hst = client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[0];
 			int bck = Convert.ToInt32(client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[1]);
 
-			var packetid = packet.Read<int>();
-			Log.Debug("PacketHandler", sLConsole.GetString("Got packet with ID: {0} from: {1}"), packetid, client.Client.RemoteEndPoint);
+			int packetid = 0;
+
+			try
+			{
+				packetid = packet.Read<int>();
+			}
+			catch(Exception)
+			{
+				Log.Warning("SchumixPacketHandler", sLConsole.GetString("Wrong packetid, aborting connection!"));
+				return;
+			}
+
+			Log.Debug("SchumixPacketHandler", sLConsole.GetString("Got packet with ID: {0} from: {1}"), packetid, client.Client.RemoteEndPoint);
 
 			if(!_AuthList.ContainsKey(hst + SchumixBase.Colon + bck))
 			{
@@ -111,7 +122,7 @@ namespace Schumix.Components.Listener
 				return;
 			}
 			else
-				Log.Notice("HandlePacket", sLConsole.GetString("Received unhandled packetid: {0}"), packetid);
+				Log.Notice("SchumixPacketHandler", sLConsole.GetString("Received unhandled packetid: {0}"), packetid);
 		}
 
 		private void AuthRequestPacketHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)

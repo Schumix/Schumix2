@@ -95,8 +95,19 @@ namespace Schumix.Framework.Network
 		public void HandlePacket(SchumixPacket packet, TcpClient client)
 		{
 			var hst = client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[0];
-			var packetid = packet.Read<int>();
-			Log.Debug("PacketHandler", sLConsole.GetString("Got packet with ID: {0} from: {1}"), packetid, client.Client.RemoteEndPoint);
+			int packetid = 0;
+
+			try
+			{
+				packetid = packet.Read<int>();
+			}
+			catch(Exception)
+			{
+				Log.Warning("ClientPacketHandler", sLConsole.GetString("Wrong packetid, aborting connection!"));
+				return;
+			}
+
+			Log.Debug("ClientPacketHandler", sLConsole.GetString("Got packet with ID: {0} from: {1}"), packetid, client.Client.RemoteEndPoint);
 
 			if(PacketMethodMap.ContainsKey((Opcode)packetid))
 			{
@@ -104,7 +115,7 @@ namespace Schumix.Framework.Network
 				return;
 			}
 			else
-				Log.Notice("HandlePacket", sLConsole.GetString("Received unhandled packetid: {0}"), packetid);
+				Log.Notice("ClientPacketHandler", sLConsole.GetString("Received unhandled packetid: {0}"), packetid);
 		}
 
 		/// <summary>

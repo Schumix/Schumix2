@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-06 14:01:44+0200\n"
+"POT-Creation-Date: 2013-07-12 15:24:32+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -30,8 +30,8 @@ msgid "All Command Handler were deleted."
 msgstr "Összes Command handler törlésre került."
 
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:28
-#: ../Core/Schumix.Irc/Network.cs:58 ../Core/Schumix.Irc/Network.cs:82
-#: ../Core/Schumix.Irc/Network.cs:85 ../Core/Schumix.Irc/Network.cs:94
+#: ../Core/Schumix.Irc/Network.cs:58 ../Core/Schumix.Irc/Network.cs:83
+#: ../Core/Schumix.Irc/Network.cs:86 ../Core/Schumix.Irc/Network.cs:95
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
@@ -208,8 +208,8 @@ msgid "Connection to: {0}"
 msgstr "Kapcsolódás megindult ide: {0}"
 
 #: ../Core/Schumix.Irc/Network.cs:43
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:16
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
 msgid "Connection closed!"
 msgstr "Kapcsolat bontva!"
 
@@ -253,19 +253,19 @@ msgstr "A tanúsítvány nem lett elfogadva, kivétel: {0}"
 msgid "Users' datas are sent."
 msgstr "Felhasználói információk ellettek küldve."
 
-#: ../Core/Schumix.Irc/Network.cs:72 ../Core/Schumix.Irc/Network.cs:93
+#: ../Core/Schumix.Irc/Network.cs:73 ../Core/Schumix.Irc/Network.cs:94
 msgid "Successfully started the thread."
 msgstr "A szál sikeresen elindult."
 
-#: ../Core/Schumix.Irc/Network.cs:72
+#: ../Core/Schumix.Irc/Network.cs:73
 msgid "Started the irc data receiving."
 msgstr "Elindult az irc adatok fogadása."
 
-#: ../Core/Schumix.Irc/Network.cs:75
+#: ../Core/Schumix.Irc/Network.cs:76
 msgid "Do not going data from irc server!"
 msgstr "Nem jön információ az irc szerver felöl!"
 
-#: ../Core/Schumix.Irc/Network.cs:92
+#: ../Core/Schumix.Irc/Network.cs:93
 msgid "Received unhandled opcode: {0}"
 msgstr "Ismeretlen opcode kód: {0}"
 
@@ -424,8 +424,8 @@ msgstr "Irc modul újraindítása!"
 #: ../Core/Schumix.Framework/Database/MySql.cs:19
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:16
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
 #: ../Core/Schumix.Framework/Runtime.cs:8
 #: ../Core/Schumix.Framework/Config/XmlConfig.cs:19
@@ -585,27 +585,33 @@ msgstr "Program indulási időpontja mentésre került."
 msgid "The program is loaded under {0}ms."
 msgstr "A program {0}ms alatt indult el."
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:10
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:11
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:11
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:12
+msgid "Wrong packetid, aborting connection!"
+msgstr "Kapcsolat dobva mert hibás a packetid!"
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:13
 msgid "Got packet with ID: {0} from: {1}"
 msgstr "Csomagot kapott, ID: {0} tőle: {1}"
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:14
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:14
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:13
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:16
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:16
 msgid "Received unhandled packetid: {0}"
 msgstr "Ismeretlen packetid: {0}"
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
 msgid "Authentication denied to SCS server!"
 msgstr "Hitelesítést megtagadta az SCS szerver!"
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:13
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:15
 msgid "Successfully authed to SCS server."
 msgstr "Sikeresen hitelesítve az SCS szerver."
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:16
 msgid "SCS sent random: {0}"
 msgstr "SCS által küldött véletlenszerű csomag: {0}"
 
@@ -1177,36 +1183,36 @@ msgstr "Összes Command handler regisztrálásra került."
 msgid "Successfully started the ServerListener."
 msgstr "ServerListener sikeresen elindult."
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:15
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:17
 msgid "Sending random value: {0}"
 msgstr "Véletlenszerű érték küldése: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:19
 msgid "Auth unsuccessful! Guid of client: {0}"
 msgstr "Hitelesítés sikertelen! Guid a clienttől: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:19
 msgid "Hash was: {0}"
 msgstr "Hash volt: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:19
 msgid "Back port is: {0}"
 msgstr "Vissza port: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:19
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:17
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:19
 msgid "Auth successful. Guid of client: {0}"
 msgstr "Hitelesítés sikeres. Guid a clienttől: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:22
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:20
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:24
+#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:22
 msgid "Connection closed! Guid of client: {0}"
 msgstr "Kapcsolat bontva! Guid a clienttől: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:25
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:27
 msgid "Restart in progress..."
 msgstr "Újraindítás folyamatban..."
 
