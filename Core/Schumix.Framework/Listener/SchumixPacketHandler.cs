@@ -21,6 +21,7 @@
 
 using System;
 using System.Text;
+using System.Timers;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,11 +37,12 @@ namespace Schumix.Framework.Listener
 	public sealed class SchumixPacketHandler
 	{
 		private readonly Dictionary<ListenerOpcode, PacketMethod> PacketMethodMap = new Dictionary<ListenerOpcode, PacketMethod>();
-		private readonly Dictionary<string, NetworkStream> _HostList = new Dictionary<string, NetworkStream>();
+		private readonly Dictionary<string, Host> _HostList = new Dictionary<string, Host>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Dictionary<string, bool> _AuthList = new Dictionary<string, bool>();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public Dictionary<string, NetworkStream> HostList { get { return _HostList; } }
+		private System.Timers.Timer _pingtimer = new System.Timers.Timer();
+		public Dictionary<string, Host> HostList { get { return _HostList; } }
 
 		public Dictionary<ListenerOpcode, PacketMethod> GetPacketMethodMap()
 		{
@@ -51,9 +53,54 @@ namespace Schumix.Framework.Listener
 
 		public void Init()
 		{
+			_pingtimer.Interval = 60*1000;
+			_pingtimer.Elapsed += HandlePingTimer;
+			_pingtimer.Enabled = true;
+			_pingtimer.Start();
+
 			RegisterHandler(ListenerOpcode.CMSG_REQUEST_AUTH,     AuthRequestPacketHandler);
+			RegisterHandler(ListenerOpcode.CMSG_PING,             PingHandler);
+			RegisterHandler(ListenerOpcode.CMSG_PONG,             PongHandler);
 			RegisterHandler(ListenerOpcode.CMSG_SCHUMIX_VERSION,  SchumixVersionHandler);
 			RegisterHandler(ListenerOpcode.CMSG_CLOSE_CONNECTION, CloseHandler);
+		}
+
+		private void HandlePingTimer(object sender, ElapsedEventArgs e)
+		{
+			var rlist = new  Dictionary<string, Host>();
+
+			foreach(var list in _HostList)
+			{
+				if((DateTime.Now - list.Value.LastPing).Minutes >= 5) // 5 minute
+				{
+					rlist.Add(list.Key, list.Value);
+					var packet = new ListenerPacket();
+					packet.Write<int>((int)ListenerOpcode.SMSG_CLOSE_CONNECTION);
+					packet.Write<string>("Ping Timeout");
+					SendPacketBack(packet, list.Value.Stream, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+					Log.Warning("HandlePingTimer", sLConsole.GetString("Connection closed! Guid of client: {0}"), list.Value.Guid);
+				}
+			}
+
+			foreach(var l in rlist)
+			{
+				if(_HostList.ContainsKey(l.Value.Hst + SchumixBase.Colon + l.Value.Bck))
+					_HostList.Remove(l.Value.Hst + SchumixBase.Colon + l.Value.Bck);
+
+				if(_AuthList.ContainsKey(l.Value.Hst + SchumixBase.Colon + l.Value.Bck))
+					_AuthList.Remove(l.Value.Hst + SchumixBase.Colon + l.Value.Bck);
+			}
+
+			if(rlist.Count > 0)
+				rlist.Clear();
+
+			foreach(var list in _HostList)
+			{
+				var packet = new ListenerPacket();
+				packet.Write<int>((int)ListenerOpcode.SMSG_PING);
+				packet.Write<long>((long)sUtilities.UnixTime);
+				SendPacketBack(packet, list.Value.Stream, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+			}
 		}
 
 		public void RegisterHandler(ListenerOpcode packetid, SchumixPacketHandlerDelegate method)
@@ -118,9 +165,6 @@ namespace Schumix.Framework.Listener
 					_AuthList.Add(hst + SchumixBase.Colon + bck, true);
 			}
 
-			if(!_HostList.ContainsKey(hst + SchumixBase.Colon + bck))
-				_HostList.Add(hst + SchumixBase.Colon + bck, stream);
-
 			if(PacketMethodMap.ContainsKey((ListenerOpcode)packetid))
 			{
 				PacketMethodMap[(ListenerOpcode)packetid].Method.Invoke(packet, stream, hst, bck);
@@ -138,9 +182,6 @@ namespace Schumix.Framework.Listener
 
 			if(hash != sUtilities.Md5(ListenerConfig.Password))
 			{
-				if(_HostList.ContainsKey(hst + SchumixBase.Colon + bck))
-					_HostList.Remove(hst + SchumixBase.Colon + bck);
-
 				Log.Warning("AuthHandler", sLConsole.GetString("Auth unsuccessful! Guid of client: {0}"), guid);
 				Log.Debug("Security", sLConsole.GetString("Hash was: {0}"), hash);
 				Log.Notice("AuthHandler", sLConsole.GetString("Back port is: {0}"), bck);
@@ -151,6 +192,10 @@ namespace Schumix.Framework.Listener
 			}
 			else
 			{
+				if(!_HostList.ContainsKey(hst + SchumixBase.Colon + bck))
+					_HostList.Add(hst + SchumixBase.Colon + bck, new Host(stream, guid, hst, bck));
+
+				_HostList[hst + SchumixBase.Colon + bck].LastPing = DateTime.Now;
 				Log.Success("AuthHandler", sLConsole.GetString("Auth successful. Guid of client: {0}"), guid);
 				Log.Debug("Security", sLConsole.GetString("Hash was: {0}"), hash);
 				Log.Notice("AuthHandler", sLConsole.GetString("Back port is: {0}"), bck);
@@ -159,6 +204,24 @@ namespace Schumix.Framework.Listener
 				packet.Write<int>((int)1);
 				SendPacketBack(packet, stream, hst, bck);
 			}
+		}
+
+		private void PingHandler(ListenerPacket pck, NetworkStream stream, string hst, int bck)
+		{
+			_HostList[hst + SchumixBase.Colon + bck].LastPing = DateTime.Now;
+
+			var packet = new ListenerPacket();
+			packet.Write<int>((int)ListenerOpcode.SMSG_PONG);
+			SendPacketBack(packet, stream, hst, bck);
+		}
+
+		private void PongHandler(ListenerPacket pck, NetworkStream stream, string hst, int bck)
+		{
+			_HostList[hst + SchumixBase.Colon + bck].LastPing = DateTime.Now;
+
+			var packet = new ListenerPacket();
+			packet.Write<int>((int)ListenerOpcode.SMSG_PONG);
+			SendPacketBack(packet, stream, hst, bck);
 		}
 
 		private void SchumixVersionHandler(ListenerPacket pck, NetworkStream stream, string hst, int bck)
@@ -196,7 +259,7 @@ namespace Schumix.Framework.Listener
 		public void SendPacketBackAllHost(ListenerPacket packet)
 		{
 			foreach(var list in _HostList)
-				SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+				SendPacketBack(packet, list.Value.Stream, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 		}
 	}
 }

@@ -158,6 +158,7 @@
     <Compile Include="Listener\SchumixPacketHandlerDelegate.cs" />
     <Compile Include="Listener\PacketMethod.cs" />
     <Compile Include="Network\SchumixPacket.cs" />
+    <Compile Include="Listener\Host.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

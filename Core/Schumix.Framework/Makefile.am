@@ -182,7 +182,8 @@ FILES = \
 	Listener/SchumixPacketHandler.cs \
 	Listener/SchumixPacketHandlerDelegate.cs \
 	Listener/PacketMethod.cs \
-	Network/SchumixPacket.cs 
+	Network/SchumixPacket.cs \
+	Listener/Host.cs 
 
 DATA_FILES = 
 

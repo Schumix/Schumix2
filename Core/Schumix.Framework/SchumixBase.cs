@@ -167,7 +167,8 @@ namespace Schumix.Framework
 				return;
 
 			var packet = new ListenerPacket();
-			packet.Write<int>((int)ListenerOpcode.CMSG_CLOSE_CONNECTION);
+			packet.Write<int>((int)ListenerOpcode.SMSG_CLOSE_CONNECTION);
+			packet.Write<string>("Schumix Shutdown");
 			sSchumixPacketHandler.SendPacketBackAllHost(packet);
 		}
 
