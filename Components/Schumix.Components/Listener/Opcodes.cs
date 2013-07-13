@@ -35,7 +35,13 @@ namespace Schumix.Components.Listener
 		SMSG_AUTH_APPROVED            = 0x02,
 		SMSG_AUTH_DENIED              = 0x03,
 		CMSG_CLOSE_CONNECTION         = 0x04,
-		SMSG_CLOSE_CONNECTION         = 0x05
+		SMSG_CLOSE_CONNECTION         = 0x05,
+		CMSG_PING                     = 0x06,
+		SMSG_PING                     = 0x07,
+		CMSG_PONG                     = 0x08,
+		SMSG_PONG                     = 0x09,
+		CMSG_SCHUMIX_VERSION          = 0x10,
+		SMSG_SCHUMIX_VERSION          = 0x11
 	}
 }
 

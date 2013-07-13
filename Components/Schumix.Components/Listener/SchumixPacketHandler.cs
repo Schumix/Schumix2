@@ -52,6 +52,7 @@ namespace Schumix.Components.Listener
 		public void Init()
 		{
 			RegisterHandler(Opcode.CMSG_REQUEST_AUTH,     AuthRequestPacketHandler);
+			RegisterHandler(Opcode.CMSG_SCHUMIX_VERSION,  SchumixVersionHandler);
 			RegisterHandler(Opcode.CMSG_CLOSE_CONNECTION, CloseHandler);
 		}
 
@@ -158,6 +159,14 @@ namespace Schumix.Components.Listener
 				packet.Write<int>((int)1);
 				SendPacketBack(packet, stream, hst, bck);
 			}
+		}
+
+		private void SchumixVersionHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
+		{
+			var packet = new SchumixPacket();
+			packet.Write<int>((int)Opcode.SMSG_SCHUMIX_VERSION);
+			packet.Write<string>(sUtilities.GetVersion());
+			SendPacketBack(packet, stream, hst, bck);
 		}
 
 		private void CloseHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
