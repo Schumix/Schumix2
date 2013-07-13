@@ -31,18 +31,18 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
-namespace Schumix.Components.Listener
+namespace Schumix.Framework.Listener
 {
 	public sealed class SchumixPacketHandler
 	{
-		private readonly Dictionary<Opcode, PacketMethod> PacketMethodMap = new Dictionary<Opcode, PacketMethod>();
+		private readonly Dictionary<ListenerOpcode, PacketMethod> PacketMethodMap = new Dictionary<ListenerOpcode, PacketMethod>();
 		private readonly Dictionary<string, NetworkStream> _HostList = new Dictionary<string, NetworkStream>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Dictionary<string, bool> _AuthList = new Dictionary<string, bool>();
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public Dictionary<string, NetworkStream> HostList { get { return _HostList; } }
 
-		public Dictionary<Opcode, PacketMethod> GetPacketMethodMap()
+		public Dictionary<ListenerOpcode, PacketMethod> GetPacketMethodMap()
 		{
 			return PacketMethodMap;
 		}
@@ -51,12 +51,12 @@ namespace Schumix.Components.Listener
 
 		public void Init()
 		{
-			RegisterHandler(Opcode.CMSG_REQUEST_AUTH,     AuthRequestPacketHandler);
-			RegisterHandler(Opcode.CMSG_SCHUMIX_VERSION,  SchumixVersionHandler);
-			RegisterHandler(Opcode.CMSG_CLOSE_CONNECTION, CloseHandler);
+			RegisterHandler(ListenerOpcode.CMSG_REQUEST_AUTH,     AuthRequestPacketHandler);
+			RegisterHandler(ListenerOpcode.CMSG_SCHUMIX_VERSION,  SchumixVersionHandler);
+			RegisterHandler(ListenerOpcode.CMSG_CLOSE_CONNECTION, CloseHandler);
 		}
 
-		public void RegisterHandler(Opcode packetid, SchumixPacketHandlerDelegate method)
+		public void RegisterHandler(ListenerOpcode packetid, SchumixPacketHandlerDelegate method)
 		{
 			if(PacketMethodMap.ContainsKey(packetid))
 				PacketMethodMap[packetid].Method += method;
@@ -64,13 +64,13 @@ namespace Schumix.Components.Listener
 				PacketMethodMap.Add(packetid, new PacketMethod(method));
 		}
 
-		public void RemoveHandler(Opcode packetid)
+		public void RemoveHandler(ListenerOpcode packetid)
 		{
 			if(PacketMethodMap.ContainsKey(packetid))
 				PacketMethodMap.Remove(packetid);
 		}
 
-		public void RemoveHandler(Opcode packetid, SchumixPacketHandlerDelegate method)
+		public void RemoveHandler(ListenerOpcode packetid, SchumixPacketHandlerDelegate method)
 		{
 			if(PacketMethodMap.ContainsKey(packetid))
 			{
@@ -81,7 +81,7 @@ namespace Schumix.Components.Listener
 			}
 		}
 
-		public void HandlePacket(SchumixPacket packet, TcpClient client, NetworkStream stream)
+		public void HandlePacket(ListenerPacket packet, TcpClient client, NetworkStream stream)
 		{
 			var hst = client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[0];
 			int bck = Convert.ToInt32(client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[1]);
@@ -94,8 +94,8 @@ namespace Schumix.Components.Listener
 			}
 			catch(Exception)
 			{
-				var packet2 = new SchumixPacket();
-				packet2.Write<int>((int)Opcode.SCMSG_PACKET_NULL);
+				var packet2 = new ListenerPacket();
+				packet2.Write<int>((int)ListenerOpcode.SCMSG_PACKET_NULL);
 				packet2.Write<string>(sLConsole.GetString("Wrong packetid, aborting connection!"));
 				SendPacketBack(packet2, stream, hst, bck);
 				Log.Warning("SchumixPacketHandler", sLConsole.GetString("Wrong packetid, aborting connection!"));
@@ -106,10 +106,10 @@ namespace Schumix.Components.Listener
 
 			if(!_AuthList.ContainsKey(hst + SchumixBase.Colon + bck))
 			{
-				if(packetid != (int)Opcode.CMSG_REQUEST_AUTH)
+				if(packetid != (int)ListenerOpcode.CMSG_REQUEST_AUTH)
 				{
-					var packet2 = new SchumixPacket();
-					packet2.Write<int>((int)Opcode.SMSG_AUTH_DENIED);
+					var packet2 = new ListenerPacket();
+					packet2.Write<int>((int)ListenerOpcode.SMSG_AUTH_DENIED);
 					packet2.Write<int>((int)0);
 					SendPacketBack(packet2, stream, hst, bck);
 					return;
@@ -121,16 +121,16 @@ namespace Schumix.Components.Listener
 			if(!_HostList.ContainsKey(hst + SchumixBase.Colon + bck))
 				_HostList.Add(hst + SchumixBase.Colon + bck, stream);
 
-			if(PacketMethodMap.ContainsKey((Opcode)packetid))
+			if(PacketMethodMap.ContainsKey((ListenerOpcode)packetid))
 			{
-				PacketMethodMap[(Opcode)packetid].Method.Invoke(packet, stream, hst, bck);
+				PacketMethodMap[(ListenerOpcode)packetid].Method.Invoke(packet, stream, hst, bck);
 				return;
 			}
 			else
 				Log.Notice("SchumixPacketHandler", sLConsole.GetString("Received unhandled packetid: {0}"), packetid);
 		}
 
-		private void AuthRequestPacketHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
+		private void AuthRequestPacketHandler(ListenerPacket pck, NetworkStream stream, string hst, int bck)
 		{
 			// opcode is already read, DO _NOT_ READ AGAIN
 			string guid = pck.Read<string>();
@@ -144,8 +144,8 @@ namespace Schumix.Components.Listener
 				Log.Warning("AuthHandler", sLConsole.GetString("Auth unsuccessful! Guid of client: {0}"), guid);
 				Log.Debug("Security", sLConsole.GetString("Hash was: {0}"), hash);
 				Log.Notice("AuthHandler", sLConsole.GetString("Back port is: {0}"), bck);
-				var packet = new SchumixPacket();
-				packet.Write<int>((int)Opcode.SMSG_AUTH_DENIED);
+				var packet = new ListenerPacket();
+				packet.Write<int>((int)ListenerOpcode.SMSG_AUTH_DENIED);
 				packet.Write<int>((int)0);
 				SendPacketBack(packet, stream, hst, bck);
 			}
@@ -154,22 +154,22 @@ namespace Schumix.Components.Listener
 				Log.Success("AuthHandler", sLConsole.GetString("Auth successful. Guid of client: {0}"), guid);
 				Log.Debug("Security", sLConsole.GetString("Hash was: {0}"), hash);
 				Log.Notice("AuthHandler", sLConsole.GetString("Back port is: {0}"), bck);
-				var packet = new SchumixPacket();
-				packet.Write<int>((int)Opcode.SMSG_AUTH_APPROVED);
+				var packet = new ListenerPacket();
+				packet.Write<int>((int)ListenerOpcode.SMSG_AUTH_APPROVED);
 				packet.Write<int>((int)1);
 				SendPacketBack(packet, stream, hst, bck);
 			}
 		}
 
-		private void SchumixVersionHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
+		private void SchumixVersionHandler(ListenerPacket pck, NetworkStream stream, string hst, int bck)
 		{
-			var packet = new SchumixPacket();
-			packet.Write<int>((int)Opcode.SMSG_SCHUMIX_VERSION);
+			var packet = new ListenerPacket();
+			packet.Write<int>((int)ListenerOpcode.SMSG_SCHUMIX_VERSION);
 			packet.Write<string>(sUtilities.GetVersion());
 			SendPacketBack(packet, stream, hst, bck);
 		}
 
-		private void CloseHandler(SchumixPacket pck, NetworkStream stream, string hst, int bck)
+		private void CloseHandler(ListenerPacket pck, NetworkStream stream, string hst, int bck)
 		{
 			if(_HostList.ContainsKey(hst + SchumixBase.Colon + bck))
 				_HostList.Remove(hst + SchumixBase.Colon + bck);
@@ -181,7 +181,7 @@ namespace Schumix.Components.Listener
 			Log.Warning("CloseHandler", sLConsole.GetString("Connection closed! Guid of client: {0}"), guid);
 		}
 
-		public void SendPacketBack(SchumixPacket packet, NetworkStream stream, string hst, int backport)
+		public void SendPacketBack(ListenerPacket packet, NetworkStream stream, string hst, int backport)
 		{
 			Log.Debug("PacketHandler", "SendPacketBack(): host is: " + hst + ", port is: " + backport);
 

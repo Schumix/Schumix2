@@ -22,7 +22,7 @@ using System;
 using System.Reflection;
 using System.Collections.Generic;
 
-namespace Schumix.Components.Listener
+namespace Schumix.Framework.Listener
 {
 	public sealed class PacketMethod
 	{

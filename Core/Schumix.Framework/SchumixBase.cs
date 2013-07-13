@@ -31,6 +31,7 @@ using Schumix.Framework.Clean;
 using Schumix.Framework.Config;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Network;
+using Schumix.Framework.Listener;
 using Schumix.Framework.Database;
 using Schumix.Framework.Database.Cache;
 using Schumix.Framework.Platforms;
@@ -42,6 +43,7 @@ namespace Schumix.Framework
 {
 	public sealed class SchumixBase
 	{
+		private static readonly SchumixPacketHandler sSchumixPacketHandler = Singleton<SchumixPacketHandler>.Instance;
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private static readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
@@ -87,6 +89,13 @@ namespace Schumix.Framework
 
 					while(ThreadStop)
 						Thread.Sleep(100);
+				}
+
+				if(ListenerConfig.Enabled)
+				{
+					Log.Debug("SchumixBot", sLConsole.GetString("SchumixListener starting..."));
+					var sListener = new SchumixListener(ListenerConfig.Port);
+					new Thread(() => sListener.Listen()).Start();
 				}
 
 				if(sPlatform.IsLinux)
@@ -152,6 +161,18 @@ namespace Schumix.Framework
 			ClientSocket.SendPacketToSCS(packet);
 		}
 
+		public static void ListenerDisconnect()
+		{
+			if(!ListenerConfig.Enabled)
+				return;
+
+			var packet = new ListenerPacket();
+			packet.Write<int>((int)ListenerOpcode.CMSG_CLOSE_CONNECTION);
+
+			foreach(var list in sSchumixPacketHandler.HostList)
+				sSchumixPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+		}
+
 		public static void Quit(bool Reconnect = true)
 		{
 			lock(WriteLock)
@@ -166,6 +187,7 @@ namespace Schumix.Framework
 				sTimer.SaveUptime(memory);
 				sCacheDB.Clean();
 				ServerDisconnect(Reconnect);
+				ListenerDisconnect();
 			}
 		}
 

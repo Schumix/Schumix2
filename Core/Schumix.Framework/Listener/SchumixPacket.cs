@@ -22,12 +22,12 @@
 using System;
 using System.Collections.Generic;
 
-namespace Schumix.Components.Listener
+namespace Schumix.Framework.Listener
 {
 	/// <summary>
 	/// Class used to create packets which will be sent between Alaris server and client.
 	/// </summary>
-	public class SchumixPacket : IDisposable
+	public class ListenerPacket : IDisposable
 	{
 		private readonly List<string> split_buffer;
 		private const string Separator = "|;|";
@@ -35,21 +35,21 @@ namespace Schumix.Components.Listener
 		private string _netmsg;
 		
 		/// <summary>
-		/// Initializes a new instance of the SchumixPacket class.
+		/// Initializes a new instance of the ListenerPacket class.
 		/// </summary>
 		/// <param name='net_message'>
 		/// Net message.
 		/// </param>
-		public SchumixPacket(string net_message)
+		public ListenerPacket(string net_message)
 		{
 			_netmsg = net_message;
 			split_buffer = new List<string>(_netmsg.Split((new string[] {Separator}), StringSplitOptions.RemoveEmptyEntries));
 		}
 		
 		/// <summary>
-		/// Initializes a new instance of the SchumixPacket class.
+		/// Initializes a new instance of the ListenerPacket class.
 		/// </summary>
-		public SchumixPacket()
+		public ListenerPacket()
 		{
 			_netmsg = string.Empty;
 		}
@@ -115,13 +115,13 @@ namespace Schumix.Components.Listener
 		public List<string> GetBuffer() { return split_buffer; }
 
 		/// <summary>
-		/// Releases all resource used by the SchumixPacket object.
+		/// Releases all resource used by the ListenerPacket object.
 		/// </summary>
 		/// <remarks>
-		/// Call <see cref="Dispose"/> when you are finished using the SchumixPacket. The
-		/// <see cref="Dispose"/> method leaves the SchumixPacket in an unusable state. After calling
-		/// <see cref="Dispose"/>, you must release all references to the SchumixPacket so the
-		/// garbage collector can reclaim the memory that the SchumixPacket was occupying.
+		/// Call <see cref="Dispose"/> when you are finished using the ListenerPacket. The
+		/// <see cref="Dispose"/> method leaves the ListenerPacket in an unusable state. After calling
+		/// <see cref="Dispose"/>, you must release all references to the ListenerPacket so the
+		/// garbage collector can reclaim the memory that the ListenerPacket was occupying.
 		/// </remarks>
 		public void Dispose()
 		{

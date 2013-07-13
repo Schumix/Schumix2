@@ -70,7 +70,6 @@
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Network\ClientPacketHandler.cs" />
     <Compile Include="Network\Opcodes.cs" />
-    <Compile Include="Network\SchumixPacket.cs" />
     <Compile Include="Network\ClientSocket.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="CrashDumper.cs" />
@@ -152,6 +151,13 @@
     <Compile Include="Network\ClientPacketMethod.cs" />
     <Compile Include="Config\ListenerConfig.cs" />
     <Compile Include="Logger\DebugLog.cs" />
+    <Compile Include="Listener\Opcodes.cs" />
+    <Compile Include="Listener\SchumixListener.cs" />
+    <Compile Include="Listener\SchumixPacket.cs" />
+    <Compile Include="Listener\SchumixPacketHandler.cs" />
+    <Compile Include="Listener\SchumixPacketHandlerDelegate.cs" />
+    <Compile Include="Listener\PacketMethod.cs" />
+    <Compile Include="Network\SchumixPacket.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

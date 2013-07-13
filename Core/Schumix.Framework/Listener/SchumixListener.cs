@@ -30,7 +30,7 @@ using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
-namespace Schumix.Components.Listener
+namespace Schumix.Framework.Listener
 {
 	public sealed class SchumixListener : IDisposable
 	{
@@ -94,7 +94,7 @@ namespace Schumix.Components.Listener
 
 					var encoding = new UTF8Encoding();
 					var msg = encoding.GetString(message_buffer, 0, bytes_read);
-					var packet = new SchumixPacket(msg);
+					var packet = new ListenerPacket(msg);
 					sSchumixPacketHandler.HandlePacket(packet, client, stream);
 				}
 				
