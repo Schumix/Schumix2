@@ -168,9 +168,7 @@ namespace Schumix.Framework
 
 			var packet = new ListenerPacket();
 			packet.Write<int>((int)ListenerOpcode.CMSG_CLOSE_CONNECTION);
-
-			foreach(var list in sSchumixPacketHandler.HostList)
-				sSchumixPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+			sSchumixPacketHandler.SendPacketBackAllHost(packet);
 		}
 
 		public static void Quit(bool Reconnect = true)

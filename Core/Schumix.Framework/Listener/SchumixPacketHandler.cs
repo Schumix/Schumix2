@@ -192,5 +192,11 @@ namespace Schumix.Framework.Listener
 				stream.Flush();
 			}
 		}
+
+		public void SendPacketBackAllHost(ListenerPacket packet)
+		{
+			foreach(var list in _HostList)
+				SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+		}
 	}
 }

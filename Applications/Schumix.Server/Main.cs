@@ -189,9 +189,7 @@ namespace Schumix.Server
 			var packet = new SchumixPacket();
 			packet.Write<int>((int)Opcode.SMSG_CLOSE_CONNECTION);
 			packet.Write<int>((int)0);
-
-			foreach(var list in sServerPacketHandler.HostList)
-				sServerPacketHandler.SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+			sServerPacketHandler.SendPacketBackAllHost(packet);
 
 			Thread.Sleep(2000);
 			sRuntime.Exit();
