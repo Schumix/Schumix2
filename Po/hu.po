@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-12 15:24:32+0200\n"
+"POT-Creation-Date: 2013-07-13 13:32:24+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -35,7 +35,7 @@ msgstr "Összes Command handler törlésre került."
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
-#: ../Core/Schumix.Framework/SchumixBase.cs:15
+#: ../Core/Schumix.Framework/SchumixBase.cs:16
 #: ../Core/Schumix.Framework/Utilities.cs:25
 #: ../Core/Schumix.Framework/Utilities.cs:98
 #: ../Core/Schumix.Framework/Utilities.cs:116
@@ -45,7 +45,7 @@ msgstr "Összes Command handler törlésre került."
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
-#: ../Applications/Schumix/Schumix.cs:6
+#: ../Applications/Schumix/Schumix.cs:5
 #: ../Applications/Schumix/Console/Console.cs:7
 #: ../Applications/Schumix/Console/Commands/CommandManager.cs:11
 #: ../Applications/Schumix.Server/Config/Config.cs:6
@@ -444,7 +444,7 @@ msgid "Vhost is ON."
 msgstr "Vhost bekapcsolásra került."
 
 #: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:24
-#: ../Core/Schumix.Framework/SchumixBase.cs:30
+#: ../Core/Schumix.Framework/SchumixBase.cs:33
 msgid "FunctionReload: Failre request!"
 msgstr "FunctionReload: Hibás lekérdezés!"
 
@@ -485,36 +485,40 @@ msgstr "Kérlek töltsed ki a konfigot!"
 msgid "Initiating connection."
 msgstr "Kapcsolat kezdeményezése."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:9
+#: ../Core/Schumix.Framework/SchumixBase.cs:7
+msgid "SchumixListener starting..."
+msgstr "SchumixListener indítása..."
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:10
 msgid "Timer is starting..."
 msgstr "Timer indul..."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:10
+#: ../Core/Schumix.Framework/SchumixBase.cs:11
 msgid "MySql is starting..."
 msgstr "MySql indul..."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:11
+#: ../Core/Schumix.Framework/SchumixBase.cs:12
 msgid "CacheDB is starting..."
 msgstr "CacheDB indul..."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:12
+#: ../Core/Schumix.Framework/SchumixBase.cs:13
 msgid "Successfully connected to the database."
 msgstr "Az adatbázishoz sikeres a kapcsolodás."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:14
+#: ../Core/Schumix.Framework/SchumixBase.cs:15
 #: ../Applications/Schumix.Server/Main.cs:13
 msgid "CleanManager is starting..."
 msgstr "CleanManager indul..."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:15
+#: ../Core/Schumix.Framework/SchumixBase.cs:16
 msgid "AddonManager is loading..."
 msgstr "AddonManager indul..."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:26
+#: ../Core/Schumix.Framework/SchumixBase.cs:29
 msgid "{0} master channel is updated to: {1}"
 msgstr "{0} mester csatorna frissitve lett erre: {1}"
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:26
+#: ../Core/Schumix.Framework/SchumixBase.cs:29
 msgid "The master channel already exist on the database, named by default!"
 msgstr ""
 "A megadott mester csatorna már létezik egyszer az adatbázisban így az "
@@ -586,20 +590,20 @@ msgid "The program is loaded under {0}ms."
 msgstr "A program {0}ms alatt indult el."
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:19
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:12
 msgid "Wrong packetid, aborting connection!"
 msgstr "Kapcsolat dobva mert hibás a packetid!"
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:20
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:13
 msgid "Got packet with ID: {0} from: {1}"
 msgstr "Csomagot kapott, ID: {0} tőle: {1}"
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:13
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:22
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:16
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:16
 msgid "Received unhandled packetid: {0}"
 msgstr "Ismeretlen packetid: {0}"
 
@@ -620,26 +624,26 @@ msgid "Successfully started the ClientSocket."
 msgstr "ClientSocket sikeresen elindult."
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:3
 #: ../Applications/Schumix.Server/ServerListener.cs:3
-#: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
 msgid "Client connection from: {0}"
 msgstr "Client kapcsolódik: {0}"
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:5
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:3
 #: ../Applications/Schumix.Server/ServerListener.cs:3
-#: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
 msgid "Handling client..."
 msgstr "Client kezelése..."
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:7
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:4
 #: ../Applications/Schumix.Server/ServerListener.cs:3
-#: ../Components/Schumix.Components/Listener/SchumixListener.cs:4
 msgid "Stream data available, reading."
 msgstr "Rendelkezésre álló adatok olvasása."
 
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:9
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:5
 #: ../Applications/Schumix.Server/ServerListener.cs:3
-#: ../Components/Schumix.Components/Listener/SchumixListener.cs:5
 msgid "Lost connection!"
 msgstr "Elveszett a kapcsolat!"
 
@@ -1102,6 +1106,42 @@ msgstr ""
 msgid "Loaded the Listener settings."
 msgstr "Listener beállításai betöltve."
 
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:3
+msgid "Successfully started the SchumixListener."
+msgstr "SchumixListener sikeresen elindult."
+
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:7
+msgid "The data's processing is completed."
+msgstr "Az adatok feldolgozása befejeződött!"
+
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:8
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:33
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:24
+msgid "Connection closed! Guid of client: {0}"
+msgstr "Kapcsolat bontva! Guid a clienttől: {0}"
+
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:24
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
+msgid "Auth unsuccessful! Guid of client: {0}"
+msgstr "Hitelesítés sikertelen! Guid a clienttől: {0}"
+
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:24
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:25
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
+msgid "Hash was: {0}"
+msgstr "Hash volt: {0}"
+
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:24
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:25
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
+msgid "Back port is: {0}"
+msgstr "Vissza port: {0}"
+
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:25
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
+msgid "Auth successful. Guid of client: {0}"
+msgstr "Hitelesítés sikeres. Guid a clienttől: {0}"
+
 #: ../Applications/Schumix/Main.cs:10 ../Applications/Schumix.Server/Main.cs:8
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
 msgstr "A program leállításához használd a <Ctrl+C> vagy <quit> parancsot!"
@@ -1152,10 +1192,6 @@ msgid "Network starting..."
 msgstr "Network indul..."
 
 #: ../Applications/Schumix/Schumix.cs:5
-msgid "SchumixListener starting..."
-msgstr "SchumixListener indítása..."
-
-#: ../Applications/Schumix/Schumix.cs:6
 msgid "Console starting..."
 msgstr "Console indul..."
 
@@ -1186,31 +1222,6 @@ msgstr "ServerListener sikeresen elindult."
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:17
 msgid "Sending random value: {0}"
 msgstr "Véletlenszerű érték küldése: {0}"
-
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:19
-msgid "Auth unsuccessful! Guid of client: {0}"
-msgstr "Hitelesítés sikertelen! Guid a clienttől: {0}"
-
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:19
-msgid "Hash was: {0}"
-msgstr "Hash volt: {0}"
-
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:19
-msgid "Back port is: {0}"
-msgstr "Vissza port: {0}"
-
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:19
-msgid "Auth successful. Guid of client: {0}"
-msgstr "Hitelesítés sikeres. Guid a clienttől: {0}"
-
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:24
-#: ../Components/Schumix.Components/Listener/SchumixPacketHandler.cs:22
-msgid "Connection closed! Guid of client: {0}"
-msgstr "Kapcsolat bontva! Guid a clienttől: {0}"
 
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:27
 msgid "Restart in progress..."
@@ -1545,11 +1556,3 @@ msgstr "Lua támogatása le van tiltva!"
 #: ../Components/Schumix.Components/ScriptManager.cs:5
 msgid "Python support is disabled!"
 msgstr "Python támogatása le van tiltva!"
-
-#: ../Components/Schumix.Components/Listener/SchumixListener.cs:3
-msgid "Successfully started the SchumixListener."
-msgstr "SchumixListener sikeresen elindult."
-
-#: ../Components/Schumix.Components/Listener/SchumixListener.cs:7
-msgid "The data's processing is completed."
-msgstr "Az adatok feldolgozása befejeződött!"
