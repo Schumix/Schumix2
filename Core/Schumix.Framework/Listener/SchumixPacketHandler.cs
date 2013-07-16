@@ -21,6 +21,7 @@
 
 using System;
 using System.Text;
+using System.Data;
 using System.Timers;
 using System.Net.Sockets;
 using System.Threading;
@@ -62,6 +63,8 @@ namespace Schumix.Framework.Listener
 			RegisterHandler(ListenerOpcode.CMSG_PING,             PingHandler);
 			RegisterHandler(ListenerOpcode.CMSG_PONG,             PongHandler);
 			RegisterHandler(ListenerOpcode.CMSG_SCHUMIX_VERSION,  SchumixVersionHandler);
+			RegisterHandler(ListenerOpcode.CMSG_CACHE_DB,         CacheDBHandler);
+			RegisterHandler(ListenerOpcode.CMSG_UPDATE_DB,        UpdateDBHandler);
 			RegisterHandler(ListenerOpcode.CMSG_CLOSE_CONNECTION, CloseHandler);
 		}
 
@@ -230,6 +233,41 @@ namespace Schumix.Framework.Listener
 			packet.Write<int>((int)ListenerOpcode.SMSG_SCHUMIX_VERSION);
 			packet.Write<string>(sUtilities.GetVersion());
 			SendPacketBack(packet, stream, hst, bck);
+		}
+
+		private void CacheDBHandler(ListenerPacket pck, NetworkStream stream, string hst, int bck)
+		{
+			var db = SchumixBase.DManager.Query("SELECT Id, ServerId, ServerName, Name, Password, Vhost, Flag FROM admins");
+			if(!db.IsNull())
+			{
+				var packet = new ListenerPacket();
+				packet.Write<int>((int)ListenerOpcode.SMSG_CACHE_DB);
+
+				foreach(DataRow row in db.Rows)
+				{
+					int Id = Convert.ToInt32(row["Id"].ToString());
+					int ServerId = Convert.ToInt32(row["ServerId"].ToString());
+					string ServerName = row["ServerName"].ToString();
+					string Name = row["Name"].ToString();
+					string Password = row["Password"].ToString();
+					string Vhost = row["Vhost"].ToString();
+					int Flag = Convert.ToInt32(row["Flag"].ToString());
+					packet.Write<string>(string.Format("INSERT INTO `admins` VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\"", Id, ServerId, ServerName, Name, Password, Vhost, Flag));
+				}
+
+				SendPacketBack(packet, stream, hst, bck);
+			}
+		}
+
+		private void UpdateDBHandler(ListenerPacket pck, NetworkStream stream, string hst, int bck)
+		{
+			foreach(var list in pck.GetBuffer())
+			{
+				if(list == ListenerOpcode.CMSG_UPDATE_DB.ToString())
+					continue;
+
+				SchumixBase.DManager.ExecuteNonQuery(list);
+			}
 		}
 
 		private void CloseHandler(ListenerPacket pck, NetworkStream stream, string hst, int bck)

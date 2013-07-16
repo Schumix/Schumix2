@@ -41,7 +41,11 @@ namespace Schumix.Framework.Listener
 		CMSG_PONG                     = 0x08,
 		SMSG_PONG                     = 0x09,
 		CMSG_SCHUMIX_VERSION          = 0x10,
-		SMSG_SCHUMIX_VERSION          = 0x11
+		SMSG_SCHUMIX_VERSION          = 0x11,
+		CMSG_CACHE_DB                 = 0x12,
+		SMSG_CACHE_DB                 = 0x13,
+		CMSG_UPDATE_DB                = 0x14,
+		SMSG_UPDATE_DB                = 0x15
 	}
 }
 
