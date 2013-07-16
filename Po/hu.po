@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-13 13:32:24+0200\n"
+"POT-Creation-Date: 2013-07-16 10:02:27+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -513,6 +513,10 @@ msgstr "CleanManager indul..."
 #: ../Core/Schumix.Framework/SchumixBase.cs:16
 msgid "AddonManager is loading..."
 msgstr "AddonManager indul..."
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:21
+msgid "Schumix Shutdown"
+msgstr "Schumix leáll"
 
 #: ../Core/Schumix.Framework/SchumixBase.cs:29
 msgid "{0} master channel is updated to: {1}"
@@ -1115,7 +1119,11 @@ msgid "The data's processing is completed."
 msgstr "Az adatok feldolgozása befejeződött!"
 
 #: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:8
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:33
+msgid "Ping Timeout"
+msgstr "Ping időtúllépés"
+
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:8
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:38
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:24
 msgid "Connection closed! Guid of client: {0}"
 msgstr "Kapcsolat bontva! Guid a clienttől: {0}"

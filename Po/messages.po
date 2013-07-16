@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-13 13:32:24+0200\n"
-"PO-Revision-Date: 2013-07-13 13:32:25+0200\n"
+"POT-Creation-Date: 2013-07-16 10:02:27+0200\n"
+"PO-Revision-Date: 2013-07-16 10:02:28+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -505,6 +505,10 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/SchumixBase.cs:16
 msgid "AddonManager is loading..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/SchumixBase.cs:21
+msgid "Schumix Shutdown"
 msgstr ""
 
 #: ../Core/Schumix.Framework/SchumixBase.cs:29
@@ -1089,7 +1093,11 @@ msgid "The data's processing is completed."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:8
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:33
+msgid "Ping Timeout"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:8
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:38
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:24
 msgid "Connection closed! Guid of client: {0}"
 msgstr ""

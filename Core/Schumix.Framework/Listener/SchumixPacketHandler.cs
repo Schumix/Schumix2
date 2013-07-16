@@ -79,7 +79,7 @@ namespace Schumix.Framework.Listener
 					rlist.Add(list.Key, list.Value);
 					var packet = new ListenerPacket();
 					packet.Write<int>((int)ListenerOpcode.SMSG_CLOSE_CONNECTION);
-					packet.Write<string>("Ping Timeout");
+					packet.Write<string>(sLConsole.GetString("Ping Timeout"));
 					SendPacketBack(packet, list.Value.Stream, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 					Log.Warning("HandlePingTimer", sLConsole.GetString("Connection closed! Guid of client: {0}"), list.Value.Guid);
 				}
