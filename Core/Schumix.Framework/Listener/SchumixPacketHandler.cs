@@ -240,11 +240,13 @@ namespace Schumix.Framework.Listener
 			var db = SchumixBase.DManager.Query("SELECT Id, ServerId, ServerName, Name, Password, Vhost, Flag FROM admins");
 			if(!db.IsNull())
 			{
+				int i = 0;
 				var packet = new ListenerPacket();
 				packet.Write<int>((int)ListenerOpcode.SMSG_CACHE_DB);
 
 				foreach(DataRow row in db.Rows)
 				{
+					i++;
 					int Id = Convert.ToInt32(row["Id"].ToString());
 					int ServerId = Convert.ToInt32(row["ServerId"].ToString());
 					string ServerName = row["ServerName"].ToString();
@@ -255,7 +257,8 @@ namespace Schumix.Framework.Listener
 					packet.Write<string>(string.Format("INSERT INTO `admins` VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\"", Id, ServerId, ServerName, Name, Password, Vhost, Flag));
 				}
 
-				SendPacketBack(packet, stream, hst, bck);
+				if(i > 0)
+					SendPacketBack(packet, stream, hst, bck);
 			}
 		}
 

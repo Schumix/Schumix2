@@ -178,12 +178,12 @@ FILES = \
 	Logger/DebugLog.cs \
 	Listener/Opcodes.cs \
 	Listener/SchumixListener.cs \
-	Listener/SchumixPacket.cs \
 	Listener/SchumixPacketHandler.cs \
 	Listener/SchumixPacketHandlerDelegate.cs \
 	Listener/PacketMethod.cs \
 	Network/SchumixPacket.cs \
-	Listener/Host.cs 
+	Listener/Host.cs \
+	Listener/ListenerPacket.cs 
 
 DATA_FILES = 
 

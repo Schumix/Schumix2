@@ -148,7 +148,8 @@ FILES = \
 	Util/ChannelMode.cs \
 	Util/StatsQuery.cs \
 	Util/UserInfo.cs \
-	Util/Serv.cs 
+	Util/Serv.cs \
+	Commands/ListenerDataUpdate.cs 
 
 DATA_FILES = 
 

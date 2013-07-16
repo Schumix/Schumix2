@@ -153,12 +153,12 @@
     <Compile Include="Logger\DebugLog.cs" />
     <Compile Include="Listener\Opcodes.cs" />
     <Compile Include="Listener\SchumixListener.cs" />
-    <Compile Include="Listener\SchumixPacket.cs" />
     <Compile Include="Listener\SchumixPacketHandler.cs" />
     <Compile Include="Listener\SchumixPacketHandlerDelegate.cs" />
     <Compile Include="Listener\PacketMethod.cs" />
     <Compile Include="Network\SchumixPacket.cs" />
     <Compile Include="Listener\Host.cs" />
+    <Compile Include="Listener\ListenerPacket.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
