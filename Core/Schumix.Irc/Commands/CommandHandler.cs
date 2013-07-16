@@ -29,6 +29,7 @@ using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
+using Schumix.Framework.Listener;
 using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -37,6 +38,7 @@ namespace Schumix.Irc.Commands
 {
 	public abstract partial class CommandHandler : CommandInfo
 	{
+		protected readonly SchumixPacketHandler sSchumixPacketHandler = Singleton<SchumixPacketHandler>.Instance;
 		protected readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		protected readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		protected readonly Dictionary<string, Whois> WhoisList = new Dictionary<string, Whois>();

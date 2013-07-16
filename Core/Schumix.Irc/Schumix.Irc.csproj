@@ -106,6 +106,7 @@
     <Compile Include="Util\StatsQuery.cs" />
     <Compile Include="Util\UserInfo.cs" />
     <Compile Include="Util\Serv.cs" />
+    <Compile Include="Commands\ListenerDataUpdate.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

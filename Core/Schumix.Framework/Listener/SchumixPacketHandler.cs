@@ -263,6 +263,7 @@ namespace Schumix.Framework.Listener
 		{
 			foreach(var list in pck.GetBuffer())
 			{
+				// ide még jöhetnek részek amik majd például a csatornák frissítését idézi elő
 				if(list == ListenerOpcode.CMSG_UPDATE_DB.ToString())
 					continue;
 
@@ -296,6 +297,9 @@ namespace Schumix.Framework.Listener
 
 		public void SendPacketBackAllHost(ListenerPacket packet)
 		{
+			if(_HostList.Count == 0)
+				return;
+
 			foreach(var list in _HostList)
 				SendPacketBack(packet, list.Value.Stream, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 		}
