@@ -66,7 +66,7 @@ Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mi
 <br/>Írjuk be hogy `fakeroot`.
 <br/>Ezután futtassuk `./createdebianpkg.sh` parancsot.
 <br/>Ha lefutott megjelenik egy `schumix.deb` nevű fájl.
-<br/>Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsal és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+<br/>Ezt telepítsük a `sudo dpkg -i schumix.deb` paranccsal és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
 
 ## Windows
 

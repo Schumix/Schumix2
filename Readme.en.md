@@ -67,7 +67,7 @@ Use this option only if you want to innstal the bot like a program.
 <br/>Type the `fakeroot` command for that.
 <br/>After that run the `./createdebianpkg.sh` command.
 <br/>When it's done a `schumix.deb` named file will be created.
-<br/>Install it with the `sudo dbkg -i schumix.deb` command and it's all ready.
+<br/>Install it with the `sudo dpkg -i schumix.deb` command and it's all ready.
 <br/>Run the bot with the `schumix` command.
 
 ## Windows
