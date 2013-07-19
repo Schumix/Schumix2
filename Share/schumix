@@ -30,7 +30,7 @@ fi
 if [ -e $addons ]; then
 	for file in "/usr/lib/schumix/Addons/*.dll"
 	do
-		cp $file $addons
+		cp -u $file $addons
 	done
 fi
 
