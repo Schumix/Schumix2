@@ -21,10 +21,9 @@
 using System;
 using Schumix.Framework;
 using Schumix.Framework.Logger;
-using Schumix.Framework.Extensions;
-using Schumix.Framework.Localization;
+using Schumix.Console.Delegate;
 
-namespace Schumix.Console.Commands
+namespace Schumix.Console
 {
 	/// <summary>
 	///     CommandHandler class.
@@ -32,38 +31,20 @@ namespace Schumix.Console.Commands
 	partial class CommandHandler
 	{
 		/// <summary>
-		///     Help parancs függvénye.
+		///     Quit parancs függvénye.
 		/// </summary>
-		protected void HandleHelp()
+		protected void HandleQuit(ConsoleMessage sConsoleMessage)
 		{
-			if(Info.Length == 1)
+			var text = sLManager.GetConsoleCommandTexts("quit");
+			if(text.Length < 2)
 			{
-				var text = sLManager.GetConsoleCommandTexts("help");
-				if(text.Length < 2)
-				{
-					Log.Error("Console", sLConsole.Translations("NoFound2"));
-					return;
-				}
-
-				string commands = string.Empty;
-
-				foreach(var command in CCommandManager.GetCommandHandler())
-				{
-					if(command.Key == "help")
-						continue;
-
-					commands += ", " + command.Key;
-				}
-
-				Log.Notice("Console", text[0]);
-				Log.Notice("Console", text[1], commands.Remove(0, 2, ", "));
+				Log.Error("Console", sLConsole.Translations("NoFound2"));
 				return;
 			}
 
-			foreach(var t in sLManager.GetConsoleCommandHelpTexts(Info.SplitToString(1, "/")))
-			{
-				Log.Notice("Console", t);
-			}
+			Log.Notice("Console", text[0]);
+			SchumixBase.Quit();
+			sIrcBase.Shutdown(text[1]);
 		}
 	}
 }

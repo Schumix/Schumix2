@@ -22,10 +22,20 @@ INSTALLER_EXE_MDB=$(BUILD_DIR)/Installer.exe.mdb
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_MDB_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll.mdb
+ICSHARPCODE_SHARPZIPLIB_DLL_MDB=$(BUILD_DIR)/ICSharpCode.SharpZipLib.dll.mdb
+SHARPEN_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.dll.mdb
+SHARPEN_DLL_MDB=$(BUILD_DIR)/Sharpen.dll.mdb
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
+NSCH_DLL_MDB_SOURCE=../../External/ngit/bin/NSch.dll.mdb
+NSCH_DLL_MDB=$(BUILD_DIR)/NSch.dll.mdb
+NGIT_DLL_MDB_SOURCE=../../External/ngit/bin/NGit.dll.mdb
+NGIT_DLL_MDB=$(BUILD_DIR)/NGit.dll.mdb
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 MONO_POSIX_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Posix.dll
+SHARPEN_UNIX_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll.mdb
+SHARPEN_UNIX_DLL_MDB=$(BUILD_DIR)/Sharpen.Unix.dll.mdb
 
 endif
 
@@ -47,10 +57,15 @@ INSTALLER_EXE_MDB=
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_MDB=
+SHARPEN_DLL_MDB=
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
+NSCH_DLL_MDB=
+NGIT_DLL_MDB=
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 MONO_POSIX_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Posix.dll
+SHARPEN_UNIX_DLL_MDB=
 
 endif
 
@@ -62,10 +77,15 @@ PROGRAMFILES = \
 	$(NGIT_DLL) \
 	$(SHARPEN_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
+	$(ICSHARPCODE_SHARPZIPLIB_DLL_MDB) \
+	$(SHARPEN_DLL_MDB) \
 	$(NSCH_DLL) \
 	$(MONO_SECURITY_DLL) \
+	$(NSCH_DLL_MDB) \
+	$(NGIT_DLL_MDB) \
 	$(SHARPEN_UNIX_DLL) \
-	$(MONO_POSIX_DLL)  
+	$(MONO_POSIX_DLL) \
+	$(SHARPEN_UNIX_DLL_MDB)  
 
 BINARIES = \
 	$(SCHUMIX_INSTALLER)  
@@ -128,10 +148,15 @@ SCHUMIX_INSTALLER = $(BUILD_DIR)/schumix.installer
 $(eval $(call emit-deploy-target,NGIT_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
+$(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL_MDB))
+$(eval $(call emit-deploy-target,SHARPEN_DLL_MDB))
 $(eval $(call emit-deploy-target,NSCH_DLL))
 $(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
+$(eval $(call emit-deploy-target,NSCH_DLL_MDB))
+$(eval $(call emit-deploy-target,NGIT_DLL_MDB))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
+$(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_INSTALLER,schumix.installer,x))
 
 

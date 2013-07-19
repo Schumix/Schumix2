@@ -19,20 +19,30 @@
  */
 
 using System;
+using Schumix.Framework;
+using Schumix.Framework.Logger;
+using Schumix.Console.Delegate;
 
-namespace Schumix.Framework.Irc
+namespace Schumix.Console
 {
-	public sealed class IRCMessage
+	/// <summary>
+	///     CommandHandler class.
+	/// </summary>
+	partial class CommandHandler
 	{
-		public string Hostmask { get; set; }
-		public string Channel { get; set; }
-		public string Args { get; set; }
-		public string Nick { get; set; }
-		public string User { get; set; }
-		public string Host { get; set; }
-		public string[] Info { get; set; }
-		public int ServerId { get; set; }
-		public string ServerName { get; set; }
-		public MessageType MessageType { get; set; }
+		/// <summary>
+		///     Disconnect parancs függvénye.
+		/// </summary>
+		protected void HandleDisConnect(ConsoleMessage sConsoleMessage)
+		{
+			if(!sIrcBase.Networks[_servername].IsConnected())
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("NoConnectedIrcServer"));
+				return;
+			}
+
+			sIrcBase.Networks[_servername].sSender.Quit("Console: Disconnect.");
+			sIrcBase.Networks[_servername].DisConnect();
+		}
 	}
 }

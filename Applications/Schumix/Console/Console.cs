@@ -26,7 +26,6 @@ using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
-using Schumix.Console.Commands;
 
 namespace Schumix.Console
 {

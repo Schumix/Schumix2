@@ -45,12 +45,32 @@
     <Compile Include="Schumix.cs" />
     <Compile Include="Console\Console.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Console\Commands\CommandHandler.cs" />
-    <Compile Include="Console\Commands\CommandManager.cs" />
-    <Compile Include="Console\Commands\CommandHelp.cs" />
     <Compile Include="Windows\Windows.cs" />
     <Compile Include="Linux\Linux.cs" />
     <Compile Include="Windows\CtrlType.cs" />
+    <Compile Include="Console\Commands\HelpCommand.cs" />
+    <Compile Include="Console\Commands\ConsolelogCommand.cs" />
+    <Compile Include="Console\Commands\SysCommand.cs" />
+    <Compile Include="Console\Commands\CChannelCommand.cs" />
+    <Compile Include="Console\Commands\QuitCommand.cs" />
+    <Compile Include="Console\Commands\CServerCommand.cs" />
+    <Compile Include="Console\CommandHandler.cs" />
+    <Compile Include="Console\CommandManager.cs" />
+    <Compile Include="Console\ConsoleMessage.cs" />
+    <Compile Include="Console\Method\ConsoleMethod.cs" />
+    <Compile Include="Console\Delegate\ConsoleDelegate.cs" />
+    <Compile Include="Console\Commands\AdminCommand.cs" />
+    <Compile Include="Console\Commands\FunctionCommand.cs" />
+    <Compile Include="Console\Commands\ChannelCommand.cs" />
+    <Compile Include="Console\Commands\ConnectCommand.cs" />
+    <Compile Include="Console\Commands\DisconnectCommand.cs" />
+    <Compile Include="Console\Commands\ReconnectCommand.cs" />
+    <Compile Include="Console\Commands\IgnoreCommand.cs" />
+    <Compile Include="Console\Commands\PluginCommand.cs" />
+    <Compile Include="Console\Commands\ReloadCommand.cs" />
+    <Compile Include="Console\Commands\LeaveCommand.cs" />
+    <Compile Include="Console\Commands\JoinCommand.cs" />
+    <Compile Include="Console\Commands\NickCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -72,5 +92,7 @@
     <Folder Include="Console\" />
     <Folder Include="Windows\" />
     <Folder Include="Linux\" />
+    <Folder Include="Console\Method\" />
+    <Folder Include="Console\Delegate\" />
   </ItemGroup>
 </Project>

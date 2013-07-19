@@ -26,9 +26,12 @@ using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Framework;
 using Schumix.Framework.Logger;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
+using Schumix.Console.Method;
+using Schumix.Console.Delegate;
 
-namespace Schumix.Console.Commands
+namespace Schumix.Console
 {
 	/// <summary>
 	///     ConsoleCommandManager class.
@@ -38,7 +41,7 @@ namespace Schumix.Console.Commands
 		/// <summary>
 		///     Tárolja a parancsokat és a hozzá tartozó függvényeket.
 		/// </summary>
-		private static readonly Dictionary<string, Action> _CommandHandler = new Dictionary<string, Action>();
+		private static readonly Dictionary<string, ConsoleMethod> ConsoleMethodMap = new Dictionary<string, ConsoleMethod>();
 		/// <summary>
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     LocalizationConsole segítségével állíthatók be a konzol nyelvi tulajdonságai.
@@ -47,9 +50,9 @@ namespace Schumix.Console.Commands
 		/// <summary>
 		///     Kimenetként kiírja a parancsokat és a hozzá tartozó függvényeket.
 		/// </summary>
-		public static Dictionary<string, Action> GetCommandHandler()
+		public static Dictionary<string, ConsoleMethod> GetCommandHandler()
 		{
-			return _CommandHandler;
+			return ConsoleMethodMap;
 		}
 
 		/// <summary>
@@ -106,17 +109,35 @@ namespace Schumix.Console.Commands
 		/// <summary>
 		///     Parancs regisztráló függvény.
 		/// </summary>
-		private void RegisterHandler(string code, Action method)
+		public void RegisterHandler(string command, ConsoleDelegate method)
 		{
-			_CommandHandler.Add(code, method);
+			if(ConsoleMethodMap.ContainsKey(command))
+				ConsoleMethodMap[command].Method += method;
+			else
+				ConsoleMethodMap.Add(command, new ConsoleMethod(method));
 		}
 
 		/// <summary>
 		///     Parancs eltávolító függvény.
 		/// </summary>
-		private void RemoveHandler(string code)
+		public void RemoveHandler(string command)
 		{
-			_CommandHandler.Remove(code);
+			if(ConsoleMethodMap.ContainsKey(command))
+				ConsoleMethodMap.Remove(command);
+		}
+
+		/// <summary>
+		///     Parancs eltávolító függvény.
+		/// </summary>
+		public void RemoveHandler(string command, ConsoleDelegate method)
+		{
+			if(ConsoleMethodMap.ContainsKey(command))
+			{
+				ConsoleMethodMap[command].Method -= method;
+
+				if(ConsoleMethodMap[command].Method.IsNull())
+					ConsoleMethodMap.Remove(command);
+			}
 		}
 
 		/// <summary>
@@ -126,12 +147,13 @@ namespace Schumix.Console.Commands
 		{
 			try
 			{
-				Info = info.Split(SchumixBase.Space);
-				string cmd = Info[0].ToLower();
+				var CMessage = new ConsoleMessage();
+				CMessage.Info = info.Split(SchumixBase.Space);
+				string cmd = CMessage.Info[0].ToLower();
 
-				if(_CommandHandler.ContainsKey(cmd))
+				if(ConsoleMethodMap.ContainsKey(cmd))
 				{
-					_CommandHandler[cmd].Invoke();
+					ConsoleMethodMap[cmd].Method.Invoke(CMessage);
 					return true;
 				}
 				else

@@ -20,19 +20,10 @@
 
 using System;
 
-namespace Schumix.Framework.Irc
+namespace Schumix.Console
 {
-	public sealed class IRCMessage
+	sealed class ConsoleMessage
 	{
-		public string Hostmask { get; set; }
-		public string Channel { get; set; }
-		public string Args { get; set; }
-		public string Nick { get; set; }
-		public string User { get; set; }
-		public string Host { get; set; }
 		public string[] Info { get; set; }
-		public int ServerId { get; set; }
-		public string ServerName { get; set; }
-		public MessageType MessageType { get; set; }
 	}
 }

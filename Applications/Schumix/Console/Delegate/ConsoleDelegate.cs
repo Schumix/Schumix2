@@ -19,20 +19,9 @@
  */
 
 using System;
+using Schumix.Console;
 
-namespace Schumix.Framework.Irc
+namespace Schumix.Console.Delegate
 {
-	public sealed class IRCMessage
-	{
-		public string Hostmask { get; set; }
-		public string Channel { get; set; }
-		public string Args { get; set; }
-		public string Nick { get; set; }
-		public string User { get; set; }
-		public string Host { get; set; }
-		public string[] Info { get; set; }
-		public int ServerId { get; set; }
-		public string ServerName { get; set; }
-		public MessageType MessageType { get; set; }
-	}
+	delegate void ConsoleDelegate(ConsoleMessage sConsoleMessage);
 }

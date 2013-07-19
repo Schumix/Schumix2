@@ -19,20 +19,19 @@
  */
 
 using System;
+using System.Reflection;
+using System.Collections.Generic;
+using Schumix.Console.Delegate;
 
-namespace Schumix.Framework.Irc
+namespace Schumix.Console.Method
 {
-	public sealed class IRCMessage
+	sealed class ConsoleMethod
 	{
-		public string Hostmask { get; set; }
-		public string Channel { get; set; }
-		public string Args { get; set; }
-		public string Nick { get; set; }
-		public string User { get; set; }
-		public string Host { get; set; }
-		public string[] Info { get; set; }
-		public int ServerId { get; set; }
-		public string ServerName { get; set; }
-		public MessageType MessageType { get; set; }
+		public ConsoleDelegate Method { get; set; }
+
+		public ConsoleMethod(ConsoleDelegate method)
+		{
+			Method = method;
+		}
 	}
 }
