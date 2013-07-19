@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-16 10:02:27+0200\n"
-"PO-Revision-Date: 2013-07-16 10:02:28+0200\n"
+"POT-Creation-Date: 2013-07-19 12:29:54+0200\n"
+"PO-Revision-Date: 2013-07-19 12:29:55+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,7 +42,7 @@ msgstr ""
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
 #: ../Applications/Schumix/Schumix.cs:5
 #: ../Applications/Schumix/Console/Console.cs:7
-#: ../Applications/Schumix/Console/Commands/CommandManager.cs:11
+#: ../Applications/Schumix/Console/CommandManager.cs:13
 #: ../Applications/Schumix.Server/Config/Config.cs:6
 #: ../Applications/Schumix.Server/New/Schumix.cs:16
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
@@ -282,7 +282,7 @@ msgstr ""
 
 #: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
 #: ../Core/Schumix.Irc/Commands/Admin/ReloadCommand.cs:2
-#: ../Applications/Schumix/Console/Commands/CommandHandler.cs:147
+#: ../Applications/Schumix/Console/Commands/ReloadCommand.cs:5
 msgid ""
 "This client supports: UserInfo, Finger, Version, Source, Ping, Time and "
 "ClientInfo"
@@ -1194,11 +1194,11 @@ msgstr ""
 msgid "Successfully started the Console reader."
 msgstr ""
 
-#: ../Applications/Schumix/Console/Commands/CommandManager.cs:3
+#: ../Applications/Schumix/Console/CommandManager.cs:3
 msgid "Successfully started the CCommandManager."
 msgstr ""
 
-#: ../Applications/Schumix/Console/Commands/CommandManager.cs:7
+#: ../Applications/Schumix/Console/CommandManager.cs:7
 msgid "All Command Handler are registered."
 msgstr ""
 
