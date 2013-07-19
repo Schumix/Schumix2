@@ -23,7 +23,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using Schumix.Framework.Delegate;
 
-namespace Schumix.Irc
+namespace Schumix.Irc.Method
 {
 	public sealed class IrcMethod
 	{

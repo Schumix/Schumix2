@@ -56,7 +56,6 @@
     <Compile Include="Commands\AdminFlag.cs" />
     <Compile Include="Commands\CommandPermission.cs" />
     <Compile Include="Commands\CommandMethod.cs" />
-    <Compile Include="IrcMethod.cs" />
     <Compile Include="IrcCommandAttribute.cs" />
     <Compile Include="Sender\Sender.cs" />
     <Compile Include="Sender\SendMessage.cs" />
@@ -107,6 +106,7 @@
     <Compile Include="Util\UserInfo.cs" />
     <Compile Include="Util\Serv.cs" />
     <Compile Include="Commands\ListenerDataUpdate.cs" />
+    <Compile Include="Method\IrcMethod.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -126,5 +126,6 @@
     <Folder Include="Commands\HalfOperator\" />
     <Folder Include="Commands\Public\" />
     <Folder Include="Util\" />
+    <Folder Include="Method\" />
   </ItemGroup>
 </Project>

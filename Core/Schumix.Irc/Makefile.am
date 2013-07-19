@@ -107,7 +107,6 @@ FILES = \
 	Commands/AdminFlag.cs \
 	Commands/CommandPermission.cs \
 	Commands/CommandMethod.cs \
-	IrcMethod.cs \
 	IrcCommandAttribute.cs \
 	Sender/Sender.cs \
 	Sender/SendMessage.cs \
@@ -157,7 +156,8 @@ FILES = \
 	Util/StatsQuery.cs \
 	Util/UserInfo.cs \
 	Util/Serv.cs \
-	Commands/ListenerDataUpdate.cs 
+	Commands/ListenerDataUpdate.cs \
+	Method/IrcMethod.cs 
 
 DATA_FILES = 
 
@@ -174,6 +174,7 @@ EXTRAS = \
 	Commands/HalfOperator \
 	Commands/Public \
 	Util \
+	Method \
 	schumix.irc.pc.in 
 
 REFERENCES =  \

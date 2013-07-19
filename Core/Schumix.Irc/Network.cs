@@ -31,6 +31,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Security.Authentication;
 using Schumix.Irc.Util;
+using Schumix.Irc.Method;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Addon;
