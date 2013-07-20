@@ -1398,14 +1398,8 @@ namespace Schumix.Framework
 			if(File.Exists(AddonsConfig.Directory + "/Schumix.Framework.dll"))
 				File.Delete(AddonsConfig.Directory + "/Schumix.Framework.dll");
 
-			if(File.Exists(AddonsConfig.Directory + "/intl.dll"))
-				File.Delete(AddonsConfig.Directory + "/intl.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/MonoPosixHelper.dll"))
-				File.Delete(AddonsConfig.Directory + "/MonoPosixHelper.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/Mono.Posix.dll"))
-				File.Delete(AddonsConfig.Directory + "/Mono.Posix.dll");
+			if(File.Exists(AddonsConfig.Directory + "/NGettext.dll"))
+				File.Delete(AddonsConfig.Directory + "/NGettext.dll");
 
 			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.Core.dll"))
 				File.Delete(AddonsConfig.Directory + "/YamlDotNet.Core.dll");
