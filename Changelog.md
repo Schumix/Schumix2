@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * NGettext került felhasználásra a Mono.Unix verzió helyett.
  * Linux csomagoknál mostantól az addonok minden indításkor frissülni fognaka telepített állományból így ami a bothoz tartozik addon az automatikusan frissülni fog.
  * Console osztály parancsai átrendezve és a működési elve felújítva.
  * DebugLog-ba belekerült az sql lekérdezések logolása.
