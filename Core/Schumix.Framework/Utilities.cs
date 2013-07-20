@@ -1367,14 +1367,11 @@ namespace Schumix.Framework
 				File.Delete("MSBuild.exe");
 
 #if RELEASE
+			if(File.Exists("KeraLua.dll.mdb"))
+				File.Delete("KeraLua.dll.mdb");
+
 			if(File.Exists("KopiLua.dll.mdb"))
 				File.Delete("KopiLua.dll.mdb");
-
-			if(File.Exists("YamlDotNet.Core.dll.mdb"))
-				File.Delete("YamlDotNet.Core.dll.mdb");
-
-			if(File.Exists("YamlDotNet.RepresentationModel.dll.mdb"))
-				File.Delete("YamlDotNet.RepresentationModel.dll.mdb");
 #endif
 
 			if(server)
@@ -1406,14 +1403,6 @@ namespace Schumix.Framework
 
 			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll"))
 				File.Delete(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll");
-
-#if RELEASE
-			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.Core.dll.mdb"))
-				File.Delete(AddonsConfig.Directory + "/YamlDotNet.Core.dll.mdb");
-
-			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll.mdb"))
-				File.Delete(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll.mdb");
-#endif
 		}
 	}
 }
