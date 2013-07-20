@@ -21,8 +21,6 @@ SERVER_EXE_MDB=$(BUILD_DIR)/Server.exe.mdb
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
-INTL_DLL_SOURCE=../../Dependencies/intl.dll
-MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
@@ -32,6 +30,7 @@ YAMLDOTNET_CORE_DLL_MDB=$(BUILD_DIR)/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll.mdb
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=$(BUILD_DIR)/YamlDotNet.RepresentationModel.dll.mdb
+NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_COMPONENTS_DLL_SOURCE=../../Run/Debug/Schumix.Components.dll
@@ -89,8 +88,6 @@ SERVER_EXE_MDB=
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
-INTL_DLL_SOURCE=../../Dependencies/intl.dll
-MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
 SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
@@ -98,6 +95,7 @@ YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release
 YAMLDOTNET_CORE_DLL_MDB=
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=
+NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Release/NGettext.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_COMPONENTS_DLL_SOURCE=../../Run/Release/Schumix.Components.dll
 IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
@@ -135,8 +133,6 @@ PROGRAMFILES = \
 	$(MONO_POSIX_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SCHUMIX_DB3) \
-	$(INTL_DLL) \
-	$(MONOPOSIXHELPER_DLL) \
 	$(SQLITE3_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
@@ -144,6 +140,7 @@ PROGRAMFILES = \
 	$(YAMLDOTNET_CORE_DLL_MDB) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB) \
+	$(NGETTEXT_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_COMPONENTS_DLL) \
 	$(IRONPYTHON_DLL) \
@@ -224,13 +221,12 @@ include $(top_srcdir)/Makefile.include
 MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
-INTL_DLL = $(BUILD_DIR)/intl.dll
-MONOPOSIXHELPER_DLL = $(BUILD_DIR)/MonoPosixHelper.dll
 SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
+NGETTEXT_DLL = $(BUILD_DIR)/NGettext.dll
 SCHUMIX_COMPONENTS_DLL = $(BUILD_DIR)/Schumix.Components.dll
 IRONPYTHON_DLL = $(BUILD_DIR)/IronPython.dll
 MICROSOFT_DYNAMIC_DLL = $(BUILD_DIR)/Microsoft.Dynamic.dll
@@ -250,8 +246,6 @@ SCHUMIX_SERVER = $(BUILD_DIR)/schumix.server
 
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
-$(eval $(call emit-deploy-target,INTL_DLL))
-$(eval $(call emit-deploy-target,MONOPOSIXHELPER_DLL))
 $(eval $(call emit-deploy-target,SQLITE3_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
@@ -259,6 +253,7 @@ $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL_MDB))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB))
+$(eval $(call emit-deploy-target,NGETTEXT_DLL))
 $(eval $(call emit-deploy-target,IRONPYTHON_DLL))
 $(eval $(call emit-deploy-target,MICROSOFT_DYNAMIC_DLL))
 $(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_DLL))

@@ -46,9 +46,6 @@
       <HintPath>..\..\Dependencies\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Mono.Posix">
-      <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -170,21 +167,15 @@
       <Project>{21CA0077-E15C-446D-9C43-F6D3F9D09687}</Project>
       <Name>YamlDotNet.RepresentationModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\External\NGettext\src\NGettext\NGettext.csproj">
+      <Project>{96EED5F5-7E90-4BD8-A822-2D7BFF943E28}</Project>
+      <Name>NGettext</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
     <None Include="..\..\Sql\Schumix.db3">
       <Link>Schumix.db3</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-    </None>
-    <None Include="..\..\Dependencies\intl.dll">
-      <Link>intl.dll</Link>
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\Dependencies\MonoPosixHelper.dll">
-      <Link>MonoPosixHelper.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
     </None>

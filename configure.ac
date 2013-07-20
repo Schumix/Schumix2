@@ -67,6 +67,8 @@ External/NLua/Core/KeraLua/src/keralua.pc
 External/NLua/Core/KeraLua/src/Makefile
 External/ChatterBotApi/dotnet/ChatterBotAPI/chatterbotapi.pc
 External/ChatterBotApi/dotnet/ChatterBotAPI/Makefile
+External/NGettext/src/NGettext/ngettext.pc
+External/NGettext/src/NGettext/Makefile
 Po/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile

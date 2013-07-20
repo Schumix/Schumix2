@@ -13,3 +13,6 @@
 [submodule "External/ChatterBotApi"]
 	path = External/ChatterBotApi
 	url = https://github.com/Schumix/ChatterBotApi.git
+[submodule "External/NGettext"]
+	path = External/NGettext
+	url = https://github.com/Schumix/NGettext.git
