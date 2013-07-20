@@ -1380,9 +1380,6 @@ namespace Schumix.Framework
 			if(File.Exists(AddonsConfig.Directory + "/Schumix.db3"))
 				File.Delete(AddonsConfig.Directory + "/Schumix.db3");
 
-			if(File.Exists(AddonsConfig.Directory + "/sqlite3.dll"))
-				File.Delete(AddonsConfig.Directory + "/sqlite3.dll");
-
 			if(File.Exists(AddonsConfig.Directory + "/System.Data.SQLite.dll"))
 				File.Delete(AddonsConfig.Directory + "/System.Data.SQLite.dll");
 

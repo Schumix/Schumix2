@@ -92,7 +92,7 @@ package()
         mv $file ../../pkg/usr/lib/pkgconfig/$file
     done
 
-    rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll
+    rm Config.exe Installer.exe Addons/Schumix.db3 Addons/System.Data.SQLite.dll Addons/MySql.Data.dll
     rm Addons/Schumix.Irc.dll Addons/Schumix.Framework.dll Addons/NGettext.dll
     rm Addons/YamlDotNet.Core.dll Addons/YamlDotNet.RepresentationModel.dll schumix.config schumix.installer schumix schumix.server
 

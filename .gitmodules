@@ -16,3 +16,6 @@
 [submodule "External/NGettext"]
 	path = External/NGettext
 	url = https://github.com/Schumix/NGettext.git
+[submodule "External/CsharpSQLite"]
+	path = External/CsharpSQLite
+	url = https://github.com/Schumix/CsharpSQLite.git

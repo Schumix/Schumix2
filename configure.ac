@@ -69,6 +69,8 @@ External/ChatterBotApi/dotnet/ChatterBotAPI/chatterbotapi.pc
 External/ChatterBotApi/dotnet/ChatterBotAPI/Makefile
 External/NGettext/src/NGettext/ngettext.pc
 External/NGettext/src/NGettext/Makefile
+External/CsharpSQLite/System.Data.SQLite/system.data.sqlite.pc
+External/CsharpSQLite/System.Data.SQLite/Makefile
 Po/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile

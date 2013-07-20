@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * CsharpSQLite bekötve a magba. Így teljesen c# kóddal lesz megoldva az sqlite használata.
  * NGettext került felhasználásra a Mono.Unix verzió helyett.
  * Linux csomagoknál mostantól az addonok minden indításkor frissülni fognaka telepített állományból így ami a bothoz tartozik addon az automatikusan frissülni fog.
  * Console osztály parancsai átrendezve és a működési elve felújítva.

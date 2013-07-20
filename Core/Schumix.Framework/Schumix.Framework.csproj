@@ -39,9 +39,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\Dependencies\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\..\Dependencies\MySql.Data.dll</HintPath>
     </Reference>
@@ -171,6 +168,10 @@
       <Project>{96EED5F5-7E90-4BD8-A822-2D7BFF943E28}</Project>
       <Name>NGettext</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\External\CsharpSQLite\System.Data.SQLite\System.Data.SQLite.csproj">
+      <Project>{F1653F20-D47D-4F29-8C55-3C835542AF5F}</Project>
+      <Name>System.Data.SQLite</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -178,11 +179,6 @@
       <Link>Schumix.db3</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-    </None>
-    <None Include="..\..\Dependencies\sqlite3.dll">
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <Link>sqlite3.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>
