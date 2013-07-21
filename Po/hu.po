@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-19 12:29:54+0200\n"
+"POT-Creation-Date: 2013-07-21 13:04:01+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -1394,6 +1394,12 @@ msgstr "[UpdateNameDay] Meghibásodás részletei: {0}"
 #: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:22
 msgid "[UpdateBirthDay] Failure details: {0}"
 msgstr "[UpdateBirthDay] Meghibásodás részletei: {0}"
+
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:44
+msgid ""
+"The nameday could not find in the following language: {0} Server: {1} "
+"Channel: {2}"
+msgstr "A névnap nem található meg az alábbi nyelvezeten: {0} Szerver: {1} Csatorna: {2}"
 
 #: ../Addons/Schumix.CalendarAddon/Config/CalendarConfig.cs:3
 msgid "Loaded the Calendar settings."
