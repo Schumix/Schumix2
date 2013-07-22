@@ -81,11 +81,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Components", "Compo
 EndProject
 Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Po", "Po\Po.mdproj", "{707DC067-8EC1-4F4E-A83C-0C33E21E8E8C}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{F37F3558-9AA8-4078-8A99-57259D51C8B2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F37F3558-9AA8-4078-8A99-57259D51C8B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Framework.Test", "Test\Schumix.Framework.Test\Schumix.Framework.Test.csproj", "{762CE329-D8A7-40B8-9782-AE2FB9AD3EBD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Framework.Test", "Tests\Schumix.Framework.Test\Schumix.Framework.Test.csproj", "{762CE329-D8A7-40B8-9782-AE2FB9AD3EBD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Irc.Test", "Test\Schumix.Irc.Test\Schumix.Irc.Test.csproj", "{598F9F95-C142-4596-ADDB-907B5CACC426}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.Irc.Test", "Tests\Schumix.Irc.Test\Schumix.Irc.Test.csproj", "{598F9F95-C142-4596-ADDB-907B5CACC426}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
