@@ -17,6 +17,9 @@ Applications/Schumix/schumix
 msbuild.log
 xbuild.log
 
+# Test
+test-results
+
 # Installer
 Installer/Setup.exe
 
