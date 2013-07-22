@@ -36,14 +36,23 @@
     <Reference Include="nunit.framework">
       <HintPath>..\..\Dependencies\nunit.framework.dll</HintPath>
     </Reference>
+    <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Options\BaseRocksFixture.cs" />
+    <Compile Include="Options\CollectionContract.cs" />
+    <Compile Include="Options\ListContract.cs" />
+    <Compile Include="Options\OptionContextTest.cs" />
+    <Compile Include="Options\OptionSetTest.cs" />
+    <Compile Include="Options\OptionTest.cs" />
+    <Compile Include="Options\Utils.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Options\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">
