@@ -38,7 +38,6 @@ namespace Cadenza.Tests
 {
 	public abstract class BaseRocksFixture
 	{
-
 		public void AssertAreSame<T>(IEnumerable<T> expected, IEnumerable<T> data)
 		{
 			Assert.IsTrue(data.SequenceEqual(expected));

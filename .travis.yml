@@ -7,10 +7,10 @@ language: c
 
 # Mono
 install:
- - sudo apt-get install mono-devel mono-dmcs mono-gmcs
+ - sudo apt-get install mono-devel mono-dmcs mono-gmcs nunit
 
 script:
- - ./build.sh
+ - ./test.sh
 
 # Only watch the master branch
 branches:
