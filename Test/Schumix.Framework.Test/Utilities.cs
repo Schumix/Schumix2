@@ -125,5 +125,26 @@ namespace Schumix.Framework.Test
 			Assert.AreEqual(list[0], "http://www.nunit.org/index.php?p=samples&r=2.6.2");
 			Assert.AreEqual(list[1], "http://google.hu/?asd=asddg");
 		}
+
+		[Test]
+		public void GetUrls7()
+		{
+			var list = sUtilities.GetUrls("asda fadsfasd fad f fadfasdga 93.250.56.87 gfdgsfh g");
+			Assert.AreEqual(list[0], "http://93.250.56.87");
+		}
+
+		[Test]
+		public void GetUrls8()
+		{
+			var list = sUtilities.GetUrls("asda fadsfasd fad f fadfasdga http://93.250.56.87 gfdgsfh g");
+			Assert.AreEqual(list[0], "http://93.250.56.87");
+		}
+
+		[Test]
+		public void GetUrls9()
+		{
+			var list = sUtilities.GetUrls("asda fadsfasd fad f fadfasdga http://93.250.56.87/?asd=asd gfdgsfh g");
+			Assert.AreEqual(list[0], "http://93.250.56.87/?asd=asd");
+		}
 	}
 }
