@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using Schumix.Framework;
 using Schumix.Framework.Platforms;
@@ -34,15 +35,35 @@ namespace Schumix.Framework.Test
 		[Test]
 		public void Sha1()
 		{
-			Assert.AreEqual(sUtilities.Sha1("asd"), "f10e2821bbbea527ea02200352313bc059445190");
-			Assert.AreEqual(sUtilities.Sha1("áéűúő"), "5b9b5b33c24c476bbea6cc7528429eca4b3dea84");
+			var references = new Dictionary<string, string>
+			{
+				{ "asd", "f10e2821bbbea527ea02200352313bc059445190" },
+				{ "test1", "b444ac06613fc8d63795be9ad0beaf55011936ac" },
+				{ "test2", "109f4b3c50d7b0df729d299bc6f8e9ef9066971f" },
+				{ "another test with spaces", "ce1f93e4700bfddafa073bfe5e51851d86cf9461" },
+				{ "and numb3rs", "211efaed8adf86c2e54c35e348e825ce852b5571" },
+				{ "áéűúő", "5b9b5b33c24c476bbea6cc7528429eca4b3dea84" }
+			};
+
+			foreach(var item in references)
+				Assert.AreEqual(sUtilities.Sha1(item.Key), item.Value);
 		}
 
 		[Test]
 		public void Md5()
 		{
-			Assert.AreEqual(sUtilities.Md5("asd"), "7815696ecbf1c96e6894b779456d330e");
-			Assert.AreEqual(sUtilities.Md5("áéűúő"), "eac988f3d64e748b7c2347a8667a5ed2");
+			var references = new Dictionary<string, string>
+			{
+				{ "asd", "7815696ecbf1c96e6894b779456d330e" },
+				{ "test1", "5a105e8b9d40e1329780d62ea2265d8a" },
+				{ "test2", "ad0234829205b9033196ba818f7a872b" },
+				{ "another test with spaces", "0c2e4d83f5b88e2e3cfc132ff616507b" },
+				{ "and numb3rs", "8b26572d1abbdc27ad43d9ef5aed3eae" },
+				{ "áéűúő", "eac988f3d64e748b7c2347a8667a5ed2" }
+			};
+
+			foreach(var item in references)
+				Assert.AreEqual(sUtilities.Md5(item.Key), item.Value);
 		}
 
 		[Test]
