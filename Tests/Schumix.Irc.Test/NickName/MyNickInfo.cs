@@ -21,14 +21,41 @@
 using System;
 using NUnit.Framework;
 
-namespace Schumix.Irc.Test
+namespace Schumix.Irc.NickName.Test
 {
 	[TestFixture]
-	public class Test
+	public class MyNickInfoTest
 	{
 		[Test]
-		public void TestCase()
+		public void Parse()
 		{
+			Assert.AreEqual(Parse(":Schumix"), "Schumix");
+			Assert.AreEqual(Parse("~schumiX"), "schumiX");
+			Assert.AreEqual(Parse("&scHumix"), "scHumix");
+			Assert.AreEqual(Parse("@sChumix"), "sChumix");
+			Assert.AreEqual(Parse("%schuMix"), "schuMix");
+			Assert.AreEqual(Parse("+schumIx"), "schumIx");
+			Assert.AreEqual(Parse("schumix"), "schumix");
+			Assert.AreEqual(Parse("schUmix"), "schUmix");
+		}
+
+		public string Parse(string Name)
+		{
+			if(Name.Length < 1)
+				return string.Empty;
+
+			switch(Name.Substring(0, 1))
+			{
+				case ":":
+				case "~":
+				case "&":
+				case "@":
+				case "%":
+				case "+":
+					return Name.Remove(0, 1);
+				default:
+					return Name;
+			}
 		}
 	}
 }
