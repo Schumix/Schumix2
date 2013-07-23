@@ -37,6 +37,7 @@ namespace Schumix.Irc.NickName.Test
 			Assert.AreEqual(Parse("+schumIx"), "schumIx");
 			Assert.AreEqual(Parse("schumix"), "schumix");
 			Assert.AreEqual(Parse("schUmix"), "schUmix");
+			Assert.AreEqual(Parse(""), string.Empty);
 		}
 
 		public string Parse(string Name)
