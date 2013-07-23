@@ -378,15 +378,15 @@ namespace Schumix.Irc
 			{
 				sMyNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
 
-				if(Rfc2812Util.IsServToLower(sMyNickInfo.NickStorage)) // NickName
+				if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName
 				{
 					sMyNickInfo.ChangeNick(); // NickName -> NickName2
 
-					if(Rfc2812Util.IsServToLower(sMyNickInfo.NickStorage)) // NickName2
+					if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName2
 					{
 						sMyNickInfo.ChangeNick(); // NickName2 -> NickName3
 
-						if(Rfc2812Util.IsServToLower(sMyNickInfo.NickStorage)) // NickName3
+						if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName3
 							sMyNickInfo.ChangeNick(); // NickName3 -> Other
 					}
 

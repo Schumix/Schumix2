@@ -39,11 +39,13 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="NickName\MyNickInfo.cs" />
+    <Compile Include="Util\Rfc2812Util.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="NickName\" />
+    <Folder Include="Util\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">

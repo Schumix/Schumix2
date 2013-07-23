@@ -112,7 +112,7 @@ namespace Schumix.Irc.Util
 		/// <returns>True if the channel name is valid.</returns>
 		public static bool IsValidChannelName(string channel)
 		{
-			if(channel.IsNull() || channel.Trim().Length == 0)
+			if(channel.IsNullOrEmpty())
 				return false;
 			
 			if(ContainsSpace(channel))
@@ -134,7 +134,7 @@ namespace Schumix.Irc.Util
 		/// <returns>True is the nickname is valid</returns>
 		public static bool IsValidNick(string nick)
 		{
-			if(nick.IsNull() || nick.Trim().Length == 0)
+			if(nick.IsNullOrEmpty())
 				return false;
 
 			return !ContainsSpace(nick) && !nick.IsNumber() && !nick.Substring(0, 1).IsNumber() && NickRegex.IsMatch(nick);
@@ -319,7 +319,7 @@ namespace Schumix.Irc.Util
 			return false;
 		}
 
-		public static bool IsServToLower(this string Value)
+		public static bool IsServInLower(this string Value)
 		{
 			foreach(var func in Enum.GetNames(typeof(Serv)))
 			{
