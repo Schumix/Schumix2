@@ -110,6 +110,11 @@ Addons/Schumix.GameAddon/Makefile
 Addons/Schumix.ExtraAddon/schumix.extraaddon.pc
 Addons/Schumix.ExtraAddon/Makefile
 Addons/Makefile
+Tests/Schumix.Framework.Test/schumix.framework.test.pc
+Tests/Schumix.Framework.Test/Makefile
+Tests/Schumix.Irc.Test/schumix.irc.test.pc
+Tests/Schumix.Irc.Test/Makefile
+Tests/Makefile
 External/ngit/NSch/nsch.pc
 External/ngit/NSch/Makefile
 External/ngit/NGit/ngit.pc

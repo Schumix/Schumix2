@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Tesztek alapja elkészültek és hozzáadásra kerültek.
  * Névnap kiírása javítva.
  * CsharpSQLite bekötve a magba. Így teljesen c# kóddal lesz megoldva az sqlite használata.
  * NGettext került felhasználásra a Mono.Unix verzió helyett.
