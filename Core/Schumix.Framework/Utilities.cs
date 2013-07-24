@@ -33,6 +33,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
+using MySql.Data.MySqlClient;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Platforms;
@@ -431,73 +432,7 @@ namespace Schumix.Framework
 				}
 			}
 			else
-			{
-				var split = text.Split('\'');
-				if(split.Length > 1)
-				{
-					int x = 0;
-					var sb = new StringBuilder();
-
-					foreach(var s in split)
-					{
-						x++;
-
-						if(s.Length == 0 && x != split.Length)
-							sb.Append(@"\'");
-						else if(s.Length == 1)
-						{
-							if(s.Substring(0, 1) != @"\")
-							{
-								sb.Append(s);
-								sb.Append(@"\'");
-							}
-							else
-								sb.Append(@"\ \'");
-						}
-						else
-						{
-							int i = 0;
-							string ss = s;
-
-							for(;;)
-							{
-								if(ss.Length > 0 && ss.Substring(ss.Length-1) != @"\")
-								{
-									if(ss.Length-1 > 0)
-										sb.Append(ss.Substring(0, ss.Length));
-
-									for(int a = 0; a < i; a++)
-										sb.Append(@"\");
-
-									if(x != split.Length && i % 2 == 0)
-										sb.Append(@"\'");
-									else if(x != split.Length)
-										sb.Append(@" \'");
-
-									break;
-								}
-								else if(ss.Length <= 0)
-								{
-									for(int a = 0; a < i; a++)
-										sb.Append(@"\");
-
-									if(x != split.Length && i % 2 == 0)
-										sb.Append(@"\'");
-									else if(x != split.Length)
-										sb.Append(@" \'");
-
-									break;
-								}
-
-								i++;
-								ss = ss.Remove(ss.Length-1);
-							}
-						}
-					}
-
-					text = sb.ToString();
-				}
-			}
+				return MySqlHelper.EscapeString(text);
 
 			return text;
 		}
@@ -1388,22 +1323,6 @@ namespace Schumix.Framework
 				return string.Format("{0}/{1}", dir, file);
 		}
 
-		public string GetDirectoryName(string data)
-		{
-			if(sPlatform.IsWindows)
-			{
-				var split = data.Split('\\');
-				return split.Length > 1 ? split[split.Length-1] : data;
-			}
-			else if(sPlatform.IsLinux)
-			{
-				var split = data.Split('/');
-				return split.Length > 1 ? split[split.Length-1] : data;
-			}
-			else
-				return data;
-		}
-
 		public void CreatePidFile(string Name)
 		{
 			string pidfile = Name;
@@ -1448,58 +1367,11 @@ namespace Schumix.Framework
 				File.Delete("MSBuild.exe");
 
 #if RELEASE
+			if(File.Exists("KeraLua.dll.mdb"))
+				File.Delete("KeraLua.dll.mdb");
+
 			if(File.Exists("KopiLua.dll.mdb"))
 				File.Delete("KopiLua.dll.mdb");
-
-			if(File.Exists("YamlDotNet.Core.dll.mdb"))
-				File.Delete("YamlDotNet.Core.dll.mdb");
-
-			if(File.Exists("YamlDotNet.RepresentationModel.dll.mdb"))
-				File.Delete("YamlDotNet.RepresentationModel.dll.mdb");
-#endif
-
-			if(server)
-				return;
-
-			if(File.Exists(AddonsConfig.Directory + "/Schumix.db3"))
-				File.Delete(AddonsConfig.Directory + "/Schumix.db3");
-
-			if(File.Exists(AddonsConfig.Directory + "/sqlite3.dll"))
-				File.Delete(AddonsConfig.Directory + "/sqlite3.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/System.Data.SQLite.dll"))
-				File.Delete(AddonsConfig.Directory + "/System.Data.SQLite.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/MySql.Data.dll"))
-				File.Delete(AddonsConfig.Directory + "/MySql.Data.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/Schumix.Irc.dll"))
-				File.Delete(AddonsConfig.Directory + "/Schumix.Irc.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/Schumix.Framework.dll"))
-				File.Delete(AddonsConfig.Directory + "/Schumix.Framework.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/intl.dll"))
-				File.Delete(AddonsConfig.Directory + "/intl.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/MonoPosixHelper.dll"))
-				File.Delete(AddonsConfig.Directory + "/MonoPosixHelper.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/Mono.Posix.dll"))
-				File.Delete(AddonsConfig.Directory + "/Mono.Posix.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.Core.dll"))
-				File.Delete(AddonsConfig.Directory + "/YamlDotNet.Core.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll"))
-				File.Delete(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll");
-
-#if RELEASE
-			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.Core.dll.mdb"))
-				File.Delete(AddonsConfig.Directory + "/YamlDotNet.Core.dll.mdb");
-
-			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll.mdb"))
-				File.Delete(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll.mdb");
 #endif
 		}
 	}

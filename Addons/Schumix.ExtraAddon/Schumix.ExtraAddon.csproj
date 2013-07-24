@@ -64,10 +64,12 @@
     <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">
       <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
       <Name>Schumix.Framework</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Core\Schumix.Irc\Schumix.Irc.csproj">
       <Project>{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}</Project>
       <Name>Schumix.Irc</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Libraries\WolframAPI\WolframAPI.csproj">
       <Project>{988DBA54-C500-47AF-B31C-BE12EA83E4AA}</Project>
@@ -76,10 +78,12 @@
     <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.Core\YamlDotNet.Core.csproj">
       <Project>{BF32DE1B-6276-4341-B212-F8862ADBBA7A}</Project>
       <Name>YamlDotNet.Core</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.RepresentationModel\YamlDotNet.RepresentationModel.csproj">
       <Project>{21CA0077-E15C-446D-9C43-F6D3F9D09687}</Project>
       <Name>YamlDotNet.RepresentationModel</Name>
+      <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

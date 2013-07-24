@@ -1,5 +1,5 @@
 #define MyAppName "Schumix"
-#define MyAppVersion "4.x"
+#define MyAppVersion "4.1.x"
 #define MyAppPublisher "Schumix Productions"
 #define MyAppURL "https://github.com/Schumix/Schumix2"
 #define MyAppExeName "Schumix.exe"
@@ -63,8 +63,7 @@ Source: "..\Run\Release\Sharpen.Unix.dll"; DestDir: "{app}"; Flags: ignoreversio
 Source: "..\Run\Release\KeraLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\KopiLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\NLua.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Run\Release\intl.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Run\Release\MonoPosixHelper.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\NGettext.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Mono.Posix.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Mono.Security.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\MySql.Data.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -75,7 +74,6 @@ Source: "..\Run\Release\Schumix.Irc.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.Libraries.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.Components.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Server.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Run\Release\sqlite3.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\System.Data.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\YamlDotNet.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\YamlDotNet.RepresentationModel.dll"; DestDir: "{app}"; Flags: ignoreversion

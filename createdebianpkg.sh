@@ -4,6 +4,11 @@ echo "Init SubModule"
 git submodule update --init --recursive
 
 sdir=`ls -d $PWD`
+
+if [ -e "Run" ]; then
+	rm -rf Run
+fi
+
 echo "Running autogen.sh"
 sh autogen.sh
 echo "Running configure"
@@ -16,7 +21,10 @@ cd Po
 make DESTDIR=$sdir/Run install
 cd ..
 
-rm -rf pkg
+if [ -e "pkg" ]; then
+	rm -rf pkg
+fi
+
 mkdir pkg
 mkdir pkg/Share
 cp -rf Share/share pkg/Share/
@@ -53,9 +61,7 @@ do
 	mv $file ../../pkg/usr/lib/pkgconfig/$file
 done
 
-rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll
-rm Addons/Schumix.Irc.dll Addons/Schumix.Framework.dll Addons/Mono.Posix.dll Addons/MonoPosixHelper.dll
-rm Addons/intl.dll Addons/YamlDotNet.Core.dll Addons/YamlDotNet.RepresentationModel.dll schumix.config schumix.installer schumix schumix.server
+rm Config.exe Installer.exe schumix.config schumix.installer schumix schumix.server
 
 #for file in *.mdb
 #do

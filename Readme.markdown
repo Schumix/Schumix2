@@ -19,9 +19,14 @@ Hiányzó almodulok letöltése: git submodule update --init --recursive
 
 ## Windows
 
-Monodevelop használatakor szükséges a nyelvi fájlok lefordításához a `gettext`.
+### Monodevelop / Xamarin Studio
+Monodevelop / Xamarin Studio használatakor szükséges a nyelvi fájlok lefordításához a `gettext`.
 <br/>Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
 <br/>A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt.
+<br/>Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
+
+### Visual Studio
+Visual Studio használatakor csak a `SchumixVS.sln` fájlt kell megnyitnunk.
 <br/>Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
 
 ## Linux
@@ -61,7 +66,7 @@ Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mi
 <br/>Írjuk be hogy `fakeroot`.
 <br/>Ezután futtassuk `./createdebianpkg.sh` parancsot.
 <br/>Ha lefutott megjelenik egy `schumix.deb` nevű fájl.
-<br/>Ezt telepítsük a `sudo dbkg -i schumix.deb` paranccsal és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+<br/>Ezt telepítsük a `sudo dpkg -i schumix.deb` paranccsal és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
 
 ## Windows
 
@@ -92,7 +97,9 @@ Ha a jó öreg mysql alapú adatbázist szeretnénk használni állítsuk a konf
 Ha az SQLite alapú adatbázist szeretnénk használni állítsuk a konfig fájlban `(lásd: <SQLite><Enabled>false</Enabled>)` az engedélyét `true` értékre.
 <br/>Majd másoljuk az `Sql` mappából a `Schumix.db3` fájlt az exe mellé.
 <br/>Ezen fájl neve megváltoztatható de akkor a konfig fájlban is meg kell vátoztatni.
-<br/>Természetesen az elérési út is a névvel együtt.
+<br/>Természetesen az elérési útat is a névvel együtt.
+<br/>Ha bármiféle javítás jön a kódhoz vagy újítás nem kell az agész adatbázist újra töltenünk.
+<br/>Csak az `Updates` mappából frisistsük a megfelelõ verzió szám alapján.
 
 # Figyelmeztetés!
 

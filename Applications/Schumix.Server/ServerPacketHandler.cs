@@ -88,8 +88,23 @@ namespace Schumix.Server
 			var hst = client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[0];
 			int bck = Convert.ToInt32(client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[1]);
 
-			var packetid = packet.Read<int>();
-			Log.Debug("PacketHandler", sLConsole.GetString("Got packet with ID: {0} from: {1}"), packetid, client.Client.RemoteEndPoint);
+			int packetid = 0;
+
+			try
+			{
+				packetid = packet.Read<int>();
+			}
+			catch(Exception)
+			{
+				var packet2 = new SchumixPacket();
+				packet2.Write<int>((int)Opcode.SCMSG_PACKET_NULL);
+				packet2.Write<string>(sLConsole.GetString("Wrong packetid, aborting connection!"));
+				SendPacketBack(packet2, stream, hst, bck);
+				Log.Warning("HandlePacket", sLConsole.GetString("Wrong packetid, aborting connection!"));
+				return;
+			}
+
+			Log.Debug("HandlePacket", sLConsole.GetString("Got packet with ID: {0} from: {1}"), packetid, client.Client.RemoteEndPoint);
 
 			if(!_AuthList.ContainsKey(hst + SchumixBase.Colon + bck))
 			{
@@ -206,6 +221,12 @@ namespace Schumix.Server
 				stream.Write(buff, 0, buff.Length);
 				stream.Flush();
 			}
+		}
+
+		public void SendPacketBackAllHost(SchumixPacket packet)
+		{
+			foreach(var list in _HostList)
+				SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 		}
 	}
 }

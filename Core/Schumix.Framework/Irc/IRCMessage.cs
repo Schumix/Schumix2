@@ -22,7 +22,7 @@ using System;
 
 namespace Schumix.Framework.Irc
 {
-	public class IRCMessage
+	public sealed class IRCMessage
 	{
 		public string Hostmask { get; set; }
 		public string Channel { get; set; }

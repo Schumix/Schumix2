@@ -46,6 +46,10 @@ build()
     # SubModule
     git submodule update --init --recursive
 
+    if [ -e "Run" ]; then
+      rm -rf Run
+    fi
+
     sdir=`ls -d $PWD`
     sh autogen.sh
     ./configure --prefix=/usr
@@ -61,7 +65,10 @@ package()
     cd "${srcdir}"
     cd "$_gitdir"
 
-    rm -rf pkg
+    if [ -e "pkg" ]; then
+      rm -rf pkg
+    fi
+
     mkdir pkg
     cp -rf Share pkg/
     mkdir pkg/usr
@@ -92,9 +99,7 @@ package()
         mv $file ../../pkg/usr/lib/pkgconfig/$file
     done
 
-    rm Config.exe Installer.exe Addons/Schumix.db3 Addons/sqlite3.dll Addons/System.Data.SQLite.dll Addons/MySql.Data.dll
-    rm Addons/Schumix.Irc.dll Addons/Schumix.Framework.dll Addons/Mono.Posix.dll Addons/MonoPosixHelper.dll
-    rm Addons/intl.dll Addons/YamlDotNet.Core.dll Addons/YamlDotNet.RepresentationModel.dll schumix.config schumix.installer schumix schumix.server
+    rm Config.exe Installer.exe schumix.config schumix.installer schumix schumix.server
 
     #for file in *.mdb
     #do

@@ -220,6 +220,11 @@ namespace Schumix.Irc.Channel
 				Log.Error("MyChannelInfo", sLConsole.GetString("ChannelListReload: Failre request!"));
 		}
 
+		public string ChannelFunctions(IChannelFunctions name, string status, string channel)
+		{
+			return ChannelFunctions(name.ToString().ToLower(), status, channel);
+		}
+
 		public string ChannelFunctions(string name, string status, string channel)
 		{
 			string functions = string.Empty;

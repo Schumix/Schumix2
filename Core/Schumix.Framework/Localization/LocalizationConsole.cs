@@ -24,10 +24,10 @@ using System.Linq;
 using System.Threading;
 using System.Reflection;
 using System.Globalization;
-using Mono.Unix;
 using Schumix.Framework.Config;
 using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
+using NGettext;
 
 namespace Schumix.Framework.Localization
 {
@@ -35,6 +35,8 @@ namespace Schumix.Framework.Localization
 	{
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		public string Locale { get; set; }
+		private ICatalog _catalog;
+		private string _localedir;
 
 		private LocalizationConsole()
 		{
@@ -79,8 +81,19 @@ namespace Schumix.Framework.Localization
 					}
 				}
 			}
-			
-			Catalog.Init("schumix", LocaleDir);
+
+			_localedir = LocaleDir;
+			LoadCatalog();
+		}
+
+		private void LoadCatalog()
+		{
+			LoadCatalog(CultureInfo.GetCultureInfo("en-US"));
+		}
+
+		private void LoadCatalog(CultureInfo ci)
+		{
+			_catalog = new Catalog("schumix", _localedir, ci);
 		}
 
 		public void SetLocale()
@@ -119,56 +132,58 @@ namespace Schumix.Framework.Localization
 				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
 				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
 			}
+
+			LoadCatalog(CultureInfo.GetCultureInfo(Language));
 		}
 
 		public string GetString(string phrase)
 		{
-			return Catalog.GetString(phrase);
+			return _catalog.GetString(phrase);
 		}
 		
 		public string GetString(string phrase, object arg0)
 		{
-			return string.Format(Catalog.GetString(phrase), arg0);
+			return string.Format(_catalog.GetString(phrase), arg0);
 		}
 		
 		public string GetString(string phrase, object arg0, object arg1)
 		{
-			return string.Format(Catalog.GetString(phrase), arg0, arg1);
+			return string.Format(_catalog.GetString(phrase), arg0, arg1);
 		}
 		
 		public string GetString(string phrase, object arg0, object arg1, object arg2)
 		{
-			return string.Format(Catalog.GetString(phrase), arg0, arg1, arg2);
+			return string.Format(_catalog.GetString(phrase), arg0, arg1, arg2);
 		}
 		
 		public string GetString(string phrase, params object[] args)
 		{
-			return string.Format(Catalog.GetString(phrase), args);
+			return string.Format(_catalog.GetString(phrase), args);
 		}
 		
 		public string GetPluralString(string singular, string plural, int number)
 		{
-			return Catalog.GetPluralString(singular, plural, number);
+			return _catalog.GetPluralString(singular, plural, number);
 		}
 		
 		public string GetPluralString(string singular, string plural, int number, object arg0)
 		{
-			return string.Format(Catalog.GetPluralString(singular, plural, number), arg0);
+			return string.Format(_catalog.GetPluralString(singular, plural, number), arg0);
 		}
 		
 		public string GetPluralString(string singular, string plural, int number, object arg0, object arg1)
 		{
-			return string.Format(Catalog.GetPluralString(singular, plural, number), arg0, arg1);
+			return string.Format(_catalog.GetPluralString(singular, plural, number), arg0, arg1);
 		}
 		
 		public string GetPluralString(string singular, string plural, int number, object arg0, object arg1, object arg2)
 		{
-			return string.Format(Catalog.GetPluralString(singular, plural, number), arg0, arg1, arg2);
+			return string.Format(_catalog.GetPluralString(singular, plural, number), arg0, arg1, arg2);
 		}
 		
 		public string GetPluralString(string singular, string plural, int number, params object[] args)
 		{
-			return string.Format(Catalog.GetPluralString(singular, plural, number), args);
+			return string.Format(_catalog.GetPluralString(singular, plural, number), args);
 		}
 
 		public string Translations(string Name)

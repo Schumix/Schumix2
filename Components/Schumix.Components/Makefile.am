@@ -43,21 +43,23 @@ NGIT_DLL_MDB_SOURCE=../../External/ngit/bin/NGit.dll.mdb
 NGIT_DLL_MDB=$(BUILD_DIR)/NGit.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
-INTL_DLL_SOURCE=../../Dependencies/intl.dll
-MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_CORE_DLL_MDB=$(BUILD_DIR)/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll.mdb
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=$(BUILD_DIR)/YamlDotNet.RepresentationModel.dll.mdb
+NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll
+NGETTEXT_DLL_MDB_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll.mdb
+NGETTEXT_DLL_MDB=$(BUILD_DIR)/NGettext.dll.mdb
+SYSTEM_DATA_SQLITE_DLL_SOURCE=../../External/CsharpSQLite/Run/Debug/System.Data.SQLite.dll
+SYSTEM_DATA_SQLITE_DLL_MDB_SOURCE=../../External/CsharpSQLite/Run/Debug/System.Data.SQLite.dll.mdb
+SYSTEM_DATA_SQLITE_DLL_MDB=$(BUILD_DIR)/System.Data.SQLite.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
+MONO_POSIX_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Posix.dll
 SHARPEN_UNIX_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll.mdb
 SHARPEN_UNIX_DLL_MDB=$(BUILD_DIR)/Sharpen.Unix.dll.mdb
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Debug/KeraLua.dll
@@ -110,18 +112,18 @@ NSCH_DLL_MDB=
 NGIT_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
-INTL_DLL_SOURCE=../../Dependencies/intl.dll
-MONOPOSIXHELPER_DLL_SOURCE=../../Dependencies/MonoPosixHelper.dll
-SQLITE3_DLL_SOURCE=../../Dependencies/sqlite3.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB=
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=
+NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Release/NGettext.dll
+NGETTEXT_DLL_MDB=
+SYSTEM_DATA_SQLITE_DLL_SOURCE=../../External/CsharpSQLite/Run/Release/System.Data.SQLite.dll
+SYSTEM_DATA_SQLITE_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
+MONO_POSIX_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Posix.dll
 SHARPEN_UNIX_DLL_MDB=
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Release/KeraLua.dll
 KERALUA_DLL_MDB=
@@ -154,18 +156,18 @@ PROGRAMFILES = \
 	$(NGIT_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SCHUMIX_DB3) \
-	$(INTL_DLL) \
-	$(MONOPOSIXHELPER_DLL) \
-	$(SQLITE3_DLL) \
-	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
-	$(MONO_POSIX_DLL) \
 	$(YAMLDOTNET_CORE_DLL) \
 	$(YAMLDOTNET_CORE_DLL_MDB) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB) \
+	$(NGETTEXT_DLL) \
+	$(NGETTEXT_DLL_MDB) \
+	$(SYSTEM_DATA_SQLITE_DLL) \
+	$(SYSTEM_DATA_SQLITE_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SHARPEN_UNIX_DLL) \
+	$(MONO_POSIX_DLL) \
 	$(SHARPEN_UNIX_DLL_MDB) \
 	$(KERALUA_DLL) \
 	$(KERALUA_DLL_MDB) \
@@ -197,13 +199,7 @@ FILES = \
 	LuaEngine/LuaHelper.cs \
 	LuaEngine/SchumixCommandMethod.cs \
 	PythonEngine/PythonEngine.cs \
-	ScriptManager.cs \
-	Listener/Opcodes.cs \
-	Listener/SchumixListener.cs \
-	Listener/SchumixPacket.cs \
-	Listener/SchumixPacketHandler.cs \
-	Listener/SchumixPacketHandlerDelegate.cs \
-	Listener/PacketMethod.cs 
+	ScriptManager.cs 
 
 DATA_FILES = 
 
@@ -213,7 +209,6 @@ EXTRAS = \
 	Updater \
 	LuaEngine \
 	PythonEngine \
-	Listener \
 	schumix.components.pc.in 
 
 REFERENCES =  \
@@ -243,15 +238,13 @@ NSCH_DLL = $(BUILD_DIR)/NSch.dll
 MONO_SECURITY_DLL = $(BUILD_DIR)/Mono.Security.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
-INTL_DLL = $(BUILD_DIR)/intl.dll
-MONOPOSIXHELPER_DLL = $(BUILD_DIR)/MonoPosixHelper.dll
-SQLITE3_DLL = $(BUILD_DIR)/sqlite3.dll
-SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
-MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
+NGETTEXT_DLL = $(BUILD_DIR)/NGettext.dll
+SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
+MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 KERALUA_DLL = $(BUILD_DIR)/KeraLua.dll
 KOPILUA_DLL = $(BUILD_DIR)/KopiLua.dll
 NLUA_DLL = $(BUILD_DIR)/NLua.dll
@@ -272,17 +265,17 @@ $(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
 $(eval $(call emit-deploy-target,NSCH_DLL_MDB))
 $(eval $(call emit-deploy-target,NGIT_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
-$(eval $(call emit-deploy-target,INTL_DLL))
-$(eval $(call emit-deploy-target,MONOPOSIXHELPER_DLL))
-$(eval $(call emit-deploy-target,SQLITE3_DLL))
-$(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
-$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL_MDB))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB))
+$(eval $(call emit-deploy-target,NGETTEXT_DLL))
+$(eval $(call emit-deploy-target,NGETTEXT_DLL_MDB))
+$(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
+$(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL_MDB))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
+$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL_MDB))
 $(eval $(call emit-deploy-target,KERALUA_DLL))
 $(eval $(call emit-deploy-target,KERALUA_DLL_MDB))

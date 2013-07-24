@@ -31,6 +31,7 @@ using Schumix.Framework.Clean;
 using Schumix.Framework.Config;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Network;
+using Schumix.Framework.Listener;
 using Schumix.Framework.Database;
 using Schumix.Framework.Database.Cache;
 using Schumix.Framework.Platforms;
@@ -42,6 +43,7 @@ namespace Schumix.Framework
 {
 	public sealed class SchumixBase
 	{
+		private static readonly SchumixPacketHandler sSchumixPacketHandler = Singleton<SchumixPacketHandler>.Instance;
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private static readonly AddonManager sAddonManager = Singleton<AddonManager>.Instance;
@@ -87,6 +89,13 @@ namespace Schumix.Framework
 
 					while(ThreadStop)
 						Thread.Sleep(100);
+				}
+
+				if(ListenerConfig.Enabled)
+				{
+					Log.Debug("SchumixBot", sLConsole.GetString("SchumixListener starting..."));
+					var sListener = new SchumixListener(ListenerConfig.Port);
+					new Thread(() => sListener.Listen()).Start();
 				}
 
 				if(sPlatform.IsLinux)
@@ -152,6 +161,17 @@ namespace Schumix.Framework
 			ClientSocket.SendPacketToSCS(packet);
 		}
 
+		public static void ListenerDisconnect()
+		{
+			if(!ListenerConfig.Enabled)
+				return;
+
+			var packet = new ListenerPacket();
+			packet.Write<int>((int)ListenerOpcode.SMSG_CLOSE_CONNECTION);
+			packet.Write<string>(sLConsole.GetString("Schumix Shutdown"));
+			sSchumixPacketHandler.SendPacketBackAllHost(packet);
+		}
+
 		public static void Quit(bool Reconnect = true)
 		{
 			lock(WriteLock)
@@ -166,6 +186,7 @@ namespace Schumix.Framework
 				sTimer.SaveUptime(memory);
 				sCacheDB.Clean();
 				ServerDisconnect(Reconnect);
+				ListenerDisconnect();
 			}
 		}
 
@@ -252,11 +273,11 @@ namespace Schumix.Framework
 
 		private static void NewServerSqlData(int ServerId, string ServerName)
 		{
-			var db = DManager.QueryFirstRow("SELECT * FROM channels WHERE ServerId = '{0}'", ServerId);
+			var db = DManager.QueryFirstRow("SELECT 1 FROM channels WHERE ServerId = '{0}'", ServerId);
 			if(db.IsNull())
 				DManager.Insert("`channels`(ServerId, ServerName, Channel, Password, Language)", ServerId, ServerName, IRCConfig.List[ServerName].MasterChannel, IRCConfig.List[ServerName].MasterChannelPassword, sLManager.Locale);
 
-			db = DManager.QueryFirstRow("SELECT * FROM schumix WHERE ServerId = '{0}'", ServerId);
+			db = DManager.QueryFirstRow("SELECT 1 FROM schumix WHERE ServerId = '{0}'", ServerId);
 			if(db.IsNull())
 			{
 				foreach(var function in Enum.GetNames(typeof(IFunctions)))
@@ -275,7 +296,7 @@ namespace Schumix.Framework
 		{
 			foreach(var function in Enum.GetNames(typeof(IFunctions)))
 			{
-				var db = DManager.QueryFirstRow("SELECT * FROM schumix WHERE ServerId = '{0}' And FunctionName = '{1}'", ServerId, function.ToLower());
+				var db = DManager.QueryFirstRow("SELECT 1 FROM schumix WHERE ServerId = '{0}' And FunctionName = '{1}'", ServerId, function.ToLower());
 				if(db.IsNull())
 				{
 					if(function == IFunctions.Mantisbt.ToString() || function == IFunctions.Wordpress.ToString() ||

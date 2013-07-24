@@ -19,9 +19,6 @@
  */
 
 using System;
-#if DEBUG
-using System.IO;
-#endif
 using System.Text;
 using System.Data;
 using System.Threading;
@@ -39,13 +36,10 @@ namespace Schumix.Irc
 	public sealed class SendMessage
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-#if DEBUG
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-#endif
 		private readonly object WriteLock = new object();
 		private DateTime _timeLastSent = DateTime.Now;
 #if DEBUG
-		private string _debuglogfile;
+		private DebugLog _debuglog;
 #endif
 		private string _servername;
 
@@ -53,23 +47,7 @@ namespace Schumix.Irc
 		{
 			_servername = ServerName;
 #if DEBUG
-			sUtilities.CreateDirectory(Path.Combine(LogConfig.LogDirectory, "DebugLog"));
-			_debuglogfile = sUtilities.DirectoryToSpecial(Path.Combine(LogConfig.LogDirectory, "DebugLog"), "IrcWrite_" + _servername + ".log");
-
-			bool isfile = false;
-			if(File.Exists(_debuglogfile))
-				isfile = true;
-
-			var time = DateTime.Now;
-			sUtilities.CreateFile(_debuglogfile);
-			var file = new StreamWriter(_debuglogfile, true) { AutoFlush = true };
-
-			if(!isfile)
-				file.Write(sLConsole.GetString("Started time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
-			else
-				file.Write(sLConsole.GetString("\nStarted time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
-
-			file.Close();
+			_debuglog = new DebugLog("IrcWrite_" + _servername + ".log");
 #endif
 		}
 
@@ -380,7 +358,7 @@ namespace Schumix.Irc
 							foreach(var text in list)
 							{
 #if DEBUG
-								DebugLogInFile(text);
+								_debuglog.LogInFile(text);
 #endif
 								INetwork.WriterList[_servername].WriteLine(text);
 							}
@@ -390,7 +368,7 @@ namespace Schumix.Irc
 						else
 						{
 #if DEBUG
-							DebugLogInFile(message);
+							_debuglog.LogInFile(message);
 #endif
 							INetwork.WriterList[_servername].WriteLine(message);
 						}
@@ -477,23 +455,5 @@ namespace Schumix.Irc
 
 			return list;
 		}
-
-#if DEBUG
-		private void DebugLogInFile(string log)
-		{
-			var filesize = new FileInfo(_debuglogfile);
-
-			if(filesize.Length >= LogConfig.MaxFileSize * 1024 * 1024)
-			{
-				File.Delete(_debuglogfile);
-				sUtilities.CreateFile(_debuglogfile);
-			}
-
-			var time = DateTime.Now;
-			var file = new StreamWriter(_debuglogfile, true) { AutoFlush = true };
-			file.WriteLine("{0} {1}", time.ToString("yyyy. MM. dd. HH:mm:ss"), log);
-			file.Close();
-		}
-#endif
 	}
 }

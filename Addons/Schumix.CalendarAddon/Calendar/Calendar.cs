@@ -401,8 +401,15 @@ namespace Schumix.CalendarAddon
 				{
 					if(sMyChannelInfo.FSelect(IChannelFunctions.NameDay, channel.Key))
 					{
-						sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("NameDay", channel.Key, _servername), sUtilities.NameDay(channel.Key));
-						Thread.Sleep(400);
+						string nameday = sUtilities.NameDay(sLManager.GetChannelLocalization(channel.Key, _servername));
+
+						if(!nameday.IsNullOrEmpty())
+						{
+							sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("NameDay", channel.Key, _servername), nameday);
+							Thread.Sleep(400);
+						}
+						else
+							Log.Debug("NameDay", sLConsole.GetString("The nameday could not find in the following language: {0} Server: {1} Channel: {2}"), sLManager.GetChannelLocalization(channel.Key, _servername), _servername, channel.Key);
 					}
 				}
 			}

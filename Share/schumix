@@ -27,9 +27,15 @@ if [ ! -e $addons ]; then
 	cp -R /usr/lib/schumix/Addons $addons
 fi
 
+if [ -e $addons ]; then
+	for file in "/usr/lib/schumix/Addons/*.dll"
+	do
+		cp -u $file $addons
+	done
+fi
+
 if [ ! -e $scripts ]; then
 	cp -R /usr/lib/schumix/Scripts $scripts
 fi
 
-cd /
 exec mono "/usr/lib/schumix/Schumix.exe" "--config-dir=$config_dir" "$@"

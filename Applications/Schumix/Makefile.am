@@ -20,7 +20,6 @@ SCHUMIX_EXE_MDB=$(BUILD_DIR)/Schumix.exe.mdb
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll.mdb
@@ -28,6 +27,12 @@ YAMLDOTNET_CORE_DLL_MDB=$(BUILD_DIR)/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll.mdb
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=$(BUILD_DIR)/YamlDotNet.RepresentationModel.dll.mdb
+NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll
+NGETTEXT_DLL_MDB_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll.mdb
+NGETTEXT_DLL_MDB=$(BUILD_DIR)/NGettext.dll.mdb
+SYSTEM_DATA_SQLITE_DLL_SOURCE=../../External/CsharpSQLite/Run/Debug/System.Data.SQLite.dll
+SYSTEM_DATA_SQLITE_DLL_MDB_SOURCE=../../External/CsharpSQLite/Run/Debug/System.Data.SQLite.dll.mdb
+SYSTEM_DATA_SQLITE_DLL_MDB=$(BUILD_DIR)/System.Data.SQLite.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
@@ -62,6 +67,8 @@ KOPILUA_DLL_MDB=$(BUILD_DIR)/KopiLua.dll.mdb
 NLUA_DLL_SOURCE=../../External/NLua/Run/Debug/NLua.dll
 NLUA_DLL_MDB_SOURCE=../../External/NLua/Run/Debug/NLua.dll.mdb
 NLUA_DLL_MDB=$(BUILD_DIR)/NLua.dll.mdb
+SCHUMIX_COMPONENTS_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Components.dll.mdb
+SCHUMIX_COMPONENTS_DLL_MDB=$(BUILD_DIR)/Schumix.Components.dll.mdb
 
 endif
 
@@ -81,12 +88,15 @@ SCHUMIX_EXE_MDB=
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
-SYSTEM_DATA_SQLITE_DLL_SOURCE=../../Dependencies/System.Data.SQLite.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB=
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB=
+NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Release/NGettext.dll
+NGETTEXT_DLL_MDB=
+SYSTEM_DATA_SQLITE_DLL_SOURCE=../../External/CsharpSQLite/Run/Release/System.Data.SQLite.dll
+SYSTEM_DATA_SQLITE_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_IRC_DLL_MDB=
 SCHUMIX_COMPONENTS_DLL_SOURCE=../../Run/Release/Schumix.Components.dll
@@ -111,6 +121,7 @@ KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Release/KopiLua.dll
 KOPILUA_DLL_MDB=
 NLUA_DLL_SOURCE=../../External/NLua/Run/Release/NLua.dll
 NLUA_DLL_MDB=
+SCHUMIX_COMPONENTS_DLL_MDB=
 
 endif
 
@@ -122,12 +133,15 @@ PROGRAMFILES = \
 	$(MONO_POSIX_DLL) \
 	$(SCHUMIX_IRC_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
-	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(MYSQL_DATA_DLL) \
 	$(YAMLDOTNET_CORE_DLL) \
 	$(YAMLDOTNET_CORE_DLL_MDB) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB) \
+	$(NGETTEXT_DLL) \
+	$(NGETTEXT_DLL_MDB) \
+	$(SYSTEM_DATA_SQLITE_DLL) \
+	$(SYSTEM_DATA_SQLITE_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL_MDB) \
 	$(SCHUMIX_COMPONENTS_DLL) \
@@ -151,7 +165,8 @@ PROGRAMFILES = \
 	$(KOPILUA_DLL) \
 	$(KOPILUA_DLL_MDB) \
 	$(NLUA_DLL) \
-	$(NLUA_DLL_MDB)  
+	$(NLUA_DLL_MDB) \
+	$(SCHUMIX_COMPONENTS_DLL_MDB)  
 
 BINARIES = \
 	$(SCHUMIX)  
@@ -166,12 +181,32 @@ FILES = \
 	Schumix.cs \
 	Console/Console.cs \
 	Properties/AssemblyInfo.cs \
-	Console/Commands/CommandHandler.cs \
-	Console/Commands/CommandManager.cs \
-	Console/Commands/CommandHelp.cs \
 	Windows/Windows.cs \
 	Linux/Linux.cs \
-	Windows/CtrlType.cs 
+	Windows/CtrlType.cs \
+	Console/Commands/HelpCommand.cs \
+	Console/Commands/ConsolelogCommand.cs \
+	Console/Commands/SysCommand.cs \
+	Console/Commands/CChannelCommand.cs \
+	Console/Commands/QuitCommand.cs \
+	Console/Commands/CServerCommand.cs \
+	Console/CommandHandler.cs \
+	Console/CommandManager.cs \
+	Console/ConsoleMessage.cs \
+	Console/Method/ConsoleMethod.cs \
+	Console/Delegate/ConsoleDelegate.cs \
+	Console/Commands/AdminCommand.cs \
+	Console/Commands/FunctionCommand.cs \
+	Console/Commands/ChannelCommand.cs \
+	Console/Commands/ConnectCommand.cs \
+	Console/Commands/DisconnectCommand.cs \
+	Console/Commands/ReconnectCommand.cs \
+	Console/Commands/IgnoreCommand.cs \
+	Console/Commands/PluginCommand.cs \
+	Console/Commands/ReloadCommand.cs \
+	Console/Commands/LeaveCommand.cs \
+	Console/Commands/JoinCommand.cs \
+	Console/Commands/NickCommand.cs 
 
 DATA_FILES = 
 
@@ -182,6 +217,8 @@ EXTRAS = \
 	Console \
 	Windows \
 	Linux \
+	Console/Method \
+	Console/Delegate \
 	schumix.in 
 
 REFERENCES =  \
@@ -200,10 +237,11 @@ include $(top_srcdir)/Makefile.include
 MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
-SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
+NGETTEXT_DLL = $(BUILD_DIR)/NGettext.dll
+SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 SCHUMIX_COMPONENTS_DLL = $(BUILD_DIR)/Schumix.Components.dll
 IRONPYTHON_DLL = $(BUILD_DIR)/IronPython.dll
 MICROSOFT_DYNAMIC_DLL = $(BUILD_DIR)/Microsoft.Dynamic.dll
@@ -221,12 +259,15 @@ NLUA_DLL = $(BUILD_DIR)/NLua.dll
 SCHUMIX = $(BUILD_DIR)/schumix
 
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
-$(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL_MDB))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL_MDB))
+$(eval $(call emit-deploy-target,NGETTEXT_DLL))
+$(eval $(call emit-deploy-target,NGETTEXT_DLL_MDB))
+$(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
+$(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL_MDB))
 $(eval $(call emit-deploy-target,IRONPYTHON_DLL))
 $(eval $(call emit-deploy-target,MICROSOFT_DYNAMIC_DLL))
 $(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_DLL))

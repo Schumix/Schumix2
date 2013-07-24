@@ -39,16 +39,10 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Data.SQLite">
-      <HintPath>..\..\Dependencies\System.Data.SQLite.dll</HintPath>
-    </Reference>
     <Reference Include="MySql.Data">
       <HintPath>..\..\Dependencies\MySql.Data.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Mono.Posix">
-      <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -70,7 +64,6 @@
     <Compile Include="Extensions\ReflectionExtensions.cs" />
     <Compile Include="Network\ClientPacketHandler.cs" />
     <Compile Include="Network\Opcodes.cs" />
-    <Compile Include="Network\SchumixPacket.cs" />
     <Compile Include="Network\ClientSocket.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="CrashDumper.cs" />
@@ -151,6 +144,15 @@
     <Compile Include="Maths\MathFunctions.cs" />
     <Compile Include="Network\ClientPacketMethod.cs" />
     <Compile Include="Config\ListenerConfig.cs" />
+    <Compile Include="Logger\DebugLog.cs" />
+    <Compile Include="Listener\Opcodes.cs" />
+    <Compile Include="Listener\SchumixListener.cs" />
+    <Compile Include="Listener\SchumixPacketHandler.cs" />
+    <Compile Include="Listener\SchumixPacketHandlerDelegate.cs" />
+    <Compile Include="Listener\PacketMethod.cs" />
+    <Compile Include="Network\SchumixPacket.cs" />
+    <Compile Include="Listener\Host.cs" />
+    <Compile Include="Listener\ListenerPacket.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -162,6 +164,14 @@
       <Project>{21CA0077-E15C-446D-9C43-F6D3F9D09687}</Project>
       <Name>YamlDotNet.RepresentationModel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\External\NGettext\src\NGettext\NGettext.csproj">
+      <Project>{96EED5F5-7E90-4BD8-A822-2D7BFF943E28}</Project>
+      <Name>NGettext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\CsharpSQLite\System.Data.SQLite\System.Data.SQLite.csproj">
+      <Project>{F1653F20-D47D-4F29-8C55-3C835542AF5F}</Project>
+      <Name>System.Data.SQLite</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
@@ -169,21 +179,6 @@
       <Link>Schumix.db3</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-    </None>
-    <None Include="..\..\Dependencies\intl.dll">
-      <Link>intl.dll</Link>
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="..\..\Dependencies\MonoPosixHelper.dll">
-      <Link>MonoPosixHelper.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-    </None>
-    <None Include="..\..\Dependencies\sqlite3.dll">
-      <Gettext-ScanForTranslations>False</Gettext-ScanForTranslations>
-      <Link>sqlite3.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -20,9 +20,14 @@ Download missing submodules: git submodule update --init --recursive
 
 ## Windows
 
-When using Monodevelop the `gettext` is needed for translating the language files.
+### Monodevelop / Xamarin Studio
+When using Monodevelop / Xamarin Studio the `gettext` is needed for translating the language files.
 <br/>Download and install it. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
 <br/>The compiling is simple. Open the `Schumix.sln` file.
+<br/>Choose the configuration that fits for you and compile it.
+
+### Visual Studio
+When using Visual Studio you only need to open `SchumixVS.sln`.
 <br/>Choose the configuration that fits for you and compile it.
 
 ## Linux
@@ -62,7 +67,7 @@ Use this option only if you want to innstal the bot like a program.
 <br/>Type the `fakeroot` command for that.
 <br/>After that run the `./createdebianpkg.sh` command.
 <br/>When it's done a `schumix.deb` named file will be created.
-<br/>Install it with the `sudo dbkg -i schumix.deb` command and it's all ready.
+<br/>Install it with the `sudo dpkg -i schumix.deb` command and it's all ready.
 <br/>Run the bot with the `schumix` command.
 
 ## Windows
@@ -94,6 +99,8 @@ If you want to use a mysql based database set the `<MySql><Enabled>false</Enable
 If you want to use an SQLite based database set the `<SQLite><Enabled>false</Enabled>` permission to true.
 <br/>Then copy the `Schumix.db3` file from the `Sql` folder next to the exe.
 <br/>You can rename or move it but you have to change the name or the path in the config file.
+<br/>If any kind of correction or update will come you don't need to refill the whole database.
+<br/>Only update it from the `Updates` folder with the appropriate version number.
 
 # Attention!
 

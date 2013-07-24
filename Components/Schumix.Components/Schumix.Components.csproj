@@ -62,12 +62,6 @@
     <Compile Include="LuaEngine\SchumixCommandMethod.cs" />
     <Compile Include="PythonEngine\PythonEngine.cs" />
     <Compile Include="ScriptManager.cs" />
-    <Compile Include="Listener\Opcodes.cs" />
-    <Compile Include="Listener\SchumixListener.cs" />
-    <Compile Include="Listener\SchumixPacket.cs" />
-    <Compile Include="Listener\SchumixPacketHandler.cs" />
-    <Compile Include="Listener\SchumixPacketHandlerDelegate.cs" />
-    <Compile Include="Listener\PacketMethod.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -116,6 +110,5 @@
     <Folder Include="Updater\" />
     <Folder Include="LuaEngine\" />
     <Folder Include="PythonEngine\" />
-    <Folder Include="Listener\" />
   </ItemGroup>
 </Project>

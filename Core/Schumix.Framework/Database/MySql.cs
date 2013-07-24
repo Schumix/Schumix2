@@ -38,6 +38,9 @@ namespace Schumix.Framework.Database
 		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private MySqlConnection Connection;
 		private bool _crash = false;
+#if DEBUG
+		private DebugLog _debuglog;
+#endif
 
 		public MySql(string host, string username, string password, string database, string charset)
 		{
@@ -62,6 +65,9 @@ namespace Schumix.Framework.Database
 		{
 			try
 			{
+#if DEBUG
+				_debuglog = new DebugLog("MySql.log");
+#endif
 				Connection = new MySqlConnection(string.Format("SERVER={0};DATABASE={1};UID={2};PWD={3};charset={4};", host, database, username, password, charset));
 				Connection.Open();
 				return true;
@@ -83,6 +89,9 @@ namespace Schumix.Framework.Database
 				IsConnect();
 				var adapter = new MySqlDataAdapter();
 				var command = Connection.CreateCommand();
+#if DEBUG
+				_debuglog.LogInFile(query);
+#endif
 				command.CommandText = query;
 				adapter.SelectCommand = command;
 
@@ -116,6 +125,9 @@ namespace Schumix.Framework.Database
 
 				IsConnect();
 				var command = Connection.CreateCommand();
+#if DEBUG
+				_debuglog.LogInFile(sql);
+#endif
 				command.CommandText = sql;
 				command.ExecuteNonQuery();
 			}

@@ -46,10 +46,12 @@
     <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">
       <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
       <Name>Schumix.Framework</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\Core\Schumix.Irc\Schumix.Irc.csproj">
       <Project>{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}</Project>
       <Name>Schumix.Irc</Name>
+      <Private>False</Private>
     </ProjectReference>
     <ProjectReference Include="..\..\External\ChatterBotApi\dotnet\ChatterBotAPI\ChatterBotAPI.csproj">
       <Project>{2E624962-F155-432C-A90A-E1CE75DEE9EA}</Project>

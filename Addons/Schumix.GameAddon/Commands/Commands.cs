@@ -112,9 +112,9 @@ namespace Schumix.GameAddon.Commands
 
 					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sUtilities.GetFunctionUpdate()), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					sMyChannelInfo.ChannelFunctionsReload();
-					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("commands", SchumixBase.Off, sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
+					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions(IChannelFunctions.Commands, SchumixBase.Off, sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					sMyChannelInfo.ChannelFunctionsReload();
-					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("gamecommands", SchumixBase.On, sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
+					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions(IChannelFunctions.Gamecommands, SchumixBase.On, sIRCMessage.Channel.ToLower())), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					sMyChannelInfo.ChannelFunctionsReload();
 					sSender.Mode(sIRCMessage.Channel, "+v", sIRCMessage.Nick);
 

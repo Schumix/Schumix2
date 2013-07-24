@@ -46,7 +46,7 @@ namespace Schumix.CalendarAddon
 			if(sUtilities.IsValueBiggerDateTimeNow(time.Year, time.Month, time.Day, time.Hour, time.Minute))
 				return sLManager.GetWarningText("GaveExpiredDateTime", channel, _servername);
 	
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
 			if(!db.IsNull())
 				return sLManager.GetWarningText("BanList", channel, _servername);
 
@@ -64,7 +64,7 @@ namespace Schumix.CalendarAddon
 			if(sUtilities.IsValueBiggerDateTimeNow(time.Year, time.Month, time.Day, hour, minute))
 				return sLManager.GetWarningText("GaveExpiredDateTime", channel, _servername);
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
 			if(!db.IsNull())
 				return sLManager.GetWarningText("BanList", channel, _servername);
 
@@ -81,7 +81,7 @@ namespace Schumix.CalendarAddon
 			if(sUtilities.IsValueBiggerDateTimeNow(year, month, day, hour, minute))
 				return sLManager.GetWarningText("GaveExpiredDateTime", channel, _servername);
 
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT* FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM banned WHERE Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(name.ToLower()), channel.ToLower(), _servername);
 			if(!db.IsNull())
 				return sLManager.GetWarningText("BanList", channel, _servername);
 

@@ -28,8 +28,20 @@ namespace Schumix.Irc.Commands
 	{
 		protected void HandleDate(IRCMessage sIRCMessage)
 		{
+			var text = sLManager.GetCommandTexts("date", sIRCMessage.Channel, sIRCMessage.ServerName);
+			if(text.Length < 2)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+				return;
+			}
+
+			var time = DateTime.Now;
 			string nameday = sUtilities.NameDay(sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName));
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("date", sIRCMessage.Channel, sIRCMessage.ServerName), DateTime.Now.Year, DateTime.Now.Month.ToMonthFormat(), DateTime.Now.Day.ToDayFormat(), !nameday.IsNullOrEmpty() ? nameday : "?");
+
+			if(!nameday.IsNullOrEmpty())
+				sSendMessage.SendChatMessage(sIRCMessage, text[0], time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat(), nameday);
+			else
+				sSendMessage.SendChatMessage(sIRCMessage, text[1], time.Year, time.Month.ToMonthFormat(), time.Day.ToDayFormat());
 		}
 	}
 }

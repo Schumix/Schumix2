@@ -6,5 +6,4 @@ if [ ! -e  $config_dir ]; then
 	mkdir $config_dir
 fi
 
-cd /
 exec mono "/usr/lib/schumix/Server.exe" "--config-dir=$config_dir" "$@"

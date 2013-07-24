@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 using Schumix.GameAddon;
@@ -744,7 +745,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			SchumixBase.DManager.Update("maffiagame", "Active = '0'", string.Format("Active = '1' AND Game = '{0}' And ServerName = '{1}'", _gameid, _servername));
 			SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sGameCommand.GameChannelFunction[_channel]), string.Format("Channel = '{0}' And ServerName = '{1}'", _channel, _servername));
 			sMyChannelInfo.ChannelFunctionsReload();
-			SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions("gamecommands", SchumixBase.Off, _channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", _channel, _servername));
+			SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions(IChannelFunctions.Gamecommands, SchumixBase.Off, _channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", _channel, _servername));
 			sMyChannelInfo.ChannelFunctionsReload();
 
 			if(Started)

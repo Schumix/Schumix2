@@ -141,6 +141,7 @@ namespace WolframAPI
 						   || pod.Title.ToLower().Contains("result")
 						   || pod.Title.ToLower().Contains("derivative")
 						   || pod.Title.ToLower().Contains("decimal form")
+						   || pod.Title.ToLower().Contains("decimal approximation")
 						   select pod).FirstOrDefault();
 
 			if(solution.IsNull())

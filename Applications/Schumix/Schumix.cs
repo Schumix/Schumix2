@@ -28,7 +28,6 @@ using Schumix.Framework.Config;
 using Schumix.Framework.Database;
 using Schumix.Framework.Localization;
 using Schumix.Components;
-using Schumix.Components.Listener;
 
 namespace Schumix
 {
@@ -58,13 +57,6 @@ namespace Schumix
 				string eserver = sIrcBase.FirstStart();
 				sSchumixBase = new SchumixBase();
 				sIrcBase.Start(eserver);
-
-				if(ListenerConfig.Enabled)
-				{
-					Log.Debug("SchumixBot", sLConsole.GetString("SchumixListener starting..."));
-					var sListener = new SchumixListener(ListenerConfig.Port);
-					new Thread(() => sListener.Listen()).Start();
-				}
 
 				Log.Debug("SchumixBot", sLConsole.GetString("Console starting..."));
 				new ScriptManager(ScriptsConfig.Directory);

@@ -2,6 +2,15 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Tesztek alapja elkészültek és hozzáadásra kerültek.
+ * Névnap kiírása javítva.
+ * CsharpSQLite bekötve a magba. Így teljesen c# kóddal lesz megoldva az sqlite használata.
+ * NGettext került felhasználásra a Mono.Unix verzió helyett.
+ * Linux csomagoknál mostantól az addonok minden indításkor frissülni fognaka telepített állományból így ami a bothoz tartozik addon az automatikusan frissülni fog.
+ * Console osztály parancsai átrendezve és a működési elve felújítva.
+ * DebugLog-ba belekerült az sql lekérdezések logolása.
+ * Sql lekérdezésnél a SELECT* átírva SELECT 1-re.
+ * SqlEscape() függvény feljavítva. Mostantól a MySql-hez az ahhoz beépítettet fogja használni.
  * SchumixListener hozzáadva a bothoz.Feljavításra kerültek a régi hasnoló alapon működő rendszerek.
  * Schumix description frissítve.
  * Mathematics osztály átnevezve Maths-ra.

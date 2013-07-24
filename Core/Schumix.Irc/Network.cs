@@ -31,6 +31,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using System.Security.Authentication;
 using Schumix.Irc.Util;
+using Schumix.Irc.Method;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Addon;
@@ -85,11 +86,11 @@ namespace Schumix.Irc
 		private bool Connected = false;
 		private bool _enabled = false;
 		private ConnectionType CType;
-#if DEBUG
-		private string _debuglogfile;
-#endif
 		private DateTime LastOpcode;
 		private string _servername;
+#if DEBUG
+		private DebugLog _debuglog;
+#endif
 		private int _serverid;
 
 		public Network() : this("localhost")
@@ -123,23 +124,7 @@ namespace Schumix.Irc
 		public void Initialize()
 		{
 #if DEBUG
-			sUtilities.CreateDirectory(Path.Combine(LogConfig.LogDirectory, "DebugLog"));
-			_debuglogfile = sUtilities.DirectoryToSpecial(Path.Combine(LogConfig.LogDirectory, "DebugLog"), "IrcRead_" + _servername + ".log");
-
-			bool isfile = false;
-			if(File.Exists(_debuglogfile))
-				isfile = true;
-
-			var time = DateTime.Now;
-			sUtilities.CreateFile(_debuglogfile);
-			var file = new StreamWriter(_debuglogfile, true) { AutoFlush = true };
-
-			if(!isfile)
-				file.Write(sLConsole.GetString("Started time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
-			else
-				file.Write(sLConsole.GetString("\nStarted time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
-
-			file.Close();
+			_debuglog = new DebugLog("IrcRead_" + _servername + ".log");
 #endif
 			InitHandler();
 			InitializeCommandHandler();
@@ -393,15 +378,15 @@ namespace Schumix.Irc
 			{
 				sMyNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
 
-				if(Rfc2812Util.IsServToLower(sMyNickInfo.NickStorage)) // NickName
+				if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName
 				{
 					sMyNickInfo.ChangeNick(); // NickName -> NickName2
 
-					if(Rfc2812Util.IsServToLower(sMyNickInfo.NickStorage)) // NickName2
+					if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName2
 					{
 						sMyNickInfo.ChangeNick(); // NickName2 -> NickName3
 
-						if(Rfc2812Util.IsServToLower(sMyNickInfo.NickStorage)) // NickName3
+						if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName3
 							sMyNickInfo.ChangeNick(); // NickName3 -> Other
 					}
 
@@ -475,7 +460,9 @@ namespace Schumix.Irc
 		private void Close()
 		{
 			Connected = false;
-			_cts.Cancel();
+
+			if(!_cts.IsNull())
+				_cts.Cancel();
 
 			if(!SchumixBase.ExitStatus)
 				Thread.Sleep(2000);
@@ -573,7 +560,7 @@ namespace Schumix.Irc
 					}
 
 #if DEBUG
-					DebugLogInFile(IrcMessage);
+					_debuglog.LogInFile(IrcMessage);
 #endif
 					Task.Factory.StartNew(() => HandleIrcCommand(IrcMessage), _cts.Token);
 					Thread.Sleep(100);
@@ -704,23 +691,5 @@ namespace Schumix.Irc
 				Thread.Sleep(30*1000);
 			}
 		}
-
-#if DEBUG
-		private void DebugLogInFile(string log)
-		{
-			var filesize = new FileInfo(_debuglogfile);
-
-			if(filesize.Length >= LogConfig.MaxFileSize * 1024 * 1024)
-			{
-				File.Delete(_debuglogfile);
-				sUtilities.CreateFile(_debuglogfile);
-			}
-
-			var time = DateTime.Now;
-			var file = new StreamWriter(_debuglogfile, true) { AutoFlush = true };
-			file.WriteLine("{0} {1}", time.ToString("yyyy. MM. dd. HH:mm:ss"), log);
-			file.Close();
-		}
-#endif
 	}
 }

@@ -152,14 +152,20 @@ namespace Schumix.ExtraAddon.Commands
 					var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}' AND ServerName = '{2}' ORDER BY `Id` ASC", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
+						bool b = false;
+
 						foreach(DataRow row in db.Rows)
 						{
+							if(!b)
+								b = true;
+
 							sSendMessage.SendChatMessage(sIRCMessage, "{0}: {1}", sIRCMessage.Nick, row["Message"].ToString());
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message2", sIRCMessage.Channel, sIRCMessage.ServerName), row["Wrote"].ToString());
 							Thread.Sleep(400);
 						}
 
-						SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
+						if(b)
+							SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					}
 				}
 			}

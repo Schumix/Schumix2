@@ -67,6 +67,10 @@ External/NLua/Core/KeraLua/src/keralua.pc
 External/NLua/Core/KeraLua/src/Makefile
 External/ChatterBotApi/dotnet/ChatterBotAPI/chatterbotapi.pc
 External/ChatterBotApi/dotnet/ChatterBotAPI/Makefile
+External/NGettext/src/NGettext/ngettext.pc
+External/NGettext/src/NGettext/Makefile
+External/CsharpSQLite/System.Data.SQLite/system.data.sqlite.pc
+External/CsharpSQLite/System.Data.SQLite/Makefile
 Po/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile
@@ -106,6 +110,11 @@ Addons/Schumix.GameAddon/Makefile
 Addons/Schumix.ExtraAddon/schumix.extraaddon.pc
 Addons/Schumix.ExtraAddon/Makefile
 Addons/Makefile
+Tests/Schumix.Framework.Test/schumix.framework.test.pc
+Tests/Schumix.Framework.Test/Makefile
+Tests/Schumix.Irc.Test/schumix.irc.test.pc
+Tests/Schumix.Irc.Test/Makefile
+Tests/Makefile
 External/ngit/NSch/nsch.pc
 External/ngit/NSch/Makefile
 External/ngit/NGit/ngit.pc

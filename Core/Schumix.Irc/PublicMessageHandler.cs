@@ -192,7 +192,7 @@ namespace Schumix.Irc
 					if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, Commands.AdminFlag.Administrator))
 						return;
 
-					GC.Collect();
+					GC.Collect(1);
 					GC.WaitForPendingFinalizers();
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("schumix2/clean", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
