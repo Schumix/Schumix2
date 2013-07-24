@@ -1373,33 +1373,6 @@ namespace Schumix.Framework
 			if(File.Exists("KopiLua.dll.mdb"))
 				File.Delete("KopiLua.dll.mdb");
 #endif
-
-			if(server)
-				return;
-
-			if(File.Exists(AddonsConfig.Directory + "/Schumix.db3"))
-				File.Delete(AddonsConfig.Directory + "/Schumix.db3");
-
-			if(File.Exists(AddonsConfig.Directory + "/System.Data.SQLite.dll"))
-				File.Delete(AddonsConfig.Directory + "/System.Data.SQLite.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/MySql.Data.dll"))
-				File.Delete(AddonsConfig.Directory + "/MySql.Data.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/Schumix.Irc.dll"))
-				File.Delete(AddonsConfig.Directory + "/Schumix.Irc.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/Schumix.Framework.dll"))
-				File.Delete(AddonsConfig.Directory + "/Schumix.Framework.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/NGettext.dll"))
-				File.Delete(AddonsConfig.Directory + "/NGettext.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.Core.dll"))
-				File.Delete(AddonsConfig.Directory + "/YamlDotNet.Core.dll");
-
-			if(File.Exists(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll"))
-				File.Delete(AddonsConfig.Directory + "/YamlDotNet.RepresentationModel.dll");
 		}
 	}
 }
