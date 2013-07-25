@@ -25,7 +25,12 @@ if [ ! -e $sqlite ]; then
 fi
 
 if [ ! -e $sqldir ]; then
-	cp /usr/share/schumix/Sql $sqldir
+	cp -R /usr/share/schumix/Sql $sqldir
+fi
+
+if [ -e $sqldir ]; then
+	rm -rf $sqldir
+	cp -R /usr/share/schumix/Sql $sqldir
 fi
 
 if [ ! -e $addons ]; then
