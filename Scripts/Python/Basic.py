@@ -1,4 +1,4 @@
-from Schumix.API.Irc import IRCMessage
+from Schumix.Framework.Irc import IRCMessage
 from Schumix.Irc import IrcBase
 
 sIrcBase = IrcBase

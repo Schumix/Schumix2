@@ -64,7 +64,7 @@ namespace Schumix
 			}
 			catch(Exception e)
 			{
-				Log.Error("SchumixBot", sLConsole.GetString("Failure details: {0}"), e.Message);
+				Log.Error("SchumixBot", sLConsole.GetString("Failure details: {0}"), e);
 			}
 		}
 
