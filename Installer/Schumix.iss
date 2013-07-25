@@ -84,6 +84,9 @@ Source: "..\Run\Release\Microsoft.Scripting.dll"; DestDir: "{app}"; Flags: ignor
 ;Addons
 Source: "..\Run\Release\Addons\*"; DestDir: "{app}\Addons\"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\Run\Release\Addons\*"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion recursesubdirs createallsubdirs uninsneveruninstall
+;Scripts
+Source: "..\Run\Release\Scripts\*"; DestDir: "{app}\Scripts\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Run\Release\Scripts\*"; DestDir: "{userappdata}\Schumix\Scripts\"; Flags: ignoreversion recursesubdirs createallsubdirs uninsneveruninstall
 ;Locale
 Source: "..\Run\Release\locale\*"; DestDir: "{app}\locale\"; Flags: ignoreversion recursesubdirs createallsubdirs
 ;Configs
