@@ -3,7 +3,6 @@
 homedir="$HOME/.Schumix"
 config_file="$HOME/.Schumix/Configs/Schumix.yml"
 config_dir="$HOME/.Schumix/Configs"
-addons="$HOME/.Schumix/Addons"
 sqlite="$HOME/.Schumix/Schumix.db3"
 
 if [ ! -e $homedir ]; then
@@ -23,18 +22,7 @@ if [ ! -e $sqlite ]; then
 fi
 
 cp -uR /usr/share/schumix/Sql $homedir
-
-if [ ! -e $addons ]; then
-	cp -R /usr/lib/schumix/Addons $addons
-fi
-
-if [ -e $addons ]; then
-	for file in "/usr/lib/schumix/Addons/*.dll"
-	do
-		cp -u $file $addons
-	done
-fi
-
+cp -uR /usr/lib/schumix/Addons $homedir
 cp -uR /usr/lib/schumix/Scripts $homedir
 
 exec mono "/usr/lib/schumix/Schumix.exe" "--config-dir=$config_dir" "$@"
