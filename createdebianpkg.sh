@@ -28,6 +28,7 @@ fi
 mkdir pkg
 mkdir pkg/Share
 cp -rf Share/share pkg/Share/
+cp -rf Sql pkg/Share/share/schumix
 cp Share/changelog pkg/Share/
 cp Share/postinst pkg/Share/
 cp Share/postrm pkg/Share/

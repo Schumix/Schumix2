@@ -71,6 +71,7 @@ package()
 
     mkdir pkg
     cp -rf Share pkg/
+    cp -rf Sql pkg/Share/share/schumix
     mkdir pkg/usr
     mkdir pkg/usr/bin
     mv pkg/Share/schumix pkg/usr/bin/

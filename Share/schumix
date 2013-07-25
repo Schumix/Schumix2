@@ -6,6 +6,7 @@ config_dir="$HOME/.Schumix/Configs"
 addons="$HOME/.Schumix/Addons"
 scripts="$HOME/.Schumix/Scripts"
 sqlite="$HOME/.Schumix/Schumix.db3"
+sqldir="$HOME/.Schumix/Sql"
 
 if [ ! -e $homedir ]; then
 	mkdir $homedir
@@ -21,6 +22,10 @@ fi
 
 if [ ! -e $sqlite ]; then
 	cp /usr/lib/schumix/Schumix.db3 $sqlite
+fi
+
+if [ ! -e $sqldir ]; then
+	cp /usr/share/schumix/Sql $sqldir
 fi
 
 if [ ! -e $addons ]; then
