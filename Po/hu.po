@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-21 13:04:01+0200\n"
+"POT-Creation-Date: 2013-07-25 13:53:27+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -398,7 +398,7 @@ msgid "Plugin can not be loaded!"
 msgstr "Nem tölthető be a plugin!"
 
 #: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:21
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:21
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:26
 msgid "Loaded plugin: {0} {1} by {2} ({3})"
 msgstr "Betöltött plugin: {0} {1} készítette {2} ({3})"
 
@@ -722,22 +722,30 @@ msgid "Loaded the Server settings."
 msgstr "Server beállításai betöltve."
 
 #: ../Core/Schumix.Framework/Addon/AddonManager.cs:6
+msgid "File path not found, default will be used."
+msgstr "Nem található a megadott elérési út így az alapértelmezett lesz használva!"
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:8
+msgid "There are no addons folder, no addon will be loaded."
+msgstr "Nem található az addon mappa így nem lesz betöltve egy addon se!"
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:11
 msgid "Loading addons from: {0}"
 msgstr "Addonok betöltése innét: {0}"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:18
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:23
 msgid "This addon name already exists in the system so not loaded!"
 msgstr "Ez az addonnév már szerepel a rendszerben ezért nem kerül betöltésre!"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:23
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:28
 msgid "Ignoring plugins (config): {0}"
 msgstr "Tiltott pluginok (konfig): {0}"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:24
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:29
 msgid "Error while loading one of directories! Detail: {0}"
 msgstr "Hiba egy könyvtár betöltése közben! Részletek: {0}"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:30
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:35
 msgid "Unload plugins"
 msgstr "Pluginok leválasztva."
 
@@ -876,6 +884,54 @@ msgstr "Nincs konfig fájl!"
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
 msgid "Preparing..."
 msgstr "Elkészítése folyamatban..."
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:47
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:15
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:27
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:11
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:13
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:10
+msgid "The backup files will be used to renew the data."
+msgstr ""
+"Biztonsági másolatnak megjelölt fájl kerül felhasználásra. Így a régi adatok "
+"lesznek felújítva."
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:107
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:20
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:58
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:19
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:21
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:30
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:13
+msgid "The backup has been deleted during the re-use."
+msgstr "Biztonsági másolat törlésre kerül mert újra fel lett használva."
 
 #: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
@@ -1399,7 +1455,9 @@ msgstr "[UpdateBirthDay] Meghibásodás részletei: {0}"
 msgid ""
 "The nameday could not find in the following language: {0} Server: {1} "
 "Channel: {2}"
-msgstr "A névnap nem található meg az alábbi nyelvezeten: {0} Szerver: {1} Csatorna: {2}"
+msgstr ""
+"A névnap nem található meg az alábbi nyelvezeten: {0} Szerver: {1} Csatorna: "
+"{2}"
 
 #: ../Addons/Schumix.CalendarAddon/Config/CalendarConfig.cs:3
 msgid "Loaded the Calendar settings."

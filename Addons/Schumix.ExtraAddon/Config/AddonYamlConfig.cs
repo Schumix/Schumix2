@@ -74,7 +74,7 @@ namespace Schumix.ExtraAddon.Config
 
 				if(File.Exists(filename2))
 				{
-					Log.Notice("ExtraAddonConfig", "Biztonsági másolatnak megjelölt fájl kerül felhasználásra. Így a régi adatok lesznek felújítva.");
+					Log.Notice("ExtraAddonConfig", sLConsole.GetString("The backup files will be used to renew the data."));
 					yaml.Load(File.OpenText(filename2));
 				}
 
@@ -95,7 +95,7 @@ namespace Schumix.ExtraAddon.Config
 
 					if(File.Exists(filename2))
 					{
-						Log.Notice("ExtraAddonConfig", "Biztonsági másolat törölve mert újra fel lett használva.");
+						Log.Notice("ExtraAddonConfig", sLConsole.GetString("The backup has been deleted during the re-use."));
 						File.Delete(filename2);
 					}
 

@@ -77,7 +77,7 @@ namespace Schumix.Framework.Addon
 			{
 				if(!Directory.Exists(directory))
 				{
-					Log.Warning("AddonManager", "Nem található a megadott elérési út így az alapértelmezett lesz használva!");
+					Log.Warning("AddonManager", sLConsole.GetString("File path not found, default will be used."));
 					directory = Path.Combine(Environment.CurrentDirectory, d_addondirectory);
 				}
 
@@ -88,7 +88,7 @@ namespace Schumix.Framework.Addon
 				if(!dir.Exists)
 				{
 					_loading = false;
-					Log.Warning("AddonManager", "Nem található az addon mappa így nem lesz betöltve egy addon se!");
+					Log.Warning("AddonManager", sLConsole.GetString("There are no addons folder, no addon will be loaded."));
 
 					foreach(var sn in IRCConfig.List)
 					{

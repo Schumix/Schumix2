@@ -72,7 +72,7 @@ namespace Schumix.GitRssAddon.Config
 
 				if(File.Exists(filename2))
 				{
-					Log.Notice("GitRssAddonConfig", "Biztonsági másolatnak megjelölt fájl kerül felhasználásra. Így a régi adatok lesznek felújítva.");
+					Log.Notice("GitRssAddonConfig", sLConsole.GetString("The backup files will be used to renew the data."));
 					xmldoc.Load(filename2);
 				}
 
@@ -101,7 +101,7 @@ namespace Schumix.GitRssAddon.Config
 
 					if(File.Exists(filename2))
 					{
-						Log.Notice("GitRssAddonConfig", "Biztonsági másolat törölve mert újra fel lett használva.");
+						Log.Notice("GitRssAddonConfig", sLConsole.GetString("The backup has been deleted during the re-use."));
 						File.Delete(filename2);
 					}
 

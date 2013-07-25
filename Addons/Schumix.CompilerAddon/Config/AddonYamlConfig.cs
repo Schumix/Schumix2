@@ -73,7 +73,7 @@ namespace Schumix.CompilerAddon.Config
 
 				if(File.Exists(filename2))
 				{
-					Log.Notice("CompilerAddonConfig", "Biztonsági másolatnak megjelölt fájl kerül felhasználásra. Így a régi adatok lesznek felújítva.");
+					Log.Notice("CompilerAddonConfig", sLConsole.GetString("The backup files will be used to renew the data."));
 					yaml.Load(File.OpenText(filename2));
 				}
 
@@ -92,7 +92,7 @@ namespace Schumix.CompilerAddon.Config
 
 					if(File.Exists(filename2))
 					{
-						Log.Notice("CompilerAddonConfig", "Biztonsági másolat törölve mert újra fel lett használva.");
+						Log.Notice("CompilerAddonConfig", sLConsole.GetString("The backup has been deleted during the re-use."));
 						File.Delete(filename2);
 					}
 
