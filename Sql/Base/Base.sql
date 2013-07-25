@@ -132,7 +132,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "ignore/addon/search", "Already exist on the ignore list!\nNot on the ignore list!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "[Load]: All plugins done.\n[Load]: All plugins failed.\nPlugins are already loaded.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "[Unload]: All plugins done.\n[Unload]: All plugins failed.\nPlugins are already cutted.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: loaded.\n{0}: ignored.\nNo plugin loeaded.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: loaded.\n{0}: ignored.\nNo plugin loaded.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "cserver", "New server for the commands: {0}");
 
 -- huHU
@@ -602,7 +602,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/info", "There is no such a channel!\nThere is no password set on the channel.\nThere is a password on the channel.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "2[Load]: All plugins 3done.\n2[Load]: All plugins 5failed.\nPlugins are already loaded.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "2[Unload]: All plugins 3done.\n2[Unload]: All plugins 5failed.\nPlugins are already cutted.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: 3loaded.\n{0}: 8ignored.\nNo plugin loeaded.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: 3loaded.\n{0}: 8ignored.\nNo plugin loaded.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "quit", "Bye :(\n{0} shutted down me with command.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/info", "3{0} Channel: 2{1}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/list", "2List:3{0}");
