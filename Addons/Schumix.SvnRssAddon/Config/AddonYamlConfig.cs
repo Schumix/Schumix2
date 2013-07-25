@@ -72,7 +72,10 @@ namespace Schumix.SvnRssAddon.Config
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
+				{
+					Log.Notice("SvnRssAddonConfig", "Biztonsági másolatnak megjelölt fájl kerül felhasználásra. Így a régi adatok lesznek felújítva.");
 					yaml.Load(File.OpenText(filename2));
+				}
 
 				try
 				{
@@ -88,7 +91,10 @@ namespace Schumix.SvnRssAddon.Config
 					file.Close();
 
 					if(File.Exists(filename2))
+					{
+						Log.Notice("SvnRssAddonConfig", "Biztonsági másolat törölve mert újra fel lett használva.");
 						File.Delete(filename2);
+					}
 
 					Log.Success("SvnRssAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}

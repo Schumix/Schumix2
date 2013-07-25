@@ -35,7 +35,7 @@ namespace Schumix.Framework.Addon
 	/// <summary>
 	/// Class used to manage (load, unload, reload) plugins dynamically.
 	/// </summary>
-	public sealed class AddonManager
+	public sealed class AddonManager : DefaultConfig
 	{
 		public readonly Dictionary<string, AddonBase> Addons = new Dictionary<string, AddonBase>();
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
@@ -75,9 +75,30 @@ namespace Schumix.Framework.Addon
 		{
 			try
 			{
+				if(!Directory.Exists(directory))
+				{
+					Log.Warning("AddonManager", "Nem található a megadott elérési út így az alapértelmezett lesz használva!");
+					directory = Path.Combine(Environment.CurrentDirectory, d_addondirectory);
+				}
+
 				string file = string.Empty;
 				string[] ignore = AddonsConfig.Ignore.Split(SchumixBase.Comma);
 				var dir = new DirectoryInfo(directory);
+
+				if(!dir.Exists)
+				{
+					_loading = false;
+					Log.Warning("AddonManager", "Nem található az addon mappa így nem lesz betöltve egy addon se!");
+
+					foreach(var sn in IRCConfig.List)
+					{
+						if(!Addons.ContainsKey(sn.Key))
+							Addons.Add(sn.Key, new AddonBase());
+					}
+
+					return false;
+				}
+
 				Log.Notice("AddonManager", sLConsole.GetString("Loading addons from: {0}"), dir.FullName);
 
 				foreach(var dll in dir.GetFiles("*.dll").AsParallel())

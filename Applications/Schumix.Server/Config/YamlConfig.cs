@@ -90,7 +90,10 @@ namespace Schumix.Server.Config
 					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 					if(File.Exists(filename2))
+					{
+						Log.Notice("YamlConfig", "Biztonsági másolatnak megjelölt fájl kerül felhasználásra. Így a régi adatok lesznek felújítva.");
 						yaml.Load(File.OpenText(filename2));
+					}
 
 					try
 					{
@@ -135,7 +138,10 @@ namespace Schumix.Server.Config
 						file.Close();
 
 						if(File.Exists(filename2))
+						{
+							Log.Notice("YamlConfig", "Biztonsági másolat törölve mert újra fel lett használva.");
 							File.Delete(filename2);
+						}
 
 						Log.Success("YamlConfig", sLConsole.GetString("Config file is completed!"));
 					}

@@ -71,7 +71,10 @@ namespace Schumix.GitRssAddon.Config
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
+				{
+					Log.Notice("GitRssAddonConfig", "Biztonsági másolatnak megjelölt fájl kerül felhasználásra. Így a régi adatok lesznek felújítva.");
 					xmldoc.Load(filename2);
+				}
 
 				try
 				{
@@ -97,7 +100,10 @@ namespace Schumix.GitRssAddon.Config
 					w.Close();
 
 					if(File.Exists(filename2))
+					{
+						Log.Notice("GitRssAddonConfig", "Biztonsági másolat törölve mert újra fel lett használva.");
 						File.Delete(filename2);
+					}
 
 					Log.Success("GitRssAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}

@@ -265,7 +265,10 @@ namespace Schumix.Framework.Config
 					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 					if(File.Exists(filename2))
+					{
+						Log.Notice("XmlConfig", "Biztonsági másolatnak megjelölt fájl kerül felhasználásra. Így a régi adatok lesznek felújítva.");
 						xmldoc.Load(filename2);
+					}
 
 					try
 					{
@@ -539,7 +542,10 @@ namespace Schumix.Framework.Config
 						w.Close();
 
 						if(File.Exists(filename2))
+						{
+							Log.Notice("XmlConfig", "Biztonsági másolat törölve mert újra fel lett használva.");
 							File.Delete(filename2);
+						}
 
 						Log.Success("XmlConfig", sLConsole.GetString("Config file is completed!"));
 					}

@@ -78,7 +78,10 @@ namespace Schumix.ExtraAddon.Config
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
+				{
+					Log.Notice("ExtraAddonConfig", "Biztonsági másolatnak megjelölt fájl kerül felhasználásra. Így a régi adatok lesznek felújítva.");
 					xmldoc.Load(filename2);
+				}
 
 				try
 				{
@@ -137,7 +140,10 @@ namespace Schumix.ExtraAddon.Config
 					w.Close();
 
 					if(File.Exists(filename2))
+					{
+						Log.Notice("ExtraAddonConfig", "Biztonsági másolat törölve mert újra fel lett használva.");
 						File.Delete(filename2);
+					}
 
 					Log.Success("ExtraAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}

@@ -2,6 +2,9 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Windows installer felfrissítve. Mostantól az addonokat bemásolja a Program Files mappába is. Konfig és Schumix.db3 fájlokat nem írja felül az új fájlokkal ha már létezik. Sql mappa is másolásra kerül a Program Files-be.
+ * Konfig fájlok biztonsági másolatainak felhasználása kiírásra kerül ha fel lesz használva. Úgyan így a törlés is kiírásra kerül.
+ * Addon betöltése javítva. Ha nem létezik a mappa akkor az alapértelmezetett fogja használ. Ha az se létezik akkor nem tölti be az addonokat.
  * Tesztek alapja elkészültek és hozzáadásra kerültek.
  * Névnap kiírása javítva.
  * CsharpSQLite bekötve a magba. Így teljesen c# kóddal lesz megoldva az sqlite használata.
