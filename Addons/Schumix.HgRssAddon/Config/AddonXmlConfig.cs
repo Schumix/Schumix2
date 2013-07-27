@@ -49,7 +49,7 @@ namespace Schumix.HgRssAddon.Config
 			new RssConfig(QueryTime);
 
 			Log.Success("HgRssAddonConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~AddonXmlConfig()

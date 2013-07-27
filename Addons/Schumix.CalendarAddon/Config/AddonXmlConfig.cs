@@ -51,7 +51,7 @@ namespace Schumix.CalendarAddon.Config
 			new CalendarConfig(Seconds, NumberOfMessages, NumberOfFlooding);
 
 			Log.Success("CalendarAddonConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~AddonXmlConfig()

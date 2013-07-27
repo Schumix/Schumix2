@@ -117,7 +117,7 @@ namespace Schumix.Server.Config
 				Log.Warning("Schumix", sLConsole.GetString("There is no load of Schumix!"));
 
 			Log.Success("XmlConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~XmlConfig()

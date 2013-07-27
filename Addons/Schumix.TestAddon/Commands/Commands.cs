@@ -192,13 +192,13 @@ namespace Schumix.TestAddon.Commands
 		[SchumixCommand("test2", CommandPermission.Normal)]
 		public static void HandleTest2(IRCMessage sIRCMessage)
 		{
-			//Console.WriteLine(sIRCMessage.Args);
+			//Log.WriteLine(sIRCMessage.Args);
 		}
 
 		[IrcCommand(ReplyCode.RPL_WELCOME)]
 		public static void IrcHandleTest2(IRCMessage sIRCMessage)
 		{
-			//Console.WriteLine(sIRCMessage.Args);
+			//Log.WriteLine(sIRCMessage.Args);
 		}
 	}
 }

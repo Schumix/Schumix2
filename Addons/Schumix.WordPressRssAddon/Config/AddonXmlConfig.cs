@@ -49,7 +49,7 @@ namespace Schumix.WordPressRssAddon.Config
 			new RssConfig(QueryTime);
 
 			Log.Success("WordPressRssAddonConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~AddonXmlConfig()

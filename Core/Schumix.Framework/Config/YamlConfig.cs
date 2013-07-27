@@ -84,7 +84,7 @@ namespace Schumix.Framework.Config
 			ShortUrlMap((!schumixmap.IsNull() && schumixmap.ContainsKey("ShortUrl")) ? ((YamlMappingNode)schumixmap["ShortUrl".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("YamlConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~YamlConfig()

@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Console.Write() és WriteLine() függvények a Log osztályon keresztül lesznek használva így nem csúszhatnak össze a sorok.
  * Scripts mappa a Windows Installer-be bekerült.
  * Python betöltése javítva.
  * Windows installer felfrissítve. Mostantól az addonokat bemásolja a Program Files mappába is. Konfig és Schumix.db3 fájlokat nem írja felül az új fájlokkal ha már létezik. Sql mappa is másolásra kerül a Program Files-be.

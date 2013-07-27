@@ -49,7 +49,7 @@ namespace Schumix.GitRssAddon.Config
 			new RssConfig(QueryTime);
 
 			Log.Success("GitRssAddonConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~AddonXmlConfig()

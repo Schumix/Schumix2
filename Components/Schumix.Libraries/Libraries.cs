@@ -27,6 +27,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Platforms;
 
 namespace Schumix.Libraries
@@ -723,7 +724,7 @@ namespace Schumix.Libraries
 		{
 			lock(WriteLock)
 			{
-				Console.Write(text);
+				Log.Write(text);
 			}
 		}
 
@@ -731,7 +732,7 @@ namespace Schumix.Libraries
 		{
 			lock(WriteLock)
 			{
-				Console.Write(o);
+				Log.Write(o.ToString());
 			}
 		}
 
@@ -747,7 +748,7 @@ namespace Schumix.Libraries
 		{
 			lock(WriteLock)
 			{
-				Console.Write(text);
+				Log.Write(text);
 			}
 		}
 
@@ -755,7 +756,7 @@ namespace Schumix.Libraries
 		{
 			lock(WriteLock)
 			{
-				Console.Write(o);
+				Log.Write(o.ToString());
 			}
 		}
 

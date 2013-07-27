@@ -53,8 +53,11 @@ namespace Schumix.Framework.Logger
 			return DateTime.Now.ToString("HH:mm:ss");
 		}
 
-		private static void LogInFile(string log)
+		public static void LogInFile(string log)
 		{
+			if(LogConfig.LogDirectory.IsNullOrEmpty())
+				return;
+
 			string filename = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
 			var filesize = new FileInfo(filename);
 
@@ -66,8 +69,16 @@ namespace Schumix.Framework.Logger
 
 			var time = DateTime.Now;
 			var file = new StreamWriter(filename, true) { AutoFlush = true };
-			file.Write("{0} {1}", time.ToString("yyyy. MM. dd."), log);
+			file.Write("{0} {1} {2}", time.ToString("yyyy. MM. dd."), GetTime(), log);
 			file.Close();
+		}
+
+		public static void LogInFile(string log, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				LogInFile(string.Format(log, args));
+			}
 		}
 
 		public static string GetTypeCharacter(LogType type)
@@ -91,6 +102,12 @@ namespace Schumix.Framework.Logger
 			}
 
 			return character;
+		}
+
+		public static void SetForegroundColor(ConsoleColor color)
+		{
+			if(!_ColorblindMode)
+				Console.ForegroundColor = ConsoleColor.Gray;
 		}
 
 		public static void Initialize()
@@ -235,7 +252,7 @@ namespace Schumix.Framework.Logger
 				Console.Write(" N {0}: ", source);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write("{0}\n", format);
-				LogInFile(GetTime() + string.Format(" N {0}: {1}\n", source, format));
+				LogInFile("N {0}: {1}\n", source, format);
 			}
 		}
 
@@ -267,7 +284,7 @@ namespace Schumix.Framework.Logger
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogInFile(GetTime() + string.Format(" S {0}: {1}\n", source, format));
+				LogInFile("S {0}: {1}\n", source, format);
 			}
 		}
 
@@ -302,7 +319,7 @@ namespace Schumix.Framework.Logger
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogInFile(GetTime() + string.Format(" W {0}: {1}\n", source, format));
+				LogInFile("W {0}: {1}\n", source, format);
 			}
 		}
 
@@ -337,7 +354,7 @@ namespace Schumix.Framework.Logger
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogInFile(GetTime() + string.Format(" E {0}: {1}\n", source, format));
+				LogInFile("E {0}: {1}\n", source, format);
 			}
 		}
 
@@ -372,7 +389,7 @@ namespace Schumix.Framework.Logger
 				Console.ForegroundColor = ConsoleColor.Blue;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogInFile(GetTime() + string.Format(" D {0}: {1}\n", source, format));
+				LogInFile("D {0}: {1}\n", source, format);
 			}
 		}
 
@@ -596,7 +613,7 @@ namespace Schumix.Framework.Logger
 				Console.Write(GetTime());
 				Console.Write(" {0} {1}: ", GetTypeCharacter(type), source);
 				Console.Write("{0}\n", format);
-				LogInFile(GetTime() + string.Format(" {0} {1}: {2}\n", GetTypeCharacter(type), source, format));
+				LogInFile("{0} {1}: {2}\n", GetTypeCharacter(type), source, format);
 			}
 		}
 
@@ -605,6 +622,66 @@ namespace Schumix.Framework.Logger
 			lock(WriteLock)
 			{
 				ColorblindMode(source, format.ToString(), type);
+			}
+		}
+
+		public static void Write(StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				Write(message.ToString());
+			}
+		}
+
+		// No log in file
+		public static void Write(string message)
+		{
+			lock(WriteLock)
+			{
+				WaitOutputRedirected();
+				Console.Write(message);
+			}
+		}
+
+		public static void Write(string message, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Write(string.Format(message, args));
+			}
+		}
+
+		public static void WriteLine(StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				WriteLine(message.ToString());
+			}
+		}
+
+		public static void WriteLine(string message = "")
+		{
+			lock(WriteLock)
+			{
+				WaitOutputRedirected();
+
+				if(message.IsNullOrEmpty())
+					Console.WriteLine(message);
+				else
+					Console.WriteLine("{0} {1}", GetTime(), message);
+
+				if(message.IsNullOrEmpty())
+					LogInFile("{0}\n", message);
+				else
+					LogInFile(message);
+			}
+		}
+
+		public static void WriteLine(string message, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				WriteLine(string.Format(message, args));
 			}
 		}
 

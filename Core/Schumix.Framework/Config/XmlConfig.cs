@@ -239,7 +239,7 @@ namespace Schumix.Framework.Config
 			new ShortUrlConfig(Name, ApiKey);
 
 			Log.Success("XmlConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~XmlConfig()

@@ -58,7 +58,7 @@ namespace Schumix.CompilerAddon.Config
 			new CompilerConfig(CompilerEnabled, Enabled, Memory, CompilerOptions, WarningLevel, TreatWarningsAsErrors, Referenced, ReferencedAssemblies, MainClass, MainConstructor);
 
 			Log.Success("CompilerAddonConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~AddonXmlConfig()
