@@ -23,6 +23,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
 
@@ -262,7 +263,7 @@ namespace Schumix.Libraries
 		#region printf
 		public static void printf(string Format, params object[] Parameters)
 		{
-			Console.Write(Tools.sprintf(Format, Parameters));
+			Log.Write(Tools.sprintf(Format, Parameters));
 		}
 		#endregion
 

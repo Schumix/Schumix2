@@ -214,7 +214,7 @@ namespace Schumix.Irc
 				});
 			});
 
-			Console.WriteLine();
+			Log.WriteLine();
 			Log.Notice("Network", sLConsole.GetString("All of IRC handlers are registered."));
 		}
 

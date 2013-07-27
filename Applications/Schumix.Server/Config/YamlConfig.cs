@@ -65,7 +65,7 @@ namespace Schumix.Server.Config
 			SchumixsMap((!servermap.IsNull() && servermap.ContainsKey("Schumixs")) ? ((YamlMappingNode)servermap["Schumixs".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("YamlConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~YamlConfig()

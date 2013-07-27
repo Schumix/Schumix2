@@ -172,7 +172,7 @@ namespace Schumix
 			new ServerConfig(serverenabled ? serverenabled : ServerConfig.Enabled, serverhost != "0.0.0.0" ? serverhost : ServerConfig.Host,
 				serverport != -1 ? serverport : ServerConfig.Port, serverpassword != "0" ? serverpassword : ServerConfig.Password);
 
-			System.Console.WriteLine();
+			Log.WriteLine();
 			Log.Notice("Main", sLConsole.GetString("System is starting..."));
 
 			if(colorbindmode)

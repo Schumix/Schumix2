@@ -39,9 +39,9 @@ namespace Schumix.Irc
 
 			if(ConsoleLog.CLog)
 			{
-				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.WriteLine("[{0}] <{1}> {2}", sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
-				Console.ForegroundColor = ConsoleColor.Gray;
+				Log.SetForegroundColor(ConsoleColor.Yellow);
+				Log.WriteLine("[{0}] <{1}> {2}", sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
+				Log.SetForegroundColor(ConsoleColor.Gray);
 			}
 
 			if(sIRCMessage.Args.Contains(((char)1).ToString()))

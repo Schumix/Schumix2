@@ -49,7 +49,7 @@ namespace Schumix.MantisBTRssAddon.Config
 			new RssConfig(QueryTime);
 
 			Log.Success("MantisBTRssAddonConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~AddonXmlConfig()

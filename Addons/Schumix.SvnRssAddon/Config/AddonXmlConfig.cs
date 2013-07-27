@@ -49,7 +49,7 @@ namespace Schumix.SvnRssAddon.Config
 			new RssConfig(QueryTime);
 
 			Log.Success("SvnRssAddonConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~AddonXmlConfig()

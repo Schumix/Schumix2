@@ -58,7 +58,7 @@ namespace Schumix.Irc
 
 		protected void HandleSuccessfulAuth(IRCMessage sIRCMessage)
 		{
-			Console.WriteLine();
+			Log.WriteLine();
 			Log.Success("MessageHandler", sLConsole.GetString("Successfully connected to IRC server."));
 			RandomAllVhost();
 			Task.Factory.StartNew(() => JoinProgress());
@@ -129,16 +129,17 @@ namespace Schumix.Irc
 
 			if(ConsoleLog.CLog)
 			{
-				Console.ForegroundColor = ConsoleColor.Red;
+				Log.SetForegroundColor(ConsoleColor.Red);
 
 				if(sIRCMessage.Nick.IsServ())
-					Console.Write(sLConsole.GetString("[SERVER] "));
+					Log.Write(sLConsole.GetString("[SERVER] "));
 				else
-					Console.Write(string.Format("[{0}] ", sIRCMessage.Nick));
+					Log.Write("[{0}] ", sIRCMessage.Nick);
 
-				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.Write(sIRCMessage.Args + Environment.NewLine);
-				Console.ForegroundColor = ConsoleColor.Gray;
+				Log.SetForegroundColor(ConsoleColor.Yellow);
+				Log.Write("{0}\n", sIRCMessage.Args);
+				Log.LogInFile("{0}{1}\n", sIRCMessage.Nick.IsServ() ? sLConsole.GetString("[SERVER] ") : string.Format("[{0}] ", sIRCMessage.Nick), sIRCMessage.Args);
+				Log.SetForegroundColor(ConsoleColor.Gray);
 			}
 
 			if(sIRCMessage.Nick.IsServ(Serv.NickServ))
@@ -240,17 +241,15 @@ namespace Schumix.Irc
 			if(ConsoleLog.CLog)
 			{
 				if(SchumixConfig.ColorBindMode)
-				{
-					Console.Write(sLConsole.GetString("[SERVER] "));
-					Console.Write(sLConsole.GetString("No such irc command.\n"));
-				}
+					Log.WriteLine(sLConsole.GetString("[SERVER] ") + sLConsole.GetString("No such irc command."));
 				else
 				{
-					Console.ForegroundColor = ConsoleColor.Red;
-					Console.Write(sLConsole.GetString("[SERVER] "));
-					Console.ForegroundColor = ConsoleColor.Yellow;
-					Console.Write(sLConsole.GetString("No such irc command.\n"));
-					Console.ForegroundColor = ConsoleColor.Gray;
+					Log.SetForegroundColor(ConsoleColor.Red);
+					Log.Write(sLConsole.GetString("[SERVER] "));
+					Log.SetForegroundColor(ConsoleColor.Yellow);
+					Log.Write(sLConsole.GetString("No such irc command.\n"));
+					Log.LogInFile(sLConsole.GetString("[SERVER] ") + sLConsole.GetString("No such irc command."));
+					Log.SetForegroundColor(ConsoleColor.Gray);
 				}
 			}
 		}

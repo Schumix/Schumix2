@@ -56,7 +56,7 @@ namespace Schumix.ExtraAddon.Config
 			new WolframAlphaConfig(Key);
 
 			Log.Success("ExtraAddonConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~AddonXmlConfig()
