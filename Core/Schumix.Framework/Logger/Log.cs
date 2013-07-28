@@ -58,19 +58,22 @@ namespace Schumix.Framework.Logger
 			if(LogConfig.LogDirectory.IsNullOrEmpty())
 				return;
 
-			string filename = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
-			var filesize = new FileInfo(filename);
-
-			if(filesize.Length >= LogConfig.MaxFileSize * 1024 * 1024)
+			lock(WriteLock)
 			{
-				File.Delete(filename);
-				sUtilities.CreateFile(filename);
-			}
+				string filename = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
+				var filesize = new FileInfo(filename);
 
-			var time = DateTime.Now;
-			var file = new StreamWriter(filename, true) { AutoFlush = true };
-			file.Write("{0} {1} {2}", time.ToString("yyyy. MM. dd."), GetTime(), log);
-			file.Close();
+				if(filesize.Length >= LogConfig.MaxFileSize * 1024 * 1024)
+				{
+					File.Delete(filename);
+					sUtilities.CreateFile(filename);
+				}
+
+				var time = DateTime.Now;
+				var file = new StreamWriter(filename, true) { AutoFlush = true };
+				file.Write("{0} {1} {2}", time.ToString("yyyy. MM. dd."), GetTime(), log);
+				file.Close();
+			}
 		}
 
 		public static void LogInFile(string log, params object[] args)
