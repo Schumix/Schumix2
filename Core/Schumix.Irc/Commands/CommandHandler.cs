@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using Schumix.Irc.Ctcp;
 using Schumix.Irc.Flood;
 using Schumix.Irc.Ignore;
+using Schumix.Irc.Logger;
 using Schumix.Irc.Channel;
 using Schumix.Irc.NickName;
 using Schumix.Framework;
@@ -59,6 +60,7 @@ namespace Schumix.Irc.Commands
 		public MyNickInfo sMyNickInfo { get; private set; }
 		public AntiFlood sAntiFlood { get; private set; }
 		public Sender sSender { get; private set; }
+		public IrcLog sIrcLog { get; private set; }
 		protected string ChannelPrivmsg { get; set; }
 		protected string NewNickPrivmsg { get; set; }
 		protected string OnlinePrivmsg { get; set; }
@@ -88,6 +90,7 @@ namespace Schumix.Irc.Commands
 			sIgnoreNickName = new IgnoreNickName(_servername);
 			sIgnoreIrcCommand = new IgnoreIrcCommand(_servername);
 			sMyChannelInfo = new MyChannelInfo(_servername);
+			sIrcLog = new IrcLog(_servername);
 			sAntiFlood = new AntiFlood(_servername);
 			sCtcpSender = new CtcpSender(_servername);
 			sChannelList = new ChannelList(_servername);
