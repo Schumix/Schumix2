@@ -130,9 +130,8 @@ msgid "Nick isnt registered, so the vhost still off!"
 msgstr "A nick nincs beregisztrálva így a vhost nem került bekapcsolásra!"
 
 #: ../Core/Schumix.Irc/MessageHandler.cs:30
-#, fuzzy
 msgid "No such irc command."
-msgstr "Nem létező irc parancs.\n"
+msgstr "Nem létező irc parancs."
 
 #: ../Core/Schumix.Irc/MessageHandler.cs:30
 msgid "No such irc command.\n"
