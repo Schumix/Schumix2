@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * .en.md fájlok angolosítása elkészült. Köszönet érte AgeNt-nak.
  * Convert osztály felhasználásával készült egy kisebb extensions bövítés.
  * Irc üzenetek fájlba logolása leválasztva egy külön osztályba.
  * Console.Write() és WriteLine() függvények a Log osztályon keresztül lesznek használva így nem csúszhatnak össze a sorok.
