@@ -130,7 +130,7 @@
  * Uptime táblában ezentúl byte-ban lesznek megadva a mentett memória méretek.
  * Kitakaritva a LueEnginer referencia listája.
 
-## 3.9.0 (2012-06-26)
+## 3.9.0 (2012-12-02)
 
  * Kész a CacheDB.
  * Több ponton elhelyezésre került a LargeError.
