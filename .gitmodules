@@ -1,21 +1,21 @@
 [submodule "External/ngit"]
 	path = External/ngit
-	url = https://github.com/Schumix/ngit.git
+	url = git://github.com/Schumix/ngit.git
 [submodule "External/YamlDotNet"]
 	path = External/YamlDotNet
-	url = https://github.com/Schumix/YamlDotNet.git
+	url = git://github.com/Schumix/YamlDotNet.git
 [submodule "External/NLua"]
 	path = External/NLua
-	url = https://github.com/Schumix/NLua.git
+	url = git://github.com/Schumix/NLua.git
 [submodule "Webadmin"]
 	path = Webadmin
-	url = https://github.com/Schumix/Webadmin.git
+	url = git://github.com/Schumix/Webadmin.git
 [submodule "External/ChatterBotApi"]
 	path = External/ChatterBotApi
-	url = https://github.com/Schumix/ChatterBotApi.git
+	url = git://github.com/Schumix/ChatterBotApi.git
 [submodule "External/NGettext"]
 	path = External/NGettext
-	url = https://github.com/Schumix/NGettext.git
+	url = git://github.com/Schumix/NGettext.git
 [submodule "External/CsharpSQLite"]
 	path = External/CsharpSQLite
-	url = https://github.com/Schumix/CsharpSQLite.git
+	url = git://github.com/Schumix/CsharpSQLite.git

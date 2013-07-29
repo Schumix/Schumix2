@@ -39,9 +39,9 @@ namespace Schumix.Irc
 
 			if(ConsoleLog.CLog)
 			{
-				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.WriteLine("[{0}] <{1}> {2}", sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
-				Console.ForegroundColor = ConsoleColor.Gray;
+				Log.SetForegroundColor(ConsoleColor.Yellow);
+				Log.WriteLine("[{0}] <{1}> {2}", sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
+				Log.SetForegroundColor(ConsoleColor.Gray);
 			}
 
 			if(sIRCMessage.Args.Contains(((char)1).ToString()))
@@ -52,11 +52,11 @@ namespace Schumix.Irc
 				if(args.Length > 6 && args.Substring(0, 6) == "ACTION")
 				{
 					args = args.Remove(0, 7);
-					LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, string.Format(sLConsole.GetString("[ACTION] {0}"), args));
+					sIrcLog.LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, string.Format(sLConsole.GetString("[ACTION] {0}"), args));
 				}
 			}
 			else
-				LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
+				sIrcLog.LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
 
 			if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				sIRCMessage.Channel = sIRCMessage.Nick;

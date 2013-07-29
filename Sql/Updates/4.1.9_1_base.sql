@@ -1,0 +1,2 @@
+UPDATE `localized_command` SET Text = "{0}: 3loaded.\n{0}: 8ignored.\nNo plugin loaded." WHERE Language = 'enUS' AND Command = 'plugin';
+UPDATE `localized_console_command` SET Text = "{0}: loaded.\n{0}: ignored.\nNo plugin loaded." WHERE Language = 'enUS' AND Command = 'plugin';

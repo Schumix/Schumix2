@@ -14,7 +14,7 @@ AppUpdatesURL={#MyAppURL}
 DefaultDirName={pf}\{#MyAppName}
 DefaultGroupName={#MyAppName}
 LicenseFile=..\License
-InfoBeforeFile=..\Readme.en.md
+InfoBeforeFile=..\Readme.markdown
 OutputDir=.\
 OutputBaseFilename=Setup
 SetupIconFile=..\Applications\Schumix\icon.ico
@@ -34,7 +34,7 @@ Name: "french"; MessagesFile: "compiler:Languages\French.isl"
 Name: "german"; MessagesFile: "compiler:Languages\German.isl"
 Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
 Name: "hebrew"; MessagesFile: "compiler:Languages\Hebrew.isl"
-Name: "hungarian"; MessagesFile: "compiler:Languages\Hungarian.isl"; InfoBeforeFile: ..\Readme.markdown    
+Name: "hungarian"; MessagesFile: "compiler:Languages\Hungarian.isl"; InfoBeforeFile: ..\Readme.hu.md    
 Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
 Name: "japanese"; MessagesFile: "compiler:Languages\Japanese.isl"
 Name: "norwegian"; MessagesFile: "compiler:Languages\Norwegian.isl"
@@ -51,8 +51,8 @@ Name: "ukrainian"; MessagesFile: "compiler:Languages\Ukrainian.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Dirs]
-Name: "{userappdata}\Schumix\Logs"
-Name: "{userappdata}\Schumix\Channels"
+Name: "{userappdata}\Schumix\Logs"; Flags: uninsneveruninstall
+Name: "{userappdata}\Schumix\Channels"; Flags: uninsneveruninstall
 
 [Files]
 Source: "..\Run\Release\ICSharpCode.SharpZipLib.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -67,7 +67,7 @@ Source: "..\Run\Release\NGettext.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Mono.Posix.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Mono.Security.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\MySql.Data.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Run\Release\Schumix.db3"; DestDir: "{userappdata}\Schumix\"; Flags: ignoreversion
+Source: "..\Sql\Schumix.db3"; DestDir: "{userappdata}\Schumix\"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "..\Run\Release\Schumix.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.Framework.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.Irc.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -82,32 +82,26 @@ Source: "..\Run\Release\IronPython.Modules.dll"; DestDir: "{app}"; Flags: ignore
 Source: "..\Run\Release\Microsoft.Dynamic.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Microsoft.Scripting.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;Addons
-Source: "..\Run\Release\Addons\CalendarAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\ChatterBotAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\ChatterBotAPI.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\CompilerAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\ExtraAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\GameAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\GitRssAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\HgRssAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\MantisBTRssAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\RevisionAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\SvnRssAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\TestAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\WolframAPI.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
-Source: "..\Run\Release\Addons\WordpressRssAddon.dll"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion
+Source: "..\Run\Release\Addons\*"; DestDir: "{app}\Addons\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Run\Release\Addons\*"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion recursesubdirs createallsubdirs uninsneveruninstall
+;Scripts
+Source: "..\Run\Release\Scripts\*"; DestDir: "{app}\Scripts\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Run\Release\Scripts\*"; DestDir: "{userappdata}\Schumix\Scripts\"; Flags: ignoreversion recursesubdirs createallsubdirs uninsneveruninstall
 ;Locale
 Source: "..\Run\Release\locale\*"; DestDir: "{app}\locale\"; Flags: ignoreversion recursesubdirs createallsubdirs
 ;Configs
-Source: "..\Configs\CalendarAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: ignoreversion
-Source: "..\Configs\CompilerAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: ignoreversion
-Source: "..\Configs\ExtraAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: ignoreversion
-Source: "..\Configs\GitRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: ignoreversion
-Source: "..\Configs\HgRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: ignoreversion
-Source: "..\Configs\MantisBTRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: ignoreversion
-Source: "..\Configs\SvnRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: ignoreversion
-Source: "..\Configs\WordPressRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: ignoreversion
-Source: "Schumix.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: ignoreversion
+Source: "..\Configs\CalendarAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "..\Configs\CompilerAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "..\Configs\ExtraAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "..\Configs\GitRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "..\Configs\HgRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "..\Configs\MantisBTRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "..\Configs\SvnRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "..\Configs\WordPressRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "Schumix.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
+;Sql
+Source: "..\Sql\*"; DestDir: "{app}\Sql\"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "..\Sql\*"; DestDir: "{userappdata}\Schumix\Sql\"; Flags: ignoreversion recursesubdirs createallsubdirs uninsneveruninstall
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Parameters: "--config-dir=$userappdata\Schumix\Configs\ --config-file=Schumix.yml"

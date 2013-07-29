@@ -49,7 +49,7 @@ namespace Schumix.WordPressRssAddon.Config
 			new RssConfig(QueryTime);
 
 			Log.Success("WordPressRssAddonConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~AddonXmlConfig()
@@ -71,7 +71,10 @@ namespace Schumix.WordPressRssAddon.Config
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
+				{
+					Log.Notice("WordPressRssAddonConfig", sLConsole.GetString("The backup files will be used to renew the data."));
 					xmldoc.Load(filename2);
+				}
 
 				try
 				{
@@ -97,7 +100,10 @@ namespace Schumix.WordPressRssAddon.Config
 					w.Close();
 
 					if(File.Exists(filename2))
+					{
+						Log.Notice("WordPressRssAddonConfig", sLConsole.GetString("The backup has been deleted during the re-use."));
 						File.Delete(filename2);
+					}
 
 					Log.Success("WordPressRssAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}

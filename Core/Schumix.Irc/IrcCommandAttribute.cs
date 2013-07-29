@@ -56,7 +56,7 @@ namespace Schumix.Irc
 
 		public IrcCommandAttribute(ReplyCode command)
 		{
-			Command = Convert.ToInt32(command).ToIrcOpcode();
+			Command = command.ToInt32().ToIrcOpcode();
 		}
 
 		#endregion

@@ -39,6 +39,11 @@ namespace Schumix.Irc.Commands
 			Log.Debug("CommandInfo", sLConsole.GetString("Successfully started the CommandInfo."));
 		}
 
+		~CommandInfo()
+		{
+			Log.Debug("CommandInfo", "~CommandInfo() {0}", sLConsole.GetString("[ServerName: {0}]", servername));
+		}
+
 		public void Dispose()
 		{
 			Dispose(true);
@@ -61,7 +66,7 @@ namespace Schumix.Irc.Commands
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
 			if(!db.IsNull())
 			{
-				int flag = Convert.ToInt32(db["Flag"]);
+				int flag = db["Flag"].ToInt32();
 				return Flag == (AdminFlag)flag;
 			}
 
@@ -90,7 +95,7 @@ namespace Schumix.Irc.Commands
 				if(Vhost != vhost)
 					return false;
 
-				int flag = Convert.ToInt32(db["Flag"]);
+				int flag = db["Flag"].ToInt32();
 
 				if((flag == 1 && Flag == AdminFlag.HalfOperator) ||
 					(flag == 2 && Flag == AdminFlag.HalfOperator) ||
@@ -106,7 +111,7 @@ namespace Schumix.Irc.Commands
 		public AdminFlag Adminflag(string Name)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
-			return !db.IsNull() ? (AdminFlag)Convert.ToInt32(db["Flag"]) : AdminFlag.None;
+			return !db.IsNull() ? (AdminFlag)(db["Flag"].ToInt32()) : AdminFlag.None;
 		}
 
 		public AdminFlag Adminflag(string Name, string Vhost)
@@ -115,7 +120,7 @@ namespace Schumix.Irc.Commands
 			if(!db.IsNull())
 			{
 				string vhost = db["Vhost"].ToString();
-				return Vhost != vhost ? AdminFlag.None : (AdminFlag)Convert.ToInt32(db["Flag"]);
+				return Vhost != vhost ? AdminFlag.None : (AdminFlag)(db["Flag"].ToInt32());
 			}
 			else
 				return AdminFlag.None;

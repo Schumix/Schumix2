@@ -2,4 +2,4 @@
 
 ## Rss
 
-* **QueryTime:** Beállítható vele az rss lekérdezések ciklikus lefutása. Az az hány másodpercenként ismétlődjön meg a lekérdezés. Alapértelmezés: `60`
+* **QueryTime:** Time between a check for updates in the rss feed in seconds. Default: `60`

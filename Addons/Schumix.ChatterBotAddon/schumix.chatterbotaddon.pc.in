@@ -1,6 +1,6 @@
 Name: Schumix.ChatterBotAddon
 Description: Schumix.ChatterBotAddon
-Version: 4.1.x
+Version: 4.2.x
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/ChatterBotAddon.dll

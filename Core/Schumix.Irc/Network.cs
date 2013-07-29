@@ -121,6 +121,11 @@ namespace Schumix.Irc
 			CType = ConnectionType.Normal;
 		}
 
+		~Network()
+		{
+			Log.Debug("Network", "~Network() {0}", sLConsole.GetString("[ServerName: {0}]", _servername));
+		}
+
 		public void Initialize()
 		{
 #if DEBUG
@@ -214,7 +219,7 @@ namespace Schumix.Irc
 				});
 			});
 
-			Console.WriteLine();
+			Log.WriteLine();
 			Log.Notice("Network", sLConsole.GetString("All of IRC handlers are registered."));
 		}
 
@@ -264,7 +269,7 @@ namespace Schumix.Irc
 
 		public void IrcRegisterHandler(ReplyCode code, IRCDelegate method)
 		{
-			string scode = Convert.ToInt32(code).ToIrcOpcode();
+			string scode = code.ToInt32().ToIrcOpcode();
 
 			if(IrcMethodMap.ContainsKey(scode))
 				IrcMethodMap[scode].Method += method;
@@ -274,7 +279,7 @@ namespace Schumix.Irc
 
 		public void IrcRemoveHandler(ReplyCode code)
 		{
-			string scode = Convert.ToInt32(code).ToIrcOpcode();
+			string scode = code.ToInt32().ToIrcOpcode();
 
 			if(IrcMethodMap.ContainsKey(scode))
 				IrcMethodMap.Remove(scode);
@@ -282,7 +287,7 @@ namespace Schumix.Irc
 
 		public void IrcRemoveHandler(ReplyCode code, IRCDelegate method)
 		{
-			string scode = Convert.ToInt32(code).ToIrcOpcode();
+			string scode = code.ToInt32().ToIrcOpcode();
 
 			if(IrcMethodMap.ContainsKey(scode))
 			{

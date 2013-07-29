@@ -51,7 +51,7 @@ namespace Schumix.CalendarAddon.Config
 			new CalendarConfig(Seconds, NumberOfMessages, NumberOfFlooding);
 
 			Log.Success("CalendarAddonConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~AddonXmlConfig()
@@ -73,7 +73,10 @@ namespace Schumix.CalendarAddon.Config
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
+				{
+					Log.Notice("CalendarAddonConfig", sLConsole.GetString("The backup files will be used to renew the data."));
 					xmldoc.Load(filename2);
+				}
 
 				try
 				{
@@ -101,7 +104,10 @@ namespace Schumix.CalendarAddon.Config
 					w.Close();
 
 					if(File.Exists(filename2))
+					{
+						Log.Notice("CalendarAddonConfig", sLConsole.GetString("The backup has been deleted during the re-use."));
 						File.Delete(filename2);
+					}
 
 					Log.Success("CalendarAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}

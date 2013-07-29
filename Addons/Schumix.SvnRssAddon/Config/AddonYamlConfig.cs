@@ -72,7 +72,10 @@ namespace Schumix.SvnRssAddon.Config
 				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
+				{
+					Log.Notice("SvnRssAddonConfig", sLConsole.GetString("The backup files will be used to renew the data."));
 					yaml.Load(File.OpenText(filename2));
+				}
 
 				try
 				{
@@ -88,7 +91,10 @@ namespace Schumix.SvnRssAddon.Config
 					file.Close();
 
 					if(File.Exists(filename2))
+					{
+						Log.Notice("SvnRssAddonConfig", sLConsole.GetString("The backup has been deleted during the re-use."));
 						File.Delete(filename2);
+					}
 
 					Log.Success("SvnRssAddonConfig", sLConsole.GetString("Config file is completed!"));
 				}

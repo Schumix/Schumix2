@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-21 13:04:01+0200\n"
-"PO-Revision-Date: 2013-07-21 13:04:02+0200\n"
+"POT-Creation-Date: 2013-07-29 10:31:48+0200\n"
+"PO-Revision-Date: 2013-07-29 10:31:50+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -10,23 +10,31 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: MonoDevelop Gettext addin\n"
 
+#: ../Core/Schumix.Irc/Commands/CommandHandler.cs:4
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:4
+#: ../Core/Schumix.Irc/MessageHandler.cs:4
+#: ../Core/Schumix.Irc/Network.cs:15
+#: ../Core/Schumix.Irc/Commands/CommandInfo.cs:4
+msgid "[ServerName: {0}]"
+msgstr ""
+
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:5
 msgid "Successfully started the CommandManager."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Commands/CommandManager.cs:12
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:13
 msgid "Successfuly registered all of Command Handlers."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Commands/CommandManager.cs:18
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:19
 msgid "All Command Handler were deleted."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Commands/CommandManager.cs:28
-#: ../Core/Schumix.Irc/Network.cs:58
-#: ../Core/Schumix.Irc/Network.cs:83
-#: ../Core/Schumix.Irc/Network.cs:86
-#: ../Core/Schumix.Irc/Network.cs:95
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:29
+#: ../Core/Schumix.Irc/Network.cs:59
+#: ../Core/Schumix.Irc/Network.cs:84
+#: ../Core/Schumix.Irc/Network.cs:87
+#: ../Core/Schumix.Irc/Network.cs:96
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
@@ -42,7 +50,7 @@ msgstr ""
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
 #: ../Applications/Schumix/Schumix.cs:5
 #: ../Applications/Schumix/Console/Console.cs:7
-#: ../Applications/Schumix/Console/CommandManager.cs:13
+#: ../Applications/Schumix/Console/CommandManager.cs:14
 #: ../Applications/Schumix.Server/Config/Config.cs:6
 #: ../Applications/Schumix.Server/New/Schumix.cs:16
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
@@ -70,108 +78,113 @@ msgstr ""
 msgid "Failure details: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:5
+#: ../Core/Schumix.Irc/MessageHandler.cs:6
 msgid "Successfully connected to IRC server."
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:7
+#: ../Core/Schumix.Irc/MessageHandler.cs:8
 #: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:11
 msgid "Vhost is OFF."
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:10
+#: ../Core/Schumix.Irc/MessageHandler.cs:11
 msgid "Waiting for connection processing."
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:11
+#: ../Core/Schumix.Irc/MessageHandler.cs:12
 msgid "You have not registered!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:12
+#: ../Core/Schumix.Irc/MessageHandler.cs:13
 msgid "No such Bot's nickname!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:16
-#: ../Core/Schumix.Irc/MessageHandler.cs:29
+#: ../Core/Schumix.Irc/MessageHandler.cs:17
+#: ../Core/Schumix.Irc/MessageHandler.cs:18
+#: ../Core/Schumix.Irc/MessageHandler.cs:30
 msgid "[SERVER] "
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:18
+#: ../Core/Schumix.Irc/MessageHandler.cs:19
 msgid "Bad identify password!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:18
+#: ../Core/Schumix.Irc/MessageHandler.cs:19
 msgid "Already identified!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:18
+#: ../Core/Schumix.Irc/MessageHandler.cs:19
 msgid "Identify password accepted."
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:20
+#: ../Core/Schumix.Irc/MessageHandler.cs:21
 msgid "Your nick isn't registered!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:24
+#: ../Core/Schumix.Irc/MessageHandler.cs:25
 msgid "Nick isnt registered, so the vhost still off!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:29
+#: ../Core/Schumix.Irc/MessageHandler.cs:30
+msgid "No such irc command."
+msgstr ""
+
+#: ../Core/Schumix.Irc/MessageHandler.cs:30
 msgid ""
 "No such irc command.\n"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:30
 #: ../Core/Schumix.Irc/MessageHandler.cs:31
+#: ../Core/Schumix.Irc/MessageHandler.cs:32
 msgid "{0} already in use!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:30
 #: ../Core/Schumix.Irc/MessageHandler.cs:31
+#: ../Core/Schumix.Irc/MessageHandler.cs:32
 msgid "Retrying with: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:52
+#: ../Core/Schumix.Irc/MessageHandler.cs:53
 msgid "[joined]"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:56
+#: ../Core/Schumix.Irc/MessageHandler.cs:57
 msgid "[left] {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:59
+#: ../Core/Schumix.Irc/MessageHandler.cs:60
 msgid "[quit] {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:61
+#: ../Core/Schumix.Irc/MessageHandler.cs:62
 msgid "[Is now known as {0}]"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:64
+#: ../Core/Schumix.Irc/MessageHandler.cs:65
 msgid "[Kicked that user: {0} reason: {1}]"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:73
+#: ../Core/Schumix.Irc/MessageHandler.cs:74
 msgid "Identify password accepted!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:74
+#: ../Core/Schumix.Irc/MessageHandler.cs:75
 msgid "[Set mode: {0}]"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:75
+#: ../Core/Schumix.Irc/MessageHandler.cs:76
 msgid "[Topic] New topic: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:76
+#: ../Core/Schumix.Irc/MessageHandler.cs:77
 msgid "{0} invites you to join {1}."
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:76
+#: ../Core/Schumix.Irc/MessageHandler.cs:77
 msgid "[INVITE] {0} invites you to join {1}."
 msgstr ""
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:79
+#: ../Core/Schumix.Irc/MessageHandler.cs:80
 msgid "[Topic] {0}"
 msgstr ""
 
@@ -183,84 +196,84 @@ msgstr ""
 msgid "Server's name: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:16
+#: ../Core/Schumix.Irc/Network.cs:17
 msgid "Opcodes thread started..."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:17
+#: ../Core/Schumix.Irc/Network.cs:18
 msgid "Ping thread started..."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:18
+#: ../Core/Schumix.Irc/Network.cs:19
 msgid "Establishing connection with irc server."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:21
+#: ../Core/Schumix.Irc/Network.cs:22
 msgid "All of IRC handlers are registered."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:42
+#: ../Core/Schumix.Irc/Network.cs:43
 msgid "Connection to: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:43
+#: ../Core/Schumix.Irc/Network.cs:44
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
 msgid "Connection closed!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:46
+#: ../Core/Schumix.Irc/Network.cs:47
 msgid "Connection have been closed."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:46
+#: ../Core/Schumix.Irc/Network.cs:47
 msgid "Reconnection to: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:53
+#: ../Core/Schumix.Irc/Network.cs:54
 msgid ""
 "This nick name ({0}) is used by a service bot. Your nick is automaticly "
 "changed to a placeholder one."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:54
+#: ../Core/Schumix.Irc/Network.cs:55
 msgid "Connection type: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:55
+#: ../Core/Schumix.Irc/Network.cs:56
 msgid "Fatal error was happened while established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:56
+#: ../Core/Schumix.Irc/Network.cs:57
 msgid "Successfully established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:56
+#: ../Core/Schumix.Irc/Network.cs:57
 msgid "Error was happened while established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:58
+#: ../Core/Schumix.Irc/Network.cs:59
 msgid "Certificate not accepted, exception: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:62
+#: ../Core/Schumix.Irc/Network.cs:63
 msgid "Users' datas are sent."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:73
-#: ../Core/Schumix.Irc/Network.cs:94
+#: ../Core/Schumix.Irc/Network.cs:74
+#: ../Core/Schumix.Irc/Network.cs:95
 msgid "Successfully started the thread."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:73
+#: ../Core/Schumix.Irc/Network.cs:74
 msgid "Started the irc data receiving."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:76
+#: ../Core/Schumix.Irc/Network.cs:77
 msgid "Do not going data from irc server!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:93
+#: ../Core/Schumix.Irc/Network.cs:94
 msgid "Received unhandled opcode: {0}"
 msgstr ""
 
@@ -391,7 +404,7 @@ msgid "Plugin can not be loaded!"
 msgstr ""
 
 #: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:21
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:21
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:26
 msgid "Loaded plugin: {0} {1} by {2} ({3})"
 msgstr ""
 
@@ -576,11 +589,11 @@ msgstr ""
 msgid "Successfully loaded the Timer."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Timer.cs:4
+#: ../Core/Schumix.Framework/Timer.cs:5
 msgid "Successfully saved the Program's started time."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Timer.cs:5
+#: ../Core/Schumix.Framework/Timer.cs:6
 msgid "The program is loaded under {0}ms."
 msgstr ""
 
@@ -713,22 +726,30 @@ msgid "Loaded the Server settings."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Addon/AddonManager.cs:6
+msgid "File path not found, default will be used."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:8
+msgid "There are no addons folder, no addon will be loaded."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:11
 msgid "Loading addons from: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:18
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:23
 msgid "This addon name already exists in the system so not loaded!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:23
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:28
 msgid "Ignoring plugins (config): {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:24
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:29
 msgid "Error while loading one of directories! Detail: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:30
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:35
 msgid "Unload plugins"
 msgstr ""
 
@@ -859,6 +880,52 @@ msgstr ""
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
 msgid "Preparing..."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:47
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:15
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:27
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:11
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:13
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:10
+msgid "The backup files will be used to renew the data."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:107
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:20
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:58
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:19
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:21
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:30
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:13
+msgid "The backup has been deleted during the re-use."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
@@ -1035,45 +1102,45 @@ msgstr ""
 msgid "OptionName"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:22
-#: ../Core/Schumix.Framework/Logger/Log.cs:29
+#: ../Core/Schumix.Framework/Logger/Log.cs:25
+#: ../Core/Schumix.Framework/Logger/Log.cs:32
 msgid ""
 "The log's file name changed. From now in it will be here: {0}\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:24
+#: ../Core/Schumix.Framework/Logger/Log.cs:27
 msgid ""
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here.\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:24
+#: ../Core/Schumix.Framework/Logger/Log.cs:27
 msgid ""
 "\n"
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here.\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:29
+#: ../Core/Schumix.Framework/Logger/Log.cs:32
 #: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
 msgid ""
 "Started time: [{0}]\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:29
+#: ../Core/Schumix.Framework/Logger/Log.cs:32
 #: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
 msgid ""
 "\n"
 "Started time: [{0}]\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:30
+#: ../Core/Schumix.Framework/Logger/Log.cs:33
 msgid ""
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here. Change's time: [{1}]\n"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:30
+#: ../Core/Schumix.Framework/Logger/Log.cs:33
 msgid ""
 "\n"
 "The log file's name changed. {0} was the old. From now on the logs will be "
@@ -1198,7 +1265,7 @@ msgstr ""
 msgid "Successfully started the CCommandManager."
 msgstr ""
 
-#: ../Applications/Schumix/Console/CommandManager.cs:7
+#: ../Applications/Schumix/Console/CommandManager.cs:8
 msgid "All Command Handler are registered."
 msgstr ""
 
@@ -1503,11 +1570,11 @@ msgstr ""
 msgid "Initializing Lua engine."
 msgstr ""
 
-#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:13
+#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:14
 msgid "Loading Lua script: {0}"
 msgstr ""
 
-#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:14
+#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:15
 msgid "Exception thrown while loading Lua script: {0} Error: {1}"
 msgstr ""
 
@@ -1525,15 +1592,15 @@ msgstr ""
 msgid "Initializing Python engine."
 msgstr ""
 
-#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:13
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:14
 msgid "Loading Python script: {0}"
 msgstr ""
 
-#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:19
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:20
 msgid "Exception thrown while loading Python script. Error: {0} {1}"
 msgstr ""
 
-#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:19
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:20
 msgid "Exception thrown while loading Python script: {0} Error: {1} {2}"
 msgstr ""
 

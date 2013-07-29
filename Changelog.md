@@ -1,7 +1,19 @@
 # Schumix2 ChangeLog
 
-## 4.2.0 (2013-xx-xx)
+## 4.3.0 (2013-xx-xx)
 
+## 4.2.0 (2013-07-29)
+
+ * Angol és magyarnyelvű .md fájlok felcserélve. Ötletért köszönet Jackneill-nek.
+ * .en.md fájlok angolosítása elkészült. Köszönet érte AgeNt-nak.
+ * Convert osztály felhasználásával készült egy kisebb extensions bövítés.
+ * Irc üzenetek fájlba logolása leválasztva egy külön osztályba.
+ * Console.Write() és WriteLine() függvények a Log osztályon keresztül lesznek használva így nem csúszhatnak össze a sorok.
+ * Scripts mappa a Windows Installer-be bekerült.
+ * Python betöltése javítva.
+ * Windows installer felfrissítve. Mostantól az addonokat bemásolja a Program Files mappába is. Konfig és Schumix.db3 fájlokat nem írja felül az új fájlokkal ha már létezik. Sql mappa is másolásra kerül a Program Files-be.
+ * Konfig fájlok biztonsági másolatainak felhasználása kiírásra kerül ha fel lesz használva. Úgyan így a törlés is kiírásra kerül.
+ * Addon betöltése javítva. Ha nem létezik a mappa akkor az alapértelmezetett fogja használ. Ha az se létezik akkor nem tölti be az addonokat.
  * Tesztek alapja elkészültek és hozzáadásra kerültek.
  * Névnap kiírása javítva.
  * CsharpSQLite bekötve a magba. Így teljesen c# kóddal lesz megoldva az sqlite használata.

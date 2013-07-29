@@ -189,7 +189,7 @@ namespace Schumix.ExtraAddon.Commands
 					if(ConsoleLog.CLog)
 					{
 						string text = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
-						Console.WriteLine(sLManager.GetCommandText("handlekick", sIRCMessage.Channel, sIRCMessage.ServerName), sIRCMessage.Nick, sIRCMessage.Info[3], text.Remove(0, 1, ":"));
+						Log.WriteLine(sLManager.GetCommandText("handlekick", sIRCMessage.Channel, sIRCMessage.ServerName), sIRCMessage.Nick, sIRCMessage.Info[3], text.Remove(0, 1, ":"));
 					}
 				}
 			}

@@ -57,7 +57,7 @@ namespace Schumix.CalendarAddon.Commands
 
 		private int GetYear(string args)
 		{
-			return _regex.IsMatch(args) ? _regex.Match(args).Groups["year"].ToString().ToNumber(-1).ToInt() : -1;
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["year"].ToString().ToNumber(-1).ToInt32() : -1;
 		}
 
 		private string GetMonth(string args)
@@ -67,16 +67,16 @@ namespace Schumix.CalendarAddon.Commands
 
 		private int GetDay(string args)
 		{
-			return _regex.IsMatch(args) ? _regex.Match(args).Groups["day"].ToString().ToNumber(32).ToInt() : 32;
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["day"].ToString().ToNumber(32).ToInt32() : 32;
 		}
 
 		private int GetHour(string args)
 		{
 			if(_regex.IsMatch(args) && IsYear(args))
-				return _regex.Match(args).Groups["hour"].ToString().ToNumber(25).ToInt();
+				return _regex.Match(args).Groups["hour"].ToString().ToNumber(25).ToInt32();
 
 			if(_hamregex.IsMatch(args) && !IsYear(args))
-				return _hamregex.Match(args).Groups["hour"].ToString().ToNumber(25).ToInt();
+				return _hamregex.Match(args).Groups["hour"].ToString().ToNumber(25).ToInt32();
 
 			return 25;
 		}
@@ -84,10 +84,10 @@ namespace Schumix.CalendarAddon.Commands
 		private int GetMinute(string args)
 		{
 			if(_regex.IsMatch(args) && IsYear(args))
-				return _regex.Match(args).Groups["minute"].ToString().ToNumber(61).ToInt();
+				return _regex.Match(args).Groups["minute"].ToString().ToNumber(61).ToInt32();
 
 			if(_hamregex.IsMatch(args) && !IsYear(args))
-				return _hamregex.Match(args).Groups["minute"].ToString().ToNumber(61).ToInt();
+				return _hamregex.Match(args).Groups["minute"].ToString().ToNumber(61).ToInt32();
 
 			return 61;
 		}

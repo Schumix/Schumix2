@@ -65,7 +65,7 @@ namespace Schumix.Server.Config
 			SchumixsMap((!servermap.IsNull() && servermap.ContainsKey("Schumixs")) ? ((YamlMappingNode)servermap["Schumixs".ToYamlNode()]).Children : NullYMap);
 
 			Log.Success("YamlConfig", sLConsole.GetString("Config database is loading."));
-			Console.WriteLine();
+			Log.WriteLine();
 		}
 
 		~YamlConfig()
@@ -90,7 +90,10 @@ namespace Schumix.Server.Config
 					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
 
 					if(File.Exists(filename2))
+					{
+						Log.Notice("YamlConfig", sLConsole.GetString("The backup files will be used to renew the data."));
 						yaml.Load(File.OpenText(filename2));
+					}
 
 					try
 					{
@@ -135,7 +138,10 @@ namespace Schumix.Server.Config
 						file.Close();
 
 						if(File.Exists(filename2))
+						{
+							Log.Notice("YamlConfig", sLConsole.GetString("The backup has been deleted during the re-use."));
 							File.Delete(filename2);
+						}
 
 						Log.Success("YamlConfig", sLConsole.GetString("Config file is completed!"));
 					}

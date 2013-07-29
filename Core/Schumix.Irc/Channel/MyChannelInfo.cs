@@ -115,21 +115,24 @@ namespace Schumix.Irc.Channel
 
 		public bool SearchChannelFunction(string Name)
 		{
-			foreach(var channel in ChannelFunction)
+			lock(WriteLock)
 			{
-				foreach(var comma in channel.Value.Split(SchumixBase.Comma))
+				foreach(var channel in ChannelFunction)
 				{
-					if(comma.IsNullOrEmpty())
-						continue;
+					foreach(var comma in channel.Value.Split(SchumixBase.Comma))
+					{
+						if(comma.IsNullOrEmpty())
+							continue;
 
-					string[] point = comma.Split(SchumixBase.Colon);
+						string[] point = comma.Split(SchumixBase.Colon);
 
-					if(point[0] == Name.ToLower())
-						return true;
+						if(point[0] == Name.ToLower())
+							return true;
+					}
 				}
-			}
 
-			return false;
+				return false;
+			}
 		}
 
 		public bool FSelect(IFunctions Name)

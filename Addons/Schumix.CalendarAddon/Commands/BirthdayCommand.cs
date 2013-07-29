@@ -50,7 +50,7 @@ namespace Schumix.CalendarAddon.Commands
 
 		private int GetYear(string args)
 		{
-			return _regex.IsMatch(args) ? _regex.Match(args).Groups["year"].ToString().ToNumber(-1).ToInt() : -1;
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["year"].ToString().ToNumber(-1).ToInt32() : -1;
 		}
 
 		private string GetMonth(string args)
@@ -60,7 +60,7 @@ namespace Schumix.CalendarAddon.Commands
 
 		private int GetDay(string args)
 		{
-			return _regex.IsMatch(args) ? _regex.Match(args).Groups["day"].ToString().ToNumber(32).ToInt() : 32;
+			return _regex.IsMatch(args) ? _regex.Match(args).Groups["day"].ToString().ToNumber(32).ToInt32() : 32;
 		}
 
 		private bool IsYear(string args)

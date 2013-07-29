@@ -1,137 +1,136 @@
-# Schumix konfig fájl
+# Schumix config file
 
 ## Server
 
-* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy kapcsolodjon-e a szerverhez a program. Alapértelmezés: `false`
-* **Host:** Ide kell beírni a szerver nevét/címét ahova csatlakozni szeretnénk.
-* **Port:** A szerver portja. Alapértelmezés: `35220`
-* **Password:** A szerver azonosító jelszava. Alapértelmezés: `schumix`
+* **Enabled:** `true` or `false`. Enables the program to connect to the Server. Default: `false`
+* **Host:** Server's Domain name or Ip address.
+* **Port:** Server port. Default: `35220`
+* **Password:** Server's identification password. Default: `schumix`
 
 ## Listener
 
-* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy lehessen-e kapcsolódni a botban működő szerverhez. Alapértelmezés: `false`
-* **Port:** A szerver portja. Alapértelmezés: `36200`
-* **Password:** A szerver azonosító jelszava. Alapértelmezés: `schumix`
+* **Enabled:** `true` or `false`. Specifies that others will be able to connect to the bot's built in Server. Default: `false`
+* **Port:** Server port. Default: `36200`
+* **Password:** Server's identification password. Default: `schumix`
 
 ## Irc
 
-Yaml konfignál:<br/>
-Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (Irc: ...) le kell másolni még egyszer és ott külön be kell állítani az adatokat valamint Irc(szám) ként kell megadni. Pl: Irc2: .... (ide pedig minden úgy jön utána ahogy volt csak az Irc-nél kell átírni az újat).<br/>
-Xml konfignál:<br/>
-Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az egész irc részt (`<Irc> ... </Irc>`) le kell másolni még egyszer és ott külön be kell állítani az adatokat.
-* **ServerName:** A szerver neve. Ezzel lehet beállítani hogy többszerveres módban hogy mi legyen az egyes szervereket megkülönböztető név. FIGYELEM: Nem egyezhet meg a többi szerver nevével (kis és nagybetüt nem különbőzteti meg)!
-* **Server:** Ide kell beírni a szerver nevét ahova csatlakozni szeretnénk.
-* **Password:** A szerver jelszavát lehet vele beállítani. Ha üresen van hagyva akkor úgy veszi mintha nem kellene jelszó a szerverhez.
-* **Port:** A szerver portja. Alapértelmezés: `6667`
-* **ModeMask:** A maskot lehet vele beállítani. Alapértelmezés: `8`
-* **Ssl:** Értéke `true` vagy `false` lehet. Ezzel aktiválható a kapcsolódás olyan irc szerverre ahol ssl protokol van használva. Alapértelmezés: `false`
-* **NickName:** Elsõdleges név.
-* **NickName2:** Másodlagos név.
-* **NickName3:** Harmadlagos név.
-* **UserName:** Felhasználó név.
-* **UserInfo:** Információ a felhasználóról.
+With Yaml config:<br/>
+If you want to connect to more Irc Servers or create multiple connections to the same Irc Server you need to copy the whole Irc part (Irc: ...) and change the settings there and name it as Irc(number). e.g.: Irc2: ... (The rest is the same, only the Irc section have to be changed.).<br/>
+With Xml config:<br/>
+If you want to connect to more Irc Servers or create multiple connections to the same Irc Server you need to copy the whole Irc part (`<Irc>...</Irc>`) and you need to change the settings there.
+* **ServerName:** The Server's name. With more Servers connected you can set each Server's name. ATTENTION: The Server's name can't be the same. (Upper-case and lower-case letters aren't different)!
+* **Server:** The Server's name which you want to connect.
+* **Password:** The Server's password. If left blank it means that password is not required.
+* **Port:** The Server's port Default: `6667`
+* **ModeMask:** Irc Mask. Default: `8`
+* **Ssl:** `true` or `false`. Activates connection to a Server which uses SSL protocol. Default: `false`
+* **NickName:** Primary name.
+* **NickName2:** Secondary name.
+* **NickName3:** Tertiary name.
+* **UserName:** User name.
+* **UserInfo:** Information about the user.
 * **MasterChannel:**
-    * **Name:** Elsõdleges csatorna ahova csatlakozik minden esetben a bot. Ennek a neve itt változtatható meg. Az adatbázisból nem törölhetõ. Yaml konfig esetén "" jelek közé kell rakni a csatornát. Pl: Name: "#schumix2"
-    * **Password:** Az elsődleges csatornához tartozó jelszó.
-                    Alapértelmezés: (semmi)[Ez azt jelenti hogy nem add meg jelszót az elsődleges csatornához.]
-* **IgnoreChannels:** Letilthatók a nem kívánatos csatornák vele. Ami itt szerepel oda nem megy fel a bot. Ezen rész letiltja a bot rendszerében szereplõket is.
-                      Tehát ha abból nem akarunk valahova felmenni akkor is használhatjuk ezt törlés helyett. Vesszõvel elválasztva kell egymás útán írni öket.
-                      `pl: #teszt,#teszt2 vagy szimplán #teszt`
-* **IgnoreNames:** Letilthatóak vele a nem kívánatos személyek. Így csak az használhatja a botot aki megérdemli.
-                   `pl: schumix,schumix2 vagy szimplán schumix`
+    * **Name:** The name of the Primary Channel where the bot connects every time. It can't deleted from the database. If you using Yaml configuration you have to put the name between "" marks. e.g.: 'Name: "#schumix2"'
+    * **Password:** The password of the Primary Channel.
+                    Default: (nothing)[It means that password won't be set for the Primary Channel.]
+* **IgnoreChannels:** The bot ignores the channels listed here and won't join to them. That part affect the Channels in the bot's system too, so if you don't want to join to any channel from it use this setting instead of delete. Separate them with commas sequentially.
+                      `e.g.: #test,#test2 or simply #test`
+* **IgnoreNames:** The bot ignores the users listed here so they can't use it.
+   				`e.g.: schumix,schumix2 or simply schumix`
 * **NickServ:**
-    * **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határozza meg hogy a nickhez tartozó jelszó el legyen-e küldve. true = igen, false = nem.
-                   Alapértelmezés: false
-    * **Password:** Nickhez tartozó jelszó.
+    * **Enabled:** `true` or `false`. Specifies that the password of the Nickname can be sent. true = yes, false = no.
+                   Default: false
+    * **Password:** Password of the Nickname.
 * **HostServ:**
-    * **Enabled:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy ha van a nickhez vhost akkor bekapcsolodjon-e. Alapértelmezés: `false`
-                   Mert ha nincs akkor megjelenitödhet az ip ezért olyankor ajánlott false értékre tenni.
-    * **Vhost:** Értéke `true` vagy `false` lehet. Ezen rész határózza meg hogy a nickhez tartotó vhost aktiválásra kerüljön-e. Alapértelmezés: `false`
+    * **Enabled:** `true` or `false`. Specifies that the vhost will be enabled if the Nick has one. Default: `false`
+                   If the Nick hasn't got a vhost the Ip address can displayed therefore false is recommended.
+    * **Vhost:** `true` or `false`. Specifies that the vhost will be activated. Default: `false`
 * **Wait:**
-    * **MessageSending:** Üzenet küldésének késleltetése. Legföbbként flood ellen van.
+    * **MessageSending:** Delay between the messages. Mainly against flooding.
 * **Command:**
-    * **Prefix:** A parancsok elõjele. Yaml konfig esetén "" jelek közé kell rakni a parancsot. Pl: Prefix: "$". Alapértelmezés: `$` (Fõ parancs xbot. Ezzel a parancselõjelel így néz ki: `$xbot`)
-* **MessageType:** Értéke `Privmsg` vagy `Notice` lehet. Meghatározza hogy milyen formában küldje az üzeneteket a szerver felé. Alapértelmezés: `Privmsg`
+    * **Prefix:** The omen of the commands. If you using Yaml configuration you have to put the command between "" marks. e.g.: Prefix: "$". Default: `$` (Main command is 'xbot'. With this prefix it's look like this: `$xbot`)
+* **MessageType:** This only can be `Privmsg` or `Notice` . Specifies the format of the message to the server. Default: `Privmsg`
 
 ## Log
 
-* **FileName:** Meghatározza hova mentődjenek el a log információk. Alapértelmezés: `Schumix.log`
-* **DateFileName:** Ha ez a beállítás bekapcsolásra került akkor a log fájl nevéből létrehoz egy mappát a program és abba az indítás dátumával menti el a logot. Így áttekinthetőbbé válik.
-                    Alapértelmezés: `False`
-* **MaxFileSize:** Meghatározza a log fájlt maximális méretét. Ha eléri azt a fájl akkor törlődik és a program csinál helyette egy újat.
-                    Alapértelmezés: `100` (mb-ban értendő)
-* **LogLevel:** Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Alapértelmezés: `2`
-    * **Szintjei:** <br/>
-                    `0` (Normális üzenetek és a sikeresek)<br/>
-                    `1` (Figyelmeztetések)<br/>
-                    `2` (Hibák)<br/>
-                    `3` (Hibakeresõ üzenetek)
-* **LogDirectory:** A log üzenetek mentése abba a mappába ami megvan adva. Alapértelmezés: `Logs`
-* **IrcLogDirectory:** Az irc csatornák és egyéb üzenetének mentése abba a mappába ami megvan adva. Alapértelmezés: `Csatornak`
-* **IrcLog:** Értéke `true` vagy `false` lehet. Meghatározza hogy a konzolba kiirásra kerülhetnek-e az irc-tõl jövõ üzenetek. Alapértelmezés: `false`
+* **FileName:** The filename where the log will be saved. Default: `Schumix.log`
+* **DateFileName:** If you enable this setting it will create a folder with the Filename given below and save here the log files with the name of the date of the launch so it becomes more manageable.
+                    Default: `False`
+* **MaxFileSize:** Specifies the log file's maximal size. If the log reaches this value the bot will delete it and creates a new one.
+                    Default: `100` (In Mb)
+* **LogLevel:** Specifies the messages which will be displayed in the console. Default: `2`
+    * **Levels:** <br/>
+                    `0` (Normal and successful messages)<br/>
+                    `1` (Warnings)<br/>
+                    `2` (Errors)<br/>
+                    `3` (Troubleshooter messages)
+* **LogDirectory:** The folder where the log file will be saved. Default: `Logs`
+* **IrcLogDirectory:** The IRC Chanells' messages and others will be saved in the given folder here. Default: `Channels`
+* **IrcLog:** `true` or `false`. Specifies that the Console can display the messages from the IRC. Default: `false`
 
 ## MySql
 
-* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy mysql alapú-e az adatbázis. Alapértelmezés: `false`
-* **Host:** A mysql szerver címe.
-* **User:** A szerver felhasználó neve.
-* **Password:** A szerver jelszava.
-* **Database:** Az adatbázis amiben megtalálhatók a bothoz tartozó táblák.
-* **Charset:** Az adatbázisba menõ adatok kódolását és olvasását határozza meg.
-               Alapértelmezés: `utf8`
+* **Enabled:** `true` or `false`. Specifies that the Database is MySql based. Default: `false`
+* **Host:** Address of the MySql server.
+* **User:** Username of the server.
+* **Password:** The server's password.
+* **Database:** The Database that contains the tables for the Bot.
+* **Charset:** Specifies the encoding and the reading of the Data which goes to the Database.
+               Default: `utf8`
 
 ## SQLite
 
-* **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza hogy sqlite alapú-e az adatbázis. Alapértelmezés: `false`
-* **FileName:** Az sqlite fájl neve.
+* **Enabled:** `true` or `false`. Specifies that the Database is SQLite based. Default: `false`
+* **FileName:** The name of the SQLite file.
 
 ## Addons
 
-* **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi az addonok betöltését. Alapértelmezés: `true`
-* **Ignore:** Azon addonok melyeket nem szeretnénk inditáskor betölteni. Vesszõvel elválasztva kell egymás útán írni öket. `(pl: TestAddon,Test2Addon vagy szimplán TestAddon)`
-              Alapértelmezés: `MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TestAddon`
-* **Directory:** Az addonok mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Addons`
+* **Enabled:** `true` or `false`. Enables the loading of addons. Default: `true`
+* **Ignore:** These addons won't load at start-up. Separate them with commas sequentially.`(pl: TestAddon,Test2Addon or simply TestAddon)`
+              Default: `MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TestAddon`
+* **Directory:** The addons' folder where they stored and loaded from there. Default: `Addons`
 
 ## Scripts
 
-* **Lua:** Értéke `true` vagy `false` lehet. Engedélyezi a lua fájlok betöltését. Alapértelmezés: `false`
-* **Python:** Értéke `true` vagy `false` lehet. Engedélyezi a python fájlok betöltését. Alapértelmezés: `false`
-* **Directory:** A script-ek mappája ahol tárolva vannak és ahonnét betöltésre kerülnek. Alapértelmezés: `Scripts`
+* **Lua:** `true` or `false`. Enables the loading of the Lua files. Default: `false`
+* **Python:** `true` or `false`. Enables the loading of the Python files. Default: `false`
+* **Directory:** The scripts' folder where they stored and loaded from there. Default: `Scripts`
 
 ## Crash
 
-* **Directory:** Meghatározza az összeomláskor keletkező mappa nevét. Alapértelmezés: `Dumps`
+* **Directory:** The name of the folder which will be created when the bot crashes. Default: `Dumps`
 
 ## Localization
 
-* **Locale:** Meghatározza hogy a kód milyen nyelven fusson. (csak az irc és konzol parancsokra vonatkozik)
-              Alapértelmezés: `enUS`
+* **Locale:** The code will run on that language. (Refers only for Irc and Console commands)
+              Default: `enUS`
 
 ## Update
 
-* **Enabled:** Értéke `true` vagy `false` lehet. Engedélyezi az automatikus frissítést. Alapértelmezés: `false`
-* **Version:** Meghatározza melyik verzióra szeretnénk frissíteni. Current vagy stable lehet. A current az utolsó verzó ami a tárolóban van a stable pedig az utolsó stabil verzió.
-               Alapértelmezés: `stable`
-* **Branch:** Beállítható vele az ág (branch). Ez csak a current verziók esetében érdekes. Alapértelmezés: `master`
-* **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Alapértelmezés: `https://github.com/Schumix/Schumix2`
+* **Enabled:** `true` or `false`. Enables the automatic updates. Default: `false`
+* **Version:** The bot will be updated to this version. It can be Current or Stable. The Current is the latest version in the storage and the Stable is the latest stable version.
+               Default: `stable`
+* **Branch:** You can set the branch here. Only matter if you use Current versions. Default: `master`
+* **WebPage:** The bot will get the updates from the given URL. Default: `https://github.com/Schumix/Schumix2`
 
 ## Shutdown
 
-* **MaxMemory:** Meghatározza a program leállítását ha eléri a megadott memória nagyságot. Ha több szerverre is csatlakozik a bot akkor annyival fog tovább nőni ez a korlát ahány irc szerver be van állítva a konfigba.
-                 Alapértelmezés: `100` (mb-ban értendő)
+* **MaxMemory:** The bot will be stop running if it reaches the given memory size. If the bot connects to multiple servers It multiplies the size by how many connections the bot have.
+                 Default: `100` (mb-ban értendő)
 
 ## Flooding
 
-* **Seconds:** Meghatározza mennyi időnként fusson le a flood elemzése. Alapértelmezés: `4` (másodpercben)
-* **NumberOfCommands:** Meghatározza hányszor használhatja a parancsot adott személy a megadott indőn belül. Ha többet add meg akkor egy percre letiltja a program a parancsainak használatát annak a személynek. Alapértelmezés: `2`
+* **Seconds:** The period of the flood analysing. Default: `4` (In seconds)
+* **NumberOfCommands:** Specifies that how many times can a user use a command inside the given time. If a user violate the limit the bot will suspend the user for one minute. Default: `2`
 
 ## Clean
 
-* **Config:** Értéke `true` vagy `false` lehet. Engedélyezi a konfig mappában a régi fájlok takarítását/törlését. Alapértelmezés: `false`
-* **Database:** Értéke `true` vagy `false` lehet. Engedélyezi az adatbázis takarítását. Alapértelmezés: `false`
+* **Config:** `true` or `false`. Enables the deletion of the old files. Default: `false`
+* **Database:** `true` or `false`. Enables the cleaning of the Database. Default: `false`
 
 ## ShortUrl
 
-A bit.ly url röviditő apihoz való adatokat kell itt megadni.
-* **Name:** A felhasználói nevet kell itt megadni.
-* **ApiKey:** A felhasználóhoz tartozó api kulcsot kell megadni itt.
+The details for the bit.ly url shorting API.
+* **Name:** The u ser name.
+* **ApiKey:** The API key for the user name.

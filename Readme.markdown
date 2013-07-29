@@ -1,124 +1,127 @@
 # Schumix2 [![Build Status](https://travis-ci.org/Schumix/Schumix2.png?branch=stable)](https://travis-ci.org/Schumix/Schumix2)
 
-# Ismertetés
+# Statement
 
-Ezen kód hívatott felváltani elõdjét. Új alapokra lett helyezve és több újdonságot is tartalmaz.
-Schumixxal szemben gyorsabb és megbízhatobb. A kód c# nyelven írodott.
+This code is intended to relay its predecessor. It is lay new basis and got many newness.
+More faster and reliable than Schumix. The code is written in c#.
 
-# Platformok
+# Platforms
 
-A bot kompatibilis a windows és linux rendszerrel. Valószínüleg Mac OS X-en is fut de még nem került tesztelésre.
-Windows alatt ajálott a `.net 4.0` használata vagy újabb.
-Monon jelenleg minimum követelmény a `2.10.8.1` vagy újabb.
+The bot has compatibility with windows and linux systems.
+It might be run on Mac OS X but it's haven't been tested yet.
+Under Windows the `.NET Framework 4.0` or higher is recommended.
+Under Mono at least the `2.10.8.1` or higher is needed.
 
-# Kód futtatása/Fordítása
+# Run source/Compile
 
-## AlModulok
+## SubModule
 
-Hiányzó almodulok letöltése: git submodule update --init --recursive
+Download missing submodules: git submodule update --init --recursive
 
 ## Windows
 
 ### Monodevelop / Xamarin Studio
-Monodevelop / Xamarin Studio használatakor szükséges a nyelvi fájlok lefordításához a `gettext`.
-<br/>Töltsük le és telepítsük. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
-<br/>A fordítás egyszerû. Nyissuk meg a `Schumix.sln` fájlt.
-<br/>Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
+When using Monodevelop / Xamarin Studio the `gettext` is needed for translating the language files.
+<br/>Download and install it. `http://gnuwin32.sourceforge.net/packages/gettext.htm`
+<br/>The compiling is simple. Open the `Schumix.sln` file.
+<br/>Choose the configuration that fits for you and compile it.
 
 ### Visual Studio
-Visual Studio használatakor csak a `SchumixVS.sln` fájlt kell megnyitnunk.
-<br/>Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
+When using Visual Studio you only need to open `SchumixVS.sln`.
+<br/>Choose the configuration that fits for you and compile it.
 
 ## Linux
 
-Nyissuk meg a `Schumix.sln` fájlt.
-<br/>Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.
+Open the `Schumix.sln` file.
+<br/>Choose the configuration that fits for you and compile it.
 
-## Linux terminál
+## Linux terminal
 
-Telepítsük a `mono-xbuild` csomagot vagy forrásból a `mono`-t.
-<br/>Ezután inditsuk el a `build.sh`-t és lefordul a kód.
+Install the `mono-xbuild` package or from source `mono`.
+<br/>Than run the `build.sh` command and the code is compiled.
 
-# Kód üzembehelyezése
+# Code commissioning
 
-Navigáljunk a `Run` mappába és azon belül a konfigurációnak megfelelõ mappába.
-<br/>Indítusk el az exe-t.
-<br/>A program legenerálja önmagának a konfig fájlt.
-<br/>Ha bármi gond lenne vele hozzunk létre egy `Configs` nevû mappát és a fõ mappából másoljuk bele a `Schumix.yml` nevû fájlt.
+Navigate to the `Run` folder and than to the appropriate folder for the configuration file.
+<br/>Run the exe.
+<br/>The program will generate its own config file.
+<br/>If any problem occurs then create a `Configs` named folder and copy the `Schumix.yml` file from the root folder into it.
 
-# Telepítés
+# Install
 
-Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mint ha be akarjuk telepíteni a rendszerbe.
-<br/>Figyelem! Rendszergazadi jog valószinüleg szükséges lesz a telepítés végső szakaszához.
+Use this option only if you want to innstal the bot like a program.
+<br/>Attention! Administrative permissions probably needed at the final stage of install.
 
 ## Archlinux
 
-**Figyelem!!! Root jogra lesz szükség hozzá.**
-<br/>Futtassuk `./createarchlinuxpkg.sh` parancsot.
-<br/>Ha lefutott megjelenik egy `schumix.pkg.tar.xz` (hasonló lesz a neve) nevű fájl.
-<br/>Ezt telepítsük a `sudo pacman -U schumix2.pkg.tar.xz` (csomag fájl neve hasonló lesz) paranccsal és már készen is vagyunk.
-<br/>A botot a `schumix` paranccsal futtathatjuk.
+**Attention!!! Root permission needed for that.**
+<br/>Run the `./createarchlinuxpkg.sh` command.
+<br/>When it's done a `schumix.pkg.tar.xz` (the name will be similar) named file will be created.
+<br/>Install it with the `sudo pacman -U schumix2.pkg.tar.xz` command (the packet name will be similar) and it's all ready.
+<br/>Run the bot with the `schumix` command.
 
 ## Debian/Ubuntu
 
-**Figyelem!!! Root jogra lesz szükség hozzá.**
-<br/>Első lépés hogy átlépünk fakeroot módba.
-<br/>Írjuk be hogy `fakeroot`.
-<br/>Ezután futtassuk `./createdebianpkg.sh` parancsot.
-<br/>Ha lefutott megjelenik egy `schumix.deb` nevű fájl.
-<br/>Ezt telepítsük a `sudo dpkg -i schumix.deb` paranccsal és már készen is vagyunk. A botot a `schumix` paranccsal futtathatjuk.
+**Attention!!! Root permission needed for that.**
+<br/>For the first step, switch to fakeroot mode.
+<br/>Type the `fakeroot` command for that.
+<br/>After that run the `./createdebianpkg.sh` command.
+<br/>When it's done a `schumix.deb` named file will be created.
+<br/>Install it with the `sudo dpkg -i schumix.deb` command and it's all ready.
+<br/>Run the bot with the `schumix` command.
 
 ## Windows
 
-Navigáljunk az Installer mappába.
-<br/>Futtassuk a `Schumix.iss` nevű fájlt.
-<br/>Ha lefutott kapunk egy `Setup.exe` nevű telepíthető állományt.
-<br/>Futtasuk és értelemszerüen telepítsük.
-<br/>A többit szerintem nem kell részletezni :)
+Navigate to the Installer folder.
+<br/>Run the `Schumix.iss` named file.
+<br/>When it's done a `Setup.exe` file will be created.
+<br/>Run this and complete the install.
+<br/>I guess I don't need to explain more. :)
 
-# Konfig beállítása
+# Config settings
 
-A konfiguk beállításához menjünk a `Share/doc/Configs` mappába és a `Schumix.md` fájlt nyissuk meg.
-<br/>Ez a fő konfig leírása.
-<br/>Fontos hogy ezt a leírást mindenképpen olvassuk el mert enélkül nem lehet elindítani a botot normálisan.
-<br/>Ha megvagyunk akár a többi leírást is végiglehet nézni de az elindításhoz nem szükséges.
+To adjust the configs navigate to the `Share/doc/Configs` folder and open the `Schumix.en.md` file.
+<br/>This is the description for the main config.
+<br/>Reading the description is necessary because the bot can't be started correctly without it.
+<br/>After that you can take a look at the other descriptions but they aren't required for starting the bot.
 
-# Adatbázis beüzemelése
+# Database configuration
 
 ## MySql
 
-Ha a jó öreg mysql alapú adatbázist szeretnénk használni állítsuk a konfig fájlban `(lásd: <MySql><Enabled>false</Enabled>)` az engedélyét true értékre.
-<br/>Ezután az `Sql` mappából töltsük fel az adatbázisunkat.
-<br/>Ha bármiféle javítás jön a kódhoz vagy újítás nem kell az agész adatbázist újra töltenünk.
-<br/>Csak az `Updates` mappából frisistsük a megfelelõ verzió szám alapján.
+If you want to use a mysql based database set the `<MySql><Enabled>false</Enabled>` permission to true.
+<br/>After that, fill the database from the `Sql` folder.
+<br/>If any kind of correction or update will come you don't need to refill the whole database.
+<br/>Only update it from the `Updates` folder with the appropriate version number.
 
 ## SQLite
 
-Ha az SQLite alapú adatbázist szeretnénk használni állítsuk a konfig fájlban `(lásd: <SQLite><Enabled>false</Enabled>)` az engedélyét `true` értékre.
-<br/>Majd másoljuk az `Sql` mappából a `Schumix.db3` fájlt az exe mellé.
-<br/>Ezen fájl neve megváltoztatható de akkor a konfig fájlban is meg kell vátoztatni.
-<br/>Természetesen az elérési útat is a névvel együtt.
-<br/>Ha bármiféle javítás jön a kódhoz vagy újítás nem kell az agész adatbázist újra töltenünk.
-<br/>Csak az `Updates` mappából frisistsük a megfelelõ verzió szám alapján.
+If you want to use an SQLite based database set the `<SQLite><Enabled>false</Enabled>` permission to true.
+<br/>Then copy the `Schumix.db3` file from the `Sql` folder next to the exe.
+<br/>You can rename or move it but you have to change the name or the path in the config file.
+<br/>If any kind of correction or update will come you don't need to refill the whole database.
+<br/>Only update it from the `Updates` folder with the appropriate version number.
 
-# Figyelmeztetés!
+# Attention!
 
-**Csak egy adatbázis lehet aktiv. Olyan nem lehet hogy egyse vagy kettõ. Ezekben az esetekben a kód leáll és nem fut tovább.**
+**Only one database can be active. If there is'n an active database or there are two active database the code will crash and stop running.**
 
-Ha mind ezekkel megvagyunk már csak inditanuk kell és használni a kódot :)
+If you are all done with it than you just need to launch and use the code. :)
 
-# Apróságok
+# Trivia
 
-* Az álltalam készített addonokhoz tartoznak álltalában konfig fájlok. Ezek is szintén a `Configs` mappába generálodnak és ott állíthatóak be.
-* A kódban továbbá elhelyezésre került egy bot parancs is. Ez a parancs az elsõdleges névbõl tevõdik össze. Példa rá: `schumix2, help`
-  Fontos a parancs szerkezete `<elsõdleges nick>, parancs`
-* A kódhoz ki és be kapcsolható funkciók tartoznak. Ezt csak is gizárólag admin vezérelheti.
-  Funkciók használatáról leírás: `$help function` (természetesen az az elõjel kell ami megadásra került a konfigban)
-* Ha már megemlítésre került. Az admin hozzáadása konzolból történik elõször. `admin add <admin neve>`
-  Majd amit kapunk jelszót privát üzenetben el kell küldeni a botnak a jelszót ezen módon: `$admin access <jelszó>`
-  Ha másikat szeretnénk akkor: `$admin newpassword <régi> <új>`
-* És végül a konzol parancsok. Ha már megemlítettem ;) Szóval a lista a help paranccsal kapható meg.
-  Többit pedig úgy kell mint az irc paranccsoknál. A parancs nevét vagy a parancsot és annak alparancsát kell a help parancs mögé írni.
-* Bármi lemaradt volna tudok segítséget nyújtani az irc.rizon.net szerveren a `#schumix, #schumix2` vagy `#hun_bot` csatornán.
-* Yaml konfignál minden olyan adatot amely különleges karaktert tartalmaz (pl: #) azt idézőjelek közé kell helyezni "" mert a program máskülönben megpróbálná értelmezni és az hibát okozna.
-* Remélem meg fog tetszeni a bot :)
+* Usually configuration files belongs to the addons made by me. These are also generated in the `Configs` folder and you can modify them there.
+* Furthermore, a bot command was placed in the code. That command composed by the primary name. For example: `schumix2, help`
+  The structure of the command is important: `<primary nick>, command`
+* There are functions belongs to the code which can be turned on and off. These are controllable by the administrator only.
+  Description about the functions: `$help function` (With the configured prefix, of course)
+* If it has been already mentioned, you can add admin with the console for first.
+  `admin add <admin name>`
+  Then you will get a password which have to be sent to the bot in a private message like this: `$admin access <password>`
+  If you want to change it than: `$admin newpassword <old> <new>`
+* And finally the console commands. You can get the list with te `help` command.
+  The rest can be obtained as like the irc commands. Type the name of the command than the subcommand after the help command.
+* If anything missed I can help on the `irc.rizon.net` server on the `#schumix, #schumix2` or `#hun_bot` channels.
+* In Yaml configs, all the data which contains special characters (#,$) have to be placed between quotation marks "" otherwise the program try to    
+  interpreting them and cause an error.
+* I hope you will like the bot. :)

@@ -35,5 +35,10 @@ namespace Schumix.Framework.Logger
 		{
 			CLog = log;
 		}
+
+		~ConsoleLog()
+		{
+			Log.Debug("ConsoleLog", "~ConsoleLog()");
+		}
 	}
 }

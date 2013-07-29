@@ -1,6 +1,6 @@
 Name: Schumix.MantisBTRssAddon
 Description: Schumix.MantisBTRssAddon
-Version: 4.1.x
+Version: 4.2.x
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/MantisBTRssAddon.dll
