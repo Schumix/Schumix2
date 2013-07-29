@@ -2,18 +2,18 @@
 
 ## Log
 
-* **FileName:** Meghatározza hova mentődjenek el a log információk. Default: `Schumix.log`
-* **DateFileName:** Ha ez a beállítás bekapcsolásra került akkor a log fájl nevéből létrehoz egy mappát a program és abba az indítás dátumával menti el a logot. Így áttekinthetőbbé válik.
+* **FileName:** The filename where the log will be saved. Default: `Schumix.log`
+* **DateFileName:** If you enable this setting it will create a folder with the Filename given below and save here the log files with the name of the date of the launch so it becomes more manageable.
                     Default: `False`
-* **MaxFileSize:** Meghatározza a log fájlt maximális méretét. Ha eléri azt a fájl akkor törlődik és a program csinál helyette egy újat.
-                    Default: `100` (mb-ban értendő)
-* **LogLevel:** Meghatározza hogy a konzolba milyen üzenetek kerülnek kiírásra. Default: `2`
-    * **Szintjei:** <br/>
-                    `0` (Normális üzenetek és a sikeresek)<br/>
-                    `1` (Figyelmeztetések)<br/>
-                    `2` (Hibák)<br/>
-                    `3` (Hibakeresõ üzenetek)
-* **LogDirectory:** A log üzenetek mentése abba a mappába ami megvan adva. Default: `Logs`
+* **MaxFileSize:** Specifies the log file's maximal size. If the log reaches this value the bot will delete it and creates a new one.
+                    Default: `100` (In Mb)
+* **LogLevel:** Specifies the messages which will be displayed in the console. Default: `2`
+    * **Levels:** <br/>
+                    `0` (Normal and successful messages)<br/>
+                    `1` (Warnings)<br/>
+                    `2` (Errors)<br/>
+                    `3` (Troubleshooter messages)
+* **LogDirectory:** The folder where the log file will be saved. Default: `Logs`
 
 ## Server
 
@@ -23,30 +23,30 @@
 
 ## Crash
 
-* **Directory:** Meghatározza az összeomláskor keletkező mappa nevét. Default: `Dumps`
+* **Directory:** The name of the folder which will be created when the bot crashes. Default: `Dumps`
 
 ## Localization
 
-* **Locale:** Meghatározza hogy a kód milyen nyelven fusson. (csak az irc és konzol parancsokra vonatkozik)
+* **Locale:** The code will run on that language. (Refers only for Irc and Console commands)
               Default: `enUS`
 
 ## Update
 
-* **Enabled:** `true` or `false`. Engedélyezi az automatikus frissítést. Default: `false`
-* **Version:** Meghatározza melyik verzióra szeretnénk frissíteni. Current vagy stable lehet. A current az utolsó verzó ami a tárolóban van a stable pedig az utolsó stabil verzió.
+* **Enabled:** `true` or `false`. Enables the automatic updates. Default: `false`
+* **Version:** The bot will be updated to this version. It can be Current or Stable. The Current is the latest version in the storage and the Stable is the latest stable version.
                Default: `stable`
-* **Branch:** Beállítható vele az ág (branch). Ez csak a current verziók esetében érdekes. Default: `master`
-* **WebPage:** A megadott weboldalcímről tölti le a frissítéseket. Default: `https://github.com/Schumix/Schumix2`
+* **Branch:** You can set the branch here. Only matter if you use Current versions. Default: `master`
+* **WebPage:** The bot will get the updates from the given URL. Default: `https://github.com/Schumix/Schumix2`
 
 ## Shutdown
 
-* **MaxMemory:** Meghatározza a program leállítását ha eléri a megadott memória nagyságot. Ha több szerverre is csatlakozik a bot akkor annyival fog tovább nőni ez a korlát ahány irc szerver be van állítva a konfigba.
+* **MaxMemory:** The bot will be stop running if it reaches the given memory size. If the bot connects to multiple servers It multiplies the size by how many connections the bot have.
                  Default: `100` (mb-ban értendő)
 
 ## Clean
 
-* **Config:** `true` or `false`. Engedélyezi a konfig mappában a régi fájlok takarítását/törlését. Default: `false`
-* **Database:** `true` or `false`. Engedélyezi az adatbázis takarítását. Default: `false`
+* **Config:** `true` or `false`. Enables the deletion of the old files. Default: `false`
+* **Database:** `true` or `false`. Enables the cleaning of the Database. Default: `false`
 
 ## Schumixs
 
