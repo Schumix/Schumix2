@@ -109,7 +109,7 @@ namespace Schumix
 				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
 				{ "server-enabled=", "Premition to join the server.", v => serverenabled = Convert.ToBoolean(v) },
 				{ "server-host=", "Set server host.", v => serverhost = v },
-				{ "server-port=", "Set server port.", v => serverport = v.ToNumber(-1).ToInt() },
+				{ "server-port=", "Set server port.", v => serverport = v.ToNumber(-1).ToInt32() },
 				{ "server-password=", "Set password.", v => serverpassword = v },
 				{ "server-identify=", "Set identify.", v => serveridentify = v },
 				{ "colorbind-mode=", "Set colorbind.", v => colorbindmode = Convert.ToBoolean(v) },

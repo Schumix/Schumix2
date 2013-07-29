@@ -55,7 +55,7 @@ namespace Schumix.Framework.Extensions
 		{
 			try
 			{
-				return !Name.IsNumber() ? DateTime.ParseExact(Name, "MMMM", CultureInfo.GetCultureInfo(Locale.ToLocale())).Month : Name.ToNumber().ToInt();
+				return !Name.IsNumber() ? DateTime.ParseExact(Name, "MMMM", CultureInfo.GetCultureInfo(Locale.ToLocale())).Month : Name.ToNumber().ToInt32();
 			}
 			catch
 			{

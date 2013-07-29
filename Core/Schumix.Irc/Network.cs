@@ -269,7 +269,7 @@ namespace Schumix.Irc
 
 		public void IrcRegisterHandler(ReplyCode code, IRCDelegate method)
 		{
-			string scode = Convert.ToInt32(code).ToIrcOpcode();
+			string scode = code.ToInt32().ToIrcOpcode();
 
 			if(IrcMethodMap.ContainsKey(scode))
 				IrcMethodMap[scode].Method += method;
@@ -279,7 +279,7 @@ namespace Schumix.Irc
 
 		public void IrcRemoveHandler(ReplyCode code)
 		{
-			string scode = Convert.ToInt32(code).ToIrcOpcode();
+			string scode = code.ToInt32().ToIrcOpcode();
 
 			if(IrcMethodMap.ContainsKey(scode))
 				IrcMethodMap.Remove(scode);
@@ -287,7 +287,7 @@ namespace Schumix.Irc
 
 		public void IrcRemoveHandler(ReplyCode code, IRCDelegate method)
 		{
-			string scode = Convert.ToInt32(code).ToIrcOpcode();
+			string scode = code.ToInt32().ToIrcOpcode();
 
 			if(IrcMethodMap.ContainsKey(scode))
 			{

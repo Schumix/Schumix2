@@ -1070,7 +1070,7 @@ namespace Schumix.ExtraAddon.Commands
 				return;
 			}
 
-			bool prim = sUtilities.IsPrime(sIRCMessage.Info[4].ToNumber().ToInt());
+			bool prim = sUtilities.IsPrime(sIRCMessage.Info[4].ToNumber().ToInt32());
 
 			if(!prim)
 				sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[4]);
