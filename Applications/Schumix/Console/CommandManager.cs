@@ -58,10 +58,15 @@ namespace Schumix.Console
 		/// <summary>
 		///     Indulási függvény.
 		/// </summary>
-		public CCommandManager() : base()
+		public CCommandManager()
 		{
 			Log.Notice("CCommandManager", sLConsole.GetString("Successfully started the CCommandManager."));
 			InitHandler();
+		}
+
+		~CCommandManager()
+		{
+			Log.Debug("CCommandManager", "~CCommandManager()");
 		}
 
 		/// <summary>

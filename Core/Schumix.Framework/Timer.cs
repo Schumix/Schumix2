@@ -50,6 +50,11 @@ namespace Schumix.Framework
 			}
 		}
 
+		~Timer()
+		{
+			Log.Debug("Timer", "~Timer()");
+		}
+
 		public void Start()
 		{
 			SW.Start();

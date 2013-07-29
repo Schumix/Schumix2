@@ -82,6 +82,11 @@ namespace Schumix.Components.PythonEngine
 			_watcher.Renamed += (s, e) => LoadScripts(true);
 		}
 
+		~PythonEngine()
+		{
+			Log.Debug("PythonEngine", "~PythonEngine()");
+		}
+
 		public void LoadScripts(bool reload = false)
 		{
 			lock(Lock)

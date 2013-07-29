@@ -47,6 +47,11 @@ namespace Schumix.Irc.Commands
 			_servername = ServerName;
 		}
 
+		~CommandManager()
+		{
+			Log.Debug("CommandManager", "~CommandManager() {0}", sLConsole.GetString("[ServerName: {0}]", _servername));
+		}
+
 		public void InitializeCommandMgr()
 		{
 			Log.Notice("CommandManager", sLConsole.GetString("Successfully started the CommandManager."));

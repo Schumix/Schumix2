@@ -30,6 +30,7 @@ using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Config;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Listener;
 using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
@@ -72,6 +73,11 @@ namespace Schumix.Irc.Commands
 		protected CommandHandler(string ServerName) : base(ServerName)
 		{
 			_servername = ServerName;
+		}
+
+		~CommandHandler()
+		{
+			Log.Debug("CommandHandler", "~CommandHandler() {0}", sLConsole.GetString("[ServerName: {0}]", _servername));
 		}
 
 		public void InitializeIgnoreCommand()

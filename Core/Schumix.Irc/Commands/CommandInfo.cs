@@ -39,6 +39,11 @@ namespace Schumix.Irc.Commands
 			Log.Debug("CommandInfo", sLConsole.GetString("Successfully started the CommandInfo."));
 		}
 
+		~CommandInfo()
+		{
+			Log.Debug("CommandInfo", "~CommandInfo() {0}", sLConsole.GetString("[ServerName: {0}]", servername));
+		}
+
 		public void Dispose()
 		{
 			Dispose(true);

@@ -86,6 +86,11 @@ namespace Schumix.Components.LuaEngine
 			_watcher.Renamed += (s, e) => LoadScripts(true);
 		}
 
+		~LuaEngine()
+		{
+			Log.Debug("LuaEngine", "~LuaEngine()");
+		}
+
 		/// <summary>
 		/// Loads the Lua scripts.
 		/// </summary>

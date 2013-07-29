@@ -51,6 +51,11 @@ namespace Schumix.Irc
 			PLength = IRCConfig.List[ServerName].CommandPrefix.Length;
 		}
 
+		~MessageHandler()
+		{
+			Log.Debug("MessageHandler", "~MessageHandler() {0}", sLConsole.GetString("[ServerName: {0}]", _servername));
+		}
+
 		public void ReloadMessageHandlerConfig()
 		{
 			PLength = IRCConfig.List[_servername].CommandPrefix.Length;

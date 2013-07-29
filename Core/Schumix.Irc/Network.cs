@@ -121,6 +121,11 @@ namespace Schumix.Irc
 			CType = ConnectionType.Normal;
 		}
 
+		~Network()
+		{
+			Log.Debug("Network", "~Network() {0}", sLConsole.GetString("[ServerName: {0}]", _servername));
+		}
+
 		public void Initialize()
 		{
 #if DEBUG
