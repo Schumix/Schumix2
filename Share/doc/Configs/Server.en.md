@@ -1,4 +1,4 @@
-# Server konfig fájl
+# Server configuration file
 
 ## Log
 
@@ -18,8 +18,8 @@
 ## Server
 
 * **Listener:**
-    * **Port:** A szerver portja. Default: `35220`
-* **Password:** A szerver azonosító jelszava. Default: `schumix`
+    * **Port:** The server's port. Default: `35220`
+* **Password:** The server's identify password. Default: `schumix`
 
 ## Crash
 
@@ -41,7 +41,7 @@
 ## Shutdown
 
 * **MaxMemory:** The bot will be stop running if it reaches the given memory size. If the bot connects to multiple servers It multiplies the size by how many connections the bot have.
-                 Default: `100` (mb-ban értendő)
+                 Default: `100` (in MB)
 
 ## Clean
 
@@ -50,15 +50,15 @@
 
 ## Schumixs
 
-* **Enabled:** `true` or `false`. Engedélyezi a Schumix-ok indítását. Default: `false`
+* **Enabled:** `true` or `false`. Enables the Schumixs' start-up. Default: `false`
 
 With Yaml config:<br/>
-Ha több Schumix-ot szeretnék indítani akkor az egész Schumix részt (Schumix: ...) le kell másolni még egyszer és ott külön be kell állítani az adatokat valamint Schumix(szám) ként kell megadni. Pl: Schumix2: .... (ide pedig minde úgy jön utána ahogy volt csak az Schumix-nél kell átírni az újat).<br/>
+If you want to start more Schumix you need to copy the whole Schumix part (Schumix: ...) and change the settings there and name it as Schumix(number). e.g.: Schumix2: ... (The rest is the same, only the Schumix section have to be changed.).<br/>
 With Xml config:<br/>
-Ha több Schumix-ot szeretnék indítani akkor az egész Schumix részt (`<Schumix> ... </Schumix>`) le kell másolni még egyszer és ott külön be kell állítani az adatokat.
+If you want to start more Schumix you need to copy the whole Schumix part (`<Schumix>...</Schumix>`) and you need to change the settings there.
 * **Schumix:**
     * **Config:**
-        * **File:** Schumix konfig fájl neve. Default: `Schumix.yml`
-        * **Directory:** Schumix konfig mappa neve/elérhetősége. Default: `Configs`
-        * **ConsoleEncoding:** Schumix konzoljának karakterkódolása. Default: `utf-8`
-        * **Locale:** Schumix nyelvezete. Default: `enUS`
+        * **File:** The name of the Schumix configuration file. Default: `Schumix.yml`
+        * **Directory:** The nme of the folder which contains the Schumix's configuration. Default: `Configs`
+        * **ConsoleEncoding:** The character encoding of the Schumix's console. Default: `utf-8`
+        * **Locale:** Schumix's language. Default: `enUS`
