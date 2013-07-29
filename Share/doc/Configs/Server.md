@@ -2,7 +2,7 @@
 
 ## Log
 
-* **FileName:** Meghatározza hova mentődjenek el a log információk. Alapértelmezés: `Schumix.log`
+* **FileName:** Meghatározza hova mentődjenek el a log információk. Alapértelmezés: `Server.log`
 * **DateFileName:** Ha ez a beállítás bekapcsolásra került akkor a log fájl nevéből létrehoz egy mappát a program és abba az indítás dátumával menti el a logot. Így áttekinthetőbbé válik.
                     Alapértelmezés: `False`
 * **MaxFileSize:** Meghatározza a log fájlt maximális méretét. Ha eléri azt a fájl akkor törlődik és a program csinál helyette egy újat.

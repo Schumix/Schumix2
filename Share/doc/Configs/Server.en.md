@@ -2,7 +2,7 @@
 
 ## Log
 
-* **FileName:** The filename where the log will be saved. Default: `Schumix.log`
+* **FileName:** The filename where the log will be saved. Default: `Server.log`
 * **DateFileName:** If you enable this setting it will create a folder with the Filename given below and save here the log files with the name of the date of the launch so it becomes more manageable.
                     Default: `False`
 * **MaxFileSize:** Specifies the log file's maximal size. If the log reaches this value the bot will delete it and creates a new one.
