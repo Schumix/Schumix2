@@ -338,7 +338,7 @@ Global
 		$5.Text = 
 		$5.IncludeInNewFiles = True
 		description = Schumix2 IRC Bot
-		version = 4.1.x
+		version = 4.2.x
 		outputpath = Run
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

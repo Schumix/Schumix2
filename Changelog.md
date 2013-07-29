@@ -1,6 +1,8 @@
 # Schumix2 ChangeLog
 
-## 4.2.0 (2013-xx-xx)
+## 4.3.0 (2013-xx-xx)
+
+## 4.2.0 (2013-07-29)
 
  * Angol és magyarnyelvű .md fájlok felcserélve. Ötletért köszönet Jackneill-nek.
  * .en.md fájlok angolosítása elkészült. Köszönet érte AgeNt-nak.
