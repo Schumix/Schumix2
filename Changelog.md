@@ -2,6 +2,7 @@
 
 ## 4.2.0 (2013-xx-xx)
 
+ * Angol és magyarnyelvű .md fájlok felcserélve. Ötletért köszönet Jackneill-nek.
  * .en.md fájlok angolosítása elkészült. Köszönet érte AgeNt-nak.
  * Convert osztály felhasználásával készült egy kisebb extensions bövítés.
  * Irc üzenetek fájlba logolása leválasztva egy külön osztályba.

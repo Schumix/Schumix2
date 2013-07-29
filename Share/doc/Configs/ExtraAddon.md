@@ -1,17 +1,17 @@
-# ExtraAddon konfig fájl
+# ExtraAddon config file
 
 ## Mode
 
 * **Remove:**
-    * **Enabled:** Értéke `true` vagy `false` lehet. Ezzel lehet aktíválni az automode azon funkcióját hogy mindenkitől elvegyen a rangot aki nem szerepel az adatbázisban. Alapértelmezés: `false`
-    * **Type:** Azon rangok típusa amit elvesz a felhasználótól. Alapértelmezés: `aohv`
+    * **Enabled:** `true` or `false`. If enabled triggers the automode function which auto removes ranks from people who isn't in the database. Default: `false`
+    * **Type:** Ranks which can be removed from the irc users. Default: `aohv`
 
 ## Weather
 
 * **Home:**
-    * **City:** Azon város neve ahol lakunk. Időjárás lekérdezéshez kell megadni. Alapértelmezés: `Zalaegerszeg`
+    * **City:** The city's name whwre we live. Needs for weather query. Default: `Zalaegerszeg`
 
 ## WolframAlpha
 
 * **Api:**
-    * **Key:** `Calc` parancs mükődéséhez elengedhetetlen kód. A WorlframApi kódja igényli. Alapértelmezés: `557QYQ-UUUWTKX95V`
+    * **Key:** `Calc` Must be given in order to be the command usable. WolframApi's code. Default: `557QYQ-UUUWTKX95V`
