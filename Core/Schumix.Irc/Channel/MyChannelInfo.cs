@@ -353,8 +353,8 @@ namespace Schumix.Irc.Channel
 
 			if(SchumixBase.STime)
 			{
-				SchumixBase.sTimer.Stop();
 				SchumixBase.STime = false;
+				SchumixBase.sTimer.Stop();
 			}
 		}
 	}
