@@ -163,7 +163,7 @@ namespace Schumix.Irc.Commands
 					{
 						string channel = row["Channel"].ToString();
 						bool enabled = row["Enabled"].ToBoolean();
-						bool hidden =row["Hidden"].ToBoolean();
+						bool hidden = row["Hidden"].ToBoolean();
 						
 						if(enabled && !hidden)
 							ActiveChannels += ", " + channel;

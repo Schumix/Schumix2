@@ -178,21 +178,21 @@ namespace Schumix.Framework.Config
 		private void LogMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
 			string LogFileName = (!nodes.IsNull() && nodes.ContainsKey("FileName")) ? nodes["FileName".ToYamlNode()].ToString() : d_logfilename;
-			bool LogDateFileName = (!nodes.IsNull() && nodes.ContainsKey("DateFileName")) ? nodes["DateFileName".ToYamlNode()].ToBoolean() : d_logdatefilename;
-			int LogMaxFileSize = (!nodes.IsNull() && nodes.ContainsKey("MaxFileSize")) ? nodes["MaxFileSize".ToYamlNode()].ToInt32() : d_logmaxfilesize;
-			int LogLevel = (!nodes.IsNull() && nodes.ContainsKey("LogLevel")) ? nodes["LogLevel".ToYamlNode()].ToInt32() : d_loglevel;
+			bool LogDateFileName = (!nodes.IsNull() && nodes.ContainsKey("DateFileName")) ? nodes["DateFileName".ToYamlNode()].ToString().ToBoolean() : d_logdatefilename;
+			int LogMaxFileSize = (!nodes.IsNull() && nodes.ContainsKey("MaxFileSize")) ? nodes["MaxFileSize".ToYamlNode()].ToString().ToInt32() : d_logmaxfilesize;
+			int LogLevel = (!nodes.IsNull() && nodes.ContainsKey("LogLevel")) ? nodes["LogLevel".ToYamlNode()].ToString().ToInt32() : d_loglevel;
 			string LogDirectory = (!nodes.IsNull() && nodes.ContainsKey("LogDirectory")) ? nodes["LogDirectory".ToYamlNode()].ToString() : d_logdirectory;
 			string IrcLogDirectory = (!nodes.IsNull() && nodes.ContainsKey("IrcLogDirectory")) ? nodes["IrcLogDirectory".ToYamlNode()].ToString() : d_irclogdirectory;
-			bool IrcLog = (!nodes.IsNull() && nodes.ContainsKey("IrcLog")) ? nodes["IrcLog".ToYamlNode()].ToBoolean() : d_irclog;
+			bool IrcLog = (!nodes.IsNull() && nodes.ContainsKey("IrcLog")) ? nodes["IrcLog".ToYamlNode()].ToString().ToBoolean() : d_irclog;
 
 			new LogConfig(LogFileName, LogDateFileName, LogMaxFileSize, LogLevel, sUtilities.GetSpecialDirectory(LogDirectory), sUtilities.GetSpecialDirectory(IrcLogDirectory), IrcLog);
 		}
 
 		private void ServerMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool ServerEnabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToBoolean() : d_serverenabled;
+			bool ServerEnabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString().ToBoolean() : d_serverenabled;
 			string ServerHost = (!nodes.IsNull() && nodes.ContainsKey("Host")) ? nodes["Host".ToYamlNode()].ToString() : d_serverhost;
-			int ServerPort = (!nodes.IsNull() && nodes.ContainsKey("Port")) ? nodes["Port".ToYamlNode()].ToInt32() : d_serverport;
+			int ServerPort = (!nodes.IsNull() && nodes.ContainsKey("Port")) ? nodes["Port".ToYamlNode()].ToString().ToInt32() : d_serverport;
 			string ServerPassword = (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_serverpassword;
 
 			new ServerConfig(ServerEnabled, ServerHost, ServerPort, ServerPassword);
@@ -200,8 +200,8 @@ namespace Schumix.Framework.Config
 
 		private void ListenerMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool ListenerEnabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToBoolean() : d_listenerenabled;
-			int ListenerPort = (!nodes.IsNull() && nodes.ContainsKey("Port")) ? nodes["Port".ToYamlNode()].ToInt32() : d_listenerport;
+			bool ListenerEnabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString().ToBoolean() : d_listenerenabled;
+			int ListenerPort = (!nodes.IsNull() && nodes.ContainsKey("Port")) ? nodes["Port".ToYamlNode()].ToString().ToInt32() : d_listenerport;
 			string ListenerPassword = (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_listenerpassword;
 
 			new ListenerConfig(ListenerEnabled, ListenerPort, ListenerPassword);
@@ -247,9 +247,9 @@ namespace Schumix.Framework.Config
 					string ServerName = (!node.IsNull() && node.ContainsKey("ServerName")) ? node["ServerName".ToYamlNode()].ToString() : d_servername;
 					string Server = (!node.IsNull() && node.ContainsKey("Server")) ? node["Server".ToYamlNode()].ToString() : d_server;
 					string ServerPass = (!node.IsNull() && node.ContainsKey("Password")) ? node["Password".ToYamlNode()].ToString() : d_ircserverpassword;
-					int Port = (!node.IsNull() && node.ContainsKey("Port")) ? node["Port".ToYamlNode()].ToInt32() : d_port;
-					int ModeMask = (!node.IsNull() && node.ContainsKey("ModeMask")) ? node["ModeMask".ToYamlNode()].ToInt32() : d_modemask;
-					bool Ssl = (!node.IsNull() && node.ContainsKey("Ssl")) ? node["Ssl".ToYamlNode()].ToBoolean() : d_ssl;
+					int Port = (!node.IsNull() && node.ContainsKey("Port")) ? node["Port".ToYamlNode()].ToString().ToInt32() : d_port;
+					int ModeMask = (!node.IsNull() && node.ContainsKey("ModeMask")) ? node["ModeMask".ToYamlNode()].ToString().ToInt32() : d_modemask;
+					bool Ssl = (!node.IsNull() && node.ContainsKey("Ssl")) ? node["Ssl".ToYamlNode()].ToString().ToBoolean() : d_ssl;
 					string NickName = (!node.IsNull() && node.ContainsKey("NickName")) ? node["NickName".ToYamlNode()].ToString() : d_nickname;
 					string NickName2 = (!node.IsNull() && node.ContainsKey("NickName2")) ? node["NickName2".ToYamlNode()].ToString() : d_nickname2;
 					string NickName3 = (!node.IsNull() && node.ContainsKey("NickName3")) ? node["NickName3".ToYamlNode()].ToString() : d_nickname3;
@@ -275,7 +275,7 @@ namespace Schumix.Framework.Config
 					if(!node.IsNull() && node.ContainsKey("NickServ"))
 					{
 						var node2 = ((YamlMappingNode)node["NickServ".ToYamlNode()]).Children;
-						UseNickServ = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? node2["Enabled".ToYamlNode()].ToBoolean() : d_usenickserv;
+						UseNickServ = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? node2["Enabled".ToYamlNode()].ToString().ToBoolean() : d_usenickserv;
 						NickServPassword = (!node2.IsNull() && node2.ContainsKey("Password")) ? node2["Password".ToYamlNode()].ToString() : d_nickservpassword;
 					}
 
@@ -285,8 +285,8 @@ namespace Schumix.Framework.Config
 					if(!node.IsNull() && node.ContainsKey("HostServ"))
 					{
 						var node2 = ((YamlMappingNode)node["HostServ".ToYamlNode()]).Children;
-						UseHostServ = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? node2["Enabled".ToYamlNode()].ToBoolean() : d_usehostserv;
-						HostServStatus = (!node2.IsNull() && node2.ContainsKey("Vhost")) ? node2["Vhost".ToYamlNode()].ToBoolean() : d_hostservstatus;
+						UseHostServ = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? node2["Enabled".ToYamlNode()].ToString().ToBoolean() : d_usehostserv;
+						HostServStatus = (!node2.IsNull() && node2.ContainsKey("Vhost")) ? node2["Vhost".ToYamlNode()].ToString().ToBoolean() : d_hostservstatus;
 					}
 
 					int MessageSending = d_messagesending;
@@ -294,7 +294,7 @@ namespace Schumix.Framework.Config
 					if(!node.IsNull() && node.ContainsKey("Wait"))
 					{
 						var node2 = ((YamlMappingNode)node["Wait".ToYamlNode()]).Children;
-						MessageSending = (!node2.IsNull() && node2.ContainsKey("MessageSending")) ? node2["MessageSending".ToYamlNode()].ToInt32() : d_messagesending;
+						MessageSending = (!node2.IsNull() && node2.ContainsKey("MessageSending")) ? node2["MessageSending".ToYamlNode()].ToString().ToInt32() : d_messagesending;
 					}
 
 					string CommandPrefix = d_commandprefix;
@@ -359,7 +359,7 @@ namespace Schumix.Framework.Config
 
 		private void MySqlMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToBoolean() : d_mysqlenabled;
+			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString().ToBoolean() : d_mysqlenabled;
 			string Host = (!nodes.IsNull() && nodes.ContainsKey("Host")) ? nodes["Host".ToYamlNode()].ToString() : d_mysqlhost;
 			string User = (!nodes.IsNull() && nodes.ContainsKey("User")) ? nodes["User".ToYamlNode()].ToString() : d_mysqluser;
 			string Password = (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_mysqlpassword;
@@ -371,7 +371,7 @@ namespace Schumix.Framework.Config
 
 		private void SQLiteMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToBoolean() : d_sqliteenabled;
+			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString().ToBoolean() : d_sqliteenabled;
 			string FileName = (!nodes.IsNull() && nodes.ContainsKey("FileName")) ? nodes["FileName".ToYamlNode()].ToString() : d_sqlitefilename;
 
 			new SQLiteConfig(Enabled, sUtilities.GetSpecialDirectory(FileName));
@@ -379,7 +379,7 @@ namespace Schumix.Framework.Config
 
 		private void AddonsMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToBoolean() : d_addonenabled;
+			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString().ToBoolean() : d_addonenabled;
 			string Ignore = (!nodes.IsNull() && nodes.ContainsKey("Ignore")) ? nodes["Ignore".ToYamlNode()].ToString() : d_addonignore;
 			string Directory = (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_addondirectory;
 
@@ -388,8 +388,8 @@ namespace Schumix.Framework.Config
 
 		private void ScriptsMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Lua = (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? nodes["Lua".ToYamlNode()].ToBoolean() : d_scriptsluaenabled;
-			bool Python = (!nodes.IsNull() && nodes.ContainsKey("Python")) ? nodes["Python".ToYamlNode()].ToBoolean() : d_scriptspythonenabled;
+			bool Lua = (!nodes.IsNull() && nodes.ContainsKey("Lua")) ? nodes["Lua".ToYamlNode()].ToString().ToBoolean() : d_scriptsluaenabled;
+			bool Python = (!nodes.IsNull() && nodes.ContainsKey("Python")) ? nodes["Python".ToYamlNode()].ToString().ToBoolean() : d_scriptspythonenabled;
 			string Directory = (!nodes.IsNull() && nodes.ContainsKey("Directory")) ? nodes["Directory".ToYamlNode()].ToString() : d_scriptsdirectory;
 
 			new ScriptsConfig(Lua, Python, sUtilities.GetSpecialDirectory(Directory));
@@ -411,7 +411,7 @@ namespace Schumix.Framework.Config
 
 		private void UpdateMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToBoolean() : d_updateenabled;
+			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString().ToBoolean() : d_updateenabled;
 			string Version = (!nodes.IsNull() && nodes.ContainsKey("Version")) ? nodes["Version".ToYamlNode()].ToString() : d_updateversion;
 			string Branch = (!nodes.IsNull() && nodes.ContainsKey("Branch")) ? nodes["Branch".ToYamlNode()].ToString() : d_updatebranch;
 			string WebPage = (!nodes.IsNull() && nodes.ContainsKey("WebPage")) ? nodes["WebPage".ToYamlNode()].ToString() : d_updatewebpage;
@@ -421,23 +421,23 @@ namespace Schumix.Framework.Config
 
 		private void ShutdownMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			int MaxMemory = (!nodes.IsNull() && nodes.ContainsKey("MaxMemory")) ? nodes["MaxMemory".ToYamlNode()].ToInt32() : d_shutdownmaxmemory;
+			int MaxMemory = (!nodes.IsNull() && nodes.ContainsKey("MaxMemory")) ? nodes["MaxMemory".ToYamlNode()].ToString().ToInt32() : d_shutdownmaxmemory;
 
 			new ShutdownConfig(MaxMemory);
 		}
 
 		private void FloodingMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			int Seconds = (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? nodes["Seconds".ToYamlNode()].ToInt32() : d_floodingseconds;
-			int NumberOfCommands = (!nodes.IsNull() && nodes.ContainsKey("NumberOfCommands")) ? nodes["NumberOfCommands".ToYamlNode()].ToInt32() : d_floodingnumberofcommands;
+			int Seconds = (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? nodes["Seconds".ToYamlNode()].ToString().ToInt32() : d_floodingseconds;
+			int NumberOfCommands = (!nodes.IsNull() && nodes.ContainsKey("NumberOfCommands")) ? nodes["NumberOfCommands".ToYamlNode()].ToString().ToInt32() : d_floodingnumberofcommands;
 
 			new FloodingConfig(Seconds, NumberOfCommands);
 		}
 
 		private void CleanMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool Config = (!nodes.IsNull() && nodes.ContainsKey("Config")) ? nodes["Config".ToYamlNode()].ToBoolean() : d_cleanconfig;
-			bool Database = (!nodes.IsNull() && nodes.ContainsKey("Database")) ? nodes["Database".ToYamlNode()].ToBoolean() : d_cleandatabase;
+			bool Config = (!nodes.IsNull() && nodes.ContainsKey("Config")) ? nodes["Config".ToYamlNode()].ToString().ToBoolean() : d_cleanconfig;
+			bool Database = (!nodes.IsNull() && nodes.ContainsKey("Database")) ? nodes["Database".ToYamlNode()].ToString().ToBoolean() : d_cleandatabase;
 
 			new CleanConfig(Config, Database);
 		}

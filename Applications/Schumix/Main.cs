@@ -155,7 +155,6 @@ namespace Schumix
 			System.Console.WriteLine();
 
 			new Config(configdir, configfile, colorbindmode);
-			System.Console.WriteLine("asddd: {0}", SchumixConfig.ConfigFile);
 			sUtilities.CreatePidFile(SchumixConfig.ConfigFile);
 
 			if(!serveridentify.IsNullOrEmpty())

@@ -118,7 +118,7 @@ namespace Schumix.ExtraAddon.Config
 			if(!nodes.IsNull() && nodes.ContainsKey("Remove"))
 			{
 				var node2 = ((YamlMappingNode)nodes["Remove".ToYamlNode()]).Children;
-				Enabled = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? node2["Enabled".ToYamlNode()].ToBoolean() : d_enabled;
+				Enabled = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? node2["Enabled".ToYamlNode()].ToString().ToBoolean() : d_enabled;
 				Type = (!node2.IsNull() && node2.ContainsKey("Type")) ? node2["Type".ToYamlNode()].ToString() : d_type;
 			}
 
