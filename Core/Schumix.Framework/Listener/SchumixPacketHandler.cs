@@ -80,7 +80,7 @@ namespace Schumix.Framework.Listener
 					var packet = new ListenerPacket();
 					packet.Write<int>((int)ListenerOpcode.SMSG_CLOSE_CONNECTION);
 					packet.Write<string>(sLConsole.GetString("Ping Timeout"));
-					SendPacketBack(packet, list.Value.Stream, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+					SendPacketBack(packet, list.Value.Stream, list.Key.Split(SchumixBase.Colon)[0], asd.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 					Log.Warning("HandlePingTimer", sLConsole.GetString("Connection closed! Guid of client: {0}"), list.Value.Guid);
 				}
 			}
@@ -102,7 +102,7 @@ namespace Schumix.Framework.Listener
 				var packet = new ListenerPacket();
 				packet.Write<int>((int)ListenerOpcode.SMSG_PING);
 				packet.Write<long>((long)sUtilities.UnixTime);
-				SendPacketBack(packet, list.Value.Stream, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+				SendPacketBack(packet, list.Value.Stream, list.Key.Split(SchumixBase.Colon)[0], asd.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 			}
 		}
 
@@ -134,7 +134,7 @@ namespace Schumix.Framework.Listener
 		public void HandlePacket(ListenerPacket packet, TcpClient client, NetworkStream stream)
 		{
 			var hst = client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[0];
-			int bck = Convert.ToInt32(client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[1]);
+			int bck = asd.ToInt32(client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[1]);
 
 			int packetid = 0;
 
@@ -247,13 +247,13 @@ namespace Schumix.Framework.Listener
 				foreach(DataRow row in db.Rows)
 				{
 					i++;
-					int Id = Convert.ToInt32(row["Id"].ToString());
-					int ServerId = Convert.ToInt32(row["ServerId"].ToString());
+					int Id = asd.ToInt32(row["Id"].ToString());
+					int ServerId = asd.ToInt32(row["ServerId"].ToString());
 					string ServerName = row["ServerName"].ToString();
 					string Name = row["Name"].ToString();
 					string Password = row["Password"].ToString();
 					string Vhost = row["Vhost"].ToString();
-					int Flag = Convert.ToInt32(row["Flag"].ToString());
+					int Flag = asd.ToInt32(row["Flag"].ToString());
 					packet.Write<string>(string.Format("INSERT INTO `admins` VALUES (\"{0}\", \"{1}\", \"{2}\", \"{3}\", \"{4}\", \"{5}\", \"{6}\"", Id, ServerId, ServerName, Name, Password, Vhost, Flag));
 				}
 
@@ -304,7 +304,7 @@ namespace Schumix.Framework.Listener
 				return;
 
 			foreach(var list in _HostList)
-				SendPacketBack(packet, list.Value.Stream, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+				SendPacketBack(packet, list.Value.Stream, list.Key.Split(SchumixBase.Colon)[0], asd.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 		}
 	}
 }

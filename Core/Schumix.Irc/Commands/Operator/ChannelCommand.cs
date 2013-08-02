@@ -162,8 +162,8 @@ namespace Schumix.Irc.Commands
 					foreach(DataRow row in db.Rows)
 					{
 						string channel = row["Channel"].ToString();
-						bool enabled = Convert.ToBoolean(row["Enabled"].ToString());
-						bool hidden = Convert.ToBoolean(row["Hidden"].ToString());
+						bool enabled = asd.ToBoolean(row["Enabled"].ToString());
+						bool hidden = asd.ToBoolean(row["Hidden"].ToString());
 						
 						if(enabled && !hidden)
 							ActiveChannels += ", " + channel;

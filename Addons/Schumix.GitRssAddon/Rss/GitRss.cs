@@ -387,10 +387,10 @@ namespace Schumix.GitRssAddon
 				{
 					string language = sLManager.GetChannelLocalization(chan, _servername);
 
-					if(Convert.ToBoolean(db["ShortUrl"].ToString()))
+					if(asd.ToBoolean(db["ShortUrl"].ToString()))
 						commiturl = BitlyApi.ShortenUrl(commiturl).ShortUrl;
 
-					if(Convert.ToBoolean(db["Colors"].ToString()))
+					if(asd.ToBoolean(db["Colors"].ToString()))
 					{
 						if(_website == "github")
 						{

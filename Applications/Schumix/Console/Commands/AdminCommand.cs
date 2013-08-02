@@ -56,7 +56,7 @@ namespace Schumix.Console
 				}
 
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sConsoleMessage.Info[2].ToLower(), _servername);
-				int flag = !db.IsNull() ? Convert.ToInt32(db["Flag"].ToString()) : -1;
+				int flag = !db.IsNull() ? asd.ToInt32(db["Flag"].ToString()) : -1;
 
 				if((AdminFlag)flag == AdminFlag.HalfOperator)
 					Log.Notice("Console", text[0]);		
@@ -192,7 +192,7 @@ namespace Schumix.Console
 					return;
 				}
 
-				int rank = Convert.ToInt32(sConsoleMessage.Info[3]);
+				int rank = asd.ToInt32(sConsoleMessage.Info[3]);
 
 				if((AdminFlag)rank == AdminFlag.Administrator || (AdminFlag)rank == AdminFlag.Operator || (AdminFlag)rank == AdminFlag.HalfOperator)
 				{

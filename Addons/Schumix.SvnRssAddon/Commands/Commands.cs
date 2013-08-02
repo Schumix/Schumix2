@@ -455,9 +455,9 @@ namespace Schumix.SvnRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Colors FROM svninfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						bool enabled = Convert.ToBoolean(db["Colors"].ToString());
+						bool enabled = asd.ToBoolean(db["Colors"].ToString());
 						
-						if(Convert.ToBoolean(sIRCMessage.Info[7].ToLower()) == enabled)
+						if(asd.ToBoolean(sIRCMessage.Info[7].ToLower()) == enabled)
 						{
 							if(enabled)
 							{
@@ -507,9 +507,9 @@ namespace Schumix.SvnRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT ShortUrl FROM svninfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						bool enabled = Convert.ToBoolean(db["ShortUrl"].ToString());
+						bool enabled = asd.ToBoolean(db["ShortUrl"].ToString());
 						
-						if(Convert.ToBoolean(sIRCMessage.Info[7].ToLower()) == enabled)
+						if(asd.ToBoolean(sIRCMessage.Info[7].ToLower()) == enabled)
 						{
 							if(enabled)
 							{

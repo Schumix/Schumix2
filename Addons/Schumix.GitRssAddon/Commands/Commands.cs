@@ -504,9 +504,9 @@ namespace Schumix.GitRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Colors FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						bool enabled = Convert.ToBoolean(db["Colors"].ToString());
+						bool enabled = asd.ToBoolean(db["Colors"].ToString());
 
-						if(Convert.ToBoolean(sIRCMessage.Info[8].ToLower()) == enabled)
+						if(asd.ToBoolean(sIRCMessage.Info[8].ToLower()) == enabled)
 						{
 							if(enabled)
 							{
@@ -562,9 +562,9 @@ namespace Schumix.GitRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT ShortUrl FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						bool enabled = Convert.ToBoolean(db["ShortUrl"].ToString());
+						bool enabled = asd.ToBoolean(db["ShortUrl"].ToString());
 						
-						if(Convert.ToBoolean(sIRCMessage.Info[8].ToLower()) == enabled)
+						if(asd.ToBoolean(sIRCMessage.Info[8].ToLower()) == enabled)
 						{
 							if(enabled)
 							{

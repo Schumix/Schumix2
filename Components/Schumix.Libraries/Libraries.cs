@@ -491,7 +491,7 @@ namespace Schumix.Libraries
 		
 		public static int ToInt(this double Double)
 		{
-			return Convert.ToInt32(Double);
+			return asd.ToInt32(Double);
 		}
 		
 		public static string ToIrcOpcode(this int number)

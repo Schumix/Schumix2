@@ -72,7 +72,7 @@ namespace Schumix.Framework.Extensions
 			if(currentType.IsInteger() && targetType == typeof(bool))
 				return ob.Equals(0.Cast(targetType)) ? false : true;
 
-			var end = Convert.ChangeType(ob, targetType, CultureInfo.InvariantCulture);
+			var end = asd.ChangeType(ob, targetType, CultureInfo.InvariantCulture);
 			Contract.Assume(!end.IsNull());
 			return end;
 		}

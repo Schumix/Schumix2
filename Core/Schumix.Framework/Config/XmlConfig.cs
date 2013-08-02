@@ -45,12 +45,12 @@ namespace Schumix.Framework.Config
 			xmldoc.Load(sUtilities.DirectoryToSpecial(configdir, configfile));
 
 			string LogFileName = !xmldoc.SelectSingleNode("Schumix/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/FileName").InnerText : d_logfilename;
-			bool LogDateFileName = !xmldoc.SelectSingleNode("Schumix/Log/DateFileName").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/DateFileName").InnerText) : d_logdatefilename;
-			int LogMaxFileSize = !xmldoc.SelectSingleNode("Schumix/Log/MaxFileSize").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/MaxFileSize").InnerText) : d_logmaxfilesize;
-			int LogLevel = !xmldoc.SelectSingleNode("Schumix/Log/LogLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText) : d_loglevel;
+			bool LogDateFileName = !xmldoc.SelectSingleNode("Schumix/Log/DateFileName").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/DateFileName").InnerText) : d_logdatefilename;
+			int LogMaxFileSize = !xmldoc.SelectSingleNode("Schumix/Log/MaxFileSize").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/MaxFileSize").InnerText) : d_logmaxfilesize;
+			int LogLevel = !xmldoc.SelectSingleNode("Schumix/Log/LogLevel").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("Schumix/Log/LogLevel").InnerText) : d_loglevel;
 			string LogDirectory = !xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/LogDirectory").InnerText : d_logdirectory;
 			string IrcLogDirectory = !xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/IrcLogDirectory").InnerText : d_irclogdirectory;
-			bool IrcLog = !xmldoc.SelectSingleNode("Schumix/Log/IrcLog").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText) : d_irclog;
+			bool IrcLog = !xmldoc.SelectSingleNode("Schumix/Log/IrcLog").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/Log/IrcLog").InnerText) : d_irclog;
 
 			new LogConfig(LogFileName, LogDateFileName, LogMaxFileSize, LogLevel, sUtilities.GetSpecialDirectory(LogDirectory), sUtilities.GetSpecialDirectory(IrcLogDirectory), IrcLog);
 
@@ -58,15 +58,15 @@ namespace Schumix.Framework.Config
 			Log.Debug("XmlConfig", ">> {0}", configfile);
 
 			Log.Notice("XmlConfig", sLConsole.GetString("Config file is loading."));
-			bool ServerEnabled = !xmldoc.SelectSingleNode("Schumix/Server/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Server/Enabled").InnerText) : d_serverenabled;
+			bool ServerEnabled = !xmldoc.SelectSingleNode("Schumix/Server/Enabled").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/Server/Enabled").InnerText) : d_serverenabled;
 			string ServerHost = !xmldoc.SelectSingleNode("Schumix/Server/Host").IsNull() ? xmldoc.SelectSingleNode("Schumix/Server/Host").InnerText : d_serverhost;
-			int ServerPort = !xmldoc.SelectSingleNode("Schumix/Server/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Server/Port").InnerText) : d_serverport;
+			int ServerPort = !xmldoc.SelectSingleNode("Schumix/Server/Port").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("Schumix/Server/Port").InnerText) : d_serverport;
 			string ServerPassword = !xmldoc.SelectSingleNode("Schumix/Server/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Server/Password").InnerText : d_serverpassword;
 
 			new ServerConfig(ServerEnabled, ServerHost, ServerPort, ServerPassword);
 
-			bool ListenerEnabled = !xmldoc.SelectSingleNode("Schumix/Listener/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Listener/Enabled").InnerText) : d_listenerenabled;
-			int ListenerPort = !xmldoc.SelectSingleNode("Schumix/Listener/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Listener/Port").InnerText) : d_listenerport;
+			bool ListenerEnabled = !xmldoc.SelectSingleNode("Schumix/Listener/Enabled").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/Listener/Enabled").InnerText) : d_listenerenabled;
+			int ListenerPort = !xmldoc.SelectSingleNode("Schumix/Listener/Port").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("Schumix/Listener/Port").InnerText) : d_listenerport;
 			string ListenerPassword = !xmldoc.SelectSingleNode("Schumix/Listener/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/Listener/Password").InnerText : d_listenerpassword;
 
 			new ListenerConfig(ListenerEnabled, ListenerPort, ListenerPassword);
@@ -109,9 +109,9 @@ namespace Schumix.Framework.Config
 					string ServerName = !xn["ServerName"].IsNull() ? xn["ServerName"].InnerText : d_servername;
 					string Server = !xn["Server"].IsNull() ? xn["Server"].InnerText : d_server;
 					string ServerPass = !xn["Password"].IsNull() ? xn["Password"].InnerText : d_ircserverpassword;
-					int Port = !xn["Port"].IsNull() ? Convert.ToInt32(xn["Port"].InnerText) : d_port;
-					int ModeMask = !xn["ModeMask"].IsNull() ? Convert.ToInt32(xn["ModeMask"].InnerText) : d_modemask;
-					bool Ssl = !xn["Ssl"].IsNull() ? Convert.ToBoolean(xn["Ssl"].InnerText) : d_ssl;
+					int Port = !xn["Port"].IsNull() ? asd.ToInt32(xn["Port"].InnerText) : d_port;
+					int ModeMask = !xn["ModeMask"].IsNull() ? asd.ToInt32(xn["ModeMask"].InnerText) : d_modemask;
+					bool Ssl = !xn["Ssl"].IsNull() ? asd.ToBoolean(xn["Ssl"].InnerText) : d_ssl;
 					string NickName = !xn["NickName"].IsNull() ? xn["NickName"].InnerText : d_nickname;
 					string NickName2 = !xn["NickName2"].IsNull() ? xn["NickName2"].InnerText : d_nickname2;
 					string NickName3 = !xn["NickName3"].IsNull() ? xn["NickName3"].InnerText : d_nickname3;
@@ -121,11 +121,11 @@ namespace Schumix.Framework.Config
 					string MasterChannelPassword = !xn.SelectSingleNode("MasterChannel/Password").IsNull() ? xn.SelectSingleNode("MasterChannel/Password").InnerText : d_masterchannelpassword;
 					string IgnoreChannels = !xn["IgnoreChannels"].IsNull() ? xn["IgnoreChannels"].InnerText : d_ignorechannels;
 					string IgnoreNames = !xn["IgnoreNames"].IsNull() ? xn["IgnoreNames"].InnerText : d_ignorenames;
-					bool UseNickServ = !xn.SelectSingleNode("NickServ/Enabled").IsNull() ? Convert.ToBoolean(xn.SelectSingleNode("NickServ/Enabled").InnerText) : d_usenickserv;
+					bool UseNickServ = !xn.SelectSingleNode("NickServ/Enabled").IsNull() ? asd.ToBoolean(xn.SelectSingleNode("NickServ/Enabled").InnerText) : d_usenickserv;
 					string NickServPassword = !xn.SelectSingleNode("NickServ/Password").IsNull() ? xn.SelectSingleNode("NickServ/Password").InnerText : d_nickservpassword;
-					bool UseHostServ = !xn.SelectSingleNode("HostServ/Enabled").IsNull() ? Convert.ToBoolean(xn.SelectSingleNode("HostServ/Enabled").InnerText) : d_usehostserv;
-					bool HostServStatus = !xn.SelectSingleNode("HostServ/Vhost").IsNull() ? Convert.ToBoolean(xn.SelectSingleNode("HostServ/Vhost").InnerText) : d_hostservstatus;
-					int MessageSending = !xn.SelectSingleNode("Wait/MessageSending").IsNull() ? Convert.ToInt32(xn.SelectSingleNode("Wait/MessageSending").InnerText) : d_messagesending;
+					bool UseHostServ = !xn.SelectSingleNode("HostServ/Enabled").IsNull() ? asd.ToBoolean(xn.SelectSingleNode("HostServ/Enabled").InnerText) : d_usehostserv;
+					bool HostServStatus = !xn.SelectSingleNode("HostServ/Vhost").IsNull() ? asd.ToBoolean(xn.SelectSingleNode("HostServ/Vhost").InnerText) : d_hostservstatus;
+					int MessageSending = !xn.SelectSingleNode("Wait/MessageSending").IsNull() ? asd.ToInt32(xn.SelectSingleNode("Wait/MessageSending").InnerText) : d_messagesending;
 					string CommandPrefix = !xn.SelectSingleNode("Command/Prefix").IsNull() ? xn.SelectSingleNode("Command/Prefix").InnerText : d_commandprefix;
 					string MessageType = !xn["MessageType"].IsNull() ? xn["MessageType"].InnerText : d_messagetype;
 
@@ -178,7 +178,7 @@ namespace Schumix.Framework.Config
 				new IRCConfig(IrcList);
 			}
 
-			bool Enabled = !xmldoc.SelectSingleNode("Schumix/MySql/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText) : d_mysqlenabled;
+			bool Enabled = !xmldoc.SelectSingleNode("Schumix/MySql/Enabled").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText) : d_mysqlenabled;
 			string Host = !xmldoc.SelectSingleNode("Schumix/MySql/Host").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText : d_mysqlhost;
 			string User = !xmldoc.SelectSingleNode("Schumix/MySql/User").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/User").InnerText : d_mysqluser;
 			string Password = !xmldoc.SelectSingleNode("Schumix/MySql/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Password").InnerText : d_mysqlpassword;
@@ -187,19 +187,19 @@ namespace Schumix.Framework.Config
 
 			new MySqlConfig(Enabled, Host, User, Password, Database, Charset);
 
-			Enabled = !xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").InnerText) : d_sqliteenabled;
+			Enabled = !xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").InnerText) : d_sqliteenabled;
 			string FileName = !xmldoc.SelectSingleNode("Schumix/SQLite/FileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/SQLite/FileName").InnerText : d_sqlitefilename;
 
 			new SQLiteConfig(Enabled, sUtilities.GetSpecialDirectory(FileName));
 
-			Enabled = !xmldoc.SelectSingleNode("Schumix/Addons/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Addons/Enabled").InnerText) : d_addonenabled;
+			Enabled = !xmldoc.SelectSingleNode("Schumix/Addons/Enabled").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/Addons/Enabled").InnerText) : d_addonenabled;
 			string Ignore = !xmldoc.SelectSingleNode("Schumix/Addons/Ignore").IsNull() ? xmldoc.SelectSingleNode("Schumix/Addons/Ignore").InnerText : d_addonignore;
 			string Directory = !xmldoc.SelectSingleNode("Schumix/Addons/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Addons/Directory").InnerText : d_addondirectory;
 
 			new AddonsConfig(Enabled, Ignore, sUtilities.GetSpecialDirectory(Directory));
 
-			bool Lua = !xmldoc.SelectSingleNode("Schumix/Scripts/Lua").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Scripts/Lua").InnerText) : d_scriptsluaenabled;
-			bool Python = !xmldoc.SelectSingleNode("Schumix/Scripts/Python").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Scripts/Python").InnerText) : d_scriptspythonenabled;
+			bool Lua = !xmldoc.SelectSingleNode("Schumix/Scripts/Lua").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/Scripts/Lua").InnerText) : d_scriptsluaenabled;
+			bool Python = !xmldoc.SelectSingleNode("Schumix/Scripts/Python").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/Scripts/Python").InnerText) : d_scriptspythonenabled;
 			Directory = !xmldoc.SelectSingleNode("Schumix/Scripts/Directory").IsNull() ? xmldoc.SelectSingleNode("Schumix/Scripts/Directory").InnerText : d_scriptsdirectory;
 
 			new ScriptsConfig(Lua, Python, sUtilities.GetSpecialDirectory(Directory));
@@ -212,24 +212,24 @@ namespace Schumix.Framework.Config
 
 			new LocalizationConfig(Locale);
 
-			Enabled = !xmldoc.SelectSingleNode("Schumix/Update/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Update/Enabled").InnerText) : d_updateenabled;
+			Enabled = !xmldoc.SelectSingleNode("Schumix/Update/Enabled").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/Update/Enabled").InnerText) : d_updateenabled;
 			string Version = !xmldoc.SelectSingleNode("Schumix/Update/Version").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Version").InnerText : d_updateversion;
 			string Branch = !xmldoc.SelectSingleNode("Schumix/Update/Branch").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/Branch").InnerText : d_updatebranch;
 			string WebPage = !xmldoc.SelectSingleNode("Schumix/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Schumix/Update/WebPage").InnerText : d_updatewebpage;
 
 			new UpdateConfig(Enabled, Version.ToLower(), Branch, WebPage);
 
-			int MaxMemory = !xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").InnerText) : d_shutdownmaxmemory;
+			int MaxMemory = !xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("Schumix/Shutdown/MaxMemory").InnerText) : d_shutdownmaxmemory;
 
 			new ShutdownConfig(MaxMemory);
 
-			int Seconds = !xmldoc.SelectSingleNode("Schumix/Flooding/Seconds").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Flooding/Seconds").InnerText) : d_floodingseconds;
-			int NumberOfCommands = !xmldoc.SelectSingleNode("Schumix/Flooding/NumberOfCommands").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Schumix/Flooding/NumberOfCommands").InnerText) : d_floodingnumberofcommands;
+			int Seconds = !xmldoc.SelectSingleNode("Schumix/Flooding/Seconds").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("Schumix/Flooding/Seconds").InnerText) : d_floodingseconds;
+			int NumberOfCommands = !xmldoc.SelectSingleNode("Schumix/Flooding/NumberOfCommands").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("Schumix/Flooding/NumberOfCommands").InnerText) : d_floodingnumberofcommands;
 
 			new FloodingConfig(Seconds, NumberOfCommands);
 
-			bool Config = !xmldoc.SelectSingleNode("Schumix/Clean/Config").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Clean/Config").InnerText) : d_cleanconfig;
-			bool Database2 = !xmldoc.SelectSingleNode("Schumix/Clean/Database").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Schumix/Clean/Database").InnerText) : d_cleandatabase;
+			bool Config = !xmldoc.SelectSingleNode("Schumix/Clean/Config").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/Clean/Config").InnerText) : d_cleanconfig;
+			bool Database2 = !xmldoc.SelectSingleNode("Schumix/Clean/Database").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Schumix/Clean/Database").InnerText) : d_cleandatabase;
 
 			new CleanConfig(Config, Database2);
 

@@ -107,12 +107,12 @@ namespace Schumix
 				{ "config-file=", "Set up the config file's place.", v => configfile = v },
 				{ "console-encoding=", "Set up the program's character encoding.", v => console_encoding = v },
 				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
-				{ "server-enabled=", "Premition to join the server.", v => serverenabled = Convert.ToBoolean(v) },
+				{ "server-enabled=", "Premition to join the server.", v => serverenabled = asd.ToBoolean(v) },
 				{ "server-host=", "Set server host.", v => serverhost = v },
 				{ "server-port=", "Set server port.", v => serverport = v.ToNumber(-1).ToInt32() },
 				{ "server-password=", "Set password.", v => serverpassword = v },
 				{ "server-identify=", "Set identify.", v => serveridentify = v },
-				{ "colorbind-mode=", "Set colorbind.", v => colorbindmode = Convert.ToBoolean(v) },
+				{ "colorbind-mode=", "Set colorbind.", v => colorbindmode = asd.ToBoolean(v) },
 			};
 
 			try
@@ -134,7 +134,7 @@ namespace Schumix
 			if(!console_encoding.IsNumber())
 				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
 			else
-				System.Console.OutputEncoding = Encoding.GetEncoding(Convert.ToInt32(console_encoding));
+				System.Console.OutputEncoding = Encoding.GetEncoding(asd.ToInt32(console_encoding));
 
 			sLConsole.SetLocale(localization);
 			System.Console.Title = SchumixBase.Title;

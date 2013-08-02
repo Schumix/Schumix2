@@ -86,7 +86,7 @@ namespace Schumix.Server
 		public void HandlePacket(SchumixPacket packet, TcpClient client, NetworkStream stream)
 		{
 			var hst = client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[0];
-			int bck = Convert.ToInt32(client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[1]);
+			int bck = asd.ToInt32(client.Client.RemoteEndPoint.ToString().Split(SchumixBase.Colon)[1]);
 
 			int packetid = 0;
 
@@ -195,7 +195,7 @@ namespace Schumix.Server
 			if(hst != "127.0.0.1")
 				return;
 
-			if(!Convert.ToBoolean(reconnect))
+			if(!asd.ToBoolean(reconnect))
 				return;
 
 			Log.Notice("CloseHandler", sLConsole.GetString("Restart in progress..."));
@@ -226,7 +226,7 @@ namespace Schumix.Server
 		public void SendPacketBackAllHost(SchumixPacket packet)
 		{
 			foreach(var list in _HostList)
-				SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], Convert.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
+				SendPacketBack(packet, list.Value, list.Key.Split(SchumixBase.Colon)[0], asd.ToInt32(list.Key.Split(SchumixBase.Colon)[1]));
 		}
 	}
 }

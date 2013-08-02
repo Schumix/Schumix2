@@ -45,7 +45,7 @@ namespace Schumix.WordPressRssAddon.Config
 
 			Log.Notice("WordPressRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			int QueryTime = !xmldoc.SelectSingleNode("WordPressRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("WordPressRssAddon/Rss/QueryTime").InnerText) : d_querytime;
+			int QueryTime = !xmldoc.SelectSingleNode("WordPressRssAddon/Rss/QueryTime").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("WordPressRssAddon/Rss/QueryTime").InnerText) : d_querytime;
 			new RssConfig(QueryTime);
 
 			Log.Success("WordPressRssAddonConfig", sLConsole.GetString("Config database is loading."));

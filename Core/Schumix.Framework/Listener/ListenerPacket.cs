@@ -63,13 +63,13 @@ namespace Schumix.Framework.Listener
 		public T Read<T>()
 		{
 			if(read_position > (split_buffer.Count - 1))
-				return ((T)Convert.ChangeType(0, typeof(T)));
+				return ((T)asd.ChangeType(0, typeof(T)));
 
-			T ret = ((T)(Convert.ChangeType((split_buffer[read_position]), typeof(T))));
+			T ret = ((T)(asd.ChangeType((split_buffer[read_position]), typeof(T))));
 			++read_position;
 
 			if(typeof(T) == typeof(string))
-			  	return ((T)Convert.ChangeType((((string)(ret as object)).Replace("{[n]}", Environment.NewLine)), typeof(T)));
+			  	return ((T)asd.ChangeType((((string)(ret as object)).Replace("{[n]}", Environment.NewLine)), typeof(T)));
 
 			return ret;
 		}
@@ -85,7 +85,7 @@ namespace Schumix.Framework.Listener
 		/// </typeparam>
 		public void Write<T>(T v)
 		{
-			string append = ((string)Convert.ChangeType(v, typeof(string)));
+			string append = ((string)asd.ChangeType(v, typeof(string)));
 			
 			if(string.IsNullOrEmpty(append))
 				return;

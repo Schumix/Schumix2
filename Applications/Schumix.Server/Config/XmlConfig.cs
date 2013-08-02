@@ -48,9 +48,9 @@ namespace Schumix.Server.Config
 			xmldoc.Load(sUtilities.DirectoryToSpecial(configdir, configfile));
 
 			string LogFileName = !xmldoc.SelectSingleNode("Server/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Server/Log/FileName").InnerText : d_logfilename;
-			bool LogDateFileName = !xmldoc.SelectSingleNode("Server/Log/DateFileName").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Log/DateFileName").InnerText) : d_logdatefilename;
-			int LogMaxFileSize = !xmldoc.SelectSingleNode("Server/Log/MaxFileSize").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Log/MaxFileSize").InnerText) : d_logmaxfilesize;
-			int LogLevel = !xmldoc.SelectSingleNode("Server/Log/LogLevel").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Log/LogLevel").InnerText) : d_loglevel;
+			bool LogDateFileName = !xmldoc.SelectSingleNode("Server/Log/DateFileName").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Server/Log/DateFileName").InnerText) : d_logdatefilename;
+			int LogMaxFileSize = !xmldoc.SelectSingleNode("Server/Log/MaxFileSize").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("Server/Log/MaxFileSize").InnerText) : d_logmaxfilesize;
+			int LogLevel = !xmldoc.SelectSingleNode("Server/Log/LogLevel").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("Server/Log/LogLevel").InnerText) : d_loglevel;
 			string LogDirectory = !xmldoc.SelectSingleNode("Server/Log/LogDirectory").IsNull() ? xmldoc.SelectSingleNode("Server/Log/LogDirectory").InnerText : d_logdirectory;
 
 			new Framework.Config.LogConfig(LogFileName, LogDateFileName, LogMaxFileSize, LogLevel, sUtilities.GetSpecialDirectory(LogDirectory), string.Empty, false);
@@ -59,7 +59,7 @@ namespace Schumix.Server.Config
 			Log.Debug("XmlConfig", ">> {0}", configfile);
 
 			Log.Notice("XmlConfig", sLConsole.GetString("Config file is loading."));
-			int ListenerPort = !xmldoc.SelectSingleNode("Server/Server/Listener/Port").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Server/Listener/Port").InnerText) : d_listenerport;
+			int ListenerPort = !xmldoc.SelectSingleNode("Server/Server/Listener/Port").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("Server/Server/Listener/Port").InnerText) : d_listenerport;
 			string Password = !xmldoc.SelectSingleNode("Server/Server/Password").IsNull() ? xmldoc.SelectSingleNode("Server/Server/Password").InnerText : d_password;
 
 			new ServerConfigs(ListenerPort, Password);
@@ -72,23 +72,23 @@ namespace Schumix.Server.Config
 
 			new LocalizationConfig(Locale);
 
-			bool Enabled = !xmldoc.SelectSingleNode("Server/Update/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Update/Enabled").InnerText) : d_updateenabled;
+			bool Enabled = !xmldoc.SelectSingleNode("Server/Update/Enabled").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Server/Update/Enabled").InnerText) : d_updateenabled;
 			string Version = !xmldoc.SelectSingleNode("Server/Update/Version").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Version").InnerText : d_updateversion;
 			string Branch = !xmldoc.SelectSingleNode("Server/Update/Branch").IsNull() ? xmldoc.SelectSingleNode("Server/Update/Branch").InnerText : d_updatebranch;
 			string WebPage = !xmldoc.SelectSingleNode("Server/Update/WebPage").IsNull() ? xmldoc.SelectSingleNode("Server/Update/WebPage").InnerText : d_updatewebpage;
 
 			new Framework.Config.UpdateConfig(Enabled, Version.ToLower(), Branch, WebPage);
 
-			int MaxMemory = !xmldoc.SelectSingleNode("Server/Shutdown/MaxMemory").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("Server/Shutdown/MaxMemory").InnerText) : d_shutdownmaxmemory;
+			int MaxMemory = !xmldoc.SelectSingleNode("Server/Shutdown/MaxMemory").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("Server/Shutdown/MaxMemory").InnerText) : d_shutdownmaxmemory;
 
 			new Framework.Config.ShutdownConfig(MaxMemory);
 
-			bool Config = !xmldoc.SelectSingleNode("Server/Clean/Config").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Clean/Config").InnerText) : d_cleanconfig;
-			bool Database = !xmldoc.SelectSingleNode("Server/Clean/Database").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Clean/Database").InnerText) : d_cleandatabase;
+			bool Config = !xmldoc.SelectSingleNode("Server/Clean/Config").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Server/Clean/Config").InnerText) : d_cleanconfig;
+			bool Database = !xmldoc.SelectSingleNode("Server/Clean/Database").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Server/Clean/Database").InnerText) : d_cleandatabase;
 
 			new Framework.Config.CleanConfig(Config, Database);
 
-			if(!xmldoc.SelectSingleNode("Server/Schumixs/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("Server/Schumixs/Enabled").InnerText) : d_schumixsenabled)
+			if(!xmldoc.SelectSingleNode("Server/Schumixs/Enabled").IsNull() ? asd.ToBoolean(xmldoc.SelectSingleNode("Server/Schumixs/Enabled").InnerText) : d_schumixsenabled)
 			{
 				Task.Factory.StartNew(() =>
 				{
