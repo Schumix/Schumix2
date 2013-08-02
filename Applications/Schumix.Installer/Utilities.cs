@@ -94,46 +94,6 @@ namespace Schumix.Installer
 			}
 		}
 
-		public PlatformType GetPlatformType()
-		{
-			PlatformType platform = PlatformType.None;
-			var pid = Environment.OSVersion.Platform;
-
-			switch(pid)
-			{
-			case PlatformID.Win32NT:
-			case PlatformID.Win32S:
-			case PlatformID.Win32Windows:
-			case PlatformID.WinCE:
-				platform = PlatformType.Windows;
-				break;
-			case PlatformID.Unix:
-			case (PlatformID)128:
-				// Well, there are chances MacOSX is reported as Unix instead of MacOSX.
-				// Instead of platform check, we'll do a feature checks (Mac specific root folders)
-				if(Directory.Exists("/Applications") && Directory.Exists("/System") &&
-				   Directory.Exists("/Users") && Directory.Exists("/Volumes"))
-				{
-					platform = PlatformType.MacOSX;
-					break;
-				}
-
-				platform = PlatformType.Linux;
-				break;
-			case PlatformID.MacOSX:
-				platform = PlatformType.MacOSX;
-				break;
-			case PlatformID.Xbox:
-				platform = PlatformType.Xbox;
-				break;
-			default:
-				platform = PlatformType.None;
-				break;
-			}
-
-			return platform;
-		}
-
 		public string GetVersion()
 		{
 			return Schumix.Installer.Config.Consts.SchumixVersion;

@@ -24,12 +24,13 @@ using System.Threading;
 using System.Diagnostics;
 using Microsoft.Build.Utilities;
 using Schumix.Installer;
+using Schumix.Installer.Platforms;
 
 namespace Schumix.Installer.Compiler
 {
 	sealed class Build
 	{
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		public bool HasError { get; private set; }
 
 		public Build(string dir)
@@ -44,13 +45,13 @@ namespace Schumix.Installer.Compiler
 			build.StartInfo.RedirectStandardOutput = true;
 			build.StartInfo.RedirectStandardError = true;
 
-			if(sUtilities.GetPlatformType() == PlatformType.Linux)
+			if(sPlatform.IsLinux)
 			{
 				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "/xbuild.exe", dir + "/xbuild.exe");
 				build.StartInfo.FileName = "mono";
 				build.StartInfo.Arguments = dir + "/xbuild.exe /p:Configuration=\"Release\" " + dir + "/Schumix.sln";
 			}
-			else if(sUtilities.GetPlatformType() == PlatformType.Windows)
+			else if(sPlatform.IsWindows)
 			{
 				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "\\MSBuild.exe", dir + "\\MSBuild.exe");
 				build.StartInfo.FileName = dir + "\\MSBuild.exe";

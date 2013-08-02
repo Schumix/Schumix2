@@ -84,14 +84,15 @@ FILES = \
 	Singleton.cs \
 	CopyTo/Copy.cs \
 	Clean/DirectoryClean.cs \
-	PlatformType.cs \
 	Log.cs \
 	Extensions/GeneralExtensions.cs \
 	Download/CloneSchumix.cs \
 	Extensions/ArrayExtensions.cs \
 	Extensions/StringExtensions.cs \
 	Extensions/NumberExtensions.cs \
-	Config/Consts.cs 
+	Config/Consts.cs \
+	Platforms/Platform.cs \
+	Platforms/PlatformType.cs 
 
 DATA_FILES = 
 
@@ -101,6 +102,7 @@ EXTRAS = \
 	Properties \
 	Config \
 	Extensions \
+	Platforms \
 	schumix.installer.in 
 
 REFERENCES =  \
