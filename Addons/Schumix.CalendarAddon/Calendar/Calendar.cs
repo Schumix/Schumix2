@@ -220,7 +220,7 @@ namespace Schumix.CalendarAddon
 				{
 					string name = row["Name"].ToString();
 					string channel = row["Channel"].ToString();
-					int year = asd.ToInt32(row["Year"].ToString());
+					int year = row["Year"].ToInt32();
 
 					if(time.Year > year)
 						sUnban.UnbanName(name, channel);
@@ -228,7 +228,7 @@ namespace Schumix.CalendarAddon
 						continue;
 					else if(time.Year == year)
 					{
-						int month = asd.ToInt32(row["Month"].ToString());
+						int month = row["Month"].ToInt32();
 
 						if(time.Month > month)
 							sUnban.UnbanName(name, channel);
@@ -236,7 +236,7 @@ namespace Schumix.CalendarAddon
 							continue;
 						else
 						{
-							int day = asd.ToInt32(row["Day"].ToString());
+							int day = row["Day"].ToInt32();
 
 							if(time.Month == month)
 							{
@@ -248,7 +248,7 @@ namespace Schumix.CalendarAddon
 								{
 									if(time.Day == day)
 									{
-										int hour = asd.ToInt32(row["Hour"].ToString());
+										int hour = row["Hour"].ToInt32();
 
 										if(time.Hour > hour)
 											sUnban.UnbanName(name, channel);
@@ -258,7 +258,7 @@ namespace Schumix.CalendarAddon
 										{
 											if(time.Hour == hour)
 											{
-												int minute = asd.ToInt32(row["Minute"].ToString());
+												int minute = row["Minute"].ToInt32();
 
 												if(time.Minute > minute)
 													sUnban.UnbanName(name, channel);
@@ -288,13 +288,13 @@ namespace Schumix.CalendarAddon
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					if(asd.ToBoolean(row["Loops"].ToString()))
+					if(row["Loops"].ToBoolean())
 					{
 						string name0 = row["Name"].ToString();
 						string channel0 = row["Channel"].ToString();
 						string message0 = row["Message"].ToString();
 
-						int hour = asd.ToInt32(row["Hour"].ToString());
+						int hour = row["Hour"].ToInt32();
 
 						if(time.Hour > hour)
 							continue;
@@ -304,7 +304,7 @@ namespace Schumix.CalendarAddon
 						{
 							if(time.Hour == hour)
 							{
-								int minute = asd.ToInt32(row["Minute"].ToString());
+								int minute = row["Minute"].ToInt32();
 
 								if(time.Minute > minute)
 									continue;
@@ -321,11 +321,11 @@ namespace Schumix.CalendarAddon
 						continue;
 					}
 
-					int id = asd.ToInt32(row["Id"].ToString());
+					int id = row["Id"].ToInt32();
 					string name = row["Name"].ToString();
 					string channel = row["Channel"].ToString();
 					string message = row["Message"].ToString();
-					int year = asd.ToInt32(row["Year"].ToString());
+					int year = row["Year"].ToInt32();
 
 					if(time.Year > year)
 						sCalendarFunctions.Remove(id);
@@ -333,7 +333,7 @@ namespace Schumix.CalendarAddon
 						continue;
 					else if(time.Year == year)
 					{
-						int month = asd.ToInt32(row["Month"].ToString());
+						int month = row["Month"].ToInt32();
 
 						if(time.Month > month)
 							sCalendarFunctions.Remove(id);
@@ -341,7 +341,7 @@ namespace Schumix.CalendarAddon
 							continue;
 						else
 						{
-							int day = asd.ToInt32(row["Day"].ToString());
+							int day = row["Day"].ToInt32();
 
 							if(time.Month == month)
 							{
@@ -353,7 +353,7 @@ namespace Schumix.CalendarAddon
 								{
 									if(time.Day == day)
 									{
-										int hour = asd.ToInt32(row["Hour"].ToString());
+										int hour = row["Hour"].ToInt32();
 
 										if(time.Hour > hour)
 											sCalendarFunctions.Remove(id);
@@ -363,7 +363,7 @@ namespace Schumix.CalendarAddon
 										{
 											if(time.Hour == hour)
 											{
-												int minute = asd.ToInt32(row["Minute"].ToString());
+												int minute = row["Minute"].ToInt32();
 
 												if(time.Minute > minute)
 													sCalendarFunctions.Remove(id);
@@ -432,7 +432,7 @@ namespace Schumix.CalendarAddon
 				{
 					foreach(DataRow row in db.Rows)
 					{
-						bool enabled = asd.ToBoolean(row["Enabled"].ToString());
+						bool enabled = row["Enabled"].ToBoolean();
 						if(!enabled)
 							return;
 
@@ -440,7 +440,7 @@ namespace Schumix.CalendarAddon
 						{
 							if(sMyChannelInfo.FSelect(IChannelFunctions.BirthDay, channel.Key))
 							{
-								sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("BirthDay", channel.Key, _servername), row["Name"].ToString(), (DateTime.Now.Year - asd.ToInt32(row["Year"].ToString())));
+								sSendMessage.SendCMPrivmsg(channel.Key, sLManager.GetWarningText("BirthDay", channel.Key, _servername), row["Name"].ToString(), (DateTime.Now.Year - row["Year"].ToInt32()));
 								Thread.Sleep(400);
 							}
 						}

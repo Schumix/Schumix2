@@ -76,7 +76,7 @@ namespace Schumix.Server
 				{ "config-file=", "Set up the config file's place.", v => configfile = v },
 				{ "console-encoding=", "Set up the program's character encoding.", v => console_encoding = v },
 				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
-				{ "colorbind-mode=", "Set colorbind.", v => colorbindmode = asd.ToBoolean(v) },
+				{ "colorbind-mode=", "Set colorbind.", v => colorbindmode = v.ToBoolean() },
 			};
 			
 			try
@@ -98,7 +98,7 @@ namespace Schumix.Server
 			if(!console_encoding.IsNumber())
 				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
 			else
-				System.Console.OutputEncoding = Encoding.GetEncoding(asd.ToInt32(console_encoding));
+				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding.ToInt32());
 
 			sLConsole.SetLocale(localization);
 			System.Console.Title = "Schumix2 Server";

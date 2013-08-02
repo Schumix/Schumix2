@@ -125,7 +125,6 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\DateTimeExtensions.cs" />
     <Compile Include="Extensions\IrcExtensions.cs" />
-    <Compile Include="Extensions\NumberExtensions.cs" />
     <Compile Include="Logger\Log.cs" />
     <Compile Include="Logger\LogType.cs" />
     <Compile Include="Logger\ConsoleLog.cs" />
@@ -153,6 +152,7 @@
     <Compile Include="Network\SchumixPacket.cs" />
     <Compile Include="Listener\Host.cs" />
     <Compile Include="Listener\ListenerPacket.cs" />
+    <Compile Include="Extensions\ConvertExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

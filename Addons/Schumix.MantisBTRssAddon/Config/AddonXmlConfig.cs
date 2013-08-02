@@ -45,7 +45,7 @@ namespace Schumix.MantisBTRssAddon.Config
 
 			Log.Notice("MantisBTRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			int QueryTime = !xmldoc.SelectSingleNode("MantisBTRssAddon/Rss/QueryTime").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("MantisBTRssAddon/Rss/QueryTime").InnerText) : d_querytime;
+			int QueryTime = !xmldoc.SelectSingleNode("MantisBTRssAddon/Rss/QueryTime").IsNull() ? xmldoc.SelectSingleNode("MantisBTRssAddon/Rss/QueryTime").InnerText.ToInt32() : d_querytime;
 			new RssConfig(QueryTime);
 
 			Log.Success("MantisBTRssAddonConfig", sLConsole.GetString("Config database is loading."));

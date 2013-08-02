@@ -2,6 +2,8 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * Extensions-ba beépített Convert részek felhasználva az egész kódba.
+
 ## 4.2.0 (2013-07-29)
 
  * Angol és magyarnyelvű .md fájlok felcserélve. Ötletért köszönet Jackneill-nek.

@@ -440,7 +440,7 @@ namespace Schumix.WordPressRssAddon.Commands
 						return;
 					}
 					
-					if(sIRCMessage.Info[7].ToLower() != "true" && sIRCMessage.Info[7].ToLower() != "false")
+					if(!sIRCMessage.Info[7].IsBoolean())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ValueIsNotTrueOrFalse", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -449,9 +449,9 @@ namespace Schumix.WordPressRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Colors FROM wordpressinfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						bool enabled = asd.ToBoolean(db["Colors"].ToString());
+						bool enabled = db["Colors"].ToBoolean();
 						
-						if(asd.ToBoolean(sIRCMessage.Info[7].ToLower()) == enabled)
+						if(sIRCMessage.Info[7].ToBoolean() == enabled)
 						{
 							if(enabled)
 							{
@@ -492,7 +492,7 @@ namespace Schumix.WordPressRssAddon.Commands
 						return;
 					}
 					
-					if(sIRCMessage.Info[7].ToLower() != "true" && sIRCMessage.Info[7].ToLower() != "false")
+					if(!sIRCMessage.Info[7].IsBoolean())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ValueIsNotTrueOrFalse", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -501,9 +501,9 @@ namespace Schumix.WordPressRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT ShortUrl FROM wordpressinfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						bool enabled = asd.ToBoolean(db["ShortUrl"].ToString());
+						bool enabled = db["ShortUrl"].ToBoolean();
 						
-						if(asd.ToBoolean(sIRCMessage.Info[7].ToLower()) == enabled)
+						if(sIRCMessage.Info[7].ToBoolean() == enabled)
 						{
 							if(enabled)
 							{

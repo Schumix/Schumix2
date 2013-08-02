@@ -109,7 +109,7 @@ namespace Schumix.MantisBTRssAddon.Config
 
 		private void RssMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			int QueryTime = (!nodes.IsNull() && nodes.ContainsKey("QueryTime")) ? asd.ToInt32(nodes["QueryTime".ToYamlNode()].ToString()) : d_querytime;
+			int QueryTime = (!nodes.IsNull() && nodes.ContainsKey("QueryTime")) ? nodes["QueryTime".ToYamlNode()].ToInt32() : d_querytime;
 			new RssConfig(QueryTime);
 		}
 

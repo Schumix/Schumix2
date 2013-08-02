@@ -336,7 +336,7 @@ namespace Schumix.Irc.Channel
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					if(!asd.ToBoolean(row["Enabled"].ToString()))
+					if(!row["Enabled"].ToBoolean())
 						error = true;
 				}
 			}

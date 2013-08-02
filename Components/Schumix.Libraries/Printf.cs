@@ -228,7 +228,7 @@ namespace Schumix.Libraries
 		{
 			// convert octal quotes (like \040)
 			if(m.Groups[2].Length == 3)
-				return asd.ToChar(asd.ToByte(m.Groups[2].Value, 8)).ToString();
+				return m.Groups[2].Value.ToByte(8).ToChar().ToString();
 			else
 			{
 				// convert all other special meta characters
@@ -315,7 +315,7 @@ namespace Schumix.Libraries
 				if(!m.Groups[1].IsNull() && m.Groups[1].Value.Length > 0)
 				{
 					string val = m.Groups[1].Value.Substring(0, m.Groups[1].Value.Length - 1);
-					paramIx = asd.ToInt32(val) - 1;
+					paramIx = val.ToInt32() - 1;
 				}
 				#endregion
 
@@ -353,7 +353,7 @@ namespace Schumix.Libraries
 
 				if(!m.Groups[3].IsNull() && m.Groups[3].Value.Length > 0)
 				{
-					fieldLength = asd.ToInt32(m.Groups[3].Value);
+					fieldLength = m.Groups[3].Value.ToInt32();
 					flagZeroPadding = (m.Groups[3].Value[0] == '0');
 				}
 				#endregion
@@ -373,7 +373,7 @@ namespace Schumix.Libraries
 				fieldPrecision = int.MinValue;
 
 				if(!m.Groups[4].IsNull() && m.Groups[4].Value.Length > 0)
-					fieldPrecision = asd.ToInt32(m.Groups[4].Value);
+					fieldPrecision = m.Groups[4].Value.ToInt32();
 				#endregion
 
 				#region short / long indicator
@@ -492,7 +492,7 @@ namespace Schumix.Libraries
 					#region c - character
 					case 'c':   // character
 						if(IsNumericType(o))
-							w = asd.ToChar(o).ToString();
+							w = o.ToChar().ToString();
 						else if(o is char)
 							w = ((char)o).ToString();
 						else if(o is string && ((string)o).Length > 0)
@@ -619,7 +619,7 @@ namespace Schumix.Libraries
 
 			if(IsNumericType(Value))
 			{
-				w = asd.ToString(UnboxToLong(Value, true), 8);
+				w = Convert.ToString(UnboxToLong(Value, true), 8);
 
 				if(Left2Right || Padding == SchumixBase.Space)
 				{

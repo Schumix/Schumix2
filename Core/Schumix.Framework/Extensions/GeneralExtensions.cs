@@ -197,5 +197,17 @@ namespace Schumix.Framework.Extensions
 
 			return Language;
 		}
+
+		public static bool IsNumber(this string value)
+		{
+			double number;
+			return double.TryParse(value, out number);
+		}
+
+		public static bool IsBoolean(this string value)
+		{
+			bool b;
+			return bool.TryParse(value, out b);
+		}
 	}
 }

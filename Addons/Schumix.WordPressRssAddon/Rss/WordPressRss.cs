@@ -335,10 +335,10 @@ namespace Schumix.WordPressRssAddon
 				{
 					string language = sLManager.GetChannelLocalization(chan, _servername);
 
-					if(asd.ToBoolean(db["ShortUrl"].ToString()))
+					if(db["ShortUrl"].ToBoolean())
 						commiturl = BitlyApi.ShortenUrl(commiturl).ShortUrl;
 					
-					if(asd.ToBoolean(db["Colors"].ToString()))
+					if(db["Colors"].ToBoolean())
 					{
 						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress", language), _name, author, commiturl);
 						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.WordPressRss("WordPress2", language), _name, title);

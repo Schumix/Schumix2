@@ -44,7 +44,7 @@ namespace Schumix.Installer.Extensions
 
 		public static int ToInt(this double Double)
 		{
-			return asd.ToInt32(Double);
+			return Convert.ToInt32(Double);
 		}
 	}
 }

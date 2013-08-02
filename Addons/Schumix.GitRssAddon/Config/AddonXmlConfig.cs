@@ -45,7 +45,7 @@ namespace Schumix.GitRssAddon.Config
 
 			Log.Notice("GitRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			int QueryTime = !xmldoc.SelectSingleNode("GitRssAddon/Rss/QueryTime").IsNull() ? asd.ToInt32(xmldoc.SelectSingleNode("GitRssAddon/Rss/QueryTime").InnerText) : d_querytime;
+			int QueryTime = !xmldoc.SelectSingleNode("GitRssAddon/Rss/QueryTime").IsNull() ? xmldoc.SelectSingleNode("GitRssAddon/Rss/QueryTime").InnerText.ToInt32() : d_querytime;
 			new RssConfig(QueryTime);
 
 			Log.Success("GitRssAddonConfig", sLConsole.GetString("Config database is loading."));
