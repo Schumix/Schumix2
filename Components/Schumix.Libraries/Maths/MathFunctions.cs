@@ -21,9 +21,9 @@
 
 using System;
 using System.Collections.Generic;
-using Schumix.Libraries.Mathematics.Algorithms;
+using Schumix.Libraries.Maths.Algorithms;
 
-namespace Schumix.Libraries.Mathematics
+namespace Schumix.Libraries.Maths
 {
     /// <summary>
     /// Provides simple mathematic methods.

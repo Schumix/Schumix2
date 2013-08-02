@@ -19,23 +19,19 @@
  */
 
 using System;
-using Schumix.Framework;
 
-namespace Schumix.Libraries
+namespace Schumix.Framework.Extensions
 {
-	public sealed class Crypto
+	public static class IrcExtensions
 	{
-		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public Crypto() {}
-
-		public static string Sha1(string value)
+		public static string ToIrcOpcode(this int number)
 		{
-			return sUtilities.Sha1(value);
-		}
-
-		public static string Md5(string value)
-		{
-			return sUtilities.Md5(value);
+			if(number < 10)
+				return "00" + number.ToString();
+			else if(number < 100)
+				return "0" + number.ToString();
+			else
+				return number.ToString();
 		}
 	}
 }

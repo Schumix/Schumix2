@@ -24,7 +24,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.Generic;
 
-namespace Schumix.Libraries.Mathematics.Types
+namespace Schumix.Libraries.Maths.Types
 {
 	/// <summary>
 	/// An array which automatically sorts itself.

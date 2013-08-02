@@ -92,9 +92,17 @@ FILES = \
 	Properties/AssemblyInfo.cs \
 	Crypto/Crypto.cs \
 	Printf.cs \
-	Mathematics/MathFunctions.cs \
-	Mathematics/Algorithms/QuickSort.cs \
-	Mathematics/Types/AutoSortedArray.cs 
+	Maths/MathFunctions.cs \
+	Maths/Algorithms/QuickSort.cs \
+	Maths/Types/AutoSortedArray.cs \
+	Extensions/ArrayExtensions.cs \
+	Extensions/CollectionExtensions.cs \
+	Extensions/ConvertExtensions.cs \
+	Extensions/DateTimeExtensions.cs \
+	Extensions/GeneralExtensions.cs \
+	Extensions/StringExtensions.cs \
+	Extensions/ReflectionExtensions.cs \
+	Extensions/IrcExtensions.cs 
 
 DATA_FILES = 
 
@@ -103,6 +111,7 @@ RESOURCES =
 EXTRAS = \
 	Properties \
 	Crypto \
+	Extensions \
 	schumix.libraries.pc.in 
 
 REFERENCES =  \

@@ -40,14 +40,23 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Crypto\Crypto.cs" />
     <Compile Include="Printf.cs" />
-    <Compile Include="Mathematics\MathFunctions.cs" />
-    <Compile Include="Mathematics\Algorithms\QuickSort.cs" />
-    <Compile Include="Mathematics\Types\AutoSortedArray.cs" />
+    <Compile Include="Maths\MathFunctions.cs" />
+    <Compile Include="Maths\Algorithms\QuickSort.cs" />
+    <Compile Include="Maths\Types\AutoSortedArray.cs" />
+    <Compile Include="Extensions\ArrayExtensions.cs" />
+    <Compile Include="Extensions\CollectionExtensions.cs" />
+    <Compile Include="Extensions\ConvertExtensions.cs" />
+    <Compile Include="Extensions\DateTimeExtensions.cs" />
+    <Compile Include="Extensions\GeneralExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Extensions\IrcExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Crypto\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">
