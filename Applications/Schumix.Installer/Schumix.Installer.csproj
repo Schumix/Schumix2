@@ -52,10 +52,10 @@
     <Compile Include="Download\CloneSchumix.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Extensions\NumberExtensions.cs" />
     <Compile Include="Config\Consts.cs" />
     <Compile Include="Platforms\Platform.cs" />
     <Compile Include="Platforms\PlatformType.cs" />
+    <Compile Include="Extensions\ConvertExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

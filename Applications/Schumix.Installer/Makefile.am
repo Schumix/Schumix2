@@ -89,10 +89,10 @@ FILES = \
 	Download/CloneSchumix.cs \
 	Extensions/ArrayExtensions.cs \
 	Extensions/StringExtensions.cs \
-	Extensions/NumberExtensions.cs \
 	Config/Consts.cs \
 	Platforms/Platform.cs \
-	Platforms/PlatformType.cs 
+	Platforms/PlatformType.cs \
+	Extensions/ConvertExtensions.cs 
 
 DATA_FILES = 
 
