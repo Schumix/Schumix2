@@ -109,7 +109,7 @@ namespace Schumix.Framework.Maths.Types
 			for(var index = 0; index < _array.Count; index++)
 			{
 				var item = _array[index];
-				builder.AppendFormat(index == _array.Count - 1 ? "{0}" : "{0}, ", asd.ToString(item));
+				builder.AppendFormat(index == _array.Count - 1 ? "{0}" : "{0}, ", Convert.ToString(item));
 			}
 
 			builder.Append('}');

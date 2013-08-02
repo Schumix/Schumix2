@@ -448,7 +448,7 @@ namespace Schumix.Framework
 			if(sPlatform.IsWindows)
 			{
 				var mos = new ManagementObjectSearcher("root\\CIMV2", "SELECT * FROM Win32_Processor");
-				return (from ManagementObject mo in mos.Get() select (Regex.Replace(asd.ToString(mo["Name"]), @"\s+", SchumixBase.Space.ToString()))).FirstOrDefault();
+				return (from ManagementObject mo in mos.Get() select (Regex.Replace(mo["Name"].ToString(), @"\s+", SchumixBase.Space.ToString()))).FirstOrDefault();
 			}
 			else if(sPlatform.IsLinux)
 			{
@@ -1237,8 +1237,8 @@ namespace Schumix.Framework
 		public bool IsValueBiggerDateTimeNow(int Year, int Month, int Day, int Hour, int Minute)
 		{
 			var nowtime = DateTime.Now;
-			nowtime = asd.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}", nowtime.Year, nowtime.Month, nowtime.Day, nowtime.Hour, nowtime.Minute), dtfi);
-			var newtime = asd.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}", Year, Month, Day, Hour, Minute), dtfi);
+			nowtime = string.Format("{0}-{1}-{2} {3}:{4}", nowtime.Year, nowtime.Month, nowtime.Day, nowtime.Hour, nowtime.Minute).ToDateTime(dtfi);
+			var newtime = string.Format("{0}-{1}-{2} {3}:{4}", Year, Month, Day, Hour, Minute).ToDateTime(dtfi);
 			var compare = DateTime.Compare(nowtime, newtime);
 			return compare == 1 || compare == 0;
 		}
