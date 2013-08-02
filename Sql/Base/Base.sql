@@ -1399,6 +1399,47 @@ INSERT INTO `schumix` VALUES ("21", "1", "default", "nameday", "on");
 INSERT INTO `schumix` VALUES ("22", "1", "default", "birthday", "on");
 
 -- ----------------------------
+-- Records of ignore_irc_commands
+-- ----------------------------
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".register");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".identify");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".set");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".sop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".aop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".hop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".vop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".access");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".levels");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".akick");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".drop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".ban");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".unban");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".owner");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".deowner");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".protect");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".deprotect");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".op");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".deop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".halfop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".dehalfop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".voice");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".devoice");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".getkey");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".invite");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".kick");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".logout");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".topic");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".info");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".why");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".clear");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".flags");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".appendtopic");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".checkban");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".sync");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".kb");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".k");
+
+-- ----------------------------
 -- Records of svninfo
 -- ----------------------------
 -- INSERT INTO `svninfo` VALUES (1, "1", "default", "Sandshroud", "http://www.assembla.com/spaces/Sandshroud/stream.rss", "assembla", "false", "true", "#hun_bot,#schumix"); Példa a használatra
