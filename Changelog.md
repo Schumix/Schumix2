@@ -2,6 +2,9 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * Debug módban alapértelmezetten és megváltoztathatatlanul a logolási szint a 3-as lesz.
+ * 3.x.x széria sql frissítései részben kitakarítva.
+ * Régi sql hiányosságok és elmaradt frissítések beépítve a Base.sql-be.
  * Extensions-ba beépített Convert részek felhasználva az egész kódba.
 
 ## 4.2.0 (2013-07-29)
