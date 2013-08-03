@@ -12,7 +12,7 @@ COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
 	../../External/ngit/bin/NGit.dll \
 	../../External/ngit/bin/NSch.dll \
-	../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll \
+	../../External/ngit/External/SharpZipLib/bin/Debug/ICSharpCode.SharpZipLib.dll \
 	../../External/ngit/bin/Sharpen.dll \
 	../../External/ngit/bin/Sharpen.Unix.dll
 BUILD_DIR = ../../Run/Debug
@@ -21,7 +21,7 @@ INSTALLER_EXE_MDB_SOURCE=../../Run/Debug/Installer.exe.mdb
 INSTALLER_EXE_MDB=$(BUILD_DIR)/Installer.exe.mdb
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/Debug/ICSharpCode.SharpZipLib.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
@@ -38,7 +38,7 @@ COMPILE_TARGET = exe
 PROJECT_REFERENCES =  \
 	../../External/ngit/bin/NGit.dll \
 	../../External/ngit/bin/NSch.dll \
-	../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll \
+	../../External/ngit/External/SharpZipLib/bin/Release/ICSharpCode.SharpZipLib.dll \
 	../../External/ngit/bin/Sharpen.dll \
 	../../External/ngit/bin/Sharpen.Unix.dll
 BUILD_DIR = ../../Run/Release
@@ -46,7 +46,7 @@ BUILD_DIR = ../../Run/Release
 INSTALLER_EXE_MDB=
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/Release/ICSharpCode.SharpZipLib.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll

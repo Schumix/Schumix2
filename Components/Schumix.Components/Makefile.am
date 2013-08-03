@@ -10,7 +10,7 @@ ASSEMBLY = ../../Run/Debug/Schumix.Components.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll \
+	../../External/ngit/External/SharpZipLib/bin/Debug/ICSharpCode.SharpZipLib.dll \
 	../../External/ngit/bin/NGit.dll \
 	../../External/ngit/bin/NSch.dll \
 	../../Run/Debug/Schumix.Framework.dll \
@@ -28,7 +28,7 @@ IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
 MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
 MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/Debug/ICSharpCode.SharpZipLib.dll
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
@@ -74,7 +74,7 @@ ASSEMBLY = ../../Run/Release/Schumix.Components.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
-	../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll \
+	../../External/ngit/External/SharpZipLib/bin/Release/ICSharpCode.SharpZipLib.dll \
 	../../External/ngit/bin/NGit.dll \
 	../../External/ngit/bin/NSch.dll \
 	../../Run/Release/Schumix.Framework.dll \
@@ -91,7 +91,7 @@ IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
 MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
 MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/ICSharpCode.SharpZipLib.dll
+ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/Release/ICSharpCode.SharpZipLib.dll
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
