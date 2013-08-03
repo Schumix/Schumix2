@@ -185,6 +185,10 @@ namespace Schumix.Framework.Config
 			string IrcLogDirectory = (!nodes.IsNull() && nodes.ContainsKey("IrcLogDirectory")) ? nodes["IrcLogDirectory".ToYamlNode()].ToString() : d_irclogdirectory;
 			bool IrcLog = (!nodes.IsNull() && nodes.ContainsKey("IrcLog")) ? nodes["IrcLog".ToYamlNode()].ToString().ToBoolean() : d_irclog;
 
+#if DEBUG
+			LogLevel = 3; // Maximális log szint
+#endif
+
 			new LogConfig(LogFileName, LogDateFileName, LogMaxFileSize, LogLevel, sUtilities.GetSpecialDirectory(LogDirectory), sUtilities.GetSpecialDirectory(IrcLogDirectory), IrcLog);
 		}
 
