@@ -20,7 +20,6 @@
 
 using System;
 using System.IO;
-using System.Net;
 using NGit;
 using NGit.Api;
 
@@ -30,8 +29,13 @@ namespace Schumix.Installer.Download
 	{
 		public CloneSchumix(string Url, string Dir)
 		{
+			string path = Path.Combine(Environment.CurrentDirectory, Dir);
+
+			if(Directory.Exists(path))
+				Directory.Delete(path, true);
+
 			var clone = Git.CloneRepository();
-			var repo = clone.SetURI(Url).SetDirectory(Path.Combine(Environment.CurrentDirectory, Dir)).Call();
+			var repo = clone.SetURI(Url).SetDirectory(path).Call();
 			repo.Checkout().SetCreateBranch(true).SetUpstreamMode(CreateBranchCommand.SetupUpstreamMode.SET_UPSTREAM).SetName("origin/stable").Call();
 			repo.SubmoduleInit().Call();
 			repo.SubmoduleUpdate().Call();
