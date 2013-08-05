@@ -60,24 +60,38 @@ namespace Schumix.Components.Updater.Sql
 
 				if(sqlname.Contains("_") && !sqlname.Contains("base"))
 				{
-					var v1 = new Version(sqlname.Substring(0, sqlname.IndexOf("_")));
-					if(v1.CompareTo(v2) == 1)
+					try
 					{
-						if(sqlite)
-							SQLiteMap.Add(sqlname, string.Empty);
-						else
-							MySqlMap.Add(sqlname, string.Empty);
+						var v1 = new Version(sqlname.Substring(0, sqlname.IndexOf("_")));
+						if(v1.CompareTo(v2) == 1)
+						{
+							if(sqlite)
+								SQLiteMap.Add(sqlname, string.Empty);
+							else
+								MySqlMap.Add(sqlname, string.Empty);
+						}
+					}
+					catch(Exception)
+					{
+						// Ignore
 					}
 				}
 				else if(!sqlname.Contains("base"))
 				{
-					var v1 = new Version(sqlname.Substring(0, sqlname.IndexOf(".sql")));
-					if(v1.CompareTo(v2) == 1)
+					try
 					{
-						if(sqlite)
-							SQLiteMap.Add(sqlname, string.Empty);
-						else
-							MySqlMap.Add(sqlname, string.Empty);
+						var v1 = new Version(sqlname.Substring(0, sqlname.IndexOf(".sql")));
+						if(v1.CompareTo(v2) == 1)
+						{
+							if(sqlite)
+								SQLiteMap.Add(sqlname, string.Empty);
+							else
+								MySqlMap.Add(sqlname, string.Empty);
+						}
+					}
+					catch(Exception)
+					{
+						// Ignore
 					}
 				}
 			}
@@ -85,25 +99,31 @@ namespace Schumix.Components.Updater.Sql
 			foreach(var file in dir.GetFiles("*.sql").AsParallel())
 			{
 				var sqlname = file.Name.ToLower();
-
 				if(sqlname.Contains("_") && sqlname.Contains("base"))
 				{
-					var v1 = new Version(sqlname.Substring(0, sqlname.IndexOf("_")));
-
-					if(v1.CompareTo(v2) == 1)
+					try
 					{
-						string s = sqlname.Substring(0, sqlname.IndexOf("_base.sql"));
-						if(SQLiteMap.ContainsKey(s + "_sqlite.sql"))
-							SQLiteMap[(s + "_sqlite.sql")] = sqlname;
-						else if(MySqlMap.ContainsKey(s + ".sql"))
-							MySqlMap[(s + ".sql")] = sqlname;
-						else
+						var v1 = new Version(sqlname.Substring(0, sqlname.IndexOf("_")));
+
+						if(v1.CompareTo(v2) == 1)
 						{
-							if(SQLiteConfig.Enabled)
-								SQLiteMap.Add(sqlname.Substring(0, sqlname.IndexOf("_base")), sqlname);
+							string s = sqlname.Substring(0, sqlname.IndexOf("_base.sql"));
+							if(SQLiteMap.ContainsKey(s + "_sqlite.sql"))
+								SQLiteMap[(s + "_sqlite.sql")] = sqlname;
+							else if(MySqlMap.ContainsKey(s + ".sql"))
+								MySqlMap[(s + ".sql")] = sqlname;
 							else
-								MySqlMap.Add(sqlname.Substring(0, sqlname.IndexOf("_base")), sqlname);
-						}	
+							{
+								if(SQLiteConfig.Enabled)
+									SQLiteMap.Add(sqlname.Substring(0, sqlname.IndexOf("_base")), sqlname);
+								else
+									MySqlMap.Add(sqlname.Substring(0, sqlname.IndexOf("_base")), sqlname);
+							}	
+						}
+					}
+					catch(Exception)
+					{
+						// Ignore
 					}
 				}
 			}
