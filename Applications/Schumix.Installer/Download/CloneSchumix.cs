@@ -34,11 +34,13 @@ namespace Schumix.Installer.Download
 			if(Directory.Exists(path))
 				Directory.Delete(path, true);
 
-			var clone = Git.CloneRepository();
-			var repo = clone.SetURI(Url).SetDirectory(path).Call();
-			repo.Checkout().SetCreateBranch(true).SetUpstreamMode(CreateBranchCommand.SetupUpstreamMode.SET_UPSTREAM).SetName("origin/stable").Call();
-			repo.SubmoduleInit().Call();
-			repo.SubmoduleUpdate().Call();
+			var cmd = Git.CloneRepository();
+			cmd.SetURI(Url);
+			cmd.SetRemote("origin");
+			cmd.SetBranch("refs/heads/stable");
+			cmd.SetDirectory(path);
+			cmd.SetCloneSubmodules(true);
+			cmd.Call();
 		}
 	}
 }

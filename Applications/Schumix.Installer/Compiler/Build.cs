@@ -49,13 +49,13 @@ namespace Schumix.Installer.Compiler
 			{
 				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "/xbuild.exe", dir + "/xbuild.exe");
 				build.StartInfo.FileName = "mono";
-				build.StartInfo.Arguments = dir + "/xbuild.exe /p:Configuration=\"Release\" " + dir + "/Schumix.sln";
+				build.StartInfo.Arguments = string.Format("{0}/xbuild.exe /p:Configuration=\"Release\" {0}/Schumix.sln /flp:LogFile=xbuild.log;Verbosity=Detailed", dir);
 			}
 			else if(sPlatform.IsWindows)
 			{
 				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "\\MSBuild.exe", dir + "\\MSBuild.exe");
 				build.StartInfo.FileName = dir + "\\MSBuild.exe";
-				build.StartInfo.Arguments = "/p:Configuration=\"Release\" " + dir + "/Schumix.sln";
+				build.StartInfo.Arguments = string.Format("/p:Configuration=\"Release\" {0}/Schumix.sln /flp:LogFile=msbuild.log;Verbosity=Detailed", dir);
 			}
 
 			build.Start();
