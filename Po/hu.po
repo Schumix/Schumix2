@@ -515,7 +515,7 @@ msgstr "CacheDB indul..."
 
 #: ../Core/Schumix.Framework/SchumixBase.cs:13
 msgid "Successfully connected to the database."
-msgstr "Az adatbázishoz sikeres a kapcsolodás."
+msgstr "Az adatbázishoz sikeres a kapcsolódás."
 
 #: ../Core/Schumix.Framework/SchumixBase.cs:15
 #: ../Applications/Schumix.Server/Main.cs:13
@@ -543,11 +543,11 @@ msgstr ""
 #: ../Core/Schumix.Framework/Database/SQLite.cs:3
 #: ../Core/Schumix.Framework/Database/MySql.cs:3
 msgid "Error was handled when tried to connect to the database!"
-msgstr "Hiba történt az adatbázishoz való kapcsolodás során!"
+msgstr "Hiba történt az adatbázishoz való kapcsolódás során!"
 
 #: ../Core/Schumix.Framework/Database/SQLite.cs:3
 msgid "Successfully connected to the SQLite database."
-msgstr "SQLite adatbázishoz sikeres a kapcsolodás."
+msgstr "SQLite adatbázishoz sikeres a kapcsolódás."
 
 #: ../Core/Schumix.Framework/Database/SQLite.cs:15
 #: ../Core/Schumix.Framework/Database/SQLite.cs:18
@@ -583,7 +583,7 @@ msgstr "Két adatbázis van kiválasztva!"
 
 #: ../Core/Schumix.Framework/Database/MySql.cs:3
 msgid "Successfully connected to the MySql database."
-msgstr "MySql adatbázishoz sikeres a kapcsolodás."
+msgstr "MySql adatbázishoz sikeres a kapcsolódás."
 
 #: ../Core/Schumix.Framework/Database/MySql.cs:15
 msgid "Sql connection crash."
