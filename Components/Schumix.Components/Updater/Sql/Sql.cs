@@ -22,14 +22,18 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using Schumix.Framework;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Database;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Components.Updater.Sql
 {
 	sealed class SqlUpdate
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private Dictionary<string, string> SQLiteMap = new Dictionary<string, string>();
 		private Dictionary<string, string> MySqlMap = new Dictionary<string, string>();
 		private DatabaseManager DManager;
@@ -71,9 +75,9 @@ namespace Schumix.Components.Updater.Sql
 								MySqlMap.Add(sqlname, string.Empty);
 						}
 					}
-					catch(Exception)
+					catch(Exception e)
 					{
-						// Ignore
+						Log.Error("SqlUpdate", sLConsole.GetString("Failure details: {0}"), e.Message);
 					}
 				}
 				else if(!sqlname.Contains("base"))
@@ -89,9 +93,9 @@ namespace Schumix.Components.Updater.Sql
 								MySqlMap.Add(sqlname, string.Empty);
 						}
 					}
-					catch(Exception)
+					catch(Exception e)
 					{
-						// Ignore
+						Log.Error("SqlUpdate", sLConsole.GetString("Failure details: {0}"), e.Message);
 					}
 				}
 			}
@@ -121,9 +125,9 @@ namespace Schumix.Components.Updater.Sql
 							}	
 						}
 					}
-					catch(Exception)
+					catch(Exception e)
 					{
-						// Ignore
+						Log.Error("SqlUpdate", sLConsole.GetString("Failure details: {0}"), e.Message);
 					}
 				}
 			}

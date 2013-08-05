@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-05 11:15:15+0200\n"
+"POT-Creation-Date: 2013-08-05 17:57:53+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -79,6 +79,8 @@ msgstr "Összes Command handler törlésre került."
 #: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:17
 #: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:17
 #: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:5
+#: ../Components/Schumix.Components/Updater/Sql/Sql.cs:8
+#: ../Components/Schumix.Components/Updater/Sql/Sql.cs:10
 msgid "Failure details: {0}"
 msgstr "Meghibásodás részletei: {0}"
 
