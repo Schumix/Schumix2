@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-07-29 10:31:48+0200\n"
-"PO-Revision-Date: 2013-07-29 10:31:50+0200\n"
+"POT-Creation-Date: 2013-08-05 11:15:15+0200\n"
+"PO-Revision-Date: 2013-08-05 11:15:20+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -434,8 +434,8 @@ msgstr ""
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
 #: ../Core/Schumix.Framework/Runtime.cs:8
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:19
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:20
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:46
 #: ../Applications/Schumix.Server/ServerListener.cs:6
 #: ../Applications/Schumix.Server/Config/Config.cs:4
 msgid "Program shutting down!"
@@ -753,7 +753,7 @@ msgstr ""
 msgid "Unload plugins"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:8
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:9
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:6
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:8
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:6
@@ -776,44 +776,44 @@ msgstr ""
 msgid "Config file is loading."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 msgid "The master channel's format is wrong. \"#\" is missing. Corrected."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:15
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 msgid "The master channel is not given so the default will be used. ({0})"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 msgid "The primary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
-msgid "The secondary nick's format is wrong. The default will be used: {0}"
-msgstr ""
-
 #: ../Core/Schumix.Framework/Config/XmlConfig.cs:18
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:44
-msgid "The tertiary nick's format is wrong. The default will be used: {0}"
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
+msgid "The secondary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Config/XmlConfig.cs:19
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
+msgid "The tertiary nick's format is wrong. The default will be used: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:20
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:46
 msgid ""
 "{0}: In the three nickname there are atleast two identical, please modify "
 "those."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:20
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:46
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:21
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:47
 msgid "The {0} server is already in use so not loaded!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:43
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:44
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:11
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:23
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:7
@@ -836,7 +836,7 @@ msgstr ""
 msgid "Config database is loading."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:46
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:47
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -859,7 +859,7 @@ msgstr ""
 msgid "No such config file!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:46
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:47
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
@@ -882,7 +882,7 @@ msgstr ""
 msgid "Preparing..."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:47
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:48
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:15
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:27
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:11
@@ -905,7 +905,7 @@ msgstr ""
 msgid "The backup files will be used to renew the data."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:107
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:20
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:58
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:19
@@ -928,7 +928,7 @@ msgstr ""
 msgid "The backup has been deleted during the re-use."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:109
 #: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
@@ -951,7 +951,7 @@ msgstr ""
 msgid "Config file is completed!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:109
 #: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
@@ -1227,14 +1227,19 @@ msgid "Colorblind mode is on!"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:19
-#: ../Applications/Schumix.Server/Main.cs:16
+#: ../Applications/Schumix.Server/Main.cs:17
 msgid "FATAL ERROR"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:19
-#: ../Applications/Schumix.Server/Main.cs:16
-#: ../Applications/Schumix.Server/Main.cs:20
+#: ../Applications/Schumix.Server/Main.cs:17
+#: ../Applications/Schumix.Server/Main.cs:21
 msgid "An unhandled exception has been thrown. ({0})"
+msgstr ""
+
+#: ../Applications/Schumix/Main.cs:20
+#: ../Applications/Schumix.Server/Main.cs:14
+msgid "The automatic update is disabled."
 msgstr ""
 
 #: ../Applications/Schumix/Schumix.cs:3

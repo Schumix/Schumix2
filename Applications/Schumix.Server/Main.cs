@@ -142,7 +142,7 @@ namespace Schumix.Server
 			sCleanManager.Initialize();
 
 			if(updateignore)
-				Log.Warning("Main", /*sLConsole.GetString("System is starting...")*/ "Az automatikus frissítés le van tiltva!");
+				Log.Warning("Main", sLConsole.GetString("The automatic update is disabled."));
 			else
 				new Update(Server.Config.ServerConfig.ConfigDirectory);
 

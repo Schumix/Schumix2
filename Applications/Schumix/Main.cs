@@ -194,7 +194,7 @@ namespace Schumix
 			};
 
 			if(ServerConfig.Enabled || updateignore)
-				Log.Warning("Main", /*sLConsole.GetString("System is starting...")*/ "Az automatikus frissítés le van tiltva!");
+				Log.Warning("Main", sLConsole.GetString("The automatic update is disabled."));
 			else
 				new Update(SchumixConfig.ConfigDirectory);
 
