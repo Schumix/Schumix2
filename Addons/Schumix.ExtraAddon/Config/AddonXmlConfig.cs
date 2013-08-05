@@ -45,7 +45,7 @@ namespace Schumix.ExtraAddon.Config
 
 			Log.Notice("ExtraAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			bool Enabled = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").IsNull() ? Convert.ToBoolean(xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText) : d_enabled;
+			bool Enabled = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Enabled").InnerText.ToBoolean() : d_enabled;
 			string Type = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText : d_type;
 			new ModeConfig(Enabled, Type);
 

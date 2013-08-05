@@ -65,6 +65,7 @@ namespace Schumix.Server
 			string console_encoding = Encoding.UTF8.BodyName;
 			string localization = "start";
 			bool colorbindmode = false;
+			bool updateignore = false;
 			System.Console.CursorVisible = false;
 			System.Console.BackgroundColor = ConsoleColor.Black;
 			System.Console.ForegroundColor = ConsoleColor.Gray;
@@ -76,7 +77,8 @@ namespace Schumix.Server
 				{ "config-file=", "Set up the config file's place.", v => configfile = v },
 				{ "console-encoding=", "Set up the program's character encoding.", v => console_encoding = v },
 				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
-				{ "colorbind-mode=", "Set colorbind.", v => colorbindmode = Convert.ToBoolean(v) },
+				{ "colorbind-mode=", "Set colorbind.", v => colorbindmode = v.ToBoolean() },
+				{ "update-ignore", "Update ignore.", v => updateignore = true },
 			};
 			
 			try
@@ -98,7 +100,7 @@ namespace Schumix.Server
 			if(!console_encoding.IsNumber())
 				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
 			else
-				System.Console.OutputEncoding = Encoding.GetEncoding(Convert.ToInt32(console_encoding));
+				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding.ToInt32());
 
 			sLConsole.SetLocale(localization);
 			System.Console.Title = "Schumix2 Server";
@@ -139,7 +141,11 @@ namespace Schumix.Server
 			sCleanManager = new CleanManager(true);
 			sCleanManager.Initialize();
 
-			new Update(Server.Config.ServerConfig.ConfigDirectory);
+			if(updateignore)
+				Log.Warning("Main", sLConsole.GetString("The automatic update is disabled."));
+			else
+				new Update(Server.Config.ServerConfig.ConfigDirectory);
+
 			sUtilities.CleanHomeDirectory(true);
 
 			if(sPlatform.IsWindows)

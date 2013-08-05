@@ -95,7 +95,7 @@ namespace Schumix.Irc.Ignore
 			db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(!db.IsNull())
 			{
-				if(db["Enabled"].ToString().IsNullOrEmpty() || Convert.ToBoolean(db["Enabled"].ToString()))
+				if(db["Enabled"].ToString().IsNullOrEmpty() || db["Enabled"].ToBoolean())
 				{
 					SchumixBase.DManager.Update("channels", string.Format("Enabled = 'false', Error = '{0}'", sLConsole.IgnoreChannel("Text")), string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 
@@ -129,7 +129,7 @@ namespace Schumix.Irc.Ignore
 			db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled, Password FROM channels WHERE Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(!db.IsNull())
 			{
-				if(db["Enabled"].ToString().IsNullOrEmpty() || !Convert.ToBoolean(db["Enabled"].ToString()))
+				if(db["Enabled"].ToString().IsNullOrEmpty() || !db["Enabled"].ToBoolean())
 				{
 					SchumixBase.DManager.Update("channels", "Enabled = 'true', Error = ''", string.Format("Channel = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername));
 

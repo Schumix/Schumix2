@@ -24,6 +24,7 @@ using System.Collections.Generic;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.GameAddon.MaffiaGames
 {
@@ -94,7 +95,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Killer));
 
-						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, name, Convert.ToInt32(Rank.Killer));
+						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, name, Rank.Killer.ToInt32());
 						list.Remove(number);
 
 						if(count < 8)
@@ -128,7 +129,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Detective));
 
-						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, name, Convert.ToInt32(Rank.Detective));
+						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, name, Rank.Detective.ToInt32());
 						list.Remove(number);
 
 						if(count < 15)
@@ -156,7 +157,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(name.ToLower(), new Player(Rank.Doctor));
 
-						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, name, Convert.ToInt32(Rank.Doctor));
+						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, name, Rank.Doctor.ToInt32());
 						list.Remove(number);
 						doctor = false;
 					}
@@ -174,7 +175,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						else
 							_playerflist.Add(llist.Value.ToLower(), new Player(Rank.Normal));
 
-						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, llist.Value, Convert.ToInt32(Rank.Normal));
+						SchumixBase.DManager.Insert("`maffiagame`(ServerId, ServerName, Game, Name, Job)", IRCConfig.List[_servername].ServerId, _servername, _gameid, llist.Value, Rank.Normal.ToInt32());
 					}
 
 					break;

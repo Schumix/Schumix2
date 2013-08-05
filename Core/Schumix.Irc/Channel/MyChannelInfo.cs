@@ -336,7 +336,7 @@ namespace Schumix.Irc.Channel
 			{
 				foreach(DataRow row in db.Rows)
 				{
-					if(!Convert.ToBoolean(row["Enabled"].ToString()))
+					if(!row["Enabled"].ToBoolean())
 						error = true;
 				}
 			}
@@ -353,8 +353,8 @@ namespace Schumix.Irc.Channel
 
 			if(SchumixBase.STime)
 			{
-				SchumixBase.sTimer.Stop();
 				SchumixBase.STime = false;
+				SchumixBase.sTimer.Stop();
 			}
 		}
 	}

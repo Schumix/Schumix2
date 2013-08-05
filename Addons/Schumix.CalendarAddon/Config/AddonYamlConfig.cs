@@ -109,9 +109,9 @@ namespace Schumix.CalendarAddon.Config
 
 		private void FloodingMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			int Seconds = (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? Convert.ToInt32(nodes["Seconds".ToYamlNode()].ToString()) : _seconds;
-			int NumberOfMessages = (!nodes.IsNull() && nodes.ContainsKey("NumberOfMessages")) ? Convert.ToInt32(nodes["NumberOfMessages".ToYamlNode()].ToString()) : _numberofmessages;
-			int NumberOfFlooding = (!nodes.IsNull() && nodes.ContainsKey("NumberOfFlooding")) ? Convert.ToInt32(nodes["NumberOfFlooding".ToYamlNode()].ToString()) : _numberofflooding;
+			int Seconds = (!nodes.IsNull() && nodes.ContainsKey("Seconds")) ? nodes["Seconds".ToYamlNode()].ToString().ToInt32() : _seconds;
+			int NumberOfMessages = (!nodes.IsNull() && nodes.ContainsKey("NumberOfMessages")) ? nodes["NumberOfMessages".ToYamlNode()].ToString().ToInt32() : _numberofmessages;
+			int NumberOfFlooding = (!nodes.IsNull() && nodes.ContainsKey("NumberOfFlooding")) ? nodes["NumberOfFlooding".ToYamlNode()].ToString().ToInt32() : _numberofflooding;
 			new CalendarConfig(Seconds, NumberOfMessages, NumberOfFlooding);
 		}
 

@@ -174,7 +174,7 @@ namespace Schumix.Irc.Util
 		/// <returns>Either '+' or '-'.</returns>
 		public static char ModeActionToChar(ModeAction action)
 		{
-			return Convert.ToChar((byte)action, CultureInfo.InvariantCulture);
+			return ((byte)action).ToChar(CultureInfo.InvariantCulture);
 		}
 
 		/// <summary>
@@ -185,7 +185,7 @@ namespace Schumix.Irc.Util
 		/// <returns>An action enum.</returns>
 		public static ModeAction CharToModeAction(char action)
 		{
-			byte b = Convert.ToByte(action, CultureInfo.InvariantCulture);
+			byte b = action.ToByte(CultureInfo.InvariantCulture);
 			return (ModeAction)Enum.Parse(typeof(ModeAction), b.ToString(CultureInfo.InvariantCulture), false);
 		}
 
@@ -196,7 +196,7 @@ namespace Schumix.Irc.Util
 		/// <returns>The corresponding char.</returns>
 		public static char UserModeToChar(UserMode mode)
 		{
-			return Convert.ToChar((byte)mode, CultureInfo.InvariantCulture);
+			return ((byte)mode).ToChar(CultureInfo.InvariantCulture);
 		}
 
 		/// <summary>
@@ -218,7 +218,7 @@ namespace Schumix.Irc.Util
 		/// <returns>An mode enum.</returns>
 		public static UserMode CharToUserMode(char mode)
 		{
-			byte b = Convert.ToByte(mode, CultureInfo.InvariantCulture);
+			byte b = mode.ToByte(CultureInfo.InvariantCulture);
 			return (UserMode)Enum.Parse(typeof(UserMode), b.ToString(CultureInfo.InvariantCulture), false);
 		}
 
@@ -240,7 +240,7 @@ namespace Schumix.Irc.Util
 		/// <returns>The corresponding char.</returns>
 		public static char ChannelModeToChar(ChannelMode mode)
 		{
-			return Convert.ToChar((byte)mode, CultureInfo.InvariantCulture);
+			return ((byte)mode).ToChar(CultureInfo.InvariantCulture);
 		}
 
 		/// <summary>
@@ -251,7 +251,7 @@ namespace Schumix.Irc.Util
 		/// <returns>An mode enum.</returns>
 		public static ChannelMode CharToChannelMode(char mode)
 		{
-			byte b = Convert.ToByte(mode, CultureInfo.InvariantCulture);
+			byte b = mode.ToByte(CultureInfo.InvariantCulture);
 			return (ChannelMode)Enum.Parse(typeof(ChannelMode), b.ToString(CultureInfo.InvariantCulture), false);
 		}
 
@@ -262,7 +262,7 @@ namespace Schumix.Irc.Util
 		/// <returns>The corresponding char.</returns>
 		public static char StatsQueryToChar(StatsQuery query)
 		{
-			return Convert.ToChar((byte)query, CultureInfo.InvariantCulture);
+			return ((byte)query).ToChar(CultureInfo.InvariantCulture);
 		}
 
 		/// <summary>
@@ -273,7 +273,7 @@ namespace Schumix.Irc.Util
 		/// <returns>An StatsQuery enum.</returns>
 		public static StatsQuery CharToStatsQuery(char queryType)
 		{
-			byte b = Convert.ToByte(queryType, CultureInfo.InvariantCulture);
+			byte b = queryType.ToByte(CultureInfo.InvariantCulture);
 			return (StatsQuery)Enum.Parse(typeof(StatsQuery), b.ToString(CultureInfo.InvariantCulture), false);
 		}
 

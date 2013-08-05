@@ -22,14 +22,8 @@ using System;
 
 namespace Schumix.Framework.Extensions
 {
-	public static class NumberExtensions
+	public static class ConvertExtensions
 	{
-		public static bool IsNumber(this string value)
-		{
-			double number;
-			return double.TryParse(value, out number);
-		}
-
 		public static double ToNumber(this string value)
 		{
 			double number;

@@ -26,7 +26,6 @@ namespace Schumix.Libraries
 	public sealed class Crypto
 	{
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-
 		public Crypto() {}
 
 		public static string Sha1(string value)

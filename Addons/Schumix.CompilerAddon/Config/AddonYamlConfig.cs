@@ -109,20 +109,20 @@ namespace Schumix.CompilerAddon.Config
 
 		private void CompilerMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			bool CompilerEnabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? Convert.ToBoolean(nodes["Enabled".ToYamlNode()].ToString()) : d_compilerenabled;
+			bool CompilerEnabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString().ToBoolean() : d_compilerenabled;
 			bool Enabled = d_enabled;
 			int Memory = d_memory;
 
 			if(!nodes.IsNull() && nodes.ContainsKey("MaxAllocating"))
 			{
 				var node2 = ((YamlMappingNode)nodes["MaxAllocating".ToYamlNode()]).Children;
-				Enabled = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? Convert.ToBoolean(node2["Enabled".ToYamlNode()].ToString()) : d_enabled;
-				Memory = (!node2.IsNull() && node2.ContainsKey("Memory")) ? Convert.ToInt32(node2["Memory".ToYamlNode()].ToString()) : d_memory;
+				Enabled = (!node2.IsNull() && node2.ContainsKey("Enabled")) ? node2["Enabled".ToYamlNode()].ToString().ToBoolean() : d_enabled;
+				Memory = (!node2.IsNull() && node2.ContainsKey("Memory")) ? node2["Memory".ToYamlNode()].ToString().ToInt32() : d_memory;
 			}
 
 			string CompilerOptions = (!nodes.IsNull() && nodes.ContainsKey("CompilerOptions")) ? nodes["CompilerOptions".ToYamlNode()].ToString() : d_compileroptions;
-			int WarningLevel = (!nodes.IsNull() && nodes.ContainsKey("WarningLevel")) ? Convert.ToInt32(nodes["WarningLevel".ToYamlNode()].ToString()) : d_warninglevel;
-			bool TreatWarningsAsErrors = (!nodes.IsNull() && nodes.ContainsKey("TreatWarningsAsErrors")) ? Convert.ToBoolean(nodes["TreatWarningsAsErrors".ToYamlNode()].ToString()) : d_treatwarningsaserrors;
+			int WarningLevel = (!nodes.IsNull() && nodes.ContainsKey("WarningLevel")) ? nodes["WarningLevel".ToYamlNode()].ToString().ToInt32() : d_warninglevel;
+			bool TreatWarningsAsErrors = (!nodes.IsNull() && nodes.ContainsKey("TreatWarningsAsErrors")) ? nodes["TreatWarningsAsErrors".ToYamlNode()].ToString().ToBoolean() : d_treatwarningsaserrors;
 			string Referenced = (!nodes.IsNull() && nodes.ContainsKey("Referenced")) ? nodes["Referenced".ToYamlNode()].ToString() : d_referenced;
 			string ReferencedAssemblies = (!nodes.IsNull() && nodes.ContainsKey("ReferencedAssemblies")) ? nodes["ReferencedAssemblies".ToYamlNode()].ToString() : d_referencedassemblies;
 			string MainClass = (!nodes.IsNull() && nodes.ContainsKey("MainClass")) ? nodes["MainClass".ToYamlNode()].ToString() : d_mainclass;

@@ -31,6 +31,7 @@ using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Bitly;
 using Schumix.Framework.Config;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
@@ -184,6 +185,28 @@ namespace Schumix.TestAddon.Commands
 				}
 
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info[5].IsMonthName());
+			}
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "dbrank")
+			{
+				var db = SchumixBase.DManager.Query("SELECT Flag FROM admins WHERE ServerName = '{0}'", sIRCMessage.ServerName);
+				if(!db.IsNull())
+				{
+					foreach(DataRow row in db.Rows)
+					{
+						int rank = row["Flag"].ToInt32();
+
+						if(rank == 0)
+							Log.WriteLine("Admin rang: 0");
+
+						if(rank == 1)
+							Log.WriteLine("Admin rang: 1");
+
+						if(rank == 2)
+							Log.WriteLine("Admin rang: 2");
+					}
+				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);

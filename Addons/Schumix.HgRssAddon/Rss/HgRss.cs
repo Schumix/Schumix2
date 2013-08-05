@@ -376,10 +376,10 @@ namespace Schumix.HgRssAddon
 				{
 					string language = sLManager.GetChannelLocalization(chan, _servername);
 
-					if(Convert.ToBoolean(db["ShortUrl"].ToString()))
+					if(db["ShortUrl"].ToBoolean())
 						commiturl = BitlyApi.ShortenUrl(commiturl).ShortUrl;
 					
-					if(Convert.ToBoolean(db["Colors"].ToString()))
+					if(db["Colors"].ToBoolean())
 					{
 						if(_website == "google")
 						{

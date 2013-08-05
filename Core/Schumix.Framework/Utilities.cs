@@ -155,7 +155,7 @@ namespace Schumix.Framework
 					if(!isNum)
 						client.Encoding = Encoding.GetEncoding(encoding);
 					else
-						client.Encoding = Encoding.GetEncoding(Convert.ToInt32(Num));
+						client.Encoding = Encoding.GetEncoding(Num.ToInt32());
 
 					client.Headers.Add("referer", Consts.SchumixReferer);
 					client.Headers.Add("user-agent", Consts.SchumixUserAgent);
@@ -1237,8 +1237,8 @@ namespace Schumix.Framework
 		public bool IsValueBiggerDateTimeNow(int Year, int Month, int Day, int Hour, int Minute)
 		{
 			var nowtime = DateTime.Now;
-			nowtime = Convert.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}", nowtime.Year, nowtime.Month, nowtime.Day, nowtime.Hour, nowtime.Minute), dtfi);
-			var newtime = Convert.ToDateTime(string.Format("{0}-{1}-{2} {3}:{4}", Year, Month, Day, Hour, Minute), dtfi);
+			nowtime = string.Format("{0}-{1}-{2} {3}:{4}", nowtime.Year, nowtime.Month, nowtime.Day, nowtime.Hour, nowtime.Minute).ToDateTime(dtfi);
+			var newtime = string.Format("{0}-{1}-{2} {3}:{4}", Year, Month, Day, Hour, Minute).ToDateTime(dtfi);
 			var compare = DateTime.Compare(nowtime, newtime);
 			return compare == 1 || compare == 0;
 		}
@@ -1350,6 +1350,22 @@ namespace Schumix.Framework
 		{
 			if(File.Exists(SchumixBase.PidFile))
 				File.Delete(SchumixBase.PidFile);
+		}
+
+		public void ClearAttributes(string currentDir)
+		{
+			if(Directory.Exists(currentDir))
+			{
+				var subDirs = Directory.GetDirectories(currentDir);
+
+				foreach(string dir in subDirs)
+					ClearAttributes(dir);
+
+				var files = Directory.GetFiles(currentDir);
+
+				foreach(string file in files)
+					File.SetAttributes(file, FileAttributes.Normal);
+			}
 		}
 
 		public void CleanHomeDirectory(bool server = false)

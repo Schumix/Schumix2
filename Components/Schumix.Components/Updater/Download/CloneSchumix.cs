@@ -20,21 +20,33 @@
 
 using System;
 using System.IO;
-using System.Net;
 using NGit;
 using NGit.Api;
+using Schumix.Framework;
 
 namespace Schumix.Components.Updater.Download
 {
 	sealed class CloneSchumix
 	{
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
 		public CloneSchumix(string Url, string Dir, string Branch)
 		{
-			var clone = Git.CloneRepository();
-			var repo = clone.SetURI(Url).SetDirectory(Path.Combine(Environment.CurrentDirectory, Dir)).Call();
-			repo.Checkout().SetCreateBranch(true).SetUpstreamMode(CreateBranchCommand.SetupUpstreamMode.SET_UPSTREAM).SetName("origin/" + Branch).Call();
-			repo.SubmoduleInit().Call();
-			repo.SubmoduleUpdate().Call();
+			string path = Path.Combine(Environment.CurrentDirectory, Dir);
+
+			if(Directory.Exists(path))
+			{
+				sUtilities.ClearAttributes(path);
+				Directory.Delete(path, true);
+			}
+
+			var cmd = Git.CloneRepository();
+			cmd.SetURI(Url);
+			cmd.SetRemote("origin");
+			cmd.SetBranch(string.Format("refs/heads/{0}", Branch));
+			cmd.SetDirectory(path);
+			cmd.SetCloneSubmodules(true);
+			cmd.Call();
 		}
 	}
 }

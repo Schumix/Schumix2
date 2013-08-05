@@ -210,7 +210,7 @@ namespace Schumix.Framework
 					foreach(DataRow row in db1.Rows)
 					{
 						bool ignore = false;
-						int id = Convert.ToInt32(row["Id"].ToString());
+						int id = row["Id"].ToInt32();
 						var db3 = DManager.Query("SELECT Id, Channel FROM channels WHERE ServerName = '{0}' And Channel = '{1}' ORDER BY Id ASC", row["ServerName"].ToString(), IRCConfig.List[row["ServerName"].ToString()].MasterChannel);
 						if(!db3.IsNull())
 						{
@@ -218,11 +218,11 @@ namespace Schumix.Framework
 							var db4 = DManager.QueryFirstRow("SELECT Id FROM channels WHERE ServerName = '{0}' ORDER BY Id ASC", row["ServerName"].ToString());
 
 							if(!db4.IsNull())
-								id2 = Convert.ToInt32(db4["Id"].ToString());
+								id2 = db4["Id"].ToInt32();
 
 							foreach(DataRow row2 in db3.Rows)
 							{
-								if(id2 != Convert.ToInt32(row2["Id"].ToString()) && row2["Channel"].ToString() == IRCConfig.List[row["ServerName"].ToString()].MasterChannel)
+								if(id2 != row2["Id"].ToInt32() && row2["Channel"].ToString() == IRCConfig.List[row["ServerName"].ToString()].MasterChannel)
 								{
 									ignore = true;
 									break;
@@ -234,7 +234,7 @@ namespace Schumix.Framework
 
 						if(!db2.IsNull())
 						{
-							if(id == Convert.ToInt32(db2["Id"].ToString()) && !ignore)
+							if(id == db2["Id"].ToInt32() && !ignore)
 							{
 								string channel = db2["Channel"].ToString();
 								string servername = db2["ServerName"].ToString();
@@ -242,7 +242,7 @@ namespace Schumix.Framework
 								DManager.Update("channels", string.Format("Password = '{0}'", IRCConfig.List[servername].MasterChannelPassword.Length > 0 ? IRCConfig.List[servername].MasterChannelPassword : string.Empty), string.Format("Channel = '{0}' And ServerName = '{1}'", channel, servername));
 								Log.Notice("SchumixBase", sLConsole.GetString("{0} master channel is updated to: {1}"), servername, IRCConfig.List[servername].MasterChannel);
 							}
-							else if(id == Convert.ToInt32(db2["Id"].ToString()) && ignore)
+							else if(id == db2["Id"].ToInt32() && ignore)
 								Log.Warning("SchumixBase", sLConsole.GetString("The master channel already exist on the database, named by default!"));
 						}
 					}

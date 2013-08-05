@@ -45,7 +45,7 @@ namespace Schumix.HgRssAddon.Config
 
 			Log.Notice("HgRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			int QueryTime = !xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").InnerText) : d_querytime;
+			int QueryTime = !xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").IsNull() ? xmldoc.SelectSingleNode("HgRssAddon/Rss/QueryTime").InnerText.ToInt32() : d_querytime;
 			new RssConfig(QueryTime);
 
 			Log.Success("HgRssAddonConfig", sLConsole.GetString("Config database is loading."));

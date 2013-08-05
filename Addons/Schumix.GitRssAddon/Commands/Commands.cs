@@ -495,7 +495,7 @@ namespace Schumix.GitRssAddon.Commands
 						return;
 					}
 
-					if(sIRCMessage.Info[8].ToLower() != "true" && sIRCMessage.Info[8].ToLower() != "false")
+					if(!sIRCMessage.Info[8].IsBoolean())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ValueIsNotTrueOrFalse", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -504,9 +504,9 @@ namespace Schumix.GitRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT Colors FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						bool enabled = Convert.ToBoolean(db["Colors"].ToString());
+						bool enabled = db["Colors"].ToBoolean();
 
-						if(Convert.ToBoolean(sIRCMessage.Info[8].ToLower()) == enabled)
+						if(sIRCMessage.Info[8].ToBoolean() == enabled)
 						{
 							if(enabled)
 							{
@@ -553,7 +553,7 @@ namespace Schumix.GitRssAddon.Commands
 						return;
 					}
 
-					if(sIRCMessage.Info[8].ToLower() != "true" && sIRCMessage.Info[8].ToLower() != "false")
+					if(!sIRCMessage.Info[8].IsBoolean())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ValueIsNotTrueOrFalse", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
@@ -562,9 +562,9 @@ namespace Schumix.GitRssAddon.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT ShortUrl FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						bool enabled = Convert.ToBoolean(db["ShortUrl"].ToString());
+						bool enabled = db["ShortUrl"].ToBoolean();
 						
-						if(Convert.ToBoolean(sIRCMessage.Info[8].ToLower()) == enabled)
+						if(sIRCMessage.Info[8].ToBoolean() == enabled)
 						{
 							if(enabled)
 							{

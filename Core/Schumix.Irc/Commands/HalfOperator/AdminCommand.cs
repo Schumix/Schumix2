@@ -137,7 +137,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
-				int flag = !db.IsNull() ? Convert.ToInt32(db["Flag"].ToString()) : -1;
+				int flag = !db.IsNull() ? db["Flag"].ToInt32() : -1;
 
 				if((AdminFlag)flag == AdminFlag.HalfOperator)
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -313,7 +313,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				int rank = Convert.ToInt32(sIRCMessage.Info[6]);
+				int rank = sIRCMessage.Info[6].ToInt32();
 
 				if(IsAdmin(sIRCMessage.Nick, AdminFlag.HalfOperator) && IsAdmin(name, AdminFlag.HalfOperator) && (AdminFlag)rank == AdminFlag.Operator)
 				{

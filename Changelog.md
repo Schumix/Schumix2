@@ -2,6 +2,13 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * Frissítéskor fellépő sql hiba javítva.
+ * Telepített alkalmazásoknál a frissítés nem lesz ezentúl lehetséges még akkor se ha konfigba bekapcsolható.
+ * Debug módban alapértelmezetten és megváltoztathatatlanul a logolási szint a 3-as lesz.
+ * 3.x.x széria sql frissítései részben kitakarítva.
+ * Régi sql hiányosságok és elmaradt frissítések beépítve a Base.sql-be.
+ * Extensions-ba beépített Convert részek felhasználva az egész kódba.
+
 ## 4.2.0 (2013-07-29)
 
  * Angol és magyarnyelvű .md fájlok felcserélve. Ötletért köszönet Jackneill-nek.
@@ -130,7 +137,7 @@
  * Uptime táblában ezentúl byte-ban lesznek megadva a mentett memória méretek.
  * Kitakaritva a LueEnginer referencia listája.
 
-## 3.9.0 (2012-06-26)
+## 3.9.0 (2012-12-02)
 
  * Kész a CacheDB.
  * Több ponton elhelyezésre került a LargeError.

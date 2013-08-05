@@ -208,7 +208,7 @@ namespace Schumix.Framework.Database.Cache
 				foreach(DataRow row in db.Rows)
 				{
 					var map = new LocalizedConsoleCommand();
-					map.Id = Convert.ToInt32(row["Id"].ToString());
+					map.Id = row["Id"].ToInt32();
 					map.Language = row["Language"].ToString();
 					map.Command = row["Command"].ToString();
 					map.Text = row["Text"].ToString();
@@ -225,7 +225,7 @@ namespace Schumix.Framework.Database.Cache
 				foreach(DataRow row in db.Rows)
 				{
 					var map = new LocalizedConsoleCommandHelp();
-					map.Id = Convert.ToInt32(row["Id"].ToString());
+					map.Id = row["Id"].ToInt32();
 					map.Language = row["Language"].ToString();
 					map.Command = row["Command"].ToString();
 					map.Text = row["Text"].ToString();
@@ -242,7 +242,7 @@ namespace Schumix.Framework.Database.Cache
 				foreach(DataRow row in db.Rows)
 				{
 					var map = new LocalizedConsoleWarning();
-					map.Id = Convert.ToInt32(row["Id"].ToString());
+					map.Id = row["Id"].ToInt32();
 					map.Language = row["Language"].ToString();
 					map.Command = row["Command"].ToString();
 					map.Text = row["Text"].ToString();
@@ -259,7 +259,7 @@ namespace Schumix.Framework.Database.Cache
 				foreach(DataRow row in db.Rows)
 				{
 					var map = new LocalizedCommand();
-					map.Id = Convert.ToInt32(row["Id"].ToString());
+					map.Id = row["Id"].ToInt32();
 					map.Language = row["Language"].ToString();
 					map.Command = row["Command"].ToString();
 					map.Text = row["Text"].ToString();
@@ -276,10 +276,10 @@ namespace Schumix.Framework.Database.Cache
 				foreach(DataRow row in db.Rows)
 				{
 					var map = new LocalizedCommandHelp();
-					map.Id = Convert.ToInt32(row["Id"].ToString());
+					map.Id = row["Id"].ToInt32();
 					map.Language = row["Language"].ToString();
 					map.Command = row["Command"].ToString();
-					map.Rank = Convert.ToInt32(row["Rank"].ToString());
+					map.Rank = row["Rank"].ToInt32();
 					map.Text = row["Text"].ToString();
 					_LocalizedCommandHelpMap.Add(map.Language + map.Command, map);
 				}
@@ -294,7 +294,7 @@ namespace Schumix.Framework.Database.Cache
 				foreach(DataRow row in db.Rows)
 				{
 					var map = new LocalizedWarning();
-					map.Id = Convert.ToInt32(row["Id"].ToString());
+					map.Id = row["Id"].ToInt32();
 					map.Language = row["Language"].ToString();
 					map.Command = row["Command"].ToString();
 					map.Text = row["Text"].ToString();
@@ -311,14 +311,14 @@ namespace Schumix.Framework.Database.Cache
 				foreach(DataRow row in db.Rows)
 				{
 					var map = new Channels();
-					map.Id = Convert.ToInt32(row["Id"].ToString());
-					map.ServerId = Convert.ToInt32(row["ServerId"].ToString());
+					map.Id = row["Id"].ToInt32();
+					map.ServerId = row["ServerId"].ToInt32();
 					map.ServerName = row["ServerName"].ToString();
 					map.Functions = row["Functions"].ToString();
 					map.Channel = row["Channel"].ToString();
 					map.Password = row["Password"].ToString();
-					map.Enabled = Convert.ToBoolean(row["Enabled"].ToString());
-					map.Hidden = Convert.ToBoolean(row["Hidden"].ToString());
+					map.Enabled = row["Enabled"].ToBoolean();
+					map.Hidden = row["Hidden"].ToBoolean();
 					map.Error = row["Error"].ToString();
 					map.Language = row["Language"].ToString();
 					_ChannelsMap.Add(map.ServerName + map.Channel, map);

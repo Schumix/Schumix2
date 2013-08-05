@@ -142,5 +142,17 @@ namespace Schumix.Installer.Extensions
 
 			Task.WaitAll(coll.ToArray());
 		}
+
+		public static bool IsNumber(this string value)
+		{
+			double number;
+			return double.TryParse(value, out number);
+		}
+
+		public static bool IsBoolean(this string value)
+		{
+			bool b;
+			return bool.TryParse(value, out b);
+		}
 	}
 }

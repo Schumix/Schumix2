@@ -110,10 +110,10 @@ namespace Schumix.CalendarAddon.Commands
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled, Year, Month, Day FROM birthday WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
-					bool enabled = Convert.ToBoolean(db["Enabled"].ToString());
-					int year = Convert.ToInt32(db["Year"].ToString());
-					int month = Convert.ToInt32(db["Month"].ToString());
-					int day = Convert.ToInt32(db["Day"].ToString());
+					bool enabled = db["Enabled"].ToBoolean();
+					int year = db["Year"].ToInt32();
+					int month = db["Month"].ToInt32();
+					int day = db["Day"].ToInt32();
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[0], enabled ? SchumixBase.On : SchumixBase.Off);
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], year, month.ToMonthFormat(), day.ToDayFormat());

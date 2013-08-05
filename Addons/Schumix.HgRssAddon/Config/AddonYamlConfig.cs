@@ -109,7 +109,7 @@ namespace Schumix.HgRssAddon.Config
 
 		private void RssMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
-			int QueryTime = (!nodes.IsNull() && nodes.ContainsKey("QueryTime")) ? Convert.ToInt32(nodes["QueryTime".ToYamlNode()].ToString()) : d_querytime;
+			int QueryTime = (!nodes.IsNull() && nodes.ContainsKey("QueryTime")) ? nodes["QueryTime".ToYamlNode()].ToString().ToInt32() : d_querytime;
 			new RssConfig(QueryTime);
 		}
 

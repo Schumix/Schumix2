@@ -45,7 +45,7 @@ namespace Schumix.SvnRssAddon.Config
 
 			Log.Notice("SvnRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			int QueryTime = !xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").IsNull() ? Convert.ToInt32(xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").InnerText) : d_querytime;
+			int QueryTime = !xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").IsNull() ? xmldoc.SelectSingleNode("SvnRssAddon/Rss/QueryTime").InnerText.ToInt32() : d_querytime;
 			new RssConfig(QueryTime);
 
 			Log.Success("SvnRssAddonConfig", sLConsole.GetString("Config database is loading."));

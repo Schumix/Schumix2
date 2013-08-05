@@ -47,20 +47,22 @@
     <Compile Include="Singleton.cs" />
     <Compile Include="CopyTo\Copy.cs" />
     <Compile Include="Clean\DirectoryClean.cs" />
-    <Compile Include="PlatformType.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Extensions\GeneralExtensions.cs" />
     <Compile Include="Download\CloneSchumix.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
-    <Compile Include="Extensions\NumberExtensions.cs" />
     <Compile Include="Config\Consts.cs" />
+    <Compile Include="Platforms\Platform.cs" />
+    <Compile Include="Platforms\PlatformType.cs" />
+    <Compile Include="Extensions\ConvertExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Config\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Platforms\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\External\ngit\NGit\NGit.csproj">

@@ -20,31 +20,18 @@
 
 using System;
 
-namespace Schumix.Installer.Extensions
+namespace Schumix.Framework.Extensions
 {
-	public static class NumberExtensions
+	public static class IrcExtensions
 	{
-		public static bool IsNumber(this string Text)
+		public static string ToIrcOpcode(this int number)
 		{
-			double number;
-			return double.TryParse(Text, out number);
-		}
-
-		public static double ToNumber(this string Text)
-		{
-			double number;
-			return double.TryParse(Text, out number) ? number : 0;
-		}
-
-		public static double ToNumber(this string Text, int Else)
-		{
-			double number;
-			return double.TryParse(Text, out number) ? number : Else;
-		}
-
-		public static int ToInt(this double Double)
-		{
-			return Convert.ToInt32(Double);
+			if(number < 10)
+				return "00" + number.ToString();
+			else if(number < 100)
+				return "0" + number.ToString();
+			else
+				return number.ToString();
 		}
 	}
 }

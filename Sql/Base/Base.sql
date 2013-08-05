@@ -111,7 +111,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/info", "There is no such a channel!\nThere is no password set on the channel!\nThere is a password on the channel.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "nick", "Nick changes to: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "join", "Join to this channel: {0}");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "left", "Part of this channel: {0}");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "leave", "Part of this channel: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "reload", "The program does not contains that part!\nThere is an error in the reload!\n{0} reloaded.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "quit", "Bye :(\nConsole: Program shut down.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "help", "If you wrote behind the command the command or the name or co-command then gets information about usage.\nCommands: {0}");
@@ -1397,6 +1397,47 @@ INSERT INTO `schumix` VALUES ("19", "1", "default", "wordpress", "off");
 INSERT INTO `schumix` VALUES ("20", "1", "default", "chatterbot", "on");
 INSERT INTO `schumix` VALUES ("21", "1", "default", "nameday", "on");
 INSERT INTO `schumix` VALUES ("22", "1", "default", "birthday", "on");
+
+-- ----------------------------
+-- Records of ignore_irc_commands
+-- ----------------------------
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".register");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".identify");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".set");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".sop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".aop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".hop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".vop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".access");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".levels");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".akick");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".drop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".ban");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".unban");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".owner");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".deowner");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".protect");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".deprotect");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".op");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".deop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".halfop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".dehalfop");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".voice");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".devoice");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".getkey");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".invite");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".kick");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".logout");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".topic");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".info");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".why");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".clear");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".flags");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".appendtopic");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".checkban");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".sync");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".kb");
+INSERT INTO `ignore_irc_commands` (`Command`) VALUES (".k");
 
 -- ----------------------------
 -- Records of svninfo

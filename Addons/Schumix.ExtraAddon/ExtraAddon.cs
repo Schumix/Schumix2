@@ -65,7 +65,7 @@ namespace Schumix.ExtraAddon
 				{
 					foreach(DataRow row in db.Rows)
 					{
-						int time = Convert.ToInt32(row["UnixTime"].ToString());
+						int time = row["UnixTime"].ToInt32();
 
 						if((DateTime.Now - sUtilities.GetDateTimeFromUnixTime(time)).TotalDays > 30)
 							SchumixBase.DManager.Delete("message", string.Format("Id = '{0}'", row["Id"].ToString()));

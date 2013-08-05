@@ -33,7 +33,7 @@ namespace Schumix.CompilerAddon.Config
 		protected const string d_referenced = "using System; using System.Threading; using System.Reflection; " +
 			"using System.Threading.Tasks; using System.Linq; using System.Collections.Generic; using System.Text; " +
 			"using System.Text.RegularExpressions; using System.Numerics; using Schumix.Libraries; " +
-			"using Schumix.Libraries.Mathematics; using Schumix.Libraries.Mathematics.Types;";
+			"using Schumix.Libraries.Maths; using Schumix.Libraries.Maths.Types; using Schumix.Libraries.Extensions;";
 		protected const string d_referencedassemblies = "System.dll,System.Core.dll,System.Numerics.dll,Schumix.Libraries.dll";
 		protected const string d_mainclass = "Entry";
 		protected const string d_mainconstructor = "Schumix";

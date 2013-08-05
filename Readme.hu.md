@@ -78,7 +78,7 @@ Navigáljunk az Installer mappába.
 
 # Konfig beállítása
 
-A konfiguk beállításához menjünk a `Share/doc/Configs` mappába és a `Schumix.md` fájlt nyissuk meg.
+A konfiguk beállításához menjünk a `Share/doc/Configs` mappába és a `Schumix.hu.md` fájlt nyissuk meg.
 <br/>Ez a fő konfig leírása.
 <br/>Fontos hogy ezt a leírást mindenképpen olvassuk el mert enélkül nem lehet elindítani a botot normálisan.
 <br/>Ha megvagyunk akár a többi leírást is végiglehet nézni de az elindításhoz nem szükséges.

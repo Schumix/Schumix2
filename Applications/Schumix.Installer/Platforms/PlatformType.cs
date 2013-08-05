@@ -20,7 +20,7 @@
 
 using System;
 
-namespace Schumix.Installer
+namespace Schumix.Installer.Platforms
 {
 	public enum PlatformType
 	{

@@ -27,6 +27,7 @@ using Schumix.Installer.Clean;
 using Schumix.Installer.CopyTo;
 using Schumix.Installer.Compiler;
 using Schumix.Installer.Download;
+using Schumix.Installer.Platforms;
 using Schumix.Installer.Extensions;
 using Schumix.Installer.Localization;
 
@@ -36,6 +37,7 @@ namespace Schumix.Installer
 	{
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private const string GitUrl = "https://github.com/Schumix/Schumix2";
 		private const string _dir = "Schumix2";
 
@@ -54,7 +56,7 @@ namespace Schumix.Installer
 			Console.WriteLine();
 			Log.Initialize("Installer.log");
 
-			if(sUtilities.GetPlatformType() == PlatformType.Linux)
+			if(sPlatform.IsLinux)
 				ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 			WebRequest.DefaultWebProxy = null;

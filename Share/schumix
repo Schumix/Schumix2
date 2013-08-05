@@ -25,4 +25,4 @@ cp -uR /usr/share/schumix/Sql $homedir
 cp -uR /usr/lib/schumix/Addons $homedir
 cp -uR /usr/lib/schumix/Scripts $homedir
 
-exec mono "/usr/lib/schumix/Schumix.exe" "--config-dir=$config_dir" "$@"
+exec mono "/usr/lib/schumix/Schumix.exe" "--config-dir=$config_dir" "--update-ignore" "$@"

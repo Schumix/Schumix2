@@ -80,7 +80,7 @@ Navigate to the Installer folder.
 
 # Config settings
 
-To adjust the configs navigate to the `Share/doc/Configs` folder and open the `Schumix.en.md` file.
+To adjust the configs navigate to the `Share/doc/Configs` folder and open the `Schumix.md` file.
 <br/>This is the description for the main config.
 <br/>Reading the description is necessary because the bot can't be started correctly without it.
 <br/>After that you can take a look at the other descriptions but they aren't required for starting the bot.

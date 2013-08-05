@@ -72,7 +72,7 @@ namespace Schumix.Framework.Extensions
 			if(currentType.IsInteger() && targetType == typeof(bool))
 				return ob.Equals(0.Cast(targetType)) ? false : true;
 
-			var end = Convert.ChangeType(ob, targetType, CultureInfo.InvariantCulture);
+			var end = ob.ChangeType(targetType, CultureInfo.InvariantCulture);
 			Contract.Assume(!end.IsNull());
 			return end;
 		}
@@ -196,6 +196,18 @@ namespace Schumix.Framework.Extensions
 				Language = "en-US";
 
 			return Language;
+		}
+
+		public static bool IsNumber(this string value)
+		{
+			double number;
+			return double.TryParse(value, out number);
+		}
+
+		public static bool IsBoolean(this string value)
+		{
+			bool b;
+			return bool.TryParse(value, out b);
 		}
 	}
 }

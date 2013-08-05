@@ -69,7 +69,7 @@ namespace Schumix.Framework.Network
 			++read_position;
 
 			if(typeof(T) == typeof(string))
-			  	return ((T)Convert.ChangeType((((string)(ret as object)).Replace("{[n]}", Environment.NewLine)), typeof(T)));
+				return ((T)Convert.ChangeType((((string)(ret as object)).Replace("{[n]}", Environment.NewLine)), typeof(T)));
 
 			return ret;
 		}

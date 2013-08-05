@@ -297,10 +297,10 @@ namespace Schumix.MantisBTRssAddon
 				{
 					string language = sLManager.GetChannelLocalization(chan, _servername);
 
-					if(Convert.ToBoolean(db["ShortUrl"].ToString()))
+					if(db["ShortUrl"].ToBoolean())
 						link = BitlyApi.ShortenUrl(link).ShortUrl;
 					
-					if(Convert.ToBoolean(db["Colors"].ToString()))
+					if(db["Colors"].ToBoolean())
 					{
 						if(title.Contains(SchumixBase.Colon.ToString()))
 						{

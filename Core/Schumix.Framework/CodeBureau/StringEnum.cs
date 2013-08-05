@@ -102,7 +102,7 @@ namespace Schumix.Framework.CodeBureau
 				// Check for our custom attribute
 				var attrs = fi.GetCustomAttributes(typeof(StringValueAttribute), false) as StringValueAttribute[];
 				if(attrs.Length > 0)
-					values.Add(new DictionaryEntry(Convert.ChangeType(Enum.Parse(_enumType, fi.Name), underlyingType), attrs[0].Value));
+					values.Add(new DictionaryEntry(Enum.Parse(_enumType, fi.Name).ChangeType(underlyingType), attrs[0].Value));
 			}
 
 			return values;
