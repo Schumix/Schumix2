@@ -97,6 +97,7 @@ namespace Schumix
 			string serverpassword = "0";
 			string serveridentify = string.Empty;
 			bool colorbindmode = false;
+			bool updateignore = false;
 			System.Console.BackgroundColor = ConsoleColor.Black;
 			System.Console.ForegroundColor = ConsoleColor.Gray;
 
@@ -113,6 +114,7 @@ namespace Schumix
 				{ "server-password=", "Set password.", v => serverpassword = v },
 				{ "server-identify=", "Set identify.", v => serveridentify = v },
 				{ "colorbind-mode=", "Set colorbind.", v => colorbindmode = v.ToBoolean() },
+				{ "update-ignore", "Update ignore.", v => updateignore = true },
 			};
 
 			try
@@ -191,7 +193,9 @@ namespace Schumix
 				Shutdown("Crash.", true);
 			};
 
-			if(!ServerConfig.Enabled)
+			if(ServerConfig.Enabled || updateignore)
+				Log.Warning("Main", /*sLConsole.GetString("System is starting...")*/ "Az automatikus frissítés le van tiltva!");
+			else
 				new Update(SchumixConfig.ConfigDirectory);
 
 			sUtilities.CleanHomeDirectory();
