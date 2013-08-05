@@ -110,5 +110,21 @@ namespace Schumix.Installer
 			if(!File.Exists(Name))
 				new FileStream(Name, FileMode.Append, FileAccess.Write, FileShare.Write).Close();
 		}
+
+		public void ClearAttributes(string currentDir)
+		{
+			if(Directory.Exists(currentDir))
+			{
+				var subDirs = Directory.GetDirectories(currentDir);
+
+				foreach(string dir in subDirs)
+					ClearAttributes(dir);
+
+				var files = Directory.GetFiles(currentDir);
+
+				foreach(string file in files)
+					File.SetAttributes(file, FileAttributes.Normal);
+			}
+		}
 	}
 }

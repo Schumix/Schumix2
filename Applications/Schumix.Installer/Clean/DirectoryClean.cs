@@ -25,13 +25,18 @@ namespace Schumix.Installer.Clean
 {
 	sealed class DirectoryClean
 	{
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
 		/// <summary>
 		///     Törli azon mappát melyet megadunk a paraméterben. Ez elsősorban egy verziószám.
 		/// </summary>
 		public DirectoryClean(string dir)
 		{
 			if(Directory.Exists(dir))
+			{
+				sUtilities.ClearAttributes(dir);
 				Directory.Delete(dir, true);
+			}
 		}
 	}
 }

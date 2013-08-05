@@ -35,8 +35,8 @@ namespace Schumix.Installer.Config
 		public const string SchumixProduct = "Schumix";
 		public const string SchumixCopyright = "Copyright (C) 2013 Schumix Team <http://schumix.eu/>";
 		public const string SchumixTrademark = "GNU General Public License";
-		public const string SchumixVersion = "0.0.9";
-		public const string SchumixFileVersion = "0.0.9.0";
+		public const string SchumixVersion = "0.1.0";
+		public const string SchumixFileVersion = "0.1.0";
 		public static string SchumixUserAgent = "Schumix2 Installer " + sUtilities.GetVersion() + " / .NET " + Environment.Version;
 		public const string SchumixReferer = "http://yeahunter.hu";
 	}

@@ -1352,6 +1352,22 @@ namespace Schumix.Framework
 				File.Delete(SchumixBase.PidFile);
 		}
 
+		public void ClearAttributes(string currentDir)
+		{
+			if(Directory.Exists(currentDir))
+			{
+				var subDirs = Directory.GetDirectories(currentDir);
+
+				foreach(string dir in subDirs)
+					ClearAttributes(dir);
+
+				var files = Directory.GetFiles(currentDir);
+
+				foreach(string file in files)
+					File.SetAttributes(file, FileAttributes.Normal);
+			}
+		}
+
 		public void CleanHomeDirectory(bool server = false)
 		{
 			if(File.Exists("Config.exe"))

@@ -31,7 +31,26 @@ namespace Schumix.Config.Clean
 		public DirectoryClean(string dir)
 		{
 			if(Directory.Exists(dir))
+			{
+				ClearAttributes(dir);
 				Directory.Delete(dir, true);
+			}
+		}
+
+		private void ClearAttributes(string currentDir)
+		{
+			if(Directory.Exists(currentDir))
+			{
+				var subDirs = Directory.GetDirectories(currentDir);
+
+				foreach(string dir in subDirs)
+					ClearAttributes(dir);
+
+				var files = Directory.GetFiles(currentDir);
+
+				foreach(string file in files)
+					File.SetAttributes(file, FileAttributes.Normal);
+			}
 		}
 	}
 }

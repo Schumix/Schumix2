@@ -27,7 +27,7 @@ using System.Runtime.InteropServices;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Schumix.Config")]
-[assembly: AssemblyDescription("Schumix IRC bot")]
+[assembly: AssemblyDescription("Schumix2 IRC Bot and Framework")]
 #if DEBUG
 [assembly: AssemblyConfiguration("Debug")]
 #else
@@ -55,5 +55,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.6")]
-[assembly: AssemblyFileVersion("0.0.6.0")]
+[assembly: AssemblyVersion("0.0.7")]
+[assembly: AssemblyFileVersion("0.0.7.0")]

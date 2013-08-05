@@ -27,12 +27,17 @@ namespace Schumix.Installer.Download
 {
 	sealed class CloneSchumix
 	{
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
 		public CloneSchumix(string Url, string Dir)
 		{
 			string path = Path.Combine(Environment.CurrentDirectory, Dir);
 
 			if(Directory.Exists(path))
+			{
+				sUtilities.ClearAttributes(path);
 				Directory.Delete(path, true);
+			}
 
 			var cmd = Git.CloneRepository();
 			cmd.SetURI(Url);
