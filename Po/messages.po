@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-05 11:15:15+0200\n"
-"PO-Revision-Date: 2013-08-05 11:15:20+0200\n"
+"POT-Creation-Date: 2013-08-06 14:23:41+0200\n"
+"PO-Revision-Date: 2013-08-06 14:23:44+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -31,10 +31,11 @@ msgid "All Command Handler were deleted."
 msgstr ""
 
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:29
-#: ../Core/Schumix.Irc/Network.cs:59
-#: ../Core/Schumix.Irc/Network.cs:84
-#: ../Core/Schumix.Irc/Network.cs:87
-#: ../Core/Schumix.Irc/Network.cs:96
+#: ../Core/Schumix.Irc/Network.cs:58
+#: ../Core/Schumix.Irc/Network.cs:73
+#: ../Core/Schumix.Irc/Network.cs:86
+#: ../Core/Schumix.Irc/Network.cs:89
+#: ../Core/Schumix.Irc/Network.cs:98
 #: ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
@@ -75,6 +76,8 @@ msgstr ""
 #: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:17
 #: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:17
 #: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:5
+#: ../Components/Schumix.Components/Updater/Sql/Sql.cs:8
+#: ../Components/Schumix.Components/Updater/Sql/Sql.cs:10
 msgid "Failure details: {0}"
 msgstr ""
 
@@ -222,37 +225,37 @@ msgstr ""
 msgid "Connection closed!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:47
+#: ../Core/Schumix.Irc/Network.cs:46
 msgid "Connection have been closed."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:47
+#: ../Core/Schumix.Irc/Network.cs:46
 msgid "Reconnection to: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:54
+#: ../Core/Schumix.Irc/Network.cs:53
 msgid ""
 "This nick name ({0}) is used by a service bot. Your nick is automaticly "
 "changed to a placeholder one."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:55
+#: ../Core/Schumix.Irc/Network.cs:54
 msgid "Connection type: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:56
+#: ../Core/Schumix.Irc/Network.cs:55
 msgid "Fatal error was happened while established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:57
+#: ../Core/Schumix.Irc/Network.cs:56
 msgid "Successfully established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:57
+#: ../Core/Schumix.Irc/Network.cs:56
 msgid "Error was happened while established the connection!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:59
+#: ../Core/Schumix.Irc/Network.cs:58
 msgid "Certificate not accepted, exception: {0}"
 msgstr ""
 
@@ -260,20 +263,20 @@ msgstr ""
 msgid "Users' datas are sent."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:74
-#: ../Core/Schumix.Irc/Network.cs:95
+#: ../Core/Schumix.Irc/Network.cs:76
+#: ../Core/Schumix.Irc/Network.cs:97
 msgid "Successfully started the thread."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:74
+#: ../Core/Schumix.Irc/Network.cs:76
 msgid "Started the irc data receiving."
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:77
+#: ../Core/Schumix.Irc/Network.cs:79
 msgid "Do not going data from irc server!"
 msgstr ""
 
-#: ../Core/Schumix.Irc/Network.cs:94
+#: ../Core/Schumix.Irc/Network.cs:96
 msgid "Received unhandled opcode: {0}"
 msgstr ""
 

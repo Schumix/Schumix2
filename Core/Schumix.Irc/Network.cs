@@ -357,10 +357,7 @@ namespace Schumix.Irc
 		/// </summary>
 		public void ReConnect()
 		{
-			if(SchumixBase.ExitStatus)
-				return;
-
-			if(sIrcBase.ReloadStatus)
+			if(SchumixBase.ExitStatus || sIrcBase.ReloadStatus)
 				return;
 
 			Close();
@@ -446,6 +443,9 @@ namespace Schumix.Irc
 			else
 				InitializeStream(client.GetStream());
 
+			if(reader.IsNull() || INetwork.WriterList[_servername].IsNull())
+				return;
+
 			Connected = true;
 			sSender.RegisterConnection(IRCConfig.List[_servername].Password, sMyNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
 
@@ -484,12 +484,26 @@ namespace Schumix.Irc
 
 		private void InitializeStream(Stream stream)
 		{
-			reader = new StreamReader(stream);
+			try
+			{
+				reader = new StreamReader(stream);
 
-			if(INetwork.WriterList.ContainsKey(_servername))
-				INetwork.WriterList[_servername] = new StreamWriter(stream) { AutoFlush = true };
-			else
-				INetwork.WriterList.Add(_servername, new StreamWriter(stream) { AutoFlush = true });
+				if(INetwork.WriterList.ContainsKey(_servername))
+					INetwork.WriterList[_servername] = new StreamWriter(stream) { AutoFlush = true };
+				else
+					INetwork.WriterList.Add(_servername, new StreamWriter(stream) { AutoFlush = true });
+			}
+			catch(Exception e)
+			{
+				reader = null;
+
+				if(INetwork.WriterList.ContainsKey(_servername))
+					INetwork.WriterList[_servername] = null;
+				else
+					INetwork.WriterList.Add(_servername, null);
+
+				Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
+			}
 		}
 
 		private void HandleOpcodesTimer(object sender, ElapsedEventArgs e)
@@ -529,7 +543,7 @@ namespace Schumix.Irc
 					if((SchumixBase.ExitStatus || sIrcBase.ReloadStatus) && NetworkQuit)
 						break;
 
-					if(!Connected)
+					if(!Connected || reader.IsNull())
 					{
 						Thread.Sleep(1000);
 						continue;

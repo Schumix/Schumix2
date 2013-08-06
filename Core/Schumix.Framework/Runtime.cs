@@ -113,7 +113,7 @@ namespace Schumix.Framework
 		[DllImport("libc")] // BSD
 		private static extern void setproctitle(byte[] fmt, byte[] str_arg);
 
-		//this is from http://abock.org/2006/02/09/changing-process-name-in-mono/
+		// This is from http://abock.org/2006/02/09/changing-process-name-in-mono/
 		private void unixSetProcessName(string Name)
 		{
 			try
