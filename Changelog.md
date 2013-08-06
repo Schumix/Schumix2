@@ -2,6 +2,7 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * Irc részben javítva a fellépő hiba. A hiba jórészt csak Windows alatt fordult elő. Köszönet a hiba jelentéséért Invisible-nek.
  * Frissítéskor fellépő sql hiba javítva.
  * Telepített alkalmazásoknál a frissítés nem lesz ezentúl lehetséges még akkor se ha konfigba bekapcsolható.
  * Debug módban alapértelmezetten és megváltoztathatatlanul a logolási szint a 3-as lesz.
