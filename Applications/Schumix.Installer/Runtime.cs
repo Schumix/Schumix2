@@ -23,6 +23,7 @@ using System.Text;
 using System.Threading;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using Schumix.Installer.Logger;
 using Schumix.Installer.Platforms;
 using Schumix.Installer.Extensions;
 using Schumix.Installer.Localization;

@@ -25,7 +25,7 @@ using System.Collections.Generic;
 using Schumix.Installer.Extensions;
 using Schumix.Installer.Localization;
 
-namespace Schumix.Installer
+namespace Schumix.Installer.Logger
 {
 	public sealed class Log
 	{

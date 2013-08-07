@@ -47,7 +47,6 @@
     <Compile Include="Singleton.cs" />
     <Compile Include="CopyTo\Copy.cs" />
     <Compile Include="Clean\DirectoryClean.cs" />
-    <Compile Include="Log.cs" />
     <Compile Include="Extensions\GeneralExtensions.cs" />
     <Compile Include="Download\CloneSchumix.cs" />
     <Compile Include="Extensions\ArrayExtensions.cs" />
@@ -58,6 +57,7 @@
     <Compile Include="Extensions\ConvertExtensions.cs" />
     <Compile Include="Download\NGitProgressMonitor.cs" />
     <Compile Include="Runtime.cs" />
+    <Compile Include="Logger\Log.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -65,6 +65,7 @@
     <Folder Include="Config\" />
     <Folder Include="Extensions\" />
     <Folder Include="Platforms\" />
+    <Folder Include="Logger\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\External\ngit\NGit\NGit.csproj">

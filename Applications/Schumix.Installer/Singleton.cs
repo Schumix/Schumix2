@@ -20,6 +20,7 @@
 
 using System;
 using System.Reflection;
+using Schumix.Installer.Logger;
 using Schumix.Installer.Extensions;
 
 namespace Schumix.Installer
