@@ -102,7 +102,6 @@ namespace Schumix.Server
 			else
 				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding.ToInt32());
 
-			sLConsole.SetLocale(localization);
 			System.Console.Title = "Schumix2 Server";
 
 			if(colorbindmode)

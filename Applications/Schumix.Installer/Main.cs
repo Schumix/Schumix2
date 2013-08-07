@@ -21,14 +21,18 @@
 using System;
 using System.IO;
 using System.Net;
+using System.Text;
 using System.Threading;
 using System.Diagnostics;
+using System.Globalization;
 using Schumix.Installer.Clean;
 using Schumix.Installer.CopyTo;
 using Schumix.Installer.Logger;
+using Schumix.Installer.Options;
 using Schumix.Installer.Compiler;
 using Schumix.Installer.Download;
 using Schumix.Installer.Platforms;
+using Schumix.Installer.Exceptions;
 using Schumix.Installer.Extensions;
 using Schumix.Installer.Localization;
 
@@ -49,6 +53,41 @@ namespace Schumix.Installer
 		public static void Main(string[] args)
 		{
 			sRuntime.SetProcessName("Installer");
+			bool help = false;
+			string console_encoding = Encoding.UTF8.BodyName;
+			string localization = "start";
+
+			var os = new OptionSet()
+			{
+				{ "h|?|help", "Display help.", v => help = true },
+				{ "console-encoding=", "Set up the program's character encoding.", v => console_encoding = v },
+				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
+			};
+
+			try
+			{
+				os.Parse(args);
+
+				if(help)
+				{
+					ShowHelp(os);
+					return;
+				}
+			}
+			catch(OptionException oe)
+			{
+				Console.WriteLine("{0} for options '{1}'", oe.Message, oe.OptionName);
+				return;
+			}
+
+			if(!console_encoding.IsNumber())
+				Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
+			else
+				Console.OutputEncoding = Encoding.GetEncoding(console_encoding.ToInt32());
+
+			if(localization != "start")
+				sLConsole.SetLocale(localization);
+
 			Console.Title = "Schumix2 Installer";
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("[Installer]");
@@ -58,6 +97,10 @@ namespace Schumix.Installer
 			Console.ForegroundColor = ConsoleColor.Gray;
 			Console.WriteLine();
 			Log.Initialize("Installer.log");
+
+			if(sPlatform.IsWindows && console_encoding == Encoding.UTF8.BodyName &&
+			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
+				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
 			if(sPlatform.IsLinux)
 				ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
@@ -112,6 +155,16 @@ namespace Schumix.Installer
 
 			Log.Success("Installer", sLConsole.GetString("The installation is finished. The program shutting down!"));
 			Environment.Exit(0);
+		}
+
+		/// <summary>
+		///     Segítséget nyújt a kapcsolokhoz.
+		/// </summary>
+		private static void ShowHelp(OptionSet os)
+		{
+			Console.WriteLine("[Installer] Version: {0}", sUtilities.GetVersion());
+			Console.WriteLine("Options:");
+			os.WriteOptionDescriptions(Console.Out);
 		}
 	}
 }
