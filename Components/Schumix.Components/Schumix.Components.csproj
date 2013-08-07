@@ -62,6 +62,7 @@
     <Compile Include="LuaEngine\SchumixCommandMethod.cs" />
     <Compile Include="PythonEngine\PythonEngine.cs" />
     <Compile Include="ScriptManager.cs" />
+    <Compile Include="Updater\Download\NGitProgressMonitor.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
