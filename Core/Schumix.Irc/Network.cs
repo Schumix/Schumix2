@@ -431,10 +431,12 @@ namespace Schumix.Irc
 					catch(AuthenticationException e)
 					{
 						Log.Error("Network", sLConsole.GetString("Certificate not accepted, exception: {0}"), e.Message);
+						return;
 					}
 					catch(Exception e)
 					{
 						Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
+						return;
 					}
 
 					if(networkStream.IsNull())
