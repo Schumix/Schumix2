@@ -74,6 +74,7 @@
     <Compile Include="Exceptions\SingletonException.cs" />
     <Compile Include="Exceptions\InstallerException.cs" />
     <Compile Include="InstallerBase.cs" />
+    <Compile Include="CrashDumper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

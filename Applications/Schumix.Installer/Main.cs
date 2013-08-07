@@ -33,6 +33,7 @@ namespace Schumix.Installer
 	class MainClass
 	{
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
@@ -94,6 +95,14 @@ namespace Schumix.Installer
 			Console.WriteLine();
 			Log.Notice("Main", sLConsole.GetString("System is starting..."));
 
+			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
+			{
+				Log.LargeError(sLConsole.GetString("FATAL ERROR"));
+				Log.Error("Main", sLConsole.GetString("An unhandled exception has been thrown. ({0})"), (eventArgs.ExceptionObject as Exception).Message);
+				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
+				Shutdown();
+			};
+
 			new InstallerBase();
 		}
 
@@ -105,6 +114,11 @@ namespace Schumix.Installer
 			Console.WriteLine("[Installer] Version: {0}", sUtilities.GetVersion());
 			Console.WriteLine("Options:");
 			os.WriteOptionDescriptions(Console.Out);
+		}
+
+		public static void Shutdown()
+		{
+			sRuntime.Exit();
 		}
 	}
 }
