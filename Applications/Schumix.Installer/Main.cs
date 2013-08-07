@@ -52,8 +52,8 @@ namespace Schumix.Installer
 			Console.Title = "Schumix2 Installer";
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("[Installer]");
-			Console.WriteLine(sLConsole.Installer("Text16"));
-			Console.WriteLine(sLConsole.Installer("Text17"), sUtilities.GetVersion());
+			Console.WriteLine(sLConsole.GetString("To shut down the program use the <Ctrl+C> command!"));
+			Console.WriteLine(sLConsole.GetString("Installer Version: {0}"), sUtilities.GetVersion());
 			Console.WriteLine("================================================================================"); // 80
 			Console.ForegroundColor = ConsoleColor.Gray;
 			Console.WriteLine();
@@ -64,7 +64,7 @@ namespace Schumix.Installer
 
 			WebRequest.DefaultWebProxy = null;
 
-			Log.Notice("Installer", sLConsole.Installer("Text2"));
+			Log.Notice("Installer", sLConsole.GetString("Installer started."));
 			string url = GitUrl.Remove(0, "http://".Length, "http://");
 			url = url.Remove(0, "https://".Length, "https://");
 			string version = sUtilities.GetUrl("https://raw." + url + "/stable" +
@@ -75,31 +75,31 @@ namespace Schumix.Installer
 			try
 			{
 				new CloneSchumix("git://" + url, _dir);
-				Log.Success("Installer", sLConsole.Installer("Text6"));
+				Log.Success("Installer", sLConsole.GetString("Successfully downloaded new version."));
 			}
 			catch
 			{
-				Log.Error("Installer", sLConsole.Installer("Text7"));
-				Log.Warning("Installer", sLConsole.Installer("Text8"));
+				Log.Error("Installer", sLConsole.GetString("Downloading unsuccessful."));
+				Log.Warning("Installer", sLConsole.GetString("Installation successful!"));
 				Thread.Sleep(5*1000);
 				Environment.Exit(1);
 			}
 
-			Log.Notice("Installer", sLConsole.Installer("Text12"));
+			Log.Notice("Installer", sLConsole.GetString("Started translating."));
 			var build = new Build(_dir);
 
 			if(build.HasError)
 			{
-				Log.Error("Installer", sLConsole.Installer("Text13"));
-				Log.Warning("Installer", sLConsole.Installer("Text8"));
+				Log.Error("Installer", sLConsole.GetString("Error was handled while translated."));
+				Log.Warning("Installer", sLConsole.GetString("Installation successful!"));
 				Thread.Sleep(5*1000);
 				Environment.Exit(1);
 			}
 
-			Log.Success("Installer", sLConsole.Installer("Text14"));
-			Log.Notice("Installer", sLConsole.Installer("Text3"));
+			Log.Success("Installer", sLConsole.GetString("Successfully finished the translation."));
+			Log.Notice("Installer", sLConsole.GetString("Copy files."));
 			new Copy(_dir);
-			Log.Notice("Installer", sLConsole.Installer("Text4"));
+			Log.Notice("Installer", sLConsole.GetString("Remove unneeded datas."));
 
 			try
 			{
@@ -110,7 +110,7 @@ namespace Schumix.Installer
 				Log.Warning("Installer", e.Message);
 			}
 
-			Log.Success("Installer", sLConsole.Installer("Text15"));
+			Log.Success("Installer", sLConsole.GetString("The installation is finished. The program shutting down!"));
 			Environment.Exit(0);
 		}
 	}

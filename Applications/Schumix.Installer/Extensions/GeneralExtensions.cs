@@ -143,6 +143,16 @@ namespace Schumix.Installer.Extensions
 			Task.WaitAll(coll.ToArray());
 		}
 
+		public static string ToLocale(this string Language)
+		{
+			if(Language.Length == 4 && !Language.Contains("-"))
+				Language = Language.Substring(0, 2) + "-" + Language.Substring(2);
+			else if((Language.Length < 4 || Language.Length > 4) && !Language.Contains("-"))
+				Language = "en-US";
+
+			return Language;
+		}
+
 		public static bool IsNumber(this string value)
 		{
 			double number;

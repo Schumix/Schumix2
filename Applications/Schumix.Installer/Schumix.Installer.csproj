@@ -88,5 +88,9 @@
       <Project>{849AE05D-0058-4A8C-A0E8-77DC6BB12E52}</Project>
       <Name>Sharpen.Unix</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\External\NGettext\src\NGettext\NGettext.csproj">
+      <Project>{96EED5F5-7E90-4BD8-A822-2D7BFF943E28}</Project>
+      <Name>NGettext</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

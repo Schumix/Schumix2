@@ -19,165 +19,170 @@
  */
 
 using System;
+using System.IO;
+using System.Linq;
+using System.Threading;
+using System.Reflection;
+using System.Globalization;
+using Schumix.Installer.Platforms;
+using Schumix.Installer.Extensions;
+using NGettext;
 
 namespace Schumix.Installer.Localization
 {
 	sealed class LocalizationConsole
 	{
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		public string Locale { get; set; }
-		private LocalizationConsole() {}
+		private ICatalog _catalog;
+		private string _localedir;
 
-		public string Installer(string Name)
+		private LocalizationConsole()
 		{
-			switch(Name)
-			{
-				case "Text2":
-				{
-					if(Locale == "huHU")
-						return "Installer elindult.";
-					else if(Locale == "enUS")
-						return "Installer started.";
-					else
-						return "Installer started.";
-				}
-				case "Text3":
-				{
-					if(Locale == "huHU")
-						return "Fájlok átmásolása.";
-					else if(Locale == "enUS")
-						return "Copy files.";
-					else
-						return "Copy files.";
-				}
-				case "Text4":
-				{
-					if(Locale == "huHU")
-						return "Fölösleges adatok törlése.";
-					else if(Locale == "enUS")
-						return "Remove unneeded datas.";
-					else
-						return "Remove unneeded datas.";
-				}
-				case "Text5":
-				{
-					if(Locale == "huHU")
-						return "Új forrás letöltése.";
-					else if(Locale == "enUS")
-						return "Downloading new version.";
-					else
-						return "Downloading new version.";
-				}
-				case "Text6":
-				{
-					if(Locale == "huHU")
-						return "Forrás sikeresen le lett töltve.";
-					else if(Locale == "enUS")
-						return "Successfully downloaded new version.";
-					else
-						return "Successfully downloaded new version.";
-				}
-				case "Text7":
-				{
-					if(Locale == "huHU")
-						return "Letöltés sikertelen!";
-					else if(Locale == "enUS")
-						return "Downloading unsuccessful.";
-					else
-						return "Downloading unsuccessful.";
-				}
-				case "Text8":
-				{
-					if(Locale == "huHU")
-						return "A telepítés befejeződött!";
-					else if(Locale == "enUS")
-						return "Installation successful!";
-					else
-						return "Installation successful!";
-				}
-				case "Text12":
-				{
-					if(Locale == "huHU")
-						return "Fordítás megkezdése.";
-					else if(Locale == "enUS")
-						return "Started translating.";
-					else
-						return "Started translating.";
-				}
-				case "Text13":
-				{
-					if(Locale == "huHU")
-						return "Hiba történt a fordítás közben!";
-					else if(Locale == "enUS")
-						return "Error was handled while translated.";
-					else
-						return "Error was handled while translated.";
-				}
-				case "Text14":
-				{
-					if(Locale == "huHU")
-						return "Fordítás sikeresen befejeződött.";
-					else if(Locale == "enUS")
-						return "Successfully finished the translation.";
-					else
-						return "Successfully finished the translation.";
-				}
-				case "Text15":
-				{
-					if(Locale == "huHU")
-						return "A telepítés befejeződött. Leáll a program!";
-					else if(Locale == "enUS")
-						return "The installation is finished. The program shutting down!";
-					else
-						return "The installation is finished. The program shutting down!";
-				}
-				case "Text16":
-				{
-					if(Locale == "huHU")
-						return "A program leállításához használd a <Ctrl+C> parancsot!";
-					else if(Locale == "enUS")
-						return "To shut down the program use the <Ctrl+C> command!";
-					else
-						return "To shut down the program use the <Ctrl+C> command!";
-				}
-				case "Text17":
-				{
-					if(Locale == "huHU")
-						return "Installer Verzió: {0}";
-					else if(Locale == "enUS")
-						return "Installer Version: {0}";
-					else
-						return "Installer Version: {0}";
-				}
-				default:
-					return string.Empty;
-			}
+			Initialize();
+			SetLocale("en-US");
 		}
 
-		public string Log(string Name)
+		public void Initialize()
 		{
-			switch(Name)
+			Initialize("./locale");
+		}
+
+		public void Initialize(string LocaleDir)
+		{
+			if(LocaleDir.IsNullOrEmpty() || LocaleDir == "./locale")
 			{
-				case "Text":
+				string location = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+				if(sPlatform.IsWindows)
+					LocaleDir = Path.Combine(location, "locale");
+				else if(sPlatform.IsLinux)
 				{
-					if(Locale == "huHU")
-						return "Indulási időpont: [{0}]\n";
-					else if(Locale == "enUS")
-						return "Started time: [{0}]\n";
+					bool enabled = false;
+					var dir = new DirectoryInfo(location);
+
+					foreach(var d in dir.GetDirectories("locale").AsParallel())
+					{
+						if(d.Name == "locale")
+							enabled = true;
+					}
+
+					if(enabled)
+						LocaleDir = "./locale";
 					else
-						return "Started time: [{0}]\n";
+					{
+						// $prefix/lib/schumix
+						string prefix = Path.Combine(Path.Combine(location, ".."), "..");
+						prefix = Path.GetFullPath(prefix);
+
+						// "$prefix/share/locale"
+						LocaleDir = Path.Combine(Path.Combine(prefix, "share"), "locale");
+					}
 				}
-				case "Text2":
-				{
-					if(Locale == "huHU")
-						return "\nIndulási időpont: [{0}]\n";
-					else if(Locale == "enUS")
-						return "\nStarted time: [{0}]\n";
-					else
-						return "\nStarted time: [{0}]\n";
-				}
-				default:
-					return string.Empty;
 			}
+
+			_localedir = LocaleDir;
+			LoadCatalog();
+		}
+
+		private void LoadCatalog()
+		{
+			LoadCatalog(CultureInfo.GetCultureInfo("en-US"));
+		}
+
+		private void LoadCatalog(CultureInfo ci)
+		{
+			_catalog = new Catalog("schumix", _localedir, ci);
+		}
+
+		public void SetLocale()
+		{
+			SetLocale("en-US");
+		}
+
+		public void SetLocale(string Language)
+		{
+			Locale = Language.Replace("-", string.Empty);
+			Language = Language.ToLocale();
+
+			if(sPlatform.IsWindows)
+			{
+#if false
+				// .net 4.5
+				CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(Language);
+#endif
+				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
+			}
+			else if(sPlatform.IsLinux)
+			{
+#if false
+				// .net 4.5
+				CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(Language);
+#endif
+				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
+				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
+			}
+			else
+			{
+#if false
+				// .net 4.5
+				CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo(Language);
+#endif
+				Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo(Language);
+				Environment.SetEnvironmentVariable("LANGUAGE", Language.Substring(0, 2));
+			}
+
+			LoadCatalog(CultureInfo.GetCultureInfo(Language));
+		}
+
+		public string GetString(string phrase)
+		{
+			return _catalog.GetString(phrase);
+		}
+
+		public string GetString(string phrase, object arg0)
+		{
+			return string.Format(_catalog.GetString(phrase), arg0);
+		}
+
+		public string GetString(string phrase, object arg0, object arg1)
+		{
+			return string.Format(_catalog.GetString(phrase), arg0, arg1);
+		}
+
+		public string GetString(string phrase, object arg0, object arg1, object arg2)
+		{
+			return string.Format(_catalog.GetString(phrase), arg0, arg1, arg2);
+		}
+
+		public string GetString(string phrase, params object[] args)
+		{
+			return string.Format(_catalog.GetString(phrase), args);
+		}
+
+		public string GetPluralString(string singular, string plural, int number)
+		{
+			return _catalog.GetPluralString(singular, plural, number);
+		}
+
+		public string GetPluralString(string singular, string plural, int number, object arg0)
+		{
+			return string.Format(_catalog.GetPluralString(singular, plural, number), arg0);
+		}
+
+		public string GetPluralString(string singular, string plural, int number, object arg0, object arg1)
+		{
+			return string.Format(_catalog.GetPluralString(singular, plural, number), arg0, arg1);
+		}
+
+		public string GetPluralString(string singular, string plural, int number, object arg0, object arg1, object arg2)
+		{
+			return string.Format(_catalog.GetPluralString(singular, plural, number), arg0, arg1, arg2);
+		}
+
+		public string GetPluralString(string singular, string plural, int number, params object[] args)
+		{
+			return string.Format(_catalog.GetPluralString(singular, plural, number), args);
 		}
 	}
 }

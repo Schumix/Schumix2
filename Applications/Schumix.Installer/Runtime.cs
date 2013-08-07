@@ -62,7 +62,7 @@ namespace Schumix.Installer
 				}
 				catch(Exception e)
 				{
-					//Log.Error("Runtime", sLConsole.GetString("Failed to set process name: {0}"), e.Message);
+					Log.Error("Runtime", sLConsole.GetString("Failed to set process name: {0}"), e.Message);
 				}
 			}
 		}
@@ -79,7 +79,7 @@ namespace Schumix.Installer
 			try
 			{
 				if(prctl(15, Encoding.ASCII.GetBytes(Name + "\0"), IntPtr.Zero, IntPtr.Zero, IntPtr.Zero) != 0)
-					Log.Error("Runtime", /*sLConsole.GetString(*/"Error setting process name!"/*)*/);
+					Log.Error("Runtime", sLConsole.GetString("Error setting process name!"));
 			}
 			catch(EntryPointNotFoundException)
 			{

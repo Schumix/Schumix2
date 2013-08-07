@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-07 15:37:54+0200\n"
+"POT-Creation-Date: 2013-08-07 21:07:55+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -683,10 +683,12 @@ msgid "The program, more than {0} MB consumed!"
 msgstr "A program több mint {0} mb-ot fogyaszt!"
 
 #: ../Core/Schumix.Framework/Runtime.cs:14
+#: ../Applications/Schumix.Installer/Runtime.cs:7
 msgid "Failed to set process name: {0}"
 msgstr "Nem sikerült beállítani folyamat nevét: {0}"
 
 #: ../Core/Schumix.Framework/Runtime.cs:17
+#: ../Applications/Schumix.Installer/Runtime.cs:10
 msgid "Error setting process name!"
 msgstr "Hiba a folyamat nevének beállításában!"
 
@@ -1148,11 +1150,13 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Logger/Log.cs:32
 #: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
+#: ../Applications/Schumix.Installer/Logger/Log.cs:10
 msgid "Started time: [{0}]\n"
 msgstr "Indulási időpont: [{0}]\n"
 
 #: ../Core/Schumix.Framework/Logger/Log.cs:32
 #: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
+#: ../Applications/Schumix.Installer/Logger/Log.cs:10
 msgid ""
 "\n"
 "Started time: [{0}]\n"
@@ -1299,6 +1303,59 @@ msgstr "CCommandManager sikeresen elindult."
 #: ../Applications/Schumix/Console/CommandManager.cs:8
 msgid "All Command Handler are registered."
 msgstr "Összes Command handler regisztrálásra került."
+
+#: ../Applications/Schumix.Installer/Main.cs:3
+msgid "To shut down the program use the <Ctrl+C> command!"
+msgstr "A program leállításához használd a <Ctrl+C> parancsot!"
+
+#: ../Applications/Schumix.Installer/Main.cs:3
+msgid "Installer Version: {0}"
+msgstr "Installer Verzió: {0}"
+
+#: ../Applications/Schumix.Installer/Main.cs:6
+msgid "Installer started."
+msgstr "Installer elindult."
+
+#: ../Applications/Schumix.Installer/Main.cs:7
+#: ../Components/Schumix.Components/Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:12
+msgid "Successfully downloaded new version."
+msgstr "Forrás sikeresen le lett töltve."
+
+#: ../Applications/Schumix.Installer/Main.cs:7
+msgid "Downloading unsuccessful."
+msgstr "Sikertelen letöltés!"
+
+#: ../Applications/Schumix.Installer/Main.cs:7
+#: ../Applications/Schumix.Installer/Main.cs:9
+msgid "Installation successful!"
+msgstr "A telepítés befejeződött!"
+
+#: ../Applications/Schumix.Installer/Main.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:13
+msgid "Started translating."
+msgstr "Fordítás megkezdése."
+
+#: ../Applications/Schumix.Installer/Main.cs:9
+msgid "Error was handled while translated."
+msgstr "Hiba történt a fordítás közben!"
+
+#: ../Applications/Schumix.Installer/Main.cs:10
+#: ../Components/Schumix.Components/Updater/Update.cs:15
+msgid "Successfully finished the translation."
+msgstr "Fordítás sikeresen befejeződött."
+
+#: ../Applications/Schumix.Installer/Main.cs:10
+msgid "Copy files."
+msgstr ""
+
+#: ../Applications/Schumix.Installer/Main.cs:10
+msgid "Remove unneeded datas."
+msgstr ""
+
+#: ../Applications/Schumix.Installer/Main.cs:12
+msgid "The installation is finished. The program shutting down!"
+msgstr "A telepítés befejeződött. Leáll a program!"
 
 #: ../Applications/Schumix.Server/ServerListener.cs:3
 msgid "Successfully started the ServerListener."
@@ -1551,11 +1608,6 @@ msgstr "Új forrás letöltése."
 
 #: ../Components/Schumix.Components/Updater/Update.cs:8
 #: ../Components/Schumix.Components/Updater/Update.cs:12
-msgid "Successfully downloaded new version."
-msgstr "Forrás sikeresen le lett töltve."
-
-#: ../Components/Schumix.Components/Updater/Update.cs:8
-#: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "Downloading unsuccessful!"
 msgstr "Letöltés sikertelen!"
 
@@ -1573,17 +1625,9 @@ msgstr "A legutolsó verzió keresése megindult."
 msgid "No such version like this, update interrupted!"
 msgstr "Ilyen verzió nem létezik ezért a frissítés leáll!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:13
-msgid "Started translating."
-msgstr "Fordítás megkezdése."
-
 #: ../Components/Schumix.Components/Updater/Update.cs:14
 msgid "Error was handled while translated!"
 msgstr "Hiba történt a fordítás közben!"
-
-#: ../Components/Schumix.Components/Updater/Update.cs:15
-msgid "Successfully finished the translation."
-msgstr "Fordítás sikeresen befejeződött."
 
 #: ../Components/Schumix.Components/Updater/Update.cs:15
 msgid "Sql files update is started. The setted database will be updated."
