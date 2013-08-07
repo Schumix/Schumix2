@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-07 21:07:55+0200\n"
-"PO-Revision-Date: 2013-08-07 21:07:57+0200\n"
+"POT-Creation-Date: 2013-08-07 22:00:14+0200\n"
+"PO-Revision-Date: 2013-08-07 22:00:16+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -687,14 +687,17 @@ msgid "Error setting process name!"
 msgstr ""
 
 #: ../Core/Schumix.Framework/CrashDumper.cs:3
+#: ../Applications/Schumix.Installer/CrashDumper.cs:3
 msgid "Creating crash dump..."
 msgstr ""
 
 #: ../Core/Schumix.Framework/CrashDumper.cs:4
+#: ../Applications/Schumix.Installer/CrashDumper.cs:4
 msgid "Failed to write crash dump! ({0})"
 msgstr ""
 
 #: ../Core/Schumix.Framework/CrashDumper.cs:5
+#: ../Applications/Schumix.Installer/CrashDumper.cs:5
 msgid "Crash dump created."
 msgstr ""
 
@@ -1106,6 +1109,7 @@ msgid "Loaded the ShortUrl settings."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Exceptions/OptionException.cs:3
+#: ../Applications/Schumix.Installer/Exceptions/OptionException.cs:3
 msgid "OptionName"
 msgstr ""
 
@@ -1226,6 +1230,7 @@ msgid "Developers: {0}"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:16
+#: ../Applications/Schumix.Installer/Main.cs:11
 #: ../Applications/Schumix.Server/Main.cs:12
 msgid "System is starting..."
 msgstr ""
@@ -1236,11 +1241,13 @@ msgid "Colorblind mode is on!"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Installer/Main.cs:13
 #: ../Applications/Schumix.Server/Main.cs:17
 msgid "FATAL ERROR"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Installer/Main.cs:13
 #: ../Applications/Schumix.Server/Main.cs:17
 #: ../Applications/Schumix.Server/Main.cs:21
 msgid "An unhandled exception has been thrown. ({0})"
@@ -1283,56 +1290,56 @@ msgstr ""
 msgid "All Command Handler are registered."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:3
+#: ../Applications/Schumix.Installer/Main.cs:9
 msgid "To shut down the program use the <Ctrl+C> command!"
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:3
+#: ../Applications/Schumix.Installer/Main.cs:9
 msgid "Installer Version: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:6
+#: ../Applications/Schumix.Installer/InstallerBase.cs:5
 msgid "Installer started."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:7
+#: ../Applications/Schumix.Installer/InstallerBase.cs:6
 #: ../Components/Schumix.Components/Updater/Update.cs:8
 #: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "Successfully downloaded new version."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:7
+#: ../Applications/Schumix.Installer/InstallerBase.cs:6
 msgid "Downloading unsuccessful."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:7
-#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:6
+#: ../Applications/Schumix.Installer/InstallerBase.cs:8
 msgid "Installation successful!"
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:8
+#: ../Applications/Schumix.Installer/InstallerBase.cs:7
 #: ../Components/Schumix.Components/Updater/Update.cs:13
 msgid "Started translating."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:8
 msgid "Error was handled while translated."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:10
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
 #: ../Components/Schumix.Components/Updater/Update.cs:15
 msgid "Successfully finished the translation."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:10
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
 msgid "Copy files."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:10
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
 msgid "Remove unneeded datas."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/Main.cs:12
+#: ../Applications/Schumix.Installer/InstallerBase.cs:11
 msgid "The installation is finished. The program shutting down!"
 msgstr ""
 
