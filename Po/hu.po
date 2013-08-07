@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-06 14:23:41+0200\n"
+"POT-Creation-Date: 2013-08-07 15:37:54+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -37,7 +37,8 @@ msgid "All Command Handler were deleted."
 msgstr "Összes Command handler törlésre került."
 
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:29
-#: ../Core/Schumix.Irc/Network.cs:58 ../Core/Schumix.Irc/Network.cs:73
+#: ../Core/Schumix.Irc/Network.cs:58 ../Core/Schumix.Irc/Network.cs:63
+#: ../Core/Schumix.Irc/Network.cs:69 ../Core/Schumix.Irc/Network.cs:73
 #: ../Core/Schumix.Irc/Network.cs:86 ../Core/Schumix.Irc/Network.cs:89
 #: ../Core/Schumix.Irc/Network.cs:98 ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-06 14:23:41+0200\n"
-"PO-Revision-Date: 2013-08-06 14:23:44+0200\n"
+"POT-Creation-Date: 2013-08-07 15:37:54+0200\n"
+"PO-Revision-Date: 2013-08-07 15:37:56+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,6 +32,8 @@ msgstr ""
 
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:29
 #: ../Core/Schumix.Irc/Network.cs:58
+#: ../Core/Schumix.Irc/Network.cs:63
+#: ../Core/Schumix.Irc/Network.cs:69
 #: ../Core/Schumix.Irc/Network.cs:73
 #: ../Core/Schumix.Irc/Network.cs:86
 #: ../Core/Schumix.Irc/Network.cs:89
