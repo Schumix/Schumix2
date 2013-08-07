@@ -73,6 +73,7 @@
     <Compile Include="Exceptions\OptionException.cs" />
     <Compile Include="Exceptions\SingletonException.cs" />
     <Compile Include="Exceptions\InstallerException.cs" />
+    <Compile Include="InstallerBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
