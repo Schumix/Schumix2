@@ -38,9 +38,9 @@ namespace Schumix.Installer
 {
 	sealed class InstallerBase
 	{
-		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private const string GitUrl = "https://github.com/Schumix/Schumix2";
 		private const string _dir = "Schumix2";
 
