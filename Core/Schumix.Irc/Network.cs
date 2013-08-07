@@ -373,113 +373,127 @@ namespace Schumix.Irc
 
 		private void Connection(bool nick = false)
 		{
-			NetworkQuit = false;
-			_cts = new CancellationTokenSource();
-
-			if(nick)
-			{
-				sMyNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
-
-				if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName
-				{
-					sMyNickInfo.ChangeNick(); // NickName -> NickName2
-
-					if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName2
-					{
-						sMyNickInfo.ChangeNick(); // NickName2 -> NickName3
-
-						if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName3
-							sMyNickInfo.ChangeNick(); // NickName3 -> Other
-					}
-
-					Log.Warning("Network", sLConsole.GetString("This nick name ({0}) is used by a service bot. Your nick is automaticly changed to a placeholder one."), sMyNickInfo.NickStorage);
-				}
-			}
-
-			Log.Notice("Network", sLConsole.GetString("Connection type: {0}"), CType.ToString());
-
 			try
 			{
-				client = new TcpClient();
-				client.Connect(_server, _port);
-			}
-			catch(Exception)
-			{
-				Log.Error("Network", sLConsole.GetString("Fatal error was happened while established the connection!"));
-				return;
-			}
+				NetworkQuit = false;
+				_cts = new CancellationTokenSource();
 
-			if(!client.IsNull() && client.Connected)
-				Log.Success("Network", sLConsole.GetString("Successfully established the connection!"));
-			else
-			{
-				Log.Error("Network", sLConsole.GetString("Error was happened while established the connection!"));
-				return;
-			}
+				if(nick)
+				{
+					sMyNickInfo.ChangeNick(IRCConfig.List[_servername].NickName);
 
-			if(CType == ConnectionType.Ssl)
-			{
-				SslStream networkStream = null;
+					if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName
+					{
+						sMyNickInfo.ChangeNick(); // NickName -> NickName2
+
+						if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName2
+						{
+							sMyNickInfo.ChangeNick(); // NickName2 -> NickName3
+
+							if(Rfc2812Util.IsServInLower(sMyNickInfo.NickStorage)) // NickName3
+								sMyNickInfo.ChangeNick(); // NickName3 -> Other
+						}
+
+						Log.Warning("Network", sLConsole.GetString("This nick name ({0}) is used by a service bot. Your nick is automaticly changed to a placeholder one."), sMyNickInfo.NickStorage);
+					}
+				}
+
+				Log.Notice("Network", sLConsole.GetString("Connection type: {0}"), CType.ToString());
 
 				try
 				{
-					networkStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback((s,ce,ca,p) => true), null);
-					networkStream.AuthenticateAsClient(_server);
+					client = new TcpClient();
+					client.Connect(_server, _port);
 				}
-				catch(AuthenticationException e)
+				catch(Exception)
 				{
-					Log.Error("Network", sLConsole.GetString("Certificate not accepted, exception: {0}"), e.Message);
-				}
-				catch(Exception e)
-				{
-					Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
+					Log.Error("Network", sLConsole.GetString("Fatal error was happened while established the connection!"));
+					return;
 				}
 
-				if(networkStream.IsNull())
+				if(!client.IsNull() && client.Connected)
+					Log.Success("Network", sLConsole.GetString("Successfully established the connection!"));
+				else
+				{
+					Log.Error("Network", sLConsole.GetString("Error was happened while established the connection!"));
+					return;
+				}
+
+				if(CType == ConnectionType.Ssl)
+				{
+					SslStream networkStream = null;
+
+					try
+					{
+						networkStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback((s,ce,ca,p) => true), null);
+						networkStream.AuthenticateAsClient(_server);
+					}
+					catch(AuthenticationException e)
+					{
+						Log.Error("Network", sLConsole.GetString("Certificate not accepted, exception: {0}"), e.Message);
+					}
+					catch(Exception e)
+					{
+						Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
+					}
+
+					if(networkStream.IsNull())
+						return;
+
+					InitializeStream(networkStream);
+				}
+				else
+					InitializeStream(client.GetStream());
+
+				if(reader.IsNull() || INetwork.WriterList[_servername].IsNull())
 					return;
 
-				InitializeStream(networkStream);
+				Connected = true;
+				sSender.RegisterConnection(IRCConfig.List[_servername].Password, sMyNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
+
+				Log.Notice("Network", sLConsole.GetString("Users' datas are sent."));
+				Online = false;
+				IsAllJoin = false;
+				_enabled = true;
+				KickPrivmsg = string.Empty;
+				ModePrivmsg = string.Empty;
+				ChannelPrivmsg = string.Empty;
+				NewNickPrivmsg = string.Empty;
+				UrlTitleEnabled = false;
+				sMyNickInfo.ChangeIdentifyStatus(false);
+				sMyNickInfo.ChangeVhostStatus(false);
 			}
-			else
-				InitializeStream(client.GetStream());
-
-			if(reader.IsNull() || INetwork.WriterList[_servername].IsNull())
-				return;
-
-			Connected = true;
-			sSender.RegisterConnection(IRCConfig.List[_servername].Password, sMyNickInfo.NickStorage, IRCConfig.List[_servername].UserName, IRCConfig.List[_servername].UserInfo);
-
-			Log.Notice("Network", sLConsole.GetString("Users' datas are sent."));
-			Online = false;
-			IsAllJoin = false;
-			_enabled = true;
-			KickPrivmsg = string.Empty;
-			ModePrivmsg = string.Empty;
-			ChannelPrivmsg = string.Empty;
-			NewNickPrivmsg = string.Empty;
-			UrlTitleEnabled = false;
-			sMyNickInfo.ChangeIdentifyStatus(false);
-			sMyNickInfo.ChangeVhostStatus(false);
+			catch(Exception e)
+			{
+				Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
+			}
 		}
 
 		private void Close()
 		{
-			Connected = false;
+			try
+			{
+				Connected = false;
 
-			if(!_cts.IsNull())
-				_cts.Cancel();
+				if(!_cts.IsNull())
+					_cts.Cancel();
 
-			if(!SchumixBase.ExitStatus)
-				Thread.Sleep(2000);
+				if(!SchumixBase.ExitStatus)
+					Thread.Sleep(2000);
 
-			if(!client.IsNull())
-				client.Close();
+				if(!client.IsNull())
+					client.Close();
 
-			if(!INetwork.WriterList[_servername].IsNull())
-				INetwork.WriterList[_servername].Dispose();
+				if(!INetwork.WriterList[_servername].IsNull())
+					INetwork.WriterList[_servername].Dispose();
 
-			if(!reader.IsNull())
-				reader.Dispose();
+				if(!reader.IsNull())
+					reader.Dispose();
+			}
+			catch(Exception e)
+			{
+				Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
+			}
 		}
 
 		private void InitializeStream(Stream stream)
