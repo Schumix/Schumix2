@@ -61,8 +61,8 @@ namespace Schumix.Installer
 
 				var request = (HttpWebRequest)WebRequest.Create(url);
 				request.AllowAutoRedirect = true;
-				request.UserAgent = Consts.SchumixUserAgent;
-				request.Referer = Consts.SchumixReferer;
+				request.UserAgent = Consts.InstallerUserAgent;
+				request.Referer = Consts.InstallerReferer;
 
 				int length = 0;
 				byte[] buf = new byte[1024];
@@ -88,15 +88,15 @@ namespace Schumix.Installer
 		{
 			using(var client = new WebClient())
 			{
-				client.Headers.Add("referer", Consts.SchumixReferer);
-				client.Headers.Add("user-agent", Consts.SchumixUserAgent);
+				client.Headers.Add("referer", Consts.InstallerReferer);
+				client.Headers.Add("user-agent", Consts.InstallerUserAgent);
 				client.DownloadFile(url, filename);
 			}
 		}
 
 		public string GetVersion()
 		{
-			return Schumix.Installer.Config.Consts.SchumixVersion;
+			return Schumix.Installer.Config.Consts.InstallerVersion;
 		}
 
 		public void CreateDirectory(string Name)

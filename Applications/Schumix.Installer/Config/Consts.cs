@@ -25,19 +25,19 @@ namespace Schumix.Installer.Config
 	public static class Consts
 	{
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		public const string SchumixDescription = "Schumix2 IRC Bot and Framework";
+		public const string InstallerDescription = "Schumix2 IRC Bot and Framework";
 #if DEBUG
-		public const string SchumixConfiguration = "Debug";
+		public const string InstallerConfiguration = "Debug";
 #else
-		public const string SchumixConfiguration = "Release";
+		public const string InstallerConfiguration = "Release";
 #endif
-		public const string SchumixCompany = "Schumix Productions";
-		public const string SchumixProduct = "Schumix";
-		public const string SchumixCopyright = "Copyright (C) 2013 Schumix Team <http://schumix.eu/>";
-		public const string SchumixTrademark = "GNU General Public License";
-		public const string SchumixVersion = "0.3.1";
-		public const string SchumixFileVersion = "0.3.1";
-		public static string SchumixUserAgent = "Schumix2 Installer " + sUtilities.GetVersion() + " / .NET " + Environment.Version;
-		public const string SchumixReferer = "http://yeahunter.hu";
+		public const string InstallerCompany = "Schumix Productions";
+		public const string InstallerProduct = "Schumix";
+		public const string InstallerCopyright = "Copyright (C) 2013 Schumix Team <http://schumix.eu/>";
+		public const string InstallerTrademark = "GNU General Public License";
+		public const string InstallerVersion = "0.4.0";
+		public const string InstallerFileVersion = "0.4.0";
+		public static string InstallerUserAgent = "Schumix2 Installer " + sUtilities.GetVersion() + " / .NET " + Environment.Version;
+		public const string InstallerReferer = "http://yeahunter.hu";
 	}
 }

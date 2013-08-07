@@ -28,12 +28,12 @@ using Schumix.Installer.Config;
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Schumix.Installer")]
-[assembly: AssemblyDescription(Consts.SchumixDescription)]
-[assembly: AssemblyConfiguration(Consts.SchumixConfiguration)]
-[assembly: AssemblyCompany(Consts.SchumixCompany)]
-[assembly: AssemblyProduct(Consts.SchumixProduct)]
-[assembly: AssemblyCopyright(Consts.SchumixCopyright)]
-[assembly: AssemblyTrademark(Consts.SchumixTrademark)]
+[assembly: AssemblyDescription(Consts.InstallerDescription)]
+[assembly: AssemblyConfiguration(Consts.InstallerConfiguration)]
+[assembly: AssemblyCompany(Consts.InstallerCompany)]
+[assembly: AssemblyProduct(Consts.InstallerProduct)]
+[assembly: AssemblyCopyright(Consts.InstallerCopyright)]
+[assembly: AssemblyTrademark(Consts.InstallerTrademark)]
 
 [assembly: CLSCompliant(true)]
 
@@ -52,5 +52,5 @@ using Schumix.Installer.Config;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion(Consts.SchumixVersion)]
-[assembly: AssemblyFileVersion(Consts.SchumixFileVersion)]
+[assembly: AssemblyVersion(Consts.InstallerVersion)]
+[assembly: AssemblyFileVersion(Consts.InstallerFileVersion)]
