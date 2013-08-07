@@ -21,15 +21,15 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Schumix.Framework.Exceptions
+namespace Schumix.Installer.Exceptions
 {
 	[Serializable]
-	public sealed class SchumixException : Exception
+	sealed class InstallerException : Exception
 	{
 		/// <summary>
 		/// Initializes a new instance.
 		/// </summary>
-		public SchumixException()
+		public InstallerException()
 		{
 		}
 
@@ -37,7 +37,7 @@ namespace Schumix.Framework.Exceptions
 		/// Initializes a new instance with a specified error message.
 		/// </summary>
 		/// <param name="message">The message that describes the error.</param>
-		public SchumixException(string message) : base(message)
+		public InstallerException(string message) : base(message)
 		{
 		}
 
@@ -49,7 +49,7 @@ namespace Schumix.Framework.Exceptions
 		/// The exception that is the cause of the current exception, 
 		/// or a null reference if no inner exception is specified.
 		/// </param>
-		public SchumixException(Exception innerException) : base(null, innerException)
+		public InstallerException(Exception innerException) : base(null, innerException)
 		{
 		}
 
@@ -62,7 +62,7 @@ namespace Schumix.Framework.Exceptions
 		/// The exception that is the cause of the current exception, 
 		/// or a null reference if no inner exception is specified.
 		/// </param>
-		public SchumixException(string message, Exception innerException) : base(message, innerException)
+		public InstallerException(string message, Exception innerException) : base(message, innerException)
 		{
 		}
 
@@ -79,7 +79,7 @@ namespace Schumix.Framework.Exceptions
 		/// </param>
 		/// <exception cref="System.ArgumentNullException">The info parameter is null.</exception>
 		/// <exception cref="System.Runtime.Serialization.SerializationException">The class name is null or System.Exception.HResult is zero (0).</exception>
-		public SchumixException(SerializationInfo info, StreamingContext context) : base(info, context)
+		public InstallerException(SerializationInfo info, StreamingContext context) : base(info, context)
 		{
 		}
 	}
