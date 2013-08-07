@@ -465,6 +465,8 @@ namespace Schumix.Irc
 			}
 			catch(Exception e)
 			{
+				Online = false;
+				Connected = false;
 				Log.Error("Network", sLConsole.GetString("Failure details: {0}"), e.Message);
 			}
 		}
