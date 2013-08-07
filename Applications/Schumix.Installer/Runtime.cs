@@ -30,7 +30,7 @@ using Schumix.Installer.Localization;
 
 namespace Schumix.Installer
 {
-	public sealed class Runtime
+	sealed class Runtime
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;

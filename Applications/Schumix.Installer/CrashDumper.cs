@@ -30,7 +30,7 @@ namespace Schumix.Installer
 	/// <summary>
 	/// Used to create crash dumps which are very useful for investigation of problems.
 	/// </summary>
-	public class CrashDumper
+	class CrashDumper
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
