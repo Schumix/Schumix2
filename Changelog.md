@@ -2,6 +2,7 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * NGit-hez készítve egy ProgressMonitor. Ötletért köszönet Invisible-nek.
  * Irc részben javítva a fellépő hiba. A hiba jórészt csak Windows alatt fordult elő. Köszönet a hiba jelentéséért Invisible-nek.
  * Frissítéskor fellépő sql hiba javítva.
  * Telepített alkalmazásoknál a frissítés nem lesz ezentúl lehetséges még akkor se ha konfigba bekapcsolható.
