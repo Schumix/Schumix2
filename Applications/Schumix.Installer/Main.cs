@@ -49,6 +49,8 @@ namespace Schumix.Installer
 			bool help = false;
 			string console_encoding = Encoding.UTF8.BodyName;
 			string localization = "start";
+			System.Console.BackgroundColor = ConsoleColor.Black;
+			System.Console.ForegroundColor = ConsoleColor.Gray;
 
 			var os = new OptionSet()
 			{
