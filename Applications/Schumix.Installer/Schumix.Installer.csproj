@@ -57,6 +57,7 @@
     <Compile Include="Platforms\PlatformType.cs" />
     <Compile Include="Extensions\ConvertExtensions.cs" />
     <Compile Include="Download\NGitProgressMonitor.cs" />
+    <Compile Include="Runtime.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

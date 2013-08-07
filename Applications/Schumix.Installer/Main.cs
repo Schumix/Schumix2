@@ -38,6 +38,7 @@ namespace Schumix.Installer
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
+		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private const string GitUrl = "https://github.com/Schumix/Schumix2";
 		private const string _dir = "Schumix2";
 
@@ -46,6 +47,7 @@ namespace Schumix.Installer
 		/// </summary>
 		public static void Main(string[] args)
 		{
+			sRuntime.SetProcessName("Installer");
 			Console.Title = "Schumix2 Installer";
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("[Installer]");
