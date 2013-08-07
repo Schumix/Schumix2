@@ -267,6 +267,14 @@ namespace Schumix.Framework.Logger
 			}
 		}
 
+		public static void Notice(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Notice(source, string.Format(format, args));
+			}
+		}
+
 		public static void Success(string source, string format)
 		{
 			lock(WriteLock)
@@ -296,6 +304,14 @@ namespace Schumix.Framework.Logger
 			lock(WriteLock)
 			{
 				Success(source, format.ToString());
+			}
+		}
+		
+		public static void Success(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Success(source, string.Format(format, args));
 			}
 		}
 
@@ -334,6 +350,14 @@ namespace Schumix.Framework.Logger
 			}
 		}
 
+		public static void Warning(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Warning(source, string.Format(format, args));
+			}
+		}
+
 		public static void Error(string source, string format)
 		{
 			lock(WriteLock)
@@ -369,6 +393,14 @@ namespace Schumix.Framework.Logger
 			}
 		}
 
+		public static void Error(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Error(source, string.Format(format, args));
+			}
+		}
+
 		public static void Debug(string source, string format)
 		{
 			lock(WriteLock)
@@ -401,6 +433,14 @@ namespace Schumix.Framework.Logger
 			lock(WriteLock)
 			{
 				Debug(source, format.ToString());
+			}
+		}
+
+		public static void Debug(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Debug(source, string.Format(format, args));
 			}
 		}
 
@@ -456,6 +496,14 @@ namespace Schumix.Framework.Logger
 			}
 		}
 
+		public static void LargeWarning(string message, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				LargeWarning(string.Format(message, args));
+			}
+		}
+
 		public static void LargeError(string message)
 		{
 			lock(WriteLock)
@@ -505,54 +553,6 @@ namespace Schumix.Framework.Logger
 			lock(WriteLock)
 			{
 				LargeError(message.ToString());
-			}
-		}
-
-		public static void Notice(string source, string format, params object[] args)
-		{
-			lock(WriteLock)
-			{
-				Notice(source, string.Format(format, args));
-			}
-		}
-
-		public static void Success(string source, string format, params object[] args)
-		{
-			lock(WriteLock)
-			{
-				Success(source, string.Format(format, args));
-			}
-		}
-
-		public static void Warning(string source, string format, params object[] args)
-		{
-			lock(WriteLock)
-			{
-				Warning(source, string.Format(format, args));
-			}
-		}
-
-		public static void Error(string source, string format, params object[] args)
-		{
-			lock(WriteLock)
-			{
-				Error(source, string.Format(format, args));
-			}
-		}
-
-		public static void Debug(string source, string format, params object[] args)
-		{
-			lock(WriteLock)
-			{
-				Debug(source, string.Format(format, args));
-			}
-		}
-
-		public static void LargeWarning(string message, params object[] args)
-		{
-			lock(WriteLock)
-			{
-				LargeWarning(string.Format(message, args));
 			}
 		}
 

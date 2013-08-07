@@ -2,6 +2,7 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * Installer-ben a log felújítva és átrendezve. Normál log a magban átrendezve.
  * NGit-hez készítve egy ProgressMonitor. Ötletért köszönet Invisible-nek.
  * Irc részben javítva a fellépő hiba. A hiba jórészt csak Windows alatt fordult elő. Köszönet a hiba jelentéséért Invisible-nek.
  * Frissítéskor fellépő sql hiba javítva.
