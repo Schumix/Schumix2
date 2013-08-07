@@ -37,6 +37,9 @@
     <Reference Include="System.Web" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System.Core" />
+    <Reference Include="Mono.Posix">
+      <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -75,6 +78,9 @@
     <Compile Include="Exceptions\InstallerException.cs" />
     <Compile Include="InstallerBase.cs" />
     <Compile Include="CrashDumper.cs" />
+    <Compile Include="Linux\Linux.cs" />
+    <Compile Include="Windows\CtrlType.cs" />
+    <Compile Include="Windows\Windows.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

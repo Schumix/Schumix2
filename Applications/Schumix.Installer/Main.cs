@@ -37,6 +37,8 @@ namespace Schumix.Installer
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
+		private static readonly Windows sWindows = Singleton<Windows>.Instance;
+		private static readonly Linux sLinux = Singleton<Linux>.Instance;
 
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
@@ -94,6 +96,11 @@ namespace Schumix.Installer
 
 			Console.WriteLine();
 			Log.Notice("Main", sLConsole.GetString("System is starting..."));
+
+			if(sPlatform.IsWindows)
+				sWindows.Init();
+			else if(sPlatform.IsLinux)
+				sLinux.Init();
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
