@@ -130,7 +130,7 @@ namespace Schumix.Installer
 
 		public static void Shutdown()
 		{
-			System.Console.CursorVisible = true;
+			Console.CursorVisible = true;
 			sRuntime.Exit();
 		}
 	}
