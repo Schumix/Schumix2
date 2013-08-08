@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-08 07:39:27+0200\n"
+"POT-Creation-Date: 2013-08-08 08:03:32+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -1328,8 +1328,7 @@ msgid "The installation is finished. The program shutting down!"
 msgstr "A telepítés befejeződött. Leáll a program!"
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:9
-#: ../Components/Schumix.Components/Updater/Update.cs:8
-#: ../Components/Schumix.Components/Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:19
 msgid "Successfully downloaded new version."
 msgstr "Forrás sikeresen le lett töltve."
 
@@ -1343,7 +1342,7 @@ msgid "Installation successful!"
 msgstr "A telepítés befejeződött!"
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:10
-#: ../Components/Schumix.Components/Updater/Update.cs:13
+#: ../Components/Schumix.Components/Updater/Update.cs:20
 msgid "Started translating."
 msgstr "Fordítás megkezdése."
 
@@ -1352,7 +1351,7 @@ msgid "Error was handled while translated."
 msgstr "Hiba történt a fordítás közben!"
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:12
-#: ../Components/Schumix.Components/Updater/Update.cs:15
+#: ../Components/Schumix.Components/Updater/Update.cs:22
 msgid "Successfully finished the translation."
 msgstr "Fordítás sikeresen befejeződött."
 
@@ -1584,74 +1583,68 @@ msgstr "Kivételt dobott letöltése közben a youtube title: {0}"
 msgid "Automatic updater is off."
 msgstr "Automatikus frissítés ki van kapcsolva."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:5
+#: ../Components/Schumix.Components/Updater/Update.cs:7
+msgid "The update is finished. The program shutting down!"
+msgstr "A frissítés befejeződött. Leáll a program!"
+
+#: ../Components/Schumix.Components/Updater/Update.cs:9
 msgid "Searching for new stable version is started."
 msgstr "Új stabil verzió keresése megindult."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "Currently no newer version!"
-msgstr "Jelenleg nincs újabb verzió!"
-
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "The program starts is continuing."
-msgstr "Folytatódik a program indulása."
-
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "I found a newer version. The update to {0} version is starting."
-msgstr "Újabb verziót találtam. Megindul a frissítés a {0} verzióra."
-
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "Older version found, update interrupted!"
-msgstr "Régebbi verziót találtam ezért leáll a frissítés!"
-
-#: ../Components/Schumix.Components/Updater/Update.cs:7
 #: ../Components/Schumix.Components/Updater/Update.cs:11
+#: ../Components/Schumix.Components/Updater/Update.cs:13
 msgid "Downloading new version."
 msgstr "Új forrás letöltése."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:8
-#: ../Components/Schumix.Components/Updater/Update.cs:12
-msgid "Downloading unsuccessful!"
-msgstr "Letöltés sikertelen!"
-
-#: ../Components/Schumix.Components/Updater/Update.cs:8
-#: ../Components/Schumix.Components/Updater/Update.cs:12
-#: ../Components/Schumix.Components/Updater/Update.cs:14
-msgid "Updating successful!"
-msgstr "A frissítés befejeződött!"
-
-#: ../Components/Schumix.Components/Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:11
 msgid "Searching for the last version is started."
 msgstr "A legutolsó verzió keresése megindult."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:13
 msgid "No such version like this, update interrupted!"
 msgstr "Ilyen verzió nem létezik ezért a frissítés leáll!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:14
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "Currently no newer version!"
+msgstr "Jelenleg nincs újabb verzió!"
+
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "The program starts is continuing."
+msgstr "Folytatódik a program indulása."
+
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "I found a newer version. The update to {0} version is starting."
+msgstr "Újabb verziót találtam. Megindul a frissítés a {0} verzióra."
+
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "Older version found, update interrupted!"
+msgstr "Régebbi verziót találtam ezért leáll a frissítés!"
+
+#: ../Components/Schumix.Components/Updater/Update.cs:19
+msgid "Downloading unsuccessful!"
+msgstr "Letöltés sikertelen!"
+
+#: ../Components/Schumix.Components/Updater/Update.cs:19
+#: ../Components/Schumix.Components/Updater/Update.cs:21
+msgid "Updating successful!"
+msgstr "A frissítés befejeződött!"
+
+#: ../Components/Schumix.Components/Updater/Update.cs:21
 msgid "Error was handled while translated!"
 msgstr "Hiba történt a fordítás közben!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:15
+#: ../Components/Schumix.Components/Updater/Update.cs:23
 msgid "Sql files update is started. The setted database will be updated."
 msgstr ""
 "Megindult az sql fájlok frissítése. A beállított adatbázis fog frissülni."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:15
+#: ../Components/Schumix.Components/Updater/Update.cs:23
 msgid "Sql update finished."
 msgstr "Az sql frissítés befejeződött."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:19
+#: ../Components/Schumix.Components/Updater/Update.cs:27
 msgid "This step of updateing is finished. Continue with next step."
 msgstr "Frissítés ezen szakasza befejeződött. Következik a beállítás."
-
-#: ../Components/Schumix.Components/Updater/Update.cs:20
-msgid "The update is finished. The program shutting down!"
-msgstr "A frissítés befejeződött. Leáll a program!"
 
 #: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:6
 msgid "Initializing Lua engine."

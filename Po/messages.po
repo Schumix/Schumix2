@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-08 07:39:27+0200\n"
-"PO-Revision-Date: 2013-08-08 07:39:31+0200\n"
+"POT-Creation-Date: 2013-08-08 08:03:32+0200\n"
+"PO-Revision-Date: 2013-08-08 08:03:35+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1307,8 +1307,7 @@ msgid "The installation is finished. The program shutting down!"
 msgstr ""
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:9
-#: ../Components/Schumix.Components/Updater/Update.cs:8
-#: ../Components/Schumix.Components/Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:19
 msgid "Successfully downloaded new version."
 msgstr ""
 
@@ -1322,7 +1321,7 @@ msgid "Installation successful!"
 msgstr ""
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:10
-#: ../Components/Schumix.Components/Updater/Update.cs:13
+#: ../Components/Schumix.Components/Updater/Update.cs:20
 msgid "Started translating."
 msgstr ""
 
@@ -1331,7 +1330,7 @@ msgid "Error was handled while translated."
 msgstr ""
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:12
-#: ../Components/Schumix.Components/Updater/Update.cs:15
+#: ../Components/Schumix.Components/Updater/Update.cs:22
 msgid "Successfully finished the translation."
 msgstr ""
 
@@ -1559,72 +1558,66 @@ msgstr ""
 msgid "Automatic updater is off."
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:5
+#: ../Components/Schumix.Components/Updater/Update.cs:7
+msgid "The update is finished. The program shutting down!"
+msgstr ""
+
+#: ../Components/Schumix.Components/Updater/Update.cs:9
 msgid "Searching for new stable version is started."
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "Currently no newer version!"
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "The program starts is continuing."
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "I found a newer version. The update to {0} version is starting."
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "Older version found, update interrupted!"
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:7
 #: ../Components/Schumix.Components/Updater/Update.cs:11
+#: ../Components/Schumix.Components/Updater/Update.cs:13
 msgid "Downloading new version."
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:8
-#: ../Components/Schumix.Components/Updater/Update.cs:12
-msgid "Downloading unsuccessful!"
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:8
-#: ../Components/Schumix.Components/Updater/Update.cs:12
-#: ../Components/Schumix.Components/Updater/Update.cs:14
-msgid "Updating successful!"
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:11
 msgid "Searching for the last version is started."
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:13
 msgid "No such version like this, update interrupted!"
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:14
-msgid "Error was handled while translated!"
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "Currently no newer version!"
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:15
-msgid "Sql files update is started. The setted database will be updated."
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "The program starts is continuing."
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:15
-msgid "Sql update finished."
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "I found a newer version. The update to {0} version is starting."
+msgstr ""
+
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "Older version found, update interrupted!"
 msgstr ""
 
 #: ../Components/Schumix.Components/Updater/Update.cs:19
-msgid "This step of updateing is finished. Continue with next step."
+msgid "Downloading unsuccessful!"
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:20
-msgid "The update is finished. The program shutting down!"
+#: ../Components/Schumix.Components/Updater/Update.cs:19
+#: ../Components/Schumix.Components/Updater/Update.cs:21
+msgid "Updating successful!"
+msgstr ""
+
+#: ../Components/Schumix.Components/Updater/Update.cs:21
+msgid "Error was handled while translated!"
+msgstr ""
+
+#: ../Components/Schumix.Components/Updater/Update.cs:23
+msgid "Sql files update is started. The setted database will be updated."
+msgstr ""
+
+#: ../Components/Schumix.Components/Updater/Update.cs:23
+msgid "Sql update finished."
+msgstr ""
+
+#: ../Components/Schumix.Components/Updater/Update.cs:27
+msgid "This step of updateing is finished. Continue with next step."
 msgstr ""
 
 #: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:6
