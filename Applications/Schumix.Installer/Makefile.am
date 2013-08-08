@@ -106,23 +106,25 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES)
 
 FILES = \
 	Main.cs \
-	Compiler/Build.cs \
-	Properties/AssemblyInfo.cs \
-	Localization/LocalizationConsole.cs \
 	Utilities.cs \
 	Singleton.cs \
-	CopyTo/Copy.cs \
-	Clean/DirectoryClean.cs \
-	Extensions/GeneralExtensions.cs \
-	Download/CloneSchumix.cs \
-	Extensions/ArrayExtensions.cs \
-	Extensions/StringExtensions.cs \
-	Config/Consts.cs \
-	Platforms/Platform.cs \
-	Platforms/PlatformType.cs \
-	Extensions/ConvertExtensions.cs \
-	Download/NGitProgressMonitor.cs \
 	Runtime.cs \
+	InstallerBase.cs \
+	CrashDumper.cs \
+	Compiler/Build.cs \
+	Config/Consts.cs \
+	CopyTo/Copy.cs \
+	Download/CloneSchumix.cs \
+	Download/NGitProgressMonitor.cs \
+	Exceptions/InstallerException.cs \
+	Exceptions/OptionException.cs \
+	Exceptions/SingletonException.cs \
+	Extensions/ArrayExtensions.cs \
+	Extensions/ConvertExtensions.cs \
+	Extensions/GeneralExtensions.cs \
+	Extensions/StringExtensions.cs \
+	Linux/Linux.cs \
+	Localization/LocalizationConsole.cs \
 	Logger/Log.cs \
 	Options/ActionOption.cs \
 	Options/ArgumentEnumerator.cs \
@@ -136,12 +138,9 @@ FILES = \
 	Options/OptionValueType.cs \
 	Options/ResponseFileSource.cs \
 	Options/StringCoda.cs \
-	Exceptions/OptionException.cs \
-	Exceptions/SingletonException.cs \
-	Exceptions/InstallerException.cs \
-	InstallerBase.cs \
-	CrashDumper.cs \
-	Linux/Linux.cs \
+	Platforms/Platform.cs \
+	Platforms/PlatformType.cs \
+	Properties/AssemblyInfo.cs \
 	Windows/CtrlType.cs \
 	Windows/Windows.cs 
 
@@ -150,11 +149,19 @@ DATA_FILES =
 RESOURCES = 
 
 EXTRAS = \
-	Properties \
+	Compiler \
 	Config \
+	CopyTo \
+	Download \
+	Exceptions \
 	Extensions \
-	Platforms \
+	Linux \
+	Localization \
 	Logger \
+	Options \
+	Platforms \
+	Properties \
+	Windows \
 	schumix.installer.in 
 
 REFERENCES =  \

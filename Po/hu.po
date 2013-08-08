@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-07 22:00:14+0200\n"
+"POT-Creation-Date: 2013-08-08 07:39:27+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -1319,50 +1319,50 @@ msgstr "A program leállításához használd a <Ctrl+C> parancsot!"
 msgid "Installer Version: {0}"
 msgstr "Installer Verzió: {0}"
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:5
+#: ../Applications/Schumix.Installer/InstallerBase.cs:4
 msgid "Installer started."
 msgstr "Installer elindult."
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:6
+msgid "The installation is finished. The program shutting down!"
+msgstr "A telepítés befejeződött. Leáll a program!"
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
 #: ../Components/Schumix.Components/Updater/Update.cs:8
 #: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "Successfully downloaded new version."
 msgstr "Forrás sikeresen le lett töltve."
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:6
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
 msgid "Downloading unsuccessful."
 msgstr "Sikertelen letöltés!"
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:6
-#: ../Applications/Schumix.Installer/InstallerBase.cs:8
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:11
 msgid "Installation successful!"
 msgstr "A telepítés befejeződött!"
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:7
+#: ../Applications/Schumix.Installer/InstallerBase.cs:10
 #: ../Components/Schumix.Components/Updater/Update.cs:13
 msgid "Started translating."
 msgstr "Fordítás megkezdése."
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:8
+#: ../Applications/Schumix.Installer/InstallerBase.cs:11
 msgid "Error was handled while translated."
 msgstr "Hiba történt a fordítás közben!"
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:12
 #: ../Components/Schumix.Components/Updater/Update.cs:15
 msgid "Successfully finished the translation."
 msgstr "Fordítás sikeresen befejeződött."
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:13
 msgid "Copy files."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:14
 msgid "Remove unneeded datas."
 msgstr ""
-
-#: ../Applications/Schumix.Installer/InstallerBase.cs:11
-msgid "The installation is finished. The program shutting down!"
-msgstr "A telepítés befejeződött. Leáll a program!"
 
 #: ../Applications/Schumix.Server/ServerListener.cs:3
 msgid "Successfully started the ServerListener."

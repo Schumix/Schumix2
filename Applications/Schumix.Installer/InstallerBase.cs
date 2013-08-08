@@ -24,7 +24,6 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
-using Schumix.Installer.Clean;
 using Schumix.Installer.CopyTo;
 using Schumix.Installer.Logger;
 using Schumix.Installer.Options;
@@ -41,6 +40,7 @@ namespace Schumix.Installer
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private const string GitUrl = "https://github.com/Schumix/Schumix2";
 		private const string _dir = "Schumix2";
 
@@ -50,15 +50,31 @@ namespace Schumix.Installer
 				ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
 			WebRequest.DefaultWebProxy = null;
-
 			Log.Notice("InstallerBase", sLConsole.GetString("Installer started."));
-			string url = GitUrl.Remove(0, "http://".Length, "http://");
-			url = url.Remove(0, "https://".Length, "https://");
-			string version = sUtilities.GetUrl("https://raw." + url + "/stable" +
-			                                   "/Core/Schumix.Framework/Config/Consts.cs");
-			version = version.Remove(0, version.IndexOf("SchumixVersion = \"") + "SchumixVersion = \"".Length);
-			version = version.Substring(0, version.IndexOf("\";"));
 
+			string url = GetUrl();
+			CloneSourceCode(url);
+			BuildSourceCode();
+			CopyNewFiles();
+			Clean();
+
+			Log.Success("Installer", sLConsole.GetString("The installation is finished. The program shutting down!"));
+			sRuntime.Exit();
+		}
+
+		~InstallerBase()
+		{
+			Log.Debug("InstallerBase", "~InstallerBase()");
+		}
+
+		private string GetUrl()
+		{
+			string url = GitUrl.Remove(0, "http://".Length, "http://");
+			return url.Remove(0, "https://".Length, "https://");
+		}
+
+		private void CloneSourceCode(string url)
+		{
 			try
 			{
 				new CloneSchumix("git://" + url, _dir);
@@ -69,9 +85,12 @@ namespace Schumix.Installer
 				Log.Error("Installer", sLConsole.GetString("Downloading unsuccessful."));
 				Log.Warning("Installer", sLConsole.GetString("Installation successful!"));
 				Thread.Sleep(5*1000);
-				Environment.Exit(1);
+				sRuntime.Exit();
 			}
+		}
 
+		private void BuildSourceCode()
+		{
 			Log.Notice("Installer", sLConsole.GetString("Started translating."));
 			var build = new Build(_dir);
 
@@ -80,30 +99,34 @@ namespace Schumix.Installer
 				Log.Error("Installer", sLConsole.GetString("Error was handled while translated."));
 				Log.Warning("Installer", sLConsole.GetString("Installation successful!"));
 				Thread.Sleep(5*1000);
-				Environment.Exit(1);
+				sRuntime.Exit();
 			}
 
 			Log.Success("Installer", sLConsole.GetString("Successfully finished the translation."));
+		}
+
+		private void CopyNewFiles()
+		{
 			Log.Notice("Installer", sLConsole.GetString("Copy files."));
 			new Copy(_dir);
+		}
+
+		private void Clean()
+		{
 			Log.Notice("Installer", sLConsole.GetString("Remove unneeded datas."));
 
 			try
 			{
-				new DirectoryClean(_dir);
+				if(Directory.Exists(_dir))
+				{
+					sUtilities.ClearAttributes(_dir);
+					Directory.Delete(_dir, true);
+				}
 			}
 			catch(Exception e)
 			{
 				Log.Warning("Installer", e.Message);
 			}
-
-			Log.Success("Installer", sLConsole.GetString("The installation is finished. The program shutting down!"));
-			Environment.Exit(0);
-		}
-
-		~InstallerBase()
-		{
-			Log.Debug("InstallerBase", "~InstallerBase()");
 		}
 	}
 }

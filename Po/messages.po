@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-07 22:00:14+0200\n"
-"PO-Revision-Date: 2013-08-07 22:00:16+0200\n"
+"POT-Creation-Date: 2013-08-08 07:39:27+0200\n"
+"PO-Revision-Date: 2013-08-08 07:39:31+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1298,49 +1298,49 @@ msgstr ""
 msgid "Installer Version: {0}"
 msgstr ""
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:5
+#: ../Applications/Schumix.Installer/InstallerBase.cs:4
 msgid "Installer started."
 msgstr ""
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:6
+msgid "The installation is finished. The program shutting down!"
+msgstr ""
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
 #: ../Components/Schumix.Components/Updater/Update.cs:8
 #: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "Successfully downloaded new version."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:6
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
 msgid "Downloading unsuccessful."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:6
-#: ../Applications/Schumix.Installer/InstallerBase.cs:8
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:11
 msgid "Installation successful!"
 msgstr ""
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:7
+#: ../Applications/Schumix.Installer/InstallerBase.cs:10
 #: ../Components/Schumix.Components/Updater/Update.cs:13
 msgid "Started translating."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:8
+#: ../Applications/Schumix.Installer/InstallerBase.cs:11
 msgid "Error was handled while translated."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:12
 #: ../Components/Schumix.Components/Updater/Update.cs:15
 msgid "Successfully finished the translation."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:13
 msgid "Copy files."
 msgstr ""
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:14
 msgid "Remove unneeded datas."
-msgstr ""
-
-#: ../Applications/Schumix.Installer/InstallerBase.cs:11
-msgid "The installation is finished. The program shutting down!"
 msgstr ""
 
 #: ../Applications/Schumix.Server/ServerListener.cs:3
