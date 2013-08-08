@@ -213,6 +213,8 @@ namespace Schumix
 
 		public static void Shutdown(string Message, bool Crash = false)
 		{
+			System.Console.CursorVisible = true;
+
 			if(!SchumixBot.sSchumixBase.IsNull())
 			{
 				bool e = false;

@@ -177,6 +177,7 @@ namespace Schumix.Server
 			System.Console.WriteLine("[Server] Version: {0}", sUtilities.GetVersion());
 			System.Console.WriteLine("Options:");
 			os.WriteOptionDescriptions(System.Console.Out);
+			System.Console.CursorVisible = true;
 		}
 
 		public static void Shutdown(Exception eventArgs = null)
