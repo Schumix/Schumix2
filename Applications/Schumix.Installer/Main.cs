@@ -21,6 +21,7 @@
 using System;
 using System.Text;
 using System.Globalization;
+using Schumix.Installer.Config;
 using Schumix.Installer.Logger;
 using Schumix.Installer.Options;
 using Schumix.Installer.Platforms;
@@ -88,6 +89,8 @@ namespace Schumix.Installer
 			Console.WriteLine("[Installer]");
 			Console.WriteLine(sLConsole.GetString("To shut down the program use the <Ctrl+C> command!"));
 			Console.WriteLine(sLConsole.GetString("Installer Version: {0}"), sUtilities.GetVersion());
+			Console.WriteLine(sLConsole.GetString("Website: {0}"), Consts.InstallerWebsite);
+			Console.WriteLine(sLConsole.GetString("Programmed by: {0}"), Consts.InstallerProgrammedBy);
 			Console.WriteLine("================================================================================"); // 80
 			Console.ForegroundColor = ConsoleColor.Gray;
 			Log.Initialize("Installer.log");
