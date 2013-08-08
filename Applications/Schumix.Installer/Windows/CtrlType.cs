@@ -20,7 +20,7 @@
 
 using System;
 
-namespace Schumix
+namespace Schumix.Installer
 {
 	enum CtrlType
 	{
