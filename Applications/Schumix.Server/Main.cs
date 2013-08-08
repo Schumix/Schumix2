@@ -109,6 +109,9 @@ namespace Schumix.Server
 			else
 				System.Console.ForegroundColor = ConsoleColor.Blue;
 
+			if(localization != "start")
+				sLConsole.SetLocale(localization);
+
 			System.Console.WriteLine("[Server]");
 			System.Console.WriteLine(sLConsole.GetString("To shut down the program use the <Ctrl+C> or the <quit> command!"));
 			System.Console.WriteLine(sLConsole.GetString("Schumix Version: {0}"), sUtilities.GetVersion());
@@ -124,8 +127,6 @@ namespace Schumix.Server
 
 			if(localization == "start")
 				sLConsole.SetLocale(Server.Config.LocalizationConfig.Locale);
-			else if(localization != "start")
-				sLConsole.SetLocale(localization);
 
 			if(sPlatform.IsWindows && console_encoding == Encoding.UTF8.BodyName &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
