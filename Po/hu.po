@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-08 08:14:59+0200\n"
+"POT-Creation-Date: 2013-08-08 13:44:11+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -521,7 +521,7 @@ msgid "Successfully connected to the database."
 msgstr "Az adatbázishoz sikeres a kapcsolódás."
 
 #: ../Core/Schumix.Framework/SchumixBase.cs:15
-#: ../Applications/Schumix.Server/Main.cs:13
+#: ../Applications/Schumix.Server/Main.cs:14
 msgid "CleanManager is starting..."
 msgstr "CleanManager indul..."
 
@@ -1230,56 +1230,56 @@ msgstr "Vissza port: {0}"
 msgid "Auth successful. Guid of client: {0}"
 msgstr "Hitelesítés sikeres. Guid a clienttől: {0}"
 
-#: ../Applications/Schumix/Main.cs:10 ../Applications/Schumix.Server/Main.cs:8
+#: ../Applications/Schumix/Main.cs:11 ../Applications/Schumix.Server/Main.cs:9
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
 msgstr "A program leállításához használd a <Ctrl+C> vagy <quit> parancsot!"
 
-#: ../Applications/Schumix/Main.cs:10 ../Applications/Schumix.Server/Main.cs:8
+#: ../Applications/Schumix/Main.cs:11 ../Applications/Schumix.Server/Main.cs:9
 msgid "Schumix Version: {0}"
 msgstr "Schumix Verzió: {0}"
 
-#: ../Applications/Schumix/Main.cs:10
+#: ../Applications/Schumix/Main.cs:11
 #: ../Applications/Schumix.Installer/Main.cs:9
-#: ../Applications/Schumix.Server/Main.cs:8
+#: ../Applications/Schumix.Server/Main.cs:9
 msgid "Website: {0}"
 msgstr "Weboldal: {0}"
 
-#: ../Applications/Schumix/Main.cs:10
+#: ../Applications/Schumix/Main.cs:11
 #: ../Applications/Schumix.Installer/Main.cs:9
-#: ../Applications/Schumix.Server/Main.cs:8
+#: ../Applications/Schumix.Server/Main.cs:9
 msgid "Programmed by: {0}"
 msgstr "Programot készítette: {0}"
 
-#: ../Applications/Schumix/Main.cs:10 ../Applications/Schumix.Server/Main.cs:8
+#: ../Applications/Schumix/Main.cs:11 ../Applications/Schumix.Server/Main.cs:9
 msgid "Developers: {0}"
 msgstr "Fejlesztők: {0}"
 
-#: ../Applications/Schumix/Main.cs:16
+#: ../Applications/Schumix/Main.cs:17
 #: ../Applications/Schumix.Installer/Main.cs:11
-#: ../Applications/Schumix.Server/Main.cs:12
+#: ../Applications/Schumix.Server/Main.cs:13
 msgid "System is starting..."
 msgstr "Rendszer indul..."
 
-#: ../Applications/Schumix/Main.cs:17
-#: ../Applications/Schumix.Server/Main.cs:12
+#: ../Applications/Schumix/Main.cs:18
+#: ../Applications/Schumix.Server/Main.cs:13
 msgid "Colorblind mode is on!"
 msgstr "Színvak mód be van kapcsolva!"
 
-#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix/Main.cs:20
 #: ../Applications/Schumix.Installer/Main.cs:13
-#: ../Applications/Schumix.Server/Main.cs:17
+#: ../Applications/Schumix.Server/Main.cs:18
 msgid "FATAL ERROR"
 msgstr "VÉGZETES HIBA"
 
-#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix/Main.cs:20
 #: ../Applications/Schumix.Installer/Main.cs:13
-#: ../Applications/Schumix.Server/Main.cs:17
-#: ../Applications/Schumix.Server/Main.cs:21
+#: ../Applications/Schumix.Server/Main.cs:18
+#: ../Applications/Schumix.Server/Main.cs:22
 msgid "An unhandled exception has been thrown. ({0})"
 msgstr "Nem kezelt kivétel keletkezett. ({0})"
 
-#: ../Applications/Schumix/Main.cs:20
-#: ../Applications/Schumix.Server/Main.cs:14
+#: ../Applications/Schumix/Main.cs:21
+#: ../Applications/Schumix.Server/Main.cs:15
 msgid "The automatic update is disabled."
 msgstr "Az automatikus frissítés le van tiltva!"
 
@@ -1366,6 +1366,11 @@ msgstr ""
 #: ../Applications/Schumix.Installer/InstallerBase.cs:14
 msgid "Remove unneeded datas."
 msgstr ""
+
+#: ../Applications/Schumix.Installer/Download/CloneSchumix.cs:3
+#: ../Components/Schumix.Components/Updater/Download/CloneSchumix.cs:3
+msgid "Cloning Schumix2."
+msgstr "Schumix2 klónozás."
 
 #: ../Applications/Schumix.Server/ServerListener.cs:3
 msgid "Successfully started the ServerListener."

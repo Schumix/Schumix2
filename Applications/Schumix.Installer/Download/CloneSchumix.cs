@@ -23,15 +23,19 @@ using System.IO;
 using System.Threading;
 using NGit;
 using NGit.Api;
+using Schumix.Installer.Logger;
+using Schumix.Installer.Localization;
 
 namespace Schumix.Installer.Download
 {
 	sealed class CloneSchumix
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		public CloneSchumix(string Url, string Dir)
 		{
+			Log.Notice("CloneSchumix", sLConsole.GetString("Cloning Schumix2."));
 			string path = Path.Combine(Environment.CurrentDirectory, Dir);
 
 			if(Directory.Exists(path))
@@ -48,7 +52,7 @@ namespace Schumix.Installer.Download
 			cmd.SetDirectory(path);
 			cmd.SetCloneSubmodules(true);
 			cmd.Call();
-			Thread.Sleep(1000);
+			//Console.WriteLine();
 		}
 	}
 }
