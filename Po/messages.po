@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-08 08:03:32+0200\n"
-"PO-Revision-Date: 2013-08-08 08:03:35+0200\n"
+"POT-Creation-Date: 2013-08-08 08:14:59+0200\n"
+"PO-Revision-Date: 2013-08-08 08:15:01+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1215,11 +1215,13 @@ msgid "Schumix Version: {0}"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:10
+#: ../Applications/Schumix.Installer/Main.cs:9
 #: ../Applications/Schumix.Server/Main.cs:8
 msgid "Website: {0}"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:10
+#: ../Applications/Schumix.Installer/Main.cs:9
 #: ../Applications/Schumix.Server/Main.cs:8
 msgid "Programmed by: {0}"
 msgstr ""

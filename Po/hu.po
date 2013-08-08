@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-08 08:03:32+0200\n"
+"POT-Creation-Date: 2013-08-08 08:14:59+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -1238,11 +1238,15 @@ msgstr "A program leállításához használd a <Ctrl+C> vagy <quit> parancsot!"
 msgid "Schumix Version: {0}"
 msgstr "Schumix Verzió: {0}"
 
-#: ../Applications/Schumix/Main.cs:10 ../Applications/Schumix.Server/Main.cs:8
+#: ../Applications/Schumix/Main.cs:10
+#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Server/Main.cs:8
 msgid "Website: {0}"
 msgstr "Weboldal: {0}"
 
-#: ../Applications/Schumix/Main.cs:10 ../Applications/Schumix.Server/Main.cs:8
+#: ../Applications/Schumix/Main.cs:10
+#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Server/Main.cs:8
 msgid "Programmed by: {0}"
 msgstr "Programot készítette: {0}"
 
