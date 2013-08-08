@@ -50,8 +50,8 @@ namespace Schumix.Installer
 			bool help = false;
 			string console_encoding = Encoding.UTF8.BodyName;
 			string localization = "start";
-			System.Console.BackgroundColor = ConsoleColor.Black;
-			System.Console.ForegroundColor = ConsoleColor.Gray;
+			Console.BackgroundColor = ConsoleColor.Black;
+			Console.ForegroundColor = ConsoleColor.Gray;
 
 			var os = new OptionSet()
 			{
@@ -97,7 +97,7 @@ namespace Schumix.Installer
 
 			if(sPlatform.IsWindows && console_encoding == Encoding.UTF8.BodyName &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
-				System.Console.OutputEncoding = Encoding.GetEncoding(852);
+				Console.OutputEncoding = Encoding.GetEncoding(852);
 
 			Console.WriteLine();
 			Log.Notice("Main", sLConsole.GetString("System is starting..."));
