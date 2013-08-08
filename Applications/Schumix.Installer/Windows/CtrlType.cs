@@ -19,24 +19,15 @@
  */
 
 using System;
-using System.IO;
 
-namespace Schumix.Installer.Clean
+namespace Schumix
 {
-	sealed class DirectoryClean
+	enum CtrlType
 	{
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-
-		/// <summary>
-		///     Törli azon mappát melyet megadunk a paraméterben. Ez elsősorban egy verziószám.
-		/// </summary>
-		public DirectoryClean(string dir)
-		{
-			if(Directory.Exists(dir))
-			{
-				sUtilities.ClearAttributes(dir);
-				Directory.Delete(dir, true);
-			}
-		}
+		CTRL_C_EVENT        = 0,
+		CTRL_BREAK_EVENT    = 1,
+		CTRL_CLOSE_EVENT    = 2,
+		CTRL_LOGOFF_EVENT   = 5,
+		CTRL_SHUTDOWN_EVENT = 6
 	}
 }

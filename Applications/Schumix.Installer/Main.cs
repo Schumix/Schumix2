@@ -19,15 +19,12 @@
  */
 
 using System;
-using System.IO;
-using System.Net;
-using System.Threading;
-using System.Diagnostics;
-using Schumix.Installer.Clean;
-using Schumix.Installer.CopyTo;
-using Schumix.Installer.Compiler;
-using Schumix.Installer.Download;
+using System.Text;
+using System.Globalization;
+using Schumix.Installer.Logger;
+using Schumix.Installer.Options;
 using Schumix.Installer.Platforms;
+using Schumix.Installer.Exceptions;
 using Schumix.Installer.Extensions;
 using Schumix.Installer.Localization;
 
@@ -36,79 +33,101 @@ namespace Schumix.Installer
 	class MainClass
 	{
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
-		private const string GitUrl = "https://github.com/Schumix/Schumix2";
-		private const string _dir = "Schumix2";
+		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
+		private static readonly Windows sWindows = Singleton<Windows>.Instance;
+		private static readonly Linux sLinux = Singleton<Linux>.Instance;
 
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
 		/// </summary>
 		public static void Main(string[] args)
 		{
+			sRuntime.SetProcessName("Installer");
+			bool help = false;
+			string console_encoding = Encoding.UTF8.BodyName;
+			string localization = "start";
+			System.Console.BackgroundColor = ConsoleColor.Black;
+			System.Console.ForegroundColor = ConsoleColor.Gray;
+
+			var os = new OptionSet()
+			{
+				{ "h|?|help", "Display help.", v => help = true },
+				{ "console-encoding=", "Set up the program's character encoding.", v => console_encoding = v },
+				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
+			};
+
+			try
+			{
+				os.Parse(args);
+
+				if(help)
+				{
+					ShowHelp(os);
+					return;
+				}
+			}
+			catch(OptionException oe)
+			{
+				Console.WriteLine("{0} for options '{1}'", oe.Message, oe.OptionName);
+				return;
+			}
+
+			if(!console_encoding.IsNumber())
+				Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
+			else
+				Console.OutputEncoding = Encoding.GetEncoding(console_encoding.ToInt32());
+
+			if(localization != "start")
+				sLConsole.SetLocale(localization);
+
 			Console.Title = "Schumix2 Installer";
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("[Installer]");
-			Console.WriteLine(sLConsole.Installer("Text16"));
-			Console.WriteLine(sLConsole.Installer("Text17"), sUtilities.GetVersion());
+			Console.WriteLine(sLConsole.GetString("To shut down the program use the <Ctrl+C> command!"));
+			Console.WriteLine(sLConsole.GetString("Installer Version: {0}"), sUtilities.GetVersion());
 			Console.WriteLine("================================================================================"); // 80
 			Console.ForegroundColor = ConsoleColor.Gray;
-			Console.WriteLine();
 			Log.Initialize("Installer.log");
 
-			if(sPlatform.IsLinux)
-				ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
+			if(sPlatform.IsWindows && console_encoding == Encoding.UTF8.BodyName &&
+			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
+				System.Console.OutputEncoding = Encoding.GetEncoding(852);
 
-			WebRequest.DefaultWebProxy = null;
+			Console.WriteLine();
+			Log.Notice("Main", sLConsole.GetString("System is starting..."));
 
-			Log.Notice("Installer", sLConsole.Installer("Text2"));
-			string url = GitUrl.Remove(0, "http://".Length, "http://");
-			url = url.Remove(0, "https://".Length, "https://");
-			string version = sUtilities.GetUrl("https://raw." + url + "/stable" +
-			                                   "/Core/Schumix.Framework/Config/Consts.cs");
-			version = version.Remove(0, version.IndexOf("SchumixVersion = \"") + "SchumixVersion = \"".Length);
-			version = version.Substring(0, version.IndexOf("\";"));
+			if(sPlatform.IsWindows)
+				sWindows.Init();
+			else if(sPlatform.IsLinux)
+				sLinux.Init();
 
-			try
+			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
 			{
-				new CloneSchumix("git://" + url, _dir);
-				Log.Success("Installer", sLConsole.Installer("Text6"));
-			}
-			catch
-			{
-				Log.Error("Installer", sLConsole.Installer("Text7"));
-				Log.Warning("Installer", sLConsole.Installer("Text8"));
-				Thread.Sleep(5*1000);
-				Environment.Exit(1);
-			}
+				Log.LargeError(sLConsole.GetString("FATAL ERROR"));
+				Log.Error("Main", sLConsole.GetString("An unhandled exception has been thrown. ({0})"), (eventArgs.ExceptionObject as Exception).Message);
+				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
+				Shutdown();
+			};
 
-			Log.Notice("Installer", sLConsole.Installer("Text12"));
-			var build = new Build(_dir);
+			new InstallerBase();
+		}
 
-			if(build.HasError)
-			{
-				Log.Error("Installer", sLConsole.Installer("Text13"));
-				Log.Warning("Installer", sLConsole.Installer("Text8"));
-				Thread.Sleep(5*1000);
-				Environment.Exit(1);
-			}
+		/// <summary>
+		///     Segítséget nyújt a kapcsolokhoz.
+		/// </summary>
+		private static void ShowHelp(OptionSet os)
+		{
+			Console.WriteLine("[Installer] Version: {0}", sUtilities.GetVersion());
+			Console.WriteLine("Options:");
+			os.WriteOptionDescriptions(Console.Out);
+		}
 
-			Log.Success("Installer", sLConsole.Installer("Text14"));
-			Log.Notice("Installer", sLConsole.Installer("Text3"));
-			new Copy(_dir);
-			Log.Notice("Installer", sLConsole.Installer("Text4"));
-
-			try
-			{
-				new DirectoryClean(_dir);
-			}
-			catch(Exception e)
-			{
-				Log.Warning("Installer", e.Message);
-			}
-
-			Log.Success("Installer", sLConsole.Installer("Text15"));
-			Environment.Exit(0);
+		public static void Shutdown()
+		{
+			sRuntime.Exit();
 		}
 	}
 }

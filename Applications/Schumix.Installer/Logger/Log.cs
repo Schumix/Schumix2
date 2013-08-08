@@ -20,11 +20,12 @@
 
 using System;
 using System.IO;
+using System.Text;
 using System.Collections.Generic;
 using Schumix.Installer.Extensions;
 using Schumix.Installer.Localization;
 
-namespace Schumix.Installer
+namespace Schumix.Installer.Logger
 {
 	public sealed class Log
 	{
@@ -40,22 +41,33 @@ namespace Schumix.Installer
 		{
 			return DateTime.Now.ToString("HH:mm:ss");
 		}
-
-		private static void LogToFile(string log)
+		
+		public static void LogInFile(string log)
 		{
-			string filename = "Logs/" + _FileName;
-			var filesize = new FileInfo(filename);
-
-			if(filesize.Length >= 10 * 1024 * 1024)
+			lock(WriteLock)
 			{
-				File.Delete(filename);
-				sUtilities.CreateFile(filename);
-			}
+				string filename = "Logs/" + _FileName;
+				var filesize = new FileInfo(filename);
 
-			var time = DateTime.Now;
-			var file = new StreamWriter(filename, true) { AutoFlush = true };
-			file.Write("{0} {1}", time.ToString("yyyy. MM. dd."), log);
-			file.Close();
+				if(filesize.Length >= 10 * 1024 * 1024)
+				{
+					File.Delete(filename);
+					sUtilities.CreateFile(filename);
+				}
+
+				var time = DateTime.Now;
+				var file = new StreamWriter(filename, true) { AutoFlush = true };
+				file.Write("{0} {1} {2}", time.ToString("yyyy. MM. dd."), GetTime(), log);
+				file.Close();
+			}
+		}
+
+		public static void LogInFile(string log, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				LogInFile(string.Format(log, args));
+			}
 		}
 
 		public static void Initialize()
@@ -78,9 +90,9 @@ namespace Schumix.Installer
 			var file = new StreamWriter(logfile, true) { AutoFlush = true };
 
 			if(!isfile)
-				file.Write(sLConsole.Log("Text"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
+				file.Write(sLConsole.GetString("Started time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
 			else
-				file.Write(sLConsole.Log("Text2"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
+				file.Write(sLConsole.GetString("\nStarted time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
 				
 			file.Close();
 		}
@@ -112,7 +124,23 @@ namespace Schumix.Installer
 				Console.Write(" N {0}: ", source);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write("{0}\n", format);
-				LogToFile(GetTime() + string.Format(" N {0}: {1}\n", source, format));
+				LogInFile("N {0}: {1}\n", source, format);
+			}
+		}
+
+		public static void Notice(string source, StringBuilder format)
+		{
+			lock(WriteLock)
+			{
+				Notice(source, format.ToString());
+			}
+		}
+
+		public static void Notice(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Notice(source, string.Format(format, args));
 			}
 		}
 
@@ -129,7 +157,23 @@ namespace Schumix.Installer
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogToFile(GetTime() + string.Format(" S {0}: {1}\n", source, format));
+				LogInFile("S {0}: {1}\n", source, format);
+			}
+		}
+
+		public static void Success(string source, StringBuilder format)
+		{
+			lock(WriteLock)
+			{
+				Success(source, format.ToString());
+			}
+		}
+
+		public static void Success(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Success(source, string.Format(format, args));
 			}
 		}
 
@@ -149,7 +193,23 @@ namespace Schumix.Installer
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogToFile(GetTime() + string.Format(" W {0}: {1}\n", source, format));
+				LogInFile("W {0}: {1}\n", source, format);
+			}
+		}
+
+		public static void Warning(string source, StringBuilder format)
+		{
+			lock(WriteLock)
+			{
+				Warning(source, format.ToString());
+			}
+		}
+
+		public static void Warning(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Warning(source, string.Format(format, args));
 			}
 		}
 
@@ -169,7 +229,23 @@ namespace Schumix.Installer
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogToFile(GetTime() + string.Format(" E {0}: {1}\n", source, format));
+				LogInFile("E {0}: {1}\n", source, format);
+			}
+		}
+
+		public static void Error(string source, StringBuilder format)
+		{
+			lock(WriteLock)
+			{
+				Error(source, format.ToString());
+			}
+		}
+
+		public static void Error(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Error(source, string.Format(format, args));
 			}
 		}
 
@@ -189,7 +265,23 @@ namespace Schumix.Installer
 				Console.ForegroundColor = ConsoleColor.Blue;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogToFile(GetTime() + string.Format(" D {0}: {1}\n", source, format));
+				LogInFile("D {0}: {1}\n", source, format);
+			}
+		}
+
+		public static void Debug(string source, StringBuilder format)
+		{
+			lock(WriteLock)
+			{
+				Debug(source, format.ToString());
+			}
+		}
+
+		public static void Debug(string source, string format, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				Debug(source, string.Format(format, args));
 			}
 		}
 
@@ -226,46 +318,16 @@ namespace Schumix.Installer
 				}
 				
 				Console.WriteLine("**************************************************");
+				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}
 
-		public static void Notice(string source, string format, params object[] args)
+		
+		public static void LargeWarning(StringBuilder message)
 		{
 			lock(WriteLock)
 			{
-				Notice(source, string.Format(format, args));
-			}
-		}
-
-		public static void Success(string source, string format, params object[] args)
-		{
-			lock(WriteLock)
-			{
-				Success(source, string.Format(format, args));
-			}
-		}
-
-		public static void Warning(string source, string format, params object[] args)
-		{
-			lock(WriteLock)
-			{
-				Warning(source, string.Format(format, args));
-			}
-		}
-
-		public static void Error(string source, string format, params object[] args)
-		{
-			lock(WriteLock)
-			{
-				Error(source, string.Format(format, args));
-			}
-		}
-
-		public static void Debug(string source, string format, params object[] args)
-		{
-			lock(WriteLock)
-			{
-				Debug(source, string.Format(format, args));
+				LargeWarning(message.ToString());
 			}
 		}
 
@@ -274,6 +336,59 @@ namespace Schumix.Installer
 			lock(WriteLock)
 			{
 				LargeWarning(string.Format(message, args));
+			}
+		}
+
+		public static void LargeError(string message)
+		{
+			lock(WriteLock)
+			{
+				var sp = message.Split('\n');
+				var lines = new List<string>(50);
+
+				foreach(string s in sp)
+				{
+					if(!string.IsNullOrEmpty(s))
+						lines.Add(s);
+				}
+
+				Console.ForegroundColor = ConsoleColor.Red;
+				Console.WriteLine();
+				Console.WriteLine("**************************************************"); // 51
+
+				foreach(string item in lines)
+				{
+					uint len = (uint)item.Length;
+					uint diff = (48-len);
+					Console.Write("* {0}", item);
+
+					if(diff > 0)
+					{
+						for(uint u = 1; u < diff; ++u)
+							Console.Write(" ");
+
+						Console.Write("*\n");
+					}
+				}
+
+				Console.WriteLine("**************************************************");
+				Console.ForegroundColor = ConsoleColor.Gray;
+			}
+		}
+
+		public static void LargeError(StringBuilder message)
+		{
+			lock(WriteLock)
+			{
+				LargeError(message.ToString());
+			}
+		}
+
+		public static void LargeError(string message, params object[] args)
+		{
+			lock(WriteLock)
+			{
+				LargeError(string.Format(message, args));
 			}
 		}
 	}

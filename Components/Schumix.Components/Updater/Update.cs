@@ -39,6 +39,7 @@ namespace Schumix.Components.Updater
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
+		private readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 		private const string _dir = "Schumix2";
 
 		public Update(string ConfigDirectory)
@@ -52,98 +53,111 @@ namespace Schumix.Components.Updater
 			if(sPlatform.IsLinux)
 				System.Net.ServicePointManager.ServerCertificateValidationCallback += (s,ce,ca,p) => true;
 
+			if(!SearchingForNewVersion())
+				return;
+
+			BuildSourceCode();
+			SqlUpdate();
+			var process = ConfigCopyAndStart(ConfigDirectory);
+
+			if(sPlatform.IsLinux)
+			{
+				process.WaitForExit();
+				Log.Success("Update", sLConsole.GetString("The update is finished. The program shutting down!"));
+			}
+
+			Environment.Exit(0);
+		}
+
+		private bool SearchingForNewVersion()
+		{
 			if(UpdateConfig.Version == "stable")
 			{
 				Log.Notice("Update", sLConsole.GetString("Searching for new stable version is started."));
-				string url = UpdateConfig.WebPage.Remove(0, "http://".Length, "http://");
-				url = url.Remove(0, "https://".Length, "https://");
-				string version = sUtilities.GetUrl("https://raw." + url + "/stable" +
-				                                   "/Core/Schumix.Framework/Config/Consts.cs");
-				version = version.Remove(0, version.IndexOf("SchumixVersion = \"") + "SchumixVersion = \"".Length);
-				version = version.Substring(0, version.IndexOf("\";"));
-				
-				var v1 = new Version(version);
-				var v2 = new Version(Schumix.Framework.Config.Consts.SchumixVersion);
+				string url = GetUrl();
+				string version = GetVersion(url, "stable");
 
-				switch(v1.CompareTo(v2))
-				{
-					case 0:
-						Log.Warning("Update", sLConsole.GetString("Currently no newer version!"));
-						Log.Notice("Update", sLConsole.GetString("The program starts is continuing."));
-						return;
-					case 1:
-						Log.Success("Update", sLConsole.GetString("I found a newer version. The update to {0} version is starting."), v1.ToString());
-						break;
-					case -1:
-						Log.Warning("Update", sLConsole.GetString("Older version found, update interrupted!"));
-						Log.Notice("Update", sLConsole.GetString("The program starts is continuing."));
-						return;
-				}
+				if(!VersionCompare(version))
+					return false;
 
 				Log.Notice("Update", sLConsole.GetString("Downloading new version."));
-
-				try
-				{
-					new CloneSchumix("git://" + url, _dir, "stable");
-					Log.Success("Update", sLConsole.GetString("Successfully downloaded new version."));
-				}
-				catch
-				{
-					Log.Error("Update", sLConsole.GetString("Downloading unsuccessful!"));
-					Log.Warning("Update", sLConsole.GetString("Updating successful!"));
-					Thread.Sleep(5*1000);
-					Environment.Exit(1);
-				}
+				CloneSourceCode(url, "stable");
+				return true;
 			}
 			else if(UpdateConfig.Version == "current")
 			{
 				Log.Notice("Update", sLConsole.GetString("Searching for the last version is started."));
-				string url = UpdateConfig.WebPage.Remove(0, "http://".Length, "http://");
-				url = url.Remove(0, "https://".Length, "https://");
-				string version = sUtilities.GetUrl("https://raw." + url + "/" + UpdateConfig.Branch +
-				                                   "/Core/Schumix.Framework/Config/Consts.cs");
-				version = version.Remove(0, version.IndexOf("SchumixVersion = \"") + "SchumixVersion = \"".Length);
-				version = version.Substring(0, version.IndexOf("\";"));
+				string url = GetUrl();
+				string version = GetVersion(url, UpdateConfig.Branch);
 
-				var v1 = new Version(version);
-				var v2 = new Version(Schumix.Framework.Config.Consts.SchumixVersion);
-
-				switch(v1.CompareTo(v2))
-				{
-					case 0:
-						Log.Warning("Update", sLConsole.GetString("Currently no newer version!"));
-						Log.Notice("Update", sLConsole.GetString("The program starts is continuing."));
-						return;
-					case 1:
-						Log.Success("Update", sLConsole.GetString("I found a newer version. The update to {0} version is starting."), v1.ToString());
-						break;
-					case -1:
-						Log.Warning("Update", sLConsole.GetString("Older version found, update interrupted!"));
-						Log.Notice("Update", sLConsole.GetString("The program starts is continuing."));
-						return;
-				}
+				if(!VersionCompare(version))
+					return false;
 
 				Log.Notice("Update", sLConsole.GetString("Downloading new version."));
-
-				try
-				{
-					new CloneSchumix("git://" + url, _dir, UpdateConfig.Branch);
-					Log.Success("Update", sLConsole.GetString("Successfully downloaded new version."));
-				}
-				catch
-				{
-					Log.Error("Update", sLConsole.GetString("Downloading unsuccessful!"));
-					Log.Warning("Update", sLConsole.GetString("Updating successful!"));
-					Thread.Sleep(5*1000);
-					Environment.Exit(1);
-				}
+				CloneSourceCode(url, UpdateConfig.Branch);
+				return true;
 			}
 			else
 			{
 				Log.Warning("Update", sLConsole.GetString("No such version like this, update interrupted!"));
-				return;
+				return false;
+			}
+		}
+
+		private string GetUrl()
+		{
+			string url = UpdateConfig.WebPage.Remove(0, "http://".Length, "http://");
+			return url.Remove(0, "https://".Length, "https://");
+		}
+
+		private string GetVersion(string url, string branch)
+		{
+			string version = sUtilities.GetUrl(string.Format("https://raw.{0}/{1}/Core/Schumix.Framework/Config/Consts.cs", url, branch));
+			version = version.Remove(0, version.IndexOf("SchumixVersion = \"") + "SchumixVersion = \"".Length);
+			return version.Substring(0, version.IndexOf("\";"));
+		}
+
+		private bool VersionCompare(string version)
+		{
+			var v1 = new Version(version);
+			var v2 = new Version(Schumix.Framework.Config.Consts.SchumixVersion);
+
+			switch(v1.CompareTo(v2))
+			{
+				case 0:
+					Log.Warning("Update", sLConsole.GetString("Currently no newer version!"));
+					Log.Notice("Update", sLConsole.GetString("The program starts is continuing."));
+					return false;
+				case 1:
+					Log.Success("Update", sLConsole.GetString("I found a newer version. The update to {0} version is starting."), v1.ToString());
+					return true;
+				case -1:
+					Log.Warning("Update", sLConsole.GetString("Older version found, update interrupted!"));
+					Log.Notice("Update", sLConsole.GetString("The program starts is continuing."));
+					return false;
 			}
 
+			return false;
+		}
+
+		private void CloneSourceCode(string url, string branch)
+		{
+			try
+			{
+				new CloneSchumix("git://" + url, _dir, branch);
+				Log.Success("Update", sLConsole.GetString("Successfully downloaded new version."));
+			}
+			catch
+			{
+				Log.Error("Update", sLConsole.GetString("Downloading unsuccessful!"));
+				Log.Warning("Update", sLConsole.GetString("Updating successful!"));
+				Thread.Sleep(5*1000);
+				sRuntime.Exit();
+			}
+		}
+
+		private void BuildSourceCode()
+		{
 			Log.Notice("Update", sLConsole.GetString("Started translating."));
 			var build = new Build(_dir);
 
@@ -152,16 +166,23 @@ namespace Schumix.Components.Updater
 				Log.Error("Update", sLConsole.GetString("Error was handled while translated!"));
 				Log.Warning("Update", sLConsole.GetString("Updating successful!"));
 				Thread.Sleep(5*1000);
-				Environment.Exit(1);
+				sRuntime.Exit();
 			}
 
 			Log.Success("Update", sLConsole.GetString("Successfully finished the translation."));
+		}
+
+		private void SqlUpdate()
+		{
 			Log.Notice("Update", sLConsole.GetString("Sql files update is started. The setted database will be updated."));
 			var sql = new SqlUpdate(_dir + "/Sql/Updates");
 			sql.Connect();
 			sql.Update();
 			Log.Success("Update", sLConsole.GetString("Sql update finished."));
+		}
 
+		private Process ConfigCopyAndStart(string ConfigDirectory)
+		{
 			if(File.Exists("Config.exe"))
 				File.Delete("Config.exe");
 
@@ -184,14 +205,7 @@ namespace Schumix.Components.Updater
 
 			Log.Notice("Update", sLConsole.GetString("This step of updateing is finished. Continue with next step."));
 			config.Start();
-
-			if(sPlatform.IsLinux)
-			{
-				config.WaitForExit();
-				Log.Success("Update", sLConsole.GetString("The update is finished. The program shutting down!"));
-			}
-
-			Environment.Exit(0);
+			return config;
 		}
 	}
 }

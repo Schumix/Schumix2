@@ -138,7 +138,6 @@ namespace Schumix
 			else
 				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding.ToInt32());
 
-			sLConsole.SetLocale(localization);
 			System.Console.Title = SchumixBase.Title;
 
 			if(colorbindmode)

@@ -37,34 +37,51 @@
     <Reference Include="System.Web" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System.Core" />
+    <Reference Include="Mono.Posix">
+      <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
-    <Compile Include="Compiler\Build.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Localization\LocalizationConsole.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Singleton.cs" />
-    <Compile Include="CopyTo\Copy.cs" />
-    <Compile Include="Clean\DirectoryClean.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="Extensions\GeneralExtensions.cs" />
-    <Compile Include="Download\CloneSchumix.cs" />
-    <Compile Include="Extensions\ArrayExtensions.cs" />
-    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Runtime.cs" />
+    <Compile Include="InstallerBase.cs" />
+    <Compile Include="CrashDumper.cs" />
+    <Compile Include="Compiler\Build.cs" />
     <Compile Include="Config\Consts.cs" />
+    <Compile Include="CopyTo\Copy.cs" />
+    <Compile Include="Download\CloneSchumix.cs" />
+    <Compile Include="Download\NGitProgressMonitor.cs" />
+    <Compile Include="Exceptions\InstallerException.cs" />
+    <Compile Include="Exceptions\OptionException.cs" />
+    <Compile Include="Exceptions\SingletonException.cs" />
+    <Compile Include="Extensions\ArrayExtensions.cs" />
+    <Compile Include="Extensions\ConvertExtensions.cs" />
+    <Compile Include="Extensions\GeneralExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
+    <Compile Include="Linux\Linux.cs" />
+    <Compile Include="Localization\LocalizationConsole.cs" />
+    <Compile Include="Logger\Log.cs" />
+    <Compile Include="Options\ActionOption.cs" />
+    <Compile Include="Options\ArgumentEnumerator.cs" />
+    <Compile Include="Options\ArgumentSource.cs" />
+    <Compile Include="Options\Category.cs" />
+    <Compile Include="Options\Option.cs" />
+    <Compile Include="Options\OptionContext.cs" />
+    <Compile Include="Options\OptionDelegate.cs" />
+    <Compile Include="Options\OptionSet.cs" />
+    <Compile Include="Options\OptionValueCollection.cs" />
+    <Compile Include="Options\OptionValueType.cs" />
+    <Compile Include="Options\ResponseFileSource.cs" />
+    <Compile Include="Options\StringCoda.cs" />
     <Compile Include="Platforms\Platform.cs" />
     <Compile Include="Platforms\PlatformType.cs" />
-    <Compile Include="Extensions\ConvertExtensions.cs" />
-    <Compile Include="Download\NGitProgressMonitor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Windows\CtrlType.cs" />
+    <Compile Include="Windows\Windows.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Properties\" />
-    <Folder Include="Config\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Platforms\" />
-  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\External\ngit\NGit\NGit.csproj">
       <Project>{E3BFF8B4-189C-496A-A817-7E8B31E22B91}</Project>
@@ -86,5 +103,24 @@
       <Project>{849AE05D-0058-4A8C-A0E8-77DC6BB12E52}</Project>
       <Name>Sharpen.Unix</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\External\NGettext\src\NGettext\NGettext.csproj">
+      <Project>{96EED5F5-7E90-4BD8-A822-2D7BFF943E28}</Project>
+      <Name>NGettext</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Compiler\" />
+    <Folder Include="Config\" />
+    <Folder Include="CopyTo\" />
+    <Folder Include="Download\" />
+    <Folder Include="Exceptions\" />
+    <Folder Include="Extensions\" />
+    <Folder Include="Linux\" />
+    <Folder Include="Localization\" />
+    <Folder Include="Logger\" />
+    <Folder Include="Options\" />
+    <Folder Include="Platforms\" />
+    <Folder Include="Properties\" />
+    <Folder Include="Windows\" />
   </ItemGroup>
 </Project>

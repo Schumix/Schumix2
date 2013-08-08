@@ -24,6 +24,7 @@ using System.Threading;
 using System.Diagnostics;
 using Microsoft.Build.Utilities;
 using Schumix.Installer;
+using Schumix.Installer.Logger;
 using Schumix.Installer.Platforms;
 
 namespace Schumix.Installer.Compiler

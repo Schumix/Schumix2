@@ -23,11 +23,10 @@ using System.Threading;
 using System.Diagnostics;
 using Mono.Unix;
 using Mono.Unix.Native;
-using Schumix.Framework;
-using Schumix.Framework.Logger;
-using Schumix.Framework.Extensions;
+using Schumix.Installer.Logger;
+using Schumix.Installer.Extensions;
 
-namespace Schumix
+namespace Schumix.Installer
 {
 	class Linux
 	{
@@ -50,7 +49,7 @@ namespace Schumix
 			int which = UnixSignal.WaitAny(signals, -1);
 			Log.Debug("Linux", "Got a {0} signal!", signals[which].Signum);
 			Log.Notice("Linux", "Handler Terminated.");
-			MainClass.Shutdown("Daemon killed.");
+			MainClass.Shutdown();
 		}
 	}
 }

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-06 14:23:41+0200\n"
-"PO-Revision-Date: 2013-08-06 14:23:44+0200\n"
+"POT-Creation-Date: 2013-08-08 08:03:32+0200\n"
+"PO-Revision-Date: 2013-08-08 08:03:35+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -32,6 +32,8 @@ msgstr ""
 
 #: ../Core/Schumix.Irc/Commands/CommandManager.cs:29
 #: ../Core/Schumix.Irc/Network.cs:58
+#: ../Core/Schumix.Irc/Network.cs:63
+#: ../Core/Schumix.Irc/Network.cs:69
 #: ../Core/Schumix.Irc/Network.cs:73
 #: ../Core/Schumix.Irc/Network.cs:86
 #: ../Core/Schumix.Irc/Network.cs:89
@@ -675,22 +677,27 @@ msgid "The program, more than {0} MB consumed!"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Runtime.cs:14
+#: ../Applications/Schumix.Installer/Runtime.cs:7
 msgid "Failed to set process name: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Runtime.cs:17
+#: ../Applications/Schumix.Installer/Runtime.cs:10
 msgid "Error setting process name!"
 msgstr ""
 
 #: ../Core/Schumix.Framework/CrashDumper.cs:3
+#: ../Applications/Schumix.Installer/CrashDumper.cs:3
 msgid "Creating crash dump..."
 msgstr ""
 
 #: ../Core/Schumix.Framework/CrashDumper.cs:4
+#: ../Applications/Schumix.Installer/CrashDumper.cs:4
 msgid "Failed to write crash dump! ({0})"
 msgstr ""
 
 #: ../Core/Schumix.Framework/CrashDumper.cs:5
+#: ../Applications/Schumix.Installer/CrashDumper.cs:5
 msgid "Crash dump created."
 msgstr ""
 
@@ -1102,6 +1109,7 @@ msgid "Loaded the ShortUrl settings."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Exceptions/OptionException.cs:3
+#: ../Applications/Schumix.Installer/Exceptions/OptionException.cs:3
 msgid "OptionName"
 msgstr ""
 
@@ -1126,12 +1134,14 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Logger/Log.cs:32
 #: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
+#: ../Applications/Schumix.Installer/Logger/Log.cs:10
 msgid ""
 "Started time: [{0}]\n"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Logger/Log.cs:32
 #: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
+#: ../Applications/Schumix.Installer/Logger/Log.cs:10
 msgid ""
 "\n"
 "Started time: [{0}]\n"
@@ -1220,6 +1230,7 @@ msgid "Developers: {0}"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:16
+#: ../Applications/Schumix.Installer/Main.cs:11
 #: ../Applications/Schumix.Server/Main.cs:12
 msgid "System is starting..."
 msgstr ""
@@ -1230,11 +1241,13 @@ msgid "Colorblind mode is on!"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Installer/Main.cs:13
 #: ../Applications/Schumix.Server/Main.cs:17
 msgid "FATAL ERROR"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Installer/Main.cs:13
 #: ../Applications/Schumix.Server/Main.cs:17
 #: ../Applications/Schumix.Server/Main.cs:21
 msgid "An unhandled exception has been thrown. ({0})"
@@ -1275,6 +1288,58 @@ msgstr ""
 
 #: ../Applications/Schumix/Console/CommandManager.cs:8
 msgid "All Command Handler are registered."
+msgstr ""
+
+#: ../Applications/Schumix.Installer/Main.cs:9
+msgid "To shut down the program use the <Ctrl+C> command!"
+msgstr ""
+
+#: ../Applications/Schumix.Installer/Main.cs:9
+msgid "Installer Version: {0}"
+msgstr ""
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:4
+msgid "Installer started."
+msgstr ""
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:6
+msgid "The installation is finished. The program shutting down!"
+msgstr ""
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Components/Schumix.Components/Updater/Update.cs:19
+msgid "Successfully downloaded new version."
+msgstr ""
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+msgid "Downloading unsuccessful."
+msgstr ""
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:11
+msgid "Installation successful!"
+msgstr ""
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:10
+#: ../Components/Schumix.Components/Updater/Update.cs:20
+msgid "Started translating."
+msgstr ""
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:11
+msgid "Error was handled while translated."
+msgstr ""
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:22
+msgid "Successfully finished the translation."
+msgstr ""
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:13
+msgid "Copy files."
+msgstr ""
+
+#: ../Applications/Schumix.Installer/InstallerBase.cs:14
+msgid "Remove unneeded datas."
 msgstr ""
 
 #: ../Applications/Schumix.Server/ServerListener.cs:3
@@ -1493,85 +1558,66 @@ msgstr ""
 msgid "Automatic updater is off."
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:5
+#: ../Components/Schumix.Components/Updater/Update.cs:7
+msgid "The update is finished. The program shutting down!"
+msgstr ""
+
+#: ../Components/Schumix.Components/Updater/Update.cs:9
 msgid "Searching for new stable version is started."
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "Currently no newer version!"
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "The program starts is continuing."
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "I found a newer version. The update to {0} version is starting."
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:6
-#: ../Components/Schumix.Components/Updater/Update.cs:10
-msgid "Older version found, update interrupted!"
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:7
 #: ../Components/Schumix.Components/Updater/Update.cs:11
+#: ../Components/Schumix.Components/Updater/Update.cs:13
 msgid "Downloading new version."
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:8
-#: ../Components/Schumix.Components/Updater/Update.cs:12
-msgid "Successfully downloaded new version."
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:8
-#: ../Components/Schumix.Components/Updater/Update.cs:12
-msgid "Downloading unsuccessful!"
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:8
-#: ../Components/Schumix.Components/Updater/Update.cs:12
-#: ../Components/Schumix.Components/Updater/Update.cs:14
-msgid "Updating successful!"
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:8
+#: ../Components/Schumix.Components/Updater/Update.cs:11
 msgid "Searching for the last version is started."
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:13
 msgid "No such version like this, update interrupted!"
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:13
-msgid "Started translating."
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "Currently no newer version!"
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:14
-msgid "Error was handled while translated!"
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "The program starts is continuing."
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:15
-msgid "Successfully finished the translation."
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "I found a newer version. The update to {0} version is starting."
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:15
-msgid "Sql files update is started. The setted database will be updated."
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:15
-msgid "Sql update finished."
+#: ../Components/Schumix.Components/Updater/Update.cs:17
+msgid "Older version found, update interrupted!"
 msgstr ""
 
 #: ../Components/Schumix.Components/Updater/Update.cs:19
-msgid "This step of updateing is finished. Continue with next step."
+msgid "Downloading unsuccessful!"
 msgstr ""
 
-#: ../Components/Schumix.Components/Updater/Update.cs:20
-msgid "The update is finished. The program shutting down!"
+#: ../Components/Schumix.Components/Updater/Update.cs:19
+#: ../Components/Schumix.Components/Updater/Update.cs:21
+msgid "Updating successful!"
+msgstr ""
+
+#: ../Components/Schumix.Components/Updater/Update.cs:21
+msgid "Error was handled while translated!"
+msgstr ""
+
+#: ../Components/Schumix.Components/Updater/Update.cs:23
+msgid "Sql files update is started. The setted database will be updated."
+msgstr ""
+
+#: ../Components/Schumix.Components/Updater/Update.cs:23
+msgid "Sql update finished."
+msgstr ""
+
+#: ../Components/Schumix.Components/Updater/Update.cs:27
+msgid "This step of updateing is finished. Continue with next step."
 msgstr ""
 
 #: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:6

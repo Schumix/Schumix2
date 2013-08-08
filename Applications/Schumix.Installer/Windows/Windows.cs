@@ -22,11 +22,10 @@ using System;
 using System.Threading;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Schumix.Framework;
-using Schumix.Framework.Logger;
-using Schumix.Framework.Extensions;
+using Schumix.Installer.Logger;
+using Schumix.Installer.Extensions;
 
-namespace Schumix
+namespace Schumix.Installer
 {
 	class Windows
 	{
@@ -50,12 +49,12 @@ namespace Schumix
 				case CtrlType.CTRL_BREAK_EVENT:
 				case CtrlType.CTRL_CLOSE_EVENT:
 					Log.Notice("Windows", "Daemon killed.");
-					MainClass.Shutdown("Daemon killed.");
+					MainClass.Shutdown();
 					break;
 				case CtrlType.CTRL_LOGOFF_EVENT:
 				case CtrlType.CTRL_SHUTDOWN_EVENT:
 					Log.Notice("Windows", "User is logging off.");
-					MainClass.Shutdown("User is logging off.");
+					MainClass.Shutdown();
 					break;
 				default:
 					break;
