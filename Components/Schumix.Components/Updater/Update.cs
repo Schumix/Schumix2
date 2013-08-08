@@ -69,6 +69,11 @@ namespace Schumix.Components.Updater
 			Environment.Exit(0);
 		}
 
+		~Update()
+		{
+			Log.Debug("Update", "~Update()");
+		}
+
 		private bool SearchingForNewVersion()
 		{
 			if(UpdateConfig.Version == "stable")
