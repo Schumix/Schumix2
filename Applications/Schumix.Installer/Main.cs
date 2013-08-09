@@ -52,6 +52,7 @@ namespace Schumix.Installer
 			string localization = "start";
 			string dumpsdir = "Dumps";
 			string logsdir = "Logs";
+			int loglevel = 3;
 			Console.BackgroundColor = ConsoleColor.Black;
 			Console.ForegroundColor = ConsoleColor.Gray;
 
@@ -62,6 +63,7 @@ namespace Schumix.Installer
 				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
 				{ "dumps-dir=", "Set up the dumps folder's path and name.", v => dumpsdir = v },
 				{ "logs-dir=", "Set up the logs folder's path and name.", v => dumpsdir = v },
+				{ "loglevel=", "Logolási szint beállítása.", v => loglevel = v.ToInt32() },
 			};
 
 			try
@@ -99,6 +101,8 @@ namespace Schumix.Installer
 			Console.WriteLine(sLConsole.GetString("Programmed by: {0}"), Consts.InstallerProgrammedBy);
 			Console.WriteLine("================================================================================"); // 80
 			Console.ForegroundColor = ConsoleColor.Gray;
+
+			Log.SetLogLevel(loglevel);
 			Log.Initialize("Installer.log", logsdir);
 
 			if(sPlatform.IsWindows && console_encoding == Encoding.UTF8.BodyName &&

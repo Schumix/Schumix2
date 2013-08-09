@@ -34,6 +34,12 @@ namespace Schumix.Installer.Logger
 		private static readonly object WriteLock = new object();
 		private static string _Directory;
 		private static string _FileName;
+		private static int _LogLevel;
+
+		public Log()
+		{
+			_LogLevel = 3;
+		}
 
 		/// <returns>
 		///		A visszatérési érték az aktuális dátum.
@@ -41,6 +47,11 @@ namespace Schumix.Installer.Logger
 		private static string GetTime()
 		{
 			return DateTime.Now.ToString("HH:mm:ss");
+		}
+
+		public static void SetLogLevel(int level)
+		{
+			_LogLevel = level;
 		}
 		
 		public static void LogInFile(string log)
@@ -188,8 +199,8 @@ namespace Schumix.Installer.Logger
 		{
 			lock(WriteLock)
 			{
-				//if(LogConfig.LogLevel < 1)
-				//	return;
+				if(_LogLevel < 1)
+					return;
 
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
@@ -224,8 +235,8 @@ namespace Schumix.Installer.Logger
 		{
 			lock(WriteLock)
 			{
-				//if(LogConfig.LogLevel < 2)
-				//	return;
+				if(_LogLevel < 2)
+					return;
 
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
@@ -260,8 +271,8 @@ namespace Schumix.Installer.Logger
 		{
 			lock(WriteLock)
 			{
-				//if(LogConfig.LogLevel < 3)
-				//	return;
+				if(_LogLevel < 3)
+					return;
 
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
