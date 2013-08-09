@@ -19,6 +19,7 @@
  */
 
 using System;
+using Schumix.Framework;
 using NGit;
 
 namespace Schumix.Components.Updater.Download
@@ -96,7 +97,7 @@ namespace Schumix.Components.Updater.Download
 			{
 				Console.BackgroundColor = ConsoleColor.Gray;
 				Console.CursorLeft = position;
-				Console.Write(" ");
+				Console.Write(SchumixBase.Space);
 			}
 			else
 			{
@@ -104,7 +105,7 @@ namespace Schumix.Components.Updater.Download
 				{
 					Console.BackgroundColor = ConsoleColor.Gray;
 					Console.CursorLeft = position++;
-					Console.Write(" ");
+					Console.Write(SchumixBase.Space);
 				}
 			}
 
@@ -114,7 +115,7 @@ namespace Schumix.Components.Updater.Download
 				{
 					Console.BackgroundColor = ConsoleColor.Gray;
 					Console.CursorLeft = position++;
-					Console.Write(" ");
+					Console.Write(SchumixBase.Space);
 				}
 			}
 			else
@@ -124,7 +125,7 @@ namespace Schumix.Components.Updater.Download
 				{
 					Console.BackgroundColor = ConsoleColor.Black;
 					Console.CursorLeft = position++;
-					Console.Write(" ");
+					Console.Write(SchumixBase.Space);
 				}
 			}
 

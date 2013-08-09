@@ -32,7 +32,14 @@ namespace Schumix.Installer.Logger
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly object WriteLock = new object();
+		private static string _Directory;
 		private static string _FileName;
+		private static int _LogLevel;
+
+		public Log()
+		{
+			_LogLevel = 3;
+		}
 
 		/// <returns>
 		///		A visszatérési érték az aktuális dátum.
@@ -41,12 +48,17 @@ namespace Schumix.Installer.Logger
 		{
 			return DateTime.Now.ToString("HH:mm:ss");
 		}
+
+		public static void SetLogLevel(int level)
+		{
+			_LogLevel = level;
+		}
 		
 		public static void LogInFile(string log)
 		{
 			lock(WriteLock)
 			{
-				string filename = "Logs/" + _FileName;
+				string filename = _Directory + "/" + _FileName;
 				var filesize = new FileInfo(filename);
 
 				if(filesize.Length >= 10 * 1024 * 1024)
@@ -74,14 +86,20 @@ namespace Schumix.Installer.Logger
 		{
 			Initialize("Installer.log");
 		}
-		
+
 		public static void Initialize(string FileName)
+		{
+			Initialize(FileName, "Logs");
+		}
+
+		public static void Initialize(string FileName, string Directory)
 		{
 			bool isfile = false;
 			_FileName = FileName;
+			_Directory = Directory;
 			var time = DateTime.Now;
-			sUtilities.CreateDirectory("Logs");
-			string logfile = "Logs/" + _FileName;
+			sUtilities.CreateDirectory(Directory);
+			string logfile = Directory + "/" + _FileName;
 
 			if(File.Exists(logfile))
 				isfile = true;
@@ -181,8 +199,8 @@ namespace Schumix.Installer.Logger
 		{
 			lock(WriteLock)
 			{
-				//if(LogConfig.LogLevel < 1)
-				//	return;
+				if(_LogLevel < 1)
+					return;
 
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
@@ -217,17 +235,17 @@ namespace Schumix.Installer.Logger
 		{
 			lock(WriteLock)
 			{
-				//if(LogConfig.LogLevel < 2)
-				//	return;
+				if(_LogLevel < 2)
+					return;
 
 				Console.ForegroundColor = ConsoleColor.Gray;
-				Console.Write(GetTime());
+				Console.Error.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write(" E");
+				Console.Error.Write(" E");
 				Console.ForegroundColor = ConsoleColor.White;
-				Console.Write(" {0}: ", source);
+				Console.Error.Write(" {0}: ", source);
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write("{0}\n", format);
+				Console.Error.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				LogInFile("E {0}: {1}\n", source, format);
 			}
@@ -253,8 +271,8 @@ namespace Schumix.Installer.Logger
 		{
 			lock(WriteLock)
 			{
-				//if(LogConfig.LogLevel < 3)
-				//	return;
+				if(_LogLevel < 3)
+					return;
 
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write(GetTime());
@@ -353,25 +371,25 @@ namespace Schumix.Installer.Logger
 				}
 
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine();
-				Console.WriteLine("**************************************************"); // 51
+				Console.Error.WriteLine();
+				Console.Error.WriteLine("**************************************************"); // 51
 
 				foreach(string item in lines)
 				{
 					uint len = (uint)item.Length;
 					uint diff = (48-len);
-					Console.Write("* {0}", item);
+					Console.Error.Write("* {0}", item);
 
 					if(diff > 0)
 					{
 						for(uint u = 1; u < diff; ++u)
-							Console.Write(" ");
+							Console.Error.Write(" ");
 
-						Console.Write("*\n");
+						Console.Error.Write("*\n");
 					}
 				}
 
-				Console.WriteLine("**************************************************");
+				Console.Error.WriteLine("**************************************************");
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}

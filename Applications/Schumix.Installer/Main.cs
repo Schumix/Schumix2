@@ -21,6 +21,7 @@
 using System;
 using System.Text;
 using System.Globalization;
+using Schumix.Installer.Config;
 using Schumix.Installer.Logger;
 using Schumix.Installer.Options;
 using Schumix.Installer.Platforms;
@@ -49,14 +50,20 @@ namespace Schumix.Installer
 			bool help = false;
 			string console_encoding = Encoding.UTF8.BodyName;
 			string localization = "start";
-			System.Console.BackgroundColor = ConsoleColor.Black;
-			System.Console.ForegroundColor = ConsoleColor.Gray;
+			string dumpsdir = "Dumps";
+			string logsdir = "Logs";
+			int loglevel = 3;
+			Console.BackgroundColor = ConsoleColor.Black;
+			Console.ForegroundColor = ConsoleColor.Gray;
 
 			var os = new OptionSet()
 			{
 				{ "h|?|help", "Display help.", v => help = true },
 				{ "console-encoding=", "Set up the program's character encoding.", v => console_encoding = v },
 				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
+				{ "dumps-dir=", "Set up the dumps folder's path and name.", v => dumpsdir = v },
+				{ "logs-dir=", "Set up the logs folder's path and name.", v => dumpsdir = v },
+				{ "loglevel=", "Log level's setting.", v => loglevel = v.ToInt32() },
 			};
 
 			try
@@ -83,18 +90,24 @@ namespace Schumix.Installer
 			if(localization != "start")
 				sLConsole.SetLocale(localization);
 
+			sCrashDumper.SetDirectory(dumpsdir);
+
 			Console.Title = "Schumix2 Installer";
 			Console.ForegroundColor = ConsoleColor.Blue;
 			Console.WriteLine("[Installer]");
 			Console.WriteLine(sLConsole.GetString("To shut down the program use the <Ctrl+C> command!"));
 			Console.WriteLine(sLConsole.GetString("Installer Version: {0}"), sUtilities.GetVersion());
+			Console.WriteLine(sLConsole.GetString("Website: {0}"), Consts.InstallerWebsite);
+			Console.WriteLine(sLConsole.GetString("Programmed by: {0}"), Consts.InstallerProgrammedBy);
 			Console.WriteLine("================================================================================"); // 80
 			Console.ForegroundColor = ConsoleColor.Gray;
-			Log.Initialize("Installer.log");
+
+			Log.SetLogLevel(loglevel);
+			Log.Initialize("Installer.log", logsdir);
 
 			if(sPlatform.IsWindows && console_encoding == Encoding.UTF8.BodyName &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
-				System.Console.OutputEncoding = Encoding.GetEncoding(852);
+				Console.OutputEncoding = Encoding.GetEncoding(852);
 
 			Console.WriteLine();
 			Log.Notice("Main", sLConsole.GetString("System is starting..."));
@@ -127,6 +140,7 @@ namespace Schumix.Installer
 
 		public static void Shutdown()
 		{
+			Console.CursorVisible = true;
 			sRuntime.Exit();
 		}
 	}

@@ -145,6 +145,9 @@ namespace Schumix
 			else
 				System.Console.ForegroundColor = ConsoleColor.Blue;
 
+			if(localization != "start")
+				sLConsole.SetLocale(localization);
+
 			System.Console.WriteLine("[Schumix2]");
 			System.Console.WriteLine(sLConsole.GetString("To shut down the program use the <Ctrl+C> or the <quit> command!"));
 			System.Console.WriteLine(sLConsole.GetString("Schumix Version: {0}"), sUtilities.GetVersion());
@@ -163,8 +166,6 @@ namespace Schumix
 
 			if(localization == "start")
 				sLConsole.SetLocale(LocalizationConfig.Locale);
-			else if(localization != "start")
-				sLConsole.SetLocale(localization);
 
 			if(sPlatform.IsWindows && console_encoding == Encoding.UTF8.BodyName &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
@@ -213,6 +214,8 @@ namespace Schumix
 
 		public static void Shutdown(string Message, bool Crash = false)
 		{
+			System.Console.CursorVisible = true;
+
 			if(!SchumixBot.sSchumixBase.IsNull())
 			{
 				bool e = false;
