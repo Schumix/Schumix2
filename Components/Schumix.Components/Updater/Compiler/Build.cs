@@ -48,9 +48,8 @@ namespace Schumix.Components.Updater.Compiler
 
 			if(sPlatform.IsLinux)
 			{
-				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "/xbuild.exe", dir + "/xbuild.exe");
-				build.StartInfo.FileName = "mono";
-				build.StartInfo.Arguments = string.Format("{0}/xbuild.exe /p:Configuration=\"Release\" {0}/Schumix.sln /flp:LogFile=xbuild.log;Verbosity=Detailed", dir);
+				build.StartInfo.FileName = "xbuild";
+				build.StartInfo.Arguments = string.Format("/p:Configuration=\"Release\" {0}/Schumix.sln", dir);
 			}
 			else if(sPlatform.IsWindows)
 			{
