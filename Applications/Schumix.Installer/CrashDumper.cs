@@ -34,6 +34,7 @@ namespace Schumix.Installer
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private string _dir = "Dumps";
 		private CrashDumper() {}
 
 		/// <summary>
@@ -41,13 +42,12 @@ namespace Schumix.Installer
 		/// </summary>
 		public void CreateCrashDump(object Object)
 		{
-			string dir = "Dumps";
-			sUtilities.CreateDirectory(dir);
+			sUtilities.CreateDirectory(_dir);
 			Log.Debug("CrashDumper", sLConsole.GetString("Creating crash dump..."));
 
 			try
 			{
-				using(var fs = File.Open(Path.Combine(Environment.CurrentDirectory, dir,
+				using(var fs = File.Open(Path.Combine(Environment.CurrentDirectory, _dir,
 					string.Format("{0}.acd", DateTime.Now.ToString("yyyy_MM_dd_HH_mm"))), FileMode.Create))
 				{
 					var formatter = new BinaryFormatter();
@@ -61,6 +61,11 @@ namespace Schumix.Installer
 			}
 
 			Log.Debug("CrashDumper", sLConsole.GetString("Crash dump created."));
+		}
+
+		public void SetDirectory(string dir)
+		{
+			_dir = dir;
 		}
 	}
 }

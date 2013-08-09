@@ -50,6 +50,7 @@ namespace Schumix.Installer
 			bool help = false;
 			string console_encoding = Encoding.UTF8.BodyName;
 			string localization = "start";
+			string dumpsdir = "Dumps";
 			Console.BackgroundColor = ConsoleColor.Black;
 			Console.ForegroundColor = ConsoleColor.Gray;
 
@@ -58,6 +59,7 @@ namespace Schumix.Installer
 				{ "h|?|help", "Display help.", v => help = true },
 				{ "console-encoding=", "Set up the program's character encoding.", v => console_encoding = v },
 				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
+				{ "dumps-dir=", "Set up the dumps folder's path and name.", v => dumpsdir = v },
 			};
 
 			try
@@ -83,6 +85,8 @@ namespace Schumix.Installer
 
 			if(localization != "start")
 				sLConsole.SetLocale(localization);
+
+			sCrashDumper.SetDirectory(dumpsdir);
 
 			Console.Title = "Schumix2 Installer";
 			Console.ForegroundColor = ConsoleColor.Blue;
