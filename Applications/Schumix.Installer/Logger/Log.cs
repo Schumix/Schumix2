@@ -317,25 +317,25 @@ namespace Schumix.Installer.Logger
 				}
 
 				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.Error.WriteLine();
-				Console.Error.WriteLine("**************************************************"); // 51
+				Console.WriteLine();
+				Console.WriteLine("**************************************************"); // 51
 				
 				foreach(string item in lines)
 				{
 					uint len = (uint)item.Length;
 					uint diff = (48-len);
-					Console.Error.Write("* {0}", item);
+					Console.Write("* {0}", item);
 
 					if(diff > 0)
 					{
 						for(uint u = 1; u < diff; ++u)
-							Console.Error.Write(" ");
+							Console.Write(" ");
 						
-						Console.Error.Write("*\n");
+						Console.Write("*\n");
 					}
 				}
 				
-				Console.Error.WriteLine("**************************************************");
+				Console.WriteLine("**************************************************");
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}
