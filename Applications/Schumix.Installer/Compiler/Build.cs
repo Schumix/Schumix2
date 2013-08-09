@@ -48,9 +48,8 @@ namespace Schumix.Installer.Compiler
 
 			if(sPlatform.IsLinux)
 			{
-				File.Copy(ToolLocationHelper.GetPathToDotNetFramework(TargetDotNetFrameworkVersion.Version40) + "/xbuild.exe", dir + "/xbuild.exe");
-				build.StartInfo.FileName = "mono";
-				build.StartInfo.Arguments = string.Format("{0}/xbuild.exe /p:Configuration=\"Release\" {0}/Schumix.sln /flp:LogFile=xbuild.log;Verbosity=Detailed", dir);
+				build.StartInfo.FileName = "xbuild";
+				build.StartInfo.Arguments = string.Format("/p:Configuration=\"Release\" {0}/Schumix.sln", dir);
 			}
 			else if(sPlatform.IsWindows)
 			{
@@ -62,15 +61,20 @@ namespace Schumix.Installer.Compiler
 			build.Start();
 			build.PriorityClass = ProcessPriorityClass.Normal;
 
-			//var error = build.StandardError;
+			var error = build.StandardError;
 			var output = build.StandardOutput;
 			HasError = false;
 
-			//while(!error.EndOfStream)
-			//	HasError = true;
-
 			while(!output.EndOfStream)
 				Log.Debug("Build", output.ReadLine());
+
+			while(!error.EndOfStream)
+			{
+				if(!HasError)
+					HasError = true;
+
+				Log.Debug("Build", error.ReadLine());
+			}
 
 			build.WaitForExit();
 			build.Dispose();

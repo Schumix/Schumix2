@@ -62,15 +62,20 @@ namespace Schumix.Components.Updater.Compiler
 			build.Start();
 			build.PriorityClass = ProcessPriorityClass.Normal;
 
-			//var error = build.StandardError;
+			var error = build.StandardError;
 			var output = build.StandardOutput;
 			HasError = false;
 
-			//while(!error.EndOfStream)
-			//	HasError = true;
-
 			while(!output.EndOfStream)
 				Log.Debug("Build", output.ReadLine());
+
+			while(!error.EndOfStream)
+			{
+				if(!HasError)
+					HasError = true;
+
+				Log.Debug("Build", error.ReadLine());
+			}
 
 			build.WaitForExit();
 			build.Dispose();
