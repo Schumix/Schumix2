@@ -57,7 +57,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/remove", "Ilyen csatorna nem létezik!\nNincs a csatornához beállítva jelszó!\nJelszó el lett távolítva a csatornáról.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/update", "Ilyen csatorna nem létezik!\nNincs a csatornához beállítva jelszó!\nÚj jelszó lett beállítva a csatornára, jelszó: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "channel/password/info", "Ilyen csatorna nem létezik!\nA csatornán nincs jelszó.\nA csatornán van jelszó.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "nick", "Nick megváltoztatása erre: {0}");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "nick", "Nick megváltoztatása erre: {0}\nPontosan úgyan ez a nick név van megadva így nem kerül megváltoztatásra!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "join", "Kapcsolódás ehhez a csatornához: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "leave", "Lelépés erről a csatornáról: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "reload", "A programban nincs ilyen rész!\nValahol hiba történt az újratöltésben!\n{0} újra lett indítva.");
@@ -109,7 +109,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/remove", "There is no such a channel!\nThere is no password set on the channel!\n Password deleted from the channel.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/update", "There is no such a channel!\nThere is no password set on the channel!\nNew password set on the channel, password: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "channel/password/info", "There is no such a channel!\nThere is no password set on the channel!\nThere is a password on the channel.");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "nick", "Nick changes to: {0}");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "nick", "Nick changes to: {0}\nExactly the same nick is given thus it won't be changed.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "join", "Join to this channel: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "leave", "Part of this channel: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "reload", "The program does not contains that part!\nThere is an error in the reload!\n{0} reloaded.");
@@ -348,7 +348,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/rank", "Rang sikeresen módosítva.\nHibás rang!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "3Fél Operátor parancsok!\n3Parancsok: {0}\n3Operátor parancsok!\n3Parancsok: {0}\n3Adminisztrátor parancsok!\n3Parancsok: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "colors", "1teszt1 2teszt2 3teszt3 4teszt4 5teszt5 6teszt6 7teszt7 8teszt8 9teszt9 10teszt10 11teszt11 12teszt12 13teszt13 14teszt14 15teszt15");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "nick", "Nick megváltoztatása erre: {0}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "nick", "Nick megváltoztatása erre: {0}\nPontosan úgyan ez a nick név van megadva így nem kerül megváltoztatásra!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "join", "Kapcsolódás ehhez a csatornához: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "leave", "Lelépés erről a csatornáról: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "function/info", "2Bekapcsolva: {0}\n2Kikapcsolva: {0}");
@@ -579,7 +579,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/rank", "Successfully changed the rank!\nRank error!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin", "3half operator commands!\n3Commands: {0}\n3Operator commands!\n3Commands: {0}\n3Administrator commands!\n3Commands: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "colors", "1test1 2test2 3test3 4test4 5test5 6test6 7test7 8test8 9test9 10test10 11test11 12test12 13test13 14test14 15test15");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "nick", "Nick changes to: {0}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "nick", "Nick changes to: {0}\nExactly the same nick is given thus it won't be changed.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "join", "Join to this channel: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "leave", "Part of this channel: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "function/info", "2On: {0}\n2Off: {0}");

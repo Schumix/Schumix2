@@ -31,6 +31,13 @@ namespace Schumix.Irc.Commands
 		{
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				return;
+
+			var text = sLManager.GetCommandTexts("nick", sIRCMessage.Channel, sIRCMessage.ServerName);
+			if(text.Length < 2)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+				return;
+			}
 			
 			if(sIRCMessage.Info.Length < 5)
 			{
@@ -47,9 +54,21 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			if(sMyNickInfo.NickStorage == nick)
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+				return;
+			}
+
+			if(sChannelList.List[sIRCMessage.Channel.ToLower()].Names.ContainsKey(nick.ToLower()) && sMyNickInfo.NickStorage.ToLower() != nick.ToLower())
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text14", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+				return;
+			}
+
 			NewNickPrivmsg = sIRCMessage.Channel;
 			sMyNickInfo.ChangeNick(nick);
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("nick", sIRCMessage.Channel, sIRCMessage.ServerName), nick);
+			sSendMessage.SendChatMessage(sIRCMessage, text[0], nick);
 			sSender.Nick(nick);
 		}
 	}

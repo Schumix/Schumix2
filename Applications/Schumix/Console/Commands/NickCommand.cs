@@ -36,6 +36,13 @@ namespace Schumix.Console
 		/// </summary>
 		protected void HandleNick(ConsoleMessage sConsoleMessage)
 		{
+			var text = sLManager.GetConsoleCommandTexts("nick");
+			if(text.Length < 2)
+			{
+				Log.Error("Console", sLConsole.Translations("NoFound2"));
+				return;
+			}
+
 			if(sConsoleMessage.Info.Length < 2)
 			{
 				Log.Error("Console", sLManager.GetConsoleWarningText("NoName"));
@@ -51,9 +58,21 @@ namespace Schumix.Console
 				return;
 			}
 
+			if(sIrcBase.Networks[_servername].sMyNickInfo.NickStorage == nick)
+			{
+				Log.Error("Console", text[1]);
+				return;
+			}
+
+			if(sIrcBase.Networks[_servername].sChannelList.List[_channel].Names.ContainsKey(nick.ToLower()) && sIrcBase.Networks[_servername].sMyNickInfo.NickStorage.ToLower() != nick.ToLower())
+			{
+				Log.Error("Console", sLConsole.MessageHandler("Text14"));
+				return;
+			}
+
 			sIrcBase.Networks[_servername].sMyNickInfo.ChangeNick(nick);
 			sIrcBase.Networks[_servername].sSender.Nick(nick);
-			Log.Notice("Console", sLManager.GetConsoleCommandText("nick"), nick);
+			Log.Notice("Console", text[0], nick);
 		}
 	}
 }
