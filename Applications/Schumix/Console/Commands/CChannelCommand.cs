@@ -48,6 +48,12 @@ namespace Schumix.Console
 				return;
 			}
 
+			if(!sIrcBase.Networks[_servername].sChannelList.List.ContainsKey(sConsoleMessage.Info[1].ToLower()))
+			{
+				Log.Error("Console", sLManager.GetConsoleWarningText("ImNotOnThisChannel"));
+				return;
+			}
+
 			if(_channel == sConsoleMessage.Info[1].ToLower())
 			{
 				Log.Warning("Console", sLManager.GetConsoleWarningText("ChannelAlreadyBeenUsed"));
