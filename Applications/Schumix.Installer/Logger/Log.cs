@@ -239,13 +239,13 @@ namespace Schumix.Installer.Logger
 					return;
 
 				Console.ForegroundColor = ConsoleColor.Gray;
-				Console.Write(GetTime());
+				Console.Error.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write(" E");
+				Console.Error.Write(" E");
 				Console.ForegroundColor = ConsoleColor.White;
-				Console.Write(" {0}: ", source);
+				Console.Error.Write(" {0}: ", source);
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write("{0}\n", format);
+				Console.Error.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				LogInFile("E {0}: {1}\n", source, format);
 			}
@@ -317,25 +317,25 @@ namespace Schumix.Installer.Logger
 				}
 
 				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.WriteLine();
-				Console.WriteLine("**************************************************"); // 51
+				Console.Error.WriteLine();
+				Console.Error.WriteLine("**************************************************"); // 51
 				
 				foreach(string item in lines)
 				{
 					uint len = (uint)item.Length;
 					uint diff = (48-len);
-					Console.Write("* {0}", item);
+					Console.Error.Write("* {0}", item);
 
 					if(diff > 0)
 					{
 						for(uint u = 1; u < diff; ++u)
-							Console.Write(" ");
+							Console.Error.Write(" ");
 						
-						Console.Write("*\n");
+						Console.Error.Write("*\n");
 					}
 				}
 				
-				Console.WriteLine("**************************************************");
+				Console.Error.WriteLine("**************************************************");
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}
@@ -371,25 +371,25 @@ namespace Schumix.Installer.Logger
 				}
 
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine();
-				Console.WriteLine("**************************************************"); // 51
+				Console.Error.WriteLine();
+				Console.Error.WriteLine("**************************************************"); // 51
 
 				foreach(string item in lines)
 				{
 					uint len = (uint)item.Length;
 					uint diff = (48-len);
-					Console.Write("* {0}", item);
+					Console.Error.Write("* {0}", item);
 
 					if(diff > 0)
 					{
 						for(uint u = 1; u < diff; ++u)
-							Console.Write(" ");
+							Console.Error.Write(" ");
 
-						Console.Write("*\n");
+						Console.Error.Write("*\n");
 					}
 				}
 
-				Console.WriteLine("**************************************************");
+				Console.Error.WriteLine("**************************************************");
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}

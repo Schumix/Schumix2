@@ -373,13 +373,13 @@ namespace Schumix.Framework.Logger
 				
 				WaitOutputRedirected();
 				Console.ForegroundColor = ConsoleColor.Gray;
-				Console.Write(GetTime());
+				Console.Error.Write(GetTime());
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write(" E");
+				Console.Error.Write(" E");
 				Console.ForegroundColor = ConsoleColor.White;
-				Console.Write(" {0}: ", source);
+				Console.Error.Write(" {0}: ", source);
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.Write("{0}\n", format);
+				Console.Error.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				LogInFile("E {0}: {1}\n", source, format);
 			}
@@ -465,25 +465,25 @@ namespace Schumix.Framework.Logger
 				}
 
 				Console.ForegroundColor = ConsoleColor.Yellow;
-				Console.WriteLine();
-				Console.WriteLine("**************************************************"); // 51
+				Console.Error.WriteLine();
+				Console.Error.WriteLine("**************************************************"); // 51
 				
 				foreach(string item in lines)
 				{
 					uint len = (uint)item.Length;
 					uint diff = (48-len);
-					Console.Write("* {0}", item);
+					Console.Error.Write("* {0}", item);
 
 					if(diff > 0)
 					{
 						for(uint u = 1; u < diff; ++u)
-							Console.Write(SchumixBase.Space);
+							Console.Error.Write(SchumixBase.Space);
 						
-						Console.Write("*\n");
+						Console.Error.Write("*\n");
 					}
 				}
 				
-				Console.WriteLine("**************************************************");
+				Console.Error.WriteLine("**************************************************");
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}
@@ -525,25 +525,25 @@ namespace Schumix.Framework.Logger
 				}
 
 				Console.ForegroundColor = ConsoleColor.Red;
-				Console.WriteLine();
-				Console.WriteLine("**************************************************"); // 51
+				Console.Error.WriteLine();
+				Console.Error.WriteLine("**************************************************"); // 51
 				
 				foreach(string item in lines)
 				{
 					uint len = (uint)item.Length;
 					uint diff = (48-len);
-					Console.Write("* {0}", item);
+					Console.Error.Write("* {0}", item);
 
 					if(diff > 0)
 					{
 						for(uint u = 1; u < diff; ++u)
-							Console.Write(SchumixBase.Space);
+							Console.Error.Write(SchumixBase.Space);
 						
-						Console.Write("*\n");
+						Console.Error.Write("*\n");
 					}
 				}
 				
-				Console.WriteLine("**************************************************");
+				Console.Error.WriteLine("**************************************************");
 				Console.ForegroundColor = ConsoleColor.Gray;
 			}
 		}
@@ -613,9 +613,20 @@ namespace Schumix.Framework.Logger
 			lock(WriteLock)
 			{
 				WaitOutputRedirected();
-				Console.Write(GetTime());
-				Console.Write(" {0} {1}: ", GetTypeCharacter(type), source);
-				Console.Write("{0}\n", format);
+
+				if(type == LogType.Error)
+				{
+					Console.Error.Write(GetTime());
+					Console.Error.Write(" {0} {1}: ", GetTypeCharacter(type), source);
+					Console.Error.Write("{0}\n", format);
+				}
+				else
+				{
+					Console.Write(GetTime());
+					Console.Write(" {0} {1}: ", GetTypeCharacter(type), source);
+					Console.Write("{0}\n", format);
+				}
+
 				LogInFile("{0} {1}: {2}\n", GetTypeCharacter(type), source, format);
 			}
 		}

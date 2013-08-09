@@ -2,6 +2,7 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * Error kiírások leválasztva egy külön részbe ami alapértelmezetten is a konzol kiírásoknál az error kimenet.
  * Updater fő osztálya felújítva.
  * Installer teljesen felújítve.
  * Installer-ben a log felújítva és átrendezve. Normál log a magban átrendezve.
