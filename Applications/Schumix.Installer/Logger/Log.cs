@@ -32,6 +32,7 @@ namespace Schumix.Installer.Logger
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly object WriteLock = new object();
+		private static string _Directory;
 		private static string _FileName;
 
 		/// <returns>
@@ -46,7 +47,7 @@ namespace Schumix.Installer.Logger
 		{
 			lock(WriteLock)
 			{
-				string filename = "Logs/" + _FileName;
+				string filename = _Directory + "/" + _FileName;
 				var filesize = new FileInfo(filename);
 
 				if(filesize.Length >= 10 * 1024 * 1024)
@@ -74,14 +75,20 @@ namespace Schumix.Installer.Logger
 		{
 			Initialize("Installer.log");
 		}
-		
+
 		public static void Initialize(string FileName)
+		{
+			Initialize(FileName, "Logs");
+		}
+
+		public static void Initialize(string FileName, string Directory)
 		{
 			bool isfile = false;
 			_FileName = FileName;
+			_Directory = Directory;
 			var time = DateTime.Now;
-			sUtilities.CreateDirectory("Logs");
-			string logfile = "Logs/" + _FileName;
+			sUtilities.CreateDirectory(Directory);
+			string logfile = Directory + "/" + _FileName;
 
 			if(File.Exists(logfile))
 				isfile = true;
