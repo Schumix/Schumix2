@@ -63,7 +63,7 @@ namespace Schumix.Installer
 				{ "console-localization=", "Set up the program's console language settings.", v => localization  = v },
 				{ "dumps-dir=", "Set up the dumps folder's path and name.", v => dumpsdir = v },
 				{ "logs-dir=", "Set up the logs folder's path and name.", v => dumpsdir = v },
-				{ "loglevel=", "Logolási szint beállítása.", v => loglevel = v.ToInt32() },
+				{ "loglevel=", "Log level's setting.", v => loglevel = v.ToInt32() },
 			};
 
 			try
