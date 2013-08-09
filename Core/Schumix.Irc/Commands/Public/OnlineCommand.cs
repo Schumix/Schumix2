@@ -33,6 +33,12 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
+			if(sChannelList.List[sIRCMessage.Channel.ToLower()].Names.ContainsKey(sIRCMessage.Info[4].ToLower()))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.MessageHandler("Text11", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+				return;
+			}
+
 			IsOnline = true;
 			OnlinePrivmsg = sIRCMessage.Channel;
 			sSender.NickServInfo(sIRCMessage.Info[4]);
