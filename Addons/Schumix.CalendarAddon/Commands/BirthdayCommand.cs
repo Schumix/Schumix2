@@ -44,7 +44,7 @@ namespace Schumix.CalendarAddon.Commands
 		{
 			_regex = new Regex(@"((?<year>[0-9]{4,4})(?:[\.\s]+|))?"                         // Year
 			                   + @"((?<month>[0-9]{1,2}|[a-zóüöúőűáéí]{3,20})(?:[\.\s]+|))?" // Month
-			                   + @"((?<day>[0-9]{1,2})(?:[\.\s]|))?",                       // Day
+			                   + @"((?<day>[0-9]{1,2})(?:[\.\s]|))?",                        // Day
 			                   RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		}
 
