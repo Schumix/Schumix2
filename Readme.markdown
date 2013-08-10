@@ -45,7 +45,7 @@ Install the `mono-xbuild` package or from source `mono`.
 Navigate to the `Run` folder and than to the appropriate folder for the configuration file.
 <br/>Run the exe.
 <br/>The program will generate its own config file.
-<br/>If any problem occurs then create a `Configs` named folder and copy the `Schumix.yml` file from the root folder into it.
+<br/>If any problem occurs then create a `Configs` named folder and copy the `Schumix.yml` file from the `Configs` folder into it.
 
 # Install
 
