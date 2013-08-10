@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-08 13:44:11+0200\n"
+"POT-Creation-Date: 2013-08-10 17:50:42+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -223,10 +223,8 @@ msgid "Connection to: {0}"
 msgstr "Kapcsolódás megindult ide: {0}"
 
 #: ../Core/Schumix.Irc/Network.cs:44
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
-msgid "Connection closed!"
-msgstr "Kapcsolat bontva!"
+msgid "Connection closed! ServerName: {0}"
+msgstr "Kapcsolat bontva! ServerName: {0}"
 
 #: ../Core/Schumix.Irc/Network.cs:46
 msgid "Connection have been closed."
@@ -629,6 +627,11 @@ msgstr "Ismeretlen packetid: {0}"
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
 msgid "Authentication denied to SCS server!"
 msgstr "Hitelesítést megtagadta az SCS szerver!"
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
+msgid "Connection closed!"
+msgstr "Kapcsolat bontva!"
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:15
 msgid "Successfully authed to SCS server."
@@ -1154,13 +1157,13 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Logger/Log.cs:32
 #: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
-#: ../Applications/Schumix.Installer/Logger/Log.cs:10
+#: ../Applications/Schumix.Installer/Logger/Log.cs:14
 msgid "Started time: [{0}]\n"
 msgstr "Indulási időpont: [{0}]\n"
 
 #: ../Core/Schumix.Framework/Logger/Log.cs:32
 #: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
-#: ../Applications/Schumix.Installer/Logger/Log.cs:10
+#: ../Applications/Schumix.Installer/Logger/Log.cs:14
 msgid ""
 "\n"
 "Started time: [{0}]\n"
@@ -1239,13 +1242,13 @@ msgid "Schumix Version: {0}"
 msgstr "Schumix Verzió: {0}"
 
 #: ../Applications/Schumix/Main.cs:11
-#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Installer/Main.cs:10
 #: ../Applications/Schumix.Server/Main.cs:9
 msgid "Website: {0}"
 msgstr "Weboldal: {0}"
 
 #: ../Applications/Schumix/Main.cs:11
-#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Installer/Main.cs:10
 #: ../Applications/Schumix.Server/Main.cs:9
 msgid "Programmed by: {0}"
 msgstr "Programot készítette: {0}"
@@ -1255,7 +1258,7 @@ msgid "Developers: {0}"
 msgstr "Fejlesztők: {0}"
 
 #: ../Applications/Schumix/Main.cs:17
-#: ../Applications/Schumix.Installer/Main.cs:11
+#: ../Applications/Schumix.Installer/Main.cs:13
 #: ../Applications/Schumix.Server/Main.cs:13
 msgid "System is starting..."
 msgstr "Rendszer indul..."
@@ -1266,13 +1269,13 @@ msgid "Colorblind mode is on!"
 msgstr "Színvak mód be van kapcsolva!"
 
 #: ../Applications/Schumix/Main.cs:20
-#: ../Applications/Schumix.Installer/Main.cs:13
+#: ../Applications/Schumix.Installer/Main.cs:15
 #: ../Applications/Schumix.Server/Main.cs:18
 msgid "FATAL ERROR"
 msgstr "VÉGZETES HIBA"
 
 #: ../Applications/Schumix/Main.cs:20
-#: ../Applications/Schumix.Installer/Main.cs:13
+#: ../Applications/Schumix.Installer/Main.cs:15
 #: ../Applications/Schumix.Server/Main.cs:18
 #: ../Applications/Schumix.Server/Main.cs:22
 msgid "An unhandled exception has been thrown. ({0})"
@@ -1315,11 +1318,11 @@ msgstr "CCommandManager sikeresen elindult."
 msgid "All Command Handler are registered."
 msgstr "Összes Command handler regisztrálásra került."
 
-#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Installer/Main.cs:10
 msgid "To shut down the program use the <Ctrl+C> command!"
 msgstr "A program leállításához használd a <Ctrl+C> parancsot!"
 
-#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Installer/Main.cs:10
 msgid "Installer Version: {0}"
 msgstr "Installer Verzió: {0}"
 
@@ -1332,7 +1335,7 @@ msgid "The installation is finished. The program shutting down!"
 msgstr "A telepítés befejeződött. Leáll a program!"
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:9
-#: ../Components/Schumix.Components/Updater/Update.cs:19
+#: ../Components/Schumix.Components/Updater/Update.cs:20
 msgid "Successfully downloaded new version."
 msgstr "Forrás sikeresen le lett töltve."
 
@@ -1346,7 +1349,7 @@ msgid "Installation successful!"
 msgstr "A telepítés befejeződött!"
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:10
-#: ../Components/Schumix.Components/Updater/Update.cs:20
+#: ../Components/Schumix.Components/Updater/Update.cs:21
 msgid "Started translating."
 msgstr "Fordítás megkezdése."
 
@@ -1355,17 +1358,17 @@ msgid "Error was handled while translated."
 msgstr "Hiba történt a fordítás közben!"
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:12
-#: ../Components/Schumix.Components/Updater/Update.cs:22
+#: ../Components/Schumix.Components/Updater/Update.cs:23
 msgid "Successfully finished the translation."
 msgstr "Fordítás sikeresen befejeződött."
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:13
 msgid "Copy files."
-msgstr ""
+msgstr "Fájlok másolása."
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:14
 msgid "Remove unneeded datas."
-msgstr ""
+msgstr "Felesleges adatok eltávolítása."
 
 #: ../Applications/Schumix.Installer/Download/CloneSchumix.cs:3
 #: ../Components/Schumix.Components/Updater/Download/CloneSchumix.cs:3
@@ -1596,62 +1599,62 @@ msgstr "Automatikus frissítés ki van kapcsolva."
 msgid "The update is finished. The program shutting down!"
 msgstr "A frissítés befejeződött. Leáll a program!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:9
+#: ../Components/Schumix.Components/Updater/Update.cs:10
 msgid "Searching for new stable version is started."
 msgstr "Új stabil verzió keresése megindult."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:11
-#: ../Components/Schumix.Components/Updater/Update.cs:13
+#: ../Components/Schumix.Components/Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:14
 msgid "Downloading new version."
 msgstr "Új forrás letöltése."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:11
+#: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "Searching for the last version is started."
 msgstr "A legutolsó verzió keresése megindult."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:13
+#: ../Components/Schumix.Components/Updater/Update.cs:14
 msgid "No such version like this, update interrupted!"
 msgstr "Ilyen verzió nem létezik ezért a frissítés leáll!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:17
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "Currently no newer version!"
 msgstr "Jelenleg nincs újabb verzió!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:17
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "The program starts is continuing."
 msgstr "Folytatódik a program indulása."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:17
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "I found a newer version. The update to {0} version is starting."
 msgstr "Újabb verziót találtam. Megindul a frissítés a {0} verzióra."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:17
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "Older version found, update interrupted!"
 msgstr "Régebbi verziót találtam ezért leáll a frissítés!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:19
+#: ../Components/Schumix.Components/Updater/Update.cs:20
 msgid "Downloading unsuccessful!"
 msgstr "Letöltés sikertelen!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:19
-#: ../Components/Schumix.Components/Updater/Update.cs:21
+#: ../Components/Schumix.Components/Updater/Update.cs:20
+#: ../Components/Schumix.Components/Updater/Update.cs:22
 msgid "Updating successful!"
 msgstr "A frissítés befejeződött!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:21
+#: ../Components/Schumix.Components/Updater/Update.cs:22
 msgid "Error was handled while translated!"
 msgstr "Hiba történt a fordítás közben!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:23
+#: ../Components/Schumix.Components/Updater/Update.cs:24
 msgid "Sql files update is started. The setted database will be updated."
 msgstr ""
 "Megindult az sql fájlok frissítése. A beállított adatbázis fog frissülni."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:23
+#: ../Components/Schumix.Components/Updater/Update.cs:24
 msgid "Sql update finished."
 msgstr "Az sql frissítés befejeződött."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:27
+#: ../Components/Schumix.Components/Updater/Update.cs:28
 msgid "This step of updateing is finished. Continue with next step."
 msgstr "Frissítés ezen szakasza befejeződött. Következik a beállítás."
 

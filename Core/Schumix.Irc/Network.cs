@@ -349,7 +349,7 @@ namespace Schumix.Irc
 		public void DisConnect()
 		{
 			Close();
-			Log.Notice("Network", sLConsole.GetString("Connection closed!"));
+			Log.Notice("Network", sLConsole.GetString("Connection closed! ServerName: {0}"), _servername);
 		}
 
 		/// <summary>
