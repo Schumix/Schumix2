@@ -224,7 +224,7 @@ msgstr "Kapcsolódás megindult ide: {0}"
 
 #: ../Core/Schumix.Irc/Network.cs:44
 msgid "Connection closed! ServerName: {0}"
-msgstr "Kapcsolat bontva! ServerName: {0}"
+msgstr "Kapcsolat bontva! Szerver neve: {0}"
 
 #: ../Core/Schumix.Irc/Network.cs:46
 msgid "Connection have been closed."
