@@ -48,6 +48,7 @@ namespace Schumix.Config
 			string schumix2dir = "Schumix2";
 			string addonsdir = "Addons";
 			string configdir = "Configs";
+			Console.CursorVisible = false;
 			Console.BackgroundColor = ConsoleColor.Black;
 			Console.ForegroundColor = ConsoleColor.Gray;
 
