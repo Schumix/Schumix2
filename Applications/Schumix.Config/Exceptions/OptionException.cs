@@ -31,7 +31,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Schumix.Installer.Exceptions
+namespace Schumix.Config.Exceptions
 {
 	[Serializable]
 	class OptionException : Exception

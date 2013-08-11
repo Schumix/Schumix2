@@ -21,7 +21,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Schumix.Installer.Exceptions
+namespace Schumix.Config.Exceptions
 {
 	/// <summary>
 	/// Represents errors that occur while creating a singleton.

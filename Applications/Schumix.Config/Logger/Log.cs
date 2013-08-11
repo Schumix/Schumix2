@@ -106,9 +106,9 @@ namespace Schumix.Config.Logger
 			var file = new StreamWriter(logfile, true) { AutoFlush = true };
 
 			if(!isfile)
-				file.Write(sLConsole.GetString("Started time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
+				file.Write("Started time: [{0}]\n", time.ToString("yyyy. MM. dd. HH:mm:ss"));
 			else
-				file.Write(sLConsole.GetString("\nStarted time: [{0}]\n"), time.ToString("yyyy. MM. dd. HH:mm:ss"));
+				file.Write("\nStarted time: [{0}]\n", time.ToString("yyyy. MM. dd. HH:mm:ss"));
 				
 			file.Close();
 		}
