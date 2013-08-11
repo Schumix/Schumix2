@@ -153,6 +153,7 @@
     <Compile Include="Listener\Host.cs" />
     <Compile Include="Listener\ListenerPacket.cs" />
     <Compile Include="Extensions\ConvertExtensions.cs" />
+    <Compile Include="Folders.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

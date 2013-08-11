@@ -194,7 +194,8 @@ FILES = \
 	Network/SchumixPacket.cs \
 	Listener/Host.cs \
 	Listener/ListenerPacket.cs \
-	Extensions/ConvertExtensions.cs 
+	Extensions/ConvertExtensions.cs \
+	Folders.cs 
 
 DATA_FILES = 
 

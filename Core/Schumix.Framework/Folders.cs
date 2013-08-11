@@ -21,7 +21,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Schumix.Config.CopyTo
+namespace Schumix.Framework
 {
 	class Folders
 	{
