@@ -45,6 +45,9 @@ namespace Schumix.Config
 			string dumpsdir = "Dumps";
 			string logsdir = "Logs";
 			int loglevel = 3;
+			string schumix2dir = "Schumix2";
+			string addonsdir = "Addons";
+			string configdir = "Configs";
 			Console.BackgroundColor = ConsoleColor.Black;
 			Console.ForegroundColor = ConsoleColor.Gray;
 
@@ -55,6 +58,9 @@ namespace Schumix.Config
 				{ "dumps-dir=", "Set up the dumps folder's path and name.", v => dumpsdir = v },
 				{ "logs-dir=", "Set up the logs folder's path and name.", v => dumpsdir = v },
 				{ "loglevel=", "Log level's setting.", v => loglevel = v.ToInt32() },
+				{ "schumix2-dir=", "Set up the Schumix2 folder's path and name.", v => schumix2dir = v },
+				{ "addons-dir=", "Set up the addons folder's path and name.", v => addonsdir = v },
+				{ "config-dir=", "Set up the config folder's path and name.", v => configdir = v },
 			};
 
 			try
@@ -104,7 +110,8 @@ namespace Schumix.Config
 				Shutdown();
 			};
 
-			new ConfigBase();
+			var cbase = new ConfigBase();
+			cbase.Clean(schumix2dir, addonsdir, configdir);
 		}
 
 		/// <summary>

@@ -29,20 +29,17 @@ namespace Schumix.Config
 	{
 		public ConfigBase()
 		{
-			try
-			{
-				//new Copy(args[0], args[1], args[2]);
-				//new DirectoryClean(args[0]);
-			}
-			catch(Exception e)
-			{
-				Console.WriteLine(e);
-			}
 		}
 
 		~ConfigBase()
 		{
 			Log.Debug("ConfigBase", "~ConfigBase()");
+		}
+
+		public void Clean(string Schumix2Dir, string AddonsDir, string ConfigDir)
+		{
+			new Copy(Schumix2Dir, AddonsDir, ConfigDir);
+			new DirectoryClean(Schumix2Dir);
 		}
 	}
 }

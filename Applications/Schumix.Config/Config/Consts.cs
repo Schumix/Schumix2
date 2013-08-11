@@ -34,8 +34,8 @@ namespace Schumix.Config.Config
 		public const string ConfigProduct = "Schumix";
 		public const string ConfigCopyright = "Copyright (C) 2013 Schumix Team <http://schumix.eu/>";
 		public const string ConfigTrademark = "GNU General Public License";
-		public const string ConfigVersion = "0.4.0";
-		public const string ConfigFileVersion = "0.4.0.0";
+		public const string ConfigVersion = "0.4.4";
+		public const string ConfigFileVersion = "0.4.4.0";
 		public const string ConfigProgrammedBy = "Csaba Jakosa (Megax)";
 		public const string ConfigWebsite = "https://github.com/Schumix/Schumix2";
 	}
