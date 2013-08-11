@@ -41,10 +41,12 @@ namespace Schumix.Config
 
 		public void Clean(string Schumix2Dir, string AddonsDir, string ConfigDir)
 		{
+			Log.Notice("ConfigBase", "Copy new files.");
 			new Copy(Schumix2Dir, AddonsDir, ConfigDir);
 
 			if(Directory.Exists(Schumix2Dir))
 			{
+				Log.Notice("ConfigBase", "Clean directorys.");
 				sUtilities.ClearAttributes(Schumix2Dir);
 				Directory.Delete(Schumix2Dir, true);
 			}
