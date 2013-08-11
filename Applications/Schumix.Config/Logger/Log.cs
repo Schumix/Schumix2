@@ -82,7 +82,7 @@ namespace Schumix.Config.Logger
 
 		public static void Initialize()
 		{
-			Initialize("Installer.log");
+			Initialize("Config.log");
 		}
 
 		public static void Initialize(string FileName)
