@@ -42,6 +42,18 @@
     <Compile Include="Platforms\Platform.cs" />
     <Compile Include="Platforms\PlatformType.cs" />
     <Compile Include="Extensions\GeneralExtensions.cs" />
+    <Compile Include="Options\ActionOption.cs" />
+    <Compile Include="Options\ArgumentEnumerator.cs" />
+    <Compile Include="Options\ArgumentSource.cs" />
+    <Compile Include="Options\Category.cs" />
+    <Compile Include="Options\Option.cs" />
+    <Compile Include="Options\OptionContext.cs" />
+    <Compile Include="Options\OptionDelegate.cs" />
+    <Compile Include="Options\OptionSet.cs" />
+    <Compile Include="Options\OptionValueCollection.cs" />
+    <Compile Include="Options\OptionValueType.cs" />
+    <Compile Include="Options\ResponseFileSource.cs" />
+    <Compile Include="Options\StringCoda.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

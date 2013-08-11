@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 namespace Schumix.Installer.Extensions
 {
-	public static class ArrayExtensions
+	static class ArrayExtensions
 	{
 		public static string SplitToString(this string[] split, char c)
 		{
