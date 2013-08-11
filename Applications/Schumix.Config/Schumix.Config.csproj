@@ -64,6 +64,7 @@
     <Compile Include="Runtime.cs" />
     <Compile Include="CrashDumper.cs" />
     <Compile Include="ConfigBase.cs" />
+    <Compile Include="Extensions\ConvertExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
