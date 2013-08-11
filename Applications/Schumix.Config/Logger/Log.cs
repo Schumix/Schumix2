@@ -22,14 +22,12 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
-using Schumix.Installer.Extensions;
-using Schumix.Installer.Localization;
+using Schumix.Config.Extensions;
 
-namespace Schumix.Installer.Logger
+namespace Schumix.Config.Logger
 {
 	sealed class Log
 	{
-		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private static readonly object WriteLock = new object();
 		private static string _Directory;

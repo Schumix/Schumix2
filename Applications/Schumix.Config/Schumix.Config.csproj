@@ -58,6 +58,7 @@
     <Compile Include="Exceptions\OptionException.cs" />
     <Compile Include="Exceptions\SingletonException.cs" />
     <Compile Include="Exceptions\ConfigException.cs" />
+    <Compile Include="Logger\Log.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
