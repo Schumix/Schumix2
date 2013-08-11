@@ -27,11 +27,15 @@ namespace Schumix.Config
 {
 	class MainClass
 	{
+		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
+
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
 		/// </summary>
 		public static void Main(string[] args)
 		{
+			sRuntime.SetProcessName("Installer");
+
 			try
 			{
 				new Copy(args[0], args[1], args[2]);
