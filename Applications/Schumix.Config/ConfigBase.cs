@@ -19,24 +19,30 @@
  */
 
 using System;
+using Schumix.Config.Clean;
+using Schumix.Config.Logger;
+using Schumix.Config.CopyTo;
 
-namespace Schumix.Config.Config
+namespace Schumix.Config
 {
-	static class Consts
+	sealed class ConfigBase
 	{
-		public const string ConfigDescription = "Schumix2 IRC Bot and Framework";
-#if DEBUG
-		public const string ConfigConfiguration = "Debug";
-#else
-		public const string ConfigConfiguration = "Release";
-#endif
-		public const string ConfigCompany = "Schumix Productions";
-		public const string ConfigProduct = "Schumix";
-		public const string ConfigCopyright = "Copyright (C) 2013 Schumix Team <http://schumix.eu/>";
-		public const string ConfigTrademark = "GNU General Public License";
-		public const string ConfigVersion = "0.4.0";
-		public const string ConfigFileVersion = "0.4.0.0";
-		public const string ConfigProgrammedBy = "Csaba Jakosa (Megax)";
-		public const string ConfigWebsite = "https://github.com/Schumix/Schumix2";
+		public ConfigBase()
+		{
+			try
+			{
+				//new Copy(args[0], args[1], args[2]);
+				//new DirectoryClean(args[0]);
+			}
+			catch(Exception e)
+			{
+				Console.WriteLine(e);
+			}
+		}
+
+		~ConfigBase()
+		{
+			Log.Debug("ConfigBase", "~ConfigBase()");
+		}
 	}
 }

@@ -63,6 +63,7 @@
     <Compile Include="Config\Consts.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="CrashDumper.cs" />
+    <Compile Include="ConfigBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
