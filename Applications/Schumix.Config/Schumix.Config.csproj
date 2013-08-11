@@ -39,6 +39,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Clean\DirectoryClean.cs" />
     <Compile Include="CopyTo\Copy.cs" />
+    <Compile Include="Platforms\Platform.cs" />
+    <Compile Include="Platforms\PlatformType.cs" />
+    <Compile Include="Extensions\GeneralExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

@@ -20,9 +20,9 @@
 
 using System;
 using System.IO;
-using Schumix.Installer.Extensions;
+using Schumix.Config.Extensions;
 
-namespace Schumix.Installer.Platforms
+namespace Schumix.Config.Platforms
 {
 	sealed class Platform
 	{
