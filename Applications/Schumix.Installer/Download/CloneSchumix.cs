@@ -52,7 +52,7 @@ namespace Schumix.Installer.Download
 			cmd.SetDirectory(path);
 			cmd.SetCloneSubmodules(true);
 			cmd.Call();
-			//Console.WriteLine();
+			Console.WriteLine();
 		}
 	}
 }

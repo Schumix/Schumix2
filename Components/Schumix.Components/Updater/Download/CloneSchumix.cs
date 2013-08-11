@@ -53,7 +53,7 @@ namespace Schumix.Components.Updater.Download
 			cmd.SetDirectory(path);
 			cmd.SetCloneSubmodules(true);
 			cmd.Call();
-			//Console.WriteLine();
+			Console.WriteLine();
 		}
 	}
 }
