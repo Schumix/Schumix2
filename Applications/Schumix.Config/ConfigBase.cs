@@ -19,7 +19,7 @@
  */
 
 using System;
-using Schumix.Config.Clean;
+using System.IO;
 using Schumix.Config.Logger;
 using Schumix.Config.CopyTo;
 
@@ -27,8 +27,11 @@ namespace Schumix.Config
 {
 	sealed class ConfigBase
 	{
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
 		public ConfigBase()
 		{
+			Log.Notice("ConfigBase", "Config started.");
 		}
 
 		~ConfigBase()
@@ -39,7 +42,12 @@ namespace Schumix.Config
 		public void Clean(string Schumix2Dir, string AddonsDir, string ConfigDir)
 		{
 			new Copy(Schumix2Dir, AddonsDir, ConfigDir);
-			new DirectoryClean(Schumix2Dir);
+
+			if(Directory.Exists(Schumix2Dir))
+			{
+				sUtilities.ClearAttributes(Schumix2Dir);
+				Directory.Delete(Schumix2Dir, true);
+			}
 		}
 	}
 }
