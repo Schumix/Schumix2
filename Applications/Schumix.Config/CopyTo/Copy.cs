@@ -104,8 +104,6 @@ namespace Schumix.Config.CopyTo
 					stack.Push(new Folders(folder, Path.Combine(folders.Target, Path.GetFileName(folder))));
 				}
 			}
-
-			//Directory.Delete(source, true);
 		}
 	}
 }
