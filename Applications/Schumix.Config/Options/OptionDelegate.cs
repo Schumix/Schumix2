@@ -30,7 +30,7 @@
 
 using System;
 
-namespace Schumix.Installer.Options
+namespace Schumix.Config.Options
 {
 	public delegate void OptionAction<TKey, TValue>(TKey key, TValue value);
 }

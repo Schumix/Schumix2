@@ -32,7 +32,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace Schumix.Installer.Options
+namespace Schumix.Config.Options
 {
 	class ArgumentEnumerator : IEnumerable<string>
 	{

@@ -35,10 +35,10 @@
 using System;
 using System.ComponentModel;
 using System.Collections.Generic;
-using Schumix.Installer.Exceptions;
-using Schumix.Installer.Extensions;
+using Schumix.Config.Exceptions;
+using Schumix.Config.Extensions;
 
-namespace Schumix.Installer.Options
+namespace Schumix.Config.Options
 {
 	public abstract class Option
 	{

@@ -31,7 +31,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Schumix.Installer.Options
+namespace Schumix.Config.Options
 {
 	public class ResponseFileSource : ArgumentSource
 	{

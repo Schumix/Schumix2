@@ -32,10 +32,10 @@
 
 using System;
 using System.Collections.Generic;
-using Schumix.Installer;
-using Schumix.Installer.Extensions;
+using Schumix.Config;
+using Schumix.Config.Extensions;
 
-namespace Schumix.Installer.Options
+namespace Schumix.Config.Options
 {
 	static class StringCoda
 	{

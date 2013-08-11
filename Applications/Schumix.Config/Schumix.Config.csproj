@@ -54,6 +54,7 @@
     <Compile Include="Options\OptionValueType.cs" />
     <Compile Include="Options\ResponseFileSource.cs" />
     <Compile Include="Options\StringCoda.cs" />
+    <Compile Include="Singleton.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

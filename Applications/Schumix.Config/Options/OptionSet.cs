@@ -39,10 +39,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Schumix.Installer.Exceptions;
-using Schumix.Installer.Extensions;
+using Schumix.Config.Exceptions;
+using Schumix.Config.Extensions;
 
-namespace Schumix.Installer.Options
+namespace Schumix.Config.Options
 {
 	public class OptionSet : KeyedCollection<string, Option>
 	{

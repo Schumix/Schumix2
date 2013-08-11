@@ -31,9 +31,9 @@
  */
 
 using System;
-using Schumix.Installer.Extensions;
+using Schumix.Config.Extensions;
 
-namespace Schumix.Installer.Options
+namespace Schumix.Config.Options
 {
 	sealed class ActionOption : Option
 	{
