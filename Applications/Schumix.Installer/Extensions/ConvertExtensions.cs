@@ -22,7 +22,7 @@ using System;
 
 namespace Schumix.Installer.Extensions
 {
-	static class ConvertExtensions
+	public static class ConvertExtensions
 	{
 		public static double ToNumber(this string value)
 		{
