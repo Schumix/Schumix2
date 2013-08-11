@@ -55,6 +55,9 @@
     <Compile Include="Options\ResponseFileSource.cs" />
     <Compile Include="Options\StringCoda.cs" />
     <Compile Include="Singleton.cs" />
+    <Compile Include="Exceptions\OptionException.cs" />
+    <Compile Include="Exceptions\SingletonException.cs" />
+    <Compile Include="Exceptions\ConfigException.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
