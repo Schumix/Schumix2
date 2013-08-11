@@ -19,24 +19,20 @@
  */
 
 using System;
+using System.IO;
+using System.Collections.Generic;
 
-namespace Schumix.Config.Config
+namespace Schumix.Config.CopyTo
 {
-	static class Consts
+	class Folders
 	{
-		public const string ConfigDescription = "Schumix2 IRC Bot and Framework";
-#if DEBUG
-		public const string ConfigConfiguration = "Debug";
-#else
-		public const string ConfigConfiguration = "Release";
-#endif
-		public const string ConfigCompany = "Schumix Productions";
-		public const string ConfigProduct = "Schumix";
-		public const string ConfigCopyright = "Copyright (C) 2013 Schumix Team <http://schumix.eu/>";
-		public const string ConfigTrademark = "GNU General Public License";
-		public const string ConfigVersion = "0.5.0";
-		public const string ConfigFileVersion = "0.5.0.0";
-		public const string ConfigProgrammedBy = "Csaba Jakosa (Megax)";
-		public const string ConfigWebsite = "https://github.com/Schumix/Schumix2";
+		public string Source { get; private set; }
+		public string Target { get; private set; }
+
+		public Folders(string source, string target)
+		{
+			Source = source;
+			Target = target;
+		}
 	}
 }

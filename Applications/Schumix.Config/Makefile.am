@@ -73,7 +73,8 @@ FILES = \
 	Options/StringCoda.cs \
 	Platforms/Platform.cs \
 	Platforms/PlatformType.cs \
-	Properties/AssemblyInfo.cs 
+	Properties/AssemblyInfo.cs \
+	CopyTo/Folders.cs 
 
 DATA_FILES = 
 

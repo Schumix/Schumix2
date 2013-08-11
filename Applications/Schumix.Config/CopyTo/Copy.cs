@@ -20,11 +20,14 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace Schumix.Config.CopyTo
 {
 	sealed class Copy
 	{
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+
 		/// <summary>
 		///     Több helyről átmásolja az új fájlokat.
 		/// </summary>
@@ -60,10 +63,10 @@ namespace Schumix.Config.CopyTo
 			}
 
 			if(Directory.Exists(ndir + "/Scripts"))
-				Directory.Move(ndir + "/Scripts", "Scripts");
+				CopyDirectory(ndir + "/Scripts", "Scripts");
 			
 			if(Directory.Exists(Dir + "/locale"))
-				Directory.Move(Dir + "/locale", "locale");
+				CopyDirectory(Dir + "/locale", "locale");
 
 			dir = new DirectoryInfo(Configs);
 
@@ -74,6 +77,35 @@ namespace Schumix.Config.CopyTo
 
 				File.Move("Configs/" + fi.Name, Configs + "/_" + fi.Name);
 			}
+		}
+
+		public void CopyDirectory(string source, string target)
+		{
+			var stack = new Stack<Folders>();
+			stack.Push(new Folders(source, target));
+
+			while(stack.Count > 0)
+			{
+				var folders = stack.Pop();
+				sUtilities.CreateDirectory(folders.Target);
+
+				foreach(var file in Directory.GetFiles(folders.Source, "*.*"))
+				{
+					string targetFile = Path.Combine(folders.Target, Path.GetFileName(file));
+
+					if(File.Exists(targetFile))
+						File.Delete(targetFile);
+
+					File.Move(file, targetFile);
+				}
+
+				foreach(var folder in Directory.GetDirectories(folders.Source))
+				{
+					stack.Push(new Folders(folder, Path.Combine(folders.Target, Path.GetFileName(folder))));
+				}
+			}
+
+			//Directory.Delete(source, true);
 		}
 	}
 }

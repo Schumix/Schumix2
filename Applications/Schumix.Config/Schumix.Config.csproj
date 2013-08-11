@@ -64,6 +64,7 @@
     <Compile Include="Platforms\Platform.cs" />
     <Compile Include="Platforms\PlatformType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="CopyTo\Folders.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
