@@ -60,6 +60,7 @@
     <Compile Include="Exceptions\ConfigException.cs" />
     <Compile Include="Logger\Log.cs" />
     <Compile Include="Utilities.cs" />
+    <Compile Include="Config\Consts.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />

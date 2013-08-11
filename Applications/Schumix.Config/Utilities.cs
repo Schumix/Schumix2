@@ -34,8 +34,7 @@ namespace Schumix.Config
 
 		public string GetVersion()
 		{
-			return "";
-			//return Schumix.Installer.Config.Consts.InstallerVersion;
+			return Schumix.Config.Config.Consts.ConfigVersion;
 		}
 
 		public void CreateDirectory(string Name)
