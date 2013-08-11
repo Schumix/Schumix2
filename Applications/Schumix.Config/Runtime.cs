@@ -32,7 +32,6 @@ namespace Schumix.Config
 	sealed class Runtime
 	{
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
-
 		private Runtime() {}
 
 		public long MemorySize
