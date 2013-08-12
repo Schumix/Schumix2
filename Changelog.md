@@ -2,6 +2,7 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * MySql konfig beállításaihoz hozzáadva a Port beállításának lehetősége.
  * Config teljesen felújítve.
  * Nick váltás is a magban lévő információk alapján fel lett gyorsítva.
  * Online parancshoz felhasználva a magban tárolt csatornák információs állománya így gyorsítótárhoz hasonlóan gyorsabban lehet az adott neveket leellenőrizni ha éppen fent van az adott csatornák egyikén. Ha nincs akkor a szokás módon megy.

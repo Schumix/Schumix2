@@ -74,6 +74,7 @@ Ha több szerverre szeretnék felkapcsolódni vagy egyre többször akkor az eg�
 
 * **Enabled:** Értéke `true` vagy `false` lehet. Meghatározza, hogy mysql alapú-e az adatbázis. Alapértelmezés: `false`
 * **Host:** A mysql szerver címe.
+* **Port:** A mysql szerver portja. Alapértelmezés: `3306`
 * **User:** A szerver felhasználó neve.
 * **Password:** A szerver jelszava.
 * **Database:** Az adatbázis, amiben megtalálhatók a bothoz tartozó táblák.

@@ -365,12 +365,13 @@ namespace Schumix.Framework.Config
 		{
 			bool Enabled = (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString().ToBoolean() : d_mysqlenabled;
 			string Host = (!nodes.IsNull() && nodes.ContainsKey("Host")) ? nodes["Host".ToYamlNode()].ToString() : d_mysqlhost;
+			int Port = (!nodes.IsNull() && nodes.ContainsKey("Port")) ? nodes["Port".ToYamlNode()].ToString().ToInt32() : d_mysqlport;
 			string User = (!nodes.IsNull() && nodes.ContainsKey("User")) ? nodes["User".ToYamlNode()].ToString() : d_mysqluser;
 			string Password = (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_mysqlpassword;
 			string Database = (!nodes.IsNull() && nodes.ContainsKey("Database")) ? nodes["Database".ToYamlNode()].ToString() : d_mysqldatabase;
 			string Charset = (!nodes.IsNull() && nodes.ContainsKey("Charset")) ? nodes["Charset".ToYamlNode()].ToString() : d_mysqlcharset;
 
-			new MySqlConfig(Enabled, Host, User, Password, Database, Charset);
+			new MySqlConfig(Enabled, Host, Port, User, Password, Database, Charset);
 		}
 
 		private void SQLiteMap(IDictionary<YamlNode, YamlNode> nodes)
@@ -620,6 +621,7 @@ namespace Schumix.Framework.Config
 			var map = new YamlMappingNode();
 			map.Add("Enabled",  (!nodes.IsNull() && nodes.ContainsKey("Enabled")) ? nodes["Enabled".ToYamlNode()].ToString() : d_mysqlenabled.ToString());
 			map.Add("Host",     (!nodes.IsNull() && nodes.ContainsKey("Host")) ? nodes["Host".ToYamlNode()].ToString() : d_mysqlhost);
+			map.Add("Port",     (!nodes.IsNull() && nodes.ContainsKey("Port")) ? nodes["Port".ToYamlNode()].ToString() : d_mysqlport.ToString());
 			map.Add("User",     (!nodes.IsNull() && nodes.ContainsKey("User")) ? nodes["User".ToYamlNode()].ToString() : d_mysqluser);
 			map.Add("Password", (!nodes.IsNull() && nodes.ContainsKey("Password")) ? nodes["Password".ToYamlNode()].ToString() : d_mysqlpassword);
 			map.Add("Database", (!nodes.IsNull() && nodes.ContainsKey("Database")) ? nodes["Database".ToYamlNode()].ToString() : d_mysqldatabase);

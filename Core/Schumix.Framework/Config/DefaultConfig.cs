@@ -65,6 +65,7 @@ namespace Schumix.Framework.Config
 		protected const string d_messagetype           = "Privmsg";
 		protected const bool d_mysqlenabled            = false;
 		protected const string d_mysqlhost             = "localhost";
+		protected const int d_mysqlport                = 3306;
 		protected const string d_mysqluser             = "root";
 		protected const string d_mysqlpassword         = "password";
 		protected const string d_mysqldatabase         = "database";

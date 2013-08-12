@@ -57,6 +57,7 @@
     <MySql>
         <Enabled>False</Enabled>
         <Host>localhost</Host>
+        <Port>3306</Port>
         <User>root</User>
         <Password>password</Password>
         <Database>database</Database>

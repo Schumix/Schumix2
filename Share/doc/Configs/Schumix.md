@@ -73,6 +73,7 @@ If you want to connect to more Irc Servers or create multiple connections to the
 
 * **Enabled:** `true` or `false`. Specifies that the Database is MySql based. Default: `false`
 * **Host:** Address of the MySql server.
+* **Port:** Port of the MySql server. Default: `3306`
 * **User:** Username of the server.
 * **Password:** The server's password.
 * **Database:** The Database that contains the tables for the Bot.

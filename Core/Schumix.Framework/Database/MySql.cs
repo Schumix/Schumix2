@@ -47,19 +47,34 @@ namespace Schumix.Framework.Database
 			// None
 		}
 
-		public MySql(string host, string username, string password) : this(host, username, password, "Schumix2", "utf8")
+		public MySql(string host, string username, string password) : this(host, 3306, username, password, "Schumix2")
 		{
 			// None
 		}
 
-		public MySql(string host, string username, string password, string database) : this(host, username, password, database, "utf8")
+		public MySql(string host, int port, string username, string password) : this(host, port, username, password, "Schumix2")
 		{
 			// None
 		}
 
-		public MySql(string host, string username, string password, string database, string charset)
+		public MySql(string host, string username, string password, string database) : this(host, 3306, username, password, database, "utf8")
 		{
-			if(!Initialize(host, username, password, database, charset))
+			// None
+		}
+
+		public MySql(string host, int port, string username, string password, string database) : this(host, port, username, password, database, "utf8")
+		{
+			// None
+		}
+
+		public MySql(string host, string username, string password, string database, string charset) : this(host, 3306, username, password, database, charset)
+		{
+			// None
+		}
+
+		public MySql(string host, int port, string username, string password, string database, string charset)
+		{
+			if(!Initialize(host, port, username, password, database, charset))
 			{
 				Log.Error("MySql", sLConsole.GetString("Error was handled when tried to connect to the database!"));
 				SchumixBase.ServerDisconnect(false);
@@ -76,14 +91,14 @@ namespace Schumix.Framework.Database
 			Connection.Close();
 		}
 
-		private bool Initialize(string host, string username, string password, string database, string charset)
+		private bool Initialize(string host, int port, string username, string password, string database, string charset)
 		{
 			try
 			{
 #if DEBUG
 				_debuglog = new DebugLog("MySql.log");
 #endif
-				Connection = new MySqlConnection(string.Format("SERVER={0};DATABASE={1};UID={2};PWD={3};charset={4};", host, database, username, password, charset));
+				Connection = new MySqlConnection(string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};CharSet={5};", host, port, database, username, password, charset));
 				Connection.Open();
 				return true;
 			}
