@@ -71,7 +71,7 @@ namespace Schumix.Framework.Logger
 
 				var time = DateTime.Now;
 				var file = new StreamWriter(filename, true) { AutoFlush = true };
-				file.Write("{0} {1} {2}", time.ToString("yyyy. MM. dd."), GetTime(), log);
+				file.WriteLine("{0} {1} {2}", time.ToString("yyyy. MM. dd."), GetTime(), log);
 				file.Close();
 			}
 		}
@@ -255,7 +255,7 @@ namespace Schumix.Framework.Logger
 				Console.Write(" N {0}: ", source);
 				Console.ForegroundColor = ConsoleColor.Gray;
 				Console.Write("{0}\n", format);
-				LogInFile("N {0}: {1}\n", source, format);
+				LogInFile("N {0}: {1}", source, format);
 			}
 		}
 
@@ -295,7 +295,7 @@ namespace Schumix.Framework.Logger
 				Console.ForegroundColor = ConsoleColor.Green;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogInFile("S {0}: {1}\n", source, format);
+				LogInFile("S {0}: {1}", source, format);
 			}
 		}
 
@@ -338,7 +338,7 @@ namespace Schumix.Framework.Logger
 				Console.ForegroundColor = ConsoleColor.Yellow;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogInFile("W {0}: {1}\n", source, format);
+				LogInFile("W {0}: {1}", source, format);
 			}
 		}
 
@@ -381,7 +381,7 @@ namespace Schumix.Framework.Logger
 				Console.ForegroundColor = ConsoleColor.Red;
 				Console.Error.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogInFile("E {0}: {1}\n", source, format);
+				LogInFile("E {0}: {1}", source, format);
 			}
 		}
 
@@ -424,7 +424,7 @@ namespace Schumix.Framework.Logger
 				Console.ForegroundColor = ConsoleColor.Blue;
 				Console.Write("{0}\n", format);
 				Console.ForegroundColor = ConsoleColor.Gray;
-				LogInFile("D {0}: {1}\n", source, format);
+				LogInFile("D {0}: {1}", source, format);
 			}
 		}
 
@@ -627,7 +627,7 @@ namespace Schumix.Framework.Logger
 					Console.Write("{0}\n", format);
 				}
 
-				LogInFile("{0} {1}: {2}\n", GetTypeCharacter(type), source, format);
+				LogInFile("{0} {1}: {2}", GetTypeCharacter(type), source, format);
 			}
 		}
 
@@ -684,10 +684,7 @@ namespace Schumix.Framework.Logger
 				else
 					Console.WriteLine("{0} {1}", GetTime(), message);
 
-				if(message.IsNullOrEmpty())
-					LogInFile("{0}\n", message);
-				else
-					LogInFile(message);
+				LogInFile(message);
 			}
 		}
 

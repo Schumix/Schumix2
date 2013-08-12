@@ -143,7 +143,7 @@ namespace Schumix.Irc
 
 				Log.SetForegroundColor(ConsoleColor.Yellow);
 				Log.Write("{0}\n", sIRCMessage.Args);
-				Log.LogInFile("{0}{1}\n", sIRCMessage.Nick.IsServ() ? sLConsole.GetString("[SERVER] ") : string.Format("[{0}] ", sIRCMessage.Nick), sIRCMessage.Args);
+				Log.LogInFile("{0}{1}", sIRCMessage.Nick.IsServ() ? sLConsole.GetString("[SERVER] ") : string.Format("[{0}] ", sIRCMessage.Nick), sIRCMessage.Args);
 				Log.SetForegroundColor(ConsoleColor.Gray);
 			}
 
