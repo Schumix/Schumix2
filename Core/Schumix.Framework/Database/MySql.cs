@@ -42,6 +42,21 @@ namespace Schumix.Framework.Database
 		private DebugLog _debuglog;
 #endif
 
+		public MySql(string username, string password) : this("localhost", username, password)
+		{
+			// None
+		}
+
+		public MySql(string host, string username, string password) : this(host, username, password, "Schumix2", "utf8")
+		{
+			// None
+		}
+
+		public MySql(string host, string username, string password, string database) : this(host, username, password, database, "utf8")
+		{
+			// None
+		}
+
 		public MySql(string host, string username, string password, string database, string charset)
 		{
 			if(!Initialize(host, username, password, database, charset))
