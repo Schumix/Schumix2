@@ -89,6 +89,10 @@ namespace Schumix.Console
 				while(true)
 				{
 					message = System.Console.ReadLine();
+
+					if(!message.IsNull())
+						Log.LogInFile(sLConsole.GetString("Console input: {0}"), message);
+
 					if(message.IsNull() || CCManager.CIncomingInfo(message))
 						continue;
 

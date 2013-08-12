@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-10 17:50:42+0200\n"
+"POT-Creation-Date: 2013-08-12 12:30:00+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -54,7 +54,7 @@ msgstr "Összes Command handler törlésre került."
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
 #: ../Applications/Schumix/Schumix.cs:5
-#: ../Applications/Schumix/Console/Console.cs:7
+#: ../Applications/Schumix/Console/Console.cs:9
 #: ../Applications/Schumix/Console/CommandManager.cs:14
 #: ../Applications/Schumix.Server/Config/Config.cs:6
 #: ../Applications/Schumix.Server/New/Schumix.cs:16
@@ -429,14 +429,14 @@ msgstr "Irc modul újraindítása!"
 
 #: ../Core/Schumix.Irc/IrcBase.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:4
-#: ../Core/Schumix.Framework/Database/SQLite.cs:15
-#: ../Core/Schumix.Framework/Database/SQLite.cs:18
-#: ../Core/Schumix.Framework/Database/SQLite.cs:21
-#: ../Core/Schumix.Framework/Database/MySql.cs:15
-#: ../Core/Schumix.Framework/Database/MySql.cs:16
-#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:16
+#: ../Core/Schumix.Framework/Database/SQLite.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:21
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Database/MySql.cs:28
+#: ../Core/Schumix.Framework/Database/MySql.cs:31
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
@@ -541,24 +541,24 @@ msgstr ""
 "A megadott mester csatorna már létezik egyszer az adatbázisban így az "
 "alapértelmezett fog lenni a neve!"
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:3
-#: ../Core/Schumix.Framework/Database/MySql.cs:3
+#: ../Core/Schumix.Framework/Database/SQLite.cs:4
+#: ../Core/Schumix.Framework/Database/MySql.cs:9
 msgid "Error was handled when tried to connect to the database!"
 msgstr "Hiba történt az adatbázishoz való kapcsolódás során!"
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:3
+#: ../Core/Schumix.Framework/Database/SQLite.cs:4
 msgid "Successfully connected to the SQLite database."
 msgstr "SQLite adatbázishoz sikeres a kapcsolódás."
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:15
-#: ../Core/Schumix.Framework/Database/SQLite.cs:18
-#: ../Core/Schumix.Framework/Database/SQLite.cs:21
-#: ../Core/Schumix.Framework/Database/SQLite.cs:24
-#: ../Core/Schumix.Framework/Database/MySql.cs:16
-#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:16
+#: ../Core/Schumix.Framework/Database/SQLite.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:22
+#: ../Core/Schumix.Framework/Database/SQLite.cs:25
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
 #: ../Core/Schumix.Framework/Database/MySql.cs:28
+#: ../Core/Schumix.Framework/Database/MySql.cs:31
+#: ../Core/Schumix.Framework/Database/MySql.cs:34
 msgid "Query error: {0}"
 msgstr "Query hiba: {0}"
 
@@ -582,11 +582,11 @@ msgstr "Nincs az adatbázis típusa kiválasztva!"
 msgid "2 Database are selected!"
 msgstr "Két adatbázis van kiválasztva!"
 
-#: ../Core/Schumix.Framework/Database/MySql.cs:3
+#: ../Core/Schumix.Framework/Database/MySql.cs:9
 msgid "Successfully connected to the MySql database."
 msgstr "MySql adatbázishoz sikeres a kapcsolódás."
 
-#: ../Core/Schumix.Framework/Database/MySql.cs:15
+#: ../Core/Schumix.Framework/Database/MySql.cs:21
 msgid "Sql connection crash."
 msgstr "Sql kapcsolat összeomlott."
 
@@ -686,12 +686,12 @@ msgid "The program, more than {0} MB consumed!"
 msgstr "A program több mint {0} mb-ot fogyaszt!"
 
 #: ../Core/Schumix.Framework/Runtime.cs:14
-#: ../Applications/Schumix.Installer/Runtime.cs:7
+#: ../Applications/Schumix.Installer/Runtime.cs:6
 msgid "Failed to set process name: {0}"
 msgstr "Nem sikerült beállítani folyamat nevét: {0}"
 
 #: ../Core/Schumix.Framework/Runtime.cs:17
-#: ../Applications/Schumix.Installer/Runtime.cs:10
+#: ../Applications/Schumix.Installer/Runtime.cs:9
 msgid "Error setting process name!"
 msgstr "Hiba a folyamat nevének beállításában!"
 
@@ -1128,6 +1128,7 @@ msgid "Loaded the ShortUrl settings."
 msgstr "ShortUrl beállításai betöltve."
 
 #: ../Core/Schumix.Framework/Exceptions/OptionException.cs:3
+#: ../Applications/Schumix.Config/Exceptions/OptionException.cs:3
 #: ../Applications/Schumix.Installer/Exceptions/OptionException.cs:3
 msgid "OptionName"
 msgstr ""
@@ -1309,6 +1310,10 @@ msgstr "Console parancs olvasója indul..."
 #: ../Applications/Schumix/Console/Console.cs:5
 msgid "Successfully started the Console reader."
 msgstr "Console parancs olvasó része elindult."
+
+#: ../Applications/Schumix/Console/Console.cs:7
+msgid "Console input: {0}"
+msgstr "Konzol bemenet: {0}"
 
 #: ../Applications/Schumix/Console/CommandManager.cs:3
 msgid "Successfully started the CCommandManager."

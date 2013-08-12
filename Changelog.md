@@ -2,6 +2,7 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * Konzolba írt üzenetek, parancsok logolva lesznek a log fájlba.
  * SetForegroundColor() függvény hibája javítva.
  * Log-nál \n végződés beépítve a LogInFile() függvénybe.
  * MySql szerverhez való kapcsolódás ezentúl ha lehetséges ssl módban fog történni.

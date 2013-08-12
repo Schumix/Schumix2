@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-10 17:50:42+0200\n"
-"PO-Revision-Date: 2013-08-10 17:50:45+0200\n"
+"POT-Creation-Date: 2013-08-12 12:30:00+0200\n"
+"PO-Revision-Date: 2013-08-12 12:30:02+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr ""
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
 #: ../Applications/Schumix/Schumix.cs:5
-#: ../Applications/Schumix/Console/Console.cs:7
+#: ../Applications/Schumix/Console/Console.cs:9
 #: ../Applications/Schumix/Console/CommandManager.cs:14
 #: ../Applications/Schumix.Server/Config/Config.cs:6
 #: ../Applications/Schumix.Server/New/Schumix.cs:16
@@ -425,14 +425,14 @@ msgstr ""
 
 #: ../Core/Schumix.Irc/IrcBase.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:4
-#: ../Core/Schumix.Framework/Database/SQLite.cs:15
-#: ../Core/Schumix.Framework/Database/SQLite.cs:18
-#: ../Core/Schumix.Framework/Database/SQLite.cs:21
-#: ../Core/Schumix.Framework/Database/MySql.cs:15
-#: ../Core/Schumix.Framework/Database/MySql.cs:16
-#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:16
+#: ../Core/Schumix.Framework/Database/SQLite.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:21
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Database/MySql.cs:28
+#: ../Core/Schumix.Framework/Database/MySql.cs:31
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
@@ -535,24 +535,24 @@ msgstr ""
 msgid "The master channel already exist on the database, named by default!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:3
-#: ../Core/Schumix.Framework/Database/MySql.cs:3
+#: ../Core/Schumix.Framework/Database/SQLite.cs:4
+#: ../Core/Schumix.Framework/Database/MySql.cs:9
 msgid "Error was handled when tried to connect to the database!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:3
+#: ../Core/Schumix.Framework/Database/SQLite.cs:4
 msgid "Successfully connected to the SQLite database."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:15
-#: ../Core/Schumix.Framework/Database/SQLite.cs:18
-#: ../Core/Schumix.Framework/Database/SQLite.cs:21
-#: ../Core/Schumix.Framework/Database/SQLite.cs:24
-#: ../Core/Schumix.Framework/Database/MySql.cs:16
-#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:16
+#: ../Core/Schumix.Framework/Database/SQLite.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:22
+#: ../Core/Schumix.Framework/Database/SQLite.cs:25
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
 #: ../Core/Schumix.Framework/Database/MySql.cs:28
+#: ../Core/Schumix.Framework/Database/MySql.cs:31
+#: ../Core/Schumix.Framework/Database/MySql.cs:34
 msgid "Query error: {0}"
 msgstr ""
 
@@ -576,11 +576,11 @@ msgstr ""
 msgid "2 Database are selected!"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Database/MySql.cs:3
+#: ../Core/Schumix.Framework/Database/MySql.cs:9
 msgid "Successfully connected to the MySql database."
 msgstr ""
 
-#: ../Core/Schumix.Framework/Database/MySql.cs:15
+#: ../Core/Schumix.Framework/Database/MySql.cs:21
 msgid "Sql connection crash."
 msgstr ""
 
@@ -680,12 +680,12 @@ msgid "The program, more than {0} MB consumed!"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Runtime.cs:14
-#: ../Applications/Schumix.Installer/Runtime.cs:7
+#: ../Applications/Schumix.Installer/Runtime.cs:6
 msgid "Failed to set process name: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Runtime.cs:17
-#: ../Applications/Schumix.Installer/Runtime.cs:10
+#: ../Applications/Schumix.Installer/Runtime.cs:9
 msgid "Error setting process name!"
 msgstr ""
 
@@ -1112,6 +1112,7 @@ msgid "Loaded the ShortUrl settings."
 msgstr ""
 
 #: ../Core/Schumix.Framework/Exceptions/OptionException.cs:3
+#: ../Applications/Schumix.Config/Exceptions/OptionException.cs:3
 #: ../Applications/Schumix.Installer/Exceptions/OptionException.cs:3
 msgid "OptionName"
 msgstr ""
@@ -1285,6 +1286,10 @@ msgstr ""
 
 #: ../Applications/Schumix/Console/Console.cs:5
 msgid "Successfully started the Console reader."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Console.cs:7
+msgid "Console input: {0}"
 msgstr ""
 
 #: ../Applications/Schumix/Console/CommandManager.cs:3
