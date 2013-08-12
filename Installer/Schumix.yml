@@ -48,6 +48,7 @@ Schumix:
     MySql:
         Enabled: False
         Host: localhost
+        Port: 3306
         User: root
         Password: password
         Database: database
