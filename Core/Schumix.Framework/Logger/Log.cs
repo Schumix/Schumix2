@@ -110,7 +110,7 @@ namespace Schumix.Framework.Logger
 		public static void SetForegroundColor(ConsoleColor color)
 		{
 			if(!_ColorblindMode)
-				Console.ForegroundColor = ConsoleColor.Gray;
+				Console.ForegroundColor = color;
 		}
 
 		public static void Initialize()
