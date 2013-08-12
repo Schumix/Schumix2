@@ -98,7 +98,7 @@ namespace Schumix.Framework.Database
 #if DEBUG
 				_debuglog = new DebugLog("MySql.log");
 #endif
-				Connection = new MySqlConnection(string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};CharSet={5};", host, port, database, username, password, charset));
+				Connection = new MySqlConnection(string.Format("Server={0};Port={1};Database={2};Uid={3};Pwd={4};CharSet={5};SslMode=Preferred;", host, port, database, username, password, charset));
 				Connection.Open();
 				return true;
 			}

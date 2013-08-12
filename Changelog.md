@@ -2,6 +2,7 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * MySql szerverhez való kapcsolódás ezentúl ha lehetséges ssl módban fog történni.
  * MySql konfig beállításaihoz hozzáadva a Port beállításának lehetősége.
  * Config teljesen felújítve.
  * Nick váltás is a magban lévő információk alapján fel lett gyorsítva.
