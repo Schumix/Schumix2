@@ -45,7 +45,8 @@ namespace Schumix.Installer.Download
 			}
 
 			var cmd = Git.CloneRepository();
-			cmd.SetProgressMonitor(new NGitProgressMonitor());
+			//cmd.SetProgressMonitor(new NGitProgressMonitor());
+			cmd.SetProgressMonitor(new TextProgressMonitor());
 			cmd.SetURI(Url);
 			cmd.SetRemote("origin");
 			cmd.SetBranch("refs/heads/stable");

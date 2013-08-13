@@ -46,7 +46,8 @@ namespace Schumix.Components.Updater.Download
 			}
 
 			var cmd = Git.CloneRepository();
-			cmd.SetProgressMonitor(new NGitProgressMonitor());
+			//cmd.SetProgressMonitor(new NGitProgressMonitor());
+			cmd.SetProgressMonitor(new TextProgressMonitor());
 			cmd.SetURI(Url);
 			cmd.SetRemote("origin");
 			cmd.SetBranch(string.Format("refs/heads/{0}", Branch));
