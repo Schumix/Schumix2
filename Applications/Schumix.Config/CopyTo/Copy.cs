@@ -21,6 +21,7 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using Schumix.Config.Util;
 
 namespace Schumix.Config.CopyTo
 {

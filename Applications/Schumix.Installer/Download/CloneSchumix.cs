@@ -23,6 +23,7 @@ using System.IO;
 using System.Threading;
 using NGit;
 using NGit.Api;
+using Schumix.Installer.Util;
 using Schumix.Installer.Logger;
 using Schumix.Installer.Localization;
 

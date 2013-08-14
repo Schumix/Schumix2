@@ -24,6 +24,7 @@ using System.Threading;
 using NGit;
 using NGit.Api;
 using Schumix.Framework;
+using Schumix.Framework.Util;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Localization;
 

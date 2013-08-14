@@ -57,7 +57,6 @@
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Database\MySql.cs" />
     <Compile Include="Exceptions\SchumixException.cs" />
-    <Compile Include="Utilities.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Localization\LocalizationManager.cs" />
     <Compile Include="Localization\LocalizationConsole.cs" />
@@ -155,7 +154,8 @@
     <Compile Include="Listener\Host.cs" />
     <Compile Include="Listener\ListenerPacket.cs" />
     <Compile Include="Extensions\ConvertExtensions.cs" />
-    <Compile Include="Folders.cs" />
+    <Compile Include="Util\Folders.cs" />
+    <Compile Include="Util\Utilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -192,5 +192,6 @@
     <Folder Include="Options\" />
     <Folder Include="Platforms\" />
     <Folder Include="Logger\" />
+    <Folder Include="Util\" />
   </ItemGroup>
 </Project>

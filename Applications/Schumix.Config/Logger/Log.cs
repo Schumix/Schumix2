@@ -22,6 +22,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using Schumix.Config.Util;
 using Schumix.Config.Extensions;
 
 namespace Schumix.Config.Logger

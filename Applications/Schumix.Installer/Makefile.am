@@ -106,7 +106,6 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES)
 
 FILES = \
 	Main.cs \
-	Utilities.cs \
 	Singleton.cs \
 	Runtime.cs \
 	InstallerBase.cs \
@@ -142,7 +141,8 @@ FILES = \
 	Platforms/PlatformType.cs \
 	Properties/AssemblyInfo.cs \
 	Windows/CtrlType.cs \
-	Windows/Windows.cs 
+	Windows/Windows.cs \
+	Util/Utilities.cs 
 
 DATA_FILES = 
 
@@ -162,6 +162,7 @@ EXTRAS = \
 	Platforms \
 	Properties \
 	Windows \
+	Util \
 	schumix.installer.in 
 
 REFERENCES =  \

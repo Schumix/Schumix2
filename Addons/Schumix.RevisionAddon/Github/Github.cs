@@ -21,6 +21,7 @@
 using System;
 using System.Text;
 using Schumix.Framework;
+using Schumix.Framework.Util;
 using Schumix.RevisionAddon.Githubs.Author;
 using Schumix.RevisionAddon.Githubs.Message;
 

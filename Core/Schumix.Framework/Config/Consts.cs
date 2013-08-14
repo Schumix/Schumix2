@@ -19,6 +19,7 @@
  */
 
 using System;
+using Schumix.Framework.Util;
 
 namespace Schumix.Framework.Config
 {

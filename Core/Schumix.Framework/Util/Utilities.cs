@@ -41,7 +41,7 @@ using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
-namespace Schumix.Framework
+namespace Schumix.Framework.Util
 {
 	public sealed class Utilities
 	{

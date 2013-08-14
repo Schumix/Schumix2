@@ -22,6 +22,7 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Schumix.Installer.Util;
 using Schumix.Installer.Logger;
 using Schumix.Installer.Localization;
 

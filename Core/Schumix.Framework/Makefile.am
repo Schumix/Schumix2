@@ -89,7 +89,6 @@ FILES = \
 	Database/DatabaseManager.cs \
 	Database/MySql.cs \
 	Exceptions/SchumixException.cs \
-	Utilities.cs \
 	Timer.cs \
 	Localization/LocalizationManager.cs \
 	Localization/LocalizationConsole.cs \
@@ -187,7 +186,8 @@ FILES = \
 	Listener/Host.cs \
 	Listener/ListenerPacket.cs \
 	Extensions/ConvertExtensions.cs \
-	Folders.cs 
+	Util/Folders.cs \
+	Util/Utilities.cs 
 
 DATA_FILES = 
 
@@ -202,6 +202,7 @@ EXTRAS = \
 	Options \
 	Platforms \
 	Logger \
+	Util \
 	schumix.framework.pc.in 
 
 REFERENCES =  \

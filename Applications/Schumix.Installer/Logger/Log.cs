@@ -22,6 +22,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using Schumix.Installer.Util;
 using Schumix.Installer.Extensions;
 using Schumix.Installer.Localization;
 

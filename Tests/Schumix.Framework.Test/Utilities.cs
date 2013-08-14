@@ -22,6 +22,7 @@ using System;
 using System.Collections.Generic;
 using NUnit.Framework;
 using Schumix.Framework;
+using Schumix.Framework.Util;
 using Schumix.Framework.Platforms;
 
 namespace Schumix.Framework.Test

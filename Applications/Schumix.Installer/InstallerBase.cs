@@ -24,6 +24,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Diagnostics;
+using Schumix.Installer.Util;
 using Schumix.Installer.CopyTo;
 using Schumix.Installer.Logger;
 using Schumix.Installer.Options;

@@ -24,6 +24,7 @@ using System.Threading.Tasks;
 using System.Collections.Generic;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Util;
 using Schumix.Framework.Addon;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;

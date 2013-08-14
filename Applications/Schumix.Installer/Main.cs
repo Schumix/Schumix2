@@ -21,6 +21,7 @@
 using System;
 using System.Text;
 using System.Globalization;
+using Schumix.Installer.Util;
 using Schumix.Installer.Config;
 using Schumix.Installer.Logger;
 using Schumix.Installer.Options;

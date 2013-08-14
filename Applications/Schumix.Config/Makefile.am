@@ -47,7 +47,6 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES)
 FILES = \
 	Main.cs \
 	Singleton.cs \
-	Utilities.cs \
 	Runtime.cs \
 	CrashDumper.cs \
 	ConfigBase.cs \
@@ -74,7 +73,8 @@ FILES = \
 	Platforms/Platform.cs \
 	Platforms/PlatformType.cs \
 	Properties/AssemblyInfo.cs \
-	CopyTo/Folders.cs 
+	CopyTo/Folders.cs \
+	Util/Utilities.cs 
 
 DATA_FILES = 
 
@@ -89,6 +89,7 @@ EXTRAS = \
 	Options \
 	Platforms \
 	Properties \
+	Util \
 	schumix.config.in 
 
 REFERENCES =  \

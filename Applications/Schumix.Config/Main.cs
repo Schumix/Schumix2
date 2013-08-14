@@ -20,6 +20,7 @@
 
 using System;
 using System.Text;
+using Schumix.Config.Util;
 using Schumix.Config.Config;
 using Schumix.Config.Logger;
 using Schumix.Config.Options;

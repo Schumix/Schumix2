@@ -2,6 +2,8 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * Utilities áthelyezve az Util mappába és névtérbe.
+ * Method és Attribute fájlok áthelyezve.
  * Konzolba írt üzenetek, parancsok logolva lesznek a log fájlba.
  * SetForegroundColor() függvény hibája javítva.
  * Log-nál \n végződés beépítve a LogInFile() függvénybe.

@@ -26,7 +26,7 @@ using System.Web;
 using System.Text;
 using Schumix.Config.Extensions;
 
-namespace Schumix.Config
+namespace Schumix.Config.Util
 {
 	sealed class Utilities
 	{

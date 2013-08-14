@@ -22,6 +22,7 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using Schumix.Config.Util;
 using Schumix.Config.Logger;
 
 namespace Schumix.Config

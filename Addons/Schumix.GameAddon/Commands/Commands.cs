@@ -25,6 +25,7 @@ using Schumix.Irc;
 using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
+using Schumix.Framework.Util;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
