@@ -36,14 +36,14 @@ namespace Schumix.Framework.Logger
 			CLog = log;
 		}
 
-		protected void ChangeLog(bool log)
-		{
-			CLog = log;
-		}
-
 		~ConsoleLog()
 		{
 			Log.Debug("ConsoleLog", "~ConsoleLog()");
+		}
+
+		protected void ChangeLog(bool log)
+		{
+			CLog = log;
 		}
 	}
 }
