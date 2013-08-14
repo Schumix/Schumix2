@@ -28,7 +28,9 @@ using System.Text.RegularExpressions;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Config;
+using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.Irc.Util
 {
@@ -37,6 +39,7 @@ namespace Schumix.Irc.Util
 	/// </summary>
 	public static class Rfc2812Util
 	{
+		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		// Odd chars that IRC allows in nicknames
 		private const string Nick = @"^[" + Special + @"a-zA-Z0-9\-]{0,20}$";
 		private const string User = @"(" + Nick+ @")!([\~\w]+)@([\w\.\-]+)";
@@ -339,6 +342,32 @@ namespace Schumix.Irc.Util
 			}
 			
 			return false;
+		}
+
+		public static bool IsCtcp(string message)
+		{
+			return !message.IsNullOrEmpty() && message.StartsWith("\u0001") && message.EndsWith("\u0001") && !IsAction(message);
+		}
+
+		public static string GetCtcp(string message)
+		{
+			if(!IsCtcp(message))
+				Log.Error("Rfc2812Util", sLConsole.GetString("The message is not a CTCP message."));
+
+			return message.Substring(1).Substring(0, message.Length - 2);
+		}
+
+		public static bool IsAction(string message)
+		{
+			return !message.IsNullOrEmpty() && message.StartsWith("\u0001ACTION") && message.EndsWith("\u0001");
+		}
+
+		public static string GetAction(string message)
+		{
+			if(!IsAction(message))
+				Log.Error("Rfc2812Util", sLConsole.GetString("The message is not an action."));
+
+			return message.Substring(8).Substring(0, message.Length - 9);
 		}
 	}
 }

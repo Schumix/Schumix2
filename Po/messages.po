@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-12 12:30:00+0200\n"
-"PO-Revision-Date: 2013-08-12 12:30:02+0200\n"
+"POT-Creation-Date: 2013-08-14 11:16:58+0200\n"
+"PO-Revision-Date: 2013-08-14 11:17:01+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -42,15 +42,15 @@ msgstr ""
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
 #: ../Core/Schumix.Framework/SchumixBase.cs:16
-#: ../Core/Schumix.Framework/Utilities.cs:25
-#: ../Core/Schumix.Framework/Utilities.cs:98
-#: ../Core/Schumix.Framework/Utilities.cs:116
-#: ../Core/Schumix.Framework/Utilities.cs:129
 #: ../Core/Schumix.Framework/Timer.cs:3
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:12
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
+#: ../Core/Schumix.Framework/Util/Utilities.cs:25
+#: ../Core/Schumix.Framework/Util/Utilities.cs:98
+#: ../Core/Schumix.Framework/Util/Utilities.cs:116
+#: ../Core/Schumix.Framework/Util/Utilities.cs:129
 #: ../Applications/Schumix/Schumix.cs:5
 #: ../Applications/Schumix/Console/Console.cs:9
 #: ../Applications/Schumix/Console/CommandManager.cs:14
@@ -280,7 +280,7 @@ msgstr ""
 msgid "Received unhandled opcode: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Irc/PublicMessageHandler.cs:5
+#: ../Core/Schumix.Irc/PublicMessageHandler.cs:4
 msgid "[ACTION] {0}"
 msgstr ""
 
@@ -485,6 +485,14 @@ msgstr ""
 msgid "Banned channels: {0}"
 msgstr ""
 
+#: ../Core/Schumix.Irc/Util/Rfc2812Util.cs:35
+msgid "The message is not a CTCP message."
+msgstr ""
+
+#: ../Core/Schumix.Irc/Util/Rfc2812Util.cs:38
+msgid "The message is not an action."
+msgstr ""
+
 #: ../Core/Schumix.Framework/Config/Config.cs:4
 #: ../Applications/Schumix.Server/Config/Config.cs:4
 msgid "Please set up the Config file!"
@@ -582,10 +590,6 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Database/MySql.cs:21
 msgid "Sql connection crash."
-msgstr ""
-
-#: ../Core/Schumix.Framework/Utilities.cs:25
-msgid "Checking: {0}"
 msgstr ""
 
 #: ../Core/Schumix.Framework/Timer.cs:3
@@ -1206,6 +1210,10 @@ msgstr ""
 #: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:25
 #: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
 msgid "Auth successful. Guid of client: {0}"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Util/Utilities.cs:25
+msgid "Checking: {0}"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:11

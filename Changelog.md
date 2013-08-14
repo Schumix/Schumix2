@@ -2,6 +2,7 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * CTCP és Action észlelése feljavítva.
  * Utilities áthelyezve az Util mappába és névtérbe.
  * Method és Attribute fájlok áthelyezve.
  * Konzolba írt üzenetek, parancsok logolva lesznek a log fájlba.
