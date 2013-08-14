@@ -119,9 +119,9 @@ namespace Schumix.CompilerAddon.Commands
 				if(!IsClass(data))
 				{
 					if(!IsSchumix(data))
-						template = CompilerConfig.Referenced + " public class " + CompilerConfig.MainClass + " { public void " + CompilerConfig.MainConstructor + "() { " + CleanText(data) + " } }";
+						template = CompilerConfig.Referenced + " class " + CompilerConfig.MainClass + " { public void " + CompilerConfig.MainConstructor + "() { " + CleanText(data) + " } }";
 					else
-						template = CompilerConfig.Referenced + " public class " + CompilerConfig.MainClass + " { " + CleanText(data) + " }";
+						template = CompilerConfig.Referenced + " class " + CompilerConfig.MainClass + " { " + CleanText(data) + " }";
 				}
 				else if(IsEntry(data))
 				{
@@ -232,6 +232,9 @@ namespace Schumix.CompilerAddon.Commands
 			}
 			catch(Exception e)
 			{
+				var sw = new StreamWriter(Console.OpenStandardOutput());
+				sw.AutoFlush = true;
+				Console.SetOut(sw);
 				Log.Debug("CompilerCommand", sLConsole.GetString("Failure details: {0}"), e.Message);
 				return -1;
 			}
