@@ -157,8 +157,7 @@ namespace Schumix.CompilerAddon.Commands
 					}
 					catch(Exception e)
 					{
-						var sw = new StreamWriter(Console.OpenStandardOutput());
-						sw.AutoFlush = true;
+						var sw = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
 						Console.SetOut(sw);
 						Log.Debug("CompilerThread", sLConsole.GetString("Failure details: {0}"), e.Message);
 					}
@@ -235,8 +234,7 @@ namespace Schumix.CompilerAddon.Commands
 			}
 			catch(Exception e)
 			{
-				var sw = new StreamWriter(Console.OpenStandardOutput());
-				sw.AutoFlush = true;
+				var sw = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
 				Console.SetOut(sw);
 				Log.Debug("CompilerCommand", sLConsole.GetString("Failure details: {0}"), e.Message);
 				return -1;
