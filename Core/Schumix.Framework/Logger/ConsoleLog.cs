@@ -26,6 +26,11 @@ namespace Schumix.Framework.Logger
 	{
 		public static bool CLog { get; private set; }
 
+		protected ConsoleLog()
+		{
+			CLog = false;
+		}
+
 		protected ConsoleLog(bool log)
 		{
 			CLog = log;
