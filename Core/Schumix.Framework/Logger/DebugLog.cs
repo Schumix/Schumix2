@@ -25,6 +25,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Logger
 {
+#if DEBUG
 	public sealed class DebugLog
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
@@ -68,4 +69,5 @@ namespace Schumix.Framework.Logger
 			file.Close();
 		}
 	}
+#endif
 }
