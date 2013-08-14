@@ -57,15 +57,13 @@ namespace Schumix.Irc.Ctcp
 
 		public void CtcpReply(IRCMessage sIRCMessage)
 		{
-			string args = sIRCMessage.Args;
-
-			if(!Rfc2812Util.IsCtcp(args))
+			if(!Rfc2812Util.IsCtcp(sIRCMessage.Args))
 				return;
 
 			if(Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				return;
 
-			args = Rfc2812Util.GetCtcp(args);
+			string args = Rfc2812Util.GetCtcp(sIRCMessage.Args);
 			string[] split = args.Split(SchumixBase.Space);
 
 			switch(split[0])
