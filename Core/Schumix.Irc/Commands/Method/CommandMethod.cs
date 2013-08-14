@@ -23,7 +23,7 @@ using System.Reflection;
 using System.Collections.Generic;
 using Schumix.Framework.Delegate;
 
-namespace Schumix.Irc.Commands
+namespace Schumix.Irc.Commands.Method
 {
 	public sealed class CommandMethod
 	{
