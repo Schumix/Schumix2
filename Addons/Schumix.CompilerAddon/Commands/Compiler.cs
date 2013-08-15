@@ -157,6 +157,7 @@ namespace Schumix.CompilerAddon.Commands
 					}
 					catch(Exception e)
 					{
+						ReturnCode = -1;
 						var sw = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
 						Console.SetOut(sw);
 						Log.Debug("CompilerThread", sLConsole.GetString("Failure details: {0}"), e.Message);
