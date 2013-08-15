@@ -36,7 +36,7 @@ namespace WolframAPI
 	[Serializable, CLSCompliant(true)]
 	public sealed class WAPod : IEquatable<string>, IEquatable<WAPod>
 	{
-        private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 
 		/// <summary>
 		///   Gets or sets the pod's title.
