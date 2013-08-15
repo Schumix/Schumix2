@@ -1441,7 +1441,7 @@ msgstr "Nincs betöltendő Schumix!"
 
 #: ../Libraries/WolframAPI/Collections/UniqueList.cs:45
 msgid "The item you tried to add to the UniqueList is null."
-msgstr ""
+msgstr "A cucc amit a uniquelisthez akarták addni az null."
 
 #: ../Libraries/WolframAPI/Collections/UniqueList.cs:48
 msgid "The unique list already contains that element."
@@ -1453,7 +1453,7 @@ msgstr "Az egyedi lista már atrtalmazza ezt az elemet."
 #: ../Libraries/WolframAPI/WAClient.cs:280
 #: ../Libraries/WolframAPI/WAClient.cs:324
 msgid "Cannot evaluate a null string."
-msgstr ""
+msgstr "Nem lehet null stringet értelmezni."
 
 #: ../Libraries/WolframAPI/WAClient.cs:131
 #: ../Libraries/WolframAPI/WAClient.cs:146
@@ -1496,7 +1496,7 @@ msgstr "Kivételt dobott letöltése közben a webcím: {0}"
 
 #: ../Libraries/WolframAPI/WAPod.cs:92
 msgid "This Pod does not possess any subpods."
-msgstr ""
+msgstr "Ez a Pod nem tartalmaz alpodokat."
 
 #: ../Libraries/WolframAPI/XmlSerialized.cs:69
 msgid "Error during serialization"
