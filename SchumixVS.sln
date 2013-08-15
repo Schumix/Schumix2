@@ -43,6 +43,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua", "External\NLua\Co
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterBotAPI", "External\ChatterBotApi\dotnet\ChatterBotAPI\ChatterBotAPI.csproj", "{2E624962-F155-432C-A90A-E1CE75DEE9EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Data.SQLite", "External\CsharpSQLite\System.Data.SQLite\System.Data.SQLite.csproj", "{F1653F20-D47D-4F29-8C55-3C835542AF5F}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NGettext", "External\NGettext\src\NGettext\NGettext.csproj", "{96EED5F5-7E90-4BD8-A822-2D7BFF943E28}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Addons", "Addons", "{AD8E40DF-384D-4FF0-ABA9-91A956F38867}"

@@ -2,6 +2,8 @@
 
 ## 4.3.0 (2013-xx-xx)
 
+ * WolframAPI frissítve. Köszönet érte Twl-nek.
+ * SchumixVS.sln javítva.
  * CTCP és Action észlelése feljavítva.
  * Utilities áthelyezve az Util mappába és névtérbe.
  * Method és Attribute fájlok áthelyezve.

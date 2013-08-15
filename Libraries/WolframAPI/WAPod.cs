@@ -22,10 +22,11 @@
 using System;
 using System.Linq;
 using System.Xml.Serialization;
-using System.Diagnostics.Contracts;
-using WolframAPI.Collections;
-//using Schumix.Framework;
+using Schumix.Framework;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
+using WolframAPI.Exceptions;
+using WolframAPI.Collections;
 
 namespace WolframAPI
 {
@@ -35,7 +36,7 @@ namespace WolframAPI
 	[Serializable, CLSCompliant(true)]
 	public sealed class WAPod : IEquatable<string>, IEquatable<WAPod>
 	{
-		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+        private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 
 		/// <summary>
 		///   Gets or sets the pod's title.
@@ -88,8 +89,8 @@ namespace WolframAPI
 		{
 			get
 			{
-				//if(!sPlatform.IsLinux)
-				//	Contract.Requires(!SubPods.IsNull());
+				if(SubPods.IsNull())
+					throw new WolframException(sLConsole.GetString("This Pod does not possess any subpods."));
 
 				return (from sp in SubPods where sp.Title.ToLower().Equals(name) select sp).FirstOrDefault();
 			}

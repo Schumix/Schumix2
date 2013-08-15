@@ -22,8 +22,8 @@
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using Schumix.Framework;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
 namespace WolframAPI.Collections
@@ -35,7 +35,6 @@ namespace WolframAPI.Collections
 	public sealed class UniqueList<T> : List<T> where T : IEquatable<T>, IEquatable<string>
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		/// Adds the specified item.
@@ -43,9 +42,9 @@ namespace WolframAPI.Collections
 		/// <param name="item">The item.</param>
 		public new void Add(T item)
 		{
-			//if(!sPlatform.IsLinux)
-			//	Contract.Requires(!Equals(item, null));
-            
+			if(item.IsNull())
+				throw new ArgumentNullException("item", sLConsole.GetString("The item you tried to add to the UniqueList is null."));
+ 
 			if(Contains(item) || FindIndex(it => it.Equals(item)) != -1)
 				throw new InvalidOperationException(sLConsole.GetString("The unique list already contains that element."));
 
@@ -60,18 +59,15 @@ namespace WolframAPI.Collections
 		{
 			get
 			{
-				//if(!sPlatform.IsLinux)
-				//	Contract.Requires(!Equals(ind, null));
+				if(ind.IsNull())
+					throw new ArgumentNullException("ind");
 
 				return (from elem in this where elem.Equals(ind) select elem).FirstOrDefault();
 			}
 			set
 			{
-				//if(!sPlatform.IsLinux)
-				//{
-				//	Contract.Requires(!Equals(ind, null));
-				//	Contract.Requires(!Equals(value, null));
-				//}
+				if(ind.IsNull() || value.IsNull())
+					throw new ArgumentNullException ();
 
 				int index;
 				if((index = FindIndex(it => it.Equals(ind))) != -1)

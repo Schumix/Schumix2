@@ -23,7 +23,6 @@ using System;
 using System.Xml.Serialization;
 using System.Diagnostics.Contracts;
 using WolframAPI.Collections;
-//using Schumix.Framework;
 using Schumix.Framework.Extensions;
 
 namespace WolframAPI
@@ -34,8 +33,6 @@ namespace WolframAPI
 	[Serializable, CLSCompliant(true), XmlRoot("queryresult")]
 	public sealed class WAResult : XmlSerialized, IEquatable<WAResult>, IEquatable<string>, ICloneable
 	{
-		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WAResult"/> class.
 		/// </summary>
@@ -191,9 +188,6 @@ namespace WolframAPI
 		/// <returns>The string representation</returns>
 		public override string ToString()
 		{
-			//if(!sPlatform.IsLinux)
-			//	Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
-
 			var sd = Serialize();
 
 			if(string.IsNullOrEmpty(sd))
@@ -254,9 +248,6 @@ namespace WolframAPI
 		/// <filterpriority>2</filterpriority>
 		public object Clone()
 		{
-			//if(!sPlatform.IsLinux)
-			//	Contract.Ensures(!Contract.Result<object>().IsNull());
-
 			return new WAResult(Success, Error, NumPods, DataTypes, TimedOut, Timing, ParseTiming, ParseTimedOut, Recalculate, Version, Pods);
 		}
 
