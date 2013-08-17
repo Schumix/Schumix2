@@ -30,7 +30,7 @@ namespace Schumix.Installer.Extensions
 	/// <summary>
 	/// Some random extension stuff.
 	/// </summary>
-	public static class GeneralExtensions
+	static class GeneralExtensions
 	{
 		/// <summary>
 		/// Determines whether the specified obj is null.

@@ -20,6 +20,7 @@
 
 using System;
 using System.IO;
+using Schumix.Installer.Util;
 
 namespace Schumix.Installer.CopyTo
 {

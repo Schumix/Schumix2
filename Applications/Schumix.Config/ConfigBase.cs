@@ -19,21 +19,38 @@
  */
 
 using System;
-using System.Reflection;
-using System.Collections.Generic;
-using Schumix.Framework.Delegate;
+using System.IO;
+using Schumix.Config.Util;
+using Schumix.Config.Logger;
+using Schumix.Config.CopyTo;
 
-namespace Schumix.Irc.Commands
+namespace Schumix.Config
 {
-	public sealed class CommandMethod
+	sealed class ConfigBase
 	{
-		public CommandPermission Permission { get; private set; }
-		public CommandDelegate Method { get; set; }
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
-		public CommandMethod(CommandDelegate method, CommandPermission permission = CommandPermission.Normal)
+		public ConfigBase()
 		{
-			Method = method;
-			Permission = permission;
+			Log.Notice("ConfigBase", "Config started.");
+		}
+
+		~ConfigBase()
+		{
+			Log.Debug("ConfigBase", "~ConfigBase()");
+		}
+
+		public void Clean(string Schumix2Dir, string AddonsDir, string ConfigDir)
+		{
+			Log.Notice("ConfigBase", "Copy new files.");
+			new Copy(Schumix2Dir, AddonsDir, ConfigDir);
+
+			if(Directory.Exists(Schumix2Dir))
+			{
+				Log.Notice("ConfigBase", "Clean directorys.");
+				sUtilities.ClearAttributes(Schumix2Dir);
+				Directory.Delete(Schumix2Dir, true);
+			}
 		}
 	}
 }

@@ -25,6 +25,7 @@ using System.Threading;
 using System.Globalization;
 using Schumix.Irc;
 using Schumix.Framework;
+using Schumix.Framework.Util;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Options;

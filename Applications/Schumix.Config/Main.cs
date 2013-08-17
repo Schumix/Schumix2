@@ -19,28 +19,117 @@
  */
 
 using System;
-using System.Threading;
-using Schumix.Config.Clean;
-using Schumix.Config.CopyTo;
+using System.Text;
+using Schumix.Config.Util;
+using Schumix.Config.Config;
+using Schumix.Config.Logger;
+using Schumix.Config.Options;
+using Schumix.Config.Exceptions;
+using Schumix.Config.Extensions;
 
 namespace Schumix.Config
 {
 	class MainClass
 	{
+		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
+		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
+
 		/// <summary>
 		///     A Main függvény. Itt indul el a program.
 		/// </summary>
 		public static void Main(string[] args)
 		{
+			sRuntime.SetProcessName("Config");
+			bool help = false;
+			string console_encoding = Encoding.UTF8.BodyName;
+			string dumpsdir = "Dumps";
+			string logsdir = "Logs";
+			int loglevel = 3;
+			string schumix2dir = "Schumix2";
+			string addonsdir = "Addons";
+			string configdir = "Configs";
+			Console.CursorVisible = false;
+			Console.BackgroundColor = ConsoleColor.Black;
+			Console.ForegroundColor = ConsoleColor.Gray;
+
+			var os = new OptionSet()
+			{
+				{ "h|?|help", "Display help.", v => help = true },
+				{ "console-encoding=", "Set up the program's character encoding.", v => console_encoding = v },
+				{ "dumps-dir=", "Set up the dumps folder's path and name.", v => dumpsdir = v },
+				{ "logs-dir=", "Set up the logs folder's path and name.", v => dumpsdir = v },
+				{ "loglevel=", "Log level's setting.", v => loglevel = v.ToInt32() },
+				{ "schumix2-dir=", "Set up the Schumix2 folder's path and name.", v => schumix2dir = v },
+				{ "addons-dir=", "Set up the addons folder's path and name.", v => addonsdir = v },
+				{ "config-dir=", "Set up the config folder's path and name.", v => configdir = v },
+			};
+
 			try
 			{
-				new Copy(args[0], args[1], args[2]);
-				new DirectoryClean(args[0]);
+				os.Parse(args);
+
+				if(help)
+				{
+					ShowHelp(os);
+					return;
+				}
 			}
-			catch(Exception e)
+			catch(OptionException oe)
 			{
-				Console.WriteLine(e);
+				Console.WriteLine("{0} for options '{1}'", oe.Message, oe.OptionName);
+				return;
 			}
+
+			if(!console_encoding.IsNumber())
+				Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
+			else
+				Console.OutputEncoding = Encoding.GetEncoding(console_encoding.ToInt32());
+
+			sCrashDumper.SetDirectory(dumpsdir);
+
+			Console.Title = "Schumix2 Config";
+			Console.ForegroundColor = ConsoleColor.Blue;
+			Console.WriteLine("[Config]");
+			Console.WriteLine("To shut down the program use the <Ctrl+C> command!");
+			Console.WriteLine("Config Version: {0}", sUtilities.GetVersion());
+			Console.WriteLine("Website: {0}", Consts.ConfigWebsite);
+			Console.WriteLine("Programmed by: {0}", Consts.ConfigProgrammedBy);
+			Console.WriteLine("================================================================================"); // 80
+			Console.ForegroundColor = ConsoleColor.Gray;
+
+			Log.SetLogLevel(loglevel);
+			Log.Initialize("Config.log", logsdir);
+
+			Console.WriteLine();
+			Log.Notice("Main", "System is starting...");
+
+			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
+			{
+				Log.LargeError("FATAL ERROR");
+				Log.Error("Main", "An unhandled exception has been thrown. ({0})", (eventArgs.ExceptionObject as Exception).Message);
+				sCrashDumper.CreateCrashDump(eventArgs.ExceptionObject);
+				Shutdown();
+			};
+
+			var cbase = new ConfigBase();
+			cbase.Clean(schumix2dir, addonsdir, configdir);
+		}
+
+		/// <summary>
+		///     Segítséget nyújt a kapcsolokhoz.
+		/// </summary>
+		private static void ShowHelp(OptionSet os)
+		{
+			Console.WriteLine("[Config] Version: {0}", sUtilities.GetVersion());
+			Console.WriteLine("Options:");
+			os.WriteOptionDescriptions(Console.Out);
+		}
+
+		public static void Shutdown()
+		{
+			Console.CursorVisible = true;
+			sRuntime.Exit();
 		}
 	}
 }

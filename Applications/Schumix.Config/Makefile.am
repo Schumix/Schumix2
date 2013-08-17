@@ -46,16 +46,50 @@ all: $(ASSEMBLY) $(PROGRAMFILES) $(BINARIES)
 
 FILES = \
 	Main.cs \
+	Singleton.cs \
+	Runtime.cs \
+	CrashDumper.cs \
+	ConfigBase.cs \
+	Config/Consts.cs \
+	CopyTo/Copy.cs \
+	Exceptions/ConfigException.cs \
+	Exceptions/OptionException.cs \
+	Exceptions/SingletonException.cs \
+	Extensions/ConvertExtensions.cs \
+	Extensions/GeneralExtensions.cs \
+	Logger/Log.cs \
+	Options/ActionOption.cs \
+	Options/ArgumentEnumerator.cs \
+	Options/ArgumentSource.cs \
+	Options/Category.cs \
+	Options/Option.cs \
+	Options/OptionContext.cs \
+	Options/OptionDelegate.cs \
+	Options/OptionSet.cs \
+	Options/OptionValueCollection.cs \
+	Options/OptionValueType.cs \
+	Options/ResponseFileSource.cs \
+	Options/StringCoda.cs \
+	Platforms/Platform.cs \
+	Platforms/PlatformType.cs \
 	Properties/AssemblyInfo.cs \
-	Clean/DirectoryClean.cs \
-	CopyTo/Copy.cs 
+	CopyTo/Folders.cs \
+	Util/Utilities.cs 
 
 DATA_FILES = 
 
 RESOURCES = 
 
 EXTRAS = \
+	Config \
 	CopyTo \
+	Exceptions \
+	Extensions \
+	Logger \
+	Options \
+	Platforms \
+	Properties \
+	Util \
 	schumix.config.in 
 
 REFERENCES =  \

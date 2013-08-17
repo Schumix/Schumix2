@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.MantisBTRssAddon</RootNamespace>
     <AssemblyName>MantisBTRssAddon</AssemblyName>
-    <ReleaseVersion>4.2.x</ReleaseVersion>
+    <ReleaseVersion>4.3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

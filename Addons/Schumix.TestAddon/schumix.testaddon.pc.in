@@ -1,6 +1,6 @@
 Name: Schumix.TestAddon
 Description: Schumix.TestAddon
-Version: 4.2.x
+Version: 4.3.x
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/TestAddon.dll

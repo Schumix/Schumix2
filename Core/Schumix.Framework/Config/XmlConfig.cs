@@ -24,6 +24,7 @@ using System.IO;
 using System.Xml;
 using System.Threading;
 using System.Collections.Generic;
+using Schumix.Framework.Util;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -184,12 +185,13 @@ namespace Schumix.Framework.Config
 
 			bool Enabled = !xmldoc.SelectSingleNode("Schumix/MySql/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText.ToBoolean() : d_mysqlenabled;
 			string Host = !xmldoc.SelectSingleNode("Schumix/MySql/Host").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText : d_mysqlhost;
+			int MySqlPort = !xmldoc.SelectSingleNode("Schumix/MySql/Port").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Port").InnerText.ToInt32() : d_mysqlport;
 			string User = !xmldoc.SelectSingleNode("Schumix/MySql/User").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/User").InnerText : d_mysqluser;
 			string Password = !xmldoc.SelectSingleNode("Schumix/MySql/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Password").InnerText : d_mysqlpassword;
 			string Database = !xmldoc.SelectSingleNode("Schumix/MySql/Database").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Database").InnerText : d_mysqldatabase;
 			string Charset = !xmldoc.SelectSingleNode("Schumix/MySql/Charset").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Charset").InnerText : d_mysqlcharset;
 
-			new MySqlConfig(Enabled, Host, User, Password, Database, Charset);
+			new MySqlConfig(Enabled, Host, MySqlPort, User, Password, Database, Charset);
 
 			Enabled = !xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/SQLite/Enabled").InnerText.ToBoolean() : d_sqliteenabled;
 			string FileName = !xmldoc.SelectSingleNode("Schumix/SQLite/FileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/SQLite/FileName").InnerText : d_sqlitefilename;
@@ -450,6 +452,7 @@ namespace Schumix.Framework.Config
 						w.WriteStartElement("MySql");
 						w.WriteElementString("Enabled",          (!xmldoc.SelectSingleNode("Schumix/MySql/Enabled").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Enabled").InnerText : d_mysqlenabled.ToString()));
 						w.WriteElementString("Host",             (!xmldoc.SelectSingleNode("Schumix/MySql/Host").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Host").InnerText : d_mysqlhost));
+						w.WriteElementString("Port",             (!xmldoc.SelectSingleNode("Schumix/MySql/Port").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Port").InnerText : d_mysqlport.ToString()));
 						w.WriteElementString("User",             (!xmldoc.SelectSingleNode("Schumix/MySql/User").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/User").InnerText : d_mysqluser));
 						w.WriteElementString("Password",         (!xmldoc.SelectSingleNode("Schumix/MySql/Password").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Password").InnerText : d_mysqlpassword));
 						w.WriteElementString("Database",         (!xmldoc.SelectSingleNode("Schumix/MySql/Database").IsNull() ? xmldoc.SelectSingleNode("Schumix/MySql/Database").InnerText : d_mysqldatabase));

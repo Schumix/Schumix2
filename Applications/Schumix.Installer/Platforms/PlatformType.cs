@@ -22,7 +22,7 @@ using System;
 
 namespace Schumix.Installer.Platforms
 {
-	public enum PlatformType
+	enum PlatformType
 	{
 		Windows,
 		Linux,

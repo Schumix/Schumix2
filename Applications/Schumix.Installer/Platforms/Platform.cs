@@ -24,7 +24,7 @@ using Schumix.Installer.Extensions;
 
 namespace Schumix.Installer.Platforms
 {
-	public sealed class Platform
+	sealed class Platform
 	{
 		public bool IsWindows
 		{

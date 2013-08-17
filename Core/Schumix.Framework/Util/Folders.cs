@@ -19,38 +19,19 @@
  */
 
 using System;
-using System.IO;
+using System.Collections.Generic;
 
-namespace Schumix.Config.Clean
+namespace Schumix.Framework.Util
 {
-	sealed class DirectoryClean
+	class Folders
 	{
-		/// <summary>
-		///     Törli azon mappát melyet megadunk a paraméterben. Ez elsősorban egy verziószám.
-		/// </summary>
-		public DirectoryClean(string dir)
+		public string Source { get; private set; }
+		public string Target { get; private set; }
+
+		public Folders(string source, string target)
 		{
-			if(Directory.Exists(dir))
-			{
-				ClearAttributes(dir);
-				Directory.Delete(dir, true);
-			}
-		}
-
-		private void ClearAttributes(string currentDir)
-		{
-			if(Directory.Exists(currentDir))
-			{
-				var subDirs = Directory.GetDirectories(currentDir);
-
-				foreach(string dir in subDirs)
-					ClearAttributes(dir);
-
-				var files = Directory.GetFiles(currentDir);
-
-				foreach(string file in files)
-					File.SetAttributes(file, FileAttributes.Normal);
-			}
+			Source = source;
+			Target = target;
 		}
 	}
 }

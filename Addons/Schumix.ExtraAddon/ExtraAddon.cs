@@ -28,6 +28,7 @@ using Schumix.Irc.Ignore;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
+using Schumix.Framework.Util;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Functions;

@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.Framework</RootNamespace>
     <AssemblyName>Schumix.Framework</AssemblyName>
-    <ReleaseVersion>4.2.x</ReleaseVersion>
+    <ReleaseVersion>4.3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -19,6 +19,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>219</NoWarn>
     <PlatformTarget Condition="'$(OS)' == 'Windows_NT'">x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,6 +29,7 @@
     <DefineConstants>RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>219</NoWarn>
     <PlatformTarget Condition="'$(OS)' == 'Windows_NT'">x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>
@@ -55,7 +57,6 @@
     <Compile Include="Database\DatabaseManager.cs" />
     <Compile Include="Database\MySql.cs" />
     <Compile Include="Exceptions\SchumixException.cs" />
-    <Compile Include="Utilities.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Localization\LocalizationManager.cs" />
     <Compile Include="Localization\LocalizationConsole.cs" />
@@ -153,6 +154,8 @@
     <Compile Include="Listener\Host.cs" />
     <Compile Include="Listener\ListenerPacket.cs" />
     <Compile Include="Extensions\ConvertExtensions.cs" />
+    <Compile Include="Util\Folders.cs" />
+    <Compile Include="Util\Utilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -189,5 +192,6 @@
     <Folder Include="Options\" />
     <Folder Include="Platforms\" />
     <Folder Include="Logger\" />
+    <Folder Include="Util\" />
   </ItemGroup>
 </Project>

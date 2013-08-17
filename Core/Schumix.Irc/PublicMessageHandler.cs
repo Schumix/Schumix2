@@ -44,17 +44,8 @@ namespace Schumix.Irc
 				Log.SetForegroundColor(ConsoleColor.Gray);
 			}
 
-			if(sIRCMessage.Args.Contains(((char)1).ToString()))
-			{
-				string args = sIRCMessage.Args.Remove(0, 1, (char)1);
-				args = args.Substring(0, args.IndexOf((char)1));
-
-				if(args.Length > 6 && args.Substring(0, 6) == "ACTION")
-				{
-					args = args.Remove(0, 7);
-					sIrcLog.LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, string.Format(sLConsole.GetString("[ACTION] {0}"), args));
-				}
-			}
+			if(Rfc2812Util.IsAction(sIRCMessage.Args))
+				sIrcLog.LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sLConsole.GetString("[ACTION] {0}"), Rfc2812Util.GetAction(sIRCMessage.Args));
 			else
 				sIrcLog.LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
 

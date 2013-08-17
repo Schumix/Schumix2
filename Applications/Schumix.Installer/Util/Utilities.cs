@@ -27,7 +27,7 @@ using System.Text;
 using Schumix.Installer.Config;
 using Schumix.Installer.Extensions;
 
-namespace Schumix.Installer
+namespace Schumix.Installer.Util
 {
 	sealed class Utilities
 	{

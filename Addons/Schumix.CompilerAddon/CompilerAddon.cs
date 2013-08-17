@@ -215,8 +215,7 @@ namespace Schumix.CompilerAddon
 					break;
 			}
 
-			var sw = new StreamWriter(Console.OpenStandardOutput());
-			sw.AutoFlush = true;
+			var sw = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
 			Console.SetOut(sw);
 		}
 

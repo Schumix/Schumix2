@@ -53,7 +53,7 @@ namespace Schumix.Framework.Database
 			if(MySqlConfig.Enabled)
 			{
 				x++;
-				mdatabase = new MySql(MySqlConfig.Host, MySqlConfig.User, MySqlConfig.Password, MySqlConfig.Database, MySqlConfig.Charset);
+				mdatabase = new MySql(MySqlConfig.Host, MySqlConfig.Port, MySqlConfig.User, MySqlConfig.Password, MySqlConfig.Database, MySqlConfig.Charset);
 			}
 
 			Log.Debug("DatabaseManager", sLConsole.GetString("Selecting the Database."));

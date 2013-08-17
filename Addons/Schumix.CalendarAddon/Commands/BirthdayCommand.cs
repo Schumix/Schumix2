@@ -25,6 +25,7 @@ using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
+using Schumix.Framework.Util;
 using Schumix.Framework.Config;
 using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
@@ -44,7 +45,7 @@ namespace Schumix.CalendarAddon.Commands
 		{
 			_regex = new Regex(@"((?<year>[0-9]{4,4})(?:[\.\s]+|))?"                         // Year
 			                   + @"((?<month>[0-9]{1,2}|[a-zóüöúőűáéí]{3,20})(?:[\.\s]+|))?" // Month
-			                   + @"((?<day>[0-9]{1,2})(?:[\.\s]|))?",                       // Day
+			                   + @"((?<day>[0-9]{1,2})(?:[\.\s]|))?",                        // Day
 			                   RegexOptions.Compiled | RegexOptions.IgnoreCase);
 		}
 

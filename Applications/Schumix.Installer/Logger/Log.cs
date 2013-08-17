@@ -22,12 +22,13 @@ using System;
 using System.IO;
 using System.Text;
 using System.Collections.Generic;
+using Schumix.Installer.Util;
 using Schumix.Installer.Extensions;
 using Schumix.Installer.Localization;
 
 namespace Schumix.Installer.Logger
 {
-	public sealed class Log
+	sealed class Log
 	{
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;

@@ -1,7 +1,22 @@
 # Schumix2 ChangeLog
 
-## 4.3.0 (2013-xx-xx)
+## 4.4.0 (2013-xx-xx)
 
+## 4.3.0 (2013-08-17)
+
+ * WolframAPI frissítve. Köszönet érte Twl-nek.
+ * SchumixVS.sln javítva.
+ * CTCP és Action észlelése feljavítva.
+ * Utilities áthelyezve az Util mappába és névtérbe.
+ * Method és Attribute fájlok áthelyezve.
+ * Konzolba írt üzenetek, parancsok logolva lesznek a log fájlba.
+ * SetForegroundColor() függvény hibája javítva.
+ * Log-nál \n végződés beépítve a LogInFile() függvénybe.
+ * MySql szerverhez való kapcsolódás ezentúl ha lehetséges ssl módban fog történni.
+ * MySql konfig beállításaihoz hozzáadva a Port beállításának lehetősége.
+ * Config teljesen felújítve.
+ * Nick váltás is a magban lévő információk alapján fel lett gyorsítva.
+ * Online parancshoz felhasználva a magban tárolt csatornák információs állománya így gyorsítótárhoz hasonlóan gyorsabban lehet az adott neveket leellenőrizni ha éppen fent van az adott csatornák egyikén. Ha nincs akkor a szokás módon megy.
  * Error kiírások leválasztva egy külön részbe ami alapértelmezetten is a konzol kiírásoknál az error kimenet.
  * Updater fő osztálya felújítva.
  * Installer teljesen felújítve.

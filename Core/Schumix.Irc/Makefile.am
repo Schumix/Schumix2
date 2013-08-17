@@ -102,11 +102,8 @@ FILES = \
 	Flood/AntiFlood.cs \
 	Flood/CommandFlood.cs \
 	IrcColors.cs \
-	Commands/SchumixCommandAttribute.cs \
 	Commands/AdminFlag.cs \
 	Commands/CommandPermission.cs \
-	Commands/CommandMethod.cs \
-	IrcCommandAttribute.cs \
 	Sender/Sender.cs \
 	Sender/SendMessage.cs \
 	Ignore/IgnoreNickName.cs \
@@ -157,7 +154,10 @@ FILES = \
 	Util/Serv.cs \
 	Commands/ListenerDataUpdate.cs \
 	Method/IrcMethod.cs \
-	Logger/IrcLog.cs 
+	Logger/IrcLog.cs \
+	Attribute/IrcCommandAttribute.cs \
+	Commands/Method/CommandMethod.cs \
+	Commands/Attribute/SchumixCommandAttribute.cs 
 
 DATA_FILES = 
 
@@ -176,6 +176,9 @@ EXTRAS = \
 	Util \
 	Method \
 	Logger \
+	Attribute \
+	Commands/Method \
+	Commands/Attribute \
 	schumix.irc.pc.in 
 
 REFERENCES =  \

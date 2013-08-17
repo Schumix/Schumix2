@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-08 13:44:11+0200\n"
+"POT-Creation-Date: 2013-08-17 09:44:51+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -44,17 +44,17 @@ msgstr "Összes Command handler törlésre került."
 #: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:6
 #: ../Core/Schumix.Framework/SchumixBase.cs:16
-#: ../Core/Schumix.Framework/Utilities.cs:25
-#: ../Core/Schumix.Framework/Utilities.cs:98
-#: ../Core/Schumix.Framework/Utilities.cs:116
-#: ../Core/Schumix.Framework/Utilities.cs:129
 #: ../Core/Schumix.Framework/Timer.cs:3
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:12
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
+#: ../Core/Schumix.Framework/Util/Utilities.cs:25
+#: ../Core/Schumix.Framework/Util/Utilities.cs:98
+#: ../Core/Schumix.Framework/Util/Utilities.cs:116
+#: ../Core/Schumix.Framework/Util/Utilities.cs:129
 #: ../Applications/Schumix/Schumix.cs:5
-#: ../Applications/Schumix/Console/Console.cs:7
+#: ../Applications/Schumix/Console/Console.cs:9
 #: ../Applications/Schumix/Console/CommandManager.cs:14
 #: ../Applications/Schumix.Server/Config/Config.cs:6
 #: ../Applications/Schumix.Server/New/Schumix.cs:16
@@ -223,10 +223,8 @@ msgid "Connection to: {0}"
 msgstr "Kapcsolódás megindult ide: {0}"
 
 #: ../Core/Schumix.Irc/Network.cs:44
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
-msgid "Connection closed!"
-msgstr "Kapcsolat bontva!"
+msgid "Connection closed! ServerName: {0}"
+msgstr "Kapcsolat bontva! A szerver neve: {0}"
 
 #: ../Core/Schumix.Irc/Network.cs:46
 msgid "Connection have been closed."
@@ -284,7 +282,7 @@ msgstr "Nem jön információ az irc szerver felöl!"
 msgid "Received unhandled opcode: {0}"
 msgstr "Ismeretlen opcode kód: {0}"
 
-#: ../Core/Schumix.Irc/PublicMessageHandler.cs:5
+#: ../Core/Schumix.Irc/PublicMessageHandler.cs:4
 msgid "[ACTION] {0}"
 msgstr "[ACTION] {0}"
 
@@ -310,24 +308,24 @@ msgstr ""
 "Ez a kliens támogatja: UserInfo, Finger, Version, Source, Ping, Time és "
 "ClientInfo"
 
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:7
 #: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:8
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:9
 msgid " Idle time "
 msgstr " Idle time "
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:8
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:7
 msgid "Is not a supported Ctcp query."
 msgstr "Nem támogatott Ctcp lekérdezés."
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:13
 msgid " Hours, "
 msgstr " óra, "
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:13
 msgid " Minutes, "
 msgstr " perc, "
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:14
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:13
 msgid " Seconds."
 msgstr " másodperc."
 
@@ -431,14 +429,14 @@ msgstr "Irc modul újraindítása!"
 
 #: ../Core/Schumix.Irc/IrcBase.cs:38
 #: ../Core/Schumix.Framework/Config/Config.cs:4
-#: ../Core/Schumix.Framework/Database/SQLite.cs:15
-#: ../Core/Schumix.Framework/Database/SQLite.cs:18
-#: ../Core/Schumix.Framework/Database/SQLite.cs:21
-#: ../Core/Schumix.Framework/Database/MySql.cs:15
-#: ../Core/Schumix.Framework/Database/MySql.cs:16
-#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:16
+#: ../Core/Schumix.Framework/Database/SQLite.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:21
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Database/MySql.cs:28
+#: ../Core/Schumix.Framework/Database/MySql.cs:31
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
 #: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
@@ -490,6 +488,14 @@ msgstr "Néhány kapcsolódás sikertelen!"
 #: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:52
 msgid "Banned channels: {0}"
 msgstr "Letiltott csatornák: {0}"
+
+#: ../Core/Schumix.Irc/Util/Rfc2812Util.cs:35
+msgid "The message is not a CTCP message."
+msgstr "Az üzenet nem CTCP üzenetet!"
+
+#: ../Core/Schumix.Irc/Util/Rfc2812Util.cs:38
+msgid "The message is not an action."
+msgstr "Az üzenet nem cselekvés!"
 
 #: ../Core/Schumix.Framework/Config/Config.cs:4
 #: ../Applications/Schumix.Server/Config/Config.cs:4
@@ -543,24 +549,24 @@ msgstr ""
 "A megadott mester csatorna már létezik egyszer az adatbázisban így az "
 "alapértelmezett fog lenni a neve!"
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:3
-#: ../Core/Schumix.Framework/Database/MySql.cs:3
+#: ../Core/Schumix.Framework/Database/SQLite.cs:4
+#: ../Core/Schumix.Framework/Database/MySql.cs:9
 msgid "Error was handled when tried to connect to the database!"
 msgstr "Hiba történt az adatbázishoz való kapcsolódás során!"
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:3
+#: ../Core/Schumix.Framework/Database/SQLite.cs:4
 msgid "Successfully connected to the SQLite database."
 msgstr "SQLite adatbázishoz sikeres a kapcsolódás."
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:15
-#: ../Core/Schumix.Framework/Database/SQLite.cs:18
-#: ../Core/Schumix.Framework/Database/SQLite.cs:21
-#: ../Core/Schumix.Framework/Database/SQLite.cs:24
-#: ../Core/Schumix.Framework/Database/MySql.cs:16
-#: ../Core/Schumix.Framework/Database/MySql.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:16
+#: ../Core/Schumix.Framework/Database/SQLite.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:22
+#: ../Core/Schumix.Framework/Database/SQLite.cs:25
 #: ../Core/Schumix.Framework/Database/MySql.cs:22
 #: ../Core/Schumix.Framework/Database/MySql.cs:25
 #: ../Core/Schumix.Framework/Database/MySql.cs:28
+#: ../Core/Schumix.Framework/Database/MySql.cs:31
+#: ../Core/Schumix.Framework/Database/MySql.cs:34
 msgid "Query error: {0}"
 msgstr "Query hiba: {0}"
 
@@ -584,17 +590,13 @@ msgstr "Nincs az adatbázis típusa kiválasztva!"
 msgid "2 Database are selected!"
 msgstr "Két adatbázis van kiválasztva!"
 
-#: ../Core/Schumix.Framework/Database/MySql.cs:3
+#: ../Core/Schumix.Framework/Database/MySql.cs:9
 msgid "Successfully connected to the MySql database."
 msgstr "MySql adatbázishoz sikeres a kapcsolódás."
 
-#: ../Core/Schumix.Framework/Database/MySql.cs:15
+#: ../Core/Schumix.Framework/Database/MySql.cs:21
 msgid "Sql connection crash."
 msgstr "Sql kapcsolat összeomlott."
-
-#: ../Core/Schumix.Framework/Utilities.cs:25
-msgid "Checking: {0}"
-msgstr "Ellenőrzése: {0}"
 
 #: ../Core/Schumix.Framework/Timer.cs:3
 msgid "Successfully loaded the Timer."
@@ -629,6 +631,11 @@ msgstr "Ismeretlen packetid: {0}"
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
 msgid "Authentication denied to SCS server!"
 msgstr "Hitelesítést megtagadta az SCS szerver!"
+
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
+msgid "Connection closed!"
+msgstr "Kapcsolat bontva!"
 
 #: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:15
 msgid "Successfully authed to SCS server."
@@ -683,12 +690,12 @@ msgid "The program, more than {0} MB consumed!"
 msgstr "A program több mint {0} mb-ot fogyaszt!"
 
 #: ../Core/Schumix.Framework/Runtime.cs:14
-#: ../Applications/Schumix.Installer/Runtime.cs:7
+#: ../Applications/Schumix.Installer/Runtime.cs:6
 msgid "Failed to set process name: {0}"
 msgstr "Nem sikerült beállítani folyamat nevét: {0}"
 
 #: ../Core/Schumix.Framework/Runtime.cs:17
-#: ../Applications/Schumix.Installer/Runtime.cs:10
+#: ../Applications/Schumix.Installer/Runtime.cs:9
 msgid "Error setting process name!"
 msgstr "Hiba a folyamat nevének beállításában!"
 
@@ -1125,6 +1132,7 @@ msgid "Loaded the ShortUrl settings."
 msgstr "ShortUrl beállításai betöltve."
 
 #: ../Core/Schumix.Framework/Exceptions/OptionException.cs:3
+#: ../Applications/Schumix.Config/Exceptions/OptionException.cs:3
 #: ../Applications/Schumix.Installer/Exceptions/OptionException.cs:3
 msgid "OptionName"
 msgstr ""
@@ -1154,13 +1162,13 @@ msgstr ""
 
 #: ../Core/Schumix.Framework/Logger/Log.cs:32
 #: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
-#: ../Applications/Schumix.Installer/Logger/Log.cs:10
+#: ../Applications/Schumix.Installer/Logger/Log.cs:14
 msgid "Started time: [{0}]\n"
 msgstr "Indulási időpont: [{0}]\n"
 
 #: ../Core/Schumix.Framework/Logger/Log.cs:32
 #: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
-#: ../Applications/Schumix.Installer/Logger/Log.cs:10
+#: ../Applications/Schumix.Installer/Logger/Log.cs:14
 msgid ""
 "\n"
 "Started time: [{0}]\n"
@@ -1230,6 +1238,10 @@ msgstr "Vissza port: {0}"
 msgid "Auth successful. Guid of client: {0}"
 msgstr "Hitelesítés sikeres. Guid a clienttől: {0}"
 
+#: ../Core/Schumix.Framework/Util/Utilities.cs:25
+msgid "Checking: {0}"
+msgstr "Ellenőrzése: {0}"
+
 #: ../Applications/Schumix/Main.cs:11 ../Applications/Schumix.Server/Main.cs:9
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
 msgstr "A program leállításához használd a <Ctrl+C> vagy <quit> parancsot!"
@@ -1239,13 +1251,13 @@ msgid "Schumix Version: {0}"
 msgstr "Schumix Verzió: {0}"
 
 #: ../Applications/Schumix/Main.cs:11
-#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Installer/Main.cs:10
 #: ../Applications/Schumix.Server/Main.cs:9
 msgid "Website: {0}"
 msgstr "Weboldal: {0}"
 
 #: ../Applications/Schumix/Main.cs:11
-#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Installer/Main.cs:10
 #: ../Applications/Schumix.Server/Main.cs:9
 msgid "Programmed by: {0}"
 msgstr "Programot készítette: {0}"
@@ -1255,7 +1267,7 @@ msgid "Developers: {0}"
 msgstr "Fejlesztők: {0}"
 
 #: ../Applications/Schumix/Main.cs:17
-#: ../Applications/Schumix.Installer/Main.cs:11
+#: ../Applications/Schumix.Installer/Main.cs:13
 #: ../Applications/Schumix.Server/Main.cs:13
 msgid "System is starting..."
 msgstr "Rendszer indul..."
@@ -1266,13 +1278,13 @@ msgid "Colorblind mode is on!"
 msgstr "Színvak mód be van kapcsolva!"
 
 #: ../Applications/Schumix/Main.cs:20
-#: ../Applications/Schumix.Installer/Main.cs:13
+#: ../Applications/Schumix.Installer/Main.cs:15
 #: ../Applications/Schumix.Server/Main.cs:18
 msgid "FATAL ERROR"
 msgstr "VÉGZETES HIBA"
 
 #: ../Applications/Schumix/Main.cs:20
-#: ../Applications/Schumix.Installer/Main.cs:13
+#: ../Applications/Schumix.Installer/Main.cs:15
 #: ../Applications/Schumix.Server/Main.cs:18
 #: ../Applications/Schumix.Server/Main.cs:22
 msgid "An unhandled exception has been thrown. ({0})"
@@ -1307,6 +1319,10 @@ msgstr "Console parancs olvasója indul..."
 msgid "Successfully started the Console reader."
 msgstr "Console parancs olvasó része elindult."
 
+#: ../Applications/Schumix/Console/Console.cs:7
+msgid "Console input: {0}"
+msgstr "Konzol bemenet: {0}"
+
 #: ../Applications/Schumix/Console/CommandManager.cs:3
 msgid "Successfully started the CCommandManager."
 msgstr "CCommandManager sikeresen elindult."
@@ -1315,11 +1331,11 @@ msgstr "CCommandManager sikeresen elindult."
 msgid "All Command Handler are registered."
 msgstr "Összes Command handler regisztrálásra került."
 
-#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Installer/Main.cs:10
 msgid "To shut down the program use the <Ctrl+C> command!"
 msgstr "A program leállításához használd a <Ctrl+C> parancsot!"
 
-#: ../Applications/Schumix.Installer/Main.cs:9
+#: ../Applications/Schumix.Installer/Main.cs:10
 msgid "Installer Version: {0}"
 msgstr "Installer Verzió: {0}"
 
@@ -1332,7 +1348,7 @@ msgid "The installation is finished. The program shutting down!"
 msgstr "A telepítés befejeződött. Leáll a program!"
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:9
-#: ../Components/Schumix.Components/Updater/Update.cs:19
+#: ../Components/Schumix.Components/Updater/Update.cs:20
 msgid "Successfully downloaded new version."
 msgstr "Forrás sikeresen le lett töltve."
 
@@ -1346,7 +1362,7 @@ msgid "Installation successful!"
 msgstr "A telepítés befejeződött!"
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:10
-#: ../Components/Schumix.Components/Updater/Update.cs:20
+#: ../Components/Schumix.Components/Updater/Update.cs:21
 msgid "Started translating."
 msgstr "Fordítás megkezdése."
 
@@ -1355,17 +1371,17 @@ msgid "Error was handled while translated."
 msgstr "Hiba történt a fordítás közben!"
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:12
-#: ../Components/Schumix.Components/Updater/Update.cs:22
+#: ../Components/Schumix.Components/Updater/Update.cs:23
 msgid "Successfully finished the translation."
 msgstr "Fordítás sikeresen befejeződött."
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:13
 msgid "Copy files."
-msgstr ""
+msgstr "Fájlok másolása."
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:14
 msgid "Remove unneeded datas."
-msgstr ""
+msgstr "Felesleges adatok eltávolítása."
 
 #: ../Applications/Schumix.Installer/Download/CloneSchumix.cs:3
 #: ../Components/Schumix.Components/Updater/Download/CloneSchumix.cs:3
@@ -1404,8 +1420,20 @@ msgid "There is no load of Schumix!"
 msgstr "Nincs betöltendő Schumix!"
 
 #: ../Libraries/WolframAPI/Collections/UniqueList.cs:3
+msgid "The item you tried to add to the UniqueList is null."
+msgstr "A cucc amit a uniquelisthez akarták addni az null."
+
+#: ../Libraries/WolframAPI/Collections/UniqueList.cs:3
 msgid "The unique list already contains that element."
 msgstr "Az egyedi lista már atrtalmazza ezt az elemet."
+
+#: ../Libraries/WolframAPI/WAClient.cs:14
+#: ../Libraries/WolframAPI/WAClient.cs:24
+#: ../Libraries/WolframAPI/WAClient.cs:29
+#: ../Libraries/WolframAPI/WAClient.cs:39
+#: ../Libraries/WolframAPI/WAClient.cs:46
+msgid "Cannot evaluate a null string."
+msgstr "Nem lehet null stringet értelmezni."
 
 #: ../Libraries/WolframAPI/WAClient.cs:15
 #: ../Libraries/WolframAPI/WAClient.cs:19
@@ -1416,35 +1444,39 @@ msgstr "Megoldás nem található. A válasz eltorzulhatott."
 msgid "No solution found."
 msgstr "Megoldás nem található."
 
-#: ../Libraries/WolframAPI/WAClient.cs:21
+#: ../Libraries/WolframAPI/WAClient.cs:20
 msgid "No solution found. The pod order might have changed. Report to devs!"
 msgstr ""
 "Megoldás nem található. A fő rendszer megváltozhatott. Jelentsd a "
 "fejlesztőknek!"
 
-#: ../Libraries/WolframAPI/WAClient.cs:23
+#: ../Libraries/WolframAPI/WAClient.cs:22
 msgid "The parameter passed to this method was null or empty."
 msgstr "Az ennek a metódusnak küldött paraméter üres vagy null."
 
-#: ../Libraries/WolframAPI/WAClient.cs:29
+#: ../Libraries/WolframAPI/WAClient.cs:28
 msgid "Couldn't retrieve information!"
 msgstr "Nem tudtam visszanyerni az információt!"
 
-#: ../Libraries/WolframAPI/WAClient.cs:29
+#: ../Libraries/WolframAPI/WAClient.cs:28
 msgid "WebException thrown while getting the response."
 msgstr "Kivételt dobott letöltése közben a webcím: {0}"
 
-#: ../Libraries/WolframAPI/WAClient.cs:29
+#: ../Libraries/WolframAPI/WAClient.cs:28
 msgid "Unhandled exception thrown while submitting the expression."
 msgstr "Kezeletlen kivétel lépett fel a kifejezezés küldésekor."
 
-#: ../Libraries/WolframAPI/WAClient.cs:33
+#: ../Libraries/WolframAPI/WAClient.cs:32
 msgid "Could not deserialize the response. It might have been a malformed one."
 msgstr "Nem tudtam letölteni a választ. Lehetséges, hogy torz."
 
-#: ../Libraries/WolframAPI/WAClient.cs:34
+#: ../Libraries/WolframAPI/WAClient.cs:33
 msgid "Exception thrown while deserializing the response."
 msgstr "Kivételt dobott letöltése közben a webcím: {0}"
+
+#: ../Libraries/WolframAPI/WAPod.cs:10
+msgid "This Pod does not possess any subpods."
+msgstr "Ez a Pod nem tartalmaz alpodokat."
 
 #: ../Libraries/WolframAPI/XmlSerialized.cs:6
 msgid "Error during serialization"
@@ -1596,62 +1628,62 @@ msgstr "Automatikus frissítés ki van kapcsolva."
 msgid "The update is finished. The program shutting down!"
 msgstr "A frissítés befejeződött. Leáll a program!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:9
+#: ../Components/Schumix.Components/Updater/Update.cs:10
 msgid "Searching for new stable version is started."
 msgstr "Új stabil verzió keresése megindult."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:11
-#: ../Components/Schumix.Components/Updater/Update.cs:13
+#: ../Components/Schumix.Components/Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:14
 msgid "Downloading new version."
 msgstr "Új forrás letöltése."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:11
+#: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "Searching for the last version is started."
 msgstr "A legutolsó verzió keresése megindult."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:13
+#: ../Components/Schumix.Components/Updater/Update.cs:14
 msgid "No such version like this, update interrupted!"
 msgstr "Ilyen verzió nem létezik ezért a frissítés leáll!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:17
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "Currently no newer version!"
 msgstr "Jelenleg nincs újabb verzió!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:17
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "The program starts is continuing."
 msgstr "Folytatódik a program indulása."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:17
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "I found a newer version. The update to {0} version is starting."
 msgstr "Újabb verziót találtam. Megindul a frissítés a {0} verzióra."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:17
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "Older version found, update interrupted!"
 msgstr "Régebbi verziót találtam ezért leáll a frissítés!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:19
+#: ../Components/Schumix.Components/Updater/Update.cs:20
 msgid "Downloading unsuccessful!"
 msgstr "Letöltés sikertelen!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:19
-#: ../Components/Schumix.Components/Updater/Update.cs:21
+#: ../Components/Schumix.Components/Updater/Update.cs:20
+#: ../Components/Schumix.Components/Updater/Update.cs:22
 msgid "Updating successful!"
 msgstr "A frissítés befejeződött!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:21
+#: ../Components/Schumix.Components/Updater/Update.cs:22
 msgid "Error was handled while translated!"
 msgstr "Hiba történt a fordítás közben!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:23
+#: ../Components/Schumix.Components/Updater/Update.cs:24
 msgid "Sql files update is started. The setted database will be updated."
 msgstr ""
 "Megindult az sql fájlok frissítése. A beállított adatbázis fog frissülni."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:23
+#: ../Components/Schumix.Components/Updater/Update.cs:24
 msgid "Sql update finished."
 msgstr "Az sql frissítés befejeződött."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:27
+#: ../Components/Schumix.Components/Updater/Update.cs:28
 msgid "This step of updateing is finished. Continue with next step."
 msgstr "Frissítés ezen szakasza befejeződött. Következik a beállítás."
 

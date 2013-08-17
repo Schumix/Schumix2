@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>SchumixLibraries</RootNamespace>
     <AssemblyName>Schumix.Libraries</AssemblyName>
-    <ReleaseVersion>4.2.x</ReleaseVersion>
+    <ReleaseVersion>4.3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -19,6 +19,7 @@
     <DefineConstants>DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>219</NoWarn>
     <PlatformTarget Condition="'$(OS)' == 'Windows_NT'">x86</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -28,6 +29,7 @@
     <DefineConstants>RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <NoWarn>219</NoWarn>
     <PlatformTarget Condition="'$(OS)' == 'Windows_NT'">x86</PlatformTarget>
   </PropertyGroup>
   <ItemGroup>

@@ -22,21 +22,18 @@ using System;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using Schumix.Config.Config;
 
 // Information about this assembly is defined by the following attributes. 
 // Change them to the values specific to your project.
 
 [assembly: AssemblyTitle("Schumix.Config")]
-[assembly: AssemblyDescription("Schumix2 IRC Bot and Framework")]
-#if DEBUG
-[assembly: AssemblyConfiguration("Debug")]
-#else
-[assembly: AssemblyConfiguration("Release")]
-#endif
-[assembly: AssemblyCompany("Schumix Productions")]
-[assembly: AssemblyProduct("Schumix")]
-[assembly: AssemblyCopyright("Copyright (C) 2013 Schumix Team <http://schumix.eu/>")]
-[assembly: AssemblyTrademark("GNU General Public License")]
+[assembly: AssemblyDescription(Consts.ConfigDescription)]
+[assembly: AssemblyConfiguration(Consts.ConfigConfiguration)]
+[assembly: AssemblyCompany(Consts.ConfigCompany)]
+[assembly: AssemblyProduct(Consts.ConfigProduct)]
+[assembly: AssemblyCopyright(Consts.ConfigCopyright)]
+[assembly: AssemblyTrademark(Consts.ConfigTrademark)]
 
 [assembly: CLSCompliant(true)]
 
@@ -55,5 +52,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("0.0.7")]
-[assembly: AssemblyFileVersion("0.0.7.0")]
+[assembly: AssemblyVersion(Consts.ConfigVersion)]
+[assembly: AssemblyFileVersion(Consts.ConfigFileVersion)]

@@ -24,6 +24,7 @@ using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
+using Schumix.Framework.Util;
 using Schumix.Framework.Config;
 using Schumix.Framework.Platforms;
 using Schumix.Framework.Extensions;
@@ -56,16 +57,13 @@ namespace Schumix.Irc.Ctcp
 
 		public void CtcpReply(IRCMessage sIRCMessage)
 		{
-			string args = sIRCMessage.Args;
-
-			if(!args.Contains(((char)1).ToString()))
+			if(!Rfc2812Util.IsCtcp(sIRCMessage.Args))
 				return;
 
 			if(Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
 				return;
 
-			args = args.Remove(0, 1, (char)1);
-			args = args.Substring(0, args.IndexOf((char)1));
+			string args = Rfc2812Util.GetCtcp(sIRCMessage.Args);
 			string[] split = args.Split(SchumixBase.Space);
 
 			switch(split[0])

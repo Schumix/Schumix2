@@ -24,6 +24,7 @@ using System.Threading;
 using NGit;
 using NGit.Api;
 using Schumix.Framework;
+using Schumix.Framework.Util;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Localization;
 
@@ -46,14 +47,15 @@ namespace Schumix.Components.Updater.Download
 			}
 
 			var cmd = Git.CloneRepository();
-			cmd.SetProgressMonitor(new NGitProgressMonitor());
+			//cmd.SetProgressMonitor(new NGitProgressMonitor());
+			cmd.SetProgressMonitor(new TextProgressMonitor());
 			cmd.SetURI(Url);
 			cmd.SetRemote("origin");
 			cmd.SetBranch(string.Format("refs/heads/{0}", Branch));
 			cmd.SetDirectory(path);
 			cmd.SetCloneSubmodules(true);
 			cmd.Call();
-			//Console.WriteLine();
+			Console.WriteLine();
 		}
 	}
 }

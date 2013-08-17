@@ -5,7 +5,7 @@ EXTRA_DIST =
 
 if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = dmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- "-nowarn:219" -debug "-define:DEBUG"
 ASSEMBLY = ../../Run/Debug/Schumix.Framework.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
@@ -37,7 +37,7 @@ endif
 
 if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = dmcs
-ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
+ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-nowarn:219" "-define:RELEASE"
 ASSEMBLY = ../../Run/Release/Schumix.Framework.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
@@ -97,7 +97,6 @@ FILES = \
 	Database/DatabaseManager.cs \
 	Database/MySql.cs \
 	Exceptions/SchumixException.cs \
-	Utilities.cs \
 	Timer.cs \
 	Localization/LocalizationManager.cs \
 	Localization/LocalizationConsole.cs \
@@ -194,7 +193,9 @@ FILES = \
 	Network/SchumixPacket.cs \
 	Listener/Host.cs \
 	Listener/ListenerPacket.cs \
-	Extensions/ConvertExtensions.cs 
+	Extensions/ConvertExtensions.cs \
+	Util/Folders.cs \
+	Util/Utilities.cs 
 
 DATA_FILES = 
 
@@ -209,6 +210,7 @@ EXTRAS = \
 	Options \
 	Platforms \
 	Logger \
+	Util \
 	schumix.framework.pc.in 
 
 REFERENCES =  \

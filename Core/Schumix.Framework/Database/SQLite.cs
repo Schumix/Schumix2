@@ -41,6 +41,11 @@ namespace Schumix.Framework.Database
 		private DebugLog _debuglog;
 #endif
 
+		public SQLite() : this("Schumix.db3")
+		{
+			// None
+		}
+
 		public SQLite(string file)
 		{
 			if(!Initialize(file))

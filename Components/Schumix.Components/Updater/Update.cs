@@ -23,6 +23,7 @@ using System.IO;
 using System.Threading;
 using System.Diagnostics;
 using Schumix.Framework;
+using Schumix.Framework.Util;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Platforms;
@@ -200,12 +201,12 @@ namespace Schumix.Components.Updater
 			if(sPlatform.IsLinux)
 			{
 				config.StartInfo.FileName = "mono";
-				config.StartInfo.Arguments = "Config.exe " + _dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
+				config.StartInfo.Arguments = string.Format("Config.exe --schumix2-dir={0} --addons-dir={1} --config-dir={2} --logs-dir={3} --dumps-dir={4}", _dir, AddonsConfig.Directory, ConfigDirectory, LogConfig.LogDirectory, CrashConfig.Directory);
 			}
 			else if(sPlatform.IsWindows)
 			{
 				config.StartInfo.FileName = "Config.exe";
-				config.StartInfo.Arguments = _dir + SchumixBase.Space + AddonsConfig.Directory + SchumixBase.Space + ConfigDirectory;
+				config.StartInfo.Arguments = string.Format("--schumix2-dir={0} --addons-dir={1} --config-dir={2} --logs-dir={3} --dumps-dir={4}", _dir, AddonsConfig.Directory, ConfigDirectory, LogConfig.LogDirectory, CrashConfig.Directory);
 			}
 
 			Log.Notice("Update", sLConsole.GetString("This step of updateing is finished. Continue with next step."));

@@ -23,6 +23,7 @@ using System.IO;
 using Schumix.Irc.Util;
 using Schumix.Irc.Channel;
 using Schumix.Framework;
+using Schumix.Framework.Util;
 using Schumix.Framework.Config;
 using Schumix.Framework.Functions;
 

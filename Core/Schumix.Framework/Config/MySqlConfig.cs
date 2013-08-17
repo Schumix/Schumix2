@@ -29,15 +29,17 @@ namespace Schumix.Framework.Config
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		public static bool Enabled { get; private set; }
 		public static string Host { get; private set; }
+		public static int Port { get; private set; }
 		public static string User { get; private set; }
 		public static string Password { get; private set; }
 		public static string Database { get; private set; }
 		public static string Charset { get; private set; }
 
-		public MySqlConfig(bool enabled, string host, string user, string password, string database, string charset)
+		public MySqlConfig(bool enabled, string host, int port, string user, string password, string database, string charset)
 		{
 			Enabled  = enabled;
 			Host     = host;
+			Port     = port;
 			User     = user;
 			Password = password;
 			Database = database;

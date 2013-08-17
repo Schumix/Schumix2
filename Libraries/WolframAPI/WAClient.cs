@@ -25,7 +25,6 @@ using System.Net;
 using System.Web;
 using System.Linq;
 using System.Reflection;
-using System.Diagnostics.Contracts;
 using System.Runtime.Remoting.Messaging;
 using System.Xml.Serialization;
 using WolframAPI.Exceptions;
@@ -70,7 +69,6 @@ namespace WolframAPI
 	public sealed class WAClient
 	{
 		private static readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		//private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		/// <summary>
 		/// The base WA API url.
@@ -124,11 +122,8 @@ namespace WolframAPI
 		/// <returns>The solution of the given expression</returns>
 		public string Solve(string expression)
 		{
-			//if(!sPlatform.IsLinux)
-			//{
-			//	Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
-			//	Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
-			//}
+			if(expression.IsNullOrEmpty())
+				throw new ArgumentNullException("expression", sLConsole.GetString("Cannot evaluate a null string."));
 
 			var response = Submit(expression);
 			var result = Parse(response);
@@ -151,10 +146,7 @@ namespace WolframAPI
 			if(solution.SubPods.IsNull() || solution.SubPods.Count <= 0)
 				return sLConsole.GetString("No solution found. The response might have been malformed.");
 
-			//if(!sPlatform.IsLinux)
-			//	Contract.Assume(!solution.SubPods[0].IsNull());
-
-			if(string.IsNullOrEmpty(solution.SubPods[0].PlainText))
+			if(solution.SubPods[0].PlainText.IsNullOrEmpty())
 				return sLConsole.GetString("No solution found. The pod order might have changed. Report to devs!");
 
 			return solution.SubPods[0].PlainText;
@@ -189,11 +181,8 @@ namespace WolframAPI
 		/// <returns>Raw response</returns>
 		public string Submit(string expression)
 		{
-			//if(!sPlatform.IsLinux)
-			//{
-			//	Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
-			//	Contract.Ensures(!string.IsNullOrEmpty(Contract.Result<string>()));
-			//}
+			if(expression.IsNullOrEmpty())
+				throw new ArgumentNullException("expression", sLConsole.GetString("Cannot evaluate a null string."));
 
 			try
 			{
@@ -207,7 +196,7 @@ namespace WolframAPI
 					returned = client.DownloadString(url);
 				}
 
-				if(!string.IsNullOrEmpty(returned))
+				if(!returned.IsNullOrEmpty())
 					return returned;
 
 				return sLConsole.GetString("Couldn't retrieve information!");
@@ -231,11 +220,8 @@ namespace WolframAPI
 		/// <exception cref="ArgumentNullException">Throws if the specified argument is null.</exception>
 		public static WAResult Parse(string response)
 		{
-			//if(!sPlatform.IsLinux)
-			//{
-			//	Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(response));
-			//	Contract.Ensures(!Contract.Result<WAResult>().IsNull());
-			//}
+			if(response.IsNullOrEmpty())
+				throw new ArgumentNullException("response", sLConsole.GetString("Cannot evaluate a null string."));
 
 			try
 			{
@@ -263,11 +249,8 @@ namespace WolframAPI
 #if WITH_ASYNC
 		private void HandleSolutionReceived(IAsyncResult ar)
 		{
-			//if(!sPlatform.IsLinux)
-			//{
-			//	Contract.Requires<ArgumentNullException>(!ar.IsNull());
-			//	Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
-			//}
+			if(ar.IsNull() || ((AsyncResult)ar).AsyncDelegate.IsNull())
+				throw new ArgumentNullException("ar");
 
 			if(!ar.IsNull())
 			{
@@ -294,8 +277,8 @@ namespace WolframAPI
 		/// <returns>The solution of the given expression</returns>
 		public void SolveAsync(string expression)
 		{
-			//if(!sPlatform.IsLinux)
-			//	Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+			if(expression.IsNullOrEmpty())
+				throw new ArgumentNullException("expression", sLConsole.GetString("Cannot evaluate a null string."));
 
 			var procedure = new ExpressionProcessorMethod(Solve);
 
@@ -307,11 +290,8 @@ namespace WolframAPI
 
 		private void HandleResultReceived(IAsyncResult ar)
 		{
-			//if(!sPlatform.IsLinux)
-			//{
-			//	Contract.Requires<ArgumentNullException>(!ar.IsNull());
-			//	Contract.Requires<ArgumentNullException>(!((AsyncResult)ar).AsyncDelegate.IsNull());
-			//}
+			if(ar.IsNull() || ((AsyncResult)ar).AsyncDelegate.IsNull())
+				throw new ArgumentNullException("ar");
 
 			if(!ar.IsNull())
 			{
@@ -341,8 +321,8 @@ namespace WolframAPI
 		/// <returns>The result</returns>
 		public void GetResultAsync(string expression)
 		{
-			//if(!sPlatform.IsLinux)
-			//	Contract.Requires<ArgumentNullException>(!string.IsNullOrEmpty(expression));
+			if(expression.IsNullOrEmpty())
+				throw new ArgumentNullException("expression", sLConsole.GetString("Cannot evaluate a null string."));
 
 			var procedure = new RetrieveResultMethod(GetResult);
 

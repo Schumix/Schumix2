@@ -34,7 +34,6 @@ namespace Schumix.Installer
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
-
 		private Runtime() {}
 
 		public long MemorySize

@@ -10,7 +10,7 @@
     <RootNamespace>Schumix.Installer</RootNamespace>
     <AssemblyName>Installer</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <ReleaseVersion>4.2.x</ReleaseVersion>
+    <ReleaseVersion>4.3.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
-    <Compile Include="Utilities.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="Runtime.cs" />
     <Compile Include="InstallerBase.cs" />
@@ -80,6 +79,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Windows\CtrlType.cs" />
     <Compile Include="Windows\Windows.cs" />
+    <Compile Include="Util\Utilities.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
@@ -122,5 +122,6 @@
     <Folder Include="Platforms\" />
     <Folder Include="Properties\" />
     <Folder Include="Windows\" />
+    <Folder Include="Util\" />
   </ItemGroup>
 </Project>

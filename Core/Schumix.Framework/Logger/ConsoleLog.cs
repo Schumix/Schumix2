@@ -26,12 +26,12 @@ namespace Schumix.Framework.Logger
 	{
 		public static bool CLog { get; private set; }
 
-		protected ConsoleLog(bool log)
+		protected ConsoleLog()
 		{
-			CLog = log;
+			CLog = false;
 		}
 
-		protected void ChangeLog(bool log)
+		protected ConsoleLog(bool log)
 		{
 			CLog = log;
 		}
@@ -39,6 +39,11 @@ namespace Schumix.Framework.Logger
 		~ConsoleLog()
 		{
 			Log.Debug("ConsoleLog", "~ConsoleLog()");
+		}
+
+		protected void ChangeLog(bool log)
+		{
+			CLog = log;
 		}
 	}
 }

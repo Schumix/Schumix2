@@ -23,7 +23,7 @@ using System.Linq;
 
 namespace Schumix.Installer.Extensions
 {
-	public static class StringExtensions
+	static class StringExtensions
 	{
 		public static string Reverse(this string value)
 		{
