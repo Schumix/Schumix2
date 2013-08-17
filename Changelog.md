@@ -1,6 +1,8 @@
 # Schumix2 ChangeLog
 
-## 4.3.0 (2013-xx-xx)
+## 4.4.0 (2013-xx-xx)
+
+## 4.3.0 (2013-08-17)
 
  * WolframAPI frissítve. Köszönet érte Twl-nek.
  * SchumixVS.sln javítva.
