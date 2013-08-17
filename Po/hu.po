@@ -7,239 +7,234 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-15 15:49:07+0200\n"
+"POT-Creation-Date: 2013-08-17 09:44:51+0200\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: \n"
 "X-Generator: MonoDevelop Gettext addin\n"
 
-#: ../Core/Schumix.Irc/Commands/CommandHandler.cs:80
-#: ../Core/Schumix.Irc/Commands/CommandManager.cs:52
-#: ../Core/Schumix.Irc/MessageHandler.cs:55 ../Core/Schumix.Irc/Network.cs:125
-#: ../Core/Schumix.Irc/Commands/CommandInfo.cs:44
+#: ../Core/Schumix.Irc/Commands/CommandHandler.cs:4
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:4
+#: ../Core/Schumix.Irc/MessageHandler.cs:4 ../Core/Schumix.Irc/Network.cs:15
+#: ../Core/Schumix.Irc/Commands/CommandInfo.cs:4
 msgid "[ServerName: {0}]"
 msgstr "[A szerver neve: {0}]"
 
-#: ../Core/Schumix.Irc/Commands/CommandManager.cs:57
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:5
 msgid "Successfully started the CommandManager."
 msgstr "CommandManager sikeresen elindult."
 
-#: ../Core/Schumix.Irc/Commands/CommandManager.cs:123
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:13
 msgid "Successfuly registered all of Command Handlers."
 msgstr "Összes Command handler regisztrálásra került."
 
-#: ../Core/Schumix.Irc/Commands/CommandManager.cs:164
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:19
 msgid "All Command Handler were deleted."
 msgstr "Összes Command handler törlésre került."
 
-#: ../Core/Schumix.Irc/Commands/CommandManager.cs:231
-#: ../Core/Schumix.Irc/Network.cs:437 ../Core/Schumix.Irc/Network.cs:471
-#: ../Core/Schumix.Irc/Network.cs:498 ../Core/Schumix.Irc/Network.cs:522
-#: ../Core/Schumix.Irc/Network.cs:622 ../Core/Schumix.Irc/Network.cs:644
-#: ../Core/Schumix.Irc/Network.cs:724
-#: ../Core/Schumix.Irc/Flood/AntiFlood.cs:80
-#: ../Core/Schumix.Irc/Sender/SendMessage.cs:380
-#: ../Core/Schumix.Framework/Config/Config.cs:76
-#: ../Core/Schumix.Framework/SchumixBase.cs:135
-#: ../Core/Schumix.Framework/Timer.cs:47
-#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:128
-#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:197
-#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:50
-#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:51
-#: ../Core/Schumix.Framework/Util/Utilities.cs:235
-#: ../Core/Schumix.Framework/Util/Utilities.cs:1005
-#: ../Core/Schumix.Framework/Util/Utilities.cs:1135
-#: ../Core/Schumix.Framework/Util/Utilities.cs:1230
-#: ../Applications/Schumix/Schumix.cs:66
-#: ../Applications/Schumix/Console/Console.cs:104
-#: ../Applications/Schumix/Console/CommandManager.cs:168
-#: ../Applications/Schumix.Server/Config/Config.cs:78
-#: ../Applications/Schumix.Server/New/Schumix.cs:109
-#: ../Addons/Schumix.TestAddon/TestAddon.cs:65
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonConfig.cs:55
-#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:117
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:118
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonConfig.cs:55
-#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:117
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonConfig.cs:55
-#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:162
-#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:239
-#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:472
-#: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:88
-#: ../Addons/Schumix.CompilerAddon/Config/AddonConfig.cs:54
-#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:118
-#: ../Addons/Schumix.HgRssAddon/Config/AddonConfig.cs:55
-#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:119
-#: ../Addons/Schumix.GitRssAddon/Config/AddonConfig.cs:55
-#: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:105
-#: ../Addons/Schumix.CalendarAddon/Config/AddonConfig.cs:54
-#: ../Addons/Schumix.GameAddon/GameAddon.cs:94
-#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:163
-#: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:137
-#: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:54
-#: ../Components/Schumix.Components/Updater/Sql/Sql.cs:79
-#: ../Components/Schumix.Components/Updater/Sql/Sql.cs:97
-#: ../Components/Schumix.Components/Updater/Sql/Sql.cs:129
+#: ../Core/Schumix.Irc/Commands/CommandManager.cs:29
+#: ../Core/Schumix.Irc/Network.cs:58 ../Core/Schumix.Irc/Network.cs:63
+#: ../Core/Schumix.Irc/Network.cs:69 ../Core/Schumix.Irc/Network.cs:73
+#: ../Core/Schumix.Irc/Network.cs:86 ../Core/Schumix.Irc/Network.cs:89
+#: ../Core/Schumix.Irc/Network.cs:98 ../Core/Schumix.Irc/Flood/AntiFlood.cs:6
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:38
+#: ../Core/Schumix.Framework/Config/Config.cs:6
+#: ../Core/Schumix.Framework/SchumixBase.cs:16
+#: ../Core/Schumix.Framework/Timer.cs:3
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:12
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
+#: ../Core/Schumix.Framework/Util/Utilities.cs:25
+#: ../Core/Schumix.Framework/Util/Utilities.cs:98
+#: ../Core/Schumix.Framework/Util/Utilities.cs:116
+#: ../Core/Schumix.Framework/Util/Utilities.cs:129
+#: ../Applications/Schumix/Schumix.cs:5
+#: ../Applications/Schumix/Console/Console.cs:9
+#: ../Applications/Schumix/Console/CommandManager.cs:14
+#: ../Applications/Schumix.Server/Config/Config.cs:6
+#: ../Applications/Schumix.Server/New/Schumix.cs:16
+#: ../Addons/Schumix.TestAddon/TestAddon.cs:5
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:14
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:14
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:14
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:20
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:32
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:61
+#: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:7
+#: ../Addons/Schumix.CompilerAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:14
+#: ../Addons/Schumix.HgRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:14
+#: ../Addons/Schumix.GitRssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:9
+#: ../Addons/Schumix.CalendarAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.GameAddon/GameAddon.cs:7
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:17
+#: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:17
+#: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:5
+#: ../Components/Schumix.Components/Updater/Sql/Sql.cs:8
+#: ../Components/Schumix.Components/Updater/Sql/Sql.cs:10
 msgid "Failure details: {0}"
 msgstr "Meghibásodás részletei: {0}"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:66
+#: ../Core/Schumix.Irc/MessageHandler.cs:6
 msgid "Successfully connected to IRC server."
 msgstr "Sikeres kapcsolódás az irc kiszolgálóhoz."
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:84
-#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:146
+#: ../Core/Schumix.Irc/MessageHandler.cs:8
+#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:11
 msgid "Vhost is OFF."
 msgstr "Vhost kikapcsolásra került."
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:110
+#: ../Core/Schumix.Irc/MessageHandler.cs:11
 msgid "Waiting for connection processing."
 msgstr "Várakozás a kapcsolat feldolgozására."
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:115
+#: ../Core/Schumix.Irc/MessageHandler.cs:12
 msgid "You have not registered!"
 msgstr "Nem regisztrált!"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:120
+#: ../Core/Schumix.Irc/MessageHandler.cs:13
 msgid "No such Bot's nickname!"
 msgstr "Nincs megadva a bot nick neve!"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:139
-#: ../Core/Schumix.Irc/MessageHandler.cs:145
-#: ../Core/Schumix.Irc/MessageHandler.cs:248
-#: ../Core/Schumix.Irc/MessageHandler.cs:252
-#: ../Core/Schumix.Irc/MessageHandler.cs:255
+#: ../Core/Schumix.Irc/MessageHandler.cs:17
+#: ../Core/Schumix.Irc/MessageHandler.cs:18
+#: ../Core/Schumix.Irc/MessageHandler.cs:30
 msgid "[SERVER] "
 msgstr "[SZERVER] "
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:154
+#: ../Core/Schumix.Irc/MessageHandler.cs:19
 msgid "Bad identify password!"
 msgstr "Azonosító jelszó hibás!"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:158
+#: ../Core/Schumix.Irc/MessageHandler.cs:19
 msgid "Already identified!"
 msgstr "Azonosító már aktiválva van!"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:162
+#: ../Core/Schumix.Irc/MessageHandler.cs:19
 msgid "Identify password accepted."
 msgstr "Azonosító jelszó elfogadva."
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:169
+#: ../Core/Schumix.Irc/MessageHandler.cs:21
 msgid "Your nick isn't registered!"
 msgstr "A nick nincs regisztrálva!"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:206
+#: ../Core/Schumix.Irc/MessageHandler.cs:25
 msgid "Nick isnt registered, so the vhost still off!"
 msgstr "A nick nincs beregisztrálva így a vhost nem került bekapcsolásra!"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:248
-#: ../Core/Schumix.Irc/MessageHandler.cs:255
+#: ../Core/Schumix.Irc/MessageHandler.cs:30
 msgid "No such irc command."
 msgstr "Nem létező irc parancs."
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:254
+#: ../Core/Schumix.Irc/MessageHandler.cs:30
 msgid "No such irc command.\n"
 msgstr "Nem létező irc parancs.\n"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:269
-#: ../Core/Schumix.Irc/MessageHandler.cs:286
+#: ../Core/Schumix.Irc/MessageHandler.cs:31
+#: ../Core/Schumix.Irc/MessageHandler.cs:32
 msgid "{0} already in use!"
 msgstr "{0}-t már használja valaki!"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:271
-#: ../Core/Schumix.Irc/MessageHandler.cs:288
+#: ../Core/Schumix.Irc/MessageHandler.cs:31
+#: ../Core/Schumix.Irc/MessageHandler.cs:32
 msgid "Retrying with: {0}"
 msgstr "Újra próbálom ezzel: {0}"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:409
+#: ../Core/Schumix.Irc/MessageHandler.cs:53
 msgid "[joined]"
 msgstr "[csatlakozott]"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:424
+#: ../Core/Schumix.Irc/MessageHandler.cs:57
 msgid "[left] {0}"
 msgstr "[kilépett innen (left)] {0}"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:440
+#: ../Core/Schumix.Irc/MessageHandler.cs:60
 msgid "[quit] {0}"
 msgstr "[kilépett (quit)] {0}"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:451
+#: ../Core/Schumix.Irc/MessageHandler.cs:62
 msgid "[Is now known as {0}]"
 msgstr "[Mostantól {0}-ként ismert]"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:463
+#: ../Core/Schumix.Irc/MessageHandler.cs:65
 msgid "[Kicked that user: {0} reason: {1}]"
 msgstr "[Kirúgta a következő felhasználót: {0} oka: {1}]"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:518
+#: ../Core/Schumix.Irc/MessageHandler.cs:74
 msgid "Identify password accepted!"
 msgstr "Azonosító jelszó elfogadva."
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:521
+#: ../Core/Schumix.Irc/MessageHandler.cs:75
 msgid "[Set mode: {0}]"
 msgstr "[Beállítja a módot: {0}]"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:528
+#: ../Core/Schumix.Irc/MessageHandler.cs:76
 msgid "[Topic] New topic: {0}"
 msgstr "[Téma] Új téma: {0}"
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:533
+#: ../Core/Schumix.Irc/MessageHandler.cs:77
 msgid "{0} invites you to join {1}."
 msgstr "{0} meghívott téged a {1} szobába."
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:534
+#: ../Core/Schumix.Irc/MessageHandler.cs:77
 msgid "[INVITE] {0} invites you to join {1}."
 msgstr "[INVITE] {0} meghívott téged a {1} szobába."
 
-#: ../Core/Schumix.Irc/MessageHandler.cs:551
+#: ../Core/Schumix.Irc/MessageHandler.cs:80
 msgid "[Topic] {0}"
 msgstr "[Téma] {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:118
+#: ../Core/Schumix.Irc/Network.cs:14
 msgid "Successfully started the Network."
 msgstr "Network sikeresen elindult."
 
-#: ../Core/Schumix.Irc/Network.cs:119
+#: ../Core/Schumix.Irc/Network.cs:14
 msgid "Server's name: {0}"
 msgstr "A szerver neve: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:150
+#: ../Core/Schumix.Irc/Network.cs:17
 msgid "Opcodes thread started..."
 msgstr "Opcodes szál indul..."
 
-#: ../Core/Schumix.Irc/Network.cs:156
+#: ../Core/Schumix.Irc/Network.cs:18
 msgid "Ping thread started..."
 msgstr "Ping szál indul..."
 
-#: ../Core/Schumix.Irc/Network.cs:161
+#: ../Core/Schumix.Irc/Network.cs:19
 msgid "Establishing connection with irc server."
 msgstr "Kapcsolat létrehozása az irc szerverrel."
 
-#: ../Core/Schumix.Irc/Network.cs:222
+#: ../Core/Schumix.Irc/Network.cs:22
 msgid "All of IRC handlers are registered."
 msgstr "Összes IRC handler regisztrálásra került."
 
-#: ../Core/Schumix.Irc/Network.cs:341
+#: ../Core/Schumix.Irc/Network.cs:43
 msgid "Connection to: {0}"
 msgstr "Kapcsolódás megindult ide: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:351
+#: ../Core/Schumix.Irc/Network.cs:44
 msgid "Connection closed! ServerName: {0}"
 msgstr "Kapcsolat bontva! A szerver neve: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:363
+#: ../Core/Schumix.Irc/Network.cs:46
 msgid "Connection have been closed."
 msgstr "Kapcsolat bontásra került."
 
-#: ../Core/Schumix.Irc/Network.cs:365
+#: ../Core/Schumix.Irc/Network.cs:46
 msgid "Reconnection to: {0}"
 msgstr "Újrakapcsolódás megindult ide: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:396
+#: ../Core/Schumix.Irc/Network.cs:53
 msgid ""
 "This nick name ({0}) is used by a service bot. Your nick is automaticly "
 "changed to a placeholder one."
@@ -247,65 +242,65 @@ msgstr ""
 "Az adott nick ({0}) egy szervíz bot neve. Automatikusan egy tartalék névra "
 "meg lett változtatva."
 
-#: ../Core/Schumix.Irc/Network.cs:400
+#: ../Core/Schumix.Irc/Network.cs:54
 msgid "Connection type: {0}"
 msgstr "Kapcsolódás típusa: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:409
+#: ../Core/Schumix.Irc/Network.cs:55
 msgid "Fatal error was happened while established the connection!"
 msgstr "Végzetes hiba történt a kapcsolat létrehozásánál!"
 
-#: ../Core/Schumix.Irc/Network.cs:414
+#: ../Core/Schumix.Irc/Network.cs:56
 msgid "Successfully established the connection!"
 msgstr "A kapcsolat sikeresen létrejött!"
 
-#: ../Core/Schumix.Irc/Network.cs:417
+#: ../Core/Schumix.Irc/Network.cs:56
 msgid "Error was happened while established the connection!"
 msgstr "Hiba történt a kapcsolat létrehozásánál!"
 
-#: ../Core/Schumix.Irc/Network.cs:432
+#: ../Core/Schumix.Irc/Network.cs:58
 msgid "Certificate not accepted, exception: {0}"
 msgstr "A tanúsítvány nem lett elfogadva, kivétel: {0}"
 
-#: ../Core/Schumix.Irc/Network.cs:455
+#: ../Core/Schumix.Irc/Network.cs:63
 msgid "Users' datas are sent."
 msgstr "Felhasználói információk ellettek küldve."
 
-#: ../Core/Schumix.Irc/Network.cs:549 ../Core/Schumix.Irc/Network.cs:709
+#: ../Core/Schumix.Irc/Network.cs:76 ../Core/Schumix.Irc/Network.cs:97
 msgid "Successfully started the thread."
 msgstr "A szál sikeresen elindult."
 
-#: ../Core/Schumix.Irc/Network.cs:554
+#: ../Core/Schumix.Irc/Network.cs:76
 msgid "Started the irc data receiving."
 msgstr "Elindult az irc adatok fogadása."
 
-#: ../Core/Schumix.Irc/Network.cs:572
+#: ../Core/Schumix.Irc/Network.cs:79
 msgid "Do not going data from irc server!"
 msgstr "Nem jön információ az irc szerver felöl!"
 
-#: ../Core/Schumix.Irc/Network.cs:699
+#: ../Core/Schumix.Irc/Network.cs:96
 msgid "Received unhandled opcode: {0}"
 msgstr "Ismeretlen opcode kód: {0}"
 
-#: ../Core/Schumix.Irc/PublicMessageHandler.cs:47
+#: ../Core/Schumix.Irc/PublicMessageHandler.cs:4
 msgid "[ACTION] {0}"
 msgstr "[ACTION] {0}"
 
-#: ../Core/Schumix.Irc/Commands/CommandInfo.cs:39
+#: ../Core/Schumix.Irc/Commands/CommandInfo.cs:3
 msgid "Successfully started the CommandInfo."
 msgstr "CommandInfo sikeresen elindult."
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:51
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
 msgid "Operating System:"
 msgstr "Operácios Rendszer:"
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:51
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
 msgid "Processor:"
 msgstr "Processzor:"
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:53
-#: ../Core/Schumix.Irc/Commands/Admin/ReloadCommand.cs:61
-#: ../Applications/Schumix/Console/Commands/ReloadCommand.cs:65
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
+#: ../Core/Schumix.Irc/Commands/Admin/ReloadCommand.cs:2
+#: ../Applications/Schumix/Console/Commands/ReloadCommand.cs:5
 msgid ""
 "This client supports: UserInfo, Finger, Version, Source, Ping, Time and "
 "ClientInfo"
@@ -313,537 +308,530 @@ msgstr ""
 "Ez a kliens támogatja: UserInfo, Finger, Version, Source, Ping, Time és "
 "ClientInfo"
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:71
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:108
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:7
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:8
 msgid " Idle time "
 msgstr " Idle time "
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:93
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:7
 msgid "Is not a supported Ctcp query."
 msgstr "Nem támogatott Ctcp lekérdezés."
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:189
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:13
 msgid " Hours, "
 msgstr " óra, "
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:190
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:13
 msgid " Minutes, "
 msgstr " perc, "
 
-#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:191
+#: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:13
 msgid " Seconds."
 msgstr " másodperc."
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:124
-#: ../Core/Schumix.Irc/Sender/Sender.cs:247
-#: ../Core/Schumix.Irc/Sender/Sender.cs:267
-#: ../Core/Schumix.Irc/Sender/Sender.cs:310
-#: ../Core/Schumix.Irc/Sender/Sender.cs:451
-#: ../Core/Schumix.Irc/Sender/Sender.cs:577
+#: ../Core/Schumix.Irc/Sender/Sender.cs:13
+#: ../Core/Schumix.Irc/Sender/Sender.cs:25
+#: ../Core/Schumix.Irc/Sender/Sender.cs:27
+#: ../Core/Schumix.Irc/Sender/Sender.cs:33
+#: ../Core/Schumix.Irc/Sender/Sender.cs:49
+#: ../Core/Schumix.Irc/Sender/Sender.cs:56
 msgid "{0} is not a valid nickname!"
 msgstr "{0} nem érvényes a nick név!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:161
-#: ../Core/Schumix.Irc/Sender/Sender.cs:183
+#: ../Core/Schumix.Irc/Sender/Sender.cs:17
+#: ../Core/Schumix.Irc/Sender/Sender.cs:19
 msgid "Channel {0}'s access is denied!"
 msgstr "{0} csatorna elérése le van tiltva!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:164
-#: ../Core/Schumix.Irc/Sender/Sender.cs:186
-#: ../Core/Schumix.Irc/Sender/Sender.cs:217
-#: ../Core/Schumix.Irc/Sender/Sender.cs:253
-#: ../Core/Schumix.Irc/Sender/Sender.cs:273
-#: ../Core/Schumix.Irc/Sender/Sender.cs:477
-#: ../Core/Schumix.Irc/Sender/Sender.cs:504
-#: ../Core/Schumix.Irc/Sender/Sender.cs:536
-#: ../Core/Schumix.Irc/Sender/Sender.cs:550
-#: ../Core/Schumix.Irc/Sender/Sender.cs:564
-#: ../Core/Schumix.Irc/Sender/Sender.cs:583
+#: ../Core/Schumix.Irc/Sender/Sender.cs:17
+#: ../Core/Schumix.Irc/Sender/Sender.cs:19
+#: ../Core/Schumix.Irc/Sender/Sender.cs:22
+#: ../Core/Schumix.Irc/Sender/Sender.cs:25
+#: ../Core/Schumix.Irc/Sender/Sender.cs:28
+#: ../Core/Schumix.Irc/Sender/Sender.cs:52
+#: ../Core/Schumix.Irc/Sender/Sender.cs:54
+#: ../Core/Schumix.Irc/Sender/Sender.cs:55
+#: ../Core/Schumix.Irc/Sender/Sender.cs:57
 msgid "{0} is not a valid channel name!"
 msgstr "{0} nem érvényes a csatorna név!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:174
+#: ../Core/Schumix.Irc/Sender/Sender.cs:18
 msgid "Password cannot be empty or null!"
 msgstr "A jelszó nem lehet üres vagy nulla!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:210
-#: ../Core/Schumix.Irc/Sender/Sender.cs:230
+#: ../Core/Schumix.Irc/Sender/Sender.cs:21
+#: ../Core/Schumix.Irc/Sender/Sender.cs:23
 msgid "Part reason cannot be empty or null!"
 msgstr "Lelépés oka nem lehet üres vagy nulla!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:237
+#: ../Core/Schumix.Irc/Sender/Sender.cs:24
 msgid "One of the channels names is not valid!"
 msgstr "Az egyik csatorna neve nem érvényes!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:279
+#: ../Core/Schumix.Irc/Sender/Sender.cs:29
 msgid "The reason for kicking cannot be empty or null!"
 msgstr "Kirúgás oka nem lehet üres vagy nulla!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:297
+#: ../Core/Schumix.Irc/Sender/Sender.cs:31
 msgid "Nick cannot be empty or null!"
 msgstr "Nick nem lehet üres vagy nulla!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:303
+#: ../Core/Schumix.Irc/Sender/Sender.cs:32
 msgid "Reason cannot be empty or null!"
 msgstr "Oka nem lehet üres vagy nulla!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:352
+#: ../Core/Schumix.Irc/Sender/Sender.cs:38
 msgid "Quit reason cannot be null or empty!"
 msgstr "Kilépés oka nem lehet üres vagy nulla!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:409
+#: ../Core/Schumix.Irc/Sender/Sender.cs:44
 msgid "The email address is not valid!"
 msgstr "Az e-mail cím nem érvényes!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:529
+#: ../Core/Schumix.Irc/Sender/Sender.cs:54
 msgid "Topic cannot be empty or null!"
 msgstr "Téma nem lehet üres vagy nulla!"
 
-#: ../Core/Schumix.Irc/Sender/Sender.cs:601
+#: ../Core/Schumix.Irc/Sender/Sender.cs:59
 msgid "Away message cannot be empty or null!"
 msgstr "Távollét üzenet nem lehet üres vagy nulla!"
 
-#: ../Core/Schumix.Irc/Sender/SendMessage.cs:453
-#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:74
+#: ../Core/Schumix.Irc/Sender/SendMessage.cs:50
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:6
 msgid "ChannelList: Failure request!"
 msgstr "ChannelList: Hibás lekérdezés!"
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:134
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:19
 msgid "{0} plugin is now loading."
 msgstr "{0} plugin betöltése megindult."
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:140
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:163
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:20
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:23
 msgid "Plugin can not be loaded!"
 msgstr "Nem tölthető be a plugin!"
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:148
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:169
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:21
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:26
 msgid "Loaded plugin: {0} {1} by {2} ({3})"
 msgstr "Betöltött plugin: {0} {1} készítette {2} ({3})"
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:157
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:22
 msgid "{0} plugin denying and removing is now started."
 msgstr "{0} plugin letiltása és leválasztása megindult."
 
-#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:171
+#: ../Core/Schumix.Irc/Ignore/IgnoreAddon.cs:24
 msgid "{0} plugin successfully removed."
 msgstr "{0} plugin sikeresen le lett választva."
 
-#: ../Core/Schumix.Irc/IrcBase.cs:331
+#: ../Core/Schumix.Irc/IrcBase.cs:36
 msgid "Reload irc module!"
 msgstr "Irc modul újraindítása!"
 
-#: ../Core/Schumix.Irc/IrcBase.cs:346
-#: ../Core/Schumix.Framework/Config/Config.cs:47
-#: ../Core/Schumix.Framework/Database/SQLite.cs:172
-#: ../Core/Schumix.Framework/Database/SQLite.cs:189
-#: ../Core/Schumix.Framework/Database/SQLite.cs:206
-#: ../Core/Schumix.Framework/Database/MySql.cs:180
-#: ../Core/Schumix.Framework/Database/MySql.cs:205
-#: ../Core/Schumix.Framework/Database/MySql.cs:222
-#: ../Core/Schumix.Framework/Database/MySql.cs:239
-#: ../Core/Schumix.Framework/Database/MySql.cs:256
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:137
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:179
-#: ../Core/Schumix.Framework/Network/ClientSocket.cs:122
-#: ../Core/Schumix.Framework/Runtime.cs:70
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:168
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:346
-#: ../Applications/Schumix.Server/ServerListener.cs:105
-#: ../Applications/Schumix.Server/Config/Config.cs:48
+#: ../Core/Schumix.Irc/IrcBase.cs:38
+#: ../Core/Schumix.Framework/Config/Config.cs:4
+#: ../Core/Schumix.Framework/Database/SQLite.cs:16
+#: ../Core/Schumix.Framework/Database/SQLite.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:21
+#: ../Core/Schumix.Framework/Database/MySql.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Database/MySql.cs:28
+#: ../Core/Schumix.Framework/Database/MySql.cs:31
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:12
+#: ../Core/Schumix.Framework/Runtime.cs:8
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:20
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:46
+#: ../Applications/Schumix.Server/ServerListener.cs:6
+#: ../Applications/Schumix.Server/Config/Config.cs:4
 msgid "Program shutting down!"
 msgstr "A program leáll!"
 
-#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:134
+#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:10
 msgid "Sending nickserv identify."
 msgstr "Azonosító jelszó küldése a kiszolgálónak."
 
-#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:149
+#: ../Core/Schumix.Irc/NickName/MyNickInfo.cs:11
 msgid "Vhost is ON."
 msgstr "Vhost bekapcsolásra került."
 
-#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:184
-#: ../Core/Schumix.Framework/SchumixBase.cs:270
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:24
+#: ../Core/Schumix.Framework/SchumixBase.cs:33
 msgid "FunctionReload: Failre request!"
 msgstr "FunctionReload: Hibás lekérdezés!"
 
-#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:201
-#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:205
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:25
 msgid "ChannelFunctionReload: Failre request!"
 msgstr "ChannelFunctionReload: Hibás lekérdezés!"
 
-#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:222
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:26
 msgid "ChannelListReload: Failre request!"
 msgstr "ChannelListReload: Hibás lekérdezés!"
 
-#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:316
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:47
 msgid "Connecting to channels.."
 msgstr "Kapcsolódás a csatornákhoz..."
 
-#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:343
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:50
 msgid "JoinChannel: Failure request!"
 msgstr "JoinChannel: Hibás lekérdezés!"
 
-#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:346
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:51
 msgid "Successfully connected to channels."
 msgstr "Sikeres kapcsolódás a csatornákhoz."
 
-#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:348
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:51
 msgid "Some connection unsuccessful!"
 msgstr "Néhány kapcsolódás sikertelen!"
 
-#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:351
+#: ../Core/Schumix.Irc/Channel/MyChannelInfo.cs:52
 msgid "Banned channels: {0}"
 msgstr "Letiltott csatornák: {0}"
 
-#: ../Core/Schumix.Irc/Util/Rfc2812Util.cs:354
+#: ../Core/Schumix.Irc/Util/Rfc2812Util.cs:35
 msgid "The message is not a CTCP message."
 msgstr "Az üzenet nem CTCP üzenetet!"
 
-#: ../Core/Schumix.Irc/Util/Rfc2812Util.cs:367
+#: ../Core/Schumix.Irc/Util/Rfc2812Util.cs:38
 msgid "The message is not an action."
 msgstr "Az üzenet nem cselekvés!"
 
-#: ../Core/Schumix.Framework/Config/Config.cs:48
-#: ../Applications/Schumix.Server/Config/Config.cs:49
+#: ../Core/Schumix.Framework/Config/Config.cs:4
+#: ../Applications/Schumix.Server/Config/Config.cs:4
 msgid "Please set up the Config file!"
 msgstr "Kérlek töltsed ki a konfigot!"
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:87
+#: ../Core/Schumix.Framework/SchumixBase.cs:5
 msgid "Initiating connection."
 msgstr "Kapcsolat kezdeményezése."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:96
+#: ../Core/Schumix.Framework/SchumixBase.cs:7
 msgid "SchumixListener starting..."
 msgstr "SchumixListener indítása..."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:106
+#: ../Core/Schumix.Framework/SchumixBase.cs:10
 msgid "Timer is starting..."
 msgstr "Timer indul..."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:110
+#: ../Core/Schumix.Framework/SchumixBase.cs:11
 msgid "MySql is starting..."
 msgstr "MySql indul..."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:113
+#: ../Core/Schumix.Framework/SchumixBase.cs:12
 msgid "CacheDB is starting..."
 msgstr "CacheDB indul..."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:117
+#: ../Core/Schumix.Framework/SchumixBase.cs:13
 msgid "Successfully connected to the database."
 msgstr "Az adatbázishoz sikeres a kapcsolódás."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:122
-#: ../Applications/Schumix.Server/Main.cs:140
+#: ../Core/Schumix.Framework/SchumixBase.cs:15
+#: ../Applications/Schumix.Server/Main.cs:14
 msgid "CleanManager is starting..."
 msgstr "CleanManager indul..."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:128
+#: ../Core/Schumix.Framework/SchumixBase.cs:16
 msgid "AddonManager is loading..."
 msgstr "AddonManager indul..."
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:171
+#: ../Core/Schumix.Framework/SchumixBase.cs:21
 msgid "Schumix Shutdown"
 msgstr "Schumix leáll"
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:243
+#: ../Core/Schumix.Framework/SchumixBase.cs:29
 msgid "{0} master channel is updated to: {1}"
 msgstr "{0} mester csatorna frissitve lett erre: {1}"
 
-#: ../Core/Schumix.Framework/SchumixBase.cs:246
+#: ../Core/Schumix.Framework/SchumixBase.cs:29
 msgid "The master channel already exist on the database, named by default!"
 msgstr ""
 "A megadott mester csatorna már létezik egyszer az adatbázisban így az "
 "alapértelmezett fog lenni a neve!"
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:52
-#: ../Core/Schumix.Framework/Database/MySql.cs:78
+#: ../Core/Schumix.Framework/Database/SQLite.cs:4
+#: ../Core/Schumix.Framework/Database/MySql.cs:9
 msgid "Error was handled when tried to connect to the database!"
 msgstr "Hiba történt az adatbázishoz való kapcsolódás során!"
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:58
+#: ../Core/Schumix.Framework/Database/SQLite.cs:4
 msgid "Successfully connected to the SQLite database."
 msgstr "SQLite adatbázishoz sikeres a kapcsolódás."
 
-#: ../Core/Schumix.Framework/Database/SQLite.cs:171
-#: ../Core/Schumix.Framework/Database/SQLite.cs:188
-#: ../Core/Schumix.Framework/Database/SQLite.cs:205
-#: ../Core/Schumix.Framework/Database/SQLite.cs:220
-#: ../Core/Schumix.Framework/Database/MySql.cs:204
-#: ../Core/Schumix.Framework/Database/MySql.cs:221
-#: ../Core/Schumix.Framework/Database/MySql.cs:238
-#: ../Core/Schumix.Framework/Database/MySql.cs:255
-#: ../Core/Schumix.Framework/Database/MySql.cs:270
+#: ../Core/Schumix.Framework/Database/SQLite.cs:16
+#: ../Core/Schumix.Framework/Database/SQLite.cs:19
+#: ../Core/Schumix.Framework/Database/SQLite.cs:22
+#: ../Core/Schumix.Framework/Database/SQLite.cs:25
+#: ../Core/Schumix.Framework/Database/MySql.cs:22
+#: ../Core/Schumix.Framework/Database/MySql.cs:25
+#: ../Core/Schumix.Framework/Database/MySql.cs:28
+#: ../Core/Schumix.Framework/Database/MySql.cs:31
+#: ../Core/Schumix.Framework/Database/MySql.cs:34
 msgid "Query error: {0}"
 msgstr "Query hiba: {0}"
 
-#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:44
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:3
 msgid "Started the database loading."
 msgstr "Adatbázis betöltése elindult."
 
-#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:58
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:6
 msgid "Selecting the Database."
 msgstr "Adatbázis fajtájának kiválasztása folyamatban."
 
-#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:62
-#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:70
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
 msgid "MAJOR ERROR"
 msgstr "SÚLYOS HIBA"
 
-#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:63
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
 msgid "Database type's is not selected!"
 msgstr "Nincs az adatbázis típusa kiválasztva!"
 
-#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:71
+#: ../Core/Schumix.Framework/Database/DatabaseManager.cs:7
 msgid "2 Database are selected!"
 msgstr "Két adatbázis van kiválasztva!"
 
-#: ../Core/Schumix.Framework/Database/MySql.cs:84
+#: ../Core/Schumix.Framework/Database/MySql.cs:9
 msgid "Successfully connected to the MySql database."
 msgstr "MySql adatbázishoz sikeres a kapcsolódás."
 
-#: ../Core/Schumix.Framework/Database/MySql.cs:179
+#: ../Core/Schumix.Framework/Database/MySql.cs:21
 msgid "Sql connection crash."
 msgstr "Sql kapcsolat összeomlott."
 
-#: ../Core/Schumix.Framework/Timer.cs:43
+#: ../Core/Schumix.Framework/Timer.cs:3
 msgid "Successfully loaded the Timer."
 msgstr "Timer sikeresen elindult."
 
-#: ../Core/Schumix.Framework/Timer.cs:61
+#: ../Core/Schumix.Framework/Timer.cs:5
 msgid "Successfully saved the Program's started time."
 msgstr "Program indulási időpontja mentésre került."
 
-#: ../Core/Schumix.Framework/Timer.cs:67
+#: ../Core/Schumix.Framework/Timer.cs:6
 msgid "The program is loaded under {0}ms."
 msgstr "A program {0}ms alatt indult el."
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:107
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:109
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:149
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:151
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:101
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:103
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:11
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:19
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:12
 msgid "Wrong packetid, aborting connection!"
 msgstr "Kapcsolat dobva mert hibás a packetid!"
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:113
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:155
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:107
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:12
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:20
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:13
 msgid "Got packet with ID: {0} from: {1}"
 msgstr "Csomagot kapott, ID: {0} tőle: {1}"
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:121
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:177
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:132
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:13
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:22
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:16
 msgid "Received unhandled packetid: {0}"
 msgstr "Ismeretlen packetid: {0}"
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:135
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
 msgid "Authentication denied to SCS server!"
 msgstr "Hitelesítést megtagadta az SCS szerver!"
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:136
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:178
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:14
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:18
 msgid "Connection closed!"
 msgstr "Kapcsolat bontva!"
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:153
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:15
 msgid "Successfully authed to SCS server."
 msgstr "Sikeresen hitelesítve az SCS szerver."
 
-#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:170
+#: ../Core/Schumix.Framework/Network/ClientPacketHandler.cs:16
 msgid "SCS sent random: {0}"
 msgstr "SCS által küldött véletlenszerű csomag: {0}"
 
-#: ../Core/Schumix.Framework/Network/ClientSocket.cs:66
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
 msgid "Successfully started the ClientSocket."
 msgstr "ClientSocket sikeresen elindult."
 
-#: ../Core/Schumix.Framework/Network/ClientSocket.cs:67
-#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:60
-#: ../Applications/Schumix.Server/ServerListener.cs:62
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:4
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:3
+#: ../Applications/Schumix.Server/ServerListener.cs:3
 msgid "Client connection from: {0}"
 msgstr "Client kapcsolódik: {0}"
 
-#: ../Core/Schumix.Framework/Network/ClientSocket.cs:92
-#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:73
-#: ../Applications/Schumix.Server/ServerListener.cs:75
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:5
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:3
+#: ../Applications/Schumix.Server/ServerListener.cs:3
 msgid "Handling client..."
 msgstr "Client kezelése..."
 
-#: ../Core/Schumix.Framework/Network/ClientSocket.cs:101
-#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:82
-#: ../Applications/Schumix.Server/ServerListener.cs:84
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:7
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:4
+#: ../Applications/Schumix.Server/ServerListener.cs:3
 msgid "Stream data available, reading."
 msgstr "Rendelkezésre álló adatok olvasása."
 
-#: ../Core/Schumix.Framework/Network/ClientSocket.cs:109
-#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:90
-#: ../Applications/Schumix.Server/ServerListener.cs:89
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:9
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:5
+#: ../Applications/Schumix.Server/ServerListener.cs:3
 msgid "Lost connection!"
 msgstr "Elveszett a kapcsolat!"
 
-#: ../Core/Schumix.Framework/Network/ClientSocket.cs:150
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
 msgid "Connected. Sending packet."
 msgstr "Kapcsolodva. Csomag küldése."
 
-#: ../Core/Schumix.Framework/Network/ClientSocket.cs:155
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
 msgid "Packet sent."
 msgstr "Csomag elküldve."
 
-#: ../Core/Schumix.Framework/Network/ClientSocket.cs:160
+#: ../Core/Schumix.Framework/Network/ClientSocket.cs:16
 msgid "Couldn't send SCS packet!"
 msgstr "Nem sikerült elküldeni SCS csomagot!"
 
-#: ../Core/Schumix.Framework/Runtime.cs:69
+#: ../Core/Schumix.Framework/Runtime.cs:8
 msgid "The program, more than {0} MB consumed!"
 msgstr "A program több mint {0} mb-ot fogyaszt!"
 
-#: ../Core/Schumix.Framework/Runtime.cs:104
-#: ../Applications/Schumix.Installer/Runtime.cs:63
+#: ../Core/Schumix.Framework/Runtime.cs:14
+#: ../Applications/Schumix.Installer/Runtime.cs:6
 msgid "Failed to set process name: {0}"
 msgstr "Nem sikerült beállítani folyamat nevét: {0}"
 
-#: ../Core/Schumix.Framework/Runtime.cs:121
-#: ../Applications/Schumix.Installer/Runtime.cs:80
+#: ../Core/Schumix.Framework/Runtime.cs:17
+#: ../Applications/Schumix.Installer/Runtime.cs:9
 msgid "Error setting process name!"
 msgstr "Hiba a folyamat nevének beállításában!"
 
-#: ../Core/Schumix.Framework/CrashDumper.cs:46
-#: ../Applications/Schumix.Installer/CrashDumper.cs:46
+#: ../Core/Schumix.Framework/CrashDumper.cs:3
+#: ../Applications/Schumix.Installer/CrashDumper.cs:3
 msgid "Creating crash dump..."
 msgstr "Crash dump készítése..."
 
-#: ../Core/Schumix.Framework/CrashDumper.cs:59
-#: ../Applications/Schumix.Installer/CrashDumper.cs:59
+#: ../Core/Schumix.Framework/CrashDumper.cs:4
+#: ../Applications/Schumix.Installer/CrashDumper.cs:4
 msgid "Failed to write crash dump! ({0})"
 msgstr "Nem sikerült crash dump-ot írni! ({0})"
 
-#: ../Core/Schumix.Framework/CrashDumper.cs:63
-#: ../Applications/Schumix.Installer/CrashDumper.cs:63
+#: ../Core/Schumix.Framework/CrashDumper.cs:5
+#: ../Applications/Schumix.Installer/CrashDumper.cs:5
 msgid "Crash dump created."
 msgstr "Crash dump létrehozva."
 
-#: ../Core/Schumix.Framework/Config/IRCConfig.cs:35
+#: ../Core/Schumix.Framework/Config/IRCConfig.cs:3
 msgid "Loaded the Irc settings."
 msgstr "Irc beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Config/MySqlConfig.cs:46
+#: ../Core/Schumix.Framework/Config/MySqlConfig.cs:3
 msgid "Loaded the MySql settings."
 msgstr "MySql beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Config/SQLiteConfig.cs:36
+#: ../Core/Schumix.Framework/Config/SQLiteConfig.cs:3
 msgid "Loaded the SQLite settings."
 msgstr "SQLite beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Config/AddonsConfig.cs:38
+#: ../Core/Schumix.Framework/Config/AddonsConfig.cs:3
 msgid "Loaded the Addons settings."
 msgstr "Addons beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Config/ScriptsConfig.cs:38
+#: ../Core/Schumix.Framework/Config/ScriptsConfig.cs:3
 msgid "Loaded the Scripts settings."
 msgstr "Scripts beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Config/LocalizationConfig.cs:34
-#: ../Applications/Schumix.Server/Config/LocalizationConfig.cs:35
+#: ../Core/Schumix.Framework/Config/LocalizationConfig.cs:3
+#: ../Applications/Schumix.Server/Config/LocalizationConfig.cs:3
 msgid "Loaded the Localization settings."
 msgstr "Localization beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Config/UpdateConfig.cs:40
+#: ../Core/Schumix.Framework/Config/UpdateConfig.cs:3
 msgid "Loaded the Update settings."
 msgstr "Update beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Config/ServerConfig.cs:40
-#: ../Applications/Schumix.Server/Config/ServerConfigs.cs:37
+#: ../Core/Schumix.Framework/Config/ServerConfig.cs:3
+#: ../Applications/Schumix.Server/Config/ServerConfigs.cs:3
 msgid "Loaded the Server settings."
 msgstr "Server beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:80
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:6
 msgid "File path not found, default will be used."
 msgstr ""
 "Nem található a megadott elérési út így az alapértelmezett lesz használva!"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:91
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:8
 msgid "There are no addons folder, no addon will be loaded."
 msgstr "Nem található az addon mappa így nem lesz betöltve egy addon se!"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:102
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:11
 msgid "Loading addons from: {0}"
 msgstr "Addonok betöltése innét: {0}"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:151
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:23
 msgid "This addon name already exists in the system so not loaded!"
 msgstr "Ez az addonnév már szerepel a rendszerben ezért nem kerül betöltésre!"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:178
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:28
 msgid "Ignoring plugins (config): {0}"
 msgstr "Tiltott pluginok (konfig): {0}"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:186
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:29
 msgid "Error while loading one of directories! Detail: {0}"
 msgstr "Hiba egy könyvtár betöltése közben! Részletek: {0}"
 
-#: ../Core/Schumix.Framework/Addon/AddonManager.cs:232
+#: ../Core/Schumix.Framework/Addon/AddonManager.cs:35
 msgid "Unload plugins"
 msgstr "Pluginok leválasztva."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:64
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:55
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:61
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:58
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:46
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:49
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:46
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:49
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:46
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:49
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:46
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:49
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:46
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:49
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:46
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:49
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:46
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:49
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:46
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:49
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:9
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:6
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:8
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:6
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:5
 msgid "Config file is loading."
 msgstr "Konfig fájl betöltése."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:138
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:316
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 msgid "The master channel's format is wrong. \"#\" is missing. Corrected."
 msgstr ""
 "Hibás a mester csatorna formátuma! Nincs meg a \"#\" jel. Pótolva lett."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:143
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:321
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:16
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 msgid "The master channel is not given so the default will be used. ({0})"
 msgstr ""
 "Nincs megadva a mester csatorna ezért az alapértelmezet lesz használva. ({0})"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:149
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:327
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:17
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 msgid "The primary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 "Hibás az elsődleges nick név formátuma. Az alapértelmezet lesz használva: {0}"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:155
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:333
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:18
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 msgid "The secondary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 "Hibás a másodlagos nick név formátuma. Az alapértelmezet lesz használva: {0}"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:161
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:339
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:19
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:45
 msgid "The tertiary nick's format is wrong. The default will be used: {0}"
 msgstr ""
 "Hibás a harmadlagos nick név formátuma. Az alapértelmezet lesz használva: {0}"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:167
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:345
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:20
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:46
 msgid ""
 "{0}: In the three nickname there are atleast two identical, please modify "
 "those."
@@ -851,311 +839,310 @@ msgstr ""
 "{0}: A három nick név között minimum kettő olyan van aminek megegyezik a "
 "neve! Kérlek módosítsad őket hogy eltérőek legyenek!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:174
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:352
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:21
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:47
 msgid "The {0} server is already in use so not loaded!"
 msgstr "A {0} szerver név már használva van így nem kerül betöltésre!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:246
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:86
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:119
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:67
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:51
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:54
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:51
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:54
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:51
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:54
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:60
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:54
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:51
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:54
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:51
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:54
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:53
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:54
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:58
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:55
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:44
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:11
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:23
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:7
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:7
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:9
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:6
 msgid "Config database is loading."
 msgstr "Konfig adatbázis betöltve."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:266
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:106
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:139
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:87
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:67
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:69
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:67
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:69
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:67
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:69
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:76
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:69
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:67
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:69
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:67
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:69
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:69
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:69
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:74
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:70
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:47
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
 msgid "No such config file!"
 msgstr "Nincs konfig fájl!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:267
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:107
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:140
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:88
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:68
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:70
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:68
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:70
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:68
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:70
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:77
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:70
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:68
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:70
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:68
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:70
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:70
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:70
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:75
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:71
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:47
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:14
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:26
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
 msgid "Preparing..."
 msgstr "Elkészítése folyamatban..."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:274
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:113
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:147
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:94
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:75
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:76
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:75
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:76
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:75
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:76
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:84
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:76
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:75
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:76
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:75
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:76
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:77
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:76
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:82
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:77
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:48
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:15
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:27
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:11
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:11
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:13
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:10
 msgid "The backup files will be used to renew the data."
 msgstr ""
 "Biztonsági másolatnak megjelölt fájl kerül felhasználásra. Így a régi adatok "
 "lesznek felújítva."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:552
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:157
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:282
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:142
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:104
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:95
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:104
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:95
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:104
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:95
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:129
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:95
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:104
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:95
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:104
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:95
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:108
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:95
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:144
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:98
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:108
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:20
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:58
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:19
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:21
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:30
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:13
 msgid "The backup has been deleted during the re-use."
 msgstr "Biztonsági másolat törlésre kerül mert újra fel lett használva."
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:556
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:161
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:286
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:146
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:108
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:99
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:108
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:99
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:108
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:99
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:133
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:99
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:108
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:99
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:108
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:99
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:112
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:99
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:148
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:102
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:109
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
 msgid "Config file is completed!"
 msgstr "Konfig fájl elkészült!"
 
-#: ../Core/Schumix.Framework/Config/XmlConfig.cs:560
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:290
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:112
-#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:103
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:112
-#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:103
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:112
-#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:103
-#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:137
-#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:103
-#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:112
-#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:103
-#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:112
-#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:103
-#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:116
-#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:103
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:152
-#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:106
+#: ../Core/Schumix.Framework/Config/XmlConfig.cs:109
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:59
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.WordPressRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.SvnRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.MantisBTRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CompilerAddon/Config/AddonXmlConfig.cs:22
+#: ../Addons/Schumix.CompilerAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.HgRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.HgRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.GitRssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
 msgid "Failure was handled during the xml writing. Details: {0}"
 msgstr "Meghibásodás az xml írása során. Részletek: {0}"
 
-#: ../Core/Schumix.Framework/Config/YamlConfig.cs:165
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:150
+#: ../Core/Schumix.Framework/Config/YamlConfig.cs:21
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:20
 msgid "Failure was handled during the yml writing. Details: {0}"
 msgstr "Meghibásodás a yml írása során. Részletek: {0}"
 
-#: ../Core/Schumix.Framework/Config/CrashConfig.cs:34
+#: ../Core/Schumix.Framework/Config/CrashConfig.cs:3
 msgid "Loaded the Crash settings."
 msgstr "Crash beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Config/ShutdownConfig.cs:34
+#: ../Core/Schumix.Framework/Config/ShutdownConfig.cs:3
 msgid "Loaded the Shutdown settings."
 msgstr "Shutdown beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Config/FloodingConfig.cs:36
+#: ../Core/Schumix.Framework/Config/FloodingConfig.cs:3
 msgid "Loaded the Flooding settings."
 msgstr "Flooding beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:78
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:10
 msgid "Successfully started the CacheDB."
 msgstr "CacheDB sikeresen elindult."
 
-#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:88
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:11
 msgid "Load tables from the database to the core."
 msgstr "Adatbázisból táblák betöltése a magba."
 
-#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:90
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:11
 msgid "{0} loaded to the core."
 msgstr "Adatbázisból {0} tábla betöltése a magba."
 
-#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:157
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:15
 msgid "Tables cleared from the core."
 msgstr "Magból a táblák takarításra kerültek."
 
-#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:159
+#: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:15
 msgid "Table {0} deleted from the core."
 msgstr "Magból törölve a {0} tábla."
 
-#: ../Core/Schumix.Framework/Clean/CleanManager.cs:34
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:3
 msgid "Successfully started the CleanManager."
 msgstr "CleanManager sikeresen elindult."
 
-#: ../Core/Schumix.Framework/Clean/CleanManager.cs:46
-#: ../Core/Schumix.Framework/Clean/CleanManager.cs:56
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:5
 msgid "CleanConfig is starting..."
 msgstr "CleanConfig indul..."
 
-#: ../Core/Schumix.Framework/Clean/CleanManager.cs:64
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:6
 msgid "CleanDatabase is starting..."
 msgstr "CleanDatabase indul..."
 
-#: ../Core/Schumix.Framework/Clean/CleanManager.cs:72
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:7
 msgid "Some problems occured during cleanup in some place!"
 msgstr "Néhány helyen takarítás közben hiba lépett fel!"
 
-#: ../Core/Schumix.Framework/Clean/CleanManager.cs:75
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:8
 msgid "Cleanups have been finished."
 msgstr "Sikeresen elkészültek a takarítások."
 
-#: ../Core/Schumix.Framework/Clean/CleanManager.cs:77
+#: ../Core/Schumix.Framework/Clean/CleanManager.cs:8
 msgid "Cleanup is not turned on!"
 msgstr "Nincs bekapcsolva a takarítás!"
 
-#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:39
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:3
 msgid "Successfully started the CleanConfig."
 msgstr "CleanConfig sikeresen elindult."
 
-#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:59
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:6
 msgid "Searching for old config files have been started."
 msgstr "Régi konfig fájlok keresése elindult."
 
-#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:61
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:6
 msgid "Config folder's path: {0}"
 msgstr "Konfig mapa elérhetősége: {0}"
 
-#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:68
-#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:75
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:7
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:8
 msgid "Old config file has been deleted: {0}"
 msgstr "Régi konfig fájl törölve lett: {0}"
 
-#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:79
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:9
 msgid "Old config files have been deleted successfully."
 msgstr "Régi konfig fájlok sikeresen törölve."
 
-#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:81
+#: ../Core/Schumix.Framework/Clean/CleanConfig.cs:9
 msgid "There is not any old config files!"
 msgstr "Nincsenek régi konfig fájlok!"
 
-#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:40
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:3
 msgid "Successfully started the CleanDatabase."
 msgstr "CleanDatabase sikeresen elindult."
 
-#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:60
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:6
 msgid "The {0} table's cleanup have been started."
 msgstr "A {0} tábla takarítása megkezdődött."
 
-#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:72
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:8
 msgid "The old servername ({0}) has been deleted from the table {1}."
 msgstr "Régi szervernév ({0}) törölve lett a {1} táblából."
 
-#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:77
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:9
 msgid "The table {0} is ready for cleanup."
 msgstr "A {0} tábla takarítása kész."
 
-#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:82
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:10
 msgid "The core tables' cleanup is starting."
 msgstr "A magban lévő táblák takarítása indul."
 
-#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:92
+#: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:10
 msgid "The core tables' cleanup have been finished."
 msgstr "A magban lévő táblák takarítása kész."
 
-#: ../Core/Schumix.Framework/Config/CleanConfig.cs:36
+#: ../Core/Schumix.Framework/Config/CleanConfig.cs:3
 msgid "Loaded the Clean settings."
 msgstr "Clean beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:39
+#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:3
 msgid "Username missing!"
 msgstr "Nincs megadva a felhasználó neve!"
 
-#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:45
+#: ../Core/Schumix.Framework/Bitly/BitlyApi.cs:4
 msgid "Api key missing!"
 msgstr "Nincs megadva az api kulcs!"
 
-#: ../Core/Schumix.Framework/Config/ShortUrlConfig.cs:36
+#: ../Core/Schumix.Framework/Config/ShortUrlConfig.cs:2
 msgid "Loaded the ShortUrl settings."
 msgstr "ShortUrl beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Exceptions/OptionException.cs:56
-#: ../Applications/Schumix.Config/Exceptions/OptionException.cs:56
-#: ../Applications/Schumix.Installer/Exceptions/OptionException.cs:56
+#: ../Core/Schumix.Framework/Exceptions/OptionException.cs:3
+#: ../Applications/Schumix.Config/Exceptions/OptionException.cs:3
+#: ../Applications/Schumix.Installer/Exceptions/OptionException.cs:3
 msgid "OptionName"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:169
-#: ../Core/Schumix.Framework/Logger/Log.cs:207
+#: ../Core/Schumix.Framework/Logger/Log.cs:25
+#: ../Core/Schumix.Framework/Logger/Log.cs:32
 msgid "The log's file name changed. From now in it will be here: {0}\n"
 msgstr "Megváltozott a log fájl neve. Ezentúl itt lesz: {0}\n"
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:175
+#: ../Core/Schumix.Framework/Logger/Log.cs:27
 msgid ""
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here.\n"
@@ -1163,7 +1150,7 @@ msgstr ""
 "Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
 "logok.\n"
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:177
+#: ../Core/Schumix.Framework/Logger/Log.cs:27
 msgid ""
 "\n"
 "The log file's name changed. {0} was the old. From now on the logs will be "
@@ -1173,15 +1160,15 @@ msgstr ""
 "Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
 "logok.\n"
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:199
-#: ../Core/Schumix.Framework/Logger/DebugLog.cs:49
-#: ../Applications/Schumix.Installer/Logger/Log.cs:111
+#: ../Core/Schumix.Framework/Logger/Log.cs:32
+#: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
+#: ../Applications/Schumix.Installer/Logger/Log.cs:14
 msgid "Started time: [{0}]\n"
 msgstr "Indulási időpont: [{0}]\n"
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:201
-#: ../Core/Schumix.Framework/Logger/DebugLog.cs:51
-#: ../Applications/Schumix.Installer/Logger/Log.cs:113
+#: ../Core/Schumix.Framework/Logger/Log.cs:32
+#: ../Core/Schumix.Framework/Logger/DebugLog.cs:6
+#: ../Applications/Schumix.Installer/Logger/Log.cs:14
 msgid ""
 "\n"
 "Started time: [{0}]\n"
@@ -1189,7 +1176,7 @@ msgstr ""
 "\n"
 "Indulási időpont: [{0}]\n"
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:211
+#: ../Core/Schumix.Framework/Logger/Log.cs:33
 msgid ""
 "The log file's name changed. {0} was the old. From now on the logs will be "
 "here. Change's time: [{1}]\n"
@@ -1197,7 +1184,7 @@ msgstr ""
 "Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
 "logok. Megváltozás időpontja: [{1}]\n"
 
-#: ../Core/Schumix.Framework/Logger/Log.cs:213
+#: ../Core/Schumix.Framework/Logger/Log.cs:33
 msgid ""
 "\n"
 "The log file's name changed. {0} was the old. From now on the logs will be "
@@ -1207,396 +1194,389 @@ msgstr ""
 "Megváltozott a log fájl neve. A régi {0} volt. Mostantól ide kerülnek a "
 "logok. Megváltozás időpontja: [{1}]\n"
 
-#: ../Core/Schumix.Framework/Config/ListenerConfig.cs:38
+#: ../Core/Schumix.Framework/Config/ListenerConfig.cs:3
 msgid "Loaded the Listener settings."
 msgstr "Listener beállításai betöltve."
 
-#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:55
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:3
 msgid "Successfully started the SchumixListener."
 msgstr "SchumixListener sikeresen elindult."
 
-#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:103
+#: ../Core/Schumix.Framework/Listener/SchumixListener.cs:7
 msgid "The data's processing is completed."
 msgstr "Az adatok feldolgozása befejeződött!"
 
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:82
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:8
 msgid "Ping Timeout"
 msgstr "Ping időtúllépés"
 
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:84
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:286
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:193
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:8
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:38
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:24
 msgid "Connection closed! Guid of client: {0}"
 msgstr "Kapcsolat bontva! Guid a clienttől: {0}"
 
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:188
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:158
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:24
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
 msgid "Auth unsuccessful! Guid of client: {0}"
 msgstr "Hitelesítés sikertelen! Guid a clienttől: {0}"
 
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:189
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:203
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:159
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:169
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:24
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:25
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
 msgid "Hash was: {0}"
 msgstr "Hash volt: {0}"
 
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:190
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:204
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:160
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:170
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:24
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:25
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
 msgid "Back port is: {0}"
 msgstr "Vissza port: {0}"
 
-#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:202
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:168
+#: ../Core/Schumix.Framework/Listener/SchumixPacketHandler.cs:25
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:21
 msgid "Auth successful. Guid of client: {0}"
 msgstr "Hitelesítés sikeres. Guid a clienttől: {0}"
 
-#: ../Core/Schumix.Framework/Util/Utilities.cs:228
+#: ../Core/Schumix.Framework/Util/Utilities.cs:25
 msgid "Checking: {0}"
 msgstr "Ellenőrzése: {0}"
 
-#: ../Applications/Schumix/Main.cs:152
-#: ../Applications/Schumix.Server/Main.cs:116
+#: ../Applications/Schumix/Main.cs:11 ../Applications/Schumix.Server/Main.cs:9
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
 msgstr "A program leállításához használd a <Ctrl+C> vagy <quit> parancsot!"
 
-#: ../Applications/Schumix/Main.cs:153
-#: ../Applications/Schumix.Server/Main.cs:117
+#: ../Applications/Schumix/Main.cs:11 ../Applications/Schumix.Server/Main.cs:9
 msgid "Schumix Version: {0}"
 msgstr "Schumix Verzió: {0}"
 
-#: ../Applications/Schumix/Main.cs:154
-#: ../Applications/Schumix.Installer/Main.cs:100
-#: ../Applications/Schumix.Server/Main.cs:118
+#: ../Applications/Schumix/Main.cs:11
+#: ../Applications/Schumix.Installer/Main.cs:10
+#: ../Applications/Schumix.Server/Main.cs:9
 msgid "Website: {0}"
 msgstr "Weboldal: {0}"
 
-#: ../Applications/Schumix/Main.cs:155
-#: ../Applications/Schumix.Installer/Main.cs:101
-#: ../Applications/Schumix.Server/Main.cs:119
+#: ../Applications/Schumix/Main.cs:11
+#: ../Applications/Schumix.Installer/Main.cs:10
+#: ../Applications/Schumix.Server/Main.cs:9
 msgid "Programmed by: {0}"
 msgstr "Programot készítette: {0}"
 
-#: ../Applications/Schumix/Main.cs:156
-#: ../Applications/Schumix.Server/Main.cs:120
+#: ../Applications/Schumix/Main.cs:11 ../Applications/Schumix.Server/Main.cs:9
 msgid "Developers: {0}"
 msgstr "Fejlesztők: {0}"
 
-#: ../Applications/Schumix/Main.cs:178
-#: ../Applications/Schumix.Installer/Main.cs:113
-#: ../Applications/Schumix.Server/Main.cs:135
+#: ../Applications/Schumix/Main.cs:17
+#: ../Applications/Schumix.Installer/Main.cs:13
+#: ../Applications/Schumix.Server/Main.cs:13
 msgid "System is starting..."
 msgstr "Rendszer indul..."
 
-#: ../Applications/Schumix/Main.cs:181
-#: ../Applications/Schumix.Server/Main.cs:138
+#: ../Applications/Schumix/Main.cs:18
+#: ../Applications/Schumix.Server/Main.cs:13
 msgid "Colorblind mode is on!"
 msgstr "Színvak mód be van kapcsolva!"
 
-#: ../Applications/Schumix/Main.cs:190
-#: ../Applications/Schumix.Installer/Main.cs:122
-#: ../Applications/Schumix.Server/Main.cs:160
+#: ../Applications/Schumix/Main.cs:20
+#: ../Applications/Schumix.Installer/Main.cs:15
+#: ../Applications/Schumix.Server/Main.cs:18
 msgid "FATAL ERROR"
 msgstr "VÉGZETES HIBA"
 
-#: ../Applications/Schumix/Main.cs:191
-#: ../Applications/Schumix.Installer/Main.cs:123
-#: ../Applications/Schumix.Server/Main.cs:161
-#: ../Applications/Schumix.Server/Main.cs:192
+#: ../Applications/Schumix/Main.cs:20
+#: ../Applications/Schumix.Installer/Main.cs:15
+#: ../Applications/Schumix.Server/Main.cs:18
+#: ../Applications/Schumix.Server/Main.cs:22
 msgid "An unhandled exception has been thrown. ({0})"
 msgstr "Nem kezelt kivétel keletkezett. ({0})"
 
-#: ../Applications/Schumix/Main.cs:197
-#: ../Applications/Schumix.Server/Main.cs:145
+#: ../Applications/Schumix/Main.cs:21
+#: ../Applications/Schumix.Server/Main.cs:15
 msgid "The automatic update is disabled."
 msgstr "Az automatikus frissítés le van tiltva!"
 
-#: ../Applications/Schumix/Schumix.cs:53
+#: ../Applications/Schumix/Schumix.cs:3
 msgid "Successfully started SchumixBot."
 msgstr "SchumixBot sikeresen elindult."
 
-#: ../Applications/Schumix/Schumix.cs:54
+#: ../Applications/Schumix/Schumix.cs:3
 msgid "Network starting..."
 msgstr "Network indul..."
 
-#: ../Applications/Schumix/Schumix.cs:60
+#: ../Applications/Schumix/Schumix.cs:5
 msgid "Console starting..."
 msgstr "Console indul..."
 
-#: ../Applications/Schumix/Console/Console.cs:52
+#: ../Applications/Schumix/Console/Console.cs:3
 msgid "Successfully started the Console."
 msgstr "Console sikeresen elindult."
 
-#: ../Applications/Schumix/Console/Console.cs:53
+#: ../Applications/Schumix/Console/Console.cs:3
 msgid "Console reader starting..."
 msgstr "Console parancs olvasója indul..."
 
-#: ../Applications/Schumix/Console/Console.cs:86
+#: ../Applications/Schumix/Console/Console.cs:5
 msgid "Successfully started the Console reader."
 msgstr "Console parancs olvasó része elindult."
 
-#: ../Applications/Schumix/Console/Console.cs:93
+#: ../Applications/Schumix/Console/Console.cs:7
 msgid "Console input: {0}"
 msgstr "Konzol bemenet: {0}"
 
-#: ../Applications/Schumix/Console/CommandManager.cs:62
+#: ../Applications/Schumix/Console/CommandManager.cs:3
 msgid "Successfully started the CCommandManager."
 msgstr "CCommandManager sikeresen elindult."
 
-#: ../Applications/Schumix/Console/CommandManager.cs:110
+#: ../Applications/Schumix/Console/CommandManager.cs:8
 msgid "All Command Handler are registered."
 msgstr "Összes Command handler regisztrálásra került."
 
-#: ../Applications/Schumix.Installer/Main.cs:98
+#: ../Applications/Schumix.Installer/Main.cs:10
 msgid "To shut down the program use the <Ctrl+C> command!"
 msgstr "A program leállításához használd a <Ctrl+C> parancsot!"
 
-#: ../Applications/Schumix.Installer/Main.cs:99
+#: ../Applications/Schumix.Installer/Main.cs:10
 msgid "Installer Version: {0}"
 msgstr "Installer Verzió: {0}"
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:53
+#: ../Applications/Schumix.Installer/InstallerBase.cs:4
 msgid "Installer started."
 msgstr "Installer elindult."
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:61
+#: ../Applications/Schumix.Installer/InstallerBase.cs:6
 msgid "The installation is finished. The program shutting down!"
 msgstr "A telepítés befejeződött. Leáll a program!"
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:81
-#: ../Components/Schumix.Components/Updater/Update.cs:153
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Components/Schumix.Components/Updater/Update.cs:20
 msgid "Successfully downloaded new version."
 msgstr "Forrás sikeresen le lett töltve."
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:85
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
 msgid "Downloading unsuccessful."
 msgstr "Sikertelen letöltés!"
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:86
-#: ../Applications/Schumix.Installer/InstallerBase.cs:100
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
+#: ../Applications/Schumix.Installer/InstallerBase.cs:11
 msgid "Installation successful!"
 msgstr "A telepítés befejeződött!"
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:94
-#: ../Components/Schumix.Components/Updater/Update.cs:166
+#: ../Applications/Schumix.Installer/InstallerBase.cs:10
+#: ../Components/Schumix.Components/Updater/Update.cs:21
 msgid "Started translating."
 msgstr "Fordítás megkezdése."
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:99
+#: ../Applications/Schumix.Installer/InstallerBase.cs:11
 msgid "Error was handled while translated."
 msgstr "Hiba történt a fordítás közben!"
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:105
-#: ../Components/Schumix.Components/Updater/Update.cs:177
+#: ../Applications/Schumix.Installer/InstallerBase.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:23
 msgid "Successfully finished the translation."
 msgstr "Fordítás sikeresen befejeződött."
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:110
+#: ../Applications/Schumix.Installer/InstallerBase.cs:13
 msgid "Copy files."
 msgstr "Fájlok másolása."
 
-#: ../Applications/Schumix.Installer/InstallerBase.cs:116
+#: ../Applications/Schumix.Installer/InstallerBase.cs:14
 msgid "Remove unneeded datas."
 msgstr "Felesleges adatok eltávolítása."
 
-#: ../Applications/Schumix.Installer/Download/CloneSchumix.cs:38
-#: ../Components/Schumix.Components/Updater/Download/CloneSchumix.cs:39
+#: ../Applications/Schumix.Installer/Download/CloneSchumix.cs:3
+#: ../Components/Schumix.Components/Updater/Download/CloneSchumix.cs:3
 msgid "Cloning Schumix2."
 msgstr "Schumix2 klónozás."
 
-#: ../Applications/Schumix.Server/ServerListener.cs:57
+#: ../Applications/Schumix.Server/ServerListener.cs:3
 msgid "Successfully started the ServerListener."
 msgstr "ServerListener sikeresen elindult."
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:139
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:17
 msgid "Sending random value: {0}"
 msgstr "Véletlenszerű érték küldése: {0}"
 
-#: ../Applications/Schumix.Server/ServerPacketHandler.cs:201
+#: ../Applications/Schumix.Server/ServerPacketHandler.cs:27
 msgid "Restart in progress..."
 msgstr "Újraindítás folyamatban..."
 
-#: ../Applications/Schumix.Server/New/Schumix.cs:93
+#: ../Applications/Schumix.Server/New/Schumix.cs:12
 msgid "One of the summix has been shuted down, it will be restarted."
 msgstr "Leállt az egyik Schumix ezért újra lesz indítva."
 
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:95
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:233
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:20
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:37
 msgid "Schumixs starting..."
 msgstr "Schumixok indítása..."
 
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:98
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:234
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:21
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:37
 msgid "Schumixs number: {0}"
 msgstr "Schumixok száma: {0}"
 
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:101
-#: ../Applications/Schumix.Server/Config/XmlConfig.cs:117
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:253
-#: ../Applications/Schumix.Server/Config/YamlConfig.cs:259
+#: ../Applications/Schumix.Server/Config/XmlConfig.cs:22
+#: ../Applications/Schumix.Server/Config/YamlConfig.cs:39
 msgid "There is no load of Schumix!"
 msgstr "Nincs betöltendő Schumix!"
 
-#: ../Libraries/WolframAPI/Collections/UniqueList.cs:45
+#: ../Libraries/WolframAPI/Collections/UniqueList.cs:3
 msgid "The item you tried to add to the UniqueList is null."
 msgstr "A cucc amit a uniquelisthez akarták addni az null."
 
-#: ../Libraries/WolframAPI/Collections/UniqueList.cs:48
+#: ../Libraries/WolframAPI/Collections/UniqueList.cs:3
 msgid "The unique list already contains that element."
 msgstr "Az egyedi lista már atrtalmazza ezt az elemet."
 
-#: ../Libraries/WolframAPI/WAClient.cs:125
-#: ../Libraries/WolframAPI/WAClient.cs:184
-#: ../Libraries/WolframAPI/WAClient.cs:223
-#: ../Libraries/WolframAPI/WAClient.cs:280
-#: ../Libraries/WolframAPI/WAClient.cs:324
+#: ../Libraries/WolframAPI/WAClient.cs:14
+#: ../Libraries/WolframAPI/WAClient.cs:24
+#: ../Libraries/WolframAPI/WAClient.cs:29
+#: ../Libraries/WolframAPI/WAClient.cs:39
+#: ../Libraries/WolframAPI/WAClient.cs:46
 msgid "Cannot evaluate a null string."
 msgstr "Nem lehet null stringet értelmezni."
 
-#: ../Libraries/WolframAPI/WAClient.cs:131
-#: ../Libraries/WolframAPI/WAClient.cs:146
+#: ../Libraries/WolframAPI/WAClient.cs:15
+#: ../Libraries/WolframAPI/WAClient.cs:19
 msgid "No solution found. The response might have been malformed."
 msgstr "Megoldás nem található. A válasz eltorzulhatott."
 
-#: ../Libraries/WolframAPI/WAClient.cs:142
+#: ../Libraries/WolframAPI/WAClient.cs:17
 msgid "No solution found."
 msgstr "Megoldás nem található."
 
-#: ../Libraries/WolframAPI/WAClient.cs:149
+#: ../Libraries/WolframAPI/WAClient.cs:20
 msgid "No solution found. The pod order might have changed. Report to devs!"
 msgstr ""
 "Megoldás nem található. A fő rendszer megváltozhatott. Jelentsd a "
 "fejlesztőknek!"
 
-#: ../Libraries/WolframAPI/WAClient.cs:167
+#: ../Libraries/WolframAPI/WAClient.cs:22
 msgid "The parameter passed to this method was null or empty."
 msgstr "Az ennek a metódusnak küldött paraméter üres vagy null."
 
-#: ../Libraries/WolframAPI/WAClient.cs:201
+#: ../Libraries/WolframAPI/WAClient.cs:28
 msgid "Couldn't retrieve information!"
 msgstr "Nem tudtam visszanyerni az információt!"
 
-#: ../Libraries/WolframAPI/WAClient.cs:205
+#: ../Libraries/WolframAPI/WAClient.cs:28
 msgid "WebException thrown while getting the response."
 msgstr "Kivételt dobott letöltése közben a webcím: {0}"
 
-#: ../Libraries/WolframAPI/WAClient.cs:209
+#: ../Libraries/WolframAPI/WAClient.cs:28
 msgid "Unhandled exception thrown while submitting the expression."
 msgstr "Kezeletlen kivétel lépett fel a kifejezezés küldésekor."
 
-#: ../Libraries/WolframAPI/WAClient.cs:236
+#: ../Libraries/WolframAPI/WAClient.cs:32
 msgid "Could not deserialize the response. It might have been a malformed one."
 msgstr "Nem tudtam letölteni a választ. Lehetséges, hogy torz."
 
-#: ../Libraries/WolframAPI/WAClient.cs:242
+#: ../Libraries/WolframAPI/WAClient.cs:33
 msgid "Exception thrown while deserializing the response."
 msgstr "Kivételt dobott letöltése közben a webcím: {0}"
 
-#: ../Libraries/WolframAPI/WAPod.cs:92
+#: ../Libraries/WolframAPI/WAPod.cs:10
 msgid "This Pod does not possess any subpods."
 msgstr "Ez a Pod nem tartalmaz alpodokat."
 
-#: ../Libraries/WolframAPI/XmlSerialized.cs:69
+#: ../Libraries/WolframAPI/XmlSerialized.cs:6
 msgid "Error during serialization"
 msgstr "Hiba történt sorbarendezés közben"
 
-#: ../Libraries/WolframAPI/XmlSerialized.cs:73
+#: ../Libraries/WolframAPI/XmlSerialized.cs:7
 msgid "Error while serializing instance! Type: {0}"
 msgstr "Hiba történt a kérelem sorbarendezésekor! Típus: {0}"
 
-#: ../Addons/Schumix.TestAddon/TestAddon.cs:65
-#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:117
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:118
-#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:117
-#: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:88
-#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:118
-#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:119
-#: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:105
-#: ../Addons/Schumix.GameAddon/GameAddon.cs:94
-#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:163
+#: ../Addons/Schumix.TestAddon/TestAddon.cs:5
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:14
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:14
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:14
+#: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:7
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:14
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:14
+#: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:9
+#: ../Addons/Schumix.GameAddon/GameAddon.cs:7
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:17
 msgid "Reload: "
 msgstr "Újratöltés: "
 
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:108
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:239
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:283
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:226
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:270
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:204
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:248
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:235
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:289
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:6
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:22
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:26
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:21
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:25
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:21
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:25
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:21
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:29
 msgid "[{0}] Failure details: {1}"
 msgstr "[{0}] Meghibásodás részletei: {1}"
 
-#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:250
-#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:237
-#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:215
-#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:246
+#: ../Addons/Schumix.WordPressRssAddon/Rss/WordPressRss.cs:23
+#: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:22
+#: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:22
+#: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:22
 msgid "[{0}] Fatal failure details: {1}"
 msgstr "[{0}] Végzetes meghibásodás részletei: {1}"
 
-#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:82
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:83
-#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:82
-#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:83
-#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:84
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:10
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:10
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:10
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:10
 msgid "{0}: {1} rss loaded."
 msgstr "{0}: {1} rss került betöltésre."
 
-#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:85
-#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:86
-#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:85
-#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:86
-#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:87
+#: ../Addons/Schumix.WordPressRssAddon/WordPressRssAddon.cs:10
+#: ../Addons/Schumix.SvnRssAddon/SvnRssAddon.cs:10
+#: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:10
+#: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:10
+#: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:10
 msgid "{0}: Empty database!"
 msgstr "{0}: Üres az adatbázis!"
 
-#: ../Addons/Schumix.WordPressRssAddon/Config/RssConfig.cs:35
-#: ../Addons/Schumix.SvnRssAddon/Config/RssConfig.cs:35
-#: ../Addons/Schumix.MantisBTRssAddon/Config/RssConfig.cs:35
-#: ../Addons/Schumix.HgRssAddon/Config/RssConfig.cs:35
-#: ../Addons/Schumix.GitRssAddon/Config/RssConfig.cs:35
+#: ../Addons/Schumix.WordPressRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.SvnRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.MantisBTRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.HgRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.GitRssAddon/Config/RssConfig.cs:3
 msgid "Loaded the Rss settings."
 msgstr "Rss beállításai betöltve."
 
-#: ../Addons/Schumix.CompilerAddon/Config/CompilerConfig.cs:53
+#: ../Addons/Schumix.CompilerAddon/Config/CompilerConfig.cs:3
 msgid "Loaded the Compiler settings."
 msgstr "Compiler beállításai betöltve."
 
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:112
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:265
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:309
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:6
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:24
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:28
 msgid "[{0} {1}] Failure details: {2}"
 msgstr "[{0} {1}] Meghibásodás részletei: {2}"
 
-#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:276
+#: ../Addons/Schumix.GitRssAddon/Rss/GitRss.cs:25
 msgid "[{0} {1}] Fatal failure details: {2}"
 msgstr "[{0} {1}] Végzetes meghibásodás részletei: {2}"
 
-#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:152
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:18
 msgid "[UpdateFlood] Failure details: {0}"
 msgstr "[UpdateFlood] Meghibásodás részletei: {0}"
 
-#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:164
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:19
 msgid "[UpdateUnban] Failure details: {0}"
 msgstr "[UpdateUnban] Meghibásodás részletei: {0}"
 
-#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:176
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:20
 msgid "[UpdateCalendar] Failure details: {0}"
 msgstr "[UpdateCalendar] Meghibásodás részletei: {0}"
 
-#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:188
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:21
 msgid "[UpdateNameDay] Failure details: {0}"
 msgstr "[UpdateNameDay] Meghibásodás részletei: {0}"
 
-#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:200
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:22
 msgid "[UpdateBirthDay] Failure details: {0}"
 msgstr "[UpdateBirthDay] Meghibásodás részletei: {0}"
 
-#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:412
+#: ../Addons/Schumix.CalendarAddon/Calendar/Calendar.cs:44
 msgid ""
 "The nameday could not find in the following language: {0} Server: {1} "
 "Channel: {2}"
@@ -1604,123 +1584,122 @@ msgstr ""
 "A névnap nem található meg az alábbi nyelvezeten: {0} Szerver: {1} Csatorna: "
 "{2}"
 
-#: ../Addons/Schumix.CalendarAddon/Config/CalendarConfig.cs:39
+#: ../Addons/Schumix.CalendarAddon/Config/CalendarConfig.cs:3
 msgid "Loaded the Calendar settings."
 msgstr "Calendar beállításai betöltve."
 
-#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:61
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:4
 msgid "The deleting of messages that older than 30 days have been started."
 msgstr "30 napnál régebbi üzenetek törlése a message táblából megindult."
 
-#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:75
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:7
 msgid "Message deletion has been ended."
 msgstr "Üzenetek törlése befejezve."
 
-#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:265
+#: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:33
 msgid "Invalid webpage address: {0}"
 msgstr "Érvénytelen weboldal cím: {0}"
 
-#: ../Addons/Schumix.ExtraAddon/Commands/WebHelper.cs:70
+#: ../Addons/Schumix.ExtraAddon/Commands/WebHelper.cs:5
 msgid "Exception thrown while fetching web title: {0}"
 msgstr "Kivételt dobott letöltése közben a web title: {0}"
 
-#: ../Addons/Schumix.ExtraAddon/Config/ModeConfig.cs:37
+#: ../Addons/Schumix.ExtraAddon/Config/ModeConfig.cs:3
 msgid "Loaded the Mode settings."
 msgstr "Mode beállításai betöltve."
 
-#: ../Addons/Schumix.ExtraAddon/Config/WeatherConfig.cs:35
+#: ../Addons/Schumix.ExtraAddon/Config/WeatherConfig.cs:3
 msgid "Loaded the Weather settings."
 msgstr "Weather beállításai betöltve."
 
-#: ../Addons/Schumix.ExtraAddon/Config/WolframAlphaConfig.cs:35
+#: ../Addons/Schumix.ExtraAddon/Config/WolframAlphaConfig.cs:3
 msgid "Loaded the WorlframAlpha settings."
 msgstr "WorlframAlpha beállításai betöltve."
 
-#: ../Addons/Schumix.ExtraAddon/Commands/YoutubeTitle.cs:93
+#: ../Addons/Schumix.ExtraAddon/Commands/YoutubeTitle.cs:10
 msgid "Exception thrown while fetching youtube title: {0}"
 msgstr "Kivételt dobott letöltése közben a youtube title: {0}"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:49
+#: ../Components/Schumix.Components/Updater/Update.cs:3
 msgid "Automatic updater is off."
 msgstr "Automatikus frissítés ki van kapcsolva."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:66
+#: ../Components/Schumix.Components/Updater/Update.cs:7
 msgid "The update is finished. The program shutting down!"
 msgstr "A frissítés befejeződött. Leáll a program!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:81
+#: ../Components/Schumix.Components/Updater/Update.cs:10
 msgid "Searching for new stable version is started."
 msgstr "Új stabil verzió keresése megindult."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:88
-#: ../Components/Schumix.Components/Updater/Update.cs:101
+#: ../Components/Schumix.Components/Updater/Update.cs:12
+#: ../Components/Schumix.Components/Updater/Update.cs:14
 msgid "Downloading new version."
 msgstr "Új forrás letöltése."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:94
+#: ../Components/Schumix.Components/Updater/Update.cs:12
 msgid "Searching for the last version is started."
 msgstr "A legutolsó verzió keresése megindult."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:107
+#: ../Components/Schumix.Components/Updater/Update.cs:14
 msgid "No such version like this, update interrupted!"
 msgstr "Ilyen verzió nem létezik ezért a frissítés leáll!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:133
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "Currently no newer version!"
 msgstr "Jelenleg nincs újabb verzió!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:134
-#: ../Components/Schumix.Components/Updater/Update.cs:141
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "The program starts is continuing."
 msgstr "Folytatódik a program indulása."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:137
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "I found a newer version. The update to {0} version is starting."
 msgstr "Újabb verziót találtam. Megindul a frissítés a {0} verzióra."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:140
+#: ../Components/Schumix.Components/Updater/Update.cs:18
 msgid "Older version found, update interrupted!"
 msgstr "Régebbi verziót találtam ezért leáll a frissítés!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:157
+#: ../Components/Schumix.Components/Updater/Update.cs:20
 msgid "Downloading unsuccessful!"
 msgstr "Letöltés sikertelen!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:158
-#: ../Components/Schumix.Components/Updater/Update.cs:172
+#: ../Components/Schumix.Components/Updater/Update.cs:20
+#: ../Components/Schumix.Components/Updater/Update.cs:22
 msgid "Updating successful!"
 msgstr "A frissítés befejeződött!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:171
+#: ../Components/Schumix.Components/Updater/Update.cs:22
 msgid "Error was handled while translated!"
 msgstr "Hiba történt a fordítás közben!"
 
-#: ../Components/Schumix.Components/Updater/Update.cs:182
+#: ../Components/Schumix.Components/Updater/Update.cs:24
 msgid "Sql files update is started. The setted database will be updated."
 msgstr ""
 "Megindult az sql fájlok frissítése. A beállított adatbázis fog frissülni."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:186
+#: ../Components/Schumix.Components/Updater/Update.cs:24
 msgid "Sql update finished."
 msgstr "Az sql frissítés befejeződött."
 
-#: ../Components/Schumix.Components/Updater/Update.cs:211
+#: ../Components/Schumix.Components/Updater/Update.cs:28
 msgid "This step of updateing is finished. Continue with next step."
 msgstr "Frissítés ezen szakasza befejeződött. Következik a beállítás."
 
-#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:67
+#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:6
 msgid "Initializing Lua engine."
 msgstr "Lua motor betöltése."
 
-#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:116
+#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:14
 msgid "Loading Lua script: {0}"
 msgstr "Lua script betöltése: {0}"
 
-#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:124
+#: ../Components/Schumix.Components/LuaEngine/LuaEngine.cs:15
 msgid "Exception thrown while loading Lua script: {0} Error: {1}"
 msgstr "Kivétel dobott betöltése közben a Lua script: {0} Hiba: {1}"
 
-#: ../Components/Schumix.Components/LuaEngine/LuaHelper.cs:67
+#: ../Components/Schumix.Components/LuaEngine/LuaHelper.cs:8
 msgid ""
 "Function {0} (exported as {1}): argument number mismatch. Declared {2}, but "
 "requires {3}!"
@@ -1728,30 +1707,30 @@ msgstr ""
 "Funkció {0} (exportált {1}): argumentum szám nem egyezik. Nyilvánítva {2}, "
 "de ehhez {3}!"
 
-#: ../Components/Schumix.Components/LuaEngine/LuaHelper.cs:104
+#: ../Components/Schumix.Components/LuaEngine/LuaHelper.cs:14
 msgid "Lua compile error: {0}"
 msgstr "Lua fordítási hiba: {0}"
 
-#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:50
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:3
 msgid "Initializing Python engine."
 msgstr "Python motor betöltése."
 
-#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:116
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:14
 msgid "Loading Python script: {0}"
 msgstr "Python script betöltése: {0}"
 
-#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:150
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:20
 msgid "Exception thrown while loading Python script. Error: {0} {1}"
 msgstr "Kivétel dobott betöltése közben a Python script. Hiba: {0} {1}"
 
-#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:152
+#: ../Components/Schumix.Components/PythonEngine/PythonEngine.cs:20
 msgid "Exception thrown while loading Python script: {0} Error: {1} {2}"
 msgstr "Kivétel dobott betöltése közben a Python script: {0} Hiba: {1} {2}"
 
-#: ../Components/Schumix.Components/ScriptManager.cs:77
+#: ../Components/Schumix.Components/ScriptManager.cs:4
 msgid "Lua support is disabled!"
 msgstr "Lua támogatása le van tiltva!"
 
-#: ../Components/Schumix.Components/ScriptManager.cs:85
+#: ../Components/Schumix.Components/ScriptManager.cs:5
 msgid "Python support is disabled!"
 msgstr "Python támogatása le van tiltva!"
