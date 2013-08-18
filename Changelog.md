@@ -2,6 +2,8 @@
 
 ## 4.4.0 (2013-xx-xx)
 
+ * Hozzáadva a Console részhez a szál megállításának és indításának lehetősége.
+
 ## 4.3.0 (2013-08-17)
 
  * WolframAPI frissítve. Köszönet érte Twl-nek.

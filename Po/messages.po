@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-17 09:44:51+0200\n"
-"PO-Revision-Date: 2013-08-17 09:44:55+0200\n"
+"POT-Creation-Date: 2013-08-18 11:15:54+0200\n"
+"PO-Revision-Date: 2013-08-18 11:15:58+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr ""
 #: ../Core/Schumix.Framework/Util/Utilities.cs:116
 #: ../Core/Schumix.Framework/Util/Utilities.cs:129
 #: ../Applications/Schumix/Schumix.cs:5
-#: ../Applications/Schumix/Console/Console.cs:9
+#: ../Applications/Schumix/Console/Console.cs:16
 #: ../Applications/Schumix/Console/CommandManager.cs:14
 #: ../Applications/Schumix.Server/Config/Config.cs:6
 #: ../Applications/Schumix.Server/New/Schumix.cs:16
@@ -1288,15 +1288,23 @@ msgstr ""
 msgid "Successfully started the Console."
 msgstr ""
 
-#: ../Applications/Schumix/Console/Console.cs:3
+#: ../Applications/Schumix/Console/Console.cs:4
 msgid "Console reader starting..."
 msgstr ""
 
-#: ../Applications/Schumix/Console/Console.cs:5
+#: ../Applications/Schumix/Console/Console.cs:9
+msgid "Console thread is started."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Console.cs:11
+msgid "Stopping Console thread."
+msgstr ""
+
+#: ../Applications/Schumix/Console/Console.cs:12
 msgid "Successfully started the Console reader."
 msgstr ""
 
-#: ../Applications/Schumix/Console/Console.cs:7
+#: ../Applications/Schumix/Console/Console.cs:14
 msgid "Console input: {0}"
 msgstr ""
 
