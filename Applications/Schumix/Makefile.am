@@ -41,6 +41,7 @@ SCHUMIX_COMPONENTS_DLL_SOURCE=../../Run/Debug/Schumix.Components.dll
 IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
 MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
 MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
+MICROSOFT_SCRIPTING_METADATA_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.Metadata.dll
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/Debug/ICSharpCode.SharpZipLib.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_MDB_SOURCE=../../External/ngit/External/SharpZipLib/bin/Debug/ICSharpCode.SharpZipLib.dll.mdb
@@ -103,6 +104,7 @@ SCHUMIX_COMPONENTS_DLL_SOURCE=../../Run/Release/Schumix.Components.dll
 IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
 MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
 MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
+MICROSOFT_SCRIPTING_METADATA_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.Metadata.dll
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/Release/ICSharpCode.SharpZipLib.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_MDB=
@@ -148,6 +150,7 @@ PROGRAMFILES = \
 	$(IRONPYTHON_DLL) \
 	$(MICROSOFT_DYNAMIC_DLL) \
 	$(MICROSOFT_SCRIPTING_DLL) \
+	$(MICROSOFT_SCRIPTING_METADATA_DLL) \
 	$(IRONPYTHON_MODULES_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL_MDB) \
@@ -246,6 +249,7 @@ SCHUMIX_COMPONENTS_DLL = $(BUILD_DIR)/Schumix.Components.dll
 IRONPYTHON_DLL = $(BUILD_DIR)/IronPython.dll
 MICROSOFT_DYNAMIC_DLL = $(BUILD_DIR)/Microsoft.Dynamic.dll
 MICROSOFT_SCRIPTING_DLL = $(BUILD_DIR)/Microsoft.Scripting.dll
+MICROSOFT_SCRIPTING_METADATA_DLL = $(BUILD_DIR)/Microsoft.Scripting.Metadata.dll
 IRONPYTHON_MODULES_DLL = $(BUILD_DIR)/IronPython.Modules.dll
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 NGIT_DLL = $(BUILD_DIR)/NGit.dll
@@ -271,6 +275,7 @@ $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL_MDB))
 $(eval $(call emit-deploy-target,IRONPYTHON_DLL))
 $(eval $(call emit-deploy-target,MICROSOFT_DYNAMIC_DLL))
 $(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_DLL))
+$(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_METADATA_DLL))
 $(eval $(call emit-deploy-target,IRONPYTHON_MODULES_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL_MDB))

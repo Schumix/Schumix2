@@ -81,6 +81,7 @@ Source: "..\Run\Release\IronPython.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\IronPython.Modules.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Microsoft.Dynamic.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Microsoft.Scripting.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;Addons
 Source: "..\Run\Release\Addons\*"; DestDir: "{app}\Addons\"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\Run\Release\Addons\*"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion recursesubdirs createallsubdirs uninsneveruninstall
