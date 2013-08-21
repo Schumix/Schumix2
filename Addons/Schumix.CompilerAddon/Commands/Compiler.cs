@@ -608,12 +608,9 @@ namespace Schumix.CompilerAddon.Commands
 
 		private string CleanIrcText(string text)
 		{
-			for(int i = 0; i < 16; i++)
-			{
-				if(text.Contains(((char)i).ToString()) && i != 10)
-					text = text.Replace(((char)i).ToString(), string.Empty);
-			}
-
+			text = text.Replace(((char)1).ToString(), string.Empty);
+			text = text.Replace(((char)2).ToString(), string.Empty);
+			text = text.Replace(((char)3).ToString(), string.Empty);
 			return text;
 		}
 
