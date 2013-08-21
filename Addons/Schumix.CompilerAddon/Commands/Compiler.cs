@@ -53,10 +53,12 @@ namespace Schumix.CompilerAddon.Commands
 		public Regex EntryRegex { get; set; }
 		public Regex SchumixRegex { get; set; }
 		private string _servername;
+		private int CodePage;
 
 		public SCompiler(string ServerName) : base(ServerName)
 		{
 			_servername = ServerName;
+			CodePage = Console.OutputEncoding.CodePage;
 		}
 
 		private bool IsClass(string data)
@@ -158,8 +160,7 @@ namespace Schumix.CompilerAddon.Commands
 					catch(Exception e)
 					{
 						ReturnCode = -1;
-						var sw = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
-						Console.SetOut(sw);
+						ConsoleOpenStandardOutput();
 						Log.Debug("CompilerThread", sLConsole.GetString("Failure details: {0}"), e.Message);
 					}
 				});
@@ -235,8 +236,7 @@ namespace Schumix.CompilerAddon.Commands
 			}
 			catch(Exception e)
 			{
-				var sw = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
-				Console.SetOut(sw);
+				ConsoleOpenStandardOutput();
 				Log.Debug("CompilerCommand", sLConsole.GetString("Failure details: {0}"), e.Message);
 				return -1;
 			}
@@ -466,10 +466,13 @@ namespace Schumix.CompilerAddon.Commands
 					{
 						try
 						{
-							o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true;
+							o = null;
+							o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+							b = true;
 						}
 						catch(Exception e)
 						{
+							ConsoleOpenStandardOutput();
 							Log.Debug("CompilerThread2", sLConsole.GetString("Failure details: {0}"), e.Message);
 						}
 					});
@@ -618,6 +621,12 @@ namespace Schumix.CompilerAddon.Commands
 		{
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/warning", sIRCMessage.Channel, sIRCMessage.ServerName));
+		}
+
+		public void ConsoleOpenStandardOutput()
+		{
+			var sw = new StreamWriter(Console.OpenStandardOutput(), Encoding.GetEncoding(CodePage)) { AutoFlush = true };
+			Console.SetOut(sw);
 		}
 	}
 }
