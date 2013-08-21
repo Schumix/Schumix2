@@ -2,6 +2,7 @@
 
 ## 4.4.0 (2013-xx-xx)
 
+ * Irc színek törlése javítva.
  * IronPython frissítve és a hiányzó függősége potolva.
  * WolframAPI fordítási figyelmeztetései megszüntetve.
  * Hozzáadva a Console részhez a szál megállításának és indításának lehetősége.
