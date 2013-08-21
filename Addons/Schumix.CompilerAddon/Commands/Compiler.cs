@@ -466,7 +466,6 @@ namespace Schumix.CompilerAddon.Commands
 					{
 						try
 						{
-							o = null;
 							o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
 							b = true;
 						}
