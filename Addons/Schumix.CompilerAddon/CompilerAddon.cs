@@ -63,9 +63,10 @@ namespace Schumix.CompilerAddon
 				_config = new AddonConfig(Name, ".yml");
 
 			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
-			sSCompiler.ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
-			sSCompiler.EntryRegex = new Regex(SchumixBase.Space + CompilerConfig.MainClass + @"\s*?\{");
-			sSCompiler.SchumixRegex = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)");
+			sSCompiler.EntryRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*{");
+			sSCompiler.EntryAndAbstractRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*:\s*Schumix.Compiler.Abstract\s*{");
+			sSCompiler.SchumixRegex = new Regex(@"public\s+void\s+" + CompilerConfig.MainConstructor + @"\s*\(\s*\)\s*{");
+			sSCompiler.SchumixAndOverrideRegex  = new Regex(@"public\s+override\s+void\s+" + CompilerConfig.MainConstructor + @"\s*\(\s*\)\s*{");
 		}
 
 		public void Destroy()

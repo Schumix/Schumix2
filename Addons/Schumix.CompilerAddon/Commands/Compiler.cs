@@ -47,9 +47,10 @@ namespace Schumix.CompilerAddon.Commands
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
 		private readonly Regex SystemNetRegex = new Regex(@"using\s+System.Net");
-		public Regex ClassRegex { get; set; }
-		public Regex EntryRegex { get; set; }
+		public Regex SchumixAndOverrideRegex { get; set; }
+		public Regex EntryAndAbstractRegex { get; set; }
 		public Regex SchumixRegex { get; set; }
+		public Regex EntryRegex { get; set; }
 		private string _servername;
 		private int CodePage;
 
@@ -57,11 +58,6 @@ namespace Schumix.CompilerAddon.Commands
 		{
 			_servername = ServerName;
 			CodePage = Console.OutputEncoding.CodePage;
-		}
-
-		private bool IsClass(string data)
-		{
-			return ClassRegex.IsMatch(data);
 		}
 
 		private bool IsEntry(string data)
@@ -72,6 +68,16 @@ namespace Schumix.CompilerAddon.Commands
 		private bool IsSchumix(string data)
 		{
 			return SchumixRegex.IsMatch(data);
+		}
+
+		private bool IsSchumixAndOverride(string data)
+		{
+			return SchumixAndOverrideRegex.IsMatch(data);
+		}
+
+		private bool IsEntryAndAbstractRegex(string data)
+		{
+			return EntryAndAbstractRegex.IsMatch(data);
 		}
 
 		public string MessageText(int Code, string Channel)
@@ -101,22 +107,39 @@ namespace Schumix.CompilerAddon.Commands
 				if(Ban(data, sIRCMessage))
 					return 1;
 
-				if(!IsClass(data))
+				if(!IsEntry(data) && !IsEntryAndAbstractRegex(data))
 				{
-					if(!IsSchumix(data))
+					if(!IsSchumix(data) && !IsSchumixAndOverride(data))
 						template = CompilerConfig.Referenced + " class " + CompilerConfig.MainClass + " : Schumix.Compiler.Abstract { public override void " + CompilerConfig.MainConstructor + "() { " + CleanText(data) + " } }";
-					else // override
+					else if(IsSchumix(data) && !IsSchumixAndOverride(data))
+						template = CompilerConfig.Referenced + " class " + CompilerConfig.MainClass + " : Schumix.Compiler.Abstract { " + Regex.Replace(CleanText(data), SchumixRegex.ToString(), @"public override void " + CompilerConfig.MainConstructor + @"() {") + " }";
+					else if(!IsSchumix(data) && IsSchumixAndOverride(data))
 						template = CompilerConfig.Referenced + " class " + CompilerConfig.MainClass + " : Schumix.Compiler.Abstract { " + CleanText(data) + " }";
 				}
-				else if(IsEntry(data))
+				else if(IsEntry(data) && !IsEntryAndAbstractRegex(data))
 				{
-					if(!IsSchumix(data))
+					if(!IsSchumix(data) && !IsSchumixAndOverride(data))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return 1;
 					}
 
-					// Schumix.Compiler.Abstract, override megoldani itt is
+					if(IsSchumix(data) && !IsSchumixAndOverride(data))
+						data = Regex.Replace(data, SchumixRegex.ToString(), @"public override void " + CompilerConfig.MainConstructor + @"() {");
+
+					template = CompilerConfig.Referenced + SchumixBase.Space + Regex.Replace(CleanText(data), EntryRegex.ToString(), @"class " + CompilerConfig.MainClass + @" : Schumix.Compiler.Abstract {");
+				}
+				else if(!IsEntry(data) && IsEntryAndAbstractRegex(data))
+				{
+					if(!IsSchumix(data) && !IsSchumixAndOverride(data))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						return 1;
+					}
+
+					if(IsSchumix(data) && !IsSchumixAndOverride(data))
+						data = Regex.Replace(data, SchumixRegex.ToString(), @"public override void " + CompilerConfig.MainConstructor + @"() {");
+
 					template = CompilerConfig.Referenced + SchumixBase.Space + CleanText(data);
 				}
 
