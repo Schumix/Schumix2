@@ -21,11 +21,8 @@
 using System;
 using System.IO;
 using System.Threading;
-using System.Reflection;
-using System.CodeDom.Compiler;
 using System.Text;
 using System.Text.RegularExpressions;
-using Microsoft.CSharp;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Compiler;
