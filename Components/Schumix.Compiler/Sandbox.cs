@@ -107,9 +107,9 @@ namespace Schumix.Compiler
 			return AppDomain.CreateDomain("Sandbox", e, setup, permission);
 		}
 
-		public static Sandbox CreateInstance()
+		public static Sandbox CreateInstance(ref AppDomain sandbox)
 		{
-			var sandbox = GetSandbox();
+			sandbox = GetSandbox();
 			return (Sandbox)sandbox.CreateInstance(Assembly.GetExecutingAssembly().FullName, typeof(Sandbox).FullName).Unwrap();
 		}
 
@@ -128,10 +128,8 @@ namespace Schumix.Compiler
 			return cparams;
 		}
 
-		public Assembly CompileCode(string code)
+		public Assembly CompileCode(string code, ref string ErrorMessage)
 		{
-			string errormessage = string.Empty;
-
 			try
 			{
 				if(sPlatform.IsLinux)
@@ -139,19 +137,18 @@ namespace Schumix.Compiler
 #pragma warning disable 618
 					var compiler = new CSharpCodeProvider().CreateCompiler();
 #pragma warning restore 618
-					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), ref errormessage);
+					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), ref ErrorMessage);
 				}
 				else if(sPlatform.IsWindows)
 				{
 					var compiler = CodeDomProvider.CreateProvider("CSharp");
-					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), ref errormessage);
+					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), ref ErrorMessage);
 				}
 
 				return null;
 			}
 			catch(Exception)
 			{
-				//errormessage
 				return null;
 			}
 		}
@@ -160,7 +157,6 @@ namespace Schumix.Compiler
 		{
 			if(results.Errors.HasErrors)
 			{
-				//var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 				string errormessage = string.Empty;
 
 				foreach(CompilerError error in results.Errors)
@@ -189,8 +185,8 @@ namespace Schumix.Compiler
 
 					errormessage += ". " + errortext;
 				}
-				Console.WriteLine(errormessage);
-				//sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), errormessage.Remove(0, 2, ". "));
+
+				ErrorMessage = errormessage;
 				return null;
 			}
 			else
@@ -213,9 +209,9 @@ namespace Schumix.Compiler
 							o.GetType().InvokeMember(/*CompilerConfig.MainConstructor*/"Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
 							b = true;
 						}
-						catch(Exception/* e*/)
+						catch(Exception)
 						{
-							//Log.Debug("CompilerThread2", sLConsole.GetString("Failure details: {0}"), e.Message);
+							// None
 						}
 					});
 

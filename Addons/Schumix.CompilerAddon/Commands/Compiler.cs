@@ -123,11 +123,17 @@ namespace Schumix.CompilerAddon.Commands
 				var s = new Sandbox(CompilerConfig.ReferencedAssemblies, CompilerConfig.CompilerOptions, CompilerConfig.WarningLevel, CompilerConfig.TreatWarningsAsErrors);
 				s.TestIsFullyTrusted(); // Test Sandbox
 
-				var asm = s.CompileCode(template);
+				string errormessage = string.Empty;
+				var asm = s.CompileCode(template, ref errormessage);
+
+				if(!errormessage.IsNullOrEmpty())
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), errormessage.Remove(0, 2, ". "));
+
 				if(asm.IsNull())
 					return 1;
 
-				s = Sandbox.CreateInstance();
+				AppDomain appdomain = null;
+				s = Sandbox.CreateInstance(ref appdomain);
 				s.TestIsFullyTrusted(); // Test Sandbox
 
 				object o = asm.CreateInstance(CompilerConfig.MainClass);
@@ -141,8 +147,8 @@ namespace Schumix.CompilerAddon.Commands
 				//Console.SetOut(writer);
 
 				int ReturnCode = 0;
-				//var thread = new Thread(() =>
-				//{
+				var thread = new Thread(() =>
+				{
 					try
 					{
 						//string errormessage = string.Empty;
@@ -154,12 +160,12 @@ namespace Schumix.CompilerAddon.Commands
 						ConsoleOpenStandardOutput();
 						Log.Debug("CompilerThread", sLConsole.GetString("Failure details: {0}"), e.Message);
 					}
-				//});
+				});
 
-				//thread.Start();
-				//thread.Join(3000);
-				//thread.Abort();
-				//appdomain.unload
+				thread.Start();
+				thread.Join(3000);
+				thread.Abort();
+				AppDomain.Unload(appdomain);
 
 				switch(ReturnCode)
 				{
@@ -243,6 +249,13 @@ namespace Schumix.CompilerAddon.Commands
 				return true;
 			}
 
+			// Timers
+			if(data.Contains("System.Timers"))
+			{
+				Warning(sIRCMessage);
+				return true;
+			}
+
 			if(sPlatform.IsWindows)
 				return false;
 
@@ -280,13 +293,6 @@ namespace Schumix.CompilerAddon.Commands
 
 			// Compile
 			if(data.Contains("System.CodeDom"))
-			{
-				Warning(sIRCMessage);
-				return true;
-			}
-
-			// Timers
-			if(data.Contains("System.Timers"))
 			{
 				Warning(sIRCMessage);
 				return true;
@@ -346,7 +352,7 @@ namespace Schumix.CompilerAddon.Commands
 
 			return false;
 		}
-		
+
 		private string CleanText(string text)
 		{
 			if(text.Contains("/*") && text.Contains("*/"))
