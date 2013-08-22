@@ -73,7 +73,9 @@ namespace Schumix.Compiler
 			// In this case we are granting the permissions found in the LocalIntranet zone.
 			//var e = new Evidence();
 			//e.AddHostEvidence(new Zone(SecurityZone.Intranet));
+#pragma warning disable 618
 			var e = new Evidence(new object[] { new Zone(SecurityZone.NoZone) }, null);
+#pragma warning restore 618
 
 			//Permission permission = SecurityManager.GetStandardSandbox(e);
 			var permission = new PermissionSet(PermissionState.None);
@@ -197,7 +199,7 @@ namespace Schumix.Compiler
 						{
 							o.GetType().InvokeMember(/*CompilerConfig.MainConstructor*/"Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true;
 						}
-						catch(Exception e)
+						catch(Exception/* e*/)
 						{
 							//Log.Debug("CompilerThread2", sLConsole.GetString("Failure details: {0}"), e.Message);
 						}
