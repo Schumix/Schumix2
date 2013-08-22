@@ -91,10 +91,11 @@ namespace Schumix.Compiler
 
 			//Permission permission = SecurityManager.GetStandardSandbox(e);
 			var permission = new PermissionSet(PermissionState.None);
-			permission.AddPermission(new SecurityPermission(PermissionState.None) { Flags = SecurityPermissionFlag.Execution });
+			permission.AddPermission(new SecurityPermission(PermissionState.None) { Flags = SecurityPermissionFlag.Execution | SecurityPermissionFlag.ControlThread });
 			permission.AddPermission(new FileIOPermission(PermissionState.None));
 			permission.AddPermission(new ReflectionPermission(ReflectionPermissionFlag.RestrictedMemberAccess));
 			permission.AddPermission(new EnvironmentPermission(PermissionState.None));
+			permission.AddPermission(new RegistryPermission(PermissionState.None));
 
 			var setup = new AppDomainSetup()
 			{
@@ -193,10 +194,8 @@ namespace Schumix.Compiler
 				return results.CompiledAssembly;
 		}
 
-		public int StartCode(string Data, string MainConstructor, Abstract A/*, ref string ErrorMessage, ref int ErrorCode*/)
+		public int StartCode(string Data, string MainConstructor, Abstract A, ref string ErrorMessage, ref int ErrorCode)
 		{
-			//var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-
 			try
 			{
 				if(IsFor(Data) || IsDo(Data) || IsWhile(Data))
@@ -220,18 +219,15 @@ namespace Schumix.Compiler
 					thread.Abort();
 
 					if(!b)
-					{
-						//sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel, sIRCMessage.ServerName));
-						return -1;
-					}
+						return 0;
 				}
 				else
 					A.GetType().InvokeMember(MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, A, null);
 			}
 			catch(Exception e)
 			{
-				Console.WriteLine(e);
-				//sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), e.Message);
+				ErrorCode = 0;
+				ErrorMessage = e.Message;
 				return -1;
 			}
 

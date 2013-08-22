@@ -121,7 +121,7 @@ namespace Schumix.CompilerAddon.Commands
 				}
 
 				var s = new Sandbox(CompilerConfig.ReferencedAssemblies, CompilerConfig.CompilerOptions, CompilerConfig.WarningLevel, CompilerConfig.TreatWarningsAsErrors);
-				s.TestIsFullyTrusted(); // Test Sandbox
+				//s.TestIsFullyTrusted(); // Test Sandbox
 
 				string errormessage = string.Empty;
 				var asm = s.CompileCode(template, ref errormessage);
@@ -135,7 +135,7 @@ namespace Schumix.CompilerAddon.Commands
 
 				AppDomain appdomain = null;
 				s = Sandbox.CreateInstance(ref appdomain);
-				s.TestIsFullyTrusted(); // Test Sandbox
+				//s.TestIsFullyTrusted(); // Test Sandbox
 
 				object o = asm.CreateInstance(CompilerConfig.MainClass);
 				if(o.IsNull())
@@ -145,15 +145,16 @@ namespace Schumix.CompilerAddon.Commands
 				}
 
 				var writer = new StringWriter();
-				//Console.SetOut(writer);
+				Console.SetOut(writer);
 
 				int ReturnCode = 0;
+				int errorcode = -1;
 				var thread = new Thread(() =>
 				{
 					try
 					{
-						//string errormessage = string.Empty;
-						ReturnCode = s.StartCode(data, CompilerConfig.MainConstructor, (Abstract)o);
+						errormessage = string.Empty;
+						ReturnCode = s.StartCode(data, CompilerConfig.MainConstructor, (Abstract)o, ref errormessage, ref errorcode);
 					}
 					catch(Exception e)
 					{
@@ -167,6 +168,15 @@ namespace Schumix.CompilerAddon.Commands
 				thread.Join(3000);
 				thread.Abort();
 				AppDomain.Unload(appdomain);
+
+				switch(errorcode)
+				{
+					case 0:
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), errormessage.Length < 1000 ? errormessage : errormessage.Substring(0, 1000));
+						break;
+					default:
+						break;
+				}
 
 				switch(ReturnCode)
 				{
