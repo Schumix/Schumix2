@@ -1,0 +1,6 @@
+Name: Schumix.Compiler
+Description: Schumix.Compiler
+Version: 4.3.x
+
+Requires: 
+Libs: -r:@expanded_libdir@/@PACKAGE@/Schumix.Compiler.dll

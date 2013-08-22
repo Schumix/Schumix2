@@ -85,9 +85,9 @@ namespace Schumix.Compiler
 			// In this case we are granting the permissions found in the LocalIntranet zone.
 			//var e = new Evidence();
 			//e.AddHostEvidence(new Zone(SecurityZone.Intranet));
-#pragma warning disable 618
+#pragma warning disable 612
 			var e = new Evidence(new object[] { new Zone(SecurityZone.NoZone) }, null);
-#pragma warning restore 618
+#pragma warning restore 612
 
 			//Permission permission = SecurityManager.GetStandardSandbox(e);
 			var permission = new PermissionSet(PermissionState.None);
