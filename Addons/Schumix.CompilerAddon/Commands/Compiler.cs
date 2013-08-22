@@ -152,7 +152,7 @@ namespace Schumix.CompilerAddon.Commands
 					try
 					{
 						//string errormessage = string.Empty;
-						ReturnCode = s.StartCode(data, (Abstract)o);
+						ReturnCode = s.StartCode(data, CompilerConfig.MainConstructor, (Abstract)o);
 					}
 					catch(Exception e)
 					{

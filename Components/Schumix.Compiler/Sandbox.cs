@@ -193,20 +193,20 @@ namespace Schumix.Compiler
 				return results.CompiledAssembly;
 		}
 
-		public int StartCode(string data, Abstract o/*, ref string ErrorMessage*/)
+		public int StartCode(string Data, string MainConstructor, Abstract A/*, ref string ErrorMessage, ref int ErrorCode*/)
 		{
 			//var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 
 			try
 			{
-				if(IsFor(data) || IsDo(data) || IsWhile(data))
+				if(IsFor(Data) || IsDo(Data) || IsWhile(Data))
 				{
 					bool b = false;
 					var thread = new Thread(() =>
 					{
 						try
 						{
-							o.GetType().InvokeMember(/*CompilerConfig.MainConstructor*/"Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+							A.GetType().InvokeMember(MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, A, null);
 							b = true;
 						}
 						catch(Exception)
@@ -226,7 +226,7 @@ namespace Schumix.Compiler
 					}
 				}
 				else
-					o.GetType().InvokeMember(/*CompilerConfig.MainConstructor*/"Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+					A.GetType().InvokeMember(MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, A, null);
 			}
 			catch(Exception e)
 			{
