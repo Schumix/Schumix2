@@ -125,9 +125,10 @@ namespace Schumix.CompilerAddon.Commands
 
 				string errormessage = string.Empty;
 				var asm = s.CompileCode(template, ref errormessage);
+				errormessage = errormessage.Remove(0, 2, ". ");
 
 				if(!errormessage.IsNullOrEmpty())
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), errormessage.Remove(0, 2, ". "));
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), errormessage.Length < 1000 ? errormessage : errormessage.Substring(0, 1000));
 
 				if(asm.IsNull())
 					return 1;
