@@ -28,6 +28,7 @@ using System.Text.RegularExpressions;
 using Microsoft.CSharp;
 using Schumix.Irc;
 using Schumix.Irc.Commands;
+using Schumix.Compiler;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Logger;
@@ -45,9 +46,6 @@ namespace Schumix.CompilerAddon.Commands
 		private readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly Regex regex = new Regex(@"^\{(?<code>.*)\}$");
-		private readonly Regex ForRegex = new Regex(@"for\s*\(\s*(?<lol>.*)\s*\)");
-		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
-		private readonly Regex DoRegex = new Regex(@"do\s*\{?\s*(?<content>.+)\s*\}?\s*while\s*\((?<while>.+)\s*\)");
 		private readonly Regex SystemNetRegex = new Regex(@"using\s+System.Net");
 		public Regex ClassRegex { get; set; }
 		public Regex EntryRegex { get; set; }
@@ -72,21 +70,6 @@ namespace Schumix.CompilerAddon.Commands
 		private bool IsSchumix(string data)
 		{
 			return SchumixRegex.IsMatch(data);
-		}
-
-		private bool IsFor(string data)
-		{
-			return ForRegex.IsMatch(data);
-		}
-
-		private bool IsWhile(string data)
-		{
-			return WhileRegex.IsMatch(data);
-		}
-
-		private bool IsDo(string data)
-		{
-			return DoRegex.IsMatch(data);
 		}
 
 		public string MessageText(int Code, string Channel)
@@ -119,9 +102,9 @@ namespace Schumix.CompilerAddon.Commands
 				if(!IsClass(data))
 				{
 					if(!IsSchumix(data))
-						template = CompilerConfig.Referenced + " class " + CompilerConfig.MainClass + " { public void " + CompilerConfig.MainConstructor + "() { " + CleanText(data) + " } }";
-					else
-						template = CompilerConfig.Referenced + " class " + CompilerConfig.MainClass + " { " + CleanText(data) + " }";
+						template = CompilerConfig.Referenced + " class " + CompilerConfig.MainClass + " : Schumix.Compiler.Abstract { public override void " + CompilerConfig.MainConstructor + "() { " + CleanText(data) + " } }";
+					else // override
+						template = CompilerConfig.Referenced + " class " + CompilerConfig.MainClass + " : Schumix.Compiler.Abstract { " + CleanText(data) + " }";
 				}
 				else if(IsEntry(data))
 				{
@@ -131,15 +114,19 @@ namespace Schumix.CompilerAddon.Commands
 						return 1;
 					}
 
+					// Schumix.Compiler.Abstract, override megoldani itt is
 					template = CompilerConfig.Referenced + SchumixBase.Space + CleanText(data);
 				}
 
-				var asm = CompileCode(template, sIRCMessage);
+				var s = new Sandbox();
+				s.TestIsFullyTrusted(); // Test Sandbox
+
+				var asm = s.CompileCode(template);
 				if(asm.IsNull())
 					return 1;
 
-				var writer = new StringWriter();
-				Console.SetOut(writer);
+				s = Sandbox.CreateInstance();
+				s.TestIsFullyTrusted(); // Test Sandbox
 
 				object o = asm.CreateInstance(CompilerConfig.MainClass);
 				if(o.IsNull())
@@ -148,12 +135,16 @@ namespace Schumix.CompilerAddon.Commands
 					return 1;
 				}
 
+				var writer = new StringWriter();
+				//Console.SetOut(writer);
+
 				int ReturnCode = 0;
-				var thread = new Thread(() =>
-				{
+				//var thread = new Thread(() =>
+				//{
 					try
 					{
-						ReturnCode = StartCode(sIRCMessage, data, o);
+						//string errormessage = string.Empty;
+						ReturnCode = s.StartCode(data, (Abstract)o);
 					}
 					catch(Exception e)
 					{
@@ -162,11 +153,12 @@ namespace Schumix.CompilerAddon.Commands
 						Console.SetOut(sw);
 						Log.Debug("CompilerThread", sLConsole.GetString("Failure details: {0}"), e.Message);
 					}
-				});
+				//});
 
-				thread.Start();
-				thread.Join(3000);
-				thread.Abort();
+				//thread.Start();
+				//thread.Join(3000);
+				//thread.Abort();
+				//appdomain.unload
 
 				switch(ReturnCode)
 				{
@@ -242,109 +234,18 @@ namespace Schumix.CompilerAddon.Commands
 			}
 		}
 
-		private CompilerParameters InitCompilerParameters()
-		{
-			var cparams = new CompilerParameters();
-			cparams.GenerateExecutable = false;
-			cparams.GenerateInMemory = false;
-
-			foreach(var asm in CompilerConfig.ReferencedAssemblies)
-				cparams.ReferencedAssemblies.Add(asm);
-
-			cparams.CompilerOptions = CompilerConfig.CompilerOptions;
-			cparams.WarningLevel = CompilerConfig.WarningLevel;
-			cparams.TreatWarningsAsErrors = CompilerConfig.TreatWarningsAsErrors;
-			return cparams;
-		}
-
-		private Assembly CompileCode(string code, IRCMessage sIRCMessage)
-		{
-			try
-			{
-				if(sPlatform.IsLinux)
-				{
-#pragma warning disable 618
-					var compiler = new CSharpCodeProvider().CreateCompiler();
-#pragma warning restore 618
-					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
-				}
-				else if(sPlatform.IsWindows)
-				{
-					var compiler = CodeDomProvider.CreateProvider("CSharp");
-					return CompilerErrors(compiler.CompileAssemblyFromSource(InitCompilerParameters(), code), sIRCMessage);
-				}
-
-				return null;
-			}
-			catch(Exception)
-			{
-				return null;
-			}
-		}
-
-		private Assembly CompilerErrors(CompilerResults results, IRCMessage sIRCMessage)
-		{
-			if(results.Errors.HasErrors)
-			{
-				var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-				string errormessage = string.Empty;
-
-				foreach(CompilerError error in results.Errors)
-				{
-					string errortext = error.ErrorText;
-
-					if(errortext.Contains("Location of the symbol related to previous error"))
-					{
-						if(sPlatform.IsLinux)
-						{
-							for(;;)
-							{
-								if(errortext.Contains("/"))
-								{
-									if(errortext.Substring(0, 1) == "/")
-										errortext = errortext.Remove(0, 1);
-									else
-										errortext = errortext.Remove(0, errortext.IndexOf("/"));
-								}
-								else
-									break;
-							}
-
-							errormessage += ". " + "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
-						}
-						else if(sPlatform.IsWindows)
-						{
-							for(;;)
-							{
-								if(errortext.Contains("\\"))
-								{
-									if(errortext.Substring(0, 1) == "\\")
-										errortext = errortext.Remove(0, 1);
-									else
-										errortext = errortext.Remove(0, errortext.IndexOf("\\"));
-								}
-								else
-									break;
-							}
-
-							errormessage += ". " + "*:\\***\\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
-						}
-
-						continue;
-					}
-
-					errormessage += ". " + errortext;
-				}
-
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), errormessage.Remove(0, 2, ". "));
-				return null;
-			}
-			else
-				return results.CompiledAssembly;
-		}
-
 		private bool Ban(string data, IRCMessage sIRCMessage)
 		{
+			// DllImport
+			if(data.Contains("DllImport"))
+			{
+				Warning(sIRCMessage);
+				return true;
+			}
+
+			if(sPlatform.IsWindows)
+				return false;
+
 			// Environment and Security
 			if(data.Contains("Environment.Exit") || data.Contains("Environment.SetEnvironmentVariable") ||
 			   data.Contains("Environment.ExpandEnvironmentVariables") || data.Contains("Environment.FailFast") ||
@@ -443,57 +344,7 @@ namespace Schumix.CompilerAddon.Commands
 				return true;
 			}
 
-			// DllImport
-			if(data.Contains("DllImport"))
-			{
-				Warning(sIRCMessage);
-				return true;
-			}
-
 			return false;
-		}
-
-		private int StartCode(IRCMessage sIRCMessage, string data, object o)
-		{
-			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-
-			try
-			{
-				if(IsFor(data) || IsDo(data) || IsWhile(data))
-				{
-					bool b = false;
-					var thread = new Thread(() =>
-					{
-						try
-						{
-							o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true;
-						}
-						catch(Exception e)
-						{
-							Log.Debug("CompilerThread2", sLConsole.GetString("Failure details: {0}"), e.Message);
-						}
-					});
-
-					thread.Start();
-					thread.Join(2);
-					thread.Abort();
-	
-					if(!b)
-					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/kill", sIRCMessage.Channel, sIRCMessage.ServerName));
-						return -1;
-					}
-				}
-				else
-					o.GetType().InvokeMember(CompilerConfig.MainConstructor, BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
-			}
-			catch(Exception e)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), e.Message);
-				return -1;
-			}
-
-			return 1;
 		}
 
 		private string CleanText(string text)

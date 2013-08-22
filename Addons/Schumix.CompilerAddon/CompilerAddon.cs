@@ -23,6 +23,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Irc;
 using Schumix.Irc.Util;

@@ -72,5 +72,10 @@
       <Name>YamlDotNet.Core</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\Components\Schumix.Compiler\Schumix.Compiler.csproj">
+      <Project>{E77B34AC-09C9-417B-858D-E915DEF4F52F}</Project>
+      <Name>Schumix.Compiler</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
 </Project>
