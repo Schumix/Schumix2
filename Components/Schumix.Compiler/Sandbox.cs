@@ -34,10 +34,14 @@ namespace Schumix.Compiler
 {
 	public class Sandbox : MarshalByRefObject
 	{
-		private readonly Platform sPlatform = Singleton<Platform>.Instance;
-		private readonly Regex ForRegex = new Regex(@"for\s*\(\s*(?<lol>.*)\s*\)");
-		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
 		private readonly Regex DoRegex = new Regex(@"do\s*\{?\s*(?<content>.+)\s*\}?\s*while\s*\((?<while>.+)\s*\)");
+		private readonly Regex WhileRegex = new Regex(@"while\s*\(\s*(?<lol>.*)\s*\)");
+		private readonly Regex ForRegex = new Regex(@"for\s*\(\s*(?<lol>.*)\s*\)");
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
+		private readonly string[] ReferencedAssemblies;
+		private readonly bool TreatWarningsAsErrors;
+		private readonly string CompilerOptions;
+		private readonly int WarningLevel;
 
 		private bool IsFor(string data)
 		{
@@ -54,10 +58,18 @@ namespace Schumix.Compiler
 			return DoRegex.IsMatch(data);
 		}
 
-		//public Sandbox()
-		//{
-			//InitCompilerParameters();
-		//}
+		public Sandbox()
+		{
+			// None
+		}
+
+		public Sandbox(string[] rAssemblies, string cOptions, int wLevel, bool tErrors)
+		{
+			ReferencedAssemblies = rAssemblies;
+			CompilerOptions = cOptions;
+			WarningLevel = wLevel;
+			TreatWarningsAsErrors = tErrors;
+		}
 
 		public void TestIsFullyTrusted()
 		{
@@ -97,8 +109,8 @@ namespace Schumix.Compiler
 
 		public static Sandbox CreateInstance()
 		{
-			var adSandbox = GetSandbox();
-			return (Sandbox)adSandbox.CreateInstance(Assembly.GetExecutingAssembly().FullName, typeof(Sandbox).FullName).Unwrap();
+			var sandbox = GetSandbox();
+			return (Sandbox)sandbox.CreateInstance(Assembly.GetExecutingAssembly().FullName, typeof(Sandbox).FullName).Unwrap();
 		}
 
 		private CompilerParameters InitCompilerParameters()
@@ -106,19 +118,20 @@ namespace Schumix.Compiler
 			var cparams = new CompilerParameters();
 			cparams.GenerateExecutable = false;
 			cparams.GenerateInMemory = false;
-			// új dll hozzáadása konfighoz
-			foreach(var asm in /*CompilerConfig.ReferencedAssemblies*/"System.dll,System.Core.dll,System.Numerics.dll,Schumix.Libraries.dll,Schumix.Compiler.dll".Split(','))
+
+			foreach(var asm in ReferencedAssemblies)
 				cparams.ReferencedAssemblies.Add(asm);
 
-			cparams.CompilerOptions = "/optimize"/*CompilerConfig.CompilerOptions*/;
-			cparams.WarningLevel = 4/*CompilerConfig.WarningLevel*/;
-			cparams.TreatWarningsAsErrors = false/*CompilerConfig.TreatWarningsAsErrors*/;
+			cparams.CompilerOptions = CompilerOptions;
+			cparams.WarningLevel = WarningLevel;
+			cparams.TreatWarningsAsErrors = TreatWarningsAsErrors;
 			return cparams;
 		}
 
 		public Assembly CompileCode(string code)
 		{
 			string errormessage = string.Empty;
+
 			try
 			{
 				if(sPlatform.IsLinux)

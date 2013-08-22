@@ -118,7 +118,7 @@ namespace Schumix.CompilerAddon.Commands
 					template = CompilerConfig.Referenced + SchumixBase.Space + CleanText(data);
 				}
 
-				var s = new Sandbox();
+				var s = new Sandbox(CompilerConfig.ReferencedAssemblies, CompilerConfig.CompilerOptions, CompilerConfig.WarningLevel, CompilerConfig.TreatWarningsAsErrors);
 				s.TestIsFullyTrusted(); // Test Sandbox
 
 				var asm = s.CompileCode(template);
