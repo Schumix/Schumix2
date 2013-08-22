@@ -125,7 +125,7 @@ namespace Schumix.Console
 				string message;
 				Log.Notice("Console", sLConsole.GetString("Successfully started the Console reader."));
 
-				while(!IsRunning)
+				while(IsRunning)
 				{
 					message = System.Console.ReadLine();
 

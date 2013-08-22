@@ -210,7 +210,8 @@ namespace Schumix.Compiler
 					{
 						try
 						{
-							o.GetType().InvokeMember(/*CompilerConfig.MainConstructor*/"Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null); b = true;
+							o.GetType().InvokeMember(/*CompilerConfig.MainConstructor*/"Schumix", BindingFlags.InvokeMethod | BindingFlags.Default, null, o, null);
+							b = true;
 						}
 						catch(Exception/* e*/)
 						{
