@@ -23,6 +23,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Text;
 using System.Text.RegularExpressions;
 using Schumix.Irc;
 using Schumix.Irc.Util;
@@ -62,9 +63,10 @@ namespace Schumix.CompilerAddon
 				_config = new AddonConfig(Name, ".yml");
 
 			sIrcBase.Networks[ServerName].IrcRegisterHandler("PRIVMSG", HandlePrivmsg);
-			sSCompiler.ClassRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*?\{");
-			sSCompiler.EntryRegex = new Regex(SchumixBase.Space + CompilerConfig.MainClass + @"\s*?\{");
-			sSCompiler.SchumixRegex = new Regex(CompilerConfig.MainConstructor + @"\s*\(\s*(?<lol>.*)\s*\)");
+			sSCompiler.EntryRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*{");
+			sSCompiler.EntryAndAbstractRegex = new Regex(@"class\s+" + CompilerConfig.MainClass + @"\s*:\s*Schumix.Compiler.Abstract\s*{");
+			sSCompiler.SchumixRegex = new Regex(@"public\s+void\s+" + CompilerConfig.MainConstructor + @"\s*\(\s*\)\s*{");
+			sSCompiler.SchumixAndOverrideRegex  = new Regex(@"public\s+override\s+void\s+" + CompilerConfig.MainConstructor + @"\s*\(\s*\)\s*{");
 		}
 
 		public void Destroy()
@@ -215,8 +217,7 @@ namespace Schumix.CompilerAddon
 					break;
 			}
 
-			var sw = new StreamWriter(Console.OpenStandardOutput()) { AutoFlush = true };
-			Console.SetOut(sw);
+			sSCompiler.ConsoleOpenStandardOutput();
 		}
 
 		/// <summary>

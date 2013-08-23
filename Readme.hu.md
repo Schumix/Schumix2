@@ -11,7 +11,7 @@ A bot kompatibilis a windows és linux rendszerrel. Valószínüleg Mac OS X-en 
 Windows alatt ajálott a `.net 4.0` használata vagy újabb.
 Monon jelenleg minimum követelmény a `2.10.8.1` vagy újabb.
 
-# Kód futtatása/Fordítása
+# Kód futtatása / Fordítása
 
 ## AlModulok
 
@@ -59,7 +59,7 @@ Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mi
 <br/>Ezt telepítsük a `sudo pacman -U schumix2.pkg.tar.xz` (csomag fájl neve hasonló lesz) paranccsal és már készen is vagyunk.
 <br/>A botot a `schumix` paranccsal futtathatjuk.
 
-## Debian/Ubuntu
+## Debian / Ubuntu
 
 **Figyelem!!! Root jogra lesz szükség hozzá.**
 <br/>Első lépés hogy átlépünk fakeroot módba.

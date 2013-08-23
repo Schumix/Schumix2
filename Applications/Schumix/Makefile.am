@@ -41,23 +41,14 @@ SCHUMIX_COMPONENTS_DLL_SOURCE=../../Run/Debug/Schumix.Components.dll
 IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
 MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
 MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
+MICROSOFT_SCRIPTING_METADATA_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.Metadata.dll
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/Debug/ICSharpCode.SharpZipLib.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_MDB_SOURCE=../../External/ngit/External/SharpZipLib/bin/Debug/ICSharpCode.SharpZipLib.dll.mdb
-ICSHARPCODE_SHARPZIPLIB_DLL_MDB=$(BUILD_DIR)/ICSharpCode.SharpZipLib.dll.mdb
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
-SHARPEN_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.dll.mdb
-SHARPEN_DLL_MDB=$(BUILD_DIR)/Sharpen.dll.mdb
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
-NSCH_DLL_MDB_SOURCE=../../External/ngit/bin/NSch.dll.mdb
-NSCH_DLL_MDB=$(BUILD_DIR)/NSch.dll.mdb
-NGIT_DLL_MDB_SOURCE=../../External/ngit/bin/NGit.dll.mdb
-NGIT_DLL_MDB=$(BUILD_DIR)/NGit.dll.mdb
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
-SHARPEN_UNIX_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll.mdb
-SHARPEN_UNIX_DLL_MDB=$(BUILD_DIR)/Sharpen.Unix.dll.mdb
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Debug/KeraLua.dll
 KERALUA_DLL_MDB_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Debug/KeraLua.dll.mdb
 KERALUA_DLL_MDB=$(BUILD_DIR)/KeraLua.dll.mdb
@@ -103,18 +94,14 @@ SCHUMIX_COMPONENTS_DLL_SOURCE=../../Run/Release/Schumix.Components.dll
 IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
 MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
 MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
+MICROSOFT_SCRIPTING_METADATA_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.Metadata.dll
 IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/Release/ICSharpCode.SharpZipLib.dll
-ICSHARPCODE_SHARPZIPLIB_DLL_MDB=
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
-SHARPEN_DLL_MDB=
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
-NSCH_DLL_MDB=
-NGIT_DLL_MDB=
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
-SHARPEN_UNIX_DLL_MDB=
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Release/KeraLua.dll
 KERALUA_DLL_MDB=
 KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Release/KopiLua.dll
@@ -148,18 +135,14 @@ PROGRAMFILES = \
 	$(IRONPYTHON_DLL) \
 	$(MICROSOFT_DYNAMIC_DLL) \
 	$(MICROSOFT_SCRIPTING_DLL) \
+	$(MICROSOFT_SCRIPTING_METADATA_DLL) \
 	$(IRONPYTHON_MODULES_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
-	$(ICSHARPCODE_SHARPZIPLIB_DLL_MDB) \
 	$(NGIT_DLL) \
 	$(SHARPEN_DLL) \
-	$(SHARPEN_DLL_MDB) \
 	$(NSCH_DLL) \
 	$(MONO_SECURITY_DLL) \
-	$(NSCH_DLL_MDB) \
-	$(NGIT_DLL_MDB) \
 	$(SHARPEN_UNIX_DLL) \
-	$(SHARPEN_UNIX_DLL_MDB) \
 	$(KERALUA_DLL) \
 	$(KERALUA_DLL_MDB) \
 	$(KOPILUA_DLL) \
@@ -246,6 +229,7 @@ SCHUMIX_COMPONENTS_DLL = $(BUILD_DIR)/Schumix.Components.dll
 IRONPYTHON_DLL = $(BUILD_DIR)/IronPython.dll
 MICROSOFT_DYNAMIC_DLL = $(BUILD_DIR)/Microsoft.Dynamic.dll
 MICROSOFT_SCRIPTING_DLL = $(BUILD_DIR)/Microsoft.Scripting.dll
+MICROSOFT_SCRIPTING_METADATA_DLL = $(BUILD_DIR)/Microsoft.Scripting.Metadata.dll
 IRONPYTHON_MODULES_DLL = $(BUILD_DIR)/IronPython.Modules.dll
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 NGIT_DLL = $(BUILD_DIR)/NGit.dll
@@ -271,18 +255,14 @@ $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL_MDB))
 $(eval $(call emit-deploy-target,IRONPYTHON_DLL))
 $(eval $(call emit-deploy-target,MICROSOFT_DYNAMIC_DLL))
 $(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_DLL))
+$(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_METADATA_DLL))
 $(eval $(call emit-deploy-target,IRONPYTHON_MODULES_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
-$(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL_MDB))
 $(eval $(call emit-deploy-target,NGIT_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_DLL))
-$(eval $(call emit-deploy-target,SHARPEN_DLL_MDB))
 $(eval $(call emit-deploy-target,NSCH_DLL))
 $(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
-$(eval $(call emit-deploy-target,NSCH_DLL_MDB))
-$(eval $(call emit-deploy-target,NGIT_DLL_MDB))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
-$(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL_MDB))
 $(eval $(call emit-deploy-target,KERALUA_DLL))
 $(eval $(call emit-deploy-target,KERALUA_DLL_MDB))
 $(eval $(call emit-deploy-target,KOPILUA_DLL))

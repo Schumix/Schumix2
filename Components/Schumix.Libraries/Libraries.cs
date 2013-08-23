@@ -99,7 +99,8 @@ namespace Schumix.Libraries
 		/// <returns>
 		///   The CPU brand string.
 		/// </returns>
-		public static string GetCpuId()
+		[Obsolete]
+		public static string GetCpuId() // TODO: Majd törölni kell mert Sandbox-xal nem használható.
 		{
 			return sUtilities.GetCpuId();
 		}

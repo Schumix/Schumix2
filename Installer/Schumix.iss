@@ -73,6 +73,7 @@ Source: "..\Run\Release\Schumix.Framework.dll"; DestDir: "{app}"; Flags: ignorev
 Source: "..\Run\Release\Schumix.Irc.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.Libraries.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Schumix.Components.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Schumix.Compiler.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Server.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\System.Data.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\YamlDotNet.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -81,6 +82,7 @@ Source: "..\Run\Release\IronPython.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\IronPython.Modules.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Microsoft.Dynamic.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Microsoft.Scripting.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Microsoft.Scripting.Metadata.dll"; DestDir: "{app}"; Flags: ignoreversion
 ;Addons
 Source: "..\Run\Release\Addons\*"; DestDir: "{app}\Addons\"; Flags: ignoreversion recursesubdirs createallsubdirs
 Source: "..\Run\Release\Addons\*"; DestDir: "{userappdata}\Schumix\Addons\"; Flags: ignoreversion recursesubdirs createallsubdirs uninsneveruninstall

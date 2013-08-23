@@ -44,6 +44,11 @@ namespace Schumix.Console
 		///     ConsoleCommandManager class elérését tárolja.
 		/// </summary>
 		private readonly CCommandManager CCManager;
+		private Thread ConsoleThread;
+		/// <summary>
+		/// Gets whether the Console thread is running or not.
+		/// </summary>
+		public bool IsRunning { get; private set; }
 
 		/// <summary>
 		///     Indulási függvény.
@@ -51,10 +56,11 @@ namespace Schumix.Console
 		public Console(string ServerName)
 		{
 			Log.Notice("Console", sLConsole.GetString("Successfully started the Console."));
+			InitThread();
+
 			Log.Debug("Console", sLConsole.GetString("Console reader starting..."));
-			var thread = new Thread(() => ConsoleRead());
-			thread.Name = "Schumix Console Thread";
-			thread.Start();
+			Start();
+
 			CCManager = new CCommandManager();
 			CCManager.ServerName = ServerName;
 			CCManager.Channel = IRCConfig.List[ServerName].MasterChannel;
@@ -72,6 +78,39 @@ namespace Schumix.Console
 			Log.Debug("Console", "~Console()");
 		}
 
+		private void InitThread()
+		{
+			ConsoleThread = new Thread(() => ConsoleRead());
+			ConsoleThread.Name = "Schumix Console Thread";
+		}
+
+		/// <summary>
+		/// Starts the Console thread.
+		/// </summary>
+		public void Start()
+		{
+			if(IsRunning || ConsoleThread.ThreadState == ThreadState.Running)
+				return;
+
+			Log.Notice("Console", sLConsole.GetString("Console thread is started."));
+			IsRunning = true;
+			ConsoleThread.Start();
+		}
+
+		/// <summary>
+		/// Stops the Console thread.
+		/// </summary>
+		public void Stop()
+		{
+			if(!IsRunning || ConsoleThread.ThreadState != ThreadState.Running)
+				return;
+
+			Log.Notice("Console", sLConsole.GetString("Stopping Console thread."));
+			IsRunning = false;
+			ConsoleThread.Join(1500);
+			ConsoleThread.Abort();
+		}
+
 		/// <summary>
 		///     Console-ba beírt parancsot hajtja végre.
 		/// </summary>
@@ -86,7 +125,7 @@ namespace Schumix.Console
 				string message;
 				Log.Notice("Console", sLConsole.GetString("Successfully started the Console reader."));
 
-				while(true)
+				while(IsRunning)
 				{
 					message = System.Console.ReadLine();
 

@@ -47,6 +47,9 @@
       <HintPath>..\..\Dependencies\Microsoft.Scripting.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Scripting.Metadata">
+      <HintPath>..\..\Dependencies\Microsoft.Scripting.Metadata.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

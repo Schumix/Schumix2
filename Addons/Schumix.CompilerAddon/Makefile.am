@@ -13,7 +13,8 @@ PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Irc.dll \
 	../../Run/Debug/Schumix.Framework.dll \
 	../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll \
-	../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
+	../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll \
+	../../Run/Debug/Schumix.Compiler.dll
 BUILD_DIR = ../../Run/Debug/Addons
 
 COMPILERADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/CompilerAddon.dll.mdb
@@ -31,7 +32,8 @@ PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Irc.dll \
 	../../Run/Release/Schumix.Framework.dll \
 	../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll \
-	../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
+	../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll \
+	../../Run/Release/Schumix.Compiler.dll
 BUILD_DIR = ../../Run/Release/Addons
 
 COMPILERADDON_DLL_MDB=

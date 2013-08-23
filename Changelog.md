@@ -2,6 +2,13 @@
 
 ## 4.4.0 (2013-xx-xx)
 
+ * Compiler részbe beépítve a Sandbox. Így bíztonságosan kezelhetőek a programkódok. Jelenleg csak Windows alatt működik mert a mono nem fejelsztett ki minden függvényt rendesen.
+ * Konzolra való írás visszaállítása továbbfejlesztve. Compiler használatakor ezentúl teljesen bíztosan visszáll (remélem) és a szöveg kódolása is a váltás előtti állapotot fogja tükrözni.
+ * Irc színek törlése javítva.
+ * IronPython frissítve és a hiányzó függősége potolva.
+ * WolframAPI fordítási figyelmeztetései megszüntetve.
+ * Hozzáadva a Console részhez a szál megállításának és indításának lehetősége.
+
 ## 4.3.0 (2013-08-17)
 
  * WolframAPI frissítve. Köszönet érte Twl-nek.
