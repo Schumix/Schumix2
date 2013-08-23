@@ -166,6 +166,25 @@ namespace Schumix.Compiler
 
 					if(errortext.Contains("Location of the symbol related to previous error"))
 					{
+						if(sPlatform.IsLinux)
+						{
+							for(;;)
+							{
+								if(errortext.Contains("/"))
+								{
+									if(errortext.Substring(0, 1) == "/")
+										errortext = errortext.Remove(0, 1);
+									else
+										errortext = errortext.Remove(0, errortext.IndexOf("/"));
+								}
+								else
+									break;
+							}
+
+							errormessage += ". " + "/***/***/***/" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
+						}
+						else if(sPlatform.IsWindows)
+						{
 							for(;;)
 							{
 								if(errortext.Contains("\\"))
@@ -180,6 +199,7 @@ namespace Schumix.Compiler
 							}
 
 							errormessage += ". " + "*:\\***\\***\\" + errortext.Substring(0, errortext.IndexOf(".dll")) + ".dll (Location of the symbol related to previous error)";
+						}
 
 						continue;
 					}
