@@ -11,7 +11,7 @@ A bot kompatibilis a windows és linux rendszerrel. Valószínüleg Mac OS X-en 
 Windows alatt ajálott a `.net 4.0` használata vagy újabb.
 Monon jelenleg minimum követelmény a `2.10.8.1` vagy újabb.
 
-# Kód futtatása/Fordítása
+# Kód futtatása / Fordítása
 
 ## AlModulok
 
