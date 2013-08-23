@@ -148,7 +148,7 @@ namespace Schumix.CompilerAddon.Commands
 				errormessage = errormessage.Remove(0, 2, ". ");
 
 				if(!errormessage.IsNullOrEmpty())
-					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), errormessage.Length < 1000 ? errormessage : errormessage.Substring(0, 1000) + "...");
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), errormessage.TrimMessage(1000));
 
 				if(asm.IsNull())
 					return 1;
@@ -192,7 +192,7 @@ namespace Schumix.CompilerAddon.Commands
 				switch(errorcode)
 				{
 					case 0:
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), errormessage.Length < 1000 ? errormessage : errormessage.Substring(0, 1000) + "...");
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("compiler/code", sIRCMessage.Channel, sIRCMessage.ServerName), errormessage.TrimMessage(1000));
 						break;
 					default:
 						break;
