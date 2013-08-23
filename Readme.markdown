@@ -60,7 +60,7 @@ Use this option only if you want to innstal the bot like a program.
 <br/>Install it with the `sudo pacman -U schumix2.pkg.tar.xz` command (the packet name will be similar) and it's all ready.
 <br/>Run the bot with the `schumix` command.
 
-## Debian/Ubuntu
+## Debian / Ubuntu
 
 **Attention!!! Root permission needed for that.**
 <br/>For the first step, switch to fakeroot mode.
