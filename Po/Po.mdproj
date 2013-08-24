@@ -28,6 +28,9 @@
         <TranslationProjectInformation projectName="YamlDotNet.RepresentationModel" isIncluded="False" />
         <TranslationProjectInformation projectName="YamlDotNet.Core" isIncluded="False" />
         <TranslationProjectInformation projectName="Sharpen.Unix" isIncluded="False" />
+        <TranslationProjectInformation projectName="ChatterBotAPI" isIncluded="False" />
+        <TranslationProjectInformation projectName="NGettext" isIncluded="False" />
+        <TranslationProjectInformation projectName="System.Data.SQLite" isIncluded="False" />
       </projectInformations>
     </projectInformations>
   </PropertyGroup>
