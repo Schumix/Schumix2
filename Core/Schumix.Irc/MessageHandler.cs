@@ -570,7 +570,7 @@ namespace Schumix.Irc
 
 				sChannelList.Add(Channel, sMyNickInfo.Parse(name));
 
-				if(sChannelList.IsChannelRank(name.Substring(0, 1)))
+				if(!name.IsNullOrEmpty() && sChannelList.IsChannelRank(name.Substring(0, 1)))
 					sChannelList.List[Channel.ToLower()].Names[sMyNickInfo.Parse(name).ToLower()].Rank = StringEnum.GetStringValue(sChannelList.StringToChannelRank(name.Substring(0, 1)));
 			}
 		}
