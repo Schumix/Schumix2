@@ -288,7 +288,7 @@ Global
 		{598F9F95-C142-4596-ADDB-907B5CACC426} = {F37F3558-9AA8-4078-8A99-57259D51C8B2}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		StartupItem = Core\Schumix.Irc\Schumix.Irc.csproj
+		StartupItem = Applications\Schumix\Schumix.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1
 		$1.inheritsSet = null
