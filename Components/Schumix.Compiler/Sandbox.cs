@@ -86,7 +86,9 @@ namespace Schumix.Compiler
 			//var e = new Evidence();
 			//e.AddHostEvidence(new Zone(SecurityZone.Intranet));
 #pragma warning disable 612
+#pragma warning disable 618
 			var e = new Evidence(new object[] { new Zone(SecurityZone.NoZone) }, null);
+#pragma warning restore 618
 #pragma warning restore 612
 
 			//Permission permission = SecurityManager.GetStandardSandbox(e);

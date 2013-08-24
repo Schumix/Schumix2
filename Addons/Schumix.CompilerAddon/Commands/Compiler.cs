@@ -478,7 +478,9 @@ namespace Schumix.CompilerAddon.Commands
 
 		private string CleanSemicolon(string text)
 		{
-			if(text.Trim().Length > 0 && text.Trim().Substring(0, 1) == ";")
+			text = text.Trim();
+
+			if(text.Length > 0 && text.Substring(0, 1) == ";")
 			{
 				for(;;)
 				{
