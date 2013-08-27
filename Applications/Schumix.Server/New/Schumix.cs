@@ -122,9 +122,9 @@ namespace Schumix.Server.New
 		public void Start(string File, string Dir, string Encoding, string Locale, string Identify)
 		{
 			var exe = new Process();
-			exe.StartInfo.UseShellExecute = false;
-			exe.StartInfo.RedirectStandardOutput = true;
-			exe.StartInfo.RedirectStandardError = true;
+			exe.StartInfo.UseShellExecute = true;
+			//exe.StartInfo.RedirectStandardOutput = true;
+			//exe.StartInfo.RedirectStandardError = true;
 
 			if(sPlatform.IsLinux)
 			{
@@ -138,7 +138,7 @@ namespace Schumix.Server.New
 			}
 
 			exe.Start();
-			exe.PriorityClass = ProcessPriorityClass.Normal;
+			//exe.PriorityClass = ProcessPriorityClass.Normal;
 			var settings      = new Settings();
 			settings.File     = File;
 			settings.Dir      = Dir;
