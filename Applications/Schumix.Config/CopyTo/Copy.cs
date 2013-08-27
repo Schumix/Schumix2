@@ -76,6 +76,9 @@ namespace Schumix.Config.CopyTo
 				if(fi.Name.Substring(0, 1) == "_")
 					continue;
 
+				if("Configs/" + fi.Name == Configs + "/_" + fi.Name)
+					continue;
+
 				File.Move("Configs/" + fi.Name, Configs + "/_" + fi.Name);
 			}
 		}
