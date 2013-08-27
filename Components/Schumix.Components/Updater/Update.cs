@@ -194,9 +194,7 @@ namespace Schumix.Components.Updater
 
 			File.Move(_dir + "/Run/Release/Config.exe", "Config.exe");
 			var config = new Process();
-			config.StartInfo.UseShellExecute = false;
-			config.StartInfo.RedirectStandardOutput = true;
-			config.StartInfo.RedirectStandardError = true;
+			config.StartInfo.UseShellExecute = true;
 
 			if(sPlatform.IsLinux)
 			{
