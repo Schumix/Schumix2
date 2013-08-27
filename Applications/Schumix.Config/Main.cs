@@ -114,6 +114,7 @@ namespace Schumix.Config
 
 			var cbase = new ConfigBase();
 			cbase.Clean(schumix2dir, addonsdir, configdir);
+			sRuntime.Exit();
 		}
 
 		/// <summary>
