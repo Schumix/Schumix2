@@ -123,11 +123,10 @@ namespace Schumix.Server.New
 		{
 			var exe = new Process();
 			exe.StartInfo.UseShellExecute = true;
-			//exe.StartInfo.RedirectStandardOutput = true;
-			//exe.StartInfo.RedirectStandardError = true;
 
 			if(sPlatform.IsLinux)
 			{
+				exe.StartInfo.CreateNoWindow = true;
 				exe.StartInfo.FileName = "mono";
 				exe.StartInfo.Arguments = string.Format("Schumix.exe --config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7} --server-identify={8}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password, Identify);
 			}
