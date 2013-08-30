@@ -200,10 +200,8 @@ FILES = \
 	Util/Folders.cs \
 	Util/Utilities.cs \
 	Linux/DefaultLinux.cs \
-	Linux/ILinux.cs \
 	Windows/CtrlType.cs \
-	Windows/DefaultWindows.cs \
-	Windows/IWindows.cs 
+	Windows/DefaultWindows.cs 
 
 DATA_FILES = 
 

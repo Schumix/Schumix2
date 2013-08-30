@@ -30,7 +30,7 @@ using Schumix.Framework.Localization;
 
 namespace Schumix.Framework.Linux
 {
-	public class DefaultLinux : ILinux
+	public class DefaultLinux
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 

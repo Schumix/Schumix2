@@ -158,10 +158,8 @@
     <Compile Include="Util\Folders.cs" />
     <Compile Include="Util\Utilities.cs" />
     <Compile Include="Linux\DefaultLinux.cs" />
-    <Compile Include="Linux\ILinux.cs" />
     <Compile Include="Windows\CtrlType.cs" />
     <Compile Include="Windows\DefaultWindows.cs" />
-    <Compile Include="Windows\IWindows.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
