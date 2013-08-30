@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-30 15:18:47+0200\n"
-"PO-Revision-Date: 2013-08-30 15:18:48+0200\n"
+"POT-Creation-Date: 2013-08-30 19:40:09+0200\n"
+"PO-Revision-Date: 2013-08-30 19:40:10+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -54,6 +54,7 @@ msgstr ""
 #: ../Applications/Schumix/Schumix.cs:5
 #: ../Applications/Schumix/Console/Console.cs:16
 #: ../Applications/Schumix/Console/CommandManager.cs:14
+#: ../Applications/Schumix.Installer/InstallerBase.cs:9
 #: ../Applications/Schumix.Server/Config/Config.cs:6
 #: ../Applications/Schumix.Server/New/Schumix.cs:16
 #: ../Addons/Schumix.TestAddon/TestAddon.cs:5
@@ -77,6 +78,7 @@ msgstr ""
 #: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:17
 #: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:17
 #: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:5
+#: ../Components/Schumix.Components/Updater/Update.cs:20
 #: ../Components/Schumix.Components/Updater/Sql/Sql.cs:8
 #: ../Components/Schumix.Components/Updater/Sql/Sql.cs:10
 msgid "Failure details: {0}"
@@ -1359,7 +1361,8 @@ msgid "Successfully downloaded new version."
 msgstr ""
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:9
-msgid "Downloading unsuccessful."
+#: ../Components/Schumix.Components/Updater/Update.cs:20
+msgid "Downloading unsuccessful!"
 msgstr ""
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:9
@@ -1373,7 +1376,8 @@ msgid "Started translating."
 msgstr ""
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:11
-msgid "Error was handled while translated."
+#: ../Components/Schumix.Components/Updater/Update.cs:22
+msgid "Error was handled while translated!"
 msgstr ""
 
 #: ../Applications/Schumix.Installer/InstallerBase.cs:12
@@ -1664,16 +1668,8 @@ msgid "Older version found, update interrupted!"
 msgstr ""
 
 #: ../Components/Schumix.Components/Updater/Update.cs:20
-msgid "Downloading unsuccessful!"
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:20
 #: ../Components/Schumix.Components/Updater/Update.cs:22
 msgid "Updating successful!"
-msgstr ""
-
-#: ../Components/Schumix.Components/Updater/Update.cs:22
-msgid "Error was handled while translated!"
 msgstr ""
 
 #: ../Components/Schumix.Components/Updater/Update.cs:24

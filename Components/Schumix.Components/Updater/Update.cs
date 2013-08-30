@@ -153,9 +153,10 @@ namespace Schumix.Components.Updater
 				new CloneSchumix("git://" + url, _dir, branch);
 				Log.Success("Update", sLConsole.GetString("Successfully downloaded new version."));
 			}
-			catch
+			catch(Exception e)
 			{
 				Log.Error("Update", sLConsole.GetString("Downloading unsuccessful!"));
+				Log.Debug("Update", sLConsole.GetString("Failure details: {0}"), e.Message);
 				Log.Warning("Update", sLConsole.GetString("Updating successful!"));
 				Thread.Sleep(5*1000);
 				sRuntime.Exit();
