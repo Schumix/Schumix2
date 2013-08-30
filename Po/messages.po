@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-18 11:15:54+0200\n"
-"PO-Revision-Date: 2013-08-18 11:15:58+0200\n"
+"POT-Creation-Date: 2013-08-30 15:11:02+0200\n"
+"PO-Revision-Date: 2013-08-30 15:11:03+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -63,9 +63,8 @@ msgstr ""
 #: ../Addons/Schumix.SvnRssAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:14
 #: ../Addons/Schumix.MantisBTRssAddon/Config/AddonConfig.cs:5
-#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:20
-#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:32
-#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:61
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:25
+#: ../Addons/Schumix.CompilerAddon/Commands/Compiler.cs:38
 #: ../Addons/Schumix.CompilerAddon/CompilerAddon.cs:7
 #: ../Addons/Schumix.CompilerAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:14
@@ -523,7 +522,7 @@ msgid "Successfully connected to the database."
 msgstr ""
 
 #: ../Core/Schumix.Framework/SchumixBase.cs:15
-#: ../Applications/Schumix.Server/Main.cs:14
+#: ../Applications/Schumix.Server/Main.cs:15
 msgid "CleanManager is starting..."
 msgstr ""
 
@@ -1216,6 +1215,28 @@ msgstr ""
 msgid "Checking: {0}"
 msgstr ""
 
+#: ../Core/Schumix.Framework/Linux/DefaultLinux.cs:5
+msgid "Initializing Handler for SIGINT, SIGHUP"
+msgstr ""
+
+#: ../Core/Schumix.Framework/Linux/DefaultLinux.cs:6
+msgid "Got a {0} signal."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Linux/DefaultLinux.cs:6
+msgid "Handler Terminated."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Windows/DefaultWindows.cs:6
+#: ../Applications/Schumix/Windows/Windows.cs:3
+#: ../Applications/Schumix/Linux/Linux.cs:3
+msgid "Daemon killed."
+msgstr ""
+
+#: ../Core/Schumix.Framework/Windows/DefaultWindows.cs:6
+msgid "User is logging off."
+msgstr ""
+
 #: ../Applications/Schumix/Main.cs:11
 #: ../Applications/Schumix.Server/Main.cs:9
 msgid "To shut down the program use the <Ctrl+C> or the <quit> command!"
@@ -1243,32 +1264,32 @@ msgstr ""
 msgid "Developers: {0}"
 msgstr ""
 
-#: ../Applications/Schumix/Main.cs:17
+#: ../Applications/Schumix/Main.cs:18
 #: ../Applications/Schumix.Installer/Main.cs:13
-#: ../Applications/Schumix.Server/Main.cs:13
+#: ../Applications/Schumix.Server/Main.cs:14
 msgid "System is starting..."
 msgstr ""
 
-#: ../Applications/Schumix/Main.cs:18
-#: ../Applications/Schumix.Server/Main.cs:13
+#: ../Applications/Schumix/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:14
 msgid "Colorblind mode is on!"
 msgstr ""
 
-#: ../Applications/Schumix/Main.cs:20
+#: ../Applications/Schumix/Main.cs:21
 #: ../Applications/Schumix.Installer/Main.cs:15
-#: ../Applications/Schumix.Server/Main.cs:18
+#: ../Applications/Schumix.Server/Main.cs:19
 msgid "FATAL ERROR"
 msgstr ""
 
-#: ../Applications/Schumix/Main.cs:20
+#: ../Applications/Schumix/Main.cs:21
 #: ../Applications/Schumix.Installer/Main.cs:15
-#: ../Applications/Schumix.Server/Main.cs:18
-#: ../Applications/Schumix.Server/Main.cs:22
+#: ../Applications/Schumix.Server/Main.cs:19
+#: ../Applications/Schumix.Server/Main.cs:23
 msgid "An unhandled exception has been thrown. ({0})"
 msgstr ""
 
-#: ../Applications/Schumix/Main.cs:21
-#: ../Applications/Schumix.Server/Main.cs:15
+#: ../Applications/Schumix/Main.cs:22
+#: ../Applications/Schumix.Server/Main.cs:16
 msgid "The automatic update is disabled."
 msgstr ""
 
