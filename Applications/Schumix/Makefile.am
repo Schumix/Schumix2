@@ -17,10 +17,10 @@ BUILD_DIR = ../../Run/Debug
 
 SCHUMIX_EXE_MDB_SOURCE=../../Run/Debug/Schumix.exe.mdb
 SCHUMIX_EXE_MDB=$(BUILD_DIR)/Schumix.exe.mdb
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_CORE_DLL_MDB=$(BUILD_DIR)/YamlDotNet.Core.dll.mdb
@@ -76,10 +76,10 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release
 
 SCHUMIX_EXE_MDB=
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB=
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
@@ -117,10 +117,10 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(SCHUMIX_EXE_MDB) \
-	$(MONO_POSIX_DLL) \
 	$(SCHUMIX_IRC_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(MYSQL_DATA_DLL) \
+	$(MONO_POSIX_DLL) \
 	$(YAMLDOTNET_CORE_DLL) \
 	$(YAMLDOTNET_CORE_DLL_MDB) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
@@ -166,7 +166,6 @@ FILES = \
 	Properties/AssemblyInfo.cs \
 	Windows/Windows.cs \
 	Linux/Linux.cs \
-	Windows/CtrlType.cs \
 	Console/Commands/HelpCommand.cs \
 	Console/Commands/ConsolelogCommand.cs \
 	Console/Commands/SysCommand.cs \
@@ -210,17 +209,16 @@ REFERENCES =  \
 	System.Xml \
 	System.Core
 
-DLL_REFERENCES =  \
-	../../Dependencies/Mono.Posix.dll
+DLL_REFERENCES = 
 
 CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
 
 include $(top_srcdir)/Makefile.include
 
-MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
+MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 NGETTEXT_DLL = $(BUILD_DIR)/NGettext.dll
@@ -242,8 +240,8 @@ KOPILUA_DLL = $(BUILD_DIR)/KopiLua.dll
 NLUA_DLL = $(BUILD_DIR)/NLua.dll
 SCHUMIX = $(BUILD_DIR)/schumix
 
-$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
+$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL_MDB))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))

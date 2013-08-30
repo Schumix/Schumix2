@@ -37,6 +37,7 @@ MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_CORE_DLL_MDB=$(BUILD_DIR)/YamlDotNet.Core.dll.mdb
@@ -52,7 +53,6 @@ SYSTEM_DATA_SQLITE_DLL_MDB=$(BUILD_DIR)/System.Data.SQLite.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
-MONO_POSIX_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Posix.dll
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Debug/KeraLua.dll
 KERALUA_DLL_MDB_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Debug/KeraLua.dll.mdb
 KERALUA_DLL_MDB=$(BUILD_DIR)/KeraLua.dll.mdb
@@ -101,6 +101,7 @@ MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB=
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
@@ -111,7 +112,6 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../External/CsharpSQLite/Run/Release/System.Dat
 SYSTEM_DATA_SQLITE_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
-MONO_POSIX_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Posix.dll
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Release/KeraLua.dll
 KERALUA_DLL_MDB=
 KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Release/KopiLua.dll
@@ -141,6 +141,7 @@ PROGRAMFILES = \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SCHUMIX_DB3) \
 	$(MYSQL_DATA_DLL) \
+	$(MONO_POSIX_DLL) \
 	$(YAMLDOTNET_CORE_DLL) \
 	$(YAMLDOTNET_CORE_DLL_MDB) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
@@ -151,7 +152,6 @@ PROGRAMFILES = \
 	$(SYSTEM_DATA_SQLITE_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SHARPEN_UNIX_DLL) \
-	$(MONO_POSIX_DLL) \
 	$(KERALUA_DLL) \
 	$(KERALUA_DLL_MDB) \
 	$(KOPILUA_DLL) \
@@ -225,12 +225,12 @@ MONO_SECURITY_DLL = $(BUILD_DIR)/Mono.Security.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
+MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 NGETTEXT_DLL = $(BUILD_DIR)/NGettext.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
-MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 KERALUA_DLL = $(BUILD_DIR)/KeraLua.dll
 KOPILUA_DLL = $(BUILD_DIR)/KopiLua.dll
 NLUA_DLL = $(BUILD_DIR)/NLua.dll
@@ -249,6 +249,7 @@ $(eval $(call emit-deploy-target,NSCH_DLL))
 $(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
+$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL_MDB))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
@@ -258,7 +259,6 @@ $(eval $(call emit-deploy-target,NGETTEXT_DLL_MDB))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL_MDB))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
-$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,KERALUA_DLL))
 $(eval $(call emit-deploy-target,KERALUA_DLL_MDB))
 $(eval $(call emit-deploy-target,KOPILUA_DLL))

@@ -20,9 +20,9 @@
 
 using System;
 
-namespace Schumix.Server
+namespace Schumix.Framework.Windows
 {
-	enum CtrlType
+	public enum CtrlType
 	{
 		CTRL_C_EVENT        = 0,
 		CTRL_BREAK_EVENT    = 1,

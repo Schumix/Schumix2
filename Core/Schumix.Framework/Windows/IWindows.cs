@@ -19,20 +19,11 @@
  */
 
 using System;
-using Schumix.Framework;
-using Schumix.Framework.Windows;
-using Schumix.Framework.Localization;
 
-namespace Schumix
+namespace Schumix.Framework.Windows
 {
-	class Windows : DefaultWindows
+	public interface IWindows
 	{
-		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private Windows() {}
-
-		public override void Action()
-		{
-			MainClass.Shutdown(sLConsole.GetString("Daemon killed."));
-		}
+		void Action();
 	}
 }

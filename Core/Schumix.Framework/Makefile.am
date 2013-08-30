@@ -20,6 +20,7 @@ SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll.mdb
 YAMLDOTNET_CORE_DLL_MDB=$(BUILD_DIR)/YamlDotNet.Core.dll.mdb
@@ -51,6 +52,7 @@ BUILD_DIR = ../../Run/Release
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
 YAMLDOTNET_CORE_DLL_MDB=
 YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
@@ -69,6 +71,7 @@ PROGRAMFILES = \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_DB3) \
 	$(MYSQL_DATA_DLL) \
+	$(MONO_POSIX_DLL) \
 	$(YAMLDOTNET_CORE_DLL) \
 	$(YAMLDOTNET_CORE_DLL_MDB) \
 	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
@@ -195,7 +198,12 @@ FILES = \
 	Listener/ListenerPacket.cs \
 	Extensions/ConvertExtensions.cs \
 	Util/Folders.cs \
-	Util/Utilities.cs 
+	Util/Utilities.cs \
+	Linux/DefaultLinux.cs \
+	Linux/ILinux.cs \
+	Windows/CtrlType.cs \
+	Windows/DefaultWindows.cs \
+	Windows/IWindows.cs 
 
 DATA_FILES = 
 
@@ -211,6 +219,8 @@ EXTRAS = \
 	Platforms \
 	Logger \
 	Util \
+	Linux \
+	Windows \
 	schumix.framework.pc.in 
 
 REFERENCES =  \
@@ -225,7 +235,8 @@ REFERENCES =  \
 	System.Xml.Linq
 
 DLL_REFERENCES =  \
-	../../Dependencies/MySql.Data.dll
+	../../Dependencies/MySql.Data.dll \
+	../../Dependencies/Mono.Posix.dll
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
@@ -233,6 +244,7 @@ include $(top_srcdir)/Makefile.include
 
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
+MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
 YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 NGETTEXT_DLL = $(BUILD_DIR)/NGettext.dll
@@ -241,6 +253,7 @@ SCHUMIX_FRAMEWORK_PC = $(BUILD_DIR)/schumix.framework.pc
 
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
+$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL_MDB))
 $(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))

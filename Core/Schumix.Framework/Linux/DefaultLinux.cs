@@ -19,20 +19,43 @@
  */
 
 using System;
+using System.Threading;
+using System.Diagnostics;
+using Mono.Unix;
+using Mono.Unix.Native;
 using Schumix.Framework;
-using Schumix.Framework.Windows;
+using Schumix.Framework.Logger;
+using Schumix.Framework.Extensions;
 using Schumix.Framework.Localization;
 
-namespace Schumix
+namespace Schumix.Framework.Linux
 {
-	class Windows : DefaultWindows
+	public class DefaultLinux : ILinux
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private Windows() {}
 
-		public override void Action()
+		public virtual void Init()
 		{
-			MainClass.Shutdown(sLConsole.GetString("Daemon killed."));
+			new Thread(() => LinuxHandler()).Start();
+		}
+
+		public virtual void Action()
+		{
+		}
+
+		protected virtual void LinuxHandler()
+		{
+			Log.Notice("Linux", sLConsole.GetString("Initializing Handler for SIGINT, SIGHUP"));
+			var signals = new UnixSignal[]
+			{
+				new UnixSignal(Signum.SIGINT),
+				new UnixSignal(Signum.SIGHUP)
+			};
+
+			int which = UnixSignal.WaitAny(signals, -1);
+			Log.Debug("Linux", sLConsole.GetString("Got a {0} signal."), signals[which].Signum);
+			Log.Notice("Linux", sLConsole.GetString("Handler Terminated."));
+			Action();
 		}
 	}
 }
