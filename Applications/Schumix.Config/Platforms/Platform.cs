@@ -40,8 +40,8 @@ namespace Schumix.Config.Platforms
 		{
 			get
 			{
-				int platform = (int)Environment.OSVersion.Platform;
-				return (platform == 4 || platform == 128 || platform == 6);
+				var platform = Environment.OSVersion.Platform;
+				return (platform == PlatformID.Unix || platform == PlatformID.MacOSX || platform == (PlatformID)128);
 			}
 		}
 
