@@ -61,9 +61,9 @@ External/YamlDotNet/YamlDotNet.Core/yamldotnet.core.pc
 External/YamlDotNet/YamlDotNet.Core/Makefile
 External/YamlDotNet/YamlDotNet.RepresentationModel/yamldotnet.representationmodel.pc
 External/YamlDotNet/YamlDotNet.RepresentationModel/Makefile
-External/NLua/Core/KopiLua/KopiLua/kopilua.pc
+External/NLua/Core/KopiLua/KopiLua/kopilua.schumix.pc
 External/NLua/Core/KopiLua/KopiLua/Makefile
-External/NLua/Core/KeraLua/src/keralua.pc
+External/NLua/Core/KeraLua/src/keralua.schumix.pc
 External/NLua/Core/KeraLua/src/Makefile
 External/ChatterBotApi/dotnet/ChatterBotAPI/chatterbotapi.pc
 External/ChatterBotApi/dotnet/ChatterBotAPI/Makefile
@@ -83,7 +83,7 @@ External/ngit/Sharpen/sharpen.pc
 External/ngit/Sharpen/Makefile
 External/ngit/Sharpen.Unix/sharpen.unix.pc
 External/ngit/Sharpen.Unix/Makefile
-External/NLua/Core/NLua/nlua.pc
+External/NLua/Core/NLua/nlua.schumix.pc
 External/NLua/Core/NLua/Makefile
 Tests/Schumix.Framework.Test/schumix.framework.test.pc
 Tests/Schumix.Framework.Test/Makefile
