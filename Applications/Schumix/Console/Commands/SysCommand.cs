@@ -47,7 +47,7 @@ namespace Schumix.Console
 			Log.Notice("Console", text[0], sUtilities.GetVersion());
 			Log.Notice("Console", text[1], sPlatform.GetPlatform());
 
-			if(sPlatform.IsWindows)
+			if(sPlatform.IsWindows && sPlatform.IsLinux)
 				Log.Notice("Console", text[2], string.Format("{0} {1}bit", sPlatform.GetOSName(), sPlatform.Is64BitProcess ? 64 : 32));
 			else
 				Log.Notice("Console", text[2], Environment.OSVersion.ToString());
