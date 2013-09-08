@@ -99,7 +99,12 @@ namespace Schumix.Irc
 					int ircnetwork = sIrcBase.Networks.Count > 1 ? 20 * sIrcBase.Networks.Count : 0;
 					sSendMessage.SendChatMessage(sIRCMessage, text[0], sUtilities.GetVersion());
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sPlatform.GetPlatform());
-					sSendMessage.SendChatMessage(sIRCMessage, text[2], Environment.OSVersion.ToString());
+
+					if(sPlatform.IsWindows)
+						sSendMessage.SendChatMessage(sIRCMessage, text[2], string.Format("{0} {1}bit", sPlatform.GetOSName(), sPlatform.Is64BitProcess ? 64 : 32));
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, text[2], Environment.OSVersion.ToString());
+
 					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 
 					if(memory >= 75 + ircnetwork)

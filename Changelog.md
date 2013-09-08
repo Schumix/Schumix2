@@ -2,6 +2,7 @@
 
 ## 4.4.0 (2013-xx-xx)
 
+ * Windows alatt pontosítva az operációs rendszer nevének kiírása.
  * Linux és Windows leállítást vezérlő részek áthelyezve a Framework-be.
  * Compiler részbe beépítve a Sandbox. Így bíztonságosan kezelhetőek a programkódok. Jelenleg csak Windows alatt működik mert a mono nem fejelsztett ki minden függvényt rendesen.
  * Konzolra való írás visszaállítása továbbfejlesztve. Compiler használatakor ezentúl teljesen bíztosan visszáll (remélem) és a szöveg kódolása is a váltás előtti állapotot fogja tükrözni.

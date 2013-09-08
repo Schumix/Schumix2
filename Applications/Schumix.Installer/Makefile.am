@@ -146,7 +146,8 @@ REFERENCES =  \
 	System.Net \
 	System.Web \
 	Microsoft.Build.Utilities.v4.0 \
-	System.Core
+	System.Core \
+	System.Management
 
 DLL_REFERENCES =  \
 	../../Dependencies/Mono.Posix.dll
