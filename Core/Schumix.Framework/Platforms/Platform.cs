@@ -160,7 +160,7 @@ namespace Schumix.Framework.Platforms
 					if(Directory.Exists("/Applications") && Directory.Exists("/System") &&
 					   Directory.Exists("/Users") && Directory.Exists("/Volumes"))
 					{
-						Name = "MacOSX";
+						Name = "Mac OS X";
 						break;
 					}
 
