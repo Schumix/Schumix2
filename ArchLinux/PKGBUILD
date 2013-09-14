@@ -115,5 +115,5 @@ package()
     cd ..
     cd ..
     cd ..
-    cp -rf "${srcdir}"/"$_gitdir"/pkg/ ./
+    cp -rf "${srcdir}"/"$_gitdir"/pkg/usr/ ./pkg/$pkgname
 }
