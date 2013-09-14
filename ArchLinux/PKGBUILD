@@ -12,7 +12,7 @@ _giturl="git://github.com/Schumix/$_gitdir.git"
 pkgdesc="Schumix IRC Bot and Framework"
 arch=('any')
 url="git://github.com/Schumix/$_gitdir.git"
-license=('GNU GPL')
+license=('GNU General Public License 3')
 groups=('')
 depends=('mono>=2.10.8')
 makedepends=('git')
