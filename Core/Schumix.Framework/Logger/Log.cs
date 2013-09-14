@@ -685,7 +685,8 @@ namespace Schumix.Framework.Logger
 				else
 					Console.WriteLine("{0} {1}", GetTime(), message);
 
-				LogInFile(message);
+				if(_started)
+					LogInFile(message);
 			}
 		}
 

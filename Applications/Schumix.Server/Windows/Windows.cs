@@ -19,48 +19,17 @@
  */
 
 using System;
-using System.Threading;
-using System.Runtime.InteropServices;
-using Schumix.Framework;
-using Schumix.Framework.Logger;
-using Schumix.Framework.Network;
+using Schumix.Framework.Windows;
 
 namespace Schumix.Server
 {
-	class Windows
+	class Windows : DefaultWindows
 	{
-		[DllImport("Kernel32")]
-		private static extern bool SetConsoleCtrlHandler(EventHandler handler, bool add);
-		private delegate bool EventHandler(CtrlType sig);
-		private EventHandler _handler;
 		private Windows() {}
 
-		public void Init()
+		public override void Action()
 		{
-			_handler += new EventHandler(Handler);
-			SetConsoleCtrlHandler(_handler, true);
-		}
-	
-		private bool Handler(CtrlType sig)
-		{
-			switch(sig)
-			{
-				case CtrlType.CTRL_C_EVENT:
-				case CtrlType.CTRL_BREAK_EVENT:
-				case CtrlType.CTRL_CLOSE_EVENT:
-					Log.Notice("Windows", "Daemon killed.");
-					MainClass.Shutdown();
-					break;
-				case CtrlType.CTRL_LOGOFF_EVENT:
-				case CtrlType.CTRL_SHUTDOWN_EVENT:
-					Log.Notice("Windows", "User is logging off.");
-					MainClass.Shutdown();
-					break;
-				default:
-					break;
-			}
-
-			return true;
+			MainClass.Shutdown();
 		}
 	}
 }

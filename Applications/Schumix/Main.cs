@@ -157,7 +157,9 @@ namespace Schumix
 			System.Console.WriteLine(sLConsole.GetString("Developers: {0}"), Consts.SchumixDevelopers);
 			System.Console.WriteLine("================================================================================"); // 80
 			System.Console.ForegroundColor = ConsoleColor.Gray;
-			System.Console.WriteLine();
+
+			if(!sPlatform.IsWindows)
+				System.Console.WriteLine();
 
 			new Config(configdir, configfile, colorbindmode);
 			sUtilities.CreatePidFile(SchumixConfig.ConfigFile);

@@ -35,11 +35,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YamlDotNet.Core", "External
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YamlDotNet.RepresentationModel", "External\YamlDotNet\YamlDotNet.RepresentationModel\YamlDotNet.RepresentationModel.csproj", "{21CA0077-E15C-446D-9C43-F6D3F9D09687}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KopiLua", "External\NLua\Core\KopiLua\KopiLua\KopiLua.csproj", "{E8DDBC21-EF74-4ABA-9C49-BFC702BE25D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KopiLua", "External\NLua\Core\KopiLua\KopiLua\KopiLua.Schumix.csproj", "{E8DDBC21-EF74-4ABA-9C49-BFC702BE25D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLua", "External\NLua\Core\NLua\NLua.csproj", "{F55CABBB-4108-4A39-94E1-581FD46DC021}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NLua", "External\NLua\Core\NLua\NLua.Schumix.csproj", "{F55CABBB-4108-4A39-94E1-581FD46DC021}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua", "External\NLua\Core\KeraLua\src\KeraLua.csproj", "{47153754-10F5-44D8-B578-F5A32B69061A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeraLua", "External\NLua\Core\KeraLua\src\KeraLua.Schumix.csproj", "{47153754-10F5-44D8-B578-F5A32B69061A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatterBotAPI", "External\ChatterBotApi\dotnet\ChatterBotAPI\ChatterBotAPI.csproj", "{2E624962-F155-432C-A90A-E1CE75DEE9EA}"
 EndProject
@@ -306,7 +306,6 @@ Global
 		$2.EventRemoveBraceStyle = NextLine
 		$2.StatementBraceStyle = NextLine
 		$2.ElseNewLinePlacement = NewLine
-		$2.ElseIfNewLinePlacement = SameLine
 		$2.CatchNewLinePlacement = NewLine
 		$2.FinallyNewLinePlacement = NewLine
 		$2.BeforeMethodDeclarationParentheses = False

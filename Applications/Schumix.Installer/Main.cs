@@ -110,7 +110,9 @@ namespace Schumix.Installer
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
 				Console.OutputEncoding = Encoding.GetEncoding(852);
 
-			Console.WriteLine();
+			if(!sPlatform.IsWindows)
+				Console.WriteLine();
+
 			Log.Notice("Main", sLConsole.GetString("System is starting..."));
 
 			if(sPlatform.IsWindows)

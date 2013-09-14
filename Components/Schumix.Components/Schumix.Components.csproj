@@ -91,21 +91,21 @@
       <Project>{849AE05D-0058-4A8C-A0E8-77DC6BB12E52}</Project>
       <Name>Sharpen.Unix</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\External\NLua\Core\KeraLua\src\KeraLua.csproj">
-      <Project>{47153754-10F5-44D8-B578-F5A32B69061A}</Project>
-      <Name>KeraLua</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\External\NLua\Core\KopiLua\KopiLua\KopiLua.csproj">
-      <Project>{E8DDBC21-EF74-4ABA-9C49-BFC702BE25D8}</Project>
-      <Name>KopiLua</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\External\NLua\Core\NLua\NLua.csproj">
-      <Project>{F55CABBB-4108-4A39-94E1-581FD46DC021}</Project>
-      <Name>NLua</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Core\Schumix.Irc\Schumix.Irc.csproj">
       <Project>{18A1CAAD-C3E8-4A0E-B9DB-C0B0F3859128}</Project>
       <Name>Schumix.Irc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\NLua\Core\NLua\NLua.Schumix.csproj">
+      <Project>{F55CABBB-4108-4A39-94E1-581FD46DC021}</Project>
+      <Name>NLua.Schumix</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\NLua\Core\KeraLua\src\KeraLua.Schumix.csproj">
+      <Project>{47153754-10F5-44D8-B578-F5A32B69061A}</Project>
+      <Name>KeraLua.Schumix</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\NLua\Core\KopiLua\KopiLua\KopiLua.Schumix.csproj">
+      <Project>{E8DDBC21-EF74-4ABA-9C49-BFC702BE25D8}</Project>
+      <Name>KopiLua.Schumix</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

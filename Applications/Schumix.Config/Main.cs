@@ -24,6 +24,7 @@ using Schumix.Config.Util;
 using Schumix.Config.Config;
 using Schumix.Config.Logger;
 using Schumix.Config.Options;
+using Schumix.Config.Platforms;
 using Schumix.Config.Exceptions;
 using Schumix.Config.Extensions;
 
@@ -33,6 +34,7 @@ namespace Schumix.Config
 	{
 		private static readonly CrashDumper sCrashDumper = Singleton<CrashDumper>.Instance;
 		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
 		private static readonly Runtime sRuntime = Singleton<Runtime>.Instance;
 
 		/// <summary>
@@ -101,7 +103,9 @@ namespace Schumix.Config
 			Log.SetLogLevel(loglevel);
 			Log.Initialize("Config.log", logsdir);
 
-			Console.WriteLine();
+			if(!sPlatform.IsWindows)
+				Console.WriteLine();
+
 			Log.Notice("Main", "System is starting...");
 
 			AppDomain.CurrentDomain.UnhandledException += (sender, eventArgs) =>
@@ -114,6 +118,7 @@ namespace Schumix.Config
 
 			var cbase = new ConfigBase();
 			cbase.Clean(schumix2dir, addonsdir, configdir);
+			sRuntime.Exit();
 		}
 
 		/// <summary>

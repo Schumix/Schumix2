@@ -81,9 +81,10 @@ namespace Schumix.Installer
 				new CloneSchumix("git://" + url, _dir);
 				Log.Success("Installer", sLConsole.GetString("Successfully downloaded new version."));
 			}
-			catch
+			catch(Exception e)
 			{
-				Log.Error("Installer", sLConsole.GetString("Downloading unsuccessful."));
+				Log.Error("Installer", sLConsole.GetString("Downloading unsuccessful!"));
+				Log.Debug("Installer", sLConsole.GetString("Failure details: {0}"), e.Message);
 				Log.Warning("Installer", sLConsole.GetString("Installation successful!"));
 				Thread.Sleep(5*1000);
 				sRuntime.Exit();
@@ -97,7 +98,7 @@ namespace Schumix.Installer
 
 			if(build.HasError)
 			{
-				Log.Error("Installer", sLConsole.GetString("Error was handled while translated."));
+				Log.Error("Installer", sLConsole.GetString("Error was handled while translated!"));
 				Log.Warning("Installer", sLConsole.GetString("Installation successful!"));
 				Thread.Sleep(5*1000);
 				sRuntime.Exit();

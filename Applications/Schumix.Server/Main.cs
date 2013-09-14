@@ -67,9 +67,9 @@ namespace Schumix.Server
 			string localization = "start";
 			bool colorbindmode = false;
 			bool updateignore = false;
-			System.Console.CursorVisible = false;
-			System.Console.BackgroundColor = ConsoleColor.Black;
-			System.Console.ForegroundColor = ConsoleColor.Gray;
+			Console.CursorVisible = false;
+			Console.BackgroundColor = ConsoleColor.Black;
+			Console.ForegroundColor = ConsoleColor.Gray;
 
 			var os = new OptionSet()
 			{
@@ -94,34 +94,36 @@ namespace Schumix.Server
 			}
 			catch(OptionException oe)
 			{
-				System.Console.WriteLine("{0} for options '{1}'", oe.Message, oe.OptionName);
+				Console.WriteLine("{0} for options '{1}'", oe.Message, oe.OptionName);
 				return;
 			}
 
 			if(!console_encoding.IsNumber())
-				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
+				Console.OutputEncoding = Encoding.GetEncoding(console_encoding);
 			else
-				System.Console.OutputEncoding = Encoding.GetEncoding(console_encoding.ToInt32());
+				Console.OutputEncoding = Encoding.GetEncoding(console_encoding.ToInt32());
 
-			System.Console.Title = "Schumix2 Server";
+			Console.Title = "Schumix2 Server";
 
 			if(colorbindmode)
-				System.Console.ForegroundColor = ConsoleColor.Gray;
+				Console.ForegroundColor = ConsoleColor.Gray;
 			else
-				System.Console.ForegroundColor = ConsoleColor.Blue;
+				Console.ForegroundColor = ConsoleColor.Blue;
 
 			if(localization != "start")
 				sLConsole.SetLocale(localization);
 
-			System.Console.WriteLine("[Server]");
-			System.Console.WriteLine(sLConsole.GetString("To shut down the program use the <Ctrl+C> or the <quit> command!"));
-			System.Console.WriteLine(sLConsole.GetString("Schumix Version: {0}"), sUtilities.GetVersion());
-			System.Console.WriteLine(sLConsole.GetString("Website: {0}"), Consts.SchumixWebsite);
-			System.Console.WriteLine(sLConsole.GetString("Programmed by: {0}"), Consts.SchumixProgrammedBy);
-			System.Console.WriteLine(sLConsole.GetString("Developers: {0}"), Consts.SchumixDevelopers);
-			System.Console.WriteLine("================================================================================"); // 80
-			System.Console.ForegroundColor = ConsoleColor.Gray;
-			System.Console.WriteLine();
+			Console.WriteLine("[Server]");
+			Console.WriteLine(sLConsole.GetString("To shut down the program use the <Ctrl+C> or the <quit> command!"));
+			Console.WriteLine(sLConsole.GetString("Schumix Version: {0}"), sUtilities.GetVersion());
+			Console.WriteLine(sLConsole.GetString("Website: {0}"), Consts.SchumixWebsite);
+			Console.WriteLine(sLConsole.GetString("Programmed by: {0}"), Consts.SchumixProgrammedBy);
+			Console.WriteLine(sLConsole.GetString("Developers: {0}"), Consts.SchumixDevelopers);
+			Console.WriteLine("================================================================================"); // 80
+			Console.ForegroundColor = ConsoleColor.Gray;
+
+			if(!sPlatform.IsWindows)
+				Console.WriteLine();
 
 			new Server.Config.Config(configdir, configfile, colorbindmode);
 			sUtilities.CreatePidFile(Server.Config.ServerConfig.ConfigFile);
@@ -131,7 +133,7 @@ namespace Schumix.Server
 
 			if(sPlatform.IsWindows && console_encoding == Encoding.UTF8.BodyName &&
 			   CultureInfo.CurrentCulture.Name == "hu-HU" && sLConsole.Locale == "huHU")
-				System.Console.OutputEncoding = Encoding.GetEncoding(852);
+				Console.OutputEncoding = Encoding.GetEncoding(852);
 
 			Log.Notice("Main", sLConsole.GetString("System is starting..."));
 			
@@ -176,17 +178,17 @@ namespace Schumix.Server
 		/// </summary>
 		private static void ShowHelp(OptionSet os)
 		{
-			System.Console.WriteLine("[Server] Version: {0}", sUtilities.GetVersion());
-			System.Console.WriteLine("Options:");
-			os.WriteOptionDescriptions(System.Console.Out);
-			System.Console.CursorVisible = true;
+			Console.WriteLine("[Server] Version: {0}", sUtilities.GetVersion());
+			Console.WriteLine("Options:");
+			os.WriteOptionDescriptions(Console.Out);
+			Console.CursorVisible = true;
 		}
 
 		public static void Shutdown(Exception eventArgs = null)
 		{
 			sUtilities.RemovePidFile();
 			sListener.Exit = true;
-			System.Console.CursorVisible = true;
+			Console.CursorVisible = true;
 
 			if(!eventArgs.IsNull())
 			{

@@ -28,8 +28,6 @@ NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll
-NGETTEXT_DLL_MDB_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll.mdb
-NGETTEXT_DLL_MDB=$(BUILD_DIR)/NGettext.dll.mdb
 
 endif
 
@@ -57,7 +55,6 @@ NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Release/NGettext.dll
-NGETTEXT_DLL_MDB=
 
 endif
 
@@ -73,8 +70,7 @@ PROGRAMFILES = \
 	$(NSCH_DLL) \
 	$(MONO_SECURITY_DLL) \
 	$(SHARPEN_UNIX_DLL) \
-	$(NGETTEXT_DLL) \
-	$(NGETTEXT_DLL_MDB)  
+	$(NGETTEXT_DLL)  
 
 BINARIES = \
 	$(SCHUMIX_INSTALLER)  
@@ -150,7 +146,8 @@ REFERENCES =  \
 	System.Net \
 	System.Web \
 	Microsoft.Build.Utilities.v4.0 \
-	System.Core
+	System.Core \
+	System.Management
 
 DLL_REFERENCES =  \
 	../../Dependencies/Mono.Posix.dll
@@ -177,7 +174,6 @@ $(eval $(call emit-deploy-target,NSCH_DLL))
 $(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-target,NGETTEXT_DLL))
-$(eval $(call emit-deploy-target,NGETTEXT_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_INSTALLER,schumix.installer,x))
 
 

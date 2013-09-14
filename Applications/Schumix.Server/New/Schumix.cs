@@ -122,12 +122,12 @@ namespace Schumix.Server.New
 		public void Start(string File, string Dir, string Encoding, string Locale, string Identify)
 		{
 			var exe = new Process();
-			exe.StartInfo.UseShellExecute = false;
-			exe.StartInfo.RedirectStandardOutput = true;
-			exe.StartInfo.RedirectStandardError = true;
+			exe.StartInfo.UseShellExecute = true;
+			exe.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
 
 			if(sPlatform.IsLinux)
 			{
+				exe.StartInfo.CreateNoWindow = true; // Így az adott ablakban amiben fut a Server is hiba/fagyás nélkül elindul minden Schumix.
 				exe.StartInfo.FileName = "mono";
 				exe.StartInfo.Arguments = string.Format("Schumix.exe --config-dir={0} --config-file={1} --console-encoding={2} --console-localization={3} --server-enabled={4} --server-host={5} --server-port={6} --server-password={7} --server-identify={8}", Dir, File, Encoding, Locale, true, "127.0.0.1", Config.ServerConfigs.ListenerPort, Config.ServerConfigs.Password, Identify);
 			}
@@ -138,7 +138,7 @@ namespace Schumix.Server.New
 			}
 
 			exe.Start();
-			exe.PriorityClass = ProcessPriorityClass.Normal;
+			//exe.PriorityClass = ProcessPriorityClass.Normal;
 			var settings      = new Settings();
 			settings.File     = File;
 			settings.Dir      = Dir;

@@ -93,7 +93,9 @@ EXTRAS = \
 	schumix.config.in 
 
 REFERENCES =  \
-	System
+	System \
+	System.Core \
+	System.Management
 
 DLL_REFERENCES = 
 

@@ -46,7 +46,12 @@ namespace Schumix.Console
 			var memory = sRuntime.MemorySizeInMB;
 			Log.Notice("Console", text[0], sUtilities.GetVersion());
 			Log.Notice("Console", text[1], sPlatform.GetPlatform());
-			Log.Notice("Console", text[2], Environment.OSVersion.ToString());
+
+			if(sPlatform.IsWindows && sPlatform.IsLinux)
+				Log.Notice("Console", text[2], string.Format("{0} {1}bit", sPlatform.GetOSName(), sPlatform.Is64BitProcess ? 64 : 32));
+			else
+				Log.Notice("Console", text[2], Environment.OSVersion.ToString());
+
 			Log.Notice("Console", text[3]);
 			Log.Notice("Console", text[4], memory);
 			Log.Notice("Console", text[5], Process.GetCurrentProcess().Threads.Count);
