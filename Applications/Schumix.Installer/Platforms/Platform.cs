@@ -22,6 +22,8 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Management;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 using Schumix.Installer.Extensions;
 
 namespace Schumix.Installer.Platforms
@@ -181,7 +183,47 @@ namespace Schumix.Installer.Platforms
 						break;
 					}
 
-					Name = "Linux " + Info.Version;
+					string os = string.Empty;
+
+					try
+					{
+						// Linux
+						// FreeBSD
+						var info = new ProcessStartInfo("uname", "-s");
+						info.UseShellExecute = false;
+						info.RedirectStandardOutput = true;
+						info.RedirectStandardError = true;
+
+						var process = Process.Start(info);
+						process.WaitForExit();
+
+						os = process.StandardOutput.ReadToEnd();
+					}
+					catch(Exception)
+					{
+
+					}
+
+					if(os.IsNullOrEmpty())
+					{
+						Name = "Unix " + Info.Version;
+						break;
+					}
+
+					if(os.ToLower() == "linux")
+					{
+						string distro = GetLinuxDistro();
+
+						if(distro.IsNullOrEmpty())
+						{
+							Name = os + " " + Info.Version;
+							break;
+						}
+
+						Name = distro;
+					}
+
+					Name = os + " " + Info.Version;
 					break;
 				}
 				case PlatformID.MacOSX:
@@ -244,6 +286,116 @@ namespace Schumix.Installer.Platforms
 			}
 
 			return platform;
+		}
+
+		private string GetLinuxDistro()
+		{
+			string distro = string.Empty;
+
+			try
+			{
+				bool debian = false;
+
+				/*if(File.Exists("/etc/portage/make.conf") || File.Exists("/etc/make.conf"))
+				{
+					char keywords[bsize];
+					while(fgets(buffer, bsize, fp) != NULL)
+						find_match_char(buffer, "ACCEPT_KEYWORDS", keywords);
+					/* cppcheck-suppress uninitvar */
+				/*if(strstr(keywords, "\"") == NULL)
+				snprintf(buffer, bsize, "Gentoo Linux (stable)");
+				else
+					snprintf(buffer, bsize, "Gentoo Linux %s", keywords);
+				}*/
+				if(File.Exists("/etc/redhat-release"))
+				{
+					using(var file = new StreamReader("/etc/redhat-release"))
+					{
+						distro = file.ReadToEnd();
+					}
+				}
+				else if(File.Exists("/etc/mageia-release"))
+				{
+					using(var file = new StreamReader("/etc/mageia-release"))
+					{
+						distro = file.ReadToEnd();
+					}
+				}
+				else if(File.Exists("/etc/slackware-version"))
+				{
+					using(var file = new StreamReader("/etc/slackware-version"))
+					{
+						distro = file.ReadToEnd();
+					}
+				}
+				else if(File.Exists("/etc/mandrake-release"))
+				{
+					using(var file = new StreamReader("/etc/mandrake-release"))
+					{
+						distro = file.ReadToEnd();
+					}
+				}
+				else if(File.Exists("/etc/debian_version"))
+				{
+					debian = true;
+
+					using(var file = new StreamReader("/etc/debian_version"))
+					{
+						distro = "Debian " + file.ReadToEnd();
+					}
+				}
+				else if(File.Exists("/etc/SuSE-release"))
+				{
+					using(var file = new StreamReader("/etc/SuSE-release"))
+					{
+						distro = file.ReadToEnd();
+					}
+				}
+				else if(File.Exists("/etc/turbolinux-release"))
+				{
+					using(var file = new StreamReader("/etc/turbolinux-release"))
+					{
+						distro = file.ReadToEnd();
+					}
+				}
+				else if(File.Exists("/etc/arch-release"))
+					distro = "ArchLinux";
+				else if(File.Exists("/etc/lsb-release"))
+				{
+					using(var file = new StreamReader("/etc/lsb-release"))
+					{
+						string s = file.ReadToEnd();
+						string id = s.Remove(0, s.IndexOf("DISTRIB_ID=") + "DISTRIB_ID=".Length);
+						distro = id.Substring(0, id.IndexOf("\n"));
+						string release = s.Remove(0, s.IndexOf("DISTRIB_RELEASE=") + "DISTRIB_RELEASE=".Length);
+						distro += " " + release.Substring(0, release.IndexOf("\n"));
+					}
+				}
+
+				if(debian && File.Exists("/etc/lsb-release")) // Ubuntu, etc.
+				{
+					using(var file = new StreamReader("/etc/lsb-release"))
+					{
+						string s = file.ReadToEnd();
+						string id = s.Remove(0, s.IndexOf("DISTRIB_ID=") + "DISTRIB_ID=".Length);
+
+						if(id.ToLower() != "debian")
+						{
+							distro = id.Substring(0, id.IndexOf("\n"));
+							string release = s.Remove(0, s.IndexOf("DISTRIB_RELEASE=") + "DISTRIB_RELEASE=".Length);
+							distro += " " + release.Substring(0, release.IndexOf("\n"));
+						}
+					}
+				}
+
+				distro = distro.Replace("\n", string.Empty);
+			}
+			catch(Exception)
+			{
+
+			}
+
+			return distro;
 		}
 	}
 }

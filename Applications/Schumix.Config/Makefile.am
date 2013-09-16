@@ -74,7 +74,8 @@ FILES = \
 	Platforms/PlatformType.cs \
 	Properties/AssemblyInfo.cs \
 	CopyTo/Folders.cs \
-	Util/Utilities.cs 
+	Util/Utilities.cs \
+	Extensions/StringExtensions.cs 
 
 DATA_FILES = 
 
