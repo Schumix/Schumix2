@@ -210,21 +210,15 @@ namespace Schumix.Config.Platforms
 						break;
 					}
 
-					if(os.ToLower() == "linux")
+					string distro = GetLinuxDistro();
+
+					if(distro.IsNullOrEmpty())
 					{
-						string distro = GetLinuxDistro();
-
-						if(distro.IsNullOrEmpty())
-						{
-							Name = os + " " + Info.Version;
-							break;
-						}
-
-						Name = distro;
+						Name = os + " " + Info.Version;
 						break;
 					}
 
-					Name = os + " " + Info.Version;
+					Name = distro;
 					break;
 				}
 				case PlatformID.MacOSX:
