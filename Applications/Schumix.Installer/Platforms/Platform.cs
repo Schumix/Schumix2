@@ -206,7 +206,7 @@ namespace Schumix.Installer.Platforms
 
 					if(os.IsNullOrEmpty())
 					{
-						Name = "Unix " + Info.Version;
+						Name = Info.ToString();
 						break;
 					}
 

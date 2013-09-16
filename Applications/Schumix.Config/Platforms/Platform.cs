@@ -206,7 +206,7 @@ namespace Schumix.Config.Platforms
 
 					if(os.IsNullOrEmpty())
 					{
-						Name = "Unix " + Info.Version;
+						Name = Info.ToString();
 						break;
 					}
 
