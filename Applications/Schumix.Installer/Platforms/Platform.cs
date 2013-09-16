@@ -221,6 +221,7 @@ namespace Schumix.Installer.Platforms
 						}
 
 						Name = distro;
+						break;
 					}
 
 					Name = os + " " + Info.Version;
