@@ -24,6 +24,7 @@ namespace Schumix.Config.Platforms
 {
 	enum PlatformType
 	{
+		WinCE,
 		Windows,
 		Linux,
 		MacOSX,

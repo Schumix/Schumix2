@@ -28,13 +28,27 @@ namespace Schumix.Config.Platforms
 {
 	sealed class Platform
 	{
+		public bool IsWin9x
+		{
+			get { return Environment.OSVersion.Platform == PlatformID.Win32Windows; }
+		}
+
+		public bool IsWinNT
+		{
+			get { return Environment.OSVersion.Platform == PlatformID.Win32NT; }
+		}
+
+		public bool IsWinCE
+		{
+			get { return Environment.OSVersion.Platform == PlatformID.WinCE; }
+		}
+
 		public bool IsWindows
 		{
 			get
 			{
 				var platform = Environment.OSVersion.Platform;
-				return (platform == PlatformID.Win32NT || platform == PlatformID.Win32S ||
-				        platform == PlatformID.Win32Windows || platform == PlatformID.WinCE);
+				return (IsWin9x || IsWinNT || platform == PlatformID.Win32S);
 			}
 		}
 
@@ -96,10 +110,12 @@ namespace Schumix.Config.Platforms
 
 			switch(pid)
 			{
+				case PlatformID.WinCE:
+					platform = "WinCE";
+					break;
 				case PlatformID.Win32NT:
 				case PlatformID.Win32S:
 				case PlatformID.Win32Windows:
-				case PlatformID.WinCE:
 					platform = "Windows";
 					break;
 				case PlatformID.Unix:
@@ -189,15 +205,17 @@ namespace Schumix.Config.Platforms
 
 		public PlatformType GetPlatformType()
 		{
-			PlatformType platform = PlatformType.None;
+			var platform = PlatformType.None;
 			var pid = Environment.OSVersion.Platform;
 
 			switch(pid)
 			{
+				case PlatformID.WinCE:
+					platform = PlatformType.WinCE;
+					break;
 				case PlatformID.Win32NT:
 				case PlatformID.Win32S:
 				case PlatformID.Win32Windows:
-				case PlatformID.WinCE:
 					platform = PlatformType.Windows;
 					break;
 				case PlatformID.Unix:

@@ -24,6 +24,7 @@ namespace Schumix.Installer.Platforms
 {
 	enum PlatformType
 	{
+		WinCE,
 		Windows,
 		Linux,
 		MacOSX,
