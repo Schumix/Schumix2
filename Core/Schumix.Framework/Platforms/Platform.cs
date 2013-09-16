@@ -156,8 +156,9 @@ namespace Schumix.Framework.Platforms
 
 			switch(Info.Platform)
 			{
-				case PlatformID.Win32Windows:
+				case PlatformID.Win32S:
 				case PlatformID.Win32NT:
+				case PlatformID.Win32Windows:
 				{
 					var osname = (from x in new ManagementObjectSearcher("SELECT * FROM Win32_OperatingSystem").Get().OfType<ManagementObject>() select x.GetPropertyValue("Caption")).First();
 					Name = !osname.IsNull() ? osname.ToString() : "Unknown";
@@ -213,8 +214,8 @@ namespace Schumix.Framework.Platforms
 				case PlatformID.WinCE:
 					platform = PlatformType.WinCE;
 					break;
-				case PlatformID.Win32NT:
 				case PlatformID.Win32S:
+				case PlatformID.Win32NT:
 				case PlatformID.Win32Windows:
 					platform = PlatformType.Windows;
 					break;
