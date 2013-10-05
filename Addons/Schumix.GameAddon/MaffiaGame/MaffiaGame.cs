@@ -391,7 +391,7 @@ namespace Schumix.GameAddon.MaffiaGames
 			}
 
 			if(_owner == OldName.ToLower())
-				_owner = NewName;
+				_owner = NewName.ToLower();
 
 			if(Started)
 			{
