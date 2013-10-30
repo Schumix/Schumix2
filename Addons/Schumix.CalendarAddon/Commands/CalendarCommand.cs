@@ -95,7 +95,13 @@ namespace Schumix.CalendarAddon.Commands
 
 		private string GetMessage(string args)
 		{
-			return _regex.IsMatch(args) ? _regex.Match(args).Groups["text"].ToString() : string.Empty;
+			if(_regex.IsMatch(args) && IsYear(args))
+				return _regex.Match(args).Groups["text"].ToString();
+
+			if(_hamregex.IsMatch(args) && !IsYear(args))
+				return _hamregex.Match(args).Groups["text"].ToString();
+
+			return string.Empty;
 		}
 
 		private bool IsYear(string args)
