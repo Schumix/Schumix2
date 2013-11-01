@@ -76,8 +76,7 @@ Source: "..\Run\Release\Schumix.Components.dll"; DestDir: "{app}"; Flags: ignore
 Source: "..\Run\Release\Schumix.Compiler.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Server.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\System.Data.SQLite.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Run\Release\YamlDotNet.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Run\Release\YamlDotNet.RepresentationModel.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\YamlDotNet.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\IronPython.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\IronPython.Modules.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\Microsoft.Dynamic.dll"; DestDir: "{app}"; Flags: ignoreversion
