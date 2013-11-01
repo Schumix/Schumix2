@@ -58,14 +58,9 @@
       <Name>Schumix.Framework</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.RepresentationModel\YamlDotNet.RepresentationModel.csproj">
-      <Project>{21CA0077-E15C-446D-9C43-F6D3F9D09687}</Project>
-      <Name>YamlDotNet.RepresentationModel</Name>
-      <Private>False</Private>
-    </ProjectReference>
-    <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.Core\YamlDotNet.Core.csproj">
+    <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet\YamlDotNet.csproj">
       <Project>{BF32DE1B-6276-4341-B212-F8862ADBBA7A}</Project>
-      <Name>YamlDotNet.Core</Name>
+      <Name>YamlDotNet</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
