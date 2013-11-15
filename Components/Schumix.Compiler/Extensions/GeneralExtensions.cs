@@ -1,6 +1,7 @@
 /*
  * This file is part of Schumix.
  * 
+ * Copyright (C) 2010-2012 Twl
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
  * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
  * 
@@ -22,13 +23,26 @@ using System;
 
 namespace Schumix.Compiler.Platforms
 {
-	enum PlatformType
+	/// <summary>
+	/// Some random extension stuff.
+	/// </summary>
+	static class GeneralExtensions
 	{
-		WinCE,
-		Windows,
-		Linux,
-		MacOSX,
-		Xbox,
-		None
+		/// <summary>
+		/// Determines whether the specified obj is null.
+		/// </summary>
+		/// <param name="obj">The obj.</param>
+		/// <returns>
+		/// 	<c>true</c> if the specified obj is null; otherwise, <c>false</c>.
+		/// </returns>
+		public static bool IsNull(this object obj)
+		{
+			return (obj == null);
+		}
+
+		public static bool IsNull(this IntPtr ptr)
+		{
+			return (ptr.Equals(IntPtr.Zero));
+		}
 	}
 }

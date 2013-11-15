@@ -52,7 +52,9 @@ FILES = \
 	Platforms/Platform.cs \
 	Platforms/PlatformType.cs \
 	Singleton.cs \
-	Exceptions/SingletonException.cs 
+	Exceptions/SingletonException.cs \
+	Extensions/GeneralExtensions.cs \
+	Extensions/StringExtensions.cs 
 
 DATA_FILES = 
 
@@ -62,11 +64,14 @@ EXTRAS = \
 	Properties \
 	Platforms \
 	Exceptions \
+	Extensions \
 	schumix.compiler.pc.in 
 
 REFERENCES =  \
 	System \
-	Microsoft.CSharp
+	Microsoft.CSharp \
+	System.Core \
+	System.Management
 
 DLL_REFERENCES = 
 
