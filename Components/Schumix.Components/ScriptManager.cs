@@ -46,7 +46,7 @@ namespace Schumix.Components
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
-		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private PythonEngine.PythonEngine _pythonEngine;
 		private LuaEngine.LuaEngine _luaEngine;
 		private readonly string _scriptsPath;
