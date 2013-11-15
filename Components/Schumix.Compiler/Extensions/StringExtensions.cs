@@ -21,7 +21,7 @@
 using System;
 using System.Linq;
 
-namespace Schumix.Compiler.Platforms
+namespace Schumix.Compiler.Extensions
 {
 	static class StringExtensions
 	{

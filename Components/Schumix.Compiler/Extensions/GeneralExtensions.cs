@@ -21,7 +21,7 @@
 
 using System;
 
-namespace Schumix.Compiler.Platforms
+namespace Schumix.Compiler.Extensions
 {
 	/// <summary>
 	/// Some random extension stuff.

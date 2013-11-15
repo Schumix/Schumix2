@@ -24,6 +24,7 @@ using System.Linq;
 using System.Management;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using Schumix.Compiler.Extensions;
 
 namespace Schumix.Compiler.Platforms
 {
