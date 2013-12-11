@@ -30,7 +30,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// Utolsó kommit ami alapján frissítve lett a Mono.Options: https://github.com/mono/mono/commit/5bf49ac0efdad45a2851cf9daef3ef6ceceb0e0b
+// Utolsó kommit ami alapján frissítve lett a Mono.Options: https://github.com/mono/mono/commit/a699e7444e8ff4426197d4bd3a9607d204ee7b0f
 
 using System;
 using System.ComponentModel;
