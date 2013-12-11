@@ -429,7 +429,7 @@ namespace Schumix.Config.Options
 					if(i == 0)
 						return false;
 
-					throw new OptionException(string.Format(localizer("Cannot bundle unregistered option '{0}'."), opt), opt);
+					throw new OptionException(string.Format(localizer("Cannot use unregistered option '{0}' in bundle '{1}'."), rn, f + n), null);
 				}
 
 				p = this[rn];
