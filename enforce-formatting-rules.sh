@@ -1,19 +1,21 @@
 #!/bin/bash
 
+licence=`ls -d $PWD`/Share/doc/License.cs
+
 main () {
   for f in $(find -iname "*.cs" | grep -v "./_ReSharper" | grep -v "/obj/" | grep -v "./External")
   do
     license $f
-    license_update $f
+
   done
 }
 
 license () {
   f=$1
-  if ! grep -q "Copyright" $f;
+  if (! grep -q "Copyright" $f) | (! grep -q "* Copyright" $f);
   then
     echo "Adding licence to $f"
-    cat license.cs $f >$f.new
+    cat $licence $f > $f.new
     mv $f.new $f
   fi
 }
