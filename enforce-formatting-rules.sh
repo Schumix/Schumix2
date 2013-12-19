@@ -6,7 +6,7 @@ main () {
   for f in $(find -iname "*.cs" | grep -v "./_ReSharper" | grep -v "/obj/" | grep -v "./External")
   do
     license $f
-
+    license_update $f
   done
 }
 
