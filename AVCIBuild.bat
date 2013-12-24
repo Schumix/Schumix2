@@ -1,6 +1,7 @@
 @echo off
 SETLOCAL
 SET BUILD_CONFIG=%1
+SET MSBUILD_EXE=%WINDIR%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe
 
 git submodule init
 git submodule update
@@ -10,11 +11,11 @@ if "%BUILD_CONFIG%" == "" (
 )
 
 IF %BUILD_CONFIG%==Debug (
-	msbuild Schumix.sln /p:Configuration=Debug /flp:LogFile=msbuild.log;Verbosity=Detailed
+	%MSBUILD_EXE% Schumix.sln /p:Configuration=Debug /flp:LogFile=msbuild.log;Verbosity=Detailed
 )
 
 IF %BUILD_CONFIG%==Release (
-	msbuild Schumix.sln /p:Configuration=Release /flp:LogFile=msbuild.log;Verbosity=Detailed
+	%MSBUILD_EXE% Schumix.sln /p:Configuration=Release /flp:LogFile=msbuild.log;Verbosity=Detailed
 )
 
 ENDLOCAL
