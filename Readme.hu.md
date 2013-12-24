@@ -1,4 +1,4 @@
-# Schumix2 [![Build Status](https://travis-ci.org/Schumix/Schumix2.png?branch=master)](https://travis-ci.org/Schumix/Schumix2)
+# Schumix2 [![Build Status](https://travis-ci.org/Schumix/Schumix2.png?branch=master)](https://travis-ci.org/Schumix/Schumix2) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Schumix/schumix2/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 # Ismertetés
 
