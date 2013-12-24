@@ -1,4 +1,6 @@
 @echo off
+cd ..
+chdir src
 git submodule update --init --recursive
 
 SETLOCAL
