@@ -3,7 +3,7 @@ SETLOCAL
 SET BUILD_CONFIG=%1
 SET MSBUILD_EXE=%WINDIR%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe
 
-git submodule update --init --recursive
+git submodule update --init
 
 if "%BUILD_CONFIG%" == "" (
 	set BUILD_CONFIG=Release
