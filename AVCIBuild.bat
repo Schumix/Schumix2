@@ -1,19 +1,19 @@
 @echo off
-cd ..
-chdir src
-git submodule update --init --recursive
+:: cd ..
+:: chdir src
+:: git submodule update --init --recursive
 
 SETLOCAL
 SET BUILD_CONFIG=%1
 SET MSBUILD_EXE=%WINDIR%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe
 
 :: Rossz a recursive megoldás ezért van így kézileg megoldva. Az a baj hogy nincs elég jogosultság a működtetéséhez.
-::git submodule update --init
+git submodule update --init
 
 :: NLua
-::cd External\NLua
-::git submodule update --init
-
+cd External\NLua
+git submodule update --init
+cd ..\..
 :: NLua/KeraLua
 ::cd Core\KeraLua
 ::git submodule update --init
