@@ -23,7 +23,7 @@ license () {
 license_update () {
   f=$1
   echo "Update licence to $f"
-  find $f -type f -exec sed -i 's/* Copyright (C) 2013 Schumix Team <http:\/\/schumix.eu\/>/* Copyright (C) 2013 Schumix Team <http:\/\/schumix.eu\/>/g' {} \;
+  find $f -type f -exec sed -i 's/* Copyright (C) 2013 Schumix Team <http:\/\/schumix.eu\/>/* Copyright (C) 2013-2014 Schumix Team <http:\/\/schumix.eu\/>/g' {} \;
 }
 
 main
