@@ -1,5 +1,4 @@
 @echo off
-
 SETLOCAL
 SET BUILD_CONFIG=%1
 SET MSBUILD_EXE=%WINDIR%\Microsoft.NET\Framework\v4.0.30319\MSBuild.exe
