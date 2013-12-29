@@ -19,3 +19,6 @@
 [submodule "External/CsharpSQLite"]
 	path = External/CsharpSQLite
 	url = git://github.com/Schumix/CsharpSQLite.git
+[submodule "External/SGit"]
+	path = External/SGit
+	url = git://github.com/Schumix/SGit.git

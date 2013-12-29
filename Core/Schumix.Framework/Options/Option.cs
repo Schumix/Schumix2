@@ -8,7 +8,7 @@
  * Copyright (C) 2008 Novell (http://www.novell.com)
  * Copyright (C) 2012 Xamarin Inc (http://www.xamarin.com)
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -30,7 +30,7 @@
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-// Utolsó kommit ami alapján frissítve lett a Mono.Options: https://github.com/mono/mono/commit/5bf49ac0efdad45a2851cf9daef3ef6ceceb0e0b
+// Utolsó kommit ami alapján frissítve lett a Mono.Options: https://github.com/mono/mono/commit/a699e7444e8ff4426197d4bd3a9607d204ee7b0f
 
 using System;
 using System.ComponentModel;

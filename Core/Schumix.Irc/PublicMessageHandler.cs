@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -99,12 +99,7 @@ namespace Schumix.Irc
 					int ircnetwork = sIrcBase.Networks.Count > 1 ? 20 * sIrcBase.Networks.Count : 0;
 					sSendMessage.SendChatMessage(sIRCMessage, text[0], sUtilities.GetVersion());
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], sPlatform.GetPlatform());
-
-					if(sPlatform.IsWindows && sPlatform.IsLinux)
-						sSendMessage.SendChatMessage(sIRCMessage, text[2], string.Format("{0} {1}bit", sPlatform.GetOSName(), sPlatform.Is64BitProcess ? 64 : 32));
-					else
-						sSendMessage.SendChatMessage(sIRCMessage, text[2], Environment.OSVersion.ToString());
-
+					sSendMessage.SendChatMessage(sIRCMessage, text[2], string.Format("{0} {1}bit", sPlatform.GetOSName(), sPlatform.Is64BitProcess ? 64 : 32));
 					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
 
 					if(memory >= 75 + ircnetwork)

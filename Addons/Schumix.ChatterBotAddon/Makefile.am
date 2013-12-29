@@ -18,6 +18,8 @@ BUILD_DIR = ../../Run/Debug/Addons
 CHATTERBOTADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/ChatterBotAddon.dll.mdb
 CHATTERBOTADDON_DLL_MDB=$(BUILD_DIR)/ChatterBotAddon.dll.mdb
 CHATTERBOTAPI_DLL_SOURCE=../../External/ChatterBotApi/dotnet/ChatterBotAPI/bin/Debug/ChatterBotAPI.dll
+CHATTERBOTAPI_DLL_MDB_SOURCE=../../External/ChatterBotApi/dotnet/ChatterBotAPI/bin/Debug/ChatterBotAPI.dll.mdb
+CHATTERBOTAPI_DLL_MDB=$(BUILD_DIR)/ChatterBotAPI.dll.mdb
 
 endif
 
@@ -35,6 +37,7 @@ BUILD_DIR = ../../Run/Release/Addons
 
 CHATTERBOTADDON_DLL_MDB=
 CHATTERBOTAPI_DLL_SOURCE=../../External/ChatterBotApi/dotnet/ChatterBotAPI/bin/Release/ChatterBotAPI.dll
+CHATTERBOTAPI_DLL_MDB=
 
 endif
 
@@ -43,7 +46,8 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(CHATTERBOTADDON_DLL_MDB) \
-	$(CHATTERBOTAPI_DLL)  
+	$(CHATTERBOTAPI_DLL) \
+	$(CHATTERBOTAPI_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_CHATTERBOTADDON_PC)  
@@ -79,6 +83,7 @@ CHATTERBOTAPI_DLL = $(BUILD_DIR)/ChatterBotAPI.dll
 SCHUMIX_CHATTERBOTADDON_PC = $(BUILD_DIR)/schumix.chatterbotaddon.pc
 
 $(eval $(call emit-deploy-target,CHATTERBOTAPI_DLL))
+$(eval $(call emit-deploy-target,CHATTERBOTAPI_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_CHATTERBOTADDON_PC,schumix.chatterbotaddon.pc))
 
 

@@ -13,8 +13,7 @@ PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Framework.dll \
 	../../Run/Debug/Schumix.Irc.dll \
 	../../Run/Libraries/Debug/WolframAPI.dll \
-	../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll \
-	../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll
+	../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll
 BUILD_DIR = ../../Run/Debug/Addons
 
 EXTRAADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/ExtraAddon.dll.mdb
@@ -35,8 +34,7 @@ PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Framework.dll \
 	../../Run/Release/Schumix.Irc.dll \
 	../../Run/Libraries/Release/WolframAPI.dll \
-	../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll \
-	../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
+	../../External/YamlDotNet/YamlDotNet/bin/Release/YamlDotNet.dll
 BUILD_DIR = ../../Run/Release/Addons
 
 EXTRAADDON_DLL_MDB=

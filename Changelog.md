@@ -2,6 +2,8 @@
 
 ## 4.4.0 (2013-xx-xx)
 
+ * Issue 100 javítva. (Kalendar nem írta ki az üzenetet.)
+ * WinCE leválasztva a Windows platform kiírásról.
  * Windows és Linux alatt pontosítva az operációs rendszer nevének kiírása.
  * Linux és Windows leállítást vezérlő részek áthelyezve a Framework-be.
  * Compiler részbe beépítve a Sandbox. Így bíztonságosan kezelhetőek a programkódok. Jelenleg csak Windows alatt működik mert a mono nem fejelsztett ki minden függvényt rendesen.

@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -110,47 +110,47 @@ namespace Schumix.Irc
 
 		public static string GetColor(string Color)
 		{
-			switch(Color)
+			switch(Color.ToLower())
 			{
-				case "Black":
+				case "black":
 					return Black;
-				case "Blue":
+				case "blue":
 					return Blue;
-				case "Bold":
+				case "bold":
 					return Bold;
-				case "Brown":
+				case "brown":
 					return Brown;
-				case "Cyan":
+				case "cyan":
 					return Cyan;
-				case "DarkBlue":
+				case "darkblue":
 					return DarkBlue;
-				case "DarkGray":
+				case "darkgray":
 					return DarkGray;
-				case "DarkGreen":
+				case "darkgreen":
 					return DarkGreen;
-				case "Green":
+				case "green":
 					return Green;
-				case "LightGray":
+				case "lightgray":
 					return LightGray;
-				case "Magenta":
+				case "magenta":
 					return Magenta;
-				case "Normal":
+				case "normal":
 					return Normal;
-				case "Olive":
+				case "olive":
 					return Olive;
-				case "Purple":
+				case "purple":
 					return Purple;
-				case "Red":
+				case "red":
 					return Red;
-				case "Reverse":
+				case "reverse":
 					return Reverse;
-				case "Teal":
+				case "teal":
 					return Teal;
-				case "Underline":
+				case "underline":
 					return Underline;
-				case "White":
+				case "white":
 					return White;
-				case "Yellow":
+				case "yellow":
 					return Yellow;
 				default:
 					return Normal;

@@ -3,7 +3,7 @@
  * 
  * Copyright (C) 2012-2013 Jackneill
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

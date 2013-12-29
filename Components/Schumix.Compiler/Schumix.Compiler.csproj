@@ -31,6 +31,8 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Sandbox.cs" />
@@ -41,11 +43,14 @@
     <Compile Include="Platforms\PlatformType.cs" />
     <Compile Include="Singleton.cs" />
     <Compile Include="Exceptions\SingletonException.cs" />
+    <Compile Include="Extensions\GeneralExtensions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Properties\" />
     <Folder Include="Platforms\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
 </Project>

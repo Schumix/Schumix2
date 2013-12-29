@@ -10,7 +10,7 @@
  * Copyright (C) 2009 Federico Di Gregorio.
  * Copyright (C) 2012 Xamarin Inc (http://www.xamarin.com)
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the
@@ -429,7 +429,7 @@ namespace Schumix.Framework.Options
 					if(i == 0)
 						return false;
 
-					throw new OptionException(string.Format(localizer("Cannot bundle unregistered option '{0}'."), opt), opt);
+					throw new OptionException(string.Format(localizer("Cannot use unregistered option '{0}' in bundle '{1}'."), rn, f + n), null);
 				}
 
 				p = this[rn];

@@ -19,10 +19,15 @@ SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
-YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Debug/YamlDotNet.Core.dll
-YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Debug/YamlDotNet.RepresentationModel.dll
 NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll
+NGETTEXT_DLL_MDB_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll.mdb
+NGETTEXT_DLL_MDB=$(BUILD_DIR)/NGettext.dll.mdb
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../External/CsharpSQLite/Run/Debug/System.Data.SQLite.dll
+SYSTEM_DATA_SQLITE_DLL_MDB_SOURCE=../../External/CsharpSQLite/Run/Debug/System.Data.SQLite.dll.mdb
+SYSTEM_DATA_SQLITE_DLL_MDB=$(BUILD_DIR)/System.Data.SQLite.dll.mdb
+YAMLDOTNET_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll
+YAMLDOTNET_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll.mdb
+YAMLDOTNET_DLL_MDB=$(BUILD_DIR)/YamlDotNet.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 
@@ -43,10 +48,12 @@ SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
-YAMLDOTNET_CORE_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.Core/bin/Release/YamlDotNet.Core.dll
-YAMLDOTNET_REPRESENTATIONMODEL_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet.RepresentationModel/bin/Release/YamlDotNet.RepresentationModel.dll
 NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Release/NGettext.dll
+NGETTEXT_DLL_MDB=
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../External/CsharpSQLite/Run/Release/System.Data.SQLite.dll
+SYSTEM_DATA_SQLITE_DLL_MDB=
+YAMLDOTNET_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Release/YamlDotNet.dll
+YAMLDOTNET_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_MDB=
 
 endif
@@ -60,10 +67,12 @@ PROGRAMFILES = \
 	$(SCHUMIX_DB3) \
 	$(MYSQL_DATA_DLL) \
 	$(MONO_POSIX_DLL) \
-	$(YAMLDOTNET_CORE_DLL) \
-	$(YAMLDOTNET_REPRESENTATIONMODEL_DLL) \
 	$(NGETTEXT_DLL) \
+	$(NGETTEXT_DLL_MDB) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
+	$(SYSTEM_DATA_SQLITE_DLL_MDB) \
+	$(YAMLDOTNET_DLL) \
+	$(YAMLDOTNET_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
@@ -185,19 +194,20 @@ SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
-YAMLDOTNET_CORE_DLL = $(BUILD_DIR)/YamlDotNet.Core.dll
-YAMLDOTNET_REPRESENTATIONMODEL_DLL = $(BUILD_DIR)/YamlDotNet.RepresentationModel.dll
 NGETTEXT_DLL = $(BUILD_DIR)/NGettext.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
+YAMLDOTNET_DLL = $(BUILD_DIR)/YamlDotNet.dll
 SCHUMIX_IRC_PC = $(BUILD_DIR)/schumix.irc.pc
 
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
-$(eval $(call emit-deploy-target,YAMLDOTNET_CORE_DLL))
-$(eval $(call emit-deploy-target,YAMLDOTNET_REPRESENTATIONMODEL_DLL))
 $(eval $(call emit-deploy-target,NGETTEXT_DLL))
+$(eval $(call emit-deploy-target,NGETTEXT_DLL_MDB))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
+$(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL_MDB))
+$(eval $(call emit-deploy-target,YAMLDOTNET_DLL))
+$(eval $(call emit-deploy-target,YAMLDOTNET_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_IRC_PC,schumix.irc.pc))
 
 

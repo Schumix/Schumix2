@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -46,7 +46,7 @@ namespace Schumix.Components
 		///     Hozzáférést biztosít singleton-on keresztül a megadott class-hoz.
 		///     Utilities sokféle függvényt tartalmaz melyek hasznosak lehetnek.
 		/// </summary>
-		private static readonly Utilities sUtilities = Singleton<Utilities>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private PythonEngine.PythonEngine _pythonEngine;
 		private LuaEngine.LuaEngine _luaEngine;
 		private readonly string _scriptsPath;

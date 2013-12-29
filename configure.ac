@@ -57,10 +57,6 @@ dnl package checks, per config
 AC_CONFIG_FILES([
 External/ngit/External/SharpZipLib/src/icsharpcode.sharpzlib.pc
 External/ngit/External/SharpZipLib/src/Makefile
-External/YamlDotNet/YamlDotNet.Core/yamldotnet.core.pc
-External/YamlDotNet/YamlDotNet.Core/Makefile
-External/YamlDotNet/YamlDotNet.RepresentationModel/yamldotnet.representationmodel.pc
-External/YamlDotNet/YamlDotNet.RepresentationModel/Makefile
 External/NLua/Core/KopiLua/KopiLua/kopilua.schumix.pc
 External/NLua/Core/KopiLua/KopiLua/Makefile
 External/NLua/Core/KeraLua/src/keralua.schumix.pc
@@ -71,6 +67,8 @@ External/NGettext/src/NGettext/ngettext.pc
 External/NGettext/src/NGettext/Makefile
 External/CsharpSQLite/System.Data.SQLite/system.data.sqlite.pc
 External/CsharpSQLite/System.Data.SQLite/Makefile
+External/YamlDotNet/YamlDotNet/yamldotnet.pc
+External/YamlDotNet/YamlDotNet/Makefile
 Po/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile

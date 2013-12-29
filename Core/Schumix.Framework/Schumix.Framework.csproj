@@ -163,14 +163,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
-    <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.Core\YamlDotNet.Core.csproj">
-      <Project>{BF32DE1B-6276-4341-B212-F8862ADBBA7A}</Project>
-      <Name>YamlDotNet.Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet.RepresentationModel\YamlDotNet.RepresentationModel.csproj">
-      <Project>{21CA0077-E15C-446D-9C43-F6D3F9D09687}</Project>
-      <Name>YamlDotNet.RepresentationModel</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\External\NGettext\src\NGettext\NGettext.csproj">
       <Project>{96EED5F5-7E90-4BD8-A822-2D7BFF943E28}</Project>
       <Name>NGettext</Name>
@@ -178,6 +170,10 @@
     <ProjectReference Include="..\..\External\CsharpSQLite\System.Data.SQLite\System.Data.SQLite.csproj">
       <Project>{F1653F20-D47D-4F29-8C55-3C835542AF5F}</Project>
       <Name>System.Data.SQLite</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet\YamlDotNet.csproj">
+      <Project>{BF32DE1B-6276-4341-B212-F8862ADBBA7A}</Project>
+      <Name>YamlDotNet</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />
