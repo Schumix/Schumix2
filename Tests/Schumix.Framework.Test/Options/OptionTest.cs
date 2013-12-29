@@ -31,6 +31,7 @@
 using System;
 using NUnit.Framework;
 using Schumix.Framework.Options;
+using Schumix.Framework.Platforms;
 
 namespace Schumix.Framework.Options.Test
 {
@@ -55,9 +56,14 @@ namespace Schumix.Framework.Options.Test
 	[TestFixture]
 	public class OptionTest
 	{
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
+
 		[Test]
 		public void Exceptions()
 		{
+			if(sPlatform.IsWindows)
+				return;
+
 			object p = null;
 			Utils.AssertException(typeof(ArgumentNullException), "Argument cannot be null.\nParameter name: prototype", p, v => {
 				new DefaultOption(null, null); });

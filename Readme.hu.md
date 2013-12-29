@@ -1,4 +1,9 @@
-# Schumix2 [![Build Status](https://travis-ci.org/Schumix/Schumix2.png?branch=stable)](https://travis-ci.org/Schumix/Schumix2) [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Schumix/schumix2/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+# Schumix2 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Schumix/schumix2/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
+Platform | Konfiguráció | Build állapot | Letöltések
+----|----|----|----
+Ubuntu | Debug  | [![Build Status](https://travis-ci.org/Schumix/Schumix2.png?branch=stable)](https://travis-ci.org/Schumix/Schumix2) | Nincs
+Windows | Debug | [![Build status](https://ci.appveyor.com/api/projects/status?id=pjsrmeh2utc2100w)](https://ci.appveyor.com/project/Schumix2-stable) | Nincs
 
 # Ismertetés
 
