@@ -31,6 +31,7 @@
 using System;
 using NUnit.Framework;
 using Schumix.Framework.Options;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Exceptions;
 
 namespace Schumix.Framework.Options.Test
@@ -38,9 +39,14 @@ namespace Schumix.Framework.Options.Test
 	[TestFixture]
 	public class OptionContextTest
 	{
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
+
 		[Test]
 		public void Exceptions()
 		{
+			if(sPlatform.IsWindows)
+				return;
+
 			OptionSet p = new OptionSet() {
 				{ "a=", v => { /* ignore */ } },
 			};

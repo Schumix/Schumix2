@@ -37,6 +37,7 @@ using System.ComponentModel;
 using Cadenza.Collections.Tests;
 using NUnit.Framework;
 using Schumix.Framework.Options;
+using Schumix.Framework.Platforms;
 using Schumix.Framework.Exceptions;
 
 namespace Schumix.Framework.Options.Test
@@ -137,6 +138,8 @@ namespace Schumix.Framework.Options.Test
 	[TestFixture]
 	public class OptionSetTest : ListContract<Option>
 	{
+		private readonly Platform sPlatform = Singleton<Platform>.Instance;
+
 		protected override ICollection<Option> CreateCollection(IEnumerable<Option> values)
 		{
 			OptionSet set = new OptionSet();
@@ -339,6 +342,9 @@ namespace Schumix.Framework.Options.Test
 		[Test]
 		public void Exceptions()
 		{
+			if(sPlatform.IsWindows)
+				return;
+	
 			string a = null;
 			var p = new OptionSet() {
 				{ "a=", v => a = v },
@@ -718,6 +724,9 @@ namespace Schumix.Framework.Options.Test
 		[Test]
 		public void DerivedType()
 		{
+			if(sPlatform.IsWindows)
+				return;
+
 			bool help = false;
 			var p = new CiOptionSet() {
 				{ "h|help", v => help = v != null },
