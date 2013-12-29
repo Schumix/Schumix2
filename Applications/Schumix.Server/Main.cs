@@ -94,7 +94,7 @@ namespace Schumix.Server
 			}
 			catch(OptionException oe)
 			{
-				Console.WriteLine("{0} for options '{1}'", oe.Message, oe.OptionName);
+				Console.Error.WriteLine("{0} for options '{1}'", oe.Message, oe.OptionName);
 				return;
 			}
 

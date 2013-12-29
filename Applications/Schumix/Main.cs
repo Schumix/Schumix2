@@ -130,7 +130,7 @@ namespace Schumix
 			}
 			catch(OptionException oe)
 			{
-				System.Console.WriteLine("{0} for options '{1}'", oe.Message, oe.OptionName);
+				System.Console.Error.WriteLine("{0} for options '{1}'", oe.Message, oe.OptionName);
 				return;
 			}
 
