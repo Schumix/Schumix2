@@ -118,7 +118,7 @@ namespace Schumix.Framework.Util
 					}
 				}
 
-				return sb.ToString();
+				return WebUtility.HtmlDecode(sb.ToString());
 			}
 		}
 
@@ -159,7 +159,7 @@ namespace Schumix.Framework.Util
 
 					client.Headers.Add("referer", Consts.SchumixReferer);
 					client.Headers.Add("user-agent", Consts.SchumixUserAgent);
-					return client.DownloadString(new Uri(url));
+					return WebUtility.HtmlDecode(client.DownloadString(new Uri(url)));
 				}
 			}
 		}
@@ -999,7 +999,7 @@ namespace Schumix.Framework.Util
 						th = null;
 					}
 
-					return sb.ToString();
+					return WebUtility.HtmlDecode(sb.ToString());
 				}
 				catch(Exception e)
 				{
@@ -1129,7 +1129,7 @@ namespace Schumix.Framework.Util
 						th = null;
 					}
 
-					return sb.ToString();
+					return WebUtility.HtmlDecode(sb.ToString());
 				}
 				catch(Exception e)
 				{
@@ -1224,7 +1224,7 @@ namespace Schumix.Framework.Util
 						th = null;
 					}
 
-					return sb.ToString();
+					return WebUtility.HtmlDecode(sb.ToString());
 				}
 				catch(Exception e)
 				{

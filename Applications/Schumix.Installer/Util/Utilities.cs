@@ -80,7 +80,7 @@ namespace Schumix.Installer.Util
 					}
 				}
 
-				return sb.ToString();
+				return WebUtility.HtmlDecode(sb.ToString());
 			}
 		}
 

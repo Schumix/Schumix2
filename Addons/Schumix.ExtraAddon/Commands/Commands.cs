@@ -965,9 +965,6 @@ namespace Schumix.ExtraAddon.Commands
 				string day = string.Empty;
 				string night = string.Empty;
 				source = source.Replace("\n\t\t", SchumixBase.Space.ToString());
-				source = source.Replace("&deg;C", "°C");
-				source = source.Replace("&#176;C", "°C");
-				source = source.Replace("&#369;", "ű");
 
 				if(source.Contains("<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">"))
 				{
