@@ -186,6 +186,13 @@ namespace Schumix.Console
 				}
 
 				string name = sConsoleMessage.Info[2].ToLower();
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM admins WHERE Name = '{0}' And ServerName = '{1}'",  name, _servername);
+				if(db.IsNull())
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("ThisIsntInTheList"));
+					return;
+				}
+
 				if(!Rfc2812Util.IsValidNick(name))
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("NotaNickNameHasBeenSet"));

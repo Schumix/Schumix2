@@ -35,7 +35,7 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTranslateLanguage", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
-			
+
 			if(!sIRCMessage.Info[4].Contains("|"))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTranslateLanguage", sIRCMessage.Channel, sIRCMessage.ServerName));

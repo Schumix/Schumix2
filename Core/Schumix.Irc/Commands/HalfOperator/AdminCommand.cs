@@ -289,6 +289,13 @@ namespace Schumix.Irc.Commands
 				}
 
 				string name = sIRCMessage.Info[5].ToLower();
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name), sIRCMessage.ServerName);
+				if(db.IsNull())
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ThisIsntInTheList", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
 				if(!Rfc2812Util.IsValidNick(name))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NotaNickNameHasBeenSet", sIRCMessage.Channel, sIRCMessage.ServerName));
