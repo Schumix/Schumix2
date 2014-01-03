@@ -213,7 +213,7 @@ namespace Schumix.Framework.Util
 							+ @"(?<![.,?!\]])"							/* Not allowed to end with these */
 						+ ")?"											/* Zero or one of this /path?query_string#fragment_id thing */
 					+ ")"
-				+ @"))");
+				+ @"))", RegexOptions.IgnoreCase);
 
 				if(urlFind.IsMatch(text))
 				{
