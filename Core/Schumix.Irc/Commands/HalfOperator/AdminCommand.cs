@@ -179,7 +179,7 @@ namespace Schumix.Irc.Commands
 				}
 
 				var text = sLManager.GetCommandTexts("admin/add", sIRCMessage.Channel, sIRCMessage.ServerName);
-				if(text.Length < 5)
+				if(text.Length < 7)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
@@ -210,6 +210,17 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[2], pass);
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[3], IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
 				sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[4], IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
+
+				if(SchumixBase.DManager.IsCreatedTable("notes_users"))
+				{
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
+					if(db1.IsNull())
+					{
+						SchumixBase.DManager.Insert("`notes_users`(ServerId, ServerName, Name, Password)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(name.ToLower()), sUtilities.Sha1(pass));
+						sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[5]);
+						sSendMessage.SendChatMessage(sIRCMessage.MessageType, name, text[6], IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
+					}
+				}
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "remove")
 			{
