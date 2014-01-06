@@ -28,17 +28,30 @@ using Schumix.Irc;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
+using Schumix.Framework.Util;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Config;
 using Schumix.Framework.Functions;
 using Schumix.Framework.Extensions;
+using Schumix.Framework.Localization;
 
 namespace Schumix.ExtraAddon.Commands
 {
-	partial class Functions
+	partial class Functions : CommandInfo
 	{
+		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public System.Timers.Timer _timeronline = new System.Timers.Timer();
+		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private readonly object Lock = new object();
+		public bool IsOnline { get; set; }
+		private string _servername;
+
+		public Functions(string ServerName) : base(ServerName)
+		{
+			_servername = ServerName;
+		}
 
 		public void HLMessage(IRCMessage sIRCMessage)
 		{
