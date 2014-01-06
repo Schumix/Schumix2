@@ -155,8 +155,17 @@ namespace Schumix.Irc.Commands
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandHelpText("schumix2/sys", sIRCMessage.Channel, sIRCMessage.ServerName));
 				}
-				else if(sIRCMessage.Info[5].ToLower() == "ghost" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
+				else if(sIRCMessage.Info[5].ToLower() == "ghost")
 				{
+					if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
+						return;
+
 					var text = sLManager.GetCommandHelpTexts("schumix2/ghost", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
@@ -167,8 +176,17 @@ namespace Schumix.Irc.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], command.ToLower());
 				}
-				else if(sIRCMessage.Info[5].ToLower() == "nick" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
+				else if(sIRCMessage.Info[5].ToLower() == "nick")
 				{
+					if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
+						return;
+
 					if(sIRCMessage.Info.Length < 7)
 					{
 						var text = sLManager.GetCommandHelpTexts("schumix2/nick", sIRCMessage.Channel, sIRCMessage.ServerName);
@@ -196,8 +214,17 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, text[1], command.ToLower());
 					}
 				}
-				else if(sIRCMessage.Info[5].ToLower() == "clean" && IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
+				else if(sIRCMessage.Info[5].ToLower() == "clean")
 				{
+					if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
+						return;
+
 					var text = sLManager.GetCommandHelpTexts("schumix2/clean", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
@@ -220,7 +247,7 @@ namespace Schumix.Irc.Commands
 				if(sIgnoreCommand.IsIgnore(sIRCMessage.Info[4].ToLower()))
 					return;
 
-				var adminflag = Adminflag(sIRCMessage.Nick, sIRCMessage.Host);
+				var adminflag = Adminflag(sIRCMessage.Nick);
 
 				if(adminflag != AdminFlag.None)
 				{
@@ -230,6 +257,12 @@ namespace Schumix.Irc.Commands
 					if(rank == -1)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Other("NoFoundHelpCommand", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+						return;
+					}
+
+					if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, (AdminFlag)rank))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 

@@ -289,6 +289,7 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ConnectedIrcServer", "A kapcsolat már létrejött így nem kapcsolódhatsz fel! Előbb szakítsd meg a kapcsolatot ha fel szeretnél megint kapcsolódni vagy használd az újrakapcsolódási parancsot: reconnect");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoConnectedIrcServer", "A kapcsolat már megszünt! Előbb hozd létre a kapcsolatot ha azt meg akarod szakítani vagy használd az újrakapcsolódási parancsot: reconnect");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThisIsntInTheList", "Nem szerepel a listán!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "TheGivenRankIsntDifferent", "Már ez a rang van beállítva!");
 
 -- enUS
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WrongSwitch", "Wrong Switch!");
@@ -320,6 +321,7 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ConnectedIrcServer", "The connection is already established thus you cannot connect. First disconnect if you want to connect again or use to reconnection command: reconnect");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoConnectedIrcServer", "The connection is disappeared. First establish the connection if you want to disconnect or use the reconnection command: reconnect");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ThisIsntInTheList", "This isn't in the list!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "TheGivenRankIsntDifferent", "The given rank isn't different!");
 
 -- huHU
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "schumix2/sys", "3Verzió: 10{0}\n3Platform: {0}\n3OSVerzió: {0}\n3Programnyelv: c#\n3Memória használat:5 {0} MB\n3Memória használat:8 {0} MB\n3Memória használat:3 {0} MB\n3Működési idő: {0}");
@@ -1292,6 +1294,8 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "HourIsNotGiven", "Nincs megadva az óra!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "MinuteIsNotGiven", "Nincs megadva a perc!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThisIsntInTheList", "Nem szerepel a listán!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "WarningAdmin", "Nem azonosítottad magadat! Kérlek tedd meg a parancs használatához!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "TheGivenRankIsntDifferent", "Már ez a rang van beállítva!");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1375,6 +1379,8 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "HourIsNotGiven", "Hour is not given!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "MinuteIsNotGiven", "Minute is not given!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ThisIsntInTheList", "This isn't in the list!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WarningAdmin", "You can't use this command without identification!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "TheGivenRankIsntDifferent", "The given rank isn't different!");
 
 -- ----------------------------
 -- Records of schumix

@@ -47,11 +47,17 @@ namespace Schumix.GitRssAddon.Commands
 		
 		public void HandleGit(IRCMessage sIRCMessage)
 		{
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
+			if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+				return;
+			}
+
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 				return;
-			
-			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
-			
+
 			if(sIRCMessage.Info.Length < 5)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel, sIRCMessage.ServerName));

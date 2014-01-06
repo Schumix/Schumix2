@@ -113,6 +113,12 @@ namespace Schumix.Irc.Commands
 				status = false;
 			}
 
+			if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+				return;
+			}
+
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				return;
 
@@ -342,6 +348,16 @@ namespace Schumix.Irc.Commands
 		
 				if((AdminFlag)rank == AdminFlag.Administrator || (AdminFlag)rank == AdminFlag.Operator || (AdminFlag)rank == AdminFlag.HalfOperator)
 				{
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name), sIRCMessage.ServerName);
+					if(!db1.IsNull())
+					{
+						if(db1["Flag"].ToInt32() == rank)
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("TheGivenRankIsntDifferent", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+					}
+
 					SchumixBase.DManager.Update("admins", string.Format("Flag = '{0}'", rank), string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name), sIRCMessage.ServerName));
 					UpdateLCDB("UPDATE admins SET {0} WHERE {1}", string.Format("Flag = '{0}'", rank), string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);

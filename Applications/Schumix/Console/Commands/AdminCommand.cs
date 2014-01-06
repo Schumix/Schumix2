@@ -203,6 +203,16 @@ namespace Schumix.Console
 
 				if((AdminFlag)rank == AdminFlag.Administrator || (AdminFlag)rank == AdminFlag.Operator || (AdminFlag)rank == AdminFlag.HalfOperator)
 				{
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name, _servername);
+					if(!db1.IsNull())
+					{
+						if(db1["Flag"].ToInt32() == rank)
+						{
+							Log.Error("Console", sLManager.GetConsoleWarningText("TheGivenRankIsntDifferent"));
+							return;
+						}
+					}
+
 					SchumixBase.DManager.Update("admins", string.Format("Flag = '{0}'", rank), string.Format("Name = '{0}' And ServerName = '{1}'", name, _servername));
 					Log.Notice("Console", text[0]);
 				}

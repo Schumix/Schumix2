@@ -31,39 +31,45 @@ namespace Schumix.ExtraAddon.Commands
 		public bool Help(IRCMessage sIRCMessage)
 		{
 			// Fél Operátor parancsok segítségei
-			if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
+			if(sIRCMessage.Info[4].ToLower() == "autofunction")
 			{
 				var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 
-				if(sIRCMessage.Info[4].ToLower() == "autofunction")
+				if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 				{
-					if(sIRCMessage.Info.Length < 6)
-					{
-						var text = sLManager.GetCommandHelpTexts("autofunction", sIRCMessage.Channel, sIRCMessage.ServerName);
-						if(text.Length < 4)
-						{
-							sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
-							return true;
-						}
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return true;
+				}
 
-						if(IsAdmin(sIRCMessage.Nick, AdminFlag.HalfOperator))
-						{
-							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
-							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
-							return true;
-						}
-						else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator))
-						{
-							sSendMessage.SendChatMessage(sIRCMessage, text[2]);
-							sSendMessage.SendChatMessage(sIRCMessage, text[3]);
-							return true;
-						}
-						else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Administrator))
-						{
-							sSendMessage.SendChatMessage(sIRCMessage, text[2]);
-							sSendMessage.SendChatMessage(sIRCMessage, text[3]);
-							return true;
-						}
+				if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
+					return false;
+
+				if(sIRCMessage.Info.Length < 6)
+				{
+					var text = sLManager.GetCommandHelpTexts("autofunction", sIRCMessage.Channel, sIRCMessage.ServerName);
+					if(text.Length < 4)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+						return true;
+					}
+
+					if(IsAdmin(sIRCMessage.Nick, AdminFlag.HalfOperator))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+						return true;
+					}
+					else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
+						return true;
+					}
+					else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Administrator))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
+						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
+						return true;
 					}
 				}
 			}

@@ -28,6 +28,12 @@ namespace Schumix.Irc.Commands
 	{
 		protected void HandleQuit(IRCMessage sIRCMessage)
 		{
+			if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+				return;
+			}
+
 			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				return;
 			

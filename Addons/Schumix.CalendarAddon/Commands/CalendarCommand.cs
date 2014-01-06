@@ -155,6 +155,12 @@ namespace Schumix.CalendarAddon.Commands
 
 			if(sIRCMessage.Info[4].ToLower() == "loop")
 			{
+				if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+					return;
+				}
+
 				if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 					return;
 
