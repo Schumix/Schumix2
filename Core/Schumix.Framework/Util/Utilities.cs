@@ -1074,8 +1074,8 @@ namespace Schumix.Framework.Util
 					var request = (HttpWebRequest)WebRequest.Create(url);
 					var th = new Thread(() =>
 					{
-						if(timeout != 0)
-							Thread.Sleep(timeout+3);
+						if(timeout > 0)
+							Thread.Sleep(timeout);
 						else
 							Thread.Sleep(13*1000);
 
@@ -1083,7 +1083,7 @@ namespace Schumix.Framework.Util
 							request.Abort();
 					});
 
-					if(timeout != 0)
+					if(timeout > 0)
 					{
 						request.Timeout = timeout;
 						request.ReadWriteTimeout = timeout;
@@ -1172,8 +1172,8 @@ namespace Schumix.Framework.Util
 					var request = (HttpWebRequest)WebRequest.Create(url);
 					var th = new Thread(() =>
 					{
-						if(timeout != 0)
-							Thread.Sleep(timeout+3);
+						if(timeout > 0)
+							Thread.Sleep(timeout);
 						else
 							Thread.Sleep(13*1000);
 
@@ -1181,7 +1181,7 @@ namespace Schumix.Framework.Util
 							request.Abort();
 					});
 
-					if(timeout != 0)
+					if(timeout > 0)
 					{
 						request.Timeout = timeout;
 						request.ReadWriteTimeout = timeout;
