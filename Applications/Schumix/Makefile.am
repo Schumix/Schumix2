@@ -58,11 +58,7 @@ SHARPEN_UNIX_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll.mdb
 SHARPEN_UNIX_DLL_MDB=$(BUILD_DIR)/Sharpen.Unix.dll.mdb
 NLUA_DLL_SOURCE=../../External/NLua/Run/Debug/net40/NLua.dll
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Debug/net40/KeraLua.dll
-KERALUA_DLL_MDB_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Debug/net40/KeraLua.dll.mdb
-KERALUA_DLL_MDB=$(BUILD_DIR)/KeraLua.dll.mdb
 KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Debug/net40/KopiLua.dll
-KOPILUA_DLL_MDB_SOURCE=../../External/NLua/Core/KopiLua/Bin/Debug/net40/KopiLua.dll.mdb
-KOPILUA_DLL_MDB=$(BUILD_DIR)/KopiLua.dll.mdb
 NLUA_DLL_MDB_SOURCE=../../External/NLua/Run/Debug/net40/NLua.dll.mdb
 NLUA_DLL_MDB=$(BUILD_DIR)/NLua.dll.mdb
 SCHUMIX_COMPONENTS_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Components.dll.mdb
@@ -114,9 +110,7 @@ SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SHARPEN_UNIX_DLL_MDB=
 NLUA_DLL_SOURCE=../../External/NLua/Run/Release/net40/NLua.dll
 KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Release/net40/KeraLua.dll
-KERALUA_DLL_MDB=
 KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Release/net40/KopiLua.dll
-KOPILUA_DLL_MDB=
 NLUA_DLL_MDB=
 SCHUMIX_COMPONENTS_DLL_MDB=
 
@@ -158,9 +152,7 @@ PROGRAMFILES = \
 	$(SHARPEN_UNIX_DLL_MDB) \
 	$(NLUA_DLL) \
 	$(KERALUA_DLL) \
-	$(KERALUA_DLL_MDB) \
 	$(KOPILUA_DLL) \
-	$(KOPILUA_DLL_MDB) \
 	$(NLUA_DLL_MDB) \
 	$(SCHUMIX_COMPONENTS_DLL_MDB)  
 
@@ -278,9 +270,7 @@ $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL_MDB))
 $(eval $(call emit-deploy-target,NLUA_DLL))
 $(eval $(call emit-deploy-target,KERALUA_DLL))
-$(eval $(call emit-deploy-target,KERALUA_DLL_MDB))
 $(eval $(call emit-deploy-target,KOPILUA_DLL))
-$(eval $(call emit-deploy-target,KOPILUA_DLL_MDB))
 $(eval $(call emit-deploy-target,NLUA_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX,schumix,x))
 
