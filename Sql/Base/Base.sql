@@ -37,7 +37,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "cchannel", "Új csatorna ahova mostantól lehet írni: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/info", "Jelenleg fél operátor.\nJelenleg operátor.\nJelenleg adminisztrátor.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/list", "Adminok: {0}");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/add", "A név már szerepel az admin listán!\nAdmin hozzáadva: {0}\nJelenlegi jelszó: {0}");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/add", "A név már szerepel az admin listán!\nAdmin hozzáadva: {0}\nJelenlegi jelszó: {0}\nNotes felhasználó hozzáadva: {0}\nJelenlegi jelszó: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/remove", "Ilyen név nem létezik!\nAdmin törölve: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/rank", "Rang sikeresen módosítva.\nHibás rang!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "Parancsok: help | list | add | remove");
@@ -89,7 +89,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "cchannel", "The new channel to write to now: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/info", "You are half operator.\nYou are operator.\nYou are administrator.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/list", "Admins: {0}");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/add", "The name is already in the admin list!\nAdmin added to the list: {0}\nPassword: {0}");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/add", "The name is already in the admin list!\nAdmin added to the list: {0}\nPassword: {0}\nNotes user added to the list: {0}\nPassword: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/remove", "No such nick!\nAdmin was deleted: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/rank", "Successfully changed the rank!\nRank error!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin", "Commands: help | list | add | remove");
@@ -288,6 +288,8 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NotaNickNameHasBeenSet", "Nem nick név lett megadva!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ConnectedIrcServer", "A kapcsolat már létrejött így nem kapcsolódhatsz fel! Előbb szakítsd meg a kapcsolatot ha fel szeretnél megint kapcsolódni vagy használd az újrakapcsolódási parancsot: reconnect");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoConnectedIrcServer", "A kapcsolat már megszünt! Előbb hozd létre a kapcsolatot ha azt meg akarod szakítani vagy használd az újrakapcsolódási parancsot: reconnect");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThisIsntInTheList", "Nem szerepel a listán!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "TheGivenRankIsntDifferent", "Már ez a rang van beállítva!");
 
 -- enUS
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WrongSwitch", "Wrong Switch!");
@@ -318,6 +320,8 @@ INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NotaNickNameHasBeenSet", "Not a nickname has been set!");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ConnectedIrcServer", "The connection is already established thus you cannot connect. First disconnect if you want to connect again or use to reconnection command: reconnect");
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoConnectedIrcServer", "The connection is disappeared. First establish the connection if you want to disconnect or use the reconnection command: reconnect");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ThisIsntInTheList", "This isn't in the list!");
+INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "TheGivenRankIsntDifferent", "The given rank isn't different!");
 
 -- huHU
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "schumix2/sys", "3Verzió: 10{0}\n3Platform: {0}\n3OSVerzió: {0}\n3Programnyelv: c#\n3Memória használat:5 {0} MB\n3Memória használat:8 {0} MB\n3Memória használat:3 {0} MB\n3Működési idő: {0}");
@@ -343,7 +347,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/newpassword", "Jelszó sikeresen meg lett változtatva erre: {0}\nA mostani jelszó nem egyezik, modósítás megtagadva!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/info", "Jelenleg fél operátor.\nJelenleg operátor.\nJelenleg adminisztrátor.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/list", "2Adminok: {0}");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/add", "A név már szerepel az admin listán!\nAdmin hozzáadva: {0}\nMostantól Schumix adminja vagy. A mostani jelszavad: {0}\nHa megszeretnéd változtatni használd az {0}admin newpassword parancsot. Használata: {0}admin newpassword <régi> <új>\nAdmin nick élesítése: {0}admin access <jelszó>");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/add", "A név már szerepel az admin listán!\nAdmin hozzáadva: {0}\nMostantól Schumix adminja vagy. A mostani jelszavad: {0}\nHa megszeretnéd változtatni használd az {0}admin newpassword parancsot. Használata: {0}admin newpassword <régi> <új>\nAdmin nick élesítése: {0}admin access <jelszó>\nTovábbá:\nA notes parancshoz automatikusan lett generálva egy felhasználó melynek megegyezik a jelszava az adminnal. Kérlek módosítsad azt is az alábbi paranccsal: {0}notes user newpassword <régi jelszó> <új jelszó>");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/remove", "Ilyen név nem létezik!\nAdmin törölve: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/rank", "Rang sikeresen módosítva.\nHibás rang!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "3Fél Operátor parancsok!\n3Parancsok: {0}\n3Operátor parancsok!\n3Parancsok: {0}\n3Adminisztrátor parancsok!\n3Parancsok: {0}");
@@ -574,7 +578,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/newpassword", "Successfully changed to password to: {0}\nThe current password does not match, modification denied!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/info", "You are half operator.\nYou are operator.\nYou are administrator.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/list", "2Admins: {0}");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/add", "The name is already in the admin list!\nAdmin added to the list: {0}\nYou are schumix's admin now. Your current password is: {0}\nIf you want to change it, use this command: {0}admin newpassword. Usage: {0}admin newpassword <Old> <New>\nAdmin nick confirmation: {0}admin access <Password>");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/add", "The name is already in the admin list!\nAdmin added to the list: {0}\nYou are schumix's admin now. Your current password is: {0}\nIf you want to change it, use this command: {0}admin newpassword. Usage: {0}admin newpassword <Old> <New>\nAdmin nick confirmation: {0}admin access <Password>\nFurthermore:\nA user is automatically generated for the notes command whose password is equal to the admin's password. Please change the user's password with this command: {0}notes user newpassword <Old> <New>");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/remove", "No such nick!\nAdmin was deleted: {0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/rank", "Successfully changed the rank!\nRank error!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin", "3half operator commands!\n3Commands: {0}\n3Operator commands!\n3Commands: {0}\n3Administrator commands!\n3Commands: {0}");
@@ -1289,6 +1293,9 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "DayIsNotGiven", "Nincs megadva a nap!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "HourIsNotGiven", "Nincs megadva az óra!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "MinuteIsNotGiven", "Nincs megadva a perc!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThisIsntInTheList", "Nem szerepel a listán!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "WarningAdmin", "Nem azonosítottad magadat! Kérlek tedd meg a parancs használatához!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "TheGivenRankIsntDifferent", "Már ez a rang van beállítva!");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1371,6 +1378,9 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "DayIsNotGiven", "Day is not given!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "HourIsNotGiven", "Hour is not given!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "MinuteIsNotGiven", "Minute is not given!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ThisIsntInTheList", "This isn't in the list!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WarningAdmin", "You can't use this command without identification!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "TheGivenRankIsntDifferent", "The given rank isn't different!");
 
 -- ----------------------------
 -- Records of schumix

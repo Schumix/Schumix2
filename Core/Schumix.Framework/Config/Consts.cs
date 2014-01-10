@@ -34,10 +34,10 @@ namespace Schumix.Framework.Config
 #endif
 		public const string SchumixCompany = "Schumix Productions";
 		public const string SchumixProduct = "Schumix";
-		public const string SchumixCopyright = "Copyright (C) 2013 Schumix Team <http://schumix.eu/>";
+		public const string SchumixCopyright = "Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>";
 		public const string SchumixTrademark = "GNU General Public License";
-		public const string SchumixVersion = "4.3.4";
-		public const string SchumixFileVersion = "4.3.4.0";
+		public const string SchumixVersion = "4.3.7";
+		public const string SchumixFileVersion = "4.3.7.0";
 		public const string SchumixProgrammedBy = "Csaba Jakosa (Megax)";
 		public const string SchumixDevelopers = "Csaba Jakosa (Megax), Twl, Jackneill, Invisible, mqmq0, AgeNt";
 		public const string SchumixWebsite = "https://github.com/Schumix/Schumix2";

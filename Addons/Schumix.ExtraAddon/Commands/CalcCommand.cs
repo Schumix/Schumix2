@@ -21,32 +21,27 @@
 using System;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
+using Schumix.Framework.Extensions;
+using Schumix.ExtraAddon.Config;
+using WolframAPI;
 
-namespace Schumix.Irc.Commands
+namespace Schumix.ExtraAddon.Commands
 {
-	public abstract partial class CommandHandler
+	partial class Functions
 	{
-		protected void HandleQuit(IRCMessage sIRCMessage)
+		public void HandleCalc(IRCMessage sIRCMessage)
 		{
-			if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+
+			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoValue", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
-			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
-				return;
-			
-			var text = sLManager.GetCommandTexts("quit", sIRCMessage.Channel, sIRCMessage.ServerName);
-			if(text.Length < 2)
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
-				return;
-			}
-			
-			sSendMessage.SendChatMessage(sIRCMessage, text[0]);
-			SchumixBase.Quit();
-			sIrcBase.Shutdown(string.Format(text[1], sIRCMessage.Nick));
+			var client = new WAClient(WolframAlphaConfig.Key);
+			var solution = client.Solve(sIRCMessage.Info.SplitToString(4, SchumixBase.Space));
+			sSendMessage.SendChatMessage(sIRCMessage, "{0}", solution);
 		}
 	}
 }

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
@@ -21,22 +21,16 @@
 using System;
 using Schumix.Framework.Irc;
 
-namespace Schumix.Irc.Commands
+namespace Schumix.ExtraAddon.Commands
 {
-	public abstract partial class CommandHandler
+	partial class Functions
 	{
-		protected void HandleColors(IRCMessage sIRCMessage)
+		public void HandleRoll(IRCMessage sIRCMessage)
 		{
-			if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
-			{
-				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
-				return;
-			}
-
-			if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
-				return;
-			
-			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("colors", sIRCMessage.Channel, sIRCMessage.ServerName));
+			var rand = new Random();
+			int number = rand.Next(0, 100);
+			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
+			sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("roll", sIRCMessage.Channel, sIRCMessage.ServerName), number);
 		}
 	}
 }

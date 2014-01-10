@@ -127,6 +127,11 @@ namespace Schumix.Irc.Commands
 				return AdminFlag.None;
 		}
 
+		public bool IsWarningAdmin(string Name, string Vhost, AdminFlag Flag)
+		{
+			return IsAdmin(Name) && !IsAdmin(Name, Vhost) && IsAdmin(Name, Flag);
+		}
+
 		public void RandomVhost(string Name)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);

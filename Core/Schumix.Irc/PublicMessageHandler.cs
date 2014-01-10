@@ -21,6 +21,7 @@
 using System;
 using System.Diagnostics;
 using Schumix.Irc.Util;
+using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Logger;
@@ -131,7 +132,13 @@ namespace Schumix.Irc
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "ghost")
 				{
-					if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, Commands.AdminFlag.Operator))
+					if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Operator))
 						return;
 
 					sSender.NickServGhost(IRCConfig.List[sIRCMessage.ServerName].NickName, IRCConfig.List[sIRCMessage.ServerName].NickServPassword);
@@ -141,7 +148,13 @@ namespace Schumix.Irc
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "nick")
 				{
-					if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, Commands.AdminFlag.HalfOperator))
+					if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
 						return;
 
 					if(sIRCMessage.Info.Length < 6)
@@ -180,7 +193,13 @@ namespace Schumix.Irc
 				}
 				else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "clean")
 				{
-					if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, Commands.AdminFlag.Administrator))
+					if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
+					}
+
+					if(!IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 						return;
 
 					GC.Collect(1);

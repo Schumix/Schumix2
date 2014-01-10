@@ -118,7 +118,7 @@ namespace Schumix.Framework.Util
 					}
 				}
 
-				return sb.ToString();
+				return WebUtility.HtmlDecode(sb.ToString());
 			}
 		}
 
@@ -159,7 +159,7 @@ namespace Schumix.Framework.Util
 
 					client.Headers.Add("referer", Consts.SchumixReferer);
 					client.Headers.Add("user-agent", Consts.SchumixUserAgent);
-					return client.DownloadString(new Uri(url));
+					return WebUtility.HtmlDecode(client.DownloadString(new Uri(url)));
 				}
 			}
 		}
@@ -213,7 +213,7 @@ namespace Schumix.Framework.Util
 							+ @"(?<![.,?!\]])"							/* Not allowed to end with these */
 						+ ")?"											/* Zero or one of this /path?query_string#fragment_id thing */
 					+ ")"
-				+ @"))");
+				+ @"))", RegexOptions.IgnoreCase);
 
 				if(urlFind.IsMatch(text))
 				{
@@ -999,7 +999,7 @@ namespace Schumix.Framework.Util
 						th = null;
 					}
 
-					return sb.ToString();
+					return WebUtility.HtmlDecode(sb.ToString());
 				}
 				catch(Exception e)
 				{
@@ -1074,8 +1074,8 @@ namespace Schumix.Framework.Util
 					var request = (HttpWebRequest)WebRequest.Create(url);
 					var th = new Thread(() =>
 					{
-						if(timeout != 0)
-							Thread.Sleep(timeout+3);
+						if(timeout > 0)
+							Thread.Sleep(timeout);
 						else
 							Thread.Sleep(13*1000);
 
@@ -1083,7 +1083,7 @@ namespace Schumix.Framework.Util
 							request.Abort();
 					});
 
-					if(timeout != 0)
+					if(timeout > 0)
 					{
 						request.Timeout = timeout;
 						request.ReadWriteTimeout = timeout;
@@ -1129,7 +1129,7 @@ namespace Schumix.Framework.Util
 						th = null;
 					}
 
-					return sb.ToString();
+					return WebUtility.HtmlDecode(sb.ToString());
 				}
 				catch(Exception e)
 				{
@@ -1172,8 +1172,8 @@ namespace Schumix.Framework.Util
 					var request = (HttpWebRequest)WebRequest.Create(url);
 					var th = new Thread(() =>
 					{
-						if(timeout != 0)
-							Thread.Sleep(timeout+3);
+						if(timeout > 0)
+							Thread.Sleep(timeout);
 						else
 							Thread.Sleep(13*1000);
 
@@ -1181,7 +1181,7 @@ namespace Schumix.Framework.Util
 							request.Abort();
 					});
 
-					if(timeout != 0)
+					if(timeout > 0)
 					{
 						request.Timeout = timeout;
 						request.ReadWriteTimeout = timeout;
@@ -1224,7 +1224,7 @@ namespace Schumix.Framework.Util
 						th = null;
 					}
 
-					return sb.ToString();
+					return WebUtility.HtmlDecode(sb.ToString());
 				}
 				catch(Exception e)
 				{

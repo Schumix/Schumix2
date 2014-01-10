@@ -63,7 +63,6 @@ FILES = \
 	Properties/AssemblyInfo.cs \
 	Commands/IrcHandler.cs \
 	ExtraAddon.cs \
-	Commands/Commands.cs \
 	Commands/Help.cs \
 	Commands/Functions.cs \
 	Config/AddonConfig.cs \
@@ -76,7 +75,16 @@ FILES = \
 	Config/AddonDefaultConfig.cs \
 	Config/AddonXmlConfig.cs \
 	Config/AddonYamlConfig.cs \
-	Commands/YoutubeTitle.cs 
+	Commands/YoutubeTitle.cs \
+	Commands/AutoFunctionCommand.cs \
+	Commands/MessageCommand.cs \
+	Commands/WeatherCommand.cs \
+	Commands/RollCommand.cs \
+	Commands/Sha1Command.cs \
+	Commands/Md5Command.cs \
+	Commands/PrimeCommand.cs \
+	Commands/WikiCommand.cs \
+	Commands/CalcCommand.cs 
 
 DATA_FILES = 
 

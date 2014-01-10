@@ -35,7 +35,7 @@ namespace Schumix.Irc.Commands
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTranslateLanguage", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
-			
+
 			if(!sIRCMessage.Info[4].Contains("|"))
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoTranslateLanguage", sIRCMessage.Channel, sIRCMessage.ServerName));
@@ -54,7 +54,7 @@ namespace Schumix.Irc.Commands
 			if(!Regex.IsMatch(url))
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("translate", sIRCMessage.Channel, sIRCMessage.ServerName));
 			else
-				sSendMessage.SendChatMessage(sIRCMessage, "{0}", Regex.Match(url).Groups["text"].ToString().Replace("&#39;", "'"));
+				sSendMessage.SendChatMessage(sIRCMessage, "{0}", Regex.Match(url).Groups["text"].ToString());
 		}
 	}
 }

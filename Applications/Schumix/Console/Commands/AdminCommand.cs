@@ -92,7 +92,7 @@ namespace Schumix.Console
 				}
 
 				var text = sLManager.GetConsoleCommandTexts("admin/add");
-				if(text.Length < 3)
+				if(text.Length < 5)
 				{
 					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
@@ -120,6 +120,17 @@ namespace Schumix.Console
 
 				Log.Notice("Console", text[1], name);
 				Log.Notice("Console", text[2], pass);
+
+				if(SchumixBase.DManager.IsCreatedTable("notes_users"))
+				{
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), _servername);
+					if(db1.IsNull())
+					{
+						SchumixBase.DManager.Insert("`notes_users`(ServerId, ServerName, Name, Password)", IRCConfig.List[_servername].ServerId, _servername, name.ToLower(), sUtilities.Sha1(pass));
+						Log.Notice("Console", text[3], name);
+						Log.Notice("Console", text[4], pass);
+					}
+				}
 			}
 			else if(sConsoleMessage.Info.Length >= 2 && sConsoleMessage.Info[1].ToLower() == "remove")
 			{
@@ -186,6 +197,13 @@ namespace Schumix.Console
 				}
 
 				string name = sConsoleMessage.Info[2].ToLower();
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM admins WHERE Name = '{0}' And ServerName = '{1}'",  name, _servername);
+				if(db.IsNull())
+				{
+					Log.Error("Console", sLManager.GetConsoleWarningText("ThisIsntInTheList"));
+					return;
+				}
+
 				if(!Rfc2812Util.IsValidNick(name))
 				{
 					Log.Error("Console", sLManager.GetConsoleWarningText("NotaNickNameHasBeenSet"));
@@ -196,6 +214,16 @@ namespace Schumix.Console
 
 				if((AdminFlag)rank == AdminFlag.Administrator || (AdminFlag)rank == AdminFlag.Operator || (AdminFlag)rank == AdminFlag.HalfOperator)
 				{
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name, _servername);
+					if(!db1.IsNull())
+					{
+						if(db1["Flag"].ToInt32() == rank)
+						{
+							Log.Error("Console", sLManager.GetConsoleWarningText("TheGivenRankIsntDifferent"));
+							return;
+						}
+					}
+
 					SchumixBase.DManager.Update("admins", string.Format("Flag = '{0}'", rank), string.Format("Name = '{0}' And ServerName = '{1}'", name, _servername));
 					Log.Notice("Console", text[0]);
 				}

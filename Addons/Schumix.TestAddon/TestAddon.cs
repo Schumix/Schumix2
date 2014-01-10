@@ -32,6 +32,7 @@ namespace Schumix.TestAddon
 {
 	class TestAddon : ISchumixAddon
 	{
+		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 		private TestCommand sTestCommand;
@@ -85,13 +86,19 @@ namespace Schumix.TestAddon
 			var sSendMessage = sIrcBase.Networks[sIRCMessage.ServerName].sSendMessage;
 
 			// Adminisztrátor parancsok
-			if(sTestCommand.IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
+			if(sIRCMessage.Info[4].ToLower() == "test")
 			{
-				if(sIRCMessage.Info[4].ToLower() == "test")
+				if(sTestCommand.IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
 				{
-					sSendMessage.SendChatMessage(sIRCMessage, "Teszt célokra használt parancs.");
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("WarningAdmin", sIRCMessage.Channel, sIRCMessage.ServerName));
 					return true;
 				}
+
+				if(!sTestCommand.IsAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.Administrator))
+					return false;
+
+				sSendMessage.SendChatMessage(sIRCMessage, "Teszt célokra használt parancs.");
+				return true;
 			}
 
 			return false;
