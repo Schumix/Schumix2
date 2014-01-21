@@ -45,6 +45,7 @@ namespace Schumix.Framework.Functions
 		Wordpress,
 		Chatterbot,
 		NameDay,
-		BirthDay
+		BirthDay,
+		Rss,
 	};
 }

@@ -189,7 +189,7 @@ namespace Schumix.RssAddon
 				{
 					try
 					{
-						if(!sIrcBase.Networks[_servername].sMyChannelInfo.IsNull() && sIrcBase.Networks[_servername].sMyChannelInfo.FSelect(IFunctions.Wordpress) && errornumber < 20)
+						if(!sIrcBase.Networks[_servername].sMyChannelInfo.IsNull() && sIrcBase.Networks[_servername].sMyChannelInfo.FSelect(IFunctions.Rss) && errornumber < 20)
 						{
 							url = GetUrl();
 							if(url.IsNull())

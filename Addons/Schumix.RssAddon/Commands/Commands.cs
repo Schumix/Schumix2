@@ -73,7 +73,7 @@ namespace Schumix.RssAddon.Commands
 					{
 						string name = row["Name"].ToString();
 						string[] channel = row["Channel"].ToString().Split(SchumixBase.Comma);
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("wordpress/info", sIRCMessage.Channel, sIRCMessage.ServerName), name, channel.SplitToString(SchumixBase.Space));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("rss/info", sIRCMessage.Channel, sIRCMessage.ServerName), name, channel.SplitToString(SchumixBase.Space));
 					}
 				}
 				else
@@ -90,9 +90,9 @@ namespace Schumix.RssAddon.Commands
 						list += SchumixBase.Comma + SchumixBase.Space + row["Name"].ToString();
 
 					if(list.IsNullOrEmpty())
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("wordpress/list", sIRCMessage.Channel, sIRCMessage.ServerName), SchumixBase.Space + sLConsole.Other("Nothing"));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("rss/list", sIRCMessage.Channel, sIRCMessage.ServerName), SchumixBase.Space + sLConsole.Other("Nothing"));
 					else
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("wordpress/list", sIRCMessage.Channel, sIRCMessage.ServerName), list.Remove(0, 1, SchumixBase.Comma));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("rss/list", sIRCMessage.Channel, sIRCMessage.ServerName), list.Remove(0, 1, SchumixBase.Comma));
 				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
