@@ -31,3 +31,4 @@ DROP TABLE IF EXISTS `ignore_commands`;
 DROP TABLE IF EXISTS `ignore_irc_commands`;
 DROP TABLE IF EXISTS `maffiagame`;
 DROP TABLE IF EXISTS `ignore_addons`;
+DROP TABLE IF EXISTS `rssinfo`;
