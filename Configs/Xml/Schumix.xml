@@ -69,7 +69,7 @@
     </SQLite>
     <Addons>
         <Enabled>True</Enabled>
-        <Ignore>MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TestAddon</Ignore>
+        <Ignore>MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TestAddon,RssAddon</Ignore>
         <Directory>Addons</Directory>
     </Addons>
     <Scripts>

@@ -94,6 +94,7 @@ Source: "..\Run\Release\locale\*"; DestDir: "{app}\locale\"; Flags: ignoreversio
 Source: "..\Configs\CalendarAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "..\Configs\CompilerAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "..\Configs\ExtraAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
+Source: "..\Configs\RssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "..\Configs\GitRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "..\Configs\HgRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "..\Configs\MantisBTRssAddon.yml"; DestDir: "{userappdata}\Schumix\Configs\"; Flags: onlyifdoesntexist uninsneveruninstall
