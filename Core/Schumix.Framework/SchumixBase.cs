@@ -285,7 +285,7 @@ namespace Schumix.Framework
 				{
 					if(function == IFunctions.Mantisbt.ToString() || function == IFunctions.Wordpress.ToString() ||
 						function == IFunctions.Svn.ToString() || function == IFunctions.Git.ToString() ||
-						function == IFunctions.Hg.ToString())
+						function == IFunctions.Hg.ToString() || function == IFunctions.Rss.ToString())
 						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), Off);
 					else
 						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), On);
@@ -302,7 +302,7 @@ namespace Schumix.Framework
 				{
 					if(function == IFunctions.Mantisbt.ToString() || function == IFunctions.Wordpress.ToString() ||
 						function == IFunctions.Svn.ToString() || function == IFunctions.Git.ToString() ||
-						function == IFunctions.Hg.ToString())
+						function == IFunctions.Hg.ToString() || function == IFunctions.Rss.ToString())
 						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), Off);
 					else
 						DManager.Insert("`schumix`(ServerId, ServerName, FunctionName, FunctionStatus)", ServerId, ServerName, function.ToLower(), On);
