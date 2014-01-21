@@ -6,7 +6,7 @@ EXTRA_DIST =
 if ENABLE_DEBUG
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize- -debug "-define:DEBUG"
-ASSEMBLY = ../../Run/Debug/Addons/WordpressRssAddon.dll
+ASSEMBLY = ../../Run/Debug/Addons/RssAddon.dll
 ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
@@ -15,15 +15,15 @@ PROJECT_REFERENCES =  \
 	../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll
 BUILD_DIR = ../../Run/Debug/Addons
 
-WORDPRESSRSSADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/WordpressRssAddon.dll.mdb
-WORDPRESSRSSADDON_DLL_MDB=$(BUILD_DIR)/WordpressRssAddon.dll.mdb
+RSSADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/RssAddon.dll.mdb
+RSSADDON_DLL_MDB=$(BUILD_DIR)/RssAddon.dll.mdb
 
 endif
 
 if ENABLE_RELEASE
 ASSEMBLY_COMPILER_COMMAND = dmcs
 ASSEMBLY_COMPILER_FLAGS =  -noconfig -codepage:utf8 -warn:4 -optimize+ "-define:RELEASE"
-ASSEMBLY = ../../Run/Release/Addons/WordpressRssAddon.dll
+ASSEMBLY = ../../Run/Release/Addons/RssAddon.dll
 ASSEMBLY_MDB = 
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
@@ -32,7 +32,7 @@ PROJECT_REFERENCES =  \
 	../../External/YamlDotNet/YamlDotNet/bin/Release/YamlDotNet.dll
 BUILD_DIR = ../../Run/Release/Addons
 
-WORDPRESSRSSADDON_DLL_MDB=
+RSSADDON_DLL_MDB=
 
 endif
 
@@ -40,10 +40,10 @@ AL=al
 SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
-	$(WORDPRESSRSSADDON_DLL_MDB)  
+	$(RSSADDON_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
-	$(SCHUMIX_WORDPRESSRSSADDON_PC)  
+	$(SCHUMIX_RSSADDON_PC)  
 
 
 RESGEN=resgen2
@@ -55,8 +55,8 @@ FILES = \
 	Commands/Commands.cs \
 	Config/AddonConfig.cs \
 	Localization/PLocalization.cs \
-	Rss/WordPressRss.cs \
-	WordPressRssAddon.cs \
+	Rss/Rss.cs \
+	RssAddon.cs \
 	Config/RssConfig.cs \
 	Config/AddonDefaultConfig.cs \
 	Config/AddonXmlConfig.cs \
@@ -67,7 +67,7 @@ DATA_FILES =
 RESOURCES = 
 
 EXTRAS = \
-	schumix.wordpressrssaddon.pc.in 
+	schumix.rssaddon.pc.in 
 
 REFERENCES =  \
 	System \
@@ -81,9 +81,9 @@ CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 
 include $(top_srcdir)/Makefile.include
 
-SCHUMIX_WORDPRESSRSSADDON_PC = $(BUILD_DIR)/schumix.wordpressrssaddon.pc
+SCHUMIX_RSSADDON_PC = $(BUILD_DIR)/schumix.rssaddon.pc
 
-$(eval $(call emit-deploy-wrapper,SCHUMIX_WORDPRESSRSSADDON_PC,schumix.wordpressrssaddon.pc))
+$(eval $(call emit-deploy-wrapper,SCHUMIX_RSSADDON_PC,schumix.rssaddon.pc))
 
 
 $(eval $(call emit_resgen_targets))
