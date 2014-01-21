@@ -1,4 +1,4 @@
-# SvnRssAddon konfig fájl
+# SvnRssAddon config file
 
 ## Rss
 

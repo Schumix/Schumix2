@@ -1,4 +1,4 @@
-# WordPressRssAddon konfig fájl
+# RssAddon konfig fájl
 
 ## Rss
 
