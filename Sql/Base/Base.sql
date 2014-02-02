@@ -377,7 +377,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "2[Leválasztás]: Összes plugin leválasztása 3sikeres.\n2[Leválasztás]: Összes plugin leválasztása 5sikertelen.\nA pluginok már le vannak választva!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin", "{0}: 3betöltve.\n{0}: 8letiltva.\nNincsen betöltve plugin!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "quit", "Viszlát :(\n{0} leállított paranccsal.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/info", "3{0} Channel: 2{1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/info", "[{0}] 3{1} Channel: 2{2}\n2Információ: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/list", "2Lista:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/start", "{0} már el van indítva!\n{0} sikeresen el lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/stop", "{0} már le van állítva!\n{0} sikeresen le lett állítva.\n{0} nem létezik!");
@@ -391,7 +391,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/change/shorturl", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/change/url", "Nem szerepel a név a listában!\nUrl sikeresen módosítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/change/website", "Nem szerepel a név a listában!\nOldal neve sikeresen módosítva.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/info", "3{0} Channel: 2{1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/info", "[{0}] 3{1} Channel: 2{2}\n2Információ: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/list", "2Lista:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/start", "{0} már el van indítva!\n{0} sikeresen el lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/stop", "{0} már le van állítva!\n{0} sikeresen le lett állítva.\n{0} nem létezik!");
@@ -405,7 +405,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/change/shorturl", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/change/url", "Nem szerepel a név a listában!\nUrl sikeresen módosítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/change/website", "Nem szerepel a név a listában!\nOldal neve sikeresen módosítva.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/info", "3{0}15/7{1} Channel: 2{2}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/info", "[{0}] 3{1}15/7{2} Channel: 2{3}\n2Információ: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/list", "2Lista:{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/start", "{0} {1} már el van indítva!\n{0} {1} sikeresen el lett indítva.\n{0} {1} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "git/stop", "{0} {1} már le van állítva!\n{0} {1} sikeresen le lett állítva.\n{0} {1} nem létezik!");
@@ -464,7 +464,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "handlejoin", "Jó reggelt {0}\nJó estét {0}\nÜdv főnök");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "handleleft/random", "Viszlát\nBye");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "handleleft", "Jóét {0}");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/info", "3{0} Channel: 2{1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/info", "[{0}] 3{1} Channel: 2{2}\n2Információ: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/list", "2Lista:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/start", "{0} már el van indítva!\n{0} sikeresen el lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mantisbt/stop", "{0} már le van állítva!\n{0} sikeresen le lett állítva.\n{0} nem létezik!");
@@ -482,7 +482,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "calendar", "Helytelen dátum formátum!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "calendar/nextmessage", "3Üzenet: {0}\n3Dátum: {0}. {1}. {2}. {3}:{4}\nNincs feljegyezve üzenet!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "calendar/private/nextmessage", "3Üzenet: {0}\n3Dátum: {0}. {1}. {2}. {3}:{4}\nNincs feljegyezve üzenet!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/info", "3{0} Channel: 2{1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/info", "[{0}] 3{1} Channel: 2{2}\n2Információ: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/list", "2Lista:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/start", "{0} már el van indítva!\n{0} sikeresen el lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "wordpress/stop", "{0} már le van állítva!\n{0} sikeresen le lett állítva.\n{0} nem létezik!");
@@ -553,7 +553,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "birthday/remove", "Nem szerepelsz a listán!\nTörölve lett a születésnapod!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "mode", "Saját rangomat nem változtathatom meg!\nTúl sok rang változtatást adtál meg! Maximum 4-et lehet!\n+ vagy - jel megadása kötelező!\nCsak angol abc betűivel lehet rangot megadni!\nValamelyik betű nem rang! Kérlek keresd meg melyik a hibás!\nTúl sok név lett megadva! Maximum 4-et lehet!\nTöbb rangot adtál meg mint ahány nevet!\nTöbb nevet adtál meg mint ahány rangot!\nSzóközöket adtál meg név helyett!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "kick", "Önmagamat nem rúghatom ki a csatornáról!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/info", "3{0} Channel: 2{1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/info", "[{0}] 3{1} Channel: 2{2}\n2Információ: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/list", "2Lista:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/start", "{0} már el van indítva!\n{0} sikeresen el lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/stop", "{0} már le van állítva!\n{0} sikeresen le lett állítva.\n{0} nem létezik!");
@@ -622,7 +622,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "2[Unload]: All plugins 3done.\n2[Unload]: All plugins 5failed.\nPlugins are already cutted.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: 3loaded.\n{0}: 8ignored.\nNo plugin loaded.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "quit", "Bye :(\n{0} shutted down me with command.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/info", "3{0} Channel: 2{1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/info", "[{0}] 3{1} Channel: 2{2}\n2Information: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/list", "2List:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/start", "{0} already translated!\n{0} successfully started.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/stop", "{0} already stopped!\n{0} successfully stopped.\n{0} no such!");
@@ -636,7 +636,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/change/shorturl", "Option succesfully modified.\nThis name is not in the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/change/url", "This name is not on the list!\nUrl succesfully modified.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "svn/change/website", "This name is not on the list!\nPage name succesfully changed.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/info", "3{0} Channel: 2{1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/info", "[{0}] 3{1} Channel: 2{2}\n2Information: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/list", "2List:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/start", "{0} already translated!\n{0} successfully started.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/stop", "{0} already stopped!\n{0} successfully stopped.\n{0} no such!");
@@ -650,7 +650,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/change/shorturl", "Option succesfully modified.\nThis name is not in the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/change/url", "This name is not on the list!\nUrl succesfully modified.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "hg/change/website", "This name is not on the list!\nPage name succesfully changed.");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/info", "3{0}15/7{1} Channel: 2{2}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/info", "[{0}] 3{1}15/7{2} Channel: 2{3}\n2Information: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/list", "2List:{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/start", "{0} {1} already translated!\n{0} {1} successfully started.\n{0} {1} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "git/stop", "{0} {1} already stopped!\n{0} {1} successfully stopped.\n{0} {1} no such!");
@@ -709,7 +709,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "handlejoin", "Good Morning {0}\nGood Night {0}\nWelcome boss!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "handleleft/random", "ByeBye\nBye");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "handleleft", "Goodbye {0}");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/info", "3{0} Channel: 2{1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/info", "[{0}] 3{1} Channel: 2{2}\n2Information: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/list", "2List:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/start", "{0} already translated!\n{0} successfully started.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mantisbt/stop", "{0} already stopped!\n{0} successfully stopped.\n{0} no such!");
@@ -727,7 +727,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "calendar", "Date format error!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "calendar/nextmessage", "3Message: {0}\n3Date: {0}. {1}. {2}. {3}:{4}\nThere is not any recorded message!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "calendar/private/nextmessage", "3Message: {0}\n3Date: {0}. {1}. {2}. {3}:{4}\nThere is not any recorded message!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/info", "3{0} Channel: 2{1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/info", "[{0}] 3{1} Channel: 2{2}\n2Information: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/list", "2List:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/start", "{0} already translated!\n{0} successfully started.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "wordpress/stop", "{0} already stopped!\n{0} successfully stopped.\n{0} no such!");
@@ -765,7 +765,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "birthday/remove", "You are not in the list!\nBirthday deleted!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "mode", "You can't change your own rank!\nYou changed too much rank! It can be max 4!\n+ or - symbol requied!\nYou can use characters from the english abc!\nOne of the characters is not a rank!\nYou changed too many name! It can be max 4!\nYou type more rank than name!\nYou type more name than rank!\nYou added a space instead of a name!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "kick", "I can't kick myself from the channel!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "rss/info", "3{0} Channel: 2{1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "rss/info", "[{0}] 3{1} Channel: 2{2}\n2Information: 3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "rss/list", "2List:3{0}");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "rss/start", "{0} already translated!\n{0} successfully started.\n{0} no such!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "rss/stop", "{0} already stopped!\n{0} successfully stopped.\n{0} no such!");

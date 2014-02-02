@@ -66,14 +66,43 @@ namespace Schumix.WordPressRssAddon.Commands
 
 			if(sIRCMessage.Info[4].ToLower() == "info")
 			{
+				var text = sLManager.GetCommandTexts("wordpress/info", sIRCMessage.Channel, sIRCMessage.ServerName);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					return;
+				}
+
 				var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM wordpressinfo WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
+					if(db.Rows.Count == 0)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[1], sLConsole.Other("Nothing"));
+						return;
+					}
+
 					foreach(DataRow row in db.Rows)
 					{
+						bool started = false;
 						string name = row["Name"].ToString();
 						string[] channel = row["Channel"].ToString().Split(SchumixBase.Comma);
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("wordpress/info", sIRCMessage.Channel, sIRCMessage.ServerName), name, channel.SplitToString(SchumixBase.Space));
+
+						foreach(var list in RssList)
+						{
+							if(name.ToLower() == list.Name.ToLower())
+							{
+								if(list.Started)
+									started = true;
+
+								break;
+							}
+						}
+
+						if(channel.Length == 0)
+							sSendMessage.SendChatMessage(sIRCMessage, text[0], started ? sLConsole.Other("Started") : sLConsole.Other("Stopped"), name, channel.SplitToString(SchumixBase.Space));
+						else
+							sSendMessage.SendChatMessage(sIRCMessage, text[0], started ? sLConsole.Other("Started") : sLConsole.Other("Stopped"), name, sLConsole.Other("Nothing"));
 					}
 				}
 				else
@@ -84,15 +113,14 @@ namespace Schumix.WordPressRssAddon.Commands
 				var db = SchumixBase.DManager.Query("SELECT Name FROM wordpressinfo WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
-					string list = string.Empty;
+					if(db.Rows.Count == 0)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("wordpress/list", sIRCMessage.Channel, sIRCMessage.ServerName), sLConsole.Other("Nothing"));
+						return;
+					}
 
 					foreach(DataRow row in db.Rows)
-						list += SchumixBase.Comma + SchumixBase.Space + row["Name"].ToString();
-
-					if(list.IsNullOrEmpty())
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("wordpress/list", sIRCMessage.Channel, sIRCMessage.ServerName), SchumixBase.Space + sLConsole.Other("Nothing"));
-					else
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("wordpress/list", sIRCMessage.Channel, sIRCMessage.ServerName), list.Remove(0, 1, SchumixBase.Comma));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("wordpress/list", sIRCMessage.Channel, sIRCMessage.ServerName), row["Name"].ToString());
 				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
