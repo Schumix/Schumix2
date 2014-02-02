@@ -121,7 +121,7 @@ namespace Schumix.RssAddon
 				_title = "rss/channel/item/title";
 				_author = "rss/channel/item/dc:creator";
 			}
-			else if(_website == "hup")
+			else if(_website == "rdf")
 			{
 				_guid = "rdf/item/date";
 				_link = "rdf/item/link";
@@ -314,14 +314,15 @@ namespace Schumix.RssAddon
 
 			data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);
 
-			if(_website == "hup")
+			if(_website == "rdf")
 			{
 				string data2 = "<rdf><item>";
 				data = data.Remove(0, data.IndexOf("<item rdf:about=") + "<item rdf:about=".Length);
-				data2 += data.Substring(data.IndexOf("\">")+2);
+				data2 += data.Substring(data.IndexOf("\">") + "\">".Length);
 				data = data2;
 				data += "</rdf>";
 				data = data.Replace("dc:", "");
+				data = data.Replace("dc-unixtime", "date.x-unixtime");
 			}
 			else
 				data += "</channel></rss>";
@@ -337,7 +338,7 @@ namespace Schumix.RssAddon
 
 		private string Author(XmlDocument rss)
 		{
-			if(_website == "hup")
+			if(_website == "rdf")
 			{
 				var author = rss.SelectSingleNode(_author);
 				return author.IsNull() ? "no text" : author.InnerText;
@@ -357,7 +358,7 @@ namespace Schumix.RssAddon
 
 		private string CommitUrl(XmlDocument rss)
 		{
-			if(_website == "hup")
+			if(_website == "rdf")
 			{
 				var curl = rss.SelectSingleNode(_link);
 				return curl.IsNull() ? "no text" : (curl.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? curl.InnerText.Substring(2).TrimStart() : curl.InnerText);
