@@ -221,7 +221,7 @@ namespace Schumix.RssAddon
 								continue;
 							}
 
-							//if(_oldguid != newguid)
+							if(_oldguid != newguid)
 							{
 								string title = Title(url);
 								if(title == "no text")
