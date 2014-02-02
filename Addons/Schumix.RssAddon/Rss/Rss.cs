@@ -121,6 +121,13 @@ namespace Schumix.RssAddon
 				_title = "rss/channel/item/title";
 				_author = "rss/channel/item/dc:creator";
 			}
+			else if(_website == "hup")
+			{
+				_guid = "rdf/item/date";
+				_link = "rdf/item/link";
+				_title = "rdf/item/title";
+				_author = "rdf/item/creator";
+			}
 			else
 			{
 				_guid = string.Empty;
@@ -207,7 +214,7 @@ namespace Schumix.RssAddon
 								continue;
 							}
 
-							if(_oldguid != newguid)
+							//if(_oldguid != newguid)
 							{
 								string title = Title(url);
 								if(title == "no text")
@@ -306,7 +313,19 @@ namespace Schumix.RssAddon
 				return string.Empty;
 
 			data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);
-			data += "</channel></rss>";
+
+			if(_website == "hup")
+			{
+				string data2 = "<rdf><item>";
+				data = data.Remove(0, data.IndexOf("<item rdf:about=") + "<item rdf:about=".Length);
+				data2 += data.Substring(data.IndexOf("\">")+2);
+				data = data2;
+				data += "</rdf>";
+				data = data.Replace("dc:", "");
+			}
+			else
+				data += "</channel></rss>";
+
 			return data;
 		}
 
@@ -318,8 +337,16 @@ namespace Schumix.RssAddon
 
 		private string Author(XmlDocument rss)
 		{
-			var author = rss.SelectSingleNode(_author, _ns);
-			return author.IsNull() ? "no text" : author.InnerText;
+			if(_website == "hup")
+			{
+				var author = rss.SelectSingleNode(_author);
+				return author.IsNull() ? "no text" : author.InnerText;
+			}
+			else
+			{
+				var author = rss.SelectSingleNode(_author, _ns);
+				return author.IsNull() ? "no text" : author.InnerText;
+			}
 		}
 
 		private string Guid(XmlDocument rss)
@@ -330,8 +357,16 @@ namespace Schumix.RssAddon
 
 		private string CommitUrl(XmlDocument rss)
 		{
-			var curl = rss.SelectSingleNode(_link, _ns);
-			return curl.IsNull() ? "no text" : (curl.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? curl.InnerText.Substring(2).TrimStart() : curl.InnerText);
+			if(_website == "hup")
+			{
+				var curl = rss.SelectSingleNode(_link);
+				return curl.IsNull() ? "no text" : (curl.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? curl.InnerText.Substring(2).TrimStart() : curl.InnerText);
+			}
+			else
+			{
+				var curl = rss.SelectSingleNode(_link, _ns);
+				return curl.IsNull() ? "no text" : (curl.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? curl.InnerText.Substring(2).TrimStart() : curl.InnerText);
+			}
 		}
 		
 		private void Informations(string guid, string title, string author, string commiturl)
