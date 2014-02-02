@@ -121,6 +121,13 @@ namespace Schumix.RssAddon
 				_title = "rss/channel/item/title";
 				_author = "rss/channel/item/dc:creator";
 			}
+			if(_website == "default2")
+			{
+				_guid = "rss/channel/item/guid";
+				_link = "rss/channel/item/link";
+				_title = "rss/channel/item/title";
+				_author = "rss/channel/item/creator";
+			}
 			else if(_website == "rdf")
 			{
 				_guid = "rdf/item/date";
@@ -225,7 +232,7 @@ namespace Schumix.RssAddon
 								}
 
 								string author = Author(url);
-								if(author == "no text")
+								if(author == "no text" && _website != "default2")
 								{
 									Clean(url);
 									Thread.Sleep(RssConfig.QueryTime*1000);
@@ -366,16 +373,8 @@ namespace Schumix.RssAddon
 
 		private string CommitUrl(XmlDocument rss)
 		{
-			if(_website == "rdf")
-			{
-				var curl = rss.SelectSingleNode(_link);
-				return curl.IsNull() ? "no text" : (curl.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? curl.InnerText.Substring(2).TrimStart() : curl.InnerText);
-			}
-			else
-			{
-				var curl = rss.SelectSingleNode(_link, _ns);
-				return curl.IsNull() ? "no text" : (curl.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? curl.InnerText.Substring(2).TrimStart() : curl.InnerText);
-			}
+			var curl = rss.SelectSingleNode(_link);
+			return curl.IsNull() ? "no text" : (curl.InnerText.StartsWith(SchumixBase.NewLine.ToString()) ? curl.InnerText.Substring(2).TrimStart() : curl.InnerText);
 		}
 		
 		private void Informations(string guid, string title, string author, string commiturl)
@@ -394,15 +393,15 @@ namespace Schumix.RssAddon
 
 					if(db["ShortUrl"].ToBoolean())
 						commiturl = BitlyApi.ShortenUrl(commiturl).ShortUrl;
-					
+
 					if(db["Colors"].ToBoolean())
 					{
-						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.Rss("Rss", language), _name, author, commiturl);
+						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.Rss("Rss", language), _name, (author == "no text" ? "?" : author), commiturl);
 						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.Rss("Rss2", language), _name, title);
 					}
 					else
 					{
-						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.Rss("nocolorsRss", language), _name, author, commiturl);
+						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.Rss("nocolorsRss", language), _name, (author == "no text" ? "?" : author), commiturl);
 						sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.Rss("nocolorsRss2", language), _name, title);
 					}
 
