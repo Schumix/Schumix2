@@ -384,7 +384,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/reload", "{0} sikeresen újra lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/reload/all", "Minden rss újra lett indítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/channel/remove", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!\nNincs ilyen csatorna hozzáadva így nem törölhető!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/add", "Sikeresen hozzáadva a listához!\nMár szerepel a listán!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/remove", "Sikeresen eltávolítva a listából!\nNem szerepel a név a listában!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "svn/change/colors", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
@@ -398,7 +398,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/reload", "{0} sikeresen újra lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/reload/all", "Minden rss újra lett indítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/channel/remove", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!\nNincs ilyen csatorna hozzáadva így nem törölhető!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/add", "Sikeresen hozzáadva a listához!\nMár szerepel a listán!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/remove", "Sikeresen eltávolítva a listából!\nNem szerepel a név a listában!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "hg/change/colors", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
@@ -560,7 +560,7 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/reload", "{0} sikeresen újra lett indítva.\n{0} nem létezik!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/reload/all", "Minden rss újra lett indítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/channel/add", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
-INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/channel/remove", "Csatorna sikeresen hozzáadva.\nNem létezik ilyen név!\nMár hozzá van adva a csatorna!");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/channel/remove", "Csatorna sikeresen törölve.\nNem létezik ilyen név!\nNincs ilyen csatorna hozzáadva így nem törölhető!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/add", "Sikeresen hozzáadva a listához!\nMár szerepel a listán!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/remove", "Sikeresen eltávolítva a listából!\nNem szerepel a név a listában!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/change/colors", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");

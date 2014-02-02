@@ -78,7 +78,7 @@ namespace Schumix.GitRssAddon.Commands
 				{
 					if(db.Rows.Count == 0)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, text[1], sLConsole.Other("Nothing"));
+						sSendMessage.SendChatMessage(sIRCMessage, text[1], sLConsole.Other("Nothing", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 
@@ -100,10 +100,10 @@ namespace Schumix.GitRssAddon.Commands
 							}
 						}
 
-						if(channel.Length == 0)
-							sSendMessage.SendChatMessage(sIRCMessage, text[0], started ? sLConsole.Other("Started") : sLConsole.Other("Stopped"), name, type, channel.SplitToString(SchumixBase.Space));
+						if(channel.SplitToString(SchumixBase.Space).IsNullOrEmpty())
+							sSendMessage.SendChatMessage(sIRCMessage, text[0], started ? sLConsole.Other("Started", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)) : sLConsole.Other("Stopped", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), name, type, sLConsole.Other("Nothing", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						else
-							sSendMessage.SendChatMessage(sIRCMessage, text[0], started ? sLConsole.Other("Started") : sLConsole.Other("Stopped"), name, type, sLConsole.Other("Nothing"));
+							sSendMessage.SendChatMessage(sIRCMessage, text[0], started ? sLConsole.Other("Started", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)) : sLConsole.Other("Stopped", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), name, type, channel.SplitToString(SchumixBase.Space));
 					}
 				}
 				else
@@ -116,7 +116,7 @@ namespace Schumix.GitRssAddon.Commands
 				{
 					if(db.Rows.Count == 0)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/list", sIRCMessage.Channel, sIRCMessage.ServerName), sLConsole.Other("Nothing"));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/list", sIRCMessage.Channel, sIRCMessage.ServerName), sLConsole.Other("Nothing", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
 					}
 

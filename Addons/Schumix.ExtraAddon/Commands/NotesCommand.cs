@@ -85,7 +85,7 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					if(codes.IsNullOrEmpty())
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/info", sIRCMessage.Channel, sIRCMessage.ServerName), sLConsole.Other("Nothing"));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/info", sIRCMessage.Channel, sIRCMessage.ServerName), sLConsole.Other("Nothing", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/info", sIRCMessage.Channel, sIRCMessage.ServerName), codes.Remove(0, 2, ", "));
 				}
