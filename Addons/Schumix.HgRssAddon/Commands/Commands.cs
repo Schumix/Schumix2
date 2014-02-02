@@ -586,7 +586,7 @@ namespace Schumix.HgRssAddon.Commands
 					}
 					
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM hginfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
-					if(!db.IsNull())
+					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
@@ -647,7 +647,7 @@ namespace Schumix.HgRssAddon.Commands
 					}
 					
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM hginfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
-					if(!db.IsNull())
+					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;

@@ -580,7 +580,7 @@ namespace Schumix.WordPressRssAddon.Commands
 					}
 					
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM wordpressinfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
-					if(!db.IsNull())
+					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
