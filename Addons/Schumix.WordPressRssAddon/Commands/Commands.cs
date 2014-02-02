@@ -609,7 +609,7 @@ namespace Schumix.WordPressRssAddon.Commands
 					if(isstop && !gitr.IsNull())
 						RssList.Remove(gitr);
 					
-					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link FROM wordpressinfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sIRCMessage.Info[6].ToLower(), sIRCMessage.ServerName);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link FROM wordpressinfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db1.IsNull())
 					{
 						var rss = new WordPressRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[6]), db1["Link"].ToString());
