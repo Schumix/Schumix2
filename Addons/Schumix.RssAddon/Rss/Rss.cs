@@ -323,6 +323,14 @@ namespace Schumix.RssAddon
 				data += "</rdf>";
 				data = data.Replace("dc:", "");
 				data = data.Replace("dc-unixtime", "date.x-unixtime");
+
+				if(data.Contains("<content:encoded>"))
+				{
+					data2 = data.Substring(0, data.IndexOf("<content:encoded>"));
+					data = data.Remove(0, data.IndexOf("<content:encoded>") + "<content:encoded>".Length);
+					data2 += data.Substring(data.IndexOf("</content:encoded>") + "</content:encoded>".Length);
+					data = data2;
+				}
 			}
 			else
 				data += "</channel></rss>";
