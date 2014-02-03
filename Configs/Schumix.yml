@@ -74,7 +74,7 @@ Schumix:
         Branch: master
         WebPage: https://github.com/Schumix/Schumix2
     Shutdown:
-        MaxMemory: 1000
+        MaxMemory: 100
     Flooding:
         Seconds: 4
         NumberOfCommands: 2
