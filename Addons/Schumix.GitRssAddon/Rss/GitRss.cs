@@ -295,13 +295,13 @@ namespace Schumix.GitRssAddon
 				if(!_username.IsNullOrEmpty() && !_password.IsNullOrEmpty())
 				{
 					var rss = new XmlDocument();
-					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>", _credential)));
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</entry>", _credential)));
 					return rss;
 				}
 				else
 				{
 					var rss = new XmlDocument();
-					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>")));
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</entry>")));
 					return rss;
 				}
 			}

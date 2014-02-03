@@ -269,13 +269,13 @@ namespace Schumix.WordPressRssAddon
 				if(!_username.IsNullOrEmpty() && !_password.IsNullOrEmpty())
 				{
 					var rss = new XmlDocument();
-					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>", _credential)));
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</item>", _credential)));
 					return rss;
 				}
 				else
 				{
 					var rss = new XmlDocument();
-					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>")));
+					rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</item>")));
 					return rss;
 				}
 			}
