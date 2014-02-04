@@ -12,4 +12,4 @@ before_script:
 script:
      - git submodule update --init --recursive
      - msbuild Schumix.sln /p:Configuration=Debug /flp:LogFile=msbuild.log;Verbosity=Detailed
-     - cmd /c "packages\OpenCover.4.5.1923\OpenCover.Console.exe -register:user -target:".\test.cmd" -output:shippable\codecoverage\coveragereport.xml -log:All"
+     - cmd /c "packages\OpenCover.4.5.1923\OpenCover.Console.exe -register -target:".\test.cmd" -output:shippable\codecoverage\coveragereport.xml -log:All"
