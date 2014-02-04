@@ -2,7 +2,7 @@
 
 ## 4.4.0 (2013-xx-xx)
 
- * 2000 Commit!!!
+ * 2000. Commit!!!
  * Issue 110 javítva.
  * RssAddon hozzáadva.
  * Issue 103, 104, 105, 106 javítva.
