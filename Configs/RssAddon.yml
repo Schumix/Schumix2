@@ -1,0 +1,4 @@
+# RssAddon config file (yaml)
+RssAddon:
+    Rss:
+        QueryTime: 60

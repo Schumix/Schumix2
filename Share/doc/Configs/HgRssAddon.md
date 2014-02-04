@@ -1,4 +1,4 @@
-# HgRssAddon konfig fájl
+# HgRssAddon config file
 
 ## Rss
 

@@ -118,6 +118,8 @@ namespace Schumix.Framework.Util
 					}
 				}
 
+				buf = null;
+
 				return WebUtility.HtmlDecode(sb.ToString());
 			}
 		}
@@ -993,6 +995,8 @@ namespace Schumix.Framework.Util
 						}
 					}
 
+					buf = null;
+
 					if(!th.IsNull())
 					{
 						th.Interrupt();
@@ -1123,6 +1127,8 @@ namespace Schumix.Framework.Util
 						}
 					}
 
+					buf = null;
+
 					if(!th.IsNull())
 					{
 						th.Interrupt();
@@ -1217,6 +1223,8 @@ namespace Schumix.Framework.Util
 							}
 						}
 					}
+
+					buf = null;
 
 					if(!th.IsNull())
 					{

@@ -58,7 +58,7 @@ Schumix:
         FileName: "$home/.Schumix/Schumix.db3"
     Addon:
         Enabled: True
-        Ignore: MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon
+        Ignore: MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TesztAddon,RssAddon
         Directory: "$home/.Schumix/Addons"
     Scripts:
         Lua: False

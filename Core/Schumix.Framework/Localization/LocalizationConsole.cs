@@ -534,6 +534,24 @@ namespace Schumix.Framework.Localization
 					else
 						return "and";
 				}
+				case "Started":
+				{
+					if(Language == "huHU")
+						return "elindítva";
+					else if(Language == "enUS")
+						return "started";
+					else
+						return "started";
+				}
+				case "Stopped":
+				{
+					if(Language == "huHU")
+						return "leállítva";
+					else if(Language == "enUS")
+						return "stopped";
+					else
+						return "stopped";
+				}
 				default:
 					return string.Empty;
 			}

@@ -2,6 +2,9 @@
 
 ## 4.4.0 (2013-xx-xx)
 
+ * 2000. Commit!!!
+ * Issue 110 javítva.
+ * RssAddon hozzáadva.
  * Issue 103, 104, 105, 106 javítva.
  * Letöltött Title dekódolási hibái javítva. Továbbá az url regex is javítva.
  * Issue 100 javítva. (Kalendar nem írta ki az üzenetet.)

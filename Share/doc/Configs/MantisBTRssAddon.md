@@ -1,4 +1,4 @@
-# MantisBTRssAddon konfig fájl
+# MantisBTRssAddon config file
 
 ## Rss
 

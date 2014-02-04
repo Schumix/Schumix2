@@ -73,7 +73,7 @@ namespace Schumix.Framework.Config
 		protected const bool d_sqliteenabled           = true;
 		protected const string d_sqlitefilename        = "Schumix.db3";
 		protected const bool d_addonenabled            = true;
-		protected const string d_addonignore           = "MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TestAddon";
+		protected const string d_addonignore           = "MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TestAddon,RssAddon";
 		protected const string d_addondirectory        = "Addons";
 		protected const bool d_scriptsluaenabled       = false;
 		protected const bool d_scriptspythonenabled    = false;

@@ -1,4 +1,4 @@
-# GitRssAddon konfig fájl
+# GitRssAddon config file
 
 ## Rss
 

@@ -1,0 +1,15 @@
+language: csharp
+csharp:
+ - dotNet40
+ - dotNet45
+build_environment: win2012
+env: EnableNuGetPackageRestore=true
+before_script:
+ - cmd /c "IF NOT EXIST shippable mkdir shippable"
+ - cmd /c "IF NOT EXIST shippable\testresults mkdir shippable\testresults" 
+ - cmd /c "IF NOT EXIST shippable\codecoverage mkdir shippable\codecoverage"
+ - cmd /c ".nuget\nuget.exe install .nuget\packages.config -Output packages"
+script:
+ - git submodule update --init --recursive
+ - msbuild Schumix.sln /p:Configuration=Debug /flp:LogFile=msbuild.log;Verbosity=Detailed
+ - cmd /c "packages\OpenCover.4.5.1923\OpenCover.Console.exe -register:user -target:".\test.cmd" -output:shippable\codecoverage\coveragereport.xml -log:All"

@@ -127,9 +127,27 @@ namespace Schumix.Irc.Commands
 				return AdminFlag.None;
 		}
 
+		public bool IsAdminLevel(string Name, AdminFlag Flag)
+		{
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Flag FROM admins WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), servername);
+			if(!db.IsNull())
+			{
+				int flag = db["Flag"].ToInt32();
+
+				if((flag == 1 && Flag == AdminFlag.HalfOperator) ||
+					(flag == 2 && Flag == AdminFlag.HalfOperator) ||
+					(flag == 2 && Flag == AdminFlag.Operator))
+					return true;
+
+				return Flag == (AdminFlag)flag;
+			}
+
+			return false;
+		}
+
 		public bool IsWarningAdmin(string Name, string Vhost, AdminFlag Flag)
 		{
-			return IsAdmin(Name) && !IsAdmin(Name, Vhost) && IsAdmin(Name, Flag);
+			return IsAdmin(Name) && !IsAdmin(Name, Vhost) && IsAdminLevel(Name, Flag);
 		}
 
 		public void RandomVhost(string Name)

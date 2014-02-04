@@ -128,6 +128,8 @@ Addons/Schumix.GameAddon/schumix.gameaddon.pc
 Addons/Schumix.GameAddon/Makefile
 Addons/Schumix.ExtraAddon/schumix.extraaddon.pc
 Addons/Schumix.ExtraAddon/Makefile
+Addons/Schumix.RssAddon/schumix.rssaddon.pc
+Addons/Schumix.RssAddon/Makefile
 Addons/Makefile
 Makefile
 

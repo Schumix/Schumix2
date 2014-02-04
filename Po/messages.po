@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-30 19:40:09+0200\n"
-"PO-Revision-Date: 2013-08-30 19:40:10+0200\n"
+"POT-Creation-Date: 2014-01-21 14:48:12+0100\n"
+"PO-Revision-Date: 2014-01-21 14:48:14+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -76,8 +76,10 @@ msgstr ""
 #: ../Addons/Schumix.CalendarAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.GameAddon/GameAddon.cs:7
 #: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:17
-#: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:17
+#: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:18
 #: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.RssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.RssAddon/RssAddon.cs:14
 #: ../Components/Schumix.Components/Updater/Update.cs:20
 #: ../Components/Schumix.Components/Updater/Sql/Sql.cs:8
 #: ../Components/Schumix.Components/Updater/Sql/Sql.cs:10
@@ -298,7 +300,7 @@ msgid "Processor:"
 msgstr ""
 
 #: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
-#: ../Core/Schumix.Irc/Commands/Admin/ReloadCommand.cs:2
+#: ../Core/Schumix.Irc/Commands/Admin/ReloadCommand.cs:3
 #: ../Applications/Schumix/Console/Commands/ReloadCommand.cs:5
 msgid ""
 "This client supports: UserInfo, Finger, Version, Source, Ping, Time and "
@@ -791,6 +793,8 @@ msgstr ""
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:5
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:5
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:5
 msgid "Config file is loading."
 msgstr ""
 
@@ -851,6 +855,8 @@ msgstr ""
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:7
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:9
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:6
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:7
 msgid "Config database is loading."
 msgstr ""
 
@@ -874,6 +880,8 @@ msgstr ""
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:10
 msgid "No such config file!"
 msgstr ""
 
@@ -897,6 +905,8 @@ msgstr ""
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:10
 msgid "Preparing..."
 msgstr ""
 
@@ -920,6 +930,8 @@ msgstr ""
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:11
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:13
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:11
 msgid "The backup files will be used to renew the data."
 msgstr ""
 
@@ -943,6 +955,8 @@ msgstr ""
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:14
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:30
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:13
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:14
 msgid "The backup has been deleted during the re-use."
 msgstr ""
 
@@ -966,6 +980,8 @@ msgstr ""
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:15
 msgid "Config file is completed!"
 msgstr ""
 
@@ -987,6 +1003,8 @@ msgstr ""
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:15
 msgid "Failure was handled during the xml writing. Details: {0}"
 msgstr ""
 
@@ -1267,7 +1285,7 @@ msgid "Developers: {0}"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:18
-#: ../Applications/Schumix.Installer/Main.cs:13
+#: ../Applications/Schumix.Installer/Main.cs:14
 #: ../Applications/Schumix.Server/Main.cs:14
 msgid "System is starting..."
 msgstr ""
@@ -1278,13 +1296,13 @@ msgid "Colorblind mode is on!"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:21
-#: ../Applications/Schumix.Installer/Main.cs:15
+#: ../Applications/Schumix.Installer/Main.cs:16
 #: ../Applications/Schumix.Server/Main.cs:19
 msgid "FATAL ERROR"
 msgstr ""
 
 #: ../Applications/Schumix/Main.cs:21
-#: ../Applications/Schumix.Installer/Main.cs:15
+#: ../Applications/Schumix.Installer/Main.cs:16
 #: ../Applications/Schumix.Server/Main.cs:19
 #: ../Applications/Schumix.Server/Main.cs:23
 msgid "An unhandled exception has been thrown. ({0})"
@@ -1504,6 +1522,7 @@ msgstr ""
 #: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:9
 #: ../Addons/Schumix.GameAddon/GameAddon.cs:7
 #: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:17
+#: ../Addons/Schumix.RssAddon/RssAddon.cs:14
 msgid "Reload: "
 msgstr ""
 
@@ -1516,6 +1535,9 @@ msgstr ""
 #: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:25
 #: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:21
 #: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:29
+#: ../Addons/Schumix.RssAddon/Rss/Rss.cs:6
+#: ../Addons/Schumix.RssAddon/Rss/Rss.cs:22
+#: ../Addons/Schumix.RssAddon/Rss/Rss.cs:26
 msgid "[{0}] Failure details: {1}"
 msgstr ""
 
@@ -1523,6 +1545,7 @@ msgstr ""
 #: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:22
 #: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:22
 #: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:22
+#: ../Addons/Schumix.RssAddon/Rss/Rss.cs:23
 msgid "[{0}] Fatal failure details: {1}"
 msgstr ""
 
@@ -1531,6 +1554,7 @@ msgstr ""
 #: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:10
 #: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:10
 #: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:10
+#: ../Addons/Schumix.RssAddon/RssAddon.cs:10
 msgid "{0}: {1} rss loaded."
 msgstr ""
 
@@ -1539,6 +1563,7 @@ msgstr ""
 #: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:10
 #: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:10
 #: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:10
+#: ../Addons/Schumix.RssAddon/RssAddon.cs:10
 msgid "{0}: Empty database!"
 msgstr ""
 
@@ -1547,6 +1572,7 @@ msgstr ""
 #: ../Addons/Schumix.MantisBTRssAddon/Config/RssConfig.cs:3
 #: ../Addons/Schumix.HgRssAddon/Config/RssConfig.cs:3
 #: ../Addons/Schumix.GitRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.RssAddon/Config/RssConfig.cs:3
 msgid "Loaded the Rss settings."
 msgstr ""
 

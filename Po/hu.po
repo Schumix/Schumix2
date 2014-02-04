@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2013-08-30 19:40:09+0200\n"
+"POT-Creation-Date: 2014-01-21 14:48:12+0100\n"
 "PO-Revision-Date: 2013-01-26 09:37:13+0100\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
@@ -78,8 +78,10 @@ msgstr "Összes Command handler törlésre került."
 #: ../Addons/Schumix.CalendarAddon/Config/AddonConfig.cs:5
 #: ../Addons/Schumix.GameAddon/GameAddon.cs:7
 #: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:17
-#: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:17
+#: ../Addons/Schumix.ExtraAddon/Commands/Functions.cs:18
 #: ../Addons/Schumix.ExtraAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.RssAddon/Config/AddonConfig.cs:5
+#: ../Addons/Schumix.RssAddon/RssAddon.cs:14
 #: ../Components/Schumix.Components/Updater/Update.cs:20
 #: ../Components/Schumix.Components/Updater/Sql/Sql.cs:8
 #: ../Components/Schumix.Components/Updater/Sql/Sql.cs:10
@@ -300,7 +302,7 @@ msgid "Processor:"
 msgstr "Processzor:"
 
 #: ../Core/Schumix.Irc/Ctcp/CtcpSender.cs:3
-#: ../Core/Schumix.Irc/Commands/Admin/ReloadCommand.cs:2
+#: ../Core/Schumix.Irc/Commands/Admin/ReloadCommand.cs:3
 #: ../Applications/Schumix/Console/Commands/ReloadCommand.cs:5
 msgid ""
 "This client supports: UserInfo, Finger, Version, Source, Ping, Time and "
@@ -798,6 +800,8 @@ msgstr "Pluginok leválasztva."
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:5
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:5
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:5
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:5
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:5
 msgid "Config file is loading."
 msgstr "Konfig fájl betöltése."
 
@@ -865,6 +869,8 @@ msgstr "A {0} szerver név már használva van így nem kerül betöltésre!"
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:7
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:9
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:6
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:7
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:7
 msgid "Config database is loading."
 msgstr "Konfig adatbázis betöltve."
 
@@ -888,6 +894,8 @@ msgstr "Konfig adatbázis betöltve."
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:10
 msgid "No such config file!"
 msgstr "Nincs konfig fájl!"
 
@@ -911,6 +919,8 @@ msgstr "Nincs konfig fájl!"
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:10
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:12
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:9
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:10
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:10
 msgid "Preparing..."
 msgstr "Elkészítése folyamatban..."
 
@@ -934,6 +944,8 @@ msgstr "Elkészítése folyamatban..."
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:11
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:13
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:10
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:11
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:11
 msgid "The backup files will be used to renew the data."
 msgstr ""
 "Biztonsági másolatnak megjelölt fájl kerül felhasználásra. Így a régi adatok "
@@ -959,6 +971,8 @@ msgstr ""
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:14
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:30
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:13
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:18
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:14
 msgid "The backup has been deleted during the re-use."
 msgstr "Biztonsági másolat törlésre kerül mert újra fel lett használva."
 
@@ -982,6 +996,8 @@ msgstr "Biztonsági másolat törlésre kerül mert újra fel lett használva."
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:15
 msgid "Config file is completed!"
 msgstr "Konfig fájl elkészült!"
 
@@ -1003,6 +1019,8 @@ msgstr "Konfig fájl elkészült!"
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
+#: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:19
+#: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:15
 msgid "Failure was handled during the xml writing. Details: {0}"
 msgstr "Meghibásodás az xml írása során. Részletek: {0}"
 
@@ -1290,7 +1308,7 @@ msgid "Developers: {0}"
 msgstr "Fejlesztők: {0}"
 
 #: ../Applications/Schumix/Main.cs:18
-#: ../Applications/Schumix.Installer/Main.cs:13
+#: ../Applications/Schumix.Installer/Main.cs:14
 #: ../Applications/Schumix.Server/Main.cs:14
 msgid "System is starting..."
 msgstr "Rendszer indul..."
@@ -1301,13 +1319,13 @@ msgid "Colorblind mode is on!"
 msgstr "Színvak mód be van kapcsolva!"
 
 #: ../Applications/Schumix/Main.cs:21
-#: ../Applications/Schumix.Installer/Main.cs:15
+#: ../Applications/Schumix.Installer/Main.cs:16
 #: ../Applications/Schumix.Server/Main.cs:19
 msgid "FATAL ERROR"
 msgstr "VÉGZETES HIBA"
 
 #: ../Applications/Schumix/Main.cs:21
-#: ../Applications/Schumix.Installer/Main.cs:15
+#: ../Applications/Schumix.Installer/Main.cs:16
 #: ../Applications/Schumix.Server/Main.cs:19
 #: ../Applications/Schumix.Server/Main.cs:23
 msgid "An unhandled exception has been thrown. ({0})"
@@ -1529,6 +1547,7 @@ msgstr "Hiba történt a kérelem sorbarendezésekor! Típus: {0}"
 #: ../Addons/Schumix.CalendarAddon/CalendarAddon.cs:9
 #: ../Addons/Schumix.GameAddon/GameAddon.cs:7
 #: ../Addons/Schumix.ExtraAddon/ExtraAddon.cs:17
+#: ../Addons/Schumix.RssAddon/RssAddon.cs:14
 msgid "Reload: "
 msgstr "Újratöltés: "
 
@@ -1541,6 +1560,9 @@ msgstr "Újratöltés: "
 #: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:25
 #: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:21
 #: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:29
+#: ../Addons/Schumix.RssAddon/Rss/Rss.cs:6
+#: ../Addons/Schumix.RssAddon/Rss/Rss.cs:22
+#: ../Addons/Schumix.RssAddon/Rss/Rss.cs:26
 msgid "[{0}] Failure details: {1}"
 msgstr "[{0}] Meghibásodás részletei: {1}"
 
@@ -1548,6 +1570,7 @@ msgstr "[{0}] Meghibásodás részletei: {1}"
 #: ../Addons/Schumix.SvnRssAddon/Rss/SvnRss.cs:22
 #: ../Addons/Schumix.MantisBTRssAddon/Rss/MantisBTRss.cs:22
 #: ../Addons/Schumix.HgRssAddon/Rss/HgRss.cs:22
+#: ../Addons/Schumix.RssAddon/Rss/Rss.cs:23
 msgid "[{0}] Fatal failure details: {1}"
 msgstr "[{0}] Végzetes meghibásodás részletei: {1}"
 
@@ -1556,6 +1579,7 @@ msgstr "[{0}] Végzetes meghibásodás részletei: {1}"
 #: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:10
 #: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:10
 #: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:10
+#: ../Addons/Schumix.RssAddon/RssAddon.cs:10
 msgid "{0}: {1} rss loaded."
 msgstr "{0}: {1} rss került betöltésre."
 
@@ -1564,6 +1588,7 @@ msgstr "{0}: {1} rss került betöltésre."
 #: ../Addons/Schumix.MantisBTRssAddon/MantisBTRssAddon.cs:10
 #: ../Addons/Schumix.HgRssAddon/HgRssAddon.cs:10
 #: ../Addons/Schumix.GitRssAddon/GitRssAddon.cs:10
+#: ../Addons/Schumix.RssAddon/RssAddon.cs:10
 msgid "{0}: Empty database!"
 msgstr "{0}: Üres az adatbázis!"
 
@@ -1572,6 +1597,7 @@ msgstr "{0}: Üres az adatbázis!"
 #: ../Addons/Schumix.MantisBTRssAddon/Config/RssConfig.cs:3
 #: ../Addons/Schumix.HgRssAddon/Config/RssConfig.cs:3
 #: ../Addons/Schumix.GitRssAddon/Config/RssConfig.cs:3
+#: ../Addons/Schumix.RssAddon/Config/RssConfig.cs:3
 msgid "Loaded the Rss settings."
 msgstr "Rss beállításai betöltve."
 

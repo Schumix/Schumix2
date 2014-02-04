@@ -66,14 +66,43 @@ namespace Schumix.SvnRssAddon.Commands
 
 			if(sIRCMessage.Info[4].ToLower() == "info")
 			{
+				var text = sLManager.GetCommandTexts("svn/info", sIRCMessage.Channel, sIRCMessage.ServerName);
+				if(text.Length < 2)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+					return;
+				}
+
 				var db = SchumixBase.DManager.Query("SELECT Name, Channel FROM svninfo WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
+					if(db.Rows.Count == 0)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, text[1], sLConsole.Other("Nothing", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+						return;
+					}
+
 					foreach(DataRow row in db.Rows)
 					{
+						bool started = false;
 						string name = row["Name"].ToString();
 						string[] channel = row["Channel"].ToString().Split(SchumixBase.Comma);
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("svn/info", sIRCMessage.Channel, sIRCMessage.ServerName), name, channel.SplitToString(SchumixBase.Space));
+
+						foreach(var list in RssList)
+						{
+							if(name.ToLower() == list.Name.ToLower())
+							{
+								if(list.Started)
+									started = true;
+
+								break;
+							}
+						}
+
+						if(channel.SplitToString(SchumixBase.Space).IsNullOrEmpty())
+							sSendMessage.SendChatMessage(sIRCMessage, text[0], started ? sLConsole.Other("Started", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)) : sLConsole.Other("Stopped", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), name, sLConsole.Other("Nothing", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+						else
+							sSendMessage.SendChatMessage(sIRCMessage, text[0], started ? sLConsole.Other("Started", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)) : sLConsole.Other("Stopped", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), name, channel.SplitToString(SchumixBase.Space));
 					}
 				}
 				else
@@ -84,15 +113,14 @@ namespace Schumix.SvnRssAddon.Commands
 				var db = SchumixBase.DManager.Query("SELECT Name FROM svninfo WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
-					string list = string.Empty;
+					if(db.Rows.Count == 0)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("svn/list", sIRCMessage.Channel, sIRCMessage.ServerName), sLConsole.Other("Nothing", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
+						return;
+					}
 
 					foreach(DataRow row in db.Rows)
-						list += SchumixBase.Comma + SchumixBase.Space + row["Name"].ToString();
-
-					if(list.IsNullOrEmpty())
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("svn/list", sIRCMessage.Channel, sIRCMessage.ServerName), SchumixBase.Space + sLConsole.Other("Nothing"));
-					else
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("svn/list", sIRCMessage.Channel, sIRCMessage.ServerName), list.Remove(0, 1, SchumixBase.Comma));
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("svn/list", sIRCMessage.Channel, sIRCMessage.ServerName), row["Name"].ToString());
 				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
@@ -558,7 +586,7 @@ namespace Schumix.SvnRssAddon.Commands
 					}
 					
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM svninfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
-					if(!db.IsNull())
+					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
@@ -587,7 +615,7 @@ namespace Schumix.SvnRssAddon.Commands
 					if(isstop && !gitr.IsNull())
 						RssList.Remove(gitr);
 					
-					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link, Website FROM svninfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sIRCMessage.Info[6].ToLower(), sIRCMessage.ServerName);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link, Website FROM svninfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db1.IsNull())
 					{
 						var rss = new SvnRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[6]), db1["Link"].ToString(), db1["Website"].ToString());
@@ -619,7 +647,7 @@ namespace Schumix.SvnRssAddon.Commands
 					}
 					
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM svninfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
-					if(!db.IsNull())
+					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
@@ -648,7 +676,7 @@ namespace Schumix.SvnRssAddon.Commands
 					if(isstop && !gitr.IsNull())
 						RssList.Remove(gitr);
 					
-					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link, Website FROM svninfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sIRCMessage.Info[6].ToLower(), sIRCMessage.ServerName);
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT Link, Website FROM svninfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
 					if(!db1.IsNull())
 					{
 						var rss = new SvnRss(sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[6]), db1["Link"].ToString(), db1["Website"].ToString());

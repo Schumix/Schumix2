@@ -267,9 +267,9 @@ namespace Schumix.HgRssAddon
 					var rss = new XmlDocument();
 
 					if(_website == "bitbucket")
-						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>", _credential)));
+						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</item>", _credential)));
 					else
-						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>", _credential)));
+						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</entry>", _credential)));
 
 					return rss;
 				}
@@ -278,9 +278,9 @@ namespace Schumix.HgRssAddon
 					var rss = new XmlDocument();
 
 					if(_website == "bitbucket")
-						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</item>")));
+						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</item>")));
 					else
-						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, "</entry>")));
+						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</entry>")));
 
 					return rss;
 				}
