@@ -2,4 +2,6 @@ language: csharp
 csharp:
      - dotNet40
 build_environment: win2012
-script: msbuild Schumix.sln /p:Configuration=Debug /flp:LogFile=msbuild.log;Verbosity=Detailed
+script:
+     - git submodule update --init --recursive
+     - msbuild Schumix.sln /p:Configuration=Debug /flp:LogFile=msbuild.log;Verbosity=Detailed
