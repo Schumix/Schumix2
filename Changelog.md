@@ -2,6 +2,7 @@
 
 ## 4.4.0 (2013-xx-xx)
 
+ * .nuget hozzáadva.
  * 2000. Commit!!!
  * Issue 110 javítva.
  * RssAddon hozzáadva.
