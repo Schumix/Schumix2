@@ -102,9 +102,9 @@ namespace Schumix.HgRssAddon.Config
 				}
 			}
 
-			if(ConfigFile.EndsWith(".yml"))
+			if(Path.GetExtension(ConfigFile) == ".yml")
 				return 0;
-			else if(ConfigFile.EndsWith(".xml"))
+			else if(Path.GetExtension(ConfigFile) == ".xml")
 				return 1;
 
 			return 0;

@@ -2,6 +2,8 @@
 
 ## 4.4.0 (2013-xx-xx)
 
+ * Kiterjesztések felismerése javítva.
+ * DirectoryToSpecial függvény eltávolítva a forrásból.
  * .nuget hozzáadva.
  * 2000. Commit!!!
  * Issue 110 javítva.

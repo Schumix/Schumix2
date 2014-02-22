@@ -1318,15 +1318,8 @@ namespace Schumix.Framework.Util
 		{
 			string pidfile = Name;
 
-			if(!pidfile.Contains(".pid"))
-			{
-				if(pidfile.Contains(".xml"))
-					pidfile = pidfile.Remove(pidfile.IndexOf(".xml")) + ".pid";
-				else if(pidfile.Contains(".yml"))
-					pidfile = pidfile.Remove(pidfile.IndexOf(".yml")) + ".pid";
-				else
-					pidfile = pidfile + ".pid";
-			}
+			if(Path.GetExtension(pidfile) != ".pid")
+				pidfile = Path.GetFileNameWithoutExtension(pidfile) + ".pid";
 
 			pidfile = Path.Combine(LogConfig.LogDirectory, pidfile);
 			SchumixBase.PidFile = pidfile;
