@@ -61,7 +61,7 @@ namespace Schumix.Framework.Extensions
 
 		public static IDictionary<YamlNode, YamlNode> GetYamlChildren(this IDictionary<YamlNode, YamlNode> Nodes, string Key)
 		{
-			return (!Nodes.IsNull() && Nodes.ContainsKey(Key)) ? ((YamlMappingNode)Nodes[Key.ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
+			return (!Nodes.IsNull() && Nodes.ContainsKey(Key)) ? ((YamlMappingNode)Nodes[Key.ToYamlNode()]).Children : NullYMap;
 		}
 	}
 }
