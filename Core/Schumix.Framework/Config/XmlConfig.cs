@@ -43,7 +43,7 @@ namespace Schumix.Framework.Config
 		public XmlConfig(string configdir, string configfile, bool colorbindmode)
 		{
 			var xmldoc = new XmlDocument();
-			xmldoc.Load(sUtilities.DirectoryToSpecial(configdir, configfile));
+			xmldoc.Load(Path.Combine(configdir, configfile));
 
 			string LogFileName = !xmldoc.SelectSingleNode("Schumix/Log/FileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/FileName").InnerText : d_logfilename;
 			bool LogDateFileName = !xmldoc.SelectSingleNode("Schumix/Log/DateFileName").IsNull() ? xmldoc.SelectSingleNode("Schumix/Log/DateFileName").InnerText.ToBoolean() : d_logdatefilename;
@@ -256,7 +256,7 @@ namespace Schumix.Framework.Config
 		{
 			try
 			{
-				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+				string filename = Path.Combine(ConfigDirectory, ConfigFile);
 
 				if(File.Exists(filename))
 					return true;
@@ -268,7 +268,7 @@ namespace Schumix.Framework.Config
 					Log.Debug("XmlConfig", sLConsole.GetString("Preparing..."));
 					var w = new XmlTextWriter(filename, null);
 					var xmldoc = new XmlDocument();
-					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
+					string filename2 = Path.Combine(ConfigDirectory, "_" + ConfigFile);
 
 					if(File.Exists(filename2))
 					{

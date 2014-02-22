@@ -49,7 +49,7 @@ namespace Schumix.Server.Config
 		public YamlConfig(string configdir, string configfile, bool colorbindmode)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
+			yaml.Load(File.OpenText(Path.Combine(configdir, configfile)));
 
 			var servermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Server")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Server".ToYamlNode()]).Children : NullYMap;
 			LogMap((!servermap.IsNull() && servermap.ContainsKey("Log")) ? ((YamlMappingNode)servermap["Log".ToYamlNode()]).Children : NullYMap);
@@ -77,7 +77,7 @@ namespace Schumix.Server.Config
 		{
 			try
 			{
-				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+				string filename = Path.Combine(ConfigDirectory, ConfigFile);
 
 				if(File.Exists(filename))
 					return true;
@@ -88,7 +88,7 @@ namespace Schumix.Server.Config
 					Log.Error("YamlConfig", sLConsole.GetString("No such config file!"));
 					Log.Debug("YamlConfig", sLConsole.GetString("Preparing..."));
 					var yaml = new YamlStream();
-					string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
+					string filename2 = Path.Combine(ConfigDirectory, "_" + ConfigFile);
 
 					if(File.Exists(filename2))
 					{

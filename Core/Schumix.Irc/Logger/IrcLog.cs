@@ -71,7 +71,7 @@ namespace Schumix.Irc.Logger
 					string dir = LogConfig.IrcLogDirectory + "/" + _servername;
 					sUtilities.CreateDirectory(dir);
 
-					string logdir = sUtilities.DirectoryToSpecial(dir, channel);
+					string logdir = Path.Combine(dir, channel);
 					string logfile = string.Format("{0}/{1}.log", logdir, DateTime.Now.ToString("yyyy-MM-dd"));
 
 					sUtilities.CreateDirectory(logdir);

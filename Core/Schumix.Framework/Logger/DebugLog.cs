@@ -36,7 +36,7 @@ namespace Schumix.Framework.Logger
 		public DebugLog(string dlfilename)
 		{
 			sUtilities.CreateDirectory(Path.Combine(LogConfig.LogDirectory, "DebugLog"));
-			_debuglogfile = sUtilities.DirectoryToSpecial(Path.Combine(LogConfig.LogDirectory, "DebugLog"), dlfilename);
+			_debuglogfile = Path.Combine(Path.Combine(LogConfig.LogDirectory, "DebugLog"), dlfilename);
 
 			bool isfile = false;
 			if(File.Exists(_debuglogfile))

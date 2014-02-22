@@ -77,8 +77,8 @@ namespace Schumix.WordPressRssAddon.Config
 		{
 			if(ConfigFile == _configfiledefaultname + ".yml")
 			{
-				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
-				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, _configfiledefaultname + ".xml");
+				string filename = Path.Combine(ConfigDirectory, ConfigFile);
+				string filename2 = Path.Combine(ConfigDirectory, _configfiledefaultname + ".xml");
 
 				if(File.Exists(filename))
 					return 0;
@@ -90,8 +90,8 @@ namespace Schumix.WordPressRssAddon.Config
 			}
 			else if(ConfigFile == _configfiledefaultname + ".xml")
 			{
-				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
-				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, _configfiledefaultname + ".yml");
+				string filename = Path.Combine(ConfigDirectory, ConfigFile);
+				string filename2 = Path.Combine(ConfigDirectory, _configfiledefaultname + ".yml");
 
 				if(File.Exists(filename))
 					return 1;
