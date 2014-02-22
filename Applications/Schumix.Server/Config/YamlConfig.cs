@@ -40,7 +40,6 @@ namespace Schumix.Server.Config
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly New.Schumix sSchumix = Singleton<New.Schumix>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public YamlConfig()
 		{
@@ -51,19 +50,19 @@ namespace Schumix.Server.Config
 			var yaml = new YamlStream();
 			yaml.Load(File.OpenText(Path.Combine(configdir, configfile)));
 
-			var servermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Server")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Server".ToYamlNode()]).Children : NullYMap;
-			LogMap((!servermap.IsNull() && servermap.ContainsKey("Log")) ? ((YamlMappingNode)servermap["Log".ToYamlNode()]).Children : NullYMap);
+			var servermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Server")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Server".ToYamlNode()]).Children : YamlExtensions.NullYMap;
+			LogMap(servermap.GetYamlChildren("Log"));
 			Log.Initialize(Framework.Config.LogConfig.FileName, colorbindmode);
 			Log.Debug("YamlConfig", ">> {0}", configfile);
 
 			Log.Notice("YamlConfig", sLConsole.GetString("Config file is loading."));
-			ServerMap((!servermap.IsNull() && servermap.ContainsKey("Server")) ? ((YamlMappingNode)servermap["Server".ToYamlNode()]).Children : NullYMap);
-			CrashMap((!servermap.IsNull() && servermap.ContainsKey("Crash")) ? ((YamlMappingNode)servermap["Crash".ToYamlNode()]).Children : NullYMap);
-			LocalizationMap((!servermap.IsNull() && servermap.ContainsKey("Localization")) ? ((YamlMappingNode)servermap["Localization".ToYamlNode()]).Children : NullYMap);
-			UpdateMap((!servermap.IsNull() && servermap.ContainsKey("Update")) ? ((YamlMappingNode)servermap["Update".ToYamlNode()]).Children : NullYMap);
-			ShutdownMap((!servermap.IsNull() && servermap.ContainsKey("Shutdown")) ? ((YamlMappingNode)servermap["Shutdown".ToYamlNode()]).Children : NullYMap);
-			CleanMap((!servermap.IsNull() && servermap.ContainsKey("Clean")) ? ((YamlMappingNode)servermap["Clean".ToYamlNode()]).Children : NullYMap);
-			SchumixsMap((!servermap.IsNull() && servermap.ContainsKey("Schumixs")) ? ((YamlMappingNode)servermap["Schumixs".ToYamlNode()]).Children : NullYMap);
+			ServerMap(servermap.GetYamlChildren("Server"));
+			CrashMap(servermap.GetYamlChildren("Crash"));
+			LocalizationMap(servermap.GetYamlChildren("Localization"));
+			UpdateMap(servermap.GetYamlChildren("Update"));
+			ShutdownMap(servermap.GetYamlChildren("Shutdown"));
+			CleanMap(servermap.GetYamlChildren("Clean"));
+			SchumixsMap(servermap.GetYamlChildren("Schumixs"));
 
 			Log.Success("YamlConfig", sLConsole.GetString("Config database is loading."));
 			Log.WriteLine();
@@ -98,18 +97,18 @@ namespace Schumix.Server.Config
 
 					try
 					{
-						var servermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Server")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Server".ToYamlNode()]).Children : NullYMap;
+						var servermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("Server")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["Server".ToYamlNode()]).Children : YamlExtensions.NullYMap;
 						var nodes = new YamlMappingNode();
 						var nodes2 = new YamlMappingNode();
 						var nodes3 = new YamlMappingNode();
 
-						nodes2.Add("Log",          CreateLogMap((!servermap.IsNull() && servermap.ContainsKey("Log")) ? ((YamlMappingNode)servermap["Log".ToYamlNode()]).Children : NullYMap));
-						nodes2.Add("Server",       CreateServerMap((!servermap.IsNull() && servermap.ContainsKey("Server")) ? ((YamlMappingNode)servermap["Server".ToYamlNode()]).Children : NullYMap));
-						nodes2.Add("Crash",        CreateCrashMap((!servermap.IsNull() && servermap.ContainsKey("Crash")) ? ((YamlMappingNode)servermap["Crash".ToYamlNode()]).Children : NullYMap));
-						nodes2.Add("Localization", CreateLocalizationMap((!servermap.IsNull() && servermap.ContainsKey("Localization")) ? ((YamlMappingNode)servermap["Localization".ToYamlNode()]).Children : NullYMap));
-						nodes2.Add("Update",       CreateUpdateMap((!servermap.IsNull() && servermap.ContainsKey("Update")) ? ((YamlMappingNode)servermap["Update".ToYamlNode()]).Children : NullYMap));
-						nodes2.Add("Shutdown",     CreateShutdownMap((!servermap.IsNull() && servermap.ContainsKey("Shutdown")) ? ((YamlMappingNode)servermap["Shutdown".ToYamlNode()]).Children : NullYMap));
-						nodes2.Add("Clean",        CreateCleanMap((!servermap.IsNull() && servermap.ContainsKey("Clean")) ? ((YamlMappingNode)servermap["Clean".ToYamlNode()]).Children : NullYMap));
+						nodes2.Add("Log",          CreateLogMap(servermap.GetYamlChildren("Log")));
+						nodes2.Add("Server",       CreateServerMap(servermap.GetYamlChildren("Server")));
+						nodes2.Add("Crash",        CreateCrashMap(servermap.GetYamlChildren("Crash")));
+						nodes2.Add("Localization", CreateLocalizationMap(servermap.GetYamlChildren("Localization")));
+						nodes2.Add("Update",       CreateUpdateMap(servermap.GetYamlChildren("Update")));
+						nodes2.Add("Shutdown",     CreateShutdownMap(servermap.GetYamlChildren("Shutdown")));
+						nodes2.Add("Clean",        CreateCleanMap(servermap.GetYamlChildren("Clean")));
 
 						if((!servermap.IsNull() && servermap.ContainsKey("Schumixs")))
 						{
@@ -127,7 +126,7 @@ namespace Schumix.Server.Config
 						else
 						{
 							nodes3.Add("Enabled", d_schumixsenabled.ToString());
-							nodes3.Add("Schumix", CreateSchumixsMap(NullYMap));
+							nodes3.Add("Schumix", CreateSchumixsMap(YamlExtensions.NullYMap));
 							nodes2.Add("Schumixs", nodes3);
 						}
 

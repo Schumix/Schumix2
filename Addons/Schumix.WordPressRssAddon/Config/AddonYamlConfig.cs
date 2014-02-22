@@ -36,7 +36,6 @@ namespace Schumix.WordPressRssAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -49,8 +48,8 @@ namespace Schumix.WordPressRssAddon.Config
 
 			Log.Notice("WordPressRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("WordPressRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["WordPressRssAddon".ToYamlNode()]).Children : NullYMap;
-			RssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap);
+			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("WordPressRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["WordPressRssAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
+			RssMap(rssmap.GetYamlChildren("Rss"));
 
 			Log.Success("WordPressRssAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
@@ -80,10 +79,10 @@ namespace Schumix.WordPressRssAddon.Config
 
 				try
 				{
-					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("WordPressRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["WordPressRssAddon".ToYamlNode()]).Children : NullYMap;
+					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("WordPressRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["WordPressRssAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Rss", CreateRssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap));
+					nodes2.Add("Rss", CreateRssMap(rssmap.GetYamlChildren("Rss")));
 					nodes.Add("WordPressRssAddon", nodes2);
 
 					sUtilities.CreateFile(filename);

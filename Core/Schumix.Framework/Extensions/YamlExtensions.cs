@@ -29,6 +29,7 @@ namespace Schumix.Framework.Extensions
 	public static class YamlExtensions
 	{
 		private static readonly Platform sPlatform = Singleton<Platform>.Instance;
+		public static readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public static string ToString(this IDictionary<YamlNode, YamlNode> Nodes, string FileName = "")
 		{
@@ -56,6 +57,11 @@ namespace Schumix.Framework.Extensions
 		public static YamlScalarNode ToYamlNode(this string Text)
 		{
 			return new YamlScalarNode(Text);
+		}
+
+		public static IDictionary<YamlNode, YamlNode> GetYamlChildren(this IDictionary<YamlNode, YamlNode> Nodes, string Key)
+		{
+			return (!Nodes.IsNull() && Nodes.ContainsKey(Key)) ? ((YamlMappingNode)Nodes[Key.ToYamlNode()]).Children : (Dictionary<YamlNode, YamlNode>)null;
 		}
 	}
 }

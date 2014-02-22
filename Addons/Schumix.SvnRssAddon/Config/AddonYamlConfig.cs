@@ -36,7 +36,6 @@ namespace Schumix.SvnRssAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -49,8 +48,8 @@ namespace Schumix.SvnRssAddon.Config
 
 			Log.Notice("SvnRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("SvnRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["SvnRssAddon".ToYamlNode()]).Children : NullYMap;
-			RssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap);
+			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("SvnRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["SvnRssAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
+			RssMap(rssmap.GetYamlChildren("Rss"));
 
 			Log.Success("SvnRssAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
@@ -80,10 +79,10 @@ namespace Schumix.SvnRssAddon.Config
 
 				try
 				{
-					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("SvnRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["SvnRssAddon".ToYamlNode()]).Children : NullYMap;
+					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("SvnRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["SvnRssAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Rss", CreateRssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap));
+					nodes2.Add("Rss", CreateRssMap(rssmap.GetYamlChildren("Rss")));
 					nodes.Add("SvnRssAddon", nodes2);
 
 					sUtilities.CreateFile(filename);
