@@ -36,7 +36,6 @@ namespace Schumix.HgRssAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -45,12 +44,12 @@ namespace Schumix.HgRssAddon.Config
 		public AddonYamlConfig(string configdir, string configfile)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
+			yaml.Load(File.OpenText(Path.Combine(configdir, configfile)));
 
 			Log.Notice("HgRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("HgRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["HgRssAddon".ToYamlNode()]).Children : NullYMap;
-			RssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap);
+			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("HgRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["HgRssAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
+			RssMap(rssmap.GetYamlChildren("Rss"));
 
 			Log.Success("HgRssAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
@@ -61,7 +60,7 @@ namespace Schumix.HgRssAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+			string filename = Path.Combine(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -70,7 +69,7 @@ namespace Schumix.HgRssAddon.Config
 				Log.Error("HgRssAddonConfig", sLConsole.GetString("No such config file!"));
 				Log.Debug("HgRssAddonConfig", sLConsole.GetString("Preparing..."));
 				var yaml = new YamlStream();
-				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = Path.Combine(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 				{
@@ -80,10 +79,10 @@ namespace Schumix.HgRssAddon.Config
 
 				try
 				{
-					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("HgRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["HgRssAddon".ToYamlNode()]).Children : NullYMap;
+					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("HgRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["HgRssAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Rss", CreateRssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap));
+					nodes2.Add("Rss", CreateRssMap(rssmap.GetYamlChildren("Rss")));
 					nodes.Add("HgRssAddon", nodes2);
 
 					sUtilities.CreateFile(filename);

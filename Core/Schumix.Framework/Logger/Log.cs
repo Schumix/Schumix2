@@ -61,7 +61,7 @@ namespace Schumix.Framework.Logger
 
 			lock(WriteLock)
 			{
-				string filename = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
+				string filename = Path.Combine(LogConfig.LogDirectory, _FileName);
 				var filesize = new FileInfo(filename);
 
 				if(filesize.Length >= LogConfig.MaxFileSize * 1024 * 1024)
@@ -156,7 +156,7 @@ namespace Schumix.Framework.Logger
 				_FileName = _FileName + "/" + time.ToString("yyyy_MM_dd-HH_mm_ss") + ".log";
 
 				bool isfile = false;
-				string logfile = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
+				string logfile = Path.Combine(LogConfig.LogDirectory, _FileName);
 
 				if(File.Exists(logfile))
 					isfile = true;
@@ -165,7 +165,7 @@ namespace Schumix.Framework.Logger
 
 				if((_started && !olddatefilename) || (_started && olddatefilename && oldfile != f))
 				{
-					string oldlogfile = sUtilities.DirectoryToSpecial(oldlogdirectory, oldfile);
+					string oldlogfile = Path.Combine(oldlogdirectory, oldfile);
 					var ofile = new StreamWriter(oldlogfile, true) { AutoFlush = true };
 					ofile.Write(sLConsole.GetString("The log's file name changed. From now in it will be here: {0}\n"), logfile);
 					ofile.Close();
@@ -186,7 +186,7 @@ namespace Schumix.Framework.Logger
 					return;
 
 				bool isfile = false;
-				string logfile = sUtilities.DirectoryToSpecial(LogConfig.LogDirectory, _FileName);
+				string logfile = Path.Combine(LogConfig.LogDirectory, _FileName);
 
 				if(File.Exists(logfile))
 					isfile = true;
@@ -203,7 +203,7 @@ namespace Schumix.Framework.Logger
 				}
 				else
 				{
-					string oldlogfile = sUtilities.DirectoryToSpecial(oldlogdirectory, oldfile);
+					string oldlogfile = Path.Combine(oldlogdirectory, oldfile);
 					var ofile = new StreamWriter(oldlogfile, true) { AutoFlush = true };
 					ofile.Write(sLConsole.GetString("The log's file name changed. From now in it will be here: {0}\n"), logfile);
 					ofile.Close();

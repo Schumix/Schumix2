@@ -214,6 +214,10 @@ namespace Schumix.TestAddon.Commands
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "pathroot")
+			{
+				sSendMessage.SendChatMessage(sIRCMessage, "{0}", Path.GetPathRoot(@"C:\asd\sd\info.xml"));
+			}
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);
 		}

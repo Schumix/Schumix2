@@ -36,7 +36,6 @@ namespace Schumix.CompilerAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -45,12 +44,12 @@ namespace Schumix.CompilerAddon.Config
 		public AddonYamlConfig(string configdir, string configfile)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
+			yaml.Load(File.OpenText(Path.Combine(configdir, configfile)));
 
 			Log.Notice("CompilerAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : NullYMap;
-			CompilerMap((!compilermap.IsNull() && compilermap.ContainsKey("Compiler")) ? ((YamlMappingNode)compilermap["Compiler".ToYamlNode()]).Children : NullYMap);
+			var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
+			CompilerMap(compilermap.GetYamlChildren("Compiler"));
 
 			Log.Success("CompilerAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
@@ -61,7 +60,7 @@ namespace Schumix.CompilerAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+			string filename = Path.Combine(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -70,7 +69,7 @@ namespace Schumix.CompilerAddon.Config
 				Log.Error("CompilerAddonConfig", sLConsole.GetString("No such config file!"));
 				Log.Debug("CompilerAddonConfig", sLConsole.GetString("Preparing..."));
 				var yaml = new YamlStream();
-				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = Path.Combine(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 				{
@@ -80,10 +79,10 @@ namespace Schumix.CompilerAddon.Config
 
 				try
 				{
-					var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : NullYMap;
+					var compilermap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CompilerAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CompilerAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Compiler", CreateCompilerMap((!compilermap.IsNull() && compilermap.ContainsKey("Compiler")) ? ((YamlMappingNode)compilermap["Compiler".ToYamlNode()]).Children : NullYMap));
+					nodes2.Add("Compiler", CreateCompilerMap(compilermap.GetYamlChildren("Compiler")));
 					nodes.Add("CompilerAddon", nodes2);
 
 					sUtilities.CreateFile(filename);

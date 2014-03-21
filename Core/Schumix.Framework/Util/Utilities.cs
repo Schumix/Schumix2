@@ -1265,27 +1265,27 @@ namespace Schumix.Framework.Util
 				if(text.Length >= "$home".Length && text.Substring(0, "$home".Length) == "$home")
 				{
 					if(data.Contains("/") && data.Substring(data.IndexOf("/")).Length > 1 && data.Substring(data.IndexOf("/")).Substring(0, 1) == "/")
-						return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\" + data.Substring(data.IndexOf("/")+1);
+						return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), data.Substring(data.IndexOf("/")+1));
 					else if(data.Contains(@"\") && data.Substring(data.IndexOf(@"\")).Length > 1 && data.Substring(data.IndexOf(@"\")).Substring(0, 1) == @"\")
-						return Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\" + data.Substring(data.IndexOf(@"\")+1);
+						return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), data.Substring(data.IndexOf(@"\")+1));
 					else
 						return data;
 				}
 				else if(text.Length >= "$localappdata".Length && text.Substring(0, "$localappdata".Length) == "$localappdata")
 				{
 					if(data.Contains("/") && data.Substring(data.IndexOf("/")).Length > 1 && data.Substring(data.IndexOf("/")).Substring(0, 1) == "/")
-						return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\" + data.Substring(data.IndexOf("/")+1);
+						return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), data.Substring(data.IndexOf("/")+1));
 					else if(data.Contains(@"\") && data.Substring(data.IndexOf(@"\")).Length > 1 && data.Substring(data.IndexOf(@"\")).Substring(0, 1) == @"\")
-						return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\" + data.Substring(data.IndexOf(@"\")+1);
+						return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), data.Substring(data.IndexOf(@"\")+1));
 					else
 						return data;
 				}
 				else if(text.Length >= "$userappdata".Length && text.Substring(0, "$userappdata".Length) == "$userappdata")
 				{
 					if(data.Contains("/") && data.Substring(data.IndexOf("/")).Length > 1 && data.Substring(data.IndexOf("/")).Substring(0, 1) == "/")
-						return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + data.Substring(data.IndexOf("/")+1);
+						return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), data.Substring(data.IndexOf("/")+1));
 					else if(data.Contains(@"\") && data.Substring(data.IndexOf(@"\")).Length > 1 && data.Substring(data.IndexOf(@"\")).Substring(0, 1) == @"\")
-						return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + data.Substring(data.IndexOf(@"\")+1);
+						return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), data.Substring(data.IndexOf(@"\")+1));
 					else
 						return data;
 				}
@@ -1296,7 +1296,7 @@ namespace Schumix.Framework.Util
 			{
 				string text = data.ToLower();
 				return (text.Length >= "$home".Length && text.Substring(0, "$home".Length) == "$home") ?
-					"/home/" + GetUserName() + "/" + data.Substring(data.IndexOf("/")+1) : data;
+					Path.Combine("/home", GetUserName(), data.Substring(data.IndexOf("/")+1)) : data;
 			}
 			else
 				return data;
@@ -1314,38 +1314,14 @@ namespace Schumix.Framework.Util
 				return false;
 		}
 
-		public string DirectoryToSpecial(string dir, string file)
-		{
-			if(sPlatform.IsWindows)
-			{
-				if(dir.Length > 2 && dir.Substring(1, 2) == @":\")
-					return string.Format(@"{0}\{1}", dir, file);
-				else if(dir.Length > 2 && dir.Substring(0, 2) == "//")
-					return string.Format("//{0}/{1}", dir, file);
-				else
-					return string.Format("./{0}/{1}", dir, file);
-			}
-			else if(sPlatform.IsLinux)
-				return (dir.Length > 0 && dir.Substring(0, 1) == "/") ? string.Format("{0}/{1}", dir, file) : string.Format("./{0}/{1}", dir, file);
-			else
-				return string.Format("{0}/{1}", dir, file);
-		}
-
 		public void CreatePidFile(string Name)
 		{
 			string pidfile = Name;
 
-			if(!pidfile.Contains(".pid"))
-			{
-				if(pidfile.Contains(".xml"))
-					pidfile = pidfile.Remove(pidfile.IndexOf(".xml")) + ".pid";
-				else if(pidfile.Contains(".yml"))
-					pidfile = pidfile.Remove(pidfile.IndexOf(".yml")) + ".pid";
-				else
-					pidfile = pidfile + ".pid";
-			}
+			if(Path.GetExtension(pidfile) != ".pid")
+				pidfile = Path.GetFileNameWithoutExtension(pidfile) + ".pid";
 
-			pidfile = DirectoryToSpecial(LogConfig.LogDirectory, pidfile);
+			pidfile = Path.Combine(LogConfig.LogDirectory, pidfile);
 			SchumixBase.PidFile = pidfile;
 			RemovePidFile();
 			CreateFile(pidfile);

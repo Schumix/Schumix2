@@ -33,7 +33,6 @@ namespace Schumix.CompilerAddon.Config
 	sealed class AddonXmlConfig : AddonDefaultConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
-		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 
 		public AddonXmlConfig()
 		{
@@ -42,7 +41,7 @@ namespace Schumix.CompilerAddon.Config
 		public AddonXmlConfig(string configdir, string configfile)
 		{
 			var xmldoc = new XmlDocument();
-			xmldoc.Load(sUtilities.DirectoryToSpecial(SchumixConfig.ConfigDirectory, configfile));
+			xmldoc.Load(Path.Combine(SchumixConfig.ConfigDirectory, configfile));
 
 			Log.Notice("CompilerAddonConfig", sLConsole.GetString("Config file is loading."));
 
@@ -68,7 +67,7 @@ namespace Schumix.CompilerAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+			string filename = Path.Combine(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -78,7 +77,7 @@ namespace Schumix.CompilerAddon.Config
 				Log.Debug("CompilerAddonConfig", sLConsole.GetString("Preparing..."));
 				var w = new XmlTextWriter(filename, null);
 				var xmldoc = new XmlDocument();
-				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = Path.Combine(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 				{

@@ -36,7 +36,6 @@ namespace Schumix.ExtraAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -45,14 +44,14 @@ namespace Schumix.ExtraAddon.Config
 		public AddonYamlConfig(string configdir, string configfile)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
+			yaml.Load(File.OpenText(Path.Combine(configdir, configfile)));
 
 			Log.Notice("ExtraAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("ExtraAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["ExtraAddon".ToYamlNode()]).Children : NullYMap;
-			ModeMap((!extramap.IsNull() && extramap.ContainsKey("Mode")) ? ((YamlMappingNode)extramap["Mode".ToYamlNode()]).Children : NullYMap);
-			WeatherMap((!extramap.IsNull() && extramap.ContainsKey("Weather")) ? ((YamlMappingNode)extramap["Weather".ToYamlNode()]).Children : NullYMap);
-			WolframAlphaMap((!extramap.IsNull() && extramap.ContainsKey("WolframAlpha")) ? ((YamlMappingNode)extramap["WolframAlpha".ToYamlNode()]).Children : NullYMap);
+			var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("ExtraAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["ExtraAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
+			ModeMap(extramap.GetYamlChildren("Mode"));
+			WeatherMap(extramap.GetYamlChildren("Weather"));
+			WolframAlphaMap(extramap.GetYamlChildren("WolframAlpha"));
 			Log.Success("ExtraAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
 
@@ -62,7 +61,7 @@ namespace Schumix.ExtraAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+			string filename = Path.Combine(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -71,7 +70,7 @@ namespace Schumix.ExtraAddon.Config
 				Log.Error("ExtraAddonConfig", sLConsole.GetString("No such config file!"));
 				Log.Debug("ExtraAddonConfig", sLConsole.GetString("Preparing..."));
 				var yaml = new YamlStream();
-				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = Path.Combine(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 				{
@@ -81,12 +80,12 @@ namespace Schumix.ExtraAddon.Config
 
 				try
 				{
-					var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("ExtraAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["ExtraAddon".ToYamlNode()]).Children : NullYMap;
+					var extramap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("ExtraAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["ExtraAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Mode",         CreateModeMap((!extramap.IsNull() && extramap.ContainsKey("Mode")) ? ((YamlMappingNode)extramap["Mode".ToYamlNode()]).Children : NullYMap));
-					nodes2.Add("Weather",      CreateWeatherMap((!extramap.IsNull() && extramap.ContainsKey("Weather")) ? ((YamlMappingNode)extramap["Weather".ToYamlNode()]).Children : NullYMap));
-					nodes2.Add("WolframAlpha", CreateWolframAlphaMap((!extramap.IsNull() && extramap.ContainsKey("WolframAlpha")) ? ((YamlMappingNode)extramap["WolframAlpha".ToYamlNode()]).Children : NullYMap));
+					nodes2.Add("Mode",         CreateModeMap(extramap.GetYamlChildren("Mode")));
+					nodes2.Add("Weather",      CreateWeatherMap(extramap.GetYamlChildren("Weather")));
+					nodes2.Add("WolframAlpha", CreateWolframAlphaMap(extramap.GetYamlChildren("WolframAlpha")));
 					nodes.Add("ExtraAddon",    nodes2);
 
 					sUtilities.CreateFile(filename);

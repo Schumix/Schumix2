@@ -84,8 +84,8 @@ namespace Schumix.Server.Config
 		{
 			if(ConfigFile == "Server.yml")
 			{
-				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
-				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "Server.xml");
+				string filename = Path.Combine(ConfigDirectory, ConfigFile);
+				string filename2 = Path.Combine(ConfigDirectory, "Server.xml");
 
 				if(File.Exists(filename))
 					return 0;
@@ -97,8 +97,8 @@ namespace Schumix.Server.Config
 			}
 			else if(ConfigFile == "Server.xml")
 			{
-				string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
-				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "Server.yml");
+				string filename = Path.Combine(ConfigDirectory, ConfigFile);
+				string filename2 = Path.Combine(ConfigDirectory, "Server.yml");
 
 				if(File.Exists(filename))
 					return 1;
@@ -109,9 +109,9 @@ namespace Schumix.Server.Config
 				}
 			}
 
-			if(ConfigFile.EndsWith(".yml"))
+			if(Path.GetExtension(ConfigFile) == ".yml")
 				return 0;
-			else if(ConfigFile.EndsWith(".xml"))
+			else if(Path.GetExtension(ConfigFile) == ".xml")
 				return 1;
 
 			return 0;

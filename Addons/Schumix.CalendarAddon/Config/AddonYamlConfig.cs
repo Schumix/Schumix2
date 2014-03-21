@@ -36,7 +36,6 @@ namespace Schumix.CalendarAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -45,12 +44,12 @@ namespace Schumix.CalendarAddon.Config
 		public AddonYamlConfig(string configdir, string configfile)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
+			yaml.Load(File.OpenText(Path.Combine(configdir, configfile)));
 
 			Log.Notice("CalendarAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CalendarAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CalendarAddon".ToYamlNode()]).Children : NullYMap;
-			FloodingMap((!calendarmap.IsNull() && calendarmap.ContainsKey("Flooding")) ? ((YamlMappingNode)calendarmap["Flooding".ToYamlNode()]).Children : NullYMap);
+			var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CalendarAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CalendarAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
+			FloodingMap(calendarmap.GetYamlChildren("Flooding"));
 
 			Log.Success("CalendarAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
@@ -61,7 +60,7 @@ namespace Schumix.CalendarAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+			string filename = Path.Combine(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -70,7 +69,7 @@ namespace Schumix.CalendarAddon.Config
 				Log.Error("CalendarAddonConfig", sLConsole.GetString("No such config file!"));
 				Log.Debug("CalendarAddonConfig", sLConsole.GetString("Preparing..."));
 				var yaml = new YamlStream();
-				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = Path.Combine(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 				{
@@ -80,10 +79,10 @@ namespace Schumix.CalendarAddon.Config
 
 				try
 				{
-					var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CalendarAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CalendarAddon".ToYamlNode()]).Children : NullYMap;
+					var calendarmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("CalendarAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["CalendarAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Flooding", CreateFloodingMap((!calendarmap.IsNull() && calendarmap.ContainsKey("Flooding")) ? ((YamlMappingNode)calendarmap["Flooding".ToYamlNode()]).Children : NullYMap));
+					nodes2.Add("Flooding", CreateFloodingMap(calendarmap.GetYamlChildren("Flooding")));
 					nodes.Add("CalendarAddon", nodes2);
 
 					sUtilities.CreateFile(filename);

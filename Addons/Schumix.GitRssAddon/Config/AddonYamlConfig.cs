@@ -36,7 +36,6 @@ namespace Schumix.GitRssAddon.Config
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
-		private readonly Dictionary<YamlNode, YamlNode> NullYMap = null;
 
 		public AddonYamlConfig()
 		{
@@ -45,12 +44,12 @@ namespace Schumix.GitRssAddon.Config
 		public AddonYamlConfig(string configdir, string configfile)
 		{
 			var yaml = new YamlStream();
-			yaml.Load(File.OpenText(sUtilities.DirectoryToSpecial(configdir, configfile)));
+			yaml.Load(File.OpenText(Path.Combine(configdir, configfile)));
 
 			Log.Notice("GitRssAddonConfig", sLConsole.GetString("Config file is loading."));
 
-			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("GitRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["GitRssAddon".ToYamlNode()]).Children : NullYMap;
-			RssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap);
+			var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("GitRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["GitRssAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
+			RssMap(rssmap.GetYamlChildren("Rss"));
 
 			Log.Success("GitRssAddonConfig", sLConsole.GetString("Config database is loading."));
 		}
@@ -61,7 +60,7 @@ namespace Schumix.GitRssAddon.Config
 
 		public bool CreateConfig(string ConfigDirectory, string ConfigFile)
 		{
-			string filename = sUtilities.DirectoryToSpecial(ConfigDirectory, ConfigFile);
+			string filename = Path.Combine(ConfigDirectory, ConfigFile);
 
 			if(File.Exists(filename))
 				return true;
@@ -70,7 +69,7 @@ namespace Schumix.GitRssAddon.Config
 				Log.Error("GitRssAddonConfig", sLConsole.GetString("No such config file!"));
 				Log.Debug("GitRssAddonConfig", sLConsole.GetString("Preparing..."));
 				var yaml = new YamlStream();
-				string filename2 = sUtilities.DirectoryToSpecial(ConfigDirectory, "_" + ConfigFile);
+				string filename2 = Path.Combine(ConfigDirectory, "_" + ConfigFile);
 
 				if(File.Exists(filename2))
 				{
@@ -80,10 +79,10 @@ namespace Schumix.GitRssAddon.Config
 
 				try
 				{
-					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("GitRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["GitRssAddon".ToYamlNode()]).Children : NullYMap;
+					var rssmap = (yaml.Documents.Count > 0 && ((YamlMappingNode)yaml.Documents[0].RootNode).Children.ContainsKey("GitRssAddon")) ? ((YamlMappingNode)((YamlMappingNode)yaml.Documents[0].RootNode).Children["GitRssAddon".ToYamlNode()]).Children : YamlExtensions.NullYMap;
 					var nodes = new YamlMappingNode();
 					var nodes2 = new YamlMappingNode();
-					nodes2.Add("Rss", CreateRssMap((!rssmap.IsNull() && rssmap.ContainsKey("Rss")) ? ((YamlMappingNode)rssmap["Rss".ToYamlNode()]).Children : NullYMap));
+					nodes2.Add("Rss", CreateRssMap(rssmap.GetYamlChildren("Rss")));
 					nodes.Add("GitRssAddon", nodes2);
 
 					sUtilities.CreateFile(filename);
