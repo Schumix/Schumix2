@@ -2,6 +2,7 @@
 
 ## 4.4.0 (2013-xx-xx)
 
+ * Yaml használata picit leegyszerüsítve.
  * Kiterjesztések felismerése javítva.
  * DirectoryToSpecial függvény eltávolítva a forrásból.
  * .nuget hozzáadva.

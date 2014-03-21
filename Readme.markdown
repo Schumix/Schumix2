@@ -3,7 +3,7 @@
 Platform | Configuration | Build status | Downloads
 ----|----|----|----
 Ubuntu | Debug  | [![Build Status](https://travis-ci.org/Schumix/Schumix2.png?branch=master)](https://travis-ci.org/Schumix/Schumix2) | None
-Windows | Debug | [![Build status](https://ci.appveyor.com/api/projects/status?id=u8njmbb6ivqisgiu)](https://ci.appveyor.com/project/Schumix2) | None
+Windows | Debug | [![Build status](https://ci.appveyor.com/api/projects/status/u8njmbb6ivqisgiu/branch/master)](https://ci.appveyor.com/project/megax/Schumix2) | None
 
 # Statement
 
