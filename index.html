@@ -1,140 +1,221 @@
 <!DOCTYPE html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Schumix2 : Schumix2 IRC Bot and Framework" />
-
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Schumix2</title>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Schumix2 by Schumix</title>
   </head>
 
   <body>
+    <div id="container">
+      <div class="inner">
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/Schumix/Schumix2">View on GitHub</a>
-
-          <h1 id="project_title">Schumix2</h1>
-          <h2 id="project_tagline">Schumix2 IRC Bot and Framework</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/Schumix/Schumix2/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/Schumix/Schumix2/tarball/master">Download this project as a tar.gz file</a>
-            </section>
+        <header>
+          <h1>Schumix2</h1>
+          <h2>Schumix2 IRC Bot and Framework</h2>
         </header>
-    </div>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h1>Schumix2</h1>
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/Schumix/Schumix2/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/Schumix/Schumix2/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/Schumix/Schumix2" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
 
-<h1>Ismertetés</h1>
+        <hr>
 
-<p>Ezen kód hívatott felváltani elõdjét. Új alapokra lett helyezve és több újdonságot is tartalmaz.
-Schumixxal szemben gyorsabb és megbízhatobb. A kód c# nyelven írodott.</p>
+        <section id="main_content">
+          <h1>
+<a name="schumix2-" class="anchor" href="#schumix2-"><span class="octicon octicon-link"></span></a>Schumix2 <a href="https://bitdeli.com/free" title="Bitdeli Badge"><img src="https://d2weczhvl823v0.cloudfront.net/Schumix/schumix2/trend.png" alt="Bitdeli Badge"></a>
+</h1>
 
-<h1>Platformok</h1>
+<table>
+<thead><tr>
+<th>Platform</th>
+<th>Configuration</th>
+<th>Build status</th>
+<th>Downloads</th>
+</tr></thead>
+<tbody>
+<tr>
+<td>Ubuntu</td>
+<td>Debug</td>
+<td><a href="https://travis-ci.org/Schumix/Schumix2"><img src="https://travis-ci.org/Schumix/Schumix2.png?branch=master" alt="Build Status"></a></td>
+<td>None</td>
+</tr>
+<tr>
+<td>Windows</td>
+<td>Debug</td>
+<td><a href="https://ci.appveyor.com/project/megax/Schumix2"><img src="https://ci.appveyor.com/api/projects/status/u8njmbb6ivqisgiu/branch/master" alt="Build status"></a></td>
+<td>None</td>
+</tr>
+</tbody>
+</table><h1>
+<a name="statement" class="anchor" href="#statement"><span class="octicon octicon-link"></span></a>Statement</h1>
 
-<p>A bot kompatibilis a windows és linux rendszerrel. Valószínüleg Mac OS X-en is fut de még nem került tesztelésre.
-Windows alatt ajálott a <code>.net 4.0</code> használata vagy újabb.
-Monon jelenleg minimum követelmény a <code>2.10</code> vagy újabb.</p>
+<p>This code is intended to relay its predecessor. It is lay new basis and got many newness.
+More faster and reliable than Schumix. The code is written in c#.</p>
 
-<h1>Kód futtatása/Fordítása</h1>
+<h1>
+<a name="platforms" class="anchor" href="#platforms"><span class="octicon octicon-link"></span></a>Platforms</h1>
 
-<h2>Windows</h2>
+<p>The bot has compatibility with windows and linux systems.
+It might be run on Mac OS X but it's haven't been tested yet.
+Under Windows the <code>.NET Framework 4.0</code> or higher is recommended.
+Under Mono at least the <code>2.10.8.1</code> or higher is needed.</p>
 
-<p>A fordítás egyszerû. Nyissuk meg a <code>Schumix.sln</code> fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.</p>
+<h1>
+<a name="run-source--compile" class="anchor" href="#run-source--compile"><span class="octicon octicon-link"></span></a>Run source / Compile</h1>
 
-<h2>Linux</h2>
+<h2>
+<a name="submodule" class="anchor" href="#submodule"><span class="octicon octicon-link"></span></a>SubModule</h2>
 
-<p>Nyissuk meg a <code>Schumix.sln</code> fájlt. Válaszuk ki a nekünk megfelelõ konfigurációt és fordítsuk le vele.</p>
+<p>Download missing submodules: git submodule update --init --recursive</p>
 
-<h2>Linux terminál</h2>
+<h2>
+<a name="windows" class="anchor" href="#windows"><span class="octicon octicon-link"></span></a>Windows</h2>
 
-<p>Telepítsük a <code>mono-xbuild</code> csomagot vagy forrásból. Ezután inditsuk el a <code>build.sh</code>-t és lefordul a kód.</p>
+<h3>
+<a name="monodevelop--xamarin-studio" class="anchor" href="#monodevelop--xamarin-studio"><span class="octicon octicon-link"></span></a>Monodevelop / Xamarin Studio</h3>
 
-<h1>Kód üzembehelyezése</h1>
+<p>When using Monodevelop / Xamarin Studio the <code>gettext</code> is needed for translating the language files.
+<br>Download and install it. <code>http://gnuwin32.sourceforge.net/packages/gettext.htm</code>
+<br>The compiling is simple. Open the <code>Schumix.sln</code> file.
+<br>Choose the configuration that fits for you and compile it.</p>
 
-<p>Navigáljunk a <code>Run</code> mappába és azon belül a konfigurációnak megfelelõ mappába. Inditusk el az exe-t. A program legenerálja
-önmagának a konfig fájlt. Ha bármi gond lenne vele hozzunk létre egy <code>Configs</code> nevû mappát és a fõ mappából másoljuk bele
-a <code>Schumix.yml</code> nevû fájlt.</p>
+<h3>
+<a name="visual-studio" class="anchor" href="#visual-studio"><span class="octicon octicon-link"></span></a>Visual Studio</h3>
 
-<h1>Telepítés</h1>
+<p>When using Visual Studio you only need to open <code>SchumixVS.sln</code>.
+<br>Choose the configuration that fits for you and compile it.</p>
 
-<p>Csak akkor használjuk ezt az opciót ha úgy szeretnénk telepíteni a botot mint ha be akarjuk telepíteni a rendszerbe. Figyelem! Rendszergazadi jog valószinüleg szükséges lesz a telepítés végső szakaszához.</p>
+<h2>
+<a name="linux" class="anchor" href="#linux"><span class="octicon octicon-link"></span></a>Linux</h2>
 
-<h2>Archlinux</h2>
+<p>Open the <code>Schumix.sln</code> file.
+<br>Choose the configuration that fits for you and compile it.</p>
 
-<p>Futtassuk <code>sh createarchlinuxpkg.sh</code> parancsot. Ha lefutott megjelenik egy <code>schumix.pkg.tar.xz</code> (hasonló lesz a neve) nevű fájl. Ezt telepítsük a <code>sudo pacman -U schumix2.pkg.tar.xz</code> (csomag fájl neve hasonló lesz) paranccsl és már készen is vagyunk. A botot a <code>schumix</code> paranccsal futtathatjuk.</p>
+<h2>
+<a name="linux-terminal" class="anchor" href="#linux-terminal"><span class="octicon octicon-link"></span></a>Linux terminal</h2>
 
-<h2>Debian/Ubuntu</h2>
+<p>Install the <code>mono-xbuild</code> package or from source <code>mono</code>.
+<br>Than run the <code>build.sh</code> command and the code is compiled.</p>
 
-<p>Futtassuk <code>sh createdebianpkg.sh</code> parancsot. Ha lefutott megjelenik egy <code>schumix.deb</code> nevű fájl. Ezt telepítsük a <code>sudo dbkg -i schumix.deb</code> paranccsl és már készen is vagyunk. A botot a <code>schumix</code> paranccsal futtathatjuk.</p>
+<h1>
+<a name="code-commissioning" class="anchor" href="#code-commissioning"><span class="octicon octicon-link"></span></a>Code commissioning</h1>
 
-<h2>Windows</h2>
+<p>Navigate to the <code>Run</code> folder and than to the appropriate folder for the configuration file.
+<br>Run the exe.
+<br>The program will generate its own config file.
+<br>If any problem occurs then create a <code>Configs</code> named folder and copy the <code>Schumix.yml</code> file from the <code>Configs</code> folder into it.</p>
 
-<p>Navigáljunk az Installer mappába. Futtassuk a <code>Schumix.iss</code> nevű fájlt. Ha lefutott kapunk egy <code>Setup.exe</code> nevű telepíthető állományt. Futtasuk és értelemszerüen telepítsük. A többit szerintem nem kell részletezni :)</p>
+<h1>
+<a name="install" class="anchor" href="#install"><span class="octicon octicon-link"></span></a>Install</h1>
 
-<h1>Konfig beállítása</h1>
+<p>Use this option only if you want to innstal the bot like a program.
+<br>Attention! Administrative permissions probably needed at the final stage of install.</p>
 
-<p>A konfiguk beállításához menjünk a <code>Share/doc/Configs</code> mappába és a <code>Schumix.md</code> fájlt nyissuk meg. Ez a fő konfig leírása. Fontos hogy ezt a leírást mindenképpen olvassuk el mert enélkül nem lehet elindítani a botot normálisan. Ha megvagyunk akár a többi leírást is végiglehet nézni de az elindításhoz nem szükséges.</p>
+<h2>
+<a name="archlinux" class="anchor" href="#archlinux"><span class="octicon octicon-link"></span></a>Archlinux</h2>
 
-<h1>Adatbázis beüzemelése</h1>
+<p><strong>Attention!!! Root permission needed for that.</strong>
+<br>Run the <code>./createarchlinuxpkg.sh</code> command.
+<br>When it's done a <code>schumix.pkg.tar.xz</code> (the name will be similar) named file will be created.
+<br>Install it with the <code>sudo pacman -U schumix2.pkg.tar.xz</code> command (the packet name will be similar) and it's all ready.
+<br>Run the bot with the <code>schumix</code> command.</p>
 
-<h2>MySql</h2>
+<h2>
+<a name="debian--ubuntu" class="anchor" href="#debian--ubuntu"><span class="octicon octicon-link"></span></a>Debian / Ubuntu</h2>
 
-<p>Ha a jó öreg mysql alapú adatbázist szeretnénk használni állítsuk a konfig fájlban <code>(lásd: &lt;MySql&gt;&lt;Enabled&gt;false&lt;/Enabled&gt;)</code> az engedélyét true értékre.
-Ezután az <code>Sql</code> mappából töltsük fel az adatbázisunkat. Ha bármiféle javítás jön a kódhoz vagy újítás nem kell az agész adatbázist újra töltenünk.
-Csak az <code>Updates</code> mappából frisistsük a megfelelõ verzió szám alapján.</p>
+<p><strong>Attention!!! Root permission needed for that.</strong>
+<br>For the first step, switch to fakeroot mode.
+<br>Type the <code>fakeroot</code> command for that.
+<br>After that run the <code>./createdebianpkg.sh</code> command.
+<br>When it's done a <code>schumix.deb</code> named file will be created.
+<br>Install it with the <code>sudo dpkg -i schumix.deb</code> command and it's all ready.
+<br>Run the bot with the <code>schumix</code> command.</p>
 
-<h2>SQLite</h2>
+<h2>
+<a name="windows-1" class="anchor" href="#windows-1"><span class="octicon octicon-link"></span></a>Windows</h2>
 
-<p>Ha az SQLite alapú adatbázist szeretnénk használni állítsuk a konfig fájlban <code>(lásd: &lt;SQLite&gt;&lt;Enabled&gt;false&lt;/Enabled&gt;)</code> az engedélyét <code>true</code> értékre.
-Majd másoljuk az <code>Sql</code> mappából a <code>Schumix.db3</code> fájlt az exe mellé. Ezen fájl neve megváltoztatható de akkor a konfig fájlban is meg kell vátoztatni.
-Természetesen az elérési út is a névvel együtt.</p>
+<p>Navigate to the Installer folder.
+<br>Run the <code>Schumix.iss</code> named file.
+<br>When it's done a <code>Setup.exe</code> file will be created.
+<br>Run this and complete the install.
+<br>I guess I don't need to explain more. :)</p>
 
-<h1>Figyelmeztetés!</h1>
+<h1>
+<a name="config-settings" class="anchor" href="#config-settings"><span class="octicon octicon-link"></span></a>Config settings</h1>
 
-<p><strong>Csak egy adatbázis lehet aktiv. Olyan nem lehet hogy egyse vagy kettõ. Ezekben az esetekben a kód leáll és nem fut tovább.</strong></p>
+<p>To adjust the configs navigate to the <code>Share/doc/Configs</code> folder and open the <code>Schumix.md</code> file.
+<br>This is the description for the main config.
+<br>Reading the description is necessary because the bot can't be started correctly without it.
+<br>After that you can take a look at the other descriptions but they aren't required for starting the bot.</p>
 
-<p>Ha mind ezekkel megvagyunk már csak inditanuk kell és használni a kódot :)</p>
+<h1>
+<a name="database-configuration" class="anchor" href="#database-configuration"><span class="octicon octicon-link"></span></a>Database configuration</h1>
 
-<h1>Apróságok</h1>
+<h2>
+<a name="mysql" class="anchor" href="#mysql"><span class="octicon octicon-link"></span></a>MySql</h2>
+
+<p>If you want to use a mysql based database set the <code>&lt;MySql&gt;&lt;Enabled&gt;false&lt;/Enabled&gt;</code> permission to true.
+<br>After that, fill the database from the <code>Sql</code> folder.
+<br>If any kind of correction or update will come you don't need to refill the whole database.
+<br>Only update it from the <code>Updates</code> folder with the appropriate version number.</p>
+
+<h2>
+<a name="sqlite" class="anchor" href="#sqlite"><span class="octicon octicon-link"></span></a>SQLite</h2>
+
+<p>If you want to use an SQLite based database set the <code>&lt;SQLite&gt;&lt;Enabled&gt;false&lt;/Enabled&gt;</code> permission to true.
+<br>Then copy the <code>Schumix.db3</code> file from the <code>Sql</code> folder next to the exe.
+<br>You can rename or move it but you have to change the name or the path in the config file.
+<br>If any kind of correction or update will come you don't need to refill the whole database.
+<br>Only update it from the <code>Updates</code> folder with the appropriate version number.</p>
+
+<h1>
+<a name="attention" class="anchor" href="#attention"><span class="octicon octicon-link"></span></a>Attention!</h1>
+
+<p><strong>Only one database can be active. If there is'n an active database or there are two active database the code will crash and stop running.</strong></p>
+
+<p>If you are all done with it than you just need to launch and use the code. :)</p>
+
+<h1>
+<a name="trivia" class="anchor" href="#trivia"><span class="octicon octicon-link"></span></a>Trivia</h1>
 
 <ul>
-<li>Az álltalam készített addonokhoz tartoznak álltalában konfig fájlok. Ezek is szintén a <code>Configs</code> mappába generálodnak és ott állíthatóak be.</li>
-<li>A kódban továbbá elhelyezésre került egy bot parancs is. Ez a parancs az elsõdleges névbõl tevõdik össze. Példa rá: <code>schumix2, help</code>
-Fontos a parancs szerkezete <code>&lt;elsõdleges nick&gt;, parancs</code>
+<li>Usually configuration files belongs to the addons made by me. These are also generated in the <code>Configs</code> folder and you can modify them there.</li>
+<li>Furthermore, a bot command was placed in the code. That command composed by the primary name. For example: <code>schumix2, help</code>
+The structure of the command is important: <code>&lt;primary nick&gt;, command</code>
 </li>
-<li>A kódhoz ki és be kapcsolható funkciók tartoznak. Ezt csak is gizárólag admin vezérelheti.
-Funkciók használatáról leírás: <code>$help function</code> (természetesen az az elõjel kell ami megadásra került a konfigban)</li>
-<li>Ha már megemlítésre került. Az admin hozzáadása konzolból történik elõször. <code>admin add &lt;admin neve&gt;</code>
-Majd amit kapunk jelszót privát üzenetben el kell küldeni a botnak a jelszót ezen módon: <code>$admin access &lt;jelszó&gt;</code>
-Ha másikat szeretnénk akkor: <code>$admin newpassword &lt;régi&gt; &lt;új&gt;</code>
+<li>There are functions belongs to the code which can be turned on and off. These are controllable by the administrator only.
+Description about the functions: <code>$help function</code> (With the configured prefix, of course)</li>
+<li>If it has been already mentioned, you can add admin with the console for first.
+<code>admin add &lt;admin name&gt;</code>
+Then you will get a password which have to be sent to the bot in a private message like this: <code>$admin access &lt;password&gt;</code>
+If you want to change it than: <code>$admin newpassword &lt;old&gt; &lt;new&gt;</code>
 </li>
-<li>És végül a konzol parancsok. Ha már megemlítettem ;) Szóval a lista a help paranccsal kapható meg.
-Többit pedig úgy kell mint az irc paranccsoknál. A parancs nevét vagy a parancsot és annak alparancsát kell a help parancs mögé írni.</li>
-<li>Bármi lemaradt volna tudok segítséget nyújtani az irc.rizon.net szerveren a <code>#schumix, #schumix2</code> vagy <code>#hun_bot</code> csatornán.</li>
-<li>Yaml konfignál minden olyan adatot amely különleges karaktert tartalmaz (pl: #) azt idézőjelek közé kell helyezni "" mert a program máskülönben megpróbálná értelmezni és az hibát okozna.</li>
-<li>Remélem meg fog tetszeni a bot :)</li>
+<li>And finally the console commands. You can get the list with te <code>help</code> command.
+The rest can be obtained as like the irc commands. Type the name of the command than the subcommand after the help command.</li>
+<li>If anything missed I can help on the <code>irc.rizon.net</code> server on the <code>#schumix, #schumix2</code> or <code>#hun_bot</code> channels.</li>
+<li>In Yaml configs, all the data which contains special characters (#,$) have to be placed between quotation marks "" otherwise the program try to<br>
+interpreting them and cause an error.</li>
+<li>I hope you will like the bot. :)</li>
 </ul>
-      </section>
+        </section>
+
+        <footer>
+          Schumix2 is maintained by <a href="https://github.com/Schumix">Schumix</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
     </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Schumix2 maintained by <a href="https://github.com/Schumix">Schumix</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
   </body>
 </html>
