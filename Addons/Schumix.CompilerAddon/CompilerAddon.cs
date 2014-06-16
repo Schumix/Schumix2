@@ -133,7 +133,7 @@ namespace Schumix.CompilerAddon
 						sSendMessage.SendChatMessage(sIRCMessage, text[1], CompilerConfig.MainClass, "{ /* program... */ }");
 						sSendMessage.SendChatMessage(sIRCMessage, text[2], CompilerConfig.MainConstructor, "{ /* program... */ }");
 						sSendMessage.SendChatMessage(sIRCMessage, text[3]);
-						sSendMessage.SendChatMessage(sIRCMessage, text[4], command.ToLower());
+						sSendMessage.SendChatMessage(sIRCMessage, text[4], IRCConfig.List[sIRCMessage.ServerName].NickName.ToLower());
 						sSendMessage.SendChatMessage(sIRCMessage, text[5]);
 						sSendMessage.SendChatMessage(sIRCMessage, text[6], Consts.SchumixProgrammedBy);
 						return;
