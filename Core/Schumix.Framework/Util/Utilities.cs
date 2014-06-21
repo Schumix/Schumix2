@@ -1289,14 +1289,28 @@ namespace Schumix.Framework.Util
 					else
 						return data;
 				}
+				else if(text.Length >= "$localdir".Length && text.Substring(0, "$localdir".Length) == "$localdir")
+				{
+					if(data.Contains("/") && data.Substring(data.IndexOf("/")).Length > 1 && data.Substring(data.IndexOf("/")).Substring(0, 1) == "/")
+						return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, data.Substring(data.IndexOf("/")+1));
+					else if(data.Contains(@"\") && data.Substring(data.IndexOf(@"\")).Length > 1 && data.Substring(data.IndexOf(@"\")).Substring(0, 1) == @"\")
+						return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, data.Substring(data.IndexOf(@"\")+1));
+					else
+						return data;
+				}
 				else
 					return data;
 			}
 			else if(sPlatform.IsLinux)
 			{
 				string text = data.ToLower();
-				return (text.Length >= "$home".Length && text.Substring(0, "$home".Length) == "$home") ?
-					Path.Combine("/home", GetUserName(), data.Substring(data.IndexOf("/")+1)) : data;
+
+				if(text.Length >= "$home".Length && text.Substring(0, "$home".Length) == "$home")
+					return Path.Combine("/home", GetUserName(), data.Substring(data.IndexOf("/")+1));
+				else if(text.Length >= "$localdir".Length && text.Substring(0, "$localdir".Length) == "$localdir")
+					return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, data.Substring(data.IndexOf("/")+1));
+				else
+					return data;
 			}
 			else
 				return data;
@@ -1309,6 +1323,8 @@ namespace Schumix.Framework.Util
 			if(dir.Contains("$home"))
 				return true;
 			else if(sPlatform.IsWindows && dir.Contains("$localappdata"))
+				return true;
+			else if(dir.Contains("$localdir"))
 				return true;
 			else
 				return false;

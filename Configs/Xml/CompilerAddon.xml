@@ -10,7 +10,7 @@
         <WarningLevel>4</WarningLevel>
         <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
         <Referenced>using System; using System.Threading; using System.Reflection; using System.Threading.Tasks; using System.Linq; using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using System.Numerics; using Schumix.Libraries; using Schumix.Libraries.Maths; using Schumix.Libraries.Maths.Types; using Schumix.Libraries.Extensions;</Referenced>
-        <ReferencedAssemblies>System.dll,System.Core.dll,System.Numerics.dll,Schumix.Libraries.dll,Schumix.Compiler.dll</ReferencedAssemblies>
+        <ReferencedAssemblies>System.dll,System.Core.dll,System.Numerics.dll,$localdir/Schumix.Libraries.dll,$localdir/Schumix.Compiler.dll</ReferencedAssemblies>
         <MainClass>Entry</MainClass>
         <MainConstructor>Schumix</MainConstructor>
     </Compiler>
