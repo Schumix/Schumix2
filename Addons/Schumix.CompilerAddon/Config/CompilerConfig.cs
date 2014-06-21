@@ -19,7 +19,9 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Schumix.Framework;
+using Schumix.Framework.Util;
 using Schumix.Framework.Logger;
 using Schumix.Framework.Localization;
 
@@ -28,6 +30,7 @@ namespace Schumix.CompilerAddon.Config
 	sealed class CompilerConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		public static bool CompilerEnabled { get; private set; }
 		public static bool MaxAllocatingE { get; private set; }
 		public static int MaxAllocatingM { get; private set; }
@@ -48,7 +51,15 @@ namespace Schumix.CompilerAddon.Config
 			WarningLevel          = warninglevel;
 			TreatWarningsAsErrors = treatwarningsaserrors;
 			Referenced            = referenced;
-			ReferencedAssemblies  = referencedassemblies.Split(SchumixBase.Comma);
+
+			var list = new List<string>();
+
+			foreach(var ra in referencedassemblies.Split(SchumixBase.Comma))
+				list.Add(sUtilities.GetSpecialDirectory(ra));
+
+			ReferencedAssemblies  = list.ToArray();
+			list.Clear();
+
 			MainClass             = mainclass;
 			MainConstructor       = mainconstructor;
 			Log.Notice("CompilerConfig", sLConsole.GetString("Loaded the Compiler settings."));
