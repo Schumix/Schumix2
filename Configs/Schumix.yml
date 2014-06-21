@@ -58,7 +58,7 @@ Schumix:
         FileName: Schumix.db3
     Addon:
         Enabled: True
-        Ignore: MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,TestAddon,RssAddon
+        Ignore: MantisBTRssAddon,SvnRssAddon,GitRssAddon,HgRssAddon,WordPressRssAddon,RssAddon,TestAddon
         Directory: Addons
     Scripts:
         Lua: False
