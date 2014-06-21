@@ -2,7 +2,6 @@
 
 homedir="$HOME/.Schumix"
 config_file="$HOME/.Schumix/Configs/Schumix.yml"
-config_file_compileraddon="$HOME/.Schumix/Configs/CompilerAddon.yml"
 config_dir="$HOME/.Schumix/Configs"
 sqlite="$HOME/.Schumix/Schumix.db3"
 
@@ -16,14 +15,6 @@ if [ ! -e $config_file ]; then
 	fi
 
 	cp /usr/share/schumix/Schumix.yml $config_file
-fi
-
-if [ ! -e $config_file_compileraddon ]; then
-	if [ ! -e $config_dir ]; then
-		mkdir $config_dir
-	fi
-
-	cp /usr/share/schumix/CompilerAddon.yml $config_file_compileraddon
 fi
 
 if [ ! -e $sqlite ]; then
