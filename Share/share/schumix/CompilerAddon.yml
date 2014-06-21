@@ -1,0 +1,14 @@
+# CompilerAddon config file (yaml)
+CompilerAddon:
+    Compiler:
+        Enabled: True
+        MaxAllocating:
+            Enabled: True
+            Memory: 50
+        CompilerOptions: /optimize
+        WarningLevel: 4
+        TreatWarningsAsErrors: False
+        Referenced: using System; using System.Threading; using System.Reflection; using System.Threading.Tasks; using System.Linq; using System.Collections.Generic; using System.Text; using System.Text.RegularExpressions; using System.Numerics; using Schumix.Libraries; using Schumix.Libraries.Maths; using Schumix.Libraries.Maths.Types; using Schumix.Libraries.Extensions;
+        ReferencedAssemblies: System.dll,System.Core.dll,System.Numerics.dll,/usr/lib/schumix/Schumix.Libraries.dll,/usr/lib/schumix/Schumix.Compiler.dll
+        MainClass: Entry
+        MainConstructor: Schumix

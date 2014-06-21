@@ -237,7 +237,7 @@ namespace Schumix.Compiler
 					});
 
 					thread.Start();
-					thread.Join(2);
+					thread.Join(100);
 					thread.Abort();
 
 					if(!b)

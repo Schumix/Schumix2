@@ -11,13 +11,14 @@ _gitbranch=stable
 _giturl="git://github.com/Schumix/$_gitdir.git"
 pkgdesc="Schumix IRC Bot and Framework"
 arch=('any')
-url="git://github.com/Schumix/$_gitdir.git"
+url="http://schumix.github.io/Schumix2/"
 license=('GNU General Public License 3')
 groups=('')
 depends=('mono>=2.10.8')
 makedepends=('git')
 optdepends=()
 conflicts=('')
+md5sums=('SKIP')
 
 build()
 {
