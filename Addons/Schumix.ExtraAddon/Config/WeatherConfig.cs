@@ -28,11 +28,15 @@ namespace Schumix.ExtraAddon.Config
 	sealed class WeatherConfig
 	{
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
+		public static string Country { get; private set; }
 		public static string City { get; private set; }
+		public static string Key { get; private set; }
 
-		public WeatherConfig(string city)
+		public WeatherConfig(string country, string city, string key)
 		{
+			Country = country;
 			City = city;
+			Key = key;
 			Log.Notice("WeatherConfig", sLConsole.GetString("Loaded the Weather settings."));
 		}
 	}

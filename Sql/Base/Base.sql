@@ -927,7 +927,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "autofunction/mode/channel/remove", "1", "Rangot kapó nevének eltávolítása megadott csatornán.\nHasználata: {0}autofunction mode channel <csatorna neve> remove <név>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "autofunction/mode/channel/list", "1", "Kiírja a rangot kapók állapotát a megadott csatornán.\nHasználata: {0}autofunction mode channel <csatorna neve> info");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "reload", "2", "Újraindítja a megadott programrészt.\nHasználata: {0}reload <név>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "weather", "9", "Megmondja az időjárást a megadott városban.\nHasználata: {0}weather <város>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "weather", "9", "Megmondja az időjárást a megadott városban.\nHasználata: {0}weather <ország> <város>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "game", "9", "Játékok indítása irc-n.\nJáték parancsai: start");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "game/start", "9", "Játék indítására szolgáló parancs.\nHasználata: {0}game start <játék neve>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "mantisbt", "1", "MantisBT rss-ek kezelése.\nMantisBT parancsai: add | remove | channel | info | list | start | stop | reload | change");
@@ -1174,7 +1174,7 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "autofunction/mode/channel/remove", "1", "Name removed from those who automatically receive rank the specified channel.\nUse: {0}autofunction mode channel <channel name> remove <name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "autofunction/mode/channel/list", "1", "Names that are automatically given rank the specified channel.\nUse: {0}autofunction mode channel <channel name> info");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "reload", "2", "Reloads the specified program section.\nUse: {0}reload <név>");
-INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "weather", "9", "Displays of the canal, what is the weather in the town.\nUse: {0}weather <name>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "weather", "9", "Displays of the canal, what is the weather in the town.\nUse: {0}weather <country> <city>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "game", "9", "Games start on IRC.\nGame command: start");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "game/start", "9", "Game launching commands.\nUse: {0}game start <game name>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "mantisbt", "1", "Rss mantisbt 's management.\nMantisBT commands: add | remove | channel | info | list | start | stop | reload | change");
@@ -1358,6 +1358,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThisIsntInTheList", "Nem szerepel a listán!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "WarningAdmin", "Nem azonosítottad magadat! Kérlek tedd meg a parancs használatához!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "TheGivenRankIsntDifferent", "Már ez a rang van beállítva!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoCountryName", "Nem adott meg egy országnevet sem!");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1443,6 +1444,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ThisIsntInTheList", "This isn't in the list!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "WarningAdmin", "You can't use this command without identification!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "TheGivenRankIsntDifferent", "The given rank isn't different!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoCountryName", "No such country name!");
 
 -- ----------------------------
 -- Records of schumix

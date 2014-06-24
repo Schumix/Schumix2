@@ -663,6 +663,7 @@ namespace Schumix.Irc
 
 			string[] userdata = IMessage.Hostmask.Split('!');
 			IMessage.Nick = sUtilities.SqlEscape(userdata[0]);
+			IMessage.OriginNick = userdata[0];
 
 			if(userdata.Length > 1)
 			{

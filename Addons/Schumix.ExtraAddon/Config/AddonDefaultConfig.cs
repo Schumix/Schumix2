@@ -27,6 +27,8 @@ namespace Schumix.ExtraAddon.Config
 		protected const bool d_enabled = false;
 		protected const string d_type = "aohv";
 		protected const string d_weatherhomecity = "Zalaegerszeg";
+		protected const string d_weatherhomecountry = "Hungary";
+		protected const string d_wundergroundapikey = "26d9937d4080f167";
 		protected const string d_wolframalphaapikey = "557QYQ-UUUWTKX95V";
 	}
 }

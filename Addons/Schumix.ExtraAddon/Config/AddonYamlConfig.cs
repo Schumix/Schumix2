@@ -127,15 +127,24 @@ namespace Schumix.ExtraAddon.Config
 
 		private void WeatherMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
+			string Country = d_weatherhomecountry;
 			string City = d_weatherhomecity;
+			string Key = d_wundergroundapikey;
 
 			if(!nodes.IsNull() && nodes.ContainsKey("Home"))
 			{
 				var node2 = ((YamlMappingNode)nodes["Home".ToYamlNode()]).Children;
+				Country = (!node2.IsNull() && node2.ContainsKey("Country")) ? node2["Country".ToYamlNode()].ToString() : d_weatherhomecountry;
 				City = (!node2.IsNull() && node2.ContainsKey("City")) ? node2["City".ToYamlNode()].ToString() : d_weatherhomecity;
 			}
 
-			new WeatherConfig(City);
+			if(!nodes.IsNull() && nodes.ContainsKey("Wunderground"))
+			{
+				var node2 = ((YamlMappingNode)nodes["Wunderground".ToYamlNode()]).Children;
+				Key = (!node2.IsNull() && node2.ContainsKey("Key")) ? node2["Key".ToYamlNode()].ToString() : d_wundergroundapikey;
+			}
+
+			new WeatherConfig(Country, City, Key);
 		}
 
 		private void WolframAlphaMap(IDictionary<YamlNode, YamlNode> nodes)
@@ -180,12 +189,28 @@ namespace Schumix.ExtraAddon.Config
 			if(!nodes.IsNull() && nodes.ContainsKey("Home"))
 			{
 				var node2 = ((YamlMappingNode)nodes["Home".ToYamlNode()]).Children;
+				map2.Add("Country", (!node2.IsNull() && node2.ContainsKey("Country")) ? node2["Country".ToYamlNode()].ToString() : d_weatherhomecountry);
 				map2.Add("City", (!node2.IsNull() && node2.ContainsKey("City")) ? node2["City".ToYamlNode()].ToString() : d_weatherhomecity);
 			}
 			else
+			{
+				map2.Add("Country", d_weatherhomecountry);
 				map2.Add("City", d_weatherhomecity);
+			}
 
 			map.Add("Home", map2);
+
+			map2 = new YamlMappingNode();
+
+			if(!nodes.IsNull() && nodes.ContainsKey("Wunderground"))
+			{
+				var node2 = ((YamlMappingNode)nodes["Wunderground".ToYamlNode()]).Children;
+				map2.Add("Key", (!node2.IsNull() && node2.ContainsKey("Key")) ? node2["Key".ToYamlNode()].ToString() : d_wundergroundapikey);
+			}
+			else
+				map2.Add("Key", d_wundergroundapikey);
+
+			map.Add("Wunderground", map2);
 			return map;
 		}
 
