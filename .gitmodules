@@ -22,3 +22,6 @@
 [submodule "External/SGit"]
 	path = External/SGit
 	url = git://github.com/Schumix/SGit.git
+[submodule "External/Wunderground.Net"]
+	path = External/Wunderground.Net
+	url = git://github.com/Schumix/WUnderground.Net.git
