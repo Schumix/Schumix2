@@ -4,6 +4,7 @@
 
 ## 4.4.0 (2014-06-24)
 
+ * Issue 114 javítva.
  * Issue 113 javítva.
  * Yaml használata picit leegyszerüsítve.
  * Kiterjesztések felismerése javítva.
