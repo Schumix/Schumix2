@@ -6,7 +6,10 @@ ExtraAddon:
             Type: aohv
     Weather:
         Home:
+            Country: Hungary
             City: Zalaegerszeg
+        Wunderground:
+            Key: 26d9937d4080f167
     WolframAlpha:
         Api:
             Key: 557QYQ-UUUWTKX95V

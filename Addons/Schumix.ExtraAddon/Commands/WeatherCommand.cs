@@ -76,10 +76,10 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				ForecastData source = null;
 				string country = sIRCMessage.Info[4];
-				WApi wApi = new WApi("26d9937d4080f167");
+				WApi wApi = new WApi(WeatherConfig.Key);
 
 				if(home)
-					source = wApi.GetForecast("hu", WeatherConfig.City, language);
+					source = wApi.GetForecast(WeatherConfig.Country, WeatherConfig.City, language);
 				else
 					source = wApi.GetForecast(country, sIRCMessage.Info.SplitToString(5, SchumixBase.Space).Trim(), language);
 

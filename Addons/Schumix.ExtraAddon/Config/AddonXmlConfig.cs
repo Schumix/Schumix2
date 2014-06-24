@@ -114,9 +114,17 @@ namespace Schumix.ExtraAddon.Config
 
 					// <Home>
 					w.WriteStartElement("Home");
+					w.WriteElementString("Country",    (!xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/Country").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/Country").InnerText : d_weatherhomecountry));
 					w.WriteElementString("City",    (!xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").InnerText : d_weatherhomecity));
 
 					// </Home>
+					w.WriteEndElement();
+
+					// <Wunderground>
+					w.WriteStartElement("Wunderground");
+					w.WriteElementString("Key",    (!xmldoc.SelectSingleNode("ExtraAddon/Weather/Wunderground/Key").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Wunderground/Key").InnerText : d_wundergroundapikey));
+
+					// </Wunderground>
 					w.WriteEndElement();
 
 					// </Weather>

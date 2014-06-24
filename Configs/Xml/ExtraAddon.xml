@@ -8,8 +8,12 @@
     </Mode>
     <Weather>
         <Home>
+            <Country>Hungary</Country>
             <City>Zalaegerszeg</City>
         </Home>
+        <Wunderground>
+            <Key>26d9937d4080f167</Key>
+        </Wunderground>
     </Weather>
     <WolframAlpha>
         <Api>
