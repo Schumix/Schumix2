@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2014-01-21 14:48:12+0100\n"
-"PO-Revision-Date: 2014-01-21 14:48:14+0100\n"
+"POT-Creation-Date: 2014-06-24 18:27:40+0200\n"
+"PO-Revision-Date: 2014-06-24 18:27:42+0200\n"
 "Last-Translator: Csaba Jakosa <megax@yeahunter.hu>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -47,10 +47,10 @@ msgstr ""
 #: ../Core/Schumix.Framework/Database/Cache/CacheDB.cs:16
 #: ../Core/Schumix.Framework/Clean/CleanConfig.cs:4
 #: ../Core/Schumix.Framework/Clean/CleanDatabase.cs:4
-#: ../Core/Schumix.Framework/Util/Utilities.cs:25
-#: ../Core/Schumix.Framework/Util/Utilities.cs:98
-#: ../Core/Schumix.Framework/Util/Utilities.cs:116
-#: ../Core/Schumix.Framework/Util/Utilities.cs:129
+#: ../Core/Schumix.Framework/Util/Utilities.cs:26
+#: ../Core/Schumix.Framework/Util/Utilities.cs:100
+#: ../Core/Schumix.Framework/Util/Utilities.cs:119
+#: ../Core/Schumix.Framework/Util/Utilities.cs:133
 #: ../Applications/Schumix/Schumix.cs:5
 #: ../Applications/Schumix/Console/Console.cs:16
 #: ../Applications/Schumix/Console/CommandManager.cs:14
@@ -953,7 +953,7 @@ msgstr ""
 #: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:14
 #: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:18
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:14
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:30
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:32
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:13
 #: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:18
 #: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:14
@@ -978,7 +978,7 @@ msgstr ""
 #: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:33
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
 #: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:15
@@ -1001,7 +1001,7 @@ msgstr ""
 #: ../Addons/Schumix.GitRssAddon/Config/AddonYamlConfig.cs:15
 #: ../Addons/Schumix.CalendarAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.CalendarAddon/Config/AddonYamlConfig.cs:15
-#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:31
+#: ../Addons/Schumix.ExtraAddon/Config/AddonXmlConfig.cs:33
 #: ../Addons/Schumix.ExtraAddon/Config/AddonYamlConfig.cs:14
 #: ../Addons/Schumix.RssAddon/Config/AddonXmlConfig.cs:19
 #: ../Addons/Schumix.RssAddon/Config/AddonYamlConfig.cs:15
@@ -1231,7 +1231,7 @@ msgstr ""
 msgid "Auth successful. Guid of client: {0}"
 msgstr ""
 
-#: ../Core/Schumix.Framework/Util/Utilities.cs:25
+#: ../Core/Schumix.Framework/Util/Utilities.cs:26
 msgid "Checking: {0}"
 msgstr ""
 
@@ -1576,7 +1576,7 @@ msgstr ""
 msgid "Loaded the Rss settings."
 msgstr ""
 
-#: ../Addons/Schumix.CompilerAddon/Config/CompilerConfig.cs:3
+#: ../Addons/Schumix.CompilerAddon/Config/CompilerConfig.cs:7
 msgid "Loaded the Compiler settings."
 msgstr ""
 

@@ -42,7 +42,7 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
-				sSendMessage.SendChatMessage(sIRCMessage, "Ország!");
+				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCountryName", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 

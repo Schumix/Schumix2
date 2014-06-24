@@ -1,7 +1,10 @@
 # Schumix2 ChangeLog
 
-## 4.4.0 (2013-xx-xx)
+## 4.5.0 (2014-xx-xx)
 
+## 4.4.0 (2014-06-24)
+
+ * Issue 113 javítva.
  * Yaml használata picit leegyszerüsítve.
  * Kiterjesztések felismerése javítva.
  * DirectoryToSpecial függvény eltávolítva a forrásból.
