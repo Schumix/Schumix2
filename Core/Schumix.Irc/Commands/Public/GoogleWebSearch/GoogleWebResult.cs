@@ -75,6 +75,6 @@ namespace Schumix.Irc.Commands.GoogleWebSearch
 		/// The Goolge snippet for this search result.
 		/// </summary>
 		[DataMember(Name = "content", Order = 7)]
-		public String Snippet { get; set; }
+		public string Snippet { get; set; }
 	}
 }

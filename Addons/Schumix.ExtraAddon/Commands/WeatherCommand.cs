@@ -23,6 +23,8 @@ using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Extensions;
 using Schumix.ExtraAddon.Config;
+using CGurus.Weather.WundergroundAPI;
+using CGurus.Weather.WundergroundAPI.Models;
 
 namespace Schumix.ExtraAddon.Commands
 {
@@ -40,25 +42,30 @@ namespace Schumix.ExtraAddon.Commands
 
 			if(sIRCMessage.Info.Length < 5)
 			{
+				sSendMessage.SendChatMessage(sIRCMessage, "Ország!");
+				return;
+			}
+
+			if(sIRCMessage.Info.Length < 6  && sIRCMessage.Info[4].ToLower() != "home")
+			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoCityName", sIRCMessage.Channel, sIRCMessage.ServerName));
 				return;
 			}
 
 			bool home = false;
-			string url = string.Empty;
-			string source = string.Empty;
+			string language = string.Empty;
 
 			switch(sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName))
 			{
 				case "huHU":
-					url = "http://hungarian.wunderground.com/cgi-bin/findweather/hdfForecast?query=";
+					language = "HU";
 					break;
 				case "enUS":
 				case "enGB":
-					url = "http://www.wunderground.com/cgi-bin/findweather/hdfForecast?query=";
+					language = "US";
 					break;
 				default:
-					url = "http://www.wunderground.com/cgi-bin/findweather/hdfForecast?query=";
+					language = "US";
 					break;
 			}
 
@@ -67,54 +74,25 @@ namespace Schumix.ExtraAddon.Commands
 
 			try
 			{
+				ForecastData source = null;
+				string country = sIRCMessage.Info[4];
+				WApi wApi = new WApi("26d9937d4080f167");
+
 				if(home)
-					source = sUtilities.GetUrl(string.Format("{0}{1}", url, WeatherConfig.City));
+					source = wApi.GetForecast("hu", WeatherConfig.City, language);
 				else
-					source = sUtilities.GetUrl(url, sIRCMessage.Info.SplitToString(4, SchumixBase.Space).Trim());
+					source = wApi.GetForecast(country, sIRCMessage.Info.SplitToString(5, SchumixBase.Space).Trim(), language);
 
-				string day = string.Empty;
-				string night = string.Empty;
-				source = source.Replace("\n\t\t", SchumixBase.Space.ToString());
-
-				if(source.Contains("<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">"))
-				{
-					source = source.Remove(0, source.IndexOf("<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">") + "<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">".Length);
-					source = source.Remove(0, source.IndexOf("<td class=\"vaT full\">") + "<td class=\"vaT full\">".Length);
-
-					if(source.Contains(" <? END CHANCE OF PRECIP"))
-						day = source.Substring(0, source.IndexOf(" <? END CHANCE OF PRECIP"));
-					else
-						day = source.Substring(0, source.IndexOf("</td>"));
-				}
-				else
-				{
-					sSendMessage.SendChatMessage(sIRCMessage, text[4]);
-					return;
-				}
-
-				if(source.Contains("<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">"))
-				{
-					source = source.Remove(0, source.IndexOf("<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">") + "<td class=\"vaT\"><a href=\"\" class=\"iconSwitchMed\">".Length);
-					source = source.Remove(0, source.IndexOf("<td class=\"vaT full\">") + "<td class=\"vaT full\">".Length);
-
-					if(source.Contains(" <? END CHANCE OF PRECIP"))
-						night = source.Substring(0, source.IndexOf(" <? END CHANCE OF PRECIP"));
-					else
-						night = source.Substring(0, source.IndexOf("</td>"));
-				}
-				else
-				{
-					sSendMessage.SendChatMessage(sIRCMessage, text[4]);
-					return;
-				}
+				var day = source.Forecast.Txt_Forecast.ForecastDay[0].FctText_Metric;
+				var night = source.Forecast.Txt_Forecast.ForecastDay[1].FctText_Metric;
 
 				if(home)
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 				else
-					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info.SplitToString(4, SchumixBase.Space).Trim());
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Info[4] + ", " + sIRCMessage.Info.SplitToString(5, SchumixBase.Space).Trim());
 
-				sSendMessage.SendChatMessage(sIRCMessage, text[2], day.Remove(0, 1, SchumixBase.Space));
-				sSendMessage.SendChatMessage(sIRCMessage, text[3], night.Remove(0, 1, SchumixBase.Space));
+				sSendMessage.SendChatMessage(sIRCMessage, text[2], day);
+				sSendMessage.SendChatMessage(sIRCMessage, text[3], night);
 			}
 			catch
 			{

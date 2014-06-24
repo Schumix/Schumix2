@@ -86,6 +86,14 @@
       <Name>YamlDotNet</Name>
       <Private>False</Private>
     </ProjectReference>
+    <ProjectReference Include="..\..\External\Wunderground.Net\External\Newtonsoft.Json\Src\Newtonsoft.Json\Newtonsoft.Json.Schumix.csproj">
+      <Project>{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}</Project>
+      <Name>Newtonsoft.Json.Schumix</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\Wunderground.Net\WundergroundAPI\WundergroundAPI.csproj">
+      <Project>{2530CF11-EAFA-4B60-B151-D0A056C846B2}</Project>
+      <Name>WundergroundAPI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
