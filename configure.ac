@@ -65,6 +65,7 @@ External/CsharpSQLite/System.Data.SQLite/system.data.sqlite.pc
 External/CsharpSQLite/System.Data.SQLite/Makefile
 External/YamlDotNet/YamlDotNet/yamldotnet.pc
 External/YamlDotNet/YamlDotNet/Makefile
+Po/Makefile
 External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/newtonsoft.json.schumix.pc
 External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/Makefile
 Core/Schumix.Framework/schumix.framework.pc
