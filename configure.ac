@@ -65,7 +65,8 @@ External/CsharpSQLite/System.Data.SQLite/system.data.sqlite.pc
 External/CsharpSQLite/System.Data.SQLite/Makefile
 External/YamlDotNet/YamlDotNet/yamldotnet.pc
 External/YamlDotNet/YamlDotNet/Makefile
-Po/Makefile
+External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/newtonsoft.json.schumix.pc
+External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile
 Core/Schumix.Irc/schumix.irc.pc
@@ -79,6 +80,8 @@ External/ngit/Sharpen.Unix/sharpen.unix.pc
 External/ngit/Sharpen.Unix/Makefile
 External/NLua/Core/NLua/nlua.schumix.pc
 External/NLua/Core/NLua/Makefile
+External/Wunderground.Net/WundergroundAPI/wundergroundapi.pc
+External/Wunderground.Net/WundergroundAPI/Makefile
 Tests/Schumix.Framework.Test/schumix.framework.test.pc
 Tests/Schumix.Framework.Test/Makefile
 Tests/Schumix.Irc.Test/schumix.irc.test.pc

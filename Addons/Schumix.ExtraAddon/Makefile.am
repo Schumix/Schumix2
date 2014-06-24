@@ -13,7 +13,9 @@ PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Framework.dll \
 	../../Run/Debug/Schumix.Irc.dll \
 	../../Run/Libraries/Debug/WolframAPI.dll \
-	../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll
+	../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll \
+	../../External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/bin/Debug/Schumix/Newtonsoft.Json.dll \
+	../../External/Wunderground.Net/WundergroundAPI/bin/Debug/CGurus.Weather.WundergroundAPI.dll
 BUILD_DIR = ../../Run/Debug/Addons
 
 EXTRAADDON_DLL_MDB_SOURCE=../../Run/Debug/Addons/ExtraAddon.dll.mdb
@@ -21,6 +23,12 @@ EXTRAADDON_DLL_MDB=$(BUILD_DIR)/ExtraAddon.dll.mdb
 WOLFRAMAPI_DLL_SOURCE=../../Run/Libraries/Debug/WolframAPI.dll
 WOLFRAMAPI_DLL_MDB_SOURCE=../../Run/Libraries/Debug/WolframAPI.dll.mdb
 WOLFRAMAPI_DLL_MDB=$(BUILD_DIR)/WolframAPI.dll.mdb
+NEWTONSOFT_JSON_DLL_SOURCE=../../External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/bin/Debug/Schumix/Newtonsoft.Json.dll
+NEWTONSOFT_JSON_DLL_MDB_SOURCE=../../External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/bin/Debug/Schumix/Newtonsoft.Json.dll.mdb
+NEWTONSOFT_JSON_DLL_MDB=$(BUILD_DIR)/Newtonsoft.Json.dll.mdb
+CGURUS_WEATHER_WUNDERGROUNDAPI_DLL_SOURCE=../../External/Wunderground.Net/WundergroundAPI/bin/Debug/CGurus.Weather.WundergroundAPI.dll
+CGURUS_WEATHER_WUNDERGROUNDAPI_DLL_MDB_SOURCE=../../External/Wunderground.Net/WundergroundAPI/bin/Debug/CGurus.Weather.WundergroundAPI.dll.mdb
+CGURUS_WEATHER_WUNDERGROUNDAPI_DLL_MDB=$(BUILD_DIR)/CGurus.Weather.WundergroundAPI.dll.mdb
 
 endif
 
@@ -34,12 +42,18 @@ PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Framework.dll \
 	../../Run/Release/Schumix.Irc.dll \
 	../../Run/Libraries/Release/WolframAPI.dll \
-	../../External/YamlDotNet/YamlDotNet/bin/Release/YamlDotNet.dll
+	../../External/YamlDotNet/YamlDotNet/bin/Release/YamlDotNet.dll \
+	../../External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/bin/Release/Schumix/Newtonsoft.Json.dll \
+	../../External/Wunderground.Net/WundergroundAPI/bin/Release/CGurus.Weather.WundergroundAPI.dll
 BUILD_DIR = ../../Run/Release/Addons
 
 EXTRAADDON_DLL_MDB=
 WOLFRAMAPI_DLL_SOURCE=../../Run/Libraries/Release/WolframAPI.dll
 WOLFRAMAPI_DLL_MDB=
+NEWTONSOFT_JSON_DLL_SOURCE=../../External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/bin/Release/Schumix/Newtonsoft.Json.dll
+NEWTONSOFT_JSON_DLL_MDB=
+CGURUS_WEATHER_WUNDERGROUNDAPI_DLL_SOURCE=../../External/Wunderground.Net/WundergroundAPI/bin/Release/CGurus.Weather.WundergroundAPI.dll
+CGURUS_WEATHER_WUNDERGROUNDAPI_DLL_MDB=
 
 endif
 
@@ -49,7 +63,11 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 PROGRAMFILES = \
 	$(EXTRAADDON_DLL_MDB) \
 	$(WOLFRAMAPI_DLL) \
-	$(WOLFRAMAPI_DLL_MDB)  
+	$(WOLFRAMAPI_DLL_MDB) \
+	$(NEWTONSOFT_JSON_DLL) \
+	$(NEWTONSOFT_JSON_DLL_MDB) \
+	$(CGURUS_WEATHER_WUNDERGROUNDAPI_DLL) \
+	$(CGURUS_WEATHER_WUNDERGROUNDAPI_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_EXTRAADDON_PC)  
@@ -109,10 +127,16 @@ CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 include $(top_srcdir)/Makefile.include
 
 WOLFRAMAPI_DLL = $(BUILD_DIR)/WolframAPI.dll
+NEWTONSOFT_JSON_DLL = $(BUILD_DIR)/Newtonsoft.Json.dll
+CGURUS_WEATHER_WUNDERGROUNDAPI_DLL = $(BUILD_DIR)/CGurus.Weather.WundergroundAPI.dll
 SCHUMIX_EXTRAADDON_PC = $(BUILD_DIR)/schumix.extraaddon.pc
 
 $(eval $(call emit-deploy-target,WOLFRAMAPI_DLL))
 $(eval $(call emit-deploy-target,WOLFRAMAPI_DLL_MDB))
+$(eval $(call emit-deploy-target,NEWTONSOFT_JSON_DLL))
+$(eval $(call emit-deploy-target,NEWTONSOFT_JSON_DLL_MDB))
+$(eval $(call emit-deploy-target,CGURUS_WEATHER_WUNDERGROUNDAPI_DLL))
+$(eval $(call emit-deploy-target,CGURUS_WEATHER_WUNDERGROUNDAPI_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_EXTRAADDON_PC,schumix.extraaddon.pc))
 
 

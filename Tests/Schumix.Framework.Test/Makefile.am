@@ -17,6 +17,8 @@ SCHUMIX_FRAMEWORK_TEST_DLL_MDB_SOURCE=../../Run/Tests/Debug/Schumix.Framework.Te
 SCHUMIX_FRAMEWORK_TEST_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.Test.dll.mdb
 NUNIT_FRAMEWORK_DLL_SOURCE=../../Dependencies/nunit.framework.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
+SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
+SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
@@ -29,8 +31,6 @@ SYSTEM_DATA_SQLITE_DLL_MDB=$(BUILD_DIR)/System.Data.SQLite.dll.mdb
 YAMLDOTNET_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll
 YAMLDOTNET_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll.mdb
 YAMLDOTNET_DLL_MDB=$(BUILD_DIR)/YamlDotNet.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 
 endif
 
@@ -47,6 +47,7 @@ BUILD_DIR = ../../Run/Tests/Release
 SCHUMIX_FRAMEWORK_TEST_DLL_MDB=
 NUNIT_FRAMEWORK_DLL_SOURCE=../../Dependencies/nunit.framework.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
+SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
@@ -56,7 +57,6 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../External/CsharpSQLite/Run/Release/System.Dat
 SYSTEM_DATA_SQLITE_DLL_MDB=
 YAMLDOTNET_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Release/YamlDotNet.dll
 YAMLDOTNET_DLL_MDB=
-SCHUMIX_FRAMEWORK_DLL_MDB=
 
 endif
 
@@ -67,6 +67,7 @@ PROGRAMFILES = \
 	$(SCHUMIX_FRAMEWORK_TEST_DLL_MDB) \
 	$(NUNIT_FRAMEWORK_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
+	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_DB3) \
 	$(MYSQL_DATA_DLL) \
 	$(MONO_POSIX_DLL) \
@@ -75,8 +76,7 @@ PROGRAMFILES = \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL_MDB) \
 	$(YAMLDOTNET_DLL) \
-	$(YAMLDOTNET_DLL_MDB) \
-	$(SCHUMIX_FRAMEWORK_DLL_MDB)  
+	$(YAMLDOTNET_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_FRAMEWORK_TEST_PC)  
@@ -129,6 +129,7 @@ SCHUMIX_FRAMEWORK_TEST_PC = $(BUILD_DIR)/schumix.framework.test.pc
 
 $(eval $(call emit-deploy-target,NUNIT_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL))
+$(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
 $(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,MONO_POSIX_DLL))
@@ -138,7 +139,6 @@ $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL_MDB))
 $(eval $(call emit-deploy-target,YAMLDOTNET_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_DLL_MDB))
-$(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_FRAMEWORK_TEST_PC,schumix.framework.test.pc))
 
 

@@ -16,6 +16,8 @@ BUILD_DIR = ../../Run/Debug
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
+SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
+SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
@@ -28,8 +30,6 @@ SYSTEM_DATA_SQLITE_DLL_MDB=$(BUILD_DIR)/System.Data.SQLite.dll.mdb
 YAMLDOTNET_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll
 YAMLDOTNET_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll.mdb
 YAMLDOTNET_DLL_MDB=$(BUILD_DIR)/YamlDotNet.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
-SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 
 endif
 
@@ -45,6 +45,7 @@ BUILD_DIR = ../../Run/Release
 
 SCHUMIX_IRC_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
+SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
 MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
@@ -54,7 +55,6 @@ SYSTEM_DATA_SQLITE_DLL_SOURCE=../../External/CsharpSQLite/Run/Release/System.Dat
 SYSTEM_DATA_SQLITE_DLL_MDB=
 YAMLDOTNET_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Release/YamlDotNet.dll
 YAMLDOTNET_DLL_MDB=
-SCHUMIX_FRAMEWORK_DLL_MDB=
 
 endif
 
@@ -64,6 +64,7 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 PROGRAMFILES = \
 	$(SCHUMIX_IRC_DLL_MDB) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
+	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_DB3) \
 	$(MYSQL_DATA_DLL) \
 	$(MONO_POSIX_DLL) \
@@ -72,8 +73,7 @@ PROGRAMFILES = \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL_MDB) \
 	$(YAMLDOTNET_DLL) \
-	$(YAMLDOTNET_DLL_MDB) \
-	$(SCHUMIX_FRAMEWORK_DLL_MDB)  
+	$(YAMLDOTNET_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_IRC_PC)  
