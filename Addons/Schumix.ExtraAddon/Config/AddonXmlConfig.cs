@@ -49,10 +49,12 @@ namespace Schumix.ExtraAddon.Config
 			string Type = !xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Mode/Remove/Type").InnerText : d_type;
 			new ModeConfig(Enabled, Type);
 
+			string Country = !xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/Country").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/Country").InnerText : d_weatherhomecountry;
 			string City = !xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Home/City").InnerText : d_weatherhomecity;
-			new WeatherConfig(City);
+			string Key = !xmldoc.SelectSingleNode("ExtraAddon/Weather/Wunderground/Key").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/Weather/Wunderground/Key").InnerText : d_wundergroundapikey;
+			new WeatherConfig(Country, City, Key);
 
-			string Key = !xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").InnerText : d_wolframalphaapikey;
+			Key = !xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").IsNull() ? xmldoc.SelectSingleNode("ExtraAddon/WolframAlpha/Api/Key").InnerText : d_wolframalphaapikey;
 			new WolframAlphaConfig(Key);
 
 			Log.Success("ExtraAddonConfig", sLConsole.GetString("Config database is loading."));

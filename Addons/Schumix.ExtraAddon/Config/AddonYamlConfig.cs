@@ -127,15 +127,20 @@ namespace Schumix.ExtraAddon.Config
 
 		private void WeatherMap(IDictionary<YamlNode, YamlNode> nodes)
 		{
+			string Country = d_weatherhomecountry;
 			string City = d_weatherhomecity;
+			string Key = d_wundergroundapikey;
 
 			if(!nodes.IsNull() && nodes.ContainsKey("Home"))
 			{
 				var node2 = ((YamlMappingNode)nodes["Home".ToYamlNode()]).Children;
+				Country = (!node2.IsNull() && node2.ContainsKey("Country")) ? node2["Country".ToYamlNode()].ToString() : d_weatherhomecountry;
 				City = (!node2.IsNull() && node2.ContainsKey("City")) ? node2["City".ToYamlNode()].ToString() : d_weatherhomecity;
+				var node3 = ((YamlMappingNode)nodes["Wunderground".ToYamlNode()]).Children;
+				Key = (!node3.IsNull() && node3.ContainsKey("Key")) ? node3["Key".ToYamlNode()].ToString() : d_wundergroundapikey;
 			}
 
-			new WeatherConfig(City);
+			new WeatherConfig(Country, City, Key);
 		}
 
 		private void WolframAlphaMap(IDictionary<YamlNode, YamlNode> nodes)
