@@ -79,7 +79,7 @@ namespace Schumix.ExtraAddon.Commands
 				WApi wApi = new WApi(WeatherConfig.Key);
 
 				if(home)
-					source = wApi.GetForecast(WeatherConfig.Country, WeatherConfig.City, language);
+					source = wApi.GetForecast(WeatherConfig.Country,  WeatherConfig.City, language);
 				else
 					source = wApi.GetForecast(country, sIRCMessage.Info.SplitToString(5, SchumixBase.Space).Trim(), language);
 
@@ -94,7 +94,7 @@ namespace Schumix.ExtraAddon.Commands
 				sSendMessage.SendChatMessage(sIRCMessage, text[2], day);
 				sSendMessage.SendChatMessage(sIRCMessage, text[3], night);
 			}
-			catch
+			catch(Exception)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, text[4]);
 			}
