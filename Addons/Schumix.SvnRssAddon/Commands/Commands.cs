@@ -591,6 +591,16 @@ namespace Schumix.SvnRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
 					}
+
+					var db0 = SchumixBase.DManager.QueryFirstRow("SELECT Link FROM svninfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
+					if(!db0.IsNull())
+					{
+						if(sUtilities.SqlEscape(sIRCMessage.Info[7]) == db0["Link"].ToString())
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("TheGivenUrlIsntDifferent", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+					}
 					
 					SchumixBase.DManager.Update("svninfo", string.Format("Link = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7])), string.Format("LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
 					SvnRss gitr = null;
@@ -651,6 +661,16 @@ namespace Schumix.SvnRssAddon.Commands
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
+					}
+
+					var db0 = SchumixBase.DManager.QueryFirstRow("SELECT Website FROM svninfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
+					if(!db0.IsNull())
+					{
+						if(sUtilities.SqlEscape(sIRCMessage.Info[7]) == db0["Website"].ToString())
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("TheGivenWebsiteIsntDifferent", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
 					}
 					
 					SchumixBase.DManager.Update("svninfo", string.Format("Website = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower())), string.Format("LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));

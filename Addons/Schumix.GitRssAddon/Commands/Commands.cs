@@ -652,7 +652,17 @@ namespace Schumix.GitRssAddon.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
 					}
-					
+
+					var db0 = SchumixBase.DManager.QueryFirstRow("SELECT Link FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
+					if(!db0.IsNull())
+					{
+						if(sUtilities.SqlEscape(sIRCMessage.Info[8]) == db0["Link"].ToString())
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("TheGivenUrlIsntDifferent", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+					}
+
 					SchumixBase.DManager.Update("gitinfo", string.Format("Link = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8])), string.Format("LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName));
 					GitRss gitr = null;
 					bool isstop = false;
@@ -718,6 +728,16 @@ namespace Schumix.GitRssAddon.Commands
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
+					}
+
+					var db0 = SchumixBase.DManager.QueryFirstRow("SELECT Website FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
+					if(!db0.IsNull())
+					{
+						if(sUtilities.SqlEscape(sIRCMessage.Info[8]) == db0["Website"].ToString())
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("TheGivenWebsiteIsntDifferent", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
 					}
 					
 					SchumixBase.DManager.Update("gitinfo", string.Format("Website = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower())), string.Format("LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName));
