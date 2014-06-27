@@ -1,5 +1,5 @@
 
-EXTRA_DIST =  expansions.m4 ../../Mono.Posix ../../MySql.Data ../../nunit.framework ../../Mono.Security ../../IronPython ../../IronPython.Modules ../../Microsoft.Dynamic ../../Microsoft.Scripting ../../Microsoft.Scripting.Metadata
+EXTRA_DIST =  expansions.m4 Dependencies/Mono.Posix.dll Dependencies/MySql.Data.dll Dependencies/nunit.framework.dll Dependencies/Mono.Security.dll Dependencies/IronPython.dll Dependencies/IronPython.Modules.dll Dependencies/Microsoft.Dynamic.dll Dependencies/Microsoft.Scripting.dll Dependencies/Microsoft.Scripting.Metadata.dll
 
 #Warning: This is an automatically generated file, do not edit!
 if ENABLE_DEBUG
