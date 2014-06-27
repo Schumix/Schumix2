@@ -111,7 +111,7 @@ REFERENCES =  \
 	System.Core
 
 DLL_REFERENCES =  \
-	../../Dependencies/nunit.framework
+	../../Dependencies/nunit.framework.dll
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
