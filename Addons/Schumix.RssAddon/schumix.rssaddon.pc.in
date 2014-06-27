@@ -1,6 +1,6 @@
 Name: Schumix.RssAddon
 Description: Schumix.RssAddon
-Version: 4.3.x
+Version: 4.4.x
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/RssAddon.dll

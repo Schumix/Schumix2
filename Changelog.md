@@ -2,6 +2,7 @@
 
 ## 4.5.0 (2014-xx-xx)
 
+ * Issue 108 javítva.
  * Google fordító regex javítva. Hiba felfedezéséért köszönet attishka-nak.
  * Issue 112 javítva.
 

@@ -91,14 +91,14 @@ namespace Schumix.HgRssAddon
 
 		private void Init()
 		{
-			if(_website == "google")
+			if(_website == RssWebsiteList.Google.ToString().ToLower())
 			{
 				_id = "feed/entry/id";
 				_link = "feed/entry/link";
 				_title = "feed/entry/title";
 				_author = "feed/entry/author/name";
 			}
-			else if(_website == "bitbucket")
+			else if(_website == RssWebsiteList.Bitbucket.ToString().ToLower())
 			{
 				_id = "rss/channel/item/link";
 				_link = "rss/channel/item/link";
@@ -266,7 +266,7 @@ namespace Schumix.HgRssAddon
 				{
 					var rss = new XmlDocument();
 
-					if(_website == "bitbucket")
+					if(_website == RssWebsiteList.Bitbucket.ToString().ToLower())
 						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</item>", _credential)));
 					else
 						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</entry>", _credential)));
@@ -277,7 +277,7 @@ namespace Schumix.HgRssAddon
 				{
 					var rss = new XmlDocument();
 
-					if(_website == "bitbucket")
+					if(_website == RssWebsiteList.Bitbucket.ToString().ToLower())
 						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</item>")));
 					else
 						rss.LoadXml(DownloadToXml(sUtilities.DownloadString(_url, 60*1000, "</entry>")));
@@ -299,7 +299,7 @@ namespace Schumix.HgRssAddon
 			if(data.IsNullOrEmpty())
 				return string.Empty;
 
-			if(_website == "bitbucket")
+			if(_website == RssWebsiteList.Bitbucket.ToString().ToLower())
 			{
 				data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);
 				data += "</channel></rss>";
@@ -327,7 +327,7 @@ namespace Schumix.HgRssAddon
 
 		private string Revision(XmlDocument rss)
 		{
-			if(_website == "google")
+			if(_website == RssWebsiteList.Google.ToString().ToLower())
 			{
 				var id = rss.SelectSingleNode(_id);
 				if(id.IsNull())
@@ -340,7 +340,7 @@ namespace Schumix.HgRssAddon
 
 				return rev.Substring(rev.IndexOf("hgchanges/basic/") + "hgchanges/basic/".Length);
 			}
-			else if(_website == "bitbucket")
+			else if(_website == RssWebsiteList.Bitbucket.ToString().ToLower())
 			{
 				var id = rss.SelectSingleNode(_id);
 				if(id.IsNull())
@@ -382,7 +382,7 @@ namespace Schumix.HgRssAddon
 					
 					if(db["Colors"].ToBoolean())
 					{
-						if(_website == "google")
+						if(_website == RssWebsiteList.Google.ToString().ToLower())
 						{
 							if(title.Contains(SchumixBase.Colon.ToString()))
 							{
@@ -390,7 +390,7 @@ namespace Schumix.HgRssAddon
 								sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("google2", language), _name, rev.Substring(0, 10), author, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
 							}
 						}
-						else if(_website == "bitbucket")
+						else if(_website == RssWebsiteList.Bitbucket.ToString().ToLower())
 						{
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("bitbucket", language), _name, author, commiturl);
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("bitbucket2", language), _name, rev.Substring(0, 10), author, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
@@ -398,7 +398,7 @@ namespace Schumix.HgRssAddon
 					}
 					else
 					{
-						if(_website == "google")
+						if(_website == RssWebsiteList.Google.ToString().ToLower())
 						{
 							if(title.Contains(SchumixBase.Colon.ToString()))
 							{
@@ -406,7 +406,7 @@ namespace Schumix.HgRssAddon
 								sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("nocolorsgoogle2", language), _name, rev.Substring(0, 10), author, title.Substring(title.IndexOf(SchumixBase.Colon)+1));
 							}
 						}
-						else if(_website == "bitbucket")
+						else if(_website == RssWebsiteList.Bitbucket.ToString().ToLower())
 						{
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("nocolorsbitbucket", language), _name, author, commiturl);
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.HgRss("nocolorsbitbucket2", language), _name, rev.Substring(0, 10), author, title.Substring(title.IndexOf(SchumixBase.Colon)+1));

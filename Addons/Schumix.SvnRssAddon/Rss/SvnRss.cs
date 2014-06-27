@@ -91,7 +91,7 @@ namespace Schumix.SvnRssAddon
 
 		private void Init()
 		{
-			if(_website == "assembla")
+			if(_website == RssWebsiteList.Assembla.ToString().ToLower())
 			{
 				_link = "rss/channel/item/link";
 				_title = "rss/channel/item/title";
@@ -299,7 +299,7 @@ namespace Schumix.SvnRssAddon
 
 		private string Revision(XmlDocument rss)
 		{
-			if(_website == "assembla")
+			if(_website == RssWebsiteList.Assembla.ToString().ToLower())
 			{
 				var title = rss.SelectSingleNode(_title);
 				if(title.IsNull())
@@ -350,7 +350,7 @@ namespace Schumix.SvnRssAddon
 					
 					if(db["Colors"].ToBoolean())
 					{
-						if(_website == "assembla")
+						if(_website == RssWebsiteList.Assembla.ToString().ToLower())
 						{
 							if(title.Contains(SchumixBase.Colon.ToString()))
 							{
@@ -361,7 +361,7 @@ namespace Schumix.SvnRssAddon
 					}
 					else
 					{
-						if(_website == "assembla")
+						if(_website == RssWebsiteList.Assembla.ToString().ToLower())
 						{
 							if(title.Contains(SchumixBase.Colon.ToString()))
 							{

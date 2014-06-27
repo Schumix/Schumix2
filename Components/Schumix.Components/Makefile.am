@@ -24,11 +24,6 @@ BUILD_DIR = ../../Run/Debug
 
 SCHUMIX_COMPONENTS_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Components.dll.mdb
 SCHUMIX_COMPONENTS_DLL_MDB=$(BUILD_DIR)/Schumix.Components.dll.mdb
-IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
-MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
-MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
-MICROSOFT_SCRIPTING_METADATA_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.Metadata.dll
-IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/Debug/ICSharpCode.SharpZipLib.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_MDB_SOURCE=../../External/ngit/External/SharpZipLib/bin/Debug/ICSharpCode.SharpZipLib.dll.mdb
 ICSHARPCODE_SHARPZIPLIB_DLL_MDB=$(BUILD_DIR)/ICSharpCode.SharpZipLib.dll.mdb
@@ -46,8 +41,6 @@ SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
-MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll
 NGETTEXT_DLL_MDB_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll.mdb
 NGETTEXT_DLL_MDB=$(BUILD_DIR)/NGettext.dll.mdb
@@ -57,6 +50,8 @@ SYSTEM_DATA_SQLITE_DLL_MDB=$(BUILD_DIR)/System.Data.SQLite.dll.mdb
 YAMLDOTNET_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll
 YAMLDOTNET_DLL_MDB_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Debug/YamlDotNet.dll.mdb
 YAMLDOTNET_DLL_MDB=$(BUILD_DIR)/YamlDotNet.dll.mdb
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
+MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SHARPEN_UNIX_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll.mdb
 SHARPEN_UNIX_DLL_MDB=$(BUILD_DIR)/Sharpen.Unix.dll.mdb
@@ -72,6 +67,11 @@ KERALUA_DLL_MDB=$(BUILD_DIR)/KeraLua.dll.mdb
 KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Debug/net40/KopiLua.dll
 KOPILUA_DLL_MDB_SOURCE=../../External/NLua/Core/KopiLua/Bin/Debug/net40/KopiLua.dll.mdb
 KOPILUA_DLL_MDB=$(BUILD_DIR)/KopiLua.dll.mdb
+IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
+MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
+MICROSOFT_SCRIPTING_METADATA_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.Metadata.dll
+IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 
 endif
 
@@ -95,11 +95,6 @@ PROJECT_REFERENCES =  \
 BUILD_DIR = ../../Run/Release
 
 SCHUMIX_COMPONENTS_DLL_MDB=
-IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
-MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
-MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
-MICROSOFT_SCRIPTING_METADATA_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.Metadata.dll
-IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/Release/ICSharpCode.SharpZipLib.dll
 ICSHARPCODE_SHARPZIPLIB_DLL_MDB=
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
@@ -112,14 +107,14 @@ MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
-MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Release/NGettext.dll
 NGETTEXT_DLL_MDB=
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../External/CsharpSQLite/Run/Release/System.Data.SQLite.dll
 SYSTEM_DATA_SQLITE_DLL_MDB=
 YAMLDOTNET_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Release/YamlDotNet.dll
 YAMLDOTNET_DLL_MDB=
+MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
+MYSQL_DATA_DLL_SOURCE=../../Dependencies/MySql.Data.dll
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SHARPEN_UNIX_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
@@ -130,6 +125,11 @@ KERALUA_DLL_SOURCE=../../External/NLua/Core/KeraLua/src/bin/Release/net40/KeraLu
 KERALUA_DLL_MDB=
 KOPILUA_DLL_SOURCE=../../External/NLua/Core/KopiLua/Bin/Release/net40/KopiLua.dll
 KOPILUA_DLL_MDB=
+IRONPYTHON_DLL_SOURCE=../../Dependencies/IronPython.dll
+MICROSOFT_DYNAMIC_DLL_SOURCE=../../Dependencies/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.dll
+MICROSOFT_SCRIPTING_METADATA_DLL_SOURCE=../../Dependencies/Microsoft.Scripting.Metadata.dll
+IRONPYTHON_MODULES_DLL_SOURCE=../../Dependencies/IronPython.Modules.dll
 
 endif
 
@@ -138,11 +138,6 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(SCHUMIX_COMPONENTS_DLL_MDB) \
-	$(IRONPYTHON_DLL) \
-	$(MICROSOFT_DYNAMIC_DLL) \
-	$(MICROSOFT_SCRIPTING_DLL) \
-	$(MICROSOFT_SCRIPTING_METADATA_DLL) \
-	$(IRONPYTHON_MODULES_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL) \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL_MDB) \
 	$(NGIT_DLL) \
@@ -155,14 +150,14 @@ PROGRAMFILES = \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_DB3) \
-	$(MYSQL_DATA_DLL) \
-	$(MONO_POSIX_DLL) \
 	$(NGETTEXT_DLL) \
 	$(NGETTEXT_DLL_MDB) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
 	$(SYSTEM_DATA_SQLITE_DLL_MDB) \
 	$(YAMLDOTNET_DLL) \
 	$(YAMLDOTNET_DLL_MDB) \
+	$(MONO_POSIX_DLL) \
+	$(MYSQL_DATA_DLL) \
 	$(SHARPEN_UNIX_DLL) \
 	$(SHARPEN_UNIX_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL) \
@@ -172,7 +167,12 @@ PROGRAMFILES = \
 	$(KERALUA_DLL) \
 	$(KERALUA_DLL_MDB) \
 	$(KOPILUA_DLL) \
-	$(KOPILUA_DLL_MDB)  
+	$(KOPILUA_DLL_MDB) \
+	$(IRONPYTHON_DLL) \
+	$(MICROSOFT_DYNAMIC_DLL) \
+	$(MICROSOFT_SCRIPTING_DLL) \
+	$(MICROSOFT_SCRIPTING_METADATA_DLL) \
+	$(IRONPYTHON_MODULES_DLL)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_COMPONENTS_PC)  
@@ -225,11 +225,6 @@ CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG)
 
 include $(top_srcdir)/Makefile.include
 
-IRONPYTHON_DLL = $(BUILD_DIR)/IronPython.dll
-MICROSOFT_DYNAMIC_DLL = $(BUILD_DIR)/Microsoft.Dynamic.dll
-MICROSOFT_SCRIPTING_DLL = $(BUILD_DIR)/Microsoft.Scripting.dll
-MICROSOFT_SCRIPTING_METADATA_DLL = $(BUILD_DIR)/Microsoft.Scripting.Metadata.dll
-IRONPYTHON_MODULES_DLL = $(BUILD_DIR)/IronPython.Modules.dll
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 NGIT_DLL = $(BUILD_DIR)/NGit.dll
 SHARPEN_DLL = $(BUILD_DIR)/Sharpen.dll
@@ -237,23 +232,23 @@ NSCH_DLL = $(BUILD_DIR)/NSch.dll
 MONO_SECURITY_DLL = $(BUILD_DIR)/Mono.Security.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
-MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
-MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 NGETTEXT_DLL = $(BUILD_DIR)/NGettext.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 YAMLDOTNET_DLL = $(BUILD_DIR)/YamlDotNet.dll
+MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
+MYSQL_DATA_DLL = $(BUILD_DIR)/MySql.Data.dll
 SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
 NLUA_DLL = $(BUILD_DIR)/NLua.dll
 KERALUA_DLL = $(BUILD_DIR)/KeraLua.dll
 KOPILUA_DLL = $(BUILD_DIR)/KopiLua.dll
+IRONPYTHON_DLL = $(BUILD_DIR)/IronPython.dll
+MICROSOFT_DYNAMIC_DLL = $(BUILD_DIR)/Microsoft.Dynamic.dll
+MICROSOFT_SCRIPTING_DLL = $(BUILD_DIR)/Microsoft.Scripting.dll
+MICROSOFT_SCRIPTING_METADATA_DLL = $(BUILD_DIR)/Microsoft.Scripting.Metadata.dll
+IRONPYTHON_MODULES_DLL = $(BUILD_DIR)/IronPython.Modules.dll
 SCHUMIX_COMPONENTS_PC = $(BUILD_DIR)/schumix.components.pc
 
-$(eval $(call emit-deploy-target,IRONPYTHON_DLL))
-$(eval $(call emit-deploy-target,MICROSOFT_DYNAMIC_DLL))
-$(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_DLL))
-$(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_METADATA_DLL))
-$(eval $(call emit-deploy-target,IRONPYTHON_MODULES_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL_MDB))
 $(eval $(call emit-deploy-target,NGIT_DLL))
@@ -264,14 +259,14 @@ $(eval $(call emit-deploy-target,NSCH_DLL))
 $(eval $(call emit-deploy-target,NSCH_DLL_MDB))
 $(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
-$(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
-$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,NGETTEXT_DLL))
 $(eval $(call emit-deploy-target,NGETTEXT_DLL_MDB))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL_MDB))
 $(eval $(call emit-deploy-target,YAMLDOTNET_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_DLL_MDB))
+$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
+$(eval $(call emit-deploy-target,MYSQL_DATA_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL_MDB))
 $(eval $(call emit-deploy-target,NLUA_DLL))
@@ -280,6 +275,11 @@ $(eval $(call emit-deploy-target,KERALUA_DLL))
 $(eval $(call emit-deploy-target,KERALUA_DLL_MDB))
 $(eval $(call emit-deploy-target,KOPILUA_DLL))
 $(eval $(call emit-deploy-target,KOPILUA_DLL_MDB))
+$(eval $(call emit-deploy-target,IRONPYTHON_DLL))
+$(eval $(call emit-deploy-target,MICROSOFT_DYNAMIC_DLL))
+$(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_DLL))
+$(eval $(call emit-deploy-target,MICROSOFT_SCRIPTING_METADATA_DLL))
+$(eval $(call emit-deploy-target,IRONPYTHON_MODULES_DLL))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_COMPONENTS_PC,schumix.components.pc))
 
 

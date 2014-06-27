@@ -60,7 +60,8 @@ FILES = \
 	Config/RssConfig.cs \
 	Config/AddonDefaultConfig.cs \
 	Config/AddonXmlConfig.cs \
-	Config/AddonYamlConfig.cs 
+	Config/AddonYamlConfig.cs \
+	Rss/RssWebsiteList.cs 
 
 DATA_FILES = 
 

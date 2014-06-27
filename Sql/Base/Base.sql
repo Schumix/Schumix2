@@ -1361,6 +1361,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoCountryName", "Nem adott meg egy országnevet sem!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "TheGivenWebsiteIsntDifferent", "Már ez a website van beállítva!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "TheGivenUrlIsntDifferent", "Már ez a url van beállítva!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "ThisIsntInTheWebsiteList", "Nem szerepel a website listán!");
 
 -- enUS
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoName", "The name is not specified!");
@@ -1449,6 +1450,7 @@ INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "NoCountryName", "No such country name!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "TheGivenWebsiteIsntDifferent", "The given website isn't different!");
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "TheGivenUrlIsntDifferent", "The given url isn't different!");
+INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("enUS", "ThisIsntInTheWebsiteList", "This isn't in the website list!");
 
 -- ----------------------------
 -- Records of schumix

@@ -116,14 +116,14 @@ namespace Schumix.GitRssAddon
 
 		private void Init()
 		{
-			if(_website == "github")
+			if(_website == RssWebsiteList.Github.ToString().ToLower())
 			{
 				_id = "ga:feed/ga:entry/ga:id";
 				_link = "ga:feed/ga:entry/ga:link";
 				_title = "ga:feed/ga:entry/ga:title";
 				_author = "ga:feed/ga:entry/ga:author/ga:name";
 			}
-			else if(_website == "gitweb")
+			else if(_website == RssWebsiteList.GitWeb.ToString().ToLower())
 			{
 				_id = "ga:feed/ga:entry/ga:id";
 				_link = "ga:feed/ga:entry/ga:link";
@@ -338,7 +338,7 @@ namespace Schumix.GitRssAddon
 
 		private string Revision(XmlDocument rss)
 		{
-			if(_website == "github")
+			if(_website == RssWebsiteList.Github.ToString().ToLower())
 			{
 				var id = rss.SelectSingleNode(_id, _ns);
 				if(id.IsNull())
@@ -351,7 +351,7 @@ namespace Schumix.GitRssAddon
 
 				return rev.Substring(rev.IndexOf("Commit/") + "Commit/".Length);
 			}
-			else if(_website == "gitweb")
+			else if(_website == RssWebsiteList.GitWeb.ToString().ToLower())
 			{
 				var id = rss.SelectSingleNode(_id, _ns);
 				if(id.IsNull())
@@ -393,12 +393,12 @@ namespace Schumix.GitRssAddon
 
 					if(db["Colors"].ToBoolean())
 					{
-						if(_website == "github")
+						if(_website == RssWebsiteList.Github.ToString().ToLower())
 						{
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github", language), _name, (author == "no text" ? "?" : author), _type, commiturl);
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("github2", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author), title);
 						}
-						else if(_website == "gitweb")
+						else if(_website == RssWebsiteList.GitWeb.ToString().ToLower())
 						{
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb", language), _name, (author == "no text" ? "?" : author), _type, commiturl);
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("gitweb2", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author), title);
@@ -406,12 +406,12 @@ namespace Schumix.GitRssAddon
 					}
 					else
 					{
-						if(_website == "github")
+						if(_website == RssWebsiteList.Github.ToString().ToLower())
 						{
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("nocolorsgithub", language), _name, (author == "no text" ? "?" : author), _type, commiturl);
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("nocolorsgithub2", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author), title);
 						}
-						else if(_website == "gitweb")
+						else if(_website == RssWebsiteList.GitWeb.ToString().ToLower())
 						{
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("nocolorsgitweb", language), _name, (author == "no text" ? "?" : author), _type, commiturl);
 							sIrcBase.Networks[_servername].sSendMessage.SendCMPrivmsg(chan, sLocalization.GitRss("nocolorsgitweb2", language), _name, _type, rev.Substring(0, 10), (author == "no text" ? "?" : author), title);

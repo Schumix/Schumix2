@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{BE632D14-8F0A-4789-BE7A-63D8024FB855}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -45,6 +45,7 @@
     <Compile Include="Config\AddonXmlConfig.cs" />
     <Compile Include="Config\AddonYamlConfig.cs" />
     <Compile Include="Config\RssConfig.cs" />
+    <Compile Include="Rss\RssWebsiteList.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

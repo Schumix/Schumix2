@@ -733,11 +733,28 @@ namespace Schumix.GitRssAddon.Commands
 					var db0 = SchumixBase.DManager.QueryFirstRow("SELECT Website FROM gitinfo WHERE LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName);
 					if(!db0.IsNull())
 					{
-						if(sUtilities.SqlEscape(sIRCMessage.Info[8]) == db0["Website"].ToString())
+						if(sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()) == db0["Website"].ToString())
 						{
 							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("TheGivenWebsiteIsntDifferent", sIRCMessage.Channel, sIRCMessage.ServerName));
 							return;
 						}
+					}
+
+					bool rsslb = false;
+
+					foreach(var rsslist in Enum.GetNames(typeof(RssWebsiteList)))
+					{
+						if(sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower()) == rsslist.ToLower())
+						{
+							rsslb = true;
+							break;
+						}
+					}
+
+					if(!rsslb)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ThisIsntInTheWebsiteList", sIRCMessage.Channel, sIRCMessage.ServerName));
+						return;
 					}
 					
 					SchumixBase.DManager.Update("gitinfo", string.Format("Website = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[8].ToLower())), string.Format("LOWER(Name) = '{0}' AND Type = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[7]), sIRCMessage.ServerName));
