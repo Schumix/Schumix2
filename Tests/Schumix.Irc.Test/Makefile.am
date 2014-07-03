@@ -11,12 +11,12 @@ ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Framework.dll \
-	../../Run/Debug/Schumix.Irc.dll
+	../../Run/Debug/Schumix.Irc.dll \
+	../../External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll
 BUILD_DIR = ../../Run/Tests/Debug
 
 SCHUMIX_IRC_TEST_DLL_MDB_SOURCE=../../Run/Tests/Debug/Schumix.Irc.Test.dll.mdb
 SCHUMIX_IRC_TEST_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.Test.dll.mdb
-NUNIT_FRAMEWORK_DLL_SOURCE=../../Dependencies/nunit.framework.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
@@ -35,6 +35,9 @@ YAMLDOTNET_DLL_MDB=$(BUILD_DIR)/YamlDotNet.dll.mdb
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
+NUNIT_FRAMEWORK_DLL_SOURCE=../../External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll
+NUNIT_FRAMEWORK_DLL_MDB_SOURCE=../../External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll.mdb
+NUNIT_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/nunit.framework.dll.mdb
 
 endif
 
@@ -46,11 +49,11 @@ ASSEMBLY_MDB =
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Framework.dll \
-	../../Run/Release/Schumix.Irc.dll
+	../../Run/Release/Schumix.Irc.dll \
+	../../External/nunit-framework/bin/Release/net-4.0/nunit.framework.dll
 BUILD_DIR = ../../Run/Tests/Release
 
 SCHUMIX_IRC_TEST_DLL_MDB=
-NUNIT_FRAMEWORK_DLL_SOURCE=../../Dependencies/nunit.framework.dll
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
@@ -64,6 +67,8 @@ YAMLDOTNET_DLL_SOURCE=../../External/YamlDotNet/YamlDotNet/bin/Release/YamlDotNe
 YAMLDOTNET_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB=
+NUNIT_FRAMEWORK_DLL_SOURCE=../../External/nunit-framework/bin/Release/net-4.0/nunit.framework.dll
+NUNIT_FRAMEWORK_DLL_MDB=
 
 endif
 
@@ -72,7 +77,6 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(SCHUMIX_IRC_TEST_DLL_MDB) \
-	$(NUNIT_FRAMEWORK_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_DB3) \
@@ -85,7 +89,9 @@ PROGRAMFILES = \
 	$(YAMLDOTNET_DLL) \
 	$(YAMLDOTNET_DLL_MDB) \
 	$(SCHUMIX_IRC_DLL) \
-	$(SCHUMIX_IRC_DLL_MDB)  
+	$(SCHUMIX_IRC_DLL_MDB) \
+	$(NUNIT_FRAMEWORK_DLL) \
+	$(NUNIT_FRAMEWORK_DLL_MDB)  
 
 LINUX_PKGCONFIG = \
 	$(SCHUMIX_IRC_TEST_PC)  
@@ -113,14 +119,12 @@ EXTRAS = \
 REFERENCES =  \
 	System
 
-DLL_REFERENCES =  \
-	../../Dependencies/nunit.framework.dll
+DLL_REFERENCES = 
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
 include $(top_srcdir)/Makefile.include
 
-NUNIT_FRAMEWORK_DLL = $(BUILD_DIR)/nunit.framework.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
 MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
@@ -129,9 +133,9 @@ NGETTEXT_DLL = $(BUILD_DIR)/NGettext.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 YAMLDOTNET_DLL = $(BUILD_DIR)/YamlDotNet.dll
 SCHUMIX_IRC_DLL = $(BUILD_DIR)/Schumix.Irc.dll
+NUNIT_FRAMEWORK_DLL = $(BUILD_DIR)/nunit.framework.dll
 SCHUMIX_IRC_TEST_PC = $(BUILD_DIR)/schumix.irc.test.pc
 
-$(eval $(call emit-deploy-target,NUNIT_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
@@ -145,6 +149,8 @@ $(eval $(call emit-deploy-target,YAMLDOTNET_DLL))
 $(eval $(call emit-deploy-target,YAMLDOTNET_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL))
 $(eval $(call emit-deploy-target,SCHUMIX_IRC_DLL_MDB))
+$(eval $(call emit-deploy-target,NUNIT_FRAMEWORK_DLL))
+$(eval $(call emit-deploy-target,NUNIT_FRAMEWORK_DLL_MDB))
 $(eval $(call emit-deploy-wrapper,SCHUMIX_IRC_TEST_PC,schumix.irc.test.pc))
 
 

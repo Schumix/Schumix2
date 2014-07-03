@@ -68,6 +68,8 @@ External/YamlDotNet/YamlDotNet/Makefile
 Po/Makefile
 External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/newtonsoft.json.schumix.pc
 External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/Makefile
+External/nunit-framework/src/framework/nunit.framework.schumix.pc
+External/nunit-framework/src/framework/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile
 Core/Schumix.Irc/schumix.irc.pc

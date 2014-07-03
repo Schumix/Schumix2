@@ -225,7 +225,7 @@ REFERENCES =  \
 
 DLL_REFERENCES =  \
 	../../Dependencies/Mono.Posix.dll \
-	../../Dependencies/MySql.Data.dll
+	../../../../MySql.Data
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
