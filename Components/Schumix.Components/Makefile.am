@@ -215,11 +215,11 @@ REFERENCES =  \
 	Microsoft.CSharp
 
 DLL_REFERENCES =  \
-	../../../../IronPython \
-	../../../../IronPython.Modules \
-	../../../../Microsoft.Dynamic \
-	../../../../Microsoft.Scripting \
-	../../../../Microsoft.Scripting.Metadata
+	../../Dependencies/IronPython.dll \
+	../../Dependencies/IronPython.Modules.dll \
+	../../Dependencies/Microsoft.Dynamic.dll \
+	../../Dependencies/Microsoft.Scripting.dll \
+	../../Dependencies/Microsoft.Scripting.Metadata.dll
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 

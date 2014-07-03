@@ -174,7 +174,7 @@ REFERENCES =  \
 	System.Management
 
 DLL_REFERENCES =  \
-	../../../../Mono.Posix
+	../../Dependencies/Mono.Posix.dll
 
 CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
 

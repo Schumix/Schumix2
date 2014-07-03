@@ -2,6 +2,8 @@
 
 ## 4.5.0 (2014-xx-xx)
 
+ * fixmakefile.sh hozzáadva a forráshoz. Ezentúl ezzel a scripttel ki lehet javítani a monodevelop által generált hibás makefile állományokat.
+ * nunit-framework forrása hozzáadva Schumix-hoz.
  * Issue 108 javítva.
  * Google fordító regex javítva. Hiba felfedezéséért köszönet attishka-nak.
  * Issue 112 javítva.

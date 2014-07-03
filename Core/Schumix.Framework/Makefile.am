@@ -224,7 +224,7 @@ REFERENCES =  \
 	System.Xml.Linq
 
 DLL_REFERENCES =  \
-	../../../../Mono.Posix \
+	../../Dependencies/Mono.Posix.dll \
 	../../../../MySql.Data
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
