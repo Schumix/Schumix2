@@ -40,9 +40,6 @@
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Mono.Posix">
-      <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -175,6 +172,10 @@
     <ProjectReference Include="..\..\External\MySql.Data\Source\MySql.Data\MySql.Data.Schumix.csproj">
       <Project>{E9DF5ED1-4CBD-4226-B931-9A51610AC14D}</Project>
       <Name>MySql.Data.Schumix</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\External\MonoLibraries\Mono.Libraries\Mono.Libraries.csproj">
+      <Project>{E9A655D1-EE99-467A-8F4B-CAC80E0E65BE}</Project>
+      <Name>Mono.Libraries</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

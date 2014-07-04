@@ -48,7 +48,6 @@ SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Debug/Schumix.Framework.dll
 SCHUMIX_FRAMEWORK_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Framework.dll.mdb
 SCHUMIX_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/Schumix.Framework.dll.mdb
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll
 NGETTEXT_DLL_MDB_SOURCE=../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll.mdb
 NGETTEXT_DLL_MDB=$(BUILD_DIR)/NGettext.dll.mdb
@@ -117,7 +116,6 @@ MONO_LIBRARIES_DLL_MDB=
 SCHUMIX_FRAMEWORK_DLL_SOURCE=../../Run/Release/Schumix.Framework.dll
 SCHUMIX_FRAMEWORK_DLL_MDB=
 SCHUMIX_DB3_SOURCE=../../Sql/Schumix.db3
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Release/NGettext.dll
 NGETTEXT_DLL_MDB=
 SYSTEM_DATA_SQLITE_DLL_SOURCE=../../External/CsharpSQLite/Run/Release/System.Data.SQLite.dll
@@ -162,7 +160,6 @@ PROGRAMFILES = \
 	$(SCHUMIX_FRAMEWORK_DLL) \
 	$(SCHUMIX_FRAMEWORK_DLL_MDB) \
 	$(SCHUMIX_DB3) \
-	$(MONO_POSIX_DLL) \
 	$(NGETTEXT_DLL) \
 	$(NGETTEXT_DLL_MDB) \
 	$(SYSTEM_DATA_SQLITE_DLL) \
@@ -223,11 +220,11 @@ REFERENCES =  \
 	Microsoft.CSharp
 
 DLL_REFERENCES =  \
-	../../../../Dependencies/IronPython.dll \
-	../../../../Dependencies/IronPython.Modules.dll \
-	../../../../Dependencies/Microsoft.Dynamic.dll \
-	../../../../Dependencies/Microsoft.Scripting.dll \
-	../../../../Dependencies/Microsoft.Scripting.Metadata.dll
+	../../Dependencies/IronPython.dll \
+	../../Dependencies/IronPython.Modules.dll \
+	../../Dependencies/Microsoft.Dynamic.dll \
+	../../Dependencies/Microsoft.Scripting.dll \
+	../../Dependencies/Microsoft.Scripting.Metadata.dll
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 
@@ -245,7 +242,6 @@ NSCH_DLL = $(BUILD_DIR)/NSch.dll
 MONO_LIBRARIES_DLL = $(BUILD_DIR)/Mono.Libraries.dll
 SCHUMIX_FRAMEWORK_DLL = $(BUILD_DIR)/Schumix.Framework.dll
 SCHUMIX_DB3 = $(BUILD_DIR)/Schumix.db3
-MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 NGETTEXT_DLL = $(BUILD_DIR)/NGettext.dll
 SYSTEM_DATA_SQLITE_DLL = $(BUILD_DIR)/System.Data.SQLite.dll
 YAMLDOTNET_DLL = $(BUILD_DIR)/YamlDotNet.dll
@@ -273,7 +269,6 @@ $(eval $(call emit-deploy-target,NSCH_DLL_MDB))
 $(eval $(call emit-deploy-target,MONO_LIBRARIES_DLL))
 $(eval $(call emit-deploy-target,MONO_LIBRARIES_DLL_MDB))
 $(eval $(call emit-deploy-target,SCHUMIX_DB3))
-$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,NGETTEXT_DLL))
 $(eval $(call emit-deploy-target,NGETTEXT_DLL_MDB))
 $(eval $(call emit-deploy-target,SYSTEM_DATA_SQLITE_DLL))

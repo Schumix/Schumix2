@@ -36,9 +36,6 @@
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
-    <Reference Include="Mono.Posix">
-      <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -105,6 +102,10 @@
     <ProjectReference Include="..\..\External\NGettext\src\NGettext\NGettext.csproj">
       <Project>{96EED5F5-7E90-4BD8-A822-2D7BFF943E28}</Project>
       <Name>NGettext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\External\MonoLibraries\Mono.Libraries\Mono.Libraries.csproj">
+      <Project>{E9A655D1-EE99-467A-8F4B-CAC80E0E65BE}</Project>
+      <Name>Mono.Libraries</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
