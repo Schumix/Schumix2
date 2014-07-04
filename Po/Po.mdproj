@@ -31,6 +31,15 @@
         <TranslationProjectInformation projectName="ChatterBotAPI" isIncluded="False" />
         <TranslationProjectInformation projectName="NGettext" isIncluded="False" />
         <TranslationProjectInformation projectName="System.Data.SQLite" isIncluded="False" />
+        <TranslationProjectInformation projectName="KopiLua.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="NLua.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="KeraLua.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="YamlDotNet" isIncluded="False" />
+        <TranslationProjectInformation projectName="WundergroundAPI" isIncluded="False" />
+        <TranslationProjectInformation projectName="Newtonsoft.Json.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="nunit.framework.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="MySql.Data.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="Mono.Libraries" isIncluded="False" />
       </projectInformations>
     </projectInformations>
   </PropertyGroup>

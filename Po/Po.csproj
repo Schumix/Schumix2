@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ItemType>TranslationProject</ItemType>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{707DC067-8EC1-4F4E-A83C-0C33E21E8E8C}</ProjectGuid>
     <packageName>schumix</packageName>
@@ -15,7 +15,33 @@
         <Translation isoCode="hu" />
       </translations>
     </translations>
-    <ReleaseVersion>4.3.x</ReleaseVersion>
+    <ReleaseVersion>4.4.x</ReleaseVersion>
+    <projectInformations>
+      <projectInformations>
+        <TranslationProjectInformation projectName="NGit" isIncluded="False" />
+        <TranslationProjectInformation projectName="NSch" isIncluded="False" />
+        <TranslationProjectInformation projectName="ICSharpCode.SharpZLib" isIncluded="False" />
+        <TranslationProjectInformation projectName="Sharpen" isIncluded="False" />
+        <TranslationProjectInformation projectName="KeraLua" isIncluded="False" />
+        <TranslationProjectInformation projectName="NLua" isIncluded="False" />
+        <TranslationProjectInformation projectName="KopiLua" isIncluded="False" />
+        <TranslationProjectInformation projectName="YamlDotNet.RepresentationModel" isIncluded="False" />
+        <TranslationProjectInformation projectName="YamlDotNet.Core" isIncluded="False" />
+        <TranslationProjectInformation projectName="Sharpen.Unix" isIncluded="False" />
+        <TranslationProjectInformation projectName="ChatterBotAPI" isIncluded="False" />
+        <TranslationProjectInformation projectName="NGettext" isIncluded="False" />
+        <TranslationProjectInformation projectName="System.Data.SQLite" isIncluded="False" />
+        <TranslationProjectInformation projectName="KopiLua.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="NLua.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="KeraLua.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="YamlDotNet" isIncluded="False" />
+        <TranslationProjectInformation projectName="WundergroundAPI" isIncluded="False" />
+        <TranslationProjectInformation projectName="Newtonsoft.Json.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="nunit.framework.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="MySql.Data.Schumix" isIncluded="False" />
+        <TranslationProjectInformation projectName="Mono.Libraries" isIncluded="False" />
+      </projectInformations>
+    </projectInformations>
   </PropertyGroup>
   <!--
   Everything above is for the MD translation project serializer, and isn't really valid MSBuild.
