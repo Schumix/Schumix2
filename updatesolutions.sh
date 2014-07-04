@@ -27,8 +27,6 @@ po_csproj_update () {
   fi
 
   cp Po/Po.mdproj $f
-
-  find $f -type f -exec sed -i 's/Po.mdproj/Po.csproj/g' {} \;
 }
 
 main
