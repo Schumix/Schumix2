@@ -43,9 +43,6 @@
     <Reference Include="Mono.Posix">
       <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
     </Reference>
-    <Reference Include="MySql.Data">
-      <HintPath>..\..\Dependencies\MySql.Data.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -174,6 +171,10 @@
     <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet\YamlDotNet.csproj">
       <Project>{BF32DE1B-6276-4341-B212-F8862ADBBA7A}</Project>
       <Name>YamlDotNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\MySql.Data\Source\MySql.Data\MySql.Data.Schumix.csproj">
+      <Project>{E9DF5ED1-4CBD-4226-B931-9A51610AC14D}</Project>
+      <Name>MySql.Data.Schumix</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

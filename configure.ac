@@ -70,6 +70,8 @@ External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/newtonsof
 External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/Makefile
 External/nunit-framework/src/framework/nunit.framework.schumix.pc
 External/nunit-framework/src/framework/Makefile
+External/MySql.Data/Source/MySql.Data/mysql.data.schumix.pc
+External/MySql.Data/Source/MySql.Data/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile
 Core/Schumix.Irc/schumix.irc.pc
