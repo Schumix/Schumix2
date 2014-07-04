@@ -28,3 +28,6 @@
 [submodule "External/nunit-framework"]
 	path = External/nunit-framework
 	url = git://github.com/Schumix/nunit-framework.git
+[submodule "External/MySql.Data"]
+	path = External/MySql.Data
+	url = git://github.com/Schumix/MySql.Data.git
