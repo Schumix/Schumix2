@@ -57,7 +57,9 @@ SHARPEN_DLL_MDB=$(BUILD_DIR)/Sharpen.dll.mdb
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 NSCH_DLL_MDB_SOURCE=../../External/ngit/bin/NSch.dll.mdb
 NSCH_DLL_MDB=$(BUILD_DIR)/NSch.dll.mdb
-MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
+MONO_LIBRARIES_DLL_SOURCE=../../External/ngit/External/MonoLibraries/bin/Debug/Mono.Libraries.dll
+MONO_LIBRARIES_DLL_MDB_SOURCE=../../External/ngit/External/MonoLibraries/bin/Debug/Mono.Libraries.dll.mdb
+MONO_LIBRARIES_DLL_MDB=$(BUILD_DIR)/Mono.Libraries.dll.mdb
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SHARPEN_UNIX_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll.mdb
 SHARPEN_UNIX_DLL_MDB=$(BUILD_DIR)/Sharpen.Unix.dll.mdb
@@ -115,7 +117,8 @@ SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
 SHARPEN_DLL_MDB=
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 NSCH_DLL_MDB=
-MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
+MONO_LIBRARIES_DLL_SOURCE=../../External/ngit/External/MonoLibraries/bin/Release/Mono.Libraries.dll
+MONO_LIBRARIES_DLL_MDB=
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SHARPEN_UNIX_DLL_MDB=
 NLUA_DLL_SOURCE=../../External/NLua/Run/Release/net40/NLua.dll
@@ -161,7 +164,8 @@ PROGRAMFILES = \
 	$(SHARPEN_DLL_MDB) \
 	$(NSCH_DLL) \
 	$(NSCH_DLL_MDB) \
-	$(MONO_SECURITY_DLL) \
+	$(MONO_LIBRARIES_DLL) \
+	$(MONO_LIBRARIES_DLL_MDB) \
 	$(SHARPEN_UNIX_DLL) \
 	$(SHARPEN_UNIX_DLL_MDB) \
 	$(NLUA_DLL) \
@@ -253,7 +257,7 @@ ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 NGIT_DLL = $(BUILD_DIR)/NGit.dll
 SHARPEN_DLL = $(BUILD_DIR)/Sharpen.dll
 NSCH_DLL = $(BUILD_DIR)/NSch.dll
-MONO_SECURITY_DLL = $(BUILD_DIR)/Mono.Security.dll
+MONO_LIBRARIES_DLL = $(BUILD_DIR)/Mono.Libraries.dll
 SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
 NLUA_DLL = $(BUILD_DIR)/NLua.dll
 KERALUA_DLL = $(BUILD_DIR)/KeraLua.dll
@@ -283,7 +287,8 @@ $(eval $(call emit-deploy-target,SHARPEN_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_DLL_MDB))
 $(eval $(call emit-deploy-target,NSCH_DLL))
 $(eval $(call emit-deploy-target,NSCH_DLL_MDB))
-$(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
+$(eval $(call emit-deploy-target,MONO_LIBRARIES_DLL))
+$(eval $(call emit-deploy-target,MONO_LIBRARIES_DLL_MDB))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL_MDB))
 $(eval $(call emit-deploy-target,NLUA_DLL))

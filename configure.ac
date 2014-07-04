@@ -72,6 +72,8 @@ External/nunit-framework/src/framework/nunit.framework.schumix.pc
 External/nunit-framework/src/framework/Makefile
 External/MySql.Data/Source/MySql.Data/mysql.data.schumix.pc
 External/MySql.Data/Source/MySql.Data/Makefile
+External/ngit/External/MonoLibraries/Mono.Libraries/mono.libraries.pc
+External/ngit/External/MonoLibraries/Mono.Libraries/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile
 Core/Schumix.Irc/schumix.irc.pc

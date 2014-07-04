@@ -230,7 +230,7 @@ REFERENCES =  \
 	System.Xml.Linq
 
 DLL_REFERENCES =  \
-	../../Dependencies/Mono.Posix.dll
+	../../../../../../Mono.Posix
 
 CLEANFILES = $(PROGRAMFILES) $(LINUX_PKGCONFIG) 
 

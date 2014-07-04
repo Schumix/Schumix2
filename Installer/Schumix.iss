@@ -64,8 +64,7 @@ Source: "..\Run\Release\KeraLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\KopiLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\NLua.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\NGettext.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Run\Release\Mono.Posix.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Run\Release\Mono.Security.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Run\Release\Mono.Libraries.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Run\Release\MySql.Data.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Sql\Schumix.db3"; DestDir: "{userappdata}\Schumix\"; Flags: onlyifdoesntexist uninsneveruninstall
 Source: "..\Run\Release\Schumix.exe"; DestDir: "{app}"; Flags: ignoreversion

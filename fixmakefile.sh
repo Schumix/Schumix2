@@ -26,13 +26,6 @@ file_update () {
   f=$1
   echo "Update file: $f"
 
-  # Mono.Posix.dll
-  find $f -type f -exec sed -i 's/..\/..\/..\/..\/Mono.Posix/..\/..\/Dependencies\/Mono.Posix.dll/g' {} \;
-  find $f -type f -exec sed -i 's/..\/..\/Mono.Posix/Dependencies\/Mono.Posix.dll/g' {} \;
-
-  # Mono.Security.dll
-  find $f -type f -exec sed -i 's/..\/..\/Mono.Security/Dependencies\/Mono.Security.dll/g' {} \;
-
   # IronPython.Modules.dll
   find $f -type f -exec sed -i 's/..\/..\/..\/..\/IronPython.Modules/..\/..\/Dependencies\/IronPython.Modules.dll/g' {} \;
   find $f -type f -exec sed -i 's/..\/..\/IronPython.Modules/Dependencies\/IronPython.Modules.dll/g' {} \;
