@@ -49,6 +49,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WundergroundAPI", "External
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Newtonsoft.Json.Schumix", "External\Wunderground.Net\External\Newtonsoft.Json\Src\Newtonsoft.Json\Newtonsoft.Json.Schumix.csproj", "{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework.Schumix", "External\nunit-framework\src\framework\nunit.framework.Schumix.csproj", "{6A281C98-B74D-403B-8536-966871B992E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySql.Data.Schumix", "External\MySql.Data\Source\MySql.Data\MySql.Data.Schumix.csproj", "{E9DF5ED1-4CBD-4226-B931-9A51610AC14D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Libraries", "External\ngit\External\MonoLibraries\Mono.Libraries\Mono.Libraries.csproj", "{E9A655D1-EE99-467A-8F4B-CAC80E0E65BE}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Addons", "Addons", "{AD8E40DF-384D-4FF0-ABA9-91A956F38867}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Schumix.TestAddon", "Addons\Schumix.TestAddon\Schumix.TestAddon.csproj", "{062B6A8C-F14A-4754-81E0-66BF1E557CEF}"
@@ -147,6 +153,10 @@ Global
 		{598F9F95-C142-4596-ADDB-907B5CACC426}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{598F9F95-C142-4596-ADDB-907B5CACC426}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{598F9F95-C142-4596-ADDB-907B5CACC426}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A281C98-B74D-403B-8536-966871B992E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A281C98-B74D-403B-8536-966871B992E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A281C98-B74D-403B-8536-966871B992E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A281C98-B74D-403B-8536-966871B992E3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{707DC067-8EC1-4F4E-A83C-0C33E21E8E8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{707DC067-8EC1-4F4E-A83C-0C33E21E8E8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{707DC067-8EC1-4F4E-A83C-0C33E21E8E8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -247,6 +257,14 @@ Global
 		{E8DDBC21-EF74-4ABA-9C49-BFC702BE25D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8DDBC21-EF74-4ABA-9C49-BFC702BE25D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8DDBC21-EF74-4ABA-9C49-BFC702BE25D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9A655D1-EE99-467A-8F4B-CAC80E0E65BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9A655D1-EE99-467A-8F4B-CAC80E0E65BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9A655D1-EE99-467A-8F4B-CAC80E0E65BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9A655D1-EE99-467A-8F4B-CAC80E0E65BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9DF5ED1-4CBD-4226-B931-9A51610AC14D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9DF5ED1-4CBD-4226-B931-9A51610AC14D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9DF5ED1-4CBD-4226-B931-9A51610AC14D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9DF5ED1-4CBD-4226-B931-9A51610AC14D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E9EBE8DA-CEE7-45CF-B2F5-FD060268BD32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E9EBE8DA-CEE7-45CF-B2F5-FD060268BD32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9EBE8DA-CEE7-45CF-B2F5-FD060268BD32}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -282,6 +300,9 @@ Global
 		{BF32DE1B-6276-4341-B212-F8862ADBBA7A} = {A82C6ED9-C26B-46A2-B168-5165F230C02B}
 		{2530CF11-EAFA-4B60-B151-D0A056C846B2} = {A82C6ED9-C26B-46A2-B168-5165F230C02B}
 		{A9AE40FF-1A21-414A-9FE7-3BE13644CC6D} = {A82C6ED9-C26B-46A2-B168-5165F230C02B}
+		{6A281C98-B74D-403B-8536-966871B992E3} = {A82C6ED9-C26B-46A2-B168-5165F230C02B}
+		{E9DF5ED1-4CBD-4226-B931-9A51610AC14D} = {A82C6ED9-C26B-46A2-B168-5165F230C02B}
+		{E9A655D1-EE99-467A-8F4B-CAC80E0E65BE} = {A82C6ED9-C26B-46A2-B168-5165F230C02B}
 		{062B6A8C-F14A-4754-81E0-66BF1E557CEF} = {AD8E40DF-384D-4FF0-ABA9-91A956F38867}
 		{1079D7FE-800A-409C-AE4D-9EC577DCE8DF} = {AD8E40DF-384D-4FF0-ABA9-91A956F38867}
 		{4B29F2CB-D6CC-48E1-8A64-3A78D845BFB7} = {AD8E40DF-384D-4FF0-ABA9-91A956F38867}
@@ -309,8 +330,6 @@ Global
 		$1.scope = text/x-csharp
 		$0.CSharpFormattingPolicy = $2
 		$2.IndentSwitchBody = True
-		$2.AlignEmbeddedUsingStatements = False
-		$2.AlignEmbeddedIfStatements = False
 		$2.AnonymousMethodBraceStyle = NextLine
 		$2.PropertyBraceStyle = NextLine
 		$2.PropertyGetBraceStyle = NextLine
@@ -358,7 +377,7 @@ Global
 		$5.Text = 
 		$5.IncludeInNewFiles = True
 		description = Schumix2 IRC Bot
-		version = 4.3.x
+		version = 4.4.x
 		outputpath = Run
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

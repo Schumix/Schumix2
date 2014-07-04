@@ -592,6 +592,16 @@ namespace Schumix.RssAddon.Commands
 						return;
 					}
 
+					var db0 = SchumixBase.DManager.QueryFirstRow("SELECT Link FROM rssinfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
+					if(!db0.IsNull())
+					{
+						if(sUtilities.SqlEscape(sIRCMessage.Info[7]) == db0["Link"].ToString())
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("TheGivenUrlIsntDifferent", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+					}
+
 					SchumixBase.DManager.Update("rssinfo", string.Format("Link = '{0}'", sUtilities.SqlEscape(sIRCMessage.Info[7])), string.Format("LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName));
 					Rss gitr = null;
 					bool isstop = false;
@@ -650,6 +660,33 @@ namespace Schumix.RssAddon.Commands
 					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
+						return;
+					}
+
+					var db0 = SchumixBase.DManager.QueryFirstRow("SELECT Website FROM rssinfo WHERE LOWER(Name) = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.ServerName);
+					if(!db0.IsNull())
+					{
+						if(sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()) == db0["Website"].ToString())
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("TheGivenWebsiteIsntDifferent", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
+					}
+
+					bool rsslb = false;
+
+					foreach(var rsslist in Enum.GetNames(typeof(RssWebsiteList)))
+					{
+						if(sUtilities.SqlEscape(sIRCMessage.Info[7].ToLower()) == rsslist.ToLower())
+						{
+							rsslb = true;
+							break;
+						}
+					}
+
+					if(!rsslb)
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("ThisIsntInTheWebsiteList", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
 					}
 

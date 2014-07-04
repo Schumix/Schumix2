@@ -1,7 +1,7 @@
 dnl Warning: This is an automatically generated file, do not edit!
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
-AC_INIT([Schumix], [4.3.x])
+AC_INIT([Schumix], [4.4.x])
 AM_INIT_AUTOMAKE([foreign])
 AM_MAINTAINER_MODE
 
@@ -68,6 +68,12 @@ External/YamlDotNet/YamlDotNet/Makefile
 Po/Makefile
 External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/newtonsoft.json.schumix.pc
 External/Wunderground.Net/External/Newtonsoft.Json/Src/Newtonsoft.Json/Makefile
+External/nunit-framework/src/framework/nunit.framework.schumix.pc
+External/nunit-framework/src/framework/Makefile
+External/MySql.Data/Source/MySql.Data/mysql.data.schumix.pc
+External/MySql.Data/Source/MySql.Data/Makefile
+External/ngit/External/MonoLibraries/Mono.Libraries/mono.libraries.pc
+External/ngit/External/MonoLibraries/Mono.Libraries/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile
 Core/Schumix.Irc/schumix.irc.pc

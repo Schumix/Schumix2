@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{762CE329-D8A7-40B8-9782-AE2FB9AD3EBD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.Framework.Test</RootNamespace>
     <AssemblyName>Schumix.Framework.Test</AssemblyName>
-    <ReleaseVersion>4.3.x</ReleaseVersion>
+    <ReleaseVersion>4.4.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -34,9 +34,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\Dependencies\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
@@ -59,6 +56,10 @@
     <ProjectReference Include="..\..\Core\Schumix.Framework\Schumix.Framework.csproj">
       <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
       <Name>Schumix.Framework</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\nunit-framework\src\framework\nunit.framework.Schumix.csproj">
+      <Project>{6A281C98-B74D-403B-8536-966871B992E3}</Project>
+      <Name>nunit.framework.Schumix</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

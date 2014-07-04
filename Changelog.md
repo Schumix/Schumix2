@@ -2,8 +2,17 @@
 
 ## 4.5.0 (2014-xx-xx)
 
+ * Mono.Libraries forrása hozzáadva Schumix-hoz.
+ * MySql.Data forrása hozzáadva Schumix-hoz.
+ * fixmakefile.sh hozzáadva a forráshoz. Ezentúl ezzel a scripttel ki lehet javítani a monodevelop által generált hibás makefile állományokat.
+ * nunit-framework forrása hozzáadva Schumix-hoz.
+ * Issue 108 javítva.
+ * Google fordító regex javítva. Hiba felfedezéséért köszönet attishka-nak.
+ * Issue 112 javítva.
+
 ## 4.4.0 (2014-06-24)
 
+ * Issue 114 javítva.
  * Issue 113 javítva.
  * Yaml használata picit leegyszerüsítve.
  * Kiterjesztések felismerése javítva.

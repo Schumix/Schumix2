@@ -3,14 +3,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9C4977CA-548F-4863-B057-259A9458483B}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Schumix.Config</RootNamespace>
     <AssemblyName>Config</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <ReleaseVersion>4.3.x</ReleaseVersion>
+    <ReleaseVersion>4.4.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -49,7 +49,7 @@ namespace Schumix.Irc.Commands
 			}
 			
 			string url = sUtilities.GetUrl("http://www.google.com/translate_t?hl=en&ie=UTF8&text=", sIRCMessage.Info.SplitToString(5, SchumixBase.Space), "&langpair=" + sIRCMessage.Info[4]);
-			var Regex = new Regex("mouseout=\"this.style.backgroundColor='#fff'\">(?<text>.+)</span></span></div></div>");
+			var Regex = new Regex("mouseout=\"this.style.backgroundColor='#fff'\">(?<text>.+)</span></span></div></div>", RegexOptions.CultureInvariant);
 			
 			if(!Regex.IsMatch(url))
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("translate", sIRCMessage.Channel, sIRCMessage.ServerName));

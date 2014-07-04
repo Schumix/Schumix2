@@ -9,7 +9,10 @@
 ## Weather
 
 * **Home:**
+    * **Country:** Azon ország neve ahol lakunk. Időjárás lekérdezéshez kell megadni. Alapértelmezés: `Hungary`
     * **City:** Azon város neve ahol lakunk. Időjárás lekérdezéshez kell megadni. Alapértelmezés: `Zalaegerszeg`
+* **Wunderground:**
+    * **Key:** `Weather` parancs mükődéséhez elengedhetetlen kód. A Wunderground.Net kódja igényli. Alapértelmezés: `26d9937d4080f167`
 
 ## WolframAlpha
 

@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.Framework</RootNamespace>
     <AssemblyName>Schumix.Framework</AssemblyName>
-    <ReleaseVersion>4.3.x</ReleaseVersion>
+    <ReleaseVersion>4.4.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -39,13 +39,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Net" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="MySql.Data">
-      <HintPath>..\..\Dependencies\MySql.Data.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="Mono.Posix">
-      <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Config.cs" />
@@ -174,6 +168,14 @@
     <ProjectReference Include="..\..\External\YamlDotNet\YamlDotNet\YamlDotNet.csproj">
       <Project>{BF32DE1B-6276-4341-B212-F8862ADBBA7A}</Project>
       <Name>YamlDotNet</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\MySql.Data\Source\MySql.Data\MySql.Data.Schumix.csproj">
+      <Project>{E9DF5ED1-4CBD-4226-B931-9A51610AC14D}</Project>
+      <Name>MySql.Data.Schumix</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\External\MonoLibraries\Mono.Libraries\Mono.Libraries.csproj">
+      <Project>{E9A655D1-EE99-467A-8F4B-CAC80E0E65BE}</Project>
+      <Name>Mono.Libraries</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

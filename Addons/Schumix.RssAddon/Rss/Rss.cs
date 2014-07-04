@@ -114,21 +114,21 @@ namespace Schumix.RssAddon
 
 		private void Init()
 		{
-			if(_website == "default")
+			if(_website == RssWebsiteList.Default.ToString().ToLower())
 			{
 				_guid = "rss/channel/item/guid";
 				_link = "rss/channel/item/link";
 				_title = "rss/channel/item/title";
 				_author = "rss/channel/item/dc:creator";
 			}
-			if(_website == "default2")
+			if(_website == RssWebsiteList.Default2.ToString().ToLower())
 			{
 				_guid = "rss/channel/item/guid";
 				_link = "rss/channel/item/link";
 				_title = "rss/channel/item/title";
 				_author = "rss/channel/item/creator";
 			}
-			else if(_website == "rdf")
+			else if(_website == RssWebsiteList.Rdf.ToString().ToLower())
 			{
 				_guid = "rdf/item/date";
 				_link = "rdf/item/link";
@@ -321,7 +321,7 @@ namespace Schumix.RssAddon
 
 			data = data.Substring(0, data.IndexOf("</item>") + "</item>".Length);
 
-			if(_website == "rdf")
+			if(_website == RssWebsiteList.Rdf.ToString().ToLower())
 			{
 				string data2 = "<rdf><item>";
 				data = data.Remove(0, data.IndexOf("<item rdf:about=") + "<item rdf:about=".Length);
@@ -353,7 +353,7 @@ namespace Schumix.RssAddon
 
 		private string Author(XmlDocument rss)
 		{
-			if(_website == "rdf")
+			if(_website == RssWebsiteList.Rdf.ToString().ToLower())
 			{
 				var author = rss.SelectSingleNode(_author);
 				return author.IsNull() ? "no text" : author.InnerText;

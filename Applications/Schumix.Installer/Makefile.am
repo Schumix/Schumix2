@@ -15,12 +15,12 @@ PROJECT_REFERENCES =  \
 	../../External/ngit/External/SharpZipLib/bin/Debug/ICSharpCode.SharpZipLib.dll \
 	../../External/ngit/bin/Sharpen.dll \
 	../../External/ngit/bin/Sharpen.Unix.dll \
-	../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll
+	../../External/NGettext/src/NGettext/bin/Debug/NGettext.dll \
+	../../External/ngit/External/MonoLibraries/bin/Debug/Mono.Libraries.dll
 BUILD_DIR = ../../Run/Debug
 
 INSTALLER_EXE_MDB_SOURCE=../../Run/Debug/Installer.exe.mdb
 INSTALLER_EXE_MDB=$(BUILD_DIR)/Installer.exe.mdb
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NGIT_DLL_MDB_SOURCE=../../External/ngit/bin/NGit.dll.mdb
 NGIT_DLL_MDB=$(BUILD_DIR)/NGit.dll.mdb
@@ -33,7 +33,9 @@ ICSHARPCODE_SHARPZIPLIB_DLL_MDB=$(BUILD_DIR)/ICSharpCode.SharpZipLib.dll.mdb
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 NSCH_DLL_MDB_SOURCE=../../External/ngit/bin/NSch.dll.mdb
 NSCH_DLL_MDB=$(BUILD_DIR)/NSch.dll.mdb
-MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
+MONO_LIBRARIES_DLL_SOURCE=../../External/ngit/External/MonoLibraries/bin/Debug/Mono.Libraries.dll
+MONO_LIBRARIES_DLL_MDB_SOURCE=../../External/ngit/External/MonoLibraries/bin/Debug/Mono.Libraries.dll.mdb
+MONO_LIBRARIES_DLL_MDB=$(BUILD_DIR)/Mono.Libraries.dll.mdb
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SHARPEN_UNIX_DLL_MDB_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll.mdb
 SHARPEN_UNIX_DLL_MDB=$(BUILD_DIR)/Sharpen.Unix.dll.mdb
@@ -55,11 +57,11 @@ PROJECT_REFERENCES =  \
 	../../External/ngit/External/SharpZipLib/bin/Release/ICSharpCode.SharpZipLib.dll \
 	../../External/ngit/bin/Sharpen.dll \
 	../../External/ngit/bin/Sharpen.Unix.dll \
-	../../External/NGettext/src/NGettext/bin/Release/NGettext.dll
+	../../External/NGettext/src/NGettext/bin/Release/NGettext.dll \
+	../../External/ngit/External/MonoLibraries/bin/Release/Mono.Libraries.dll
 BUILD_DIR = ../../Run/Release
 
 INSTALLER_EXE_MDB=
-MONO_POSIX_DLL_SOURCE=../../Dependencies/Mono.Posix.dll
 NGIT_DLL_SOURCE=../../External/ngit/bin/NGit.dll
 NGIT_DLL_MDB=
 SHARPEN_DLL_SOURCE=../../External/ngit/bin/Sharpen.dll
@@ -68,7 +70,8 @@ ICSHARPCODE_SHARPZIPLIB_DLL_SOURCE=../../External/ngit/External/SharpZipLib/bin/
 ICSHARPCODE_SHARPZIPLIB_DLL_MDB=
 NSCH_DLL_SOURCE=../../External/ngit/bin/NSch.dll
 NSCH_DLL_MDB=
-MONO_SECURITY_DLL_SOURCE=../../External/ngit/Dependencies/Mono.Security.dll
+MONO_LIBRARIES_DLL_SOURCE=../../External/ngit/External/MonoLibraries/bin/Release/Mono.Libraries.dll
+MONO_LIBRARIES_DLL_MDB=
 SHARPEN_UNIX_DLL_SOURCE=../../External/ngit/bin/Sharpen.Unix.dll
 SHARPEN_UNIX_DLL_MDB=
 NGETTEXT_DLL_SOURCE=../../External/NGettext/src/NGettext/bin/Release/NGettext.dll
@@ -81,7 +84,6 @@ SATELLITE_ASSEMBLY_NAME=$(notdir $(basename $(ASSEMBLY))).resources.dll
 
 PROGRAMFILES = \
 	$(INSTALLER_EXE_MDB) \
-	$(MONO_POSIX_DLL) \
 	$(NGIT_DLL) \
 	$(NGIT_DLL_MDB) \
 	$(SHARPEN_DLL) \
@@ -90,7 +92,8 @@ PROGRAMFILES = \
 	$(ICSHARPCODE_SHARPZIPLIB_DLL_MDB) \
 	$(NSCH_DLL) \
 	$(NSCH_DLL_MDB) \
-	$(MONO_SECURITY_DLL) \
+	$(MONO_LIBRARIES_DLL) \
+	$(MONO_LIBRARIES_DLL_MDB) \
 	$(SHARPEN_UNIX_DLL) \
 	$(SHARPEN_UNIX_DLL_MDB) \
 	$(NGETTEXT_DLL) \
@@ -173,24 +176,21 @@ REFERENCES =  \
 	System.Core \
 	System.Management
 
-DLL_REFERENCES =  \
-	../../Dependencies/Mono.Posix.dll
+DLL_REFERENCES = 
 
 CLEANFILES = $(PROGRAMFILES) $(BINARIES) 
 
 include $(top_srcdir)/Makefile.include
 
-MONO_POSIX_DLL = $(BUILD_DIR)/Mono.Posix.dll
 NGIT_DLL = $(BUILD_DIR)/NGit.dll
 SHARPEN_DLL = $(BUILD_DIR)/Sharpen.dll
 ICSHARPCODE_SHARPZIPLIB_DLL = $(BUILD_DIR)/ICSharpCode.SharpZipLib.dll
 NSCH_DLL = $(BUILD_DIR)/NSch.dll
-MONO_SECURITY_DLL = $(BUILD_DIR)/Mono.Security.dll
+MONO_LIBRARIES_DLL = $(BUILD_DIR)/Mono.Libraries.dll
 SHARPEN_UNIX_DLL = $(BUILD_DIR)/Sharpen.Unix.dll
 NGETTEXT_DLL = $(BUILD_DIR)/NGettext.dll
 SCHUMIX_INSTALLER = $(BUILD_DIR)/schumix.installer
 
-$(eval $(call emit-deploy-target,MONO_POSIX_DLL))
 $(eval $(call emit-deploy-target,NGIT_DLL))
 $(eval $(call emit-deploy-target,NGIT_DLL_MDB))
 $(eval $(call emit-deploy-target,SHARPEN_DLL))
@@ -199,7 +199,8 @@ $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL))
 $(eval $(call emit-deploy-target,ICSHARPCODE_SHARPZIPLIB_DLL_MDB))
 $(eval $(call emit-deploy-target,NSCH_DLL))
 $(eval $(call emit-deploy-target,NSCH_DLL_MDB))
-$(eval $(call emit-deploy-target,MONO_SECURITY_DLL))
+$(eval $(call emit-deploy-target,MONO_LIBRARIES_DLL))
+$(eval $(call emit-deploy-target,MONO_LIBRARIES_DLL_MDB))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL))
 $(eval $(call emit-deploy-target,SHARPEN_UNIX_DLL_MDB))
 $(eval $(call emit-deploy-target,NGETTEXT_DLL))

@@ -3,13 +3,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A4846770-4EF1-40AE-9D14-C87A732B7316}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.Components</RootNamespace>
     <AssemblyName>Schumix.Components</AssemblyName>
-    <ReleaseVersion>4.3.x</ReleaseVersion>
+    <ReleaseVersion>4.4.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,6 +32,7 @@
     <Reference Include="System" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="IronPython">
       <HintPath>..\..\Dependencies\IronPython.dll</HintPath>
     </Reference>
@@ -44,7 +45,6 @@
     <Reference Include="Microsoft.Scripting">
       <HintPath>..\..\Dependencies\Microsoft.Scripting.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Scripting.Metadata">
       <HintPath>..\..\Dependencies\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>

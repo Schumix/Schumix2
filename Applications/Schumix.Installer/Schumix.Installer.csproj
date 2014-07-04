@@ -3,14 +3,14 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{4D468489-A781-4C55-A7F6-372335686437}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>Schumix.Installer</RootNamespace>
     <AssemblyName>Installer</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <ReleaseVersion>4.3.x</ReleaseVersion>
+    <ReleaseVersion>4.4.x</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,9 +35,6 @@
     <Reference Include="System.Web" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="System.Core" />
-    <Reference Include="Mono.Posix">
-      <HintPath>..\..\Dependencies\Mono.Posix.dll</HintPath>
-    </Reference>
     <Reference Include="System.Management" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +102,10 @@
     <ProjectReference Include="..\..\External\NGettext\src\NGettext\NGettext.csproj">
       <Project>{96EED5F5-7E90-4BD8-A822-2D7BFF943E28}</Project>
       <Name>NGettext</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\External\ngit\External\MonoLibraries\Mono.Libraries\Mono.Libraries.csproj">
+      <Project>{E9A655D1-EE99-467A-8F4B-CAC80E0E65BE}</Project>
+      <Name>Mono.Libraries</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
