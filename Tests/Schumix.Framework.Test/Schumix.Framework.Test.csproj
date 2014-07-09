@@ -57,7 +57,7 @@
       <Project>{B493EC79-3FD8-4F84-9BF8-69BDF3297DEA}</Project>
       <Name>Schumix.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\External\nunit-framework\src\framework\nunit.framework.Schumix.csproj">
+    <ProjectReference Include="..\..\External\ngit\External\nunit-framework\src\framework\nunit.framework.Schumix.csproj">
       <Project>{6A281C98-B74D-403B-8536-966871B992E3}</Project>
       <Name>nunit.framework.Schumix</Name>
     </ProjectReference>
