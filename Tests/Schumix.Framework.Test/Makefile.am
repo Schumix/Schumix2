@@ -11,7 +11,7 @@ ASSEMBLY_MDB = $(ASSEMBLY).mdb
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Framework.dll \
-	../../External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll
+	../../External/ngit/External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll
 BUILD_DIR = ../../Run/Tests/Debug
 
 SCHUMIX_FRAMEWORK_TEST_DLL_MDB_SOURCE=../../Run/Tests/Debug/Schumix.Framework.Test.dll.mdb
@@ -35,8 +35,8 @@ MYSQL_DATA_DLL_MDB=$(BUILD_DIR)/MySql.Data.dll.mdb
 MONO_LIBRARIES_DLL_SOURCE=../../External/ngit/External/MonoLibraries/bin/Debug/Mono.Libraries.dll
 MONO_LIBRARIES_DLL_MDB_SOURCE=../../External/ngit/External/MonoLibraries/bin/Debug/Mono.Libraries.dll.mdb
 MONO_LIBRARIES_DLL_MDB=$(BUILD_DIR)/Mono.Libraries.dll.mdb
-NUNIT_FRAMEWORK_DLL_SOURCE=../../External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll
-NUNIT_FRAMEWORK_DLL_MDB_SOURCE=../../External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll.mdb
+NUNIT_FRAMEWORK_DLL_SOURCE=../../External/ngit/External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll
+NUNIT_FRAMEWORK_DLL_MDB_SOURCE=../../External/ngit/External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll.mdb
 NUNIT_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/nunit.framework.dll.mdb
 
 endif
@@ -49,7 +49,7 @@ ASSEMBLY_MDB =
 COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Framework.dll \
-	../../External/nunit-framework/bin/Release/net-4.0/nunit.framework.dll
+	../../External/ngit/External/nunit-framework/bin/Release/net-4.0/nunit.framework.dll
 BUILD_DIR = ../../Run/Tests/Release
 
 SCHUMIX_FRAMEWORK_TEST_DLL_MDB=
@@ -66,7 +66,7 @@ MYSQL_DATA_DLL_SOURCE=../../External/MySql.Data/Source/MySql.Data/bin/Release/My
 MYSQL_DATA_DLL_MDB=
 MONO_LIBRARIES_DLL_SOURCE=../../External/ngit/External/MonoLibraries/bin/Release/Mono.Libraries.dll
 MONO_LIBRARIES_DLL_MDB=
-NUNIT_FRAMEWORK_DLL_SOURCE=../../External/nunit-framework/bin/Release/net-4.0/nunit.framework.dll
+NUNIT_FRAMEWORK_DLL_SOURCE=../../External/ngit/External/nunit-framework/bin/Release/net-4.0/nunit.framework.dll
 NUNIT_FRAMEWORK_DLL_MDB=
 
 endif
