@@ -1,0 +1,65 @@
+.TH Schumix 1
+.SH NAME
+Schumix - IRC Bot and Framework
+.SH SYNOPSIS
+schumix [options]
+.SH DESCRIPTION
+Schumix is an IRC Bot and Framework.
+For more information read https://github.com/Schumix/Schumix2/blob/master/Readme.markdown
+.SH OPTIONS
+.IP "-h, -?, --help"
+Display help.
+.IP --config-dir=VALUE
+VALUE: Config folder's path.
+.IP --config-file=VALUE
+VALUE: Config file's place.
+.IP --console-encoding=VALUE
+VALUE: Character encoding.
+.IP --console-localization=VALUE
+VALUE: Console's language settings.
+.IP --server-enabled=VALUE
+VALUE: true or false. Connect to server?
+.IP --server-host=VALUE
+VALUE: Server host.
+.IP --server-port=VALUE
+VALUE: Server port.
+.IP --server-password=VALUE
+VALUE: Server password.
+.IP --server-identify=VALUE
+VALUE: Identity.
+.IP --colorbind-mode=VALUE
+VALUE: true or false. Use colors? Only works on 8-bit terminals. (Under 256 color modes it doesn't work due to mono not supporting it.)
+.IP --update-ignore
+Don't start update.
+.SH FILES
+.I /usr/share/schumix/Schumix.yml
+.RS
+The system-wide main configuration file.
+.RE
+.I $HOME/.Schumix
+.RS
+Local schumix directory.
+.RE
+.I $HOME/.Schumix/Configs
+.RS
+Configration directory containing config files for schumix/addons.
+.RE
+.I $HOME/.Schumix/Configs/Schumix.yml
+.RS
+Local main Schumix configuration file.
+.RE
+.I $HOME/.Schumix/Logs
+.RS
+Log directory.
+.RE
+.I $HOME/.Schumix/Dumps
+.RS
+Crash report directory.
+.RE
+.I $HOME/.Schumix/Addons
+.RS
+Directory of addons.
+.RE
+.SH AUTHORS
+Main developer: Megax (github.com/megax).
+Also see 'Authors' file: https://github.com/Schumix/Schumix2/blob/master/Authors
