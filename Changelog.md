@@ -2,6 +2,8 @@
 
 ## 4.5.0 (2014-xx-xx)
 
+ * Issue 116 elkészült.
+ * Authors fájl hozzáadva.
  * Mono.Libraries forrása hozzáadva Schumix-hoz.
  * MySql.Data forrása hozzáadva Schumix-hoz.
  * fixmakefile.sh hozzáadva a forráshoz. Ezentúl ezzel a scripttel ki lehet javítani a monodevelop által generált hibás makefile állományokat.
