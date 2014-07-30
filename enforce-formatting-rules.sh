@@ -27,6 +27,11 @@ main () {
     license $f
     license_update $f
   done
+
+  for f in $(find -iname "*.sh" | grep -v "./_ReSharper" | grep -v "/obj/" | grep -v "./External")
+  do
+    license_sh_update $f
+  done
 }
 
 license () {
@@ -43,6 +48,12 @@ license_update () {
   f=$1
   echo "Update licence to $f"
   find $f -type f -exec sed -i 's/* Copyright (C) 2013 Schumix Team <http:\/\/schumix.eu\/>/* Copyright (C) 2013-2014 Schumix Team <http:\/\/schumix.eu\/>/g' {} \;
+}
+
+license_sh_update () {
+  f=$1
+  echo "Update licence to $f"
+  find $f -type f -exec sed -i 's/# Copyright (C) 2013 Schumix Team <http:\/\/schumix.eu\/>/# Copyright (C) 2013-2014 Schumix Team <http:\/\/schumix.eu\/>/g' {} \;
 }
 
 main
