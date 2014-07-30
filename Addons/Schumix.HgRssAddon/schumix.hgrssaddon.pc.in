@@ -1,6 +1,6 @@
 Name: Schumix.HgRssAddon
 Description: Schumix.HgRssAddon
-Version: 4.4.x
+Version: 4.4.2
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/HgRssAddon.dll
