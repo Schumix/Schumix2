@@ -15,6 +15,10 @@ fi
 main () {
   echo "New version: $newversion"
 
+  fv="Version"
+  echo "Update Version file."
+  find $fv -type f -exec sed -i 's/.*/'$newversion'/g' {} \;
+
   for f in $(find -iname "*.sln" | grep -v "./_ReSharper" | grep -v "/obj/" | grep -v "./External")
   do
     sln_update $f
