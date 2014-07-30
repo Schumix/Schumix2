@@ -2,6 +2,7 @@
 
 ## 4.5.0 (2014-xx-xx)
 
+ * License bekerült a script fájlokba is.
  * Verzió frissítéshez elkészült a script. Mostantól ezzel mindenhol le lehet a kódba frissíteni a verziót. Akár úgy hogy kiolvassa a Consts.cs-ből vagy direktbe megadásra kerül a varzió.
  * Issue 116 elkészült.
  * Authors fájl hozzáadva.
