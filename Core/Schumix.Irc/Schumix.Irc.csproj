@@ -106,6 +106,7 @@
     <Compile Include="Attribute\IrcCommandAttribute.cs" />
     <Compile Include="Commands\Method\CommandMethod.cs" />
     <Compile Include="Commands\Attribute\SchumixCommandAttribute.cs" />
+    <Compile Include="Commands\Operator\AliasCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

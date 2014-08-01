@@ -90,6 +90,7 @@ namespace Schumix.Framework.Clean
 			CleanTable("ignore_commands");
 			CleanTable("ignore_irc_commands");
 			CleanTable("ignore_nicks");
+			CleanTable("alias_irc_command");
 			Log.Notice("CleanDatabase", sLConsole.GetString("The core tables' cleanup have been finished."));
 		}
 	}

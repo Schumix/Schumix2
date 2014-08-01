@@ -180,6 +180,7 @@ namespace Schumix.ExtraAddon
 			sIrcBase.Networks[_servername].SchumixRegisterHandler("wiki",         sFunctions.HandleWiki);
 			sIrcBase.Networks[_servername].SchumixRegisterHandler("calc",         sFunctions.HandleCalc);
 			sIrcBase.Networks[_servername].SchumixRegisterHandler("autofunction", sFunctions.HandleAutoFunction, CommandPermission.HalfOperator);
+		
 		}
 
 		private void RemoveIrcCommand()

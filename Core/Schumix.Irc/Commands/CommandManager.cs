@@ -88,6 +88,7 @@ namespace Schumix.Irc.Commands
 			SchumixRegisterHandler("kick",         HandleKick,     CommandPermission.Operator);
 			SchumixRegisterHandler("mode",         HandleMode,     CommandPermission.Operator);
 			SchumixRegisterHandler("ignore",       HandleIgnore,   CommandPermission.Operator);
+			SchumixRegisterHandler("alias",        HandleAlias,    CommandPermission.Operator);
 
 			// Admin
 			SchumixRegisterHandler("plugin",       HandlePlugin,   CommandPermission.Administrator);
@@ -152,6 +153,7 @@ namespace Schumix.Irc.Commands
 			SchumixRemoveHandler("kick",          HandleKick);
 			SchumixRemoveHandler("mode",          HandleMode);
 			SchumixRemoveHandler("ignore",        HandleIgnore);
+			SchumixRemoveHandler("alias",         HandleAlias);
 
 			// Admin
 			SchumixRemoveHandler("plugin",        HandlePlugin);
@@ -193,6 +195,14 @@ namespace Schumix.Irc.Commands
 				CommandMethodMap[code.ToLower()].Method += method;
 			else
 				CommandMethodMap.Add(code.ToLower(), new CommandMethod(method, permission));
+		}
+
+		public void SchumixRegisterHandler(string code, CommandMethod method)
+		{
+			if(sIgnoreCommand.IsIgnore(code))
+				return;
+
+			CommandMethodMap.Add(code.ToLower(), method);
 		}
 
 		public void SchumixRemoveHandler(string code)
