@@ -247,14 +247,13 @@ namespace Schumix.Irc.Commands
 				if(sIgnoreCommand.IsIgnore(sIRCMessage.Info[4].ToLower()))
 					return;
 
-				var alias = false;
+				string aliascommand = string.Empty;
 				var adminflag = Adminflag(sIRCMessage.Nick);
-				string aliascommand = sIRCMessage.Info[4].ToLower();
 
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT BaseCommand FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[4].ToLower()), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
-					alias = true;
+					aliascommand = sIRCMessage.Info[4].ToLower();
 					string basecommand = db["BaseCommand"].ToString();
 					sIRCMessage.Info[4] = basecommand;
 				}
@@ -281,7 +280,7 @@ namespace Schumix.Irc.Commands
 					   (adminflag == AdminFlag.Operator && rank == 0) || (adminflag == AdminFlag.HalfOperator && rank == 0) ||
 					   (adminflag == AdminFlag.Administrator && rank == 9) || (adminflag == AdminFlag.Operator && rank == 9) ||
 					   (adminflag == AdminFlag.HalfOperator && rank == 9))
-						HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName, rank), alias, aliascommand);
+						HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName, rank), aliascommand);
 				}
 				else
 				{
@@ -292,16 +291,16 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName), alias, aliascommand);
+					HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName), aliascommand);
 				}
 			}
 		}
 
-		private void HelpMessage(IRCMessage sIRCMessage, string[] text, bool alias, string AliasCommand)
+		private void HelpMessage(IRCMessage sIRCMessage, string[] text, string AliasCommand)
 		{
 			foreach(var t in text)
 			{
-				if(alias)
+				if(!AliasCommand.IsNullOrEmpty())
 				{
 					if(t.Contains("{0}"))
 					{

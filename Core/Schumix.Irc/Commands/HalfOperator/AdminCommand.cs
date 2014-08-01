@@ -391,6 +391,7 @@ namespace Schumix.Irc.Commands
 				if(IsAdmin(sIRCMessage.Nick, AdminFlag.HalfOperator))
 				{
 					string commands = string.Empty;
+					string aliascommands = string.Empty;
 
 					foreach(var command in sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap)
 					{
@@ -403,15 +404,27 @@ namespace Schumix.Irc.Commands
 						if(sIgnoreCommand.IsIgnore(command.Key))
 							continue;
 
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT BaseCommand FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(command.Key), sIRCMessage.ServerName);
+						if(!db.IsNull())
+						{
+							string basecommand = db["BaseCommand"].ToString();
+							aliascommands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key + "->" + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + basecommand;
+							continue;
+						}
+
 						commands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key;
 					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], commands.Remove(0, 3, " | "));
+
+					if(!aliascommands.IsNullOrEmpty())
+						sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00033Alias parancsok:\u000f\u000f \u0002{0}\u000f", aliascommands.Remove(0, 3, " | "));
 				}
 				else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator))
 				{
 					string commands = string.Empty;
+					string aliascommands = string.Empty;
 
 					foreach(var command in sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap)
 					{
@@ -425,15 +438,27 @@ namespace Schumix.Irc.Commands
 						if(sIgnoreCommand.IsIgnore(command.Key))
 							continue;
 
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT BaseCommand FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(command.Key), sIRCMessage.ServerName);
+						if(!db.IsNull())
+						{
+							string basecommand = db["BaseCommand"].ToString();
+							aliascommands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key + "->" + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + basecommand;
+							continue;
+						}
+
 						commands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key;
 					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[3], commands.Remove(0, 3, " | "));
+
+					if(!aliascommands.IsNullOrEmpty())
+						sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00033Alias parancsok:\u000f\u000f \u0002{0}\u000f", aliascommands.Remove(0, 3, " | "));
 				}
 				else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Administrator))
 				{
 					string commands = string.Empty;
+					string aliascommands = string.Empty;
 
 					foreach(var command in sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap)
 					{
@@ -446,11 +471,22 @@ namespace Schumix.Irc.Commands
 						if(sIgnoreCommand.IsIgnore(command.Key))
 							continue;
 
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT BaseCommand FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(command.Key), sIRCMessage.ServerName);
+						if(!db.IsNull())
+						{
+							string basecommand = db["BaseCommand"].ToString();
+							aliascommands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key + "->" + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + basecommand;
+							continue;
+						}
+
 						commands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key;
 					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[4]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[5], commands.Remove(0, 3, " | "));
+
+					if(!aliascommands.IsNullOrEmpty())
+						sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00033Alias parancsok:\u000f\u000f \u0002{0}\u000f", aliascommands.Remove(0, 3, " | "));
 				}
 			}
 		}
