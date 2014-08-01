@@ -19,6 +19,7 @@
  */
 
 using System;
+using System.Data;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Extensions;
@@ -152,14 +153,26 @@ namespace Schumix.Irc.Commands
 						return;
 					}*/
 
-					/*var db = SchumixBase.DManager.Query("SELECT NewCommand, BaseCommand FROM alias_irc_command WHERE ServerName = '{0}'", sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.Query("SELECT NewCommand, BaseCommand FROM alias_irc_command WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
+						string commandlist = string.Empty;
 
+						foreach(DataRow row in db.Rows)
+						{
+							string newcommand = row["NewCommand"].ToString();
+							string basecommand = row["BaseCommand"].ToString();
+							commandlist += ", " + newcommand + "\u0002->\u000f" + basecommand;
+						}
+
+						if(commandlist.Length > 0)
+							sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00033Lista:\u000f\u000f {0}", commandlist.Remove(0, 2, ", "));
+						else
+							sSendMessage.SendChatMessage(sIRCMessage, "Nincs alias parancs!");
 					}
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
-					*/}
+				}
 			}
 		}
 	}
