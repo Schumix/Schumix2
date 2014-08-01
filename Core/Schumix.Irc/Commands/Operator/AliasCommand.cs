@@ -85,6 +85,12 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
+					if(sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(newcommand))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "Már létezik ilyen parancs: {0}!", newcommand);
+						return;
+					}
+
 					if(!sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(basecommand))
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, "Nem létezik ilyen parancs: {0}!", basecommand);
@@ -93,7 +99,7 @@ namespace Schumix.Irc.Commands
 
 					// if : A parancs le van tiltva!
 
-					sIrcBase.Networks[sIRCMessage.ServerName].SchumixRegisterHandler(newcommand, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[basecommand]);
+					sIrcBase.Networks[sIRCMessage.ServerName].SchumixRegisterHandler(newcommand, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[basecommand].Method, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[basecommand].Permission);
 					SchumixBase.DManager.Insert("`alias_irc_command`(ServerId, ServerName, NewCommand, BaseCommand)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(newcommand), sUtilities.SqlEscape(basecommand));
 					sSendMessage.SendChatMessage(sIRCMessage, "{0} parancs létrehozva az alábbi parancshoz: {1}", newcommand, basecommand);
 				}

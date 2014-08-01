@@ -21,6 +21,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Data;
 using System.Reflection;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -121,6 +122,17 @@ namespace Schumix.Irc.Commands
 				});
 			});
 
+			var db = SchumixBase.DManager.Query("SELECT NewCommand, BaseCommand FROM alias_irc_command WHERE ServerName = '{0}'", _servername);
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string newcommand = row["NewCommand"].ToString();
+					string basecommand = row["BaseCommand"].ToString();
+					SchumixRegisterHandler(newcommand, CommandMethodMap[basecommand]);
+				}
+			}
+
 			if(!Reload)
 				Log.Notice("CommandManager", sLConsole.GetString("Successfuly registered all of Command Handlers."));
 		}
@@ -159,6 +171,17 @@ namespace Schumix.Irc.Commands
 			SchumixRemoveHandler("plugin",        HandlePlugin);
 			SchumixRemoveHandler("reload",        HandleReload);
 			SchumixRemoveHandler("quit",          HandleQuit);
+
+			var db = SchumixBase.DManager.Query("SELECT NewCommand, BaseCommand FROM alias_irc_command WHERE ServerName = '{0}'", _servername);
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string newcommand = row["NewCommand"].ToString();
+					string basecommand = row["BaseCommand"].ToString();
+					SchumixRemoveHandler(newcommand, CommandMethodMap[basecommand].Method);
+				}
+			}
 
 			if(SchumixBase.ExitStatus)
 				CommandMethodMap.Clear();
