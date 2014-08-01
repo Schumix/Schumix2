@@ -85,19 +85,31 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
+					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(basecommand), sIRCMessage.ServerName);
+					if(!db1.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "Alias parancsról nem csinálhatsz újabb alias parancsot!");
+						return;
+					}
+
 					if(sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(newcommand))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Már létezik ilyen parancs: {0}!", newcommand);
+						sSendMessage.SendChatMessage(sIRCMessage, "Már létezik ilyen parancs: {0}", newcommand);
 						return;
 					}
 
 					if(!sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(basecommand))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Nem létezik ilyen parancs: {0}!", basecommand);
+						sSendMessage.SendChatMessage(sIRCMessage, "Nem létezik ilyen parancs: {0}", basecommand);
 						return;
 					}
 
-					// if : A parancs le van tiltva!
+					if(sIgnoreCommand.IsIgnore(basecommand))
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "Az alábbi parancs tiltva van: {0}", basecommand);
+						sSendMessage.SendChatMessage(sIRCMessage, "Ha használni szeretnéd old fel az \"ignore\" parancs segítségével.");
+						return;
+					}
 
 					sIrcBase.Networks[sIRCMessage.ServerName].SchumixRegisterHandler(newcommand, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[basecommand].Method, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[basecommand].Permission);
 					SchumixBase.DManager.Insert("`alias_irc_command`(ServerId, ServerName, NewCommand, BaseCommand)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(newcommand), sUtilities.SqlEscape(basecommand));
