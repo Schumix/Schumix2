@@ -247,7 +247,17 @@ namespace Schumix.Irc.Commands
 				if(sIgnoreCommand.IsIgnore(sIRCMessage.Info[4].ToLower()))
 					return;
 
+				var alias = false;
 				var adminflag = Adminflag(sIRCMessage.Nick);
+				string aliascommand = sIRCMessage.Info[4].ToLower();
+
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT BaseCommand FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(sIRCMessage.Info[4].ToLower()), sIRCMessage.ServerName);
+				if(!db.IsNull())
+				{
+					alias = true;
+					string basecommand = db["BaseCommand"].ToString();
+					sIRCMessage.Info[4] = basecommand;
+				}
 
 				if(adminflag != AdminFlag.None)
 				{
@@ -271,7 +281,7 @@ namespace Schumix.Irc.Commands
 					   (adminflag == AdminFlag.Operator && rank == 0) || (adminflag == AdminFlag.HalfOperator && rank == 0) ||
 					   (adminflag == AdminFlag.Administrator && rank == 9) || (adminflag == AdminFlag.Operator && rank == 9) ||
 					   (adminflag == AdminFlag.HalfOperator && rank == 9))
-						HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName, rank));
+						HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName, rank), alias, aliascommand);
 				}
 				else
 				{
@@ -282,19 +292,32 @@ namespace Schumix.Irc.Commands
 						return;
 					}
 
-					HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName));
+					HelpMessage(sIRCMessage, sLManager.GetCommandHelpTexts(commands, sIRCMessage.Channel, sIRCMessage.ServerName), alias, aliascommand);
 				}
 			}
 		}
 
-		private void HelpMessage(IRCMessage sIRCMessage, string[] text)
+		private void HelpMessage(IRCMessage sIRCMessage, string[] text, bool alias, string AliasCommand)
 		{
 			foreach(var t in text)
 			{
-				if(t.Contains("{0}"))
-					sSendMessage.SendChatMessage(sIRCMessage, t, IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
+				if(alias)
+				{
+					if(t.Contains("{0}"))
+					{
+						string message = string.Format(t, IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
+						sSendMessage.SendChatMessage(sIRCMessage, message.Replace(string.Format("{0}{1}", IRCConfig.List[sIRCMessage.ServerName].CommandPrefix, sIRCMessage.Info[4]), string.Format("{0}{1}", IRCConfig.List[sIRCMessage.ServerName].CommandPrefix, AliasCommand)));
+					}
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, t);
+				}
 				else
-					sSendMessage.SendChatMessage(sIRCMessage, t);
+				{
+					if(t.Contains("{0}"))
+						sSendMessage.SendChatMessage(sIRCMessage, t, IRCConfig.List[sIRCMessage.ServerName].CommandPrefix);
+					else
+						sSendMessage.SendChatMessage(sIRCMessage, t);
+				}
 			}
 		}
 	}
