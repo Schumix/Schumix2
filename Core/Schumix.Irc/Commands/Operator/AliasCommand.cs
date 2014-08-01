@@ -88,7 +88,7 @@ namespace Schumix.Irc.Commands
 					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(basecommand), sIRCMessage.ServerName);
 					if(!db1.IsNull())
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Alias parancsról nem csinálhatsz újabb alias parancsot!");
+						sSendMessage.SendChatMessage(sIRCMessage, "Alias parancsból nem csinálhatsz újabb alias parancsot!");
 						return;
 					}
 
@@ -132,8 +132,15 @@ namespace Schumix.Irc.Commands
 
 					string command = sIRCMessage.Info[6].ToLower();
 
-					// TODO
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(command), sIRCMessage.ServerName);
+					if(db.IsNull())
+					{
+						sSendMessage.SendChatMessage(sIRCMessage, "Nem szerepel a listán!");
+						return;
+					}
 
+					sIrcBase.Networks[sIRCMessage.ServerName].SchumixRemoveHandler(command, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[command].Method);
+					SchumixBase.DManager.Delete("alias_irc_command", string.Format("NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(command), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, "{0} parancs eltávolítva az alias parancs listából.", command);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "list")
