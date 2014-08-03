@@ -39,38 +39,38 @@ namespace Schumix.MantisBTRssAddon.Localization
 				case "Text":
 				{
 					if(Language == "huHU")
-						return "3{0} BugKód: 10{1} Link: {2}";
+						return "\u00033\u0002{0}\u000f\u000f \u0002BugKód:\u000f \u000310\u0002{1}\u000f\u000f \u0002Link: {2}\u000f";
 					else if(Language == "enUS")
-						return "3{0} BugCode: 10{1} Link: {2}";
+						return "\u00033\u0002{0}\u000f\u000f \u0002BugCode:\u000f \u000310\u0002{1}\u000f\u000f \u0002Link: {2}\u000f";
 					else
-						return "3{0} BugCode: 10{1} Link: {2}";
+						return "\u00033\u0002{0}\u000f\u000f \u0002BugCode:\u000f \u000310\u0002{1}\u000f\u000f \u0002Link: {2}\u000f";
 				}
 				case "Text2":
 				{
 					if(Language == "huHU")
-						return "3{0} Infó:{1}";
+						return "\u00033\u0002{0}\u000f\u000f \u0002Infó:\u000f{1}";
 					else if(Language == "enUS")
-						return "3{0} Info:{1}";
+						return "\u00033\u0002{0}\u000f\u000f \u0002Info:\u000f{1}";
 					else
-						return "3{0} Info:{1}";
+						return "\u00033\u0002{0}\u000f\u000f \u0002Info:\u000f{1}";
 				}
 				case "Text3":
 				{
 					if(Language == "huHU")
-						return "{0} BugKód: {1} Link: {2}";
+						return "\u0002{0}\u000f \u0002BugKód:\u000f \u0002{1}\u000f \u0002Link: {2}\u000f";
 					else if(Language == "enUS")
-						return "{0} BugCode: {1} Link: {2}";
+						return "\u0002{0}\u000f \u0002BugCode:\u000f \u0002{1}\u000f \u0002Link: {2}\u000f";
 					else
-						return "{0} BugCode: {1} Link: {2}";
+						return "\u0002{0}\u000f \u0002BugCode:\u000f \u0002{1}\u000f \u0002Link: {2}\u000f";
 				}
 				case "Text4":
 				{
 					if(Language == "huHU")
-						return "{0} Infó:{1}";
+						return "\u0002{0}\u000f \u0002Infó:\u000f{1}";
 					else if(Language == "enUS")
-						return "{0} Info:{1}";
+						return "\u0002{0}\u000f \u0002Info:\u000f{1}";
 					else
-						return "{0} Info:{1}";
+						return "\u0002{0}\u000f \u0002Info:\u000f{1}";
 				}
 				default:
 					return string.Empty;

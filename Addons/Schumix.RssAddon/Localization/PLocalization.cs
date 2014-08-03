@@ -39,38 +39,38 @@ namespace Schumix.RssAddon.Localization
 				case "Rss":
 				{
 					if(Language == "huHU")
-						return "[3{0}] {1} küldött új témát: 02{2}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f küldött új témát: \u000302\u001f{2}\u000f\u000f";
 					else if(Language == "enUS")
-						return "[3{0}] {1} pushed new topic: 02{2}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f pushed new topic: \u000302\u001f{2}\u000f\u000f";
 					else
-						return "[3{0}] {1} pushed new topic: 02{2}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f pushed new topic: \u000302\u001f{2}\u000f\u000f";
 				}
 				case "Rss2":
 				{
 					if(Language == "huHU")
-						return "3{0} Infó: {1}";
+						return "\u00033\u0002{0}\u000f\u000f \u0002Infó\u000f: {1}";
 					else if(Language == "enUS")
-						return "3{0} Info: {1}";
+						return "\u00033\u0002{0}\u000f\u000f \u0002Info\u000f: {1}";
 					else
-						return "3{0} Info: {1}";
+						return "\u00033\u0002{0}\u000f\u000f \u0002Info\u000f: {1}";
 				}
 				case "nocolorsRss":
 				{
 					if(Language == "huHU")
-						return "[{0}] {1} küldött új témát: {2}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f küldött új témát: \u001f{2}\u000f";
 					else if(Language == "enUS")
-						return "[{0}] {1} pushed new topic: {2}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f pushed new topic: \u001f{2}\u000f";
 					else
-						return "[{0}] {1} pushed new topic: {2}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f pushed new topic: \u001f{2}\u000f";
 				}
 				case "nocolorsRss2":
 				{
 					if(Language == "huHU")
-						return "{0} Infó: {1}";
+						return "\u0002{0}\u000f \u0002Infó\u000f: {1}";
 					else if(Language == "enUS")
-						return "{0} Info: {1}";
+						return "\u0002{0}\u000f \u0002Info\u000f: {1}";
 					else
-						return "{0} Info: {1}";
+						return "\u0002{0}\u000f \u0002Info\u000f: {1}";
 				}
 				default:
 					return string.Empty;

@@ -128,7 +128,7 @@ namespace Schumix.ExtraAddon.Commands
 				{
 					if(youtube.IsTitle())
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "1,0You0,4Tube: {0}", youtube.GetTitle());
+						sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00031,0You\u00030,4Tube\u0003\u0002: {0}", youtube.GetTitle());
 						return;
 					}
 				}
@@ -144,7 +144,7 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 
 				var title = Regex.Replace(webTitle, @"\s+", SchumixBase.Space.ToString());
-				sSendMessage.SendChatMessage(sIRCMessage, "1,0Title: {0}", title);
+				sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00031,0Title\u0003\u0002: {0}", title);
 			}
 			catch(Exception e)
 			{
