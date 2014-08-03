@@ -39,74 +39,74 @@ namespace Schumix.HgRssAddon.Localization
 				case "google":
 				{
 					if(Language == "huHU")
-						return "[3{0}] {1} küldött új kommitot: 02{2}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f küldött új kommitot: \u000302\u001f{2}\u000f\u000f";
 					else if(Language == "enUS")
-						return "[3{0}] {1} pushed new commit: 02{2}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit: \u000302\u001f{2}\u000f\u000f";
 					else
-						return "[3{0}] {1} pushed new commit: 02{2}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit: \u000302\u001f{2}\u000f\u000f";
 				}
 				case "google2":
 				{
 					if(Language == "huHU")
-						return "3{0} 10{1} {2}: {3}";
+						return "\u00033\u0002{0}\u000f\u000f \u000310\u0002{1}\u000f\u000f \u0002{2}\u000f: {3}";
 					else if(Language == "enUS")
-						return "3{0} 10{1} {2}: {3}";
+						return "\u00033\u0002{0}\u000f\u000f \u000310\u0002{1}\u000f\u000f \u0002{2}\u000f: {3}";
 					else
-						return "3{0} 10{1} {2}: {3}";
+						return "\u00033\u0002{0}\u000f\u000f \u000310\u0002{1}\u000f\u000f \u0002{2}\u000f: {3}";
 				}
 				case "bitbucket":
 				{
 					if(Language == "huHU")
-						return "[3{0}] {1} küldött új kommitot: 02{2}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f küldött új kommitot: \u000302\u001f{2}\u000f\u000f";
 					else if(Language == "enUS")
-						return "[3{0}] {1} pushed new commit: 02{2}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit: \u000302\u001f{2}\u000f\u000f";
 					else
-						return "[3{0}] {1} pushed new commit: 02{2}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit: \u000302\u001f{2}\u000f\u000f";
 				}
 				case "bitbucket2":
 				{
 					if(Language == "huHU")
-						return "3{0} 10{1} {2}: {3}";
+						return "\u00033\u0002{0}\u000f\u000f \u000310\u0002{1}\u000f\u000f \u0002{2}\u000f: {3}";
 					else if(Language == "enUS")
-						return "3{0} 10{1} {2}: {3}";
+						return "\u00033\u0002{0}\u000f\u000f \u000310\u0002{1}\u000f\u000f \u0002{2}\u000f: {3}";
 					else
-						return "3{0} 10{1} {2}: {3}";
+						return "\u00033\u0002{0}\u000f\u000f \u000310\u0002{1}\u000f\u000f \u0002{2}\u000f: {3}";
 				}
 				case "nocolorsgoogle":
 				{
 					if(Language == "huHU")
-						return "[{0}] {1} küldött új kommitot: {2}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f küldött új kommitot: \u001f{2}\u000f";
 					else if(Language == "enUS")
-						return "[{0}] {1} pushed new commit: {2}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit: \u001f{2}\u000f";
 					else
-						return "[{0}] {1} pushed new commit: {2}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit: \u001f{2}\u000f";
 				}
 				case "nocolorsgoogle2":
 				{
 					if(Language == "huHU")
-						return "{0} {1} {2}: {3}";
+						return "\u0002{0}\u000f \u0002{1}\u000f \u0002{2}\u000f: {3}";
 					else if(Language == "enUS")
-						return "{0} {1} {2}: {3}";
+						return "\u0002{0}\u000f \u0002{1}\u000f \u0002{2}\u000f: {3}";
 					else
-						return "{0} {1} {2}: {3}";
+						return "\u0002{0}\u000f \u0002{1}\u000f \u0002{2}\u000f: {3}";
 				}
 				case "nocolorsbitbucket":
 				{
 					if(Language == "huHU")
-						return "[{0}] {1} küldött új kommitot: {2}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f küldött új kommitot: \u001f{2}\u000f";
 					else if(Language == "enUS")
-						return "[{0}] {1} pushed new commit: {2}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit: \u001f{2}\u000f";
 					else
-						return "[{0}] {1} pushed new commit: {2}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit: \u001f{2}\u000f";
 				}
 				case "nocolorsbitbucket2":
 				{
 					if(Language == "huHU")
-						return "{0} {1} {2}: {3}";
+						return "\u0002{0}\u000f \u0002{1}\u000f \u0002{2}\u000f: {3}";
 					else if(Language == "enUS")
-						return "{0} {1} {2}: {3}";
+						return "\u0002{0}\u000f \u0002{1}\u000f \u0002{2}\u000f: {3}";
 					else
-						return "{0} {1} {2}: {3}";
+						return "\u0002{0}\u000f \u0002{1}\u000f \u0002{2}\u000f: {3}";
 				}
 				default:
 					return string.Empty;

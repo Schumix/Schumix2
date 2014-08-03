@@ -194,21 +194,22 @@ namespace Schumix.TestAddon.Commands
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "dbrank")
 			{
-				var db = SchumixBase.DManager.Query("SELECT Flag FROM admins WHERE ServerName = '{0}'", sIRCMessage.ServerName);
+				var db = SchumixBase.DManager.Query("SELECT Name, Flag FROM admins WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					foreach(DataRow row in db.Rows)
 					{
+						string name = row["Name"].ToString();
 						int rank = row["Flag"].ToInt32();
 
 						if(rank == 0)
-							Log.WriteLine("Admin rang: 0");
+							Log.WriteLine("{0} admin rank: 0", name);
 
 						if(rank == 1)
-							Log.WriteLine("Admin rang: 1");
+							Log.WriteLine("{0} admin rank: 1", name);
 
 						if(rank == 2)
-							Log.WriteLine("Admin rang: 2");
+							Log.WriteLine("{0} admin rank: 2", name);
 					}
 				}
 				else

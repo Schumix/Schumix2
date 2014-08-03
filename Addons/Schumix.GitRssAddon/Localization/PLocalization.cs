@@ -39,74 +39,74 @@ namespace Schumix.GitRssAddon.Localization
 				case "github":
 				{
 					if(Language == "huHU")
-						return "[3{0}] {1} küldött új kommitot ide 7{2}: 02{3}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f küldött új kommitot ide \u00037{2}\u000f: \u000302\u001f{3}\u000f\u000f";
 					else if(Language == "enUS")
-						return "[3{0}] {1} pushed new commit to 7{2}: 02{3}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit to \u00037{2}\u000f: \u000302\u001f{3}\u000f\u000f";
 					else
-						return "[3{0}] {1} pushed new commit to 7{2}: 02{3}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit to \u00037{2}\u000f: \u000302\u001f{3}\u000f\u000f";
 				}
 				case "github2":
 				{
 					if(Language == "huHU")
-						return "3{0}15/7{1} 10{2} {3}: {4}";
+						return "\u00033\u0002{0}\u000f\u000f\u000315/\u000f\u00037{1}\u000f \u000310\u0002{2}\u000f\u000f \u0002{3}\u000f: {4}";
 					else if(Language == "enUS")
-						return "3{0}15/7{1} 10{2} {3}: {4}";
+						return "\u00033\u0002{0}\u000f\u000f\u000315/\u000f\u00037{1}\u000f \u000310\u0002{2}\u000f\u000f \u0002{3}\u000f: {4}";
 					else
-						return "3{0}15/7{1} 10{2} {3}: {4}";
+						return "\u00033\u0002{0}\u000f\u000f\u000315/\u000f\u00037{1}\u000f \u000310\u0002{2}\u000f\u000f \u0002{3}\u000f: {4}";
 				}
 				case "nocolorsgithub":
 				{
 					if(Language == "huHU")
-						return "[{0}] {1} küldött új kommitot ide {2}: {3}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f küldött új kommitot ide {2}: \u001f{3}\u000f";
 					else if(Language == "enUS")
-						return "[{0}] {1} pushed new commit to {2}: {3}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit to {2}: \u001f{3}\u000f";
 					else
-						return "[{0}] {1} pushed new commit to {2}: {3}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit to {2}: \u001f{3}\u000f";
 				}
 				case "nocolorsgithub2":
 				{
 					if(Language == "huHU")
-						return "{0}/{1} {2} {3}: {4}";
+						return "\u0002{0}\u000f/{1} \u0002{2}\u000f \u0002{3}\u000f: {4}";
 					else if(Language == "enUS")
-						return "{0}/{1} {2} {3}: {4}";
+						return "\u0002{0}\u000f/{1} \u0002{2}\u000f \u0002{3}\u000f: {4}";
 					else
-						return "{0}/{1} {2} {3}: {4}";
+						return "\u0002{0}\u000f/{1} \u0002{2}\u000f \u0002{3}\u000f: {4}";
 				}
 				case "gitweb":
 				{
 					if(Language == "huHU")
-						return "[3{0}] {1} küldött új kommitot ide 7{2}: 02{3}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f küldött új kommitot ide \u00037{2}\u000f: \u000302\u001f{3}\u000f\u000f";
 					else if(Language == "enUS")
-						return "[3{0}] {1} pushed new commit to 7{2}: 02{3}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit to \u00037{2}\u000f: \u000302\u001f{3}\u000f\u000f";
 					else
-						return "[3{0}] {1} pushed new commit to 7{2}: 02{3}";
+						return "\u0002[\u00033{0}\u000f\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit to \u00037{2}\u000f: \u000302\u001f{3}\u000f\u000f";
 				}
 				case "gitweb2":
 				{
 					if(Language == "huHU")
-						return "3{0}15/7{1} 10{2} {3}: {4}";
+						return "\u00033\u0002{0}\u000f\u000f\u000315/\u000f\u00037{1}\u000f \u000310\u0002{2}\u000f\u000f \u0002{3}\u000f: {4}";
 					else if(Language == "enUS")
-						return "3{0}15/7{1} 10{2} {3}: {4}";
+						return "\u00033\u0002{0}\u000f\u000f\u000315/\u000f\u00037{1}\u000f \u000310\u0002{2}\u000f\u000f \u0002{3}\u000f: {4}";
 					else
-						return "3{0}15/7{1} 10{2} {3}: {4}";
+						return "\u00033\u0002{0}\u000f\u000f\u000315/\u000f\u00037{1}\u000f \u000310\u0002{2}\u000f\u000f \u0002{3}\u000f: {4}";
 				}
 				case "nocolorsgitweb":
 				{
 					if(Language == "huHU")
-						return "[{0}] {1} küldött új kommitot ide {2}: {3}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f küldött új kommitot ide {2}: \u001f{3}\u000f";
 					else if(Language == "enUS")
-						return "[{0}] {1} pushed new commit to {2}: {3}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit to {2}: \u001f{3}\u000f";
 					else
-						return "[{0}] {1} pushed new commit to {2}: {3}";
+						return "\u0002[{0}\u000f\u0002]\u000f \u0002{1}\u000f pushed new commit to {2}: \u001f{3}\u000f";
 				}
 				case "nocolorsgitweb2":
 				{
 					if(Language == "huHU")
-						return "{0}/{1} {2} {3}: {4}";
+						return "\u0002{0}\u000f/{1} \u0002{2}\u000f \u0002{3}\u000f: {4}";
 					else if(Language == "enUS")
-						return "{0}/{1} {2} {3}: {4}";
+						return "\u0002{0}\u000f/{1} \u0002{2}\u000f \u0002{3}\u000f: {4}";
 					else
-						return "{0}/{1} {2} {3}: {4}";
+						return "\u0002{0}\u000f/{1} \u0002{2}\u000f \u0002{3}\u000f: {4}";
 				}
 				default:
 					return string.Empty;
