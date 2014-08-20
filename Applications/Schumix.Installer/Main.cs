@@ -19,7 +19,9 @@
  */
 
 using System;
+using System.IO;
 using System.Text;
+using System.Reflection;
 using System.Globalization;
 using Schumix.Installer.Util;
 using Schumix.Installer.Config;
@@ -47,7 +49,7 @@ namespace Schumix.Installer
 		/// </summary>
 		public static void Main(string[] args)
 		{
-			sRuntime.SetProcessName("Installer");
+			sRuntime.SetProcessName(Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().ManifestModule.Name));
 			bool help = false;
 			string console_encoding = Encoding.UTF8.BodyName;
 			string localization = "start";
