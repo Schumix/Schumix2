@@ -34,7 +34,8 @@ namespace Schumix.ExtraAddon.Commands
 		private readonly LocalizationConsole sLConsole = Singleton<LocalizationConsole>.Instance;
 		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private bool _isyoutube;
-		private string _title;
+        private string _title;
+        private string _viewCount;
 		private string _code;
 		private string _url;
 
@@ -51,6 +52,11 @@ namespace Schumix.ExtraAddon.Commands
 		{
 			return _title;
 		}
+
+        public string GetViewCount()
+        {
+            return _viewCount;
+        }
 
 		public bool IsTitle()
 		{
@@ -80,13 +86,18 @@ namespace Schumix.ExtraAddon.Commands
 			try
 			{
 				var xml = new XmlDocument();
-				var url = new Uri(string.Format("http://gdata.youtube.com/feeds/api/videos/{0}?v=2&fields=title", _code));
+                var url = new Uri(string.Format("http://gdata.youtube.com/feeds/api/videos/{0}?v=2&fields=title,yt:statistics", _code));
 				xml.LoadXml(sUtilities.DownloadString(url, 10000));
 				var ns = new XmlNamespaceManager(xml.NameTable);
-				ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
+                ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
+                ns.AddNamespace("yt", "http://gdata.youtube.com/schemas/2007");
 
 				var title = xml.SelectSingleNode("ga:entry/ga:title", ns);
 				_title = title.IsNull() ? string.Empty : title.InnerText;
+
+                var viewCount = xml.SelectSingleNode("ga:entry/yt:statistics", ns);
+                _viewCount = viewCount.IsNull() ? string.Empty : viewCount.Attributes.GetNamedItem("viewCount").Value;
+
 				xml.RemoveAll();
 			}
 			catch(Exception e)
