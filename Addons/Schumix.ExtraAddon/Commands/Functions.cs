@@ -128,7 +128,7 @@ namespace Schumix.ExtraAddon.Commands
 				{
 					if(youtube.IsTitle())
 					{
-                        sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00031,0You\u00030,4Tube\u0003\u0002: {0} \u0002\u000304{1}:\u000f\u000f {2}", youtube.GetTitle(), sLConsole.Other("YoutubeViewCount", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), youtube.GetViewCount());
+						sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00031,0You\u00030,4Tube\u0003\u0002: {0} \u0002\u000304{1}:\u000f\u000f {2}", youtube.GetTitle(), sLConsole.Other("YoutubeViewCount", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), youtube.GetViewCount());
 						return;
 					}
 				}

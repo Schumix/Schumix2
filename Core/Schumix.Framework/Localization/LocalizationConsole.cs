@@ -551,16 +551,16 @@ namespace Schumix.Framework.Localization
 						return "stopped";
 					else
 						return "stopped";
-                }
-                case "YoutubeViewCount":
-                {
-                    if (Language == "huHU")
-                        return "Megtekintések száma";
-                    else if (Language == "enUS")
-                        return "View Count";
-                    else
-                        return "View Count";
-                }
+				}
+				case "YoutubeViewCount":
+				{
+					if(Language == "huHU")
+						return "Megtekintések száma";
+					else if(Language == "enUS")
+						return "View Count";
+					else
+						return "View Count";
+				}
 				default:
 					return string.Empty;
 			}
