@@ -80,7 +80,7 @@ namespace Schumix.ExtraAddon.Commands
 			try
 			{
 				var xml = new XmlDocument();
-				var url = new Uri(string.Format("http://gdata.youtube.com/feeds/api/videos/{0}?fields=title", _code));
+				var url = new Uri(string.Format("http://gdata.youtube.com/feeds/api/videos/{0}?v=2&fields=title", _code));
 				xml.LoadXml(sUtilities.DownloadString(url, 10000));
 				var ns = new XmlNamespaceManager(xml.NameTable);
 				ns.AddNamespace("ga", "http://www.w3.org/2005/Atom");
