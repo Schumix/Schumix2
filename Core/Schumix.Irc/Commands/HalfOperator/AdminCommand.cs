@@ -63,7 +63,10 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					}
 					else
+					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+						return;
+					}
 				}
 
 				if(!sChannelList.IsChannelList(name))
@@ -107,7 +110,10 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.Info[6]);
 					}
 					else
+					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+						return;
+					}
 				}
 
 				status = false;
