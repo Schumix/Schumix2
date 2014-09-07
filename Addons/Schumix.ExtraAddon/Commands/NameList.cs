@@ -208,6 +208,7 @@ namespace Schumix.ExtraAddon.Commands
 			channel.Clear();
 			RandomVhost(Name.ToLower());
 
+			// Azt ellenőrzi le felszabadul-e az elsődleges nick neve.
 			if(IRCConfig.List[_servername].NickName.ToLower() == Name.ToLower() && !Identify)
 			{
 				sIrcBase.Networks[_servername].sMyNickInfo.ChangeIdentifyStatus(false);

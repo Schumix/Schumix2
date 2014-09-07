@@ -315,10 +315,14 @@ namespace Schumix.ExtraAddon
 					sIrcHandler.sNameList.Change(sMyNickInfo.NickStorage, IRCConfig.List[sIRCMessage.ServerName].NickName, true);
 					sMyNickInfo.ChangeNick(IRCConfig.List[sIRCMessage.ServerName].NickName);
 					sSender.Nick(IRCConfig.List[sIRCMessage.ServerName].NickName);
-					sMyNickInfo.Identify(IRCConfig.List[sIRCMessage.ServerName].NickServPassword);
 
-					if(IRCConfig.List[sIRCMessage.ServerName].UseHostServ)
-						sMyNickInfo.Vhost(SchumixBase.On);
+					if(!sMyNickInfo.IsIdentify && IRCConfig.List[_servername].UseNickServ && sIrcBase.Networks[_servername].Online)
+					{
+						sMyNickInfo.Identify(IRCConfig.List[sIRCMessage.ServerName].NickServPassword);
+
+						if(IRCConfig.List[sIRCMessage.ServerName].UseHostServ)
+							sMyNickInfo.Vhost(SchumixBase.On);
+					}
 
 					sFunctions.IsOnline = false;
 				}
