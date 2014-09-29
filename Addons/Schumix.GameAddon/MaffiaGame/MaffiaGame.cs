@@ -1117,7 +1117,7 @@ namespace Schumix.GameAddon.MaffiaGames
 						foreach(var name in _ghostlist)
 							names += ", " + DisableHl(name.Value);
 
-						sSendMessage.SendCMPrivmsg(_channel, "A következő személyek halottak: {0}", names.Remove(0, 2, ", "));*/
+						sSendMessage.SendCMPrivmsg(_channel, "\u0002A következő személyek halottak: {0}\u000f", names.Remove(0, 2, ", "));*/
 						sSendMessage.SendCMPrivmsg(_channel, text[29], _ghostlist.Count);
 
 						if(!NoLynch)

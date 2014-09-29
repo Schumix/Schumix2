@@ -121,7 +121,7 @@ namespace Schumix.GitRssAddon.Commands
 					}
 
 					foreach(DataRow row in db.Rows)
-						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/list", sIRCMessage.Channel, sIRCMessage.ServerName), "3{0}15/7{1}", row["Name"].ToString(), row["Type"].ToString());
+						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("git/list", sIRCMessage.Channel, sIRCMessage.ServerName), "\u00033\u0002{0}\u000f\u000f\u000315/\u000f\u00037{1}\u000f", row["Name"].ToString(), row["Type"].ToString());
 				}
 				else
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));

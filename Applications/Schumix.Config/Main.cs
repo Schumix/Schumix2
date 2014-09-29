@@ -19,7 +19,9 @@
  */
 
 using System;
+using System.IO;
 using System.Text;
+using System.Reflection;
 using Schumix.Config.Util;
 using Schumix.Config.Config;
 using Schumix.Config.Logger;
@@ -42,7 +44,7 @@ namespace Schumix.Config
 		/// </summary>
 		public static void Main(string[] args)
 		{
-			sRuntime.SetProcessName("Config");
+			sRuntime.SetProcessName(Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().ManifestModule.Name));
 			bool help = false;
 			string console_encoding = Encoding.UTF8.BodyName;
 			string dumpsdir = "Dumps";

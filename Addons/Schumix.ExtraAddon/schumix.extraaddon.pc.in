@@ -1,6 +1,6 @@
 Name: Schumix.ExtraAddon
 Description: Schumix.ExtraAddon
-Version: 4.4.x
+Version: 4.4.3
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/ExtraAddon.dll

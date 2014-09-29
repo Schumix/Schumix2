@@ -330,6 +330,7 @@ Global
 		$1.scope = text/x-csharp
 		$0.CSharpFormattingPolicy = $2
 		$2.IndentSwitchBody = True
+		$2.IndentPreprocessorDirectives = False
 		$2.AnonymousMethodBraceStyle = NextLine
 		$2.PropertyBraceStyle = NextLine
 		$2.PropertyGetBraceStyle = NextLine
@@ -377,7 +378,7 @@ Global
 		$5.Text = 
 		$5.IncludeInNewFiles = True
 		description = Schumix2 IRC Bot
-		version = 4.4.x
+		version = 4.4.3
 		outputpath = Run
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution

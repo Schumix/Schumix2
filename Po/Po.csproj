@@ -15,7 +15,7 @@
         <Translation isoCode="hu" />
       </translations>
     </translations>
-    <ReleaseVersion>4.4.x</ReleaseVersion>
+    <ReleaseVersion>4.4.3</ReleaseVersion>
     <projectInformations>
       <projectInformations>
         <TranslationProjectInformation projectName="NGit" isIncluded="False" />

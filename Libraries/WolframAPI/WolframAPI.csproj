@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WolframAPI</RootNamespace>
     <AssemblyName>WolframAPI</AssemblyName>
-    <ReleaseVersion>4.4.x</ReleaseVersion>
+    <ReleaseVersion>4.4.3</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

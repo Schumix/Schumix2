@@ -23,8 +23,8 @@ using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Extensions;
 using Schumix.ExtraAddon.Config;
-using CGurus.Weather.WundergroundAPI;
-using CGurus.Weather.WundergroundAPI.Models;
+using WundergroundAPI;
+using WundergroundAPI.Models;
 
 namespace Schumix.ExtraAddon.Commands
 {

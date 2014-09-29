@@ -22,6 +22,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Threading;
+using System.Reflection;
 using System.Globalization;
 using Schumix.Irc;
 using Schumix.Framework;
@@ -86,7 +87,7 @@ namespace Schumix
 		/// </remarks>
 		private static void Main(string[] args)
 		{
-			sRuntime.SetProcessName("Schumix");
+			sRuntime.SetProcessName(Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().ManifestModule.Name));
 			bool help = false;
 			string configdir = "Configs";
 			string configfile = "Schumix.yml";
