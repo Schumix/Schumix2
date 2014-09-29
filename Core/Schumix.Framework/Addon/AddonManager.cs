@@ -244,6 +244,10 @@ namespace Schumix.Framework.Addon
 
 			AppDomain.CurrentDomain.AssemblyResolve += (sender, eargs) =>
 			{
+				// Mono 3.8 crash ???
+				if(eargs.RequestingAssembly.IsNull())
+					return null;
+
 				Log.Debug("AddonManager", "AppDomain::AssemblyResolve, sender: {0}, name: {1}, asm: {2}", sender.GetHashCode(), eargs.Name, eargs.RequestingAssembly.FullName);
 				return null;
 			};

@@ -10,7 +10,7 @@
     <RootNamespace>Schumix.Installer</RootNamespace>
     <AssemblyName>Installer</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <ReleaseVersion>4.4.2</ReleaseVersion>
+    <ReleaseVersion>4.4.3</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

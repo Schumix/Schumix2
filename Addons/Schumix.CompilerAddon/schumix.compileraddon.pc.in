@@ -1,6 +1,6 @@
 Name: Schumix.CompilerAddon
 Description: Schumix.CompilerAddon
-Version: 4.4.2
+Version: 4.4.3
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/CompilerAddon.dll

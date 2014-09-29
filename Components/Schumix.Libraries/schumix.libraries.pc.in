@@ -1,6 +1,6 @@
 Name: Schumix.Libraries
 Description: Schumix.Libraries
-Version: 4.4.2
+Version: 4.4.3
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/Schumix.Libraries.dll
