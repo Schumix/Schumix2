@@ -80,7 +80,6 @@ sln_update () {
   find $f -type f -exec sed -i 's/version = .*/version = '$newversion'/g' {} \;
 }
 
-
 csproj_update () {
   f=$1
   echo "Update csproj file: $f"
