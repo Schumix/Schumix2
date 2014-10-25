@@ -12,7 +12,7 @@ COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Debug/Schumix.Framework.dll \
 	../../Run/Debug/Schumix.Irc.dll \
-	../../External/ngit/External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll
+	../../External/ngit/External/nunit-framework/src/bin/Debug/net-4.0/nunit.framework.dll
 BUILD_DIR = ../../Run/Tests/Debug
 
 SCHUMIX_IRC_TEST_DLL_MDB_SOURCE=../../Run/Tests/Debug/Schumix.Irc.Test.dll.mdb
@@ -39,8 +39,8 @@ MONO_LIBRARIES_DLL_MDB=$(BUILD_DIR)/Mono.Libraries.dll.mdb
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Debug/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB_SOURCE=../../Run/Debug/Schumix.Irc.dll.mdb
 SCHUMIX_IRC_DLL_MDB=$(BUILD_DIR)/Schumix.Irc.dll.mdb
-NUNIT_FRAMEWORK_DLL_SOURCE=../../External/ngit/External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll
-NUNIT_FRAMEWORK_DLL_MDB_SOURCE=../../External/ngit/External/nunit-framework/bin/Debug/net-4.0/nunit.framework.dll.mdb
+NUNIT_FRAMEWORK_DLL_SOURCE=../../External/ngit/External/nunit-framework/src/bin/Debug/net-4.0/nunit.framework.dll
+NUNIT_FRAMEWORK_DLL_MDB_SOURCE=../../External/ngit/External/nunit-framework/src/bin/Debug/net-4.0/nunit.framework.dll.mdb
 NUNIT_FRAMEWORK_DLL_MDB=$(BUILD_DIR)/nunit.framework.dll.mdb
 
 endif
@@ -54,7 +54,7 @@ COMPILE_TARGET = library
 PROJECT_REFERENCES =  \
 	../../Run/Release/Schumix.Framework.dll \
 	../../Run/Release/Schumix.Irc.dll \
-	../../External/ngit/External/nunit-framework/bin/Release/net-4.0/nunit.framework.dll
+	../../External/ngit/External/nunit-framework/src/bin/Release/net-4.0/nunit.framework.dll
 BUILD_DIR = ../../Run/Tests/Release
 
 SCHUMIX_IRC_TEST_DLL_MDB=
@@ -73,7 +73,7 @@ MONO_LIBRARIES_DLL_SOURCE=../../External/ngit/External/MonoLibraries/bin/Release
 MONO_LIBRARIES_DLL_MDB=
 SCHUMIX_IRC_DLL_SOURCE=../../Run/Release/Schumix.Irc.dll
 SCHUMIX_IRC_DLL_MDB=
-NUNIT_FRAMEWORK_DLL_SOURCE=../../External/ngit/External/nunit-framework/bin/Release/net-4.0/nunit.framework.dll
+NUNIT_FRAMEWORK_DLL_SOURCE=../../External/ngit/External/nunit-framework/src/bin/Release/net-4.0/nunit.framework.dll
 NUNIT_FRAMEWORK_DLL_MDB=
 
 endif
