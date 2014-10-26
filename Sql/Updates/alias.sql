@@ -1,5 +1,15 @@
 -- ----------------------------
--- Table structure for alias
+-- Table structure for alias_console_command
+-- ----------------------------
+CREATE TABLE `alias_console_command` (
+  `Id` int(10) unsigned NOT NULL auto_increment,
+  `NewCommand` text collate utf8_hungarian_ci NOT NULL,
+  `BaseCommand` text collate utf8_hungarian_ci NOT NULL,
+  PRIMARY KEY  (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
+
+-- ----------------------------
+-- Table structure for alias_irc_command
 -- ----------------------------
 CREATE TABLE `alias_irc_command` (
   `Id` int(10) unsigned NOT NULL auto_increment,
