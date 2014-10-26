@@ -1,6 +1,6 @@
 Name: Schumix.RevisionAddon
 Description: Schumix.RevisionAddon
-Version: 4.4.3
+Version: 4.4.4
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/RevisionAddon.dll

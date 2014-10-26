@@ -132,7 +132,7 @@ namespace Schumix.ExtraAddon.Commands
 					{
 						bool enabled = false;
 						string name = sIRCMessage.Nick.ToLower();
-						var db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled FROM hlmessage WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT Enabled FROM hlmessage WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name), sIRCMessage.ServerName);
 
 						if(!db.IsNull())
 							enabled = db["Enabled"].ToString().ToLower() == SchumixBase.On;
@@ -153,7 +153,7 @@ namespace Schumix.ExtraAddon.Commands
 							return;
 						}
 
-						SchumixBase.DManager.Update("hlmessage", string.Format("Enabled = '{0}'", status), string.Format("Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName));
+						SchumixBase.DManager.Update("hlmessage", string.Format("Enabled = '{0}'", status), string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name), sIRCMessage.ServerName));
 
 						if(status == SchumixBase.On)
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], name);
@@ -165,8 +165,7 @@ namespace Schumix.ExtraAddon.Commands
 				}
 				else
 				{
-					string name = sIRCMessage.Nick.ToLower();
-					SchumixBase.DManager.Update("hlmessage", string.Format("Info = '{0}', Enabled = 'on'", sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space))), string.Format("Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName));
+					SchumixBase.DManager.Update("hlmessage", string.Format("Info = '{0}', Enabled = 'on'", sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space))), string.Format("Name = '{0}' And ServerName = '{1}'", sIRCMessage.SqlEscapeNick.ToLower(), sIRCMessage.ServerName));
 					SchumixBase.DManager.Update("schumix", "FunctionStatus = 'on'", string.Format("FunctionName = 'autohl' And ServerName = '{0}'", sIRCMessage.ServerName));
 					SchumixBase.DManager.Update("channels", string.Format("Functions = '{0}'", sMyChannelInfo.ChannelFunctions(IChannelFunctions.Autohl, SchumixBase.On, sIRCMessage.Channel)), string.Format("Channel = '{0}' And ServerName = '{1}'", sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					sMyChannelInfo.FunctionsReload();

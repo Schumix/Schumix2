@@ -51,7 +51,7 @@ namespace Schumix.Irc
 				sIrcLog.LogInFile(sIRCMessage.Channel, sIRCMessage.Nick, sIRCMessage.Args);
 
 			if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
-				sIRCMessage.Channel = sIRCMessage.Nick;
+				sIRCMessage.Channel = sIRCMessage.Nick; // Nem 100% a müködés. Ha baj van akkor az adott helyen kell javítani nem így globálisan. (sqlescape)
 
 			sCtcpSender.CtcpReply(sIRCMessage);
 

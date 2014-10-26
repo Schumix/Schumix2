@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Schumix.Components</RootNamespace>
     <AssemblyName>Schumix.Components</AssemblyName>
-    <ReleaseVersion>4.4.3</ReleaseVersion>
+    <ReleaseVersion>4.4.4</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
