@@ -106,7 +106,7 @@ namespace Schumix.CompilerAddon
 					return;
 
 				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
-					sIRCMessage.Channel = sIRCMessage.Nick;
+					sIRCMessage.Channel = sIRCMessage.Nick; // Nem 100% így. (sqlescape)
 
 				string command = IRCConfig.List[sIRCMessage.ServerName].NickName + SchumixBase.Comma;
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);

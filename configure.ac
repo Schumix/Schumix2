@@ -1,7 +1,7 @@
 dnl Warning: This is an automatically generated file, do not edit!
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
-AC_INIT([Schumix], [4.4.2])
+AC_INIT([Schumix], [4.4.4])
 AM_INIT_AUTOMAKE([foreign])
 AM_MAINTAINER_MODE
 
@@ -72,8 +72,8 @@ External/MySql.Data/Source/MySql.Data/mysql.data.schumix.pc
 External/MySql.Data/Source/MySql.Data/Makefile
 External/ngit/External/MonoLibraries/Mono.Libraries/mono.libraries.pc
 External/ngit/External/MonoLibraries/Mono.Libraries/Makefile
-External/ngit/External/nunit-framework/src/framework/nunit.framework.schumix.pc
-External/ngit/External/nunit-framework/src/framework/Makefile
+External/ngit/External/nunit-framework/src/NUnitFramework/framework/nunit.framework.schumix.pc
+External/ngit/External/nunit-framework/src/NUnitFramework/framework/Makefile
 Core/Schumix.Framework/schumix.framework.pc
 Core/Schumix.Framework/Makefile
 Core/Schumix.Irc/schumix.irc.pc

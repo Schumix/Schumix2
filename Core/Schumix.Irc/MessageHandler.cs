@@ -218,7 +218,7 @@ namespace Schumix.Irc
 				}
 			}
 
-			sIRCMessage.Channel = sIRCMessage.Nick;
+			sIRCMessage.Channel = sIRCMessage.Nick; // Nem 100% hogy így tökéletese a védelem.
 			HandleCommand(sIRCMessage);
 		}
 

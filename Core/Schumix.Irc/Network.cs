@@ -662,8 +662,8 @@ namespace Schumix.Irc
 				IMessage.Channel = sUtilities.SqlEscape(IrcCommand[2]);
 
 			string[] userdata = IMessage.Hostmask.Split('!');
-			IMessage.Nick = sUtilities.SqlEscape(userdata[0]);
-			IMessage.OriginNick = userdata[0];
+			IMessage.Nick = userdata[0];
+			IMessage.SqlEscapeNick = sUtilities.SqlEscape(userdata[0]);
 
 			if(userdata.Length > 1)
 			{

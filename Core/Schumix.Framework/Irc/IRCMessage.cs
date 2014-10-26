@@ -28,7 +28,7 @@ namespace Schumix.Framework.Irc
 		public string Channel { get; set; }
 		public string Args { get; set; }
 		public string Nick { get; set; }
-		public string OriginNick { get; set; }
+		public string SqlEscapeNick { get; set; }
 		public string User { get; set; }
 		public string Host { get; set; }
 		public string[] Info { get; set; }

@@ -3,6 +3,8 @@
 ## 4.5.0 (2014-xx-xx)
 
  * Base.sql és maffiagame.sql átalakítva. Így megjelennek a színkódok minden fajta böngészőbe és editorban.
+ * Issue 119 javítva.
+ * Admin parancs fix. Mostantól nem írja ki hogy nem azonosítottad magadat miközbe aktiválnád a nickedet és hibás volt az aktiválás.
  * License bekerült a script fájlokba is.
  * Verzió frissítéshez elkészült a script. Mostantól ezzel mindenhol le lehet a kódba frissíteni a verziót. Akár úgy hogy kiolvassa a Consts.cs-ből vagy direktbe megadásra kerül a varzió.
  * Issue 116 elkészült.

@@ -92,7 +92,7 @@ namespace Schumix.ExtraAddon.Commands
 
 				if(sMyChannelInfo.FSelect(IFunctions.Autokick) && sMyChannelInfo.FSelect(IChannelFunctions.Autokick, channel))
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", nick.ToLower(), _servername);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(nick.ToLower()), _servername);
 					if(!db.IsNull())
 					{
 						sSender.Kick(channel, nick, db["Reason"].ToString());
@@ -105,7 +105,7 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				if(sMyChannelInfo.FSelect(IFunctions.Autokick) && sMyChannelInfo.FSelect(IChannelFunctions.Autokick, _channel))
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", nick.ToLower(), _servername);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(nick.ToLower()), _servername);
 					if(!db.IsNull())
 					{
 						sSender.Kick(_channel, nick, db["Reason"].ToString());
@@ -128,7 +128,7 @@ namespace Schumix.ExtraAddon.Commands
 				{
 					if(youtube.IsTitle())
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00031,0You\u00030,4Tube\u0003\u0002: {0}", youtube.GetTitle());
+						sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00031,0You\u00030,4Tube\u0003\u0002: {0} \u0002\u000304{1}:\u000f\u000f {2}", youtube.GetTitle(), sLConsole.Other("YoutubeViewCount", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)), youtube.GetViewCount());
 						return;
 					}
 				}
@@ -162,7 +162,7 @@ namespace Schumix.ExtraAddon.Commands
 
 				if(sMyChannelInfo.FSelect(IFunctions.Message) && sMyChannelInfo.FSelect(IChannelFunctions.Message, sIRCMessage.Channel))
 				{
-					var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}' AND ServerName = '{2}' ORDER BY `Id` ASC", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}' AND ServerName = '{2}' ORDER BY `Id` ASC", sIRCMessage.SqlEscapeNick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						bool b = false;
@@ -178,7 +178,7 @@ namespace Schumix.ExtraAddon.Commands
 						}
 
 						if(b)
-							SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
+							SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sIRCMessage.SqlEscapeNick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					}
 				}
 			}

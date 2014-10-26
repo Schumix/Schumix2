@@ -73,7 +73,7 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.Query("SELECT Code FROM notes WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
+				var db = SchumixBase.DManager.Query("SELECT Code FROM notes WHERE Name = '{0}' And ServerName = '{1}'", sIRCMessage.SqlEscapeNick.ToLower(), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					string codes = string.Empty;
@@ -116,12 +116,12 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					string name = sIRCMessage.Nick;
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[6]))
 						{
-							SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sIRCMessage.Host), string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName));
+							SchumixBase.DManager.Update("notes_users", string.Format("Vhost = '{0}'", sIRCMessage.Host), string.Format("Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(name.ToLower()), sIRCMessage.ServerName));
 							sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						}
 						else
@@ -156,13 +156,13 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					string name = sIRCMessage.Nick;
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), _servername);
+					string name = sIRCMessage.SqlEscapeNick.ToLower();
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name, _servername);
 					if(!db.IsNull())
 					{
 						if(db["Password"].ToString() == sUtilities.Sha1(sIRCMessage.Info[6]))
 						{
-							SchumixBase.DManager.Update("notes_users", string.Format("Password = '{0}'", sUtilities.Sha1(sIRCMessage.Info[7])), string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName));
+							SchumixBase.DManager.Update("notes_users", string.Format("Password = '{0}'", sUtilities.Sha1(sIRCMessage.Info[7])), string.Format("Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName));
 							sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.Info[7]);
 						}
 						else
@@ -184,8 +184,8 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					string name = sIRCMessage.Nick;
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName);
+					string name = sIRCMessage.SqlEscapeNick.ToLower();
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
@@ -193,7 +193,7 @@ namespace Schumix.ExtraAddon.Commands
 					}
 
 					string pass = sIRCMessage.Info[6];
-					SchumixBase.DManager.Insert("`notes_users`(ServerId, ServerName, Name, Password, Vhost)", sIRCMessage.ServerId, sIRCMessage.ServerName, name.ToLower(), sUtilities.Sha1(pass), sIRCMessage.Host);
+					SchumixBase.DManager.Insert("`notes_users`(ServerId, ServerName, Name, Password, Vhost)", sIRCMessage.ServerId, sIRCMessage.ServerName, name, sUtilities.Sha1(pass), sIRCMessage.Host);
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "remove")
@@ -211,15 +211,15 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					string name = sIRCMessage.Nick;
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName);
+					string name = sIRCMessage.SqlEscapeNick.ToLower();
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
 					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 						return;
 					}
 
-					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName);
+					db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						if(db["Password"].ToString() != sUtilities.Sha1(sIRCMessage.Info[6]))
@@ -230,8 +230,8 @@ namespace Schumix.ExtraAddon.Commands
 						}
 					}
 
-					SchumixBase.DManager.Delete("notes_users", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName));
-					SchumixBase.DManager.Delete("notes", string.Format("Name = '{0}' And ServerName = '{1}'", name.ToLower(), sIRCMessage.ServerName));
+					SchumixBase.DManager.Delete("notes_users", string.Format("Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName));
+					SchumixBase.DManager.Delete("notes", string.Format("Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, text[4]);
 				}
 			}
@@ -264,19 +264,19 @@ namespace Schumix.ExtraAddon.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes WHERE Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes WHERE Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.SqlEscapeNick.ToLower(), sIRCMessage.ServerName);
 					if(db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
 					}
 
-					SchumixBase.DManager.Delete("notes", string.Format("Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName));
+					SchumixBase.DManager.Delete("notes", string.Format("Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sIRCMessage.SqlEscapeNick.ToLower(), sIRCMessage.ServerName));
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 				}
 				else
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Note FROM notes WHERE Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Note FROM notes WHERE Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sIRCMessage.SqlEscapeNick.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("notes/code", sIRCMessage.Channel, sIRCMessage.ServerName), db["Note"].ToString());
 					else
@@ -305,27 +305,27 @@ namespace Schumix.ExtraAddon.Commands
 				}
 
 				string code = sIRCMessage.Info[4];
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes WHERE Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(code.ToLower()), sIRCMessage.Nick.ToLower(), sIRCMessage.ServerName);
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes WHERE Code = '{0}' AND Name = '{1}' And ServerName = '{2}'", sUtilities.SqlEscape(code.ToLower()), sIRCMessage.SqlEscapeNick.ToLower(), sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 					return;
 				}
 
-				SchumixBase.DManager.Insert("`notes`(ServerId, ServerName, Code, Name, Note)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(code.ToLower()), sIRCMessage.Nick.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)));
+				SchumixBase.DManager.Insert("`notes`(ServerId, ServerName, Code, Name, Note)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(code.ToLower()), sIRCMessage.SqlEscapeNick.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)));
 				sSendMessage.SendChatMessage(sIRCMessage, text[2], code);
 			}
 		}
 
 		private bool IsUser(string Name)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", Name.ToLower(), _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			return !db.IsNull();
 		}
 
 		private bool IsUser(string Name, string Vhost)
 		{
-			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", Name.ToLower(), _servername);
+			var db = SchumixBase.DManager.QueryFirstRow("SELECT Vhost FROM notes_users WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), _servername);
 			if(!db.IsNull())
 			{
 				string vhost = db["Vhost"].ToString();

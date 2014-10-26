@@ -52,7 +52,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				string name = sIRCMessage.Nick.ToLower();
+				string name = sIRCMessage.SqlEscapeNick.ToLower();
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
@@ -63,14 +63,17 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					}
 					else
+					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+						return;
+					}
 				}
 
-				if(!sChannelList.IsChannelList(name))
+				if(!sChannelList.IsChannelList(sIRCMessage.Nick.ToLower()))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
-					sChannelList.NewThread(sIRCMessage.ServerName, name);
+					sChannelList.NewThread(sIRCMessage.ServerName, sIRCMessage.Nick.ToLower());
 				}
 
 				status = false;
@@ -96,7 +99,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				string name = sIRCMessage.Nick.ToLower();
+				string name = sIRCMessage.SqlEscapeNick.ToLower();
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
@@ -107,7 +110,10 @@ namespace Schumix.Irc.Commands
 						sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.Info[6]);
 					}
 					else
+					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
+						return;
+					}
 				}
 
 				status = false;

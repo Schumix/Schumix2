@@ -23,6 +23,7 @@ using System.IO;
 using System.Text;
 using System.Net;
 using System.Threading;
+using System.Reflection;
 using System.Net.Sockets;
 using System.Globalization;
 using Schumix.Framework;
@@ -59,7 +60,7 @@ namespace Schumix.Server
 		/// </summary>
 		private static void Main(string[] args)
 		{
-			sRuntime.SetProcessName("Server");
+			sRuntime.SetProcessName(Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().ManifestModule.Name));
 			bool help = false;
 			string configdir = "Configs";
 			string configfile = "Server.yml";

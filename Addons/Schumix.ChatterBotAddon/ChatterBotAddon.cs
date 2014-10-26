@@ -64,7 +64,7 @@ namespace Schumix.ChatterBotAddon
 				return;
 
 			if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
-				sIRCMessage.Channel = sIRCMessage.Nick;
+				sIRCMessage.Channel = sIRCMessage.Nick; // Nem 100% így. (sqlescape)
 
 			if(sMyChannelInfo.FSelect(IFunctions.Chatterbot) && sMyChannelInfo.FSelect(IChannelFunctions.Chatterbot, sIRCMessage.Channel))
 				Task.Factory.StartNew(() => sSendMessage.SendChatMessage(sIRCMessage, HttpUtility.HtmlDecode(session.Think(sIRCMessage.Args))));
