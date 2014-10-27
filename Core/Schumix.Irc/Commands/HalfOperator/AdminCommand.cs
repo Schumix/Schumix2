@@ -388,7 +388,7 @@ namespace Schumix.Irc.Commands
 					return;
 
 				var text = sLManager.GetCommandTexts("admin", sIRCMessage.Channel, sIRCMessage.ServerName);
-				if(text.Length < 6)
+				if(text.Length < 7)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
@@ -425,7 +425,7 @@ namespace Schumix.Irc.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], commands.Remove(0, 3, " | "));
 
 					if(!aliascommands.IsNullOrEmpty())
-						sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00033Alias parancsok:\u000f\u000f \u0002{0}\u000f", aliascommands.Remove(0, 3, " | "));
+						sSendMessage.SendChatMessage(sIRCMessage, text[6], aliascommands.Remove(0, 3, " | "));
 				}
 				else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator))
 				{
@@ -459,7 +459,7 @@ namespace Schumix.Irc.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, text[3], commands.Remove(0, 3, " | "));
 
 					if(!aliascommands.IsNullOrEmpty())
-						sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00033Alias parancsok:\u000f\u000f \u0002{0}\u000f", aliascommands.Remove(0, 3, " | "));
+						sSendMessage.SendChatMessage(sIRCMessage, text[6], aliascommands.Remove(0, 3, " | "));
 				}
 				else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Administrator))
 				{
@@ -492,7 +492,7 @@ namespace Schumix.Irc.Commands
 					sSendMessage.SendChatMessage(sIRCMessage, text[5], commands.Remove(0, 3, " | "));
 
 					if(!aliascommands.IsNullOrEmpty())
-						sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00033Alias parancsok:\u000f\u000f \u0002{0}\u000f", aliascommands.Remove(0, 3, " | "));
+						sSendMessage.SendChatMessage(sIRCMessage, text[6], aliascommands.Remove(0, 3, " | "));
 				}
 			}
 		}

@@ -31,7 +31,7 @@ namespace Schumix.Irc.Commands
 		protected void HandleXbot(IRCMessage sIRCMessage)
 		{
 			var text = sLManager.GetCommandTexts("xbot", sIRCMessage.Channel, sIRCMessage.ServerName);
-			if(text.Length < 3)
+			if(text.Length < 4)
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 				return;
@@ -67,7 +67,7 @@ namespace Schumix.Irc.Commands
 			sSendMessage.SendChatMessage(sIRCMessage, text[2], commands.Remove(0, 3, " | "));
 
 			if(!aliascommands.IsNullOrEmpty())
-				sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00033Alias parancsok:\u000f\u000f \u0002{0}\u000f", aliascommands.Remove(0, 3, " | "));
+				sSendMessage.SendChatMessage(sIRCMessage, text[3], aliascommands.Remove(0, 3, " | "));
 		}
 	}
 }

@@ -1,0 +1,7 @@
+-- huHU
+UPDATE `localized_command` SET Text = "\u0002\u00033Fél Operátor parancsok!\u000f\u000f\n\u0002\u00033Parancsok:\u000f\u000f \u0002{0}\u000f\n\u0002\u00033Operátor parancsok!\u000f\u000f\n\u0002\u00033Parancsok:\u000f\u000f \u0002{0}\u000f\n\u0002\u00033Adminisztrátor parancsok!\u000f\u000f\n\u0002\u00033Parancsok:\u000f\u000f \u0002{0}\u000f\n\u0002\u00033Alias parancsok:\u000f\u000f \u0002{0}\u000f" WHERE Language = 'huHU' AND Command = 'admin';
+UPDATE `localized_command` SET Text = "\u0002\u00033Verzió:\u000f\u000f \u000310{0}\u000f\n\u0002\u00033Programot írta:\u000f\u000f {0}\n\u0002\u00033Parancsok:\u000f\u000f \u0002{0}\u000f\n\u0002\u00033Alias parancsok:\u000f\u000f \u0002{0}\u000f" WHERE Language = 'huHU' AND Command = 'xbot';
+
+-- enUS
+UPDATE `localized_command` SET Text = "\u0002\u00033Half operator commands!\u000f\u000f\n\u0002\u00033Commands:\u000f\u000f \u0002{0}\u000f\n\u0002\u00033Operator commands!\u000f\u000f\n\u0002\u00033Commands:\u000f\u000f \u0002{0}\u000f\n\u0002\u00033Administrator commands!\u000f\u000f\n\u0002\u00033Commands:\u000f\u000f \u0002{0}\u000f\u000f\n\u0002\u00033Alias commands:\u000f\u000f \u0002{0}\u000f" WHERE Language = 'enUS' AND Command = 'admin';
+UPDATE `localized_command` SET Text = "\u0002\u00033Version:\u000f\u000f \u000310{0}\u000f\n\u0002\u00033Programmed by:\u000f\u000f {0}\n\u0002\u00033Commands:\u000f\u000f \u0002{0}\u000f\n\u0002\u00033Alias commands:\u000f\u000f \u0002{0}\u000f" WHERE Language = 'enUS' AND Command = 'xbot';
