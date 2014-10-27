@@ -47,7 +47,7 @@ namespace Schumix.Irc.Commands
 				return;
 			}
 
-			else if(sIRCMessage.Info[4].ToLower() == "command")
+			if(sIRCMessage.Info[4].ToLower() == "command")
 			{
 				if(sIRCMessage.Info.Length < 6)
 				{

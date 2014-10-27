@@ -22,6 +22,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Linq;
+using System.Data;
 using System.Collections.Generic;
 using Schumix.Irc;
 using Schumix.Framework;
@@ -95,6 +96,7 @@ namespace Schumix.Console
 			RegisterHandler("cchannel",   HandleConsoleToChannel);
 			RegisterHandler("cserver",    HandleOldServerToNewServer);
 			RegisterHandler("admin",      HandleAdmin);
+			RegisterHandler("alias",      HandleAlias);
 			RegisterHandler("function",   HandleFunction);
 			RegisterHandler("channel",    HandleChannel);
 			RegisterHandler("connect",    HandleConnect);
@@ -107,6 +109,17 @@ namespace Schumix.Console
 			RegisterHandler("ignore",     HandleIgnore);
 			RegisterHandler("plugin",     HandlePlugin);
 			RegisterHandler("quit",       HandleQuit);
+
+			var db = SchumixBase.DManager.Query("SELECT NewCommand, BaseCommand FROM alias_console_command");
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string newcommand = row["NewCommand"].ToString();
+					string basecommand = row["BaseCommand"].ToString();
+					RegisterHandler(newcommand, ConsoleMethodMap[basecommand].Method);
+				}
+			}
 
 			Log.Notice("CCommandManager", sLConsole.GetString("All Command Handler are registered."));
 		}

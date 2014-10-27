@@ -65,6 +65,7 @@
     <Compile Include="Console\Commands\LeaveCommand.cs" />
     <Compile Include="Console\Commands\JoinCommand.cs" />
     <Compile Include="Console\Commands\NickCommand.cs" />
+    <Compile Include="Console\Commands\AliasCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
