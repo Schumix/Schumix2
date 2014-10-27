@@ -57,16 +57,16 @@ namespace Schumix.Irc.Commands
 
 				if(sIRCMessage.Info[5].ToLower() == "add")
 				{
-					/*var text = sLManager.GetCommandTexts("alias/command/add", sIRCMessage.Channel, sIRCMessage.ServerName);
-					if(text.Length < 2)
+					var text = sLManager.GetCommandTexts("alias/command/add", sIRCMessage.Channel, sIRCMessage.ServerName);
+					if(text.Length < 8)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
-					}*/
+					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva az új parancs neve!");
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
 					}
 
@@ -82,48 +82,48 @@ namespace Schumix.Irc.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(newcommand), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Már szerepel a listán!");
+						sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 						return;
 					}
 
 					var db1 = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(basecommand), sIRCMessage.ServerName);
 					if(!db1.IsNull())
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Alias parancsból nem csinálhatsz újabb alias parancsot!");
+						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 						return;
 					}
 
 					if(sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(newcommand))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Már létezik ilyen parancs: {0}", newcommand);
+						sSendMessage.SendChatMessage(sIRCMessage, text[3], newcommand);
 						return;
 					}
 
 					if(!sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(basecommand))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Nem létezik ilyen parancs: {0}", basecommand);
+						sSendMessage.SendChatMessage(sIRCMessage, text[4], basecommand);
 						return;
 					}
 
 					if(sIgnoreCommand.IsIgnore(basecommand))
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Az alábbi parancs tiltva van: {0}", basecommand);
-						sSendMessage.SendChatMessage(sIRCMessage, "Ha használni szeretnéd old fel az \"ignore\" parancs segítségével.");
+						sSendMessage.SendChatMessage(sIRCMessage, text[5], basecommand);
+						sSendMessage.SendChatMessage(sIRCMessage, text[6]);
 						return;
 					}
 
 					sIrcBase.Networks[sIRCMessage.ServerName].SchumixRegisterHandler(newcommand, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[basecommand].Method, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[basecommand].Permission);
 					SchumixBase.DManager.Insert("`alias_irc_command`(ServerId, ServerName, NewCommand, BaseCommand)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(newcommand), sUtilities.SqlEscape(basecommand));
-					sSendMessage.SendChatMessage(sIRCMessage, "{0} parancs létrehozva az alábbi parancshoz: {1}", newcommand, basecommand);
+					sSendMessage.SendChatMessage(sIRCMessage, text[7], newcommand, basecommand);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "remove")
 				{
-					/*var text = sLManager.GetCommandTexts("alias/command/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
+					var text = sLManager.GetCommandTexts("alias/command/remove", sIRCMessage.Channel, sIRCMessage.ServerName);
 					if(text.Length < 2)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
-					}*/
+					}
 
 					if(sIRCMessage.Info.Length < 7)
 					{
@@ -136,22 +136,22 @@ namespace Schumix.Irc.Commands
 					var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(command), sIRCMessage.ServerName);
 					if(db.IsNull())
 					{
-						sSendMessage.SendChatMessage(sIRCMessage, "Nem szerepel a listán!");
+						sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 						return;
 					}
 
 					sIrcBase.Networks[sIRCMessage.ServerName].SchumixRemoveHandler(command, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[command].Method);
 					SchumixBase.DManager.Delete("alias_irc_command", string.Format("NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(command), sIRCMessage.ServerName));
-					sSendMessage.SendChatMessage(sIRCMessage, "{0} parancs eltávolítva az alias parancs listából.", command);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], command);
 				}
 				else if(sIRCMessage.Info[5].ToLower() == "list")
 				{
-					/*var text = sLManager.GetCommandTexts("alias/command/list", sIRCMessage.Channel, sIRCMessage.ServerName);
-					if(text.Length < 6)
+					var text = sLManager.GetCommandTexts("alias/command/list", sIRCMessage.Channel, sIRCMessage.ServerName);
+					if(text.Length < 2)
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 						return;
-					}*/
+					}
 
 					var db = SchumixBase.DManager.Query("SELECT NewCommand, BaseCommand FROM alias_irc_command WHERE ServerName = '{0}'", sIRCMessage.ServerName);
 					if(!db.IsNull())
@@ -166,9 +166,9 @@ namespace Schumix.Irc.Commands
 						}
 
 						if(commandlist.Length > 0)
-							sSendMessage.SendChatMessage(sIRCMessage, "\u0002\u00033Lista:\u000f\u000f {0}", commandlist.Remove(0, 2, ", "));
+							sSendMessage.SendChatMessage(sIRCMessage, text[0], commandlist.Remove(0, 2, ", "));
 						else
-							sSendMessage.SendChatMessage(sIRCMessage, "Nincs alias parancs!");
+							sSendMessage.SendChatMessage(sIRCMessage, text[1]);
 					}
 					else
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));

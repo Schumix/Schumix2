@@ -567,6 +567,9 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/change/shorturl", "Sikeresen módosítva a beállítás.\nNem szerepel a név a listában!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/change/url", "Nem szerepel a név a listában!\nUrl sikeresen módosítva.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "rss/change/website", "Nem szerepel a név a listában!\nOldal neve sikeresen módosítva.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "alias/command/add", "Nincs megadva az új parancs neve!\nMár szerepel a listán!\nAlias parancsból nem csinálhatsz újabb alias parancsot!\nMár létezik ilyen parancs: {0}\nNem létezik ilyen parancs: {0}\nAz alábbi parancs tiltva van: {0}\nHa használni szeretnéd old fel az 'ignore' parancs segítségével.\n{0} parancs létrehozva az alábbi parancshoz: {1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "alias/command/remove", "Nem szerepel a listán!\n{0} parancs eltávolítva az alias parancs listából.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "alias/command/list", "\u0002\u00033Lista:\u000f\u000f {0}\nNincs alias parancs!");
 
 -- enUS
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "schumix2/sys", "\u0002\u00033Version:\u000f\u000f \u000310{0}\u000f\n\u0002\u00033Platform:\u000f\u000f {0}\n\u0002\u00033OSVersion:\u000f\u000f {0}\n\u0002\u00033Programming language:\u000f\u000f c#\n\u0002\u00033Memory allocation:\u000f\u000f\u00035 {0}\u000f MB\n\u0002\u00033Memory allocation:\u000f\u000f\u00038 {0}\u000f MB\n\u0002\u00033Memory allocation:\u000f\u000f\u00033 {0}\u000f MB\n\u0002\u00033Uptime:\u000f\u000f {0}");
