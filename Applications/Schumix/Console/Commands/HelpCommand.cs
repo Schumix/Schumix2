@@ -86,7 +86,7 @@ namespace Schumix.Console
 			foreach(var t in sLManager.GetConsoleCommandHelpTexts(sConsoleMessage.Info.SplitToString(1, "/")))
 			{
 				if(!aliascommand.IsNullOrEmpty())
-					Log.Notice("Console", t.Replace(sConsoleMessage.Info[1], aliascommand));
+					Log.Notice("Console", t.Replace(string.Format(" {0} ", sConsoleMessage.Info[1]), string.Format(" {0} ", aliascommand)));
 				else
 					Log.Notice("Console", t);
 			}

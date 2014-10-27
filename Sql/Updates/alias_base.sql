@@ -8,8 +8,12 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("huHU", 
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "alias/command/add", "Nincs megadva az új parancs neve!\nMár szerepel a listán!\nAlias parancsból nem csinálhatsz újabb alias parancsot!\nMár létezik ilyen parancs: {0}\nNem létezik ilyen parancs: {0}\n{0} parancs létrehozva az alábbi parancshoz: {1}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "alias/command/remove", "Nem szerepel a listán!\n{0} parancs eltávolítva az alias parancs listából.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "alias/command/list", "Lista: {0}\nNincs alias parancs!");
+UPDATE `localized_console_command` SET Text = "Parancsok: add | remove | info | list | rank" WHERE Language = 'huHU' AND Command = 'admin';
+UPDATE `localized_console_command_help` SET Text = "Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.\nAdmin parancsai: info | list | add | remove | rank" WHERE Language = 'huHU' AND Command = 'admin';
 
 -- enUS
 UPDATE `localized_command` SET Text = "\u0002\u00033Half operator commands!\u000f\u000f\n\u0002\u00033Commands:\u000f\u000f \u0002{0}\u000f\n\u0002\u00033Operator commands!\u000f\u000f\n\u0002\u00033Commands:\u000f\u000f \u0002{0}\u000f\n\u0002\u00033Administrator commands!\u000f\u000f\n\u0002\u00033Commands:\u000f\u000f \u0002{0}\u000f\u000f\n\u0002\u00033Alias commands:\u000f\u000f \u0002{0}\u000f" WHERE Language = 'enUS' AND Command = 'admin';
 UPDATE `localized_command` SET Text = "\u0002\u00033Version:\u000f\u000f \u000310{0}\u000f\n\u0002\u00033Programmed by:\u000f\u000f {0}\n\u0002\u00033Commands:\u000f\u000f \u0002{0}\u000f\n\u0002\u00033Alias commands:\u000f\u000f \u0002{0}\u000f" WHERE Language = 'enUS' AND Command = 'xbot';
 UPDATE `localized_console_command` SET Text = "If you wrote behind the command the command or the name or co-command then gets information about usage.\nCommands: {0}\nAlias commands: {0}" WHERE Language = 'enUS' AND Command = 'help';
+UPDATE `localized_console_command` SET Text = "Commands: add | remove | info | list | rank" WHERE Language = 'enUS' AND Command = 'admin';
+UPDATE `localized_console_command_help` SET Text = "Print Operators or Administrators can use commands.\nAdmin commands: info | list | add | remove | rank" WHERE Language = 'enUS' AND Command = 'admin';

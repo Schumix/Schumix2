@@ -40,7 +40,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/add", "A név már szerepel az admin listán!\nAdmin hozzáadva: {0}\nJelenlegi jelszó: {0}\nNotes felhasználó hozzáadva: {0}\nJelenlegi jelszó: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/remove", "Ilyen név nem létezik!\nAdmin törölve: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/rank", "Rang sikeresen módosítva.\nHibás rang!");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "Parancsok: help | list | add | remove");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "Parancsok: add | remove | info | list | rank");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "function/channel/info", "Bekapcsolva: {0}\nKikapcsolva: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "function/channel", "{0}: bekapcsolva\n{0}: kikapcsolva\nIlyen csatorna nem létezik!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("huHU", "function/update", "Sikeresen frissítve {0} csatornán a funkciók.");
@@ -95,7 +95,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/add", "The name is already in the admin list!\nAdmin added to the list: {0}\nPassword: {0}\nNotes user added to the list: {0}\nPassword: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/remove", "No such nick!\nAdmin was deleted: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/rank", "Successfully changed the rank!\nRank error!");
-INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin", "Commands: help | list | add | remove");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin", "Commands: add | remove | info | list | rank");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "function/channel/info", "On: {0}\nOff: {0}");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "function/channel", "{0}: On\n{0}: Off\nNo such channel!");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "function/update", "Successfully updated the channel functions in: {0}.");
@@ -139,7 +139,7 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "cserver", "New server for the commands: {0}");
 
 -- huHU
-INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.\nAdmin parancsai: info | list | add | remove | rank | access | newpassword");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.\nAdmin parancsai: info | list | add | remove | rank");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/add", "Új admin hozzáadása.\nHasználata: admin add <admin neve>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/remove", "Admin eltávolítása.\nHasználata: admin remove <admin neve>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin/rank", "Admin rangjának megváltoztatása.\nHasználata: admin rank <admin neve> <új rang pl halfoperator: 0, operator: 1, administrator: 2>");
@@ -201,7 +201,7 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "cserver", "A szerverek között válthatunk vele.\nHasználata: cserver <szerver neve>");
 
 -- enUS
-INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin", "Print Operators or Administrators can use commands.\nAdmin commands: info | list | add | remove | rank | access | newpassword");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin", "Print Operators or Administrators can use commands.\nAdmin commands: info | list | add | remove | rank");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/add", "Add new admin.\nUse: admin add <admin name>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/remove", "Removing admin.\nUse: admin remove <admin name>");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin/rank", "Admin rank change.\nUse: admin rank <admin name> <new rank e.g. halfoperator: 0, operator: 1, administrator: 2>");
