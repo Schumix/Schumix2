@@ -127,7 +127,7 @@ namespace Schumix.Console
 		/// <summary>
 		///     Parancs regisztráló függvény.
 		/// </summary>
-		public void RegisterHandler(string command, ConsoleDelegate method)
+		public static void RegisterHandler(string command, ConsoleDelegate method)
 		{
 			if(ConsoleMethodMap.ContainsKey(command))
 				ConsoleMethodMap[command].Method += method;
@@ -138,7 +138,7 @@ namespace Schumix.Console
 		/// <summary>
 		///     Parancs eltávolító függvény.
 		/// </summary>
-		public void RemoveHandler(string command)
+		public static void RemoveHandler(string command)
 		{
 			if(ConsoleMethodMap.ContainsKey(command))
 				ConsoleMethodMap.Remove(command);
@@ -147,7 +147,7 @@ namespace Schumix.Console
 		/// <summary>
 		///     Parancs eltávolító függvény.
 		/// </summary>
-		public void RemoveHandler(string command, ConsoleDelegate method)
+		public static void RemoveHandler(string command, ConsoleDelegate method)
 		{
 			if(ConsoleMethodMap.ContainsKey(command))
 			{

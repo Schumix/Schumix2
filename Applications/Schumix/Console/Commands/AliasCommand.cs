@@ -89,19 +89,19 @@ namespace Schumix.Console
 						return;
 					}
 
-					/*if(sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(newcommand))
+					if(CCommandManager.GetCommandHandler().ContainsKey(newcommand))
 					{
 						Log.Warning("Console", text[3], newcommand);
 						return;
 					}
 
-					if(!sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(basecommand))
+					if(!CCommandManager.GetCommandHandler().ContainsKey(basecommand))
 					{
 						Log.Error("Console", text[4], basecommand);
 						return;
-					}*/
+					}
 
-					//sIrcBase.Networks[sIRCMessage.ServerName].SchumixRegisterHandler(newcommand, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[basecommand].Method, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[basecommand].Permission);
+					CCommandManager.RegisterHandler(newcommand, CCommandManager.GetCommandHandler()[basecommand].Method);
 					SchumixBase.DManager.Insert("`alias_console_command`(NewCommand, BaseCommand)", sUtilities.SqlEscape(newcommand), sUtilities.SqlEscape(basecommand));
 					Log.Notice("Console", text[5], newcommand, basecommand);
 				}
@@ -129,7 +129,7 @@ namespace Schumix.Console
 						return;
 					}
 
-					//sIrcBase.Networks[sIRCMessage.ServerName].SchumixRemoveHandler(command, sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[command].Method);
+					CCommandManager.RemoveHandler(command, CCommandManager.GetCommandHandler()[command].Method);
 					SchumixBase.DManager.Delete("alias_console_command", string.Format("NewCommand = '{0}'", sUtilities.SqlEscape(command)));
 					Log.Notice("Console", text[1], command);
 				}
