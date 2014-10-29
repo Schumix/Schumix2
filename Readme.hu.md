@@ -1,6 +1,6 @@
 # Schumix2 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Schumix/schumix2/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
-  [1]: https://ci.appveyor.com/project/megax/Schumix2/build/artifacts
+  [1]: https://ci.appveyor.com/project/megax/Schumix2
   [2]: http://nvlabs.github.com/cub/download-icon.png (Download for Windows)
 
 Platform | Konfiguráció | Build állapot | Letöltések

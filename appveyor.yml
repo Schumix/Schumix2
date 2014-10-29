@@ -10,6 +10,14 @@
 version: 4.4.4.{build}
 
 #
+# Environment
+# 
+environment:
+  matrix:
+    - configuration: Debug
+    - configuration: Release
+
+#
 # Branches
 # 
 branches:
@@ -39,11 +47,6 @@ build:
 # Platform
 #
 platform: Any CPU
-
-#
-# Configuration
-#
-configuration: Debug
 
 #
 # Disable tests for now
