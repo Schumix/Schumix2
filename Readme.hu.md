@@ -3,7 +3,7 @@
 Platform | Konfiguráció | Build állapot | Letöltések
 ----|----|----|----
 Ubuntu | Debug  | [![Build Status](https://travis-ci.org/Schumix/Schumix2.svg?branch=master)](https://travis-ci.org/Schumix/Schumix2) | Nincs
-Windows | Debug | [![Build status](https://ci.appveyor.com/api/projects/status/u8njmbb6ivqisgiu/branch/master)](https://ci.appveyor.com/project/megax/Schumix2) | Nincs
+Windows | Debug | [![Build status](https://ci.appveyor.com/api/projects/status/u8njmbb6ivqisgiu/branch/master?svg=true)](https://ci.appveyor.com/project/megax/Schumix2) | Nincs
 
 # Ismertetés
 
