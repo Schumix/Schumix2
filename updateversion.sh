@@ -72,6 +72,11 @@ main () {
   do
     iss_update $f
   done
+
+  for f in $(find -iname "appveyor.yml" | grep -v "./_ReSharper" | grep -v "/obj/" | grep -v "./External")
+  do
+    appveyor_yml $f
+  done
 }
 
 sln_update () {
@@ -115,6 +120,12 @@ iss_update () {
   f=$1
   echo "Update iss file: $f"
   find $f -type f -exec sed -i 's/MyAppVersion ".*"/MyAppVersion "'$newversion'"/g' {} \;
+}
+
+appveyor_yml () {
+  f=$1
+  echo "Update appveyor.yml file: $f"
+  find $f -type f -exec sed -i 's/version: .*/version: '$newversion'.{build}/g' {} \;
 }
 
 main

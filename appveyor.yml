@@ -5,6 +5,11 @@
 #
 
 #
+# Version
+# 
+version: 4.4.4.{build}
+
+#
 # Branches
 # 
 branches:
