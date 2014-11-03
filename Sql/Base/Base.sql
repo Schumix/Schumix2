@@ -137,6 +137,9 @@ INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES (
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "[Unload]: All plugins done.\n[Unload]: All plugins failed.\nPlugins are already cutted.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin", "{0}: loaded.\n{0}: ignored.\nNo plugin loaded.");
 INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "cserver", "New server for the commands: {0}");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "alias/command/add", "The name of the new command is not given!\nIts already on the list!\nYou can't make an Alias command from an alias command!\nThis command is already exist: {0}\nThere is no such command: {0}\n{0} command created to the following command: {1}");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "alias/command/remove", "This is not on the list!\n{0} command deleted from the alias list.");
+INSERT INTO `localized_console_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "alias/command/list", "List: {0}\nNo alias command!");
 
 -- huHU
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "admin", "Kiírja az operátorok vagy adminisztrátorok által használható parancsokat.\nAdmin parancsai: info | list | add | remove | rank");
@@ -199,6 +202,11 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/load", "Betölt minden plugint.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "plugin/unload", "Eltávolít minden plugint.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "cserver", "A szerverek között válthatunk vele.\nHasználata: cserver <szerver neve>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "alias", "Álnév készíthető vele.\nAlias parancsai: command");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "alias/command", "Álparancs készíthető vele.\nCommand parancsai: add | remove | list");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "alias/command/add", "Új alias hozzáadása.\nHasználata: alias command add <új parancs (alias)> <eredeti parancs>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "alias/command/remove", "Törli az alias-t.\nHasználata: alias command remove <alias parancs>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("huHU", "alias/command/list", "Kiírja az összes alias parancsot ami az adatbázisban szerepel.");
 
 -- enUS
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "admin", "Print Operators or Administrators can use commands.\nAdmin commands: info | list | add | remove | rank");
@@ -261,6 +269,11 @@ INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VAL
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/load", "Loads all the plugin.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "plugin/unload", "Remove all plugin.");
 INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "cserver", "Switch between servers.\nUse: cserver <server's name>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "alias", "You can create alias with it.\nAlias commands: command");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "alias/command", "You can create aliases with it.\nCommand commands: add | remove | list");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "alias/command/add", "Adding new alias.\nUsage: alias command add <new command (alias)> <original command>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "alias/command/remove", "Delete the alias.\nUsage: alias command remove <alias command>");
+INSERT INTO `localized_console_command_help` (`Language`, `Command`, `Text`) VALUES ("enUS", "alias/command/list", "Shows every alias command from the database.");
 
 -- huHU
 INSERT INTO `localized_console_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "WrongSwitch", "Nem megfelelő kapcsoló lett megadva!");
@@ -785,6 +798,9 @@ INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", 
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "rss/change/shorturl", "Option succesfully modified.\nThis name is not in the list!");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "rss/change/url", "This name is not on the list!\nUrl succesfully modified.");
 INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "rss/change/website", "This name is not on the list!\nPage name succesfully changed.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "alias/command/add", "No new command given\nIt's already on the list\nYou can't make an Alias command from an alias command\nThis command is already exist: {0}\nThere is no such command: {0}\nThe following command is prohibited: {0}\nIf you would like to use it, use the 'ignore' command\n{0} command created to the following command: {1}");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "alias/command/remove", "It's not on the list!\n{0} command deleted from the alias command list.");
+INSERT INTO `localized_command` (`Language`, `Command`, `Text`) VALUES ("enUS", "alias/command/list", "\u0002\u00033Lista:\u000f\u000f {0}\nThere is no alias command!");
 
 -- huHU
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "xbot", "9", "Felhasználók számára használható parancslista.");
@@ -1032,6 +1048,11 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "rss/change/shorturl", "1", "Be illetve kikapcsolható vele az rss url rövidítése.\nHasználata: {0}rss change shorturl <true vagy false (értelemszerűen)>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "rss/change/url", "1", "Megváltoztatható vele az rss url címe.\nHasználata: {0}rss change url <rss neve> <url>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "rss/change/website", "1", "Megváltoztatható vele az rss weboldal címe.\nHasználata: {0}rss change website <rss neve> <weboldal (egyedi, a kód alapján kell beállítani)>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "alias", "1", "Álnév készíthető vele.\nAlias parancsai: command");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "alias/command", "1", "Álparancs készíthető vele.\nCommand parancsai: add | remove | list");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "alias/command/add", "1", "Új alias hozzáadása.\nHasználata: {0}alias command add <új parancs (alias)> <eredeti parancs>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "alias/command/remove", "1", "Törli az alias-t.\nHasználata: {0}alias command remove <alias parancs>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("huHU", "alias/command/list", "1", "Kiírja az összes alias parancsot ami az adatbázisban szerepel.");
 
 -- enUS
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "xbot", "9", "Users to use the command list.");
@@ -1279,6 +1300,11 @@ INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VAL
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "rss/change/shorturl", "1", "Url shortener on/off switch.\usage: {0}rss change shorturl <true or false>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "rss/change/url", "1", "Rss url changer.\nUsage: {0}rss change url <rss name> <url>");
 INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "rss/change/website", "1", "Rss website changer.\nUsage: {0}rss change website <rss name> <unique>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "alias", "1", "You can create alias with it.\nCommands of alias: command");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "alias/command", "1", "You can create aliases with it.\nCommand commands: add | remove | list");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "alias/command/add", "1", "Adding new alias.\nUsage: {0}alias command add <new command (alias)> <original command>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "alias/command/remove", "1", "Delete the alias.\nUsage: {0}alias command remove <alias command>");
+INSERT INTO `localized_command_help` (`Language`, `Command`, `Rank`, `Text`) VALUES ("enUS", "alias/command/list", "1", "Shows every alias command from the database.");
 
 -- huHU
 INSERT INTO `localized_warning` (`Language`, `Command`, `Text`) VALUES ("huHU", "NoName", "A név nincs megadva!");
