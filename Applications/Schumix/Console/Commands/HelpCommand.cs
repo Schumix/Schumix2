@@ -39,30 +39,56 @@ namespace Schumix.Console
 			if(sConsoleMessage.Info.Length == 1)
 			{
 				var text = sLManager.GetConsoleCommandTexts("help");
-				if(text.Length < 2)
+				if(text.Length < 3)
 				{
 					Log.Error("Console", sLConsole.Translations("NoFound2"));
 					return;
 				}
 
 				string commands = string.Empty;
+				string aliascommands = string.Empty;
 
 				foreach(var command in CCommandManager.GetCommandHandler())
 				{
 					if(command.Key == "help")
 						continue;
 
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT BaseCommand FROM alias_console_command WHERE NewCommand = '{0}'", sUtilities.SqlEscape(command.Key));
+					if(!db.IsNull())
+					{
+						string basecommand = db["BaseCommand"].ToString();
+						aliascommands += " | " + command.Key + "->" + basecommand;
+						continue;
+					}
+
 					commands += ", " + command.Key;
 				}
 
 				Log.Notice("Console", text[0]);
 				Log.Notice("Console", text[1], commands.Remove(0, 2, ", "));
+
+				if(!aliascommands.IsNullOrEmpty())
+					Log.Notice("Console", text[2], aliascommands.Remove(0, 3, " | "));
+
 				return;
+			}
+
+			string aliascommand = string.Empty;
+
+			var db2 = SchumixBase.DManager.QueryFirstRow("SELECT BaseCommand FROM alias_console_command WHERE NewCommand = '{0}'", sUtilities.SqlEscape(sConsoleMessage.Info[1].ToLower()));
+			if(!db2.IsNull())
+			{
+				aliascommand = sConsoleMessage.Info[1].ToLower();
+				string basecommand = db2["BaseCommand"].ToString();
+				sConsoleMessage.Info[1] = basecommand;
 			}
 
 			foreach(var t in sLManager.GetConsoleCommandHelpTexts(sConsoleMessage.Info.SplitToString(1, "/")))
 			{
-				Log.Notice("Console", t);
+				if(!aliascommand.IsNullOrEmpty())
+					Log.Notice("Console", t.Replace(string.Format(" {0} ", sConsoleMessage.Info[1]), string.Format(" {0} ", aliascommand)));
+				else
+					Log.Notice("Console", t);
 			}
 		}
 	}

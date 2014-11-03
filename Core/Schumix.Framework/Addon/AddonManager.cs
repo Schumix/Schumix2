@@ -256,7 +256,7 @@ namespace Schumix.Framework.Addon
 		private bool IsIgnore(string Name, string ServerName)
 		{
 			var db = SchumixBase.DManager.QueryFirstRow("SELECT 1 FROM ignore_addons WHERE Addon = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(Name.ToLower()), ServerName);
-			return !db.IsNull() ? true : false;
+			return !db.IsNull();
 		}
 	}
 }

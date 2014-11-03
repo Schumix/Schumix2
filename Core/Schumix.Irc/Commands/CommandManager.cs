@@ -21,6 +21,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using System.Data;
 using System.Reflection;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -88,6 +89,7 @@ namespace Schumix.Irc.Commands
 			SchumixRegisterHandler("kick",         HandleKick,     CommandPermission.Operator);
 			SchumixRegisterHandler("mode",         HandleMode,     CommandPermission.Operator);
 			SchumixRegisterHandler("ignore",       HandleIgnore,   CommandPermission.Operator);
+			SchumixRegisterHandler("alias",        HandleAlias,    CommandPermission.Operator);
 
 			// Admin
 			SchumixRegisterHandler("plugin",       HandlePlugin,   CommandPermission.Administrator);
@@ -119,6 +121,17 @@ namespace Schumix.Irc.Commands
 					});
 				});
 			});
+
+			var db = SchumixBase.DManager.Query("SELECT NewCommand, BaseCommand FROM alias_irc_command WHERE ServerName = '{0}'", _servername);
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string newcommand = row["NewCommand"].ToString();
+					string basecommand = row["BaseCommand"].ToString();
+					SchumixRegisterHandler(newcommand, CommandMethodMap[basecommand]);
+				}
+			}
 
 			if(!Reload)
 				Log.Notice("CommandManager", sLConsole.GetString("Successfuly registered all of Command Handlers."));
@@ -152,11 +165,23 @@ namespace Schumix.Irc.Commands
 			SchumixRemoveHandler("kick",          HandleKick);
 			SchumixRemoveHandler("mode",          HandleMode);
 			SchumixRemoveHandler("ignore",        HandleIgnore);
+			SchumixRemoveHandler("alias",         HandleAlias);
 
 			// Admin
 			SchumixRemoveHandler("plugin",        HandlePlugin);
 			SchumixRemoveHandler("reload",        HandleReload);
 			SchumixRemoveHandler("quit",          HandleQuit);
+
+			var db = SchumixBase.DManager.Query("SELECT NewCommand, BaseCommand FROM alias_irc_command WHERE ServerName = '{0}'", _servername);
+			if(!db.IsNull())
+			{
+				foreach(DataRow row in db.Rows)
+				{
+					string newcommand = row["NewCommand"].ToString();
+					string basecommand = row["BaseCommand"].ToString();
+					SchumixRemoveHandler(newcommand, CommandMethodMap[basecommand].Method);
+				}
+			}
 
 			if(SchumixBase.ExitStatus)
 				CommandMethodMap.Clear();
@@ -193,6 +218,14 @@ namespace Schumix.Irc.Commands
 				CommandMethodMap[code.ToLower()].Method += method;
 			else
 				CommandMethodMap.Add(code.ToLower(), new CommandMethod(method, permission));
+		}
+
+		public void SchumixRegisterHandler(string code, CommandMethod method)
+		{
+			if(sIgnoreCommand.IsIgnore(code))
+				return;
+
+			CommandMethodMap.Add(code.ToLower(), method);
 		}
 
 		public void SchumixRemoveHandler(string code)
