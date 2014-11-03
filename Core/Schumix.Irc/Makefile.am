@@ -161,7 +161,8 @@ FILES = \
 	Logger/IrcLog.cs \
 	Attribute/IrcCommandAttribute.cs \
 	Commands/Method/CommandMethod.cs \
-	Commands/Attribute/SchumixCommandAttribute.cs 
+	Commands/Attribute/SchumixCommandAttribute.cs \
+	Commands/Operator/AliasCommand.cs 
 
 DATA_FILES = 
 

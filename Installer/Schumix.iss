@@ -1,5 +1,5 @@
 #define MyAppName "Schumix"
-#define MyAppVersion "4.4.4"
+#define MyAppVersion "4.4.5"
 #define MyAppPublisher "Schumix Productions"
 #define MyAppURL "https://github.com/Schumix/Schumix2"
 #define MyAppExeName "Schumix.exe"

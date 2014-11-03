@@ -10,7 +10,7 @@
     <RootNamespace>Schumix</RootNamespace>
     <AssemblyName>Schumix</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <ReleaseVersion>4.4.4</ReleaseVersion>
+    <ReleaseVersion>4.4.5</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>

@@ -1,6 +1,6 @@
 Name: Schumix.Compiler
 Description: Schumix.Compiler
-Version: 4.4.4
+Version: 4.4.5
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/Schumix.Compiler.dll

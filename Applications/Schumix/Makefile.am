@@ -209,7 +209,8 @@ FILES = \
 	Console/Commands/ReloadCommand.cs \
 	Console/Commands/LeaveCommand.cs \
 	Console/Commands/JoinCommand.cs \
-	Console/Commands/NickCommand.cs 
+	Console/Commands/NickCommand.cs \
+	Console/Commands/AliasCommand.cs 
 
 DATA_FILES = 
 
