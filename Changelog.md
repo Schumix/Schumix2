@@ -2,26 +2,26 @@
 
 ## 4.5.0 (2014-xx-xx)
 
- * Alias parancs hozzáadva a kódhoz.
+ * Alias parancs hozzáadva a kódhoz. ([Issue 107](https://github.com/Schumix/Schumix2/issues/107))
  * Base.sql és maffiagame.sql átalakítva. Így megjelennek a színkódok minden fajta böngészőbe és editorban.
  * [Issue 119](https://github.com/Schumix/Schumix2/issues/119) javítva.
  * Admin parancs fix. Mostantól nem írja ki hogy nem azonosítottad magadat miközbe aktiválnád a nickedet és hibás volt az aktiválás.
  * License bekerült a script fájlokba is.
  * Verzió frissítéshez elkészült a script. Mostantól ezzel mindenhol le lehet a kódba frissíteni a verziót. Akár úgy hogy kiolvassa a Consts.cs-ből vagy direktbe megadásra kerül a varzió.
- * Issue 116 elkészült.
+ * [Issue 116](https://github.com/Schumix/Schumix2/issues/116) elkészült.
  * Authors fájl hozzáadva.
  * Mono.Libraries forrása hozzáadva Schumix-hoz.
  * MySql.Data forrása hozzáadva Schumix-hoz.
  * fixmakefile.sh hozzáadva a forráshoz. Ezentúl ezzel a scripttel ki lehet javítani a monodevelop által generált hibás makefile állományokat.
  * nunit-framework forrása hozzáadva Schumix-hoz.
- * Issue 108 javítva.
+ * [Issue 108](https://github.com/Schumix/Schumix2/issues/108) javítva.
  * Google fordító regex javítva. Hiba felfedezéséért köszönet attishka-nak.
- * Issue 112 javítva.
+ * [Issue 112](https://github.com/Schumix/Schumix2/issues/112) javítva.
 
 ## 4.4.0 (2014-06-24)
 
- * Issue 114 javítva.
- * Issue 113 javítva.
+ * [Issue 114](https://github.com/Schumix/Schumix2/issues/114) javítva.
+ * [Issue 113](https://github.com/Schumix/Schumix2/issues/113) javítva.
  * Yaml használata picit leegyszerüsítve.
  * Kiterjesztések felismerése javítva.
  * DirectoryToSpecial függvény eltávolítva a forrásból.
@@ -29,9 +29,9 @@
  * 2000. Commit!!!
  * Issue 110 javítva.
  * RssAddon hozzáadva.
- * Issue 103, 104, 105, 106 javítva.
+ * Issue [103](https://github.com/Schumix/Schumix2/issues/103), [104](https://github.com/Schumix/Schumix2/issues/104), [105](https://github.com/Schumix/Schumix2/issues/105), [106](https://github.com/Schumix/Schumix2/issues/106) javítva.
  * Letöltött Title dekódolási hibái javítva. Továbbá az url regex is javítva.
- * Issue 100 javítva. (Kalendar nem írta ki az üzenetet.)
+ * [Issue 100](https://github.com/Schumix/Schumix2/issues/100) javítva. (Kalendar nem írta ki az üzenetet.)
  * WinCE leválasztva a Windows platform kiírásról.
  * Windows és Linux alatt pontosítva az operációs rendszer nevének kiírása.
  * Linux és Windows leállítást vezérlő részek áthelyezve a Framework-be.
