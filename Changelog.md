@@ -18,7 +18,7 @@
  * Google fordító regex javítva. Hiba felfedezéséért köszönet attishka-nak.
  * [Issue 112](https://github.com/Schumix/Schumix2/issues/112) javítva.
 
-## 4.4.0 (2014-06-24)
+## [4.4.0](https://github.com/Schumix/Schumix2/tree/v4.4.0) (2014-06-24)
 
  * [Issue 114](https://github.com/Schumix/Schumix2/issues/114) javítva.
  * [Issue 113](https://github.com/Schumix/Schumix2/issues/113) javítva.
@@ -42,7 +42,7 @@
  * WolframAPI fordítási figyelmeztetései megszüntetve.
  * Hozzáadva a Console részhez a szál megállításának és indításának lehetősége.
 
-## 4.3.0 (2013-08-17)
+## [4.3.0](https://github.com/Schumix/Schumix2/tree/v4.3.0) (2013-08-17)
 
  * WolframAPI frissítve. Köszönet érte Twl-nek.
  * SchumixVS.sln javítva.
@@ -70,7 +70,7 @@
  * Régi sql hiányosságok és elmaradt frissítések beépítve a Base.sql-be.
  * Extensions-ba beépített Convert részek felhasználva az egész kódba.
 
-## 4.2.0 (2013-07-29)
+## [4.2.0](https://github.com/Schumix/Schumix2/tree/v4.2.0) (2013-07-29)
 
  * Angol és magyarnyelvű .md fájlok felcserélve. Ötletért köszönet Jackneill-nek.
  * .en.md fájlok angolosítása elkészült. Köszönet érte AgeNt-nak.
@@ -117,7 +117,7 @@
  * LogToFile függvény átnevezve LogInFile függvényre.
  * Randomkick funkciónév lecserélve Otherkick-re. Így jobban jelzi amire való.
 
-## 4.1.0 (2013-06-23)
+## [4.1.0](https://github.com/Schumix/Schumix2/tree/v4.1.0) (2013-06-23)
 
  * NetworkQuit akkor is true értéket kap ezentúl ha egyéb hiba lépett fel a kapcsolatban.
  * IrcBase osztályban létrehozva a LoadProcessMethods() és UnloadProcessMethods(). Így egységesebb lesz a program több része is. Javítva az addonok leválasztása.
@@ -145,7 +145,7 @@
  * Idő formátum kezelése szépítve.
  * Paraméterek megadásának lehetősége átalakítva. A Mono.Options került beépítésre.
 
-## 4.0.0 (2013-03-19)
+## [4.0.0](https://github.com/Schumix/Schumix2/tree/v4.0.0) (2013-03-19)
 
  * UrlShort beépítve a magba.
  * Almodulként hozzáadva a kódhoz a LuaInterface.
@@ -198,7 +198,7 @@
  * Uptime táblában ezentúl byte-ban lesznek megadva a mentett memória méretek.
  * Kitakaritva a LueEnginer referencia listája.
 
-## 3.9.0 (2012-12-02)
+## [3.9.0](https://github.com/Schumix/Schumix2/tree/v3.9.0) (2012-12-02)
 
  * Kész a CacheDB.
  * Több ponton elhelyezésre került a LargeError.
@@ -244,7 +244,7 @@
  * Törlésre került a config adatok Server.exe álltal történő küldése és vissza lett állytva a régi megoldásra.
  * Fixalva az enUS nevnapkiiras.
 
-## 3.8.0 (2012-06-26)
+## [3.8.0](https://github.com/Schumix/Schumix2/tree/v3.8.0) (2012-06-26)
 
  * Vhost hiba javítva.
  * LuaInterface lib állomanya kicserélésre került.
@@ -291,7 +291,7 @@
  * Join és leave parancsoknál fixálva hogy ha fentvan azon a csatornán vagy ha már lelépett, esetleg le van tiltva akkor jöjjön válasz miért nem jelenik meg ott a bot.
  * +i érzékelés a cstornára való fellépésnél hozzáadásra került.
 
-## 3.7.0 (2012-02-05)
+## [3.7.0](https://github.com/Schumix/Schumix2/tree/v3.7.0) (2012-02-05)
 
  * Szerverbe beépítva a config adatok tárolása újraindításhoz.
  * Wordpress és chatterbot addon hozzá lett adva a kódhoz.
@@ -317,7 +317,7 @@
  * A Szerverrel való kapcsolatbontás javítva.
  * Leállási folyamat javítva az újrakapcsolódással együtt.
 
-## 3.6.0 (2011-10-15)
+## [3.6.0](https://github.com/Schumix/Schumix2/tree/v3.6.0) (2011-10-15)
 
  * A kód mostantól elkapja a végzetes hibákat és egy fájlba írja a hibát.
  * Játékban fixálva a csatornához tartozó funckiók visszaállítása.
@@ -341,7 +341,7 @@
  * Title lekérdezés fixálva.
  * CTCP fixálva.
 
-## 3.5.0 (2011-09-24)
+## [3.5.0](https://github.com/Schumix/Schumix2/tree/v3.5.0) (2011-09-24)
 
  * Online help parancs hozzáadva.
  * Translate parancs fixálva.
@@ -363,7 +363,7 @@
  * Irc parancs frissitve lett.
  * A roll, sha1, md5 es prime parancs át lett helyezve az extraaddonba.
 
-## 3.4.0 (2011-08-22)
+## [3.4.0](https://github.com/Schumix/Schumix2/tree/v3.4.0) (2011-08-22)
 
  * Sqlite hiba javítva lett.
  * Notes parancs javítva.
@@ -382,7 +382,7 @@
  * GitRss error szövege fixálva.
  * Compiler addon konfigja frisstve lett.
 
-## 3.3.0 (2011-08-11)
+## [3.3.0](https://github.com/Schumix/Schumix2/tree/v3.3.0) (2011-08-11)
 
  * Sql-hez hozzáadva az update, delete, insert és removetable függvény.
  * botnic, csc parancs hozzáadva. Ez a compiler használatáról ad bővebb információt.
@@ -398,7 +398,7 @@
  * Libben a végzetes meghívásí hiba javítva.
  * Uptime tabla frissitve lett. SQLite tablak is frissitesre kerultek de az utf-8 olvasassal van kis gond meg. Regi sql fajlok atlettek helyezve.
 
-## 3.2.0 (2011-07-21)
+## [3.2.0](https://github.com/Schumix/Schumix2/tree/v3.2.0) (2011-07-21)
 
  * Mag nyelvezeti konzol kiírása teljesen kész.
  * Helyesírási hibák javítva.
@@ -410,7 +410,7 @@
  * Encoding fixálva.
  * Elkészült az angol fordítások nagy része.
 
-## 3.1.0 (2011-06-24)
+## [3.1.0](https://github.com/Schumix/Schumix2/tree/v3.1.0) (2011-06-24)
 
  * Üzenet küldés az irc szerver felé fixálva. Inéttől csak a 2000 karakter alatti üzeneteket küldi el a kód.
  * A compilerben hatalmas átalakításon eset át a végtelen ciklus elleni védelem.
@@ -429,7 +429,7 @@
  * Config betöltése fixálva. Ha valami okból hiányzik az xml-ből valamilyen adat akkor az alapértelmezettet használja a kód.
  * A main fv-ben hozzáadásra került a config fájl és a mappájának nevének módosítása.
 
-## 3.0.0 (2011-05-18)
+## [3.0.0](https://github.com/Schumix/Schumix2/tree/v3.0.0) (2011-05-18)
 
  * Revision addon hozzáadva de még fejlesztve lesz.
  * Többfunkciós nyelvi használat lehetősége hozzáadva.
@@ -451,7 +451,7 @@
  * Legtöbb Assembly információ egy helyre került.
  * Csatorna neve fixálva lett. Mostantól bármilyen formában kezeli a kód. Egyéb javítások.
 
-## 2.9.0 (2011-04-23)
+## [2.9.0](https://github.com/Schumix/Schumix2/tree/v2.9.0) (2011-04-23)
 
  * Asmg és Me hozzáadva az üzenet küldéshez. De még nem üzemel mert nincs meg a strukturája.
  * Végtelen ciklus elleni védelem bővitve.
@@ -465,7 +465,7 @@
  * Config fájl szerkezete megigazítva.
  * GitRss addon hozzáadásra került.
 
-## 2.8.0 (2011-04-14)
+## [2.8.0](https://github.com/Schumix/Schumix2/tree/v2.8.0) (2011-04-14)
 
  * Platform kiírása áthelyezve.
  * Konzol uptime kiirasa fixalva.
@@ -484,7 +484,7 @@
  * Ignore hozzáadva az addonhoz. Fixálva a betöltendő fájlok listája. Mostantól csak az az addon töltödik be amelyik nevében szerepel az addon szó.
  * Forditas win-en fixalva. SQLite adatbazis frissitve. Schumix.sql frissitve.
 
-## 2.7.0 (2011-04-04)
+## [2.7.0](https://github.com/Schumix/Schumix2/tree/v2.7.0) (2011-04-04)
 
  * SvnRssAddon hozzáadva a kódhoz.
  * A Konfig fájl ezentúl a Configs mappában lesz tárolva. Emelet az addonok konfig fájlai is oda fognak legenerálodni és onnét töltödnek be. Legalább is amit én adok hozzá.
@@ -496,7 +496,7 @@
  * Help rész fixálva.
  * Fixálva az admin és új csatorna hozzáadása.
 
-## 2.6.0 (2011-03-28)
+## [2.6.0](https://github.com/Schumix/Schumix2/tree/v2.6.0) (2011-03-28)
 
  * Plugin rendszer frissitésre került.
  * Master csatorna hozzáadva a konfighoz.
@@ -507,7 +507,7 @@
  * AssemblyInfok frissítesre kerültek.
  * Finomítások a kódon.
 
-## 2.5.0 (2011-03-16)
+## [2.5.0](https://github.com/Schumix/Schumix2/tree/v2.5.0) (2011-03-16)
 
  * Console rész újra lett írva. Egyébb finomítások is történtek.
  * Console parancsokhoz hozzáadva a channel parancs. FSelect fv átalakítva.
@@ -517,7 +517,7 @@
  * Válasz üzenetek hozzáadva a legtöbb részhez. Ha valahonnét hiányzik csak jelezni kell és potlom.
  * Parancsok letiltása javítva.
 
-## 2.2.0 (2011-03-08)
+## [2.2.0](https://github.com/Schumix/Schumix2/tree/v2.2.0) (2011-03-08)
 
  * Flood elleni védelem hozzáadva a compiler részhez.
  * SQLite kezelés lehetősége hozzáadva a kódhoz.
@@ -528,7 +528,7 @@
  * Windows javítás.
  * Konfig automatikus legenárálásának lehetősége hozzáadva a rendszerhez.
 
-## 2.1.0 (2011-03-01)
+## [2.1.0](https://github.com/Schumix/Schumix2/tree/v2.1.0) (2011-03-01)
 
  * Alapértelmezetten a koszones, kick és mode funkciók kikapcsolásra kerültek.
  * Url encode hozzáadva a kódhoz.
@@ -540,7 +540,7 @@
  * Összeomlás javítva.
  * Kiírások javítva.
 
-## 2.0.0 (2011-02-12)
+## [2.0.0](https://github.com/Schumix/Schumix2/tree/v2.0.0) (2011-02-12)
 
  * Compiler plugin hozzáadva.
  * Help() és Privmsg() függvény hozzáadva a plugin API-hoz.
@@ -554,7 +554,7 @@
  * Schumix tábla frissítve.
  * Time osztály létrehozva.
 
-## 1.6.0 (2011-02-02)
+## [1.6.0](https://github.com/Schumix/Schumix2/tree/v1.6.0) (2011-02-02)
 
  * Konfig fájl olvasása átalakítva.
  * Calc, md5, cha1 parancsok javítva.
@@ -572,7 +572,7 @@
  * További szerkezeti átalakítások.
  * Takarítás.
 
-## 1.5.0 (2011-01-25)
+## [1.5.0](https://github.com/Schumix/Schumix2/tree/v1.5.0) (2011-01-25)
 
  * WolframAPI hozzáadva a kódhoz.
  * Mappa szerkezetek átalakításra kerültek.
@@ -581,7 +581,7 @@
  * Sender osztály létrehozve.
  * SendMessage kibővítve több új függvénnyel.
 
-## 1.3.0 (2011-01-23)
+## [1.3.0](https://github.com/Schumix/Schumix2/tree/v1.3.0) (2011-01-23)
 
  * ChannelInfo class létrehozva.
  * String.Format eltüntetetésre került. A SendMessage, Log és MySql függvényeknél lett alkalmazva ezen átalakítás.
@@ -591,7 +591,7 @@
  * Reconnect ki-be kapcsolási lehetősége hozzáadva a rendszerhez.
  * Konzol parancsokhoz hozzáadva a hibás részek kiírása.
 
-## 1.2.0 (2011-01-21)
+## [1.2.0](https://github.com/Schumix/Schumix2/tree/v1.2.0) (2011-01-21)
 
  * Beállítva a program fejlécének a "Schumix2 IRC Bot" szöveg.
  * Konzol parancsok bővitve admin, connect, disconnect, reconnect parancsokkal
@@ -603,7 +603,7 @@
  * Schumix2, sys és info parancs össze lett olvasztva.
  * Crash javítva.
 
-## 1.1.0 (2011-01-19)
+## [1.1.0](https://github.com/Schumix/Schumix2/tree/v1.1.0) (2011-01-19)
 
  * A hibás lekérdezések ezentúl kiírásra kerülnek.
  * Mode parancs fixálva.
@@ -616,7 +616,7 @@
  * CNick() függvény létrehozva. A csatornákról lehet vele a Nick nevekre váltani üzenet küldés céljából. (automatikusan vált a függvény közöttük)
  * Logban a függvényekhez hozzá lett adva a Lock. Így nem lehet olyan hogy összefolyik a kiírás.
 
-## 1.0.0 (2011-01-18)
+## [1.0.0](https://github.com/Schumix/Schumix2/tree/v1.0.0) (2011-01-18)
 
  * TODO fájl hozzáadva.
  * README fájl hozzáadva.
@@ -625,10 +625,10 @@
  * Parancsok kezelése alapjaitól újra lett írva.
  * schumix4.0.csproj átnevezve schumix.csproj-ra
 
-## 0.2.0 (2010-10-29)
+## [0.2.0](https://github.com/Schumix/Schumix2/tree/v0.2.0) (2010-10-29)
 
  * Köszönés alapértelmezetten bekapcsolva lesz.
 
-## 0.1.3 (2010-10-28)
+## [0.1.3](https://github.com/Schumix/Schumix2/tree/v0.1.3) (2010-10-28)
 
  * A kód hozzáadásra került.
