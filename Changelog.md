@@ -631,4 +631,4 @@
 
 ## 0.1.3 (2010-10-28)
 
- * A kód hozzá lett adva a githez.
+ * A kód hozzáadásra került.
