@@ -76,7 +76,7 @@ namespace Schumix.Irc.Commands
 					sChannelList.NewThread(sIRCMessage.ServerName, sIRCMessage.Nick.ToLower());
 				}
 
-				status = false;
+				return;
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "newpassword")
 			{
@@ -116,7 +116,7 @@ namespace Schumix.Irc.Commands
 					}
 				}
 
-				status = false;
+				return;
 			}
 
 			if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
@@ -384,9 +384,6 @@ namespace Schumix.Irc.Commands
 			}
 			else
 			{
-				if(!status)
-					return;
-
 				var text = sLManager.GetCommandTexts("admin", sIRCMessage.Channel, sIRCMessage.ServerName);
 				if(text.Length < 7)
 				{
