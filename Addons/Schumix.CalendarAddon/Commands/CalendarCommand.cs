@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -912,7 +912,7 @@ namespace Schumix.CalendarAddon.Commands
 						return;
 					}
 
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Message, Year, Month, Day, Hour, Minute FROM calendar WHERE ServerName = '{0}' And Channel = '{1}' And Name = '{2}' And Loops = 'false' ORDER BY UnixTime ASC", sIRCMessage.ServerName, sIRCMessage.Nick.ToLower(), sIRCMessage.Nick.ToLower());
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Message, Year, Month, Day, Hour, Minute FROM calendar WHERE ServerName = '{0}' And Channel = '{1}' And Name = '{2}' And Loops = 'false' ORDER BY UnixTime ASC", sIRCMessage.ServerName, sIRCMessage.SqlEscapeNick.ToLower(), sIRCMessage.SqlEscapeNick.ToLower());
 					if(!db.IsNull())
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, text[0], db["Message"].ToString());
@@ -1047,7 +1047,7 @@ namespace Schumix.CalendarAddon.Commands
 					return;
 				}
 
-				var db = SchumixBase.DManager.QueryFirstRow("SELECT Message, Year, Month, Day, Hour, Minute FROM calendar WHERE ServerName = '{0}' And Channel = '{1}' And Name = '{2}' And Loops = 'false' ORDER BY UnixTime ASC", sIRCMessage.ServerName, sIRCMessage.Channel.ToLower(), sIRCMessage.Nick.ToLower());
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT Message, Year, Month, Day, Hour, Minute FROM calendar WHERE ServerName = '{0}' And Channel = '{1}' And Name = '{2}' And Loops = 'false' ORDER BY UnixTime ASC", sIRCMessage.ServerName, sIRCMessage.Channel.ToLower(), sIRCMessage.SqlEscapeNick.ToLower());
 				if(!db.IsNull())
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[0], db["Message"].ToString());

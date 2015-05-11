@@ -6,7 +6,7 @@
  *
  * Copyright (C) 2008 Novell (http://www.novell.com)
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
  * 
  * Permission is hereby granted, free of charge, to any person obtaining
  * a copy of this software and associated documentation files (the

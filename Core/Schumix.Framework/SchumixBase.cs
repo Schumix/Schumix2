@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -204,6 +204,7 @@ namespace Schumix.Framework
 				DManager.Update("ignore_commands", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
 				DManager.Update("ignore_irc_commands", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
 				DManager.Update("ignore_nicks", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
+				DManager.Update("alias_irc_command", string.Format("ServerName = '{0}'", sn.Key), string.Format("ServerId = '{0}'", sn.Value.ServerId));
 
 				var db1 = DManager.Query("SELECT Id, ServerName FROM channels WHERE ServerId = '{0}'", sn.Value.ServerId);
 				if(!db1.IsNull())

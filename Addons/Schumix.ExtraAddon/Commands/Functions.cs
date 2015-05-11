@@ -3,7 +3,7 @@
  * 
  * Copyright (C) 2010-2012 Twl
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -92,7 +92,7 @@ namespace Schumix.ExtraAddon.Commands
 
 				if(sMyChannelInfo.FSelect(IFunctions.Autokick) && sMyChannelInfo.FSelect(IChannelFunctions.Autokick, channel))
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", nick.ToLower(), _servername);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(nick.ToLower()), _servername);
 					if(!db.IsNull())
 					{
 						sSender.Kick(channel, nick, db["Reason"].ToString());
@@ -105,7 +105,7 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				if(sMyChannelInfo.FSelect(IFunctions.Autokick) && sMyChannelInfo.FSelect(IChannelFunctions.Autokick, _channel))
 				{
-					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", nick.ToLower(), _servername);
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT Reason FROM kicklist WHERE Name = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(nick.ToLower()), _servername);
 					if(!db.IsNull())
 					{
 						sSender.Kick(_channel, nick, db["Reason"].ToString());
@@ -162,7 +162,7 @@ namespace Schumix.ExtraAddon.Commands
 
 				if(sMyChannelInfo.FSelect(IFunctions.Message) && sMyChannelInfo.FSelect(IChannelFunctions.Message, sIRCMessage.Channel))
 				{
-					var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}' AND ServerName = '{2}' ORDER BY `Id` ASC", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
+					var db = SchumixBase.DManager.Query("SELECT Message, Wrote FROM message WHERE Name = '{0}' AND Channel = '{1}' AND ServerName = '{2}' ORDER BY `Id` ASC", sIRCMessage.SqlEscapeNick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName);
 					if(!db.IsNull())
 					{
 						bool b = false;
@@ -178,7 +178,7 @@ namespace Schumix.ExtraAddon.Commands
 						}
 
 						if(b)
-							SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sIRCMessage.Nick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
+							SchumixBase.DManager.Delete("message", string.Format("Name = '{0}' AND Channel = '{1}' And ServerName = '{2}'", sIRCMessage.SqlEscapeNick.ToLower(), sIRCMessage.Channel.ToLower(), sIRCMessage.ServerName));
 					}
 				}
 			}

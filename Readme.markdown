@@ -1,9 +1,12 @@
 # Schumix2 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/Schumix/schumix2/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
+  [1]: https://ci.appveyor.com/project/megax/Schumix2
+  [2]: http://nvlabs.github.com/cub/download-icon.png (Download for Windows)
+
 Platform | Configuration | Build status | Downloads
 ----|----|----|----
 Ubuntu | Debug  | [![Build Status](https://travis-ci.org/Schumix/Schumix2.png?branch=stable)](https://travis-ci.org/Schumix/Schumix2) | None
-Windows | Debug | [![Build status](https://ci.appveyor.com/api/projects/status/u8njmbb6ivqisgiu/branch/stable)](https://ci.appveyor.com/project/megax/Schumix2) | None
+Windows | Debug | [![Build status](https://ci.appveyor.com/api/projects/status/u8njmbb6ivqisgiu/branch/stable)](https://ci.appveyor.com/project/megax/Schumix2) | [![dwn_windows][2]][1]
 
 # Statement
 

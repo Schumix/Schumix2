@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -53,7 +53,7 @@ namespace Schumix.ExtraAddon.Commands
 		/// </summary>
 		public void HandleJoin(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.OriginNick == sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.NickStorage)
+			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.NickStorage)
 				return;
 
 			if(sFunctions.AutoKick("join", sIRCMessage.Nick, sIRCMessage.Channel))
@@ -72,7 +72,7 @@ namespace Schumix.ExtraAddon.Commands
 			{
 				AutoMode = true;
 				ModeChannel = sIRCMessage.Channel;
-				sSender.NickServStatus(sIRCMessage.OriginNick);
+				sSender.NickServStatus(sIRCMessage.Nick);
 			}
 
 			if(sMyChannelInfo.FSelect(IFunctions.Greeter) && sMyChannelInfo.FSelect(IChannelFunctions.Greeter, sIRCMessage.Channel))
@@ -90,15 +90,15 @@ namespace Schumix.ExtraAddon.Commands
 				greeter = text2[rand.Next(0, text2.Length-1)];
 
 				if(DateTime.Now.Hour >= 3 && DateTime.Now.Hour <= 9)
-					sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.OriginNick);
+					sSendMessage.SendChatMessage(sIRCMessage, text[0], sIRCMessage.Nick);
 				else if(DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 3)
-					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.OriginNick);
+					sSendMessage.SendChatMessage(sIRCMessage, text[1], sIRCMessage.Nick);
 				else
 				{
 					if(IsAdmin(sIRCMessage.Nick, sIRCMessage.Host))
 						sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					else
-						sSendMessage.SendChatMessage(sIRCMessage, "{0} {1}", greeter, sIRCMessage.OriginNick);
+						sSendMessage.SendChatMessage(sIRCMessage, "{0} {1}", greeter, sIRCMessage.Nick);
 				}
 			}
 		}
@@ -109,7 +109,7 @@ namespace Schumix.ExtraAddon.Commands
 		/// </summary>
 		public void HandleLeft(IRCMessage sIRCMessage)
 		{
-			if(sIRCMessage.OriginNick == sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.NickStorage)
+			if(sIRCMessage.Nick == sIrcBase.Networks[sIRCMessage.ServerName].sMyNickInfo.NickStorage)
 			{
 				sNameList.Remove(sIRCMessage.Channel);
 				return;
@@ -132,7 +132,7 @@ namespace Schumix.ExtraAddon.Commands
 				if(DateTime.Now.Hour >= 20 && DateTime.Now.Hour < 3)
 					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("handleleft", sIRCMessage.Channel, sIRCMessage.ServerName), sIRCMessage.Nick);
 				else
-					sSendMessage.SendChatMessage(sIRCMessage, "{0} {1}", greeter, sIRCMessage.OriginNick);
+					sSendMessage.SendChatMessage(sIRCMessage, "{0} {1}", greeter, sIRCMessage.Nick);
 			}
 		}
 
@@ -189,7 +189,7 @@ namespace Schumix.ExtraAddon.Commands
 					if(ConsoleLog.CLog)
 					{
 						string text = sIRCMessage.Info.SplitToString(4, SchumixBase.Space);
-						Log.WriteLine(sLManager.GetCommandText("handlekick", sIRCMessage.Channel, sIRCMessage.ServerName), sIRCMessage.OriginNick, sIRCMessage.Info[3], text.Remove(0, 1, ":"));
+						Log.WriteLine(sLManager.GetCommandText("handlekick", sIRCMessage.Channel, sIRCMessage.ServerName), sIRCMessage.Nick, sIRCMessage.Info[3], text.Remove(0, 1, ":"));
 					}
 				}
 			}

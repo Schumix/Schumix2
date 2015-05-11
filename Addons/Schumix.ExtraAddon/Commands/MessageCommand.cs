@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -84,7 +84,7 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
-				SchumixBase.DManager.Insert("`message`(ServerId, ServerName, Name, Channel, Message, Wrote, UnixTime)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(7, SchumixBase.Space)), sIRCMessage.Nick, sUtilities.UnixTime);
+				SchumixBase.DManager.Insert("`message`(ServerId, ServerName, Name, Channel, Message, Wrote, UnixTime)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[6].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info[5].ToLower()), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(7, SchumixBase.Space)), sIRCMessage.SqlEscapeNick, sUtilities.UnixTime);
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message/channel", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
 			else
@@ -113,7 +113,7 @@ namespace Schumix.ExtraAddon.Commands
 					return;
 				}
 
-				SchumixBase.DManager.Insert("`message`(ServerId, ServerName, Name, Channel, Message, Wrote, UnixTime)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[4].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)), sIRCMessage.Nick, sUtilities.UnixTime);
+				SchumixBase.DManager.Insert("`message`(ServerId, ServerName, Name, Channel, Message, Wrote, UnixTime)", sIRCMessage.ServerId, sIRCMessage.ServerName, sUtilities.SqlEscape(sIRCMessage.Info[4].ToLower()), sIRCMessage.Channel.ToLower(), sUtilities.SqlEscape(sIRCMessage.Info.SplitToString(5, SchumixBase.Space)), sIRCMessage.SqlEscapeNick, sUtilities.UnixTime);
 				sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetCommandText("message", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
 		}

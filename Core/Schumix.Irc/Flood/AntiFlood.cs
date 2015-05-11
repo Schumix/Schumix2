@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,24 +100,26 @@ namespace Schumix.Irc.Flood
 
 		public bool Ignore(IRCMessage sIRCMessage)
 		{
-			if(CommandFloodList.ContainsKey(sIRCMessage.Nick.ToLower()))
+			string nick = sIRCMessage.Nick.ToLower();
+
+			if(CommandFloodList.ContainsKey(nick))
 			{
-				if(!CommandFloodList[sIRCMessage.Nick.ToLower()].IsIgnore &&
-				   CommandFloodList[sIRCMessage.Nick.ToLower()].Message >= FloodingConfig.NumberOfCommands)
+				if(!CommandFloodList[nick].IsIgnore &&
+				   CommandFloodList[nick].Message >= FloodingConfig.NumberOfCommands)
 				{
-					CommandFloodList[sIRCMessage.Nick.ToLower()].IsIgnore = true;
-					CommandFloodList[sIRCMessage.Nick.ToLower()].Warring = true;
-					CommandFloodList[sIRCMessage.Nick.ToLower()].BanTime = DateTime.Now.AddMinutes(1);
-					CommandFloodList[sIRCMessage.Nick.ToLower()].Message = 0;
-					sSendMessage.SendCMPrivmsg(sIRCMessage.Nick.ToLower(), sLManager.GetWarningText("CommandsDisabled2", sIRCMessage.Channel, sIRCMessage.ServerName), FloodingConfig.Seconds);
+					CommandFloodList[nick].IsIgnore = true;
+					CommandFloodList[nick].Warring = true;
+					CommandFloodList[nick].BanTime = DateTime.Now.AddMinutes(1);
+					CommandFloodList[nick].Message = 0;
+					sSendMessage.SendCMPrivmsg(nick, sLManager.GetWarningText("CommandsDisabled2", sIRCMessage.Channel, sIRCMessage.ServerName), FloodingConfig.Seconds);
 					return true;
 				}
 
-				if(CommandFloodList[sIRCMessage.Nick.ToLower()].IsIgnore)
+				if(CommandFloodList[nick].IsIgnore)
 				{
-					if(CommandFloodList[sIRCMessage.Nick.ToLower()].Warring)
+					if(CommandFloodList[nick].Warring)
 					{
-						CommandFloodList[sIRCMessage.Nick.ToLower()].Warring = false;
+						CommandFloodList[nick].Warring = false;
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("CommandsDisabled", sIRCMessage.Channel, sIRCMessage.ServerName));
 					}
 

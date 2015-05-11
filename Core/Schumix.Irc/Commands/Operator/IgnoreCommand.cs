@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,10 @@
 
 using System;
 using Schumix.Irc.Util;
+using Schumix.Framework;
 using Schumix.Framework.Irc;
 using Schumix.Framework.Config;
+using Schumix.Framework.Extensions;
 
 namespace Schumix.Irc.Commands
 {
@@ -163,6 +165,18 @@ namespace Schumix.Irc.Commands
 					{
 						sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoIgnoreCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
 						return;
+					}
+
+					var db = SchumixBase.DManager.QueryFirstRow("SELECT BaseCommand FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(command), sIRCMessage.ServerName);
+					if(!db.IsNull())
+					{
+						string basecommand = db["BaseCommand"].ToString();
+
+						if(basecommand == "ignore" || basecommand == "admin")
+						{
+							sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("NoIgnoreCommand", sIRCMessage.Channel, sIRCMessage.ServerName));
+							return;
+						}
 					}
 
 					if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator) && sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap.ContainsKey(command) && sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap[command].Permission != CommandPermission.Administrator)

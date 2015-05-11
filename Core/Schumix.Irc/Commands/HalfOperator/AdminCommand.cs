@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -52,7 +52,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				string name = sIRCMessage.Nick.ToLower();
+				string name = sIRCMessage.SqlEscapeNick.ToLower();
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
@@ -69,14 +69,14 @@ namespace Schumix.Irc.Commands
 					}
 				}
 
-				if(!sChannelList.IsChannelList(name))
+				if(!sChannelList.IsChannelList(sIRCMessage.Nick.ToLower()))
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[3]);
-					sChannelList.NewThread(sIRCMessage.ServerName, name);
+					sChannelList.NewThread(sIRCMessage.ServerName, sIRCMessage.Nick.ToLower());
 				}
 
-				status = false;
+				return;
 			}
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "newpassword")
 			{
@@ -99,7 +99,7 @@ namespace Schumix.Irc.Commands
 					return;
 				}
 
-				string name = sIRCMessage.Nick.ToLower();
+				string name = sIRCMessage.SqlEscapeNick.ToLower();
 				var db = SchumixBase.DManager.QueryFirstRow("SELECT Password FROM admins WHERE Name = '{0}' And ServerName = '{1}'", name, sIRCMessage.ServerName);
 				if(!db.IsNull())
 				{
@@ -116,7 +116,7 @@ namespace Schumix.Irc.Commands
 					}
 				}
 
-				status = false;
+				return;
 			}
 
 			if(IsWarningAdmin(sIRCMessage.Nick, sIRCMessage.Host, AdminFlag.HalfOperator))
@@ -384,11 +384,8 @@ namespace Schumix.Irc.Commands
 			}
 			else
 			{
-				if(!status)
-					return;
-
 				var text = sLManager.GetCommandTexts("admin", sIRCMessage.Channel, sIRCMessage.ServerName);
-				if(text.Length < 6)
+				if(text.Length < 7)
 				{
 					sSendMessage.SendChatMessage(sIRCMessage, sLConsole.Translations("NoFound2", sLManager.GetChannelLocalization(sIRCMessage.Channel, sIRCMessage.ServerName)));
 					return;
@@ -397,6 +394,7 @@ namespace Schumix.Irc.Commands
 				if(IsAdmin(sIRCMessage.Nick, AdminFlag.HalfOperator))
 				{
 					string commands = string.Empty;
+					string aliascommands = string.Empty;
 
 					foreach(var command in sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap)
 					{
@@ -409,15 +407,27 @@ namespace Schumix.Irc.Commands
 						if(sIgnoreCommand.IsIgnore(command.Key))
 							continue;
 
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT BaseCommand FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(command.Key), sIRCMessage.ServerName);
+						if(!db.IsNull())
+						{
+							string basecommand = db["BaseCommand"].ToString();
+							aliascommands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key + "->" + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + basecommand;
+							continue;
+						}
+
 						commands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key;
 					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[0]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[1], commands.Remove(0, 3, " | "));
+
+					if(!aliascommands.IsNullOrEmpty())
+						sSendMessage.SendChatMessage(sIRCMessage, text[6], aliascommands.Remove(0, 3, " | "));
 				}
 				else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Operator))
 				{
 					string commands = string.Empty;
+					string aliascommands = string.Empty;
 
 					foreach(var command in sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap)
 					{
@@ -431,15 +441,27 @@ namespace Schumix.Irc.Commands
 						if(sIgnoreCommand.IsIgnore(command.Key))
 							continue;
 
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT BaseCommand FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(command.Key), sIRCMessage.ServerName);
+						if(!db.IsNull())
+						{
+							string basecommand = db["BaseCommand"].ToString();
+							aliascommands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key + "->" + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + basecommand;
+							continue;
+						}
+
 						commands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key;
 					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[2]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[3], commands.Remove(0, 3, " | "));
+
+					if(!aliascommands.IsNullOrEmpty())
+						sSendMessage.SendChatMessage(sIRCMessage, text[6], aliascommands.Remove(0, 3, " | "));
 				}
 				else if(IsAdmin(sIRCMessage.Nick, AdminFlag.Administrator))
 				{
 					string commands = string.Empty;
+					string aliascommands = string.Empty;
 
 					foreach(var command in sIrcBase.Networks[sIRCMessage.ServerName].CommandMethodMap)
 					{
@@ -452,11 +474,22 @@ namespace Schumix.Irc.Commands
 						if(sIgnoreCommand.IsIgnore(command.Key))
 							continue;
 
+						var db = SchumixBase.DManager.QueryFirstRow("SELECT BaseCommand FROM alias_irc_command WHERE NewCommand = '{0}' And ServerName = '{1}'", sUtilities.SqlEscape(command.Key), sIRCMessage.ServerName);
+						if(!db.IsNull())
+						{
+							string basecommand = db["BaseCommand"].ToString();
+							aliascommands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key + "->" + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + basecommand;
+							continue;
+						}
+
 						commands += " | " + IRCConfig.List[sIRCMessage.ServerName].CommandPrefix + command.Key;
 					}
 
 					sSendMessage.SendChatMessage(sIRCMessage, text[4]);
 					sSendMessage.SendChatMessage(sIRCMessage, text[5], commands.Remove(0, 3, " | "));
+
+					if(!aliascommands.IsNullOrEmpty())
+						sSendMessage.SendChatMessage(sIRCMessage, text[6], aliascommands.Remove(0, 3, " | "));
 				}
 			}
 		}

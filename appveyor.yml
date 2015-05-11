@@ -1,0 +1,62 @@
+#
+# Appveyor configuration file for CI build of SGit on Windows
+#
+# For further details see http://www.appveyor.com
+#
+
+#
+# Version
+# 
+version: 4.4.5.{build}
+
+#
+# Environment
+# 
+environment:
+  matrix:
+    - configuration: Debug
+    - configuration: Release
+
+#
+# Branches
+# 
+branches:
+  only:
+    - master
+    - stable
+
+#
+# OS
+# 
+os: Windows Server 2012 R2
+
+#
+# Install needed build dependencies
+# 
+install:
+    - cmd: 'git submodule update --init --recursive'
+
+#
+# BUILD
+#
+build:
+    project: Schumix.sln 
+#    verbosity: detailed
+
+#
+# Platform
+#
+platform: Any CPU
+
+#
+# Disable tests for now
+# 
+test: off
+
+#
+# NOTE: Create an installation package artifact.
+#
+artifacts:
+    - path: Run
+      name: $(configuration)
+      type: zip

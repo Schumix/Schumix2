@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -662,8 +662,8 @@ namespace Schumix.Irc
 				IMessage.Channel = sUtilities.SqlEscape(IrcCommand[2]);
 
 			string[] userdata = IMessage.Hostmask.Split('!');
-			IMessage.Nick = sUtilities.SqlEscape(userdata[0]);
-			IMessage.OriginNick = userdata[0];
+			IMessage.Nick = userdata[0];
+			IMessage.SqlEscapeNick = sUtilities.SqlEscape(userdata[0]);
 
 			if(userdata.Length > 1)
 			{

@@ -3,7 +3,7 @@
 # This file is part of Schumix.
 # 
 # Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
-# Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+# Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
 # 
 # Schumix is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -72,6 +72,11 @@ main () {
   do
     iss_update $f
   done
+
+  for f in $(find -iname "appveyor.yml" | grep -v "./_ReSharper" | grep -v "/obj/" | grep -v "./External")
+  do
+    appveyor_yml $f
+  done
 }
 
 sln_update () {
@@ -79,7 +84,6 @@ sln_update () {
   echo "Update sln file: $f"
   find $f -type f -exec sed -i 's/version = .*/version = '$newversion'/g' {} \;
 }
-
 
 csproj_update () {
   f=$1
@@ -116,6 +120,12 @@ iss_update () {
   f=$1
   echo "Update iss file: $f"
   find $f -type f -exec sed -i 's/MyAppVersion ".*"/MyAppVersion "'$newversion'"/g' {} \;
+}
+
+appveyor_yml () {
+  f=$1
+  echo "Update appveyor.yml file: $f"
+  find $f -type f -exec sed -i 's/version: .*/version: '$newversion'.{build}/g' {} \;
 }
 
 main

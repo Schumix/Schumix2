@@ -10,7 +10,7 @@
     <RootNamespace>Schumix</RootNamespace>
     <AssemblyName>Schumix</AssemblyName>
     <ApplicationIcon>icon.ico</ApplicationIcon>
-    <ReleaseVersion>4.4.3</ReleaseVersion>
+    <ReleaseVersion>4.4.5</ReleaseVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,6 +65,7 @@
     <Compile Include="Console\Commands\LeaveCommand.cs" />
     <Compile Include="Console\Commands\JoinCommand.cs" />
     <Compile Include="Console\Commands\NickCommand.cs" />
+    <Compile Include="Console\Commands\AliasCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

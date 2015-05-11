@@ -2,7 +2,7 @@
  * This file is part of Schumix.
  * 
  * Copyright (C) 2010-2013 Megax <http://megax.yeahunter.hu/>
- * Copyright (C) 2013-2014 Schumix Team <http://schumix.eu/>
+ * Copyright (C) 2013-2015 Schumix Team <http://schumix.eu/>
  * 
  * Schumix is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -106,7 +106,7 @@ namespace Schumix.CompilerAddon
 					return;
 
 				if(!Rfc2812Util.IsValidChannelName(sIRCMessage.Channel))
-					sIRCMessage.Channel = sIRCMessage.Nick;
+					sIRCMessage.Channel = sIRCMessage.Nick; // Nem 100% így. (sqlescape)
 
 				string command = IRCConfig.List[sIRCMessage.ServerName].NickName + SchumixBase.Comma;
 				sIRCMessage.Info[3] = sIRCMessage.Info[3].Remove(0, 1, SchumixBase.Colon);

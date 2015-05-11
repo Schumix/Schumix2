@@ -1,6 +1,6 @@
 Name: Schumix.Irc
 Description: Schumix.Irc
-Version: 4.4.3
+Version: 4.4.5
 
 Requires: 
 Libs: -r:@expanded_libdir@/@PACKAGE@/Schumix.Irc.dll

@@ -53,7 +53,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySql.Data.Schumix", "Exter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Libraries", "External\ngit\External\MonoLibraries\Mono.Libraries\Mono.Libraries.csproj", "{E9A655D1-EE99-467A-8F4B-CAC80E0E65BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework.Schumix", "External\ngit\External\nunit-framework\src\framework\nunit.framework.Schumix.csproj", "{6A281C98-B74D-403B-8536-966871B992E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "nunit.framework.Schumix", "External\ngit\External\nunit-framework\src\NUnitFramework\framework\nunit.framework.Schumix.csproj", "{6A281C98-B74D-403B-8536-966871B992E3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Addons", "Addons", "{AD8E40DF-384D-4FF0-ABA9-91A956F38867}"
 EndProject
@@ -378,7 +378,7 @@ Global
 		$5.Text = 
 		$5.IncludeInNewFiles = True
 		description = Schumix2 IRC Bot
-		version = 4.4.3
+		version = 4.4.5
 		outputpath = Run
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
