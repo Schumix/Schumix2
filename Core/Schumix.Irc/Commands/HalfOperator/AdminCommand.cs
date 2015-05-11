@@ -35,8 +35,6 @@ namespace Schumix.Irc.Commands
 			if(!IsAdmin(sIRCMessage.Nick))
 				return;
 
-			bool status = true;
-
 			if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "access")
 			{
 				if(sIRCMessage.Info.Length < 6)
