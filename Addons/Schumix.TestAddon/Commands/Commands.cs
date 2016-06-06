@@ -29,6 +29,7 @@ using Schumix.Irc.Util;
 using Schumix.Irc.Commands;
 using Schumix.Framework;
 using Schumix.Framework.Irc;
+using Schumix.Framework.Util;
 using Schumix.Framework.Bitly;
 using Schumix.Framework.Config;
 using Schumix.Framework.Logger;
@@ -40,6 +41,7 @@ namespace Schumix.TestAddon.Commands
 	class TestCommand : CommandInfo
 	{
 		private readonly LocalizationManager sLManager = Singleton<LocalizationManager>.Instance;
+		private readonly Utilities sUtilities = Singleton<Utilities>.Instance;
 		private readonly IrcBase sIrcBase = Singleton<IrcBase>.Instance;
 
 		public TestCommand(string ServerName) : base(ServerName)
@@ -218,6 +220,29 @@ namespace Schumix.TestAddon.Commands
 			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "pathroot")
 			{
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", Path.GetPathRoot(@"C:\asd\sd\info.xml"));
+			}
+			else if(sIRCMessage.Info.Length >= 5 && sIRCMessage.Info[4].ToLower() == "dbcount")
+			{
+				if(sIRCMessage.Info.Length < 6)
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Nincs megadva a szám!");
+					return;
+				}
+
+				if(!sIRCMessage.Info[5].IsNumber())
+				{
+					sSendMessage.SendChatMessage(sIRCMessage, "Nem szám lett megadva!");
+					return;
+				}
+
+				var db = SchumixBase.DManager.QueryFirstRow("SELECT count(UnixTime) FROM message WHERE UnixTime > {0} and ServerName = '{1}'", sIRCMessage.Info[5].ToInt32(), sIRCMessage.ServerName);
+				if(!db.IsNull())
+				{
+					int count = db[0].ToInt32();
+					sSendMessage.SendChatMessage(sIRCMessage, "Count: {0}", count);
+				}
+				else
+					sSendMessage.SendChatMessage(sIRCMessage, sLManager.GetWarningText("FaultyQuery", sIRCMessage.Channel, sIRCMessage.ServerName));
 			}
 			else
 				sSendMessage.SendChatMessage(sIRCMessage, "{0}", sIRCMessage.Info.Length);
